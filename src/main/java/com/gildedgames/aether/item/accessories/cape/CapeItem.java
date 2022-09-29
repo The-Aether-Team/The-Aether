@@ -8,8 +8,6 @@ import net.minecraft.resources.ResourceLocation;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
-import javax.annotation.Nonnull;
-
 public class CapeItem extends AccessoryItem {
     protected ResourceLocation CAPE_LOCATION;
 
@@ -18,7 +16,6 @@ public class CapeItem extends AccessoryItem {
         this.setRenderTexture(Aether.MODID, capeLocation);
     }
 
-    @Nonnull
     @Override
     public ICurio.SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
         return new ICurio.SoundInfo(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_CAPE.get(), 1.0F, 1.0F);

@@ -6,15 +6,13 @@ import com.gildedgames.aether.item.accessories.abilities.FreezingAccessory;
 import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.SlotContext;
 
-import javax.annotation.Nonnull;
-
 public class IceRingItem extends RingItem implements FreezingAccessory {
     public IceRingItem(Properties properties) {
         super(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_ICE_RING, properties);
     }
 
     @Override
-    public boolean isValidRepairItem(@Nonnull ItemStack repairItem, ItemStack repairMaterial) {
+    public boolean isValidRepairItem(ItemStack repairItem, ItemStack repairMaterial) {
         return repairMaterial.is(AetherTags.Items.ICE_REPAIRING);
     }
 

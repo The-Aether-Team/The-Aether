@@ -13,8 +13,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 
-import javax.annotation.Nonnull;
-
 public class VampireBladeItem extends SwordItem {
     public VampireBladeItem() {
         super(AetherItemTiers.VAMPIRE, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
@@ -29,7 +27,7 @@ public class VampireBladeItem extends SwordItem {
      * @return Whether the enemy was hurt or not, as a {@link Boolean}.
      */
     @Override
-    public boolean hurtEnemy(@Nonnull ItemStack stack, @Nonnull LivingEntity target, @Nonnull LivingEntity attacker) {
+    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (EquipmentUtil.isFullStrength(attacker)) {
             if (attacker.getHealth() < attacker.getMaxHealth()) {
                 if (attacker instanceof Player player) {

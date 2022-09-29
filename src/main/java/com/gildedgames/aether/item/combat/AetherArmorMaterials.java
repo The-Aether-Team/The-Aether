@@ -9,7 +9,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
 public enum AetherArmorMaterials implements ArmorMaterial {
@@ -55,19 +54,16 @@ public enum AetherArmorMaterials implements ArmorMaterial {
 		return this.enchantability;
 	}
 
-	@Nonnull
 	@Override
 	public SoundEvent getEquipSound() {
 		return this.soundEvent.get();
 	}
 
-	@Nonnull
 	@Override
 	public Ingredient getRepairIngredient() {
 		return this.repairMaterial.get();
 	}
 
-	@Nonnull
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public String getName() {

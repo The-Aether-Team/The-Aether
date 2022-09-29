@@ -16,8 +16,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 
-import javax.annotation.Nonnull;
-
 public class LightningKnifeItem extends Item {
 	public LightningKnifeItem() {
 		super(new Item.Properties().rarity(AetherItems.AETHER_LOOT).stacksTo(16).tab(AetherItemGroups.AETHER_WEAPONS));
@@ -31,9 +29,8 @@ public class LightningKnifeItem extends Item {
 	 * @param hand The {@link InteractionHand} in which the item is being used.
 	 * @return Success (the item is swung). This is an {@link InteractionResultHolder InteractionResultHolder&lt;ItemStack&gt;}.
 	 */
-	@Nonnull
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, @Nonnull InteractionHand hand) {
+	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		ItemStack heldStack = player.getItemInHand(hand);
 		if (!level.isClientSide()) {
 			if (!player.getAbilities().instabuild && heldStack.getEnchantmentLevel(Enchantments.INFINITY_ARROWS) == 0) { // Note: Lightning knives can't be enchanted with Infinity in survival, but we still implement the behavior.

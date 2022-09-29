@@ -15,8 +15,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nonnull;
-
 public class HammerOfNotchItem extends SwordItem {
     public HammerOfNotchItem() {
         super(AetherItemTiers.HAMMER_OF_NOTCH, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
@@ -29,9 +27,8 @@ public class HammerOfNotchItem extends SwordItem {
      * @param hand The {@link InteractionHand} in which the item is being used.
      * @return Success (the item is swung). This is an {@link InteractionResultHolder InteractionResultHolder&lt;ItemStack&gt;}.
      */
-    @Nonnull
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, @Nonnull InteractionHand hand) {
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack heldStack = player.getItemInHand(hand);
         if (!level.isClientSide()) {
             if (!player.getAbilities().instabuild) {

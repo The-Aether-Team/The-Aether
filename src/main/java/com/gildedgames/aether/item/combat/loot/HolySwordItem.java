@@ -15,8 +15,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 
-import javax.annotation.Nonnull;
-
 public class HolySwordItem extends SwordItem {
     public HolySwordItem() {
         super(AetherItemTiers.HOLY, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
@@ -31,7 +29,7 @@ public class HolySwordItem extends SwordItem {
      * @return Whether the enemy was hurt or not, as a {@link Boolean}.
      */
     @Override
-    public boolean hurtEnemy(@Nonnull ItemStack stack, @Nonnull LivingEntity target, @Nonnull LivingEntity attacker) {
+    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (EquipmentUtil.isFullStrength(attacker)) {
             if (target.getMobType() == MobType.UNDEAD || target.isInvertedHealAndHarm()) {
                 DamageSource damageSource = (attacker instanceof Player player ? DamageSource.playerAttack(player) : DamageSource.mobAttack(attacker)).bypassArmor();

@@ -10,8 +10,6 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nonnull;
-
 public class HealingStoneItem extends Item {
     public HealingStoneItem() {
         super(new Item.Properties().rarity(Rarity.RARE).food(AetherFoods.HEALING_STONE).tab(AetherItemGroups.AETHER_FOOD));
@@ -24,9 +22,8 @@ public class HealingStoneItem extends Item {
      * @param user The {@link LivingEntity} using the stack.
      * @return The used {@link ItemStack}.
      */
-    @Nonnull
     @Override
-    public ItemStack finishUsingItem(@Nonnull ItemStack stack, @Nonnull Level level, @Nonnull LivingEntity user) {
+    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity user) {
         if (user instanceof ServerPlayer serverPlayer) {
             CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, stack);
             serverPlayer.awardStat(Stats.ITEM_USED.get(this));
@@ -39,7 +36,7 @@ public class HealingStoneItem extends Item {
      * @return Whether the item should render an enchantment glint, as a {@link Boolean}.
      */
     @Override
-    public boolean isFoil(@Nonnull ItemStack stack) {
+    public boolean isFoil(ItemStack stack) {
         return true;
     }
 }

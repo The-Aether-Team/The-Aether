@@ -17,16 +17,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.context.UseOnContext;
 
-import javax.annotation.Nonnull;
-
 public class AmbrosiumShardItem extends Item implements ItemUseConversion<AmbrosiumRecipe>, ConsumableItem {
 	public AmbrosiumShardItem(Properties properties) {
 		super(properties);
 	}
 
-	@Nonnull
 	@Override
-	public InteractionResult useOn(@Nonnull UseOnContext context) {
+	public InteractionResult useOn(UseOnContext context) {
 		return this.convertBlock(AetherRecipeTypes.AMBROSIUM_ENCHANTING.get(), context);
 	}
 
@@ -39,9 +36,8 @@ public class AmbrosiumShardItem extends Item implements ItemUseConversion<Ambros
 	 * @return Consume (cause the item to bob down then up in hand) if the Ambrosium Shard is edible or the player is missing health. Fail (do nothing) if the player has full health. Pass (do nothing) if the Ambrosium Shard isn't edible.
 	 * This is an {@link InteractionResultHolder InteractionResultHolder&lt;ItemStack&gt;}.
 	 */
-	@Nonnull
 	@Override
-	public InteractionResultHolder<ItemStack> use(@Nonnull Level level, @Nonnull Player player, @Nonnull InteractionHand hand) {
+	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		if (AetherConfig.COMMON.edible_ambrosium.get()) {
 			ItemStack itemStack = player.getItemInHand(hand);
 			if (player.getHealth() < player.getMaxHealth() || player.isCreative()) {
@@ -63,9 +59,8 @@ public class AmbrosiumShardItem extends Item implements ItemUseConversion<Ambros
 	 * @param user The {@link LivingEntity} using the stack.
 	 * @return The used {@link ItemStack}.
 	 */
-	@Nonnull
 	@Override
-	public ItemStack finishUsingItem(@Nonnull ItemStack stack, @Nonnull Level level, @Nonnull LivingEntity user) {
+	public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity user) {
 		if (AetherConfig.COMMON.edible_ambrosium.get()) {
 			user.heal(1);
 			this.consume(this, stack, user);
@@ -76,9 +71,8 @@ public class AmbrosiumShardItem extends Item implements ItemUseConversion<Ambros
 	/**
 	 * @return The {@link UseAnim#EAT} animation if the Ambrosium Shard is edible according to {@link AetherConfig.Common#edible_ambrosium}, otherwise {@link UseAnim#NONE}.
 	 */
-	@Nonnull
 	@Override
-	public UseAnim getUseAnimation(@Nonnull ItemStack stack) {
+	public UseAnim getUseAnimation(ItemStack stack) {
 		return AetherConfig.COMMON.edible_ambrosium.get() ? UseAnim.EAT : UseAnim.NONE;
 	}
 
@@ -86,7 +80,7 @@ public class AmbrosiumShardItem extends Item implements ItemUseConversion<Ambros
 	 * @return A use duration of 16 as an {@link Integer} if the Ambrosium Shard is edible according to {@link AetherConfig.Common#edible_ambrosium}, otherwise 0.
 	 */
 	@Override
-	public int getUseDuration(@Nonnull ItemStack stack) {
+	public int getUseDuration(ItemStack stack) {
 		return AetherConfig.COMMON.edible_ambrosium.get() ? 16 : 0;
 	}
 }

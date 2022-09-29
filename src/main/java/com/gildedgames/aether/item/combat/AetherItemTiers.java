@@ -4,7 +4,6 @@ import com.gildedgames.aether.AetherTags;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 
-import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
 public enum AetherItemTiers implements Tier {
@@ -62,7 +61,6 @@ public enum AetherItemTiers implements Tier {
 		return this.enchantability;
 	}
 
-	@Nonnull
 	@Override
 	public Ingredient getRepairIngredient() {
 		return this.repairMaterial.get();

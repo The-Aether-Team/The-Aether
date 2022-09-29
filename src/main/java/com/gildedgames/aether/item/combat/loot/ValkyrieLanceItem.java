@@ -15,8 +15,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 
-import javax.annotation.Nonnull;
-
 public class ValkyrieLanceItem extends SwordItem implements ValkyrieTool {
     public ValkyrieLanceItem() {
         super(AetherItemTiers.VALKYRIE, 3, -2.6F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
@@ -33,7 +31,7 @@ public class ValkyrieLanceItem extends SwordItem implements ValkyrieTool {
     }
 
     @Override
-    public boolean canPerformAction(@Nonnull ItemStack stack, @Nonnull ToolAction toolAction) {
+    public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
         return ToolActions.DEFAULT_SWORD_ACTIONS.contains(toolAction) && toolAction != ToolActions.SWORD_SWEEP;
     }
 }

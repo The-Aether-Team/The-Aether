@@ -12,8 +12,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nonnull;
-
 public class WhiteAppleItem extends Item {
     public WhiteAppleItem() {
         super(new Item.Properties().food(AetherFoods.WHITE_APPLE).tab(AetherItemGroups.AETHER_FOOD));
@@ -27,9 +25,8 @@ public class WhiteAppleItem extends Item {
      * @param user The {@link LivingEntity} using the stack.
      * @return The used {@link ItemStack}.
      */
-    @Nonnull
     @Override
-    public ItemStack finishUsingItem(@Nonnull ItemStack stack, Level level, @Nonnull LivingEntity user) {
+    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity user) {
         if (!level.isClientSide()) {
             user.curePotionEffects(new ItemStack(AetherItems.WHITE_APPLE.get()));
         }

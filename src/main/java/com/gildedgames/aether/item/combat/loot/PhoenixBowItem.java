@@ -11,8 +11,6 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.Item;
 
-import javax.annotation.Nonnull;
-
 public class PhoenixBowItem extends BowItem {
     public PhoenixBowItem() {
         super(new Item.Properties().durability(384).rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
@@ -24,9 +22,8 @@ public class PhoenixBowItem extends BowItem {
      * @param arrow The {@link AbstractArrow} created by the Bow.
      * @return The original {@link AbstractArrow} (the Phoenix Bow doesn't modify it).
      */
-    @Nonnull
     @Override
-    public AbstractArrow customArrow(@Nonnull AbstractArrow arrow) {
+    public AbstractArrow customArrow(AbstractArrow arrow) {
         PhoenixArrow.get(arrow).ifPresent(phoenixArrow -> {
             phoenixArrow.setPhoenixArrow(true);
             int defaultTime = 20;

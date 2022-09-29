@@ -14,8 +14,6 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nonnull;
-
 public class GummySwetItem extends Item implements ConsumableItem {
 	public GummySwetItem() {
 		super(new Item.Properties().rarity(AetherItems.AETHER_LOOT).food(AetherFoods.GUMMY_SWET).tab(AetherItemGroups.AETHER_FOOD));
@@ -29,9 +27,8 @@ public class GummySwetItem extends Item implements ConsumableItem {
 	 * @return Consume (cause the item to bob down then up in hand) if the item is successfully used whether it be for eating or healing, or fail (do nothing) if those conditions aren't met.
 	 * This is an {@link InteractionResultHolder InteractionResultHolder&lt;ItemStack&gt;}.
 	 */
-	@Nonnull
 	@Override
-	public InteractionResultHolder<ItemStack> use(@Nonnull Level level, Player player, @Nonnull InteractionHand hand) {
+	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		ItemStack heldStack = player.getItemInHand(hand);
 		if (this.isEdible()) { // If AetherConfig.COMMON.healing_gummy_swets.get() is false.
 			FoodProperties foodProperties = this.getFoodProperties(heldStack, player);
@@ -59,9 +56,8 @@ public class GummySwetItem extends Item implements ConsumableItem {
 	 * @param user The {@link LivingEntity} using the stack.
 	 * @return The used {@link ItemStack}.
 	 */
-	@Nonnull
 	@Override
-	public ItemStack finishUsingItem(@Nonnull ItemStack stack, @Nonnull Level level, @Nonnull LivingEntity user) {
+	public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity user) {
 		if (this.isEdible()) { // If AetherConfig.COMMON.healing_gummy_swets.get() is false.
 			return user.eat(level, stack); // Automatically handles the criteria trigger and stat awarding code.
 		} else { // If AetherConfig.COMMON.healing_gummy_swets.get() is true.
@@ -71,14 +67,13 @@ public class GummySwetItem extends Item implements ConsumableItem {
 		}
 	}
 
-	@Nonnull
 	@Override
-	public UseAnim getUseAnimation(@Nonnull ItemStack stack) {
+	public UseAnim getUseAnimation(ItemStack stack) {
 		return UseAnim.EAT;
 	}
 
 	@Override
-	public int getUseDuration(@Nonnull ItemStack stack) {
+	public int getUseDuration(ItemStack stack) {
 		return 16;
 	}
 

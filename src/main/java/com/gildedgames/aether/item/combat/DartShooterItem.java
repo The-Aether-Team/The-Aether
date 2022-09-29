@@ -24,8 +24,6 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.event.ForgeEventFactory;
 
-import javax.annotation.Nonnull;
-
 public class DartShooterItem extends ProjectileWeaponItem implements Vanishable {
     private final Supplier<Item> dartType;
 
@@ -42,9 +40,8 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
      * @return Consume (cause the item to bob down then up in hand) if the player has ammo or is in creative, or fail (do nothing) if those conditions aren't met, or use the result of the Forge event hook if there is one.
      * This is an {@link InteractionResultHolder InteractionResultHolder&lt;ItemStack&gt;}.
      */
-    @Nonnull
     @Override
-    public InteractionResultHolder<ItemStack> use(@Nonnull Level level, Player player, @Nonnull InteractionHand hand) {
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack heldStack = player.getItemInHand(hand);
         boolean hasAmmo = !player.getProjectile(heldStack).isEmpty();
 
@@ -68,9 +65,8 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
      * @param user The {@link LivingEntity} using the stack.
      * @return The used {@link ItemStack}.
      */
-    @Nonnull
     @Override
-    public ItemStack finishUsingItem(@Nonnull ItemStack stack, @Nonnull Level level, @Nonnull LivingEntity user) {
+    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity user) {
         if (user instanceof Player player) {
             ItemStack ammoItem = player.getProjectile(stack); // Gets matching ammo stack from inventory according to DartShooterItem#getAllSupportedProjectiles().
 
@@ -128,17 +124,15 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
      * @return The usage duration in ticks as an {@link Integer}.
      */
     @Override
-    public int getUseDuration(@Nonnull ItemStack stack) {
+    public int getUseDuration(ItemStack stack) {
         return 4;
     }
 
-    @Nonnull
     @Override
-    public UseAnim getUseAnimation(@Nonnull ItemStack stack) {
+    public UseAnim getUseAnimation(ItemStack stack) {
         return UseAnim.BOW;
     }
 
-    @Nonnull
     @Override
     public Predicate<ItemStack> getAllSupportedProjectiles() {
         return (stack) -> stack.is(this.getDartType().get());
@@ -157,7 +151,7 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
     }
 
     @Override
-    public boolean isEnchantable(@Nonnull ItemStack stack) {
+    public boolean isEnchantable(ItemStack stack) {
         return true;
     }
 

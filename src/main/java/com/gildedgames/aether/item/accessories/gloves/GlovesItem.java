@@ -16,7 +16,6 @@ import org.apache.commons.lang3.tuple.ImmutableTriple;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
-import javax.annotation.Nonnull;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -40,7 +39,6 @@ public class GlovesItem extends AccessoryItem {
         return attributes;
     }
 
-    @Nonnull
     @Override
     public ICurio.SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
         return new ICurio.SoundInfo(this.equipSound.get(), 1.0F, 1.0F);

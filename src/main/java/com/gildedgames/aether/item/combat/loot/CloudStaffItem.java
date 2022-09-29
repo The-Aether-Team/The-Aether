@@ -18,8 +18,6 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nonnull;
-
 public class CloudStaffItem extends Item {
     public CloudStaffItem() {
         super(new Item.Properties().durability(60).rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_MISC));
@@ -34,9 +32,8 @@ public class CloudStaffItem extends Item {
      * @param hand The {@link InteractionHand} in which the item is being used.
      * @return Pass (do nothing) (we handle swing behavior manually in the lambda earlier on). This is an {@link InteractionResultHolder InteractionResultHolder&lt;ItemStack&gt;}.
      */
-    @Nonnull
     @Override
-    public InteractionResultHolder<ItemStack> use(@Nonnull Level level, Player player, @Nonnull InteractionHand hand) {
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack heldItem = player.getItemInHand(hand);
         AetherPlayer.get(player).ifPresent(aetherPlayer -> {
             if (aetherPlayer.getCloudMinions().isEmpty()) {
@@ -103,7 +100,7 @@ public class CloudStaffItem extends Item {
     }
 
     @Override
-    public boolean canAttackBlock(@Nonnull BlockState state, @Nonnull Level level, @Nonnull BlockPos pos, Player player) {
+    public boolean canAttackBlock(BlockState state, Level level, BlockPos pos, Player player) {
         return !player.isCreative();
     }
 }

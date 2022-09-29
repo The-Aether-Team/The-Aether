@@ -8,8 +8,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import top.theillusivec4.curios.api.SlotContext;
 
-import javax.annotation.Nonnull;
-
 /**
  * Zanite ring mining speed boost behavior is called by {@link com.gildedgames.aether.event.listeners.abilities.AccessoryAbilityListener#onMiningSpeed(PlayerEvent.BreakSpeed)}
  */
@@ -19,7 +17,7 @@ public class ZaniteRingItem extends RingItem implements ZaniteAccessory {
     }
 
     @Override
-    public boolean isValidRepairItem(@Nonnull ItemStack repairItem, ItemStack repairMaterial) {
+    public boolean isValidRepairItem(ItemStack repairItem, ItemStack repairMaterial) {
         return repairMaterial.is(AetherTags.Items.ZANITE_REPAIRING);
     }
 

@@ -11,8 +11,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 
-import javax.annotation.Nonnull;
-
 public class CandyCaneSwordItem extends SwordItem {
     public CandyCaneSwordItem() {
         super(AetherItemTiers.CANDY_CANE, 3, -2.4F, new Item.Properties().tab(AetherItemGroups.AETHER_WEAPONS));
@@ -26,7 +24,7 @@ public class CandyCaneSwordItem extends SwordItem {
      * @return Whether the enemy was hurt or not, as a {@link Boolean}.
      */
     @Override
-    public boolean hurtEnemy(@Nonnull ItemStack stack, @Nonnull LivingEntity target, @Nonnull LivingEntity attacker) {
+    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (EquipmentUtil.isFullStrength(attacker)) {
             if (!target.getType().is(AetherTags.Entities.NO_CANDY_CANE_DROPS) && target.getLevel().getRandom().nextBoolean()) {
                 target.spawnAtLocation(AetherItems.CANDY_CANE.get());
