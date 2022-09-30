@@ -13,6 +13,8 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.FluidState;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 
@@ -42,11 +44,18 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
     default int freezeFromRecipe(Level level, ItemStack source, BlockPos pos, int flag) {
         if (!level.isClientSide()) {
             BlockState oldBlockState = level.getBlockState(pos);
+            FluidState fluidState = level.getFluidState(pos);
             for (Recipe<?> recipe : level.getRecipeManager().getAllRecipesFor(AetherRecipeTypes.ACCESSORY_FREEZABLE.get())) {
                 if (recipe instanceof AccessoryFreezableRecipe freezableRecipe) {
-                    if (freezableRecipe.matches(level, pos, oldBlockState)) {
-                        BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                        return this.freezeBlockAt(level, source, oldBlockState, newBlockState, pos, flag);
+                    if (!fluidState.isEmpty() && fluidState.createLegacyBlock() != oldBlockState) {
+                        if (freezableRecipe.matches(level, pos, fluidState.createLegacyBlock())) {
+                            level.setBlock(pos, oldBlockState.setValue(BlockStateProperties.WATERLOGGED, false), flag);
+                        }
+                    } else {
+                        if (freezableRecipe.matches(level, pos, oldBlockState)) {
+                            BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
+                            return this.freezeBlockAt(level, source, oldBlockState, newBlockState, pos, flag);
+                        }
                     }
                 }
             }
