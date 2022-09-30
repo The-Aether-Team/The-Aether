@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class ValkyrieHoeItem extends HoeItem implements ValkyrieTool {
     public ValkyrieHoeItem() {
-        super(AetherItemTiers.VALKYRIE, -4, -0.2F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_TOOLS));
+        super(AetherItemTiers.VALKYRIE, -4, -0.3F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_TOOLS));
     }
 
     @Override
