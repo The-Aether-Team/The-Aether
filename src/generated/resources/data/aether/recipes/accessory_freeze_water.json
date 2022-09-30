@@ -1,9 +1,42 @@
 {
-  "type": "aether:accessory_freezable",
-  "ingredient": {
-    "block": "minecraft:water"
-  },
-  "result": {
-    "block": "minecraft:ice"
-  }
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "aether:config",
+          "config": "[Gameplay, Temporary blocks from Ice Accessories]"
+        }
+      ],
+      "recipe": {
+        "type": "aether:accessory_freezable",
+        "ingredient": {
+          "block": "minecraft:water"
+        },
+        "result": {
+          "block": "minecraft:frosted_ice"
+        }
+      }
+    },
+    {
+      "conditions": [
+        {
+          "type": "forge:not",
+          "value": {
+            "type": "aether:config",
+            "config": "[Gameplay, Temporary blocks from Ice Accessories]"
+          }
+        }
+      ],
+      "recipe": {
+        "type": "aether:accessory_freezable",
+        "ingredient": {
+          "block": "minecraft:water"
+        },
+        "result": {
+          "block": "minecraft:ice"
+        }
+      }
+    }
+  ]
 }

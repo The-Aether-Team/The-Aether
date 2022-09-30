@@ -1,12 +1,14 @@
 package com.gildedgames.aether.data.generators;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.api.AetherMoaTypes;
 import com.gildedgames.aether.data.providers.AetherRecipeProvider;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.AetherTags;
+import com.gildedgames.aether.recipe.conditions.ConfigCondition;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
@@ -22,6 +24,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.CandleBlock;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.crafting.conditions.NotCondition;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
@@ -754,7 +757,11 @@ public class AetherRecipeData extends AetherRecipeProvider
         icestoneFreezable(Blocks.ICE, Blocks.WATER).save(consumer, name("icestone_freeze_water"));
         icestoneFreezable(Blocks.OBSIDIAN, Blocks.LAVA).save(consumer, name("icestone_freeze_lava"));
 
-        accessoryFreezable(Blocks.ICE, Blocks.WATER).save(consumer, name("accessory_freeze_water"));
+        Consumer<Consumer<FinishedRecipe>> permanentIceConversion = accessoryFreezable(Blocks.ICE, Blocks.WATER)::save;
+        Consumer<Consumer<FinishedRecipe>> temporaryIceConversion = accessoryFreezable(Blocks.FROSTED_ICE, Blocks.WATER)::save;
+        ConfigCondition configCondition = new ConfigCondition(AetherConfig.COMMON.temporary_ice_accessory_conversion);
+        conditional().addCondition(configCondition).addRecipe(temporaryIceConversion).addCondition(new NotCondition(configCondition)).addRecipe(permanentIceConversion).build(consumer, name("accessory_freeze_water"));
+
         accessoryFreezable(Blocks.OBSIDIAN, Blocks.LAVA).save(consumer, name("accessory_freeze_lava"));
 
         convertPlacement(AetherBlocks.AEROGEL.get(), Blocks.LAVA, AetherTags.Biomes.ULTRACOLD).save(consumer, name("aerogel_conversion"));

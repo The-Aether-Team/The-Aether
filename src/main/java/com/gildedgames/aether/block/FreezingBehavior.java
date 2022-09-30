@@ -1,6 +1,7 @@
 package com.gildedgames.aether.block;
 
 import com.gildedgames.aether.event.events.FreezeEvent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.tags.FluidTags;
@@ -58,6 +59,9 @@ public interface FreezingBehavior<T> {
         FreezeEvent event = this.onFreeze(level, pos, oldBlockState, newBlockState, source);
         if (!event.isCanceled()) {
             level.setBlock(pos, newBlockState, flag);
+            if (newBlockState.isRandomlyTicking()) {
+                level.scheduleTick(pos, newBlockState.getBlock(), Mth.nextInt(level.getRandom(), 60, 120));
+            }
             if (oldBlockState.getFluidState().is(FluidTags.LAVA)) {
                 level.playSound(null, pos, SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
             }
