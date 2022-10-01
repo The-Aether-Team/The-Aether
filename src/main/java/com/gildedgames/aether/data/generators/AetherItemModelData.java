@@ -162,9 +162,9 @@ public class AetherItemModelData extends AetherItemModelProvider
 
         item(AetherItems.VICTORY_MEDAL, "miscellaneous/");
 
-        item(AetherItems.BRONZE_DUNGEON_KEY, "miscellaneous/");
-        item(AetherItems.SILVER_DUNGEON_KEY, "miscellaneous/");
-        item(AetherItems.GOLD_DUNGEON_KEY, "miscellaneous/");
+        keyItem(AetherItems.BRONZE_DUNGEON_KEY, "miscellaneous/");
+        keyItem(AetherItems.SILVER_DUNGEON_KEY, "miscellaneous/");
+        keyItem(AetherItems.GOLD_DUNGEON_KEY, "miscellaneous/");
 
         item(AetherItems.SKYROOT_BUCKET, "miscellaneous/");
         item(AetherItems.SKYROOT_WATER_BUCKET, "miscellaneous/");
