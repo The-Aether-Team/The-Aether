@@ -1,6 +1,7 @@
 package com.gildedgames.aether.block;
 
 import com.gildedgames.aether.event.events.FreezeEvent;
+import com.gildedgames.aether.util.ConstantsUtil;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
@@ -11,8 +12,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
 public interface FreezingBehavior<T> {
-    int FLAG_SHELL = 1 | 2;
-    int FLAG_VOLUME = 2 | 16;
+    int FLAG_SHELL = ConstantsUtil.FLAG_BLOCK_UPDATE | ConstantsUtil.FLAG_CLIENT_CHANGE;
+    int FLAG_VOLUME = ConstantsUtil.FLAG_CLIENT_CHANGE | ConstantsUtil.FLAG_PREVENT_NEIGHBOR_UPDATE;
+
     default int freezeBlocks(Level worldIn, BlockPos origin, T source, float radius) {
         float radiusSq = radius * radius;
 
