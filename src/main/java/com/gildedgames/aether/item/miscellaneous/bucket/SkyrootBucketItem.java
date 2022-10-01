@@ -36,7 +36,7 @@ public class SkyrootBucketItem extends BucketItem {
     /**
      * Map of replacements for vanilla buckets to Skyroot buckets.
      */
-    public static Map<Supplier<Item>, Supplier<Item>> REPLACEMENTS = new HashMap<>();
+    public static final Map<Supplier<Item>, Supplier<Item>> REPLACEMENTS = new HashMap<>();
 
     /**
      * Sets up the possible replacements for vanilla buckets to Skyroot buckets.
