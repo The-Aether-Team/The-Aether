@@ -1,11 +1,14 @@
 package com.gildedgames.aether.data.providers;
 
+import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.api.registers.MoaType;
 import com.gildedgames.aether.recipe.BlockPropertyPair;
 import com.gildedgames.aether.recipe.BlockStateIngredient;
 import com.gildedgames.aether.recipe.builder.*;
 import com.gildedgames.aether.recipe.AetherRecipeSerializers;
 import com.gildedgames.aether.AetherTags;
+import com.gildedgames.aether.recipe.conditions.ConfigCondition;
+import net.minecraft.data.recipes.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
@@ -20,15 +23,11 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.common.Tags;
 
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.data.recipes.ShapelessRecipeBuilder;
-import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
-import net.minecraft.data.recipes.SingleItemRecipeBuilder;
-import net.minecraft.data.recipes.UpgradeRecipeBuilder;
 import net.minecraftforge.common.crafting.ConditionalRecipe;
+import net.minecraftforge.common.crafting.conditions.NotCondition;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public abstract class AetherRecipeProvider extends RecipeProvider
@@ -457,11 +456,18 @@ public abstract class AetherRecipeProvider extends RecipeProvider
         return BlockBanBuilder.recipe(BlockStateIngredient.of(ingredient), BlockStateIngredient.of(bypass), biome, AetherRecipeSerializers.BLOCK_PLACEMENT_BAN.get());
     }
 
-    public ConditionalRecipe.Builder conditional() {
-        return ConditionalRecipe.builder();
+    public ConditionalRecipe.Builder conditionalAccessoryFreezing(RecipeBuilder temporary, RecipeBuilder permanent) {
+        ConfigCondition configCondition = new ConfigCondition(AetherConfig.COMMON.temporary_ice_accessory_conversion);
+        return ConditionalRecipe.builder().addCondition(configCondition).addRecipe(ConditionalFinishedRecipe.create(temporary)).addCondition(new NotCondition(configCondition)).addRecipe(ConditionalFinishedRecipe.create(permanent));
     }
 
     protected BlockPropertyPair pair(Block resultBlock, Map<Property<?>, Comparable<?>> resultProperties) {
         return BlockPropertyPair.of(resultBlock, resultProperties);
+    }
+
+    protected interface ConditionalFinishedRecipe extends Consumer<Consumer<FinishedRecipe>> {
+        static ConditionalFinishedRecipe create(RecipeBuilder recipe) {
+            return recipe::save;
+        }
     }
 }

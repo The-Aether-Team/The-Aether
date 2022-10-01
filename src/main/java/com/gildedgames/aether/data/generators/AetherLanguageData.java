@@ -166,6 +166,8 @@ public class AetherLanguageData extends AetherLanguageProvider
 
         addBlock(AetherBlocks.SKYROOT_BED, "Skyroot Bed");
 
+        addBlock(AetherBlocks.UNSTABLE_OBSIDIAN, "Unstable Obsidian");
+
 
         addItem(AetherItems.SKYROOT_PICKAXE, "Skyroot Pickaxe");
         addItem(AetherItems.SKYROOT_AXE, "Skyroot Axe");

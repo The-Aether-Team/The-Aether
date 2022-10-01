@@ -32,7 +32,9 @@ public class AetherBlockTagData extends BlockTagsProvider
     @Override
     protected void addTags() {
         //aether
-        tag(AetherTags.Blocks.TREATED_AS_VANILLA_BLOCK).add(AetherBlocks.CHEST_MIMIC.get());
+        tag(AetherTags.Blocks.TREATED_AS_VANILLA_BLOCK).add(
+                AetherBlocks.CHEST_MIMIC.get(),
+                AetherBlocks.UNSTABLE_OBSIDIAN.get());
         tag(AetherTags.Blocks.AETHER_PORTAL_BLOCKS).add(Blocks.GLOWSTONE);
         tag(AetherTags.Blocks.AETHER_ISLAND_BLOCKS).add(
                 AetherBlocks.AETHER_DIRT.get(),
