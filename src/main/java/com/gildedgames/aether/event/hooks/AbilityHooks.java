@@ -9,6 +9,7 @@ import com.gildedgames.aether.item.accessories.abilities.ZaniteAccessory;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.item.tools.abilities.GravititeTool;
 import com.gildedgames.aether.item.tools.abilities.HolystoneTool;
+import com.gildedgames.aether.item.tools.abilities.ValkyrieTool;
 import com.gildedgames.aether.item.tools.abilities.ZaniteTool;
 import com.gildedgames.aether.loot.AetherLoot;
 import com.gildedgames.aether.AetherTags;
@@ -24,6 +25,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -39,6 +42,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
@@ -51,6 +55,7 @@ import net.minecraftforge.event.level.BlockEvent;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 public class AbilityHooks {
     public static class AccessoryHooks {
@@ -251,6 +256,67 @@ public class AbilityHooks {
                     }
                 }
             }
+        }
+
+        /**
+         * Checks if an entity is too far away for the player to be able to interact with if they're trying to interact using a hand that doesn't contain a {@link ValkyrieTool}, but are still holding a Valkyrie Tool in another hand.
+         * @param target The target {@link Entity} being interacted with.
+         * @param player The {@link Player} attempting to interact.
+         * @param hand The {@link InteractionHand} used to interact.
+         * @return Whether the player is too far to interact, as a {@link Boolean}.
+         */
+        public static boolean entityTooFar(Entity target, Player player, InteractionHand hand) {
+            ItemStack heldStack = player.getItemInHand(hand);
+            if (hasValkyrieItemInOneHand(player) && !(heldStack.getItem() instanceof ValkyrieTool)) {
+                UUID uuidForOppositeHand = hand == InteractionHand.MAIN_HAND ? ValkyrieTool.ATTACK_RANGE_MODIFIER_OFFHAND_UUID : ValkyrieTool.ATTACK_RANGE_MODIFIER_MAINHAND_UUID; // We're checking the hand being used to interact, which won't contain a Valkyrie Tool, so we must get the UUID of the opposite hand, which will contain a tool.
+                AttributeInstance attackRange = player.getAttribute(ForgeMod.ATTACK_RANGE.get());
+                if (attackRange != null) {
+                    AttributeModifier valkyrieModifier = attackRange.getModifier(uuidForOppositeHand);
+                    if (valkyrieModifier != null) {
+                        double totalRange = player.getAttackRange(); // Gets the total range from the modifier along with the bonus range granted by creative mode.
+                        double valkyrieRange = valkyrieModifier.getAmount();
+                        double baseRange = totalRange - valkyrieRange; // Whatever the normal range is, vanilla or modified, without the Valkyrie Tool modifier.
+                        return !player.isCloseEnough(target, baseRange); // Taken from IForgePlayer#canInteractWith(Entity, double), but reversed.
+                    }
+                }
+            }
+            return false;
+        }
+
+        /**
+         * Checks if a block is too far away for the player to be able to interact with if they're trying to interact using a hand that doesn't contain a {@link ValkyrieTool}, but are still holding a Valkyrie Tool in another hand.
+         * @param pos The target {@link BlockPos} of a block being interacted with.
+         * @param player The {@link Player} attempting to interact.
+         * @param hand The {@link InteractionHand} used to interact.
+         * @return Whether the player is too far to interact, as a {@link Boolean}.
+         */
+        public static boolean blockTooFar(BlockPos pos, Player player, InteractionHand hand) {
+            ItemStack heldStack = player.getItemInHand(hand);
+            if (hasValkyrieItemInOneHand(player) && !(heldStack.getItem() instanceof ValkyrieTool)) {
+                UUID uuidForOppositeHand = hand == InteractionHand.MAIN_HAND ? ValkyrieTool.REACH_DISTANCE_MODIFIER_OFFHAND_UUID : ValkyrieTool.REACH_DISTANCE_MODIFIER_MAINHAND_UUID; // We're checking the hand being used to interact, which won't contain a Valkyrie Tool, so we must get the UUID of the opposite hand, which will contain a tool.
+                AttributeInstance reachDistance = player.getAttribute(ForgeMod.REACH_DISTANCE.get());
+                if (reachDistance != null) {
+                    AttributeModifier valkyrieModifier = reachDistance.getModifier(uuidForOppositeHand);
+                    if (valkyrieModifier != null) {
+                        double totalReach = player.getReachDistance(); // Gets the total reach from the modifier along with the bonus range granted by creative mode.
+                        double valkyrieReach = valkyrieModifier.getAmount();
+                        double baseReach = totalReach - valkyrieReach; // Whatever the normal reach is, vanilla or modified, without the Valkyrie Tool modifier.
+                        return player.getEyePosition().distanceToSqr(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) > baseReach * baseReach; // Taken from IForgePlayer#canInteractWith(BlockPos, double), but reversed.
+                    }
+                }
+            }
+            return false;
+        }
+
+        /**
+         * Checks if the player is holding a {@link ValkyrieTool} in only one hand.
+         * @param player The {@link Player} holding the Valkyrie Tool.
+         * @return A {@link Boolean} of whether the player is holding a Valkyrie Tool in one hand.
+         */
+        private static boolean hasValkyrieItemInOneHand(Player player) {
+            ItemStack mainHandStack = player.getMainHandItem();
+            ItemStack offHandStack = player.getOffhandItem();
+            return (mainHandStack.getItem() instanceof ValkyrieTool && !(offHandStack.getItem() instanceof ValkyrieTool)) || (offHandStack.getItem() instanceof ValkyrieTool && !(mainHandStack.getItem() instanceof ValkyrieTool));
         }
     }
 
