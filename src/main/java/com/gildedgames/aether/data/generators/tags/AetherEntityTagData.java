@@ -45,6 +45,9 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
         tag(AetherTags.Entities.NO_AMBROSIUM_DROPS).add(EntityType.PLAYER);
         tag(AetherTags.Entities.UNLAUNCHABLE);
         tag(AetherTags.Entities.NO_CANDY_CANE_DROPS).add(EntityType.PLAYER);
+        tag(AetherTags.Entities.NO_HAMMER_KNOCKBACK).add(
+                AetherEntityTypes.SLIDER.get(),
+                AetherEntityTypes.SUN_SPIRIT.get());
         tag(AetherTags.Entities.DEFLECTABLE_PROJECTILES).addTag(EntityTypeTags.ARROWS).add(
                 EntityType.EGG,
                 EntityType.SMALL_FIREBALL,
