@@ -47,14 +47,23 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
             FluidState fluidState = level.getFluidState(pos);
             for (Recipe<?> recipe : level.getRecipeManager().getAllRecipesFor(AetherRecipeTypes.ACCESSORY_FREEZABLE.get())) {
                 if (recipe instanceof AccessoryFreezableRecipe freezableRecipe) {
-                    if (!fluidState.isEmpty() && fluidState.createLegacyBlock() != oldBlockState) {
+                    if (!fluidState.isEmpty() && fluidState.createLegacyBlock() != oldBlockState && oldBlockState.hasProperty(BlockStateProperties.WATERLOGGED)) {
                         if (freezableRecipe.matches(level, pos, fluidState.createLegacyBlock())) {
                             level.setBlock(pos, oldBlockState.setValue(BlockStateProperties.WATERLOGGED, false), flag);
                         }
                     } else {
-                        if (freezableRecipe.matches(level, pos, oldBlockState)) {
-                            BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                            return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, source, flag);
+                        if (oldBlockState.getFluidState().isEmpty()) {
+                            if (freezableRecipe.matches(level, pos, oldBlockState)) {
+                                BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
+                                return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, source, flag);
+                            }
+                        } else {
+                            oldBlockState = oldBlockState.getFluidState().createLegacyBlock();
+                            if (freezableRecipe.matches(level, pos, oldBlockState)) {
+                                level.destroyBlock(pos, true);
+                                BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
+                                return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, source, flag);
+                            }
                         }
                     }
                 }

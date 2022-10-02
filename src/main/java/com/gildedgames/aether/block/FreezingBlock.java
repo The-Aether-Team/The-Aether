@@ -31,7 +31,7 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
             BlockState oldBlockState = level.getBlockState(pos);
             Block oldBlock = oldBlockState.getBlock();
             FluidState fluidState = level.getFluidState(pos);
-            if (!fluidState.isEmpty() && oldBlockState == source) {
+            if (!fluidState.isEmpty() && oldBlockState == source && oldBlockState.hasProperty(BlockStateProperties.WATERLOGGED)) {
                 BlockState fluidBlockState = fluidState.createLegacyBlock();
                 Block fluidBlock = fluidBlockState.getBlock();
                 BlockPropertyPair pair = matchesCache(fluidBlock, fluidBlockState);
@@ -42,12 +42,25 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
                     }
                 }
             } else {
-                BlockPropertyPair pair = matchesCache(oldBlock, oldBlockState);
-                if (pair != null) {
-                    IcestoneFreezableRecipe freezableRecipe = cachedBlocks.get(oldBlock, pair);
-                    if (freezableRecipe != null) {
-                        BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                        return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, source, flag);
+                if (oldBlockState.getFluidState().isEmpty()) {
+                    BlockPropertyPair pair = matchesCache(oldBlock, oldBlockState);
+                    if (pair != null) {
+                        IcestoneFreezableRecipe freezableRecipe = cachedBlocks.get(oldBlock, pair);
+                        if (freezableRecipe != null) {
+                            BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
+                            return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, source, flag);
+                        }
+                    }
+                } else {
+                    oldBlockState = oldBlockState.getFluidState().createLegacyBlock();
+                    BlockPropertyPair pair = matchesCache(oldBlock, oldBlockState);
+                    if (pair != null) {
+                        IcestoneFreezableRecipe freezableRecipe = cachedBlocks.get(oldBlock, pair);
+                        if (freezableRecipe != null) {
+                            level.destroyBlock(pos, true);
+                            BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
+                            return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, source, flag);
+                        }
                     }
                 }
             }
