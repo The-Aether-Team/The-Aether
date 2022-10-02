@@ -1,6 +1,5 @@
 package com.gildedgames.aether.block;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.event.events.FreezeEvent;
 import com.gildedgames.aether.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
@@ -21,29 +20,13 @@ import net.minecraft.world.level.material.FluidState;
 import java.util.*;
 
 public interface FreezingBlock extends FreezingBehavior<BlockState> {
-    Table<Block, BlockPropertyPair, IcestoneFreezableRecipe> cachedBlocks = HashBasedTable.create();
     // This magic number comes from b1.7.3 code that checks if the Euclidean distance of a coordinate exceeds 8 for a spherical function
     float SQRT_8 = Mth.sqrt(8);
 
-    default int freezeBlocks(Level worldIn, BlockPos origin, BlockState source, float radius) {
-        return FreezingBehavior.super.freezeBlocks(worldIn, origin, source, radius);
-    }
-
-    static void cacheRecipes(Level level) {
-        if (FreezingBlock.cachedBlocks.isEmpty()) {
-            for (Recipe<?> recipe : level.getRecipeManager().getAllRecipesFor(AetherRecipeTypes.ICESTONE_FREEZABLE.get())) {
-                if (recipe instanceof IcestoneFreezableRecipe freezableRecipe) {
-                    BlockPropertyPair[] pairs = freezableRecipe.getIngredient().getPairs();
-                    if (pairs != null) {
-                        Arrays.stream(pairs).forEach(pair -> cachedBlocks.put(pair.block(), pair, freezableRecipe));
-                    }
-                }
-            }
-        }
-    }
+    Table<Block, BlockPropertyPair, IcestoneFreezableRecipe> cachedBlocks = HashBasedTable.create();
 
     @Override
-    default int freezeFromRecipe(Level level, BlockState source, BlockPos pos, int flag) {
+    default int freezeFromRecipe(Level level, BlockPos pos, BlockState source, int flag) {
         if (!level.isClientSide()) {
             BlockState oldBlockState = level.getBlockState(pos);
             Block oldBlock = oldBlockState.getBlock();
@@ -64,12 +47,30 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
                     IcestoneFreezableRecipe freezableRecipe = cachedBlocks.get(oldBlock, pair);
                     if (freezableRecipe != null) {
                         BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                        return this.freezeBlockAt(level, source, oldBlockState, newBlockState, pos, flag);
+                        return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, source, flag);
                     }
                 }
             }
         }
         return 0;
+    }
+
+    @Override
+    default FreezeEvent onFreeze(LevelAccessor level, BlockPos pos, BlockState oldBlockState, BlockState newBlockState, BlockState source) {
+        return AetherEventDispatch.onBlockFreezeFluid(level, pos, oldBlockState, newBlockState, source);
+    }
+
+    static void cacheRecipes(Level level) {
+        if (FreezingBlock.cachedBlocks.isEmpty()) {
+            for (Recipe<?> recipe : level.getRecipeManager().getAllRecipesFor(AetherRecipeTypes.ICESTONE_FREEZABLE.get())) {
+                if (recipe instanceof IcestoneFreezableRecipe freezableRecipe) {
+                    BlockPropertyPair[] pairs = freezableRecipe.getIngredient().getPairs();
+                    if (pairs != null) {
+                        Arrays.stream(pairs).forEach(pair -> cachedBlocks.put(pair.block(), pair, freezableRecipe));
+                    }
+                }
+            }
+        }
     }
 
     static BlockPropertyPair matchesCache(Block block, BlockState blockState) {
@@ -83,10 +84,5 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
             return pair;
         }
         return null;
-    }
-
-    @Override
-    default FreezeEvent onFreeze(LevelAccessor world, BlockPos pos, BlockState fluidState, BlockState blockState, BlockState source) {
-        return AetherEventDispatch.onBlockFreezeFluid(world, pos, fluidState, blockState, source);
     }
 }

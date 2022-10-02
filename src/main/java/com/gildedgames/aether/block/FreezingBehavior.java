@@ -12,52 +12,102 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
 public interface FreezingBehavior<T> {
+    /**
+     * Cause a block update and send this change to the client.
+     */
     int FLAG_SHELL = ConstantsUtil.FLAG_BLOCK_UPDATE | ConstantsUtil.FLAG_CLIENT_CHANGE;
+    /**
+     * Send this change to the client and prevent any block updates from neighboring blocks.
+     */
     int FLAG_VOLUME = ConstantsUtil.FLAG_CLIENT_CHANGE | ConstantsUtil.FLAG_PREVENT_NEIGHBOR_UPDATE;
 
-    default int freezeBlocks(Level worldIn, BlockPos origin, T source, float radius) {
+    /**
+     * Loops over the area of the positive quarter of a circle, then freezes blocks within that quarter along with the 3 quarters using {@link FreezingBehavior#quarters(Level, BlockPos, int, int, int, Object, int)}.<br><br>
+     * Note 1: All 1/4 sections (quarters) of a circle are symmetrical, which is why only one quarter needs to be looped over, and the x and z positions gotten from the loop can be used to freeze in the other 3 quarters safely.<br><br>
+     * Note 2: This is also modified to work with a sphere by looping through the positive area in its space (the +x,+y,+z octant), but freezing blocks in both positive and negative y positions relative from the origin.<br><br>
+     * <a href="https://www.desmos.com/calculator/psqynhk21k">Relevant math showcasing quarters of circles can be found here.</a><br><br>
+     * The loop also checks whether the block being frozen was the first block in the loop iteration, meaning the outermost block,
+     * because the loop for each coordinate starts at the radius (as far away from the center as possible) and decreases (moves inwards towards the center).
+     * It does this so that it can separate what update flags are used for the freezing depending on whether a block was at the exterior (see: {@link FreezingBehavior#FLAG_SHELL}) or at the interior (see: {@link FreezingBehavior#FLAG_VOLUME}),
+     * to minimize the amount of block updates caused.
+     * @param level The {@link Level} to perform the freezing in.
+     * @param origin The origin {@link BlockPos}; the center of the circle.
+     * @param source The source causing the freezing, which is accepted as {@link T}.
+     * @param radius The radius of the circle/sphere as a {@link Float}.
+     * @return An {@link Integer} added up from the blocks being frozen, with +1 corresponding to every successfully frozen block.
+     */
+    default int freezeBlocks(Level level, BlockPos origin, T source, float radius) {
         float radiusSq = radius * radius;
 
         int blocksFrozen = 0;
 
-        // This loop may be configured weird but this guarantees fully unique
-        // placement positions while only updating the shell of its volume
         for (int x = (int) radius; x >= 0; x--) {
-            boolean firstXZ = true;
 
+            boolean firstXZ = true; // Reset every time the x iteration changes.
             for (int z = (int) radius; z >= 0; z--) {
                 int xzLengthSq = x * x + z * z;
 
-                if (xzLengthSq > radiusSq) continue;
+                if (xzLengthSq > radiusSq) continue; // Restarts the loop at the next iteration, skipping the following code. This ensures freezing never occurs beyond the radius.
 
-                blocksFrozen += this.quarters(worldIn, source, origin, x, 0, z, firstXZ ? FLAG_SHELL : FLAG_VOLUME);
+                blocksFrozen += this.quarters(level, origin, x, 0, z, source, firstXZ ? FLAG_SHELL : FLAG_VOLUME); // Only places along the center-most y region (at 0), meaning this will only freeze within a circle.
                 firstXZ = false;
 
-                boolean firstY = true;
-                for (int y = (int) radius; y >= 0; y--) {
+                boolean firstY = true; // Reset every time the z iteration changes, or the x iteration changes causing the z iterations to restart.
+                for (int y = (int) radius; y >= 0; y--) { // Responsible for freezing the rest of the blocks, forming the sphere shape, in addition to the circle frozen at y=0.
 
-                    if (xzLengthSq + y * y > radiusSq) continue;
+                    if (xzLengthSq + y * y > radiusSq) continue; // Restarts the loop at the next iteration, skipping the following code. This ensures freezing never occurs beyond the radius.
 
                     int placementFlag = firstY ? FLAG_SHELL : FLAG_VOLUME;
-                    blocksFrozen += this.quarters(worldIn, source, origin, x, y, z, placementFlag);
-                    blocksFrozen += this.quarters(worldIn, source, origin, x, -y, z, placementFlag);
+                    blocksFrozen += this.quarters(level, origin, x, y, z, source, placementFlag); // Place in positive space
+                    blocksFrozen += this.quarters(level, origin, x, -y, z, source, placementFlag); // Place in negative space
                     firstY = false;
                 }
             }
         }
 
-        // Update the center too
-        return this.freezeFromRecipe(worldIn, source, origin, FLAG_SHELL) + blocksFrozen;
+        // Update the center manually too
+        return this.freezeFromRecipe(level, origin, source, FLAG_SHELL) + blocksFrozen;
     }
 
-    private int quarters(Level worldIn, T source, BlockPos origin, int dX, int dY, int dZ, int flag) {
-        return this.freezeFromRecipe(worldIn, source, origin.offset(dX, dY, dZ), flag)
-                + this.freezeFromRecipe(worldIn, source, origin.offset(-dZ, dY, dX), flag)
-                + this.freezeFromRecipe(worldIn, source, origin.offset(-dX, dY, -dZ), flag)
-                + this.freezeFromRecipe(worldIn, source, origin.offset(dZ, dY, -dX), flag);
+    /**
+     * Freezes a block in all four quarters/quadrants of a circle (+x,+z; +x,-z; -x,+z; -x,-z), offset equally from the origin by the given x and z parameters.
+     * @param level The {@link Level} to perform the freezing in.
+     * @param origin The origin {@link BlockPos}; the center of the circle.
+     * @param dX The x {@link Integer} offset from the center of the circle.
+     * @param dY The y {@link Integer} offset from the center of the circle.
+     * @param dZ The z {@link Integer} offset from the center of the circle.
+     * @param source The source causing the freezing, which is accepted as {@link T}.
+     * @param flag The flag to use for block placement when freezing.
+     * @return An {@link Integer} added up from the blocks being frozen. See {@link FreezingBehavior#freezeFromRecipe(Level, BlockPos, Object, int)}.
+     */
+    private int quarters(Level level, BlockPos origin, int dX, int dY, int dZ, T source, int flag) {
+        return this.freezeFromRecipe(level, origin.offset(dX, dY, dZ), source, flag)
+                + this.freezeFromRecipe(level, origin.offset(-dZ, dY, dX), source, flag)
+                + this.freezeFromRecipe(level, origin.offset(-dX, dY, -dZ), source, flag)
+                + this.freezeFromRecipe(level, origin.offset(dZ, dY, -dX), source, flag);
     }
 
-    default int freezeBlockAt(Level level, T source, BlockState oldBlockState, BlockState newBlockState, BlockPos pos, int flag) {
+    /**
+     * Handles pre-block modification freezing behavior, should be used by subclasses for recipe and source-specific code.
+     * @param level The {@link Level} to perform the freezing in.
+     * @param pos The {@link BlockPos} to freeze at.
+     * @param source The source causing the freezing, which is accepted as {@link T}.
+     * @param flag The {@link Integer} placement flag.
+     * @return An {@link Integer} added up from the blocks being frozen. See {@link FreezingBehavior#freezeBlockAt(Level, BlockPos, BlockState, BlockState, Object, int)}.
+     */
+    int freezeFromRecipe(Level level, BlockPos pos, T source, int flag);
+
+    /**
+     * Freezes (sets) a block at a position if the {@link FreezeEvent} isn't cancelled. Also schedules a tick if the block can randomly tick, and plays a lava extinguishing sound if the old block is in the {@link FluidTags#LAVA} tag.
+     * @param level The {@link Level} to perform the freezing in.
+     * @param pos The {@link BlockPos} to freeze at.
+     * @param oldBlockState The original {@link BlockState} being frozen.
+     * @param newBlockState The new {@link BlockState} to freeze into.
+     * @param source The source causing the freezing, which is accepted as {@link T}.
+     * @param flag The {@link Integer} placement flag.
+     * @return An {@link Integer} 0 if the block failed to freeze or 1 if it succeeded
+     */
+    default int freezeBlockAt(Level level, BlockPos pos, BlockState oldBlockState, BlockState newBlockState, T source, int flag) {
         FreezeEvent event = this.onFreeze(level, pos, oldBlockState, newBlockState, source);
         if (!event.isCanceled()) {
             level.setBlock(pos, newBlockState, flag);
@@ -72,7 +122,14 @@ public interface FreezingBehavior<T> {
         return 0;
     }
 
-    int freezeFromRecipe(Level level, T source, BlockPos pos, int flag);
-
-    FreezeEvent onFreeze(LevelAccessor world, BlockPos pos, BlockState fluidState, BlockState blockState, T source);
+    /**
+     * Event hook call for freezing blocks, used by subclasses.
+     * @param level The {@link Level} to perform the freezing in.
+     * @param pos The {@link BlockPos} to freeze at.
+     * @param oldBlockState The original {@link BlockState} being frozen.
+     * @param newBlockState The new {@link BlockState} to freeze into.
+     * @param source The source causing the freezing, which is accepted as {@link T}.
+     * @return The {@link FreezeEvent} for this behavior.
+     */
+    FreezeEvent onFreeze(LevelAccessor level, BlockPos pos, BlockState oldBlockState, BlockState newBlockState, T source);
 }

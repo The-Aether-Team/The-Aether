@@ -41,7 +41,7 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
      * @return An {@link Integer} 1 if a block was successfully frozen, or a 0 if it wasn't.
      */
     @Override
-    default int freezeFromRecipe(Level level, ItemStack source, BlockPos pos, int flag) {
+    default int freezeFromRecipe(Level level, BlockPos pos, ItemStack source, int flag) {
         if (!level.isClientSide()) {
             BlockState oldBlockState = level.getBlockState(pos);
             FluidState fluidState = level.getFluidState(pos);
@@ -54,7 +54,7 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
                     } else {
                         if (freezableRecipe.matches(level, pos, oldBlockState)) {
                             BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                            return this.freezeBlockAt(level, source, oldBlockState, newBlockState, pos, flag);
+                            return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, source, flag);
                         }
                     }
                 }
@@ -64,7 +64,7 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
     }
 
     @Override
-    default FreezeEvent onFreeze(LevelAccessor world, BlockPos pos, BlockState fluidState, BlockState blockState, ItemStack source) {
-        return AetherEventDispatch.onItemFreezeFluid(world, pos, fluidState, blockState, source);
+    default FreezeEvent onFreeze(LevelAccessor level, BlockPos pos, BlockState oldBlockState, BlockState newBlockState, ItemStack source) {
+        return AetherEventDispatch.onItemFreezeFluid(level, pos, oldBlockState, newBlockState, source);
     }
 }
