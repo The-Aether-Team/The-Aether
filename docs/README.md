@@ -110,7 +110,7 @@ The Aether is available in these languages thanks to the following contributors:
 | Chinese Traditional* | (zh_tw) | y830705                                                     |
 | Dutch*               | (nl_nl) | Critical                                                    |
 | French*              | (fr_fr) | lololoustau, Beethov46, Aethyus                             |
-| German*              | (de_de) | DarkBread                                                   |
+| German*              | (de_de) | ?                                                           |
 | Indonesian*          | (id_id) | F640                                                        |
 | Italian*             | (it_it) | ?                                                           |
 | Japanese*            | (ja_jp) | baguchan                                                    |
