@@ -13,4 +13,6 @@ public class AetherStructureProcessors {
     public static final DeferredRegister<StructureProcessorType<?>> STRUCTURE_PROCESSOR_TYPES = DeferredRegister.create(Registry.STRUCTURE_PROCESSOR_REGISTRY, Aether.MODID);
 
     public static final RegistryObject<StructureProcessorType<DungeonStoneProcessor>> DUNGEON_STONE_REPLACE = STRUCTURE_PROCESSOR_TYPES.register("dungeon_stone_replace", () -> () -> DungeonStoneProcessor.CODEC);
+
+    public static final RegistryObject<StructureProcessorType<NoReplaceProcessor>> NO_REPLACE = STRUCTURE_PROCESSOR_TYPES.register("no_replace", () -> () -> NoReplaceProcessor.CODEC);
 }

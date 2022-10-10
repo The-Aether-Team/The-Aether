@@ -51,9 +51,9 @@ public class AetherNoiseBuilders {
         return SurfaceRules.state(block);
     }
 
-    /** [VANILLA COPY]
-     * Below is all based off of NoiseRouterData
-     * @link NoiseRouterData
+    /**
+     * Everything below is based off of NoiseRouterData
+     * @see NoiseRouterData
      */
     public static NoiseRouter makeNoiseRouter() {
         DensityFunction finalDensity = buildFinalDensity();
@@ -61,7 +61,8 @@ public class AetherNoiseBuilders {
     }
 
     private static DensityFunction buildFinalDensity() {
-        DensityFunction density = getFunction(createKey("end/base_3d_noise"));
+        DensityFunction density = getFunction(createKey("overworld/base_3d_noise"));
+        density = DensityFunctions.mul(density, DensityFunctions.noise(getNoise(Noises.JAGGED), 3, 1));
         density = buildSlide(density, 0, 128, 72, -184, -23.4375D, 4, 32, -0.234375D);
         density = DensityFunctions.blendDensity(density);
         return DensityFunctions.mul(DensityFunctions.interpolated(density), DensityFunctions.constant(0.64D)).squeeze();
@@ -101,8 +102,8 @@ public class AetherNoiseBuilders {
         return new DensityFunctions.HolderHolder(BuiltinRegistries.DENSITY_FUNCTION.getHolderOrThrow(p_224466_));
     }
 
-    private static Holder<NormalNoise.NoiseParameters> getNoise(ResourceKey<NormalNoise.NoiseParameters> p_209543_) {
-        return BuiltinRegistries.NOISE.getHolderOrThrow(p_209543_);
+    private static Holder<NormalNoise.NoiseParameters> getNoise(ResourceKey<NormalNoise.NoiseParameters> noiseKey) {
+        return BuiltinRegistries.NOISE.getHolderOrThrow(noiseKey);
     }
 
     private static ResourceKey<DensityFunction> createKey(String pLocation) {
