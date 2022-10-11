@@ -1,5 +1,6 @@
 package com.gildedgames.aether.event.listeners.abilities;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.event.hooks.AbilityHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -18,7 +19,7 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = Aether.MODID)
 public class ToolAbilityListener {
     /**
      * @see AbilityHooks.ToolHooks#setupToolActions(LevelAccessor, BlockPos, BlockState, ToolAction)

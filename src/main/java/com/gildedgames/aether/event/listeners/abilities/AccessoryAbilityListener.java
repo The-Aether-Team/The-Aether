@@ -1,5 +1,6 @@
 package com.gildedgames.aether.event.listeners.abilities;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.event.hooks.AbilityHooks;
 import com.gildedgames.aether.item.accessories.abilities.ShieldOfRepulsionAccessory;
 import com.gildedgames.aether.util.EquipmentUtil;
@@ -15,7 +16,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = Aether.MODID)
 public class AccessoryAbilityListener {
     /**
      * @see AbilityHooks.AccessoryHooks#damageGloves(DamageSource)

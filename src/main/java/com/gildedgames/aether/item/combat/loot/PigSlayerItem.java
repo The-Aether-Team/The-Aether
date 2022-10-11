@@ -1,5 +1,6 @@
 package com.gildedgames.aether.item.combat.loot;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.combat.AetherItemTiers;
 import com.gildedgames.aether.item.AetherItems;
@@ -25,7 +26,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = Aether.MODID)
 public class PigSlayerItem extends SwordItem {
 	public PigSlayerItem() {
 		super(AetherItemTiers.PIG_SLAYER, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));

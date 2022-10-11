@@ -1,5 +1,6 @@
 package com.gildedgames.aether.event.listeners.abilities;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.event.hooks.AbilityHooks;
 import com.gildedgames.aether.item.combat.abilities.armor.*;
 import net.minecraft.world.damagesource.DamageSource;
@@ -10,7 +11,7 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = Aether.MODID)
 public class ArmorAbilityListener {
     /**
      * @see ValkyrieArmor#handleFlight(LivingEntity)

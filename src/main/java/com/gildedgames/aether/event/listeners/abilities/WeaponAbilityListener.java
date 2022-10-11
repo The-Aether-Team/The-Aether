@@ -1,5 +1,6 @@
 package com.gildedgames.aether.event.listeners.abilities;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.event.hooks.AbilityHooks;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -13,7 +14,7 @@ import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = Aether.MODID)
 public class WeaponAbilityListener {
     /**
      * @see AbilityHooks.WeaponHooks#stickDart(LivingEntity, DamageSource)

@@ -1,5 +1,6 @@
 package com.gildedgames.aether.item.combat;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.combat.abilities.weapon.SkyrootWeapon;
@@ -19,7 +20,7 @@ import net.minecraftforge.fml.common.Mod;
 import javax.annotation.Nullable;
 import java.util.Collection;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = Aether.MODID)
 public class SkyrootSwordItem extends SwordItem implements SkyrootWeapon {
     public SkyrootSwordItem() {
         super(AetherItemTiers.SKYROOT, 3, -2.4F, new Item.Properties().tab(AetherItemGroups.AETHER_WEAPONS));
