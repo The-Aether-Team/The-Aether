@@ -107,9 +107,9 @@ public class HammerProjectile extends ThrowableProjectile {
     private void launchTarget(Entity target) {
         if (target != this.getOwner()) {
             if (this.getOwner() == null || target != this.getOwner().getVehicle()) {
-                if (!target.getType().is(AetherTags.Entities.NO_HAMMER_KNOCKBACK)) {
-                    target.hurt(DamageSource.thrown(this, this.getOwner()), 5);
-                    target.push(this.getDeltaMovement().x, 0.6, this.getDeltaMovement().z);
+                if (target instanceof LivingEntity livingEntity) {
+                    livingEntity.hurt(DamageSource.thrown(this, this.getOwner()), 5);
+                    livingEntity.push(this.getDeltaMovement().x, 0.6, this.getDeltaMovement().z);
                 }
             }
         }
