@@ -43,14 +43,14 @@ body:
     id: forge-ver
     attributes:
       label: Forge Version
-      description: What version of Forge are you running? This can be found on the installation jar you have downloaded, in the Mod Options menu, or the profile's version. Please note "latest" is NOT a version. *If you are reporting a bug that exists only on the Fabric port, please report it **[here](https://github.com/TeamTwilight/twilightforest-fabric/issues)** instead.*
+      description: What version of Forge are you running? This can be found on the installation jar you have downloaded, in the Mod Options menu, or the profile's version. Please note "latest" is NOT a version.
       placeholder: "39.0.0"
     validations:
       required: true
   - type: input
     id: aether-ver
     attributes:
-      label: The Aether 1 Version
+      label: The Aether Version
       description: What version of The Aether are you running? This can be found on the jar file you have downloaded or the Mod Options menu. Please note "latest" is NOT a version.
       placeholder: "1.1.1"
     validations:
