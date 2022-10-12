@@ -170,7 +170,7 @@ jar.finalizedBy('reobfJar')
 reobf.create('jarJar')
 
 def reobfFile = file("$buildDir/reobfJar/output.jar")
-def reobfArtifact = artifacts.add('default', reobfFile) {
+def jar = artifacts.add('default', reobfFile) {
     type 'jar'
     builtBy 'reobfJar'
 }
