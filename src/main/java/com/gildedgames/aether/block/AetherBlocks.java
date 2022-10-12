@@ -3,6 +3,7 @@ package com.gildedgames.aether.block;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.construction.*;
 import com.gildedgames.aether.block.dungeon.*;
+import com.gildedgames.aether.block.miscellaneous.UnstableObsidianBlock;
 import com.gildedgames.aether.blockentity.ChestMimicBlockEntity;
 import com.gildedgames.aether.blockentity.SkyrootBedBlockEntity;
 import com.gildedgames.aether.blockentity.TreasureChestBlockEntity;
@@ -224,6 +225,8 @@ public class AetherBlocks
     public static final RegistryObject<Block> SKYROOT_BOOKSHELF = register("skyroot_bookshelf", () -> new BookshelfBlock(Block.Properties.copy(Blocks.BOOKSHELF)));
 
     public static final RegistryObject<BedBlock> SKYROOT_BED = register("skyroot_bed", () -> new SkyrootBedBlock(Block.Properties.copy(Blocks.CYAN_BED)));
+
+    public static final RegistryObject<Block> UNSTABLE_OBSIDIAN = BLOCKS.register("unstable_obsidian", () -> new UnstableObsidianBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).randomTicks().requiresCorrectToolForDrops().strength(50.0F, 1200.0F)));
 
     public static void registerPots() {
         FlowerPotBlock pot = (FlowerPotBlock) Blocks.FLOWER_POT;

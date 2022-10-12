@@ -4,8 +4,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.sounds.SoundEvents;
 
-public class GoldGlovesItem extends GlovesItem
-{
+public class GoldGlovesItem extends GlovesItem {
     public GoldGlovesItem(double punchDamage, Properties properties) {
         super(punchDamage, "gold_gloves", () -> SoundEvents.ARMOR_EQUIP_GOLD, properties);
     }

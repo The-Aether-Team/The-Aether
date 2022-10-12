@@ -182,6 +182,8 @@ public class AetherBlockLootData extends AetherBlockLootProvider {
 
         this.add(AetherBlocks.SKYROOT_BED.get(),
                 (bed) -> createSinglePropConditionTable(bed, BedBlock.PART, BedPart.HEAD));
+
+        this.dropNone(AetherBlocks.UNSTABLE_OBSIDIAN);
     }
 
     @Nonnull

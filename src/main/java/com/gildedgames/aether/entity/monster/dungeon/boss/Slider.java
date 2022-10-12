@@ -490,6 +490,11 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
     }
 
     @Override
+    public void push(double x, double y, double z) {
+
+    }
+
+    @Override
     public boolean ignoreExplosion() {
         return true;
     }

@@ -14,6 +14,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
 import javax.annotation.Nonnull;
+import java.util.Optional;
 
 public class EnchantedDartLayer<T extends LivingEntity, M extends PlayerModel<T>> extends AbstractDartLayer<T, M> {
     public EnchantedDartLayer(EntityRenderDispatcher renderDispatcher, LivingEntityRenderer<T, M> renderer) {
@@ -22,12 +23,13 @@ public class EnchantedDartLayer<T extends LivingEntity, M extends PlayerModel<T>
 
     @Override
     protected int numStuck(@Nonnull T entity) {
-        if (entity instanceof Player) {
-            AetherPlayer aetherPlayer = AetherPlayer.get((Player) entity).orElse(null);
-            return aetherPlayer.getEnchantedDartCount();
-        } else {
-            return 0;
+        if (entity instanceof Player player) {
+            Optional<AetherPlayer> aetherPlayerOptional = AetherPlayer.get(player).resolve();
+            if (aetherPlayerOptional.isPresent()) {
+                return aetherPlayerOptional.get().getEnchantedDartCount();
+            }
         }
+        return 0;
     }
 
     @Override

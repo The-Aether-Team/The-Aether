@@ -13,7 +13,6 @@ import net.minecraft.world.item.SolidBucketItem;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.Block;
 
-import javax.annotation.Nonnull;
 import java.util.Map;
 
 public class SkyrootSolidBucketItem extends SolidBucketItem {
@@ -21,23 +20,49 @@ public class SkyrootSolidBucketItem extends SolidBucketItem {
         super(block, placeSound, properties);
     }
 
-    @Nonnull
+    /**
+     * Sets the bucket after usage to a Skyroot Bucket. Otherwise behavior is the same as {@link SolidBucketItem}.
+     * @param context The {@link UseOnContext} of the usage interaction.
+     * @return The super {@link InteractionResult}.
+     */
     @Override
-    public InteractionResult useOn(@Nonnull UseOnContext context) {
-        InteractionResult interactionresult = super.useOn(context);
+    public InteractionResult useOn(UseOnContext context) {
+        InteractionResult interactionResult = super.useOn(context);
         Player player = context.getPlayer();
-        if (interactionresult.consumesAction() && player != null && !player.isCreative()) {
-            InteractionHand interactionhand = context.getHand();
-            player.setItemInHand(interactionhand, AetherItems.SKYROOT_BUCKET.get().getDefaultInstance());
+        if (interactionResult.consumesAction() && player != null && !player.isCreative()) {
+            InteractionHand interactionHand = context.getHand();
+            player.setItemInHand(interactionHand, new ItemStack(AetherItems.SKYROOT_BUCKET.get()));
         }
-        return interactionresult;
+        return interactionResult;
     }
 
-    public void fillItemCategory(@Nonnull CreativeModeTab category, @Nonnull NonNullList<ItemStack> items) {
+    /**
+     * Normally, anything extending {@link net.minecraft.world.item.BlockItem} calls {@link Block#fillItemCategory(CreativeModeTab, NonNullList)} for this,
+     * meaning in the creative tab it'll fill whatever item corresponds to the block in the registry, and not this item itself. So, we override that and instead perform the
+     * default behavior for adding an item to a creative tab (as seen in {@link Item#fillItemCategory(CreativeModeTab, NonNullList)}) so that it doesn't conflict with vanilla solid bucket items (like the Powder Snow Bucket).
+     * @param category The {@link CreativeModeTab} the item is trying to be added to.
+     * @param items The {@link NonNullList} for all the items that have been added to the tabs.
+     */
+    @Override
+    public void fillItemCategory(CreativeModeTab category, NonNullList<ItemStack> items) {
         if (this.allowedIn(category)) {
             items.add(new ItemStack(this));
         }
     }
 
-    public void registerBlocks(@Nonnull Map<Block, Item> blockToItemMap, @Nonnull Item item) { }
+    /**
+     * This is used to pair a {@link net.minecraft.world.item.BlockItem} to a block, which we don't want to do because we don't want to pair our solid bucket items in place of vanilla's.
+     * @param blockToItemMap The {@link Map} pairing {@link Block}s to {@link Item}s.
+     * @param item The {@link Item} to register.
+     */
+    @Override
+    public void registerBlocks(Map<Block, Item> blockToItemMap, Item item) { }
+
+    /**
+     * We don't register to the map, so we also don't allow removing from it. See {@link SkyrootSolidBucketItem#registerBlocks(Map, Item)}.
+     * @param blockToItemMap The {@link Map} pairing {@link Block}s to {@link Item}s.
+     * @param item The {@link Item} to register.
+     */
+    @Override
+    public void removeFromBlockToItemMap(Map<Block, Item> blockToItemMap, Item item) { }
 }

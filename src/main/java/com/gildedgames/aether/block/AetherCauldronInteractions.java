@@ -24,8 +24,15 @@ public class AetherCauldronInteractions
     public static final CauldronInteraction FILL_WATER = (p_175683_, p_175684_, p_175685_, p_175686_, p_175687_, p_175688_) ->
             emptySkyrootBucket(p_175684_, p_175685_, p_175686_, p_175687_, p_175688_, Blocks.WATER_CAULDRON.defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, 3), SoundEvents.BUCKET_EMPTY);
 
+    public static final CauldronInteraction FILL_POWDER_SNOW = (p_175669_, p_175670_, p_175671_, p_175672_, p_175673_, p_175674_) ->
+            emptySkyrootBucket(p_175670_, p_175671_, p_175672_, p_175673_, p_175674_, Blocks.POWDER_SNOW_CAULDRON.defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, 3), SoundEvents.BUCKET_EMPTY_POWDER_SNOW);
+
     public static final CauldronInteraction EMPTY_WATER = (p_175725_, p_175726_, p_175727_, p_175728_, p_175729_, p_175730_) ->
             CauldronInteraction.fillBucket(p_175725_, p_175726_, p_175727_, p_175728_, p_175729_, p_175730_, new ItemStack(AetherItems.SKYROOT_WATER_BUCKET.get()), (p_175660_) ->
+                    p_175660_.getValue(LayeredCauldronBlock.LEVEL) == 3, SoundEvents.BUCKET_FILL);
+
+    public static final CauldronInteraction EMPTY_POWDER_SNOW = (p_175725_, p_175726_, p_175727_, p_175728_, p_175729_, p_175730_) ->
+            CauldronInteraction.fillBucket(p_175725_, p_175726_, p_175727_, p_175728_, p_175729_, p_175730_, new ItemStack(AetherItems.SKYROOT_POWDER_SNOW_BUCKET.get()), (p_175660_) ->
                     p_175660_.getValue(LayeredCauldronBlock.LEVEL) == 3, SoundEvents.BUCKET_FILL);
 
     public static final CauldronInteraction CAPE = (pState, pLevel, pPos, pPlayer, pHand, pStack) -> {

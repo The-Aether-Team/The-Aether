@@ -13,8 +13,10 @@ import net.minecraft.world.level.Level;
 
 import java.util.function.Supplier;
 
-public class ParachuteItem extends Item
-{
+public class ParachuteItem extends Item {
+    /**
+     * The {@link Parachute} that this item can spawn in.
+     */
     protected final Supplier<EntityType<Parachute>> parachuteEntity;
 
     public ParachuteItem(Supplier<EntityType<Parachute>> parachuteEntity, Properties properties) {
@@ -22,32 +24,39 @@ public class ParachuteItem extends Item
         this.parachuteEntity = parachuteEntity;
     }
 
+    /**
+     * Spawns in a {@link Parachute} when used dependent on various conditions.
+     * @param level The {@link Level} of the user.
+     * @param player The {@link Player} using this item.
+     * @param hand The {@link InteractionHand} in which the item is being used.
+     * @return a {@link InteractionResultHolder#sidedSuccess(Object, boolean)} (success on client, consume on server) if the Parachute is successfully spawned. Otherwise, return a pass.
+     */
     @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player playerEntity, InteractionHand hand) {
-        ItemStack itemstack = playerEntity.getItemInHand(hand);
-        if (!playerEntity.isOnGround() && !playerEntity.isInWater() && !playerEntity.isInLava() && !playerEntity.isShiftKeyDown()) {
-            Entity entity = this.getParachuteEntity().get().create(world);
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        ItemStack heldStack = player.getItemInHand(hand);
+        if (!player.isOnGround() && !player.isInWater() && !player.isInLava() && !player.isShiftKeyDown()) { // Player has to be on ground and can't be in liquid, and also can't be holding shift.
+            Entity entity = this.getParachuteEntity().get().create(level);
             if (entity instanceof Parachute parachute) {
-                parachute.setPos(playerEntity.getX(), playerEntity.getY() - 1.0D, playerEntity.getZ());
-                parachute.setDeltaMovement(playerEntity.getDeltaMovement());
-                if (playerEntity.isPassenger()) {
-                    if (playerEntity.getVehicle() instanceof Parachute) {
-                        playerEntity.getVehicle().ejectPassengers();
+                parachute.setPos(player.getX(), player.getY() - 1.0D, player.getZ()); // Spawn Parachute below player.
+                parachute.setDeltaMovement(player.getDeltaMovement());
+                if (player.isPassenger()) {
+                    if (player.getVehicle() instanceof Parachute) { // Using a Parachute while already having one will switch to the new one.
+                        player.getVehicle().ejectPassengers();
                     } else {
-                        return InteractionResultHolder.pass(itemstack);
+                        return InteractionResultHolder.pass(heldStack);
                     }
                 }
-                if (!world.isClientSide) {
-                    world.addFreshEntity(parachute);
-                    playerEntity.startRiding(parachute);
-                    itemstack.hurtAndBreak(1, playerEntity, (p) -> p.broadcastBreakEvent(hand));
+                if (!level.isClientSide()) { // Spawn Parachute and damage item (or automatically break for Cold Parachutes since they have 1 durability).
+                    level.addFreshEntity(parachute);
+                    player.startRiding(parachute);
+                    heldStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
                 }
                 parachute.spawnExplosionParticle();
-                playerEntity.awardStat(Stats.ITEM_USED.get(this));
-                return InteractionResultHolder.sidedSuccess(itemstack, world.isClientSide());
+                player.awardStat(Stats.ITEM_USED.get(this));
+                return InteractionResultHolder.sidedSuccess(heldStack, level.isClientSide());
             }
         }
-        return InteractionResultHolder.pass(itemstack);
+        return InteractionResultHolder.pass(heldStack);
     }
 
     public Supplier<EntityType<Parachute>> getParachuteEntity() {

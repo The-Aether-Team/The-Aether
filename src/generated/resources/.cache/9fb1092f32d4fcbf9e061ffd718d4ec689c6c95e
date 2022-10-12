@@ -1,4 +1,4 @@
-// 1.19.2	2022-09-09T22:05:55.8009897	Recipes
+// 1.19.2	2022-09-30T20:21:55.7510184	Recipes
 d000da625d82240dda7b149bfae6cafbdc56d4c0 data/aether/advancements/recipes/aether_accessories/blue_cape.json
 e51fddb0b890fa94472e7882ae603719607fc2d6 data/aether/advancements/recipes/aether_accessories/chainmail_gloves_repairing.json
 6a4414227977f3bc902dbeb8a926309ccbe75688 data/aether/advancements/recipes/aether_accessories/diamond_gloves.json
@@ -291,8 +291,8 @@ fb98ac560d3f9540d338fb53119089bafe5968f2 data/aether/advancements/recipes/tools/
 54b2b06275fefadddfd3f8b5d7a3c2c13d2f0616 data/aether/advancements/recipes/tools/wooden_pickaxe_repairing.json
 79a251ebdcd61a850752487ba5e0077617da9994 data/aether/advancements/recipes/tools/wooden_shovel_repairing.json
 94c996f9430545a6d34a50e2302aee3e29955822 data/aether/advancements/recipes/transportation/aether_saddle.json
-86ee2146b7cc42e5cf8c0fad0f3cb959a689d40c data/aether/recipes/accessory_freeze_lava.json
-6ce4e0dbc7961de75e0d037879aee5cb42b37417 data/aether/recipes/accessory_freeze_water.json
+5badcd0ba0108ef0b005743881a3efe163aeaa8b data/aether/recipes/accessory_freeze_lava.json
+485337fa6e9d77bf15aeea4b061ff18fcd5540f7 data/aether/recipes/accessory_freeze_water.json
 0db55d55d59157df6bd3dc51efb82cdf5a6614f4 data/aether/recipes/aerogel_conversion.json
 76345db205be6e041e509fe70c812327427d4eb1 data/aether/recipes/aerogel_slab.json
 550ff51db66fca47eee538cff73eb3676a22c4ff data/aether/recipes/aerogel_slab_stonecutting.json

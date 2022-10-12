@@ -32,6 +32,9 @@ public class AetherBlockTagData extends BlockTagsProvider
     @Override
     protected void addTags() {
         //aether
+        tag(AetherTags.Blocks.TREATED_AS_VANILLA_BLOCK).add(
+                AetherBlocks.CHEST_MIMIC.get(),
+                AetherBlocks.UNSTABLE_OBSIDIAN.get());
         tag(AetherTags.Blocks.AETHER_PORTAL_BLOCKS).add(Blocks.GLOWSTONE);
         tag(AetherTags.Blocks.AETHER_ISLAND_BLOCKS).add(
                 AetherBlocks.AETHER_DIRT.get(),
@@ -161,6 +164,7 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.ANGELIC_STONE.get(),
                 AetherBlocks.LIGHT_ANGELIC_STONE.get()
         );
+        tag(AetherTags.Blocks.TREATED_AS_AETHER_BLOCK);
 
         //vanilla
         tag(BlockTags.STONE_BRICKS).add(AetherBlocks.HOLYSTONE_BRICKS.get()).addTag(AetherTags.Blocks.DUNGEON_BLOCKS);

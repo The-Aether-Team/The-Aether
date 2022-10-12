@@ -1,5 +1,6 @@
 package com.gildedgames.aether.mixin;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.item.accessories.cape.CapeItem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,8 +24,14 @@ public class AetherMixinHooks {
                 Optional<ICurioStacksHandler> stacksHandler = itemHandler.resolve().get().getStacksHandler(identifier);
                 CapeItem cape = (CapeItem) slotResult.get().stack().getItem();
                 boolean isCapeVisible = stacksHandler.get().getRenders().get(id);
-                if (cape.getCapeTexture() != null && isCapeVisible) {
-                    return cape.getCapeTexture();
+                ResourceLocation texture;
+                if (slotResult.get().stack().getHoverName().getString().equalsIgnoreCase("swuff_'s cape")) {
+                    texture = new ResourceLocation(Aether.MODID, "textures/models/accessory/capes/swuff_accessory.png");
+                } else {
+                    texture = cape.getCapeTexture();
+                }
+                if (texture != null && isCapeVisible) {
+                    return texture;
                 }
             }
         }

@@ -175,5 +175,7 @@ public class AetherBlockStateData extends AetherBlockStateProvider
         bookshelf(AetherBlocks.SKYROOT_BOOKSHELF, AetherBlocks.SKYROOT_PLANKS);
 
         bed(AetherBlocks.SKYROOT_BED, AetherBlocks.SKYROOT_PLANKS);
+
+        unstableObsidian(AetherBlocks.UNSTABLE_OBSIDIAN);
     }
 }

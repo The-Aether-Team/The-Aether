@@ -4,12 +4,20 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.construction.AetherFarmlandBlock;
 import com.gildedgames.aether.block.AetherBlockStateProperties;
 import com.gildedgames.aether.block.dungeon.DoorwayBlock;
+import com.gildedgames.aether.block.miscellaneous.UnstableObsidianBlock;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.data.models.blockstates.PropertyDispatch;
+import net.minecraft.data.models.blockstates.Variant;
+import net.minecraft.data.models.blockstates.VariantProperties;
+import net.minecraft.data.models.model.ModelTemplates;
+import net.minecraft.data.models.model.TextureMapping;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -387,6 +395,13 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
                     .rotationY((((int) dir.toYRot()) + 180) % 360)
                     .build();
         }, BedBlock.OCCUPIED);
+    }
+
+    public void unstableObsidian(Supplier<? extends Block> block) {
+        getVariantBuilder(block.get()).forAllStates(state -> {
+            int age = state.getValue(UnstableObsidianBlock.AGE);
+            return ConfiguredModel.builder().modelFile(models().cubeAll(name(block) + "_" + age, texture(name(block) + "_" + age, "miscellaneous/"))).build();
+        });
     }
 
     public ModelFile cubeAll(Supplier<? extends Block> block, String location) {

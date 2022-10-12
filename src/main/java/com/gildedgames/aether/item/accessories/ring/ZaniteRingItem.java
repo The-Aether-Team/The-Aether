@@ -1,31 +1,28 @@
 package com.gildedgames.aether.item.accessories.ring;
 
+import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.client.AetherSoundEvents;
-import com.gildedgames.aether.item.AetherItems;
-import net.minecraft.world.entity.LivingEntity;
+import com.gildedgames.aether.item.accessories.abilities.ZaniteAccessory;
 import net.minecraft.world.item.ItemStack;
-import top.theillusivec4.curios.api.CuriosApi;
 
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import top.theillusivec4.curios.api.SlotContext;
 
-import javax.annotation.Nonnull;
-
-public class ZaniteRingItem extends RingItem
-{
+/**
+ * Zanite ring mining speed boost behavior is called by {@link com.gildedgames.aether.event.listeners.abilities.AccessoryAbilityListener#onMiningSpeed(PlayerEvent.BreakSpeed)}
+ */
+public class ZaniteRingItem extends RingItem implements ZaniteAccessory {
     public ZaniteRingItem(Properties properties) {
         super(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_ZANITE_RING, properties);
     }
 
     @Override
-    public boolean isValidRepairItem(@Nonnull ItemStack repairItem, ItemStack repairMaterial) {
-        return repairMaterial.is(AetherItems.ZANITE_GEMSTONE.get());
+    public boolean isValidRepairItem(ItemStack repairItem, ItemStack repairMaterial) {
+        return repairMaterial.is(AetherTags.Items.ZANITE_REPAIRING);
     }
 
     @Override
     public void curioTick(SlotContext slotContext, ItemStack stack) {
-        LivingEntity livingEntity = slotContext.entity();
-        if (!livingEntity.level.isClientSide() && livingEntity.tickCount % 400 == 0) {
-            stack.hurtAndBreak(1, livingEntity, wearer -> CuriosApi.getCuriosHelper().onBrokenCurio(slotContext));
-        }
+        this.damageZaniteAccessory(slotContext, stack);
     }
 }

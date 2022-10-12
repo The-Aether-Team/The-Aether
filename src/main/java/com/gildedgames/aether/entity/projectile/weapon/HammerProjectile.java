@@ -1,5 +1,6 @@
 package com.gildedgames.aether.entity.projectile.weapon;
 
+import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -106,8 +107,10 @@ public class HammerProjectile extends ThrowableProjectile {
     private void launchTarget(Entity target) {
         if (target != this.getOwner()) {
             if (this.getOwner() == null || target != this.getOwner().getVehicle()) {
-                target.hurt(DamageSource.thrown(this, this.getOwner()), 5);
-                target.push(this.getDeltaMovement().x, 0.6, this.getDeltaMovement().z);
+                if (target instanceof LivingEntity livingEntity) {
+                    livingEntity.hurt(DamageSource.thrown(this, this.getOwner()), 5);
+                    livingEntity.push(this.getDeltaMovement().x, 0.6, this.getDeltaMovement().z);
+                }
             }
         }
     }
