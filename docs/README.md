@@ -46,6 +46,8 @@ buildscript {
     classpath group: 'io.github.0ffz', name: 'gpr-for-gradle', version: '1.+', changing: true
   }
 }
+...
+apply plugin: 'io.github.0ffz.github-packages'
 ```
 
 </details>
