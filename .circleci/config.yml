@@ -21,7 +21,8 @@ jobs:
       - run:
           name: Remove sources
           command: |
-            pwd
+            cd ~/build/libs
+            echo *
       - persist_to_workspace:
           root: ~/project/build/libs
           paths: 
