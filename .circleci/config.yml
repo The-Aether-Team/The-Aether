@@ -22,7 +22,7 @@ jobs:
           name: Remove sources
           command: |
             cd ~/project/build/libs
-            rm .*sources
+            rm *sources
       - persist_to_workspace:
           root: ~/project/build/libs
           paths: 
