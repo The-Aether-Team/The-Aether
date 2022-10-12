@@ -155,7 +155,6 @@ jar {
     }
 }
 
-
 task sourcesJar(type: Jar) {
     archiveClassifier.set('sources')
     from sourceSets.main.allJava
