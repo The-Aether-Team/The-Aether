@@ -19,7 +19,7 @@ jobs:
     steps:
       - setup
       - run:
-          name: Remove sources
+          name: Remove sources before persist
           command: |
             cd ~/project/build/libs
             rm *-sources.jar
@@ -30,7 +30,7 @@ jobs:
       - run:
           name: Publish artifact link to Discord
           command: |
-            artifact_path=$(curl --request GET --url https://circleci.com/api/v2/project/gh/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM/artifacts --header 'authorization: Basic REPLACE_BASIC_AUTH' | jq -r '.items[0].path')
+            artifact_path=$(curl --request GET --url https://circleci.com/api/v2/project/gh/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM/artifacts --header 'authorization: Basic REPLACE_BASIC_AUTH' | jq -r '.items[1].path')
             if [ -z "${WEBHOOK_URL}" ]; then
               echo "NO DISCORD WEBHOOK SET"
               echo "Please input your DISCORD_WEBHOOK value either in the settings for this project, or as a parameter for this orb."
