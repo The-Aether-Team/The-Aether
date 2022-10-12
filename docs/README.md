@@ -64,8 +64,6 @@ repositories {
 
 </details>
 
-*TODO: We don't have packages yet, I don't know what our package path will be*
-
 Then load it through your dependencies, with `project.aether_version` specified in the `gradle.properties`:
 
 <details>
@@ -74,8 +72,8 @@ Then load it through your dependencies, with `project.aether_version` specified 
 ```
 dependencies {
   ...
-  compileOnly "com.gildedgames.the-aether:aether:${project.aether_version}"
-  runtimeOnly fg.deobf("com.gildedgames.the-aether:aether:${project.aether_version}")
+  compileOnly "com.gildedgames.aether:aether:${project.aether_version}"
+  runtimeOnly fg.deobf("com.gildedgames.aether:aether:${project.aether_version}")
   ...
 }
 ```
