@@ -172,12 +172,19 @@ tasks.jarJar.configure {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifact reobfArtifact
+            artifactId project.archivesBaseName
+            artifact jar
+            artifact sourcesJar
         }
     }
     repositories {
         maven {
-            url "file:///${project.projectDir}/mcmodsrepo"
+            name = "GitHubPackages"
+            url = "https://maven.pkg.github.com/Gilded-Games/The-Aether"
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
         }
     }
 }
