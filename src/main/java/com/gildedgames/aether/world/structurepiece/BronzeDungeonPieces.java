@@ -2,13 +2,14 @@ package com.gildedgames.aether.world.structurepiece;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.api.DungeonTracker;
+import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.blockentity.TreasureChestBlockEntity;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.monster.dungeon.boss.Slider;
 import com.gildedgames.aether.loot.AetherLoot;
 import com.gildedgames.aether.util.BlockLogicUtil;
-import com.gildedgames.aether.world.processor.DungeonStoneProcessor;
 import com.gildedgames.aether.world.processor.NoReplaceProcessor;
+import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -24,22 +25,27 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructurePieceAccessor;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
+import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 import net.minecraft.world.phys.AABB;
 
 import java.util.ArrayList;
 
 public class BronzeDungeonPieces {
+    public static RuleProcessor LOCKED_SENTRY_STONE = new RuleProcessor(ImmutableList.of(
+            new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.LOCKED_CARVED_STONE.get(), 0.1F), AlwaysTrueTest.INSTANCE, AetherBlocks.LOCKED_SENTRY_STONE.get().defaultBlockState())
+    ));
+    public static RuleProcessor BRONZE_DUNGEON_STONE = new RuleProcessor(ImmutableList.of(
+            new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.CARVED_STONE.get(), 0.1F), AlwaysTrueTest.INSTANCE, AetherBlocks.SENTRY_STONE.get().defaultBlockState()),
+            new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.HOLYSTONE.get(), 0.1F), AlwaysTrueTest.INSTANCE, AetherBlocks.MOSSY_HOLYSTONE.get().defaultBlockState())
+    ));
 
     /**
      * Starting piece for the bronze dungeon. Has the slider.
      */
     public static class BossRoom extends TemplateStructurePiece {
 
-        public BossRoom(StructureTemplateManager manager, ResourceLocation id, BlockPos pos, Rotation rotation) {
-            super(AetherStructurePieceTypes.BRONZE_BOSS_ROOM.get(), 0, manager, id, id.toString(), makeSettings().setRotation(rotation), pos);
+        public BossRoom(StructureTemplateManager manager, int genDepth, String name, BlockPos pos, Rotation rotation) {
+            super(AetherStructurePieceTypes.BRONZE_BOSS_ROOM.get(), genDepth, manager, new ResourceLocation(Aether.MODID, "bronze_dungeon/" + name), name, makeSettings().setRotation(rotation), pos);
             this.setOrientation(this.getRotation().rotate(Direction.SOUTH));
         }
 
@@ -47,16 +53,22 @@ public class BronzeDungeonPieces {
             super(AetherStructurePieceTypes.BRONZE_BOSS_ROOM.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
         }
 
-        public void addChildren(StructureTemplateManager manager, StructurePiece start, StructurePieceAccessor pieceAccessor, RandomSource random) {
+        public void addTemplateChildren(StructureTemplateManager manager, StructurePiece start, StructurePieceAccessor pieceAccessor, RandomSource random) {
             Direction direction = this.getOrientation();
             if (direction == null) {
                 direction = this.getRotation().rotate(Direction.SOUTH);
             }
-            HolystoneTunnel.buildTunnelFromRoom(manager, start, pieceAccessor, this.getRotation(), direction);
+            BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(start.getBoundingBox().moved(0, 2, 0), direction, 6);
+            DungeonRoom hallway = new DungeonRoom(manager, "square_tunnel", pos, this.getRotation());
+            pos = BlockLogicUtil.tunnelFromEvenSquareRoom(hallway.getBoundingBox(), direction, 12);
+            DungeonRoom lobby = new DungeonRoom(manager, "lobby", pos, this.getRotation());
+            pieceAccessor.addPiece(lobby);
+            pieceAccessor.addPiece(hallway);
+            lobby.addTemplateChildren(manager, start, pieceAccessor, random);
         }
 
         static StructurePlaceSettings makeSettings() {
-            return new StructurePlaceSettings().addProcessor(DungeonStoneProcessor.SENTRY);
+            return new StructurePlaceSettings().addProcessor(LOCKED_SENTRY_STONE);
         }
 
         @Override
@@ -92,6 +104,40 @@ public class BronzeDungeonPieces {
         }
     }
 
+    public static class DungeonRoom extends TemplateStructurePiece {
+        public DungeonRoom(StructureTemplateManager manager, int genDepth, String name, BlockPos pos, Rotation rotation) {
+            super(AetherStructurePieceTypes.BRONZE_DUNGEON_ROOM.get(), genDepth, manager, new ResourceLocation(Aether.MODID, "bronze_dungeon/" + name), name, makeSettings().setRotation(rotation), pos);
+            this.setOrientation(this.getRotation().rotate(Direction.SOUTH));
+        }
+
+        public DungeonRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
+            this(manager, 0, name, pos, rotation);
+        }
+
+        public DungeonRoom(StructurePieceSerializationContext context, CompoundTag tag) {
+            super(AetherStructurePieceTypes.BRONZE_DUNGEON_ROOM.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
+        }
+
+        static StructurePlaceSettings makeSettings() {
+            return new StructurePlaceSettings().addProcessor(BRONZE_DUNGEON_STONE);
+        }
+
+        @Override
+        protected void handleDataMarker(String pName, BlockPos pPos, ServerLevelAccessor pLevel, RandomSource pRandom, BoundingBox pBox) {
+
+        }
+
+        public void addTemplateChildren(StructureTemplateManager manager, StructurePiece start, StructurePieceAccessor pieceAccessor, RandomSource random) {
+            Rotation rotation = this.getRotation();
+            switch (random.nextInt(3)) {
+                case 0 -> rotation = rotation.getRotated(Rotation.COUNTERCLOCKWISE_90);
+                case 2 -> rotation = rotation.getRotated(Rotation.CLOCKWISE_90);
+            }
+            Direction direction = rotation.rotate(Direction.SOUTH);
+            HolystoneTunnel.buildTunnelFromRoom(manager, this, pieceAccessor, rotation, direction);
+        }
+    }
+
     public static class HolystoneTunnel extends TemplateStructurePiece {
 
         public HolystoneTunnel(StructureTemplateManager pStructureTemplateManager, ResourceLocation id, BlockPos pTemplatePosition, Rotation rotation) {
@@ -103,7 +149,7 @@ public class BronzeDungeonPieces {
         }
 
         static StructurePlaceSettings makeSettings() {
-            return new StructurePlaceSettings().addProcessor(NoReplaceProcessor.AIR).addProcessor(DungeonStoneProcessor.MOSSY_HOLYSTONE);
+            return new StructurePlaceSettings().addProcessor(NoReplaceProcessor.AIR).addProcessor(BRONZE_DUNGEON_STONE);
         }
 
         @Override
@@ -121,8 +167,7 @@ public class BronzeDungeonPieces {
          */
         public static void buildTunnelFromRoom(StructureTemplateManager manager, StructurePiece connectedRoom, StructurePieceAccessor pieceAccessor, Rotation rotation, Direction direction) {
             StructureTemplate template = manager.getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/end_corridor"));
-            BoundingBox box = connectedRoom.getBoundingBox().moved(0, 2, 0);
-            BlockPos startPos = BlockLogicUtil.tunnelFromEvenSquareRoom(box, direction, template.getSize().getX());
+            BlockPos startPos = BlockLogicUtil.tunnelFromEvenSquareRoom(connectedRoom.getBoundingBox(), direction, template.getSize().getX());
             Aether.LOGGER.info("Start position: " + startPos);
             int length = template.getSize().getZ();
             for (int i = 0; i < 100; i+=length) {
