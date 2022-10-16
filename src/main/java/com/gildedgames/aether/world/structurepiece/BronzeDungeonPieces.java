@@ -17,8 +17,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
@@ -38,6 +40,12 @@ public class BronzeDungeonPieces {
             new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.CARVED_STONE.get(), 0.1F), AlwaysTrueTest.INSTANCE, AetherBlocks.SENTRY_STONE.get().defaultBlockState()),
             new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.HOLYSTONE.get(), 0.1F), AlwaysTrueTest.INSTANCE, AetherBlocks.MOSSY_HOLYSTONE.get().defaultBlockState())
     ));
+
+    public static class Builder {
+        public Builder() {
+
+        }
+    }
 
     /**
      * Starting piece for the bronze dungeon. Has the slider.
@@ -123,8 +131,18 @@ public class BronzeDungeonPieces {
         }
 
         @Override
-        protected void handleDataMarker(String pName, BlockPos pPos, ServerLevelAccessor pLevel, RandomSource pRandom, BoundingBox pBox) {
-
+        protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox box) {
+            level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
+            if (name.equals("Chest")) {
+                if (random.nextBoolean()) {
+                    level.setBlock(pos, Blocks.CHEST.defaultBlockState(), 2);
+                    if (level.getBlockEntity(pos) instanceof ChestBlockEntity chest) {
+                        chest.setLootTable(AetherLoot.BRONZE_DUNGEON, random.nextLong());
+                    }
+                } else {
+                    level.setBlock(pos, AetherBlocks.CHEST_MIMIC.get().defaultBlockState(), 3);
+                }
+            }
         }
 
         public void addTemplateChildren(StructureTemplateManager manager, StructurePiece start, StructurePieceAccessor pieceAccessor, RandomSource random) {

@@ -42,6 +42,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -308,7 +309,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
             return Blocks.AIR.defaultBlockState();
         }
         if (state.is(AetherBlocks.TREASURE_DOORWAY_CARVED_STONE.get())) {
-            return AetherBlocks.SKYROOT_TRAPDOOR.get().defaultBlockState();
+            return AetherBlocks.SKYROOT_TRAPDOOR.get().defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, state.getValue(HorizontalDirectionalBlock.FACING));
         }
         return null;
     }
