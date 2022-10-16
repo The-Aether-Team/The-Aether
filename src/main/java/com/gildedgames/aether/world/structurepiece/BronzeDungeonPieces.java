@@ -61,10 +61,10 @@ public class BronzeDungeonPieces {
             BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(start.getBoundingBox().moved(0, 2, 0), direction, 6);
             DungeonRoom hallway = new DungeonRoom(manager, "square_tunnel", pos, this.getRotation());
             pos = BlockLogicUtil.tunnelFromEvenSquareRoom(hallway.getBoundingBox(), direction, 12);
-            DungeonRoom lobby = new DungeonRoom(manager, "lobby", pos, this.getRotation());
-            pieceAccessor.addPiece(lobby);
+            DungeonRoom chestRoom = new DungeonRoom(manager, this.genDepth - 1, "chest_room", pos, this.getRotation());
+            pieceAccessor.addPiece(chestRoom);
             pieceAccessor.addPiece(hallway);
-            lobby.addTemplateChildren(manager, start, pieceAccessor, random);
+            chestRoom.addTemplateChildren(manager, this, pieceAccessor, random);
         }
 
         static StructurePlaceSettings makeSettings() {
@@ -128,13 +128,26 @@ public class BronzeDungeonPieces {
         }
 
         public void addTemplateChildren(StructureTemplateManager manager, StructurePiece start, StructurePieceAccessor pieceAccessor, RandomSource random) {
-            Rotation rotation = this.getRotation();
-            switch (random.nextInt(3)) {
-                case 0 -> rotation = rotation.getRotated(Rotation.COUNTERCLOCKWISE_90);
-                case 2 -> rotation = rotation.getRotated(Rotation.CLOCKWISE_90);
+            if (this.genDepth > 0) {
+                Rotation rotation = this.getRotation();
+                int genDepth = this.genDepth - 1;
+                for (Rotation rot : Rotation.values()) {
+                    if (rotation != rot) {
+                        rot = rotation.getRotated(rot);
+                        Direction direction = rot.rotate(Direction.SOUTH);
+                        BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(this.getBoundingBox(), direction, 6);
+                        DungeonRoom hallway = new DungeonRoom(manager, "square_tunnel", pos, rot);
+                        pos = BlockLogicUtil.tunnelFromEvenSquareRoom(hallway.getBoundingBox(), direction, 12);
+                        DungeonRoom chestRoom = new DungeonRoom(manager, genDepth, "chest_room", pos, rot);
+                        if (pieceAccessor.findCollisionPiece(chestRoom.boundingBox) == null) {
+                            pieceAccessor.addPiece(chestRoom);
+                            pieceAccessor.addPiece(hallway);
+                            chestRoom.addTemplateChildren(manager, this, pieceAccessor, random);
+                        }
+                    }
+                }
             }
-            Direction direction = rotation.rotate(Direction.SOUTH);
-            HolystoneTunnel.buildTunnelFromRoom(manager, this, pieceAccessor, rotation, direction);
+//            HolystoneTunnel.buildTunnelFromRoom(manager, this, pieceAccessor, rotation, direction);
         }
     }
 
