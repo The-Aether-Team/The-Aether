@@ -4,9 +4,11 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.world.structurepiece.SilverDungeonPieces;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
@@ -30,13 +32,24 @@ public class SilverDungeonStructure extends Structure {
         RandomSource randomSource = context.random();
         BlockPos worldPos = context.chunkPos().getWorldPosition();
         BlockPos elevatedPos = new BlockPos(worldPos.getX(), 100, worldPos.getZ());
+        Rotation rotation = Rotation.getRandom(randomSource);
+        Direction direction = rotation.rotate(Direction.SOUTH);
         SilverDungeonPieces.BossRoom bossRoom = new SilverDungeonPieces.BossRoom(
                 context.structureTemplateManager(),
-                new ResourceLocation(Aether.MODID, "silver_dungeon/boss_room"),
+                new ResourceLocation(Aether.MODID, "silver_dungeon/back"),
                 elevatedPos,
-                randomSource
+                rotation
         );
         builder.addPiece(bossRoom);
+        int xOffset = direction.getStepX() * bossRoom.getBoundingBox().getXSpan();
+        int zOffset = direction.getStepZ() * bossRoom.getBoundingBox().getZSpan();
+        SilverDungeonPieces.SilverDungeonPiece front = new SilverDungeonPieces.SilverDungeonPiece(
+                context.structureTemplateManager(),
+                new ResourceLocation(Aether.MODID, "silver_dungeon/front"),
+                elevatedPos.offset(xOffset, 0, zOffset),
+                rotation
+        );
+        builder.addPiece(front);
     }
 
     @Override
