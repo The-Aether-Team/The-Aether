@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "aether:block/unstable_obsidian_0"
+    },
+    "age=1": {
+      "model": "aether:block/unstable_obsidian_1"
+    },
+    "age=2": {
+      "model": "aether:block/unstable_obsidian_2"
+    },
+    "age=3": {
+      "model": "aether:block/unstable_obsidian_3"
+    }
+  }
+}

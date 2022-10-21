@@ -166,6 +166,8 @@ public class AetherLanguageData extends AetherLanguageProvider
 
         addBlock(AetherBlocks.SKYROOT_BED, "Skyroot Bed");
 
+        addBlock(AetherBlocks.UNSTABLE_OBSIDIAN, "Unstable Obsidian");
+
 
         addItem(AetherItems.SKYROOT_PICKAXE, "Skyroot Pickaxe");
         addItem(AetherItems.SKYROOT_AXE, "Skyroot Axe");
@@ -994,6 +996,8 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "A music disc that plays Welcoming Skies by Voyed.");
         addLore(AetherItems.MUSIC_DISC_CHINCHILLA,"A music disc that plays chinchilla by RENREN.");
 
+        addLoreUnique("item.aether.hammer_of_jeb", "A mysterious hammer that can shoot projectiles. At one point it vanished from existence. It's said this was actually Jeb's hammer at one point.");
+
 
         addProTip("skyroot_tool_ability", "Skyroot tools gain double drops from blocks.");
         addProTip("holystone_tool_ability", "Holystone tools occasionally generate Ambrosium.");
@@ -1059,6 +1063,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addCommonConfig("gameplay", "tools_debuff", "Tools that aren't from the Aether will mine all blocks slower than ones that are from the Aether");
         addCommonConfig("gameplay", "edible_ambrosium", "Ambrosium Shards can be eaten to restore a half heart of health");
         addCommonConfig("gameplay", "healing_gummy_swets", "Gummy Swets when eaten restore full health instead of full hunger");
+        addCommonConfig("gameplay", "temporary_ice_accessory_conversion", "Ice Accessories will create temporary blocks instead of permanent blocks from conversions");
         addCommonConfig("gameplay", "maximum_life_shards", "Determines the limit of the amount of Life Shards a player can consume to increase their health");
         addCommonConfig("gameplay", "repeat_sun_spirit_dialogue", "Determines whether the Sun Spirit's dialogue when meeting him should play through every time you meet him");
 

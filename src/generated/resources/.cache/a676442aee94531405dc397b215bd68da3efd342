@@ -1,4 +1,4 @@
-// 1.19.2	2022-09-03T23:03:26.7031081	Aether Block States
+// 1.19.2	2022-09-30T20:13:58.8908265	Aether Block States
 79cb0c0ea34a92e86b03080a209cb60f268cb31e assets/aether/blockstates/aerogel.json
 28f7eea22b621bda459b2328c2252cdebe0bcdb9 assets/aether/blockstates/aerogel_slab.json
 0866f96b2339b894ff4c8a01aebb3d87103eb0fb assets/aether/blockstates/aether_dirt.json
@@ -122,6 +122,7 @@ f6aef375cc24b818d47e91cb2c47564fab13f9ca assets/aether/blockstates/treasure_door
 07148c9dcf70e89b2eb0ffa22debd20634e1b7cc assets/aether/blockstates/treasure_doorway_light_angelic_stone.json
 70717519790d42656f9e16599e92b1801addcd4c assets/aether/blockstates/treasure_doorway_light_hellfire_stone.json
 395331de5b5694172dfb4ba71dc00ff32762a7e8 assets/aether/blockstates/treasure_doorway_sentry_stone.json
+c9b68f98218a628c8860483a05d86461e94dbb44 assets/aether/blockstates/unstable_obsidian.json
 f9a64a17dc6f0d5076930f79848eb5f1f7bfd154 assets/aether/blockstates/white_flower.json
 6ee9d161aa29368af59967c6930e5bcd2edef61e assets/aether/blockstates/zanite_block.json
 c5d51079da7e8f4f78cdfd3e12c5f0b215fb639a assets/aether/blockstates/zanite_ore.json
@@ -301,6 +302,10 @@ e6adf31dca8f70274a0d0b77ecc6b3910f061536 assets/aether/models/block/stripped_sky
 818f7645da518ce2f7bbe3721693107f7e03503d assets/aether/models/block/stripped_skyroot_wood_horizontal.json
 22cebeee6bf91517635c457a3f8739c875485477 assets/aether/models/block/sun_altar.json
 019cdb40bdffeeba69265a85c472675ffa3249a8 assets/aether/models/block/treasure_chest.json
+98e83c5357176028bb6587c36c91cdfb584781ec assets/aether/models/block/unstable_obsidian_0.json
+d5816398a523e886c9558b832dd70c6542bf552f assets/aether/models/block/unstable_obsidian_1.json
+4991d9baab1eb0affe5ac52aaf6ecb9fe9be7144 assets/aether/models/block/unstable_obsidian_2.json
+573f3dcacf42831057c46a8522bc5fb0e0de8ba3 assets/aether/models/block/unstable_obsidian_3.json
 a16404040b35bcdb19f228637aa67999cf81f244 assets/aether/models/block/white_flower.json
 222241f97ecc69159a71953ed433a4e4d2bfa1f4 assets/aether/models/block/zanite_block.json
 19c0a92285acb02f965c3c9da3d80955409d2ef0 assets/aether/models/block/zanite_ore.json
