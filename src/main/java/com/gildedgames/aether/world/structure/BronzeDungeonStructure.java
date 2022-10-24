@@ -41,7 +41,7 @@ public class BronzeDungeonStructure extends Structure {
         StructureTemplateManager manager = context.structureTemplateManager();
         RandomSource random = context.random();
         Rotation rotation = Rotation.getRandom(random);
-        BronzeDungeonPieces.BossRoom bossRoom = new BronzeDungeonPieces.BossRoom(manager, this.maxRooms, "boss_room", startPos, rotation);
+        BronzeDungeonPieces.BossRoom bossRoom = new BronzeDungeonPieces.BossRoom(manager, 2, "boss_room", startPos, rotation);
         bossRoom.addTemplateChildren(manager, bossRoom, builder, random);
         builder.addPiece(bossRoom);
 //        builder.offsetPiecesVertically(-15);

@@ -199,7 +199,6 @@ public class BronzeDungeonPieces {
         public static void buildTunnelFromRoom(StructureTemplateManager manager, StructurePiece connectedRoom, StructurePieceAccessor pieceAccessor, Rotation rotation, Direction direction) {
             StructureTemplate template = manager.getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/end_corridor"));
             BlockPos startPos = BlockLogicUtil.tunnelFromEvenSquareRoom(connectedRoom.getBoundingBox(), direction, template.getSize().getX());
-            Aether.LOGGER.info("Start position: " + startPos);
             int length = template.getSize().getZ();
             for (int i = 0; i < 100; i+=length) {
                 BlockPos pos = startPos.offset(direction.getStepX() * i, 0, direction.getStepZ() * i);

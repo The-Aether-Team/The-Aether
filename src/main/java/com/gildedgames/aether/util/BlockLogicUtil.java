@@ -1,6 +1,5 @@
 package com.gildedgames.aether.util;
 
-import com.gildedgames.aether.Aether;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
@@ -26,10 +25,6 @@ public class BlockLogicUtil {
 
         int xOffset = direction.getStepX() * offsetFromCenter - direction.getStepZ() * sidedOffset - Math.max(0, direction.getStepX()) + Math.min(0, direction.getStepZ());
         int zOffset = direction.getStepZ() * offsetFromCenter + direction.getStepX() * sidedOffset - Math.max(0, direction.getStepZ()) - Math.max(0, direction.getStepX());
-
-        Aether.LOGGER.info(String.format("Offset from center: %d, Width: %d", offsetFromCenter, width));
-        Aether.LOGGER.info("Center pos: " + box.getCenter());
-        Aether.LOGGER.info(String.format("X offset: %d, Z offset: %d", xOffset, zOffset));
 
         return box.getCenter().offset(
                 xOffset,
