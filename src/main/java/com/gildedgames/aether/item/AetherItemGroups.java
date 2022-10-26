@@ -6,8 +6,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class AetherItemGroups
-{
+public class AetherItemGroups {
 	public static final CreativeModeTab AETHER_BLOCKS = new CreativeModeTab("aether_blocks") {
 		@Override
 		@OnlyIn(Dist.CLIENT)

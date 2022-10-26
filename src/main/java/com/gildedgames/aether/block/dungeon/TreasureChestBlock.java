@@ -167,8 +167,7 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
 				if (treasureChestBlockEntity.getLocked()) {
 					ItemStack stack = player.getMainHandItem();
 					if (treasureChestBlockEntity.tryUnlock(player)) {
-						if (player instanceof ServerPlayer serverPlayer) {
-							CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, stack);
+						if (player instanceof ServerPlayer) {
 							player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
 						}
 						stack.shrink(1);

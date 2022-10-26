@@ -12,28 +12,36 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.level.Level;
 
-public class WhiteAppleItem extends Item
-{
+public class WhiteAppleItem extends Item {
     public WhiteAppleItem() {
         super(new Item.Properties().food(AetherFoods.WHITE_APPLE).tab(AetherItemGroups.AETHER_FOOD));
     }
 
+    /**
+     * Cures any potion effects that are removed by White Apples, then sets the remedy vignette if the user was a player.
+     * Also triggers the {@link CriteriaTriggers#CONSUME_ITEM} advancement criteria and gives the {@link Stats#ITEM_USED} stat to the player for the item.
+     * @param stack The {@link ItemStack} in use.
+     * @param level The {@link Level} of the user.
+     * @param user The {@link LivingEntity} using the stack.
+     * @return The used {@link ItemStack}.
+     */
     @Override
-    public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
-        if (!worldIn.isClientSide) entityLiving.curePotionEffects(new ItemStack(AetherItems.WHITE_APPLE.get()));
-        if (entityLiving instanceof ServerPlayer) {
-            ServerPlayer serverplayerentity = (ServerPlayer) entityLiving;
-            CriteriaTriggers.CONSUME_ITEM.trigger(serverplayerentity, stack);
-            serverplayerentity.awardStat(Stats.ITEM_USED.get(this));
+    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity user) {
+        if (!level.isClientSide()) {
+            user.curePotionEffects(new ItemStack(AetherItems.WHITE_APPLE.get()));
         }
-        if (entityLiving instanceof Player player) {
+        if (user instanceof Player player) {
             AetherPlayer.get(player).ifPresent(aetherPlayer -> {
-                if (!player.level.isClientSide()) {
+                if (!player.getLevel().isClientSide()) { // Values used by the green remedy screen overlay vignette.
                     aetherPlayer.setRemedyMaximum(300);
                     aetherPlayer.setRemedyTimer(300);
                 }
             });
+            if (player instanceof ServerPlayer serverPlayer) {
+                CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, stack);
+                serverPlayer.awardStat(Stats.ITEM_USED.get(this));
+            }
         }
-        return super.finishUsingItem(stack, worldIn, entityLiving);
+        return super.finishUsingItem(stack, level, user);
     }
 }

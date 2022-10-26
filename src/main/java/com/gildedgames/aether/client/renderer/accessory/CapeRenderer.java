@@ -1,5 +1,6 @@
 package com.gildedgames.aether.client.renderer.accessory;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.accessory.model.CapeModel;
 import com.gildedgames.aether.item.accessories.cape.CapeItem;
@@ -14,6 +15,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -75,7 +77,12 @@ public class CapeRenderer implements ICurioRenderer {
                     poseStack.mulPose(Vector3f.XP.rotationDegrees(6.0F + f2 / 2.0F + f1));
                     poseStack.mulPose(Vector3f.ZP.rotationDegrees(f3 / 2.0F));
                     poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F - f3 / 2.0F));
-                    VertexConsumer consumer = buffer.getBuffer(RenderType.entitySolid(capeItem.getCapeTexture()));
+                    VertexConsumer consumer;
+                    if (stack.getHoverName().getString().equalsIgnoreCase("swuff_'s cape")) {
+                        consumer = buffer.getBuffer(RenderType.entitySolid(new ResourceLocation(Aether.MODID, "textures/models/accessory/capes/swuff_accessory.png")));
+                    } else {
+                        consumer = buffer.getBuffer(RenderType.entitySolid(capeItem.getCapeTexture()));
+                    }
                     this.cape.renderToBuffer(poseStack, consumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
                     poseStack.popPose();
                 }

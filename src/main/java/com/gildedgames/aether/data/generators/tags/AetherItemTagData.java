@@ -43,50 +43,24 @@ public class AetherItemTagData extends ItemTagsProvider
         copy(AetherTags.Blocks.DUNGEON_BLOCKS, AetherTags.Items.DUNGEON_BLOCKS);
         copy(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS, AetherTags.Items.LOCKED_DUNGEON_BLOCKS);
         copy(AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS, AetherTags.Items.TRAPPED_DUNGEON_BLOCKS);
+        copy(AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS, AetherTags.Items.BOSS_DOORWAY_DUNGEON_BLOCKS);
+        copy(AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS, AetherTags.Items.TREASURE_DOORWAY_DUNGEON_BLOCKS);
+        copy(AetherTags.Blocks.SENTRY_BLOCKS, AetherTags.Items.SENTRY_BLOCKS);
+        copy(AetherTags.Blocks.ANGELIC_BLOCKS, AetherTags.Items.ANGELIC_BLOCKS);
+        copy(AetherTags.Blocks.HELLFIRE_BLOCKS, AetherTags.Items.HELLFIRE_BLOCKS);
 
-        tag(AetherTags.Items.PLANKS_CRAFTING).addTag(ItemTags.PLANKS).add(AetherBlocks.SKYROOT_PLANKS.get().asItem());
-        tag(AetherTags.Items.STONE_CRAFTING).addTag(ItemTags.STONE_CRAFTING_MATERIALS).add(AetherBlocks.HOLYSTONE.get().asItem());
+        tag(AetherTags.Items.PLANKS_CRAFTING).add(AetherBlocks.SKYROOT_PLANKS.get().asItem());
 
         tag(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS);
         tag(AetherTags.Items.BOOK_OF_LORE_MATERIALS).addTag(Tags.Items.DUSTS_GLOWSTONE).add(
                 Items.FLINT,
                 AetherItems.AMBROSIUM_SHARD.get());
         tag(AetherTags.Items.SKYROOT_STICKS).add(AetherItems.SKYROOT_STICK.get());
-        tag(AetherTags.Items.EFFECTIVE_IN_AETHER);
-        tag(AetherTags.Items.SKYROOT_TOOLS).add(
-                AetherItems.SKYROOT_PICKAXE.get(),
-                AetherItems.SKYROOT_AXE.get(),
-                AetherItems.SKYROOT_SHOVEL.get(),
-                AetherItems.SKYROOT_HOE.get());
-        tag(AetherTags.Items.SKYROOT_WEAPONS).add(AetherItems.SKYROOT_SWORD.get());
-        tag(AetherTags.Items.HOLYSTONE_TOOLS).add(
-                AetherItems.HOLYSTONE_PICKAXE.get(),
-                AetherItems.HOLYSTONE_AXE.get(),
-                AetherItems.HOLYSTONE_SHOVEL.get(),
-                AetherItems.HOLYSTONE_HOE.get());
-        tag(AetherTags.Items.HOLYSTONE_WEAPONS).add(AetherItems.HOLYSTONE_SWORD.get());
-        tag(AetherTags.Items.ZANITE_TOOLS).add(
-                AetherItems.ZANITE_PICKAXE.get(),
-                AetherItems.ZANITE_AXE.get(),
-                AetherItems.ZANITE_SHOVEL.get(),
-                AetherItems.ZANITE_HOE.get());
-        tag(AetherTags.Items.ZANITE_WEAPONS).add(AetherItems.ZANITE_SWORD.get());
-        tag(AetherTags.Items.GRAVITITE_TOOLS).add(
-                AetherItems.GRAVITITE_PICKAXE.get(),
-                AetherItems.GRAVITITE_AXE.get(),
-                AetherItems.GRAVITITE_SHOVEL.get(),
-                AetherItems.GRAVITITE_HOE.get());
-        tag(AetherTags.Items.GRAVITITE_WEAPONS).add(AetherItems.GRAVITITE_SWORD.get());
-        tag(AetherTags.Items.VALKYRIE_TOOLS).add(
-                AetherItems.VALKYRIE_PICKAXE.get(),
-                AetherItems.VALKYRIE_AXE.get(),
-                AetherItems.VALKYRIE_SHOVEL.get(),
-                AetherItems.VALKYRIE_HOE.get());
-        tag(AetherTags.Items.VALKYRIE_WEAPONS).add(AetherItems.VALKYRIE_LANCE.get());
         tag(AetherTags.Items.GOLDEN_AMBER_HARVESTERS).add(
                 AetherItems.ZANITE_AXE.get(),
                 AetherItems.GRAVITITE_AXE.get(),
                 AetherItems.VALKYRIE_AXE.get());
+        tag(AetherTags.Items.TREATED_AS_AETHER_ITEM);
         tag(AetherTags.Items.NO_SKYROOT_DOUBLE_DROPS).addTag(AetherTags.Items.DUNGEON_KEYS).add(
                 AetherItems.VICTORY_MEDAL.get(),
                 Items.PLAYER_HEAD,
@@ -96,7 +70,9 @@ public class AetherItemTagData extends ItemTagsProvider
                 Items.WITHER_SKELETON_SKULL,
                 Items.DRAGON_HEAD,
                 Items.NETHER_STAR);
-        tag(AetherTags.Items.PIG_DROPS).add(Items.PORKCHOP);
+        tag(AetherTags.Items.PIG_DROPS).add(
+                Items.PORKCHOP,
+                Items.COOKED_PORKCHOP);
         tag(AetherTags.Items.DARTS).add(
                 AetherItems.GOLDEN_DART.get(),
                 AetherItems.POISON_DART.get(),
@@ -151,6 +127,24 @@ public class AetherItemTagData extends ItemTagsProvider
         tag(AetherTags.Items.MOA_TEMPTATION_ITEMS).add(AetherItems.NATURE_STAFF.get());
         tag(AetherTags.Items.MOA_FOOD_ITEMS).add(AetherItems.AECHOR_PETAL.get());
 
+        tag(AetherTags.Items.SKYROOT_REPAIRING).add(AetherBlocks.SKYROOT_PLANKS.get().asItem());
+        tag(AetherTags.Items.HOLYSTONE_REPAIRING).add(AetherBlocks.HOLYSTONE.get().asItem());
+        tag(AetherTags.Items.ZANITE_REPAIRING).add(AetherItems.ZANITE_GEMSTONE.get());
+        tag(AetherTags.Items.GRAVITITE_REPAIRING).add(AetherBlocks.ENCHANTED_GRAVITITE.get().asItem());
+        tag(AetherTags.Items.VALKYRIE_REPAIRING);
+        tag(AetherTags.Items.FLAMING_REPAIRING);
+        tag(AetherTags.Items.LIGHTNING_REPAIRING);
+        tag(AetherTags.Items.HOLY_REPAIRING);
+        tag(AetherTags.Items.VAMPIRE_REPAIRING);
+        tag(AetherTags.Items.PIG_SLAYER_REPAIRING);
+        tag(AetherTags.Items.HAMMER_OF_NOTCH_REPAIRING);
+        tag(AetherTags.Items.CANDY_CANE_REPAIRING).add(AetherItems.CANDY_CANE.get());
+        tag(AetherTags.Items.NEPTUNE_REPAIRING);
+        tag(AetherTags.Items.PHOENIX_REPAIRING);
+        tag(AetherTags.Items.OBSIDIAN_REPAIRING);
+        tag(AetherTags.Items.SENTRY_REPAIRING);
+        tag(AetherTags.Items.ICE_REPAIRING);
+
         tag(AetherTags.Items.TOOLS_LANCES).add(AetherItems.VALKYRIE_LANCE.get());
         tag(AetherTags.Items.TOOLS_HAMMERS).add(AetherItems.HAMMER_OF_NOTCH.get());
 
@@ -201,6 +195,7 @@ public class AetherItemTagData extends ItemTagsProvider
                 AetherTags.Items.AETHER_SHIELD);
 
         //vanilla
+        tag(ItemTags.STONE_CRAFTING_MATERIALS).add(AetherBlocks.HOLYSTONE.get().asItem());
         tag(ItemTags.STONE_BRICKS).add(AetherBlocks.HOLYSTONE_BRICKS.get().asItem()).addTag(AetherTags.Items.DUNGEON_BLOCKS);
         tag(ItemTags.WOODEN_STAIRS).add(AetherBlocks.SKYROOT_STAIRS.get().asItem());
         tag(ItemTags.WOODEN_SLABS).add(AetherBlocks.SKYROOT_SLAB.get().asItem());

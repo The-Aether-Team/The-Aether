@@ -97,6 +97,16 @@ public abstract class AetherItemModelProvider extends ItemModelProvider
                 .texture("layer1", modLoc("item/" + location + id.getPath() + "_overlay"));
     }
 
+    public ItemModelBuilder keyItem(Supplier<? extends Item> item, String location) {
+        ResourceLocation id = ForgeRegistries.ITEMS.getKey(item.get());
+        return withExistingParent(id.getPath(), mcLoc("item/generated"))
+                .texture("layer0", modLoc("item/" + location + id.getPath()))
+                .transforms()
+                .transform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND).rotation(90.0F, -90.0F, 25.0F).translation(1.13F, 3.2F, 1.13F).scale(0.68F, 0.68F, 0.68F).end()
+                .transform(ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND).rotation(90.0F, 90.0F, -25.0F).translation(1.13F, 3.2F, 1.13F).scale(0.68F, 0.68F, 0.68F).end()
+                .end();
+    }
+
     public ItemModelBuilder moaEggItem(Supplier<? extends Item> item, String location) {
         return withExistingParent(ForgeRegistries.ITEMS.getKey(item.get()).getPath(), mcLoc("item/generated"))
                 .texture("layer0", modLoc("item/" + location + "moa_egg"))
@@ -147,7 +157,11 @@ public abstract class AetherItemModelProvider extends ItemModelProvider
     }
 
     public ItemModelBuilder itemInvisibleBlock(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock) {
-        return withExistingParent(blockName(block), texture(blockName(baseBlock)));
+        return itemOverlayDungeonBlock(block, baseBlock, "door");
+    }
+
+    public ItemModelBuilder itemTreasureBlock(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock) {
+        return itemOverlayDungeonBlock(block, baseBlock, "treasure");
     }
 
     public ItemModelBuilder itemOverlayDungeonBlock(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock, String overlay) {

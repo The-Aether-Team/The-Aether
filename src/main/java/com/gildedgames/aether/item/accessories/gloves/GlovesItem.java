@@ -10,17 +10,17 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
-import javax.annotation.Nonnull;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-public class GlovesItem extends AccessoryItem
-{
-    protected double damage;
+public class GlovesItem extends AccessoryItem {
+    protected final double damage;
     protected ResourceLocation GLOVES_TEXTURE;
     protected ResourceLocation GLOVES_SLIM_TEXTURE;
     protected final Supplier<SoundEvent> equipSound;
@@ -39,10 +39,9 @@ public class GlovesItem extends AccessoryItem
         return attributes;
     }
 
-    @Nonnull
     @Override
     public ICurio.SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
-        return new ICurio.SoundInfo(this.equipSound.get(), 1.0f, 1.0f);
+        return new ICurio.SoundInfo(this.equipSound.get(), 1.0F, 1.0F);
     }
 
     public void setRenderTexture(String modId, String registryName) {
@@ -58,6 +57,7 @@ public class GlovesItem extends AccessoryItem
         return this.GLOVES_SLIM_TEXTURE;
     }
 
+    @OnlyIn(Dist.CLIENT)
     public ImmutableTriple<Float, Float, Float> getColors(ItemStack stack) {
         float red = 1.0F;
         float green = 1.0F;

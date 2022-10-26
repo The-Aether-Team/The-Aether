@@ -92,6 +92,9 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
     public void init() {
         super.init();
         if (this.minecraft != null) {
+            if (this.minecraft.player != null) {
+                this.imageWidth = this.minecraft.player.isCreative() ? 176 + this.creativeXOffset() : 176;
+            }
             this.widthTooNarrow = this.width < 379;
             this.recipeBookComponent.init(this.width, this.height, this.minecraft, this.widthTooNarrow, this.menu);
             this.recipeBookComponentInitialized = true;
@@ -212,6 +215,10 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
             if (this.destroyItemSlot != null && this.isHovering(this.destroyItemSlot.x, this.destroyItemSlot.y, 16, 16, mouseX, mouseY)) {
                 this.renderTooltip(poseStack, Component.translatable("inventory.binSlot"), mouseX, mouseY);
             }
+
+            if (this.minecraft != null && this.minecraft.player != null) {
+                this.imageWidth = this.minecraft.player.isCreative() ? 176 + this.creativeXOffset() : 176;
+            }
         }
         this.renderTooltip(poseStack, mouseX, mouseY);
         this.recipeBookComponent.renderTooltip(poseStack, this.leftPos, this.topPos, mouseX, mouseY);
@@ -261,7 +268,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
     @Override
     protected void renderLabels(@Nonnull PoseStack matrixStack, int mouseX, int mouseY) {
         if (this.minecraft != null && this.minecraft.player != null) {
-            this.font.draw(matrixStack, this.title, 115, 8, 4210752);
+            this.font.draw(matrixStack, this.title, 115, 6, 4210752);
         }
     }
 
@@ -307,12 +314,12 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
             type = slotId == -999 && type == ClickType.PICKUP ? ClickType.THROW : type;
             if (slot != null || type == ClickType.QUICK_CRAFT) {
                 if (slot == null || slot.mayPickup(this.minecraft.player)) {
-                    if (slot == this.destroyItemSlot && flag) {
+                    if (slot == this.destroyItemSlot && this.destroyItemSlot != null && flag) {
                         for (int j = 0; j < this.minecraft.player.inventoryMenu.getItems().size(); ++j) {
                             this.minecraft.gameMode.handleCreativeModeItemAdd(ItemStack.EMPTY, j);
                         }
                     } else {
-                        if (slot == this.destroyItemSlot) {
+                        if (slot == this.destroyItemSlot && this.destroyItemSlot != null) {
                             this.menu.setCarried(ItemStack.EMPTY);
                             AetherPacketHandler.sendToServer(new ClearItemPacket(this.minecraft.player.getId()));
                         } else {

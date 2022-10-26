@@ -421,11 +421,6 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	@Override
-	protected float getSoundVolume() {
-		return 0.25F;
-	}
-
-	@Override
 	public boolean isFood(@Nonnull ItemStack stack) {
 		return false;
 	}

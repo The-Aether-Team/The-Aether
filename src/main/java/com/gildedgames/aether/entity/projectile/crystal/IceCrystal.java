@@ -3,10 +3,12 @@ package com.gildedgames.aether.entity.projectile.crystal;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.client.particle.AetherParticleTypes;
 import com.gildedgames.aether.entity.AetherEntityTypes;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -42,9 +44,10 @@ public class IceCrystal extends AbstractCrystal {
     public IceCrystal(Level level, Entity shooter) {
         this(AetherEntityTypes.ICE_CRYSTAL.get(), level);
         this.setOwner(shooter);
-        this.setPos(shooter.getX(), shooter.getY() + 1, shooter.getZ());
-        this.xPower = (0.2 + this.random.nextFloat() * 0.15 * (this.random.nextInt(2) == 0 ? 1 : -1)) / 3;
-        this.zPower = (0.2 + this.random.nextFloat() * 0.15 * (this.random.nextInt(2) == 0 ? 1 : -1)) / 3;
+        this.setPos(shooter.getX(), shooter.getY(), shooter.getZ());
+        float rotation = this.random.nextFloat() * 360;
+        this.xPower = Mth.sin(rotation) * 0.15;
+        this.zPower = -Mth.cos(rotation) * 0.15;
         this.setDeltaMovement(this.xPower, 0, this.zPower);
     }
 
@@ -86,18 +89,6 @@ public class IceCrystal extends AbstractCrystal {
         this.setDeltaMovement(this.xPower, 0, this.zPower);
     }
 
-    @Override
-    public void spawnExplosionParticles() {
-        if (this.level instanceof ServerLevel level) {
-            for (int i = 0; i < 20; i++) {
-                double x = (this.random.nextFloat() - 0.5F) * 0.5;
-                double y = (this.random.nextFloat() - 0.5F) * 0.5;
-                double z = (this.random.nextFloat() - 0.5F) * 0.5;
-                level.sendParticles(AetherParticleTypes.FROZEN.get(), this.getX(), this.getY(), this.getZ(), 1, x, y, z, 0.0F);
-            }
-        }
-    }
-
     /** [VANILLA COPY] - AbstractHurtingProjectile.hurt(DamageSource, float)
      * The ice crystal needs to move only horizontally when attacked, so yPower isn't copied over.
      */
@@ -110,8 +101,8 @@ public class IceCrystal extends AbstractCrystal {
             if (entity != null) {
                 if (!this.level.isClientSide) {
                     Vec3 vec3 = entity.getLookAngle();
-                    this.xPower = vec3.x;
-                    this.zPower = vec3.z;
+                    this.xPower = vec3.x * 2;
+                    this.zPower = vec3.z * 2;
                     this.setDeltaMovement(xPower, 0, zPower);
                     this.setOwner(entity);
                     this.attacked = true;
@@ -133,6 +124,11 @@ public class IceCrystal extends AbstractCrystal {
 
     public SoundEvent getImpactExplosionSoundEvent() {
         return AetherSoundEvents.ENTITY_ICE_CRYSTAL_EXPLODE.get();
+    }
+
+    @Override
+    protected ParticleOptions getExplosionParticle() {
+        return AetherParticleTypes.FROZEN.get();
     }
 
     @Override

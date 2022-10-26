@@ -36,4 +36,9 @@ public class SunSpiritRenderer extends MobRenderer<SunSpirit, SunSpiritModel<Sun
     protected int getBlockLightLevel(SunSpirit sunSpirit, BlockPos pos) {
         return 15;
     }
+
+    @Override
+    protected int getSkyLightLevel(SunSpirit sunSpirit, BlockPos pos) {
+        return 15;
+    }
 }

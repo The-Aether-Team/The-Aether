@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,6 +75,6 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
     @Nonnull
     @Override
     public List<Recipe<?>> getRecipesToAwardAndPopExperience(@Nonnull ServerLevel level, @Nonnull Vec3 experiencePos) {
-        return Lists.newArrayList();
+        return new ArrayList<>();
     }
 }

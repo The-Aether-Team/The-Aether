@@ -19,7 +19,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -32,9 +31,14 @@ public class SkyrootBoatItem extends Item {
         this.hasChest = hasChest;
     }
 
-    @Nonnull
+    /**
+     * Copy of {@link net.minecraft.world.item.BoatItem#use(Level, Player, InteractionHand)}.
+     * @param level The {@link Level} of the user.
+     * @param player The {@link Player} using this item.
+     * @param hand The {@link InteractionHand} in which the item is being used.
+     */
     @Override
-    public InteractionResultHolder<ItemStack> use(@Nonnull Level level, Player player, @Nonnull InteractionHand hand) {
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack heldStack = player.getItemInHand(hand);
         HitResult hitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.ANY);
         if (hitResult.getType() == HitResult.Type.MISS) {
@@ -73,6 +77,12 @@ public class SkyrootBoatItem extends Item {
         }
     }
 
+    /**
+     * Gets a Skyroot Boat dependent on {@link SkyrootBoatItem#hasChest}.
+     * @param level The {@link Level} of the boat.
+     * @param hitResult The {@link HitResult} of attempting to place the boat.
+     * @return The type of {@link Boat}, either a {@link SkyrootChestBoat} or a {@link SkyrootBoat}.
+     */
     private Boat getBoat(Level level, HitResult hitResult) {
         return this.hasChest ? new SkyrootChestBoat(level, hitResult.getLocation().x, hitResult.getLocation().y, hitResult.getLocation().z) : new SkyrootBoat(level, hitResult.getLocation().x, hitResult.getLocation().y, hitResult.getLocation().z);
     }

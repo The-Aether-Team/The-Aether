@@ -13,6 +13,9 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 
 import javax.annotation.Nonnull;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Predicate;
 
 public class LoreBookMenu extends AbstractContainerMenu
 {
@@ -109,8 +112,20 @@ public class LoreBookMenu extends AbstractContainerMenu
         this.loreEntryExists = exists;
     }
 
+    private static final Map<Predicate<ItemStack>, String> LORE_ENTRY_OVERRIDES = new HashMap<>();
+
+    @OnlyIn(Dist.CLIENT)
+    public static void addLoreEntryOverride(Predicate<ItemStack> predicate, String entry) {
+        LORE_ENTRY_OVERRIDES.putIfAbsent(predicate, entry);
+    }
+
     @OnlyIn(Dist.CLIENT)
     public String getLoreEntryKey(ItemStack stack) {
+        for (Predicate<ItemStack> predicate : LORE_ENTRY_OVERRIDES.keySet()) {
+            if (predicate.test(stack)) {
+                return LORE_ENTRY_OVERRIDES.get(predicate);
+            }
+        }
         return "lore." + stack.getDescriptionId();
     }
 

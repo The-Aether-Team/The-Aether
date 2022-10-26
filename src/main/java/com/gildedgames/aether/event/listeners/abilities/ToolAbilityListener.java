@@ -1,11 +1,10 @@
 package com.gildedgames.aether.event.listeners.abilities;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.event.hooks.AbilityHooks;
-import com.gildedgames.aether.item.tools.abilities.GravititeTool;
-import com.gildedgames.aether.item.tools.abilities.HolystoneTool;
-import com.gildedgames.aether.item.tools.abilities.ZaniteTool;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.LevelAccessor;
@@ -13,32 +12,62 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = Aether.MODID)
 public class ToolAbilityListener {
+    /**
+     * @see AbilityHooks.ToolHooks#setupToolActions(LevelAccessor, BlockPos, BlockState, ToolAction)
+     */
+    @SubscribeEvent
+    public static void setupToolModifications(BlockEvent.BlockToolModificationEvent event) {
+        LevelAccessor levelAccessor = event.getLevel();
+        BlockPos pos = event.getPos();
+        BlockState oldState = event.getState();
+        ToolAction toolAction = event.getToolAction();
+        BlockState newState = AbilityHooks.ToolHooks.setupToolActions(levelAccessor, pos, oldState, toolAction);
+        if (newState != oldState && !event.isSimulated() && !event.isCanceled()) {
+            event.setFinalState(newState);
+        }
+    }
+
+    /**
+     * @see AbilityHooks.ToolHooks#handleHolystoneToolAbility(Player, Level, BlockPos, ItemStack) 
+     */
     @SubscribeEvent
     public static void doHolystoneAbility(BlockEvent.BreakEvent event) {
         Player player = event.getPlayer();
         Level level = player.getLevel();
         BlockPos blockPos = event.getPos();
         ItemStack itemStack = player.getMainHandItem();
-        HolystoneTool.dropAmbrosium(player, level, blockPos, itemStack);
+        if (!event.isCanceled()) {
+            AbilityHooks.ToolHooks.handleHolystoneToolAbility(player, level, blockPos, itemStack);
+        }
     }
-
+    
+    /**
+     * @see AbilityHooks.ToolHooks#handleZaniteToolAbility(ItemStack, float)
+     * @see AbilityHooks.ToolHooks#reduceToolEffectiveness(BlockState, ItemStack, float)
+     */
     @SubscribeEvent
-    public static void doZaniteAbility(PlayerEvent.BreakSpeed event) {
-        Player player = event.getEntity();
+    public static void modifyBreakSpeed(PlayerEvent.BreakSpeed event) {
         BlockState blockState = event.getState();
+        Player player = event.getEntity();
         ItemStack itemStack = player.getMainHandItem();
-        Level level = player.getLevel();
-        event.setNewSpeed(ZaniteTool.increaseSpeed(itemStack, event.getNewSpeed()));
-        event.setNewSpeed(AbilityHooks.ToolHooks.reduceToolEffectiveness(level, blockState, itemStack, event.getNewSpeed()));
+        if (!event.isCanceled()) {
+            event.setNewSpeed(AbilityHooks.ToolHooks.handleZaniteToolAbility(itemStack, event.getNewSpeed()));
+            event.setNewSpeed(AbilityHooks.ToolHooks.reduceToolEffectiveness(blockState, itemStack, event.getNewSpeed()));
+        }
     }
 
+    /**
+     * @see AbilityHooks.ToolHooks#handleGravititeToolAbility(Level, BlockPos, ItemStack, BlockState, Player, InteractionHand) 
+     */
     @SubscribeEvent
     public static void doGravititeAbility(BlockEvent.BlockToolModificationEvent event) {
         Level level = event.getContext().getLevel();
@@ -47,22 +76,16 @@ public class ToolAbilityListener {
         BlockState blockState = event.getState();
         Player player = event.getPlayer();
         InteractionHand interactionHand = event.getContext().getHand();
-        if (GravititeTool.floatBlock(level, blockPos, itemStack, blockState, player, interactionHand)) {
-            event.setCanceled(true);
+        if (!event.isSimulated() && !event.isCanceled()) {
+            if (AbilityHooks.ToolHooks.handleGravititeToolAbility(level, blockPos, itemStack, blockState, player, interactionHand)) {
+                event.setCanceled(true);
+            }
         }
     }
 
-    @SubscribeEvent
-    public static void setupToolModifications(BlockEvent.BlockToolModificationEvent event) {
-        LevelAccessor levelAccessor = event.getLevel();
-        BlockPos pos = event.getPos();
-        BlockState oldState = event.getState();
-        ToolAction toolAction = event.getToolAction();
-        BlockState newState = AbilityHooks.ToolHooks.setupToolActions(levelAccessor, pos, oldState, toolAction);
-        if (newState != oldState && !event.isSimulated()) {
-            event.setFinalState(newState);
-        }
-    }
+    /**
+     * @see AbilityHooks.ToolHooks#stripGoldenOak(LevelAccessor, BlockState, ItemStack, ToolAction, UseOnContext)
+     */
     @SubscribeEvent
     public static void doGoldenOakStripping(BlockEvent.BlockToolModificationEvent event) {
         LevelAccessor levelAccessor = event.getLevel();
@@ -70,8 +93,53 @@ public class ToolAbilityListener {
         ItemStack itemStack = event.getHeldItemStack();
         ToolAction toolAction = event.getToolAction();
         UseOnContext context = event.getContext();
-        if (!event.isSimulated()) {
+        if (!event.isSimulated() && !event.isCanceled()) {
             AbilityHooks.ToolHooks.stripGoldenOak(levelAccessor, oldState, itemStack, toolAction, context);
+        }
+    }
+
+    /**
+     * @see ToolAbilityListener#checkEntityTooFar(PlayerEvent, Entity, Player, InteractionHand)
+     */
+    @SubscribeEvent
+    public static void onEntityAttack(AttackEntityEvent event) {
+        checkEntityTooFar(event, event.getTarget(), event.getEntity(), InteractionHand.MAIN_HAND);
+    }
+
+    /**
+     * @see ToolAbilityListener#checkEntityTooFar(PlayerEvent, Entity, Player, InteractionHand)
+     * @see ToolAbilityListener#checkBlockTooFar(PlayerEvent, BlockPos, Player, InteractionHand)
+     */
+    @SubscribeEvent
+    public static void onEntityInteract(PlayerInteractEvent event) {
+        if (event instanceof PlayerInteractEvent.EntityInteractSpecific entityInteractSpecific) {
+            checkEntityTooFar(entityInteractSpecific, entityInteractSpecific.getTarget(), entityInteractSpecific.getEntity(), entityInteractSpecific.getHand());
+        } else if (event instanceof PlayerInteractEvent.EntityInteract entityInteract) {
+            checkEntityTooFar(entityInteract, entityInteract.getTarget(), entityInteract.getEntity(), entityInteract.getHand());
+        } else if (event instanceof PlayerInteractEvent.RightClickBlock rightClickBlock) {
+            checkBlockTooFar(event, rightClickBlock.getPos(), rightClickBlock.getEntity(), rightClickBlock.getHand());
+        } else if (event instanceof PlayerInteractEvent.LeftClickBlock leftClickBlock) {
+            checkBlockTooFar(event, leftClickBlock.getPos(), leftClickBlock.getEntity(), leftClickBlock.getHand());
+        }
+    }
+
+    /**
+     * Cancels the given event if the targeted entity is too far away.
+     * @see AbilityHooks.ToolHooks#entityTooFar(Entity, Player, InteractionHand)
+     */
+    private static void checkEntityTooFar(PlayerEvent event, Entity target, Player player, InteractionHand hand) {
+        if (!event.isCanceled() && AbilityHooks.ToolHooks.entityTooFar(target, player, hand)) {
+            event.setCanceled(true);
+        }
+    }
+
+    /**
+     * Cancels the given event if the targeted block is too far away.
+     * @see AbilityHooks.ToolHooks#blockTooFar(BlockPos, Player, InteractionHand)
+     */
+    private static void checkBlockTooFar(PlayerEvent event, BlockPos target, Player player, InteractionHand hand) {
+        if (!event.isCanceled() && AbilityHooks.ToolHooks.blockTooFar(target, player, hand)) {
+            event.setCanceled(true);
         }
     }
 }

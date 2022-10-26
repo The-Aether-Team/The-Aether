@@ -100,12 +100,18 @@ public class AetherLanguageData extends AetherLanguageProvider
         addBlock(AetherBlocks.TRAPPED_LIGHT_HELLFIRE_STONE, "Trapped Light Hellfire Stone");
 
         addBlock(AetherBlocks.BOSS_DOORWAY_CARVED_STONE, "Boss Doorway Carved Stone");
+        addBlock(AetherBlocks.BOSS_DOORWAY_SENTRY_STONE, "Boss Doorway Sentry Stone");
         addBlock(AetherBlocks.BOSS_DOORWAY_ANGELIC_STONE, "Boss Doorway Angelic Stone");
+        addBlock(AetherBlocks.BOSS_DOORWAY_LIGHT_ANGELIC_STONE, "Boss Doorway Light Angelic Stone");
         addBlock(AetherBlocks.BOSS_DOORWAY_HELLFIRE_STONE, "Boss Doorway Hellfire Stone");
+        addBlock(AetherBlocks.BOSS_DOORWAY_LIGHT_HELLFIRE_STONE, "Boss Doorway Light Hellfire Stone");
 
         addBlock(AetherBlocks.TREASURE_DOORWAY_CARVED_STONE, "Treasure Doorway Carved Stone");
+        addBlock(AetherBlocks.TREASURE_DOORWAY_SENTRY_STONE, "Treasure Doorway Sentry Stone");
         addBlock(AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE, "Treasure Doorway Angelic Stone");
+        addBlock(AetherBlocks.TREASURE_DOORWAY_LIGHT_ANGELIC_STONE, "Treasure Doorway Light Angelic Stone");
         addBlock(AetherBlocks.TREASURE_DOORWAY_HELLFIRE_STONE, "Treasure Doorway Hellfire Stone");
+        addBlock(AetherBlocks.TREASURE_DOORWAY_LIGHT_HELLFIRE_STONE, "Treasure Doorway Light Hellfire Stone");
 
         addBlock(AetherBlocks.CHEST_MIMIC, "Chest Mimic");
         addBlock(AetherBlocks.TREASURE_CHEST, "Treasure Chest");
@@ -159,6 +165,8 @@ public class AetherLanguageData extends AetherLanguageProvider
         addBlock(AetherBlocks.SKYROOT_BOOKSHELF, "Skyroot Bookshelf");
 
         addBlock(AetherBlocks.SKYROOT_BED, "Skyroot Bed");
+
+        addBlock(AetherBlocks.UNSTABLE_OBSIDIAN, "Unstable Obsidian");
 
 
         addItem(AetherItems.SKYROOT_PICKAXE, "Skyroot Pickaxe");
@@ -303,7 +311,7 @@ public class AetherLanguageData extends AetherLanguageProvider
 
         addItem(AetherItems.BRONZE_DUNGEON_KEY, "Bronze Key");
         addItem(AetherItems.SILVER_DUNGEON_KEY, "Silver Key");
-        addItem(AetherItems.GOLD_DUNGEON_KEY, "Golden Key");
+        addItem(AetherItems.GOLD_DUNGEON_KEY, "Gold Key");
 
         addItem(AetherItems.MUSIC_DISC_AETHER_TUNE, "Blue Music Disc");
         addDiscDesc(AetherItems.MUSIC_DISC_AETHER_TUNE, "Noisestorm - Aether Tune");
@@ -421,9 +429,9 @@ public class AetherLanguageData extends AetherLanguageProvider
         addContainerType(AetherMenuTypes.ALTAR, "Altar");
         addContainerType(AetherMenuTypes.FREEZER, "Freezer");
         addContainerType(AetherMenuTypes.INCUBATOR, "Incubator");
-        addContainerType("bronze_dungeon_chest", "Bronze Dungeon Chest");
-        addContainerType("silver_dungeon_chest", "Silver Dungeon Chest");
-        addContainerType("gold_dungeon_chest", "Gold Dungeon Chest");
+        addContainerType("bronze_treasure_chest", "Bronze Treasure Chest");
+        addContainerType("silver_treasure_chest", "Silver Treasure Chest");
+        addContainerType("gold_treasure_chest", "Gold Treasure Chest");
         addContainerType("sun_altar", "Sun Altar");
 
 
@@ -467,6 +475,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addSubtitle("block", "aether_portal.trigger", "Aether Portal noise intensifies");
         addSubtitle("block", "chest_mimic.open", "Mimic awakens");
         addSubtitle("block", "dungeon_trap.trigger", "Dungeon Trap activated");
+        addSubtitle("block", "aether.water.evaporate", "Water evaporated");
 
         addSubtitle("item", "dart_shooter.shoot", "Dart Shooter fired");
         addSubtitle("item", "lightning_knife.shoot", "Lightning Knife flies");
@@ -581,7 +590,9 @@ public class AetherLanguageData extends AetherLanguageProvider
         addDeath("inebriation", "%1$s was inebriated");
         addDeath("inebriation.player", "%1$s was inebriated by %2$s");
         addDeath("crush", "%1$s was crushed by %2$s");
+        addDeath("fire_crystal", "%1$s was incinerated by %2$s's Fire Crystal");
         addDeath("ice_crystal", "%1$s was chilled by %2$s's Ice Crystal");
+        addDeath("thunder_crystal", "%1$s was zapped by %2$s's Thunder Crystal");
         addDeath("incineration", "%1$s was incinerated by %2$s");
 
 
@@ -606,6 +617,12 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("recipebook.toggleRecipes.enchantable", "Showing Enchantable");
         addGuiText("recipebook.toggleRecipes.freezable", "Showing Freezable");
         addGuiText("recipebook.toggleRecipes.incubatable", "Showing Incubatable");
+
+        addGuiText("jei.altar.enchanting", "Enchanting");
+        addGuiText("jei.altar.repairing", "Repairing");
+        addGuiText("jei.freezing", "Freezing");
+        addGuiText("jei.incubating", "Incubating");
+        addGuiText("jei.fuel", "Aether Fuel");
 
 
         addGuiText("slider.title", "the Slider");
@@ -642,6 +659,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("queen.dialog.no_medals", "Take your time.");
         addGuiText("queen.dialog.peaceful", "Sorry, I don't fight with weaklings.");
         addGuiText("queen.dialog.playerdeath", "As expected of a human.");
+        addGuiText("queen.dialog.begin", "Now then, let's begin!");
         addGuiText("queen.dialog.ready", "If you wish to challenge me, strike at any time.");
         addGuiText("queen.title", "the Valkyrie Queen");
 
@@ -655,6 +673,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         //Sun spirit dialogue
         addGuiText("sun_spirit.title", "the Sun Spirit");
         addGuiText("sun_spirit.dead", "Such bitter cold... is this the feeling... of pain?");
+        addGuiText("sun_spirit.playerdeath", "Such is the fate of a being who opposes the might of the sun.");
         addGuiText("sun_spirit.line0", "You are certainly a brave soul to have entered this chamber.");
         addGuiText("sun_spirit.line1", "Begone human, you serve no purpose here.");
         addGuiText("sun_spirit.line2", "Your presence annoys me. Do you not fear my burning aura?");
@@ -696,9 +715,9 @@ public class AetherLanguageData extends AetherLanguageProvider
 
 
         addMessage("life_shard_limit", "You can only use a total of %s Life Shards.");
-        addMessage("bronze_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Bronze Key.");
-        addMessage("silver_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Silver Key.");
-        addMessage("gold_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Golden Key.");
+        addMessage("bronze_treasure_chest_locked", "This Treasure Chest must be unlocked with a Bronze Key.");
+        addMessage("silver_treasure_chest_locked", "This Treasure Chest must be unlocked with a Silver Key.");
+        addMessage("gold_treasure_chest_locked", "This Treasure Chest must be unlocked with a Gold Key.");
         addMessage("sun_altar.in_control", "The sun spirit is still in control of this realm.");
         addMessage("sun_altar.no_permission", "You don't have permission to use this.");
         addMessage("sun_altar.no_power", "The sun spirit has no power over this realm.");
@@ -977,6 +996,8 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "A music disc that plays Welcoming Skies by Voyed.");
         addLore(AetherItems.MUSIC_DISC_CHINCHILLA,"A music disc that plays chinchilla by RENREN.");
 
+        addLoreUnique("item.aether.hammer_of_jeb", "A mysterious hammer that can shoot projectiles. At one point it vanished from existence. It's said this was actually Jeb's hammer at one point.");
+
 
         addProTip("skyroot_tool_ability", "Skyroot tools gain double drops from blocks.");
         addProTip("holystone_tool_ability", "Holystone tools occasionally generate Ambrosium.");
@@ -1042,6 +1063,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addCommonConfig("gameplay", "tools_debuff", "Tools that aren't from the Aether will mine all blocks slower than ones that are from the Aether");
         addCommonConfig("gameplay", "edible_ambrosium", "Ambrosium Shards can be eaten to restore a half heart of health");
         addCommonConfig("gameplay", "healing_gummy_swets", "Gummy Swets when eaten restore full health instead of full hunger");
+        addCommonConfig("gameplay", "temporary_ice_accessory_conversion", "Ice Accessories will create temporary blocks instead of permanent blocks from conversions");
         addCommonConfig("gameplay", "maximum_life_shards", "Determines the limit of the amount of Life Shards a player can consume to increase their health");
         addCommonConfig("gameplay", "repeat_sun_spirit_dialogue", "Determines whether the Sun Spirit's dialogue when meeting him should play through every time you meet him");
 

@@ -225,9 +225,9 @@ public class AetherRecipeData extends AetherRecipeProvider
 
         ShapelessRecipeBuilder.shapeless(AetherItems.POISON_DART_SHOOTER.get(), 1)
                 .requires(AetherItems.GOLDEN_DART_SHOOTER.get())
-                .requires(AetherItems.SKYROOT_POISON_BUCKET.get())
+                .requires(AetherItems.AECHOR_PETAL.get())
                 .unlockedBy("has_golden_dart_shooter", has(AetherItems.GOLDEN_DART_SHOOTER.get()))
-                .unlockedBy("has_poison_bucket", has(AetherItems.SKYROOT_POISON_BUCKET.get()))
+                .unlockedBy("has_aechor_petal", has(AetherItems.AECHOR_PETAL.get()))
                 .save(consumer);
 
         makeHelmet(AetherItems.ZANITE_HELMET, AetherItems.ZANITE_GEMSTONE).save(consumer);
@@ -313,8 +313,8 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .save(consumer);
 
         ShapelessRecipeBuilder.shapeless(AetherItems.SKYROOT_CHEST_BOAT.get(), 1)
+                .requires(Tags.Items.CHESTS_WOODEN)
                 .requires(AetherItems.SKYROOT_BOAT.get())
-                .requires(Tags.Items.CHESTS)
                 .unlockedBy("has_boat", has(AetherItems.SKYROOT_BOAT.get()))
                 .group("chest_boat")
                 .save(consumer);
@@ -326,16 +326,6 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .define('S', Items.STRING)
                 .unlockedBy("has_leather", has(Items.LEATHER))
                 .save(consumer, name("aether_saddle"));
-
-        ShapedRecipeBuilder.shaped(Items.LEAD, 2)
-                .pattern("SS ")
-                .pattern("SB ")
-                .pattern("  S")
-                .define('B', AetherItems.SWET_BALL.get())
-                .define('S', Tags.Items.STRING)
-                .unlockedBy("has_swet_ball", has(AetherItems.SWET_BALL.get()))
-                .group("lead")
-                .save(consumer, name("swet_lead"));
 
         ShapedRecipeBuilder.shaped(AetherBlocks.SKYROOT_DOOR.get(), 3)
                 .pattern("SS")
@@ -363,7 +353,6 @@ public class AetherRecipeData extends AetherRecipeProvider
         ShapelessRecipeBuilder.shapeless(AetherBlocks.HOLYSTONE_BUTTON.get(), 1)
                 .requires(AetherBlocks.HOLYSTONE.get())
                 .unlockedBy("has_holystone", has(AetherBlocks.HOLYSTONE.get()))
-                .group("button")
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(AetherBlocks.SKYROOT_PRESSURE_PLATE.get(), 1)
@@ -377,8 +366,18 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .pattern("HH")
                 .define('H', AetherBlocks.HOLYSTONE.get())
                 .unlockedBy("has_holystone", has(AetherBlocks.HOLYSTONE.get()))
-                .group("pressure_plate")
                 .save(consumer);
+
+        // The group IDs below match the IDs of the respective vanilla recipes
+        ShapedRecipeBuilder.shaped(Items.LEAD, 2)
+                .pattern("SS ")
+                .pattern("SB ")
+                .pattern("  S")
+                .define('B', AetherItems.SWET_BALL.get())
+                .define('S', Tags.Items.STRING)
+                .unlockedBy("has_swet_ball", has(AetherItems.SWET_BALL.get()))
+                .group("minecraft:lead")
+                .save(consumer, name("swet_lead"));
 
         ShapedRecipeBuilder.shaped(Blocks.BARREL, 1)
                 .pattern("SHS")
@@ -388,7 +387,7 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .define('H', ItemTags.WOODEN_SLABS)
                 .unlockedBy("has_skyroot", has(AetherBlocks.SKYROOT_PLANKS.get()))
                 .unlockedBy("has_skyroot_slab", has(AetherBlocks.SKYROOT_SLAB.get()))
-                .group("barrel")
+                .group("minecraft:barrel")
                 .save(consumer, name("skyroot_barrel"));
 
         ShapedRecipeBuilder.shaped(Blocks.BEEHIVE, 1)
@@ -398,7 +397,7 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .define('S', AetherTags.Items.PLANKS_CRAFTING)
                 .define('C', Items.HONEYCOMB)
                 .unlockedBy("has_honeycomb", has(Items.HONEYCOMB))
-                .group("beehive")
+                .group("minecraft:beehive")
                 .save(consumer, name("skyroot_beehive"));
 
         ShapedRecipeBuilder.shaped(Blocks.CARTOGRAPHY_TABLE, 1)
@@ -408,7 +407,7 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .define('P', Items.PAPER)
                 .define('S', AetherTags.Items.PLANKS_CRAFTING)
                 .unlockedBy("has_paper", has(Items.PAPER))
-                .group("cartography_table")
+                .group("minecraft:cartography_table")
                 .save(consumer, name("skyroot_cartography_table"));
 
         ShapedRecipeBuilder.shaped(Blocks.CHEST, 1)
@@ -417,7 +416,7 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .pattern("SSS")
                 .define('S', AetherTags.Items.PLANKS_CRAFTING)
                 .unlockedBy("has_lots_of_items", new InventoryChangeTrigger.TriggerInstance(EntityPredicate.Composite.ANY, MinMaxBounds.Ints.atLeast(10), MinMaxBounds.Ints.ANY, MinMaxBounds.Ints.ANY, new ItemPredicate[0]))
-                .group("chest")
+                .group("minecraft:chest")
                 .save(consumer, name("skyroot_chest"));
 
         ShapedRecipeBuilder.shaped(Blocks.CRAFTING_TABLE, 1)
@@ -425,7 +424,7 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .pattern("SS")
                 .define('S', AetherTags.Items.PLANKS_CRAFTING)
                 .unlockedBy("has_skyroot", has(AetherBlocks.SKYROOT_PLANKS.get()))
-                .group("crafting_table")
+                .group("minecraft:crafting_table")
                 .save(consumer, name("skyroot_crafting_table"));
 
         ShapedRecipeBuilder.shaped(Blocks.FLETCHING_TABLE, 1)
@@ -435,7 +434,7 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .define('F', Items.FLINT)
                 .define('S', AetherTags.Items.PLANKS_CRAFTING)
                 .unlockedBy("has_flint", has(Items.FLINT))
-                .group("fletching_table")
+                .group("minecraft:fletching_table")
                 .save(consumer, name("skyroot_fletching_table"));
 
         ShapedRecipeBuilder.shaped(Blocks.GRINDSTONE, 1)
@@ -445,7 +444,7 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .define('H', Blocks.STONE_SLAB)
                 .define('S', AetherTags.Items.PLANKS_CRAFTING)
                 .unlockedBy("has_stone_slab", has(Blocks.STONE_SLAB))
-                .group("grindstone")
+                .group("minecraft:grindstone")
                 .save(consumer, name("skyroot_grindstone"));
 
         ShapedRecipeBuilder.shaped(Blocks.JUKEBOX, 1)
@@ -455,7 +454,7 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .define('S', AetherTags.Items.PLANKS_CRAFTING)
                 .define('D', Tags.Items.GEMS_DIAMOND)
                 .unlockedBy("has_diamond", has(Tags.Items.GEMS_DIAMOND))
-                .group("jukebox")
+                .group("minecraft:jukebox")
                 .save(consumer, name("skyroot_jukebox"));
 
         ShapedRecipeBuilder.shaped(Blocks.JUKEBOX, 1)
@@ -465,7 +464,7 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .define('P', ItemTags.PLANKS)
                 .define('G', AetherBlocks.ENCHANTED_GRAVITITE.get())
                 .unlockedBy("has_gravitite", has(AetherBlocks.ENCHANTED_GRAVITITE.get()))
-                .group("jukebox")
+                .group("minecraft:jukebox")
                 .save(consumer, name("gravitite_jukebox"));
 
         ShapedRecipeBuilder.shaped(Blocks.JUKEBOX, 1)
@@ -475,7 +474,7 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .define('S', AetherTags.Items.PLANKS_CRAFTING)
                 .define('G', AetherBlocks.ENCHANTED_GRAVITITE.get())
                 .unlockedBy("has_gravitite", has(AetherBlocks.ENCHANTED_GRAVITITE.get()))
-                .group("jukebox")
+                .group("minecraft:jukebox")
                 .save(consumer, name("skyroot_gravitite_jukebox"));
 
         ShapedRecipeBuilder.shaped(Blocks.LOOM, 1)
@@ -484,7 +483,7 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .define('T', Tags.Items.STRING)
                 .define('S', AetherTags.Items.PLANKS_CRAFTING)
                 .unlockedBy("has_string", has(Tags.Items.STRING))
-                .group("loom")
+                .group("minecraft:loom")
                 .save(consumer, name("skyroot_loom"));
 
         ShapedRecipeBuilder.shaped(Blocks.NOTE_BLOCK, 1)
@@ -494,7 +493,7 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .define('S', AetherTags.Items.PLANKS_CRAFTING)
                 .define('R', Tags.Items.DUSTS_REDSTONE)
                 .unlockedBy("has_redstone", has(Tags.Items.DUSTS_REDSTONE))
-                .group("note_block")
+                .group("minecraft:note_block")
                 .save(consumer, name("skyroot_note_block"));
 
         ShapedRecipeBuilder.shaped(Blocks.PISTON, 1)
@@ -506,7 +505,7 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .define('I', Tags.Items.INGOTS_IRON)
                 .define('R', Tags.Items.DUSTS_REDSTONE)
                 .unlockedBy("has_redstone", has(Tags.Items.DUSTS_REDSTONE))
-                .group("piston")
+                .group("minecraft:piston")
                 .save(consumer, name("skyroot_piston"));
 
         ShapedRecipeBuilder.shaped(Items.SHIELD, 1)
@@ -516,7 +515,7 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .define('S', AetherTags.Items.PLANKS_CRAFTING)
                 .define('I', Tags.Items.INGOTS_IRON)
                 .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
-                .group("shield")
+                .group("minecraft:shield")
                 .save(consumer, name("skyroot_shield"));
 
         ShapedRecipeBuilder.shaped(Blocks.SMITHING_TABLE, 1)
@@ -526,7 +525,7 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .define('I', Tags.Items.INGOTS_IRON)
                 .define('S', AetherTags.Items.PLANKS_CRAFTING)
                 .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
-                .group("smithing_table")
+                .group("minecraft:smithing_table")
                 .save(consumer, name("skyroot_smithing_table"));
 
         ShapedRecipeBuilder.shaped(Blocks.TRIPWIRE_HOOK, 2)
@@ -537,26 +536,8 @@ public class AetherRecipeData extends AetherRecipeProvider
                 .define('T', Tags.Items.RODS_WOODEN)
                 .define('S', AetherTags.Items.PLANKS_CRAFTING)
                 .unlockedBy("has_string", has(Tags.Items.STRING))
-                .group("tripwire_hook")
+                .group("minecraft:tripwire_hook")
                 .save(consumer, name("skyroot_tripwire_hook"));
-
-        ShapedRecipeBuilder.shaped(Blocks.BREWING_STAND, 1)
-                .pattern(" B ")
-                .pattern("HHH")
-                .define('B', Tags.Items.RODS_BLAZE)
-                .define('H', AetherTags.Items.STONE_CRAFTING)
-                .unlockedBy("has_blaze_rod", has(Items.BLAZE_ROD))
-                .group("brewing_stand")
-                .save(consumer, name("holystone_brewing_stand"));
-
-        ShapedRecipeBuilder.shaped(Blocks.FURNACE, 1)
-                .pattern("HHH")
-                .pattern("H H")
-                .pattern("HHH")
-                .define('H', AetherTags.Items.STONE_CRAFTING)
-                .unlockedBy("has_holystone", has(AetherBlocks.HOLYSTONE.get()))
-                .group("furnace")
-                .save(consumer, name("holystone_furnace"));
 
         smeltingRecipe(AetherItems.AMBROSIUM_SHARD.get(), AetherBlocks.AMBROSIUM_ORE.get(), 0.1F).save(consumer, name("smelt_ambrosium"));
         blastingRecipe(AetherItems.AMBROSIUM_SHARD.get(), AetherBlocks.AMBROSIUM_ORE.get(), 0.1F).save(consumer, name("blast_ambrosium"));
@@ -773,8 +754,8 @@ public class AetherRecipeData extends AetherRecipeProvider
         icestoneFreezable(Blocks.ICE, Blocks.WATER).save(consumer, name("icestone_freeze_water"));
         icestoneFreezable(Blocks.OBSIDIAN, Blocks.LAVA).save(consumer, name("icestone_freeze_lava"));
 
-        accessoryFreezable(Blocks.ICE, Blocks.WATER).save(consumer, name("accessory_freeze_water"));
-        accessoryFreezable(Blocks.OBSIDIAN, Blocks.LAVA).save(consumer, name("accessory_freeze_lava"));
+        conditionalAccessoryFreezing(accessoryFreezable(Blocks.FROSTED_ICE, Blocks.WATER), accessoryFreezable(Blocks.ICE, Blocks.WATER)).build(consumer, name("accessory_freeze_water"));
+        conditionalAccessoryFreezing(accessoryFreezable(AetherBlocks.UNSTABLE_OBSIDIAN.get(), Blocks.LAVA), accessoryFreezable(Blocks.OBSIDIAN, Blocks.LAVA)).build(consumer, name("accessory_freeze_lava"));
 
         convertPlacement(AetherBlocks.AEROGEL.get(), Blocks.LAVA, AetherTags.Biomes.ULTRACOLD).save(consumer, name("aerogel_conversion"));
         convertPlacementWithProperties(Blocks.CAMPFIRE, Map.of(CampfireBlock.LIT, false), Blocks.CAMPFIRE, Map.of(CampfireBlock.LIT, true), AetherTags.Biomes.ULTRACOLD).save(consumer, name("campfire_conversion"));

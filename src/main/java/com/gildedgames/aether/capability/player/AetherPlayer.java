@@ -71,6 +71,9 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 	void setProjectileImpactedTimer(int timer);
 	int getProjectileImpactedTimer();
 
+	void setVampireHealing(boolean performVampireHealing);
+	boolean performVampireHealing();
+
 	void setMountedAerbunny(Aerbunny mountedAerbunny);
 	Aerbunny getMountedAerbunny();
 	void setMountedAerbunnyTag(CompoundTag mountedAerbunny);

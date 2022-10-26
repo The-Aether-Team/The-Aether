@@ -22,7 +22,7 @@ public record BlockPropertyPair(Block block, Map<Property<?>, Comparable<?>> pro
 
     public static boolean propertiesMatch(BlockState state, Map<Property<?>, Comparable<?>> properties) {
         if (!properties.isEmpty()) {
-            HashSet<Map.Entry<Property<?>, Comparable<?>>> stateProperties = Sets.newHashSet();
+            HashSet<Map.Entry<Property<?>, Comparable<?>>> stateProperties = new HashSet<>();
             stateProperties.addAll(state.getValues().entrySet());
             return stateProperties.containsAll(properties.entrySet());
         }

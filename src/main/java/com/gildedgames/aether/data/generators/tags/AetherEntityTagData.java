@@ -9,6 +9,7 @@ import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.tags.EntityTypeTags;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import javax.annotation.Nonnull;
@@ -41,6 +42,9 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
                 EntityType.PLAYER,
                 EntityType.WITHER,
                 EntityType.ENDER_DRAGON);
+        tag(AetherTags.Entities.NO_AMBROSIUM_DROPS).add(EntityType.PLAYER);
+        tag(AetherTags.Entities.UNLAUNCHABLE);
+        tag(AetherTags.Entities.NO_CANDY_CANE_DROPS).add(EntityType.PLAYER);
         tag(AetherTags.Entities.DEFLECTABLE_PROJECTILES).addTag(EntityTypeTags.ARROWS).add(
                 EntityType.EGG,
                 EntityType.SMALL_FIREBALL,
@@ -77,6 +81,13 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
         tag(AetherTags.Entities.AERCLOUD_SPAWNABLE).add(
                 AetherEntityTypes.AERWHALE.get(),
                 AetherEntityTypes.ZEPHYR.get()
+        );
+
+        //forge
+        tag(Tags.EntityTypes.BOSSES).add(
+                AetherEntityTypes.SLIDER.get(),
+                AetherEntityTypes.VALKYRIE_QUEEN.get(),
+                AetherEntityTypes.SUN_SPIRIT.get()
         );
 
         //vanilla

@@ -12,6 +12,7 @@ import top.theillusivec4.curios.api.CuriosApi;
 
 public class AetherTags {
 	public static class Blocks {
+		public static final TagKey<Block> TREATED_AS_VANILLA_BLOCK = tag("treated_as_vanilla_block");
 		public static final TagKey<Block> AETHER_PORTAL_BLOCKS = tag("aether_portal_blocks");
 		public static final TagKey<Block> AETHER_ISLAND_BLOCKS = tag("aether_island_blocks");
 		public static final TagKey<Block> AETHER_DIRT = tag("aether_dirt");
@@ -24,6 +25,8 @@ public class AetherTags {
 		public static final TagKey<Block> DUNGEON_BLOCKS = tag("dungeon_blocks");
 		public static final TagKey<Block> LOCKED_DUNGEON_BLOCKS = tag("locked_dungeon_blocks");
 		public static final TagKey<Block> TRAPPED_DUNGEON_BLOCKS = tag("trapped_dungeon_blocks");
+		public static final TagKey<Block> BOSS_DOORWAY_DUNGEON_BLOCKS = tag("boss_doorway_dungeon_blocks");
+		public static final TagKey<Block> TREASURE_DOORWAY_DUNGEON_BLOCKS = tag("treasure_doorway_dungeon_blocks");
 		public static final TagKey<Block> SENTRY_BLOCKS = tag("sentry_blocks");
 		public static final TagKey<Block> ANGELIC_BLOCKS = tag("angelic_blocks");
 		public static final TagKey<Block> HELLFIRE_BLOCKS = tag("hellfire_blocks");
@@ -38,6 +41,7 @@ public class AetherTags {
 		public static final TagKey<Block> ALLOWED_FLAMMABLES = tag("allowed_flammables");
 		public static final TagKey<Block> QUICKSOIL_CAN_GENERATE = tag("quicksoil_can_generate");
 		public static final TagKey<Block> VALKYRIE_TELEPORTABLE_ON = tag("valkyrie_teleportable_on");
+		public static final TagKey<Block> TREATED_AS_AETHER_BLOCK = tag("treated_as_aether_block");
 
 		private static TagKey<Block> tag(String name) {
 			return TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Aether.MODID, name));
@@ -54,25 +58,19 @@ public class AetherTags {
 		public static final TagKey<Item> DUNGEON_BLOCKS = tag("dungeon_blocks");
 		public static final TagKey<Item> LOCKED_DUNGEON_BLOCKS = tag("locked_dungeon_blocks");
 		public static final TagKey<Item> TRAPPED_DUNGEON_BLOCKS = tag("trapped_dungeon_blocks");
+		public static final TagKey<Item> BOSS_DOORWAY_DUNGEON_BLOCKS = tag("boss_doorway_dungeon_blocks");
+		public static final TagKey<Item> TREASURE_DOORWAY_DUNGEON_BLOCKS = tag("treasure_doorway_dungeon_blocks");
+		public static final TagKey<Item> SENTRY_BLOCKS = tag("sentry_blocks");
+		public static final TagKey<Item> ANGELIC_BLOCKS = tag("angelic_blocks");
+		public static final TagKey<Item> HELLFIRE_BLOCKS = tag("hellfire_blocks");
 
 		public static final TagKey<Item> PLANKS_CRAFTING = tag("planks_crafting");
-		public static final TagKey<Item> STONE_CRAFTING = tag("stone_crafting");
 
 		public static final TagKey<Item> AETHER_PORTAL_ACTIVATION_ITEMS = tag("aether_portal_activation_items");
 		public static final TagKey<Item> BOOK_OF_LORE_MATERIALS = tag("book_of_lore_materials");
 		public static final TagKey<Item> SKYROOT_STICKS = tag("skyroot_stick");
-		public static final TagKey<Item> EFFECTIVE_IN_AETHER = tag("effective_in_aether");
-		public static final TagKey<Item> SKYROOT_TOOLS = tag("skyroot_tools");
-		public static final TagKey<Item> SKYROOT_WEAPONS = tag("skyroot_weapons");
-		public static final TagKey<Item> HOLYSTONE_TOOLS = tag("holystone_tools");
-		public static final TagKey<Item> HOLYSTONE_WEAPONS = tag("holystone_weapons");
-		public static final TagKey<Item> ZANITE_TOOLS = tag("zanite_tools");
-		public static final TagKey<Item> ZANITE_WEAPONS = tag("zanite_weapons");
-		public static final TagKey<Item> GRAVITITE_TOOLS = tag("gravitite_tools");
-		public static final TagKey<Item> GRAVITITE_WEAPONS = tag("gravitite_weapons");
-		public static final TagKey<Item> VALKYRIE_TOOLS = tag("valkyrie_tools");
-		public static final TagKey<Item> VALKYRIE_WEAPONS = tag("valkyrie_weapons");
 		public static final TagKey<Item> GOLDEN_AMBER_HARVESTERS = tag("golden_amber_harvesters");
+		public static final TagKey<Item> TREATED_AS_AETHER_ITEM = tag("treated_as_aether_item");
 		public static final TagKey<Item> NO_SKYROOT_DOUBLE_DROPS = tag("no_skyroot_double_drops");
 		public static final TagKey<Item> PIG_DROPS = tag("pig_drops");
 		public static final TagKey<Item> DARTS = tag("darts");
@@ -93,6 +91,24 @@ public class AetherTags {
 		public static final TagKey<Item> AERBUNNY_TEMPTATION_ITEMS = tag("aerbunny_temptation_items");
 		public static final TagKey<Item> MOA_TEMPTATION_ITEMS = tag("moa_temptation_items");
 		public static final TagKey<Item> MOA_FOOD_ITEMS = tag("moa_food_items");
+
+		public static final TagKey<Item> SKYROOT_REPAIRING = tag("skyroot_repairing");
+		public static final TagKey<Item> HOLYSTONE_REPAIRING = tag("holystone_repairing");
+		public static final TagKey<Item> ZANITE_REPAIRING = tag("zanite_repairing");
+		public static final TagKey<Item> GRAVITITE_REPAIRING = tag("gravitite_repairing");
+		public static final TagKey<Item> VALKYRIE_REPAIRING = tag("valkyrie_repairing");
+		public static final TagKey<Item> FLAMING_REPAIRING = tag("flaming_repairing");
+		public static final TagKey<Item> LIGHTNING_REPAIRING = tag("lightning_repairing");
+		public static final TagKey<Item> HOLY_REPAIRING = tag("holy_repairing");
+		public static final TagKey<Item> VAMPIRE_REPAIRING = tag("vampire_repairing");
+		public static final TagKey<Item> PIG_SLAYER_REPAIRING = tag("pig_slayer_repairing");
+		public static final TagKey<Item> HAMMER_OF_NOTCH_REPAIRING = tag("hammer_of_notch_repairing");
+		public static final TagKey<Item> CANDY_CANE_REPAIRING = tag("candy_cane_repairing");
+		public static final TagKey<Item> NEPTUNE_REPAIRING = tag("neptune_repairing");
+		public static final TagKey<Item> PHOENIX_REPAIRING = tag("phoenix_repairing");
+		public static final TagKey<Item> OBSIDIAN_REPAIRING = tag("obsidian_repairing");
+		public static final TagKey<Item> SENTRY_REPAIRING = tag("sentry_repairing");
+		public static final TagKey<Item> ICE_REPAIRING = tag("ice_repairing");
 
 		public static final TagKey<Item> TOOLS_LANCES = tag("tools/lances");
 		public static final TagKey<Item> TOOLS_HAMMERS = tag("tools/hammers");
@@ -118,6 +134,9 @@ public class AetherTags {
 	public static class Entities {
 		public static final TagKey<EntityType<?>> PIGS = tag("pigs");
 		public static final TagKey<EntityType<?>> NO_SKYROOT_DOUBLE_DROPS = tag("no_skyroot_double_drops");
+		public static final TagKey<EntityType<?>> NO_AMBROSIUM_DROPS = tag("no_ambrosium_drops");
+		public static final TagKey<EntityType<?>> UNLAUNCHABLE = tag("unlaunchable");
+		public static final TagKey<EntityType<?>> NO_CANDY_CANE_DROPS = tag("no_candy_cane_drops");
 		public static final TagKey<EntityType<?>> DEFLECTABLE_PROJECTILES = tag("deflectable_projectiles");
 		public static final TagKey<EntityType<?>> SWET_TARGETS = tag("swet_targets");
 		public static final TagKey<EntityType<?>> AECHOR_PLANT_TARGETS = tag("aechor_plant_targets");
