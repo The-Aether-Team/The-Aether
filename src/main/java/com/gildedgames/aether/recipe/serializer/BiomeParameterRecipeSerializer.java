@@ -5,6 +5,7 @@ import com.gildedgames.aether.recipe.BlockStateIngredient;
 import com.gildedgames.aether.recipe.recipes.block.AbstractBiomeParameterRecipe;
 import com.gildedgames.aether.util.BlockStateRecipeUtil;
 import com.google.gson.JsonObject;
+import net.minecraft.commands.CommandFunction;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -30,7 +31,7 @@ public class BiomeParameterRecipeSerializer<T extends AbstractBiomeParameterReci
         ResourceKey<Biome> biomeKey = biomeRecipeData.getLeft();
         TagKey<Biome> biomeTag = biomeRecipeData.getRight();
         T recipe = super.fromJson(recipeId, serializedRecipe);
-        return this.factory.create(recipeId, biomeKey, biomeTag, recipe.getIngredient(), recipe.getResult());
+        return this.factory.create(recipeId, biomeKey, biomeTag, recipe.getIngredient(), recipe.getResult(), recipe.getMcfunction());
     }
 
     @Nullable
@@ -40,7 +41,7 @@ public class BiomeParameterRecipeSerializer<T extends AbstractBiomeParameterReci
         TagKey<Biome> biomeTag = BlockStateRecipeUtil.readBiomeTag(buf);
         BlockStateIngredient ingredient = BlockStateIngredient.fromNetwork(buf);
         BlockPropertyPair result = BlockStateRecipeUtil.readPair(buf);
-        return this.factory.create(recipeId, biomeKey, biomeTag, ingredient, result);
+        return this.factory.create(recipeId, biomeKey, biomeTag, ingredient, result, CommandFunction.CacheableFunction.NONE);
     }
 
     @Override
@@ -51,6 +52,6 @@ public class BiomeParameterRecipeSerializer<T extends AbstractBiomeParameterReci
     }
 
     public interface CookieBaker<T extends AbstractBiomeParameterRecipe> {
-        T create(ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result);
+        T create(ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, CommandFunction.CacheableFunction function);
     }
 }

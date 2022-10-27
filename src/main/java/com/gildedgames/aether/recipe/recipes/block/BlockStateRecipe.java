@@ -2,6 +2,7 @@ package com.gildedgames.aether.recipe.recipes.block;
 
 import com.gildedgames.aether.recipe.BlockPropertyPair;
 import com.gildedgames.aether.recipe.BlockStateIngredient;
+import net.minecraft.commands.CommandFunction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -17,6 +18,8 @@ public interface BlockStateRecipe extends Recipe<Container> {
     BlockPropertyPair getResult();
 
     BlockState getResultState(BlockState originalState);
+
+    CommandFunction.CacheableFunction getMcfunction();
 
     @Override
     default boolean matches(@Nonnull Container container, @Nonnull Level level) {

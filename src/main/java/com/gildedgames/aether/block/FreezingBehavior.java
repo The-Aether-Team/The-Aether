@@ -2,6 +2,8 @@ package com.gildedgames.aether.block;
 
 import com.gildedgames.aether.event.events.FreezeEvent;
 import com.gildedgames.aether.util.ConstantsUtil;
+import net.minecraft.commands.CommandFunction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
@@ -10,6 +12,9 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
+
+import javax.annotation.Nullable;
 
 public interface FreezingBehavior<T> {
     /**
@@ -93,7 +98,7 @@ public interface FreezingBehavior<T> {
      * @param pos The {@link BlockPos} to freeze at.
      * @param source The source causing the freezing, which is accepted as {@link T}.
      * @param flag The {@link Integer} placement flag.
-     * @return An {@link Integer} added up from the blocks being frozen. See {@link FreezingBehavior#freezeBlockAt(Level, BlockPos, BlockState, BlockState, Object, int)}.
+     * @return An {@link Integer} added up from the blocks being frozen. See {@link FreezingBehavior#freezeBlockAt(Level, BlockPos, BlockState, BlockState, CommandFunction.CacheableFunction, Object, int)}.
      */
     int freezeFromRecipe(Level level, BlockPos pos, T source, int flag);
 
@@ -103,11 +108,12 @@ public interface FreezingBehavior<T> {
      * @param pos The {@link BlockPos} to freeze at.
      * @param oldBlockState The original {@link BlockState} being frozen.
      * @param newBlockState The new {@link BlockState} to freeze into.
+     * @param mcfunction The {@link CommandFunction.CacheableFunction} to run after freezing.
      * @param source The source causing the freezing, which is accepted as {@link T}.
      * @param flag The {@link Integer} placement flag.
      * @return An {@link Integer} 0 if the block failed to freeze or 1 if it succeeded
      */
-    default int freezeBlockAt(Level level, BlockPos pos, BlockState oldBlockState, BlockState newBlockState, T source, int flag) {
+    default int freezeBlockAt(Level level, BlockPos pos, BlockState oldBlockState, BlockState newBlockState, @Nullable CommandFunction.CacheableFunction mcfunction, T source, int flag) {
         FreezeEvent event = this.onFreeze(level, pos, oldBlockState, newBlockState, source);
         if (!event.isCanceled()) {
             level.setBlock(pos, newBlockState, flag);
@@ -117,6 +123,14 @@ public interface FreezingBehavior<T> {
             if (oldBlockState.getFluidState().is(FluidTags.LAVA)) {
                 level.playSound(null, pos, SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
             }
+            var serverLevel = (ServerLevel) level;
+            var server = serverLevel.getServer();
+            mcfunction.get(server.getFunctions()).ifPresent(command -> {
+                var context = server.getFunctions().getGameLoopSender()
+                        .withPosition(Vec3.atBottomCenterOf(pos))
+                        .withLevel(serverLevel);
+                server.getFunctions().execute(command, context);
+            });
             return 1;
         }
         return 0;

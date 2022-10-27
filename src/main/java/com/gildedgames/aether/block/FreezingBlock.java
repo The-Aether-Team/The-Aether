@@ -7,6 +7,7 @@ import com.gildedgames.aether.recipe.BlockPropertyPair;
 import com.gildedgames.aether.recipe.recipes.block.IcestoneFreezableRecipe;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
+import net.minecraft.commands.CommandFunction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
@@ -48,7 +49,8 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
                         IcestoneFreezableRecipe freezableRecipe = cachedBlocks.get(oldBlock, pair);
                         if (freezableRecipe != null) {
                             BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                            return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, source, flag);
+                            CommandFunction.CacheableFunction mcfunction = freezableRecipe.getMcfunction();
+                            return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, mcfunction, source, flag);
                         }
                     }
                 } else {
@@ -59,7 +61,8 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
                         if (freezableRecipe != null) {
                             level.destroyBlock(pos, true);
                             BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                            return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, source, flag);
+                            CommandFunction.CacheableFunction mcfunction = freezableRecipe.getMcfunction();
+                            return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, mcfunction, source, flag);
                         }
                     }
                 }

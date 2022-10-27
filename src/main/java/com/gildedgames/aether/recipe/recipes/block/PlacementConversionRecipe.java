@@ -7,6 +7,7 @@ import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.gildedgames.aether.recipe.BlockPropertyPair;
 import com.gildedgames.aether.recipe.BlockStateIngredient;
 import com.gildedgames.aether.recipe.serializer.BiomeParameterRecipeSerializer;
+import net.minecraft.commands.CommandFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -20,12 +21,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class PlacementConversionRecipe extends AbstractBiomeParameterRecipe {
-    public PlacementConversionRecipe(ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result) {
-        super(AetherRecipeTypes.PLACEMENT_CONVERSION.get(), id, biomeKey, biomeTag, ingredient, result);
+    public PlacementConversionRecipe(ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, CommandFunction.CacheableFunction mcfunction) {
+        super(AetherRecipeTypes.PLACEMENT_CONVERSION.get(), id, biomeKey, biomeTag, ingredient, result, mcfunction);
     }
 
-    public PlacementConversionRecipe(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result) {
-        this(id, null, null, ingredient,  result);
+    public PlacementConversionRecipe(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result, CommandFunction.CacheableFunction mcfunction) {
+        this(id, null, null, ingredient, result, mcfunction);
     }
 
     public boolean convert(Level level, BlockPos pos, BlockState oldState) {

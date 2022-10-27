@@ -7,6 +7,7 @@ import com.gildedgames.aether.util.BlockStateRecipeUtil;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import net.minecraft.commands.CommandFunction;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -38,7 +39,11 @@ public class BlockStateRecipeSerializer<T extends AbstractBlockStateRecipe> impl
             throw new JsonSyntaxException("Expected result to be object");
         }
 
-        return this.factory.create(recipeId, ingredient, result);
+        var mcfunctionIdString = GsonHelper.getAsString(serializedRecipe, "mcfunction", null);
+        var mcfunctionId = mcfunctionIdString == null ? null : new ResourceLocation(mcfunctionIdString);
+        var mcfunction = mcfunctionId == null ? CommandFunction.CacheableFunction.NONE : new CommandFunction.CacheableFunction(mcfunctionId);
+
+        return this.factory.create(recipeId, ingredient, result, mcfunction);
     }
 
     @Nullable
@@ -46,7 +51,7 @@ public class BlockStateRecipeSerializer<T extends AbstractBlockStateRecipe> impl
     public T fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull FriendlyByteBuf buf) {
         BlockStateIngredient ingredient = BlockStateIngredient.fromNetwork(buf);
         BlockPropertyPair result = BlockStateRecipeUtil.readPair(buf);
-        return this.factory.create(recipeId, ingredient, result);
+        return this.factory.create(recipeId, ingredient, result, CommandFunction.CacheableFunction.NONE);
     }
 
     @Override
@@ -56,6 +61,6 @@ public class BlockStateRecipeSerializer<T extends AbstractBlockStateRecipe> impl
     }
 
     public interface CookieBaker<T extends AbstractBlockStateRecipe> {
-        T create(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result);
+        T create(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result, CommandFunction.CacheableFunction function);
     }
 }

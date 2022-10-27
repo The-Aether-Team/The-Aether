@@ -5,14 +5,15 @@ import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.gildedgames.aether.recipe.BlockPropertyPair;
 import com.gildedgames.aether.recipe.BlockStateIngredient;
 import com.gildedgames.aether.recipe.serializer.BlockStateRecipeSerializer;
+import net.minecraft.commands.CommandFunction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
 import javax.annotation.Nonnull;
 
 public class AccessoryFreezableRecipe extends AbstractBlockStateRecipe {
-    public AccessoryFreezableRecipe(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result) {
-        super(AetherRecipeTypes.ACCESSORY_FREEZABLE.get(), id, ingredient, result);
+    public AccessoryFreezableRecipe(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result, CommandFunction.CacheableFunction mcfunction) {
+        super(AetherRecipeTypes.ACCESSORY_FREEZABLE.get(), id, ingredient, result, mcfunction);
     }
 
     @Nonnull
