@@ -3,11 +3,9 @@ package com.gildedgames.aether.item.materials;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.item.crafting.RecipeType;
 
-public class SkyrootStickItem extends Item
-{
+public class SkyrootStickItem extends Item {
     public SkyrootStickItem(Properties properties) {
         super(properties);
     }

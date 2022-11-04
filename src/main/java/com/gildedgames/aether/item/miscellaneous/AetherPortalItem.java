@@ -2,6 +2,7 @@ package com.gildedgames.aether.item.miscellaneous;
 
 import com.gildedgames.aether.block.miscellaneous.AetherPortalBlock;
 import com.gildedgames.aether.block.AetherBlocks;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -11,17 +12,21 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
-public class AetherPortalItem extends Item
-{
+public class AetherPortalItem extends Item {
     public AetherPortalItem(Properties properties) {
         super(properties);
     }
 
+    /**
+     * Creates an Aether Portal with {@link AetherPortalItem#createPortalFrame(UseOnContext)} and swing and consumes the item if the portal is successfully placed.
+     * @param context The {@link UseOnContext} of the usage interaction.
+     * @return A "consume" {@link InteractionResult} if successful, fail if otherwise.
+     */
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Player player = context.getPlayer();
         if (player != null) {
-            if (createPortalFrame(context.getLevel(), context.getClickedPos().relative(context.getClickedFace()), player.getDirection().getAxis())) {
+            if (createPortalFrame(context)) {
                 player.swing(context.getHand());
                 if (!player.getAbilities().instabuild) {
                     context.getItemInHand().shrink(1);
@@ -32,12 +37,24 @@ public class AetherPortalItem extends Item
         return InteractionResult.FAIL;
     }
 
-    private boolean createPortalFrame(Level world, BlockPos pos, Direction.Axis axis) {
+    /**
+     * Creates an Aether Portal.
+     * @param context The {@link UseOnContext} of the usage interaction.
+     * @return Whether the portal frame can be placed, as a {@link Boolean}.
+     */
+    private boolean createPortalFrame(UseOnContext context) {
+        Level level = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        if (!level.getBlockState(pos).canBeReplaced(new BlockPlaceContext(context))) {
+            pos = pos.relative(context.getClickedFace()); // If the block can't be placed at the clicked position, it'll choose a relative position based on the clicked face.
+        }
+        Direction.Axis axis = context.getHorizontalDirection().getAxis();
+
         for (int h = -1; h < 3; h++) {
             for (int v = pos.getY(); v < pos.getY() + 5; v++) {
                 BlockPos truePos = axis == Direction.Axis.X ? new BlockPos(pos.getX(), v, pos.getZ() + h) : new BlockPos(pos.getX() + h, v, pos.getZ());
-                if (!world.getBlockState(truePos).isAir()) {
-                    return false;
+                if (!level.getBlockState(truePos).canBeReplaced(new BlockPlaceContext(context))) {
+                    return false; // If any blocks in the frame positions region can't be replaced, then the portal can't be placed.
                 }
             }
         }
@@ -45,7 +62,7 @@ public class AetherPortalItem extends Item
         for (int h = -1; h < 3; h++) {
             for (int v = pos.getY(); v < pos.getY() + 5; v++) {
                 BlockPos truePos = axis == Direction.Axis.X ? new BlockPos(pos.getX(), v, pos.getZ() + h) : new BlockPos(pos.getX() + h, v, pos.getZ());
-                world.setBlockAndUpdate(truePos, Blocks.GLOWSTONE.defaultBlockState());
+                level.setBlockAndUpdate(truePos, Blocks.GLOWSTONE.defaultBlockState());
             }
         }
 
@@ -53,7 +70,7 @@ public class AetherPortalItem extends Item
             for (int v = pos.getY() + 1; v < pos.getY() + 4; v++) {
                 BlockPos truePos = axis == Direction.Axis.X ? new BlockPos(pos.getX(), v, pos.getZ() + h) : new BlockPos(pos.getX() + h, v, pos.getZ());
                 Direction.Axis trueAxis = axis == Direction.Axis.X ? Direction.Axis.Z : Direction.Axis.X;
-                world.setBlock(truePos, AetherBlocks.AETHER_PORTAL.get().defaultBlockState().setValue(AetherPortalBlock.AXIS, trueAxis), 18);
+                level.setBlock(truePos, AetherBlocks.AETHER_PORTAL.get().defaultBlockState().setValue(AetherPortalBlock.AXIS, trueAxis), 18);
             }
         }
 

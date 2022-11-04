@@ -1,4 +1,4 @@
-// 1.19.2	2022-09-03T21:15:38.1944781	Aether Item Models
+// 1.19.2	2022-09-30T17:12:44.9748022	Aether Item Models
 88dbeab79e0017737773db746d2e719a21fdb198 assets/aether/models/item/aechor_petal.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/aechor_plant_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/aerbunny_spawn_egg.json
@@ -38,7 +38,7 @@ a2d2dc58910189328906bccc22f009ccbd9faad9 assets/aether/models/item/boss_doorway_
 7bdd9631922e33d6810445783ae7f59cac252b19 assets/aether/models/item/boss_doorway_light_angelic_stone.json
 54a894044906b11327b09d6edd21aa4c98dbde75 assets/aether/models/item/boss_doorway_light_hellfire_stone.json
 935cb78a2b2755a9d1b5e5684aabcda671d0efb8 assets/aether/models/item/boss_doorway_sentry_stone.json
-5b0199a2805fcee4a69b63ded1ca106a22207704 assets/aether/models/item/bronze_dungeon_key.json
+619292f2f6fb25c583cf5dd95f9daadbed226f31 assets/aether/models/item/bronze_dungeon_key.json
 5267ca41c7a25c538947c478299c33d0e5cbbe77 assets/aether/models/item/candy_cane.json
 2c102972f03a81b7df5d9011039a1a1d72b22449 assets/aether/models/item/candy_cane_sword.json
 dc98f564fe0ec6d4ea481be792c3706b1613eef2 assets/aether/models/item/carved_slab.json
@@ -81,7 +81,7 @@ a63a015c88ff075031102fa28286ff75b4a6410f assets/aether/models/item/golden_parach
 4f3202e750d747e5d5188cd4f2a2be3bab7cd33c assets/aether/models/item/golden_pendant.json
 e3772254275d9748bdf986f6d8579ecc05015697 assets/aether/models/item/golden_ring.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/golden_swet_spawn_egg.json
-7584a3243773fa208ef676c81bec118ab258586a assets/aether/models/item/gold_dungeon_key.json
+d297a0b44e26161e8d10861f605095441cbcde58 assets/aether/models/item/gold_dungeon_key.json
 39ec937a62ab72c3a65cfb21ed00e267b108ab46 assets/aether/models/item/gravitite_axe.json
 b8ef7d5bd207fe89143c7f6e7b84f9fc4e103fad assets/aether/models/item/gravitite_boots.json
 49a462e0840dfcb3221f9bc8826bd20f5f53f0c4 assets/aether/models/item/gravitite_chestplate.json
@@ -194,7 +194,7 @@ e9ab8590c32480a379bbe843fc15a661ed1a6c2f assets/aether/models/item/red_cape.json
 d17855c49bbb1444ce63c9cfd09608a19e91070d assets/aether/models/item/sentry_stone.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/sheepuff_spawn_egg.json
 21d8cf835e8015a33bef050c3994052f222a2f24 assets/aether/models/item/shield_of_repulsion.json
-19cbe6f0a4f65e857b50603c39acff811ddf4d0f assets/aether/models/item/silver_dungeon_key.json
+abc1e0b68d7bacffa0010360cd85fd205301bdb9 assets/aether/models/item/silver_dungeon_key.json
 db8bbf7e3b0abc666c3ba5d90549b73a42d00ac2 assets/aether/models/item/skyroot_axe.json
 58331365e983bfe6b467978c1a6c0c3f20f4cfeb assets/aether/models/item/skyroot_axolotl_bucket.json
 625eef14b28d20605fe24bc376d94d2ad0cfe2c4 assets/aether/models/item/skyroot_bed.json

@@ -16,6 +16,7 @@ public class AetherConfig
         public final ConfigValue<Boolean> edible_ambrosium;
         public final ConfigValue<Boolean> tools_debuff;
         public final ConfigValue<Boolean> healing_gummy_swets;
+        public final ConfigValue<Boolean> temporary_ice_accessory_conversion;
         public final ConfigValue<Integer> maximum_life_shards;
         public final ConfigValue<Boolean> repeat_sun_spirit_dialogue;
 
@@ -65,6 +66,10 @@ public class AetherConfig
                     .comment("Determines the limit of the amount of Life Shards a player can consume to increase their health")
                     .translation("config.aether.common.gameplay.maximum_life_shards")
                     .define("Maximum consumable Life Shards", 10);
+            temporary_ice_accessory_conversion = builder
+                    .comment("Ice Accessories will create temporary blocks instead of permanent blocks from conversions")
+                    .translation("config.aether.common.gameplay.temporary_ice_accessory_conversion")
+                    .define("Temporary blocks from Ice Accessories", false);
             repeat_sun_spirit_dialogue = builder
                     .comment("Determines whether the Sun Spirit's dialogue when meeting him should play through every time you meet him")
                     .translation("config.aether.common.gameplay.repeat_sun_spirit_dialogue")

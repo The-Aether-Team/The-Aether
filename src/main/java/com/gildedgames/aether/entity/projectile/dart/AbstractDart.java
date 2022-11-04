@@ -8,6 +8,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
@@ -37,6 +38,12 @@ public abstract class AbstractDart extends AbstractArrow {
     @Override
     protected void onHitBlock(@Nonnull BlockHitResult result) {
         super.onHitBlock(result);
+        this.setNoGravity(false);
+    }
+
+    @Override
+    protected void onHitEntity(@Nonnull EntityHitResult result) {
+        super.onHitEntity(result);
         this.setNoGravity(false);
     }
 

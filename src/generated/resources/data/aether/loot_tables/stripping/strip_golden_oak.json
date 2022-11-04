@@ -6,14 +6,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:match_tool",
-              "predicate": {
-                "tag": "aether:golden_amber_harvesters"
-              }
-            }
-          ],
           "functions": [
             {
               "add": false,

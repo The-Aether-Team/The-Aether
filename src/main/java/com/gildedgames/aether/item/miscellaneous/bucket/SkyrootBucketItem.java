@@ -2,9 +2,7 @@ package com.gildedgames.aether.item.miscellaneous.bucket;
 
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.AetherTags;
-import com.google.common.collect.Maps;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.*;
@@ -29,15 +27,20 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
 public class SkyrootBucketItem extends BucketItem {
-    public static Map<Holder<Item>, Supplier<Item>> REPLACEMENTS = new HashMap<>();
+    /**
+     * Map of replacements for vanilla buckets to Skyroot buckets.
+     */
+    public static final Map<Supplier<Item>, Supplier<Item>> REPLACEMENTS = new HashMap<>();
 
+    /**
+     * Sets up the possible replacements for vanilla buckets to Skyroot buckets.
+     */
     public SkyrootBucketItem(Supplier<? extends Fluid> supplier, Item.Properties properties) {
         super(supplier, properties);
         REPLACEMENTS.put(ForgeRegistries.ITEMS.getDelegateOrThrow(Items.WATER_BUCKET), AetherItems.SKYROOT_WATER_BUCKET);
@@ -50,22 +53,28 @@ public class SkyrootBucketItem extends BucketItem {
         REPLACEMENTS.put(ForgeRegistries.ITEMS.getDelegateOrThrow(Items.TADPOLE_BUCKET), AetherItems.SKYROOT_TADPOLE_BUCKET);
     }
 
-    @Nonnull
+    /**
+     * Based on {@link BucketItem#use(Level, Player, InteractionHand)} except blocks that can be picked up depends on {@link AetherTags.Blocks#ALLOWED_BUCKET_PICKUP} or {@link AetherTags.Fluids#ALLOWED_BUCKET_PICKUP},
+     * and the method will also swap out any returned vanilla buckets from interactions with Skyroot buckets using {@link SkyrootBucketItem#swapBucketType(ItemStack)}.
+     * @param level The {@link Level} of the user.
+     * @param player The {@link Player} using this item.
+     * @param hand The {@link InteractionHand} in which the item is being used.
+     */
     @Override
-    public InteractionResultHolder<ItemStack> use(@Nonnull Level level, Player player, @Nonnull InteractionHand hand) {
-        ItemStack itemStack = player.getItemInHand(hand);
-        BlockHitResult blockhitresult = getPlayerPOVHitResult(level, player, this.getFluid() == Fluids.EMPTY ? ClipContext.Fluid.SOURCE_ONLY : ClipContext.Fluid.NONE);
-        InteractionResultHolder<ItemStack> interactionResult = net.minecraftforge.event.ForgeEventFactory.onBucketUse(player, level, itemStack, blockhitresult);
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        ItemStack heldStack = player.getItemInHand(hand);
+        BlockHitResult blockhitResult = getPlayerPOVHitResult(level, player, this.getFluid() == Fluids.EMPTY ? ClipContext.Fluid.SOURCE_ONLY : ClipContext.Fluid.NONE);
+        InteractionResultHolder<ItemStack> interactionResult = net.minecraftforge.event.ForgeEventFactory.onBucketUse(player, level, heldStack, blockhitResult);
         if (interactionResult != null) return interactionResult;
-        if (blockhitresult.getType() == HitResult.Type.MISS) {
-            return InteractionResultHolder.pass(itemStack);
-        } else if (blockhitresult.getType() != HitResult.Type.BLOCK) {
-            return InteractionResultHolder.pass(itemStack);
+        if (blockhitResult.getType() == HitResult.Type.MISS) {
+            return InteractionResultHolder.pass(heldStack);
+        } else if (blockhitResult.getType() != HitResult.Type.BLOCK) {
+            return InteractionResultHolder.pass(heldStack);
         } else {
-            BlockPos blockPos = blockhitresult.getBlockPos();
-            Direction direction = blockhitresult.getDirection();
+            BlockPos blockPos = blockhitResult.getBlockPos();
+            Direction direction = blockhitResult.getDirection();
             BlockPos relativePos = blockPos.relative(direction);
-            if (level.mayInteract(player, blockPos) && player.mayUseItemAt(relativePos, direction, itemStack)) {
+            if (level.mayInteract(player, blockPos) && player.mayUseItemAt(relativePos, direction, heldStack)) {
                 if (this.getFluid() == Fluids.EMPTY) {
                     BlockState blockState = level.getBlockState(blockPos);
                     FluidState fluidState = level.getFluidState(blockPos);
@@ -76,34 +85,39 @@ public class SkyrootBucketItem extends BucketItem {
                             player.awardStat(Stats.ITEM_USED.get(this));
                             bucketPickup.getPickupSound(blockState).ifPresent((soundEvent) -> player.playSound(soundEvent, 1.0F, 1.0F));
                             level.gameEvent(player, GameEvent.FLUID_PICKUP, blockPos);
-                            ItemStack resultStack = ItemUtils.createFilledResult(itemStack, player, bucketStack);
-                            if (!level.isClientSide) {
+                            ItemStack resultStack = ItemUtils.createFilledResult(heldStack, player, bucketStack);
+                            if (!level.isClientSide()) {
                                 CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer)player, bucketStack);
                             }
                             return InteractionResultHolder.sidedSuccess(resultStack, level.isClientSide());
                         }
                     }
-                    return InteractionResultHolder.fail(itemStack);
+                    return InteractionResultHolder.fail(heldStack);
                 } else {
-                    BlockState blockstate = level.getBlockState(blockPos);
-                    BlockPos newPos = canBlockContainFluid(level, blockPos, blockstate) ? blockPos : relativePos;
-                    if (this.emptyContents(player, level, newPos, blockhitresult)) {
-                        this.checkExtraContent(player, level, itemStack, newPos);
+                    BlockState blockState = level.getBlockState(blockPos);
+                    BlockPos newPos = canBlockContainFluid(level, blockPos, blockState) ? blockPos : relativePos;
+                    if (this.emptyContents(player, level, newPos, blockhitResult)) {
+                        this.checkExtraContent(player, level, heldStack, newPos);
                         if (player instanceof ServerPlayer serverPlayer) {
-                            CriteriaTriggers.PLACED_BLOCK.trigger(serverPlayer, newPos, itemStack);
+                            CriteriaTriggers.PLACED_BLOCK.trigger(serverPlayer, newPos, heldStack);
                         }
                         player.awardStat(Stats.ITEM_USED.get(this));
-                        return InteractionResultHolder.sidedSuccess(getEmptySuccessItem(itemStack, player), level.isClientSide());
+                        return InteractionResultHolder.sidedSuccess(getEmptySuccessItem(heldStack, player), level.isClientSide());
                     } else {
-                        return InteractionResultHolder.fail(itemStack);
+                        return InteractionResultHolder.fail(heldStack);
                     }
                 }
             } else {
-                return InteractionResultHolder.fail(itemStack);
+                return InteractionResultHolder.fail(heldStack);
             }
         }
     }
 
+    /**
+     * Swaps a given bucket with a replacement using {@link SkyrootBucketItem#REPLACEMENTS}.
+     * @param filledStack The given bucket as an {@link ItemStack}
+     * @return  The replacement bucket as an {@link ItemStack}.
+     */
     public static ItemStack swapBucketType(ItemStack filledStack) {
         Supplier<Item> filledItem = ForgeRegistries.ITEMS.getDelegateOrThrow(filledStack.getItem());
         if (REPLACEMENTS.containsKey(filledItem)) {
@@ -116,16 +130,24 @@ public class SkyrootBucketItem extends BucketItem {
         }
     }
 
-    @Nonnull
-    public static ItemStack getEmptySuccessItem(@Nonnull ItemStack bucketStack, Player player) {
+    /**
+     * Based on {@link BucketItem#getEmptySuccessItem(ItemStack, Player)} except it returns a Skyroot Bucket instead of a vanilla bucket.
+     */
+    public static ItemStack getEmptySuccessItem(ItemStack bucketStack, Player player) {
         return !player.getAbilities().instabuild ? new ItemStack(AetherItems.SKYROOT_BUCKET.get()) : bucketStack;
     }
 
+    /**
+     * We don't initialize the Forge {@link net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper} for Skyroot Buckets.
+     */
     @Override
-    public ICapabilityProvider initCapabilities(@Nonnull ItemStack stack, @Nullable CompoundTag nbt) {
+    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag tag) {
         return null;
     }
 
+    /**
+     * Copy of BucketItem#canBlockContainFluid(Level, BlockPos, BlockState).
+     */
     private boolean canBlockContainFluid(Level level, BlockPos pos, BlockState state) {
         return state.getBlock() instanceof LiquidBlockContainer liquidBlockContainer && liquidBlockContainer.canPlaceLiquid(level, pos, state, this.getFluid());
     }

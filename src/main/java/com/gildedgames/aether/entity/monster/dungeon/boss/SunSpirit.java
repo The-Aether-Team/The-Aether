@@ -322,7 +322,14 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
      * The sun spirit doesn't take knockback
      */
     @Override
-    public void knockback(double strength, double ratioX, double ratioZ) { }
+    public void knockback(double strength, double ratioX, double ratioZ) {
+
+    }
+
+    @Override
+    public void push(double x, double y, double z) {
+
+    }
 
     /**
      * Add the given player to the list of players tracking this entity. For instance, a player may track a boss in order
