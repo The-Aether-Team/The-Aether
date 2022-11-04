@@ -10,6 +10,9 @@ import com.gildedgames.aether.loot.AetherLoot;
 import com.gildedgames.aether.util.BlockLogicUtil;
 import com.gildedgames.aether.world.processor.NoReplaceProcessor;
 import com.google.common.collect.ImmutableList;
+import com.google.common.graph.Graph;
+import com.google.common.graph.GraphBuilder;
+import com.google.common.graph.MutableGraph;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -22,15 +25,14 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
-import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.world.level.levelgen.structure.StructurePiece;
-import net.minecraft.world.level.levelgen.structure.StructurePieceAccessor;
-import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
+import net.minecraft.world.level.levelgen.structure.*;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 import net.minecraft.world.phys.AABB;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class BronzeDungeonPieces {
     public static RuleProcessor LOCKED_SENTRY_STONE = new RuleProcessor(ImmutableList.of(
@@ -41,9 +43,69 @@ public class BronzeDungeonPieces {
             new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.HOLYSTONE.get(), 0.1F), AlwaysTrueTest.INSTANCE, AetherBlocks.MOSSY_HOLYSTONE.get().defaultBlockState())
     ));
 
+    @Deprecated
     public static class Builder {
-        public Builder() {
+        public final StructurePiecesBuilder builder;
+        Structure.GenerationContext context;
+        public int remainingRooms;
 
+        public Builder(StructurePiecesBuilder builder, Structure.GenerationContext context, int maxRooms) {
+            this.builder = builder;
+            this.context = context;
+            this.remainingRooms = Math.max(3, maxRooms);
+        }
+
+        public void buildDungeonPrototype() {
+            MutableGraph<StructurePiece> dungeonGraph = GraphBuilder.directed().expectedNodeCount(this.remainingRooms).build();
+        }
+
+        public void buildDungeon(BlockPos startPos) {
+            StructureTemplateManager manager = context.structureTemplateManager();
+            RandomSource random = context.random();
+            Rotation rotation = Rotation.getRandom(random);
+            BronzeDungeonPieces.BossRoom bossRoom = new BronzeDungeonPieces.BossRoom(manager, this.remainingRooms, "boss_room", startPos, rotation);
+            TemplateStructurePiece chestRoom = this.startFromBossRoom(manager, bossRoom, builder, random);
+            this.addTemplateChildren(manager, chestRoom, builder, random);
+            this.builder.addPiece(bossRoom);
+        }
+
+        /**
+         * Make the room right next to the boss room.
+         */
+        public TemplateStructurePiece startFromBossRoom(StructureTemplateManager manager, StructurePiece start, StructurePieceAccessor pieceAccessor, RandomSource random) {
+            Direction direction = start.getOrientation();
+            if (direction == null) {
+                direction = start.getRotation().rotate(Direction.SOUTH);
+            }
+            BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(start.getBoundingBox().moved(0, 2, 0), direction, 6);
+            DungeonRoom hallway = new DungeonRoom(manager, "square_tunnel", pos, start.getRotation());
+            pos = BlockLogicUtil.tunnelFromEvenSquareRoom(hallway.getBoundingBox(), direction, 12);
+            DungeonRoom chestRoom = new DungeonRoom(manager, "chest_room", pos, start.getRotation());
+            pieceAccessor.addPiece(chestRoom);
+            pieceAccessor.addPiece(hallway);
+            --this.remainingRooms;
+            return chestRoom;
+        }
+
+        public void addTemplateChildren(StructureTemplateManager manager, StructurePiece start, StructurePieceAccessor pieceAccessor, RandomSource random) {
+            Rotation rotation = start.getRotation();
+            for (Rotation rot : Rotation.getShuffled(random)) {
+                if (this.remainingRooms > 0 && rotation != rot) {
+                    rot = rotation.getRotated(rot);
+                    Direction direction = rot.rotate(Direction.SOUTH);
+                    BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(start.getBoundingBox(), direction, 6);
+                    DungeonRoom hallway = new DungeonRoom(manager, "square_tunnel", pos, rot);
+                    pos = BlockLogicUtil.tunnelFromEvenSquareRoom(hallway.getBoundingBox(), direction, 12);
+                    DungeonRoom chestRoom = new DungeonRoom(manager, "chest_room", pos, rot);
+                    if (pieceAccessor.findCollisionPiece(chestRoom.getBoundingBox()) == null) {
+                        --this.remainingRooms;
+                        pieceAccessor.addPiece(chestRoom);
+                        pieceAccessor.addPiece(hallway);
+                        this.addTemplateChildren(manager, chestRoom, pieceAccessor, random);
+                    }
+                }
+            }
+//            HolystoneTunnel.buildTunnelFromRoom(manager, this, pieceAccessor, rotation, direction);
         }
     }
 
@@ -59,20 +121,6 @@ public class BronzeDungeonPieces {
 
         public BossRoom(StructurePieceSerializationContext context, CompoundTag tag) {
             super(AetherStructurePieceTypes.BRONZE_BOSS_ROOM.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
-        }
-
-        public void addTemplateChildren(StructureTemplateManager manager, StructurePiece start, StructurePieceAccessor pieceAccessor, RandomSource random) {
-            Direction direction = this.getOrientation();
-            if (direction == null) {
-                direction = this.getRotation().rotate(Direction.SOUTH);
-            }
-            BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(start.getBoundingBox().moved(0, 2, 0), direction, 6);
-            DungeonRoom hallway = new DungeonRoom(manager, "square_tunnel", pos, this.getRotation());
-            pos = BlockLogicUtil.tunnelFromEvenSquareRoom(hallway.getBoundingBox(), direction, 12);
-            DungeonRoom chestRoom = new DungeonRoom(manager, this.genDepth - 1, "chest_room", pos, this.getRotation());
-            pieceAccessor.addPiece(chestRoom);
-            pieceAccessor.addPiece(hallway);
-            chestRoom.addTemplateChildren(manager, this, pieceAccessor, random);
         }
 
         static StructurePlaceSettings makeSettings() {
@@ -102,8 +150,7 @@ public class BronzeDungeonPieces {
                 slider.finalizeSpawn(level, level.getCurrentDifficultyAt(pos), MobSpawnType.STRUCTURE, null, null);
                 level.getLevel().addFreshEntity(slider);
                 level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
-            }
-            else if (name.equals("Treasure Chest")) {
+            } else if (name.equals("Treasure Chest")) {
                 BlockPos chest = pos.below();
                 RandomizableContainerBlockEntity.setLootTable(level, random, chest, AetherLoot.BRONZE_DUNGEON_REWARD);
                 TreasureChestBlockEntity.setDungeonType(level, chest, new ResourceLocation(Aether.MODID, "bronze"));
@@ -113,13 +160,9 @@ public class BronzeDungeonPieces {
     }
 
     public static class DungeonRoom extends TemplateStructurePiece {
-        public DungeonRoom(StructureTemplateManager manager, int genDepth, String name, BlockPos pos, Rotation rotation) {
-            super(AetherStructurePieceTypes.BRONZE_DUNGEON_ROOM.get(), genDepth, manager, new ResourceLocation(Aether.MODID, "bronze_dungeon/" + name), name, makeSettings().setRotation(rotation), pos);
-            this.setOrientation(this.getRotation().rotate(Direction.SOUTH));
-        }
-
         public DungeonRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
-            this(manager, 0, name, pos, rotation);
+            super(AetherStructurePieceTypes.BRONZE_DUNGEON_ROOM.get(), 0, manager, new ResourceLocation(Aether.MODID, "bronze_dungeon/" + name), name, makeSettings().setRotation(rotation), pos);
+            this.setOrientation(this.getRotation().rotate(Direction.SOUTH));
         }
 
         public DungeonRoom(StructurePieceSerializationContext context, CompoundTag tag) {
@@ -144,29 +187,6 @@ public class BronzeDungeonPieces {
                 }
             }
         }
-
-        public void addTemplateChildren(StructureTemplateManager manager, StructurePiece start, StructurePieceAccessor pieceAccessor, RandomSource random) {
-            if (this.genDepth > 0) {
-                Rotation rotation = this.getRotation();
-                int genDepth = this.genDepth - 1;
-                for (Rotation rot : Rotation.values()) {
-                    if (rotation != rot) {
-                        rot = rotation.getRotated(rot);
-                        Direction direction = rot.rotate(Direction.SOUTH);
-                        BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(this.getBoundingBox(), direction, 6);
-                        DungeonRoom hallway = new DungeonRoom(manager, "square_tunnel", pos, rot);
-                        pos = BlockLogicUtil.tunnelFromEvenSquareRoom(hallway.getBoundingBox(), direction, 12);
-                        DungeonRoom chestRoom = new DungeonRoom(manager, genDepth, "chest_room", pos, rot);
-                        if (pieceAccessor.findCollisionPiece(chestRoom.boundingBox) == null) {
-                            pieceAccessor.addPiece(chestRoom);
-                            pieceAccessor.addPiece(hallway);
-                            chestRoom.addTemplateChildren(manager, this, pieceAccessor, random);
-                        }
-                    }
-                }
-            }
-//            HolystoneTunnel.buildTunnelFromRoom(manager, this, pieceAccessor, rotation, direction);
-        }
     }
 
     public static class HolystoneTunnel extends TemplateStructurePiece {
@@ -190,17 +210,18 @@ public class BronzeDungeonPieces {
 
         /**
          * Builds a tunnel from a symmetrical room to make an entrance.
-         * @param manager - Used by TemplateStructurePiece
+         *
+         * @param manager       - Used by TemplateStructurePiece
          * @param connectedRoom - The room the tunnel leads to
          * @param pieceAccessor - This builds the structure pieces in the world
-         * @param rotation - The rotation of the template
-         * @param direction - The direction to build in
+         * @param rotation      - The rotation of the template
+         * @param direction     - The direction to build in
          */
         public static void buildTunnelFromRoom(StructureTemplateManager manager, StructurePiece connectedRoom, StructurePieceAccessor pieceAccessor, Rotation rotation, Direction direction) {
             StructureTemplate template = manager.getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/end_corridor"));
             BlockPos startPos = BlockLogicUtil.tunnelFromEvenSquareRoom(connectedRoom.getBoundingBox(), direction, template.getSize().getX());
             int length = template.getSize().getZ();
-            for (int i = 0; i < 100; i+=length) {
+            for (int i = 0; i < 100; i += length) {
                 BlockPos pos = startPos.offset(direction.getStepX() * i, 0, direction.getStepZ() * i);
                 HolystoneTunnel tunnel = new HolystoneTunnel(manager, new ResourceLocation(Aether.MODID, "bronze_dungeon/end_corridor"), pos, rotation);
                 pieceAccessor.addPiece(tunnel);
