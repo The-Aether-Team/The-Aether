@@ -18,7 +18,7 @@ public class AetherStructureSets {
     public static final ResourceKey<StructureSet> BRONZE_DUNGEON = register("bronze_dungeon",
             new StructureSet(
                     AetherStructures.dataHolder(AetherStructures.BRONZE_DUNGEON),
-                    new RandomSpreadStructurePlacement(12, 6, RandomSpreadType.LINEAR, 32146754)
+                    new RandomSpreadStructurePlacement(12, 10, RandomSpreadType.LINEAR, 32146754)
             )
     );
     public static final ResourceKey<StructureSet> SILVER_DUNGEON = register("silver_dungeon",

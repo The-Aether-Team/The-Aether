@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 import java.util.*;
@@ -30,10 +31,9 @@ public class BronzeDungeonGraph {
     public final int nodeWidth;
     public final int edgeWidth;
     public final int edgeLength;
-
     public final int maxSize;
-    public final List<StructurePiece> nodes = new ArrayList<>();
 
+    public final List<StructurePiece> nodes = new ArrayList<>();
     public final Map<StructurePiece, Map<Direction, Connection>> edges = new HashMap<>();
 
 
@@ -50,7 +50,7 @@ public class BronzeDungeonGraph {
         this.edgeWidth = edgeSize.getX();
         this.edgeLength = edgeSize.getZ();
 
-        this.maxSize = maxSize;
+        this.maxSize = Math.max(3, maxSize);
     }
 
     public void initializeDungeon(BlockPos startPos) {
@@ -66,68 +66,106 @@ public class BronzeDungeonGraph {
         this.nodes.add(chestRoom);
         new Connection(bossRoom, chestRoom, hallway, direction);
 
-        for (int i = 2; i < this.maxSize; i++) {
-            propagateRooms(chestRoom);
+        for (int i = 2; i < this.maxSize - 1; ++i) {
+            propagateRooms(chestRoom, false);
         }
+        propagateRooms(chestRoom, true);
+        StructurePiece lobby = this.nodes.get(this.nodes.size() - 1);
+        this.buildEndTunnel(lobby);
     }
 
     /**
      * Recursively move through the graph of rooms to add new pieces. Returns true if successful in placing a new piece.
      */
-    public boolean propagateRooms(StructurePiece startNode) {
+    public boolean propagateRooms(StructurePiece startNode, boolean placeLobby) {
         Rotation rotation = startNode.getRotation();
-        switch (this.random.nextInt(3)) {
-            case 0 -> rotation = rotation.getRotated(Rotation.COUNTERCLOCKWISE_90);
-            case 2 -> rotation = rotation.getRotated(Rotation.CLOCKWISE_90);
-        }
+        List<Rotation> rotations = new ArrayList<>(3);
+        rotations.add(rotation.getRotated(Rotation.COUNTERCLOCKWISE_90));
+        rotations.add(rotation);
+        rotations.add(rotation.getRotated(Rotation.CLOCKWISE_90));
+        String roomName = placeLobby ? "lobby" : "chest_room";
 
-        Direction direction = rotation.rotate(Direction.SOUTH);
-        if (this.hasConnection(startNode, direction)) {
-            if (propagateRooms(this.edges.get(startNode).get(direction).end)) {
-                return true;
-            }
-        } else {
-            BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(startNode.getBoundingBox(), direction, this.edgeWidth);
-            BronzeDungeonPieces.DungeonRoom hallway = new BronzeDungeonPieces.DungeonRoom(this.manager, "square_tunnel", pos, rotation);
-            pos = BlockLogicUtil.tunnelFromEvenSquareRoom(hallway.getBoundingBox(), direction, this.nodeWidth);
-            BronzeDungeonPieces.DungeonRoom chestRoom = new BronzeDungeonPieces.DungeonRoom(manager, "chest_room", pos, rotation);
-
-            StructurePiece collisionPiece = StructurePiece.findCollisionPiece(this.nodes, chestRoom.getBoundingBox());
-            if (collisionPiece == null) {
-                new Connection(startNode, chestRoom, hallway, direction);
-                this.nodes.add(chestRoom);
-                return true;
+        /**
+         * Attempt to generate a room in each direction
+         */
+        for (int i = 3; i > 0; i--) {
+            rotation = rotations.remove(this.random.nextInt(i));
+            Direction direction = rotation.rotate(Direction.SOUTH);
+            if (this.hasConnection(startNode, direction)) {
+                if (propagateRooms(this.edges.get(startNode).get(direction).end, placeLobby)) {
+                    return true;
+                }
             } else {
-                boolean flag = this.edges.computeIfAbsent(collisionPiece, piece -> new HashMap<>()).values().stream()
-                        .map(Connection::endPiece).anyMatch(piece -> piece == startNode);
-                if (!flag/* && random.nextBoolean()*/) {
-                    new Connection(startNode, chestRoom, hallway, direction);
+                BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(startNode.getBoundingBox(), direction, this.edgeWidth);
+                BronzeDungeonPieces.DungeonRoom hallway = new BronzeDungeonPieces.DungeonRoom(this.manager, "square_tunnel", pos, rotation);
+                pos = BlockLogicUtil.tunnelFromEvenSquareRoom(hallway.getBoundingBox(), direction, this.nodeWidth);
+                BronzeDungeonPieces.DungeonRoom room = new BronzeDungeonPieces.DungeonRoom(this.manager, roomName, pos, rotation);
+                StructurePiece collisionPiece = StructurePiece.findCollisionPiece(this.nodes, room.getBoundingBox());
+
+                if (collisionPiece == null) {
+                    new Connection(startNode, room, hallway, direction);
+                    this.nodes.add(room);
+                    return true;
+                } else { // If there's a piece in the way, see if there's a connection already. If not, make one. Then continue the loop.
+                    boolean flag = this.edges.computeIfAbsent(collisionPiece, piece -> new HashMap<>()).values().stream()
+                            .map(Connection::endPiece).anyMatch(piece -> piece == startNode);
+                    if (!flag) {
+                        new Connection(startNode, room, hallway, direction);
+                    }
                 }
             }
         }
-
         return false;
     }
 
-    /*public boolean propagateRoomsOld(BronzeDungeonPieces.DungeonRoom start) {
-        Rotation rotation = start.getRotation();
-        for (Rotation rot : Rotation.getShuffled(random)) {
-            if (this.remainingRooms > 0 && rotation != rot) {
-                rot = rotation.getRotated(rot);
-                Direction direction = rot.rotate(Direction.SOUTH);
-                BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(start.getBoundingBox(), direction, 6);
-                BronzeDungeonPieces.DungeonRoom hallway = new BronzeDungeonPieces.DungeonRoom(manager, "square_tunnel", pos, rot);
-                pos = BlockLogicUtil.tunnelFromEvenSquareRoom(hallway.getBoundingBox(), direction, 12);
-                BronzeDungeonPieces.DungeonRoom chestRoom = new BronzeDungeonPieces.DungeonRoom(manager, "chest_room", pos, rot);
-                if (pieceAccessor.findCollisionPiece(chestRoom.getBoundingBox()) == null) {
-                    --this.remainingRooms;
-                    pieceAccessor.addPiece(chestRoom);
-                    pieceAccessor.addPiece(hallway);
-                    this.addTemplateChildren(manager, chestRoom, pieceAccessor, random);
-                }
+    public void buildEndTunnel(StructurePiece lobby) {
+        Rotation rotation = lobby.getRotation();
+        List<Rotation> rotations = new ArrayList<>(3);
+        rotations.add(rotation.getRotated(Rotation.COUNTERCLOCKWISE_90));
+        rotations.add(rotation);
+        rotations.add(rotation.getRotated(Rotation.CLOCKWISE_90));
+        for (int i = 3; i > 0; i--) {
+            rotation = rotations.remove(this.random.nextInt(i));
+            Direction direction = rotation.rotate(Direction.SOUTH);
+            if (buildTunnelFromRoom(lobby, rotation, direction)) {
+                break;
             }
         }
-    }*/
+    }
+
+    /**
+     * Builds a tunnel from a symmetrical room to make an entrance.
+     *
+     * @param connectedRoom - The room the tunnel leads to
+     * @param rotation      - The rotation of the template
+     * @param direction     - The direction to build in
+     */
+    public boolean buildTunnelFromRoom(StructurePiece connectedRoom, Rotation rotation, Direction direction) {
+        StructureTemplate template = this.manager.getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/end_corridor"));
+        BlockPos startPos = BlockLogicUtil.tunnelFromEvenSquareRoom(connectedRoom.getBoundingBox(), direction, template.getSize().getX());
+        int length = template.getSize().getZ();
+        boolean flag = false;
+
+        for (int i = 0; i < 40; i += length) {
+            BlockPos pos = startPos.offset(direction.getStepX() * i, 0, direction.getStepZ() * i);
+            BronzeDungeonPieces.HolystoneTunnel tunnel = new BronzeDungeonPieces.HolystoneTunnel(this.manager, new ResourceLocation(Aether.MODID, "bronze_dungeon/end_corridor"), pos, rotation);
+
+            //Skip the connected piece, since the tunnel will be digging into it.
+            StructurePiece col = null;
+            for (StructurePiece piece : this.nodes) {
+                if (piece != null && piece != connectedRoom && piece.getBoundingBox().intersects(connectedRoom.getBoundingBox())) {
+                    col = StructurePiece.findCollisionPiece(this.nodes, tunnel.getBoundingBox());
+                    break;
+                }
+            }
+            if (col != null) {
+                break;
+            }
+            flag = true;
+            this.nodes.add(tunnel);
+        }
+        return flag;
+    }
 
     /**
      * Adds all the pieces to the StructurePieceAccessor so that it can generate in the world.
