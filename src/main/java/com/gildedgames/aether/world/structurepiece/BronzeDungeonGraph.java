@@ -2,7 +2,6 @@ package com.gildedgames.aether.world.structurepiece;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.util.BlockLogicUtil;
-import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -15,7 +14,6 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilde
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * A directed graph used for assembling the bronze dungeon. This allows us to keep track of how far away a room is
@@ -34,8 +32,9 @@ public class BronzeDungeonGraph {
     public final int edgeLength;
 
     public final int maxSize;
-    public final List<Node> nodes = new ArrayList<>();
-    public final Set<Connection> edges = new HashSet<>();
+    public final List<StructurePiece> nodes = new ArrayList<>();
+
+    public final Map<StructurePiece, Map<Direction, Connection>> edges = new HashMap<>();
 
 
     public BronzeDungeonGraph(StructurePiecesBuilder builder, Structure.GenerationContext context, int maxSize) {
@@ -63,45 +62,47 @@ public class BronzeDungeonGraph {
         pos = BlockLogicUtil.tunnelFromEvenSquareRoom(hallway.getBoundingBox(), direction, this.nodeWidth);
         BronzeDungeonPieces.DungeonRoom chestRoom = new BronzeDungeonPieces.DungeonRoom(manager, "chest_room", pos, hallway.getRotation());
 
-        Node startRoom = new Node(bossRoom);
-        this.nodes.add(startRoom);
-        Node secondRoom = new Node(chestRoom);
-        this.nodes.add(secondRoom);
-        Connection edge = new Connection(startRoom, secondRoom, hallway, direction);
-        this.edges.add(edge);
+        this.nodes.add(bossRoom);
+        this.nodes.add(chestRoom);
+        new Connection(bossRoom, chestRoom, hallway, direction);
 
         for (int i = 2; i < this.maxSize; i++) {
-            propagateRooms(secondRoom);
+            propagateRooms(chestRoom);
         }
     }
 
     /**
      * Recursively move through the graph of rooms to add new pieces. Returns true if successful in placing a new piece.
      */
-    public boolean propagateRooms(Node startNode) {
-        Rotation rotation = startNode.room.getRotation();
+    public boolean propagateRooms(StructurePiece startNode) {
+        Rotation rotation = startNode.getRotation();
         switch (this.random.nextInt(3)) {
             case 0 -> rotation = rotation.getRotated(Rotation.COUNTERCLOCKWISE_90);
             case 2 -> rotation = rotation.getRotated(Rotation.CLOCKWISE_90);
         }
 
         Direction direction = rotation.rotate(Direction.SOUTH);
-        if (startNode.hasConnection(direction)) {
-            if (propagateRooms(startNode.connections.get(direction).end)) {
+        if (this.hasConnection(startNode, direction)) {
+            if (propagateRooms(this.edges.get(startNode).get(direction).end)) {
                 return true;
             }
         } else {
-            BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(startNode.room.getBoundingBox(), direction, this.edgeWidth);
+            BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(startNode.getBoundingBox(), direction, this.edgeWidth);
             BronzeDungeonPieces.DungeonRoom hallway = new BronzeDungeonPieces.DungeonRoom(this.manager, "square_tunnel", pos, rotation);
             pos = BlockLogicUtil.tunnelFromEvenSquareRoom(hallway.getBoundingBox(), direction, this.nodeWidth);
             BronzeDungeonPieces.DungeonRoom chestRoom = new BronzeDungeonPieces.DungeonRoom(manager, "chest_room", pos, rotation);
-            StructurePiece collisionPiece = StructurePiece.findCollisionPiece(this.nodes.stream().map(Node::getRoom).collect(Collectors.toList()), chestRoom.getBoundingBox());
+
+            StructurePiece collisionPiece = StructurePiece.findCollisionPiece(this.nodes, chestRoom.getBoundingBox());
             if (collisionPiece == null) {
-                Node endNode = new Node(chestRoom);
-                Connection edge = new Connection(startNode, endNode, hallway, direction);
-                this.nodes.add(endNode);
-                this.edges.add(edge);
+                new Connection(startNode, chestRoom, hallway, direction);
+                this.nodes.add(chestRoom);
                 return true;
+            } else {
+                boolean flag = this.edges.computeIfAbsent(collisionPiece, piece -> new HashMap<>()).values().stream()
+                        .map(Connection::endPiece).anyMatch(piece -> piece == startNode);
+                if (!flag/* && random.nextBoolean()*/) {
+                    new Connection(startNode, chestRoom, hallway, direction);
+                }
             }
         }
 
@@ -129,45 +130,36 @@ public class BronzeDungeonGraph {
     }*/
 
     /**
-     * Adds all of the pieces to the StructurePieceAccessor so that it can generate in the world.
+     * Adds all the pieces to the StructurePieceAccessor so that it can generate in the world.
      */
     public void populatePiecesBuilder() {
-        StructurePiece bossRoom = this.nodes.remove(0).room;
-        this.nodes.forEach(node -> builder.addPiece(node.room));
-        edges.forEach(edge -> builder.addPiece(edge.hallway));
+        StructurePiece bossRoom = this.nodes.remove(0);
+        this.nodes.forEach(this.builder::addPiece);
+        this.edges.values().forEach(map -> map.values().forEach(connection -> this.builder.addPiece(connection.hallway)));
         // Add the tunnel at the end to make sure the tunnel doesn't dig into the boss room, since we have special doorway blocks.
-        builder.addPiece(bossRoom);
+        this.builder.addPiece(bossRoom);
     }
 
-    static class Node {
-        public final StructurePiece room;
-        final HashMap<Direction, Connection> connections;
-
-        public Node(StructurePiece room) {
-            this.room = room;
-            this.connections = new HashMap<>();
-        }
-
-        public boolean hasConnection(Direction direction) {
-            return this.connections.containsKey(direction);
-        }
-
-        public StructurePiece getRoom() {
-            return this.room;
-        }
+    private boolean hasConnection(StructurePiece node, Direction direction) {
+        return this.edges.get(node) instanceof HashMap map && map.containsKey(direction);
     }
 
-    /* An edge going in one direction. When iterating through the graph, you cannot go backward through these. */
-    static class Connection {
-        public final Node start;
-        public final Node end;
+    /** An edge going in one direction. When iterating through the graph, you cannot go backward through these. */
+    class Connection {
+        public final StructurePiece start;
+        public final StructurePiece end;
         public final StructurePiece hallway;
 
-        public Connection(Node start, Node end, StructurePiece hallway, Direction direction) {
+        /** Creates a new Connection and adds it to the map. */
+        public Connection(StructurePiece start, StructurePiece end, StructurePiece hallway, Direction direction) {
             this.start = start;
             this.end = end;
             this.hallway = hallway;
-            start.connections.put(direction, this);
+            BronzeDungeonGraph.this.edges.computeIfAbsent(start, piece -> new HashMap<>()).put(direction, this);
+        }
+
+        public StructurePiece endPiece() {
+            return end;
         }
     }
 }
