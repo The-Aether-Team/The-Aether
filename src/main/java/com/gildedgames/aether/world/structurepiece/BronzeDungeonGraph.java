@@ -7,6 +7,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
@@ -71,7 +72,7 @@ public class BronzeDungeonGraph {
         }
         propagateRooms(chestRoom, true);
         StructurePiece lobby = this.nodes.get(this.nodes.size() - 1);
-        this.buildEndTunnel(lobby);
+        this.buildEndTunnel(lobby, startPos);
     }
 
     /**
@@ -116,7 +117,7 @@ public class BronzeDungeonGraph {
         return false;
     }
 
-    public void buildEndTunnel(StructurePiece lobby) {
+    public void buildEndTunnel(StructurePiece lobby, BlockPos origin) {
         Rotation rotation = lobby.getRotation();
         List<Rotation> rotations = new ArrayList<>(3);
         rotations.add(rotation.getRotated(Rotation.COUNTERCLOCKWISE_90));
@@ -125,7 +126,7 @@ public class BronzeDungeonGraph {
         for (int i = 3; i > 0; i--) {
             rotation = rotations.remove(this.random.nextInt(i));
             Direction direction = rotation.rotate(Direction.SOUTH);
-            if (buildTunnelFromRoom(lobby, rotation, direction)) {
+            if (buildTunnelFromRoom(lobby, rotation, direction, origin)) {
                 break;
             }
         }
@@ -137,16 +138,25 @@ public class BronzeDungeonGraph {
      * @param connectedRoom - The room the tunnel leads to
      * @param rotation      - The rotation of the template
      * @param direction     - The direction to build in
+     * @param origin        - The start position of the structure
      */
-    public boolean buildTunnelFromRoom(StructurePiece connectedRoom, Rotation rotation, Direction direction) {
+    public boolean buildTunnelFromRoom(StructurePiece connectedRoom, Rotation rotation, Direction direction, BlockPos origin) {
         StructureTemplate template = this.manager.getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/end_corridor"));
         BlockPos startPos = BlockLogicUtil.tunnelFromEvenSquareRoom(connectedRoom.getBoundingBox(), direction, template.getSize().getX());
         int length = template.getSize().getZ();
-        boolean flag = false;
-
-        for (int i = 0; i < 40; i += length) {
-            BlockPos pos = startPos.offset(direction.getStepX() * i, 0, direction.getStepZ() * i);
+        boolean noOverlap = false;
+        boolean reachedAir = false;
+        BlockPos pos;
+        int i = 0;
+        do {
+            pos = startPos.offset(direction.getStepX() * i, 0, direction.getStepZ() * i);
             BronzeDungeonPieces.HolystoneTunnel tunnel = new BronzeDungeonPieces.HolystoneTunnel(this.manager, new ResourceLocation(Aether.MODID, "bronze_dungeon/end_corridor"), pos, rotation);
+
+            // If the tunnel doesn't find an opening, we can try making another one.
+            if (this.checkForAirAtPos(pos.getX(), pos.getY(), pos.getZ()) && this.checkForAirAtPos(pos.getX(), tunnel.getBoundingBox().maxY(), pos.getZ())) {
+                reachedAir = true;
+                break;
+            }
 
             //Skip the connected piece, since the tunnel will be digging into it.
             StructurePiece col = null;
@@ -159,23 +169,29 @@ public class BronzeDungeonGraph {
             if (col != null) {
                 break;
             } else {
-                flag = true;
+                noOverlap = true;
                 this.nodes.add(tunnel);
                 connectedRoom = tunnel;
             }
-        }
-        return flag;
+            i += length;
+        } while (Math.abs(origin.getX() - pos.getX()) < 100 && Math.abs(origin.getZ() - pos.getZ()) < 100); // At some point, the tunnel should cut off to avoid issues.
+
+        return noOverlap && reachedAir;
     }
 
-    /**
-     * Adds all the pieces to the StructurePieceAccessor so that it can generate in the world.
-     */
+    /** Adds all the pieces to the StructurePieceAccessor so that it can generate in the world. */
     public void populatePiecesBuilder() {
         StructurePiece bossRoom = this.nodes.remove(0);
         this.nodes.forEach(this.builder::addPiece);
         this.edges.values().forEach(map -> map.values().forEach(connection -> this.builder.addPiece(connection.hallway)));
         // Add the tunnel at the end to make sure the tunnel doesn't dig into the boss room, since we have special doorway blocks.
         this.builder.addPiece(bossRoom);
+    }
+
+    /** Returns true if the block at the specified position is air. */
+    public boolean checkForAirAtPos(int x, int y, int z) {
+        NoiseColumn column = this.context.chunkGenerator().getBaseColumn(x, z, this.context.heightAccessor(), this.context.randomState());
+        return column.getBlock(y).isAir();
     }
 
     public boolean hasConnection(StructurePiece node, Direction direction) {
