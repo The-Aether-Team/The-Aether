@@ -24,9 +24,11 @@ import net.minecraft.world.level.levelgen.structure.*;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.common.world.PieceBeardifierModifier;
 
 import java.util.ArrayList;
 
+// TODO: The beardifier is not going to be our long-term solution. I'm using PieceBeardifierModifier mainly for testing purposes.
 public class BronzeDungeonPieces {
     public static RuleProcessor LOCKED_SENTRY_STONE = new RuleProcessor(ImmutableList.of(
             new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.LOCKED_CARVED_STONE.get(), 0.1F), AlwaysTrueTest.INSTANCE, AetherBlocks.LOCKED_SENTRY_STONE.get().defaultBlockState())
@@ -40,7 +42,7 @@ public class BronzeDungeonPieces {
     /**
      * Starting piece for the bronze dungeon. Has the slider.
      */
-    public static class BossRoom extends TemplateStructurePiece {
+    public static class BossRoom extends TemplateStructurePiece implements PieceBeardifierModifier {
 
         public BossRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
             super(AetherStructurePieceTypes.BRONZE_BOSS_ROOM.get(), 0, manager, new ResourceLocation(Aether.MODID, "bronze_dungeon/" + name), name, makeSettings().setRotation(rotation), pos);
@@ -85,9 +87,24 @@ public class BronzeDungeonPieces {
                 level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
             }
         }
+
+        @Override
+        public BoundingBox getBeardifierBox() {
+            return this.boundingBox;
+        }
+
+        @Override
+        public TerrainAdjustment getTerrainAdjustment() {
+            return TerrainAdjustment.BURY;
+        }
+
+        @Override
+        public int getGroundLevelDelta() {
+            return 8;
+        }
     }
 
-    public static class DungeonRoom extends TemplateStructurePiece {
+    public static class DungeonRoom extends TemplateStructurePiece implements PieceBeardifierModifier {
         public DungeonRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
             super(AetherStructurePieceTypes.BRONZE_DUNGEON_ROOM.get(), 0, manager, new ResourceLocation(Aether.MODID, "bronze_dungeon/" + name), name, makeSettings().setRotation(rotation), pos);
             this.setOrientation(this.getRotation().rotate(Direction.SOUTH));
@@ -115,9 +132,24 @@ public class BronzeDungeonPieces {
                 }
             }
         }
+
+        @Override
+        public BoundingBox getBeardifierBox() {
+            return this.boundingBox;
+        }
+
+        @Override
+        public TerrainAdjustment getTerrainAdjustment() {
+            return TerrainAdjustment.BURY;
+        }
+
+        @Override
+        public int getGroundLevelDelta() {
+            return 8;
+        }
     }
 
-    public static class HolystoneTunnel extends TemplateStructurePiece {
+    public static class HolystoneTunnel extends TemplateStructurePiece implements PieceBeardifierModifier {
 
         public HolystoneTunnel(StructureTemplateManager pStructureTemplateManager, ResourceLocation id, BlockPos pTemplatePosition, Rotation rotation) {
             super(AetherStructurePieceTypes.BRONZE_TUNNEL.get(), 0, pStructureTemplateManager, id, id.toString(), makeSettings().setRotation(rotation), pTemplatePosition);
@@ -134,6 +166,21 @@ public class BronzeDungeonPieces {
         @Override
         protected void handleDataMarker(String pName, BlockPos pPos, ServerLevelAccessor pLevel, RandomSource pRandom, BoundingBox pBox) {
 
+        }
+
+        @Override
+        public BoundingBox getBeardifierBox() {
+            return this.boundingBox;
+        }
+
+        @Override
+        public TerrainAdjustment getTerrainAdjustment() {
+            return TerrainAdjustment.NONE;
+        }
+
+        @Override
+        public int getGroundLevelDelta() {
+            return 0;
         }
     }
 }

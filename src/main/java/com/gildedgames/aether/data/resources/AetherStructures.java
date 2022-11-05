@@ -31,7 +31,7 @@ public class AetherStructures {
             new BronzeDungeonStructure(AetherStructureBuilders.structure(
                     AetherTags.Biomes.HAS_BRONZE_DUNGEON,
                     GenerationStep.Decoration.SURFACE_STRUCTURES,
-                    TerrainAdjustment.NONE),
+                    TerrainAdjustment.BURY),
                     8
             )
     );

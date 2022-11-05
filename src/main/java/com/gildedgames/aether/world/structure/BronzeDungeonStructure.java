@@ -1,20 +1,16 @@
 package com.gildedgames.aether.world.structure;
 
 import com.gildedgames.aether.world.structurepiece.BronzeDungeonGraph;
-import com.gildedgames.aether.world.structurepiece.BronzeDungeonPieces;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.Structure;
-import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 import java.util.Optional;
 
@@ -34,8 +30,12 @@ public class BronzeDungeonStructure extends Structure {
     public Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
         ChunkPos chunkPos = context.chunkPos();
         ChunkGenerator chunkGenerator = context.chunkGenerator();
-        int height = chunkGenerator.getBaseHeight(chunkPos.getMiddleBlockX(), chunkPos.getMiddleBlockZ(), Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState());
-        BlockPos blockPos = new BlockPos(context.chunkPos().getMiddleBlockX(), 50, context.chunkPos().getMiddleBlockZ());
+        LevelHeightAccessor heightAccessor = context.heightAccessor();
+        int height = chunkGenerator.getFirstOccupiedHeight(chunkPos.getMiddleBlockX(), chunkPos.getMiddleBlockZ(), Heightmap.Types.WORLD_SURFACE_WG, heightAccessor, context.randomState());
+        if (height < heightAccessor.getMinBuildHeight() + 30) {
+            return Optional.empty();
+        }
+        BlockPos blockPos = new BlockPos(context.chunkPos().getMiddleBlockX(), height - 10, context.chunkPos().getMiddleBlockZ());
         return Optional.of(new GenerationStub(blockPos, (builder -> this.generatePieces(builder, context, blockPos))));
     }
 

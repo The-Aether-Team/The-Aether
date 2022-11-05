@@ -3,5 +3,6 @@
   "biomes": "#aether:has_bronze_dungeon",
   "maxrooms": 8,
   "spawn_overrides": {},
-  "step": "surface_structures"
+  "step": "surface_structures",
+  "terrain_adaptation": "bury"
 }
