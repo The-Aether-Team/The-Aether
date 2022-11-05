@@ -54,7 +54,7 @@ public class BronzeDungeonGraph {
     }
 
     public void initializeDungeon(BlockPos startPos) {
-        BronzeDungeonPieces.BossRoom bossRoom = new BronzeDungeonPieces.BossRoom(this.manager, 0, "boss_room", startPos, Rotation.getRandom(this.random));
+        BronzeDungeonPieces.BossRoom bossRoom = new BronzeDungeonPieces.BossRoom(this.manager, "boss_room", startPos, Rotation.getRandom(this.random));
         Direction direction = bossRoom.getOrientation();
 
         BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(bossRoom.getBoundingBox().moved(0, 2, 0), direction, this.edgeWidth);
@@ -85,9 +85,7 @@ public class BronzeDungeonGraph {
         rotations.add(rotation.getRotated(Rotation.CLOCKWISE_90));
         String roomName = placeLobby ? "lobby" : "chest_room";
 
-        /**
-         * Attempt to generate a room in each direction
-         */
+        // Attempt to generate a room in each direction
         for (int i = 3; i > 0; i--) {
             rotation = rotations.remove(this.random.nextInt(i));
             Direction direction = rotation.rotate(Direction.SOUTH);
@@ -153,16 +151,18 @@ public class BronzeDungeonGraph {
             //Skip the connected piece, since the tunnel will be digging into it.
             StructurePiece col = null;
             for (StructurePiece piece : this.nodes) {
-                if (piece != null && piece != connectedRoom && piece.getBoundingBox().intersects(connectedRoom.getBoundingBox())) {
-                    col = StructurePiece.findCollisionPiece(this.nodes, tunnel.getBoundingBox());
+                if (piece != null && piece != connectedRoom && piece.getBoundingBox().intersects(tunnel.getBoundingBox())) {
+                    col = piece;
                     break;
                 }
             }
             if (col != null) {
                 break;
+            } else {
+                flag = true;
+                this.nodes.add(tunnel);
+                connectedRoom = tunnel;
             }
-            flag = true;
-            this.nodes.add(tunnel);
         }
         return flag;
     }
@@ -178,8 +178,9 @@ public class BronzeDungeonGraph {
         this.builder.addPiece(bossRoom);
     }
 
-    private boolean hasConnection(StructurePiece node, Direction direction) {
-        return this.edges.get(node) instanceof HashMap map && map.containsKey(direction);
+    public boolean hasConnection(StructurePiece node, Direction direction) {
+        Map<Direction, Connection> map = this.edges.get(node);
+        return this.edges.get(node) != null && map.containsKey(direction);
     }
 
     /** An edge going in one direction. When iterating through the graph, you cannot go backward through these. */

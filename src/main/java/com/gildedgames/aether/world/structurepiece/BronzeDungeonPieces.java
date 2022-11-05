@@ -37,19 +37,13 @@ public class BronzeDungeonPieces {
             new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.HOLYSTONE.get(), 0.1F), AlwaysTrueTest.INSTANCE, AetherBlocks.MOSSY_HOLYSTONE.get().defaultBlockState())
     ));
 
-    {
-        {
-//            HolystoneTunnel.buildTunnelFromRoom(manager, this, pieceAccessor, rotation, direction);
-        }
-    }
-
     /**
      * Starting piece for the bronze dungeon. Has the slider.
      */
     public static class BossRoom extends TemplateStructurePiece {
 
-        public BossRoom(StructureTemplateManager manager, int genDepth, String name, BlockPos pos, Rotation rotation) {
-            super(AetherStructurePieceTypes.BRONZE_BOSS_ROOM.get(), genDepth, manager, new ResourceLocation(Aether.MODID, "bronze_dungeon/" + name), name, makeSettings().setRotation(rotation), pos);
+        public BossRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
+            super(AetherStructurePieceTypes.BRONZE_BOSS_ROOM.get(), 0, manager, new ResourceLocation(Aether.MODID, "bronze_dungeon/" + name), name, makeSettings().setRotation(rotation), pos);
             this.setOrientation(this.getRotation().rotate(Direction.SOUTH));
         }
 

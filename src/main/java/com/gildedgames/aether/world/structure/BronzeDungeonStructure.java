@@ -40,9 +40,6 @@ public class BronzeDungeonStructure extends Structure {
     }
 
     private void generatePieces(StructurePiecesBuilder builder, Structure.GenerationContext context, BlockPos startPos) {
-        //Old method
-//        new BronzeDungeonPieces.Builder(builder, context, this.maxRooms).buildDungeon(startPos);
-        //New method
         BronzeDungeonGraph graph = new BronzeDungeonGraph(builder, context, this.maxRooms);
         graph.initializeDungeon(startPos);
         graph.populatePiecesBuilder();
