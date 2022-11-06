@@ -149,6 +149,9 @@ public class BronzeDungeonPieces {
         }
     }
 
+    /**
+     * The entrance to the bronze dungeon. It shouldn't replace air so that it matches the landscape.
+     */
     public static class HolystoneTunnel extends TemplateStructurePiece implements PieceBeardifierModifier {
 
         public HolystoneTunnel(StructureTemplateManager pStructureTemplateManager, ResourceLocation id, BlockPos pTemplatePosition, Rotation rotation) {

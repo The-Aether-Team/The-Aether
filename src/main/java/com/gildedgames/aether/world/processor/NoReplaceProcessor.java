@@ -16,6 +16,10 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Use this processor for structure pieces that shouldn't replace certain blocks in the world.
+ * An example of this being used is the bronze dungeon's tunnel not replacing air to blend in with the landscape.
+ */
 public class NoReplaceProcessor extends StructureProcessor {
     public static final NoReplaceProcessor AIR = new NoReplaceProcessor(Blocks.AIR);
     public static final Codec<NoReplaceProcessor> CODEC = RecordCodecBuilder.create(builder ->

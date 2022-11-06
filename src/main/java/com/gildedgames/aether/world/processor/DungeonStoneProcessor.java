@@ -15,10 +15,9 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Randomly replaces some hellfire stone in the gold dungeon with light hellfire stone
  */
+@Deprecated(forRemoval = true) // Obsolete - see RuleProcessor, ProcessorRule, and RandomBlockMatchTest
 public class DungeonStoneProcessor extends StructureProcessor {
     // Pass this instance to the structure pieces that use it
-    public static final DungeonStoneProcessor MOSSY_HOLYSTONE = new DungeonStoneProcessor(AetherBlocks.HOLYSTONE.get(), AetherBlocks.MOSSY_HOLYSTONE.get(), 0.1F);
-    public static final DungeonStoneProcessor SENTRY = new DungeonStoneProcessor(AetherBlocks.LOCKED_CARVED_STONE.get(), AetherBlocks.LOCKED_SENTRY_STONE.get(), 0.1F);
     public static final DungeonStoneProcessor HELLFIRE = new DungeonStoneProcessor(AetherBlocks.LOCKED_HELLFIRE_STONE.get(), AetherBlocks.LOCKED_LIGHT_HELLFIRE_STONE.get(), 0.1F);
     public static final Codec<DungeonStoneProcessor> CODEC = RecordCodecBuilder.create(builder -> builder.group(
             ForgeRegistries.BLOCKS.getCodec().fieldOf("baseblock").forGetter(o -> o.baseBlock),
