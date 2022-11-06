@@ -152,12 +152,6 @@ public class BronzeDungeonGraph {
             pos = startPos.offset(direction.getStepX() * i, 0, direction.getStepZ() * i);
             BronzeDungeonPieces.HolystoneTunnel tunnel = new BronzeDungeonPieces.HolystoneTunnel(this.manager, new ResourceLocation(Aether.MODID, "bronze_dungeon/end_corridor"), pos, rotation);
 
-            // If the tunnel doesn't find an opening, we can try making another one.
-            if (this.checkForAirAtPos(pos.getX(), pos.getY(), pos.getZ()) && this.checkForAirAtPos(pos.getX(), tunnel.getBoundingBox().maxY(), pos.getZ())) {
-                reachedAir = true;
-                break;
-            }
-
             //Skip the connected piece, since the tunnel will be digging into it.
             StructurePiece col = null;
             for (StructurePiece piece : this.nodes) {
@@ -174,6 +168,13 @@ public class BronzeDungeonGraph {
                 connectedRoom = tunnel;
             }
             i += length;
+
+            // If the tunnel doesn't find an opening, we can try making another one.
+            if (this.checkForAirAtPos(pos.getX(), pos.getY(), pos.getZ()) && this.checkForAirAtPos(pos.getX(), tunnel.getBoundingBox().maxY(), pos.getZ())) {
+                reachedAir = true;
+                break;
+            }
+
         } while (Math.abs(origin.getX() - pos.getX()) < 100 && Math.abs(origin.getZ() - pos.getZ()) < 100); // At some point, the tunnel should cut off to avoid issues.
 
         return noOverlap && reachedAir;
