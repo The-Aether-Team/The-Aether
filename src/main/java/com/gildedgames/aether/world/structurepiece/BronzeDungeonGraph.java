@@ -150,7 +150,7 @@ public class BronzeDungeonGraph {
         int i = 0;
         do {
             pos = startPos.offset(direction.getStepX() * i, 0, direction.getStepZ() * i);
-            BronzeDungeonPieces.HolystoneTunnel tunnel = new BronzeDungeonPieces.HolystoneTunnel(this.manager, new ResourceLocation(Aether.MODID, "bronze_dungeon/end_corridor"), pos, rotation);
+            BronzeDungeonPieces.HolystoneTunnel tunnel = new BronzeDungeonPieces.HolystoneTunnel(this.manager, "end_corridor", pos, rotation);
 
             //Skip the connected piece, since the tunnel will be digging into it.
             StructurePiece col = null;

@@ -22,11 +22,13 @@ import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.levelgen.structure.*;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.world.PieceBeardifierModifier;
 
 import java.util.ArrayList;
+import java.util.function.Function;
 
 // TODO: The beardifier is not going to be our long-term solution. I'm using PieceBeardifierModifier mainly for testing purposes.
 public class BronzeDungeonPieces {
@@ -42,10 +44,10 @@ public class BronzeDungeonPieces {
     /**
      * Starting piece for the bronze dungeon. Has the slider.
      */
-    public static class BossRoom extends TemplateStructurePiece implements PieceBeardifierModifier {
+    public static class BossRoom extends BronzeDungeonPiece implements PieceBeardifierModifier {
 
         public BossRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
-            super(AetherStructurePieceTypes.BRONZE_BOSS_ROOM.get(), 0, manager, new ResourceLocation(Aether.MODID, "bronze_dungeon/" + name), name, makeSettings().setRotation(rotation), pos);
+            super(AetherStructurePieceTypes.BRONZE_BOSS_ROOM.get(), 0, manager, name, makeSettings().setRotation(rotation), pos);
             this.setOrientation(this.getRotation().rotate(Direction.SOUTH));
         }
 
@@ -104,9 +106,9 @@ public class BronzeDungeonPieces {
         }
     }
 
-    public static class DungeonRoom extends TemplateStructurePiece implements PieceBeardifierModifier {
+    public static class DungeonRoom extends BronzeDungeonPiece implements PieceBeardifierModifier {
         public DungeonRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
-            super(AetherStructurePieceTypes.BRONZE_DUNGEON_ROOM.get(), 0, manager, new ResourceLocation(Aether.MODID, "bronze_dungeon/" + name), name, makeSettings().setRotation(rotation), pos);
+            super(AetherStructurePieceTypes.BRONZE_DUNGEON_ROOM.get(), 0, manager, name, makeSettings().setRotation(rotation), pos);
             this.setOrientation(this.getRotation().rotate(Direction.SOUTH));
         }
 
@@ -152,10 +154,10 @@ public class BronzeDungeonPieces {
     /**
      * The entrance to the bronze dungeon. It shouldn't replace air so that it matches the landscape.
      */
-    public static class HolystoneTunnel extends TemplateStructurePiece implements PieceBeardifierModifier {
+    public static class HolystoneTunnel extends BronzeDungeonPiece implements PieceBeardifierModifier {
 
-        public HolystoneTunnel(StructureTemplateManager pStructureTemplateManager, ResourceLocation id, BlockPos pTemplatePosition, Rotation rotation) {
-            super(AetherStructurePieceTypes.BRONZE_TUNNEL.get(), 0, pStructureTemplateManager, id, id.toString(), makeSettings().setRotation(rotation), pTemplatePosition);
+        public HolystoneTunnel(StructureTemplateManager pStructureTemplateManager, String name, BlockPos pTemplatePosition, Rotation rotation) {
+            super(AetherStructurePieceTypes.BRONZE_TUNNEL.get(), 0, pStructureTemplateManager, name, makeSettings().setRotation(rotation), pTemplatePosition);
         }
 
         public HolystoneTunnel(StructurePieceSerializationContext context, CompoundTag tag) {
@@ -184,6 +186,23 @@ public class BronzeDungeonPieces {
         @Override
         public int getGroundLevelDelta() {
             return 0;
+        }
+    }
+
+    public static abstract class BronzeDungeonPiece extends TemplateStructurePiece {
+
+        public BronzeDungeonPiece(StructurePieceType type, int genDepth, StructureTemplateManager manager, String name, StructurePlaceSettings settings, BlockPos pos) {
+            super(type, genDepth, manager, new ResourceLocation(Aether.MODID, "bronze_dungeon/" + name), name, settings, pos);
+        }
+
+        public BronzeDungeonPiece(StructurePieceType type, CompoundTag tag, StructureTemplateManager manager, Function<ResourceLocation, StructurePlaceSettings> settingsFactory) {
+            super(type, tag, manager, settingsFactory.andThen(settings -> settings.setRotation(Rotation.valueOf(tag.getString("Rotation")))));
+        }
+
+        @Override
+        protected void addAdditionalSaveData(StructurePieceSerializationContext context, CompoundTag tag) {
+            super.addAdditionalSaveData(context, tag);
+            tag.putString("Rotation", this.placeSettings.getRotation().name());
         }
     }
 }
