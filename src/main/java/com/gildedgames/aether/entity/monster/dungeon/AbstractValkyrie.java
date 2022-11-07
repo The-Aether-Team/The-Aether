@@ -10,6 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -31,6 +32,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.*;
 import net.minecraft.world.phys.Vec2;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -54,7 +56,8 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     public void registerGoals() {
         this.goalSelector.addGoal(1, new ValkyrieTeleportGoal(this));
         this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 0.65, true));
-        this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.5));
+        this.goalSelector.addGoal(4, new LungeGoal(this));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.5));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F, 8.0F));
         this.mostDamageTargetGoal = new MostDamageTargetGoal(this);
         this.targetSelector.addGoal(1, this.mostDamageTargetGoal);
@@ -222,6 +225,57 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
             } else {
                 this.valkyrie.teleportTimer -= 20;
             }
+        }
+
+        @Override
+        public boolean requiresUpdateEveryTick() {
+            return true;
+        }
+    }
+
+    /**
+     * Lunge back at the target after being attacked.
+     */
+    public static class LungeGoal extends Goal {
+        private final AbstractValkyrie valkyrie;
+        private int counter;
+        private int timestamp;
+        public LungeGoal(AbstractValkyrie mob) {
+            this.valkyrie = mob;
+        }
+
+        @Override
+        public boolean canUse() {
+            int timestamp = this.valkyrie.getLastHurtByMobTimestamp();
+            if (this.timestamp != timestamp) {
+                this.timestamp = timestamp;
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return !this.valkyrie.onGround && this.counter <= 5;
+        }
+
+        @Override
+        public void tick() {
+            if (this.counter++ >= 5 && this.valkyrie.getTarget() != null) {
+                Vec3 distance = this.valkyrie.getTarget().position().subtract(this.valkyrie.position());
+                double angle = Math.atan2(distance.x, distance.z);
+                this.valkyrie.setDeltaMovement(Math.sin(angle) * 0.25, this.valkyrie.getDeltaMovement().y, Math.cos(angle) * 0.25);
+            }
+        }
+
+        @Override
+        public void stop() {
+            this.counter = 0;
+        }
+
+        @Override
+        public boolean requiresUpdateEveryTick() {
+            return true;
         }
     }
 
