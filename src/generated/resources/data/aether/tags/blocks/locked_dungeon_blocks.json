@@ -5,6 +5,8 @@
     "aether:locked_angelic_stone",
     "aether:locked_light_angelic_stone",
     "aether:locked_hellfire_stone",
-    "aether:locked_light_hellfire_stone"
+    "aether:locked_light_hellfire_stone",
+    "#aether:boss_doorway_dungeon_blocks",
+    "#aether:treasure_doorway_dungeon_blocks"
   ]
 }

@@ -1,6 +1,5 @@
 package com.gildedgames.aether.entity.monster.dungeon.boss;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.api.DungeonTracker;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.client.gui.screen.ValkyrieQueenDialogueScreen;
@@ -40,6 +39,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -296,8 +296,11 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
         if (state.is(AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get())) {
             return AetherBlocks.LIGHT_ANGELIC_STONE.get().defaultBlockState();
         }
-        if (state.is(AetherBlocks.BOSS_DOORWAY_ANGELIC_STONE.get()) || state.is(AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE.get())) {
+        if (state.is(AetherBlocks.BOSS_DOORWAY_ANGELIC_STONE.get())) {
             return Blocks.AIR.defaultBlockState();
+        }
+        if (state.is(AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE.get())) {
+            AetherBlocks.SKYROOT_TRAPDOOR.get().defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, state.getValue(HorizontalDirectionalBlock.FACING));
         }
         return null;
     }

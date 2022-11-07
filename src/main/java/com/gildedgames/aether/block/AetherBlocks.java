@@ -144,12 +144,12 @@ public class AetherBlocks
     public static final RegistryObject<Block> BOSS_DOORWAY_HELLFIRE_STONE = register("boss_doorway_hellfire_stone", () -> new DoorwayBlock(BlockBehaviour.Properties.copy(LOCKED_HELLFIRE_STONE.get())));
     public static final RegistryObject<Block> BOSS_DOORWAY_LIGHT_HELLFIRE_STONE = register("boss_doorway_light_hellfire_stone", () -> new DoorwayBlock(BlockBehaviour.Properties.copy(LOCKED_LIGHT_HELLFIRE_STONE.get())));
 
-    public static final RegistryObject<Block> TREASURE_DOORWAY_CARVED_STONE = register("treasure_doorway_carved_stone", () -> new Block(BlockBehaviour.Properties.copy(LOCKED_CARVED_STONE.get())));
-    public static final RegistryObject<Block> TREASURE_DOORWAY_SENTRY_STONE = register("treasure_doorway_sentry_stone", () -> new Block(BlockBehaviour.Properties.copy(LOCKED_SENTRY_STONE.get())));
-    public static final RegistryObject<Block> TREASURE_DOORWAY_ANGELIC_STONE = register("treasure_doorway_angelic_stone", () -> new Block(BlockBehaviour.Properties.copy(LOCKED_ANGELIC_STONE.get())));
-    public static final RegistryObject<Block> TREASURE_DOORWAY_LIGHT_ANGELIC_STONE = register("treasure_doorway_light_angelic_stone", () -> new Block(BlockBehaviour.Properties.copy(LOCKED_LIGHT_ANGELIC_STONE.get())));
-    public static final RegistryObject<Block> TREASURE_DOORWAY_HELLFIRE_STONE = register("treasure_doorway_hellfire_stone", () -> new Block(BlockBehaviour.Properties.copy(LOCKED_HELLFIRE_STONE.get())));
-    public static final RegistryObject<Block> TREASURE_DOORWAY_LIGHT_HELLFIRE_STONE = register("treasure_doorway_light_hellfire_stone", () -> new Block(BlockBehaviour.Properties.copy(LOCKED_LIGHT_HELLFIRE_STONE.get())));
+    public static final RegistryObject<Block> TREASURE_DOORWAY_CARVED_STONE = register("treasure_doorway_carved_stone", () -> new TreasureDoorwayBlock(BlockBehaviour.Properties.copy(LOCKED_CARVED_STONE.get())));
+    public static final RegistryObject<Block> TREASURE_DOORWAY_SENTRY_STONE = register("treasure_doorway_sentry_stone", () -> new TreasureDoorwayBlock(BlockBehaviour.Properties.copy(LOCKED_SENTRY_STONE.get())));
+    public static final RegistryObject<Block> TREASURE_DOORWAY_ANGELIC_STONE = register("treasure_doorway_angelic_stone", () -> new TreasureDoorwayBlock(BlockBehaviour.Properties.copy(LOCKED_ANGELIC_STONE.get())));
+    public static final RegistryObject<Block> TREASURE_DOORWAY_LIGHT_ANGELIC_STONE = register("treasure_doorway_light_angelic_stone", () -> new TreasureDoorwayBlock(BlockBehaviour.Properties.copy(LOCKED_LIGHT_ANGELIC_STONE.get())));
+    public static final RegistryObject<Block> TREASURE_DOORWAY_HELLFIRE_STONE = register("treasure_doorway_hellfire_stone", () -> new TreasureDoorwayBlock(BlockBehaviour.Properties.copy(LOCKED_HELLFIRE_STONE.get())));
+    public static final RegistryObject<Block> TREASURE_DOORWAY_LIGHT_HELLFIRE_STONE = register("treasure_doorway_light_hellfire_stone", () -> new TreasureDoorwayBlock(BlockBehaviour.Properties.copy(LOCKED_LIGHT_HELLFIRE_STONE.get())));
 
     public static final RegistryObject<Block> CHEST_MIMIC = register("chest_mimic", () -> new ChestMimicBlock(Block.Properties.copy(Blocks.CHEST)));
     public static final RegistryObject<Block> TREASURE_CHEST = register("treasure_chest", () -> new TreasureChestBlock(Block.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).requiresCorrectToolForDrops()));
