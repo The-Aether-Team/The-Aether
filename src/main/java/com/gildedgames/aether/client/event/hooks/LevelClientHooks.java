@@ -98,7 +98,9 @@ public class LevelClientHooks {
             if (!depopulate) {
                 BlockPos pos = new BlockPos(x, y, z);
                 if (stack.is(level.getBlockState(pos).getBlock().asItem())) {
-                    positionsForTypes.get(type).add(pos);
+                    if (!positionsForTypes.get(type).contains(pos)) {
+                        positionsForTypes.get(type).add(pos);
+                    }
                 }
             } else {
                 List<BlockPos> positions = positionsForTypes.get(type);
