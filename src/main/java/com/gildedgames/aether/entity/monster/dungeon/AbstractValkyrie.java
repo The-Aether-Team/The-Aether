@@ -129,6 +129,11 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         return false;
     }
 
+    @Override
+    protected boolean canRide(@Nonnull Entity vehicle) {
+        return false;
+    }
+
     /**
      * The valkyrie will be provoked to attack the player if attacked.
      */
