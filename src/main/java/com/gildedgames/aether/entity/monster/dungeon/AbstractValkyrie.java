@@ -1,11 +1,14 @@
 package com.gildedgames.aether.entity.monster.dungeon;
 
+import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.entity.NotGrounded;
 import com.gildedgames.aether.entity.ai.goal.target.MostDamageTargetGoal;
 import com.gildedgames.aether.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.event.events.ValkyrieTeleportEvent;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.ExplosionParticlePacket;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -29,6 +32,7 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.*;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
@@ -41,8 +45,6 @@ import javax.annotation.Nullable;
  */
 public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(AbstractValkyrie.class, EntityDataSerializers.BOOLEAN);
-    /** Increments every tick to decide when the valkyries are ready to teleport. */
-    protected int teleportTimer;
     /** Goal for targeting in groups of entities */
     MostDamageTargetGoal mostDamageTargetGoal;
 
@@ -112,7 +114,6 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     @Override
     public void customServerAiStep() {
         super.customServerAiStep();
-        this.teleportTimer++;
     }
 
     @Override
@@ -161,21 +162,21 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         double x = target.getX() + targetVec.x * 7;
         double y = target.getY();
         double z = target.getZ() + targetVec.y * 7;
-        return this.teleport(x, y, z);
-    }
-
-    /**
-     * Teleports to the specified position. Returns false if it fails.
-     */
-    protected boolean teleport(double pX, double pY, double pZ) {
-        /*BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos(pX, pY, pZ);
+        BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos(x, y, z);
 
         while(blockpos$mutableblockpos.getY() > this.level.getMinBuildHeight() && !this.level.getBlockState(blockpos$mutableblockpos).getMaterial().blocksMotion()) {
             blockpos$mutableblockpos.move(Direction.DOWN);
         }
 
         BlockState blockstate = this.level.getBlockState(blockpos$mutableblockpos);
-        boolean flag = blockstate.is(AetherTags.Blocks.VALKYRIE_TELEPORTABLE_ON);*/
+        boolean isValidSpot = blockstate.is(AetherTags.Blocks.VALKYRIE_TELEPORTABLE_ON);
+        return isValidSpot && this.teleport(x, y, z);
+    }
+
+    /**
+     * Teleports to the specified position. Returns false if it fails.
+     */
+    protected boolean teleport(double pX, double pY, double pZ) {
         ValkyrieTeleportEvent event = AetherEventDispatch.onValkyrieTeleport(this, pX, pY, pZ);
         if (event.isCanceled()) return false;
         boolean flag = this.randomTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ(), false);
@@ -212,21 +213,23 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
      */
     public static class ValkyrieTeleportGoal extends Goal {
         private final AbstractValkyrie valkyrie;
+        protected int teleportTimer;
         public ValkyrieTeleportGoal(AbstractValkyrie mob) {
             this.valkyrie = mob;
+            this.teleportTimer = this.valkyrie.getRandom().nextInt(200);
         }
 
         @Override
         public boolean canUse() {
-            return this.valkyrie.getTarget() != null && this.valkyrie.teleportTimer >= 450;
+            return this.valkyrie.getTarget() != null && this.teleportTimer++ >= 450;
         }
 
         @Override
         public void start() {
             if (this.valkyrie.teleportAroundTarget(valkyrie.getTarget())) {
-                this.valkyrie.teleportTimer = this.valkyrie.random.nextInt(40);
+                this.teleportTimer = this.valkyrie.random.nextInt(40);
             } else {
-                this.valkyrie.teleportTimer -= 20;
+                this.teleportTimer -= 20;
             }
         }
 

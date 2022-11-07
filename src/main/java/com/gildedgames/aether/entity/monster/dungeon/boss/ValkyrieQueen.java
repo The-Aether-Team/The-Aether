@@ -90,6 +90,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     public void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(1, new NpcDialogueGoal<>(this));
+        this.goalSelector.addGoal(1, new GetUnstuckGoal(this));
         this.goalSelector.addGoal(2, new ThunderCrystalAttackGoal(this, 450, 28.0F));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, livingEntity -> this.isBossFight()));
     }
@@ -209,6 +210,13 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
             z = Mth.clamp(z, room.minZ, room.maxZ);
         }
         return this.teleport(x, y, z);
+    }
+
+    /**
+     * Teleports to an unreachable player
+     */
+    protected boolean teleportUnstuck(Entity target) {
+        return this.teleport(target.getX(), target.getY(), target.getZ());
     }
 
     public void readyUp() {
@@ -499,6 +507,36 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
 
         public boolean requiresUpdateEveryTick() {
             return true;
+        }
+    }
+
+    public static class GetUnstuckGoal extends Goal {
+        private final ValkyrieQueen valkyrie;
+        protected int stuckTimer;
+
+        public GetUnstuckGoal(ValkyrieQueen valkyrie) {
+            this.valkyrie = valkyrie;
+        }
+
+        @Override
+        public boolean canUse() {
+            Entity target = this.valkyrie.getTarget();
+            if (target == null) {
+                return false;
+            } else if (target.getY() > this.valkyrie.getY()) {
+                if (this.stuckTimer++ >= 75) {
+                    this.stuckTimer = 0;
+                    return true;
+                }
+            } else {
+                this.stuckTimer = 0;
+            }
+            return false;
+        }
+
+        @Override
+        public void start() {
+            this.valkyrie.teleportUnstuck(this.valkyrie.getTarget());
         }
     }
 }
