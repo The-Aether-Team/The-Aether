@@ -42,7 +42,7 @@ public record DungeonTracker<T extends Mob & BossMob<T>>(T boss, Vec3 originCoor
                     if (x == Math.floor(this.roomBounds().minX) || x == Math.ceil(this.roomBounds().maxX)
                             || y == Math.floor(this.roomBounds().minY) || y == Math.ceil(this.roomBounds().maxY)
                             || z == Math.floor(this.roomBounds().minZ) || z == Math.ceil(this.roomBounds().maxZ)) {
-                        this.boss().getLevel().setBlockAndUpdate(new BlockPos(x, y, z), AetherBlocks.LOCKED_SENTRY_STONE.get().defaultBlockState());
+                        this.boss().getLevel().setBlockAndUpdate(new BlockPos(x, y, z), AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get().defaultBlockState());
                     }
                 }
             }
