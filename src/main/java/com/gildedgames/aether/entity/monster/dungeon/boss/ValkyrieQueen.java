@@ -27,6 +27,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.*;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -40,11 +41,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 
 /**
  * This class holds the implementation of valkyrie queens. They are the boss version of valkyries, and they fight
@@ -56,7 +60,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     /** The player whom the valkyrie queen is currently conversing with */
     @Nullable
     private Player tradingPlayer;
-    /** Boss health bar manager */
+    private DungeonTracker<ValkyrieQueen> dungeon;
     private final ServerBossEvent bossFight;
 
     public ValkyrieQueen(EntityType<? extends ValkyrieQueen> type, Level level) {
@@ -73,6 +77,12 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor pLevel, @Nonnull DifficultyInstance pDifficulty, @Nonnull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
         SpawnGroupData data = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
         this.setBossName(BossNameGenerator.generateValkyrieName());
+        if (this.dungeon == null) {
+            this.dungeon = new DungeonTracker<>(this,
+                    this.position(),
+                    new AABB(this.position().subtract(15, 0, 15), this.position().add(15, 15, 15)),
+                    new ArrayList<>());
+        }
         return data;
     }
 
@@ -103,6 +113,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     public void customServerAiStep() {
         super.customServerAiStep();
         this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
+        this.trackDungeon();
     }
 
     /**
@@ -111,21 +122,25 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     @Override
     @Nonnull
     protected InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
-        if (!this.isReady()) {
-            this.lookAt(player, 180F, 180F);
-            if (player instanceof ServerPlayer serverPlayer) {
-                if (!this.isTrading()) {
-                    AetherPacketHandler.sendToPlayer(new OpenNpcDialoguePacket(this.getId()), serverPlayer);
-                    this.setTradingPlayer(serverPlayer);
+        if (!this.isBossFight()) {
+            if (!this.isReady()) {
+                this.lookAt(player, 180F, 180F);
+                if (player instanceof ServerPlayer serverPlayer) {
+                    if (!this.isTrading()) {
+                        AetherPacketHandler.sendToPlayer(new OpenNpcDialoguePacket(this.getId()), serverPlayer);
+                        this.setTradingPlayer(serverPlayer);
+                    }
+                }
+            } else {
+                if (!this.level.isClientSide()) {
+                    MutableComponent message = Component.translatable("gui.aether.queen.dialog.ready");
+                    this.chatWithNearby(message);
                 }
             }
+            return InteractionResult.SUCCESS;
         } else {
-            if (!this.level.isClientSide()) {
-                MutableComponent message = Component.translatable("gui.aether.queen.dialog.ready");
-                this.chatWithNearby(message);
-            }
+            return InteractionResult.PASS;
         }
-        return InteractionResult.SUCCESS;
     }
 
     /**
@@ -133,11 +148,15 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
      */
     @Override
     public boolean hurt(@Nonnull DamageSource source, float pDamageAmount) {
-        boolean flag = this.isReady() && super.hurt(source, pDamageAmount);
-        if (!this.level.isClientSide && source.getEntity() instanceof Player player) {
+        boolean flag = (this.isReady() || source == DamageSource.OUT_OF_WORLD) && super.hurt(source, pDamageAmount);
+        if (!this.level.isClientSide && source.getEntity() instanceof Player) {
             if (!this.isBossFight() && flag && level.getDifficulty() != Difficulty.PEACEFUL && this.getHealth() > 0) {
+                chatWithNearby(Component.translatable("gui.aether.queen.dialog.fight"));
                 this.setBossFight(true);
-                chatItUp(player, Component.translatable("gui.aether.queen.dialog.fight"));
+                if (this.getDungeon() != null) {
+                    this.getDungeon().debugBounds();
+                    this.closeRoom();
+                }
             }
         }
         return flag;
@@ -165,8 +184,31 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
             this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
             this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.defeated"));
             this.spawnExplosionParticles();
+            if (this.getDungeon() != null) {
+                this.getDungeon().grantAdvancements(pCause);
+                this.tearDownRoom();
+            }
         }
         super.die(pCause);
+    }
+
+    /**
+     * Teleports near a target outside of a specified radius. Returns false if it fails.
+     * If it's outside the room, clamp to inside the room.
+     */
+    @Override
+    protected boolean teleportAroundTarget(Entity target) {
+        Vec2 targetVec = new Vec2((this.random.nextFloat() - 0.5F), (this.random.nextFloat() - 0.5F)).normalized();
+        double x = target.getX() + targetVec.x * 7;
+        double y = target.getY();
+        double z = target.getZ() + targetVec.y * 7;
+        if (this.dungeon != null) {
+            AABB room = this.dungeon.roomBounds();
+            x = Mth.clamp(x, room.minX, room.maxX);
+            y = Mth.clamp(y, room.minY, room.maxY);
+            z = Mth.clamp(z, room.minZ, room.maxZ);
+        }
+        return this.teleport(x, y, z);
     }
 
     public void readyUp() {
@@ -198,10 +240,9 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     public void startSeenByPlayer(@Nonnull ServerPlayer pPlayer) {
         super.startSeenByPlayer(pPlayer);
         AetherPacketHandler.sendToPlayer(new BossInfoPacket.Display(this.bossFight.getId()), pPlayer);
-        this.bossFight.addPlayer(pPlayer); //todo remove
-//        if (this.getDungeon() != null && this.getDungeon().isPlayerWithinRoom(pPlayer)) {
-//            this.bossFight.addPlayer(pPlayer);
-//        }
+        if (this.getDungeon() != null && this.getDungeon().isPlayerWithinRoom(pPlayer)) {
+            this.bossFight.addPlayer(pPlayer);
+        }
     }
 
     /**
@@ -214,19 +255,19 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
         this.bossFight.removePlayer(pPlayer);
     }
 
-//    @Override
-//    public void onDungeonPlayerAdded(@Nullable Player player) {
-//        if (player instanceof ServerPlayer serverPlayer) {
-//            this.bossFight.addPlayer(serverPlayer);
-//        }
-//    }
-//
-//    @Override
-//    public void onDungeonPlayerRemoved(@Nullable Player player) {
-//        if (player instanceof ServerPlayer serverPlayer) {
-//            this.bossFight.removePlayer(serverPlayer);
-//        }
-//    }
+    @Override
+    public void onDungeonPlayerAdded(@Nullable Player player) {
+        if (player instanceof ServerPlayer serverPlayer) {
+            this.bossFight.addPlayer(serverPlayer);
+        }
+    }
+
+    @Override
+    public void onDungeonPlayerRemoved(@Nullable Player player) {
+        if (player instanceof ServerPlayer serverPlayer) {
+            this.bossFight.removePlayer(serverPlayer);
+        }
+    }
 
     @Override
     public void setCustomName(@Nullable Component pName) {
@@ -265,12 +306,12 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
 
     @Override
     public DungeonTracker<ValkyrieQueen> getDungeon() { // TODO
-        return null;
+        return this.dungeon;
     }
 
     @Override
     public void setDungeon(DungeonTracker<ValkyrieQueen> dungeon) {
-
+        this.dungeon = dungeon;
     }
 
     @Override
@@ -280,7 +321,12 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
 
     @Override
     public void reset() {
-
+        this.setBossFight(false);
+        this.setTarget(null);
+        this.setHealth(this.getMaxHealth());
+        if (this.getDungeon() != null) {
+            this.openRoom();
+        }
     }
 
     /**
@@ -387,6 +433,9 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
         tag.putString("BossName", Component.Serializer.toJson(this.getBossName()));
         tag.putBoolean("BossFight", this.isBossFight());
         tag.putBoolean("Ready", this.isReady());
+        if (this.getDungeon() != null) {
+            tag.put("Dungeon", this.getDungeon().addAdditionalSaveData());
+        }
     }
 
     @Override
@@ -403,6 +452,9 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
         }
         if (tag.contains("Ready")) {
             this.setReady(tag.getBoolean("Ready"));
+        }
+        if (tag.contains("Dungeon") && tag.get("Dungeon") instanceof CompoundTag dungeonTag) {
+            this.setDungeon(DungeonTracker.readAdditionalSaveData(dungeonTag, this));
         }
     }
 

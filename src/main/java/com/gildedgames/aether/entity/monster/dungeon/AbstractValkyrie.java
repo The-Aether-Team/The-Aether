@@ -10,7 +10,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -172,7 +171,6 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
 
         BlockState blockstate = this.level.getBlockState(blockpos$mutableblockpos);
         boolean flag = blockstate.is(AetherTags.Blocks.VALKYRIE_TELEPORTABLE_ON);*/
-        //TODO: Lock teleporting to tagged blocks.
         ValkyrieTeleportEvent event = AetherEventDispatch.onValkyrieTeleport(this, pX, pY, pZ);
         if (event.isCanceled()) return false;
         boolean flag = this.randomTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ(), false);
@@ -256,12 +254,12 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
 
         @Override
         public boolean canContinueToUse() {
-            return !this.valkyrie.onGround && this.counter <= 5;
+            return !this.valkyrie.onGround && this.counter >= 0;
         }
 
         @Override
         public void tick() {
-            if (this.counter++ >= 5 && this.valkyrie.getTarget() != null) {
+            if (this.counter-- <= 0 && this.valkyrie.getTarget() != null) {
                 Vec3 distance = this.valkyrie.getTarget().position().subtract(this.valkyrie.position());
                 double angle = Math.atan2(distance.x, distance.z);
                 this.valkyrie.setDeltaMovement(Math.sin(angle) * 0.25, this.valkyrie.getDeltaMovement().y, Math.cos(angle) * 0.25);
@@ -270,7 +268,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
 
         @Override
         public void stop() {
-            this.counter = 0;
+            this.counter = 7;
         }
 
         @Override
