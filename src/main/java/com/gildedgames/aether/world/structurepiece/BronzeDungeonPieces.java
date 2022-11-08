@@ -77,7 +77,7 @@ public class BronzeDungeonPieces {
                 slider.setPos(xPos, pos.getY(), zPos);
                 slider.setDungeon(new DungeonTracker<>(slider,
                         slider.position(),
-                        new AABB(this.boundingBox.minX(), this.boundingBox.minY(), this.boundingBox.minZ(), this.boundingBox.maxX(), this.boundingBox.maxY(), this.boundingBox.maxZ()),
+                        new AABB(this.boundingBox.minX(), this.boundingBox.minY(), this.boundingBox.minZ(), this.boundingBox.maxX() + 1, this.boundingBox.maxY() + 1, this.boundingBox.maxZ() + 1),
                         new ArrayList<>()));
                 slider.finalizeSpawn(level, level.getCurrentDifficultyAt(pos), MobSpawnType.STRUCTURE, null, null);
                 level.getLevel().addFreshEntity(slider);
