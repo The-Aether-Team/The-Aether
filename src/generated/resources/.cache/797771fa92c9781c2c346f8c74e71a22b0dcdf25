@@ -1,4 +1,4 @@
-// 1.19.2	2022-11-05T14:02:47.0034519	Aether Item Tags
+// 1.19.2	2022-11-08T15:08:29.916293528	Aether Item Tags
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/items/accepted_music_discs.json
 b1b83b96d9600b7878597cc26851b843bf99a3dd data/aether/tags/items/accessories.json
 6404c17e75ed612591fd253fd1cfd8c6a5ea4a8a data/aether/tags/items/aerbunny_temptation_items.json
@@ -10,8 +10,8 @@ eb4cdf6f9a5abc219ab893139c2ed512fb1e06de data/aether/tags/items/angelic_blocks.j
 4c3f53ffa001534a8db6e1a65a1bdefc3fa0142f data/aether/tags/items/book_of_lore_materials.json
 d9dcb253fe96193998f03751892165ee5f5c1924 data/aether/tags/items/boss_doorway_dungeon_blocks.json
 ac1d9421f0295d2b3a733f9b307cb39c2a63629d data/aether/tags/items/candy_cane_repairing.json
-321cad0c802b794f364a9ba5a34536ecc36271ec data/aether/tags/items/darts.json
 689feb68cd191d91398feec72aac2a3ba6fc6c1e data/aether/tags/items/dart_shooters.json
+321cad0c802b794f364a9ba5a34536ecc36271ec data/aether/tags/items/darts.json
 e76fa7895d12cebf68ad53507c85f84321c922ad data/aether/tags/items/deployable_parachutes.json
 b7b37d30e23e65ee6925f4068e6d142f874fadd6 data/aether/tags/items/dungeon_blocks.json
 1afb0e16f412f35b65a41d9abe8ae898f087e419 data/aether/tags/items/dungeon_keys.json
@@ -25,9 +25,9 @@ bbd431b5ea0dbbac9aa71e30c71140e28ae93250 data/aether/tags/items/freezable_rings.
 24739a7c6e39fa7efc02d98276194ef47fa70290 data/aether/tags/items/gravitite_repairing.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/hammer_of_notch_repairing.json
 14656c5bacbe085775af17b37cc6fe661f3c5c00 data/aether/tags/items/hellfire_blocks.json
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/holy_repairing.json
 7a6ab5f621a7a401034f482edac807cc203ff72b data/aether/tags/items/holystone.json
 336a5cf28e3a807615f25965e0a90c7bf33dd3ac data/aether/tags/items/holystone_repairing.json
-35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/holy_repairing.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/ice_repairing.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/lightning_repairing.json
 fa94db494e54603d2b82615f7071ecad7080ce64 data/aether/tags/items/locked_dungeon_blocks.json
@@ -58,11 +58,11 @@ c26f64255e81ace6a67fcf973a34043471ebff1d data/aether/tags/items/treasure_doorway
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/valkyrie_repairing.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/vampire_repairing.json
 794ba2e4990dd4fa1823ea008d8b78437527dacd data/aether/tags/items/zanite_repairing.json
-89af558945f41e6e1e5e29c9da8dc0324f4c9cc2 data/curios/tags/items/aether_accessory.json
-99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/curios/tags/items/aether_cape.json
-cd6129430937fd4b57b84a64be78f993ba915b85 data/curios/tags/items/aether_gloves.json
-dfabf018a03431c6925f20338e5f5b105beacae6 data/curios/tags/items/aether_pendant.json
-cd70d1f5f10c0f6f5aaa22bcd218352b3a14cb69 data/curios/tags/items/aether_ring.json
+9a6a0559b86f300f0732ed1fa52dfedf3ee222ba data/curios/tags/items/aether_accessory.json
+cf5274595bae04ea85f85d2a94202d4589da1113 data/curios/tags/items/aether_cape.json
+a555483b58adf47150fdc42864f0fb7949171449 data/curios/tags/items/aether_gloves.json
+5ba247034a4019a795773918d18542d96b4123ed data/curios/tags/items/aether_pendant.json
+19261e2135bd69433443b498613f30bf6c4364a7 data/curios/tags/items/aether_ring.json
 3f9727bd2367c552a68056fe20cf61a448d0e81e data/curios/tags/items/aether_shield.json
 7cc99b499993ff43d1bec64e0297def0c92f4c2d data/forge/tags/items/armors/boots.json
 ae55992a015bc68477c240af9e2959c48fba8803 data/forge/tags/items/armors/chestplates.json
@@ -70,15 +70,15 @@ ae55992a015bc68477c240af9e2959c48fba8803 data/forge/tags/items/armors/chestplate
 c6a2f3012677318fa59bcac00346119501124dc5 data/forge/tags/items/armors/leggings.json
 01f606af3f58ae6c9742c9c6e927e787256e6274 data/forge/tags/items/bookshelves.json
 27515cc6012baf242e2835b3aaee05b65357b60a data/forge/tags/items/eggs.json
-bc9de2bdb11aba0025a16f480e48e231376296ee data/forge/tags/items/fences.json
-bc9de2bdb11aba0025a16f480e48e231376296ee data/forge/tags/items/fences/wooden.json
 0bba5a874905f77d759a35126765746aff21acf2 data/forge/tags/items/fence_gates.json
 0bba5a874905f77d759a35126765746aff21acf2 data/forge/tags/items/fence_gates/wooden.json
+bc9de2bdb11aba0025a16f480e48e231376296ee data/forge/tags/items/fences.json
+bc9de2bdb11aba0025a16f480e48e231376296ee data/forge/tags/items/fences/wooden.json
 794ba2e4990dd4fa1823ea008d8b78437527dacd data/forge/tags/items/gems.json
 3549a6c0791821524c9419a608b6af0de62b3530 data/forge/tags/items/glass/colorless.json
 3e52c5c101f4f3e27d0a4c0ceb478864450a6a40 data/forge/tags/items/glass_panes/colorless.json
-47071da7c265ffd70c41ff2b88a06b237cd784f9 data/forge/tags/items/ores.json
 47071da7c265ffd70c41ff2b88a06b237cd784f9 data/forge/tags/items/ore_rates/singular.json
+47071da7c265ffd70c41ff2b88a06b237cd784f9 data/forge/tags/items/ores.json
 4d0fcd44af39fa4f1950e841827bfde973be863f data/forge/tags/items/rods/wooden.json
 01be455b4f57023ac9af8857eb885afcfb917025 data/forge/tags/items/storage_blocks.json
 addb62cbd712e3f83c6bbadcbfdf309dc0ee3cc3 data/forge/tags/items/tools.json
