@@ -1,7 +1,6 @@
 package com.gildedgames.aether.entity.projectile.crystal;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
-import com.gildedgames.aether.capability.lightning.LightningTracker;
 import com.gildedgames.aether.client.particle.AetherParticleTypes;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -13,11 +12,9 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -96,7 +93,7 @@ public class ThunderCrystal extends AbstractCrystal {
         this.hasImpulse = true;
         Vec3 vec3 = this.getDeltaMovement();
         Vec3 vec31 = target.normalize().scale(strength);
-        this.setDeltaMovement(vec3.x / 2.0D - vec31.x, vec3.y / 2 - vec31.y, vec3.z / 2.0D - vec31.z);
+        this.setDeltaMovement(vec3.x / 2.0D + vec31.x, vec3.y / 2 + vec31.y, vec3.z / 2.0D + vec31.z);
     }
 
     /**

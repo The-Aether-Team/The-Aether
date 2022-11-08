@@ -79,7 +79,11 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.LOCKED_ANGELIC_STONE.get(),
                 AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get(),
                 AetherBlocks.LOCKED_HELLFIRE_STONE.get(),
-                AetherBlocks.LOCKED_LIGHT_HELLFIRE_STONE.get());
+                AetherBlocks.LOCKED_LIGHT_HELLFIRE_STONE.get())
+                .addTags(
+                        AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS,
+                        AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS
+                );
         tag(AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS).add(
                 AetherBlocks.TRAPPED_CARVED_STONE.get(),
                 AetherBlocks.TRAPPED_SENTRY_STONE.get(),
