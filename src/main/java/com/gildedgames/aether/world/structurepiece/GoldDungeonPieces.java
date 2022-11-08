@@ -4,12 +4,19 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.api.DungeonTracker;
 import com.gildedgames.aether.blockentity.TreasureChestBlockEntity;
 import com.gildedgames.aether.data.generators.AetherLootTableData;
+import com.gildedgames.aether.data.resources.AetherConfiguredFeatures;
+import com.gildedgames.aether.data.resources.AetherPlacedFeatures;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.monster.dungeon.boss.SunSpirit;
 import com.gildedgames.aether.loot.AetherLoot;
+import com.gildedgames.aether.world.feature.AetherFeatures;
 import com.gildedgames.aether.world.processor.HellfireStoneProcessor;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.MobSpawnType;
@@ -18,9 +25,13 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import net.minecraft.world.phys.AABB;
@@ -37,8 +48,8 @@ public class GoldDungeonPieces {
      */
     public static class BossRoom extends TemplateStructurePiece {
 
-        public BossRoom(StructureTemplateManager manager, ResourceLocation id, BlockPos pos, RandomSource random) {
-            super(AetherStructurePieceTypes.GOLD_BOSS_ROOM.get(), 0, manager, id, id.toString(), makeSettings().setRotation(Rotation.getRandom(random)), pos);
+        public BossRoom(StructureTemplateManager manager, ResourceLocation id, BlockPos pos, RandomSource random, Rotation rotation) {
+            super(AetherStructurePieceTypes.GOLD_BOSS_ROOM.get(), 0, manager, id, id.toString(), makeSettings().setRotation(rotation), pos);
             this.setOrientation(getRandomHorizontalDirection(random));
         }
 
@@ -76,13 +87,26 @@ public class GoldDungeonPieces {
     /**
      * The chunks of land surrounding the boss room to form an island.
      */
-    public static class Island extends TemplateStructurePiece { // TODO: This might be unnecessary.
-
-        public Island(StructureTemplateManager manager, ResourceLocation id, BlockPos pos) {
-            super(AetherStructurePieceTypes.GOLD_ISLAND.get(), 0, manager, id, id.toString(), makeSettings(), pos);
+    public static class Island extends FeatureStructurePiece {
+        public Island(ResourceKey<ConfiguredFeature<?, ?>> feature, RegistryAccess access, BlockPos pos) {
+            super(AetherStructurePieceTypes.GOLD_ISLAND.get(), PlacementUtils.inlinePlaced(access.registryOrThrow(Registry.CONFIGURED_FEATURE_REGISTRY).getOrCreateHolderOrThrow(feature)).get(), pos);
         }
 
         public Island(StructurePieceSerializationContext context, CompoundTag tag) {
+            super(AetherStructurePieceTypes.GOLD_BOSS_ROOM.get(), tag);
+        }
+
+        @Override
+        protected void handleDataMarker(String pName, BlockPos pPos, ServerLevelAccessor pLevel, RandomSource pRandom, BoundingBox pBox) {}
+    }
+
+    public static class TemplateIsland extends TemplateStructurePiece {
+        public TemplateIsland(StructureTemplateManager manager, ResourceLocation id, BlockPos pos, RandomSource random, Rotation rotation) {
+            super(AetherStructurePieceTypes.GOLD_ISLAND.get(), 0, manager, id, id.toString(), makeSettings().setRotation(rotation), pos);
+            this.setOrientation(getRandomHorizontalDirection(random));
+        }
+
+        public TemplateIsland(StructurePieceSerializationContext context, CompoundTag tag) {
             super(AetherStructurePieceTypes.GOLD_ISLAND.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
         }
 
@@ -91,6 +115,6 @@ public class GoldDungeonPieces {
         }
 
         @Override
-        protected void handleDataMarker(String p_226906_, BlockPos p_226907_, ServerLevelAccessor p_226908_, RandomSource p_226909_, BoundingBox p_226910_) {}
+        protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox chunkBB) {}
     }
 }

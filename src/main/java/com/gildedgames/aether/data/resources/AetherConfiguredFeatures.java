@@ -91,6 +91,8 @@ public class AetherConfiguredFeatures {
                     .decorators(ImmutableList.of(new HolidayTreeDecorator(new WeightedStateProvider(new SimpleWeightedRandomList.Builder<BlockState>().add(AetherFeatureStates.SNOW, 10).add(AetherFeatureStates.PRESENT, 1).build()))))
                     .build());
 
+    public static final ResourceKey<ConfiguredFeature<?, ?>> HOLYSTONE_SPHERE_CONFIGURATION = register("holystone_sphere", AetherFeatures.HOLYSTONE_SPHERE.get(), new NoneFeatureConfiguration());
+
     public static final ResourceKey<ConfiguredFeature<?, ?>> FLOWER_PATCH_CONFIGURATION = register("flower_patch", Feature.FLOWER,
             AetherFeatureBuilders.grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
                     .add(AetherFeatureStates.PURPLE_FLOWER, 2)

@@ -11,7 +11,6 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 
 public class HolystoneSphereFeature extends Feature<NoneFeatureConfiguration> {
-    private final BlockStateProvider holystone = BlockStateProvider.simple(AetherBlocks.HOLYSTONE.get().defaultBlockState());
 
     public HolystoneSphereFeature(Codec<NoneFeatureConfiguration> codec) {
         super(codec);
@@ -22,7 +21,7 @@ public class HolystoneSphereFeature extends Feature<NoneFeatureConfiguration> {
         BlockPos pos = context.origin();
         WorldGenLevel reader = context.level();
 
-        BlockPlacementUtil.placeSphere(pos, 4.5f, reader, this.holystone, context.random());
+        BlockPlacementUtil.placeSphere(pos, 23.5F, reader, BlockStateProvider.simple(AetherBlocks.HOLYSTONE.get().defaultBlockState()), context.random());
 
         return true;
     }
