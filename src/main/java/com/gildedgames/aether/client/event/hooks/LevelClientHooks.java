@@ -1,22 +1,30 @@
 package com.gildedgames.aether.client.event.hooks;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.api.WorldDisplayHelper;
 import com.gildedgames.aether.AetherConfig;
-import com.gildedgames.aether.client.AetherRenderTypes;
 import com.mojang.blaze3d.vertex.*;
+import com.mojang.math.Matrix3f;
+import com.mojang.math.Matrix4f;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderBuffers;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.culling.Frustum;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
-import net.minecraftforge.client.model.data.ModelData;
-import net.minecraftforge.client.model.data.ModelDataManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,18 +66,17 @@ public class LevelClientHooks {
         return null;
     }
 
+    private static final TextureAtlasSprite LOCK = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation(Aether.MODID, "block/dungeon/lock"));
+    private static final TextureAtlasSprite EXCLAMATION = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation(Aether.MODID, "block/dungeon/exclamation"));
+    private static final TextureAtlasSprite DOOR = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation(Aether.MODID, "block/dungeon/door"));
+    private static final TextureAtlasSprite TREASURE = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation(Aether.MODID, "block/dungeon/treasure"));
     private static final HashMap<Integer, List<BlockPos>> positionsForTypes = new HashMap<>();
 
-    public static void renderDungeonBlockOverlays(RenderLevelStageEvent.Stage stage, PoseStack poseStack, Camera camera, Minecraft minecraft) {
+    public static void renderDungeonBlockOverlays(RenderLevelStageEvent.Stage stage, PoseStack poseStack, Camera camera, Frustum frustum, Minecraft minecraft) {
         if (stage == RenderLevelStageEvent.Stage.AFTER_PARTICLES && minecraft.level != null) {
             LocalPlayer player = minecraft.player;
             ClientLevel level = minecraft.level;
-            ModelDataManager modelDataManager = level.getModelDataManager();
             RenderBuffers renderBuffers = minecraft.renderBuffers();
-            Vec3 vec3 = camera.getPosition();
-            double vecX = vec3.x();
-            double vecY = vec3.y();
-            double vecZ = vec3.z();
             int range = 32;
             if (player != null && player.isCreative()) {
                 BlockPos playerPos = player.blockPosition();
@@ -79,7 +86,7 @@ public class LevelClientHooks {
                     updatePositions(playerPos, level, stack, range, type, false);
                 }
                 for (int i = 0; i < positionsForTypes.size(); i++) {
-                    renderOverlays(poseStack, modelDataManager, renderBuffers, level, vecX, vecY, vecZ, minecraft, i);
+                    renderOverlays(level, poseStack, renderBuffers, camera, frustum, i);
                     updatePositions(playerPos, level, stack, range, i, true);
                 }
             }
@@ -115,19 +122,104 @@ public class LevelClientHooks {
         }
     }
 
-    private static void renderOverlays(PoseStack poseStack, ModelDataManager modelDataManager, RenderBuffers renderBuffers, ClientLevel level, double vecX, double vecY, double vecZ, Minecraft minecraft, int type) {
+    private static void renderOverlays(ClientLevel level, PoseStack poseStack, RenderBuffers renderBuffers, Camera camera, Frustum frustum, int type) {
         for (BlockPos blockPos : positionsForTypes.get(type)) {
-            poseStack.pushPose();
-            poseStack.translate(blockPos.getX() - vecX, blockPos.getY() - vecY, blockPos.getZ() - vecZ);
-            PoseStack.Pose lastPose = poseStack.last();
-            VertexConsumer vertexConsumer = new SheetedDecalTextureGenerator(renderBuffers.bufferSource().getBuffer(AetherRenderTypes.dungeonBlockOverlayType(type)), lastPose.pose(), lastPose.normal());
-            if (modelDataManager != null) {
-                ModelData modelData = modelDataManager.getAt(blockPos);
-                minecraft.getBlockRenderer().renderBreakingTexture(level.getBlockState(blockPos), blockPos, level, poseStack, vertexConsumer, modelData == null ? ModelData.EMPTY : modelData);
+            if (frustum.isVisible(new AABB(blockPos)) && level.getBlockState(blockPos).getRenderShape() != RenderShape.INVISIBLE) {
+                drawSurfaces(renderBuffers.bufferSource(), poseStack.last().pose(), poseStack.last().normal(), blockPos, camera,
+                        (float) (blockPos.getX() - camera.getPosition().x()) - 0.001F,
+                        (float) (blockPos.getZ() - camera.getPosition().z()) - 0.001F,
+                        (float) (blockPos.getX() - camera.getPosition().x()) + 1.001F,
+                        (float) (blockPos.getZ() - camera.getPosition().z()) + 1.001F,
+                        (float) (blockPos.getY() - camera.getPosition().y()) - 0.001F,
+                        (float) (blockPos.getY() - camera.getPosition().y()) + 1.001F,
+                        type);
             }
-            poseStack.popPose();
         }
         renderBuffers.bufferSource().endBatch();
+    }
+
+    private static void drawSurfaces(MultiBufferSource buffer, Matrix4f matrix, Matrix3f normal, BlockPos blockPos, Camera camera, float startX, float startZ, float endX, float endZ, float botY, float topY, int type) {
+        VertexConsumer builder = buffer.getBuffer(RenderType.cutout());
+        TextureAtlasSprite sprite = spriteForId(type);
+
+        if (sprite != null) {
+            float minU = sprite.getU1();
+            float maxU = sprite.getU0();
+            float minV = sprite.getV1();
+            float maxV = sprite.getV0();
+
+            // Bottom
+            if (camera.getPosition().y() < blockPos.getY() + botY) {
+                buildVertex(builder, matrix, normal, startX, botY, startZ, minU, minV, 0, -1, 0);
+                buildVertex(builder, matrix, normal, endX, botY, startZ, maxU, minV, 0, -1, 0);
+                buildVertex(builder, matrix, normal, endX, botY, endZ, maxU, maxV, 0, -1, 0);
+                buildVertex(builder, matrix, normal, startX, botY, endZ, minU, maxV, 0, -1, 0);
+            }
+
+            // Top
+            if (camera.getPosition().y() > blockPos.getY() + topY) {
+                buildVertex(builder, matrix, normal, endX, topY, startZ, minU, minV, 0, 1, 0);
+                buildVertex(builder, matrix, normal, startX, topY, startZ, maxU, minV, 0, 1, 0);
+                buildVertex(builder, matrix, normal, startX, topY, endZ, maxU, maxV, 0, 1, 0);
+                buildVertex(builder, matrix, normal, endX, topY, endZ, minU, maxV, 0, 1, 0);
+            }
+
+            // North
+            if (camera.getPosition().z() < blockPos.getZ() + startZ) {
+                buildVertex(builder, matrix, normal, startX, botY, startZ, minU, minV, 0, 0, -1);
+                buildVertex(builder, matrix, normal, startX, topY, startZ, minU, maxV, 0, 0, -1);
+                buildVertex(builder, matrix, normal, endX, topY, startZ, maxU, maxV, 0, 0, -1);
+                buildVertex(builder, matrix, normal, endX, botY, startZ, maxU, minV, 0, 0, -1);
+            }
+
+            // South
+            if (camera.getPosition().z() > blockPos.getZ() + endZ) {
+                buildVertex(builder, matrix, normal, endX, botY, endZ, minU, minV, 0, 0, 1);
+                buildVertex(builder, matrix, normal, endX, topY, endZ, minU, maxV, 0, 0, 1);
+                buildVertex(builder, matrix, normal, startX, topY, endZ, maxU, maxV, 0, 0, 1);
+                buildVertex(builder, matrix, normal, startX, botY, endZ, maxU, minV, 0, 0, 1);
+            }
+
+            // West
+            if (camera.getPosition().x() < blockPos.getX() + startX) {
+                buildVertex(builder, matrix, normal, startX, botY, endZ, minU, minV, -1, 0, 0);
+                buildVertex(builder, matrix, normal, startX, topY, endZ, minU, maxV, -1, 0, 0);
+                buildVertex(builder, matrix, normal, startX, topY, startZ, maxU, maxV, -1, 0, 0);
+                buildVertex(builder, matrix, normal, startX, botY, startZ, maxU, minV, -1, 0, 0);
+            }
+
+            // East
+            if (camera.getPosition().x() > blockPos.getX() + endX) {
+                buildVertex(builder, matrix, normal, endX, botY, startZ, minU, minV, 1, 0, 0);
+                buildVertex(builder, matrix, normal, endX, topY, startZ, minU, maxV, 1, 0, 0);
+                buildVertex(builder, matrix, normal, endX, topY, endZ, maxU, maxV, 1, 0, 0);
+                buildVertex(builder, matrix, normal, endX, botY, endZ, maxU, minV, 1, 0, 0);
+            }
+        }
+    }
+
+    private static void buildVertex(VertexConsumer builder, Matrix4f matrix, Matrix3f normal, float x, float y, float z, float u, float v, float normalX, float normalY, float normalZ) {
+        builder.vertex(matrix, x, y, z).color(0xFF, 0xFF, 0xFF, 0xAA).uv(u, v).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(240).normal(normal, normalX, normalY, normalZ).endVertex();
+    }
+
+    private static TextureAtlasSprite spriteForId(int id) {
+        switch(id) {
+            case 0 -> {
+                return LOCK;
+            }
+            case 1 -> {
+                return EXCLAMATION;
+            }
+            case 2 -> {
+                return DOOR;
+            }
+            case 3 -> {
+                return TREASURE;
+            }
+            default -> {
+                return null;
+            }
+        }
     }
 
     private static int idForItem(ItemStack stack) {
