@@ -29,6 +29,7 @@ import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.function.Supplier;
 
@@ -96,6 +97,14 @@ public abstract class AetherBlockLootProvider extends BlockLoot {
                                 LootItem.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
                                 .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
                 .apply(DoubleDrops.builder());
+    }
+
+    protected static LootTable.Builder droppingGoldenOakLeaves(Block block, Block sapling, float... chances) {
+        return droppingWithChancesAndSkyrootSticks(block, sapling, chances)
+                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).when(HAS_SHEARS_OR_SILK_TOUCH.invert())
+                        .add(applyExplosionCondition(block,
+                                LootItem.lootTableItem(Items.GOLDEN_APPLE))
+                                .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.00005F, 0.000055555557F, 0.0000625F, 0.00008333334F, 0.00025F))));
     }
 
     protected static LootTable.Builder droppingDoubleItemsWithFortune(Block block, Item item) {

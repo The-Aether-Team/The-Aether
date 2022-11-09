@@ -39,7 +39,7 @@ public class AetherBlockLootData extends AetherBlockLootProvider {
         this.add(AetherBlocks.SKYROOT_LEAVES.get(),
                 (leaves) -> droppingWithChancesAndSkyrootSticks(leaves, AetherBlocks.SKYROOT_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
         this.add(AetherBlocks.GOLDEN_OAK_LEAVES.get(),
-                (leaves) -> droppingWithChancesAndSkyrootSticks(leaves, AetherBlocks.GOLDEN_OAK_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
+                (leaves) -> droppingGoldenOakLeaves(leaves, AetherBlocks.GOLDEN_OAK_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
         this.add(AetherBlocks.CRYSTAL_LEAVES.get(),
                 AetherBlockLootProvider::droppingWithSkyrootSticks);
         this.add(AetherBlocks.CRYSTAL_FRUIT_LEAVES.get(),

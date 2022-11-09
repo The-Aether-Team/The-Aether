@@ -1,4 +1,4 @@
-// 1.19.2	2022-09-30T20:13:58.880826	Aether Loot Tables
+// 1.19.2	2022-11-08T17:03:06.551701107	Aether Loot Tables
 d025471306910ea35dcf85d28fc188182a1b3c8d data/aether/loot_tables/advancements/enter_aether.json
 96aec873b17d2a5aed2a22fe094efa32b8d54645 data/aether/loot_tables/blocks/aerogel.json
 9e100e6de96b47a3a1b9533e76ad9847d364b9c0 data/aether/loot_tables/blocks/aerogel_slab.json
@@ -40,7 +40,7 @@ fb2a129617148d0f11e10635096d96c8364de598 data/aether/loot_tables/blocks/enchante
 e7dd3076149db8ad39ea29ea18fa92629c655240 data/aether/loot_tables/blocks/enchanted_gravitite.json
 2765f1b6c4c298a5bf1bbcdc4c673efb573ce627 data/aether/loot_tables/blocks/freezer.json
 33c7f5b77e576fc80c4694550e9d21d214402393 data/aether/loot_tables/blocks/golden_aercloud.json
-c90259df1fd9ac4fd9e5845ddfa925c34cf61a40 data/aether/loot_tables/blocks/golden_oak_leaves.json
+d7079c550235422c7b45ea0ab46803cf11491e57 data/aether/loot_tables/blocks/golden_oak_leaves.json
 fa88f4c82809908b9747554316bd220df4813fdd data/aether/loot_tables/blocks/golden_oak_log.json
 39dab6228c398004e6eb10c4be067779995e3125 data/aether/loot_tables/blocks/golden_oak_sapling.json
 e0676a159d4b5669c4541e3b8a53424dc3fceeec data/aether/loot_tables/blocks/golden_oak_wood.json
@@ -51,10 +51,10 @@ cbc3fb3a3766eef0e267efcae14f68f4beb991ec data/aether/loot_tables/blocks/hellfire
 71c2dca6991829c42cdb80e19d8eee48200ef1d9 data/aether/loot_tables/blocks/hellfire_wall.json
 4f280929cf5b6538cf20ef03b7b097883de796c2 data/aether/loot_tables/blocks/holiday_leaves.json
 79deca1b81a28a777fd5fdea98a797ab3ae2ff4a data/aether/loot_tables/blocks/holystone.json
-55dac0b82e3254167cd0e58330e673947f7baa44 data/aether/loot_tables/blocks/holystone_bricks.json
 82b89089226c25ceeb0c11506374073fa923862c data/aether/loot_tables/blocks/holystone_brick_slab.json
 ad19af6454a6f77e72c3f496dd3854c3797ec5e9 data/aether/loot_tables/blocks/holystone_brick_stairs.json
 8059f85cfd0f3cb2b35c3021cdb8ef928be266f7 data/aether/loot_tables/blocks/holystone_brick_wall.json
+55dac0b82e3254167cd0e58330e673947f7baa44 data/aether/loot_tables/blocks/holystone_bricks.json
 10f246dcf4434028b08e52b5d52f881dcda12f90 data/aether/loot_tables/blocks/holystone_button.json
 6161f683aa3c6ee8b09c6f9243c47cd9a1d218d9 data/aether/loot_tables/blocks/holystone_pressure_plate.json
 3224fb702bec15b1444d318ea0e7109bdfc9f059 data/aether/loot_tables/blocks/holystone_slab.json
