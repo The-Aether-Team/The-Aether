@@ -16,8 +16,7 @@ import net.minecraft.server.level.ServerLevel;
 
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
-public class BerryBushStemBlock extends AetherBushBlock implements BonemealableBlock
-{
+public class BerryBushStemBlock extends AetherBushBlock implements BonemealableBlock {
 	protected static final VoxelShape SHAPE = Block.box(2.0, 0.0, 2.0, 14.0, 13.0, 14.0);
 
 	public BerryBushStemBlock(BlockBehaviour.Properties properties) {

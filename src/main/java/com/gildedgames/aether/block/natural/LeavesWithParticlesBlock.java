@@ -1,7 +1,6 @@
 package com.gildedgames.aether.block.natural;
 
 import com.gildedgames.aether.block.AetherBlockStateProperties;
-import com.gildedgames.aether.block.DoubleDrops;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.Block;
@@ -19,12 +18,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.function.Supplier;
 
-public class LeavesWithParticlesBlock extends LeavesBlock implements DoubleDrops
-{
+public class LeavesWithParticlesBlock extends LeavesBlock {
 	private final Supplier<SimpleParticleType> particle;
 
 	public LeavesWithParticlesBlock(Supplier<SimpleParticleType> particle, BlockBehaviour.Properties properties) {
-
 		super(properties.noOcclusion().isValidSpawn((state, reader, pos, entity) -> (entity == EntityType.OCELOT || entity == EntityType.PARROT)).isSuffocating((state, reader, pos) -> false).isViewBlocking((state, reader, pos) -> false));
 		this.registerDefaultState(this.defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, false));
 		this.particle = particle;

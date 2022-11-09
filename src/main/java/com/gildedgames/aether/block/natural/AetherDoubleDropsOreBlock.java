@@ -1,6 +1,5 @@
 package com.gildedgames.aether.block.natural;
 
-import com.gildedgames.aether.block.DoubleDrops;
 import com.gildedgames.aether.block.AetherBlockStateProperties;
 
 import net.minecraft.util.valueproviders.UniformInt;
@@ -11,8 +10,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
-public class AetherDoubleDropsOreBlock extends DropExperienceBlock implements DoubleDrops
-{
+public class AetherDoubleDropsOreBlock extends DropExperienceBlock {
 	public AetherDoubleDropsOreBlock(BlockBehaviour.Properties properties, UniformInt xpRange) {
 		super(properties, xpRange);
 		this.registerDefaultState(this.defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, false));
@@ -20,6 +18,7 @@ public class AetherDoubleDropsOreBlock extends DropExperienceBlock implements Do
 	
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+		super.createBlockStateDefinition(builder);
 		builder.add(AetherBlockStateProperties.DOUBLE_DROPS);
 	}
 }

@@ -1,7 +1,6 @@
 package com.gildedgames.aether.block.natural;
 
 import com.gildedgames.aether.block.AetherBlockStateProperties;
-import com.gildedgames.aether.block.DoubleDrops;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -19,21 +18,19 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class AercloudBlock extends HalfTransparentBlock implements DoubleDrops
-{
-	private static final BooleanProperty DOUBLE_DROPS = AetherBlockStateProperties.DOUBLE_DROPS;
+public class AercloudBlock extends HalfTransparentBlock {
 	protected static final VoxelShape COLLISION_SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 0.01, 16.0);
 	protected static final VoxelShape FALLING_COLLISION_SHAPE = Shapes.box(0.0D, 0.0D, 0.0D, 1.0D, (double)0.9F, 1.0D);
 	
 	public AercloudBlock(BlockBehaviour.Properties properties) {
 		super(properties.isRedstoneConductor((state, reader, pos) -> false).isSuffocating((state, reader, pos) -> false).isViewBlocking((state, reader, pos) -> false));
-		this.registerDefaultState(this.defaultBlockState().setValue(DOUBLE_DROPS, false));
+		this.registerDefaultState(this.defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, false));
 	}
 
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		super.createBlockStateDefinition(builder);
-		builder.add(DOUBLE_DROPS);
+		builder.add(AetherBlockStateProperties.DOUBLE_DROPS);
 	}
 
 	@Override
