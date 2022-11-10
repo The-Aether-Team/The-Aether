@@ -5,6 +5,7 @@ import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.mixin.mixins.accessor.BlockColorsAccessor;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.world.level.ColorResolver;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -33,10 +34,11 @@ public class AetherColorResolvers {
     @SubscribeEvent
     static void registerBlockColor(RegisterColorHandlersEvent.Block event) {
         Map<Block, BlockColor> map = new HashMap<>();
-        map.put(Blocks.GRASS, ((BlockColorsAccessor) event.getBlockColors()).getBlockColors().get(ForgeRegistries.BLOCKS.getDelegateOrThrow(Blocks.GRASS)));
-        map.put(Blocks.FERN, ((BlockColorsAccessor) event.getBlockColors()).getBlockColors().get(ForgeRegistries.BLOCKS.getDelegateOrThrow(Blocks.FERN)));
-        map.put(Blocks.TALL_GRASS, ((BlockColorsAccessor) event.getBlockColors()).getBlockColors().get(ForgeRegistries.BLOCKS.getDelegateOrThrow(Blocks.TALL_GRASS)));
-        map.put(Blocks.LARGE_FERN, ((BlockColorsAccessor) event.getBlockColors()).getBlockColors().get(ForgeRegistries.BLOCKS.getDelegateOrThrow(Blocks.LARGE_FERN)));
+        Map<Holder.Reference<Block>, BlockColor> blockColors = ((BlockColorsAccessor) event.getBlockColors()).getBlockColors();
+        map.put(Blocks.GRASS, blockColors.get(ForgeRegistries.BLOCKS.getDelegateOrThrow(Blocks.GRASS)));
+        map.put(Blocks.FERN, blockColors.get(ForgeRegistries.BLOCKS.getDelegateOrThrow(Blocks.FERN)));
+        map.put(Blocks.TALL_GRASS, blockColors.get(ForgeRegistries.BLOCKS.getDelegateOrThrow(Blocks.TALL_GRASS)));
+        map.put(Blocks.LARGE_FERN, blockColors.get(ForgeRegistries.BLOCKS.getDelegateOrThrow(Blocks.LARGE_FERN)));
 
         for (Map.Entry<Block, BlockColor> entry : map.entrySet()) {
             event.register(((state, level, pos, tintIndex) -> {
