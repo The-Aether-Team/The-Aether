@@ -15,6 +15,7 @@
     "common.LivingEntityMixin"
   ],
   "client": [
+    "accessor.BlockColorsAccessor",
     "client.AdvancementToastMixin",
     "client.ConnectScreenMixin",
     "client.CreateWorldScreenMixin",
