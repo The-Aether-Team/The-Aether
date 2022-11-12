@@ -193,6 +193,12 @@ public class AetherItemTagData extends ItemTagsProvider
                 .addOptionalTag(new ResourceLocation(Curios.MODID, "curio"))
                 .addOptionalTag(new ResourceLocation(Curios.MODID, "charm"));
         tag(AetherTags.Items.AETHER_SHIELD).add(AetherItems.SHIELD_OF_REPULSION.get());
+        tag(AetherTags.Items.RING).addTag(AetherTags.Items.AETHER_RING);
+        tag(AetherTags.Items.NECKLACE).addTag(AetherTags.Items.AETHER_PENDANT);
+        tag(AetherTags.Items.HANDS).addTag(AetherTags.Items.AETHER_GLOVES);
+        tag(AetherTags.Items.BACK).addTag(AetherTags.Items.AETHER_CAPE);
+        tag(AetherTags.Items.CURIO).addTag(AetherTags.Items.AETHER_ACCESSORY);
+        tag(AetherTags.Items.CHARM).addTag(AetherTags.Items.AETHER_ACCESSORY);
 
         tag(AetherTags.Items.ACCESSORIES).addTags(
                 AetherTags.Items.AETHER_RING,
