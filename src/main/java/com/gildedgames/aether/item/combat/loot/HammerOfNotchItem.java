@@ -1,5 +1,6 @@
 package com.gildedgames.aether.item.combat.loot;
 
+import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.projectile.weapon.HammerProjectile;
 import com.gildedgames.aether.item.AetherItemGroups;
@@ -32,7 +33,7 @@ public class HammerOfNotchItem extends SwordItem {
         ItemStack heldStack = player.getItemInHand(hand);
         if (!level.isClientSide()) {
             if (!player.getAbilities().instabuild) {
-                player.getCooldowns().addCooldown(this, 200);
+                player.getCooldowns().addCooldown(this, AetherConfig.COMMON.hammer_of_notch_cooldown.get());
                 heldStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
             }
             HammerProjectile hammerProjectile = new HammerProjectile(player, level);

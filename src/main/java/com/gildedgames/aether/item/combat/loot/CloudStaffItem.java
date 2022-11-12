@@ -1,5 +1,6 @@
 package com.gildedgames.aether.item.combat.loot;
 
+import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.capability.player.AetherPlayerCapability;
 import com.gildedgames.aether.entity.miscellaneous.CloudMinion;
 import com.gildedgames.aether.item.AetherItemGroups;
@@ -80,7 +81,7 @@ public class CloudStaffItem extends Item {
                             cloudMinionLeft.setShouldShoot(true);
                         }
                         if (!aetherPlayer.getPlayer().getAbilities().instabuild) {
-                            aetherPlayer.getPlayer().getCooldowns().addCooldown(this, 40);
+                            aetherPlayer.getPlayer().getCooldowns().addCooldown(this, AetherConfig.COMMON.cloud_staff_cooldown.get());
                         }
                     }
                 }
