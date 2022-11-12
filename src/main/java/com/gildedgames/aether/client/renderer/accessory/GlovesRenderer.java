@@ -4,6 +4,7 @@ import com.gildedgames.aether.client.renderer.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.accessory.model.GlovesModel;
 import com.gildedgames.aether.item.accessories.gloves.GlovesItem;
 import com.gildedgames.aether.capability.rankings.AetherRankings;
+import com.gildedgames.aether.mixin.mixins.accessor.PlayerModelAccessor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -50,8 +51,9 @@ public class GlovesRenderer implements ICurioRenderer {
             model = this.glovesModel;
             texture = glovesItem.getGlovesTexture();
         } else {
-            model = playerModel.slim ? this.glovesModelSlim : this.glovesModel;
-            texture = playerModel.slim ? glovesItem.getGlovesSlimTexture() : glovesItem.getGlovesTexture();
+            PlayerModelAccessor playerModelAccessor = (PlayerModelAccessor) playerModel;
+            model = playerModelAccessor.getSlim() ? this.glovesModelSlim : this.glovesModel;
+            texture = playerModelAccessor.getSlim() ? glovesItem.getGlovesSlimTexture() : glovesItem.getGlovesTexture();
         }
         ICurioRenderer.followBodyRotations(slotContext.entity(), model);
 

@@ -4,6 +4,7 @@ import com.gildedgames.aether.event.events.PlacementBanEvent;
 import com.gildedgames.aether.event.events.PlacementConvertEvent;
 import com.gildedgames.aether.event.hooks.DimensionHooks;
 import com.gildedgames.aether.data.resources.AetherDimensions;
+import com.gildedgames.aether.mixin.mixins.accessor.ServerLevelAccessor;
 import com.gildedgames.aether.world.AetherLevelData;
 import com.gildedgames.aether.capability.time.AetherTime;
 import net.minecraft.resources.ResourceKey;
@@ -98,8 +99,10 @@ public class DimensionListener {
         if (event.getLevel() instanceof ServerLevel level && level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
             AetherTime.get(level).ifPresent(cap -> {
                 AetherLevelData levelData = new AetherLevelData(level.getServer().getWorldData(), level.getServer().getWorldData().overworldData(), cap.getDayTime());
-                level.serverLevelData = levelData;
-                level.levelData = levelData;
+                ServerLevelAccessor serverLevelAccessor = (ServerLevelAccessor) level;
+                com.gildedgames.aether.mixin.mixins.accessor.LevelAccessor levelAccessor = (com.gildedgames.aether.mixin.mixins.accessor.LevelAccessor) event.getLevel();
+                serverLevelAccessor.setServerLevelData(levelData);
+                levelAccessor.setLevelData(levelData);
             });
         }
     }
@@ -111,10 +114,11 @@ public class DimensionListener {
     public static void onSleepFinish(SleepFinishedTimeEvent event) {
         ServerLevel level = (ServerLevel) event.getLevel();
         if (level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
-            level.serverLevelData.setRainTime(0);
-            level.serverLevelData.setRaining(false);
-            level.serverLevelData.setThunderTime(0);
-            level.serverLevelData.setThundering(false);
+            ServerLevelAccessor serverLevelAccessor = (ServerLevelAccessor) level;
+            serverLevelAccessor.getServerLevelData().setRainTime(0);
+            serverLevelAccessor.getServerLevelData().setRaining(false);
+            serverLevelAccessor.getServerLevelData().setThunderTime(0);
+            serverLevelAccessor.getServerLevelData().setThundering(false);
         }
     }
 }

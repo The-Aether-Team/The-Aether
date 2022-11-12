@@ -22,10 +22,10 @@ public record SentryExplosionParticlePacket(int entityID) implements AetherPacke
     public void execute(Player playerEntity) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null && Minecraft.getInstance().player.level.getEntity(this.entityID) instanceof Sentry sentry) {
             for (int i = 0; i < 40; i++) {
-                double x = sentry.getX() + ((double) sentry.random.nextFloat() * 0.25);
+                double x = sentry.getX() + ((double) sentry.getRandom().nextFloat() * 0.25);
                 double y = sentry.getY() + 0.5;
-                double z = sentry.getZ() + ((double) sentry.random.nextFloat() * 0.25);
-                float f1 = sentry.random.nextFloat() * 360.0F;
+                double z = sentry.getZ() + ((double) sentry.getRandom().nextFloat() * 0.25);
+                float f1 = sentry.getRandom().nextFloat() * 360.0F;
                 sentry.level.addParticle(ParticleTypes.POOF, x, y, z, -Math.sin((float) (Math.PI / 180.0F) * f1) * 0.75, 0.125, Math.cos((float) (Math.PI / 180.0F) * f1) * 0.75);
             }
         }

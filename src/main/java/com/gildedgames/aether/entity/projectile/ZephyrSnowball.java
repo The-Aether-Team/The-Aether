@@ -3,6 +3,7 @@ package com.gildedgames.aether.entity.projectile;
 import com.gildedgames.aether.client.particle.AetherParticleTypes;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 
+import com.gildedgames.aether.mixin.mixins.accessor.PlayerAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.ZephyrSnowballHitPacket;
 import com.gildedgames.aether.util.EquipmentUtil;
@@ -84,7 +85,8 @@ public class ZephyrSnowball extends Fireball implements ItemSupplier {
 			Entity entity = ((EntityHitResult) result).getEntity();
 			if (entity instanceof LivingEntity livingEntity && !EquipmentUtil.hasSentryBoots(livingEntity)) {
 				if (livingEntity instanceof Player player && player.isBlocking()) {
-					player.hurtCurrentlyUsedShield(3.0F);
+					PlayerAccessor playerAccessor = ((PlayerAccessor) player);
+					playerAccessor.hurtCurrentlyUsedShield(3.0F);
 				} else {
 					entity.setDeltaMovement(entity.getDeltaMovement().x, entity.getDeltaMovement().y + 0.5, entity.getDeltaMovement().z);
 					entity.setDeltaMovement(entity.getDeltaMovement().x + (this.getDeltaMovement().x * 1.5F), entity.getDeltaMovement().y, entity.getDeltaMovement().z + (this.getDeltaMovement().z * 1.5F));

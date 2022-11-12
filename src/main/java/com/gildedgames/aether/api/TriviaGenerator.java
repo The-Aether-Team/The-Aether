@@ -1,6 +1,6 @@
 package com.gildedgames.aether.api;
 
-import net.minecraft.client.resources.language.I18n;
+import com.gildedgames.aether.mixin.mixins.accessor.I18nAccessor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.RandomSource;
 
@@ -15,7 +15,7 @@ public class TriviaGenerator {
     public TriviaGenerator() { }
 
     public void generateTriviaList() {
-        for (String string : I18n.language.getLanguageData().keySet()) {
+        for (String string : I18nAccessor.getLanguage().getLanguageData().keySet()) {
             if (string.startsWith("aether.pro_tips.line.")) {
                 this.getTrivia().add(Component.translatable(string));
             }

@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
-import com.gildedgames.aether.entity.ai.FallingRandomStrollGoal;
+import com.gildedgames.aether.entity.ai.goal.FallingRandomStrollGoal;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 
 import com.gildedgames.aether.AetherTags;

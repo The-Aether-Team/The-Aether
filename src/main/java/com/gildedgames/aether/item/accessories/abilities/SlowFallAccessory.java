@@ -1,5 +1,6 @@
 package com.gildedgames.aether.item.accessories.abilities;
 
+import com.gildedgames.aether.mixin.mixins.accessor.ServerGamePacketListenerImplAccessor;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -20,7 +21,8 @@ public interface SlowFallAccessory {
         }
         livingEntity.resetFallDistance();
         if (livingEntity instanceof ServerPlayer serverPlayer) { // Prevents the player from being kicked for flying.
-            serverPlayer.connection.aboveGroundTickCount = 0; // AT: f_9737_
+            ServerGamePacketListenerImplAccessor serverGamePacketListenerImplAccessor = (ServerGamePacketListenerImplAccessor) serverPlayer.connection;
+            serverGamePacketListenerImplAccessor.setAboveGroundTickCount(0);
         }
     }
 }

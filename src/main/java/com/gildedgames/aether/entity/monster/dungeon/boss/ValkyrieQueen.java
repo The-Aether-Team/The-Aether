@@ -504,7 +504,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
                 if (++this.attackTime >= this.attackInterval) {
                     ThunderCrystal thunderCrystal = new ThunderCrystal(AetherEntityTypes.THUNDER_CRYSTAL.get(), this.mob.level, this.mob, this.target);
                     this.mob.level.addFreshEntity(thunderCrystal);
-                    this.attackTime = this.mob.random.nextInt(40);
+                    this.attackTime = this.mob.getRandom().nextInt(40);
                 }
             }
         }

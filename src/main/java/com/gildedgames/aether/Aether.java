@@ -51,6 +51,7 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.event.AddPackFindersEvent;
@@ -266,21 +267,25 @@ public class Aether
     }
 
     private void registerComposting() {
-        ComposterBlock.add(0.3F, AetherBlocks.SKYROOT_LEAVES.get());
-        ComposterBlock.add(0.3F, AetherBlocks.SKYROOT_SAPLING.get());
-        ComposterBlock.add(0.3F, AetherBlocks.GOLDEN_OAK_LEAVES.get());
-        ComposterBlock.add(0.3F, AetherBlocks.GOLDEN_OAK_SAPLING.get());
-        ComposterBlock.add(0.3F, AetherBlocks.CRYSTAL_LEAVES.get());
-        ComposterBlock.add(0.3F, AetherBlocks.CRYSTAL_FRUIT_LEAVES.get());
-        ComposterBlock.add(0.3F, AetherBlocks.HOLIDAY_LEAVES.get());
-        ComposterBlock.add(0.3F, AetherBlocks.DECORATED_HOLIDAY_LEAVES.get());
-        ComposterBlock.add(0.3F, AetherItems.BLUE_BERRY.get());
-        ComposterBlock.add(0.5F, AetherItems.ENCHANTED_BERRY.get());
-        ComposterBlock.add(0.5F, AetherBlocks.BERRY_BUSH.get());
-        ComposterBlock.add(0.5F, AetherBlocks.BERRY_BUSH_STEM.get());
-        ComposterBlock.add(0.65F, AetherBlocks.WHITE_FLOWER.get());
-        ComposterBlock.add(0.65F, AetherBlocks.PURPLE_FLOWER.get());
-        ComposterBlock.add(0.65F, AetherItems.WHITE_APPLE.get());
+        addCompost(0.3F, AetherBlocks.SKYROOT_LEAVES.get().asItem());
+        addCompost(0.3F, AetherBlocks.SKYROOT_SAPLING.get());
+        addCompost(0.3F, AetherBlocks.GOLDEN_OAK_LEAVES.get());
+        addCompost(0.3F, AetherBlocks.GOLDEN_OAK_SAPLING.get());
+        addCompost(0.3F, AetherBlocks.CRYSTAL_LEAVES.get());
+        addCompost(0.3F, AetherBlocks.CRYSTAL_FRUIT_LEAVES.get());
+        addCompost(0.3F, AetherBlocks.HOLIDAY_LEAVES.get());
+        addCompost(0.3F, AetherBlocks.DECORATED_HOLIDAY_LEAVES.get());
+        addCompost(0.3F, AetherItems.BLUE_BERRY.get());
+        addCompost(0.5F, AetherItems.ENCHANTED_BERRY.get());
+        addCompost(0.5F, AetherBlocks.BERRY_BUSH.get());
+        addCompost(0.5F, AetherBlocks.BERRY_BUSH_STEM.get());
+        addCompost(0.65F, AetherBlocks.WHITE_FLOWER.get());
+        addCompost(0.65F, AetherBlocks.PURPLE_FLOWER.get());
+        addCompost(0.65F, AetherItems.WHITE_APPLE.get());
+    }
+
+    private static void addCompost(float chance, ItemLike item) {
+        ComposterBlock.COMPOSTABLES.put(item.asItem(), chance);
     }
 
     private void registerFuels() {

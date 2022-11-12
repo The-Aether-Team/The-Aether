@@ -4,6 +4,8 @@ import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.block.FreezingBlock;
 import com.gildedgames.aether.event.AetherGameEvents;
+import com.gildedgames.aether.mixin.mixins.accessor.ServerGamePacketListenerImplAccessor;
+import com.gildedgames.aether.mixin.mixins.accessor.ServerLevelAccessor;
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.gildedgames.aether.recipe.recipes.ban.BlockBanRecipe;
 import com.gildedgames.aether.recipe.recipes.ban.ItemBanRecipe;
@@ -145,9 +147,11 @@ public class DimensionHooks {
      */
     public static void tickTime(Level level) {
         if (level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location()) && level instanceof ServerLevel serverLevel) {
-            long i = serverLevel.levelData.getGameTime() + 1L;
-            serverLevel.serverLevelData.setGameTime(i);
-            if (serverLevel.levelData.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
+            ServerLevelAccessor serverLevelAccessor = (ServerLevelAccessor) serverLevel;
+            com.gildedgames.aether.mixin.mixins.accessor.LevelAccessor levelAccessor = (com.gildedgames.aether.mixin.mixins.accessor.LevelAccessor) level;
+            long i = levelAccessor.getLevelData().getGameTime() + 1L;
+            serverLevelAccessor.getServerLevelData().setGameTime(i);
+            if (serverLevelAccessor.getServerLevelData().getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
                 AetherTime.get(level).ifPresent(cap -> serverLevel.setDayTime(cap.tickTime(level)));
             }
         }
@@ -233,8 +237,9 @@ public class DimensionHooks {
     public static void travelling(Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
             if (teleportationTimer > 0) {
-                serverPlayer.connection.aboveGroundTickCount = 0;
-                serverPlayer.connection.aboveGroundVehicleTickCount = 0;
+                ServerGamePacketListenerImplAccessor serverGamePacketListenerImplAccessor = (ServerGamePacketListenerImplAccessor) serverPlayer.connection;
+                serverGamePacketListenerImplAccessor.setAboveGroundTickCount(0);
+                serverGamePacketListenerImplAccessor.setAboveGroundVehicleTickCount(0);
                 teleportationTimer--;
             }
             if (teleportationTimer < 0 || serverPlayer.verticalCollisionBelow) {

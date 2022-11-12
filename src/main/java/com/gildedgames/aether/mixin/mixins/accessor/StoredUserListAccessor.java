@@ -1,0 +1,12 @@
+package com.gildedgames.aether.mixin.mixins.accessor;
+
+import net.minecraft.server.players.StoredUserEntry;
+import net.minecraft.server.players.StoredUserList;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Invoker;
+
+@Mixin(StoredUserList.class)
+public interface StoredUserListAccessor {
+    @Invoker("contains")
+    <K, V extends StoredUserEntry<K>> boolean contains(K entry);
+}

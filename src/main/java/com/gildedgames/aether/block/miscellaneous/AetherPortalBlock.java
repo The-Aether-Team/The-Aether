@@ -5,6 +5,7 @@ import com.gildedgames.aether.client.particle.AetherParticleTypes;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.AetherTags;
+import com.gildedgames.aether.mixin.mixins.accessor.EntityAccessor;
 import com.gildedgames.aether.util.LevelUtil;
 import com.gildedgames.aether.world.AetherTeleporter;
 import com.gildedgames.aether.AetherConfig;
@@ -85,12 +86,13 @@ public class AetherPortalBlock extends Block
 
 	@Override
 	public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entity) {
+		EntityAccessor entityAccessor = (EntityAccessor) entity;
 		if (!entity.isPassenger() && !entity.isVehicle() && entity.canChangeDimensions()) {
 			if (entity.isOnPortalCooldown()) {
 				entity.setPortalCooldown();
 			} else {
-				if (!entity.level.isClientSide && !pos.equals(entity.portalEntrancePos)) {
-					entity.portalEntrancePos = pos.immutable();
+				if (!entity.level.isClientSide && !pos.equals(entityAccessor.getPortalEntrancePos())) {
+					entityAccessor.setPortalEntrancePos(pos.immutable());
 				}
 				LazyOptional<AetherPlayer> aetherPlayer = entity.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
 				if (!aetherPlayer.isPresent()) {

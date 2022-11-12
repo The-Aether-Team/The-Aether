@@ -2,6 +2,7 @@ package com.gildedgames.aether.world;
 
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.block.miscellaneous.AetherPortalBlock;
+import com.gildedgames.aether.mixin.mixins.accessor.EntityAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.PortalTravelSoundPacket;
 import com.gildedgames.aether.util.LevelUtil;
@@ -170,6 +171,7 @@ public class AetherTeleporter implements ITeleporter
     @Nullable
     @Override
     public PortalInfo getPortalInfo(Entity entity, ServerLevel destWorld, Function<ServerLevel, PortalInfo> defaultPortalInfo) {
+        EntityAccessor entityAccessor = (EntityAccessor) entity;
         boolean isAether = destWorld.dimension() == LevelUtil.destinationDimension();
         if (entity.level.dimension() != LevelUtil.destinationDimension() && !isAether) {
             return null;
@@ -186,13 +188,13 @@ public class AetherTeleporter implements ITeleporter
             double coordinateDifference = DimensionType.getTeleportationScale(entity.level.dimensionType(), destWorld.dimensionType());
             BlockPos blockpos = new BlockPos(Mth.clamp(entity.getX() * coordinateDifference, minX, maxX), entity.getY(), Mth.clamp(entity.getZ() * coordinateDifference, minZ, maxZ));
             return this.getOrMakePortal(entity, blockpos).map((result) -> {
-                BlockState blockstate = entity.level.getBlockState(entity.portalEntrancePos);
+                BlockState blockstate = entity.level.getBlockState(entityAccessor.getPortalEntrancePos());
                 Direction.Axis axis;
                 Vec3 vector3d;
                 if (blockstate.hasProperty(BlockStateProperties.HORIZONTAL_AXIS)) {
                     axis = blockstate.getValue(BlockStateProperties.HORIZONTAL_AXIS);
-                    BlockUtil.FoundRectangle rectangle = BlockUtil.getLargestRectangleAround(entity.portalEntrancePos, axis, 21, Direction.Axis.Y, 21, (pos) -> entity.level.getBlockState(pos) == blockstate);
-                    vector3d = entity.getRelativePortalPosition(axis, rectangle);
+                    BlockUtil.FoundRectangle rectangle = BlockUtil.getLargestRectangleAround(entityAccessor.getPortalEntrancePos(), axis, 21, Direction.Axis.Y, 21, (pos) -> entity.level.getBlockState(pos) == blockstate);
+                    vector3d = entityAccessor.getRelativePortalPosition(axis, rectangle);
                 } else {
                     axis = Direction.Axis.X;
                     vector3d = new Vec3(0.5D, 0.0D, 0.0D);
@@ -204,12 +206,13 @@ public class AetherTeleporter implements ITeleporter
     }
 
     protected Optional<BlockUtil.FoundRectangle> getOrMakePortal(Entity entity, BlockPos pos) {
+        EntityAccessor entityAccessor = (EntityAccessor) entity;
         Optional<BlockUtil.FoundRectangle> existingPortal = this.getExistingPortal(pos);
         if (existingPortal.isPresent()) {
             return existingPortal;
         }
         else {
-            Direction.Axis portalAxis = this.world.getBlockState(entity.portalEntrancePos).getOptionalValue(AetherPortalBlock.AXIS).orElse(Direction.Axis.X);
+            Direction.Axis portalAxis = this.world.getBlockState(entityAccessor.getPortalEntrancePos()).getOptionalValue(AetherPortalBlock.AXIS).orElse(Direction.Axis.X);
             Optional<BlockUtil.FoundRectangle> makePortal = this.makePortal(pos, portalAxis);
             if (!makePortal.isPresent()) {
                 //Uh oh!

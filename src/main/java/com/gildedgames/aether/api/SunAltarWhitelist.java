@@ -1,6 +1,7 @@
 package com.gildedgames.aether.api;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.mixin.mixins.accessor.StoredUserListAccessor;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.server.players.UserWhiteList;
 import net.minecraft.server.players.UserWhiteListEntry;
@@ -31,7 +32,8 @@ public class SunAltarWhitelist {
     }
 
     public boolean isWhiteListed(GameProfile profile) {
-        return this.sunAltarWhitelist.contains(profile);
+        StoredUserListAccessor storedUserListAccessor = (StoredUserListAccessor) this.sunAltarWhitelist;
+        return storedUserListAccessor.contains(profile);
     }
 
     public void add(UserWhiteListEntry element) {

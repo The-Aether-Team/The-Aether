@@ -11,9 +11,11 @@ import com.gildedgames.aether.client.gui.screen.menu.VanillaLeftTitleScreen;
 import com.gildedgames.aether.client.AetherKeys;
 import com.gildedgames.aether.event.hooks.DimensionHooks;
 import com.gildedgames.aether.AetherConfig;
+import com.gildedgames.aether.mixin.mixins.accessor.GuiComponentAccessor;
+import com.gildedgames.aether.mixin.mixins.accessor.RealmsPlayerScreenAccessor;
+import com.gildedgames.aether.mixin.mixins.accessor.TitleScreenAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.server.OpenAccessoriesPacket;
-import com.mojang.realmsclient.gui.screens.RealmsPlayerScreen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -58,10 +60,10 @@ public class GuiHooks {
                 OLD_LOCATION = GuiComponent.BACKGROUND_LOCATION;
             }
             if (OLD_REALMS_LOCATION == null) {
-                OLD_REALMS_LOCATION = RealmsPlayerScreen.OPTIONS_BACKGROUND;
+                OLD_REALMS_LOCATION = RealmsPlayerScreenAccessor.getOptionsBackground();
             }
-            GuiComponent.BACKGROUND_LOCATION = AetherConfig.CLIENT.enable_aether_menu.get() ? BACKGROUND_LOCATION : OLD_LOCATION;
-            RealmsPlayerScreen.OPTIONS_BACKGROUND = AetherConfig.CLIENT.enable_aether_menu.get() ? BACKGROUND_LOCATION : OLD_REALMS_LOCATION;
+            GuiComponentAccessor.setBackgroundLocation(AetherConfig.CLIENT.enable_aether_menu.get() ? BACKGROUND_LOCATION : OLD_LOCATION);
+            RealmsPlayerScreenAccessor.setOptionsBackground(AetherConfig.CLIENT.enable_aether_menu.get() ? BACKGROUND_LOCATION : OLD_REALMS_LOCATION);
         }
     }
 
@@ -105,10 +107,12 @@ public class GuiHooks {
 
     public static void setupSplash(Screen screen) {
         if (screen instanceof TitleScreen titleScreen) {
-            if (default_menu.splash != null) {
-                titleScreen.splash = default_menu.splash;
+            TitleScreenAccessor titleScreenAccessor = (TitleScreenAccessor) titleScreen;
+            TitleScreenAccessor defaultMenuAccessor = (TitleScreenAccessor) default_menu;
+            if (defaultMenuAccessor.getSplash() != null) {
+                titleScreenAccessor.setSplash(defaultMenuAccessor.getSplash());
             } else {
-                default_menu.splash = titleScreen.splash;
+                defaultMenuAccessor.setSplash(titleScreenAccessor.getSplash());
             }
         }
     }
@@ -183,7 +187,8 @@ public class GuiHooks {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         if (calendar.get(Calendar.MONTH) + 1 == 7 && calendar.get(Calendar.DATE) == 22) {
-            screen.splash = "Happy anniversary to the Aether!";
+            TitleScreenAccessor titleScreenAccessor = (TitleScreenAccessor) screen;
+            titleScreenAccessor.setSplash("Happy anniversary to the Aether!");
         }
     }
 
@@ -198,8 +203,9 @@ public class GuiHooks {
                 default_left_menu.fadeInStart = 0L;
                 return default_left_menu;
             } else {
-                default_menu.fading = true;
-                default_menu.fadeInStart = 0L;
+                TitleScreenAccessor defaultMenuAccessor = (TitleScreenAccessor) default_menu;
+                defaultMenuAccessor.setFading(true);
+                defaultMenuAccessor.setFadeInStart(0L);
                 return default_menu;
             }
         }

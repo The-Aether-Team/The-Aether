@@ -1,5 +1,6 @@
 package com.gildedgames.aether.entity.miscellaneous;
 
+import com.gildedgames.aether.mixin.mixins.accessor.ServerGamePacketListenerImplAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.ExplosionParticlePacket;
 import com.gildedgames.aether.util.EntityUtil;
@@ -76,8 +77,9 @@ public class Parachute extends Entity {
             this.setDeltaMovement(movement.x * (double) 0.91F, Math.max(d2, fallSpeed), movement.z * (double) 0.91F);
 
             if (passenger instanceof ServerPlayer serverPlayer) {
-                serverPlayer.connection.aboveGroundTickCount = 0;
-                serverPlayer.connection.aboveGroundVehicleTickCount = 0;
+                ServerGamePacketListenerImplAccessor serverGamePacketListenerImplAccessor = (ServerGamePacketListenerImplAccessor) serverPlayer.connection;
+                serverGamePacketListenerImplAccessor.setAboveGroundTickCount(0);
+                serverGamePacketListenerImplAccessor.setAboveGroundVehicleTickCount(0);
             }
         }
     }

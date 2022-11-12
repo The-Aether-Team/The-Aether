@@ -40,7 +40,7 @@ public class InBossRoomTargetGoal<T extends LivingEntity, J extends Mob & BossMo
     protected void findTarget() {
         DungeonTracker<J> dungeon = ((J) this.mob).getDungeon();
         if (dungeon != null && (this.targetType == Player.class || this.targetType == ServerPlayer.class) && !dungeon.dungeonPlayers().isEmpty()) {
-            UUID uuid = dungeon.dungeonPlayers().get(this.mob.random.nextInt(dungeon.dungeonPlayers().size()));
+            UUID uuid = dungeon.dungeonPlayers().get(this.mob.getRandom().nextInt(dungeon.dungeonPlayers().size()));
             Player player = this.mob.level.getPlayerByUUID(uuid);
             if (player != null && !player.isSpectator() && !player.isCreative()) {
                 this.target = player;

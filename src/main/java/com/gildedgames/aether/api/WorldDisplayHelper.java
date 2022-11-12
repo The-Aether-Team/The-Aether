@@ -2,6 +2,8 @@ package com.gildedgames.aether.api;
 
 import com.gildedgames.aether.client.event.hooks.GuiHooks;
 import com.gildedgames.aether.AetherConfig;
+import com.gildedgames.aether.mixin.mixins.accessor.LevelStorageAccessAccessor;
+import com.gildedgames.aether.mixin.mixins.accessor.MinecraftServerAccessor;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
@@ -144,7 +146,8 @@ public class WorldDisplayHelper {
         try {
             LevelStorageSource.LevelStorageAccess storageAccess = getStorageAccess();
             if (storageAccess != null) {
-                storageAccess.lock = DirectoryLock.create(storageAccess.getWorldDir());
+                LevelStorageAccessAccessor levelStorageAccessAccessor = (LevelStorageAccessAccessor) storageAccess;
+                levelStorageAccessAccessor.setLock(DirectoryLock.create(storageAccess.getWorldDir()));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -155,7 +158,8 @@ public class WorldDisplayHelper {
         Minecraft minecraft = Minecraft.getInstance();
         IntegratedServer server = minecraft.getSingleplayerServer();
         if (server != null) {
-            return server.storageSource;
+            MinecraftServerAccessor minecraftServerAccessor = (MinecraftServerAccessor) server;
+            return minecraftServerAccessor.getStorageSource();
         } else {
             return null;
         }
