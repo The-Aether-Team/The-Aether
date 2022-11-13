@@ -31,7 +31,6 @@
     "accessor.StoredUserListAccessor",
     "accessor.ZombifiedPiglinAccessor",
     "common.AbstractArrowMixin",
-    "common.AbstractFurnaceBlockEntityMixin",
     "common.CropBlockMixin",
     "common.DimensionTypeMixin",
     "common.FeatureMixin"

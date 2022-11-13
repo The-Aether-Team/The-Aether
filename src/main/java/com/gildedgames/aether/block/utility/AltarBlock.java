@@ -1,5 +1,6 @@
 package com.gildedgames.aether.block.utility;
 
+import com.gildedgames.aether.blockentity.AbstractAetherFurnaceBlockEntity;
 import com.gildedgames.aether.blockentity.AltarBlockEntity;
 
 import com.gildedgames.aether.blockentity.AetherBlockEntityTypes;
@@ -32,7 +33,7 @@ public class AltarBlock extends AbstractFurnaceBlock
 
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@Nonnull Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> blockEntityType) {
-		return createFurnaceTicker(level, blockEntityType, AetherBlockEntityTypes.ALTAR.get());
+		return level.isClientSide() ? null : createTickerHelper(blockEntityType, AetherBlockEntityTypes.ALTAR.get(), AbstractAetherFurnaceBlockEntity::serverTick);
 	}
 
 	@Override

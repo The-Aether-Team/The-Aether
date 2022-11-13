@@ -1,5 +1,6 @@
 package com.gildedgames.aether.block.utility;
 
+import com.gildedgames.aether.blockentity.AbstractAetherFurnaceBlockEntity;
 import com.gildedgames.aether.blockentity.FreezerBlockEntity;
 
 import com.gildedgames.aether.client.particle.AetherParticleTypes;
@@ -33,7 +34,7 @@ public class FreezerBlock extends AbstractFurnaceBlock
 
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@Nonnull Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> blockEntityType) {
-		return createFurnaceTicker(level, blockEntityType, AetherBlockEntityTypes.FREEZER.get());
+		return level.isClientSide() ? null : createTickerHelper(blockEntityType, AetherBlockEntityTypes.FREEZER.get(), AbstractAetherFurnaceBlockEntity::serverTick);
 	}
 	
 	@Override
