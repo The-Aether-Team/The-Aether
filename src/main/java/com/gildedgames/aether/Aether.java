@@ -75,11 +75,10 @@ import java.util.List;
 
 @Mod(Aether.MODID)
 @Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class Aether
-{
+public class Aether {
     public static final String MODID = "aether";
     public static final Logger LOGGER = LogUtils.getLogger();
-    public static final Path DIRECTORY = FMLPaths.CONFIGDIR.get().resolve("aether");
+    public static final Path DIRECTORY = FMLPaths.CONFIGDIR.get().resolve(Aether.MODID);
 
     public static TriviaGenerator TRIVIA_READER;
 
@@ -120,9 +119,9 @@ public class Aether
             register.register(modEventBus);
         }
 
-        AetherBlocks.registerWoodTypes();
+        AetherBlocks.registerWoodTypes(); // Registered this early to avoid bugs with WoodTypes and signs.
 
-        DIRECTORY.toFile().mkdirs();
+        DIRECTORY.toFile().mkdirs(); // Ensures the Aether's config folder is generated.
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
 
@@ -138,7 +137,7 @@ public class Aether
 
         SunAltarWhitelist.initialize();
 
-        registerFuels();
+        this.registerFuels();
 
         event.enqueueWork(() -> {
             AetherBlocks.registerPots();
@@ -146,13 +145,14 @@ public class Aether
 
             AetherEntityTypes.registerSpawnPlacements();
 
-            registerDispenserBehaviors();
-            registerCauldronInteractions();
-            registerComposting();
+            this.registerDispenserBehaviors();
+            this.registerCauldronInteractions();
+            this.registerComposting();
         });
     }
 
     public void curiosSetup(InterModEnqueueEvent event) {
+        // All slots are marked with .hide() so they don't appear in the Curios GUI, as they are only added to the Aether's accessory menu which is done manually in its code.
         InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("aether_pendant").icon(new ResourceLocation(Aether.MODID, "gui/slots/pendant")).hide().build());
         InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("aether_cape").icon(new ResourceLocation(Aether.MODID, "gui/slots/cape")).hide().build());
         InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("aether_ring").icon(new ResourceLocation(Aether.MODID, "gui/slots/ring")).size(2).hide().build());
@@ -165,11 +165,13 @@ public class Aether
         DataGenerator generator = event.getGenerator();
         ExistingFileHelper helper = event.getExistingFileHelper();
 
+        // Client Data
         generator.addProvider(event.includeClient(), new AetherBlockStateData(generator, helper));
         generator.addProvider(event.includeClient(), new AetherItemModelData(generator, helper));
         generator.addProvider(event.includeClient(), new AetherLanguageData(generator));
         generator.addProvider(event.includeClient(), new AetherSoundData(generator, helper));
 
+        // Server Data
         generator.addProvider(event.includeServer(), new AetherRecipeData(generator));
         generator.addProvider(event.includeServer(), new AetherLootTableData(generator));
         generator.addProvider(event.includeServer(), new AetherLootModifierData(generator));
@@ -191,27 +193,41 @@ public class Aether
     }
 
     public void packSetup(AddPackFindersEvent event) {
-        setupReleasePack(event);
-        setupBetaPack(event);
-        setupCTMFixPack(event);
+        this.setupReleasePack(event);
+        this.setupBetaPack(event);
+        this.setupCTMFixPack(event);
     }
 
+    /**
+     * A built-in resource pack for programmer art based on the 1.2.5 version of the mod.
+     */
     private void setupReleasePack(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.CLIENT_RESOURCES) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_125");
             PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, resourcePath);
-            createCombinedPack(event, resourcePath, pack, "builtin/aether_125_art", "Aether 1.2.5 Textures", "The classic look of the Aether from 1.2.5");
+            this.createCombinedPack(event, resourcePath, pack, "builtin/aether_125_art", "Aether 1.2.5 Textures", "The classic look of the Aether from 1.2.5");
         }
     }
 
+    /**
+     * A built-in resource pack for programmer art based on the b1.7.3 version of the mod.
+     */
     private void setupBetaPack(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.CLIENT_RESOURCES) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_b173");
             PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, resourcePath);
-            createCombinedPack(event, resourcePath, pack, "builtin/aether_b173_art", "Aether b1.7.3 Textures", "The original look of the Aether from b1.7.3");
+            this.createCombinedPack(event, resourcePath, pack, "builtin/aether_b173_art", "Aether b1.7.3 Textures", "The original look of the Aether from b1.7.3");
         }
     }
 
+    /**
+     * Creates a built-in resource pack that combines asset files from two different locations.
+     * @param sourcePath The {@link Path} of the non-base assets.
+     * @param pack The {@link PathPackResources} that handles the non-base asset path for the resource pack.
+     * @param name The {@link String} internal name of the resource pack.
+     * @param title The {@link String} title of the resource pack.
+     * @param description The {@link String} description of the resource pack.
+     */
     private void createCombinedPack(AddPackFindersEvent event, Path sourcePath, PathPackResources pack, String name, String title, String description) {
         Path baseResourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_base");
         PathPackResources basePack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + baseResourcePath, baseResourcePath);
@@ -224,6 +240,10 @@ public class Aether
                 ));
     }
 
+    /**
+     * A built-in resource pack to change the model of Quicksoil Glass Panes when using CTM, as CTM's connected textures won't properly work with the normal Quicksoil Glass Pane model.<br><br>
+     * The pack is loaded and automatically applied if CTM is installed.
+     */
     private void setupCTMFixPack(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.CLIENT_RESOURCES && ModList.get().isLoaded("ctm")) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/ctm_fix");
@@ -267,24 +287,29 @@ public class Aether
     }
 
     private void registerComposting() {
-        addCompost(0.3F, AetherBlocks.SKYROOT_LEAVES.get().asItem());
-        addCompost(0.3F, AetherBlocks.SKYROOT_SAPLING.get());
-        addCompost(0.3F, AetherBlocks.GOLDEN_OAK_LEAVES.get());
-        addCompost(0.3F, AetherBlocks.GOLDEN_OAK_SAPLING.get());
-        addCompost(0.3F, AetherBlocks.CRYSTAL_LEAVES.get());
-        addCompost(0.3F, AetherBlocks.CRYSTAL_FRUIT_LEAVES.get());
-        addCompost(0.3F, AetherBlocks.HOLIDAY_LEAVES.get());
-        addCompost(0.3F, AetherBlocks.DECORATED_HOLIDAY_LEAVES.get());
-        addCompost(0.3F, AetherItems.BLUE_BERRY.get());
-        addCompost(0.5F, AetherItems.ENCHANTED_BERRY.get());
-        addCompost(0.5F, AetherBlocks.BERRY_BUSH.get());
-        addCompost(0.5F, AetherBlocks.BERRY_BUSH_STEM.get());
-        addCompost(0.65F, AetherBlocks.WHITE_FLOWER.get());
-        addCompost(0.65F, AetherBlocks.PURPLE_FLOWER.get());
-        addCompost(0.65F, AetherItems.WHITE_APPLE.get());
+        this.addCompost(0.3F, AetherBlocks.SKYROOT_LEAVES.get().asItem());
+        this.addCompost(0.3F, AetherBlocks.SKYROOT_SAPLING.get());
+        this.addCompost(0.3F, AetherBlocks.GOLDEN_OAK_LEAVES.get());
+        this.addCompost(0.3F, AetherBlocks.GOLDEN_OAK_SAPLING.get());
+        this.addCompost(0.3F, AetherBlocks.CRYSTAL_LEAVES.get());
+        this.addCompost(0.3F, AetherBlocks.CRYSTAL_FRUIT_LEAVES.get());
+        this.addCompost(0.3F, AetherBlocks.HOLIDAY_LEAVES.get());
+        this.addCompost(0.3F, AetherBlocks.DECORATED_HOLIDAY_LEAVES.get());
+        this.addCompost(0.3F, AetherItems.BLUE_BERRY.get());
+        this.addCompost(0.5F, AetherItems.ENCHANTED_BERRY.get());
+        this.addCompost(0.5F, AetherBlocks.BERRY_BUSH.get());
+        this.addCompost(0.5F, AetherBlocks.BERRY_BUSH_STEM.get());
+        this.addCompost(0.65F, AetherBlocks.WHITE_FLOWER.get());
+        this.addCompost(0.65F, AetherBlocks.PURPLE_FLOWER.get());
+        this.addCompost(0.65F, AetherItems.WHITE_APPLE.get());
     }
 
-    private static void addCompost(float chance, ItemLike item) {
+    /**
+     * Copy of {@link ComposterBlock#add(float, ItemLike)}.
+     * @param chance Chance (as a {@link Float}) to fill a compost layer.
+     * @param item The {@link ItemLike} that can be composted.
+     */
+    private void addCompost(float chance, ItemLike item) {
         ComposterBlock.COMPOSTABLES.put(item.asItem(), chance);
     }
 
