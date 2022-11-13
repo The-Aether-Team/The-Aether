@@ -11,4 +11,14 @@ public interface BlockLootAccessor {
     static LootItemCondition.Builder hasSilkTouch() {
         throw new AssertionError();
     }
+
+    @Accessor("HAS_SHEARS_OR_SILK_TOUCH")
+    static LootItemCondition.Builder hasShearsOrSilkTouch() {
+        throw new AssertionError();
+    }
+
+    @Accessor("NORMAL_LEAVES_SAPLING_CHANCES")
+    static float[] getNormalLeavesSaplingChances() {
+        throw new AssertionError();
+    }
 }

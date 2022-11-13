@@ -2,6 +2,7 @@ package com.gildedgames.aether.block.natural;
 
 import com.gildedgames.aether.block.AetherBlockStateProperties;
 import com.gildedgames.aether.block.AetherBlocks;
+import com.gildedgames.aether.mixin.mixins.accessor.SpreadingSnowyDirtBlockAccessor;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.core.BlockPos;
@@ -34,7 +35,7 @@ public class AetherGrassBlock extends GrassBlock {
 
 	@Override
 	public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
-		if (!canBeGrass(state, worldIn, pos)) {
+		if (!SpreadingSnowyDirtBlockAccessor.callCanBeGrass(state, worldIn, pos)) {
 			if (!worldIn.isAreaLoaded(pos, 3)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light and spreading
 			worldIn.setBlockAndUpdate(pos, AetherBlocks.AETHER_DIRT.get().defaultBlockState());
 		} else {
@@ -42,7 +43,7 @@ public class AetherGrassBlock extends GrassBlock {
 				BlockState blockstate = this.defaultBlockState();
 				for(int i = 0; i < 4; ++i) {
 					BlockPos blockpos = pos.offset(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
-					if (worldIn.getBlockState(blockpos).is(AetherBlocks.AETHER_DIRT.get()) && canPropagate(blockstate, worldIn, blockpos)) {
+					if (worldIn.getBlockState(blockpos).is(AetherBlocks.AETHER_DIRT.get()) && SpreadingSnowyDirtBlockAccessor.callCanPropagate(blockstate, worldIn, blockpos)) {
 						worldIn.setBlockAndUpdate(blockpos, blockstate.setValue(SNOWY, worldIn.getBlockState(blockpos.above()).is(Blocks.SNOW)));
 					}
 				}

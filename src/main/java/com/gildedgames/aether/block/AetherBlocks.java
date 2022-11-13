@@ -241,28 +241,28 @@ public class AetherBlocks
 
     public static void registerFlammability() {
         FireBlockAccessor fireBlockAccessor = (FireBlockAccessor) Blocks.FIRE;
-        fireBlockAccessor.setFlammable(AetherBlocks.SKYROOT_LEAVES.get(), 30, 60);
-        fireBlockAccessor.setFlammable(AetherBlocks.GOLDEN_OAK_LEAVES.get(), 30, 60);
-        fireBlockAccessor.setFlammable(AetherBlocks.CRYSTAL_LEAVES.get(), 30, 60);
-        fireBlockAccessor.setFlammable(AetherBlocks.CRYSTAL_FRUIT_LEAVES.get(), 30, 60);
-        fireBlockAccessor.setFlammable(AetherBlocks.HOLIDAY_LEAVES.get(), 30, 60);
-        fireBlockAccessor.setFlammable(AetherBlocks.DECORATED_HOLIDAY_LEAVES.get(), 30, 60);
-        fireBlockAccessor.setFlammable(AetherBlocks.SKYROOT_LOG.get(), 5, 5);
-        fireBlockAccessor.setFlammable(AetherBlocks.GOLDEN_OAK_LOG.get(), 5, 5);
-        fireBlockAccessor.setFlammable(AetherBlocks.STRIPPED_SKYROOT_LOG.get(), 5, 5);
-        fireBlockAccessor.setFlammable(AetherBlocks.SKYROOT_WOOD.get(), 5, 5);
-        fireBlockAccessor.setFlammable(AetherBlocks.GOLDEN_OAK_WOOD.get(), 5, 5);
-        fireBlockAccessor.setFlammable(AetherBlocks.STRIPPED_SKYROOT_WOOD.get(), 5, 5);
-        fireBlockAccessor.setFlammable(AetherBlocks.SKYROOT_PLANKS.get(), 5, 20);
-        fireBlockAccessor.setFlammable(AetherBlocks.BERRY_BUSH.get(), 30, 60);
-        fireBlockAccessor.setFlammable(AetherBlocks.BERRY_BUSH_STEM.get(), 60, 100);
-        fireBlockAccessor.setFlammable(AetherBlocks.PURPLE_FLOWER.get(), 60, 100);
-        fireBlockAccessor.setFlammable(AetherBlocks.WHITE_FLOWER.get(), 60, 100);
-        fireBlockAccessor.setFlammable(AetherBlocks.SKYROOT_FENCE_GATE.get(), 5, 20);
-        fireBlockAccessor.setFlammable(AetherBlocks.SKYROOT_FENCE.get(), 5, 20);
-        fireBlockAccessor.setFlammable(AetherBlocks.SKYROOT_STAIRS.get(), 5, 20);
-        fireBlockAccessor.setFlammable(AetherBlocks.SKYROOT_SLAB.get(), 5, 20);
-        fireBlockAccessor.setFlammable(AetherBlocks.SKYROOT_BOOKSHELF.get(), 30, 20);
+        fireBlockAccessor.callSetFlammable(AetherBlocks.SKYROOT_LEAVES.get(), 30, 60);
+        fireBlockAccessor.callSetFlammable(AetherBlocks.GOLDEN_OAK_LEAVES.get(), 30, 60);
+        fireBlockAccessor.callSetFlammable(AetherBlocks.CRYSTAL_LEAVES.get(), 30, 60);
+        fireBlockAccessor.callSetFlammable(AetherBlocks.CRYSTAL_FRUIT_LEAVES.get(), 30, 60);
+        fireBlockAccessor.callSetFlammable(AetherBlocks.HOLIDAY_LEAVES.get(), 30, 60);
+        fireBlockAccessor.callSetFlammable(AetherBlocks.DECORATED_HOLIDAY_LEAVES.get(), 30, 60);
+        fireBlockAccessor.callSetFlammable(AetherBlocks.SKYROOT_LOG.get(), 5, 5);
+        fireBlockAccessor.callSetFlammable(AetherBlocks.GOLDEN_OAK_LOG.get(), 5, 5);
+        fireBlockAccessor.callSetFlammable(AetherBlocks.STRIPPED_SKYROOT_LOG.get(), 5, 5);
+        fireBlockAccessor.callSetFlammable(AetherBlocks.SKYROOT_WOOD.get(), 5, 5);
+        fireBlockAccessor.callSetFlammable(AetherBlocks.GOLDEN_OAK_WOOD.get(), 5, 5);
+        fireBlockAccessor.callSetFlammable(AetherBlocks.STRIPPED_SKYROOT_WOOD.get(), 5, 5);
+        fireBlockAccessor.callSetFlammable(AetherBlocks.SKYROOT_PLANKS.get(), 5, 20);
+        fireBlockAccessor.callSetFlammable(AetherBlocks.BERRY_BUSH.get(), 30, 60);
+        fireBlockAccessor.callSetFlammable(AetherBlocks.BERRY_BUSH_STEM.get(), 60, 100);
+        fireBlockAccessor.callSetFlammable(AetherBlocks.PURPLE_FLOWER.get(), 60, 100);
+        fireBlockAccessor.callSetFlammable(AetherBlocks.WHITE_FLOWER.get(), 60, 100);
+        fireBlockAccessor.callSetFlammable(AetherBlocks.SKYROOT_FENCE_GATE.get(), 5, 20);
+        fireBlockAccessor.callSetFlammable(AetherBlocks.SKYROOT_FENCE.get(), 5, 20);
+        fireBlockAccessor.callSetFlammable(AetherBlocks.SKYROOT_STAIRS.get(), 5, 20);
+        fireBlockAccessor.callSetFlammable(AetherBlocks.SKYROOT_SLAB.get(), 5, 20);
+        fireBlockAccessor.callSetFlammable(AetherBlocks.SKYROOT_BOOKSHELF.get(), 30, 20);
     }
 
     public static void registerWoodTypes() {

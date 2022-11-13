@@ -86,7 +86,7 @@ public class ZephyrSnowball extends Fireball implements ItemSupplier {
 			if (entity instanceof LivingEntity livingEntity && !EquipmentUtil.hasSentryBoots(livingEntity)) {
 				if (livingEntity instanceof Player player && player.isBlocking()) {
 					PlayerAccessor playerAccessor = ((PlayerAccessor) player);
-					playerAccessor.hurtCurrentlyUsedShield(3.0F);
+					playerAccessor.callHurtCurrentlyUsedShield(3.0F);
 				} else {
 					entity.setDeltaMovement(entity.getDeltaMovement().x, entity.getDeltaMovement().y + 0.5, entity.getDeltaMovement().z);
 					entity.setDeltaMovement(entity.getDeltaMovement().x + (this.getDeltaMovement().x * 1.5F), entity.getDeltaMovement().y, entity.getDeltaMovement().z + (this.getDeltaMovement().z * 1.5F));

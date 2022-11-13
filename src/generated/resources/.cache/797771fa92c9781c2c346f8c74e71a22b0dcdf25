@@ -1,4 +1,4 @@
-// 1.19.2	2022-11-05T14:02:47.0034519	Aether Item Tags
+// 1.19.2	2022-11-12T14:54:30.6273743	Aether Item Tags
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/items/accepted_music_discs.json
 b1b83b96d9600b7878597cc26851b843bf99a3dd data/aether/tags/items/accessories.json
 6404c17e75ed612591fd253fd1cfd8c6a5ea4a8a data/aether/tags/items/aerbunny_temptation_items.json
@@ -58,12 +58,18 @@ c26f64255e81ace6a67fcf973a34043471ebff1d data/aether/tags/items/treasure_doorway
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/valkyrie_repairing.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/vampire_repairing.json
 794ba2e4990dd4fa1823ea008d8b78437527dacd data/aether/tags/items/zanite_repairing.json
-89af558945f41e6e1e5e29c9da8dc0324f4c9cc2 data/curios/tags/items/aether_accessory.json
-99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/curios/tags/items/aether_cape.json
-cd6129430937fd4b57b84a64be78f993ba915b85 data/curios/tags/items/aether_gloves.json
-dfabf018a03431c6925f20338e5f5b105beacae6 data/curios/tags/items/aether_pendant.json
-cd70d1f5f10c0f6f5aaa22bcd218352b3a14cb69 data/curios/tags/items/aether_ring.json
+9a6a0559b86f300f0732ed1fa52dfedf3ee222ba data/curios/tags/items/aether_accessory.json
+cf5274595bae04ea85f85d2a94202d4589da1113 data/curios/tags/items/aether_cape.json
+a555483b58adf47150fdc42864f0fb7949171449 data/curios/tags/items/aether_gloves.json
+5ba247034a4019a795773918d18542d96b4123ed data/curios/tags/items/aether_pendant.json
+19261e2135bd69433443b498613f30bf6c4364a7 data/curios/tags/items/aether_ring.json
 3f9727bd2367c552a68056fe20cf61a448d0e81e data/curios/tags/items/aether_shield.json
+8e6cc2addf3c57e62ffa8ec438d55516c381ff3f data/curios/tags/items/back.json
+0e01b98649475857f7dde40f8badcb78c55892af data/curios/tags/items/charm.json
+0e01b98649475857f7dde40f8badcb78c55892af data/curios/tags/items/curio.json
+0fa32a72588ce97499b47ae08f820295942e33a2 data/curios/tags/items/hands.json
+08bc785ec15e245aae0aa6cd40ad477f01bd9a4e data/curios/tags/items/necklace.json
+ebdd2c8bd23103855949f36a05e9736b88e68751 data/curios/tags/items/ring.json
 7cc99b499993ff43d1bec64e0297def0c92f4c2d data/forge/tags/items/armors/boots.json
 ae55992a015bc68477c240af9e2959c48fba8803 data/forge/tags/items/armors/chestplates.json
 07eee825ec47b39c00f2fa8525836431d139cee1 data/forge/tags/items/armors/helmets.json

@@ -1,11 +1,14 @@
 package com.gildedgames.aether.mixin.mixins.accessor;
 
+import net.minecraft.client.gui.Gui;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
-@Mixin(Player.class)
-public interface PlayerAccessor {
+@Mixin(Gui.HeartType.class)
+public interface HeartTypeAccessor {
     @Invoker
-    void callHurtCurrentlyUsedShield(float damage);
+    static Gui.HeartType callForPlayer(Player player) {
+        throw new AssertionError();
+    }
 }

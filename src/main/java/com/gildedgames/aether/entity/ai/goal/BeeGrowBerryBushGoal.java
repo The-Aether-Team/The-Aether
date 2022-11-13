@@ -27,12 +27,12 @@ public class BeeGrowBerryBushGoal extends Goal {
 
     public boolean canBeeUse() {
         BeeAccessor beeAccessor = (BeeAccessor) this.bee;
-        if (beeAccessor.getCropsGrownSincePollination() >= 10) {
+        if (beeAccessor.callGetCropsGrownSincePollination() >= 10) {
             return false;
         } else if (this.bee.getRandom().nextFloat() < 0.3F) {
             return false;
         } else {
-            return this.bee.hasNectar() && beeAccessor.isHiveValid();
+            return this.bee.hasNectar() && beeAccessor.callIsHiveValid();
         }
     }
 
@@ -55,7 +55,7 @@ public class BeeGrowBerryBushGoal extends Goal {
                     if (isStem) {
                         this.bee.level.levelEvent(2005, blockPos, 0);
                         this.bee.level.setBlockAndUpdate(blockPos, AetherBlocks.BERRY_BUSH.get().defaultBlockState());
-                        beeAccessor.incrementNumCropsGrownSincePollination();
+                        beeAccessor.callIncrementNumCropsGrownSincePollination();
                     }
                 }
             }

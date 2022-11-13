@@ -141,7 +141,7 @@ public class FloatingBlockEntity extends Entity {
                                     if (block instanceof Floatable floatable) {
                                         floatable.onCollide(this.level, blockPos1, this.blockState, blockState, this);
                                     } else if (block instanceof ConcretePowderBlock concretePowderBlock) {
-                                        if (ConcretePowderBlockAccessor.shouldSolidify(this.level, blockPos1, blockState)) {
+                                        if (ConcretePowderBlockAccessor.callShouldSolidify(this.level, blockPos1, blockState)) {
                                             ConcretePowderBlockAccessor concretePowderBlockAccessor = (ConcretePowderBlockAccessor) concretePowderBlock;
                                             this.level.setBlock(blockPos1, concretePowderBlockAccessor.getConcrete(), 3);
                                         }

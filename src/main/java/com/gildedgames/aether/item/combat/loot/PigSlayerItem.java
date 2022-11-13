@@ -49,7 +49,7 @@ public class PigSlayerItem extends SwordItem {
 					if (!(attacker instanceof Player player) || !player.isCreative()) {
 						ZombifiedPiglinAccessor zombifiedPiglinAccessor = (ZombifiedPiglinAccessor) zombifiedPiglin;
 						zombifiedPiglin.setTarget(attacker);
-						zombifiedPiglinAccessor.alertOthers();
+						zombifiedPiglinAccessor.callAlertOthers();
 					}
 				}
 				DamageSource damageSource = (attacker instanceof Player player ? DamageSource.playerAttack(player) : DamageSource.mobAttack(attacker)).bypassArmor();

@@ -9,8 +9,8 @@ import java.util.function.Consumer;
 
 @Mixin(LootContextParamSets.class)
 public interface LootContextParamSetsAccessor {
-    @Invoker("register")
-    static LootContextParamSet register(String registryName, Consumer<LootContextParamSet.Builder> builderConsumer) {
+    @Invoker
+    static LootContextParamSet callRegister(String registryName, Consumer<LootContextParamSet.Builder> builderConsumer) {
         throw new AssertionError();
     }
 }

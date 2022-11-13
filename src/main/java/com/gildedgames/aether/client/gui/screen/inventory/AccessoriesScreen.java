@@ -4,6 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.screen.perks.AetherCustomizationsScreen;
 import com.gildedgames.aether.client.AetherKeys;
 import com.gildedgames.aether.inventory.menu.AccessoriesMenu;
+import com.gildedgames.aether.mixin.mixins.accessor.ScreenAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.server.ClearItemPacket;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -148,7 +149,8 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
     }
 
     public void updateRenderButtons() {
-        this.narratables.removeIf(widget -> widget instanceof RenderButton);
+        ScreenAccessor screenAccessor = (ScreenAccessor) this;
+        screenAccessor.getNarratables().removeIf(widget -> widget instanceof RenderButton);
         this.children().removeIf(widget -> widget instanceof RenderButton);
         this.renderables.removeIf(widget -> widget instanceof RenderButton);
         for (Slot inventorySlot : this.menu.slots) {

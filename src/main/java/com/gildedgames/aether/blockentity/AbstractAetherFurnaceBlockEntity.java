@@ -1,5 +1,6 @@
 package com.gildedgames.aether.blockentity;
 
+import com.gildedgames.aether.mixin.mixins.accessor.AbstractFurnaceBlockEntityAccessor;
 import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -54,7 +55,8 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
 
     @Override
     public boolean canTakeItemThroughFace(int index, @Nonnull ItemStack stack, @Nonnull Direction direction) {
-        Optional<NonNullList<Ingredient>> ingredient = this.quickCheck.getRecipeFor(this, this.level).map(AbstractCookingRecipe::getIngredients);
+        AbstractFurnaceBlockEntityAccessor abstractFurnaceBlockEntityAccessor = (AbstractFurnaceBlockEntityAccessor) this;
+        Optional<NonNullList<Ingredient>> ingredient = abstractFurnaceBlockEntityAccessor.getQuickCheck().getRecipeFor(this, this.level).map(AbstractCookingRecipe::getIngredients);
         if (this.containerItem.isEmpty()) {
             ingredient.ifPresent(ing -> this.containerItem = stack.getCraftingRemainingItem());
         }

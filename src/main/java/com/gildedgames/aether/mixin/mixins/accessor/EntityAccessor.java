@@ -21,6 +21,6 @@ public interface EntityAccessor {
     @Accessor
     void setPortalEntrancePos(BlockPos portalEntrancePos);
 
-    @Invoker("getRelativePortalPosition")
-    Vec3 getRelativePortalPosition(Direction.Axis pAxis, BlockUtil.FoundRectangle pPortal);
+    @Invoker
+    Vec3 callGetRelativePortalPosition(Direction.Axis axis, BlockUtil.FoundRectangle portal);
 }

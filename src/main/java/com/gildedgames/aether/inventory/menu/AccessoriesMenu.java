@@ -1,5 +1,6 @@
 package com.gildedgames.aether.inventory.menu;
 
+import com.gildedgames.aether.mixin.mixins.accessor.AbstractContainerMenuAccessor;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.MinecraftServer;
@@ -72,10 +73,11 @@ public class AccessoriesMenu extends InventoryMenu
 
     public AccessoriesMenu(int containerId, Inventory playerInventory, boolean hasButton) {
         super(playerInventory, playerInventory.player.level.isClientSide, playerInventory.player);
-        this.menuType = AetherMenuTypes.ACCESSORIES.get();
-        this.containerId = containerId;
-        this.remoteSlots.clear();
-        this.lastSlots.clear();
+        AbstractContainerMenuAccessor abstractContainerMenuAccessor = (AbstractContainerMenuAccessor) this;
+        abstractContainerMenuAccessor.setMenuType(AetherMenuTypes.ACCESSORIES.get());
+        abstractContainerMenuAccessor.setContainerId(containerId);
+        abstractContainerMenuAccessor.getRemoteSlots().clear();
+        abstractContainerMenuAccessor.getLastSlots().clear();
         this.slots.clear();
         this.player = playerInventory.player;
         this.curiosHandler = CuriosApi.getCuriosHelper().getCuriosHandler(this.player);

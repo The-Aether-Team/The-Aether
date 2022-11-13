@@ -33,7 +33,7 @@ public class SunAltarWhitelist {
 
     public boolean isWhiteListed(GameProfile profile) {
         StoredUserListAccessor storedUserListAccessor = (StoredUserListAccessor) this.sunAltarWhitelist;
-        return storedUserListAccessor.contains(profile);
+        return storedUserListAccessor.callContains(profile);
     }
 
     public void add(UserWhiteListEntry element) {

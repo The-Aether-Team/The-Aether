@@ -6,12 +6,12 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(Bee.class)
 public interface BeeAccessor {
-    @Invoker("getCropsGrownSincePollination")
-    int getCropsGrownSincePollination();
+    @Invoker
+    int callGetCropsGrownSincePollination();
 
-    @Invoker("isHiveValid")
-    boolean isHiveValid();
+    @Invoker
+    boolean callIsHiveValid();
 
-    @Invoker("incrementNumCropsGrownSincePollination")
-    void incrementNumCropsGrownSincePollination();
+    @Invoker
+    void callIncrementNumCropsGrownSincePollination();
 }

@@ -6,6 +6,7 @@ import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.loot.functions.DoubleDrops;
 import com.gildedgames.aether.loot.functions.SpawnTNT;
 import com.gildedgames.aether.loot.functions.SpawnXP;
+import com.gildedgames.aether.mixin.mixins.accessor.BlockLootAccessor;
 import net.minecraft.advancements.critereon.BlockPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.LocationPredicate;
@@ -75,7 +76,7 @@ public abstract class AetherBlockLootProvider extends BlockLoot {
     }
 
     protected static LootTable.Builder droppingDoubleWithSilkTouch(Block block, LootPoolEntryContainer.Builder<?> builder) {
-        return droppingDouble(block, HAS_SILK_TOUCH, builder);
+        return droppingDouble(block, BlockLootAccessor.hasSilkTouch(), builder);
     }
 
     protected static LootTable.Builder droppingDouble(ItemLike item) {
@@ -92,7 +93,7 @@ public abstract class AetherBlockLootProvider extends BlockLoot {
 
     protected static LootTable.Builder droppingWithChancesAndSkyrootSticks(Block block, Block sapling, float... chances) {
         return createSilkTouchOrShearsDispatchTable(block, applyExplosionCondition(block, LootItem.lootTableItem(sapling)).when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, chances)))
-                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).when(HAS_SHEARS_OR_SILK_TOUCH.invert())
+                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).when(BlockLootAccessor.hasShearsOrSilkTouch().invert())
                         .add(applyExplosionDecay(block,
                                 LootItem.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
                                 .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
@@ -101,7 +102,7 @@ public abstract class AetherBlockLootProvider extends BlockLoot {
 
     protected static LootTable.Builder droppingGoldenOakLeaves(Block block, Block sapling, float... chances) {
         return droppingWithChancesAndSkyrootSticks(block, sapling, chances)
-                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).when(HAS_SHEARS_OR_SILK_TOUCH.invert())
+                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).when(BlockLootAccessor.hasShearsOrSilkTouch().invert())
                         .add(applyExplosionCondition(block,
                                 LootItem.lootTableItem(Items.GOLDEN_APPLE))
                                 .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.00005F, 0.000055555557F, 0.0000625F, 0.00008333334F, 0.00025F))));
@@ -122,7 +123,7 @@ public abstract class AetherBlockLootProvider extends BlockLoot {
 
     protected static LootTable.Builder droppingWithFruitAndSkyrootSticks(Block block, Item fruit) {
         return createSilkTouchOrShearsDispatchTable(block, applyExplosionDecay(block, LootItem.lootTableItem(fruit)))
-                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).when(HAS_SHEARS_OR_SILK_TOUCH.invert())
+                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).when(BlockLootAccessor.hasShearsOrSilkTouch().invert())
                         .add(applyExplosionDecay(block,
                                 LootItem.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
                                 .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
@@ -132,12 +133,12 @@ public abstract class AetherBlockLootProvider extends BlockLoot {
     protected static LootTable.Builder droppingDoubleGoldenOak(Block original, Block block, Item item) {
         return LootTable.lootTable()
                 .withPool(applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(original)
-                        .when(HAS_SILK_TOUCH))))
+                        .when(BlockLootAccessor.hasSilkTouch()))))
                 .withPool(applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(block)
-                        .when(HAS_SILK_TOUCH.invert()))))
+                        .when(BlockLootAccessor.hasSilkTouch().invert()))))
                 .withPool(applyExplosionDecay(item, LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(item)
                         .when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(AetherTags.Items.GOLDEN_AMBER_HARVESTERS)))
-                        .when(HAS_SILK_TOUCH.invert())
+                        .when(BlockLootAccessor.hasSilkTouch().invert())
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
                         .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)))))
                 .apply(DoubleDrops.builder());
@@ -163,11 +164,11 @@ public abstract class AetherBlockLootProvider extends BlockLoot {
                                         LocationPredicate.Builder.location().setBlock(
                                                 BlockPredicate.Builder.block().of(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get()).build()),
                                         new BlockPos(0, -1, 0))))))
-                .when(HAS_SILK_TOUCH.invert())
+                .when(BlockLootAccessor.hasSilkTouch().invert())
                 .apply(DoubleDrops.builder())
         ).withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                 .add(LootItem.lootTableItem(block))
-                .when(HAS_SILK_TOUCH)
+                .when(BlockLootAccessor.hasSilkTouch())
         ).withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                 .add(LootItem.lootTableItem(stem)
                         .when(LootItemEntityPropertyCondition.entityPresent(LootContext.EntityTarget.THIS).invert()))

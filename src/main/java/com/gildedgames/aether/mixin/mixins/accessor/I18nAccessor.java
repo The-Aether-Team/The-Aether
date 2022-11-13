@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(I18n.class)
 public interface I18nAccessor {
-    @Accessor("language")
+    @Accessor
     static Language getLanguage() {
         throw new AssertionError();
     }

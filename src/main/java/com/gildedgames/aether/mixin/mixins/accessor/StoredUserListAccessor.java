@@ -7,6 +7,6 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(StoredUserList.class)
 public interface StoredUserListAccessor {
-    @Invoker("contains")
-    <K, V extends StoredUserEntry<K>> boolean contains(K entry);
+    @Invoker
+    <K, V extends StoredUserEntry<K>> boolean callContains(K entry);
 }

@@ -13,8 +13,8 @@ public interface ConcretePowderBlockAccessor {
     @Accessor
     BlockState getConcrete();
 
-    @Invoker("shouldSolidify")
-    static boolean shouldSolidify(BlockGetter level, BlockPos pos, BlockState state) {
+    @Invoker
+    static boolean callShouldSolidify(BlockGetter level, BlockPos pos, BlockState state) {
         throw new AssertionError();
     }
 }

@@ -8,12 +8,14 @@ import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import top.theillusivec4.curios.Curios;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -152,12 +154,14 @@ public class AetherItemTagData extends ItemTagsProvider
                 AetherItems.IRON_RING.get(),
                 AetherItems.GOLDEN_RING.get(),
                 AetherItems.ZANITE_RING.get(),
-                AetherItems.ICE_RING.get());
+                AetherItems.ICE_RING.get())
+                .addOptionalTag(new ResourceLocation(Curios.MODID, "ring"));
         tag(AetherTags.Items.AETHER_PENDANT).add(
                 AetherItems.IRON_PENDANT.get(),
                 AetherItems.GOLDEN_PENDANT.get(),
                 AetherItems.ZANITE_PENDANT.get(),
-                AetherItems.ICE_PENDANT.get());
+                AetherItems.ICE_PENDANT.get())
+                .addOptionalTag(new ResourceLocation(Curios.MODID, "necklace"));
         tag(AetherTags.Items.AETHER_GLOVES).add(
                 AetherItems.LEATHER_GLOVES.get(),
                 AetherItems.CHAINMAIL_GLOVES.get(),
@@ -170,7 +174,8 @@ public class AetherItemTagData extends ItemTagsProvider
                 AetherItems.NEPTUNE_GLOVES.get(),
                 AetherItems.PHOENIX_GLOVES.get(),
                 AetherItems.OBSIDIAN_GLOVES.get(),
-                AetherItems.VALKYRIE_GLOVES.get());
+                AetherItems.VALKYRIE_GLOVES.get())
+                .addOptionalTag(new ResourceLocation(Curios.MODID, "hands"));
         tag(AetherTags.Items.AETHER_CAPE).add(
                 AetherItems.RED_CAPE.get(),
                 AetherItems.BLUE_CAPE.get(),
@@ -179,12 +184,21 @@ public class AetherItemTagData extends ItemTagsProvider
                 AetherItems.SWET_CAPE.get(),
                 AetherItems.INVISIBILITY_CLOAK.get(),
                 AetherItems.AGILITY_CAPE.get(),
-                AetherItems.VALKYRIE_CAPE.get());
+                AetherItems.VALKYRIE_CAPE.get())
+                .addOptionalTag(new ResourceLocation(Curios.MODID, "back"));
         tag(AetherTags.Items.AETHER_ACCESSORY).add(
                 AetherItems.GOLDEN_FEATHER.get(),
                 AetherItems.REGENERATION_STONE.get(),
-                AetherItems.IRON_BUBBLE.get());
+                AetherItems.IRON_BUBBLE.get())
+                .addOptionalTag(new ResourceLocation(Curios.MODID, "curio"))
+                .addOptionalTag(new ResourceLocation(Curios.MODID, "charm"));
         tag(AetherTags.Items.AETHER_SHIELD).add(AetherItems.SHIELD_OF_REPULSION.get());
+        tag(AetherTags.Items.RING).addTag(AetherTags.Items.AETHER_RING);
+        tag(AetherTags.Items.NECKLACE).addTag(AetherTags.Items.AETHER_PENDANT);
+        tag(AetherTags.Items.HANDS).addTag(AetherTags.Items.AETHER_GLOVES);
+        tag(AetherTags.Items.BACK).addTag(AetherTags.Items.AETHER_CAPE);
+        tag(AetherTags.Items.CURIO).addTag(AetherTags.Items.AETHER_ACCESSORY);
+        tag(AetherTags.Items.CHARM).addTag(AetherTags.Items.AETHER_ACCESSORY);
 
         tag(AetherTags.Items.ACCESSORIES).addTags(
                 AetherTags.Items.AETHER_RING,
