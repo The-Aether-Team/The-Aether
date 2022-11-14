@@ -12,6 +12,7 @@
     "accessor.BeeAccessor",
     "accessor.BlockLootAccessor",
     "accessor.BoatAccessor",
+    "accessor.BushBlockAccessor",
     "accessor.ConcretePowderBlockAccessor",
     "accessor.EntityAccessor",
     "accessor.EntityRendererAccessor",
@@ -31,7 +32,6 @@
     "accessor.StoredUserListAccessor",
     "accessor.ZombifiedPiglinAccessor",
     "common.AbstractArrowMixin",
-    "common.CropBlockMixin",
     "common.DimensionTypeMixin",
     "common.FeatureMixin"
   ],

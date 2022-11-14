@@ -1,6 +1,7 @@
 package com.gildedgames.aether.block.construction;
 
 import com.gildedgames.aether.block.AetherBlocks;
+import com.gildedgames.aether.mixin.mixins.accessor.BushBlockAccessor;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -13,8 +14,11 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 
+import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.PlantType;
 
 public class AetherFarmlandBlock extends FarmBlock
 {
@@ -78,5 +82,11 @@ public class AetherFarmlandBlock extends FarmBlock
         }
 
         return net.minecraftforge.common.FarmlandWaterManager.hasBlockWaterTicket(p_176530_0_, p_176530_1_);
+    }
+
+    @Override
+    public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, IPlantable plantable) {
+        PlantType type = plantable.getPlantType(world, pos.relative(facing));
+        return (plantable instanceof BushBlock bushBlock && ((BushBlockAccessor) bushBlock).callMayPlaceOn(state, world, pos)) || PlantType.CROP.equals(type) || PlantType.PLAINS.equals(type);
     }
 }

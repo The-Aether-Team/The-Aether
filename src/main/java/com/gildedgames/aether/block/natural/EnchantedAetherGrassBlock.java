@@ -1,34 +1,35 @@
 package com.gildedgames.aether.block.natural;
 
 import com.gildedgames.aether.block.AetherBlocks;
+import com.gildedgames.aether.mixin.mixins.accessor.SpreadingSnowyDirtBlockAccessor;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.GrassBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.SnowyDirtBlock;
-import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.lighting.LayerLightEngine;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.server.level.ServerLevel;
 
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
-public class EnchantedAetherGrassBlock extends SnowyDirtBlock
-{
+import java.util.function.BiConsumer;
+
+public class EnchantedAetherGrassBlock extends GrassBlock {
 	public EnchantedAetherGrassBlock(BlockBehaviour.Properties properties) {
 		super(properties);
 	}
-	
-	 protected static boolean canBlockStay(BlockState state, LevelReader world, BlockPos pos) {
-		BlockPos posUp = pos.above();
-		BlockState stateUp = world.getBlockState(posUp);
-		int i = LayerLightEngine.getLightBlockInto(world, state, pos, stateUp, posUp, Direction.UP, stateUp.getLightBlock(world, posUp));
-		return i < world.getMaxLightLevel();
+
+	@Override
+	public boolean onTreeGrow(BlockState state, LevelReader level, BiConsumer<BlockPos, BlockState> placeFunction, RandomSource randomSource, BlockPos pos, TreeConfiguration config) {
+		placeFunction.accept(pos, AetherBlocks.AETHER_DIRT.get().defaultBlockState());
+		return true;
 	}
 
 	@Override
-	public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
-		if (!canBlockStay(state, worldIn, pos)) {
-			worldIn.setBlockAndUpdate(pos, AetherBlocks.AETHER_DIRT.get().defaultBlockState());
+	public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+		if (!SpreadingSnowyDirtBlockAccessor.callCanBeGrass(state, level, pos)) {
+			if (!level.isAreaLoaded(pos, 3)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light and spreading
+			level.setBlockAndUpdate(pos, AetherBlocks.AETHER_DIRT.get().defaultBlockState());
 		}
 	}
 }
