@@ -89,11 +89,11 @@ public interface FreezingBehavior<T> {
 
     /**
      * Handles pre-block modification freezing behavior, should be used by subclasses for recipe and source-specific code.
-     * @param level The {@link Level} to perform the freezing in.
-     * @param pos The {@link BlockPos} to freeze at.
+     * @param level The {@link Level} to freeze the blocks in.
+     * @param pos The {@link BlockPos} the freezing occurred at.
      * @param source The source causing the freezing, which is accepted as {@link T}.
-     * @param flag The {@link Integer} placement flag.
-     * @return An {@link Integer} added up from the blocks being frozen. See {@link FreezingBehavior#freezeBlockAt(Level, BlockPos, BlockState, BlockState, Object, int)}.
+     * @param flag The {@link Integer} representing the block placement flag (see {@link net.minecraft.world.level.LevelWriter#setBlock(BlockPos, BlockState, int)}).
+     * @return An {@link Integer} 1 if a block was successfully frozen, or a 0 if it wasn't.
      */
     int freezeFromRecipe(Level level, BlockPos pos, T source, int flag);
 
