@@ -35,6 +35,19 @@ public class AetherRecipeData extends AetherRecipeProvider
 
     @Override
     protected void buildCraftingRecipes(@Nonnull Consumer<FinishedRecipe> consumer) {
+        ShapelessRecipeBuilder.shapeless(AetherBlocks.MOSSY_HOLYSTONE.get())
+                .requires(AetherBlocks.HOLYSTONE.get())
+                .requires(Blocks.VINE)
+                .group("mossy_holystone")
+                .unlockedBy("has_holystone", has(AetherBlocks.HOLYSTONE.get()))
+                .save(consumer, name("mossy_holystone_with_vine"));
+        ShapelessRecipeBuilder.shapeless(AetherBlocks.MOSSY_HOLYSTONE.get())
+                .requires(AetherBlocks.HOLYSTONE.get())
+                .requires(Blocks.MOSS_BLOCK)
+                .group("mossy_holystone")
+                .unlockedBy("has_holystone", has(AetherBlocks.HOLYSTONE.get()))
+                .save(consumer, name("mossy_holystone_with_moss"));
+
         makeWood(AetherBlocks.SKYROOT_WOOD, AetherBlocks.SKYROOT_LOG).save(consumer);
         makeWood(AetherBlocks.GOLDEN_OAK_WOOD, AetherBlocks.GOLDEN_OAK_LOG).save(consumer);
         makeWood(AetherBlocks.STRIPPED_SKYROOT_WOOD, AetherBlocks.STRIPPED_SKYROOT_LOG).save(consumer);
