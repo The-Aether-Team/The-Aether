@@ -36,6 +36,9 @@ public class AetherGrassBlock extends GrassBlock {
 		return true;
 	}
 
+	/**
+	 * Based on {@link net.minecraft.world.level.block.SpreadingSnowyDirtBlock#randomTick(BlockState, ServerLevel, BlockPos, RandomSource)}.
+	 */
 	@Override
 	public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
 		if (!SpreadingSnowyDirtBlockAccessor.callCanBeGrass(state, level, pos)) {
