@@ -6,64 +6,87 @@ import it.unimi.dsi.fastutil.objects.Object2ByteLinkedOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class AerogelStairsBlock extends StairBlock {
     public AerogelStairsBlock(Supplier<BlockState> state, Properties properties) {
         super(state, properties);
     }
 
+    /**
+     * Determines the amount of light this will block.<br><br>
+     * Warning for "deprecation" is suppressed because the method is fine to override.
+     * @param state The {@link BlockState} of the block.
+     * @param level The {@link Level} the block is in.
+     * @param pos The {@link BlockPos} of the block.
+     * @return The {@link Integer} of how many light levels are blocked, plus 2 extra by default.
+     */
+    @SuppressWarnings("deprecation")
     @Override
-    public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
+    public int getLightBlock(BlockState state, BlockGetter level, BlockPos pos) {
         return 3;
     }
 
+    /**
+     * Relevant to lighting checks for blocks that aren't full cubes and neighboring blocks.
+     * @param state The {@link BlockState} of the block.
+     * @return Whether to use the shape for light occlusion, as a {@link Boolean}.
+     */
     @Override
     public boolean useShapeForLightOcclusion(BlockState state) {
         return true;
     }
 
+    /**
+     * @see net.minecraftforge.common.extensions.IForgeBlock#supportsExternalFaceHiding(BlockState)
+     */
     @Override
     public boolean supportsExternalFaceHiding(BlockState state) {
         return true;
     }
 
-    private static final ThreadLocal<Object2ByteLinkedOpenHashMap<BlockStatePairKey>> NEIGHBOR_OCCLUSION_CACHE = ThreadLocal.withInitial(() -> {
-        var map = new Object2ByteLinkedOpenHashMap<BlockStatePairKey>() {
+    /**
+     * Copy of {@link Block#OCCLUSION_CACHE}.
+     */
+    private static final ThreadLocal<Object2ByteLinkedOpenHashMap<BlockStatePairKey>> OCCLUSION_CACHE = ThreadLocal.withInitial(() -> {
+        Object2ByteLinkedOpenHashMap<Block.BlockStatePairKey> occlusionCache = new Object2ByteLinkedOpenHashMap<>() {
             @Override
-            protected void rehash(int p_49979_) {}
+            protected void rehash(int value) { }
         };
-        map.defaultReturnValue((byte)127);
-        return map;
+        occlusionCache.defaultReturnValue((byte) 127);
+        return occlusionCache;
     });
 
     /**
-     * TODO: It is theoretically possible to implement this instead by overriding {@link #skipRendering(BlockState, BlockState, Direction)}
+     * Based on {@link Block#hidesNeighborFace(BlockGetter, BlockPos, BlockState, BlockState, Direction)}.
      */
     @Override
-    public boolean hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState, Direction dir) {
+    public boolean hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState, Direction direction) {
         if (neighborState.is(this)) {
-            var key = new BlockStatePairKey(neighborState, state, dir.getOpposite());
-            var occlusion_cache = NEIGHBOR_OCCLUSION_CACHE.get();
-            byte b = occlusion_cache.getAndMoveToFirst(key);
-            if (b != 127) {
-                return b != 0;
+            Block.BlockStatePairKey blockStatePairKey = new BlockStatePairKey(neighborState, state, direction.getOpposite());
+            Object2ByteLinkedOpenHashMap<Block.BlockStatePairKey> occlusionCache = OCCLUSION_CACHE.get();
+            byte cacheByte = occlusionCache.getAndMoveToFirst(blockStatePairKey);
+            if (cacheByte != 127) {
+                return cacheByte != 0;
             }
-            var voxelshape = neighborState.getFaceOcclusionShape(level, pos.relative(dir), dir.getOpposite());
-            if (voxelshape.isEmpty()) {
+            VoxelShape neighborShape = neighborState.getFaceOcclusionShape(level, pos.relative(direction), direction.getOpposite());
+            if (neighborShape.isEmpty()) {
                 return false;
             }
-            var voxelshape1 = state.getFaceOcclusionShape(level, pos, dir);
-            boolean differing = !Shapes.joinIsNotEmpty(voxelshape, voxelshape1, BooleanOp.ONLY_FIRST);
-            if (occlusion_cache.size() == 2048) {
-                occlusion_cache.removeLastByte();
+            VoxelShape shape = state.getFaceOcclusionShape(level, pos, direction);
+            boolean differing = !Shapes.joinIsNotEmpty(neighborShape, shape, BooleanOp.ONLY_FIRST);
+            if (occlusionCache.size() == 2048) {
+                occlusionCache.removeLastByte();
             }
-            occlusion_cache.putAndMoveToFirst(key, (byte)(differing ? 1 : 0));
+            occlusionCache.putAndMoveToFirst(blockStatePairKey, (byte) (differing ? 1 : 0));
             return differing;
         }
-        return super.hidesNeighborFace(level, pos, state, neighborState, dir);
+        return super.hidesNeighborFace(level, pos, state, neighborState, direction);
     }
 }

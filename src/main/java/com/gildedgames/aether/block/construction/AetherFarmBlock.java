@@ -104,8 +104,8 @@ public class AetherFarmBlock extends FarmBlock {
      * Chosen checks based on {@link net.minecraft.world.level.block.Block#canSustainPlant(BlockState, BlockGetter, BlockPos, Direction, IPlantable)}.
      */
     @Override
-    public boolean canSustainPlant(BlockState state, BlockGetter level, BlockPos pos, Direction facing, IPlantable plantable) {
-        PlantType type = plantable.getPlantType(level, pos.relative(facing));
+    public boolean canSustainPlant(BlockState state, BlockGetter level, BlockPos pos, Direction direction, IPlantable plantable) {
+        PlantType type = plantable.getPlantType(level, pos.relative(direction));
         return (plantable instanceof BushBlock bushBlock && ((BushBlockAccessor) bushBlock).callMayPlaceOn(state, level, pos)) || PlantType.CROP.equals(type) || PlantType.PLAINS.equals(type);
     }
 }

@@ -77,11 +77,11 @@ public class AetherPortalBlock extends Block
 
 	@Override
 	@Deprecated
-	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
-		Axis directionAxis = facing.getAxis();
+	public BlockState updateShape(BlockState stateIn, Direction direction, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
+		Axis directionAxis = direction.getAxis();
 		Axis stateAxis = stateIn.getValue(AXIS);
 		boolean flag = stateAxis != directionAxis && directionAxis.isHorizontal();
-		return (!flag && !facingState.is(this) && !(new AetherPortalBlock.Size(worldIn, currentPos, stateAxis)).canCreatePortal()) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+		return (!flag && !facingState.is(this) && !(new AetherPortalBlock.Size(worldIn, currentPos, stateAxis)).canCreatePortal()) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, direction, facingState, worldIn, currentPos, facingPos);
 	}
 
 	@Override

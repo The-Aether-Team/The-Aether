@@ -34,9 +34,9 @@ public class FloatingBlock extends Block implements Floatable
 
 	@Nonnull
 	@Override
-	public BlockState updateShape(@Nonnull BlockState state, @Nonnull Direction facing, @Nonnull BlockState facingState, @Nonnull LevelAccessor level, @Nonnull BlockPos pos, @Nonnull BlockPos facingPos) {
+	public BlockState updateShape(@Nonnull BlockState state, @Nonnull Direction direction, @Nonnull BlockState facingState, @Nonnull LevelAccessor level, @Nonnull BlockPos pos, @Nonnull BlockPos facingPos) {
 		level.scheduleTick(pos, this, this.getDelayAfterPlace());
-		return super.updateShape(state, facing, facingState, level, pos, facingPos);
+		return super.updateShape(state, direction, facingState, level, pos, facingPos);
 	}
 
 	public void tick(@Nonnull BlockState state, @Nonnull ServerLevel level, @Nonnull BlockPos pos, @Nonnull RandomSource random) {

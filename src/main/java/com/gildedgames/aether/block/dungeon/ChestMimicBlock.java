@@ -57,11 +57,11 @@ public class ChestMimicBlock extends BaseEntityBlock implements SimpleWaterlogge
 
 	@Nonnull
 	@Override
-	public BlockState updateShape(BlockState state, @Nonnull Direction facing, @Nonnull BlockState facingState, @Nonnull LevelAccessor level, @Nonnull BlockPos currentPos, @Nonnull BlockPos facingPos) {
+	public BlockState updateShape(BlockState state, @Nonnull Direction direction, @Nonnull BlockState facingState, @Nonnull LevelAccessor level, @Nonnull BlockPos currentPos, @Nonnull BlockPos facingPos) {
 		if (state.getValue(WATERLOGGED)) {
 			level.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
 		}
-		return super.updateShape(state, facing, facingState, level, currentPos, facingPos);
+		return super.updateShape(state, direction, facingState, level, currentPos, facingPos);
 	}
 
 	@Nonnull
@@ -100,8 +100,8 @@ public class ChestMimicBlock extends BaseEntityBlock implements SimpleWaterlogge
 	}
 
 	private void spawnMimic(BlockState state, Level worldIn, BlockPos pos) {
-		Direction facing = state.getValue(FACING);
-		float angle = facing.toYRot();
+		Direction direction = state.getValue(FACING);
+		float angle = direction.toYRot();
 		Mimic mimic = new Mimic(AetherEntityTypes.MIMIC.get(), worldIn);
 		mimic.absMoveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, angle, 0.0F);
 		mimic.setYHeadRot(angle);
