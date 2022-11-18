@@ -28,17 +28,33 @@ public class BerryBushBlock extends AetherBushBlock {
 		builder.add(AetherBlockStateProperties.DOUBLE_DROPS);
 	}
 
+	/**
+	 * Sets a Berry Bush Stem in place of a destroyed Berry Bush, if Silk Touch wasn't used on the Berry Bush.
+	 * @param level The {@link Level} the block is in.
+	 * @param player The {@link Player} destroying the block.
+	 * @param pos The {@link BlockPos} of the block.
+	 * @param state The {@link BlockState} of the block.
+	 * @param blockEntity The {@link BlockEntity} that the block has.
+	 * @param tool The {@link ItemStack} of the tool used to destroy the block.
+	 */
 	@Override
-	public void playerDestroy(Level pLevel, Player pPlayer, BlockPos pPos, BlockState pState, @Nullable BlockEntity pBlockEntity, ItemStack pTool) {
-		super.playerDestroy(pLevel, pPlayer, pPos, pState, pBlockEntity, pTool);
-		if (pTool.getEnchantmentLevel(Enchantments.SILK_TOUCH) <= 0) {
-			pLevel.setBlock(pPos, AetherBlocks.BERRY_BUSH_STEM.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, pState.getValue(AetherBlockStateProperties.DOUBLE_DROPS)), 3);
+	public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
+		super.playerDestroy(level, player, pos, state, blockEntity, tool);
+		if (tool.getEnchantmentLevel(Enchantments.SILK_TOUCH) <= 0) {
+			level.setBlock(pos, AetherBlocks.BERRY_BUSH_STEM.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, state.getValue(AetherBlockStateProperties.DOUBLE_DROPS)), 3);
 		}
 	}
 
+	/**
+	 * Sets a Berry Bush stem in place of a Berry Bush when exploded.
+	 * @param state The {@link BlockState} of the block.
+	 * @param level The {@link Level} the block is in.
+	 * @param pos The {@link BlockPos} of the block.
+	 * @param explosion The {@link Explosion} affecting the block.
+	 */
 	@Override
-	public void onBlockExploded(BlockState state, Level world, BlockPos pos, Explosion explosion) {
-		super.onBlockExploded(state, world, pos, explosion);
-		world.setBlock(pos, AetherBlocks.BERRY_BUSH_STEM.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, state.getValue(AetherBlockStateProperties.DOUBLE_DROPS)), 3);
+	public void onBlockExploded(BlockState state, Level level, BlockPos pos, Explosion explosion) {
+		super.onBlockExploded(state, level, pos, explosion);
+		level.setBlock(pos, AetherBlocks.BERRY_BUSH_STEM.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, state.getValue(AetherBlockStateProperties.DOUBLE_DROPS)), 3);
 	}
 }
