@@ -12,7 +12,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 
 public class BlueAercloudBlock extends AercloudBlock {
-	protected static VoxelShape COLLISION_SHAPE = Shapes.empty();
+	protected static final VoxelShape COLLISION_SHAPE = Shapes.empty();
 
 	public BlueAercloudBlock(BlockBehaviour.Properties properties) {
 		super(properties);

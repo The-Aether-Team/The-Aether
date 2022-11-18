@@ -15,6 +15,6 @@ public class QuicksoilGlassBlock extends GlassBlock implements FrictionCapped {
 
     @Override
     public float getFriction(BlockState state, LevelReader level, BlockPos pos, @Nullable Entity entity) {
-        return this.getFriction(entity, super.getFriction());
+        return this.getCappedFriction(entity, super.getFriction());
     }
 }

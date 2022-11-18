@@ -11,7 +11,7 @@ public interface FrictionCapped {
      * @param defaultFriction The {@link Float} for the default block friction.
      * @return A new friction value as a {@link Float}.
      */
-    default float getFriction(@Nullable Entity entity, float defaultFriction) {
+    default float getCappedFriction(@Nullable Entity entity, float defaultFriction) {
         if (entity != null) {
             Vec3 motion = entity.getDeltaMovement();
             if (Math.abs(motion.x()) > 1.0 || Math.abs(motion.z()) > 1.0) {

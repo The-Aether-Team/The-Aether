@@ -6,9 +6,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.LeavesBlock;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.ParticleStatus;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.core.BlockPos;
@@ -22,7 +19,7 @@ public class LeavesWithParticlesBlock extends LeavesBlock {
 	private final Supplier<SimpleParticleType> particle;
 
 	public LeavesWithParticlesBlock(Supplier<SimpleParticleType> particle, BlockBehaviour.Properties properties) {
-		super(properties.noOcclusion().isValidSpawn((state, reader, pos, entity) -> (entity == EntityType.OCELOT || entity == EntityType.PARROT)).isSuffocating((state, reader, pos) -> false).isViewBlocking((state, reader, pos) -> false));
+		super(properties);
 		this.registerDefaultState(this.defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, false));
 		this.particle = particle;
 	}
@@ -35,22 +32,18 @@ public class LeavesWithParticlesBlock extends LeavesBlock {
 	
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand) {
-		super.animateTick(stateIn, worldIn, pos, rand);
-		
-		if (worldIn.isClientSide) {
-			if (Minecraft.getInstance().options.particles().get() != ParticleStatus.MINIMAL) {
-				if (rand.nextInt(10) == 0) {
-					for (int i = 0; i < 15; i++) {
-						double x = pos.getX() + (rand.nextFloat() - 0.5) * 8.0;
-						double y = pos.getY() + (rand.nextFloat() - 0.5) * 8.0;
-						double z = pos.getZ() + (rand.nextFloat() - 0.5) * 8.0;
-						double dx = (rand.nextFloat() - 0.5) * 0.5;
-						double dy = (rand.nextFloat() - 0.5) * 0.5;
-						double dz = (rand.nextFloat() - 0.5) * 0.5;
-
-						worldIn.addParticle(this.particle.get(), x, y, z, dx, dy, dz);
-					}
+	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+		super.animateTick(state, level, pos, random);
+		if (level.isClientSide()) {
+			if (random.nextInt(10) == 0) {
+				for (int i = 0; i < 15; i++) {
+					double x = pos.getX() + (random.nextFloat() - 0.5) * 8.0;
+					double y = pos.getY() + (random.nextFloat() - 0.5) * 8.0;
+					double z = pos.getZ() + (random.nextFloat() - 0.5) * 8.0;
+					double dx = (random.nextFloat() - 0.5) * 0.5;
+					double dy = (random.nextFloat() - 0.5) * 0.5;
+					double dz = (random.nextFloat() - 0.5) * 0.5;
+					level.addParticle(this.particle.get(), x, y, z, dx, dy, dz);
 				}
 			}
 		}
