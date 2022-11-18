@@ -50,7 +50,7 @@ public class AccessoriesMenu extends InventoryMenu
             EquipmentSlot.LEGS,
             EquipmentSlot.FEET
     };
-    private static final String[] AETHER_IDENTIFIERS = new String[] {
+    public static final String[] AETHER_IDENTIFIERS = new String[] {
             "aether_pendant",
             "aether_cape",
             "aether_shield",
