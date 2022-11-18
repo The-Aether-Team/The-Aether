@@ -15,6 +15,18 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class AerogelStairsBlock extends StairBlock {
+    /**
+     * Copy of {@link Block#OCCLUSION_CACHE}.
+     */
+    private static final ThreadLocal<Object2ByteLinkedOpenHashMap<BlockStatePairKey>> OCCLUSION_CACHE = ThreadLocal.withInitial(() -> {
+        Object2ByteLinkedOpenHashMap<Block.BlockStatePairKey> occlusionCache = new Object2ByteLinkedOpenHashMap<>() {
+            @Override
+            protected void rehash(int value) { }
+        };
+        occlusionCache.defaultReturnValue((byte) 127);
+        return occlusionCache;
+    });
+
     public AerogelStairsBlock(Supplier<BlockState> state, Properties properties) {
         super(state, properties);
     }
@@ -50,18 +62,6 @@ public class AerogelStairsBlock extends StairBlock {
     public boolean supportsExternalFaceHiding(BlockState state) {
         return true;
     }
-
-    /**
-     * Copy of {@link Block#OCCLUSION_CACHE}.
-     */
-    private static final ThreadLocal<Object2ByteLinkedOpenHashMap<BlockStatePairKey>> OCCLUSION_CACHE = ThreadLocal.withInitial(() -> {
-        Object2ByteLinkedOpenHashMap<Block.BlockStatePairKey> occlusionCache = new Object2ByteLinkedOpenHashMap<>() {
-            @Override
-            protected void rehash(int value) { }
-        };
-        occlusionCache.defaultReturnValue((byte) 127);
-        return occlusionCache;
-    });
 
     /**
      * Based on {@link Block#hidesNeighborFace(BlockGetter, BlockPos, BlockState, BlockState, Direction)}.

@@ -48,6 +48,7 @@ public class AetherFarmBlock extends FarmBlock {
     /**
      * Copy of {@link FarmBlock#randomTick(BlockState, ServerLevel, BlockPos, RandomSource)}.
      */
+    @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         int i = state.getValue(MOISTURE);
         if (!isNearWater(level, pos) && !level.isRainingAt(pos.above())) {
