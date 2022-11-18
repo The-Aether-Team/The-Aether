@@ -6,10 +6,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
-
 public class AetherDoubleDropBlock extends Block {
-	public AetherDoubleDropBlock(BlockBehaviour.Properties properties) {
+	public AetherDoubleDropBlock(Properties properties) {
 		super(properties);
 		this.registerDefaultState(this.defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, false));
 	}

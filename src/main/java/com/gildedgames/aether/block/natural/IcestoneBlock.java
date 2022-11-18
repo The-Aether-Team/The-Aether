@@ -9,7 +9,6 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEventListener;
 import org.jetbrains.annotations.Nullable;
@@ -17,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.annotation.Nonnull;
 
 public class IcestoneBlock extends BaseEntityBlock {
-	public IcestoneBlock(BlockBehaviour.Properties properties) {
+	public IcestoneBlock(Properties properties) {
 		super(properties);
 	}
 

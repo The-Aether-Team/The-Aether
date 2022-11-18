@@ -1,6 +1,5 @@
 package com.gildedgames.aether.block.natural;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.core.particles.ParticleTypes;
@@ -14,7 +13,7 @@ import net.minecraft.world.level.Level;
 public class BlueAercloudBlock extends AercloudBlock {
 	protected static final VoxelShape COLLISION_SHAPE = Shapes.empty();
 
-	public BlueAercloudBlock(BlockBehaviour.Properties properties) {
+	public BlueAercloudBlock(Properties properties) {
 		super(properties);
 	}
 

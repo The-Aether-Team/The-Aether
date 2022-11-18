@@ -7,10 +7,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.StateDefinition;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
-
 public class AetherLogBlock extends RotatedPillarBlock {
-	public AetherLogBlock(BlockBehaviour.Properties properties) {
+	public AetherLogBlock(Properties properties) {
 		super(properties);
 		this.registerDefaultState(this.defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, false));
 	}

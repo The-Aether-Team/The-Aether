@@ -6,10 +6,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
-
 public class PinkAercloudBlock extends AercloudBlock {
-	public PinkAercloudBlock(BlockBehaviour.Properties properties) {
+	public PinkAercloudBlock(Properties properties) {
 		super(properties);
 	}
 

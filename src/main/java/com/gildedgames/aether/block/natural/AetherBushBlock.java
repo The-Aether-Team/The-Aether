@@ -6,10 +6,8 @@ import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
-
 public class AetherBushBlock extends BushBlock {
-	public AetherBushBlock(BlockBehaviour.Properties properties) {
+	public AetherBushBlock(Properties properties) {
 		super(properties);
 	}
 	

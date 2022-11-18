@@ -10,12 +10,10 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.server.level.ServerLevel;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
-
 import java.util.function.BiConsumer;
 
 public class EnchantedAetherGrassBlock extends GrassBlock {
-	public EnchantedAetherGrassBlock(BlockBehaviour.Properties properties) {
+	public EnchantedAetherGrassBlock(Properties properties) {
 		super(properties);
 	}
 

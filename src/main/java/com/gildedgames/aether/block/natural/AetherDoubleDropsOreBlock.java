@@ -8,10 +8,8 @@ import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
-
 public class AetherDoubleDropsOreBlock extends DropExperienceBlock {
-	public AetherDoubleDropsOreBlock(BlockBehaviour.Properties properties, UniformInt xpRange) {
+	public AetherDoubleDropsOreBlock(Properties properties, UniformInt xpRange) {
 		super(properties, xpRange);
 		this.registerDefaultState(this.defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, false));
 	}

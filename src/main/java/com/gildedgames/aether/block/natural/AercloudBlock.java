@@ -1,7 +1,6 @@
 package com.gildedgames.aether.block.natural;
 
 import com.gildedgames.aether.block.AetherBlockStateProperties;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.HalfTransparentBlock;
@@ -21,7 +20,7 @@ public class AercloudBlock extends HalfTransparentBlock {
 	protected static final VoxelShape COLLISION_SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 0.01, 16.0);
 	protected static final VoxelShape FALLING_COLLISION_SHAPE = Shapes.box(0.0, 0.0, 0.0, 1.0, 0.9, 1.0);
 	
-	public AercloudBlock(BlockBehaviour.Properties properties) {
+	public AercloudBlock(Properties properties) {
 		super(properties);
 		this.registerDefaultState(this.defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, false));
 	}
