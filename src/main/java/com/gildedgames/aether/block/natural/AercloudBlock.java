@@ -86,7 +86,7 @@ public class AercloudBlock extends HalfTransparentBlock {
 	 * @param state The {@link BlockState} of the block.
 	 * @param level The {@link Level} the block is in.
 	 * @param pos The {@link BlockPos} of the block.
-	 * @param context The {@link CollisionContext} of the entity colliding with the block.
+	 * @param context The {@link CollisionContext} of the entity with the block.
 	 * @return The collision {@link VoxelShape} of the block.
 	 */
 	@SuppressWarnings("deprecation")
