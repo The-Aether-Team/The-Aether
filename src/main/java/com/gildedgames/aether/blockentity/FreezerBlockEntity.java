@@ -4,10 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.inventory.menu.FreezerMenu;
 
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
-import com.google.common.collect.Maps;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -16,44 +13,27 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.network.chat.Component;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.tags.ITagManager;
 
-import javax.annotation.Nonnull;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FreezerBlockEntity extends AbstractAetherFurnaceBlockEntity
-{
+public class FreezerBlockEntity extends AbstractAetherFurnaceBlockEntity {
 	private static final Map<Item, Integer> freezingMap = new LinkedHashMap<>();
 
 	public FreezerBlockEntity(BlockPos pos, BlockState state) {
 		super(AetherBlockEntityTypes.FREEZER.get(), pos, state, AetherRecipeTypes.FREEZING.get());
 	}
-	
-	@Nonnull
+
 	@Override
 	protected Component getDefaultName() {
 		return Component.translatable("menu." + Aether.MODID + ".freezer");
 	}
 
-	@Nonnull
 	@Override
-	protected AbstractContainerMenu createMenu(int id, @Nonnull Inventory playerInventory) {
+	protected AbstractContainerMenu createMenu(int id, Inventory playerInventory) {
 		return new FreezerMenu(id, playerInventory, this, this.dataAccess);
-	}
-
-	public static Map<Item, Integer> getFreezingMap() {
-		return freezingMap;
-	}
-
-	private static void addItemTagFreezingTime(TagKey<Item> itemTag, int burnTime) {
-		for(Holder<Item> holder : Registry.ITEM.getTagOrEmpty(itemTag)) {
-			freezingMap.put(holder.value(), burnTime);
-		}
-	}
-
-	public static void addItemFreezingTime(ItemLike itemProvider, int burnTime) {
-		Item item = itemProvider.asItem();
-		freezingMap.put(item, burnTime);
 	}
 
 	@Override
@@ -63,5 +43,21 @@ public class FreezerBlockEntity extends AbstractAetherFurnaceBlockEntity
 		} else {
 			return getFreezingMap().get(fuelStack.getItem());
 		}
+	}
+
+	public static Map<Item, Integer> getFreezingMap() {
+		return freezingMap;
+	}
+
+	private static void addItemTagFreezingTime(TagKey<Item> itemTag, int burnTime) {
+		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
+		if (tags != null) {
+			tags.getTag(itemTag).stream().forEach((item) -> freezingMap.put(item, burnTime));
+		}
+	}
+
+	public static void addItemFreezingTime(ItemLike itemProvider, int burnTime) {
+		Item item = itemProvider.asItem();
+		freezingMap.put(item, burnTime);
 	}
 }
