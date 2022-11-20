@@ -23,16 +23,18 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Based on {@link AbstractFurnaceBlockEntity}.
+ */
 public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBlockEntity {
     private static final int[] SLOTS_FOR_UP = new int[]{0};
     private static final int[] SLOTS_FOR_DOWN = new int[]{2, 0};
     private static final int[] SLOTS_FOR_SIDES = new int[]{1};
-    protected ItemStack containerItem = ItemStack.EMPTY;
+    protected ItemStack remainderItem = ItemStack.EMPTY;
 
     public AbstractAetherFurnaceBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, RecipeType<? extends AbstractCookingRecipe> recipeType) {
         super(type, pos, state, recipeType);
@@ -105,10 +107,19 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
         }
 
         if (abstractFurnaceBlockEntityAccessor.getItems().get(0).isEmpty() && abstractFurnaceBlockEntityAccessor.getItems().get(2).isEmpty()) {
-            blockEntity.containerItem = ItemStack.EMPTY;
+            blockEntity.remainderItem = ItemStack.EMPTY; // Resets the remainder item variable used for hopper extraction at the end of the tick loop. This is necessary so that it actually has enough time to get extracted.
         }
     }
 
+    /**
+     * Ensures that NBT is carried over between input and result stacks.<br><br>
+     * Warning for "unchecked" is suppressed because casting {@link Recipe}<{@link WorldlyContainer}> is fine and done by vanilla.
+     * @param recipe The {@link Recipe Recipe<?>} being burned.
+     * @param stacks The {@link NonNullList NonNullList<ItemStack>} of items in the menu.
+     * @param stackSize The max stack size as an {@link Integer}.
+     * @return A {@link Boolean} for whether the item successfully burnt.
+     */
+    @SuppressWarnings("unchecked")
     private boolean burn(@Nullable Recipe<?> recipe, NonNullList<ItemStack> stacks, int stackSize) {
         AbstractFurnaceBlockEntityAccessor abstractFurnaceBlockEntityAccessor = (AbstractFurnaceBlockEntityAccessor) this;
         if (recipe != null && abstractFurnaceBlockEntityAccessor.callCanBurn(recipe, stacks, stackSize)) {
@@ -143,9 +154,8 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
         }
     }
 
-    @Nonnull
     @Override
-    public int[] getSlotsForFace(@Nonnull Direction side) {
+    public int[] getSlotsForFace(Direction side) {
         if (side == Direction.DOWN) {
             return SLOTS_FOR_DOWN;
         } else {
@@ -154,7 +164,7 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
     }
 
     @Override
-    public boolean canPlaceItem(int index, @Nonnull ItemStack stack) {
+    public boolean canPlaceItem(int index, ItemStack stack) {
         if (index == 2) {
             return false;
         } else if (index != 1) {
@@ -164,16 +174,23 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
         }
     }
 
+    /**
+     * Allows the Aether's furnaces to have remaining crafting byproducts extracted (like buckets) alongside product items.
+     * @param index The {@link Integer} for the slot index.
+     * @param stack The {@link ItemStack} trying to be taken from the block.
+     * @param direction The {@link Direction} for a face.
+     * @return Whether the item can be taken by a hopper through the face, as a {@link Boolean}.
+     */
     @Override
-    public boolean canTakeItemThroughFace(int index, @Nonnull ItemStack stack, @Nonnull Direction direction) {
+    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
         AbstractFurnaceBlockEntityAccessor abstractFurnaceBlockEntityAccessor = (AbstractFurnaceBlockEntityAccessor) this;
-        Optional<NonNullList<Ingredient>> ingredient = abstractFurnaceBlockEntityAccessor.getQuickCheck().getRecipeFor(this, this.level).map(AbstractCookingRecipe::getIngredients);
-        if (this.containerItem.isEmpty()) {
-            ingredient.ifPresent(ing -> this.containerItem = stack.getCraftingRemainingItem());
+        Optional<NonNullList<Ingredient>> ingredient = abstractFurnaceBlockEntityAccessor.getQuickCheck().getRecipeFor(this, this.getLevel()).map(AbstractCookingRecipe::getIngredients);
+        if (this.remainderItem.isEmpty()) {
+            ingredient.ifPresent(ing -> this.remainderItem = stack.getCraftingRemainingItem()); // Stores the correlating crafting remainder item.
         }
         if (direction == Direction.DOWN && index == 0) {
-            if (!this.containerItem.isEmpty()) {
-                return stack.is(this.containerItem.getItem());
+            if (!this.remainderItem.isEmpty()) {
+                return stack.is(this.remainderItem.getItem()); // An item can be taken as long as it matches the stored crafting remainder item.
             } else {
                 return false;
             }
@@ -183,11 +200,10 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
     }
 
     @Override
-    public void awardUsedRecipesAndPopExperience(@Nonnull ServerPlayer player) { }
+    public void awardUsedRecipesAndPopExperience(ServerPlayer player) { }
 
-    @Nonnull
     @Override
-    public List<Recipe<?>> getRecipesToAwardAndPopExperience(@Nonnull ServerLevel level, @Nonnull Vec3 experiencePos) {
+    public List<Recipe<?>> getRecipesToAwardAndPopExperience(ServerLevel level, Vec3 experiencePos) {
         return new ArrayList<>();
     }
 }

@@ -52,12 +52,12 @@ public class AltarBlockEntity extends AbstractAetherFurnaceBlockEntity {
 	private static void addItemTagEnchantingTime(TagKey<Item> itemTag, int burnTime) {
 		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
 		if (tags != null) {
-			tags.getTag(itemTag).stream().forEach((item) -> enchantingMap.put(item, burnTime));
+			tags.getTag(itemTag).stream().forEach((item) -> getEnchantingMap().put(item, burnTime));
 		}
 	}
 
 	public static void addItemEnchantingTime(ItemLike itemProvider, int burnTime) {
 		Item item = itemProvider.asItem();
-		enchantingMap.put(item, burnTime);
+		getEnchantingMap().put(item, burnTime);
 	}
 }

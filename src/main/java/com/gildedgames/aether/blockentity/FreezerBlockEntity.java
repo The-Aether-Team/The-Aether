@@ -52,12 +52,12 @@ public class FreezerBlockEntity extends AbstractAetherFurnaceBlockEntity {
 	private static void addItemTagFreezingTime(TagKey<Item> itemTag, int burnTime) {
 		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
 		if (tags != null) {
-			tags.getTag(itemTag).stream().forEach((item) -> freezingMap.put(item, burnTime));
+			tags.getTag(itemTag).stream().forEach((item) -> getFreezingMap().put(item, burnTime));
 		}
 	}
 
 	public static void addItemFreezingTime(ItemLike itemProvider, int burnTime) {
 		Item item = itemProvider.asItem();
-		freezingMap.put(item, burnTime);
+		getFreezingMap().put(item, burnTime);
 	}
 }
