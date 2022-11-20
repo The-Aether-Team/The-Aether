@@ -155,11 +155,11 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
     }
 
     @Override
-    public int[] getSlotsForFace(Direction side) {
-        if (side == Direction.DOWN) {
+    public int[] getSlotsForFace(Direction direction) {
+        if (direction == Direction.DOWN) {
             return SLOTS_FOR_DOWN;
         } else {
-            return side == Direction.UP ? SLOTS_FOR_UP : SLOTS_FOR_SIDES;
+            return direction == Direction.UP ? SLOTS_FOR_UP : SLOTS_FOR_SIDES;
         }
     }
 
