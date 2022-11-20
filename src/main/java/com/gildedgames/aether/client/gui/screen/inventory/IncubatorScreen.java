@@ -74,11 +74,11 @@ public class IncubatorScreen extends AbstractContainerScreen<IncubatorMenu> impl
 		int guiLeft = this.leftPos;
 		int guiTop = this.topPos;
 		this.blit(poseStack, guiLeft, guiTop, 0, 0, this.imageWidth, this.imageHeight);
-
 		if (this.menu.isIncubating()) {
 			int incubationTimeRemaining = this.menu.getIncubationTimeRemaining();
-			this.blit(poseStack, guiLeft + 74, (guiTop + 47) - incubationTimeRemaining, 176, 12 - incubationTimeRemaining, 14, incubationTimeRemaining + 2);
+			this.blit(poseStack, guiLeft + 74, (guiTop + 48) - incubationTimeRemaining, 176, 13 - incubationTimeRemaining, 14, incubationTimeRemaining + 1);
 		}
+
 		int progressionScaled = this.menu.getIncubationProgressScaled();
 		this.blit(poseStack, guiLeft + 103, guiTop + 70 - progressionScaled, 179, 70 - progressionScaled, 10, progressionScaled);
 	}
