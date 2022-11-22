@@ -188,15 +188,15 @@ public class AetherDispenseBehaviors {
 
     /**
      * Behavior to shoot a projectile.
-     * @param blockSource The {@link BlockSource} for the dispenser.
+     * @param source The {@link BlockSource} for the dispenser.
      * @param projectile The {@link Projectile} to dispense.
      * @param velocity The velocity for the projectile, as a {@link Float}.
      * @param inaccuracy The inaccuracy for the projectile, as a {@link Float}.
      */
-    protected static void spawnProjectile(BlockSource blockSource, Projectile projectile, float velocity, float inaccuracy) {
-        Level level = blockSource.getLevel();
-        Direction direction = blockSource.getBlockState().getValue(DispenserBlock.FACING);
-        projectile.shoot(direction.getStepX(), (float) direction.getStepY(), direction.getStepZ(), velocity, inaccuracy);
+    protected static void spawnProjectile(BlockSource source, Projectile projectile, float velocity, float inaccuracy) {
+        Level level = source.getLevel();
+        Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
+        projectile.shoot(direction.getStepX(), direction.getStepY(), direction.getStepZ(), velocity, inaccuracy);
         level.addFreshEntity(projectile);
     }
 }

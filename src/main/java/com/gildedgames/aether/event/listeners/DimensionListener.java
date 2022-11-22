@@ -9,6 +9,7 @@ import com.gildedgames.aether.world.AetherLevelData;
 import com.gildedgames.aether.capability.time.AetherTime;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
@@ -16,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -31,6 +33,30 @@ import net.minecraft.core.Direction;
 
 @Mod.EventBusSubscriber
 public class DimensionListener {
+    @SubscribeEvent
+    public static void onInteractWithPortalFrame(PlayerInteractEvent.RightClickBlock event) {
+        Player player = event.getEntity();
+        Level level = event.getLevel();
+        BlockPos blockPos = event.getPos();
+        Direction direction = event.getFace();
+        ItemStack itemStack = event.getItemStack();
+        InteractionHand interactionHand = event.getHand();
+        if (DimensionHooks.createPortal(player, level, blockPos, direction, itemStack, interactionHand)) {
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onWaterExistsInsidePortalFrame(BlockEvent.NeighborNotifyEvent event) {
+        LevelAccessor level = event.getLevel();
+        BlockPos blockPos = event.getPos();
+        BlockState blockState = level.getBlockState(blockPos);
+        FluidState fluidState = level.getFluidState(blockPos);
+        if (DimensionHooks.detectWaterInFrame(level, blockPos, blockState, fluidState)) {
+            event.setCanceled(true);
+        }
+    }
+
     @SubscribeEvent
     public static void checkBanned(PlayerInteractEvent.RightClickBlock event) {
         Player player = event.getEntity();

@@ -27,7 +27,7 @@ import com.gildedgames.aether.loot.functions.AetherLootFunctions;
 import com.gildedgames.aether.loot.modifiers.AetherLootModifiers;
 import com.gildedgames.aether.recipe.AetherRecipeSerializers;
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
-import com.gildedgames.aether.world.AetherPOI;
+import com.gildedgames.aether.world.AetherPoi;
 import com.gildedgames.aether.world.foliageplacer.AetherFoliagePlacerTypes;
 import com.gildedgames.aether.world.feature.AetherFeatures;
 import com.gildedgames.aether.world.placementmodifier.AetherPlacementModifiers;
@@ -101,7 +101,7 @@ public class Aether {
                 AetherFeatures.FEATURES,
                 AetherFoliagePlacerTypes.FOLIAGE_PLACERS,
                 AetherTreeDecoratorTypes.TREE_DECORATORS,
-                AetherPOI.POI,
+                AetherPoi.POI,
                 AetherStructureTypes.STRUCTURE_TYPES,
                 AetherStructurePieceTypes.STRUCTURE_PIECE_TYPES,
                 AetherStructureProcessors.STRUCTURE_PROCESSOR_TYPES,

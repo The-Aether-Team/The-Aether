@@ -11,7 +11,7 @@ import com.gildedgames.aether.block.miscellaneous.FloatingBlock;
 import com.gildedgames.aether.block.natural.*;
 import com.gildedgames.aether.block.utility.*;
 import com.gildedgames.aether.client.particle.AetherParticleTypes;
-import com.gildedgames.aether.block.miscellaneous.AetherPortalBlock;
+import com.gildedgames.aether.block.portal.AetherPortalBlock;
 import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.item.block.BurnableBlockItem;
