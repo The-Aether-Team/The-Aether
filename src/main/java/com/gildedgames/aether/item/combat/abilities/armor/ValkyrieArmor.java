@@ -1,6 +1,7 @@
 package com.gildedgames.aether.item.combat.abilities.armor;
 
 import com.gildedgames.aether.capability.player.AetherPlayer;
+import com.gildedgames.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
 import com.gildedgames.aether.util.EquipmentUtil;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
@@ -46,7 +47,8 @@ public interface ValkyrieArmor {
                         player.setDeltaMovement(deltaMovement.x(), 0.025F * aetherPlayer.getFlightModifier(), deltaMovement.z());
                     }
                     if (player instanceof ServerPlayer serverPlayer) { // Prevents the player from being kicked for flying.
-                        serverPlayer.connection.aboveGroundTickCount = 0; // AT: f_9737_
+                        ServerGamePacketListenerImplAccessor serverGamePacketListenerImplAccessor = (ServerGamePacketListenerImplAccessor) serverPlayer.connection;
+                        serverGamePacketListenerImplAccessor.setAboveGroundTickCount(0);
                     }
                 });
             }

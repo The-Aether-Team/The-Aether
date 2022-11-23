@@ -6,6 +6,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -16,6 +17,12 @@ import java.util.Optional;
 
 @Mod.EventBusSubscriber
 public class EntityListener {
+    @SubscribeEvent
+    public static void onEntityJoin(EntityJoinLevelEvent event) {
+        Entity entity = event.getEntity();
+        EntityHooks.addGoals(entity);
+    }
+
     @SubscribeEvent
     public static void onMountEntity(EntityMountEvent event) {
         Entity riderEntity = event.getEntityMounting();

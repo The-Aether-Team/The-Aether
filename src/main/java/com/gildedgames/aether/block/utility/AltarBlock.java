@@ -1,5 +1,6 @@
 package com.gildedgames.aether.block.utility;
 
+import com.gildedgames.aether.blockentity.AbstractAetherFurnaceBlockEntity;
 import com.gildedgames.aether.blockentity.AltarBlockEntity;
 
 import com.gildedgames.aether.blockentity.AetherBlockEntityTypes;
@@ -9,7 +10,6 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.sounds.SoundSource;
@@ -17,44 +17,39 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nonnull;
-
-public class AltarBlock extends AbstractFurnaceBlock
-{
+public class AltarBlock extends AbstractFurnaceBlock {
 	public AltarBlock(Properties properties) {
 		super(properties);
 	}
 
 	@Override
-	public BlockEntity newBlockEntity(@Nonnull BlockPos pos, @Nonnull BlockState state) {
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
 		return new AltarBlockEntity(pos, state);
 	}
 
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@Nonnull Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> blockEntityType) {
-		return createFurnaceTicker(level, blockEntityType, AetherBlockEntityTypes.ALTAR.get());
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+		return level.isClientSide() ? null : createTickerHelper(blockEntityType, AetherBlockEntityTypes.ALTAR.get(), AbstractAetherFurnaceBlockEntity::serverTick);
 	}
 
 	@Override
-	protected void openContainer(Level level, @Nonnull BlockPos pos, @Nonnull Player player) {
-		if (!level.isClientSide) {
+	protected void openContainer(Level level, BlockPos pos, Player player) {
+		if (!level.isClientSide()) {
 			BlockEntity blockEntity = level.getBlockEntity(pos);
-			if (blockEntity instanceof AltarBlockEntity) {
-				player.openMenu((MenuProvider) blockEntity);
+			if (blockEntity instanceof AltarBlockEntity altarBlockEntity) {
+				player.openMenu(altarBlockEntity);
 			}
 		}
 	}
 	
 	@Override
-	public void animateTick(BlockState state, @Nonnull Level level, @Nonnull BlockPos pos, @Nonnull RandomSource random) {
+	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
 		if (state.getValue(LIT)) {
 			double x = pos.getX() + 0.5;
 			double y = pos.getY() + 1.0 + (random.nextFloat() * 6.0) / 16.0;
 			double z = pos.getZ() + 0.5;
-
 			level.addParticle(ParticleTypes.SMOKE, x, y, z, 0.0, 0.0, 0.0);
 			level.addParticle(ParticleTypes.FLAME, x, y, z, 0.0, 0.0, 0.0);
-			
 			if (random.nextDouble() < 0.1) {
 				level.playLocalSound(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1.0F, 1.0F, false);
 			}

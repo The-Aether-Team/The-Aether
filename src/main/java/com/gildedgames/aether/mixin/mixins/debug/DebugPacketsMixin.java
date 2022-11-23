@@ -27,9 +27,9 @@ public class DebugPacketsMixin {
 
     @Inject(at = @At("HEAD"), method = "sendPathFindingPacket", remap = false)
     private static void sendPathFindingPacket(Level level, Mob mob, Path path, float maxDistanceToWaypoint, CallbackInfo ci) {
-        if (level instanceof ServerLevel serverLevel && path != null) {
-            path.targetNodes = new HashSet<>();
-            path.targetNodes.add(new Target(0, 0, 0));
+        if (level instanceof ServerLevel serverLevel && path instanceof PathAccessor accessor) {
+            accessor.setTargetNodes(new HashSet<>());
+            accessor.getTargetNodes().add(new Target(0, 0, 0));
             FriendlyByteBuf friendlyByteBuf = new FriendlyByteBuf(Unpooled.buffer());
             friendlyByteBuf.writeInt(mob.getId());
             friendlyByteBuf.writeFloat(maxDistanceToWaypoint);

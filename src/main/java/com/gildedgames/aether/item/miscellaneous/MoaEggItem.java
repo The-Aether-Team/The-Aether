@@ -3,6 +3,7 @@ package com.gildedgames.aether.item.miscellaneous;
 import com.gildedgames.aether.entity.passive.Moa;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.api.registers.MoaType;
+import com.gildedgames.aether.mixin.mixins.common.accessor.BaseSpawnerAccessor;
 import com.google.common.collect.Iterables;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -79,10 +80,11 @@ public class MoaEggItem extends Item {
                     BlockEntity blockEntity = level.getBlockEntity(blockPos);
                     if (blockEntity instanceof SpawnerBlockEntity spawnerBlockEntity) {
                         BaseSpawner baseSpawner = spawnerBlockEntity.getSpawner();
+                        BaseSpawnerAccessor baseSpawnerAccessor = (BaseSpawnerAccessor) baseSpawner;
                         EntityType<Moa> entityType = AetherEntityTypes.MOA.get();
                         baseSpawner.setEntityId(entityType);
-                        baseSpawner.nextSpawnData.getEntityToSpawn().putString("MoaType", this.getMoaTypeId().toString());
-                        baseSpawner.nextSpawnData.getEntityToSpawn().putBoolean("PlayerGrown", true); // Moas spawned from a Mob Spawner as set by a Moa Egg will always be tamed.
+                        baseSpawnerAccessor.getNextSpawnData().getEntityToSpawn().putString("MoaType", this.getMoaTypeId().toString());
+                        baseSpawnerAccessor.getNextSpawnData().getEntityToSpawn().putBoolean("PlayerGrown", true); // Moas spawned from a Mob Spawner as set by a Moa Egg will always be tamed.
                         blockEntity.setChanged();
                         level.sendBlockUpdated(blockPos, blockState, blockState, 3);
                         itemStack.shrink(1);

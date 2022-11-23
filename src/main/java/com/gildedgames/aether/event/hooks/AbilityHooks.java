@@ -7,7 +7,6 @@ import com.gildedgames.aether.entity.projectile.dart.GoldenDart;
 import com.gildedgames.aether.entity.projectile.dart.PoisonDart;
 import com.gildedgames.aether.item.accessories.abilities.ZaniteAccessory;
 import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.item.tools.abilities.GravititeTool;
 import com.gildedgames.aether.item.tools.abilities.HolystoneTool;
 import com.gildedgames.aether.item.tools.abilities.ValkyrieTool;
 import com.gildedgames.aether.item.tools.abilities.ZaniteTool;
@@ -193,18 +192,6 @@ public class AbilityHooks {
                 return zaniteTool.increaseSpeed(stack, speed);
             }
             return speed;
-        }
-
-        /**
-         * Handles ability for {@link com.gildedgames.aether.item.tools.abilities.GravititeTool}.
-         * @see GravititeTool#floatBlock(Level, BlockPos, ItemStack, BlockState, Player, InteractionHand)
-         * @see com.gildedgames.aether.event.listeners.abilities.ToolAbilityListener#doGravititeAbility(BlockEvent.BlockToolModificationEvent)
-         */
-        public static boolean handleGravititeToolAbility(Level level, BlockPos pos, ItemStack stack, BlockState state, Player player, InteractionHand hand) {
-            if (stack.getItem() instanceof GravititeTool gravititeTool) {
-                return gravititeTool.floatBlock(level, pos, stack, state, player, hand);
-            }
-            return false;
         }
 
         /**

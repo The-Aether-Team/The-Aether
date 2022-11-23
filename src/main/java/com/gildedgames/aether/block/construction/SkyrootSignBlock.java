@@ -9,15 +9,14 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 
 import javax.annotation.Nonnull;
 
-public class SkyrootSignBlock extends StandingSignBlock
-{
-    public SkyrootSignBlock(Properties propertiesIn, WoodType woodTypeIn)
+public class SkyrootSignBlock extends StandingSignBlock {
+    public SkyrootSignBlock(Properties properties, WoodType woodType)
     {
-        super(propertiesIn, woodTypeIn);
+        super(properties, woodType);
     }
 
     @Override
-    public BlockEntity newBlockEntity(@Nonnull BlockPos pos, @Nonnull BlockState state) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new SkyrootSignBlockEntity(pos, state);
     }
 }

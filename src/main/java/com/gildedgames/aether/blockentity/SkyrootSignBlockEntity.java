@@ -5,15 +5,11 @@ import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nonnull;
-
-public class SkyrootSignBlockEntity extends SignBlockEntity
-{
-    public SkyrootSignBlockEntity(BlockPos p_155700_, BlockState p_155701_) {
-        super(p_155700_, p_155701_);
+public class SkyrootSignBlockEntity extends SignBlockEntity {
+    public SkyrootSignBlockEntity(BlockPos pos, BlockState state) {
+        super(pos, state);
     }
 
-    @Nonnull
     @Override
     public BlockEntityType<SkyrootSignBlockEntity> getType()
     {

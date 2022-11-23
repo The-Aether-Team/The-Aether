@@ -1,6 +1,7 @@
 package com.gildedgames.aether.client.gui.screen.menu;
 
 import com.gildedgames.aether.client.gui.component.DynamicMenuButton;
+import com.gildedgames.aether.mixin.mixins.client.accessor.TitleScreenAccessor;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -62,6 +63,7 @@ public class VanillaLeftTitleScreen extends TitleScreen {
 
     @Override
     public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+        TitleScreenAccessor titleScreenAccessor = (TitleScreenAccessor) this;
         if (this.minecraft != null) {
             if (this.fadeInStart == 0L && this.fading) {
                 this.fadeInStart = Util.getMillis();
@@ -81,7 +83,7 @@ public class VanillaLeftTitleScreen extends TitleScreen {
                 RenderSystem.setShader(GameRenderer::getPositionTexShader);
                 RenderSystem.setShaderTexture(0, MINECRAFT_LOGO);
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, f1);
-                if (this.minceraftEasterEgg) {
+                if (titleScreenAccessor.getMinceraftEasterEgg()) {
                     this.blitOutlineBlack(j, 15, (x, y) -> {
                         this.blit(poseStack, x, y, 0, 0, 99, 44);
                         this.blit(poseStack, x + 99, y, 129, 0, 27, 44);
@@ -101,13 +103,13 @@ public class VanillaLeftTitleScreen extends TitleScreen {
 
                 net.minecraftforge.client.ForgeHooksClient.renderMainMenu(this, poseStack, this.font, this.width, this.height, l);
 
-                if (this.splash != null) {
+                if (titleScreenAccessor.getSplash() != null) {
                     poseStack.pushPose();
                     poseStack.translate(250.0F, 50.0F, 0.0F);
                     poseStack.mulPose(Vector3f.ZP.rotationDegrees(-20.0F));
                     float f2 = 1.8F - Mth.abs(Mth.sin((float) (Util.getMillis() % 1000L) / 1000.0F * ((float) Math.PI * 2F)) * 0.1F);
-                    f2 = f2 * 100.0F / (float) (this.font.width(this.splash) + 32); poseStack.scale(f2, f2, f2);
-                    drawCenteredString(poseStack, this.font, this.splash, 0, -8, 16776960 | l);
+                    f2 = f2 * 100.0F / (float) (this.font.width(titleScreenAccessor.getSplash()) + 32); poseStack.scale(f2, f2, f2);
+                    drawCenteredString(poseStack, this.font, titleScreenAccessor.getSplash(), 0, -8, 16776960 | l);
                     poseStack.popPose();
                 }
 

@@ -4,6 +4,7 @@ import com.gildedgames.aether.client.event.hooks.LevelClientHooks;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.client.event.ViewportEvent;
@@ -17,9 +18,10 @@ public class LevelClientListener {
         RenderLevelStageEvent.Stage stage = event.getStage();
         PoseStack poseStack = event.getPoseStack();
         Camera camera = event.getCamera();
+        Frustum frustum = event.getFrustum();
         Minecraft minecraft = Minecraft.getInstance();
         LevelClientHooks.renderMenuWithWorld(stage, minecraft);
-        LevelClientHooks.renderDungeonBlockOverlays(stage, poseStack, camera, minecraft);
+        LevelClientHooks.renderDungeonBlockOverlays(stage, poseStack, camera, frustum, minecraft);
     }
 
     @SubscribeEvent

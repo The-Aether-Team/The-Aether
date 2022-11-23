@@ -1,6 +1,8 @@
 package com.gildedgames.aether.event.hooks;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
+import com.gildedgames.aether.entity.ai.goal.BeeGrowBerryBushGoal;
+import com.gildedgames.aether.entity.ai.goal.FoxEatBerryBushGoal;
 import com.gildedgames.aether.entity.monster.Swet;
 import com.gildedgames.aether.entity.monster.dungeon.boss.Slider;
 import com.gildedgames.aether.entity.passive.FlyingCow;
@@ -16,9 +18,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Bucketable;
-import net.minecraft.world.entity.animal.Cow;
+import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.ItemStack;
@@ -30,6 +30,16 @@ import net.minecraft.world.phys.HitResult;
 import java.util.Optional;
 
 public class EntityHooks {
+    public static void addGoals(Entity entity) {
+        if (entity.getClass() == Bee.class) {
+            Bee bee = (Bee) entity;
+            bee.goalSelector.addGoal(7, new BeeGrowBerryBushGoal(bee));
+        } else if (entity.getClass() == Fox.class) {
+            Fox fox = (Fox) entity;
+            fox.goalSelector.addGoal(10, new FoxEatBerryBushGoal(fox, 1.2F, 12, 1));
+        }
+    }
+
     public static boolean dismountPrevention(Entity rider, Entity mount, boolean dismounting) {
         if (dismounting && rider.isShiftKeyDown()) {
             return (mount instanceof MountableAnimal && !mount.isOnGround()) || (mount instanceof Swet swet && !swet.isFriendly());

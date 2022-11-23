@@ -1,6 +1,5 @@
 package com.gildedgames.aether.block.natural;
 
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.core.particles.ParticleTypes;
@@ -8,49 +7,49 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 
-public class BlueAercloudBlock extends AercloudBlock
-{
-	protected static VoxelShape COLLISION_SHAPE = Shapes.empty();
+public class BlueAercloudBlock extends AercloudBlock {
+	protected static final VoxelShape COLLISION_SHAPE = Shapes.empty();
 
-	public BlueAercloudBlock(BlockBehaviour.Properties properties) {
+	public BlueAercloudBlock(Properties properties) {
 		super(properties);
 	}
-	
+
+	/**
+	 * Launches the entity inside the block into the air and resets their fall distance when not holding the shift key.
+	 * If they are holding the shift key, behavior defaults to that of {@link AercloudBlock#entityInside(BlockState, Level, BlockPos, Entity)}.
+	 * There is also code to reduce the amount of particles spawned by the block if the entity is stuck in it in some way (like because of creative flight).
+	 * @param state The {@link BlockState} of the block.
+	 * @param level The {@link Level} the block is in.
+	 * @param pos The {@link BlockPos} of the block.
+	 * @param entity The {@link Entity} in the block.
+	 */
 	@Override
-	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
-		entity.resetFallDistance();
-		Vec3 motion = entity.getDeltaMovement();
-
-		if (entity.isShiftKeyDown()) {
-			if (motion.y < 0) {
-				entity.setDeltaMovement(motion.multiply(1.0, 0.005, 1.0));
+	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+		if (!entity.isShiftKeyDown()) {
+			entity.resetFallDistance();
+			entity.setDeltaMovement(entity.getDeltaMovement().x(), 2.0, entity.getDeltaMovement().z());
+			if (level.isClientSide()) {
+				int amount = 50; // Default amount.
+				if (entity.getY() == entity.yOld) {
+					amount = 10; // Alternative amount if the entity's y-position is not changing.
+				}
+				for (int count = 0; count < amount; count++) {
+					double xOffset = pos.getX() + level.getRandom().nextDouble();
+					double yOffset = pos.getY() + level.getRandom().nextDouble();
+					double zOffset = pos.getZ() + level.getRandom().nextDouble();
+					level.addParticle(ParticleTypes.SPLASH, xOffset, yOffset, zOffset, 0.0, 0.0, 0.0);
+				}
 			}
-			return;
-		}
-		
-		entity.setDeltaMovement(motion.x, 2.0, motion.z);
-
-		if (world.isClientSide) {
-			int amount = 50;
-			if (entity.getY() == entity.yOld) {
-				amount = 10;
-			}
-			for (int count = 0; count < amount; count++) {
-				double xOffset = pos.getX() + world.random.nextDouble();
-				double yOffset = pos.getY() + world.random.nextDouble();
-				double zOffset = pos.getZ() + world.random.nextDouble();
-				
-				world.addParticle(ParticleTypes.SPLASH, xOffset, yOffset, zOffset, 0.0, 0.0, 0.0);
-			}
+		} else {
+			super.entityInside(state, level, pos, entity);
 		}
 	}
 
 	@Override
-	public VoxelShape getAlternateShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+	public VoxelShape getDefaultCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return COLLISION_SHAPE;
 	}
 }

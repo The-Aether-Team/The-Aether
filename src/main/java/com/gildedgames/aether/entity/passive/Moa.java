@@ -5,7 +5,7 @@ import javax.annotation.Nullable;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.WingedBird;
-import com.gildedgames.aether.entity.ai.FallingRandomStrollGoal;
+import com.gildedgames.aether.entity.ai.goal.FallingRandomStrollGoal;
 import com.gildedgames.aether.entity.ai.navigator.FallPathNavigation;
 
 import com.gildedgames.aether.item.miscellaneous.MoaEggItem;

@@ -4,6 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.Floatable;
 import com.gildedgames.aether.block.miscellaneous.FloatingBlock;
 import com.gildedgames.aether.entity.AetherEntityTypes;
+import com.gildedgames.aether.mixin.mixins.common.accessor.ConcretePowderBlockAccessor;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -140,8 +141,9 @@ public class FloatingBlockEntity extends Entity {
                                     if (block instanceof Floatable floatable) {
                                         floatable.onCollide(this.level, blockPos1, this.blockState, blockState, this);
                                     } else if (block instanceof ConcretePowderBlock concretePowderBlock) {
-                                        if (ConcretePowderBlock.shouldSolidify(this.level, blockPos1, blockState)) {
-                                            this.level.setBlock(blockPos1, concretePowderBlock.concrete, 3);
+                                        if (ConcretePowderBlockAccessor.callShouldSolidify(this.level, blockPos1, blockState)) {
+                                            ConcretePowderBlockAccessor concretePowderBlockAccessor = (ConcretePowderBlockAccessor) concretePowderBlock;
+                                            this.level.setBlock(blockPos1, concretePowderBlockAccessor.getConcrete(), 3);
                                         }
                                     } else if (block instanceof AnvilBlock) {
                                         if (!this.isSilent()) {

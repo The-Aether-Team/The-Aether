@@ -4,6 +4,7 @@ import com.gildedgames.aether.client.renderer.AetherModelLayers;
 import com.gildedgames.aether.item.accessories.miscellaneous.ShieldOfRepulsionItem;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.capability.player.AetherPlayer;
+import com.gildedgames.aether.mixin.mixins.client.accessor.PlayerModelAccessor;
 import com.gildedgames.aether.util.ConstantsUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -59,16 +60,17 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
                         HumanoidModel<LivingEntity> model;
 
                         if (livingEntity instanceof Player player && renderLayerParent.getModel() instanceof PlayerModel<?> playerModel) {
-                            model = playerModel.slim ? this.shieldModelSlim : this.shieldModel;
+                            PlayerModelAccessor playerModelAccessor = (PlayerModelAccessor) playerModel;
+                            model = playerModelAccessor.getSlim() ? this.shieldModelSlim : this.shieldModel;
                             Optional<AetherPlayer> aetherPlayerOptional = AetherPlayer.get(player).resolve();
                             if (aetherPlayerOptional.isPresent()) {
                                 if (!aetherPlayerOptional.get().isMoving()) {
-                                    texture = playerModel.slim ? shield.getShieldOfRepulsionSlimTexture() : shield.getShieldOfRepulsionTexture();
+                                    texture = playerModelAccessor.getSlim() ? shield.getShieldOfRepulsionSlimTexture() : shield.getShieldOfRepulsionTexture();
                                 } else {
-                                    texture = playerModel.slim ? shield.getShieldOfRepulsionSlimInactiveTexture() : shield.getShieldOfRepulsionInactiveTexture();
+                                    texture = playerModelAccessor.getSlim() ? shield.getShieldOfRepulsionSlimInactiveTexture() : shield.getShieldOfRepulsionInactiveTexture();
                                 }
                             } else {
-                                texture = playerModel.slim ? shield.getShieldOfRepulsionSlimInactiveTexture() : shield.getShieldOfRepulsionInactiveTexture();
+                                texture = playerModelAccessor.getSlim() ? shield.getShieldOfRepulsionSlimInactiveTexture() : shield.getShieldOfRepulsionInactiveTexture();
                             }
                         } else {
                             model = this.shieldModel;

@@ -120,6 +120,13 @@ public class AetherTags {
 		public static final TagKey<Item> AETHER_ACCESSORY = curio("aether_accessory");
 		public static final TagKey<Item> AETHER_SHIELD = curio("aether_shield");
 
+		public static final TagKey<Item> RING = curio("ring");
+		public static final TagKey<Item> NECKLACE = curio("necklace");
+		public static final TagKey<Item> HANDS = curio("hands");
+		public static final TagKey<Item> BACK = curio("back");
+		public static final TagKey<Item> CURIO = curio("curio");
+		public static final TagKey<Item> CHARM = curio("charm");
+
 		public static final TagKey<Item> ACCESSORIES = tag("accessories");
 
 		private static TagKey<Item> tag(String name) {

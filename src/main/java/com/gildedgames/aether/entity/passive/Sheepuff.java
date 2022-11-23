@@ -7,14 +7,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
-import com.gildedgames.aether.entity.ai.EatAetherGrassGoal;
-import com.gildedgames.aether.entity.ai.FallingRandomStrollGoal;
+import com.gildedgames.aether.entity.ai.goal.EatAetherGrassGoal;
+import com.gildedgames.aether.entity.ai.goal.FallingRandomStrollGoal;
 import com.gildedgames.aether.entity.ai.controller.FallingMovementController;
 import com.gildedgames.aether.entity.ai.navigator.FallPathNavigation;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.loot.AetherLoot;
 import com.gildedgames.aether.AetherTags;
-import com.google.common.collect.Maps;
 
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
