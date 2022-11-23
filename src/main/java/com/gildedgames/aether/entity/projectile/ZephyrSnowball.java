@@ -25,6 +25,7 @@ import net.minecraft.world.phys.HitResult;
 
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
@@ -52,7 +53,7 @@ public class ZephyrSnowball extends Fireball implements ItemSupplier {
 		}
 		if (this.level.isClientSide || (this.getOwner() == null || this.getOwner().isAlive()) && this.level.hasChunkAt(this.blockPosition())) {
 			HitResult hitResult = ProjectileUtil.getHitResult(this, this::canHitEntity);
-			if (hitResult.getType() != HitResult.Type.MISS && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, hitResult)) {
+			if (hitResult.getType() != HitResult.Type.MISS && !ForgeEventFactory.onProjectileImpact(this, hitResult)) {
 				this.onHit(hitResult);
 			}
 
@@ -85,7 +86,7 @@ public class ZephyrSnowball extends Fireball implements ItemSupplier {
 			Entity entity = ((EntityHitResult) result).getEntity();
 			if (entity instanceof LivingEntity livingEntity && !EquipmentUtil.hasSentryBoots(livingEntity)) {
 				if (livingEntity instanceof Player player && player.isBlocking()) {
-					PlayerAccessor playerAccessor = ((PlayerAccessor) player);
+					PlayerAccessor playerAccessor = (PlayerAccessor) player;
 					playerAccessor.callHurtCurrentlyUsedShield(3.0F);
 				} else {
 					entity.setDeltaMovement(entity.getDeltaMovement().x, entity.getDeltaMovement().y + 0.5, entity.getDeltaMovement().z);

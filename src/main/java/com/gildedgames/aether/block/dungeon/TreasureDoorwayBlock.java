@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 public class TreasureDoorwayBlock extends HorizontalDirectionalBlock {
     public TreasureDoorwayBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+        this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH));
     }
 
     @Override

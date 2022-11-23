@@ -26,7 +26,6 @@ public class BerryBushStemBlock extends AetherBushBlock implements BonemealableB
 
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		super.createBlockStateDefinition(builder);
 		builder.add(AetherBlockStateProperties.DOUBLE_DROPS);
 	}
 

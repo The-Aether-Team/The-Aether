@@ -13,7 +13,7 @@ public class IcestoneBlockEntity extends BlockEntity implements FreezingBlock {
 
     public IcestoneBlockEntity(BlockPos pos, BlockState state) {
         super(AetherBlockEntityTypes.ICESTONE.get(), pos, state);
-        PositionSource positionSource = new BlockPositionSource(this.worldPosition);
+        PositionSource positionSource = new BlockPositionSource(this.getBlockPos());
         this.listener = new FreezingListener(positionSource, 4);
     }
 

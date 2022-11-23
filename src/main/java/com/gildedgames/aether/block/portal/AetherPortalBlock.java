@@ -154,6 +154,7 @@ public class AetherPortalBlock extends Block {
 	 * Warning for "deprecation" is suppressed because the method is fine to override.
 	 */
 	@SuppressWarnings("deprecation")
+	@Override
 	public BlockState updateShape(BlockState state, Direction direction, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
 		Direction.Axis directionAxis = direction.getAxis();
 		Direction.Axis blockAxis = state.getValue(AXIS);
@@ -165,6 +166,7 @@ public class AetherPortalBlock extends Block {
 	 * Warning for "deprecation" is suppressed because the method is fine to override.
 	 */
 	@SuppressWarnings("deprecation")
+	@Override
 	public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
 		return ItemStack.EMPTY;
 	}

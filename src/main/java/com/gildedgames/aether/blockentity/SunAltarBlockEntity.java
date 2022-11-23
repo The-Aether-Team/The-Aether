@@ -21,6 +21,7 @@ public class SunAltarBlockEntity extends BlockEntity implements Nameable {
         super(AetherBlockEntityTypes.SUN_ALTAR.get(), pos, blockState);
     }
 
+    @Override
     public Component getName() {
         return this.name != null ? this.name : Component.translatable("menu." + Aether.MODID + ".sun_altar");
     }

@@ -34,7 +34,7 @@ public class DoorwayBlock extends Block {
 
     public DoorwayBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(INVISIBLE, false));
+        this.registerDefaultState(this.getStateDefinition().any().setValue(INVISIBLE, false));
     }
 
     @Override
