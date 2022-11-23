@@ -2,6 +2,7 @@ package com.gildedgames.aether.block.dispenser;
 
 import com.gildedgames.aether.entity.projectile.weapon.HammerProjectile;
 import com.gildedgames.aether.entity.projectile.weapon.ThrownLightningKnife;
+import com.gildedgames.aether.inventory.menu.AccessoriesMenu;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.item.miscellaneous.bucket.SkyrootBucketItem;
 import net.minecraft.Util;
@@ -24,47 +25,58 @@ import net.minecraft.world.level.block.entity.DispenserBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
 import top.theillusivec4.curios.api.type.util.ICuriosHelper;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 
 public class AetherDispenseBehaviors {
+    /**
+     * Behavior for allowing dispensers to equip Curios accessories to players.
+     */
     public static final DispenseItemBehavior DISPENSE_ACCESSORY_BEHAVIOR = new DefaultDispenseItemBehavior() {
-        @Nonnull
         @Override
-        protected ItemStack execute(@Nonnull BlockSource blockSource, @Nonnull ItemStack stack) {
+        protected ItemStack execute(BlockSource blockSource, ItemStack stack) {
             return dispenseAccessory(blockSource, stack) ? stack : super.execute(blockSource, stack);
         }
     };
 
+    /**
+     * Based on {@link net.minecraft.world.item.ArmorItem#dispenseArmor(BlockSource, ItemStack)} and {@link top.theillusivec4.curios.common.event.CuriosEventHandler#curioRightClick(PlayerInteractEvent.RightClickItem)}.<br><br>
+     * Handles checking if an accessory shot from a dispenser can be equipped, and handles that equipping behavior if it can.
+     * @param blockSource The {@link BlockSource} for the dispenser.
+     * @param stack The {@link ItemStack} in the dispenser.
+     * @return Whether the accessory can be dispensed, as a {@link Boolean}.
+     */
     public static boolean dispenseAccessory(BlockSource blockSource, ItemStack stack) {
-        BlockPos blockpos = blockSource.getPos().relative(blockSource.getBlockState().getValue(DispenserBlock.FACING));
-        List<LivingEntity> list = blockSource.getLevel().getEntitiesOfClass(LivingEntity.class, new AABB(blockpos), EntitySelector.NO_SPECTATORS.and(new EntitySelector.MobCanWearArmorEntitySelector(stack)));
+        BlockPos pos = blockSource.getPos().relative(blockSource.getBlockState().getValue(DispenserBlock.FACING));
+        List<LivingEntity> list = blockSource.getLevel().getEntitiesOfClass(LivingEntity.class, new AABB(pos), EntitySelector.NO_SPECTATORS.and(new EntitySelector.MobCanWearArmorEntitySelector(stack)));
         if (list.isEmpty()) {
             return false;
         } else {
-            LivingEntity livingentity = list.get(0);
+            LivingEntity livingEntity = list.get(0);
             ItemStack itemStack = stack.split(1);
             ICuriosHelper curiosHelper = CuriosApi.getCuriosHelper();
-            curiosHelper.getCurio(itemStack).ifPresent(curio -> curiosHelper.getCuriosHandler(livingentity).ifPresent(handler -> {
+            curiosHelper.getCurio(itemStack).ifPresent(curio -> curiosHelper.getCuriosHandler(livingEntity).ifPresent(handler -> {
                 Map<String, ICurioStacksHandler> curios = handler.getCurios();
-                for (Map.Entry<String, ICurioStacksHandler> entry : curios.entrySet()) {
-                    IDynamicStackHandler stackHandler = entry.getValue().getStacks();
-                    for (int i = 0; i < stackHandler.getSlots(); i++) {
-                        String id = entry.getKey();
-                        SlotContext slotContext = new SlotContext(id, livingentity, i, true, true);
-                        if (curiosHelper.isStackValid(slotContext, itemStack) && curio.canEquip(id, livingentity) && curio.canEquipFromUse(slotContext)) {
-                            ItemStack present = stackHandler.getStackInSlot(i);
-                            if (present.isEmpty()) {
-                                stackHandler.setStackInSlot(i, itemStack.copy());
-                                int count = itemStack.getCount();
-                                itemStack.shrink(count);
+                for (Map.Entry<String, ICurioStacksHandler> entry : curios.entrySet()) { // Curios entries.
+                    if (List.of(AccessoriesMenu.AETHER_IDENTIFIERS).contains(entry.getKey())) { // Check if Curios entries match the ones in the Aether accessories menu.
+                        IDynamicStackHandler stackHandler = entry.getValue().getStacks();
+                        for (int i = 0; i < stackHandler.getSlots(); i++) {
+                            String id = entry.getKey();
+                            SlotContext slotContext = new SlotContext(id, livingEntity, i, false, true); // Get slot that a Curio entry has.
+                            if (curiosHelper.isStackValid(slotContext, itemStack) && curio.canEquip(slotContext) && curio.canEquipFromUse(slotContext)) {
+                                ItemStack slotStack = stackHandler.getStackInSlot(i);
+                                if (slotStack.isEmpty()) { // Check if Curio slot is empty.
+                                    stackHandler.setStackInSlot(i, itemStack.copy()); // Put copy of stack from dispenser into slot.
+                                    int count = itemStack.getCount();
+                                    itemStack.shrink(count); // Shrink stack in dispenser.
+                                }
                             }
                         }
                     }
@@ -74,13 +86,15 @@ public class AetherDispenseBehaviors {
         }
     }
 
+    /**
+     * Behavior for dispensing Lightning Knives.
+     */
     public static final DispenseItemBehavior DISPENSE_LIGHTNING_KNIFE_BEHAVIOR = new AbstractProjectileDispenseBehavior() {
-        @Nonnull
         @Override
-        protected Projectile getProjectile(@Nonnull Level world, @Nonnull Position position, @Nonnull ItemStack stack) {
-            return Util.make(new ThrownLightningKnife(world), (projectile) -> {
-                projectile.setPos(position.x(), position.y(), position.z());
-                projectile.setItem(stack);
+        protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
+            return Util.make(new ThrownLightningKnife(level), (lightningKnife) -> {
+                lightningKnife.setPos(position.x(), position.y(), position.z());
+                lightningKnife.setItem(stack);
             });
         }
 
@@ -90,30 +104,24 @@ public class AetherDispenseBehaviors {
         }
     };
 
+    /**
+     * Behavior for dispensing Notch Hammer projectiles.
+     */
     public static final DispenseItemBehavior DISPENSE_NOTCH_HAMMER_BEHAVIOR = new AbstractProjectileDispenseBehavior() {
-        @Nonnull
         @Override
-        public ItemStack execute(BlockSource blockSource, @Nonnull ItemStack stack) {
-            Level world = blockSource.getLevel();
-            Position position = DispenserBlock.getDispensePosition(blockSource);
-            Direction direction = blockSource.getBlockState().getValue(DispenserBlock.FACING);
-            Projectile projectileEntity = this.getProjectile(world, position, stack);
-            projectileEntity.shoot(direction.getStepX(), (float) direction.getStepY(), direction.getStepZ(), this.getPower(), this.getUncertainty());
-            world.addFreshEntity(projectileEntity);
-            int damage = stack.getDamageValue();
-            stack.setDamageValue(damage + 1);
+        public ItemStack execute(BlockSource blockSource, ItemStack stack) {
+            Projectile projectile = this.getProjectile(blockSource.getLevel(), DispenserBlock.getDispensePosition(blockSource), stack);
+            AetherDispenseBehaviors.spawnProjectile(blockSource, projectile, this.getPower(), this.getUncertainty());
+            stack.setDamageValue(stack.getDamageValue() + 1); // Decrease durability by one.
             if (stack.getDamageValue() >= stack.getMaxDamage()) {
-                stack.shrink(1);
+                stack.shrink(1); // Shrink stack if the durability is completely used up.
             }
             return stack;
         }
 
-        @Nonnull
         @Override
-        protected Projectile getProjectile(@Nonnull Level world, Position position, @Nonnull ItemStack stack) {
-            HammerProjectile hammerProjectile = new HammerProjectile(world);
-            hammerProjectile.setPos(position.x(), position.y(), position.z());
-            return hammerProjectile;
+        protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
+            return Util.make(new HammerProjectile(level), (projectile) -> projectile.setPos(position.x(), position.y(), position.z()));
         }
 
         @Override
@@ -122,17 +130,19 @@ public class AetherDispenseBehaviors {
         }
     };
 
+    /**
+     * Based on default dispenser behavior for filled buckets in {@link DispenseItemBehavior#bootStrap()}.
+     */
     public static final DispenseItemBehavior SKYROOT_BUCKET_DISPENSE_BEHAVIOR = new DefaultDispenseItemBehavior() {
         private final DefaultDispenseItemBehavior defaultDispenseItemBehavior = new DefaultDispenseItemBehavior();
 
-        @Nonnull
         @Override
         public ItemStack execute(BlockSource source, ItemStack stack) {
-            DispensibleContainerItem dispensiblecontaineritem = (DispensibleContainerItem) stack.getItem();
+            DispensibleContainerItem dispensibleContainerItem = (DispensibleContainerItem) stack.getItem();
             BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
             Level level = source.getLevel();
-            if (dispensiblecontaineritem.emptyContents(null, level, blockpos, null)) {
-                dispensiblecontaineritem.checkExtraContent(null, level, stack, blockpos);
+            if (dispensibleContainerItem.emptyContents(null, level, blockpos, null)) {
+                dispensibleContainerItem.checkExtraContent(null, level, stack, blockpos);
                 return new ItemStack(AetherItems.SKYROOT_BUCKET.get());
             } else {
                 return this.defaultDispenseItemBehavior.dispense(source, stack);
@@ -140,12 +150,14 @@ public class AetherDispenseBehaviors {
         }
     };
 
+    /**
+     * Based on default dispenser behavior for empty buckets in {@link DispenseItemBehavior#bootStrap()}.
+     */
     public static final DispenseItemBehavior SKYROOT_BUCKET_PICKUP_BEHAVIOR = new DefaultDispenseItemBehavior() {
         private final DefaultDispenseItemBehavior defaultDispenseItemBehavior = new DefaultDispenseItemBehavior();
 
-        @Nonnull
         @Override
-        public ItemStack execute(@Nonnull BlockSource source, @Nonnull ItemStack stack) {
+        public ItemStack execute(BlockSource source, ItemStack stack) {
             LevelAccessor levelAccessor = source.getLevel();
             BlockPos blockPos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
             BlockState blockState = levelAccessor.getBlockState(blockPos);
@@ -173,4 +185,18 @@ public class AetherDispenseBehaviors {
             }
         }
     };
+
+    /**
+     * Behavior to shoot a projectile.
+     * @param source The {@link BlockSource} for the dispenser.
+     * @param projectile The {@link Projectile} to dispense.
+     * @param velocity The velocity for the projectile, as a {@link Float}.
+     * @param inaccuracy The inaccuracy for the projectile, as a {@link Float}.
+     */
+    protected static void spawnProjectile(BlockSource source, Projectile projectile, float velocity, float inaccuracy) {
+        Level level = source.getLevel();
+        Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
+        projectile.shoot(direction.getStepX(), direction.getStepY(), direction.getStepZ(), velocity, inaccuracy);
+        level.addFreshEntity(projectile);
+    }
 }

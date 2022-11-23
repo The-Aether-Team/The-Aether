@@ -1,4 +1,4 @@
-package com.gildedgames.aether.entity.ai;
+package com.gildedgames.aether.entity.ai.goal;
 
 import com.gildedgames.aether.block.AetherBlockStateProperties;
 import com.gildedgames.aether.block.AetherBlocks;

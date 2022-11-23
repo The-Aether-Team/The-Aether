@@ -6,10 +6,8 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import org.apache.commons.lang3.tuple.Pair;
 
-public class AetherConfig
-{
-    public static class Common
-    {
+public class AetherConfig {
+    public static class Common {
         public final ConfigValue<Boolean> enable_bed_explosions;
         public final ConfigValue<Boolean> start_with_portal;
         public final ConfigValue<Boolean> enable_startup_loot;
@@ -148,8 +146,7 @@ public class AetherConfig
         }
     }
 
-    public static class Client
-    {
+    public static class Client {
         public final ConfigValue<Boolean> legacy_models;
         public final ConfigValue<Boolean> disable_aether_skybox;
 

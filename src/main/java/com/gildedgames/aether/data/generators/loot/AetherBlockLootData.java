@@ -3,6 +3,7 @@ package com.gildedgames.aether.data.generators.loot;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.data.providers.AetherBlockLootProvider;
 import com.gildedgames.aether.item.AetherItems;
+import com.gildedgames.aether.mixin.mixins.common.accessor.BlockLootAccessor;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Block;
@@ -37,9 +38,9 @@ public class AetherBlockLootData extends AetherBlockLootProvider {
         dropWithFortune(AetherBlocks.ZANITE_ORE, AetherItems.ZANITE_GEMSTONE);
         dropSelf(AetherBlocks.GRAVITITE_ORE);
         this.add(AetherBlocks.SKYROOT_LEAVES.get(),
-                (leaves) -> droppingWithChancesAndSkyrootSticks(leaves, AetherBlocks.SKYROOT_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
+                (leaves) -> droppingWithChancesAndSkyrootSticks(leaves, AetherBlocks.SKYROOT_SAPLING.get(), BlockLootAccessor.getNormalLeavesSaplingChances()));
         this.add(AetherBlocks.GOLDEN_OAK_LEAVES.get(),
-                (leaves) -> droppingWithChancesAndSkyrootSticks(leaves, AetherBlocks.GOLDEN_OAK_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
+                (leaves) -> droppingGoldenOakLeaves(leaves, AetherBlocks.GOLDEN_OAK_SAPLING.get(), BlockLootAccessor.getNormalLeavesSaplingChances()));
         this.add(AetherBlocks.CRYSTAL_LEAVES.get(),
                 AetherBlockLootProvider::droppingWithSkyrootSticks);
         this.add(AetherBlocks.CRYSTAL_FRUIT_LEAVES.get(),

@@ -1,6 +1,6 @@
 package com.gildedgames.aether.item.miscellaneous;
 
-import com.gildedgames.aether.block.miscellaneous.AetherPortalBlock;
+import com.gildedgames.aether.block.portal.AetherPortalBlock;
 import com.gildedgames.aether.block.AetherBlocks;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Blocks;
@@ -26,7 +26,7 @@ public class AetherPortalItem extends Item {
     public InteractionResult useOn(UseOnContext context) {
         Player player = context.getPlayer();
         if (player != null) {
-            if (createPortalFrame(context)) {
+            if (this.createPortalFrame(context)) {
                 player.swing(context.getHand());
                 if (!player.getAbilities().instabuild) {
                     context.getItemInHand().shrink(1);

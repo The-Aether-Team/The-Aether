@@ -5,6 +5,7 @@ import com.gildedgames.aether.entity.NotGrounded;
 import com.gildedgames.aether.entity.ai.goal.target.MostDamageTargetGoal;
 import com.gildedgames.aether.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.event.events.ValkyrieTeleportEvent;
+import com.gildedgames.aether.mixin.mixins.common.accessor.FlyNodeEvaluatorAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.ExplosionParticlePacket;
 import net.minecraft.core.BlockPos;
@@ -336,7 +337,8 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         @Nullable
         protected Node getNode(int pX, int pY, int pZ) {
             Node node = null;
-            BlockPathTypes blockpathtypes = this.getCachedBlockPathType(pX, pY, pZ);
+            FlyNodeEvaluatorAccessor flyNodeEvaluatorAccessor = (FlyNodeEvaluatorAccessor) this;
+            BlockPathTypes blockpathtypes = flyNodeEvaluatorAccessor.callGetCachedBlockPathType(pX, pY, pZ);
             float f = this.mob.getPathfindingMalus(blockpathtypes);
             if (f >= 0.0F) {
                 node = this.nodes.computeIfAbsent(Node.createHash(pX, pY, pZ), (p_77332_) -> new Node(pX, pY, pZ));

@@ -66,24 +66,6 @@ public class ToolAbilityListener {
     }
 
     /**
-     * @see AbilityHooks.ToolHooks#handleGravititeToolAbility(Level, BlockPos, ItemStack, BlockState, Player, InteractionHand) 
-     */
-    @SubscribeEvent
-    public static void doGravititeAbility(BlockEvent.BlockToolModificationEvent event) {
-        Level level = event.getContext().getLevel();
-        BlockPos blockPos = event.getPos();
-        ItemStack itemStack = event.getContext().getItemInHand();
-        BlockState blockState = event.getState();
-        Player player = event.getPlayer();
-        InteractionHand interactionHand = event.getContext().getHand();
-        if (!event.isSimulated() && !event.isCanceled()) {
-            if (AbilityHooks.ToolHooks.handleGravititeToolAbility(level, blockPos, itemStack, blockState, player, interactionHand)) {
-                event.setCanceled(true);
-            }
-        }
-    }
-
-    /**
      * @see AbilityHooks.ToolHooks#stripGoldenOak(LevelAccessor, BlockState, ItemStack, ToolAction, UseOnContext)
      */
     @SubscribeEvent

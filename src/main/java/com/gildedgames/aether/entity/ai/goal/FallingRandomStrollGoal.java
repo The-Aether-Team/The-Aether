@@ -1,4 +1,4 @@
-package com.gildedgames.aether.entity.ai;
+package com.gildedgames.aether.entity.ai.goal;
 
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.util.LandRandomPos;

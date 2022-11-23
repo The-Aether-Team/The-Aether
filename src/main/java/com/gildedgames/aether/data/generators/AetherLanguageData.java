@@ -1055,6 +1055,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addProTip("difficulty", "Easier rarely means funner.");
         addProTip("portal_misclick", "Be careful not to misclick when building portals.");
         addProTip("the_game", "The game is only as fun as you make it.");
+        addProTip("golden_apples", "The leaves of Golden Oak trees occasionally drop Golden Apples.");
 
 
         addCommonConfig("gameplay", "enable_bed_explosions", "Vanilla's beds will explode in the Aether");

@@ -3,6 +3,7 @@ package com.gildedgames.aether.client.renderer.entity.layers;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.entity.model.HaloModel;
 import com.gildedgames.aether.entity.passive.Phyg;
+import com.gildedgames.aether.mixin.mixins.client.accessor.QuadrupedModelAccessor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.PigModel;
@@ -27,8 +28,9 @@ public class PhygHaloLayer extends RenderLayer<Phyg, PigModel<Phyg>> {
     @Override
     public void render(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, Phyg phyg, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (phyg.hasCustomName() && phyg.getCustomName() != null && phyg.getCustomName().getContents().equals("KingPhygieBoo")) {
-            this.phygHalo.halo.yRot = this.getParentModel().head.yRot;
-            this.phygHalo.halo.xRot = this.getParentModel().head.xRot;
+            QuadrupedModelAccessor quadrupedModelAccessor = (QuadrupedModelAccessor) this.getParentModel();
+            this.phygHalo.halo.yRot = quadrupedModelAccessor.getHead().yRot;
+            this.phygHalo.halo.xRot = quadrupedModelAccessor.getHead().xRot;
             this.phygHalo.setupAnim(phyg, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
             VertexConsumer consumer = buffer.getBuffer(RenderType.eyes(HALO_LOCATION));
             this.phygHalo.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 0.25F);
