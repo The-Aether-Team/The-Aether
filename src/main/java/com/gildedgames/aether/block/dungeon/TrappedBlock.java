@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
 
+import com.gildedgames.aether.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.mixin.mixins.accessor.EntityAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -36,7 +37,7 @@ public class TrappedBlock extends Block {
 	 */
 	@Override
 	public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
-		if (entity instanceof Player) {
+		if (entity instanceof Player player && AetherEventDispatch.onTriggerTrap(player, level, pos, state)) {
 			level.setBlockAndUpdate(pos, this.defaultStateSupplier.get());
 			if (level instanceof ServerLevel serverLevel) {
 				Entity spawnableEntity = this.spawnableEntityTypeSupplier.get().create(level);
