@@ -317,9 +317,9 @@ public class Aether {
         AltarBlockEntity.addItemEnchantingTime(AetherItems.AMBROSIUM_SHARD.get(), 500);
         AltarBlockEntity.addItemEnchantingTime(AetherBlocks.AMBROSIUM_BLOCK.get(), 5000);
         FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE.get(), 500);
-        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE_SLAB.get(), 1500);
-        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE_STAIRS.get(), 3000);
-        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE_WALL.get(), 3000);
+        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE_SLAB.get(), 250);
+        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE_STAIRS.get(), 500);
+        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE_WALL.get(), 500);
         IncubatorBlockEntity.addItemIncubatingTime(AetherBlocks.AMBROSIUM_TORCH.get(), 1000);
     }
 }
