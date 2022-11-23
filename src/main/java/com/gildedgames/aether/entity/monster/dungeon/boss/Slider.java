@@ -1,5 +1,6 @@
 package com.gildedgames.aether.entity.monster.dungeon.boss;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.api.BossNameGenerator;
 import com.gildedgames.aether.api.DungeonTracker;
@@ -9,6 +10,7 @@ import com.gildedgames.aether.entity.BossMob;
 import com.gildedgames.aether.entity.ai.controller.BlankMoveControl;
 import com.gildedgames.aether.entity.ai.goal.target.InBossRoomTargetGoal;
 import com.gildedgames.aether.entity.ai.goal.target.MostDamageTargetGoal;
+import com.gildedgames.aether.entity.ai.navigator.AxisAlignedPathNavigation;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.BossInfoPacket;
 import net.minecraft.core.BlockPos;
@@ -34,8 +36,10 @@ import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
@@ -69,8 +73,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
 
     private boolean canMove;
     private int moveDelay;
-    private float velocity;
-    private Direction direction = null;
 
     public Slider(EntityType<? extends Slider> entityType, Level level) {
         super(entityType, level);
@@ -78,7 +80,8 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         this.bossFight.setVisible(false);
         this.xpReward = XP_REWARD_BOSS;
         this.setRot(0, 0);
-        this.moveControl = new BlankMoveControl(this);
+        this.moveControl = new SliderMoveControl(this);
+//        this.moveControl = new BlankMoveControl(this);
         this.setPersistenceRequired();
     }
 
@@ -107,6 +110,12 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(3, new InBossRoomTargetGoal<>(this, Player.class));
         this.goalSelector.addGoal(1, new SliderMoveGoal(this));
+//        this.goalSelector.addGoal(1, new RandomStrollGoal(this, 1));
+    }
+
+    @Override
+    protected PathNavigation createNavigation(Level level) {
+        return new AxisAlignedPathNavigation(this, level);
     }
 
     public static AttributeSupplier.Builder createSliderAttributes() {
@@ -137,9 +146,9 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         if (!this.level.isClientSide() && this.getDungeon() == null && (this.getTarget() == null || !this.getTarget().isAlive() || this.getTarget().getHealth() <= 0.0)) {
             this.reset();
         }
-        if (!this.canMove) {
+        /*if (!this.canMove) {
             this.setDeltaMovement(Vec3.ZERO);
-        }
+        }*/
         this.collide();
         this.evaporate();
 
@@ -276,8 +285,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
     private void stop() {
         this.canMove = false;
         this.moveDelay = 12;
-        this.direction = Direction.UP;
-        this.velocity = 0.0F;
         this.setDeltaMovement(Vec3.ZERO);
     }
 
@@ -583,15 +590,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         }
     }
 
-    @Override
-    public Direction getDirection() {
-        return this.direction;
-    }
-
-    public void setDirection(Direction direction) {
-        this.direction = direction;
-    }
-
     public int getMoveDelay() {
         return this.moveDelay;
     }
@@ -602,18 +600,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
 
     public void decreaseMoveDelay(int amount) {
         this.moveDelay -= amount;
-    }
-
-    public float getVelocity() {
-        return this.velocity;
-    }
-
-    public void setVelocity(float velocity) {
-        this.velocity = velocity;
-    }
-
-    public void increaseVelocity(float amount) {
-        this.velocity += amount;
     }
 
     public int getChatCooldown() {
@@ -641,6 +627,29 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
 
         public SliderMoveGoal(Slider slider) {
             this.slider = slider;
+        }
+
+        @Override
+        public boolean canUse() {
+            return this.slider.isAwake() && this.slider.getTarget() != null;
+        }
+
+        @Override
+        public void tick() {
+            LivingEntity target = this.slider.getTarget();
+            this.slider.moveControl.setWantedPosition(target.getX(), target.getY(), target.getZ(), 1);
+//            this.slider.navigation.moveTo(this.slider.getTarget(), 1);
+            /*LivingEntity target = this.slider.getTarget();
+            Path path = this.slider.navigation.createPath(ImmutableSet.of(target.blockPosition(), target.blockPosition().offset(-3, 0, -3)), 1);
+            this.slider.navigation.moveTo(path, 1);*/
+        }
+    }
+
+    public static class SliderLegacyMoveGoal extends Goal {
+        protected final Slider slider;
+
+        public SliderLegacyMoveGoal(Slider slider) {
+            this.slider = slider;
             this.setFlags(EnumSet.of(Goal.Flag.MOVE));
         }
 
@@ -659,53 +668,8 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
             this.slider.stop();
         }
 
-        @Override
-        public boolean requiresUpdateEveryTick() {
-            return true;
-        }
-
-        @Override
-        public void tick() {
-            if (this.slider.getTarget() != null) {
-                if (this.slider.canMove()) {
-                    boolean crushed = this.crushedBlocks();
-                    if (!crushed) {
-                        if (this.slider.getVelocity() < this.getMaxVelocity()) {
-                            // The Slider increases its speed based on the speed it has saved
-                            this.slider.increaseVelocity(this.getVelocityIncrease());
-                        }
-                        this.slider.setDeltaMovement(Vec3.ZERO);
-                        if (this.slider.getDirection() != null) {
-                            // The Slider moves based on its direction
-                            this.slider.setDeltaMovement(this.slider.getDirection().getStepX() * this.slider.getVelocity(), this.slider.getDirection().getStepY() * this.slider.getVelocity(), this.slider.getDirection().getStepZ() * this.slider.getVelocity());
-                            if (this.reachedTarget()) {
-                                // Once the Slider reaches its target, it stops moving, and starts the movement delay timer.
-                                this.stop();
-                                this.slider.setMoveDelay(this.calculateMoveDelay());
-                            }
-                        }
-                    }
-                } else if (this.slider.getMoveDelay() > 0) {
-                    // When the Slider decreases its move delay
-                    this.slider.decreaseMoveDelay(this.getMoveDelayDecrease());
-                    this.slider.setDeltaMovement(Vec3.ZERO);
-                } else {
-                    // When the Slider starts moving
-                    this.slider.setDirection(this.calculateDirection());
-                    this.slider.playSound(this.slider.getMoveSound(), 2.5F, 1.0F / (this.slider.getRandom().nextFloat() * 0.2F + 0.9F));
-                    this.slider.setCanMove(true);
-                }
-            } else {
-                // The Slider stops moving if it's target is null
-                this.stop();
-            }
-            // When hitting walls, the Slider sometimes moves up a TINY fraction of a block.
-            // This realigns it as long as it's not moving up or down and is within 1/20 of a block above or below a block.
-            this.alignNearY();
-        }
-
         /** Calculates what direction the slider should slide */
-        public Direction calculateDirection() {
+        /*public Direction calculateDirection() {
             Direction newDirection;
 
             double xDiff = Math.abs(this.slider.position().x() - this.slider.getTarget().position().x());
@@ -748,10 +712,9 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                 newDirection = Direction.DOWN;
             }
             return newDirection;
-        }
+        }*/
 
-        public boolean reachedTarget()
-        {
+        /*public boolean reachedTarget() {
             if (this.slider.getDirection() == Direction.UP) {
                 return
                 // If the dungeon exists
@@ -783,6 +746,150 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                 return  (this.slider.position().z() < this.slider.getTarget().position().z() - 0.125);
             }
             return false;
+        }*/
+
+        /** Sets the slider's position to the block it is on, because it sometimes moves slightly up (or possibly down, added just in case) */
+        /*protected void alignNearY() {
+            if (this.slider.getY() % 1 != 0.0) {
+                if (this.slider.getY() % 1 <= 0.05 && (this.slider.direction.getAxis() != Direction.Axis.Y)) {
+                    this.slider.setPos(this.slider.getX(), Mth.floor(this.slider.getY()), this.slider.getZ());
+                } else if (this.slider.getY() % 1 >= 0.95 && (this.slider.direction.getAxis() != Direction.Axis.Y)) {
+                    this.slider.setPos(this.slider.getX(), Mth.ceil(this.slider.getY()), this.slider.getZ());
+                }
+            }
+        }*/
+
+        /** Returns the decrease (negative) that the move delay should decrease each tick */
+        protected int getMoveDelayDecrease() {
+            return (this.slider.isCritical() && this.slider.moveDelay > 1 && this.slider.random.nextInt(2) == 0) ? 2 : 1;
+        }
+    }
+
+    public static class SliderMoveControl extends MoveControl {
+        private Slider slider;
+        private float velocity;
+        private Direction moveDir;
+
+        private int moveDelay;
+        private boolean moving;
+        public SliderMoveControl(Slider mob) {
+            super(mob);
+            this.slider = mob;
+            this.moveDelay = 50;
+        }
+
+        @Override
+        public void tick() {
+            if (this.operation == Operation.MOVE_TO) {
+                if (this.moveDelay > 0) {
+                    this.moveDelay--;
+                } else {
+                    double x = this.getWantedX() - this.slider.getX();
+                    double y = this.getWantedY() - this.slider.getY();
+                    double z = this.getWantedZ() - this.slider.getZ();
+
+                    if (this.moveDir == null) {
+                        this.moveDir = this.calculateDirection(x, y, z);
+
+                        if (this.moveDir == null) {
+                            this.operation = Operation.WAIT;
+                            Aether.LOGGER.warn("Couldn't get a direction for the slider!");
+                            return;
+                        }
+                    }
+
+                    Vec3 targetPos = new Vec3(this.getWantedX(), this.getWantedY(), this.getWantedZ());
+
+                    double axisDistance = Math.abs(x * this.moveDir.getStepX())
+                            + Math.abs(y * this.moveDir.getStepY())
+                            + Math.abs(z * this.moveDir.getStepZ());
+                    if (axisDistance < 1) {
+                        this.operation = Operation.WAIT;
+                        this.stop();
+                        return;
+                    }
+
+                    if (this.velocity < this.getMaxVelocity()) {
+                        // The Slider increases its speed based on the speed it has saved
+                        this.velocity = Math.min(this.getMaxVelocity(), this.velocity + this.getVelocityIncrease());
+                    }
+
+                    Vec3 directionVec = new Vec3(this.moveDir.getStepX(), this.moveDir.getStepY(), this.moveDir.getStepZ());
+                    Vec3 movement = directionVec.scale(this.velocity);
+
+                    this.slider.setDeltaMovement(movement);
+                }
+            } else {
+                this.stop();
+            }
+        }
+
+        private void stop() {
+            this.moveDir = null;
+            this.velocity = 0;
+            this.moveDelay = this.calculateMoveDelay();
+            this.slider.setDeltaMovement(Vec3.ZERO);
+        }
+
+        private Direction calculateDirection(double x, double y, double z) {
+            double absX = Math.abs(x);
+            double absY = Math.abs(y);
+            double absZ = Math.abs(z);
+            if (absY > absX && absY > absZ) {
+                return y > 0 ? Direction.UP : Direction.DOWN;
+            } else if (absX > absZ) {
+                return x > 0 ? Direction.EAST : Direction.WEST;
+            } else {
+                return z > 0 ? Direction.SOUTH : Direction.NORTH;
+            }
+        }
+
+        /*@Override
+        public void tick() {
+            if (this.operation == Operation.MOVE_TO) {
+                if (this.moveDelay > 0) {
+                    --this.moveDelay;
+                } else {
+                    boolean crushed = this.crushedBlocks();
+                    if (!crushed) {
+                        if (!this.moving) {
+                            this.slider.playSound(this.slider.getMoveSound(), 2.5F, 1.0F / (this.slider.getRandom().nextFloat() * 0.2F + 0.9F));
+                            this.moving = true;
+                        }
+                        if (this.velocity < this.getMaxVelocity()) {
+                            // The Slider increases its speed based on the speed it has saved
+                            this.velocity += this.getVelocityIncrease();
+                        }
+
+                        double x = this.wantedX - this.mob.getX();
+                        double y = this.wantedY - this.mob.getY();
+                        double z = this.wantedZ - this.mob.getZ();
+
+                        this.slider.setDeltaMovement(new Vec3(x, y, z).normalize().scale(this.velocity));
+                        if (Check for target position) {
+                            this.operation = Operation.WAIT;
+                            this.moveDelay = this.calculateMoveDelay();
+                            this.moving = false;
+                            this.velocity = 0;
+                        }
+                    }
+                }
+            } else {
+                this.slider.setDeltaMovement(Vec3.ZERO);
+                this.velocity = 0;
+            }
+        }*/
+
+        protected float getVelocityIncrease() {
+            return this.slider.isCritical() ? 0.035F : 0.0175F;
+        }
+
+        protected float getMaxVelocity() {
+            return 2.0F;
+        }
+
+        protected int calculateMoveDelay() {
+            return this.slider.isCritical() ? 4 : 8;
         }
 
         protected boolean crushedBlocks() {
@@ -836,7 +943,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                             this.blockDestroySmoke(pos);
                             this.slider.level.playSound(null, this.slider.blockPosition(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 3.0F, (0.625F + (this.slider.random.nextFloat() - this.slider.random.nextFloat()) * 0.2F) * 0.7F);
                             this.slider.playSound(this.slider.getCollideSound(), 2.5F, 1.0F / (this.slider.random.nextFloat() * 0.2F + 0.9F));
-                            this.stop();
+                            this.slider.stop();
                             flag = true;
                         }
                     }
@@ -845,56 +952,9 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
             return flag;
         }
 
-        /** Returns the Slider which this goal is for */
-        public Slider getSlider() {
-            return this.slider;
-        }
-
         /** Destroys a block and spawns smoke. Added so addons can use this private method in their custom Slider AI, if they have one */
         protected void blockDestroySmoke(BlockPos pos){
             this.slider.blockDestroySmoke(pos);
-        }
-
-        /** Sets the slider's position to the block it is on, because it sometimes moves slightly up (or possibly down, added just in case) */
-        protected void alignNearY() {
-            if (this.slider.getY() % 1 != 0.0) {
-                if (this.slider.getY() % 1 <= 0.05 && (this.slider.direction.getAxis() != Direction.Axis.Y)) {
-                    this.slider.setPos(this.slider.getX(), Mth.floor(this.slider.getY()), this.slider.getZ());
-                } else if (this.slider.getY() % 1 >= 0.95 && (this.slider.direction.getAxis() != Direction.Axis.Y)) {
-                    this.slider.setPos(this.slider.getX(), Mth.ceil(this.slider.getY()), this.slider.getZ());
-                }
-            }
-        }
-
-        /** Returns how much should be added to the Slider's velocity when sliding */
-        protected float getVelocityIncrease() {
-            float velocity = this.slider.isCritical() ? 0.07F : 0.035F;
-            return velocity;
-        }
-
-        /** Returns what the delay of the Slider's movement should be set to when it stops, based on whether or not the Slider is in the critical stage or not */
-        protected int calculateMoveDelay() {
-            return this.slider.isCritical() ? 4 : 8;
-        }
-
-        /** Returns the decrease (negative) that the move delay should decrease each tick */
-        protected int getMoveDelayDecrease() {
-            return (this.slider.isCritical() && this.slider.moveDelay > 1 && this.slider.random.nextInt(2) == 0) ? 2 : 1;
-        }
-
-        /** Returns the fastest the slider can go */
-        protected float getMaxVelocity() {
-            return 2.0F;
-        }
-
-        /** Returns the Y level of the floor */
-        protected double getFloorLevel() {
-            return this.slider.getDungeon().roomBounds().minY + 1;
-        }
-
-        /** Returns the Y level of the ceiling */
-        protected double getCeilingLevel() {
-            return this.slider.getDungeon().roomBounds().maxY;
         }
     }
 }
