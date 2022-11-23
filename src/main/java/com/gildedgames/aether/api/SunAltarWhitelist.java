@@ -1,7 +1,7 @@
 package com.gildedgames.aether.api;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.mixin.mixins.accessor.StoredUserListAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.StoredUserListAccessor;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.server.players.UserWhiteList;
 import net.minecraft.server.players.UserWhiteListEntry;

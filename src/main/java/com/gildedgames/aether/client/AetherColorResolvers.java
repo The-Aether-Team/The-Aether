@@ -2,7 +2,7 @@ package com.gildedgames.aether.client;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.mixin.mixins.accessor.BlockColorsAccessor;
+import com.gildedgames.aether.mixin.mixins.client.accessor.BlockColorsAccessor;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;

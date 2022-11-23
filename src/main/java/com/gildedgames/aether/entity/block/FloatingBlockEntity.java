@@ -4,7 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.Floatable;
 import com.gildedgames.aether.block.miscellaneous.FloatingBlock;
 import com.gildedgames.aether.entity.AetherEntityTypes;
-import com.gildedgames.aether.mixin.mixins.accessor.ConcretePowderBlockAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.ConcretePowderBlockAccessor;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

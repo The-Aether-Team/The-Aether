@@ -1,6 +1,6 @@
 package com.gildedgames.aether.inventory.menu;
 
-import com.gildedgames.aether.mixin.mixins.accessor.AbstractContainerMenuAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.AbstractContainerMenuAccessor;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.MinecraftServer;

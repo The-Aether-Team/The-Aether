@@ -2,7 +2,7 @@ package com.gildedgames.aether.block.portal;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.mixin.mixins.accessor.EntityAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.EntityAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.PortalTravelSoundPacket;
 import com.gildedgames.aether.util.LevelUtil;

@@ -1,7 +1,7 @@
 package com.gildedgames.aether.entity.ai.goal;
 
 import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.mixin.mixins.accessor.BeeAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.BeeAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.ai.goal.Goal;

@@ -5,7 +5,7 @@ import com.gildedgames.aether.client.gui.component.AetherMenuButton;
 import com.gildedgames.aether.client.gui.component.DynamicMenuButton;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.AetherConfig;
-import com.gildedgames.aether.mixin.mixins.accessor.TitleScreenAccessor;
+import com.gildedgames.aether.mixin.mixins.client.accessor.TitleScreenAccessor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;

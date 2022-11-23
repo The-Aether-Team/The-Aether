@@ -19,7 +19,7 @@ import com.gildedgames.aether.item.block.EntityBlockItem;
 import com.gildedgames.aether.effect.AetherEffects;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.AetherTags;
-import com.gildedgames.aether.mixin.mixins.accessor.FireBlockAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.FireBlockAccessor;
 import com.gildedgames.aether.world.treegrower.GoldenOakTree;
 import com.gildedgames.aether.world.treegrower.SkyrootTree;
 import net.minecraft.core.BlockPos;

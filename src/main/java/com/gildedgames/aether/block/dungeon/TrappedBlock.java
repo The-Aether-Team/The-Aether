@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import com.gildedgames.aether.client.AetherSoundEvents;
 
 import com.gildedgames.aether.event.dispatch.AetherEventDispatch;
-import com.gildedgames.aether.mixin.mixins.accessor.EntityAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.EntityAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.Entity;

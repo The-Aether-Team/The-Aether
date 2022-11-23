@@ -1,7 +1,7 @@
 package com.gildedgames.aether.blockentity;
 
 import com.gildedgames.aether.AetherTags;
-import com.gildedgames.aether.mixin.mixins.accessor.AbstractFurnaceBlockEntityAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.AbstractFurnaceBlockEntityAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;

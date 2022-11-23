@@ -2,7 +2,7 @@ package com.gildedgames.aether.client.event.hooks;
 
 import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.api.WorldDisplayHelper;
-import com.gildedgames.aether.mixin.mixins.accessor.EntityRendererAccessor;
+import com.gildedgames.aether.mixin.mixins.client.accessor.EntityRendererAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.world.entity.Entity;

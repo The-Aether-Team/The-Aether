@@ -1,6 +1,6 @@
 package com.gildedgames.aether.util;
 
-import com.gildedgames.aether.mixin.mixins.accessor.EntityAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.EntityAccessor;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;

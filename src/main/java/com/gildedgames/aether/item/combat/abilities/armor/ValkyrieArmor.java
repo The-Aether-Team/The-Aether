@@ -1,7 +1,7 @@
 package com.gildedgames.aether.item.combat.abilities.armor;
 
 import com.gildedgames.aether.capability.player.AetherPlayer;
-import com.gildedgames.aether.mixin.mixins.accessor.ServerGamePacketListenerImplAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
 import com.gildedgames.aether.util.EquipmentUtil;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;

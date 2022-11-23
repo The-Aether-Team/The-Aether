@@ -2,8 +2,8 @@ package com.gildedgames.aether.api;
 
 import com.gildedgames.aether.client.event.hooks.GuiHooks;
 import com.gildedgames.aether.AetherConfig;
-import com.gildedgames.aether.mixin.mixins.accessor.LevelStorageAccessAccessor;
-import com.gildedgames.aether.mixin.mixins.accessor.MinecraftServerAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.LevelStorageAccessAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.MinecraftServerAccessor;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.GenericDirtMessageScreen;

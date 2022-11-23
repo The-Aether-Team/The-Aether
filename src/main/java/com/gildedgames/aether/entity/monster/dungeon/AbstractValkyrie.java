@@ -5,7 +5,7 @@ import com.gildedgames.aether.entity.NotGrounded;
 import com.gildedgames.aether.entity.ai.goal.target.MostDamageTargetGoal;
 import com.gildedgames.aether.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.event.events.ValkyrieTeleportEvent;
-import com.gildedgames.aether.mixin.mixins.accessor.FlyNodeEvaluatorAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.FlyNodeEvaluatorAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.ExplosionParticlePacket;
 import net.minecraft.core.BlockPos;

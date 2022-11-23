@@ -1,6 +1,6 @@
 package com.gildedgames.aether.api;
 
-import com.gildedgames.aether.mixin.mixins.accessor.I18nAccessor;
+import com.gildedgames.aether.mixin.mixins.client.accessor.I18nAccessor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.RandomSource;
 

@@ -2,7 +2,7 @@ package com.gildedgames.aether.entity;
 
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.item.AetherItems;
-import com.gildedgames.aether.mixin.mixins.accessor.BoatAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.BoatAccessor;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.vehicle.Boat;

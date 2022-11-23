@@ -3,7 +3,7 @@ package com.gildedgames.aether.item.miscellaneous;
 import com.gildedgames.aether.entity.passive.Moa;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.api.registers.MoaType;
-import com.gildedgames.aether.mixin.mixins.accessor.BaseSpawnerAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.BaseSpawnerAccessor;
 import com.google.common.collect.Iterables;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

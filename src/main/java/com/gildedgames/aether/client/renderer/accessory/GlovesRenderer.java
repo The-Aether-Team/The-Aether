@@ -4,7 +4,7 @@ import com.gildedgames.aether.client.renderer.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.accessory.model.GlovesModel;
 import com.gildedgames.aether.item.accessories.gloves.GlovesItem;
 import com.gildedgames.aether.capability.rankings.AetherRankings;
-import com.gildedgames.aether.mixin.mixins.accessor.PlayerModelAccessor;
+import com.gildedgames.aether.mixin.mixins.client.accessor.PlayerModelAccessor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;

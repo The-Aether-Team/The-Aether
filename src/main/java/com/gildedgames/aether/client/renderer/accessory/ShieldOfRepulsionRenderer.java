@@ -4,7 +4,7 @@ import com.gildedgames.aether.client.renderer.AetherModelLayers;
 import com.gildedgames.aether.item.accessories.miscellaneous.ShieldOfRepulsionItem;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.capability.player.AetherPlayer;
-import com.gildedgames.aether.mixin.mixins.accessor.PlayerModelAccessor;
+import com.gildedgames.aether.mixin.mixins.client.accessor.PlayerModelAccessor;
 import com.gildedgames.aether.util.ConstantsUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

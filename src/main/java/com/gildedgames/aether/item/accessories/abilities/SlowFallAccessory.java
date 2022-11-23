@@ -1,6 +1,6 @@
 package com.gildedgames.aether.item.accessories.abilities;
 
-import com.gildedgames.aether.mixin.mixins.accessor.ServerGamePacketListenerImplAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;

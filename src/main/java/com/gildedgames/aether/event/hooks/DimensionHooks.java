@@ -6,8 +6,8 @@ import com.gildedgames.aether.block.FreezingBlock;
 import com.gildedgames.aether.block.portal.AetherPortalForcer;
 import com.gildedgames.aether.block.portal.AetherPortalShape;
 import com.gildedgames.aether.event.AetherGameEvents;
-import com.gildedgames.aether.mixin.mixins.accessor.ServerGamePacketListenerImplAccessor;
-import com.gildedgames.aether.mixin.mixins.accessor.ServerLevelAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.ServerLevelAccessor;
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.gildedgames.aether.recipe.recipes.ban.BlockBanRecipe;
 import com.gildedgames.aether.recipe.recipes.ban.ItemBanRecipe;
@@ -195,7 +195,7 @@ public class DimensionHooks {
     public static void tickTime(Level level) {
         if (level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location()) && level instanceof ServerLevel serverLevel) {
             ServerLevelAccessor serverLevelAccessor = (ServerLevelAccessor) serverLevel;
-            com.gildedgames.aether.mixin.mixins.accessor.LevelAccessor levelAccessor = (com.gildedgames.aether.mixin.mixins.accessor.LevelAccessor) level;
+            com.gildedgames.aether.mixin.mixins.common.accessor.LevelAccessor levelAccessor = (com.gildedgames.aether.mixin.mixins.common.accessor.LevelAccessor) level;
             long i = levelAccessor.getLevelData().getGameTime() + 1L;
             serverLevelAccessor.getServerLevelData().setGameTime(i);
             if (serverLevelAccessor.getServerLevelData().getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {

@@ -3,7 +3,7 @@ package com.gildedgames.aether.entity.projectile;
 import com.gildedgames.aether.client.particle.AetherParticleTypes;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 
-import com.gildedgames.aether.mixin.mixins.accessor.PlayerAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.PlayerAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.ZephyrSnowballHitPacket;
 import com.gildedgames.aether.util.EquipmentUtil;

@@ -1,9 +1,8 @@
 package com.gildedgames.aether.entity.miscellaneous;
 
-import com.gildedgames.aether.mixin.mixins.accessor.ServerGamePacketListenerImplAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.ExplosionParticlePacket;
-import com.gildedgames.aether.util.EntityUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.server.level.ServerPlayer;

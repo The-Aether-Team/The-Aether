@@ -3,7 +3,7 @@ package com.gildedgames.aether.data.generators.loot;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.data.providers.AetherBlockLootProvider;
 import com.gildedgames.aether.item.AetherItems;
-import com.gildedgames.aether.mixin.mixins.accessor.BlockLootAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.BlockLootAccessor;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Block;

@@ -4,7 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.screen.perks.AetherCustomizationsScreen;
 import com.gildedgames.aether.client.AetherKeys;
 import com.gildedgames.aether.inventory.menu.AccessoriesMenu;
-import com.gildedgames.aether.mixin.mixins.accessor.ScreenAccessor;
+import com.gildedgames.aether.mixin.mixins.client.accessor.ScreenAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.server.ClearItemPacket;
 import com.mojang.blaze3d.vertex.PoseStack;

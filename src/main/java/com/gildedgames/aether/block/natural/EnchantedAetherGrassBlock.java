@@ -1,7 +1,7 @@
 package com.gildedgames.aether.block.natural;
 
 import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.mixin.mixins.accessor.SpreadingSnowyDirtBlockAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.SpreadingSnowyDirtBlockAccessor;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.GrassBlock;
 import net.minecraft.world.level.block.state.BlockState;

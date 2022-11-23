@@ -1,7 +1,7 @@
 package com.gildedgames.aether.block.construction;
 
 import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.mixin.mixins.accessor.BushBlockAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.BushBlockAccessor;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;

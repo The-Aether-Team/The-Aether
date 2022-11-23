@@ -6,7 +6,7 @@ import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.loot.functions.DoubleDrops;
 import com.gildedgames.aether.loot.functions.SpawnTNT;
 import com.gildedgames.aether.loot.functions.SpawnXP;
-import com.gildedgames.aether.mixin.mixins.accessor.BlockLootAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.BlockLootAccessor;
 import net.minecraft.advancements.critereon.BlockPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.LocationPredicate;
@@ -30,7 +30,6 @@ import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.function.Supplier;
 

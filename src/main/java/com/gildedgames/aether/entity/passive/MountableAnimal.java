@@ -2,7 +2,7 @@ package com.gildedgames.aether.entity.passive;
 
 import com.gildedgames.aether.entity.NotGrounded;
 import com.gildedgames.aether.capability.player.AetherPlayer;
-import com.gildedgames.aether.mixin.mixins.accessor.ServerGamePacketListenerImplAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;

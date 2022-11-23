@@ -4,7 +4,7 @@ import com.gildedgames.aether.event.events.PlacementBanEvent;
 import com.gildedgames.aether.event.events.PlacementConvertEvent;
 import com.gildedgames.aether.event.hooks.DimensionHooks;
 import com.gildedgames.aether.data.resources.AetherDimensions;
-import com.gildedgames.aether.mixin.mixins.accessor.ServerLevelAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.ServerLevelAccessor;
 import com.gildedgames.aether.world.AetherLevelData;
 import com.gildedgames.aether.capability.time.AetherTime;
 import net.minecraft.resources.ResourceKey;
@@ -126,7 +126,7 @@ public class DimensionListener {
             AetherTime.get(level).ifPresent(cap -> {
                 AetherLevelData levelData = new AetherLevelData(level.getServer().getWorldData(), level.getServer().getWorldData().overworldData(), cap.getDayTime());
                 ServerLevelAccessor serverLevelAccessor = (ServerLevelAccessor) level;
-                com.gildedgames.aether.mixin.mixins.accessor.LevelAccessor levelAccessor = (com.gildedgames.aether.mixin.mixins.accessor.LevelAccessor) event.getLevel();
+                com.gildedgames.aether.mixin.mixins.common.accessor.LevelAccessor levelAccessor = (com.gildedgames.aether.mixin.mixins.common.accessor.LevelAccessor) event.getLevel();
                 serverLevelAccessor.setServerLevelData(levelData);
                 levelAccessor.setLevelData(levelData);
             });

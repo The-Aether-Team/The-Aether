@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.gui.screen.menu;
 
 import com.gildedgames.aether.client.gui.component.DynamicMenuButton;
-import com.gildedgames.aether.mixin.mixins.accessor.TitleScreenAccessor;
+import com.gildedgames.aether.mixin.mixins.client.accessor.TitleScreenAccessor;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
