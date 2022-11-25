@@ -48,7 +48,7 @@ public class AetherFeatureBuilders {
     }
 
     private static ImmutableList.Builder<PlacementModifier> treePlacementBase(PlacementModifier p_195485_) {
-        return ImmutableList.<PlacementModifier>builder().add(p_195485_).add(InSquarePlacement.spread()).add(TREE_THRESHOLD).add(ImprovedLayerPlacementModifier.of(Heightmap.Types.OCEAN_FLOOR, UniformInt.of(0, 1), 4)).add(BiomeFilter.biome());
+        return ImmutableList.<PlacementModifier>builder().add(p_195485_).add(InSquarePlacement.spread()).add(TREE_THRESHOLD).add(ImprovedLayerPlacementModifier.of(Heightmap.Types.OCEAN_FLOOR, UniformInt.of(0, 1), 4)).add(BiomeFilter.biome()).add(new DungeonBlacklistFilter());
     }
 
     public static List<PlacementModifier> treePlacement(PlacementModifier p_195480_) {

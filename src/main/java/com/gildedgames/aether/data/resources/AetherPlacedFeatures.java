@@ -45,6 +45,7 @@ public class AetherPlacedFeatures {
     public static final ResourceKey<PlacedFeature> CRYSTAL_ISLAND_PLACEMENT = register("crystal_island", AetherConfiguredFeatures.dataHolder(AetherConfiguredFeatures.CRYSTAL_ISLAND_CONFIGURATION),
             InSquarePlacement.spread(),
             HeightRangePlacement.uniform(VerticalAnchor.absolute(80), VerticalAnchor.absolute(120)),
+            new DungeonBlacklistFilter(),
             RarityFilter.onAverageOnceEvery(16));
 
     public static final ResourceKey<PlacedFeature> HOLIDAY_TREE_PLACEMENT = register("holiday_tree", AetherConfiguredFeatures.dataHolder(AetherConfiguredFeatures.HOLIDAY_TREE_CONFIGURATION),
