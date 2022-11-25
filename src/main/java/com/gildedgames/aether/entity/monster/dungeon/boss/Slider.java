@@ -1,6 +1,5 @@
 package com.gildedgames.aether.entity.monster.dungeon.boss;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.api.BossNameGenerator;
 import com.gildedgames.aether.api.DungeonTracker;
@@ -106,7 +105,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(3, new InBossRoomTargetGoal<>(this, Player.class));
         this.goalSelector.addGoal(1, new SliderMoveGoal(this));
-//        this.goalSelector.addGoal(1, new RandomStrollGoal(this, 1));
     }
 
     @Override
@@ -583,36 +581,12 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         }
     }
 
-    public int getMoveDelay() {
-        return this.moveDelay;
-    }
-
-    public void setMoveDelay(int moveDelay) {
-        this.moveDelay = moveDelay;
-    }
-
-    public void decreaseMoveDelay(int amount) {
-        this.moveDelay -= amount;
-    }
-
     public int getChatCooldown() {
         return this.chatCooldown;
     }
 
     public void setChatCooldown(int cooldown) {
         this.chatCooldown = cooldown;
-    }
-
-    public void increaseChatTime(int amount) {
-        this.chatCooldown += amount;
-    }
-
-    public boolean canMove() {
-        return this.canMove;
-    }
-
-    public void setCanMove(boolean move) {
-        this.canMove = move;
     }
 
     public static class SliderMoveGoal extends Goal {
@@ -644,7 +618,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         private Direction moveDir;
 
         private int moveDelay;
-        private boolean moving;
         public SliderMoveControl(Slider mob) {
             super(mob);
             this.slider = mob;
