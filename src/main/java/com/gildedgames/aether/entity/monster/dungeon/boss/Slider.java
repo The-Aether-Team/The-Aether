@@ -52,6 +52,8 @@ import net.minecraftforge.event.ForgeEventFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
     public static final EntityDataAccessor<Boolean> DATA_AWAKE_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.BOOLEAN);
@@ -66,9 +68,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
 
     private int chatCooldown;
 
-    private boolean canMove;
-    private int moveDelay;
-
     public Slider(EntityType<? extends Slider> entityType, Level level) {
         super(entityType, level);
         this.bossFight = new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
@@ -76,7 +75,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         this.xpReward = XP_REWARD_BOSS;
         this.setRot(0, 0);
         this.moveControl = new SliderMoveControl(this);
-//        this.moveControl = new BlankMoveControl(this);
         this.setPersistenceRequired();
     }
 
@@ -245,7 +243,9 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                     }
                     entity.setDeltaMovement(entity.getDeltaMovement().multiply(4.0, 1.0, 4.0).add(0.0, 0.25, 0.0));
                     this.playSound(this.getCollideSound(), 2.5F, 1.0F / (this.random.nextFloat() * 0.2F + 0.9F));
-                    this.stop();
+                    if (this.moveControl instanceof SliderMoveControl control) {
+                        control.stop();
+                    }
                 } else if (!(entity instanceof Player player && player.isCreative()) && !(entity instanceof Slider)) {
                     entity.setDeltaMovement(this.getDeltaMovement().multiply(4.0, 1.0, 4.0).add(0.0, 0.25, 0.0));
                 }
@@ -274,8 +274,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
     }
 
     private void stop() {
-        this.canMove = false;
-        this.moveDelay = 12;
         this.setDeltaMovement(Vec3.ZERO);
     }
 
@@ -589,8 +587,13 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         this.chatCooldown = cooldown;
     }
 
+    /**
+     * This goal allows the slider to pick a spot to move to while avoiding unbreakable blocks.
+     */
     public static class SliderMoveGoal extends Goal {
         protected final Slider slider;
+        public final List<BlockPos> targetPoints = new ArrayList<>();
+        private int ticksUntilRecomputePath = 10;
 
         public SliderMoveGoal(Slider slider) {
             this.slider = slider;
@@ -604,11 +607,58 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         @Override
         public void tick() {
             LivingEntity target = this.slider.getTarget();
-            this.slider.moveControl.setWantedPosition(target.getX(), target.getY(), target.getZ(), 1);
-//            this.slider.navigation.moveTo(target, 1);
-            /*LivingEntity target = this.slider.getTarget();
-            Path path = this.slider.navigation.createPath(ImmutableSet.of(target.blockPosition(), target.blockPosition().offset(-3, 0, -3)), 1);
-            this.slider.navigation.moveTo(path, 1);*/
+            if (this.targetPoints.isEmpty()/* || --this.ticksUntilRecomputePath <= 0*/) {
+                this.ticksUntilRecomputePath = 10;
+                this.targetPoints.clear();
+                BlockPos targetPos = target.blockPosition();
+                BlockPos currentPos = this.slider.blockPosition();
+                BlockPos difference = targetPos.subtract(currentPos);
+
+                Direction direction = this.calculateDirection(difference.getX(), difference.getY(), difference.getZ());
+
+                // If the block next to the slider is unbreakable, move up first.
+                if (direction.getAxis() != Direction.Axis.Y) {
+                    if (this.slider.level.getBlockState(currentPos.relative(direction)).is(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)) {
+                        do {
+                            currentPos = currentPos.above();
+                        } while (this.slider.level.getBlockState(currentPos.relative(direction)).is(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS));
+                        this.targetPoints.add(currentPos);
+                    } else if (currentPos.getY() > targetPos.getY() && this.slider.level.getBlockState(currentPos.offset(0, -1, 0)).isAir()) { // Bring the slider back to the ground before attacking again.
+                        do {
+                            currentPos = currentPos.offset(0, -1, 0);
+                        } while (currentPos.getY() > targetPos.getY() && this.slider.level.getBlockState(currentPos.offset(0, -1, 0)).isAir());
+                        this.targetPoints.add(currentPos);
+                    }
+                }
+                BlockPos.MutableBlockPos offset = new BlockPos.MutableBlockPos();
+
+                // Find the next point in the path.
+                while (Math.abs(offset.getX()) <= Math.abs(difference.getX()) && Math.abs(offset.getY()) <= Math.abs(difference.getY()) && Math.abs(offset.getZ()) <= Math.abs(difference.getZ())) {
+                    offset.move(direction);
+                    if (this.slider.level.getBlockState(currentPos.offset(offset)).is(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)) {
+                        break;
+                    }
+                }
+                offset.move(direction.getOpposite());
+                this.targetPoints.add(currentPos.offset(offset));
+            }
+
+            // Move along the calculated path
+            BlockPos pos = this.targetPoints.remove(0);
+            this.slider.moveControl.setWantedPosition(pos.getX(), pos.getY(), pos.getZ(), 1);
+        }
+
+        public Direction calculateDirection(double x, double y, double z) {
+            double absX = Math.abs(x);
+            double absY = Math.abs(y);
+            double absZ = Math.abs(z);
+            if (absY > absX && absY > absZ) {
+                return y > 0 ? Direction.UP : Direction.DOWN;
+            } else if (absX > absZ) {
+                return x > 0 ? Direction.EAST : Direction.WEST;
+            } else {
+                return z > 0 ? Direction.SOUTH : Direction.NORTH;
+            }
         }
     }
 
@@ -633,7 +683,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                     }
                 } else {
                     if (this.crush()) {
-                        this.operation = Operation.WAIT;
                         this.stop();
                         return;
                     }
@@ -648,8 +697,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                     double axisDistance = x * this.moveDir.getStepX()
                             + y * this.moveDir.getStepY()
                             + z * this.moveDir.getStepZ();
-                    if (axisDistance < 0.1) {
-                        this.operation = Operation.WAIT;
+                    if (axisDistance < 0) {
                         this.stop();
                         return;
                     }
@@ -669,14 +717,15 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
             }
         }
 
-        private void stop() {
+        protected void stop() {
+            this.operation = Operation.WAIT;
             this.moveDir = null;
             this.velocity = 0;
             this.moveDelay = this.calculateMoveDelay();
             this.slider.setDeltaMovement(Vec3.ZERO);
         }
 
-        private Direction calculateDirection(double x, double y, double z) {
+        public Direction calculateDirection(double x, double y, double z) {
             double absX = Math.abs(x);
             double absY = Math.abs(y);
             double absZ = Math.abs(z);
