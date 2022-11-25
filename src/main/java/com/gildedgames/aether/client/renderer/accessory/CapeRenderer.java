@@ -4,7 +4,6 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.AetherModelLayers;
 import com.gildedgames.aether.client.renderer.accessory.model.CapeModel;
 import com.gildedgames.aether.item.accessories.cape.CapeItem;
-import com.gildedgames.aether.capability.cape.CapeEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
@@ -39,22 +38,21 @@ public class CapeRenderer implements ICurioRenderer {
     public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack poseStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource buffer, int light, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         LivingEntity livingEntity = slotContext.entity();
         CapeItem capeItem = (CapeItem) stack.getItem();
-        CapeEntity.get(livingEntity).ifPresent((capeEntity) -> {
-            if (!livingEntity.isInvisible()) {
-                ItemStack itemstack = livingEntity.getItemBySlot(EquipmentSlot.CHEST);
-                boolean hasCape = livingEntity instanceof AbstractClientPlayer abstractClientPlayer
+        ItemStack itemStack = livingEntity.getItemBySlot(EquipmentSlot.CHEST);
+        if (!livingEntity.isInvisible()) {
+            if (livingEntity instanceof Player player) {
+                boolean hasCape = player instanceof AbstractClientPlayer abstractClientPlayer
                         && abstractClientPlayer.isCapeLoaded()
                         && abstractClientPlayer.getCloakTextureLocation() != null
                         && abstractClientPlayer.isModelPartShown(PlayerModelPart.CAPE);
-                boolean isCapeDisabled = ModList.get().isLoaded("caelus") && livingEntity instanceof Player player && !ClientMixinHooks.canRenderCape(player);
-
-                if (!(itemstack.getItem() instanceof ElytraItem) && !hasCape && !isCapeDisabled) {
+                boolean isCapeDisabled = ModList.get().isLoaded("caelus") && !ClientMixinHooks.canRenderCape(player);
+                if (!(itemStack.getItem() instanceof ElytraItem) && !hasCape && !isCapeDisabled) {
                     this.cape.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
                     poseStack.pushPose();
                     poseStack.translate(0.0D, 0.0D, 0.125D);
-                    double d0 = Mth.lerp(partialTicks, capeEntity.getxCloakO(), capeEntity.getxCloak()) - Mth.lerp(partialTicks, livingEntity.xo, livingEntity.getX());
-                    double d1 = Mth.lerp(partialTicks, capeEntity.getyCloakO(), capeEntity.getyCloak()) - Mth.lerp(partialTicks, livingEntity.yo, livingEntity.getY());
-                    double d2 = Mth.lerp(partialTicks, capeEntity.getzCloakO(), capeEntity.getzCloak()) - Mth.lerp(partialTicks, livingEntity.zo, livingEntity.getZ());
+                    double d0 = Mth.lerp(partialTicks, player.xCloakO, player.xCloak) - Mth.lerp(partialTicks, livingEntity.xo, livingEntity.getX());
+                    double d1 = Mth.lerp(partialTicks, player.yCloakO, player.yCloak) - Mth.lerp(partialTicks, livingEntity.yo, livingEntity.getY());
+                    double d2 = Mth.lerp(partialTicks, player.zCloakO, player.zCloak) - Mth.lerp(partialTicks, livingEntity.zo, livingEntity.getZ());
                     float f = livingEntity.yBodyRotO + (livingEntity.yBodyRot - livingEntity.yBodyRotO);
                     double d3 = Mth.sin(f * ((float) Math.PI / 180F));
                     double d4 = -Mth.cos(f * ((float) Math.PI / 180F));
@@ -68,7 +66,7 @@ public class CapeRenderer implements ICurioRenderer {
                         f2 = 0.0F;
                     }
 
-                    float f4 = Mth.lerp(partialTicks, capeEntity.getoBob(), capeEntity.getBob());
+                    float f4 = Mth.lerp(partialTicks, player.oBob, player.bob);
                     f1 += Mth.sin(Mth.lerp(partialTicks, livingEntity.walkDistO, livingEntity.walkDist) * 6.0F) * 32.0F * f4;
                     if (livingEntity.isCrouching()) {
                         f1 += 25.0F;
@@ -77,16 +75,27 @@ public class CapeRenderer implements ICurioRenderer {
                     poseStack.mulPose(Vector3f.XP.rotationDegrees(6.0F + f2 / 2.0F + f1));
                     poseStack.mulPose(Vector3f.ZP.rotationDegrees(f3 / 2.0F));
                     poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F - f3 / 2.0F));
-                    VertexConsumer consumer;
-                    if (stack.getHoverName().getString().equalsIgnoreCase("swuff_'s cape")) {
-                        consumer = buffer.getBuffer(RenderType.entitySolid(new ResourceLocation(Aether.MODID, "textures/models/accessory/capes/swuff_accessory.png")));
-                    } else {
-                        consumer = buffer.getBuffer(RenderType.entitySolid(capeItem.getCapeTexture()));
-                    }
-                    this.cape.renderToBuffer(poseStack, consumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+                    this.renderCape(poseStack, buffer, stack, capeItem, light);
                     poseStack.popPose();
                 }
+            } else {
+                this.cape.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+                poseStack.pushPose();
+                poseStack.translate(0.0D, 0.0D, 0.125D);
+                poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
+                this.renderCape(poseStack, buffer, stack, capeItem, light);
+                poseStack.popPose();
             }
-        });
+        }
+    }
+
+    private void renderCape(PoseStack poseStack, MultiBufferSource buffer, ItemStack stack, CapeItem capeItem, int light) {
+        VertexConsumer consumer;
+        if (stack.getHoverName().getString().equalsIgnoreCase("swuff_'s cape")) {
+            consumer = buffer.getBuffer(RenderType.entitySolid(new ResourceLocation(Aether.MODID, "textures/models/accessory/capes/swuff_accessory.png")));
+        } else {
+            consumer = buffer.getBuffer(RenderType.entitySolid(capeItem.getCapeTexture()));
+        }
+        this.cape.renderToBuffer(poseStack, consumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
     }
 }

@@ -2,6 +2,7 @@ package com.gildedgames.aether.block.dungeon;
 
 import com.gildedgames.aether.client.particle.AetherParticleTypes;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -27,17 +28,13 @@ import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-/**
- * A block that can switch between being air and a solid block. This is useful for creating doors in dungeons, as bosses
- * can detect and switch these blocks. Only creative players can interact with these blocks when they're invisible.
- */
 public class DoorwayBlock extends Block {
     public static final BooleanProperty INVISIBLE = BooleanProperty.create("invisible");
-    public static final VoxelShape SHAPE = Block.box(5.0D, 5.0D, 5.0D, 11.0D, 11.0D, 11.0D);
+    public static final VoxelShape INVISIBLE_SHAPE = Block.box(5.0, 5.0, 5.0, 11.0, 11.0, 11.0);
 
-    public DoorwayBlock(Properties pProperties) {
-        super(pProperties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(INVISIBLE, false));
+    public DoorwayBlock(Properties properties) {
+        super(properties);
+        this.registerDefaultState(this.getStateDefinition().any().setValue(INVISIBLE, false));
     }
 
     @Override
@@ -45,38 +42,37 @@ public class DoorwayBlock extends Block {
         builder.add(INVISIBLE);
     }
 
-    @Override
-    public RenderShape getRenderShape(BlockState state) {
-        return state.getValue(INVISIBLE) ? RenderShape.INVISIBLE : super.getRenderShape(state);
-    }
-
-    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        if (state.getValue(INVISIBLE)) {
-            if (context instanceof EntityCollisionContext entity && entity.getEntity() instanceof Player player && player.isCreative()) {
-                return SHAPE;
-            }
-            return Shapes.empty();
-        }
-        return super.getShape(state, level, pos, context);
-    }
-
-    @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return state.getValue(INVISIBLE) ? Shapes.empty() : super.getCollisionShape(state, level, pos, context);
-    }
-
+    /**
+     * Toggles the block between invisible and not invisible if a creative player interacts with it.<br><br>
+     * Warning for "deprecation" is suppressed because the method is fine to override.
+     * @param state The {@link BlockState} of the block.
+     * @param level The {@link Level} the block is in.
+     * @param pos The {@link BlockPos} of the block.
+     * @param player The {@link Player} interacting with the block.
+     * @param hand The {@link InteractionHand} the player interacts with.
+     * @param hit The {@link BlockHitResult} of the interaction.
+     * @return The {@link InteractionResult} of the interaction.
+     */
+    @SuppressWarnings("deprecation")
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (player.isCreative()) {
-            BlockState blockState = state.cycle(INVISIBLE);
-            level.setBlock(pos, blockState, 3);
+            BlockState newState = state.cycle(INVISIBLE);
+            level.setBlock(pos, newState, 3);
             return InteractionResult.SUCCESS;
         } else {
             return super.use(state, level, pos, player, hand, hit);
         }
     }
 
+    /**
+     * Spawns smoke particles when a player attempts to place anything inside the block.<br><br>
+     * Warning for "deprecation" is suppressed because the method is fine to override.
+     * @param state The {@link BlockState} of the block.
+     * @param context The {@link BlockPlaceContext} of the replacement attempt.
+     * @return Whether the block can be replaced, as a {@link Boolean}.
+     */
+    @SuppressWarnings("deprecation")
     @Override
     public boolean canBeReplaced(BlockState state, BlockPlaceContext context) {
         boolean flag = super.canBeReplaced(state, context);
@@ -84,9 +80,9 @@ public class DoorwayBlock extends Block {
             Level level = context.getLevel();
             BlockPos pos = context.getClickedPos();
             for (int i = 0; i < 2; i++) {
-                double a = pos.getX() + 0.5D + (double) (level.random.nextFloat() - level.random.nextFloat()) * 0.375D;
-                double b = pos.getY() + 0.5D + (double) (level.random.nextFloat() - level.random.nextFloat()) * 0.375D;
-                double c = pos.getZ() + 0.5D + (double) (level.random.nextFloat() - level.random.nextFloat()) * 0.375D;
+                double a = pos.getX() + 0.5 + (double) (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.375;
+                double b = pos.getY() + 0.5 + (double) (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.375;
+                double c = pos.getZ() + 0.5 + (double) (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.375;
                 if (level instanceof ServerLevel serverLevel) {
                     serverLevel.sendParticles(ParticleTypes.POOF, a, b, c, 1, 0.0, 0.0, 0.0, 0.0);
                 }
@@ -95,17 +91,64 @@ public class DoorwayBlock extends Block {
         return flag;
     }
 
+    /**
+     * Based on {@link ClientLevel#getMarkerParticleTarget()} and {@link ClientLevel#doAnimateTick(int, int, int, int, RandomSource, Block, BlockPos.MutableBlockPos)}.
+     * Similar to barrier blocks, this renders the boss doorway block overlay icon at a doorway block's position while it's invisible if the block is held by the player.
+     * @param state The {@link BlockState} of the block.
+     * @param level The {@link Level} the block is in.
+     * @param pos The {@link BlockPos} of the block.
+     * @param random The {@link RandomSource} of the level.
+     */
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.gameMode != null && minecraft.gameMode.getPlayerMode() == GameType.CREATIVE && minecraft.player != null && minecraft.level != null) {
-            ItemStack itemstack = minecraft.player.getMainHandItem();
-            Item item = itemstack.getItem();
+            ItemStack itemStack = minecraft.player.getMainHandItem();
+            Item item = itemStack.getItem();
             if (item instanceof BlockItem blockItem) {
                 if (blockItem.getBlock() == this && state.getValue(INVISIBLE)) {
-                    minecraft.level.addParticle(AetherParticleTypes.BOSS_DOORWAY_BLOCK.get(), (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
+                    minecraft.level.addParticle(AetherParticleTypes.BOSS_DOORWAY_BLOCK.get(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0.0, 0.0, 0.0);
                 }
             }
         }
+    }
+
+    /**
+     * Creates a small hitbox for doorway blocks when invisible and hovered over by creative players.<br><br>
+     * Warning for "deprecation" is suppressed because the method is fine to override.
+     * @param state The {@link BlockState} of the block.
+     * @param level The {@link Level} the block is in.
+     * @param pos The {@link BlockPos} of the block.
+     * @param context The {@link CollisionContext} of the entity with the block.
+     * @return The {@link VoxelShape} of the block.
+     */
+    @SuppressWarnings("deprecation")
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        if (state.getValue(INVISIBLE)) {
+            if (context instanceof EntityCollisionContext entity && entity.getEntity() instanceof Player player && player.isCreative()) {
+                return INVISIBLE_SHAPE;
+            }
+            return Shapes.empty();
+        }
+        return super.getShape(state, level, pos, context);
+    }
+
+    /**
+     * Warning for "deprecation" is suppressed because the method is fine to override.
+     */
+    @SuppressWarnings("deprecation")
+    @Override
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return state.getValue(INVISIBLE) ? Shapes.empty() : super.getCollisionShape(state, level, pos, context);
+    }
+
+    /**
+     * Warning for "deprecation" is suppressed because the method is fine to override.
+     */
+    @SuppressWarnings("deprecation")
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return state.getValue(INVISIBLE) ? RenderShape.INVISIBLE : super.getRenderShape(state);
     }
 }

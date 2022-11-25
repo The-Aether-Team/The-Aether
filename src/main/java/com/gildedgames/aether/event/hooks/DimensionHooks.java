@@ -3,14 +3,17 @@ package com.gildedgames.aether.event.hooks;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.block.FreezingBlock;
+import com.gildedgames.aether.block.portal.AetherPortalForcer;
+import com.gildedgames.aether.block.portal.AetherPortalShape;
 import com.gildedgames.aether.event.AetherGameEvents;
+import com.gildedgames.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
+import com.gildedgames.aether.mixin.mixins.common.accessor.ServerLevelAccessor;
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.gildedgames.aether.recipe.recipes.ban.BlockBanRecipe;
 import com.gildedgames.aether.recipe.recipes.ban.ItemBanRecipe;
 import com.gildedgames.aether.recipe.recipes.block.PlacementConversionRecipe;
 import com.gildedgames.aether.util.LevelUtil;
 import com.gildedgames.aether.data.resources.AetherDimensions;
-import com.gildedgames.aether.world.AetherTeleporter;
 import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.capability.time.AetherTime;
 import com.gildedgames.aether.network.AetherPacketHandler;
@@ -44,15 +47,61 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.entity.EntityTypeTest;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class DimensionHooks {
     public static boolean playerLeavingAether;
     public static boolean displayAetherTravel;
     public static int teleportationTimer;
+
+    public static boolean createPortal(Player player, Level level, BlockPos pos, Direction direction, ItemStack stack, InteractionHand hand) {
+        if (direction != null) {
+            BlockPos relativePos = pos.relative(direction);
+            if (stack.is(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS)) {
+                if ((level.dimension() == LevelUtil.returnDimension() || level.dimension() == LevelUtil.destinationDimension()) && !AetherConfig.COMMON.disable_aether_portal.get()) {
+                    Optional<AetherPortalShape> optional = AetherPortalShape.findEmptyAetherPortalShape(level, relativePos, Direction.Axis.X);
+                    if (optional.isPresent()) {
+                        optional.get().createPortalBlocks();
+                        player.playSound(SoundEvents.BUCKET_EMPTY, 1.0F, 1.0F);
+                        player.swing(hand);
+                        if (!player.isCreative()) {
+                            if (stack.getCount() > 1) {
+                                stack.shrink(1);
+                                player.addItem(stack.hasCraftingRemainingItem() ? stack.getCraftingRemainingItem() : ItemStack.EMPTY);
+                            } else if (stack.isDamageableItem()) {
+                                stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
+                            } else {
+                                player.setItemInHand(hand, stack.hasCraftingRemainingItem() ? stack.getCraftingRemainingItem() : ItemStack.EMPTY);
+                            }
+                        }
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean detectWaterInFrame(LevelAccessor levelAccessor, BlockPos pos, BlockState blockState, FluidState fluidState) {
+        if (levelAccessor instanceof Level level) {
+            if (fluidState.is(Fluids.WATER) && fluidState.createLegacyBlock().getBlock() == blockState.getBlock()) {
+                if ((level.dimension() == LevelUtil.returnDimension() || level.dimension() == LevelUtil.destinationDimension()) && !AetherConfig.COMMON.disable_aether_portal.get()) {
+                    Optional<AetherPortalShape> optional = AetherPortalShape.findEmptyAetherPortalShape(level, pos, Direction.Axis.X);
+                    if (optional.isPresent()) {
+                        optional.get().createPortalBlocks();
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
     public static boolean checkInteractionBanned(Player player, Level level, BlockPos pos, Direction face, ItemStack stack, BlockState state) {
         if (isItemPlacementBanned(level, pos, face, stack)) {
@@ -145,9 +194,11 @@ public class DimensionHooks {
      */
     public static void tickTime(Level level) {
         if (level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location()) && level instanceof ServerLevel serverLevel) {
-            long i = serverLevel.levelData.getGameTime() + 1L;
-            serverLevel.serverLevelData.setGameTime(i);
-            if (serverLevel.levelData.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
+            ServerLevelAccessor serverLevelAccessor = (ServerLevelAccessor) serverLevel;
+            com.gildedgames.aether.mixin.mixins.common.accessor.LevelAccessor levelAccessor = (com.gildedgames.aether.mixin.mixins.common.accessor.LevelAccessor) level;
+            long i = levelAccessor.getLevelData().getGameTime() + 1L;
+            serverLevelAccessor.getServerLevelData().setGameTime(i);
+            if (serverLevelAccessor.getServerLevelData().getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
                 AetherTime.get(level).ifPresent(cap -> serverLevel.setDayTime(cap.tickTime(level)));
             }
         }
@@ -185,7 +236,7 @@ public class DimensionHooks {
                 List<Entity> passengers = entity.getPassengers();
                 entity.level.getProfiler().push("aether_fall");
                 entity.setPortalCooldown();
-                Entity target = entity.changeDimension(destination, new AetherTeleporter(destination, false));
+                Entity target = entity.changeDimension(destination, new AetherPortalForcer(destination, false));
                 entity.level.getProfiler().pop();
                 // Check for passengers
                 if (target != null) {
@@ -233,8 +284,9 @@ public class DimensionHooks {
     public static void travelling(Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
             if (teleportationTimer > 0) {
-                serverPlayer.connection.aboveGroundTickCount = 0;
-                serverPlayer.connection.aboveGroundVehicleTickCount = 0;
+                ServerGamePacketListenerImplAccessor serverGamePacketListenerImplAccessor = (ServerGamePacketListenerImplAccessor) serverPlayer.connection;
+                serverGamePacketListenerImplAccessor.setAboveGroundTickCount(0);
+                serverGamePacketListenerImplAccessor.setAboveGroundVehicleTickCount(0);
                 teleportationTimer--;
             }
             if (teleportationTimer < 0 || serverPlayer.verticalCollisionBelow) {

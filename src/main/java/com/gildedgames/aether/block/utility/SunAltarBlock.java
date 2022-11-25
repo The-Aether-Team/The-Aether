@@ -20,51 +20,56 @@ import net.minecraft.world.level.block.BaseEntityBlock;
 
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
 import java.util.Optional;
 
 public class SunAltarBlock extends BaseEntityBlock {
-	public SunAltarBlock(BlockBehaviour.Properties properties) {
+	public SunAltarBlock(Properties properties) {
 		super(properties);
 	}
 
-	@Nullable
 	@Override
-	public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-		return new SunAltarBlockEntity(pPos, pState);
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return new SunAltarBlockEntity(pos, state);
 	}
 
-	@Nonnull
+	/**
+	 * Controls when the Sun Altar can be used and interacted with.<br><br>
+	 * Warning for "deprecation" is suppressed because the method is fine to override.
+	 * @param state The {@link BlockState} of the block.
+	 * @param level The {@link Level} the block is in.
+	 * @param pos The {@link BlockPos} of the block.
+	 * @param player The {@link Player} interacting with the block.
+	 * @param hand The {@link InteractionHand} the player interacts with.
+	 * @param hit The {@link BlockHitResult} of the interaction.
+	 * @return The {@link InteractionResult} of the interaction.
+	 */
+	@SuppressWarnings("deprecation")
 	@Override
-	public InteractionResult use(@Nonnull BlockState state, Level level, @Nonnull BlockPos pos, @Nonnull Player player, @Nonnull InteractionHand hand, @Nonnull BlockHitResult hit) {
-		if (level.isClientSide) {
-			return InteractionResult.SUCCESS;
-		} else {
-			if (AetherConfig.COMMON.sun_altar_whitelist.get() && !player.hasPermissions(4) && !SunAltarWhitelist.INSTANCE.isWhiteListed(player.getGameProfile())) {
-				player.displayClientMessage(Component.translatable(Aether.MODID + ".sun_altar.no_permission"), true);
-				return InteractionResult.SUCCESS;
-			}
-			Optional<AetherTime> aetherTimeOptional = level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).resolve();
-			if (aetherTimeOptional.isPresent()) {
-				if (!aetherTimeOptional.get().getEternalDay() || AetherConfig.COMMON.disable_eternal_day.get()) {
-					this.openScreen(level, pos, player);
-				} else {
-					player.displayClientMessage(Component.translatable(Aether.MODID + ".sun_altar.in_control"), true);
-				}
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+		if (!level.isClientSide()) {
+			if (AetherConfig.COMMON.sun_altar_whitelist.get() && !player.hasPermissions(4) && !SunAltarWhitelist.INSTANCE.isWhiteListed(player.getGameProfile())) { // Prevents non-operator or non-whitelisted players from using the Sun Altar on servers
+				player.displayClientMessage(Component.translatable(Aether.MODID + ".sun_altar.no_permission"), true); // Player doesn't have permission to use the Sun Altar.
 			} else {
-				player.displayClientMessage(Component.translatable(Aether.MODID + ".sun_altar.no_power"), true);
+				Optional<AetherTime> aetherTimeOptional = level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).resolve();
+				if (aetherTimeOptional.isPresent()) { // Checks if the level has the capability used for Aether time, which determines if the Sun Altar has control over the time of a dimension.
+					if (!aetherTimeOptional.get().getEternalDay() || AetherConfig.COMMON.disable_eternal_day.get()) { // Checks if the time is locked into eternal day or not.
+						this.openScreen(level, pos, player);
+					} else {
+						player.displayClientMessage(Component.translatable(Aether.MODID + ".sun_altar.in_control"), true); // Sun Spirit is still in control of the realm.
+					}
+				} else {
+					player.displayClientMessage(Component.translatable(Aether.MODID + ".sun_altar.no_power"), true); // Sun Altar has no power in the dimension.
+				}
 			}
-			return InteractionResult.SUCCESS;
 		}
+		return InteractionResult.SUCCESS;
 	}
 
-	protected void openScreen(Level level, @Nonnull BlockPos pos, @Nonnull Player player) {
-		if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
+	protected void openScreen(Level level, BlockPos pos, Player player) {
+		if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
 			BlockEntity blockEntity = level.getBlockEntity(pos);
 			if (blockEntity instanceof SunAltarBlockEntity sunAltar) {
 				AetherPacketHandler.sendToPlayer(new OpenSunAltarPacket(sunAltar.getName()), serverPlayer);
@@ -73,19 +78,22 @@ public class SunAltarBlock extends BaseEntityBlock {
 	}
 
 	@Override
-	public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, LivingEntity pPlacer, ItemStack pStack) {
-		if (pStack.hasCustomHoverName()) {
-			BlockEntity blockentity = pLevel.getBlockEntity(pPos);
-			if (blockentity instanceof SunAltarBlockEntity sunAltar) {
-				sunAltar.setCustomName(pStack.getHoverName());
+	public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
+		if (stack.hasCustomHoverName()) {
+			BlockEntity blockEntity = level.getBlockEntity(pos);
+			if (blockEntity instanceof SunAltarBlockEntity sunAltar) {
+				sunAltar.setCustomName(stack.getHoverName());
 				sunAltar.setChanged();
 			}
 		}
 	}
 
+	/**
+	 * Warning for "deprecation" is suppressed because the method is fine to override.
+	 */
+	@SuppressWarnings("deprecation")
 	@Override
-	public RenderShape getRenderShape(BlockState pState) {
+	public RenderShape getRenderShape(BlockState state) {
 		return RenderShape.MODEL;
 	}
-
 }

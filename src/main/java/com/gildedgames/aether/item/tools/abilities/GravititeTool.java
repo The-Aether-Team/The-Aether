@@ -24,7 +24,6 @@ public interface GravititeTool {
      * @param player The {@link Player} using the tool.
      * @param hand The {@link InteractionHand} the tool was used in.
      * @return Whether the block was successfully floated or not, as a {@link Boolean}.
-     * @see com.gildedgames.aether.event.hooks.AbilityHooks.ToolHooks#handleGravititeToolAbility(Level, BlockPos, ItemStack, BlockState, Player, InteractionHand)
      */
     default boolean floatBlock(Level level, BlockPos pos, ItemStack stack, BlockState state, Player player, InteractionHand hand) {
         if (stack.getItem() instanceof TieredItem tieredItem) {

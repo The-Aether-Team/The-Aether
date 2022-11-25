@@ -6,10 +6,7 @@ import net.minecraft.world.effect.MobEffects;
 
 import java.util.function.Supplier;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
-public class AetherFlowerBlock extends FlowerBlock
-{
+public class AetherFlowerBlock extends FlowerBlock {
     private final Supplier<MobEffect> suspiciousStewEffect;
     private final int effectDuration;
 

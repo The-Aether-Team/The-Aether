@@ -120,6 +120,13 @@ public class AetherTags {
 		public static final TagKey<Item> AETHER_ACCESSORY = curio("aether_accessory");
 		public static final TagKey<Item> AETHER_SHIELD = curio("aether_shield");
 
+		public static final TagKey<Item> RING = curio("ring");
+		public static final TagKey<Item> NECKLACE = curio("necklace");
+		public static final TagKey<Item> HANDS = curio("hands");
+		public static final TagKey<Item> BACK = curio("back");
+		public static final TagKey<Item> CURIO = curio("curio");
+		public static final TagKey<Item> CHARM = curio("charm");
+
 		public static final TagKey<Item> ACCESSORIES = tag("accessories");
 
 		private static TagKey<Item> tag(String name) {
@@ -158,6 +165,8 @@ public class AetherTags {
 	public static class Biomes {
 		public static final TagKey<Biome> IS_AETHER = tag("is_aether");
 		public static final TagKey<Biome> HAS_LARGE_AERCLOUD = tag("has_large_aercloud");
+		public static final TagKey<Biome> HAS_BRONZE_DUNGEON = tag("has_bronze_dungeon");
+		public static final TagKey<Biome> HAS_SILVER_DUNGEON = tag("has_silver_dungeon");
 		public static final TagKey<Biome> HAS_GOLD_DUNGEON = tag("has_gold_dungeon");
 
 		public static final TagKey<Biome> MYCELIUM_CONVERSION = tag("mycelium_conversion");

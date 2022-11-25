@@ -12,17 +12,30 @@ import net.minecraft.world.Nameable;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class SunAltarBlockEntity extends BlockEntity implements Nameable {
     private Component name;
 
-    public SunAltarBlockEntity(BlockPos pWorldPosition, BlockState pBlockState) {
-        super(AetherBlockEntityTypes.SUN_ALTAR.get(), pWorldPosition, pBlockState);
+    public SunAltarBlockEntity(BlockPos pos, BlockState blockState) {
+        super(AetherBlockEntityTypes.SUN_ALTAR.get(), pos, blockState);
     }
 
-    @Nonnull
+    @Override
+    public Component getName() {
+        return this.name != null ? this.name : Component.translatable("menu." + Aether.MODID + ".sun_altar");
+    }
+
+    public void setCustomName(@Nullable Component name) {
+        this.name = name;
+    }
+
+    @Nullable
+    @Override
+    public Component getCustomName() {
+        return this.name;
+    }
+
     @Override
     public CompoundTag getUpdateTag() {
         return this.saveWithoutMetadata();
@@ -34,18 +47,18 @@ public class SunAltarBlockEntity extends BlockEntity implements Nameable {
     }
 
     @Override
-    protected void saveAdditional(@Nonnull CompoundTag pTag) {
-        super.saveAdditional(pTag);
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
         if (this.hasCustomName()) {
-            pTag.putString("CustomName", Component.Serializer.toJson(this.name));
+            tag.putString("CustomName", Component.Serializer.toJson(this.name));
         }
     }
 
     @Override
-    public void load(@Nonnull CompoundTag pTag) {
-        super.load(pTag);
-        if (pTag.contains("CustomName", 8)) {
-            this.name = Component.Serializer.fromJson(pTag.getString("CustomName"));
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        if (tag.contains("CustomName", 8)) {
+            this.name = Component.Serializer.fromJson(tag.getString("CustomName"));
         }
     }
 
@@ -55,23 +68,8 @@ public class SunAltarBlockEntity extends BlockEntity implements Nameable {
     }
 
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet) {
+    public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet) {
         CompoundTag compound = packet.getTag();
         this.handleUpdateTag(compound);
-    }
-
-    @Nonnull
-    public Component getName() {
-        return this.name != null ? this.name : Component.translatable("menu." + Aether.MODID + ".sun_altar");
-    }
-
-    public void setCustomName(@Nullable Component pName) {
-        this.name = pName;
-    }
-
-    @Nullable
-    @Override
-    public Component getCustomName() {
-        return this.name;
     }
 }

@@ -7,6 +7,7 @@ import com.gildedgames.aether.capability.player.AetherPlayer;
 import com.gildedgames.aether.util.EquipmentUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -32,7 +33,9 @@ public class PlayerWingsLayer<T extends Player, M extends PlayerModel<T>> extend
     public void render(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, @Nonnull T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (EquipmentUtil.hasFullValkyrieSet(entity)) {
             AetherPlayer.get(entity).ifPresent((aetherPlayer) -> {
-                this.handleWingRotation(aetherPlayer);
+                if (!Minecraft.getInstance().isPaused()) {
+                    this.handleWingRotation(aetherPlayer);
+                }
                 this.setupWingRotation(entity, aetherPlayer.getWingRotation());
                 VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutoutNoCull(VALKYRIE_TEXTURE));
                 this.wings.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
@@ -43,14 +46,14 @@ public class PlayerWingsLayer<T extends Player, M extends PlayerModel<T>> extend
     private void handleWingRotation(AetherPlayer aetherPlayer) {
         if (EquipmentUtil.hasFullValkyrieSet(aetherPlayer.getPlayer())) {
             if (!aetherPlayer.getPlayer().isOnGround() && (aetherPlayer.getPlayer().getFirstPassenger() != null && !aetherPlayer.getPlayer().getFirstPassenger().isOnGround())) {
-                aetherPlayer.setWingRotation(aetherPlayer.getWingRotation() + (0.75F / 20.0F));
+                aetherPlayer.setWingRotation(aetherPlayer.getWingRotation() + (0.75F / 4.0F));
             } else {
-                aetherPlayer.setWingRotation(aetherPlayer.getWingRotation() + (0.15F / 20.0F));
+                aetherPlayer.setWingRotation(aetherPlayer.getWingRotation() + (0.15F / 4.0F));
             }
             if (aetherPlayer.getWingRotation() > (Math.PI * 2.0F)) {
                 aetherPlayer.setWingRotation(aetherPlayer.getWingRotation() - ((float) Math.PI * 2.0F));
             } else {
-                aetherPlayer.setWingRotation(aetherPlayer.getWingRotation() + (0.1F / 20.0F));
+                aetherPlayer.setWingRotation(aetherPlayer.getWingRotation() + (0.1F / 4.0F));
             }
         } else {
             aetherPlayer.setWingRotation(0.0F);

@@ -6,10 +6,8 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import org.apache.commons.lang3.tuple.Pair;
 
-public class AetherConfig
-{
-    public static class Common
-    {
+public class AetherConfig {
+    public static class Common {
         public final ConfigValue<Boolean> enable_bed_explosions;
         public final ConfigValue<Boolean> start_with_portal;
         public final ConfigValue<Boolean> enable_startup_loot;
@@ -17,6 +15,8 @@ public class AetherConfig
         public final ConfigValue<Boolean> tools_debuff;
         public final ConfigValue<Boolean> healing_gummy_swets;
         public final ConfigValue<Boolean> temporary_ice_accessory_conversion;
+        public final ConfigValue<Integer> hammer_of_notch_cooldown;
+        public final ConfigValue<Integer> cloud_staff_cooldown;
         public final ConfigValue<Integer> maximum_life_shards;
         public final ConfigValue<Boolean> repeat_sun_spirit_dialogue;
 
@@ -70,6 +70,14 @@ public class AetherConfig
                     .comment("Ice Accessories will create temporary blocks instead of permanent blocks from conversions")
                     .translation("config.aether.common.gameplay.temporary_ice_accessory_conversion")
                     .define("Temporary blocks from Ice Accessories", false);
+            hammer_of_notch_cooldown = builder
+                    .comment("Determines the cooldown in ticks for the Hammer of Notch's ability")
+                    .translation("config.aether.common.gameplay.hammer_of_notch_cooldown")
+                    .define("Cooldown for the Hammer of Notch", 200);
+            cloud_staff_cooldown = builder
+                    .comment("Determines the cooldown in ticks for the Cloud Staff's ability")
+                    .translation("config.aether.common.gameplay.cloud_staff_cooldown")
+                    .define("Cooldown for the Cloud Staff", 40);
             repeat_sun_spirit_dialogue = builder
                     .comment("Determines whether the Sun Spirit's dialogue when meeting him should play through every time you meet him")
                     .translation("config.aether.common.gameplay.repeat_sun_spirit_dialogue")
@@ -138,8 +146,7 @@ public class AetherConfig
         }
     }
 
-    public static class Client
-    {
+    public static class Client {
         public final ConfigValue<Boolean> legacy_models;
         public final ConfigValue<Boolean> disable_aether_skybox;
 
