@@ -45,16 +45,16 @@ public class SilverDungeonStructure extends Structure {
         Direction direction = rotation.rotate(Direction.SOUTH);
         SilverDungeonPieces.BossRoom bossRoom = new SilverDungeonPieces.BossRoom(
                 context.structureTemplateManager(),
-                new ResourceLocation(Aether.MODID, "silver_dungeon/back"),
+                "back",
                 elevatedPos,
                 rotation
         );
         builder.addPiece(bossRoom);
         int xOffset = direction.getStepX() * bossRoom.getBoundingBox().getXSpan();
         int zOffset = direction.getStepZ() * bossRoom.getBoundingBox().getZSpan();
-        SilverDungeonPieces.SilverDungeonPiece front = new SilverDungeonPieces.SilverDungeonPiece(
+        SilverDungeonPieces.TemplePiece front = new SilverDungeonPieces.TemplePiece(
                 context.structureTemplateManager(),
-                new ResourceLocation(Aether.MODID, "silver_dungeon/front"),
+                "front",
                 elevatedPos.offset(xOffset, 0, zOffset),
                 rotation
         );

@@ -21,12 +21,12 @@ public class AetherStructureSets {
                     new RandomSpreadStructurePlacement(12, 10, RandomSpreadType.LINEAR, 32146754)
             )
     );
-    /*public static final ResourceKey<StructureSet> SILVER_DUNGEON = register("silver_dungeon",
+    public static final ResourceKey<StructureSet> SILVER_DUNGEON = register("silver_dungeon",
             new StructureSet(
                     AetherStructures.dataHolder(AetherStructures.SILVER_DUNGEON),
                     new RandomSpreadStructurePlacement(16, 6, RandomSpreadType.LINEAR, 4325806)
             )
-    );*/
+    );
     public static final ResourceKey<StructureSet> GOLD_DUNGEON = register("gold_dungeon",
             new StructureSet(
                     AetherStructures.dataHolder(AetherStructures.GOLD_DUNGEON),

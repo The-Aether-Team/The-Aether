@@ -32,13 +32,16 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 import net.minecraft.world.phys.AABB;
 
 import java.util.ArrayList;
+import java.util.function.Function;
 
 public class SilverDungeonPieces {
     public static final RuleProcessor LOCKED_ANGELIC_STONE = new RuleProcessor(ImmutableList.of(
             new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.LOCKED_ANGELIC_STONE.get(), 0.2F), AlwaysTrueTest.INSTANCE, AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get().defaultBlockState()),
+            new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.TRAPPED_ANGELIC_STONE.get(), 0.2F), AlwaysTrueTest.INSTANCE, AetherBlocks.TRAPPED_LIGHT_ANGELIC_STONE.get().defaultBlockState()),
             new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.HOLYSTONE.get(), 0.3F), AlwaysTrueTest.INSTANCE, AetherBlocks.MOSSY_HOLYSTONE.get().defaultBlockState())
     ));
     public static final BlockRotProcessor CLOUD_DECAY = new BlockRotProcessor(0.2F);
+
     /**
      * For testing the silver dungeon grid.
      */
@@ -49,26 +52,14 @@ public class SilverDungeonPieces {
         randomsource.setSeed(i);
     }
 
-    static class FloorGrid {
-        private final int[][] grid;
-        private final int width;
-        private final int length;
+    public static class TemplePiece extends SilverDungeonPiece {
 
-        public FloorGrid(int width, int length) {
-            this.grid = new int[width][length];
-            this.width = width;
-            this.length = length;
-        }
-    }
-
-    public static class SilverDungeonPiece extends TemplateStructurePiece {
-
-        public SilverDungeonPiece(StructureTemplateManager manager, ResourceLocation id, BlockPos pos, Rotation rotation) {
-            super(AetherStructurePieceTypes.SILVER_DUNGEON_PIECE.get(), 0, manager, id, id.toString(), makeSettings().setRotation(rotation), pos);
+        public TemplePiece(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
+            super(AetherStructurePieceTypes.SILVER_DUNGEON_PIECE.get(), manager, name, makeSettings().setRotation(rotation), pos);
             this.setOrientation(rotation.rotate(Direction.SOUTH));
         }
 
-        public SilverDungeonPiece(StructurePieceSerializationContext context, CompoundTag tag) {
+        public TemplePiece(StructurePieceSerializationContext context, CompoundTag tag) {
             super(AetherStructurePieceTypes.SILVER_DUNGEON_PIECE.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
         }
 
@@ -98,10 +89,10 @@ public class SilverDungeonPieces {
         }
     }
 
-    public static class BossRoom extends TemplateStructurePiece {
+    public static class BossRoom extends SilverDungeonPiece {
 
-        public BossRoom(StructureTemplateManager manager, ResourceLocation id, BlockPos pos, Rotation rotation) {
-            super(AetherStructurePieceTypes.SILVER_BOSS_ROOM.get(), 0, manager, id, id.toString(), makeSettings().setRotation(rotation), pos);
+        public BossRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
+            super(AetherStructurePieceTypes.SILVER_BOSS_ROOM.get(), manager, name, makeSettings().setRotation(rotation), pos);
             this.setOrientation(rotation.rotate(Direction.SOUTH));
         }
 
@@ -126,8 +117,7 @@ public class SilverDungeonPieces {
                 queen.finalizeSpawn(level, level.getCurrentDifficultyAt(pos), MobSpawnType.STRUCTURE, null, null);
                 level.getLevel().addFreshEntity(queen);
                 level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
-            }
-            else if (name.equals("Treasure Chest")) {
+            } else if (name.equals("Treasure Chest")) {
                 BlockPos chest = pos.below();
                 RandomizableContainerBlockEntity.setLootTable(level, random, chest, AetherLoot.SILVER_DUNGEON_REWARD);
                 TreasureChestBlockEntity.setDungeonType(level, chest, new ResourceLocation(Aether.MODID, "silver"));
@@ -142,10 +132,10 @@ public class SilverDungeonPieces {
         }
     }
 
-    public static class CloudBed extends TemplateStructurePiece {
+    public static class CloudBed extends SilverDungeonPiece {
 
         public CloudBed(StructureTemplateManager pStructureTemplateManager, String name, StructurePlaceSettings pPlaceSettings, BlockPos pTemplatePosition) {
-            super(AetherStructurePieceTypes.CLOUD_BED.get(), 0, pStructureTemplateManager, new ResourceLocation(name), name, pPlaceSettings, pTemplatePosition);
+            super(AetherStructurePieceTypes.CLOUD_BED.get(), pStructureTemplateManager, name, pPlaceSettings, pTemplatePosition);
         }
 
         public CloudBed(StructurePieceSerializationContext context, CompoundTag tag) {
@@ -179,6 +169,23 @@ public class SilverDungeonPieces {
         @Override
         public void postProcess(WorldGenLevel pLevel, StructureManager pStructureManager, ChunkGenerator pGenerator, RandomSource pRandom, BoundingBox pBox, ChunkPos pChunkPos, BlockPos pPos) {
 
+        }
+    }
+
+    public static abstract class SilverDungeonPiece extends TemplateStructurePiece {
+
+        public SilverDungeonPiece(StructurePieceType type, StructureTemplateManager manager, String name, StructurePlaceSettings settings, BlockPos pos) {
+            super(type, 0, manager, new ResourceLocation(Aether.MODID, "silver_dungeon/" + name), name, settings, pos);
+        }
+
+        public SilverDungeonPiece(StructurePieceType type, CompoundTag tag, StructureTemplateManager manager, Function<ResourceLocation, StructurePlaceSettings> settingsFactory) {
+            super(type, tag, manager, settingsFactory.andThen(settings -> settings.setRotation(Rotation.valueOf(tag.getString("Rotation")))));
+        }
+
+        @Override
+        protected void addAdditionalSaveData(StructurePieceSerializationContext context, CompoundTag tag) {
+            super.addAdditionalSaveData(context, tag);
+            tag.putString("Rotation", this.placeSettings.getRotation().name());
         }
     }
 
