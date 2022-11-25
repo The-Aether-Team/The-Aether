@@ -606,8 +606,9 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
 
         @Override
         public void tick() {
+            boolean recomputedPath = false;
             LivingEntity target = this.slider.getTarget();
-            if (this.targetPoints.isEmpty()/* || --this.ticksUntilRecomputePath <= 0*/) {
+            if (--this.ticksUntilRecomputePath <= 0 || !this.slider.moveControl.hasWanted() && this.targetPoints.isEmpty()) {
                 this.ticksUntilRecomputePath = 10;
                 this.targetPoints.clear();
                 BlockPos targetPos = target.blockPosition();
@@ -641,11 +642,13 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                 }
                 offset.move(direction.getOpposite());
                 this.targetPoints.add(currentPos.offset(offset));
+                recomputedPath = true;
             }
-
-            // Move along the calculated path
-            BlockPos pos = this.targetPoints.remove(0);
-            this.slider.moveControl.setWantedPosition(pos.getX(), pos.getY(), pos.getZ(), 1);
+            if (recomputedPath || !this.slider.moveControl.hasWanted()) {
+                // Move along the calculated path
+                BlockPos pos = this.targetPoints.remove(0);
+                this.slider.moveControl.setWantedPosition(pos.getX(), pos.getY(), pos.getZ(), 1);
+            }
         }
 
         public Direction calculateDirection(double x, double y, double z) {
