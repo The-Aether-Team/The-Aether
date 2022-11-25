@@ -44,9 +44,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
@@ -55,7 +53,6 @@ import net.minecraftforge.event.ForgeEventFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.EnumSet;
 
 public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
     public static final EntityDataAccessor<Boolean> DATA_AWAKE_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.BOOLEAN);
@@ -145,9 +142,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         if (!this.level.isClientSide() && this.getDungeon() == null && (this.getTarget() == null || !this.getTarget().isAlive() || this.getTarget().getHealth() <= 0.0)) {
             this.reset();
         }
-        /*if (!this.canMove) {
-            this.setDeltaMovement(Vec3.ZERO);
-        }*/
         this.collide();
         this.evaporate();
 
@@ -644,126 +638,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         }
     }
 
-    public static class SliderLegacyMoveGoal extends Goal {
-        protected final Slider slider;
-
-        public SliderLegacyMoveGoal(Slider slider) {
-            this.slider = slider;
-            this.setFlags(EnumSet.of(Goal.Flag.MOVE));
-        }
-
-        @Override
-        public boolean canUse() {
-            return this.slider.isAwake() && this.slider.getTarget() != null;
-        }
-
-        @Override
-        public boolean canContinueToUse() {
-            return this.slider.isAwake() && this.slider.getTarget() != null;
-        }
-
-        @Override
-        public void stop() {
-            this.slider.stop();
-        }
-
-        /** Calculates what direction the slider should slide */
-        /*public Direction calculateDirection() {
-            Direction newDirection;
-
-            double xDiff = Math.abs(this.slider.position().x() - this.slider.getTarget().position().x());
-            double yDiff = Math.abs(this.slider.getBoundingBox().minY - this.slider.getTarget().getBoundingBox().minY);
-            double zDiff = Math.abs(this.slider.position().z() - this.slider.getTarget().position().z());
-
-            if (xDiff > zDiff) {
-                newDirection = Direction.EAST;
-                if (this.slider.position().x() > this.slider.getTarget().position().x()) {
-                    newDirection = Direction.WEST;
-                }
-            } else {
-                newDirection = Direction.SOUTH;
-                if (this.slider.position().z() > this.slider.getTarget().position().z()) {
-                    newDirection = Direction.NORTH;
-                }
-            }
-
-            if // Dungeon exists
-            ((((this.slider.getDungeon() != null &&
-            // Target is too high to be hit if the Slider was on the floor
-            this.slider.getTarget().getBoundingBox().minY >= (this.getFloorLevel() + this.slider.getBoundingBox().getYsize()))
-            // The target is above the slider
-            && (this.slider.getBoundingBox().maxY - this.slider.getTarget().getBoundingBox().minY) <= 0)
-            // The target is farther away on the Y axis
-            && (yDiff > xDiff && yDiff > zDiff))) {
-                newDirection = Direction.UP;
-            }
-
-            if // Slider is much further above than any other axis
-            ((((yDiff > (xDiff * 0.75F) && yDiff > (zDiff * 0.75F))
-            // slider is above target
-            && (this.slider.getBoundingBox().minY > this.slider.getTarget().getBoundingBox().minY))
-            // Slider has a dungeon
-            || (this.slider.getDungeon() != null
-            // Target is low enough to be hit if the Slider is on the ground
-            && (((this.slider.getTarget().getBoundingBox().minY < (this.getFloorLevel() + (this.slider.getBoundingBox().getYsize()))))
-            // Slider is not already on the floor
-            && this.slider.getBoundingBox().minY > this.getFloorLevel())))) {
-                newDirection = Direction.DOWN;
-            }
-            return newDirection;
-        }*/
-
-        /*public boolean reachedTarget() {
-            if (this.slider.getDirection() == Direction.UP) {
-                return
-                // If the dungeon exists
-                (this.slider.getDungeon() != null ?
-                // Return whether or not the player is low enough to be hit from the floor
-                (((this.slider.getTarget().getBoundingBox().minY < (this.getFloorLevel() + this.slider.getBoundingBox().getYsize()))
-                // Or/Otherwise whether or not the slider has reached the player's hitbox
-                || ((this.slider.getBoundingBox().minY > this.slider.getTarget().getBoundingBox().minY)))
-                // Or the slider has reached the dungeon ceiling
-                || this.slider.getBoundingBox().maxY >= this.getCeilingLevel())
-                : (this.slider.getBoundingBox().minY > this.slider.getTarget().getBoundingBox().minY));
-            } else if (this.slider.direction == Direction.DOWN) {
-                return
-                // If the dungeon exists, and the player's height is low enough that it could be hit by the slider if it was on the floor (the bottom of the player's hitbox is below where the top of the slider's hitbox would be if it was on the floor)
-                (this.slider.getDungeon() != null &&
-                (this.slider.getTarget().getBoundingBox().minY < (this.getFloorLevel() + this.slider.getBoundingBox().getYsize())))
-                // then return whether or not the slider is on the ground already
-                ? this.slider.getBoundingBox().minY <= this.getFloorLevel() :
-                // Otherwise, return the default logic (whether or not the Slider is above the player)
-                ((this.slider.getBoundingBox().minY <= this.slider.getTarget().getBoundingBox().minY));
-
-            } else if (this.slider.getDirection() == Direction.EAST) {
-                return  (this.slider.position().x() > this.slider.getTarget().position().x() + 0.125);
-            } else if (this.slider.getDirection() == Direction.WEST) {
-                return (this.slider.position().x() < this.slider.getTarget().position().x() - 0.125);
-            } else if (this.slider.getDirection() == Direction.SOUTH) {
-                return (this.slider.position().z() > this.slider.getTarget().position().z() + 0.125);
-            } else if (this.slider.getDirection() == Direction.NORTH) {
-                return  (this.slider.position().z() < this.slider.getTarget().position().z() - 0.125);
-            }
-            return false;
-        }*/
-
-        /** Sets the slider's position to the block it is on, because it sometimes moves slightly up (or possibly down, added just in case) */
-        /*protected void alignNearY() {
-            if (this.slider.getY() % 1 != 0.0) {
-                if (this.slider.getY() % 1 <= 0.05 && (this.slider.direction.getAxis() != Direction.Axis.Y)) {
-                    this.slider.setPos(this.slider.getX(), Mth.floor(this.slider.getY()), this.slider.getZ());
-                } else if (this.slider.getY() % 1 >= 0.95 && (this.slider.direction.getAxis() != Direction.Axis.Y)) {
-                    this.slider.setPos(this.slider.getX(), Mth.ceil(this.slider.getY()), this.slider.getZ());
-                }
-            }
-        }*/
-
-        /** Returns the decrease (negative) that the move delay should decrease each tick */
-        protected int getMoveDelayDecrease() {
-            return (this.slider.isCritical() && this.slider.moveDelay > 1 && this.slider.random.nextInt(2) == 0) ? 2 : 1;
-        }
-    }
-
     public static class SliderMoveControl extends MoveControl {
         private Slider slider;
         private float velocity;
@@ -781,20 +655,21 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         public void tick() {
             if (this.operation == Operation.MOVE_TO) {
                 if (this.moveDelay > 0) {
-                    this.moveDelay--;
+                    if (--this.moveDelay == 0) {
+                        this.slider.playSound(this.slider.getMoveSound(), 2.5F, 1.0F / (this.slider.getRandom().nextFloat() * 0.2F + 0.9F));
+                    }
                 } else {
+                    if (this.crush()) {
+                        this.operation = Operation.WAIT;
+                        this.stop();
+                        return;
+                    }
                     double x = this.getWantedX() - this.slider.getX();
                     double y = this.getWantedY() - this.slider.getY();
                     double z = this.getWantedZ() - this.slider.getZ();
 
                     if (this.moveDir == null) {
                         this.moveDir = this.calculateDirection(x, y, z);
-
-                        if (this.moveDir == null) {
-                            this.operation = Operation.WAIT;
-                            Aether.LOGGER.warn("Couldn't get a direction for the slider!");
-                            return;
-                        }
                     }
 
                     double axisDistance = x * this.moveDir.getStepX()
@@ -841,42 +716,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
             }
         }
 
-        /*@Override
-        public void tick() {
-            if (this.operation == Operation.MOVE_TO) {
-                if (this.moveDelay > 0) {
-                    --this.moveDelay;
-                } else {
-                    boolean crushed = this.crushedBlocks();
-                    if (!crushed) {
-                        if (!this.moving) {
-                            this.slider.playSound(this.slider.getMoveSound(), 2.5F, 1.0F / (this.slider.getRandom().nextFloat() * 0.2F + 0.9F));
-                            this.moving = true;
-                        }
-                        if (this.velocity < this.getMaxVelocity()) {
-                            // The Slider increases its speed based on the speed it has saved
-                            this.velocity += this.getVelocityIncrease();
-                        }
-
-                        double x = this.wantedX - this.mob.getX();
-                        double y = this.wantedY - this.mob.getY();
-                        double z = this.wantedZ - this.mob.getZ();
-
-                        this.slider.setDeltaMovement(new Vec3(x, y, z).normalize().scale(this.velocity));
-                        if (Check for target position) {
-                            this.operation = Operation.WAIT;
-                            this.moveDelay = this.calculateMoveDelay();
-                            this.moving = false;
-                            this.velocity = 0;
-                        }
-                    }
-                }
-            } else {
-                this.slider.setDeltaMovement(Vec3.ZERO);
-                this.velocity = 0;
-            }
-        }*/
-
         protected float getVelocityIncrease() {
             return this.slider.isCritical() ? 0.035F : 0.0175F;
         }
@@ -889,69 +728,31 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
             return this.slider.isCritical() ? 4 : 8;
         }
 
-        protected boolean crushedBlocks() {
-            AABB entity = this.slider.getBoundingBox();
-            BlockPos minInside = new BlockPos(entity.minX, entity.minY, entity.minZ);
-            BlockPos maxInside = new BlockPos(Math.ceil(entity.maxX - 1.0), Math.ceil(entity.maxY - 1.0), Math.ceil(entity.maxZ - 1.0));
-            if (this.crush(minInside, maxInside, true)) {
-                return true;
-            } else {
-                BlockPos min;
-                BlockPos max;
-                if (this.slider.getDirection() == Direction.UP) {
-                    min = new BlockPos(entity.minX, entity.maxY, entity.minZ);
-                    max = new BlockPos(Math.ceil(entity.maxX - 1.0), entity.maxY, Math.ceil(entity.maxZ - 1.0));
-                    return this.crush(min, max, false);
-                } else if (this.slider.getDirection() == Direction.DOWN) {
-                    // The Slider does not try to break the dungeon floor
-                    min = new BlockPos(entity.minX, (this.slider.getDungeon() != null ? Math.max(entity.minY - 1.0, this.slider.getDungeon().roomBounds().minY + 1.0F) : entity.minY - 1.0), entity.minZ);
-                    max = new BlockPos(Math.ceil(entity.maxX - 1.0), (this.slider.getDungeon() != null ? Math.min(entity.maxY - 1.0, this.slider.getDungeon().roomBounds().maxY - 1.0F) : entity.maxY - 1.0), Math.ceil(entity.maxZ - 1.0));
-                    return this.crush(min, max, false);
-                } else if (this.slider.getDirection() == Direction.EAST) {
-                    min = new BlockPos(entity.maxX, entity.minY, entity.minZ);
-                    max = new BlockPos(entity.maxX, Math.ceil(entity.maxY - 1.0), Math.ceil(entity.maxZ - 1.0));
-                    return this.crush(min, max, false);
-                } else if (this.slider.getDirection() == Direction.WEST) {
-                    min = new BlockPos(entity.minX - 1.0, entity.minY, entity.minZ);
-                    max = new BlockPos(entity.minX - 1.0, Math.ceil(entity.maxY - 1.0), Math.ceil(entity.maxZ - 1.0));
-                    return this.crush(min, max, false);
-                } else if (this.slider.getDirection() == Direction.SOUTH) {
-                    min = new BlockPos(entity.minX, entity.minY, entity.maxZ);
-                    max = new BlockPos(Math.ceil(entity.maxX - 1.0), Math.ceil(entity.maxY - 1.0), entity.maxZ);
-                    return this.crush(min, max, false);
-                } else if (this.slider.getDirection() == Direction.NORTH) {
-                    min = new BlockPos(entity.minX, entity.minY, entity.minZ - 1.0);
-                    max = new BlockPos(Math.ceil(entity.maxX - 1.0), Math.ceil(entity.maxY - 1.0), entity.minZ - 1.0);
-                    return this.crush(min, max, false);
-                } else {
-                    return false;
-                }
-            }
-        }
-
-        protected boolean crush(BlockPos min, BlockPos max, boolean isInside) {
-            boolean flag = false;
-            if (this.slider.getDeltaMovement().equals(Vec3.ZERO) || isInside) {
-                for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
+        /**
+         * Crushes any blocks in the slider's way.
+         * @return True if there is a collision with a block.
+         */
+        protected boolean crush() {
+            boolean collided = false;
+            boolean crushed = false;
+            if ((this.slider.horizontalCollision || this.slider.verticalCollision) && ForgeEventFactory.getMobGriefingEvent(this.slider.level, this.slider)) {
+                AABB crushBox = this.slider.getBoundingBox().inflate(0.2);
+                for(BlockPos pos : BlockPos.betweenClosed(Mth.floor(crushBox.minX), Mth.floor(crushBox.minY), Mth.floor(crushBox.minZ), Mth.floor(crushBox.maxX), Mth.floor(crushBox.maxY), Mth.floor(crushBox.maxZ))) {
                     BlockState blockState = this.slider.level.getBlockState(pos);
-                    if (!blockState.isAir() && !blockState.is(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)) {
-                        if (ForgeEventFactory.getMobGriefingEvent(this.slider.level, this.slider) && this.slider.getDungeon() != null && this.slider.getDungeon().roomBounds().contains(Vec3.atCenterOf(pos))) {
-                            this.slider.level.destroyBlock(pos, true, this.slider);
-                            this.blockDestroySmoke(pos);
-                            this.slider.level.playSound(null, this.slider.blockPosition(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 3.0F, (0.625F + (this.slider.random.nextFloat() - this.slider.random.nextFloat()) * 0.2F) * 0.7F);
-                            this.slider.playSound(this.slider.getCollideSound(), 2.5F, 1.0F / (this.slider.random.nextFloat() * 0.2F + 0.9F));
-                            this.slider.stop();
-                            flag = true;
+                    if (!blockState.isAir()) {
+                        collided = true;
+                        if (!blockState.is(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)) {
+                            crushed = this.slider.level.destroyBlock(pos, true, this.slider) || crushed;
+                            this.slider.blockDestroySmoke(pos);
                         }
                     }
                 }
             }
-            return flag;
-        }
-
-        /** Destroys a block and spawns smoke. Added so addons can use this private method in their custom Slider AI, if they have one */
-        protected void blockDestroySmoke(BlockPos pos){
-            this.slider.blockDestroySmoke(pos);
+            if (crushed) {
+                this.slider.level.playSound(null, this.slider.blockPosition(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 3.0F, (0.625F + (this.slider.random.nextFloat() - this.slider.random.nextFloat()) * 0.2F) * 0.7F);
+                this.slider.playSound(this.slider.getCollideSound(), 2.5F, 1.0F / (this.slider.random.nextFloat() * 0.2F + 0.9F));
+            }
+            return collided;
         }
     }
 }
