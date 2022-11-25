@@ -182,6 +182,7 @@ public class Aether {
         generator.addProvider(event.includeServer(), new AetherEntityTagData(generator, helper));
         generator.addProvider(event.includeServer(), new AetherFluidTagData(generator, helper));
         generator.addProvider(event.includeServer(), new AetherBiomeTagData(generator, helper));
+        generator.addProvider(event.includeServer(), new AetherStructureTagData(generator, helper));
         generator.addProvider(event.includeServer(), AetherDataGenerators.create(generator, helper, AetherConfiguredFeatures.CONFIGURED_FEATURES, Registry.CONFIGURED_FEATURE_REGISTRY));
         generator.addProvider(event.includeServer(), AetherDataGenerators.create(generator, helper, AetherPlacedFeatures.PLACED_FEATURES, Registry.PLACED_FEATURE_REGISTRY));
         generator.addProvider(event.includeServer(), AetherDataGenerators.create(generator, helper, AetherStructures.STRUCTURES, Registry.STRUCTURE_REGISTRY));

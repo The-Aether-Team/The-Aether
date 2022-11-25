@@ -1,4 +1,4 @@
-package com.gildedgames.aether.mixin.mixins.common;
+package com.gildedgames.aether.mixin.mixins.common.accessor;
 
 
 import net.minecraft.server.level.WorldGenRegion;

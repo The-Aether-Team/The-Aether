@@ -3,7 +3,9 @@ package com.gildedgames.aether.data.resources.builders;
 import com.gildedgames.aether.block.AetherBlockStateProperties;
 import com.gildedgames.aether.world.configuration.AercloudConfiguration;
 import com.gildedgames.aether.world.configuration.AetherLakeConfiguration;
+import com.gildedgames.aether.world.placementmodifier.AetherPlacementModifiers;
 import com.gildedgames.aether.world.placementmodifier.ConfigFilter;
+import com.gildedgames.aether.world.placementmodifier.DungeonBlacklistFilter;
 import com.gildedgames.aether.world.placementmodifier.ImprovedLayerPlacementModifier;
 import com.gildedgames.aether.AetherConfig;
 import com.google.common.collect.ImmutableList;
@@ -34,13 +36,14 @@ public class AetherFeatureBuilders {
 
     // TODO investigate changing this to triangle
     public static List<PlacementModifier> createAercloudPlacements(int height, int chance) {
-        return List.of(HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(height)), InSquarePlacement.spread(), RarityFilter.onAverageOnceEvery(chance));
+        return List.of(HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(height)), InSquarePlacement.spread(), RarityFilter.onAverageOnceEvery(chance), new DungeonBlacklistFilter());
     }
 
     public static List<PlacementModifier> createPinkAercloudPlacements(int height, int chance) {
         return List.of(HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(height)),
                 InSquarePlacement.spread(),
                 RarityFilter.onAverageOnceEvery(chance),
+                new DungeonBlacklistFilter(),
                 new ConfigFilter(AetherConfig.COMMON.generate_pink_aerclouds));
     }
 

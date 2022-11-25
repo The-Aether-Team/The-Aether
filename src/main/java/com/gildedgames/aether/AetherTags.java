@@ -4,6 +4,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.item.Item;
 import net.minecraft.tags.*;
@@ -182,6 +183,14 @@ public class AetherTags {
 
 		private static TagKey<Biome> tag(String name) {
 			return TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Aether.MODID, name));
+		}
+	}
+
+	public static class Structures {
+		public static final TagKey<Structure> DUNGEONS = tag("dungeons");
+
+		private static TagKey<Structure> tag(String name) {
+			return TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(Aether.MODID, name));
 		}
 	}
 }

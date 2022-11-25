@@ -4,10 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.data.resources.builders.AetherFeatureBuilders;
-import com.gildedgames.aether.world.placementmodifier.ConfigFilter;
-import com.gildedgames.aether.world.placementmodifier.ElevationAdjustmentModifier;
-import com.gildedgames.aether.world.placementmodifier.ElevationFilter;
-import com.gildedgames.aether.world.placementmodifier.HolidayFilter;
+import com.gildedgames.aether.world.placementmodifier.*;
 import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.data.generators.AetherDataGenerators;
 import net.minecraft.core.Holder;
@@ -79,6 +76,7 @@ public class AetherPlacedFeatures {
             PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
             new ElevationAdjustmentModifier(UniformInt.of(-4, -2)),
             new ElevationFilter(47, 70),
+            new DungeonBlacklistFilter(),
             BlockPredicateFilter.forPredicate(BlockPredicate.matchesTag(AetherTags.Blocks.QUICKSOIL_CAN_GENERATE)));
     // FIXME once Terrain can go above 63 again, change 47 -> 63
 
@@ -91,6 +89,7 @@ public class AetherPlacedFeatures {
     public static final ResourceKey<PlacedFeature> WATER_SPRING_PLACEMENT = register("water_spring", AetherConfiguredFeatures.dataHolder(AetherConfiguredFeatures.WATER_SPRING_CONFIGURATION),
             CountPlacement.of(25),
             InSquarePlacement.spread(),
+            new DungeonBlacklistFilter(),
             HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(192)), BiomeFilter.biome());
 
     public static final ResourceKey<PlacedFeature> ORE_AETHER_DIRT_PLACEMENT = register("aether_dirt_ore", AetherConfiguredFeatures.dataHolder(AetherConfiguredFeatures.ORE_AETHER_DIRT_CONFIGURATION),
