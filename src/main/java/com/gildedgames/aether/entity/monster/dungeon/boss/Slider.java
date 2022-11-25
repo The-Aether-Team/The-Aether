@@ -7,7 +7,6 @@ import com.gildedgames.aether.api.DungeonTracker;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.BossMob;
-import com.gildedgames.aether.entity.ai.controller.BlankMoveControl;
 import com.gildedgames.aether.entity.ai.goal.target.InBossRoomTargetGoal;
 import com.gildedgames.aether.entity.ai.goal.target.MostDamageTargetGoal;
 import com.gildedgames.aether.entity.ai.navigator.AxisAlignedPathNavigation;
@@ -638,7 +637,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         public void tick() {
             LivingEntity target = this.slider.getTarget();
             this.slider.moveControl.setWantedPosition(target.getX(), target.getY(), target.getZ(), 1);
-//            this.slider.navigation.moveTo(this.slider.getTarget(), 1);
+//            this.slider.navigation.moveTo(target, 1);
             /*LivingEntity target = this.slider.getTarget();
             Path path = this.slider.navigation.createPath(ImmutableSet.of(target.blockPosition(), target.blockPosition().offset(-3, 0, -3)), 1);
             this.slider.navigation.moveTo(path, 1);*/
@@ -798,12 +797,10 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                         }
                     }
 
-                    Vec3 targetPos = new Vec3(this.getWantedX(), this.getWantedY(), this.getWantedZ());
-
-                    double axisDistance = Math.abs(x * this.moveDir.getStepX())
-                            + Math.abs(y * this.moveDir.getStepY())
-                            + Math.abs(z * this.moveDir.getStepZ());
-                    if (axisDistance < 1) {
+                    double axisDistance = x * this.moveDir.getStepX()
+                            + y * this.moveDir.getStepY()
+                            + z * this.moveDir.getStepZ();
+                    if (axisDistance < 0.1) {
                         this.operation = Operation.WAIT;
                         this.stop();
                         return;
