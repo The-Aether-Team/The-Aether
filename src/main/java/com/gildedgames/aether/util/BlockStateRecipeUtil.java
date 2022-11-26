@@ -1,22 +1,28 @@
 package com.gildedgames.aether.util;
 
 import com.gildedgames.aether.recipe.BlockPropertyPair;
-import com.google.common.collect.Maps;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import net.minecraft.commands.CommandFunction;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
@@ -24,6 +30,18 @@ import java.util.Map;
 import java.util.Optional;
 
 public class BlockStateRecipeUtil {
+    public static void executeFunction(Level level, BlockPos pos, CommandFunction.CacheableFunction function) {
+        if (level instanceof ServerLevel serverLevel && function != null) {
+            MinecraftServer minecraftServer = serverLevel.getServer();
+            function.get(minecraftServer.getFunctions()).ifPresent(command -> {
+                CommandSourceStack context = minecraftServer.getFunctions().getGameLoopSender()
+                        .withPosition(Vec3.atBottomCenterOf(pos))
+                        .withLevel(serverLevel);
+                minecraftServer.getFunctions().execute(command, context);
+            });
+        }
+    }
+
     public static void writePair(FriendlyByteBuf buf, BlockPropertyPair pair) {
         if (pair.block().defaultBlockState().isAir() && pair.properties().isEmpty()) {
             buf.writeBoolean(false);
@@ -97,6 +115,12 @@ public class BlockStateRecipeUtil {
             ResourceLocation tagLocation = buf.readResourceLocation();
             return TagKey.create(Registry.BIOME_REGISTRY, tagLocation);
         }
+    }
+
+    public static CommandFunction.CacheableFunction readFunction(FriendlyByteBuf buf) {
+        String functionString = buf.readUtf();
+        ResourceLocation functionLocation = functionString.isEmpty() ? null : new ResourceLocation(functionString);
+        return functionLocation == null ? CommandFunction.CacheableFunction.NONE : new CommandFunction.CacheableFunction(functionLocation);
     }
 
     public static BlockPropertyPair pairFromJson(JsonObject json) {

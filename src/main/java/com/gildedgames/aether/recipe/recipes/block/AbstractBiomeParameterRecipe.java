@@ -2,6 +2,7 @@ package com.gildedgames.aether.recipe.recipes.block;
 
 import com.gildedgames.aether.recipe.BlockPropertyPair;
 import com.gildedgames.aether.recipe.BlockStateIngredient;
+import net.minecraft.commands.CommandFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -17,8 +18,8 @@ public abstract class AbstractBiomeParameterRecipe extends AbstractBlockStateRec
     private final ResourceKey<Biome> biomeKey;
     private final TagKey<Biome> biomeTag;
 
-    public AbstractBiomeParameterRecipe(RecipeType<?> type, ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result) {
-        super(type, id, ingredient, result);
+    public AbstractBiomeParameterRecipe(RecipeType<?> type, ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, CommandFunction.CacheableFunction function) {
+        super(type, id, ingredient, result, function);
         this.biomeKey = biomeKey;
         this.biomeTag = biomeTag;
     }
