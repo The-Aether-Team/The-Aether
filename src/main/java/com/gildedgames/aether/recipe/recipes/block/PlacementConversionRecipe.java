@@ -21,12 +21,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class PlacementConversionRecipe extends AbstractBiomeParameterRecipe {
-    public PlacementConversionRecipe(ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, CommandFunction.CacheableFunction mcfunction) {
-        super(AetherRecipeTypes.PLACEMENT_CONVERSION.get(), id, biomeKey, biomeTag, ingredient, result, mcfunction);
+    public PlacementConversionRecipe(ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, CommandFunction.CacheableFunction function) {
+        super(AetherRecipeTypes.PLACEMENT_CONVERSION.get(), id, biomeKey, biomeTag, ingredient, result, function);
     }
 
-    public PlacementConversionRecipe(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result, CommandFunction.CacheableFunction mcfunction) {
-        this(id, null, null, ingredient, result, mcfunction);
+    public PlacementConversionRecipe(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result, CommandFunction.CacheableFunction function) {
+        this(id, null, null, ingredient, result, function);
     }
 
     public boolean convert(Level level, BlockPos pos, BlockState oldState) {

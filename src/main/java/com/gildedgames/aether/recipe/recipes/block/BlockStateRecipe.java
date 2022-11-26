@@ -19,7 +19,7 @@ public interface BlockStateRecipe extends Recipe<Container> {
 
     BlockState getResultState(BlockState originalState);
 
-    CommandFunction.CacheableFunction getMcfunction();
+    CommandFunction.CacheableFunction getFunction();
 
     @Override
     default boolean matches(@Nonnull Container container, @Nonnull Level level) {

@@ -1,8 +1,11 @@
 package com.gildedgames.aether.block;
 
 import com.gildedgames.aether.event.events.FreezeEvent;
+import com.gildedgames.aether.util.BlockStateRecipeUtil;
 import com.gildedgames.aether.util.ConstantsUtil;
 import net.minecraft.commands.CommandFunction;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.LevelAccessor;
@@ -108,12 +111,12 @@ public interface FreezingBehavior<T> {
      * @param pos The {@link BlockPos} to freeze at.
      * @param oldBlockState The original {@link BlockState} being frozen.
      * @param newBlockState The new {@link BlockState} to freeze into.
-     * @param mcfunction The {@link CommandFunction.CacheableFunction} to run after freezing.
+     * @param function The {@link CommandFunction.CacheableFunction} to run after freezing.
      * @param source The source causing the freezing, which is accepted as {@link T}.
      * @param flag The {@link Integer} placement flag.
      * @return An {@link Integer} 0 if the block failed to freeze or 1 if it succeeded
      */
-    default int freezeBlockAt(Level level, BlockPos pos, BlockState oldBlockState, BlockState newBlockState, @Nullable CommandFunction.CacheableFunction mcfunction, T source, int flag) {
+    default int freezeBlockAt(Level level, BlockPos pos, BlockState oldBlockState, BlockState newBlockState, @Nullable CommandFunction.CacheableFunction function, T source, int flag) {
         FreezeEvent event = this.onFreeze(level, pos, oldBlockState, newBlockState, source);
         if (!event.isCanceled()) {
             level.setBlock(pos, newBlockState, flag);
@@ -123,14 +126,7 @@ public interface FreezingBehavior<T> {
             if (oldBlockState.getFluidState().is(FluidTags.LAVA)) {
                 level.playSound(null, pos, SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
             }
-            var serverLevel = (ServerLevel) level;
-            var server = serverLevel.getServer();
-            mcfunction.get(server.getFunctions()).ifPresent(command -> {
-                var context = server.getFunctions().getGameLoopSender()
-                        .withPosition(Vec3.atBottomCenterOf(pos))
-                        .withLevel(serverLevel);
-                server.getFunctions().execute(command, context);
-            });
+            BlockStateRecipeUtil.executeFunction(level, pos, function);
             return 1;
         }
         return 0;

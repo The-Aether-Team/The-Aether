@@ -39,11 +39,11 @@ public class BlockStateRecipeSerializer<T extends AbstractBlockStateRecipe> impl
             throw new JsonSyntaxException("Expected result to be object");
         }
 
-        var mcfunctionIdString = GsonHelper.getAsString(serializedRecipe, "mcfunction", null);
-        var mcfunctionId = mcfunctionIdString == null ? null : new ResourceLocation(mcfunctionIdString);
-        var mcfunction = mcfunctionId == null ? CommandFunction.CacheableFunction.NONE : new CommandFunction.CacheableFunction(mcfunctionId);
+        String functionString = GsonHelper.getAsString(serializedRecipe, "mcfunction", null);
+        ResourceLocation functionLocation = functionString == null ? null : new ResourceLocation(functionString);
+        CommandFunction.CacheableFunction function = functionLocation == null ? CommandFunction.CacheableFunction.NONE : new CommandFunction.CacheableFunction(functionLocation);
 
-        return this.factory.create(recipeId, ingredient, result, mcfunction);
+        return this.factory.create(recipeId, ingredient, result, function);
     }
 
     @Nullable
@@ -51,13 +51,16 @@ public class BlockStateRecipeSerializer<T extends AbstractBlockStateRecipe> impl
     public T fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull FriendlyByteBuf buf) {
         BlockStateIngredient ingredient = BlockStateIngredient.fromNetwork(buf);
         BlockPropertyPair result = BlockStateRecipeUtil.readPair(buf);
-        return this.factory.create(recipeId, ingredient, result, CommandFunction.CacheableFunction.NONE);
+        CommandFunction.CacheableFunction function = BlockStateRecipeUtil.readFunction(buf);
+        return this.factory.create(recipeId, ingredient, result, function);
     }
 
     @Override
     public void toNetwork(@Nonnull FriendlyByteBuf buf, T recipe) {
         recipe.getIngredient().toNetwork(buf);
         BlockStateRecipeUtil.writePair(buf, recipe.getResult());
+        CommandFunction.CacheableFunction function = recipe.getFunction();
+        buf.writeUtf(function != null && function.getId() != null ? function.getId().toString() : "");
     }
 
     public interface CookieBaker<T extends AbstractBlockStateRecipe> {

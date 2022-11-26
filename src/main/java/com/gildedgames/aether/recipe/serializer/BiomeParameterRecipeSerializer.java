@@ -31,7 +31,7 @@ public class BiomeParameterRecipeSerializer<T extends AbstractBiomeParameterReci
         ResourceKey<Biome> biomeKey = biomeRecipeData.getLeft();
         TagKey<Biome> biomeTag = biomeRecipeData.getRight();
         T recipe = super.fromJson(recipeId, serializedRecipe);
-        return this.factory.create(recipeId, biomeKey, biomeTag, recipe.getIngredient(), recipe.getResult(), recipe.getMcfunction());
+        return this.factory.create(recipeId, biomeKey, biomeTag, recipe.getIngredient(), recipe.getResult(), recipe.getFunction());
     }
 
     @Nullable
@@ -41,7 +41,8 @@ public class BiomeParameterRecipeSerializer<T extends AbstractBiomeParameterReci
         TagKey<Biome> biomeTag = BlockStateRecipeUtil.readBiomeTag(buf);
         BlockStateIngredient ingredient = BlockStateIngredient.fromNetwork(buf);
         BlockPropertyPair result = BlockStateRecipeUtil.readPair(buf);
-        return this.factory.create(recipeId, biomeKey, biomeTag, ingredient, result, CommandFunction.CacheableFunction.NONE);
+        CommandFunction.CacheableFunction function = BlockStateRecipeUtil.readFunction(buf);
+        return this.factory.create(recipeId, biomeKey, biomeTag, ingredient, result, function);
     }
 
     @Override

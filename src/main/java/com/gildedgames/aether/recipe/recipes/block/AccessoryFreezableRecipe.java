@@ -12,8 +12,8 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import javax.annotation.Nonnull;
 
 public class AccessoryFreezableRecipe extends AbstractBlockStateRecipe {
-    public AccessoryFreezableRecipe(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result, CommandFunction.CacheableFunction mcfunction) {
-        super(AetherRecipeTypes.ACCESSORY_FREEZABLE.get(), id, ingredient, result, mcfunction);
+    public AccessoryFreezableRecipe(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result, CommandFunction.CacheableFunction function) {
+        super(AetherRecipeTypes.ACCESSORY_FREEZABLE.get(), id, ingredient, result, function);
     }
 
     @Nonnull

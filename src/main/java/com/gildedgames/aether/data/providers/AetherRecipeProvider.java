@@ -10,7 +10,6 @@ import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.recipe.conditions.ConfigCondition;
 import net.minecraft.data.recipes.*;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.biome.Biome;
@@ -415,10 +414,6 @@ public abstract class AetherRecipeProvider extends RecipeProvider
 
     public BlockStateRecipeBuilder ambrosiumEnchanting(Block result, Block ingredient) {
         return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipeSerializers.AMBROSIUM_ENCHANTING.get());
-    }
-
-    public BlockStateRecipeBuilder ambrosiumEnchanting(Block result, Block ingredient, ResourceLocation mcfunction) {
-        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipeSerializers.AMBROSIUM_ENCHANTING.get(), mcfunction);
     }
 
     public BlockStateRecipeBuilder swetBallConversion(Block result, Block ingredient) {

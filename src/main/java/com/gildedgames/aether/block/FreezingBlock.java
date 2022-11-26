@@ -49,8 +49,8 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
                         IcestoneFreezableRecipe freezableRecipe = cachedBlocks.get(oldBlock, pair);
                         if (freezableRecipe != null) {
                             BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                            CommandFunction.CacheableFunction mcfunction = freezableRecipe.getMcfunction();
-                            return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, mcfunction, source, flag);
+                            CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
+                            return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, function, source, flag);
                         }
                     }
                 } else {
@@ -61,8 +61,8 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
                         if (freezableRecipe != null) {
                             level.destroyBlock(pos, true);
                             BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                            CommandFunction.CacheableFunction mcfunction = freezableRecipe.getMcfunction();
-                            return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, mcfunction, source, flag);
+                            CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
+                            return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, function, source, flag);
                         }
                     }
                 }

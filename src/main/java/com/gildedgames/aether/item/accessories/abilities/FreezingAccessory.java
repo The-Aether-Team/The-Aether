@@ -56,16 +56,16 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
                         if (oldBlockState.getFluidState().isEmpty()) { // Default freezing behavior.
                             if (freezableRecipe.matches(level, pos, oldBlockState)) {
                                 BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                                CommandFunction.CacheableFunction mcfunction = freezableRecipe.getMcfunction();
-                                return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, mcfunction, source, flag);
+                                CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
+                                return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, function, source, flag);
                             }
                         } else { // Breaks a block before freezing if it has a fluidstate attached by default (this is different from waterlogging for blocks like Kelp and Seagrass).
                             oldBlockState = oldBlockState.getFluidState().createLegacyBlock();
                             if (freezableRecipe.matches(level, pos, oldBlockState)) {
                                 level.destroyBlock(pos, true);
                                 BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                                CommandFunction.CacheableFunction mcfunction = freezableRecipe.getMcfunction();
-                                return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, mcfunction, source, flag);
+                                CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
+                                return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, function, source, flag);
                             }
                         }
                     }

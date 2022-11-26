@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -25,34 +26,26 @@ public class BlockStateRecipeBuilder implements RecipeBuilder {
     private final BlockStateIngredient ingredient;
     private final BlockStateRecipeSerializer<?> serializer;
     @Nullable
-    private final ResourceLocation mcfunction;
+    private ResourceLocation function;
 
-    public BlockStateRecipeBuilder(BlockPropertyPair result, BlockStateIngredient ingredient, BlockStateRecipeSerializer<?> serializer, @Nullable ResourceLocation mcfunction) {
+    public BlockStateRecipeBuilder(BlockPropertyPair result, BlockStateIngredient ingredient, BlockStateRecipeSerializer<?> serializer) {
         this.result = result;
         this.ingredient = ingredient;
         this.serializer = serializer;
-        this.mcfunction = mcfunction;
     }
 
     public static BlockStateRecipeBuilder recipe(BlockStateIngredient ingredient, Block resultBlock, BlockStateRecipeSerializer<?> serializer) {
-        return recipe(ingredient, BlockPropertyPair.of(resultBlock, Map.of()), serializer, null);
-    }
-
-    public static BlockStateRecipeBuilder recipe(BlockStateIngredient ingredient, Block resultBlock, BlockStateRecipeSerializer<?> serializer, ResourceLocation mcfunction) {
-        return recipe(ingredient, BlockPropertyPair.of(resultBlock, Map.of()), serializer, mcfunction);
+        return recipe(ingredient, BlockPropertyPair.of(resultBlock, Map.of()), serializer);
     }
 
     public static BlockStateRecipeBuilder recipe(BlockStateIngredient ingredient, Block resultBlock, Map<Property<?>, Comparable<?>> resultProperties, BlockStateRecipeSerializer<?> serializer) {
-        return recipe(ingredient, BlockPropertyPair.of(resultBlock, resultProperties), serializer, null);
+        return recipe(ingredient, BlockPropertyPair.of(resultBlock, resultProperties), serializer);
     }
 
-    public static BlockStateRecipeBuilder recipe(BlockStateIngredient ingredient, Block resultBlock, Map<Property<?>, Comparable<?>> resultProperties, BlockStateRecipeSerializer<?> serializer, ResourceLocation mcfunction) {
-        return recipe(ingredient, BlockPropertyPair.of(resultBlock, resultProperties), serializer, mcfunction);
+    public static BlockStateRecipeBuilder recipe(BlockStateIngredient ingredient, BlockPropertyPair result, BlockStateRecipeSerializer<?> serializer) {
+        return new BlockStateRecipeBuilder(result, ingredient, serializer);
     }
 
-    public static BlockStateRecipeBuilder recipe(BlockStateIngredient ingredient, BlockPropertyPair result, BlockStateRecipeSerializer<?> serializer, ResourceLocation mcfunction) {
-        return new BlockStateRecipeBuilder(result, ingredient, serializer, mcfunction);
-    }
 
     public BlockStateIngredient getIngredient() {
         return this.ingredient;
@@ -79,6 +72,12 @@ public class BlockStateRecipeBuilder implements RecipeBuilder {
     }
 
     @Nonnull
+    public RecipeBuilder function(@Nullable ResourceLocation function) {
+        this.function = function;
+        return this;
+    }
+
+    @Nonnull
     @Override
     public Item getResult() {
         return Items.AIR;
@@ -86,7 +85,7 @@ public class BlockStateRecipeBuilder implements RecipeBuilder {
 
     @Override
     public void save(@Nonnull Consumer<FinishedRecipe> finishedRecipeConsumer, @Nonnull ResourceLocation recipeId) {
-        finishedRecipeConsumer.accept(new BlockStateRecipeBuilder.Result(recipeId, this.ingredient, this.result, this.serializer, this.mcfunction));
+        finishedRecipeConsumer.accept(new BlockStateRecipeBuilder.Result(recipeId, this.ingredient, this.result, this.serializer, this.function));
     }
 
     public static class Result implements FinishedRecipe {
@@ -95,18 +94,18 @@ public class BlockStateRecipeBuilder implements RecipeBuilder {
         private final BlockPropertyPair result;
         private final RecipeSerializer<? extends AbstractBlockStateRecipe> serializer;
         @Nullable
-        private final ResourceLocation mcfunction;
+        private final ResourceLocation function;
 
         public Result(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result, RecipeSerializer<? extends AbstractBlockStateRecipe> serializer) {
             this(id, ingredient, result, serializer, null);
         }
 
-        public Result(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result, RecipeSerializer<? extends AbstractBlockStateRecipe> serializer, @Nullable ResourceLocation mcfunction) {
+        public Result(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result, RecipeSerializer<? extends AbstractBlockStateRecipe> serializer, @Nullable ResourceLocation function) {
             this.id = id;
             this.ingredient = ingredient;
             this.result = result;
             this.serializer = serializer;
-            this.mcfunction = mcfunction;
+            this.function = function;
         }
 
         @Override
@@ -117,8 +116,8 @@ public class BlockStateRecipeBuilder implements RecipeBuilder {
             } else {
                 json.add("result", BlockStateIngredient.of(this.result).toJson());
             }
-            if (this.mcfunction != null) {
-                json.addProperty("mcfunction", this.mcfunction.toString());
+            if (this.function != null) {
+                json.addProperty("mcfunction", this.function.toString());
             }
         }
 
