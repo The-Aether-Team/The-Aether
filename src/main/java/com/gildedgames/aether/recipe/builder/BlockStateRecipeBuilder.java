@@ -46,7 +46,6 @@ public class BlockStateRecipeBuilder implements RecipeBuilder {
         return new BlockStateRecipeBuilder(result, ingredient, serializer);
     }
 
-
     public BlockStateIngredient getIngredient() {
         return this.ingredient;
     }
