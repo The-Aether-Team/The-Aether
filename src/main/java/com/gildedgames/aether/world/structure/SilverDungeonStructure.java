@@ -24,8 +24,7 @@ public class SilverDungeonStructure extends Structure {
     @Override
     public Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
         ChunkPos chunkpos = context.chunkPos();
-        int height = context.chunkGenerator().getBaseHeight(chunkpos.getMiddleBlockX(), chunkpos.getMiddleBlockZ(), Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState());
-        BlockPos blockpos = new BlockPos(chunkpos.getMiddleBlockX(), Math.max(height, 30) + 20 + context.random().nextInt(30), chunkpos.getMiddleBlockZ());
+        BlockPos blockpos = new BlockPos(chunkpos.getMiddleBlockX(), 20 + context.random().nextInt(30), chunkpos.getMiddleBlockZ());
         return Optional.of(new GenerationStub(blockpos, (piecesBuilder) -> this.generatePieces(piecesBuilder, context, blockpos)));
     }
 
@@ -50,6 +49,14 @@ public class SilverDungeonStructure extends Structure {
                 rotation
         );
         builder.addPiece(front);
+
+        BoundingBox box = builder.getBoundingBox();
+        int height = 30;
+        int[] corners = {box.minX(), box.minZ(), box.minX(), box.maxZ(), box.maxX(), box.minZ(), box.maxX(), box.maxZ()};
+        for (int index = 0; index < corners.length; index += 2) {
+            height = Math.max(height, context.chunkGenerator().getBaseHeight(corners[index], corners[index + 1], Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState()));
+        }
+        builder.offsetPiecesVertically(height);
     }
 
     /**
@@ -92,7 +99,7 @@ public class SilverDungeonStructure extends Structure {
         Set<BlockPos> positions = new HashSet<>();
         for (int tries = 0; tries < 100; tries++) {
             int x = offset.getX() + random.nextInt(xBounds);
-            int y = offset.getY();
+            int y = 0;
             int z = offset.getZ() + random.nextInt(zBounds);
             int xTendency = random.nextInt(3) - 1;
             int zTendency = random.nextInt(3) - 1;
@@ -110,7 +117,7 @@ public class SilverDungeonStructure extends Structure {
                             if (Math.abs(x1 - x) + Math.abs(y1 - y) + Math.abs(z1 - z) < 4 + random.nextInt(2)) {
                                 BlockPos newPosition = new BlockPos(x1, y1, z1);
                                 positions.add(newPosition);
-                                chunks.putIfAbsent(new ChunkPos(newPosition), new HashSet<>());
+                                chunks.computeIfAbsent(new ChunkPos(newPosition), (pos) -> new HashSet<>());
                             }
                         }
                     }
