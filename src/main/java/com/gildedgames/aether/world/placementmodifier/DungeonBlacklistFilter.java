@@ -22,16 +22,7 @@ public class DungeonBlacklistFilter extends PlacementFilter {
         if (!(context.getLevel() instanceof WorldGenRegion)) {
             return false;
         }
-
-        Registry<Structure> configuredStructureFeatureRegistry = context.getLevel().registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY);
-        StructureManager structureManager = ((WorldGenRegionAccessor)context.getLevel()).getStructureManager();
-
-        for (Holder<Structure> structure : configuredStructureFeatureRegistry.getOrCreateTag(AetherTags.Structures.DUNGEONS)) {
-            if (structureManager.getStructureAt(pos, structure.value()).isValid()) {
-                return false;
-            }
-        }
-        return true;
+        return !((WorldGenRegionAccessor) context.getLevel()).getStructureManager().getStructureWithPieceAt(pos, AetherTags.Structures.DUNGEONS).isValid();
     }
 
     @Override
