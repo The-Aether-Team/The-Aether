@@ -31,7 +31,6 @@ public class AetherTags {
 		public static final TagKey<Block> SENTRY_BLOCKS = tag("sentry_blocks");
 		public static final TagKey<Block> ANGELIC_BLOCKS = tag("angelic_blocks");
 		public static final TagKey<Block> HELLFIRE_BLOCKS = tag("hellfire_blocks");
-		public static final TagKey<Block> SLIDER_UNBREAKABLE = tag("slider_unbreakable");
 		public static final TagKey<Block> GRAVITITE_ABILITY_BLACKLIST = tag("gravitite_ability_blacklist");
 		public static final TagKey<Block> AETHER_ANIMALS_SPAWNABLE_ON = tag("aether_animals_spawnable_on");
 		public static final TagKey<Block> AERWHALE_SPAWNABLE_ON = tag("aerwhale_spawnable_on");

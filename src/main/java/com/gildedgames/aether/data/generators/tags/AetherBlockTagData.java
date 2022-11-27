@@ -79,7 +79,11 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.LOCKED_ANGELIC_STONE.get(),
                 AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get(),
                 AetherBlocks.LOCKED_HELLFIRE_STONE.get(),
-                AetherBlocks.LOCKED_LIGHT_HELLFIRE_STONE.get());
+                AetherBlocks.LOCKED_LIGHT_HELLFIRE_STONE.get())
+                .addTags(
+                        AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS,
+                        AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS
+                );
         tag(AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS).add(
                 AetherBlocks.TRAPPED_CARVED_STONE.get(),
                 AetherBlocks.TRAPPED_SENTRY_STONE.get(),
@@ -137,11 +141,6 @@ public class AetherBlockTagData extends BlockTagsProvider
                 AetherBlocks.HELLFIRE_STAIRS.get(),
                 AetherBlocks.HELLFIRE_SLAB.get(),
                 AetherBlocks.HELLFIRE_WALL.get());
-        tag(AetherTags.Blocks.SLIDER_UNBREAKABLE).addTags(
-                AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
-                AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS,
-                AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS,
-                AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS);
         tag(AetherTags.Blocks.GRAVITITE_ABILITY_BLACKLIST).addTags(
                 BlockTags.BUTTONS,
                 BlockTags.PRESSURE_PLATES,
@@ -155,17 +154,20 @@ public class AetherBlockTagData extends BlockTagsProvider
         tag(AetherTags.Blocks.COCKATRICE_SPAWNABLE_BLACKLIST).addTags(
                 AetherTags.Blocks.DUNGEON_BLOCKS,
                 AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
-                AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS);
+                AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS
+        );
         tag(AetherTags.Blocks.INFINIBURN).addTag(BlockTags.INFINIBURN_OVERWORLD);
         tag(AetherTags.Blocks.ALLOWED_FLAMMABLES).add(Blocks.SOUL_SAND, Blocks.SOUL_SOIL).addTags(
                 AetherTags.Blocks.INFINIBURN,
                 AetherTags.Blocks.HELLFIRE_BLOCKS);
         tag(AetherTags.Blocks.QUICKSOIL_CAN_GENERATE).add(
                 AetherBlocks.AETHER_DIRT.get(),
-                AetherBlocks.HOLYSTONE.get());
+                AetherBlocks.HOLYSTONE.get()
+        );
         tag(AetherTags.Blocks.VALKYRIE_TELEPORTABLE_ON).add(
                 AetherBlocks.ANGELIC_STONE.get(),
-                AetherBlocks.LIGHT_ANGELIC_STONE.get());
+                AetherBlocks.LIGHT_ANGELIC_STONE.get()
+        );
         tag(AetherTags.Blocks.TREATED_AS_AETHER_BLOCK);
 
         //vanilla
