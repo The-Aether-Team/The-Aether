@@ -3,7 +3,6 @@ package com.gildedgames.aether.data.resources.builders;
 import com.gildedgames.aether.block.AetherBlockStateProperties;
 import com.gildedgames.aether.world.configuration.AercloudConfiguration;
 import com.gildedgames.aether.world.configuration.AetherLakeConfiguration;
-import com.gildedgames.aether.world.placementmodifier.AetherPlacementModifiers;
 import com.gildedgames.aether.world.placementmodifier.ConfigFilter;
 import com.gildedgames.aether.world.placementmodifier.DungeonBlacklistFilter;
 import com.gildedgames.aether.world.placementmodifier.ImprovedLayerPlacementModifier;
@@ -48,7 +47,12 @@ public class AetherFeatureBuilders {
     }
 
     private static ImmutableList.Builder<PlacementModifier> treePlacementBase(PlacementModifier p_195485_) {
-        return ImmutableList.<PlacementModifier>builder().add(p_195485_).add(InSquarePlacement.spread()).add(TREE_THRESHOLD).add(ImprovedLayerPlacementModifier.of(Heightmap.Types.OCEAN_FLOOR, UniformInt.of(0, 1), 4)).add(BiomeFilter.biome()).add(new DungeonBlacklistFilter());
+        return ImmutableList.<PlacementModifier>builder()
+                .add(p_195485_)
+                .add(ImprovedLayerPlacementModifier.of(Heightmap.Types.OCEAN_FLOOR, UniformInt.of(0, 1), 4))
+                .add(TREE_THRESHOLD)
+                .add(BiomeFilter.biome())
+                .add(new DungeonBlacklistFilter());
     }
 
     public static List<PlacementModifier> treePlacement(PlacementModifier p_195480_) {
