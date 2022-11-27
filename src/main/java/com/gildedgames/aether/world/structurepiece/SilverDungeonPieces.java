@@ -10,18 +10,16 @@ import com.gildedgames.aether.loot.AetherLoot;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.StructureManager;
-import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
@@ -31,7 +29,8 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 import net.minecraft.world.phys.AABB;
 
-import java.util.ArrayList;
+import javax.annotation.Nonnull;
+import java.util.*;
 import java.util.function.Function;
 
 public class SilverDungeonPieces {
@@ -81,12 +80,6 @@ public class SilverDungeonPieces {
                 }
             }
         }
-
-        @Override
-        public void postProcess(WorldGenLevel level, StructureManager pStructureManager, ChunkGenerator pGenerator, RandomSource random, BoundingBox pBox, ChunkPos pChunkPos, BlockPos pPos) {
-            super.postProcess(level, pStructureManager, pGenerator, random, pBox, pChunkPos, pPos);
-//            generateClouds(level, pBox, this.boundingBox.minY(), random);
-        }
     }
 
     public static class BossRoom extends SilverDungeonPiece {
@@ -124,51 +117,53 @@ public class SilverDungeonPieces {
                 level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
             }
         }
-
-        @Override
-        public void postProcess(WorldGenLevel level, StructureManager pStructureManager, ChunkGenerator pGenerator, RandomSource random, BoundingBox pBox, ChunkPos pChunkPos, BlockPos pPos) {
-            super.postProcess(level, pStructureManager, pGenerator, random, pBox, pChunkPos, pPos);
-//            generateClouds(level, pBox, this.boundingBox.minY(), random);
-        }
-    }
-
-    public static class CloudBed extends SilverDungeonPiece {
-
-        public CloudBed(StructureTemplateManager pStructureTemplateManager, String name, StructurePlaceSettings pPlaceSettings, BlockPos pTemplatePosition) {
-            super(AetherStructurePieceTypes.CLOUD_BED.get(), pStructureTemplateManager, name, pPlaceSettings, pTemplatePosition);
-        }
-
-        public CloudBed(StructurePieceSerializationContext context, CompoundTag tag) {
-            super(AetherStructurePieceTypes.CLOUD_BED.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
-        }
-
-        private static StructurePlaceSettings makeSettings() {
-            return new StructurePlaceSettings().addProcessor(CLOUD_DECAY);
-        }
-
-        @Override
-        protected void handleDataMarker(String pName, BlockPos pPos, ServerLevelAccessor pLevel, RandomSource pRandom, BoundingBox pBox) {
-
-        }
     }
 
     public static class LegacyCloudBed extends StructurePiece {
-        public LegacyCloudBed(StructurePieceType pType, BoundingBox pBox) {
-            super(pType, 0, pBox);
+        private final Set<BlockPos> positions;
+
+        public LegacyCloudBed(Set<BlockPos> positions, BoundingBox pBox, Direction direction) {
+            super(AetherStructurePieceTypes.LEGACY_CLOUD_BED.get(), 0, pBox);
+            this.positions = positions;
+            this.setOrientation(direction);
         }
 
         public LegacyCloudBed(StructurePieceSerializationContext context, CompoundTag tag) {
             super(AetherStructurePieceTypes.LEGACY_CLOUD_BED.get(), tag);
+            ListTag positions = tag.getList("Positions", Tag.TAG_COMPOUND);
+            this.positions = new HashSet<>();
+            for (Tag position : positions) {
+                this.positions.add(NbtUtils.readBlockPos((CompoundTag) position));
+            }
+        }
+
+        protected void addAdditionalSaveData(StructurePieceSerializationContext context, CompoundTag tag) {
+            ListTag positions = new ListTag();
+            for (BlockPos position : this.positions) {
+                positions.add(NbtUtils.writeBlockPos(position));
+            }
+            tag.put("Positions", positions);
         }
 
         @Override
-        protected void addAdditionalSaveData(StructurePieceSerializationContext pContext, CompoundTag pTag) {
-
+        public void postProcess(@Nonnull WorldGenLevel level, @Nonnull StructureManager manager, @Nonnull ChunkGenerator generator, @Nonnull RandomSource random, @Nonnull BoundingBox bounds, @Nonnull ChunkPos chunkPos, @Nonnull BlockPos blockPos) {
+            if (!this.positions.isEmpty()) {
+                this.positions.removeIf(pos -> this.placeBlock(level, AetherBlocks.COLD_AERCLOUD.get().defaultBlockState(), pos, bounds));
+            }
         }
 
-        @Override
-        public void postProcess(WorldGenLevel pLevel, StructureManager pStructureManager, ChunkGenerator pGenerator, RandomSource pRandom, BoundingBox pBox, ChunkPos pChunkPos, BlockPos pPos) {
+        protected boolean placeBlock(WorldGenLevel level, BlockState state, BlockPos pos, BoundingBox bounds) {
+            if (bounds.isInside(pos)) {
+                if (this.canBeReplaced(level, pos)) {
+                    level.setBlock(pos, state, 2);
+                }
+                return true;
+            }
+            return false;
+        }
 
+        protected boolean canBeReplaced(LevelReader level, BlockPos pos) {
+            return level.isEmptyBlock(pos);
         }
     }
 
@@ -186,43 +181,6 @@ public class SilverDungeonPieces {
         protected void addAdditionalSaveData(StructurePieceSerializationContext context, CompoundTag tag) {
             super.addAdditionalSaveData(context, tag);
             tag.putString("Rotation", this.placeSettings.getRotation().name());
-        }
-    }
-
-    /**
-     * Generates the cloud bed under the silver dungeon.
-     */
-    public static void generateClouds(WorldGenLevel level, BoundingBox chunk, int minY, RandomSource random) {
-        int minX = chunk.minX();
-        minY -= 1;
-        int minZ = chunk.minZ();
-        int xTendency = random.nextInt(3) - 2;
-        int zTendency = random.nextInt(3) - 2;
-        int xSpan = chunk.getXSpan();
-        int zSpan = chunk.getZSpan();
-        int xOffset = minX + random.nextInt(xSpan);
-        int yOffset = minY;
-        int zOffset = minZ + random.nextInt(zSpan);
-        for (int tries = 0; tries < 16; tries++) {
-            for (int n = 0; n < 10; ++n) {
-                xOffset += random.nextInt(3) + xTendency;
-                zOffset += random.nextInt(3) + zTendency;
-                if (random.nextBoolean()) {
-                    yOffset += random.nextInt(3) - 1;
-                }
-                for (int x = xOffset; x < xOffset + random.nextInt(4) + 3; ++x) {
-                    for (int y = yOffset; y < yOffset + random.nextInt(1) + 2; ++y) {
-                        for (int z = zOffset; z < zOffset + random.nextInt(4) + 3; ++z) {
-                            BlockPos pos = new BlockPos(x, y, z);
-                            if (chunk.isInside(pos)) {
-                                if (Math.abs(x - xOffset) + Math.abs(y - yOffset) + Math.abs(z - zOffset) < 4 + random.nextInt(2)) {
-                                    level.setBlock(pos, AetherBlocks.COLD_AERCLOUD.get().defaultBlockState(), 2);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
         }
     }
 }
