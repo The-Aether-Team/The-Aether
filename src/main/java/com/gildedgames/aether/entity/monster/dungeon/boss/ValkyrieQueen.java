@@ -18,6 +18,7 @@ import com.gildedgames.aether.network.packet.client.OpenNpcDialoguePacket;
 import com.gildedgames.aether.api.BossNameGenerator;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -62,6 +63,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     @Nullable
     private Player tradingPlayer;
     private DungeonTracker<ValkyrieQueen> dungeon;
+    private AABB dungeonBounds;
     private final ServerBossEvent bossFight;
 
     public ValkyrieQueen(EntityType<? extends ValkyrieQueen> type, Level level) {
@@ -83,6 +85,9 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
                     this.position(),
                     new AABB(this.position().subtract(15, 0, 15), this.position().add(15, 15, 15)),
                     new ArrayList<>());
+        }
+        if (this.dungeonBounds == null) {
+            this.dungeonBounds = this.dungeon.roomBounds();
         }
         return data;
     }
@@ -156,7 +161,6 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
                 chatWithNearby(Component.translatable("gui.aether.queen.dialog.fight"));
                 this.setBossFight(true);
                 if (this.getDungeon() != null) {
-                    this.getDungeon().debugBounds();
                     this.closeRoom();
                 }
             }
@@ -192,6 +196,20 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
             }
         }
         super.die(pCause);
+    }
+
+    /**
+     * The valkyrie queen needs to open the whole dungeon. Not just the boss room.
+     */
+    @Override
+    public void tearDownRoom() {
+        for (BlockPos pos : BlockPos.betweenClosed((int) this.dungeonBounds.minX, (int) this.dungeonBounds.minY, (int) this.dungeonBounds.minZ, (int) this.dungeonBounds.maxX, (int) this.dungeonBounds.maxY, (int) this.dungeonBounds.maxZ)) {
+            BlockState state = this.level.getBlockState(pos);
+            BlockState newState = this.convertBlock(state);
+            if (newState != null) {
+                this.level.setBlock(pos, newState, 3);
+            }
+        }
     }
 
     /**
@@ -238,7 +256,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
      * Sends a message to nearby players. Useful for boss fights.
      */
     protected void chatWithNearby(Component message) {
-        this.level.getNearbyPlayers(NON_COMBAT, this, this.getBoundingBox().inflate(16, 16, 16)).forEach(player -> this.chatItUp(player, message));
+        this.level.getNearbyPlayers(NON_COMBAT, this, this.dungeon.roomBounds()).forEach(player -> this.chatItUp(player, message));
     }
 
     /**
@@ -323,6 +341,10 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
         this.dungeon = dungeon;
     }
 
+    public void setDungeonBounds(AABB dungeonBounds) {
+        this.dungeonBounds = dungeonBounds;
+    }
+
     @Override
     public int getDeathScore() {
         return this.deathScore;
@@ -354,7 +376,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
             return Blocks.AIR.defaultBlockState();
         }
         if (state.is(AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE.get())) {
-            AetherBlocks.SKYROOT_TRAPDOOR.get().defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, state.getValue(HorizontalDirectionalBlock.FACING));
+            return AetherBlocks.SKYROOT_TRAPDOOR.get().defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, state.getValue(HorizontalDirectionalBlock.FACING));
         }
         return null;
     }
@@ -448,6 +470,14 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
         if (this.getDungeon() != null) {
             tag.put("Dungeon", this.getDungeon().addAdditionalSaveData());
         }
+        if (this.dungeonBounds != null) {
+            tag.putDouble("DungeonBoundsMinX", this.dungeonBounds.minX);
+            tag.putDouble("DungeonBoundsMinY", this.dungeonBounds.minY);
+            tag.putDouble("DungeonBoundsMinZ", this.dungeonBounds.minZ);
+            tag.putDouble("DungeonBoundsMaxX", this.dungeonBounds.maxX);
+            tag.putDouble("DungeonBoundsMaxY", this.dungeonBounds.maxY);
+            tag.putDouble("DungeonBoundsMaxZ", this.dungeonBounds.maxZ);
+        }
     }
 
     @Override
@@ -467,6 +497,15 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
         }
         if (tag.contains("Dungeon") && tag.get("Dungeon") instanceof CompoundTag dungeonTag) {
             this.setDungeon(DungeonTracker.readAdditionalSaveData(dungeonTag, this));
+        }
+        if (tag.contains("DungeonBoundsMinX")) {
+            double minX = tag.getDouble("DungeonBoundsMinX");
+            double minY = tag.getDouble("DungeonBoundsMinY");
+            double minZ = tag.getDouble("DungeonBoundsMinZ");
+            double maxX = tag.getDouble("DungeonBoundsMaxX");
+            double maxY = tag.getDouble("DungeonBoundsMaxY");
+            double maxZ = tag.getDouble("DungeonBoundsMaxZ");
+            this.dungeonBounds = new AABB(minX, minY, minZ, maxX, maxY, maxZ);
         }
     }
 
