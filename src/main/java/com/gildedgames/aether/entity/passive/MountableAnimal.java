@@ -4,6 +4,8 @@ import com.gildedgames.aether.entity.NotGrounded;
 import com.gildedgames.aether.capability.player.AetherPlayer;
 import com.gildedgames.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
@@ -34,6 +36,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.Saddleable;
 import net.minecraft.world.entity.vehicle.DismountHelper;
+import net.minecraftforge.common.ForgeMod;
+
+import java.util.UUID;
 
 public abstract class MountableAnimal extends AetherAnimal implements ItemSteerable, Saddleable, NotGrounded {
 	private static final EntityDataAccessor<Boolean> DATA_SADDLE_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);
@@ -41,6 +46,8 @@ public abstract class MountableAnimal extends AetherAnimal implements ItemSteera
 	private static final EntityDataAccessor<Boolean> DATA_MOUNT_JUMPING_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> DATA_PLAYER_CROUCHED_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);
+	private static final UUID MOUNT_HEIGHT_UUID = UUID.fromString("B2D5A57A-8DA5-4127-8091-14A4CCD000F1");
+	private static final UUID DEFAULT_HEIGHT_UUID = UUID.fromString("31535561-F99D-4E14-ACE7-F636EAAD6180");
 
 	protected MountableAnimal(EntityType<? extends Animal> type, Level level) {
 		super(type, level);
@@ -105,7 +112,15 @@ public abstract class MountableAnimal extends AetherAnimal implements ItemSteera
 					this.setPlayerJumped(false);
 					this.onJump();
 				}
-				this.maxUpStep = 1.0F;
+				AttributeInstance stepHeight = this.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
+				if (stepHeight != null) {
+					if (stepHeight.hasModifier(this.getDefaultStepHeightModifier())) {
+						stepHeight.removeModifier(this.getDefaultStepHeightModifier());
+					}
+					if (!stepHeight.hasModifier(this.getMountStepHeightModifier())) {
+						stepHeight.addTransientModifier(this.getMountStepHeightModifier());
+					}
+				}
 				this.flyingSpeed = this.getSteeringSpeed() * 0.25F;
 				if (this.isControlledByLocalInstance()) {
 					this.setSpeed(this.getSteeringSpeed());
@@ -124,7 +139,15 @@ public abstract class MountableAnimal extends AetherAnimal implements ItemSteera
 				}
 				this.calculateEntityAnimation(this, false);
 			} else {
-				this.maxUpStep = 0.5F;
+				AttributeInstance stepHeight = this.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
+				if (stepHeight != null) {
+					if (stepHeight.hasModifier(this.getMountStepHeightModifier())) {
+						stepHeight.removeModifier(this.getMountStepHeightModifier());
+					}
+					if (!stepHeight.hasModifier(this.getDefaultStepHeightModifier())) {
+						stepHeight.addTransientModifier(this.getDefaultStepHeightModifier());
+					}
+				}
 				this.flyingSpeed = 0.02F;
 				this.travelWithInput(vector3d);
 			}
@@ -281,6 +304,14 @@ public abstract class MountableAnimal extends AetherAnimal implements ItemSteera
 	@Override
 	public void setEntityOnGround(boolean onGround) {
 		this.entityData.set(DATA_ENTITY_ON_GROUND_ID, onGround);
+	}
+
+	public AttributeModifier getMountStepHeightModifier() {
+		return new AttributeModifier(MOUNT_HEIGHT_UUID, "Mounted step height increase", 0.4, AttributeModifier.Operation.ADDITION);
+	}
+
+	public AttributeModifier getDefaultStepHeightModifier() {
+		return new AttributeModifier(DEFAULT_HEIGHT_UUID, "Default step height increase", -0.1, AttributeModifier.Operation.ADDITION);
 	}
 
 	@Override

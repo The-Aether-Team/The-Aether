@@ -2,10 +2,13 @@ package com.gildedgames.aether.client;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.AetherBlocks;
+import com.gildedgames.aether.item.AetherItems;
+import com.gildedgames.aether.item.miscellaneous.MoaEggItem;
 import com.gildedgames.aether.mixin.mixins.client.accessor.BlockColorsAccessor;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.level.ColorResolver;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -52,6 +55,14 @@ public class AetherColorResolvers {
                 }
                 return entry.getValue().getColor(state, level, pos, tintIndex);
             }), entry.getKey());
+        }
+    }
+
+    @SubscribeEvent
+    static void registerItemColor(RegisterColorHandlersEvent.Item event) {
+        event.register((color, itemProvider) -> itemProvider > 0 ? -1 : ((DyeableLeatherItem) color.getItem()).getColor(color), AetherItems.LEATHER_GLOVES.get());
+        for (MoaEggItem moaEggItem : MoaEggItem.moaEggs()) {
+            event.register((color, itemProvider) -> moaEggItem.getColor(), moaEggItem);
         }
     }
 }

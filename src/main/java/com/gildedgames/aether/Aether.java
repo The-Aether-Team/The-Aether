@@ -143,8 +143,6 @@ public class Aether {
             AetherBlocks.registerPots();
             AetherBlocks.registerFlammability();
 
-            AetherEntityTypes.registerSpawnPlacements();
-
             this.registerDispenserBehaviors();
             this.registerCauldronInteractions();
             this.registerComposting();

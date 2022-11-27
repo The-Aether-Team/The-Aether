@@ -1,4 +1,4 @@
-// 1.19.2	2022-11-25T14:27:16.7532638	worldgen/placed_feature generator for aether
+// 1.19.2	2022-11-26T19:34:43.0209964	worldgen/placed_feature generator for aether
 ae63d0e0f5d9c44eb75e02fc596fb3564e1c1ab8 data/aether/worldgen/placed_feature/aether_dirt_ore.json
 abcf2c1d93a2b2e6fbb0a13571253e76d8768747 data/aether/worldgen/placed_feature/ambrosium_ore.json
 1d87df9577a9df7d5dc62b1930fedb1e4183d4f9 data/aether/worldgen/placed_feature/blue_aercloud.json
@@ -10,7 +10,7 @@ af78729a1c8a75705c91caa52745b53f65d0b5ba data/aether/worldgen/placed_feature/gol
 91161f8a3cfc038407a71cff9d473ddfff3a9e09 data/aether/worldgen/placed_feature/grass_patch.json
 9c26bc2a4934655fb701a220bc35dc3962fd0cfa data/aether/worldgen/placed_feature/gravitite_ore_common.json
 42550b21f6f1cdaaac4e4f6447fbf685a1ffa020 data/aether/worldgen/placed_feature/gravitite_ore_dense.json
-e7e7ca86d8a1f6e5f61135abaa503b8eae13626b data/aether/worldgen/placed_feature/holiday_tree.json
+228dc702621073807591674b16e3db9e697851a1 data/aether/worldgen/placed_feature/holiday_tree.json
 84687a9429ed6c84df7b9ef4e7667a354d788c56 data/aether/worldgen/placed_feature/icestone_ore.json
 24c6a689765fac21805aff99c8845768cf24db8a data/aether/worldgen/placed_feature/pink_aercloud.json
 b02739ecf5737c04d12ff59e2df3f694f88588d2 data/aether/worldgen/placed_feature/quicksoil_shelf.json

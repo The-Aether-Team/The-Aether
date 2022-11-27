@@ -83,9 +83,13 @@ public abstract class AbstractWhirlwind extends Mob {
         return level.getDifficulty() != Difficulty.PEACEFUL && level.getRawBrightness(pos, 0) > 12 && Mob.checkMobSpawnRules(whirlwind, level, reason, pos, random);
     }
 
+    /**
+     * Warning for "deprecation" is suppressed because vanilla calls {@link LevelReader#getSeaLevel()} just fine.
+     */
+    @SuppressWarnings("deprecation")
     public boolean checkSpawnObstruction(@Nonnull LevelReader level) {
         if (level.isUnobstructed(this) && !level.containsAnyLiquid(this.getBoundingBox())) {
-            return !(this.getY() < level.getSeaLevel() + 1);
+            return this.getY() >= level.getSeaLevel() + 1;
         }
         return false;
     }

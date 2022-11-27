@@ -7,6 +7,7 @@ import com.gildedgames.aether.mixin.mixins.common.accessor.PlayerAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.ZephyrSnowballHitPacket;
 import com.gildedgames.aether.util.EquipmentUtil;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -43,6 +44,10 @@ public class ZephyrSnowball extends Fireball implements ItemSupplier {
 		this.setNoGravity(true);
 	}
 
+	/**
+	 * Warning for "deprecation" is suppressed because vanilla calls {@link Level#hasChunkAt(BlockPos)} just fine.
+	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public void tick() {
 		if (!this.onGround) {

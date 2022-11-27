@@ -23,6 +23,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
@@ -43,11 +44,12 @@ public class BlockStateRecipeUtil {
     }
 
     public static void writePair(FriendlyByteBuf buf, BlockPropertyPair pair) {
-        if (pair.block().defaultBlockState().isAir() && pair.properties().isEmpty()) {
+        ResourceLocation blockLocation = ForgeRegistries.BLOCKS.getKey(pair.block());
+        if ((pair.block().defaultBlockState().isAir() && pair.properties().isEmpty()) || blockLocation == null) {
             buf.writeBoolean(false);
         } else {
             buf.writeBoolean(true);
-            buf.writeVarInt(Registry.BLOCK.getId(pair.block()));
+            buf.writeUtf(blockLocation.toString());
             CompoundTag tag = new CompoundTag();
             for (Map.Entry<Property<?>, Comparable<?>> entry : pair.properties().entrySet()) {
                 Property<?> property = entry.getKey();
@@ -79,8 +81,12 @@ public class BlockStateRecipeUtil {
         if (!buf.readBoolean()) {
             return BlockPropertyPair.of(Blocks.AIR, new HashMap<>());
         } else {
-            int id = buf.readVarInt();
-            Block block = Registry.BLOCK.byId(id);
+            String blockString = buf.readUtf();
+            ResourceLocation blockLocation = new ResourceLocation(blockString);
+            Block block = ForgeRegistries.BLOCKS.getValue(blockLocation);
+            if (block == null) {
+                throw new JsonSyntaxException("Unknown block '" + blockLocation + "'");
+            }
 
             Map<Property<?>, Comparable<?>> properties = new HashMap<>();
             CompoundTag tag = buf.readNbt();
@@ -143,9 +149,13 @@ public class BlockStateRecipeUtil {
 
     public static Block blockFromJson(JsonObject json) {
         String blockName = GsonHelper.getAsString(json, "block");
-        Block block = Registry.BLOCK.getOptional(new ResourceLocation(blockName)).orElseThrow(() -> new JsonSyntaxException("Unknown block '" + blockName + "'"));
+        ResourceLocation blockLocation = new ResourceLocation(blockName);
+        Block block = ForgeRegistries.BLOCKS.getValue(blockLocation);
+        if (block == null) {
+            throw new JsonSyntaxException("Unknown block '" + blockLocation + "'");
+        }
         if (block.defaultBlockState().isAir()) {
-            throw new JsonSyntaxException("Invalid block: " + blockName);
+            throw new JsonSyntaxException("Invalid block: " + blockLocation);
         } else {
             return block;
         }
