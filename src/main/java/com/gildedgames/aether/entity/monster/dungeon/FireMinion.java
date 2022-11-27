@@ -43,7 +43,7 @@ public class FireMinion extends Monster {
         super.tick();
         ParticleOptions particle = ParticleTypes.FLAME;
         if (this.hasCustomName()) {
-            String name = this.getName().getContents().toString();
+            String name = this.getName().getString();
             if (name.equals("JorgeQ") || name.equals("Jorge_SunSpirit")) {
                 particle = ParticleTypes.ITEM_SNOWBALL;
             }
