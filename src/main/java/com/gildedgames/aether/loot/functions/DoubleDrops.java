@@ -12,20 +12,23 @@ import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 
-import javax.annotation.Nonnull;
-
 public class DoubleDrops extends LootItemConditionalFunction {
-	protected DoubleDrops(LootItemCondition[] conditionsIn) {
-		super(conditionsIn);
+	protected DoubleDrops(LootItemCondition[] conditions) {
+		super(conditions);
 	}
 
-	@Nonnull
+	/**
+	 * Doubles the dropped stack through {@link SkyrootTool#doubleDrops(ItemStack, ItemStack, BlockState)}.
+	 * @param stack The {@link ItemStack} for the loot pool.
+	 * @param context The {@link LootContext}.
+	 * @return The {@link ItemStack} for the loot pool.
+	 */
 	@Override
-	protected ItemStack run(@Nonnull ItemStack stack, LootContext context) {
-		ItemStack tool = context.getParamOrNull(LootContextParams.TOOL);
-		BlockState state = context.getParamOrNull(LootContextParams.BLOCK_STATE);
-		if (tool.getItem() instanceof SkyrootTool skyrootTool) {
-			return skyrootTool.doubleDrops(stack, tool, state);
+	protected ItemStack run(ItemStack stack, LootContext context) {
+		ItemStack toolStack = context.getParamOrNull(LootContextParams.TOOL);
+		BlockState blockState = context.getParamOrNull(LootContextParams.BLOCK_STATE);
+		if (toolStack.getItem() instanceof SkyrootTool skyrootTool) {
+			return skyrootTool.doubleDrops(stack, toolStack, blockState);
 		} else {
 			return stack;
 		}
@@ -35,7 +38,6 @@ public class DoubleDrops extends LootItemConditionalFunction {
 		return LootItemConditionalFunction.simpleBuilder(DoubleDrops::new);
 	}
 
-    @Nonnull
 	@Override
     public LootItemFunctionType getType() {
         return AetherLootFunctions.DOUBLE_DROPS.get();
@@ -43,13 +45,12 @@ public class DoubleDrops extends LootItemConditionalFunction {
 
     public static class Serializer extends LootItemConditionalFunction.Serializer<DoubleDrops> {
 		@Override
-		public void serialize(@Nonnull JsonObject object, @Nonnull DoubleDrops function, @Nonnull JsonSerializationContext serializationContext) {
-			super.serialize(object, function, serializationContext);
+		public void serialize(JsonObject json, DoubleDrops instance, JsonSerializationContext context) {
+			super.serialize(json, instance, context);
 		}
 
-		@Nonnull
 		@Override
-		public DoubleDrops deserialize(@Nonnull JsonObject object, @Nonnull JsonDeserializationContext deserializationContext, @Nonnull LootItemCondition[] conditions) {
+		public DoubleDrops deserialize(JsonObject json, JsonDeserializationContext context, LootItemCondition[] conditions) {
 			return new DoubleDrops(conditions);
 		}
 	}
