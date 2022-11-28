@@ -104,13 +104,13 @@ public class SilverDungeonPieces {
                 queen.setPos(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
                 queen.setDungeon(new DungeonTracker<>(queen,
                         queen.position(),
-                        new AABB(this.boundingBox.minX(), this.boundingBox.minY(), this.boundingBox.minZ(), this.boundingBox.maxX(), this.boundingBox.maxY(), this.boundingBox.maxZ()),
+                        new AABB(this.boundingBox.minX(), this.boundingBox.minY(), this.boundingBox.minZ(), this.boundingBox.maxX() + 1, this.boundingBox.maxY() + 1, this.boundingBox.maxZ() + 1),
                         new ArrayList<>()));
                 StructureManager manager = level.getLevel().structureManager();
                 Structure temple = manager.registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY).get(AetherStructures.SILVER_DUNGEON);
                 if (temple != null) {
                     BoundingBox box = manager.getStructureAt(pos, temple).getBoundingBox();
-                    AABB dungeonBounds = new AABB(box.minX(), box.minY(), box.minZ(), box.maxX(), box.maxY(), box.maxZ());
+                    AABB dungeonBounds = new AABB(box.minX(), box.minY(), box.minZ(), box.maxX() + 1, box.maxY() + 1, box.maxZ() + 1);
                     queen.setDungeonBounds(dungeonBounds);
                 }
                 queen.finalizeSpawn(level, level.getCurrentDifficultyAt(pos), MobSpawnType.STRUCTURE, null, null);
