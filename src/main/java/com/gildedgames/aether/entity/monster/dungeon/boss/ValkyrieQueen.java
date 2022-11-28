@@ -129,7 +129,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     @Override
     @Nonnull
     protected InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
-        if (!this.isBossFight()) {
+        if (!this.isBossFight() && !this.level.isClientSide) {
             if (!this.isReady()) {
                 this.lookAt(player, 180F, 180F);
                 if (player instanceof ServerPlayer serverPlayer) {
@@ -139,10 +139,8 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
                     }
                 }
             } else {
-                if (!this.level.isClientSide()) {
                     MutableComponent message = Component.translatable("gui.aether.queen.dialog.ready");
                     this.chatWithNearby(message);
-                }
             }
             return InteractionResult.SUCCESS;
         } else {
@@ -332,7 +330,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     }
 
     @Override
-    public DungeonTracker<ValkyrieQueen> getDungeon() { // TODO
+    public DungeonTracker<ValkyrieQueen> getDungeon() {
         return this.dungeon;
     }
 
