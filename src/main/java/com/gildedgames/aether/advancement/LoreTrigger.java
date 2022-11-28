@@ -18,21 +18,20 @@ import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.advancements.critereon.NbtPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 
-import javax.annotation.Nonnull;
-
+/**
+ * Criterion trigger used for checking an item placed by a player inside a Book of Lore.
+ */
 public class LoreTrigger extends SimpleCriterionTrigger<LoreTrigger.Instance> {
     private static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "lore_entry");
     public static final LoreTrigger INSTANCE = new LoreTrigger();
 
-    @Nonnull
     @Override
     public ResourceLocation getId() {
         return ID;
     }
 
-    @Nonnull
     @Override
-    public LoreTrigger.Instance createInstance(JsonObject json, @Nonnull EntityPredicate.Composite entity, @Nonnull DeserializationContext conditions) {
+    public LoreTrigger.Instance createInstance(JsonObject json, EntityPredicate.Composite entity, DeserializationContext context) {
         ItemPredicate itemPredicate = ItemPredicate.fromJson(json.get("item"));
         return new LoreTrigger.Instance(entity, itemPredicate);
     }
@@ -66,10 +65,9 @@ public class LoreTrigger extends SimpleCriterionTrigger<LoreTrigger.Instance> {
             return this.item.matches(stack);
         }
 
-        @Nonnull
         @Override
-        public JsonObject serializeToJson(@Nonnull SerializationContext conditions) {
-            JsonObject jsonObject = super.serializeToJson(conditions);
+        public JsonObject serializeToJson(SerializationContext context) {
+            JsonObject jsonObject = super.serializeToJson(context);
             jsonObject.add("item", this.item.serializeToJson());
             return jsonObject;
         }
