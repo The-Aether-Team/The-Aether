@@ -37,6 +37,13 @@ public class PlayerCapabilityCommand {
         );
     }
 
+    /**
+     * Sets the Life Shard (half) heart count of a list of players to a specific value.
+     * @param source The {@link CommandSourceStack}.
+     * @param gameProfiles A {@link Collection} of {@link GameProfile}s to execute the command on.
+     * @param value The {@link Integer} value for the amount of Life Shard hearts.
+     * @return An {@link Integer}.
+     */
     private static int setLifeShards(CommandSourceStack source, Collection<GameProfile> gameProfiles, int value) {
         ServerLevel level = source.getLevel();
         PlayerList playerList = source.getServer().getPlayerList();
@@ -50,7 +57,7 @@ public class PlayerCapabilityCommand {
                         attribute.removeModifier(aetherPlayer.getLifeShardHealthAttributeModifier());
                     }
                     player.setHealth(player.getMaxHealth());
-                    AetherPacketHandler.sendToNear(new HealthResetPacket(player.getId(), value), player.getX(), player.getY(), player.getZ(), 5.0, level.dimension());
+                    AetherPacketHandler.sendToNear(new HealthResetPacket(player.getId(), value), player.getX(), player.getY(), player.getZ(), 5.0, level.dimension()); // Sync to client.
                     source.sendSuccess(Component.translatable("commands.aether.capability.player.life_shards.set", player.getDisplayName(), value), true);
                 });
             }

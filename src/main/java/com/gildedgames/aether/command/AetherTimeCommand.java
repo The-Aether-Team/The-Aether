@@ -8,7 +8,9 @@ import net.minecraft.commands.arguments.TimeArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 
-// Vanilla copy of TimeCommand
+/**
+ * Copy of {@link net.minecraft.server.commands.TimeCommand}.
+ */
 public class AetherTimeCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("aether")
