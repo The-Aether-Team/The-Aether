@@ -1,6 +1,5 @@
 package com.gildedgames.aether.loot.functions;
 
-import com.gildedgames.aether.loot.AetherLoot;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
@@ -14,22 +13,27 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.server.level.ServerLevel;
 
-public class SpawnXP extends LootItemConditionalFunction
-{
-    protected SpawnXP(LootItemCondition[] conditionsIn) {
-        super(conditionsIn);
+public class SpawnXP extends LootItemConditionalFunction {
+    protected SpawnXP(LootItemCondition[] conditions) {
+        super(conditions);
     }
 
+    /**
+     * Spawns experience orbs that give 6-9 experience.
+     * @param stack The {@link ItemStack} for the loot pool.
+     * @param context The {@link LootContext}.
+     * @return The {@link ItemStack} for the loot pool.
+     */
     @Override
     protected ItemStack run(ItemStack stack, LootContext context) {
-        ServerLevel world = context.getLevel();
-        Vec3 vector3d = context.getParamOrNull(LootContextParams.ORIGIN);
-        if (vector3d != null) {
-            int randomNumber = (int) ((4 * world.random.nextDouble()) + 6);
-            while(randomNumber > 0) {
+        ServerLevel serverLevel = context.getLevel();
+        Vec3 originVec = context.getParamOrNull(LootContextParams.ORIGIN);
+        if (originVec != null) {
+            int randomNumber = (int) ((4 * serverLevel.getRandom().nextDouble()) + 6);
+            while (randomNumber > 0) {
                 int i = ExperienceOrb.getExperienceValue(randomNumber);
                 randomNumber -= i;
-                world.addFreshEntity(new ExperienceOrb(world, vector3d.x(), vector3d.y(), vector3d.z(), i));
+                serverLevel.addFreshEntity(new ExperienceOrb(serverLevel, originVec.x(), originVec.y(), originVec.z(), i));
             }
         }
         return stack;
@@ -44,16 +48,15 @@ public class SpawnXP extends LootItemConditionalFunction
         return AetherLootFunctions.SPAWN_XP.get();
     }
 
-    public static class Serializer extends LootItemConditionalFunction.Serializer<SpawnXP>
-    {
+    public static class Serializer extends LootItemConditionalFunction.Serializer<SpawnXP> {
         @Override
-        public void serialize(JsonObject object, SpawnXP functionClazz, JsonSerializationContext serializationContext) {
-            super.serialize(object, functionClazz, serializationContext);
+        public void serialize(JsonObject json, SpawnXP instance, JsonSerializationContext context) {
+            super.serialize(json, instance, context);
         }
 
         @Override
-        public SpawnXP deserialize(JsonObject object, JsonDeserializationContext deserializationContext, LootItemCondition[] conditionsIn) {
-            return new SpawnXP(conditionsIn);
+        public SpawnXP deserialize(JsonObject json, JsonDeserializationContext context, LootItemCondition[] conditions) {
+            return new SpawnXP(conditions);
         }
     }
 }
