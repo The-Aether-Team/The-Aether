@@ -27,7 +27,7 @@ public class PhygHaloLayer extends RenderLayer<Phyg, PigModel<Phyg>> {
 
     @Override
     public void render(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, Phyg phyg, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (phyg.hasCustomName() && phyg.getCustomName() != null && phyg.getCustomName().getContents().equals("KingPhygieBoo")) {
+        if (phyg.hasCustomName() && phyg.getName().getString().equals("KingPhygieBoo")) {
             QuadrupedModelAccessor quadrupedModelAccessor = (QuadrupedModelAccessor) this.getParentModel();
             this.phygHalo.halo.yRot = quadrupedModelAccessor.getHead().yRot;
             this.phygHalo.halo.xRot = quadrupedModelAccessor.getHead().xRot;

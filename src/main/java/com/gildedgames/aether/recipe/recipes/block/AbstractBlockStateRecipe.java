@@ -3,6 +3,7 @@ package com.gildedgames.aether.recipe.recipes.block;
 import com.gildedgames.aether.recipe.BlockPropertyPair;
 import com.gildedgames.aether.recipe.BlockStateIngredient;
 import com.gildedgames.aether.util.BlockStateRecipeUtil;
+import net.minecraft.commands.CommandFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -18,18 +19,21 @@ public abstract class AbstractBlockStateRecipe implements BlockStateRecipe {
     protected final ResourceLocation id;
     protected final BlockStateIngredient ingredient;
     protected final BlockPropertyPair result;
+    protected final CommandFunction.CacheableFunction function;
 
-    public AbstractBlockStateRecipe(RecipeType<?> type, ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result) {
+    public AbstractBlockStateRecipe(RecipeType<?> type, ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result, CommandFunction.CacheableFunction function) {
         this.type = type;
         this.id = id;
         this.ingredient = ingredient;
         this.result = result;
+        this.function = function;
     }
 
     public boolean set(Level level, BlockPos pos, BlockState oldState) {
         if (this.matches(level, pos, oldState)) {
             BlockState newState = this.getResultState(oldState);
             level.setBlockAndUpdate(pos, newState);
+            BlockStateRecipeUtil.executeFunction(level, pos, this.getFunction());
             return true;
         }
         return false;
@@ -56,6 +60,11 @@ public abstract class AbstractBlockStateRecipe implements BlockStateRecipe {
     @Override
     public BlockPropertyPair getResult() {
         return this.result;
+    }
+
+    @Override
+    public CommandFunction.CacheableFunction getFunction() {
+        return this.function;
     }
 
     @Nonnull

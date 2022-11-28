@@ -18,13 +18,6 @@
       }
     },
     {
-      "type": "minecraft:in_square"
-    },
-    {
-      "type": "minecraft:surface_water_depth_filter",
-      "max_water_depth": 0
-    },
-    {
       "type": "aether:improved_layer_placement",
       "count": {
         "type": "minecraft:uniform",
@@ -37,7 +30,14 @@
       "verticalBounds": 4
     },
     {
+      "type": "minecraft:surface_water_depth_filter",
+      "max_water_depth": 0
+    },
+    {
       "type": "minecraft:biome"
+    },
+    {
+      "type": "aether:dungeon_blacklist_filter"
     }
   ]
 }

@@ -13,7 +13,7 @@ If you enjoy our work, [please consider making a pledge](https://patreon.com/Gil
 
 You can also support the Aether project and Gilded Games by telling your friends, joining our Discord server, and sharing our progress and announcements on social media. Every bit helps!
 
-If you're interested in sponsoring the Aether project or Gilded Games, please [contact us](mailto:support@gildedgames.com).
+If you're interested in sponsoring the Aether project or Gilded Games, please [contact Oz#1986 on the Aether Community Discord](https://discord.gg/aethermod).
 
 ## :package: Download the latest releases
 [![Mod loader: Forge](https://img.shields.io/badge/mod%20loader-forge-CC974D?style=flat-square)](https://files.minecraftforge.net/net/minecraftforge/forge/)
@@ -98,7 +98,7 @@ If you're wanting to create a gameplay video/review, extension or addon, parody,
 
 If you are thinking about using the Aether project's code or assets, please note our licensing. **All assets of The Aether are unlicensed and all rights are reserved to them by Gilded Games and their respective authors.** The source code of The Aether mod for Minecraft 1.7+ is under the LGPL v3.0 license. Any previous versions' source code is unlicensed and all rights are reserved to it by Gilded Games.
 
-If you have a reason that you wish to use our brand or any unlicensed material, please [get in contact with us](mailto:support@gildedgames.com) for details.
+If you have a reason that you wish to use our brand or any unlicensed material, please [get in contact with Oz#1986 on the Aether Community Discord](https://discord.gg/aethermod) for details.
 
 ## :star2: Special mentions
 ### :speech_balloon: Translations

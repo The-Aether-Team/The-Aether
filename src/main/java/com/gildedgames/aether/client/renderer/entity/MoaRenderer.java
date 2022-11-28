@@ -45,7 +45,7 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
 			return MOS_TEXTURE;
 		}
 		if ((moa.hasCustomName() && moa.getName().getString().equals("Raptor__") && moa.getMoaType() == AetherMoaTypes.BLUE.get())
-				|| (moa.getRider() != null && moa.getRider().equals(UUID.fromString("c3e6871e-8e60-490a-8a8d-2bbe35ad1604")))) {
+				|| (moa.getRider() != null && moa.getRider().equals(UUID.fromString("c3e6871e-8e60-490a-8a8d-2bbe35ad1604")))) { // Raptor__
 			return RAPTOR_TEXTURE;
 		}
 		return moa.getMoaType().getMoaTexture();

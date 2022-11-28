@@ -9,6 +9,9 @@
       "type": "minecraft:in_square"
     },
     {
+      "type": "aether:dungeon_blacklist_filter"
+    },
+    {
       "type": "minecraft:height_range",
       "height": {
         "type": "minecraft:uniform",
