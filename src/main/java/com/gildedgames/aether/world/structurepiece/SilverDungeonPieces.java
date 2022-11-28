@@ -4,41 +4,42 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.api.DungeonTracker;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.blockentity.TreasureChestBlockEntity;
+import com.gildedgames.aether.data.resources.AetherStructures;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.monster.dungeon.boss.ValkyrieQueen;
 import com.gildedgames.aether.loot.AetherLoot;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Registry;
+import net.minecraft.nbt.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.StructureManager;
-import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.world.level.levelgen.structure.StructurePiece;
-import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
+import net.minecraft.world.level.levelgen.structure.*;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 import net.minecraft.world.phys.AABB;
 
-import java.util.ArrayList;
+import javax.annotation.Nonnull;
+import java.util.*;
+import java.util.function.Function;
 
 public class SilverDungeonPieces {
     public static final RuleProcessor LOCKED_ANGELIC_STONE = new RuleProcessor(ImmutableList.of(
             new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.LOCKED_ANGELIC_STONE.get(), 0.2F), AlwaysTrueTest.INSTANCE, AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get().defaultBlockState()),
+            new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.TRAPPED_ANGELIC_STONE.get(), 0.2F), AlwaysTrueTest.INSTANCE, AetherBlocks.TRAPPED_LIGHT_ANGELIC_STONE.get().defaultBlockState()),
             new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.HOLYSTONE.get(), 0.3F), AlwaysTrueTest.INSTANCE, AetherBlocks.MOSSY_HOLYSTONE.get().defaultBlockState())
     ));
-    public static final BlockRotProcessor CLOUD_DECAY = new BlockRotProcessor(0.2F);
+
     /**
      * For testing the silver dungeon grid.
      */
@@ -49,26 +50,14 @@ public class SilverDungeonPieces {
         randomsource.setSeed(i);
     }
 
-    static class FloorGrid {
-        private final int[][] grid;
-        private final int width;
-        private final int length;
+    public static class TemplePiece extends SilverDungeonPiece {
 
-        public FloorGrid(int width, int length) {
-            this.grid = new int[width][length];
-            this.width = width;
-            this.length = length;
-        }
-    }
-
-    public static class SilverDungeonPiece extends TemplateStructurePiece {
-
-        public SilverDungeonPiece(StructureTemplateManager manager, ResourceLocation id, BlockPos pos, Rotation rotation) {
-            super(AetherStructurePieceTypes.SILVER_DUNGEON_PIECE.get(), 0, manager, id, id.toString(), makeSettings().setRotation(rotation), pos);
+        public TemplePiece(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
+            super(AetherStructurePieceTypes.SILVER_DUNGEON_PIECE.get(), manager, name, makeSettings().setRotation(rotation), pos);
             this.setOrientation(rotation.rotate(Direction.SOUTH));
         }
 
-        public SilverDungeonPiece(StructurePieceSerializationContext context, CompoundTag tag) {
+        public TemplePiece(StructurePieceSerializationContext context, CompoundTag tag) {
             super(AetherStructurePieceTypes.SILVER_DUNGEON_PIECE.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
         }
 
@@ -90,18 +79,12 @@ public class SilverDungeonPieces {
                 }
             }
         }
-
-        @Override
-        public void postProcess(WorldGenLevel level, StructureManager pStructureManager, ChunkGenerator pGenerator, RandomSource random, BoundingBox pBox, ChunkPos pChunkPos, BlockPos pPos) {
-            super.postProcess(level, pStructureManager, pGenerator, random, pBox, pChunkPos, pPos);
-//            generateClouds(level, pBox, this.boundingBox.minY(), random);
-        }
     }
 
-    public static class BossRoom extends TemplateStructurePiece {
+    public static class BossRoom extends SilverDungeonPiece {
 
-        public BossRoom(StructureTemplateManager manager, ResourceLocation id, BlockPos pos, Rotation rotation) {
-            super(AetherStructurePieceTypes.SILVER_BOSS_ROOM.get(), 0, manager, id, id.toString(), makeSettings().setRotation(rotation), pos);
+        public BossRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
+            super(AetherStructurePieceTypes.SILVER_BOSS_ROOM.get(), manager, name, makeSettings().setRotation(rotation), pos);
             this.setOrientation(rotation.rotate(Direction.SOUTH));
         }
 
@@ -121,101 +104,90 @@ public class SilverDungeonPieces {
                 queen.setPos(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
                 queen.setDungeon(new DungeonTracker<>(queen,
                         queen.position(),
-                        new AABB(this.boundingBox.minX(), this.boundingBox.minY(), this.boundingBox.minZ(), this.boundingBox.maxX(), this.boundingBox.maxY(), this.boundingBox.maxZ()),
+                        new AABB(this.boundingBox.minX(), this.boundingBox.minY(), this.boundingBox.minZ(), this.boundingBox.maxX() + 1, this.boundingBox.maxY() + 1, this.boundingBox.maxZ() + 1),
                         new ArrayList<>()));
+                StructureManager manager = level.getLevel().structureManager();
+                Structure temple = manager.registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY).get(AetherStructures.SILVER_DUNGEON);
+                if (temple != null) {
+                    BoundingBox box = manager.getStructureAt(pos, temple).getBoundingBox();
+                    AABB dungeonBounds = new AABB(box.minX(), box.minY(), box.minZ(), box.maxX() + 1, box.maxY() + 1, box.maxZ() + 1);
+                    queen.setDungeonBounds(dungeonBounds);
+                }
                 queen.finalizeSpawn(level, level.getCurrentDifficultyAt(pos), MobSpawnType.STRUCTURE, null, null);
                 level.getLevel().addFreshEntity(queen);
                 level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
-            }
-            else if (name.equals("Treasure Chest")) {
+            } else if (name.equals("Treasure Chest")) {
                 BlockPos chest = pos.below();
                 RandomizableContainerBlockEntity.setLootTable(level, random, chest, AetherLoot.SILVER_DUNGEON_REWARD);
                 TreasureChestBlockEntity.setDungeonType(level, chest, new ResourceLocation(Aether.MODID, "silver"));
                 level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
             }
         }
-
-        @Override
-        public void postProcess(WorldGenLevel level, StructureManager pStructureManager, ChunkGenerator pGenerator, RandomSource random, BoundingBox pBox, ChunkPos pChunkPos, BlockPos pPos) {
-            super.postProcess(level, pStructureManager, pGenerator, random, pBox, pChunkPos, pPos);
-//            generateClouds(level, pBox, this.boundingBox.minY(), random);
-        }
-    }
-
-    public static class CloudBed extends TemplateStructurePiece {
-
-        public CloudBed(StructureTemplateManager pStructureTemplateManager, String name, StructurePlaceSettings pPlaceSettings, BlockPos pTemplatePosition) {
-            super(AetherStructurePieceTypes.CLOUD_BED.get(), 0, pStructureTemplateManager, new ResourceLocation(name), name, pPlaceSettings, pTemplatePosition);
-        }
-
-        public CloudBed(StructurePieceSerializationContext context, CompoundTag tag) {
-            super(AetherStructurePieceTypes.CLOUD_BED.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
-        }
-
-        private static StructurePlaceSettings makeSettings() {
-            return new StructurePlaceSettings().addProcessor(CLOUD_DECAY);
-        }
-
-        @Override
-        protected void handleDataMarker(String pName, BlockPos pPos, ServerLevelAccessor pLevel, RandomSource pRandom, BoundingBox pBox) {
-
-        }
     }
 
     public static class LegacyCloudBed extends StructurePiece {
-        public LegacyCloudBed(StructurePieceType pType, BoundingBox pBox) {
-            super(pType, 0, pBox);
+        private final Set<BlockPos> positions;
+
+        public LegacyCloudBed(Set<BlockPos> positions, BoundingBox pBox, Direction direction) {
+            super(AetherStructurePieceTypes.LEGACY_CLOUD_BED.get(), 0, pBox);
+            this.positions = positions;
+            this.setOrientation(direction);
         }
 
         public LegacyCloudBed(StructurePieceSerializationContext context, CompoundTag tag) {
             super(AetherStructurePieceTypes.LEGACY_CLOUD_BED.get(), tag);
+            ListTag positions = tag.getList("Positions", Tag.TAG_COMPOUND);
+            this.positions = new HashSet<>();
+            for (Tag position : positions) {
+                this.positions.add(NbtUtils.readBlockPos((CompoundTag) position));
+            }
+        }
+
+        protected void addAdditionalSaveData(StructurePieceSerializationContext context, CompoundTag tag) {
+            ListTag positions = new ListTag();
+            for (BlockPos position : this.positions) {
+                positions.add(NbtUtils.writeBlockPos(position));
+            }
+            tag.put("Positions", positions);
         }
 
         @Override
-        protected void addAdditionalSaveData(StructurePieceSerializationContext pContext, CompoundTag pTag) {
-
+        public void postProcess(@Nonnull WorldGenLevel level, @Nonnull StructureManager manager, @Nonnull ChunkGenerator generator, @Nonnull RandomSource random, @Nonnull BoundingBox bounds, @Nonnull ChunkPos chunkPos, @Nonnull BlockPos blockPos) {
+            if (!this.positions.isEmpty()) {
+                this.positions.removeIf(pos -> this.placeBlock(level, AetherBlocks.COLD_AERCLOUD.get().defaultBlockState(), pos.offset(0, blockPos.getY(), 0), bounds));
+            }
         }
 
-        @Override
-        public void postProcess(WorldGenLevel pLevel, StructureManager pStructureManager, ChunkGenerator pGenerator, RandomSource pRandom, BoundingBox pBox, ChunkPos pChunkPos, BlockPos pPos) {
+        protected boolean placeBlock(WorldGenLevel level, BlockState state, BlockPos pos, BoundingBox bounds) {
+            if (bounds.isInside(pos)) {
+                if (this.canBeReplaced(level, pos)) {
+                    level.setBlock(pos, state, 2);
+                }
+                return true;
+            }
+            return false;
+        }
 
+        protected boolean canBeReplaced(LevelReader level, BlockPos pos) {
+            return level.isEmptyBlock(pos);
         }
     }
 
-    /**
-     * Generates the cloud bed under the silver dungeon.
-     */
-    public static void generateClouds(WorldGenLevel level, BoundingBox chunk, int minY, RandomSource random) {
-        int minX = chunk.minX();
-        minY -= 1;
-        int minZ = chunk.minZ();
-        int xTendency = random.nextInt(3) - 2;
-        int zTendency = random.nextInt(3) - 2;
-        int xSpan = chunk.getXSpan();
-        int zSpan = chunk.getZSpan();
-        int xOffset = minX + random.nextInt(xSpan);
-        int yOffset = minY;
-        int zOffset = minZ + random.nextInt(zSpan);
-        for (int tries = 0; tries < 16; tries++) {
-            for (int n = 0; n < 10; ++n) {
-                xOffset += random.nextInt(3) + xTendency;
-                zOffset += random.nextInt(3) + zTendency;
-                if (random.nextBoolean()) {
-                    yOffset += random.nextInt(3) - 1;
-                }
-                for (int x = xOffset; x < xOffset + random.nextInt(4) + 3; ++x) {
-                    for (int y = yOffset; y < yOffset + random.nextInt(1) + 2; ++y) {
-                        for (int z = zOffset; z < zOffset + random.nextInt(4) + 3; ++z) {
-                            BlockPos pos = new BlockPos(x, y, z);
-                            if (chunk.isInside(pos)) {
-                                if (Math.abs(x - xOffset) + Math.abs(y - yOffset) + Math.abs(z - zOffset) < 4 + random.nextInt(2)) {
-                                    level.setBlock(pos, AetherBlocks.COLD_AERCLOUD.get().defaultBlockState(), 2);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+    public static abstract class SilverDungeonPiece extends TemplateStructurePiece {
+
+        public SilverDungeonPiece(StructurePieceType type, StructureTemplateManager manager, String name, StructurePlaceSettings settings, BlockPos pos) {
+            super(type, 0, manager, new ResourceLocation(Aether.MODID, "silver_dungeon/" + name), name, settings, pos);
+        }
+
+        public SilverDungeonPiece(StructurePieceType type, CompoundTag tag, StructureTemplateManager manager, Function<ResourceLocation, StructurePlaceSettings> settingsFactory) {
+            super(type, tag, manager, settingsFactory.andThen(settings -> settings.setRotation(Rotation.valueOf(tag.getString("Rotation")))));
+            this.setOrientation(this.getRotation().rotate(Direction.SOUTH));
+        }
+
+        @Override
+        protected void addAdditionalSaveData(StructurePieceSerializationContext context, CompoundTag tag) {
+            super.addAdditionalSaveData(context, tag);
+            tag.putString("Rotation", this.placeSettings.getRotation().name());
         }
     }
 }

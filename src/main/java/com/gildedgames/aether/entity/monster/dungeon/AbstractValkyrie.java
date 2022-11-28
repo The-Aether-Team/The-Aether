@@ -277,7 +277,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
 
         @Override
         public void stop() {
-            this.counter = 7;
+            this.counter = 8;
         }
 
         @Override
