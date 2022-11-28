@@ -181,6 +181,7 @@ public class SilverDungeonPieces {
 
         public SilverDungeonPiece(StructurePieceType type, CompoundTag tag, StructureTemplateManager manager, Function<ResourceLocation, StructurePlaceSettings> settingsFactory) {
             super(type, tag, manager, settingsFactory.andThen(settings -> settings.setRotation(Rotation.valueOf(tag.getString("Rotation")))));
+            this.setOrientation(this.getRotation().rotate(Direction.SOUTH));
         }
 
         @Override
