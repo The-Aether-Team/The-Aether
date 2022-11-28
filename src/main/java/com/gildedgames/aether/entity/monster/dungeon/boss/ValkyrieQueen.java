@@ -59,7 +59,9 @@ import java.util.ArrayList;
 public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQueen>, NpcDialogue {
     public static final EntityDataAccessor<Boolean> DATA_IS_READY = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.COMPONENT);
-    /** The player whom the valkyrie queen is currently conversing with */
+    /**
+     * The player whom the valkyrie queen is currently conversing with
+     */
     @Nullable
     private Player tradingPlayer;
     private DungeonTracker<ValkyrieQueen> dungeon;
@@ -139,8 +141,8 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
                     }
                 }
             } else {
-                    MutableComponent message = Component.translatable("gui.aether.queen.dialog.ready");
-                    this.chatWithNearby(message);
+                MutableComponent message = Component.translatable("gui.aether.queen.dialog.ready");
+                this.chatWithNearby(message);
             }
             return InteractionResult.SUCCESS;
         } else {
@@ -154,13 +156,11 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     @Override
     public boolean hurt(@Nonnull DamageSource source, float pDamageAmount) {
         boolean flag = (this.isReady() || source == DamageSource.OUT_OF_WORLD) && super.hurt(source, pDamageAmount);
-        if (!this.level.isClientSide && source.getEntity() instanceof Player) {
-            if (!this.isBossFight() && flag && level.getDifficulty() != Difficulty.PEACEFUL && this.getHealth() > 0) {
-                chatWithNearby(Component.translatable("gui.aether.queen.dialog.fight"));
-                this.setBossFight(true);
-                if (this.getDungeon() != null) {
-                    this.closeRoom();
-                }
+        if (!this.level.isClientSide && !this.isBossFight() && flag && level.getDifficulty() != Difficulty.PEACEFUL && this.getHealth() > 0) {
+            chatWithNearby(Component.translatable("gui.aether.queen.dialog.fight"));
+            this.setBossFight(true);
+            if (this.getDungeon() != null) {
+                this.closeRoom();
             }
         }
         return flag;
@@ -400,12 +400,13 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
 
     /**
      * Handles an NPC interaction on the server.
-     * @see NpcPlayerInteractPacket
+     *
      * @param interactionID - A code for which interaction was performed on the client.
      *                      0 - What can you tell me about this place?
      *                      1 - Challenged to a fight.
      *                      2 - Actually, I changed my mind (fight)
      *                      3 - Nevermind
+     * @see NpcPlayerInteractPacket
      */
     @Override
     public void handleNpcInteraction(Player player, byte interactionID) {
@@ -517,6 +518,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
         private final int attackInterval;
         private int attackTime = 0;
         private final float attackRadius;
+
         public ThunderCrystalAttackGoal(Mob mob, int attackInterval, float attackRadius) {
             this.mob = mob;
             this.attackInterval = attackInterval;
