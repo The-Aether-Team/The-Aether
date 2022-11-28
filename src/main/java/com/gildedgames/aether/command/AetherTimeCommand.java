@@ -8,7 +8,9 @@ import net.minecraft.commands.arguments.TimeArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 
-// Vanilla copy of TimeCommand
+/**
+ * Copy of {@link net.minecraft.server.commands.TimeCommand}.
+ */
 public class AetherTimeCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("aether")
@@ -41,14 +43,14 @@ public class AetherTimeCommand {
         return time;
     }
 
-    public static int setTime(CommandSourceStack source, int time) {
+    private static int setTime(CommandSourceStack source, int time) {
         ServerLevel level = source.getLevel();
         level.setDayTime(time);
         source.sendSuccess(Component.translatable("commands.time.set", time), true);
         return getDayTime(source.getLevel());
     }
 
-    public static int addTime(CommandSourceStack source, int amount) {
+    private static int addTime(CommandSourceStack source, int amount) {
         ServerLevel level = source.getLevel();
         level.setDayTime(level.getDayTime() + amount);
         int i = getDayTime(source.getLevel());
