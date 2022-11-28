@@ -830,7 +830,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
             if (this.slider.getDeltaMovement().equals(Vec3.ZERO) || isInside) {
                 for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
                     BlockState blockState = this.slider.level.getBlockState(pos);
-                    if (!blockState.isAir() && !blockState.is(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)) {
+                    if (!blockState.isAir() && !blockState.is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
                         if (ForgeEventFactory.getMobGriefingEvent(this.slider.level, this.slider) && this.slider.getDungeon() != null && this.slider.getDungeon().roomBounds().contains(Vec3.atCenterOf(pos))) {
                             this.slider.level.destroyBlock(pos, true, this.slider);
                             this.blockDestroySmoke(pos);

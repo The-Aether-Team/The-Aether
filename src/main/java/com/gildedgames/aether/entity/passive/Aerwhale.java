@@ -164,7 +164,7 @@ public class Aerwhale extends FlyingMob {
     @Override
     @Nonnull
     protected InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
-        if (player.getUUID().getMostSignificantBits() == 220717875589366683L && player.getUUID().getLeastSignificantBits() == -7181826737698904209L) {
+        if (player.getUUID().equals(UUID.fromString("031025bd-0a15-439b-9c55-06a20d0de76f"))) { // SerenityLowes
             player.startRiding(this);
             if (!this.level.isClientSide) {
                 MutableComponent msg = Component.literal("Serenity is the queen of W(h)ales!!");
