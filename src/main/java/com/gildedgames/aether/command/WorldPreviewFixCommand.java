@@ -20,7 +20,7 @@ public class WorldPreviewFixCommand {
      * @param source The {@link CommandSourceStack}.
      * @return An {@link Integer}.
      */
-    public static int fix(CommandSourceStack source) {
+    private static int fix(CommandSourceStack source) {
         WorldDisplayHelper.loadedLevel = null;
         WorldDisplayHelper.loadedSummary = null;
         source.sendSuccess(Component.translatable("commands.aether.menu.fix"), true);

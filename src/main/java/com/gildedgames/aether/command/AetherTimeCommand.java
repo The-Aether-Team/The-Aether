@@ -43,14 +43,14 @@ public class AetherTimeCommand {
         return time;
     }
 
-    public static int setTime(CommandSourceStack source, int time) {
+    private static int setTime(CommandSourceStack source, int time) {
         ServerLevel level = source.getLevel();
         level.setDayTime(time);
         source.sendSuccess(Component.translatable("commands.time.set", time), true);
         return getDayTime(source.getLevel());
     }
 
-    public static int addTime(CommandSourceStack source, int amount) {
+    private static int addTime(CommandSourceStack source, int amount) {
         ServerLevel level = source.getLevel();
         level.setDayTime(level.getDayTime() + amount);
         int i = getDayTime(source.getLevel());
