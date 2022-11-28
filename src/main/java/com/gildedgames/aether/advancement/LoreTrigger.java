@@ -18,6 +18,9 @@ import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.advancements.critereon.NbtPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 
+/**
+ * Criterion trigger used for checking an item placed by a player inside a Book of Lore.
+ */
 public class LoreTrigger extends SimpleCriterionTrigger<LoreTrigger.Instance> {
     private static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "lore_entry");
     public static final LoreTrigger INSTANCE = new LoreTrigger();
