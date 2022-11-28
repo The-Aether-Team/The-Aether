@@ -26,10 +26,13 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
@@ -106,6 +109,11 @@ public class AetherOverlays {
         });
     }
 
+
+    /**
+     * Warning for "deprecation" is suppressed because vanilla calls {@link net.minecraft.client.renderer.block.BlockModelShaper#getParticleIcon(BlockState)} just fine.
+     */
+    @SuppressWarnings("deprecation")
     private static void renderAetherPortalOverlay(PoseStack poseStack, Minecraft mc, Window window, AetherPlayer handler, float partialTicks) {
         float timeInPortal = handler.getPrevPortalAnimTime() + (handler.getPortalAnimTime() - handler.getPrevPortalAnimTime()) * partialTicks;
         if (timeInPortal > 0.0F) {
@@ -121,7 +129,7 @@ public class AetherOverlays {
             RenderSystem.depthMask(false);
             RenderSystem.defaultBlendFunc();
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, timeInPortal);
-            RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
+            RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             TextureAtlasSprite textureatlassprite = mc.getBlockRenderer().getBlockModelShaper().getParticleIcon(AetherBlocks.AETHER_PORTAL.get().defaultBlockState());
             float f = textureatlassprite.getU0();

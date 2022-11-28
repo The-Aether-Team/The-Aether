@@ -13,6 +13,7 @@ import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
@@ -50,7 +51,7 @@ public class AetherPlacedFeatures {
 
     public static final ResourceKey<PlacedFeature> HOLIDAY_TREE_PLACEMENT = register("holiday_tree", AetherConfiguredFeatures.dataHolder(AetherConfiguredFeatures.HOLIDAY_TREE_CONFIGURATION),
             new HolidayFilter(),
-            CountOnEveryLayerPlacement.of(1), //todo replace
+            ImprovedLayerPlacementModifier.of(Heightmap.Types.OCEAN_FLOOR, UniformInt.of(0, 1), 4),
             RarityFilter.onAverageOnceEvery(48),
             PlacementUtils.filteredByBlockSurvival(AetherBlocks.SKYROOT_SAPLING.get()));
 

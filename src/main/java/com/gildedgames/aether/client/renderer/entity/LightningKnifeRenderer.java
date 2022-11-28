@@ -8,11 +8,11 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
+import net.minecraft.world.inventory.InventoryMenu;
 
 import javax.annotation.Nonnull;
 
@@ -37,6 +37,6 @@ public class LightningKnifeRenderer extends EntityRenderer<ThrownLightningKnife>
 	@Nonnull
 	@Override
 	public ResourceLocation getTextureLocation(@Nonnull ThrownLightningKnife lightningKnife) {
-		return TextureAtlas.LOCATION_BLOCKS;
+		return InventoryMenu.BLOCK_ATLAS;
 	}
 }

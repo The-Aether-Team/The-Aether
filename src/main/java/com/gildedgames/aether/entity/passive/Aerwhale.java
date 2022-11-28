@@ -16,6 +16,8 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.LookControl;
@@ -27,6 +29,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.ForgeMod;
 
 import javax.annotation.Nonnull;
 import java.util.EnumSet;
@@ -36,6 +39,8 @@ import java.util.UUID;
 public class Aerwhale extends FlyingMob {
     public static final EntityDataAccessor<Float> DATA_X_ROT_ID = SynchedEntityData.defineId(Aerwhale.class, EntityDataSerializers.FLOAT);
     public static final EntityDataAccessor<Float> DATA_Y_ROT_ID = SynchedEntityData.defineId(Aerwhale.class, EntityDataSerializers.FLOAT);
+    private static final UUID MOUNT_HEIGHT_UUID = UUID.fromString("B2D5A57A-8DA5-4127-8091-14A4CCD000F1");
+    private static final UUID DEFAULT_HEIGHT_UUID = UUID.fromString("31535561-F99D-4E14-ACE7-F636EAAD6180");
 
     public Aerwhale(EntityType<? extends Aerwhale> type, Level level) {
         super(type, level);
@@ -107,7 +112,15 @@ public class Aerwhale extends FlyingMob {
                         );
                     }
 
-                    this.maxUpStep = 1.0F;
+                    AttributeInstance stepHeight = this.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
+                    if (stepHeight != null) {
+                        if (stepHeight.hasModifier(this.getDefaultStepHeightModifier())) {
+                            stepHeight.removeModifier(this.getDefaultStepHeightModifier());
+                        }
+                        if (!stepHeight.hasModifier(this.getMountStepHeightModifier())) {
+                            stepHeight.addTransientModifier(this.getMountStepHeightModifier());
+                        }
+                    }
 
                     if (!this.level.isClientSide) {
                         this.flyingSpeed = this.getSpeed() * 0.6F;
@@ -127,7 +140,15 @@ public class Aerwhale extends FlyingMob {
                     this.animationPosition += this.animationSpeed;
                 }
             } else {
-                this.maxUpStep = 0.5F;
+                AttributeInstance stepHeight = this.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
+                if (stepHeight != null) {
+                    if (stepHeight.hasModifier(this.getMountStepHeightModifier())) {
+                        stepHeight.removeModifier(this.getMountStepHeightModifier());
+                    }
+                    if (!stepHeight.hasModifier(this.getDefaultStepHeightModifier())) {
+                        stepHeight.addTransientModifier(this.getDefaultStepHeightModifier());
+                    }
+                }
                 this.flyingSpeed = 0.02F;
                 super.travel(positionIn);
             }
@@ -173,6 +194,14 @@ public class Aerwhale extends FlyingMob {
 
     public float getYRotData() {
         return this.entityData.get(DATA_Y_ROT_ID);
+    }
+
+    public AttributeModifier getMountStepHeightModifier() {
+        return new AttributeModifier(MOUNT_HEIGHT_UUID, "Mounted step height increase", 0.4, AttributeModifier.Operation.ADDITION);
+    }
+
+    public AttributeModifier getDefaultStepHeightModifier() {
+        return new AttributeModifier(DEFAULT_HEIGHT_UUID, "Default step height increase", -0.1, AttributeModifier.Operation.ADDITION);
     }
 
     @Override

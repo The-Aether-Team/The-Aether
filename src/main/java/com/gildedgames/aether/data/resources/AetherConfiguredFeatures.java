@@ -114,6 +114,10 @@ public class AetherConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> WATER_LAKE_CONFIGURATION = register("water_lake", AetherFeatures.LAKE.get(),
             AetherFeatureBuilders.lake(BlockStateProvider.simple(Blocks.WATER), BlockStateProvider.simple(AetherBlocks.AETHER_GRASS_BLOCK.get())));
 
+    /**
+     * Warning for "deprecation" is suppressed because vanilla calls {@link Block#builtInRegistryHolder()} just fine.
+     */
+    @SuppressWarnings("deprecation")
     public static final ResourceKey<ConfiguredFeature<?, ?>> WATER_SPRING_CONFIGURATION = register("water_spring", Feature.SPRING,
             AetherFeatureBuilders.spring(Fluids.WATER.defaultFluidState(), true, 4, 1, HolderSet.direct(Block::builtInRegistryHolder, AetherBlocks.HOLYSTONE.get(), AetherBlocks.AETHER_DIRT.get())));
 
