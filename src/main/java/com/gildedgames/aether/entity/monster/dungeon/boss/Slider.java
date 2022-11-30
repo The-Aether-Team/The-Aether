@@ -8,7 +8,6 @@ import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.BossMob;
 import com.gildedgames.aether.entity.ai.goal.target.InBossRoomTargetGoal;
 import com.gildedgames.aether.entity.ai.goal.target.MostDamageTargetGoal;
-import com.gildedgames.aether.entity.ai.navigator.AxisAlignedPathNavigation;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.BossInfoPacket;
 import net.minecraft.core.BlockPos;
@@ -37,7 +36,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
@@ -52,8 +50,6 @@ import net.minecraftforge.event.ForgeEventFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
     public static final EntityDataAccessor<Boolean> DATA_AWAKE_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.BOOLEAN);
@@ -103,11 +99,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(3, new InBossRoomTargetGoal<>(this, Player.class));
         this.goalSelector.addGoal(1, new SliderMoveGoal(this));
-    }
-
-    @Override
-    protected PathNavigation createNavigation(Level level) {
-        return new AxisAlignedPathNavigation(this, level);
     }
 
     public static AttributeSupplier.Builder createSliderAttributes() {
@@ -587,12 +578,29 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         this.chatCooldown = cooldown;
     }
 
+    public static Direction calculateDirection(double x, double y, double z) {
+        double absX = Math.abs(x);
+        double absY = Math.abs(y);
+        double absZ = Math.abs(z);
+        if (absY > absX && absY > absZ) {
+            return y > 0 ? Direction.UP : Direction.DOWN;
+        } else if (absX > absZ) {
+            return x > 0 ? Direction.EAST : Direction.WEST;
+        } else {
+            return z > 0 ? Direction.SOUTH : Direction.NORTH;
+        }
+    }
+
+    public static double axisDistance(double x, double y, double z, Direction direction) {
+        return x * direction.getStepX() + y * direction.getStepY() + z * direction.getStepZ();
+    }
+
     /**
      * This goal allows the slider to pick a spot to move to while avoiding unbreakable blocks.
      */
     public static class SliderMoveGoal extends Goal {
         protected final Slider slider;
-        public final List<BlockPos> targetPoints = new ArrayList<>();
+        protected BlockPos targetPoint;
         private int ticksUntilRecomputePath = 10;
 
         public SliderMoveGoal(Slider slider) {
@@ -606,62 +614,139 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
 
         @Override
         public void tick() {
-            boolean recomputedPath = false;
             LivingEntity target = this.slider.getTarget();
-            if (--this.ticksUntilRecomputePath <= 0 || !this.slider.moveControl.hasWanted() && this.targetPoints.isEmpty()) {
+            if (--this.ticksUntilRecomputePath <= 0 || !this.slider.moveControl.hasWanted() && this.targetPoint == null) {
                 this.ticksUntilRecomputePath = 10;
-                this.targetPoints.clear();
                 BlockPos targetPos = target.blockPosition();
                 BlockPos currentPos = this.slider.blockPosition();
                 BlockPos difference = targetPos.subtract(currentPos);
-
-                Direction direction = this.calculateDirection(difference.getX(), difference.getY(), difference.getZ());
+                Direction direction;
+                if (this.slider.moveControl instanceof SliderMoveControl control && control.moveDir != null && axisDistance(difference.getX(), difference.getY(), difference.getZ(), control.moveDir) > 0) {
+                    direction = control.moveDir;
+                } else {
+                    direction = calculateDirection(difference.getX(), difference.getY(), difference.getZ());
+                }
+                AABB pathBox = this.calculatePathBox(this.slider.getBoundingBox(), difference, direction);
 
                 // If the block next to the slider is unbreakable, move up first.
-                if (direction.getAxis() != Direction.Axis.Y) {
-                    if (this.slider.level.getBlockState(currentPos.relative(direction)).is(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)) {
-                        do {
-                            currentPos = currentPos.above();
-                        } while (this.slider.level.getBlockState(currentPos.relative(direction)).is(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS));
-                        this.targetPoints.add(currentPos);
-                    } else if (currentPos.getY() > targetPos.getY() && this.slider.level.getBlockState(currentPos.offset(0, -1, 0)).isAir()) { // Bring the slider back to the ground before attacking again.
-                        do {
-                            currentPos = currentPos.offset(0, -1, 0);
-                        } while (currentPos.getY() > targetPos.getY() && this.slider.level.getBlockState(currentPos.offset(0, -1, 0)).isAir());
-                        this.targetPoints.add(currentPos);
-                    }
-                }
-                BlockPos.MutableBlockPos offset = new BlockPos.MutableBlockPos();
+                if (direction.getAxis() == Direction.Axis.Y || !this.setPathUpOrDown(pathBox, currentPos, targetPos, difference, direction)) {
+                    BlockPos.MutableBlockPos offset = new BlockPos.MutableBlockPos();
 
-                // Find the next point in the path.
-                while (Math.abs(offset.getX()) <= Math.abs(difference.getX()) && Math.abs(offset.getY()) <= Math.abs(difference.getY()) && Math.abs(offset.getZ()) <= Math.abs(difference.getZ())) {
-                    offset.move(direction);
-                    if (this.slider.level.getBlockState(currentPos.offset(offset)).is(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)) {
-                        break;
+                    // Find the next point in the path.
+                    while (Math.abs(offset.getX()) <= Math.abs(difference.getX()) && Math.abs(offset.getY()) <= Math.abs(difference.getY()) && Math.abs(offset.getZ()) <= Math.abs(difference.getZ())) {
+                        offset.move(direction);
+                        if (this.slider.level.getBlockState(currentPos.offset(offset)).is(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)) {
+                            break;
+                        }
                     }
+                    offset.move(direction.getOpposite());
+                    this.targetPoint = currentPos.offset(offset);
                 }
-                offset.move(direction.getOpposite());
-                this.targetPoints.add(currentPos.offset(offset));
-                recomputedPath = true;
             }
-            if (recomputedPath || !this.slider.moveControl.hasWanted()) {
+            if (this.targetPoint != null) {
                 // Move along the calculated path
-                BlockPos pos = this.targetPoints.remove(0);
+                BlockPos pos = this.targetPoint;
+                this.targetPoint = null;
                 this.slider.moveControl.setWantedPosition(pos.getX(), pos.getY(), pos.getZ(), 1);
             }
         }
 
-        public Direction calculateDirection(double x, double y, double z) {
-            double absX = Math.abs(x);
-            double absY = Math.abs(y);
-            double absZ = Math.abs(z);
-            if (absY > absX && absY > absZ) {
-                return y > 0 ? Direction.UP : Direction.DOWN;
-            } else if (absX > absZ) {
-                return x > 0 ? Direction.EAST : Direction.WEST;
-            } else {
-                return z > 0 ? Direction.SOUTH : Direction.NORTH;
+        /**
+         * Checks if the slider should move up or down. If so, set the path in that direction and return true;
+         * @param currentPath - The expanded AABB including both the slider and its target point
+         * @param currentPos - The slider's current position
+         * @param targetPos - The slider's target's position
+         * @param direction - The direction the slider wants to move in
+         * @return - True if the slider changes direction to move up or down
+         */
+        private boolean setPathUpOrDown(AABB currentPath, BlockPos currentPos, BlockPos targetPos, BlockPos difference, Direction direction) {
+            AABB collisionBox = this.calculateAdjacentBox(this.slider.getBoundingBox(), direction);
+            boolean isTouchingWall = false;
+
+            for (BlockPos pos : BlockPos.betweenClosed(Mth.floor(collisionBox.minX), Mth.floor(collisionBox.minY), Mth.floor(collisionBox.minZ), Mth.floor(collisionBox.maxX), Mth.floor(collisionBox.maxY), Mth.floor(collisionBox.maxZ))) {
+                if (this.slider.level.getBlockState(pos).is(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)) {
+                    isTouchingWall = true;
+                    break;
+                }
             }
+
+            if (isTouchingWall) {
+                BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+                int y = Mth.floor(collisionBox.maxY + 1);
+                while (isTouchingWall) {
+                    isTouchingWall = false;
+                    for (int x = Mth.floor(collisionBox.minX); x < collisionBox.maxX; x++) {
+                        for (int z = Mth.floor(collisionBox.minZ); z < collisionBox.maxZ; z++) {
+                            if (this.slider.level.getBlockState(pos.set(x, y, z)).is(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)) {
+                                isTouchingWall = true;
+                            }
+                        }
+                    }
+                    y++;
+                }
+                this.targetPoint = currentPos.atY(y);
+                return true;
+            } else if (currentPos.getY() > targetPos.getY()) { // Bring the slider back to the ground before attacking again.
+                BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+                currentPath = this.calculateAdjacentBox(currentPath, Direction.DOWN);
+                currentPath = currentPath.expandTowards(difference.getX(), difference.getY() + 1, difference.getZ());
+                // If there's a block in the way, don't take the low road.
+                for (int x = Mth.floor(currentPath.minX); x < currentPath.maxX; x++) {
+                    for (int z = Mth.floor(currentPath.minZ); z < currentPath.maxZ; z++) {
+                        for (int y = Mth.floor(currentPath.minY); y < currentPath.maxY; y++) {
+                            if (!this.slider.level.getBlockState(pos.set(x, y, z)).isAir()) {
+                                isTouchingWall = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (!isTouchingWall) {
+                    this.targetPoint = currentPos.atY(targetPos.getY());
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /**
+         * Creates an AABB expanded to the point the slider wants to go to.
+         */
+        public AABB calculatePathBox(AABB box, BlockPos length, Direction direction) {
+            return box.expandTowards(length.getX() * direction.getStepX(), length.getY() * direction.getStepY(), length.getZ() * direction.getStepZ());
+        }
+
+        /**
+         * Calculates a box adjacent to the original, with equal dimensions except for the axis it's translated along.
+         */
+        public AABB calculateAdjacentBox(AABB box, Direction direction) {
+            double minX = box.minX;
+            double minY = box.minY;
+            double minZ = box.minZ;
+            double maxX = box.maxX;
+            double maxY = box.maxY;
+            double maxZ = box.maxZ;
+            if (direction == Direction.UP) {
+                minY = maxY;
+                maxY += 1;
+            } else if (direction == Direction.DOWN) {
+                maxY = minY;
+                minY -= 1;
+            } else if (direction == Direction.NORTH) {
+                maxZ = minZ;
+                minZ -= 1;
+            } else if (direction == Direction.SOUTH) {
+                minZ = maxZ;
+                maxZ += 1;
+            } else if (direction == Direction.EAST) {
+                minX = maxX;
+                maxX += 1;
+            } else { // West
+                maxX = minX;
+                minX -= 1;
+            }
+
+            return new AABB(minX, minY, minZ, maxX, maxY, maxZ);
         }
     }
 
@@ -694,7 +779,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                     double z = this.getWantedZ() - this.slider.getZ();
 
                     if (this.moveDir == null) {
-                        this.moveDir = this.calculateDirection(x, y, z);
+                        this.moveDir = calculateDirection(x, y, z);
                     }
 
                     double axisDistance = x * this.moveDir.getStepX()
@@ -726,19 +811,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
             this.velocity = 0;
             this.moveDelay = this.calculateMoveDelay();
             this.slider.setDeltaMovement(Vec3.ZERO);
-        }
-
-        public Direction calculateDirection(double x, double y, double z) {
-            double absX = Math.abs(x);
-            double absY = Math.abs(y);
-            double absZ = Math.abs(z);
-            if (absY > absX && absY > absZ) {
-                return y > 0 ? Direction.UP : Direction.DOWN;
-            } else if (absX > absZ) {
-                return x > 0 ? Direction.EAST : Direction.WEST;
-            } else {
-                return z > 0 ? Direction.SOUTH : Direction.NORTH;
-            }
         }
 
         protected float getVelocityIncrease() {
