@@ -601,7 +601,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
     public static class SliderMoveGoal extends Goal {
         protected final Slider slider;
         protected BlockPos targetPoint;
-        private int ticksUntilRecomputePath = 10;
+        private int ticksUntilRecomputePath = 2;
 
         public SliderMoveGoal(Slider slider) {
             this.slider = slider;
@@ -672,8 +672,9 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
 
             if (isTouchingWall) {
                 BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
-                int y = Mth.floor(collisionBox.maxY + 1);
+                int y = Mth.floor(collisionBox.maxY);
                 while (isTouchingWall) {
+                    y++;
                     isTouchingWall = false;
                     for (int x = Mth.floor(collisionBox.minX); x < collisionBox.maxX; x++) {
                         for (int z = Mth.floor(collisionBox.minZ); z < collisionBox.maxZ; z++) {
@@ -682,7 +683,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                             }
                         }
                     }
-                    y++;
                 }
                 this.targetPoint = currentPos.atY(y);
                 return true;
@@ -747,6 +747,11 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
             }
 
             return new AABB(minX, minY, minZ, maxX, maxY, maxZ);
+        }
+
+        @Override
+        public boolean requiresUpdateEveryTick() {
+            return true;
         }
     }
 
