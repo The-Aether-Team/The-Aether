@@ -616,7 +616,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         public void tick() {
             LivingEntity target = this.slider.getTarget();
             if (--this.ticksUntilRecomputePath <= 0 || !this.slider.moveControl.hasWanted() && this.targetPoint == null) {
-                this.ticksUntilRecomputePath = 10;
+                this.ticksUntilRecomputePath = 2;
                 BlockPos targetPos = target.blockPosition();
                 BlockPos currentPos = this.slider.blockPosition();
                 BlockPos difference = targetPos.subtract(currentPos);
@@ -672,7 +672,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
 
             if (isTouchingWall) {
                 BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
-                int y = Mth.floor(collisionBox.maxY);
+                int y = Mth.floor(collisionBox.minY);
                 while (isTouchingWall) {
                     y++;
                     isTouchingWall = false;
