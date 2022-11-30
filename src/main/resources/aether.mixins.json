@@ -6,7 +6,6 @@
   "plugin": "com.gildedgames.aether.mixin.AetherMixinPlugin",
   "refmap": "aether.refmap.json",
   "mixins": [
-    "debug.PathAccessor",
     "common.AbstractArrowMixin",
     "common.DimensionTypeMixin",
     "common.FeatureMixin",
@@ -30,8 +29,7 @@
     "common.accessor.ServerLevelAccessor",
     "common.accessor.SpreadingSnowyDirtBlockAccessor",
     "common.accessor.StoredUserListAccessor",
-    "common.accessor.ZombifiedPiglinAccessor",
-    "debug.DebugPacketsMixin"
+    "common.accessor.ZombifiedPiglinAccessor"
   ],
   "client": [
     "client.AdvancementToastMixin",
@@ -53,8 +51,7 @@
     "client.accessor.QuadrupedModelAccessor",
     "client.accessor.RealmsPlayerScreenAccessor",
     "client.accessor.ScreenAccessor",
-    "client.accessor.TitleScreenAccessor",
-    "debug.DebugRendererMixin"
+    "client.accessor.TitleScreenAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
