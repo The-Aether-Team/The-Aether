@@ -677,7 +677,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
             AABB collisionBox = this.calculateAdjacentBox(this.slider.getBoundingBox(), direction);
             boolean isTouchingWall = false;
 
-            for (BlockPos pos : BlockPos.betweenClosed(Mth.floor(collisionBox.minX), Mth.floor(collisionBox.minY), Mth.floor(collisionBox.minZ), Mth.floor(collisionBox.maxX), Mth.floor(collisionBox.maxY), Mth.floor(collisionBox.maxZ))) {
+            for (BlockPos pos : BlockPos.betweenClosed(Mth.floor(collisionBox.minX), Mth.floor(collisionBox.minY), Mth.floor(collisionBox.minZ), Mth.floor(collisionBox.maxX) - 1, Mth.floor(collisionBox.maxY) - 1, Mth.floor(collisionBox.maxZ) - 1)) {
                 if (this.slider.level.getBlockState(pos).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
                     isTouchingWall = true;
                     break;
