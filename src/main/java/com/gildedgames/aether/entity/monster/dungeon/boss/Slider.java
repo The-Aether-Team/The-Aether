@@ -677,7 +677,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
             AABB collisionBox = this.calculateAdjacentBox(this.slider.getBoundingBox(), direction);
             boolean isTouchingWall = false;
 
-            for (BlockPos pos : BlockPos.betweenClosed(Mth.floor(collisionBox.minX), Mth.floor(collisionBox.minY), Mth.floor(collisionBox.minZ), Mth.floor(collisionBox.maxX) - 1, Mth.floor(collisionBox.maxY) - 1, Mth.floor(collisionBox.maxZ) - 1)) {
+            for (BlockPos pos : BlockPos.betweenClosed(Mth.floor(collisionBox.minX), Mth.floor(collisionBox.minY), Mth.floor(collisionBox.minZ), Mth.ceil(collisionBox.maxX - 1), Mth.floor(collisionBox.maxY), Mth.ceil(collisionBox.maxZ - 1))) {
                 if (this.slider.level.getBlockState(pos).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
                     isTouchingWall = true;
                     break;
@@ -701,7 +701,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                 this.targetPoint = currentPos.atY(y);
                 this.moveDir = Direction.UP;
                 return true;
-            } else if (currentPath.minY > targetPos.getY()) { // Bring the slider back to the ground before attacking again.
+            } else if (this.slider.getY() > targetPos.getY()) { // Bring the slider back to the ground before attacking again.
                 BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
                 currentPath = this.calculateAdjacentBox(currentPath, Direction.DOWN);
                 currentPath = currentPath.expandTowards(difference.getX(), difference.getY(), difference.getZ());
