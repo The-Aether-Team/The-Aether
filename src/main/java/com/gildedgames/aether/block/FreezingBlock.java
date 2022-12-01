@@ -7,6 +7,7 @@ import com.gildedgames.aether.recipe.BlockPropertyPair;
 import com.gildedgames.aether.recipe.recipes.block.IcestoneFreezableRecipe;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
+import net.minecraft.commands.CommandFunction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -62,7 +63,8 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
                         IcestoneFreezableRecipe freezableRecipe = cachedBlocks.get(oldBlock, pair);
                         if (freezableRecipe != null) {
                             BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                            return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, source, flag);
+                            CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
+                            return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, function, source, flag);
                         }
                     }
                 } else { // Breaks a block before freezing if it has a FluidState attached by default (this is different from waterlogging for blocks like Kelp and Seagrass).
@@ -73,7 +75,8 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
                         if (freezableRecipe != null) {
                             level.destroyBlock(pos, true);
                             BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                            return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, source, flag);
+                            CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
+                            return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, function, source, flag);
                         }
                     }
                 }

@@ -4,8 +4,8 @@ import com.gildedgames.aether.entity.monster.AbstractWhirlwind;
 
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.InventoryMenu;
 
 import javax.annotation.Nonnull;
 
@@ -17,6 +17,6 @@ public class WhirlwindRenderer extends EntityRenderer<AbstractWhirlwind> {
     @Nonnull
     @Override
     public ResourceLocation getTextureLocation(@Nonnull AbstractWhirlwind whirlwind) {
-        return TextureAtlas.LOCATION_BLOCKS;
+        return InventoryMenu.BLOCK_ATLAS;
     }
 }

@@ -617,7 +617,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                     // Find the next point in the path.
                     while (Math.abs(offset.getX()) <= Math.abs(difference.getX()) && Math.abs(offset.getY()) <= Math.abs(difference.getY()) && Math.abs(offset.getZ()) <= Math.abs(difference.getZ())) {
                         offset.move(this.moveDir);
-                        if (this.slider.level.getBlockState(currentPos.offset(offset)).is(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)) {
+                        if (this.slider.level.getBlockState(currentPos.offset(offset)).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
                             break;
                         }
                     }
@@ -678,7 +678,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
             boolean isTouchingWall = false;
 
             for (BlockPos pos : BlockPos.betweenClosed(Mth.floor(collisionBox.minX), Mth.floor(collisionBox.minY), Mth.floor(collisionBox.minZ), Mth.floor(collisionBox.maxX), Mth.floor(collisionBox.maxY), Mth.floor(collisionBox.maxZ))) {
-                if (this.slider.level.getBlockState(pos).is(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)) {
+                if (this.slider.level.getBlockState(pos).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
                     isTouchingWall = true;
                     break;
                 }
@@ -692,7 +692,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                     isTouchingWall = false;
                     for (int x = Mth.floor(collisionBox.minX); x < collisionBox.maxX; x++) {
                         for (int z = Mth.floor(collisionBox.minZ); z < collisionBox.maxZ; z++) {
-                            if (this.slider.level.getBlockState(pos.set(x, y, z)).is(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)) {
+                            if (this.slider.level.getBlockState(pos.set(x, y, z)).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
                                 isTouchingWall = true;
                             }
                         }
@@ -794,7 +794,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                     BlockState blockState = this.slider.level.getBlockState(pos);
                     if (!blockState.isAir()) {
                         collided = true;
-                        if (!blockState.is(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)) {
+                        if (!blockState.is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
                             crushed = this.slider.level.destroyBlock(pos, true, this.slider) || crushed;
                             this.slider.blockDestroySmoke(pos);
                         }

@@ -4,10 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.data.resources.builders.AetherFeatureBuilders;
-import com.gildedgames.aether.world.placementmodifier.ConfigFilter;
-import com.gildedgames.aether.world.placementmodifier.ElevationAdjustmentModifier;
-import com.gildedgames.aether.world.placementmodifier.ElevationFilter;
-import com.gildedgames.aether.world.placementmodifier.HolidayFilter;
+import com.gildedgames.aether.world.placementmodifier.*;
 import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.data.generators.AetherDataGenerators;
 import net.minecraft.core.Holder;
@@ -16,6 +13,7 @@ import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
@@ -48,11 +46,12 @@ public class AetherPlacedFeatures {
     public static final ResourceKey<PlacedFeature> CRYSTAL_ISLAND_PLACEMENT = register("crystal_island", AetherConfiguredFeatures.dataHolder(AetherConfiguredFeatures.CRYSTAL_ISLAND_CONFIGURATION),
             InSquarePlacement.spread(),
             HeightRangePlacement.uniform(VerticalAnchor.absolute(80), VerticalAnchor.absolute(120)),
+            new DungeonBlacklistFilter(),
             RarityFilter.onAverageOnceEvery(16));
 
     public static final ResourceKey<PlacedFeature> HOLIDAY_TREE_PLACEMENT = register("holiday_tree", AetherConfiguredFeatures.dataHolder(AetherConfiguredFeatures.HOLIDAY_TREE_CONFIGURATION),
             new HolidayFilter(),
-            CountOnEveryLayerPlacement.of(1), //todo replace
+            ImprovedLayerPlacementModifier.of(Heightmap.Types.OCEAN_FLOOR, UniformInt.of(0, 1), 4),
             RarityFilter.onAverageOnceEvery(48),
             PlacementUtils.filteredByBlockSurvival(AetherBlocks.SKYROOT_SAPLING.get()));
 
@@ -79,6 +78,7 @@ public class AetherPlacedFeatures {
             PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
             new ElevationAdjustmentModifier(UniformInt.of(-4, -2)),
             new ElevationFilter(47, 70),
+            new DungeonBlacklistFilter(),
             BlockPredicateFilter.forPredicate(BlockPredicate.matchesTag(AetherTags.Blocks.QUICKSOIL_CAN_GENERATE)));
     // FIXME once Terrain can go above 63 again, change 47 -> 63
 
@@ -91,6 +91,7 @@ public class AetherPlacedFeatures {
     public static final ResourceKey<PlacedFeature> WATER_SPRING_PLACEMENT = register("water_spring", AetherConfiguredFeatures.dataHolder(AetherConfiguredFeatures.WATER_SPRING_CONFIGURATION),
             CountPlacement.of(25),
             InSquarePlacement.spread(),
+            new DungeonBlacklistFilter(),
             HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(192)), BiomeFilter.biome());
 
     public static final ResourceKey<PlacedFeature> ORE_AETHER_DIRT_PLACEMENT = register("aether_dirt_ore", AetherConfiguredFeatures.dataHolder(AetherConfiguredFeatures.ORE_AETHER_DIRT_CONFIGURATION),

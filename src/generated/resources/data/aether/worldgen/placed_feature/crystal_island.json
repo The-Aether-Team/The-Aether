@@ -17,6 +17,9 @@
       }
     },
     {
+      "type": "aether:dungeon_blacklist_filter"
+    },
+    {
       "type": "minecraft:rarity_filter",
       "chance": 16
     }

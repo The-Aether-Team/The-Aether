@@ -5,6 +5,7 @@ import com.gildedgames.aether.event.events.FreezeEvent;
 import com.gildedgames.aether.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.gildedgames.aether.recipe.recipes.block.AccessoryFreezableRecipe;
+import net.minecraft.commands.CommandFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -55,14 +56,16 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
                         if (oldBlockState.getFluidState().isEmpty()) { // Default freezing behavior.
                             if (freezableRecipe.matches(level, pos, oldBlockState)) {
                                 BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                                return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, source, flag);
+                                CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
+                                return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, function, source, flag);
                             }
                         } else { // Breaks a block before freezing if it has a FluidState attached by default (this is different from waterlogging for blocks like Kelp and Seagrass).
                             oldBlockState = oldBlockState.getFluidState().createLegacyBlock();
                             if (freezableRecipe.matches(level, pos, oldBlockState)) {
                                 level.destroyBlock(pos, true);
                                 BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                                return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, source, flag);
+                                CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
+                                return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, function, source, flag);
                             }
                         }
                     }

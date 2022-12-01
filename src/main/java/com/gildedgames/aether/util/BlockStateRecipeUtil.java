@@ -1,22 +1,29 @@
 package com.gildedgames.aether.util;
 
 import com.gildedgames.aether.recipe.BlockPropertyPair;
-import com.google.common.collect.Maps;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import net.minecraft.commands.CommandFunction;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
@@ -24,12 +31,25 @@ import java.util.Map;
 import java.util.Optional;
 
 public class BlockStateRecipeUtil {
+    public static void executeFunction(Level level, BlockPos pos, CommandFunction.CacheableFunction function) {
+        if (level instanceof ServerLevel serverLevel && function != null) {
+            MinecraftServer minecraftServer = serverLevel.getServer();
+            function.get(minecraftServer.getFunctions()).ifPresent(command -> {
+                CommandSourceStack context = minecraftServer.getFunctions().getGameLoopSender()
+                        .withPosition(Vec3.atBottomCenterOf(pos))
+                        .withLevel(serverLevel);
+                minecraftServer.getFunctions().execute(command, context);
+            });
+        }
+    }
+
     public static void writePair(FriendlyByteBuf buf, BlockPropertyPair pair) {
-        if (pair.block().defaultBlockState().isAir() && pair.properties().isEmpty()) {
+        ResourceLocation blockLocation = ForgeRegistries.BLOCKS.getKey(pair.block());
+        if ((pair.block().defaultBlockState().isAir() && pair.properties().isEmpty()) || blockLocation == null) {
             buf.writeBoolean(false);
         } else {
             buf.writeBoolean(true);
-            buf.writeVarInt(Registry.BLOCK.getId(pair.block()));
+            buf.writeUtf(blockLocation.toString());
             CompoundTag tag = new CompoundTag();
             for (Map.Entry<Property<?>, Comparable<?>> entry : pair.properties().entrySet()) {
                 Property<?> property = entry.getKey();
@@ -61,8 +81,12 @@ public class BlockStateRecipeUtil {
         if (!buf.readBoolean()) {
             return BlockPropertyPair.of(Blocks.AIR, new HashMap<>());
         } else {
-            int id = buf.readVarInt();
-            Block block = Registry.BLOCK.byId(id);
+            String blockString = buf.readUtf();
+            ResourceLocation blockLocation = new ResourceLocation(blockString);
+            Block block = ForgeRegistries.BLOCKS.getValue(blockLocation);
+            if (block == null) {
+                throw new JsonSyntaxException("Unknown block '" + blockLocation + "'");
+            }
 
             Map<Property<?>, Comparable<?>> properties = new HashMap<>();
             CompoundTag tag = buf.readNbt();
@@ -99,6 +123,12 @@ public class BlockStateRecipeUtil {
         }
     }
 
+    public static CommandFunction.CacheableFunction readFunction(FriendlyByteBuf buf) {
+        String functionString = buf.readUtf();
+        ResourceLocation functionLocation = functionString.isEmpty() ? null : new ResourceLocation(functionString);
+        return functionLocation == null ? CommandFunction.CacheableFunction.NONE : new CommandFunction.CacheableFunction(functionLocation);
+    }
+
     public static BlockPropertyPair pairFromJson(JsonObject json) {
         Block block;
         Map<Property<?>, Comparable<?>> properties = Map.of();
@@ -119,9 +149,13 @@ public class BlockStateRecipeUtil {
 
     public static Block blockFromJson(JsonObject json) {
         String blockName = GsonHelper.getAsString(json, "block");
-        Block block = Registry.BLOCK.getOptional(new ResourceLocation(blockName)).orElseThrow(() -> new JsonSyntaxException("Unknown block '" + blockName + "'"));
+        ResourceLocation blockLocation = new ResourceLocation(blockName);
+        Block block = ForgeRegistries.BLOCKS.getValue(blockLocation);
+        if (block == null) {
+            throw new JsonSyntaxException("Unknown block '" + blockLocation + "'");
+        }
         if (block.defaultBlockState().isAir()) {
-            throw new JsonSyntaxException("Invalid block: " + blockName);
+            throw new JsonSyntaxException("Invalid block: " + blockLocation);
         } else {
             return block;
         }
