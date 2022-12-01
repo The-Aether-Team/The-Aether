@@ -427,7 +427,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
     }
 
     public boolean isCritical() {
-        return this.getHealth() <= 125;
+        return this.getHealth() <= 100;
     }
 
     protected SoundEvent getAwakenSound() {
@@ -670,6 +670,10 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
          * @return - True if the slider changes direction to move up or down
          */
         private boolean setPathUpOrDown(AABB currentPath, BlockPos currentPos, BlockPos targetPos, BlockPos difference, Direction direction) {
+            if (direction.getAxis() == Direction.Axis.Y) {
+                return true;
+            }
+
             AABB collisionBox = this.calculateAdjacentBox(this.slider.getBoundingBox(), direction);
             boolean isTouchingWall = false;
 
@@ -697,14 +701,14 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                 this.targetPoint = currentPos.atY(y);
                 this.moveDir = Direction.UP;
                 return true;
-            } else if (currentPos.getY() > targetPos.getY()) { // Bring the slider back to the ground before attacking again.
+            } else if (currentPath.minY > targetPos.getY()) { // Bring the slider back to the ground before attacking again.
                 BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
                 currentPath = this.calculateAdjacentBox(currentPath, Direction.DOWN);
-                currentPath = currentPath.expandTowards(difference.getX(), difference.getY(), difference.getZ()).move(0, 1, 0);
+                currentPath = currentPath.expandTowards(difference.getX(), difference.getY(), difference.getZ());
                 // If there's a block in the way, don't take the low road.
                 for (int x = Mth.floor(currentPath.minX); x < currentPath.maxX; x++) {
                     for (int z = Mth.floor(currentPath.minZ); z < currentPath.maxZ; z++) {
-                        BlockState state = this.slider.level.getBlockState(pos.set(x, Mth.ceil(currentPath.maxY), z));
+                        BlockState state = this.slider.level.getBlockState(pos.set(x, targetPos.getY(), z));
                         if (!state.isAir()) {
                             isTouchingWall = true;
                             break;
