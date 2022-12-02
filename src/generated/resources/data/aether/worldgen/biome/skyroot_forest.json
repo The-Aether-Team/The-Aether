@@ -54,7 +54,12 @@
     ]
   ],
   "precipitation": "none",
-  "spawn_costs": {},
+  "spawn_costs": {
+    "aether:zephyr": {
+      "charge": 0.7,
+      "energy_budget": 0.15
+    }
+  },
   "spawners": {
     "ambient": [],
     "axolotls": [],
