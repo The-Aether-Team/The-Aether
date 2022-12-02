@@ -1,5 +1,6 @@
 package com.gildedgames.aether.block.miscellaneous;
 
+import com.gildedgames.aether.util.ConstantsUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -77,7 +78,7 @@ public class UnstableObsidianBlock extends Block {
     private boolean slightlyMelt(BlockState state, Level level, BlockPos pos) {
         int i = state.getValue(AGE);
         if (i < 3) {
-            level.setBlock(pos, state.setValue(AGE, i + 1), 2);
+            level.setBlock(pos, state.setValue(AGE, i + 1), ConstantsUtil.FLAG_CLIENT_CHANGE);
             return false;
         } else {
             this.melt(level, pos);

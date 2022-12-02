@@ -2,6 +2,7 @@ package com.gildedgames.aether.block.construction;
 
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.mixin.mixins.common.accessor.BushBlockAccessor;
+import com.gildedgames.aether.util.ConstantsUtil;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -53,12 +54,12 @@ public class AetherFarmBlock extends FarmBlock {
         int i = state.getValue(MOISTURE);
         if (!isNearWater(level, pos) && !level.isRainingAt(pos.above())) {
             if (i > 0) {
-                level.setBlock(pos, state.setValue(MOISTURE, i - 1), 2);
+                level.setBlock(pos, state.setValue(MOISTURE, i - 1), ConstantsUtil.FLAG_CLIENT_CHANGE);
             } else if (!isUnderCrops(level, pos)) {
                 turnToDirt(state, level, pos);
             }
         } else if (i < 7) {
-            level.setBlock(pos, state.setValue(MOISTURE, 7), 2);
+            level.setBlock(pos, state.setValue(MOISTURE, 7), ConstantsUtil.FLAG_CLIENT_CHANGE);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.gildedgames.aether.block.dungeon;
 
 import com.gildedgames.aether.client.particle.AetherParticleTypes;
+import com.gildedgames.aether.util.ConstantsUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
@@ -58,7 +59,7 @@ public class DoorwayBlock extends Block {
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (player.isCreative()) {
             BlockState newState = state.cycle(INVISIBLE);
-            level.setBlock(pos, newState, 3);
+            level.setBlock(pos, newState, ConstantsUtil.FLAG_BLOCK_UPDATE_OR_CLIENT_CHANGE);
             return InteractionResult.SUCCESS;
         } else {
             return super.use(state, level, pos, player, hand, hit);

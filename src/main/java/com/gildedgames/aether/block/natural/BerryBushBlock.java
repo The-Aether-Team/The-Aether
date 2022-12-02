@@ -2,6 +2,7 @@ package com.gildedgames.aether.block.natural;
 
 import com.gildedgames.aether.block.AetherBlockStateProperties;
 import com.gildedgames.aether.block.AetherBlocks;
+import com.gildedgames.aether.util.ConstantsUtil;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -39,7 +40,7 @@ public class BerryBushBlock extends AetherBushBlock {
 	public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
 		super.playerDestroy(level, player, pos, state, blockEntity, tool);
 		if (tool.getEnchantmentLevel(Enchantments.SILK_TOUCH) <= 0) {
-			level.setBlock(pos, AetherBlocks.BERRY_BUSH_STEM.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, state.getValue(AetherBlockStateProperties.DOUBLE_DROPS)), 3);
+			level.setBlock(pos, AetherBlocks.BERRY_BUSH_STEM.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, state.getValue(AetherBlockStateProperties.DOUBLE_DROPS)), ConstantsUtil.FLAG_BLOCK_UPDATE_OR_CLIENT_CHANGE);
 		}
 	}
 
@@ -53,6 +54,6 @@ public class BerryBushBlock extends AetherBushBlock {
 	@Override
 	public void onBlockExploded(BlockState state, Level level, BlockPos pos, Explosion explosion) {
 		super.onBlockExploded(state, level, pos, explosion);
-		level.setBlock(pos, AetherBlocks.BERRY_BUSH_STEM.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, state.getValue(AetherBlockStateProperties.DOUBLE_DROPS)), 3);
+		level.setBlock(pos, AetherBlocks.BERRY_BUSH_STEM.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, state.getValue(AetherBlockStateProperties.DOUBLE_DROPS)), ConstantsUtil.FLAG_BLOCK_UPDATE_OR_CLIENT_CHANGE);
 	}
 }

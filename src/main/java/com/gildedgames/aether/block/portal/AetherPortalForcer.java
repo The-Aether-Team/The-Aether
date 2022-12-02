@@ -5,6 +5,7 @@ import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.mixin.mixins.common.accessor.EntityAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.PortalTravelSoundPacket;
+import com.gildedgames.aether.util.ConstantsUtil;
 import com.gildedgames.aether.util.LevelUtil;
 import com.gildedgames.aether.world.AetherPoi;
 import net.minecraft.BlockUtil;
@@ -205,7 +206,7 @@ public class AetherPortalForcer implements ITeleporter {
             for (int j2 = -1; j2 < 4; ++j2) {
                 if (l1 == -1 || l1 == 2 || j2 == -1 || j2 == 3) {
                     mutablePos.setWithOffset(blockPos, l1 * direction.getStepX(), j2, l1 * direction.getStepZ());
-                    this.level.setBlock(mutablePos, Blocks.GLOWSTONE.defaultBlockState(), 3);
+                    this.level.setBlock(mutablePos, Blocks.GLOWSTONE.defaultBlockState(), ConstantsUtil.FLAG_BLOCK_UPDATE_OR_CLIENT_CHANGE);
                 }
             }
         }
@@ -214,7 +215,7 @@ public class AetherPortalForcer implements ITeleporter {
         for (int k2 = 0; k2 < 2; ++k2) {
             for (int l2 = 0; l2 < 3; ++l2) {
                 mutablePos.setWithOffset(blockPos, k2 * direction.getStepX(), l2, k2 * direction.getStepZ());
-                this.level.setBlock(mutablePos, blockState, 18);
+                this.level.setBlock(mutablePos, blockState, ConstantsUtil.FLAG_CLIENT_CHANGE_OR_PREVENT_NEIGHBOR_UPDATE);
             }
         }
 

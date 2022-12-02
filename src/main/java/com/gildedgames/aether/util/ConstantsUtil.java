@@ -22,6 +22,11 @@ public class ConstantsUtil {
     public static int FLAG_CLIENT_CHANGE = 2;
 
     /**
+     * Bitwise OR of {@link ConstantsUtil#FLAG_BLOCK_UPDATE} and {@link ConstantsUtil#FLAG_CLIENT_CHANGE}. Equal to 3.
+     */
+    public static int FLAG_BLOCK_UPDATE_OR_CLIENT_CHANGE = FLAG_BLOCK_UPDATE | FLAG_CLIENT_CHANGE;
+
+    /**
      * Prevent the block from being re-rendered.
      * @see net.minecraft.world.level.LevelWriter#setBlock(BlockPos, BlockState, int)
      */
@@ -38,6 +43,11 @@ public class ConstantsUtil {
      * @see net.minecraft.world.level.LevelWriter#setBlock(BlockPos, BlockState, int)
      */
     public static int FLAG_PREVENT_NEIGHBOR_UPDATE = 16;
+
+    /**
+     * Bitwise OR of {@link ConstantsUtil#FLAG_CLIENT_CHANGE} and {@link ConstantsUtil#FLAG_PREVENT_NEIGHBOR_UPDATE}. Equal to 18.
+     */
+    public static int FLAG_CLIENT_CHANGE_OR_PREVENT_NEIGHBOR_UPDATE = FLAG_CLIENT_CHANGE | FLAG_PREVENT_NEIGHBOR_UPDATE;
 
     /**
      * Prevent neighbor reactions from spawning drops.

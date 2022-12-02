@@ -2,6 +2,7 @@ package com.gildedgames.aether.block.portal;
 
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.block.AetherBlocks;
+import com.gildedgames.aether.util.ConstantsUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.LevelAccessor;
@@ -144,7 +145,7 @@ public class AetherPortalShape {
 
     public void createPortalBlocks() {
         BlockState blockState = AetherBlocks.AETHER_PORTAL.get().defaultBlockState().setValue(NetherPortalBlock.AXIS, this.axis);
-        BlockPos.betweenClosed(this.bottomLeft, this.bottomLeft.relative(Direction.UP, this.height - 1).relative(this.rightDir, this.width - 1)).forEach((pos) -> this.level.setBlock(pos, blockState, 18));
+        BlockPos.betweenClosed(this.bottomLeft, this.bottomLeft.relative(Direction.UP, this.height - 1).relative(this.rightDir, this.width - 1)).forEach((pos) -> this.level.setBlock(pos, blockState, ConstantsUtil.FLAG_CLIENT_CHANGE_OR_PREVENT_NEIGHBOR_UPDATE));
     }
 
     public boolean isComplete() {

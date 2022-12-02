@@ -7,6 +7,7 @@ import com.gildedgames.aether.inventory.menu.IncubatorMenu;
 
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.gildedgames.aether.recipe.recipes.item.IncubationRecipe;
+import com.gildedgames.aether.util.ConstantsUtil;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.*;
 import net.minecraft.resources.ResourceLocation;
@@ -191,7 +192,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 		if (flag != blockEntity.isLit()) {
 			flag1 = true;
 			state = state.setValue(AbstractFurnaceBlock.LIT, blockEntity.isLit());
-			level.setBlock(pos, state, 3);
+			level.setBlock(pos, state, ConstantsUtil.FLAG_BLOCK_UPDATE_OR_CLIENT_CHANGE);
 		}
 
 		if (flag1) {
