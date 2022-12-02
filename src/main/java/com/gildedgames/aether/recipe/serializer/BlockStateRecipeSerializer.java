@@ -7,6 +7,7 @@ import com.gildedgames.aether.util.BlockStateRecipeUtil;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import net.minecraft.commands.CommandFunction;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -38,7 +39,11 @@ public class BlockStateRecipeSerializer<T extends AbstractBlockStateRecipe> impl
             throw new JsonSyntaxException("Expected result to be object");
         }
 
-        return this.factory.create(recipeId, ingredient, result);
+        String functionString = GsonHelper.getAsString(serializedRecipe, "mcfunction", null);
+        ResourceLocation functionLocation = functionString == null ? null : new ResourceLocation(functionString);
+        CommandFunction.CacheableFunction function = functionLocation == null ? CommandFunction.CacheableFunction.NONE : new CommandFunction.CacheableFunction(functionLocation);
+
+        return this.factory.create(recipeId, ingredient, result, function);
     }
 
     @Nullable
@@ -46,16 +51,19 @@ public class BlockStateRecipeSerializer<T extends AbstractBlockStateRecipe> impl
     public T fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull FriendlyByteBuf buf) {
         BlockStateIngredient ingredient = BlockStateIngredient.fromNetwork(buf);
         BlockPropertyPair result = BlockStateRecipeUtil.readPair(buf);
-        return this.factory.create(recipeId, ingredient, result);
+        CommandFunction.CacheableFunction function = BlockStateRecipeUtil.readFunction(buf);
+        return this.factory.create(recipeId, ingredient, result, function);
     }
 
     @Override
     public void toNetwork(@Nonnull FriendlyByteBuf buf, T recipe) {
         recipe.getIngredient().toNetwork(buf);
         BlockStateRecipeUtil.writePair(buf, recipe.getResult());
+        CommandFunction.CacheableFunction function = recipe.getFunction();
+        buf.writeUtf(function != null && function.getId() != null ? function.getId().toString() : "");
     }
 
     public interface CookieBaker<T extends AbstractBlockStateRecipe> {
-        T create(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result);
+        T create(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result, CommandFunction.CacheableFunction function);
     }
 }

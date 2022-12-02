@@ -1,7 +1,6 @@
 package com.gildedgames.aether.recipe;
 
 import com.gildedgames.aether.util.BlockStateRecipeUtil;
-import com.google.common.collect.Lists;
 import com.google.gson.*;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
@@ -11,6 +10,8 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.tags.ITagManager;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -172,7 +173,12 @@ public class BlockStateIngredient implements Predicate<BlockState> {
         @Override
         public JsonObject serialize() {
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("block", Registry.BLOCK.getKey(this.block).toString());
+            ResourceLocation blockLocation = ForgeRegistries.BLOCKS.getKey(this.block);
+            if (blockLocation == null) {
+                throw new JsonParseException("Block for ingredient StateValue serialization shouldn't be null");
+            } else {
+                jsonObject.addProperty("block", blockLocation.toString());
+            }
             JsonObject jsonObject1 = new JsonObject();
             if (!this.properties.isEmpty()) {
                 for (Map.Entry<Property<?>, Comparable<?>> entry : this.properties.entrySet()) {
@@ -200,7 +206,12 @@ public class BlockStateIngredient implements Predicate<BlockState> {
         @Override
         public JsonObject serialize() {
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("block", Registry.BLOCK.getKey(this.block).toString());
+            ResourceLocation blockLocation = ForgeRegistries.BLOCKS.getKey(this.block);
+            if (blockLocation == null) {
+                throw new JsonParseException("Block for ingredient StateValue serialization shouldn't be null");
+            } else {
+                jsonObject.addProperty("block", blockLocation.toString());
+            }
             return jsonObject;
         }
     }
@@ -215,7 +226,10 @@ public class BlockStateIngredient implements Predicate<BlockState> {
         @Override
         public Collection<BlockPropertyPair> getPairs() {
             List<BlockPropertyPair> list = new ArrayList<>();
-            Registry.BLOCK.getTagOrEmpty(this.tag).forEach(holder -> list.add(BlockPropertyPair.of(holder.value(), Map.of())));
+            ITagManager<Block> tags = ForgeRegistries.BLOCKS.tags();
+            if (tags != null) {
+                tags.getTag(this.tag).stream().forEach((block) -> list.add(BlockPropertyPair.of(block, Map.of())));
+            }
             return list;
         }
 

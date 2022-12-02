@@ -1,6 +1,5 @@
 package com.gildedgames.aether.recipe;
 
-import com.google.common.collect.Sets;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
@@ -22,8 +21,7 @@ public record BlockPropertyPair(Block block, Map<Property<?>, Comparable<?>> pro
 
     public static boolean propertiesMatch(BlockState state, Map<Property<?>, Comparable<?>> properties) {
         if (!properties.isEmpty()) {
-            HashSet<Map.Entry<Property<?>, Comparable<?>>> stateProperties = new HashSet<>();
-            stateProperties.addAll(state.getValues().entrySet());
+            HashSet<Map.Entry<Property<?>, Comparable<?>>> stateProperties = new HashSet<>(state.getValues().entrySet());
             return stateProperties.containsAll(properties.entrySet());
         }
         return true;

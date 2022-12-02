@@ -7,6 +7,8 @@ import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.effect.AetherEffects;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.capability.player.AetherPlayer;
+import com.gildedgames.aether.mixin.mixins.client.accessor.GuiAccessor;
+import com.gildedgames.aether.mixin.mixins.client.accessor.HeartTypeAccessor;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.platform.Window;
@@ -24,10 +26,13 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
@@ -104,6 +109,11 @@ public class AetherOverlays {
         });
     }
 
+
+    /**
+     * Warning for "deprecation" is suppressed because vanilla calls {@link net.minecraft.client.renderer.block.BlockModelShaper#getParticleIcon(BlockState)} just fine.
+     */
+    @SuppressWarnings("deprecation")
     private static void renderAetherPortalOverlay(PoseStack poseStack, Minecraft mc, Window window, AetherPlayer handler, float partialTicks) {
         float timeInPortal = handler.getPrevPortalAnimTime() + (handler.getPortalAnimTime() - handler.getPrevPortalAnimTime()) * partialTicks;
         if (timeInPortal > 0.0F) {
@@ -119,7 +129,7 @@ public class AetherOverlays {
             RenderSystem.depthMask(false);
             RenderSystem.defaultBlendFunc();
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, timeInPortal);
-            RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
+            RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             TextureAtlasSprite textureatlassprite = mc.getBlockRenderer().getBlockModelShaper().getParticleIcon(AetherBlocks.AETHER_PORTAL.get().defaultBlockState());
             float f = textureatlassprite.getU0();
@@ -241,6 +251,7 @@ public class AetherOverlays {
     }
 
     private static void renderSilverLifeShardHearts(PoseStack poseStack, ForgeGui gui, LocalPlayer player, int width, int height, int[] lastLifeShardHealth, int[] lastOverallHealth) {
+        GuiAccessor guiAccessor = (GuiAccessor) gui;
         if (AetherConfig.CLIENT.enable_silver_hearts.get() && gui.shouldDrawSurvivalElements()) {
             AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                 if (aetherPlayer.getLifeShardCount() > 0) {
@@ -256,8 +267,8 @@ public class AetherOverlays {
                     int currentOverallHealth = Mth.ceil(player.getHealth());
                     int currentLifeShardHealth = Mth.ceil(player.getHealth() - maxDefaultHealth);
 
-                    boolean highlight = gui.healthBlinkTime > (long) gui.getGuiTicks() && (gui.healthBlinkTime - (long) gui.getGuiTicks()) / 3L % 2L == 1L;
-                    if (Util.getMillis() - gui.lastHealthTime > 1000L) {
+                    boolean highlight = guiAccessor.getHealthBlinkTime() > (long) gui.getGuiTicks() && (guiAccessor.getHealthBlinkTime() - (long) gui.getGuiTicks()) / 3L % 2L == 1L;
+                    if (Util.getMillis() - guiAccessor.getLastHealthTime() > 1000L) {
                         lastOverallHealth[0] = currentOverallHealth;
                         lastLifeShardHealth[0] = currentLifeShardHealth;
                     }
@@ -282,7 +293,8 @@ public class AetherOverlays {
     }
 
     private static void renderHearts(PoseStack poseStack, Player player, ForgeGui gui, int left, int top, int regen, float displayOverallHealth, float displayLifeShardHealth, int maxDefaultHealth, int lifeShardHealth, int lastLifeShardHealth, boolean highlight) {
-        Gui.HeartType heartType = Gui.HeartType.forPlayer(player);
+        GuiAccessor guiAccessor = (GuiAccessor) gui;
+        Gui.HeartType heartType = HeartTypeAccessor.callForPlayer(player);
         int overallHearts = Mth.ceil((double) displayOverallHealth / 2.0D);
         int lifeShardHearts = Mth.ceil((double) displayLifeShardHealth / 2.0D);
         int maxDefaultHearts = Mth.ceil((double) maxDefaultHealth / 2.0D);
@@ -297,11 +309,11 @@ public class AetherOverlays {
             int j = i * 2;
             if (highlight && j < lastLifeShardHealth) {
                 boolean flag2 = j + 1 == lastLifeShardHealth;
-                gui.renderHeart(poseStack, heartType, l1, i2, 0, true, flag2);
+                guiAccessor.callRenderHeart(poseStack, heartType, l1, i2, 0, true, flag2);
             }
             if (j < lifeShardHealth) {
                 boolean flag3 = j + 1 == lifeShardHealth;
-                gui.renderHeart(poseStack, heartType, l1, i2, 0, false, flag3);
+                guiAccessor.callRenderHeart(poseStack, heartType, l1, i2, 0, false, flag3);
             }
         }
     }

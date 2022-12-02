@@ -5,6 +5,7 @@ import com.gildedgames.aether.event.events.FreezeEvent;
 import com.gildedgames.aether.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.gildedgames.aether.recipe.recipes.block.AccessoryFreezableRecipe;
+import net.minecraft.commands.CommandFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -35,8 +36,8 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
     /**
      * Freezes blocks from one block to another using the {@link AetherRecipeTypes#ACCESSORY_FREEZABLE} recipe type.
      * @param level The {@link Level} to freeze the blocks in.
-     * @param source The {@link ItemStack} that was the source of the freezing.
      * @param pos The {@link BlockPos} the freezing occurred at.
+     * @param source The {@link ItemStack} that was the source of the freezing.
      * @param flag The {@link Integer} representing the block placement flag (see {@link net.minecraft.world.level.LevelWriter#setBlock(BlockPos, BlockState, int)}).
      * @return An {@link Integer} 1 if a block was successfully frozen, or a 0 if it wasn't.
      */
@@ -55,14 +56,16 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
                         if (oldBlockState.getFluidState().isEmpty()) { // Default freezing behavior.
                             if (freezableRecipe.matches(level, pos, oldBlockState)) {
                                 BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                                return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, source, flag);
+                                CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
+                                return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, function, source, flag);
                             }
-                        } else { // Breaks a block before freezing if it has a fluidstate attached by default (this is different from waterlogging for blocks like Kelp and Seagrass).
+                        } else { // Breaks a block before freezing if it has a FluidState attached by default (this is different from waterlogging for blocks like Kelp and Seagrass).
                             oldBlockState = oldBlockState.getFluidState().createLegacyBlock();
                             if (freezableRecipe.matches(level, pos, oldBlockState)) {
                                 level.destroyBlock(pos, true);
                                 BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                                return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, source, flag);
+                                CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
+                                return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, function, source, flag);
                             }
                         }
                     }

@@ -1,6 +1,5 @@
 package com.gildedgames.aether.loot.functions;
 
-import com.gildedgames.aether.loot.AetherLoot;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
@@ -17,61 +16,61 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.Vec3;
 
-import javax.annotation.Nonnull;
-
 public class WhirlwindSpawnEntity extends LootItemConditionalFunction {
-    protected final EntityType<?> entityType;
-    protected final int count;
-    protected WhirlwindSpawnEntity(LootItemCondition[] pConditions, EntityType<?> pType, int pCount) {
-        super(pConditions);
-        this.entityType = pType;
-        this.count = pCount;
+    private final EntityType<?> entityType;
+    private final int count;
+
+    protected WhirlwindSpawnEntity(LootItemCondition[] conditions, EntityType<?> entityType, int count) {
+        super(conditions);
+        this.entityType = entityType;
+        this.count = count;
     }
 
+    /**
+     * Spawns an entity from a Whirlwind.
+     * @param stack The {@link ItemStack} for the loot pool.
+     * @param context The {@link LootContext}.
+     * @return The {@link ItemStack} for the loot pool.
+     */
     @Override
-    @Nonnull
-    protected ItemStack run(@Nonnull ItemStack pStack, LootContext pContext) {
-        ServerLevel level = pContext.getLevel();
-        Vec3 pos = pContext.getParamOrNull(LootContextParams.ORIGIN);
-        if(pos != null) {
-            for(int i = 0; i < this.count; i++) {
-                Entity entity = this.entityType.create(level);
-                entity.moveTo(pos.x, pos.y + 0.5D, pos.z, ((float) Math.random()) * 360F, 0.0F);
-                entity.setDeltaMovement((Math.random() - Math.random()) * 0.125D, entity.getDeltaMovement().y, (Math.random() - Math.random()) * 0.125D);
-                level.addFreshEntity(entity);
+    protected ItemStack run(ItemStack stack, LootContext context) {
+        ServerLevel serverLevel = context.getLevel();
+        Vec3 originVec = context.getParamOrNull(LootContextParams.ORIGIN);
+        if (originVec != null) {
+            for (int i = 0; i < this.count; i++) {
+                Entity entity = this.entityType.create(serverLevel);
+                if (entity != null) {
+                    entity.moveTo(originVec.x(), originVec.y() + 0.5, originVec.z(), ((float) Math.random()) * 360.0F, 0.0F);
+                    entity.setDeltaMovement((Math.random() - Math.random()) * 0.125, entity.getDeltaMovement().y(), (Math.random() - Math.random()) * 0.125);
+                    serverLevel.addFreshEntity(entity);
+                }
             }
         }
-        return pStack;
+        return stack;
+    }
+
+    public static LootItemConditionalFunction.Builder<?> builder(EntityType<?> entityType, int count) {
+        return LootItemConditionalFunction.simpleBuilder((lootItemConditions) -> new WhirlwindSpawnEntity(lootItemConditions, entityType, count));
     }
 
     @Override
-    @Nonnull
     public LootItemFunctionType getType() {
         return AetherLootFunctions.WHIRLWIND_SPAWN_ENTITY.get();
     }
 
-    public static LootItemConditionalFunction.Builder<?> builder(EntityType<?> pEntityType, int pCount) {
-        return LootItemConditionalFunction.simpleBuilder((lootItemConditions -> new WhirlwindSpawnEntity(lootItemConditions, pEntityType, pCount)));
-    }
-
     public static class Serializer extends LootItemConditionalFunction.Serializer<WhirlwindSpawnEntity> {
         @Override
-        public void serialize(@Nonnull JsonObject pJson, @Nonnull WhirlwindSpawnEntity pValue, @Nonnull JsonSerializationContext pSerializationContext) {
-            super.serialize(pJson, pValue, pSerializationContext);
-            pJson.addProperty("entity", EntityType.getKey(pValue.entityType).toString());
-            pJson.addProperty("count", pValue.count);
+        public void serialize(JsonObject json, WhirlwindSpawnEntity instance, JsonSerializationContext context) {
+            super.serialize(json, instance, context);
+            json.addProperty("entity", EntityType.getKey(instance.entityType).toString());
+            json.addProperty("count", instance.count);
         }
 
         @Override
-        @Nonnull
-        public WhirlwindSpawnEntity deserialize(@Nonnull JsonObject object, @Nonnull JsonDeserializationContext deserializationContext, @Nonnull LootItemCondition[] conditionsIn) {
-            try {
-                EntityType<?> entityType = EntityType.byString(GsonHelper.getAsString(object, "entity")).orElseThrow(() -> new JsonSyntaxException("No value present! Is the loot table entity entry incorrect?"));
-                int count = GsonHelper.getAsInt(object, "count");
-                return new WhirlwindSpawnEntity(conditionsIn, entityType, count);
-            } catch (JsonSyntaxException exception) {
-                throw exception;
-            }
+        public WhirlwindSpawnEntity deserialize(JsonObject json, JsonDeserializationContext context, LootItemCondition[] conditions) {
+            EntityType<?> entityType = EntityType.byString(GsonHelper.getAsString(json, "entity")).orElseThrow(() -> new JsonSyntaxException("No value present! Is the loot table entity entry incorrect?"));
+            int count = GsonHelper.getAsInt(json, "count");
+            return new WhirlwindSpawnEntity(conditions, entityType, count);
         }
     }
 }

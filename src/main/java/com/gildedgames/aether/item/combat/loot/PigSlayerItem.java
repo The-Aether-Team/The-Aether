@@ -6,6 +6,7 @@ import com.gildedgames.aether.item.combat.AetherItemTiers;
 import com.gildedgames.aether.item.AetherItems;
 
 import com.gildedgames.aether.AetherTags;
+import com.gildedgames.aether.mixin.mixins.common.accessor.ZombifiedPiglinAccessor;
 import com.gildedgames.aether.util.EquipmentUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -46,8 +47,9 @@ public class PigSlayerItem extends SwordItem {
 			if (target.getType().is(AetherTags.Entities.PIGS)) {
 				if (target instanceof ZombifiedPiglin zombifiedPiglin) {
 					if (!(attacker instanceof Player player) || !player.isCreative()) {
+						ZombifiedPiglinAccessor zombifiedPiglinAccessor = (ZombifiedPiglinAccessor) zombifiedPiglin;
 						zombifiedPiglin.setTarget(attacker);
-						zombifiedPiglin.alertOthers(); // AT: m_34473_()V
+						zombifiedPiglinAccessor.callAlertOthers();
 					}
 				}
 				DamageSource damageSource = (attacker instanceof Player player ? DamageSource.playerAttack(player) : DamageSource.mobAttack(attacker)).bypassArmor();

@@ -24,13 +24,13 @@ public class IncubatorMenu extends RecipeBookMenu<Container>
 	public final Level level;
 
 	public IncubatorMenu(int id, Inventory playerInventoryIn) {
-		this(id, playerInventoryIn, new SimpleContainer(2), new SimpleContainerData(3));
+		this(id, playerInventoryIn, new SimpleContainer(2), new SimpleContainerData(4));
 	}
 	
 	public IncubatorMenu(int id, Inventory playerInventory, Container incubatorInventory, ContainerData incubatorData) {
 		super(AetherMenuTypes.INCUBATOR.get(), id);
 		checkContainerSize(incubatorInventory, 2);
-		checkContainerDataCount(incubatorData, 3);
+		checkContainerDataCount(incubatorData, 4);
 		this.container = incubatorInventory;
 		this.data = incubatorData;
 		this.level = playerInventory.player.level;
@@ -142,7 +142,7 @@ public class IncubatorMenu extends RecipeBookMenu<Container>
 	}
 
 	public int getIncubationProgressScaled() {
-		return this.data.get(2) != 0 ? (this.data.get(1) * 54) / this.data.get(2) : 0;
+		return this.data.get(3) != 0 ? (this.data.get(2) * 54) / this.data.get(3) : 0;
 	}
 
 	public boolean isIncubating() {
@@ -150,7 +150,11 @@ public class IncubatorMenu extends RecipeBookMenu<Container>
 	}
 
 	public int getIncubationTimeRemaining() {
-		return (this.data.get(0) * 12) / 500;
+		int i = this.data.get(1);
+		if (i == 0) {
+			i = 1000;
+		}
+		return (this.data.get(0) * 11) / i;
 	}
 
 	@Nonnull

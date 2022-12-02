@@ -4,6 +4,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.item.Item;
 import net.minecraft.tags.*;
@@ -30,6 +31,7 @@ public class AetherTags {
 		public static final TagKey<Block> SENTRY_BLOCKS = tag("sentry_blocks");
 		public static final TagKey<Block> ANGELIC_BLOCKS = tag("angelic_blocks");
 		public static final TagKey<Block> HELLFIRE_BLOCKS = tag("hellfire_blocks");
+		public static final TagKey<Block> SLIDER_UNBREAKABLE = tag("slider_unbreakable");
 		public static final TagKey<Block> GRAVITITE_ABILITY_BLACKLIST = tag("gravitite_ability_blacklist");
 		public static final TagKey<Block> AETHER_ANIMALS_SPAWNABLE_ON = tag("aether_animals_spawnable_on");
 		public static final TagKey<Block> AERWHALE_SPAWNABLE_ON = tag("aerwhale_spawnable_on");
@@ -120,6 +122,13 @@ public class AetherTags {
 		public static final TagKey<Item> AETHER_ACCESSORY = curio("aether_accessory");
 		public static final TagKey<Item> AETHER_SHIELD = curio("aether_shield");
 
+		public static final TagKey<Item> RING = curio("ring");
+		public static final TagKey<Item> NECKLACE = curio("necklace");
+		public static final TagKey<Item> HANDS = curio("hands");
+		public static final TagKey<Item> BACK = curio("back");
+		public static final TagKey<Item> CURIO = curio("curio");
+		public static final TagKey<Item> CHARM = curio("charm");
+
 		public static final TagKey<Item> ACCESSORIES = tag("accessories");
 
 		private static TagKey<Item> tag(String name) {
@@ -175,6 +184,14 @@ public class AetherTags {
 
 		private static TagKey<Biome> tag(String name) {
 			return TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Aether.MODID, name));
+		}
+	}
+
+	public static class Structures {
+		public static final TagKey<Structure> DUNGEONS = tag("dungeons");
+
+		private static TagKey<Structure> tag(String name) {
+			return TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(Aether.MODID, name));
 		}
 	}
 }

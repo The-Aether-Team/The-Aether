@@ -29,7 +29,7 @@ public class FireMinionRenderer extends MobRenderer<FireMinion, FireMinionModel<
     @Override
     public ResourceLocation getTextureLocation(FireMinion fireMinion) {
         if (fireMinion.hasCustomName()) {
-            String name = fireMinion.getName().getContents().toString();
+            String name = fireMinion.getName().getString();
             if (name.equals("JorgeQ") || name.equals("Jorge_SunSpirit")) {
                 return FROZEN_SPIRIT_TEXTURE;
             }

@@ -12,7 +12,7 @@ public interface SkyrootTool {
      * @param tool The {@link ItemStack} of the tool used to harvest the block.
      * @param state The {@link BlockState} of the block.
      * @return The new modified {@link ItemStack} of the item drop.
-     * @see com.gildedgames.aether.block.DoubleDrops
+     * @see com.gildedgames.aether.loot.functions.DoubleDrops
      */
     default ItemStack doubleDrops(ItemStack drop, ItemStack tool, BlockState state) {
         if (tool != null && tool.getEnchantmentLevel(Enchantments.SILK_TOUCH) == 0) {

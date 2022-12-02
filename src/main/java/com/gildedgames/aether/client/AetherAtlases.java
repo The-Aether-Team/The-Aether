@@ -34,6 +34,10 @@ public class AetherAtlases {
 			event.addSprite(TREASURE_CHEST_RIGHT_MATERIAL.texture());
 		}
 		if (event.getAtlas().location().equals(InventoryMenu.BLOCK_ATLAS)) {
+			event.addSprite(new ResourceLocation(Aether.MODID, "block/dungeon/door"));
+			event.addSprite(new ResourceLocation(Aether.MODID, "block/dungeon/exclamation"));
+			event.addSprite(new ResourceLocation(Aether.MODID, "block/dungeon/lock"));
+			event.addSprite(new ResourceLocation(Aether.MODID, "block/dungeon/treasure"));
 			event.addSprite(new ResourceLocation(Aether.MODID, "gui/slots/cape"));
 			event.addSprite(new ResourceLocation(Aether.MODID, "gui/slots/gloves"));
 			event.addSprite(new ResourceLocation(Aether.MODID, "gui/slots/misc"));

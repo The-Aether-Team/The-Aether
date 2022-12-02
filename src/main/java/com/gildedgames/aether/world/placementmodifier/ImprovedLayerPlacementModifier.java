@@ -44,10 +44,10 @@ public class ImprovedLayerPlacementModifier extends PlacementModifier {
         do {
             flag = false;
             for (int j = 0; j < this.count.sample(random); ++j) {
-                int x = pos.getX();
-                int z = pos.getZ();
+                int x = random.nextInt(16) + pos.getX();
+                int z = random.nextInt(16) + pos.getZ();
                 int height = context.getHeight(this.heightmap, x, z);
-                BlockPos blockPos = this.findOnGroundPosition(context, random, new BlockPos(x, height, z), i);
+                BlockPos blockPos = this.findOnGroundPosition(context, new BlockPos(x, height, z), i);
                 if (blockPos != null) {
                     builder.add(blockPos);
                     flag = true;
@@ -64,18 +64,12 @@ public class ImprovedLayerPlacementModifier extends PlacementModifier {
         return AetherPlacementModifiers.IMPROVED_LAYER_PLACEMENT;
     }
 
-    private BlockPos findOnGroundPosition(PlacementContext context, RandomSource random, BlockPos pos, int count) {
+    private BlockPos findOnGroundPosition(PlacementContext context, BlockPos pos, int count) {
         int i = 0;
-        int x;
-        int z;
+        int x = pos.getX();
+        int z = pos.getZ();
         int y = pos.getY();
         for (int j = y; j >= context.getMinBuildHeight() + 1; --j) {
-            x = pos.getX();
-            z = pos.getZ();
-            if (j < y) {
-                x += random.nextBoolean() ? -(random.nextInt(2) + 1) : random.nextInt(2) + 1;
-                z += random.nextBoolean() ? -(random.nextInt(2) + 1) : random.nextInt(2) + 1;
-            }
             BlockPos blockPos = new BlockPos(x, j, z);
             BlockState blockState = context.getBlockState(blockPos);
             BlockState blockState1 = context.getBlockState(blockPos.below());

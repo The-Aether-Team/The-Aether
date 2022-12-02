@@ -2,6 +2,7 @@ package com.gildedgames.aether.client.event.hooks;
 
 import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.api.WorldDisplayHelper;
+import com.gildedgames.aether.mixin.mixins.client.accessor.EntityRendererAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.world.entity.Entity;
@@ -17,11 +18,12 @@ public class EntityRenderHooks {
     }
 
     public static void adjustShadow(EntityRenderer<?> renderer, boolean flag) {
+        EntityRendererAccessor entityRendererAccessor = (EntityRendererAccessor) renderer;
         if (flag) {
-            renderer.shadowRadius = 0.0F;
+            entityRendererAccessor.setShadowRadius(0.0F);
         } else {
-            if (renderer.shadowRadius == 0.0F) {
-                renderer.shadowRadius = 0.5F;
+            if (entityRendererAccessor.getShadowRadius() == 0.0F) {
+                entityRendererAccessor.setShadowRadius(0.5F);
             }
         }
     }

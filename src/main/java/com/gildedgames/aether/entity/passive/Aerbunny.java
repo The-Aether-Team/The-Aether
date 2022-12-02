@@ -1,11 +1,12 @@
 package com.gildedgames.aether.entity.passive;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
-import com.gildedgames.aether.entity.ai.FallingRandomStrollGoal;
+import com.gildedgames.aether.entity.ai.goal.FallingRandomStrollGoal;
 import com.gildedgames.aether.entity.ai.navigator.FallPathNavigation;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.capability.player.AetherPlayer;
+import com.gildedgames.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.ExplosionParticlePacket;
 import com.gildedgames.aether.network.packet.server.AerbunnyPuffPacket;
@@ -126,7 +127,8 @@ public class Aerbunny extends AetherAnimal {
                 this.stopRiding();
             }
             if (player instanceof ServerPlayer serverPlayer) {
-                serverPlayer.connection.aboveGroundTickCount = 0;
+                ServerGamePacketListenerImplAccessor serverGamePacketListenerImplAccessor = (ServerGamePacketListenerImplAccessor) serverPlayer.connection;
+                serverGamePacketListenerImplAccessor.setAboveGroundTickCount(0);
             }
         }
         if (this.isOnGround() || (this.getVehicle() != null && this.getVehicle().isOnGround())) {

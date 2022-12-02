@@ -29,7 +29,7 @@ public class BiomeParameterRecipeBuilder extends BlockStateRecipeBuilder {
         this.biomeKey = biomeKey;
         this.biomeTag = biomeTag;
     }
-    
+
     public static BiomeParameterRecipeBuilder recipe(BlockStateIngredient ingredient, Block result, ResourceKey<Biome> biomeKey, BlockStateRecipeSerializer<?> serializer) {
         return recipe(BlockPropertyPair.of(result, Map.of()), ingredient, biomeKey, null, serializer);
     }
@@ -68,7 +68,11 @@ public class BiomeParameterRecipeBuilder extends BlockStateRecipeBuilder {
         private final TagKey<Biome> biomeTag;
 
         public Result(ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, RecipeSerializer<? extends AbstractBlockStateRecipe> serializer) {
-            super(id, ingredient, result, serializer);
+            this(id, biomeKey, biomeTag, ingredient, result, serializer, null);
+        }
+
+        public Result(ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, RecipeSerializer<? extends AbstractBlockStateRecipe> serializer, @Nullable ResourceLocation function) {
+            super(id, ingredient, result, serializer, function);
             this.biomeKey = biomeKey;
             this.biomeTag = biomeTag;
         }

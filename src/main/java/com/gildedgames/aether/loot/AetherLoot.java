@@ -4,26 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.loot.conditions.ConfigEnabled;
-import com.gildedgames.aether.loot.functions.DoubleDrops;
-import com.gildedgames.aether.loot.functions.SpawnTNT;
-import com.gildedgames.aether.loot.functions.SpawnXP;
-import com.gildedgames.aether.loot.functions.WhirlwindSpawnEntity;
-import com.google.common.collect.Sets;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.Registry;
 
-import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
-
-public class AetherLoot
-{
+public class AetherLoot {
 	private static final Set<ResourceLocation> LOOT_TABLES = new HashSet<>();
 
 	public static final ResourceLocation ENTITIES_SHEEPUFF_WHITE = register("entities/sheepuff/white");
@@ -84,8 +68,7 @@ public class AetherLoot
 	private static ResourceLocation register(ResourceLocation id) {
 		if (LOOT_TABLES.add(id)) {
 			return id;
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException(id + " is already a registered built-in loot table");
 		}
 	}

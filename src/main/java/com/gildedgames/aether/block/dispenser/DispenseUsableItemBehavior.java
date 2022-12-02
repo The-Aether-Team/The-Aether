@@ -11,8 +11,6 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
 
-import javax.annotation.Nonnull;
-
 public class DispenseUsableItemBehavior<R extends MatchEventRecipe & BlockStateRecipe> extends OptionalDispenseItemBehavior implements ItemUseConversion<R> {
     private final RecipeType<R> recipeType;
 
@@ -20,9 +18,11 @@ public class DispenseUsableItemBehavior<R extends MatchEventRecipe & BlockStateR
         this.recipeType = recipeType;
     }
 
-    @Nonnull
+    /**
+     * @see ItemUseConversion#convertBlockWithoutContext(RecipeType, Level, BlockPos, ItemStack)
+     */
     @Override
-    protected ItemStack execute(BlockSource source, @Nonnull ItemStack stack) {
+    protected ItemStack execute(BlockSource source, ItemStack stack) {
         this.setSuccess(true);
         Level world = source.getLevel();
         BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
