@@ -7,5 +7,8 @@ public class AetherRecipeBookTypes {
     public static final RecipeBookType FREEZER = RecipeBookType.create("FREEZER");
     public static final RecipeBookType INCUBATOR = RecipeBookType.create("INCUBATOR");
 
-    public static void init() {}
+    /**
+     * Guarantees classloading.
+     */
+    public static void init() { }
 }

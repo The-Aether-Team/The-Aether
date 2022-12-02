@@ -17,8 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public class LoreBookMenu extends AbstractContainerMenu
-{
+public class LoreBookMenu extends AbstractContainerMenu {
     private final LoreInventory bookInventory;
 
     private boolean loreEntryExists;
@@ -31,7 +30,7 @@ public class LoreBookMenu extends AbstractContainerMenu
         super(AetherMenuTypes.BOOK_OF_LORE.get(), id);
         checkContainerSize(bookInventory, 1);
         this.bookInventory = bookInventory;
-        bookInventory.setContainer(this);
+        bookInventory.setMenu(this);
         bookInventory.startOpen(playerInventory.player);
 
         this.addSlot(new Slot(bookInventory, 0, 83, 63));
@@ -130,7 +129,7 @@ public class LoreBookMenu extends AbstractContainerMenu
     }
 
     @OnlyIn(Dist.CLIENT)
-    public boolean loreEntryExists(ItemStack stack) {
+    public boolean loreEntryKeyExists(ItemStack stack) {
         return I18n.exists(getLoreEntryKey(stack));
     }
 }

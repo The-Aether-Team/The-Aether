@@ -10,9 +10,9 @@ import net.minecraft.network.FriendlyByteBuf;
 public record LoreExistsPacket(int playerID, ItemStack itemStack, boolean exists) implements AetherPacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
-        buf.writeInt(this.playerID);
-        buf.writeItem(this.itemStack);
-        buf.writeBoolean(this.exists);
+        buf.writeInt(this.playerID());
+        buf.writeItem(this.itemStack());
+        buf.writeBoolean(this.exists());
     }
 
     public static LoreExistsPacket decode(FriendlyByteBuf buf) {
@@ -23,9 +23,9 @@ public record LoreExistsPacket(int playerID, ItemStack itemStack, boolean exists
     }
 
     @Override
-    public void execute(Player playerEntity) {
-        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level.getEntity(this.playerID) instanceof ServerPlayer player && player.containerMenu instanceof LoreBookMenu container) {
-            container.setLoreEntryExists(this.exists);
+    public void execute(Player player) {
+        if (player != null && player.getServer() != null && player.getLevel().getEntity(this.playerID()) instanceof ServerPlayer && player.containerMenu instanceof LoreBookMenu menu) {
+            menu.setLoreEntryExists(this.exists());
         }
     }
 }
