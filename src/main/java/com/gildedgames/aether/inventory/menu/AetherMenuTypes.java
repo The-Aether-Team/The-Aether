@@ -7,8 +7,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-public class AetherMenuTypes
-{
+public class AetherMenuTypes {
 	public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, Aether.MODID);
 
 	public static final RegistryObject<MenuType<AccessoriesMenu>> ACCESSORIES = MENU_TYPES.register("accessories", () -> new MenuType<>(AccessoriesMenu::new));

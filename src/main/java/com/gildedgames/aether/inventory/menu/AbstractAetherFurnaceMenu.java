@@ -13,8 +13,9 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nonnull;
-
+/**
+ * Based on {@link AbstractFurnaceMenu}.
+ */
 public abstract class AbstractAetherFurnaceMenu extends RecipeBookMenu<Container> {
     private final Container container;
     private final ContainerData data;
@@ -34,9 +35,9 @@ public abstract class AbstractAetherFurnaceMenu extends RecipeBookMenu<Container
         checkContainerDataCount(data, 4);
         this.container = container;
         this.data = data;
-        this.level = playerInventory.player.level;
+        this.level = playerInventory.player.getLevel();
         this.addSlot(new Slot(container, 0, 56, 17));
-        this.addSlot(new AetherFurnaceFuelSlot(this, container, 1, 56, 53));
+        this.addSlot(new AetherFurnaceFuelSlot(this, container, 1, 56, 53)); // Used instead of FurnaceFuelSlot to get around buckets being allowed as fuel.
         this.addSlot(new FurnaceResultSlot(playerInventory.player, container, 2, 116, 35));
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 9; ++j) {
@@ -50,9 +51,9 @@ public abstract class AbstractAetherFurnaceMenu extends RecipeBookMenu<Container
     }
 
     @Override
-    public void fillCraftSlotsStackedContents(@Nonnull StackedContents itemHelper) {
+    public void fillCraftSlotsStackedContents(StackedContents contents) {
         if (this.container instanceof StackedContentsCompatible stackedContentsCompatible) {
-            stackedContentsCompatible.fillStackedContents(itemHelper);
+            stackedContentsCompatible.fillStackedContents(contents);
         }
     }
 
@@ -88,13 +89,16 @@ public abstract class AbstractAetherFurnaceMenu extends RecipeBookMenu<Container
     }
 
     @Override
-    public boolean stillValid(@Nonnull Player player) {
+    public boolean stillValid(Player player) {
         return this.container.stillValid(player);
     }
 
-    @Nonnull
+    /**
+     * Warning for "ConstantConditions" is suppressed because of being based on vanilla code.
+     */
+    @SuppressWarnings("ConstantConditions")
     @Override
-    public ItemStack quickMoveStack(@Nonnull Player player, int index) {
+    public ItemStack quickMoveStack(Player player, int index) {
         ItemStack itemStack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
         if (slot != null && slot.hasItem()) {
@@ -137,10 +141,17 @@ public abstract class AbstractAetherFurnaceMenu extends RecipeBookMenu<Container
         return itemStack;
     }
 
+    /**
+     * Warning for "unchecked" is suppressed because of being based on vanilla code.
+     */
+    @SuppressWarnings("unchecked")
     protected boolean canSmelt(ItemStack stack) {
         return this.level.getRecipeManager().getRecipeFor((RecipeType<AbstractCookingRecipe>) this.recipeType, new SimpleContainer(stack), this.level).isPresent();
     }
 
+    /**
+     * Overridden and determined by subclasses.
+     */
     public boolean isFuel(ItemStack stack) {
         return false;
     }
@@ -163,7 +174,6 @@ public abstract class AbstractAetherFurnaceMenu extends RecipeBookMenu<Container
         return this.data.get(0) > 0;
     }
 
-    @Nonnull
     @Override
     public RecipeBookType getRecipeBookType() {
         return this.recipeBookType;

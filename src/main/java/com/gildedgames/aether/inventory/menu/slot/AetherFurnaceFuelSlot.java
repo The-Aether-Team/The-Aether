@@ -5,23 +5,16 @@ import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
-
 public class AetherFurnaceFuelSlot extends Slot {
     private final AbstractAetherFurnaceMenu menu;
 
-    public AetherFurnaceFuelSlot(AbstractAetherFurnaceMenu furnaceMenu, Container furnaceContainer, int slot, int x, int y) {
-        super(furnaceContainer, slot, x, y);
-        this.menu = furnaceMenu;
+    public AetherFurnaceFuelSlot(AbstractAetherFurnaceMenu menu, Container container, int slot, int x, int y) {
+        super(container, slot, x, y);
+        this.menu = menu;
     }
 
     @Override
-    public boolean mayPlace(@Nonnull ItemStack stack) {
+    public boolean mayPlace(ItemStack stack) {
         return this.menu.isFuel(stack);
-    }
-
-    @Override
-    public int getMaxStackSize(@Nonnull ItemStack stack) {
-        return super.getMaxStackSize(stack);
     }
 }

@@ -1,6 +1,8 @@
 package com.gildedgames.aether.item.miscellaneous;
 
-import com.gildedgames.aether.inventory.provider.LoreBookProvider;
+import com.gildedgames.aether.inventory.menu.LoreBookMenu;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
@@ -16,7 +18,7 @@ public class LoreBookItem extends Item {
     }
 
     /**
-     * Opens the Book of Lore screen using {@link LoreBookProvider}.
+     * Opens the Book of Lore screen.
      * @param level The {@link Level} of the user.
      * @param player The {@link Player} using this item.
      * @param hand The {@link InteractionHand} in which the item is being used.
@@ -25,7 +27,7 @@ public class LoreBookItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
-            NetworkHooks.openScreen(serverPlayer, new LoreBookProvider());
+            NetworkHooks.openScreen(serverPlayer, new SimpleMenuProvider((id, inventory, playerEntity) -> new LoreBookMenu(id, inventory), Component.translatable("menu.aether.book_of_lore")));
         }
         return super.use(level, player, hand);
     }

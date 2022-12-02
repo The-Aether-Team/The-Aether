@@ -1,9 +1,11 @@
 package com.gildedgames.aether.network.packet.server;
 
-import com.gildedgames.aether.inventory.provider.AccessoriesProvider;
+import com.gildedgames.aether.inventory.menu.AccessoriesMenu;
 import com.gildedgames.aether.network.AetherPacket;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.ClientGrabItemPacket;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
@@ -24,11 +26,11 @@ public record OpenAccessoriesPacket(int playerID, ItemStack carryStack) implemen
     }
 
     @Override
-    public void execute(Player playerEntity) {
-        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level.getEntity(this.playerID) instanceof ServerPlayer serverPlayer) {
+    public void execute(Player player) {
+        if (player != null && player.getServer() != null && player.level.getEntity(this.playerID) instanceof ServerPlayer serverPlayer) {
             ItemStack itemStack = serverPlayer.isCreative() ? this.carryStack : serverPlayer.containerMenu.getCarried();
             serverPlayer.containerMenu.setCarried(ItemStack.EMPTY);
-            NetworkHooks.openScreen(serverPlayer, new AccessoriesProvider());
+            NetworkHooks.openScreen(serverPlayer, new SimpleMenuProvider((id, inventory, playerEntity) -> new AccessoriesMenu(id, inventory), Component.translatable("container.crafting")));
             if (!itemStack.isEmpty()) {
                 serverPlayer.containerMenu.setCarried(itemStack);
                 AetherPacketHandler.sendToPlayer(new ClientGrabItemPacket(serverPlayer.getId(), itemStack), serverPlayer);

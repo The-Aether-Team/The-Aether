@@ -5,19 +5,16 @@ import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
-
-public class IncubatorFuelSlot extends Slot
-{
-	private final IncubatorMenu container;
+public class IncubatorFuelSlot extends Slot {
+	private final IncubatorMenu menu;
 	
-	public IncubatorFuelSlot(IncubatorMenu container, Container incubatorInventoryIn, int index, int xPosition, int yPosition) {
-		super(incubatorInventoryIn, index, xPosition, yPosition);
-		this.container = container;
+	public IncubatorFuelSlot(IncubatorMenu menu, Container container, int slot, int x, int y) {
+		super(container, slot, x, y);
+		this.menu = menu;
 	}
 	
 	@Override
-	public boolean mayPlace(@Nonnull ItemStack stack) {
-		return this.container.isFuel(stack);
+	public boolean mayPlace(ItemStack stack) {
+		return this.menu.isFuel(stack);
 	}
 }
