@@ -10,12 +10,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.inventory.ContainerData;
 
 public class AltarMenu extends AbstractAetherFurnaceMenu {
-	public AltarMenu(int windowId, Inventory playerInventory) {
-		super(AetherMenuTypes.ALTAR.get(), AetherRecipeTypes.ENCHANTING.get(), AetherRecipeBookTypes.ALTAR, windowId, playerInventory);
+	public AltarMenu(int containerId, Inventory playerInventory) {
+		super(AetherMenuTypes.ALTAR.get(), AetherRecipeTypes.ENCHANTING.get(), AetherRecipeBookTypes.ALTAR, containerId, playerInventory);
 	}
 
-	public AltarMenu(int windowId, Inventory playerInventory, Container altarContainer, ContainerData data) {
-		super(AetherMenuTypes.ALTAR.get(), AetherRecipeTypes.ENCHANTING.get(), AetherRecipeBookTypes.ALTAR, windowId, playerInventory, altarContainer, data);
+	public AltarMenu(int containerId, Inventory playerInventory, Container altarContainer, ContainerData data) {
+		super(AetherMenuTypes.ALTAR.get(), AetherRecipeTypes.ENCHANTING.get(), AetherRecipeBookTypes.ALTAR, containerId, playerInventory, altarContainer, data);
 	}
 
 	@Override
