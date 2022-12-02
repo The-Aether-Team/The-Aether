@@ -15,45 +15,39 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nonnull;
-
-public class IncubatorMenu extends RecipeBookMenu<Container>
-{
+public class IncubatorMenu extends RecipeBookMenu<Container> {
 	public final Container container;
 	public final ContainerData data;
 	public final Level level;
 
-	public IncubatorMenu(int id, Inventory playerInventoryIn) {
-		this(id, playerInventoryIn, new SimpleContainer(2), new SimpleContainerData(4));
+	public IncubatorMenu(int containerId, Inventory playerInventory) {
+		this(containerId, playerInventory, new SimpleContainer(2), new SimpleContainerData(4));
 	}
 	
-	public IncubatorMenu(int id, Inventory playerInventory, Container incubatorInventory, ContainerData incubatorData) {
-		super(AetherMenuTypes.INCUBATOR.get(), id);
-		checkContainerSize(incubatorInventory, 2);
-		checkContainerDataCount(incubatorData, 4);
-		this.container = incubatorInventory;
-		this.data = incubatorData;
-		this.level = playerInventory.player.level;
-		this.addSlot(new Slot(incubatorInventory, 0, 73, 17));
-		this.addSlot(new IncubatorFuelSlot(this, incubatorInventory, 1, 73, 53));
-
+	public IncubatorMenu(int containerId, Inventory playerInventory, Container container, ContainerData data) {
+		super(AetherMenuTypes.INCUBATOR.get(), containerId);
+		checkContainerSize(container, 2);
+		checkContainerDataCount(data, 4);
+		this.container = container;
+		this.data = data;
+		this.level = playerInventory.player.getLevel();
+		this.addSlot(new Slot(container, 0, 73, 17));
+		this.addSlot(new IncubatorFuelSlot(this, container, 1, 73, 53));
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 9; ++j) {
 				this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
 			}
 		}
-
 		for (int k = 0; k < 9; ++k) {
 			this.addSlot(new Slot(playerInventory, k, 8 + k * 18, 142));
 		}
-
-		this.addDataSlots(incubatorData);
+		this.addDataSlots(data);
 	}
 
 	@Override
-	public void fillCraftSlotsStackedContents(@Nonnull StackedContents itemHelper) {
+	public void fillCraftSlotsStackedContents(StackedContents contents) {
 		if (this.container instanceof StackedContentsCompatible stackedContentsCompatible) {
-			stackedContentsCompatible.fillStackedContents(itemHelper);
+			stackedContentsCompatible.fillStackedContents(contents);
 		}
 	}
 
@@ -82,17 +76,18 @@ public class IncubatorMenu extends RecipeBookMenu<Container>
 		return 1;
 	}
 
+	@Override
 	public int getSize() {
 		return 2;
 	}
 
-	public boolean stillValid(@Nonnull Player player) {
+	@Override
+	public boolean stillValid(Player player) {
 		return this.container.stillValid(player);
 	}
 
-	@Nonnull
 	@Override
-	public ItemStack quickMoveStack(@Nonnull Player player, int index) {
+	public ItemStack quickMoveStack(Player player, int index) {
 		ItemStack itemStack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
 		if (slot.hasItem()) {
@@ -117,14 +112,12 @@ public class IncubatorMenu extends RecipeBookMenu<Container>
 			} else if (!this.moveItemStackTo(itemStack1, 2, 38, false)) {
 				return ItemStack.EMPTY;
 			}
-
 			if (itemStack1.isEmpty()) {
 				slot.set(ItemStack.EMPTY);
 			}
 			else {
 				slot.setChanged();
 			}
-
 			if (itemStack1.getCount() == itemStack.getCount()) {
 				return ItemStack.EMPTY;
 			}
@@ -157,7 +150,6 @@ public class IncubatorMenu extends RecipeBookMenu<Container>
 		return (this.data.get(0) * 11) / i;
 	}
 
-	@Nonnull
 	@Override
 	public RecipeBookType getRecipeBookType() {
 		return AetherRecipeBookTypes.INCUBATOR;

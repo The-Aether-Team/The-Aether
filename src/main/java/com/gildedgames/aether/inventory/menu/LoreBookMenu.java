@@ -12,106 +12,96 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 
-import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
 public class LoreBookMenu extends AbstractContainerMenu {
-    private final LoreInventory bookInventory;
-
+    private static final Map<Predicate<ItemStack>, String> LORE_ENTRY_OVERRIDES = new HashMap<>();
+    private final LoreInventory loreInventory;
     private boolean loreEntryExists;
 
     public LoreBookMenu(int id, Inventory playerInventory) {
         this(id, playerInventory, new LoreInventory(playerInventory.player));
     }
 
-    public LoreBookMenu(int id, Inventory playerInventory, LoreInventory bookInventory) {
+    public LoreBookMenu(int id, Inventory playerInventory, LoreInventory loreInventory) {
         super(AetherMenuTypes.BOOK_OF_LORE.get(), id);
-        checkContainerSize(bookInventory, 1);
-        this.bookInventory = bookInventory;
-        bookInventory.setMenu(this);
-        bookInventory.startOpen(playerInventory.player);
-
-        this.addSlot(new Slot(bookInventory, 0, 83, 63));
-
-        for(int k = 0; k < 3; ++k) {
-            for(int i1 = 0; i1 < 9; ++i1) {
+        checkContainerSize(loreInventory, 1);
+        this.loreInventory = loreInventory;
+        loreInventory.setMenu(this); // Provide this menu to the LoreInventory.
+        loreInventory.startOpen(playerInventory.player);
+        this.addSlot(new Slot(loreInventory, 0, 83, 63));
+        for (int k = 0; k < 3; ++k) {
+            for (int i1 = 0; i1 < 9; ++i1) {
                 this.addSlot(new Slot(playerInventory, i1 + k * 9 + 9, 48 + i1 * 18, 113 + k * 18));
             }
         }
-
-        for(int l = 0; l < 9; ++l) {
+        for (int l = 0; l < 9; ++l) {
             this.addSlot(new Slot(playerInventory, l, 48 + l * 18, 171));
         }
     }
 
-    public static LoreBookMenu create(int id, Inventory playerInventory) {
-        return new LoreBookMenu(id, playerInventory);
+    @Override
+    public boolean stillValid(Player player) {
+        return this.loreInventory.stillValid(player);
     }
 
+    /**
+     * Warning for "ConstantConditions" is suppressed because of being based on vanilla code.
+     */
+    @SuppressWarnings("ConstantConditions")
     @Override
-    public boolean stillValid(Player playerIn) {
-        return this.bookInventory.stillValid(playerIn);
-    }
-
-    @Override
-    public ItemStack quickMoveStack(Player playerIn, int index) {
-        ItemStack itemstack = ItemStack.EMPTY;
+    public ItemStack quickMoveStack(Player player, int index) {
+        ItemStack itemStack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
         if (slot != null && slot.hasItem()) {
-            ItemStack itemstack1 = slot.getItem();
-            itemstack = itemstack1.copy();
+            ItemStack itemStack1 = slot.getItem();
+            itemStack = itemStack1.copy();
             if (index < 1) {
-                if (!this.moveItemStackTo(itemstack1, 1, 37, true)) {
+                if (!this.moveItemStackTo(itemStack1, 1, 37, true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(itemstack1, 0, 1, false)) {
+            } else if (!this.moveItemStackTo(itemStack1, 0, 1, false)) {
                 return ItemStack.EMPTY;
             }
-
-            if (itemstack1.isEmpty()) {
+            if (itemStack1.isEmpty()) {
                 slot.set(ItemStack.EMPTY);
             } else {
                 slot.setChanged();
             }
-
-            if (itemstack1.getCount() == itemstack.getCount()) {
+            if (itemStack1.getCount() == itemStack.getCount()) {
                 return ItemStack.EMPTY;
             }
-
-            slot.onTake(playerIn, itemstack1);
+            slot.onTake(player, itemStack1);
         }
-
-        return itemstack;
+        return itemStack;
     }
 
     @Override
-    public void removed(@Nonnull Player playerIn) {
-        super.removed(playerIn);
-        if (playerIn instanceof ServerPlayer serverPlayer) {
-            ItemStack stack = this.bookInventory.getItem(0);
+    public void removed(Player player) {
+        super.removed(player);
+        if (player instanceof ServerPlayer serverPlayer) {
+            ItemStack stack = this.loreInventory.getItem(0);
             if (!stack.isEmpty()) {
-                if (playerIn.isAlive() && !serverPlayer.hasDisconnected()) {
-                    playerIn.getInventory().placeItemBackInInventory(stack);
+                if (player.isAlive() && !serverPlayer.hasDisconnected()) {
+                    player.getInventory().placeItemBackInInventory(stack);
                 } else {
-                    playerIn.drop(stack, false);
+                    player.drop(stack, false);
                 }
-                this.bookInventory.setItem(0, ItemStack.EMPTY);
+                this.loreInventory.setItem(0, ItemStack.EMPTY);
             }
         }
-        this.bookInventory.stopOpen(playerIn);
+        this.loreInventory.stopOpen(player);
     }
 
     public boolean getLoreEntryExists() {
         return this.loreEntryExists;
     }
 
-    public void setLoreEntryExists(boolean exists) {
-        this.loreEntryExists = exists;
+    public void setLoreEntryExists(boolean loreEntryExists) {
+        this.loreEntryExists = loreEntryExists;
     }
-
-    private static final Map<Predicate<ItemStack>, String> LORE_ENTRY_OVERRIDES = new HashMap<>();
 
     @OnlyIn(Dist.CLIENT)
     public static void addLoreEntryOverride(Predicate<ItemStack> predicate, String entry) {
@@ -130,6 +120,6 @@ public class LoreBookMenu extends AbstractContainerMenu {
 
     @OnlyIn(Dist.CLIENT)
     public boolean loreEntryKeyExists(ItemStack stack) {
-        return I18n.exists(getLoreEntryKey(stack));
+        return I18n.exists(this.getLoreEntryKey(stack));
     }
 }
