@@ -130,7 +130,7 @@ public class BronzeDungeonPieces {
                         chest.setLootTable(AetherLoot.BRONZE_DUNGEON, random.nextLong());
                     }
                 } else {
-                    level.setBlock(pos, AetherBlocks.CHEST_MIMIC.get().defaultBlockState(), 3);
+                    level.setBlock(pos, AetherBlocks.CHEST_MIMIC.get().defaultBlockState(), 1 | 2);
                 }
             }
         }
