@@ -768,7 +768,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherItems.AETHER_PORTAL_FRAME, "A portable frame containing the power to travel to the Aether or back to the Overworld. Not something you're likely to find naturally.");
         addLore(AetherBlocks.AETHER_GRASS_BLOCK, "Grass found in the Aether dimension. It can be used to grow the trees native to the Aether. It is much more pale than normal Grass.");
         addLore(AetherItems.AGILITY_CAPE, "A slightly rare cape, it can be seen in Bronze and Silver Dungeons. It makes the wearer's legs stronger, therefore they can walk up blocks instantly.");
-        addLore(AetherBlocks.ALTAR, "Used to enchant items and repair armor. They are powered by Ambrosium Shards. The enchanting process can take some time, but if you place an Enchanted Gravitite block under it, the process is sped up by a huge amount.");
+        addLore(AetherBlocks.ALTAR, "Used to enchant items and repair armor. They are powered by Ambrosium Shards.");
         addLore(AetherBlocks.AMBROSIUM_ORE, "The most common ore in the Aether. The drops can be doubled with Skyroot tools.");
         addLore(AetherItems.AMBROSIUM_SHARD, "Aether's coal equivalent, they have a healing property when eaten, and restore a small amount of health.");
         addLore(AetherBlocks.AMBROSIUM_BLOCK, "A block of pure Ambrosium, useful for storing large quantities of fuel.");
@@ -808,7 +808,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherItems.ENCHANTED_DART_SHOOTER, "A Dart Shooter which shoots Enchanted Darts, the strongest one!");
         addLore(AetherBlocks.ENCHANTED_GRAVITITE, "After putting Gravitite Ore into an Altar and enchanting it, you get Enchanted Gravitite. This can be made into Gravitite Tools and Armor. When powered with a Redstone signal, Enchanted Gravitite Blocks will float into the air, similarly to Gravitite Ore.");
         addLore(AetherItems.FLAMING_SWORD, "An ancient sword which flames its foes to a burning crisp. It almost hurts to touch! Using this on animals can make them drop cooked meat!");
-        addLore(AetherBlocks.FREEZER, "You can freeze various items using this, such as Aerclouds, or Water Buckets. It's source of power is Icestone. You can speed up the freezing process by placing an Icestone under the Freezer.");
+        addLore(AetherBlocks.FREEZER, "You can freeze various items using this, such as Aerclouds, or Water Buckets. It's source of power is Icestone.");
         addLore(AetherItems.GINGERBREAD_MAN, "Found in presents under Holiday trees, these are the most common of Christmas items. They are very abundant when dropped from presents.");
         addLore(AetherItems.GOLD_DUNGEON_KEY, "A key that has a shiny finish. It is dropped by the Sun Spirit after you defeat him. You can use it to claim the legendary treasure in the back room!");
         addLore(AetherBlocks.GOLDEN_AERCLOUD, "A golden cloud found in small quantities, higher in the air than normal. The properties are similar to Cold Aerclouds, but the Parachutes they produce have much more durability.");
