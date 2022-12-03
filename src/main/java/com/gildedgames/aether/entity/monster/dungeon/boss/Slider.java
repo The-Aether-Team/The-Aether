@@ -603,7 +603,11 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
 
         @Override
         public void tick() {
-            BlockPos targetPos = this.slider.getTarget().blockPosition();
+            LivingEntity target = this.slider.getTarget();
+            if (target == null) {
+                return;
+            }
+            BlockPos targetPos = target.blockPosition();
             BlockPos currentPos = this.slider.blockPosition();
             BlockPos difference = targetPos.subtract(currentPos);
             Direction lastDirection = this.moveDir;
