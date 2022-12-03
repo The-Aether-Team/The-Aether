@@ -58,7 +58,7 @@ public class DoorwayBlock extends Block {
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (player.isCreative()) {
             BlockState newState = state.cycle(INVISIBLE);
-            level.setBlock(pos, newState, 3);
+            level.setBlock(pos, newState, 1 | 2);
             return InteractionResult.SUCCESS;
         } else {
             return super.use(state, level, pos, player, hand, hit);

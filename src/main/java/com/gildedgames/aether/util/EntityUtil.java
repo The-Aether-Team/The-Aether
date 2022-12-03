@@ -22,7 +22,7 @@ public class EntityUtil {
         double x = entity.getX() + ((double) random.nextFloat() * entity.getBbWidth() * 2.0) - entity.getBbWidth() - d0 * d3;
         double y = entity.getY() + ((double) random.nextFloat() * entity.getBbHeight()) - d1 * d3;
         double z = entity.getZ() + ((double) random.nextFloat() * entity.getBbWidth() * 2.0) - entity.getBbWidth() - d2 * d3;
-        entity.level.addParticle(ParticleTypes.POOF, x, y, z, d0, d1, d2);
+        entity.getLevel().addParticle(ParticleTypes.POOF, x, y, z, d0, d1, d2);
     }
 
     public static void spawnSummoningExplosionParticles(Entity entity) {
@@ -35,7 +35,7 @@ public class EntityUtil {
             double x = entity.getX(0.0) - d0 * d3;
             double y = entity.getRandomY() - d1 * d3;
             double z = entity.getRandomZ(1.0) - d2 * d3;
-            entity.level.addParticle(ParticleTypes.POOF, x, y, z, d0, d1, d2);
+            entity.getLevel().addParticle(ParticleTypes.POOF, x, y, z, d0, d1, d2);
         }
     }
 }

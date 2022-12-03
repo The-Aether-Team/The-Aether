@@ -205,7 +205,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
             BlockState state = this.level.getBlockState(pos);
             BlockState newState = this.convertBlock(state);
             if (newState != null) {
-                this.level.setBlock(pos, newState, 3);
+                this.level.setBlock(pos, newState, 1 | 2);
             }
         }
     }

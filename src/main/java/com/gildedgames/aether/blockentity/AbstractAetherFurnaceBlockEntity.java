@@ -99,7 +99,7 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
         if (flag != abstractFurnaceBlockEntityAccessor.callIsLit()) {
             flag1 = true;
             state = state.setValue(AbstractFurnaceBlock.LIT, abstractFurnaceBlockEntityAccessor.callIsLit());
-            level.setBlock(pos, state, 3);
+            level.setBlock(pos, state, 1 | 2);
         }
 
         if (flag1) {

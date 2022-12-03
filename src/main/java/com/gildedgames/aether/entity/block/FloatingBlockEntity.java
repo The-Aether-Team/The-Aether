@@ -135,7 +135,7 @@ public class FloatingBlockEntity extends Entity {
                                     this.blockState = this.blockState.setValue(BlockStateProperties.WATERLOGGED, true);
                                 }
 
-                                if (this.level.setBlock(blockPos1, this.blockState, 3)) {
+                                if (this.level.setBlock(blockPos1, this.blockState, 1 | 2)) {
                                     ((ServerLevel) this.level).getChunkSource().chunkMap.broadcast(this, new ClientboundBlockUpdatePacket(blockPos1, this.level.getBlockState(blockPos1)));
                                     this.discard();
                                     if (block instanceof Floatable floatable) {
@@ -143,7 +143,7 @@ public class FloatingBlockEntity extends Entity {
                                     } else if (block instanceof ConcretePowderBlock concretePowderBlock) {
                                         if (ConcretePowderBlockAccessor.callShouldSolidify(this.level, blockPos1, blockState)) {
                                             ConcretePowderBlockAccessor concretePowderBlockAccessor = (ConcretePowderBlockAccessor) concretePowderBlock;
-                                            this.level.setBlock(blockPos1, concretePowderBlockAccessor.getConcrete(), 3);
+                                            this.level.setBlock(blockPos1, concretePowderBlockAccessor.getConcrete(), 1 | 2);
                                         }
                                     } else if (block instanceof AnvilBlock) {
                                         if (!this.isSilent()) {

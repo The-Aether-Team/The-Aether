@@ -630,7 +630,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
             BlockPos pos = new BlockPos(this.sunSpirit.getX(), this.sunSpirit.getY(), this.sunSpirit.getZ());
             for (int i = 0; i <= 3; i++) {
                 if (this.sunSpirit.level.isEmptyBlock(pos) && !this.sunSpirit.level.isEmptyBlock(pos.below())) {
-                    this.sunSpirit.level.setBlock(pos, Blocks.FIRE.defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
+                    this.sunSpirit.level.setBlock(pos, Blocks.FIRE.defaultBlockState(), 1 | 2 | 8);
                     break;
                 }
                 pos = pos.below();
