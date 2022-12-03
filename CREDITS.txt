@@ -23,6 +23,9 @@ CartoonishVillain:
 CDAGaming:
 - Fixes to the Aether main menu.
 
+GizmoTheMoonPig
+- Fixes to the Life Shard silver heart overlay rendering.
+
 InsomniaKitten
 - Providing the accessory inventory texture.
 
