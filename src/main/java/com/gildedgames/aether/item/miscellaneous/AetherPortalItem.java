@@ -2,7 +2,6 @@ package com.gildedgames.aether.item.miscellaneous;
 
 import com.gildedgames.aether.block.portal.AetherPortalBlock;
 import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.util.ConstantsUtil;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.player.Player;

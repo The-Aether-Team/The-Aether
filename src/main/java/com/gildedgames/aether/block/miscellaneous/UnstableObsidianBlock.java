@@ -1,6 +1,5 @@
 package com.gildedgames.aether.block.miscellaneous;
 
-import com.gildedgames.aether.util.ConstantsUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;

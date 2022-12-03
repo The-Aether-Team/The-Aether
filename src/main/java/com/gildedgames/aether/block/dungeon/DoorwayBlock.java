@@ -1,7 +1,6 @@
 package com.gildedgames.aether.block.dungeon;
 
 import com.gildedgames.aether.client.particle.AetherParticleTypes;
-import com.gildedgames.aether.util.ConstantsUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;

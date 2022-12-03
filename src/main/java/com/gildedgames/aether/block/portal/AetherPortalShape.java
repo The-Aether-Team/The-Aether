@@ -2,7 +2,6 @@ package com.gildedgames.aether.block.portal;
 
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.util.ConstantsUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.LevelAccessor;

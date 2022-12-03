@@ -5,7 +5,6 @@ import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.mixin.mixins.common.accessor.EntityAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.PortalTravelSoundPacket;
-import com.gildedgames.aether.util.ConstantsUtil;
 import com.gildedgames.aether.util.LevelUtil;
 import com.gildedgames.aether.world.AetherPoi;
 import net.minecraft.BlockUtil;

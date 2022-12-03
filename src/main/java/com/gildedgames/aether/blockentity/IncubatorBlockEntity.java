@@ -7,7 +7,6 @@ import com.gildedgames.aether.inventory.menu.IncubatorMenu;
 
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.gildedgames.aether.recipe.recipes.item.IncubationRecipe;
-import com.gildedgames.aether.util.ConstantsUtil;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.*;
 import net.minecraft.resources.ResourceLocation;
