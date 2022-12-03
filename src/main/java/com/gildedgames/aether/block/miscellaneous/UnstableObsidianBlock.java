@@ -78,7 +78,7 @@ public class UnstableObsidianBlock extends Block {
     private boolean slightlyMelt(BlockState state, Level level, BlockPos pos) {
         int i = state.getValue(AGE);
         if (i < 3) {
-            level.setBlock(pos, state.setValue(AGE, i + 1), ConstantsUtil.FLAG_CLIENT_CHANGE);
+            level.setBlock(pos, state.setValue(AGE, i + 1), 2);
             return false;
         } else {
             this.melt(level, pos);

@@ -23,11 +23,11 @@ public interface FreezingBehavior<T> {
     /**
      * Cause a block update and send this change to the client.
      */
-    int FLAG_SHELL = ConstantsUtil.FLAG_BLOCK_UPDATE | ConstantsUtil.FLAG_CLIENT_CHANGE;
+    int FLAG_SHELL = 1 | 2;
     /**
      * Send this change to the client and prevent any block updates from neighboring blocks.
      */
-    int FLAG_VOLUME = ConstantsUtil.FLAG_CLIENT_CHANGE | ConstantsUtil.FLAG_PREVENT_NEIGHBOR_UPDATE;
+    int FLAG_VOLUME = 2 | 16;
 
     /**
      * Loops over the area of the positive quarter of a circle, then freezes blocks within that quarter along with the 3 quarters using {@link FreezingBehavior#quarters(Level, BlockPos, int, int, int, Object, int)}.<br><br>

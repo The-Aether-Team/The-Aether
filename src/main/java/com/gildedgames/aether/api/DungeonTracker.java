@@ -94,7 +94,7 @@ public record DungeonTracker<T extends Mob & BossMob<T>>(T boss, Vec3 originCoor
             BlockState state = level.getBlockState(pos);
             BlockState newState = function.apply(state);
             if (newState != null) {
-                level.setBlock(pos, newState, ConstantsUtil.FLAG_BLOCK_UPDATE_OR_CLIENT_CHANGE);
+                level.setBlock(pos, newState, 1 | 2);
             }
         }
     }

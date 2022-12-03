@@ -71,7 +71,7 @@ public class AetherPortalItem extends Item {
             for (int v = pos.getY() + 1; v < pos.getY() + 4; v++) {
                 BlockPos truePos = axis == Direction.Axis.X ? new BlockPos(pos.getX(), v, pos.getZ() + h) : new BlockPos(pos.getX() + h, v, pos.getZ());
                 Direction.Axis trueAxis = axis == Direction.Axis.X ? Direction.Axis.Z : Direction.Axis.X;
-                level.setBlock(truePos, AetherBlocks.AETHER_PORTAL.get().defaultBlockState().setValue(AetherPortalBlock.AXIS, trueAxis), ConstantsUtil.FLAG_CLIENT_CHANGE_OR_PREVENT_NEIGHBOR_UPDATE);
+                level.setBlock(truePos, AetherBlocks.AETHER_PORTAL.get().defaultBlockState().setValue(AetherPortalBlock.AXIS, trueAxis), 2 | 16);
             }
         }
 

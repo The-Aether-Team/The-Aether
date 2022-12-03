@@ -54,12 +54,12 @@ public class AetherFarmBlock extends FarmBlock {
         int i = state.getValue(MOISTURE);
         if (!isNearWater(level, pos) && !level.isRainingAt(pos.above())) {
             if (i > 0) {
-                level.setBlock(pos, state.setValue(MOISTURE, i - 1), ConstantsUtil.FLAG_CLIENT_CHANGE);
+                level.setBlock(pos, state.setValue(MOISTURE, i - 1), 2);
             } else if (!isUnderCrops(level, pos)) {
                 turnToDirt(state, level, pos);
             }
         } else if (i < 7) {
-            level.setBlock(pos, state.setValue(MOISTURE, 7), ConstantsUtil.FLAG_CLIENT_CHANGE);
+            level.setBlock(pos, state.setValue(MOISTURE, 7), 2);
         }
     }
 
