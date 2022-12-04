@@ -12,6 +12,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
@@ -48,6 +49,11 @@ public class ThunderCrystal extends AbstractCrystal {
     public void tickMovement() {
         if (!this.level.isClientSide) {
             if (this.ticksInAir >= this.getLifeSpan() || this.target == null || !this.target.isAlive()) {
+                LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(this.level);
+                if (lightningBolt != null) {
+                    lightningBolt.setPos(this.getX(), this.getY(), this.getZ());
+                    this.level.addFreshEntity(lightningBolt);
+                }
                 this.playSound(AetherSoundEvents.ENTITY_THUNDER_CRYSTAL_EXPLODE.get(), 1.0F, 1.0F);
             } else {
                 Vec3 motion = this.getDeltaMovement().scale(0.9);
@@ -73,6 +79,7 @@ public class ThunderCrystal extends AbstractCrystal {
         if (pResult.getEntity() instanceof LivingEntity target && target != this.getOwner()) {
             target.hurt(new IndirectEntityDamageSource("thunder_crystal", this, this.getOwner()).setProjectile(), 5.0F);
             this.knockback(0.1, this.position().subtract(target.position()));
+            target.knockback(0.25, this.getX() - target.getX(), this.getZ() - target.getZ());
         }
     }
 
