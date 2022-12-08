@@ -102,25 +102,26 @@ dependencies {
 //    compileOnly "com.gildedgames.nitrogen:nitrogen:${project.nitrogen_version}"
 //    runtimeOnly fg.deobf("com.gildedgames.nitrogen:nitrogen:${project.nitrogen_version}")
 
-    compileOnly "top.theillusivec4.curios:curios-forge:${project.curios_version}:api"
-    compileOnly "top.theillusivec4.curios:curios-forge:${project.curios_version}"
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}")
-
-    compileOnly "top.theillusivec4.caelus:caelus-forge:${project.caelus_version}:api"
-    compileOnly "top.theillusivec4.caelus:caelus-forge:${project.caelus_version}"
-
-    compileOnly "mezz.jei:jei-${project.mc_version}-common-api:${project.jei_version}"
-    compileOnly "mezz.jei:jei-${project.mc_version}-forge-api:${project.jei_version}"
+//    compileOnly "top.theillusivec4.curios:curios-forge:${project.curios_version}:api"
+//    compileOnly "top.theillusivec4.curios:curios-forge:${project.curios_version}"
+//    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}")
+//
+//    compileOnly "top.theillusivec4.caelus:caelus-forge:${project.caelus_version}:api"
+//    compileOnly "top.theillusivec4.caelus:caelus-forge:${project.caelus_version}"
+//
+//    compileOnly "mezz.jei:jei-${project.mc_version}-common-api:${project.jei_version}"
+//    compileOnly "mezz.jei:jei-${project.mc_version}-forge-api:${project.jei_version}"
 
 //    jarJar fg.deobf("com.gildedgames.nitrogen:nitrogen:${project.nitrogen_version}") {
 //        jarJar.ranged(it, "[${project.nitrogen_version},)")
 //        jarJar.pin(it, "${project.nitrogen_version}")
 //    }
 
-    jarJar fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}") {
-        jarJar.ranged(it, "[${project.curios_version},)")
-        jarJar.pin(it, "${project.curios_version}")
-    }
+//    jarJar fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}") {
+//        jarJar.ranged(it, "[${project.curios_version},)")
+//        jarJar.pin(it, "${project.curios_version}")
+//    }
+
 
     // compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-${project.crafttweaker_version}")
 
