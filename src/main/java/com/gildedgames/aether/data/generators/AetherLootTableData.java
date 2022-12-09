@@ -6,7 +6,10 @@ import com.gildedgames.aether.loot.AetherLootContexts;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.data.loot.packs.*;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.ValidationContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -22,29 +25,15 @@ import javax.annotation.Nonnull;
 
 import net.minecraft.world.level.storage.loot.LootTable;
 
-public class AetherLootTableData extends LootTableProvider {
-    public AetherLootTableData(DataGenerator dataGeneratorIn) {
-        super(dataGeneratorIn);
+public class AetherLootTableData {
+    public static LootTableProvider create(PackOutput packOutput) {
+        return new LootTableProvider(packOutput, BuiltInLootTables.all(), List.of(
+                new LootTableProvider.SubProviderEntry(AetherDungeonLootData::new, LootContextParamSets.CHEST),
+                new LootTableProvider.SubProviderEntry(AetherEntityLootData::new, LootContextParamSets.ENTITY),
+                new LootTableProvider.SubProviderEntry(AetherBlockLootData::new, LootContextParamSets.BLOCK),
+                new LootTableProvider.SubProviderEntry(AetherAdvancementLootData::new, LootContextParamSets.ADVANCEMENT_REWARD),
+                new LootTableProvider.SubProviderEntry(AetherSelectorLootData::new, LootContextParamSets.SELECTOR),
+                new LootTableProvider.SubProviderEntry(AetherStrippingLootData::new, AetherLootContexts.STRIPPING)
+        ));
     }
-
-    @Nonnull
-    @Override
-    public String getName() {
-        return "Aether Loot Tables";
-    }
-
-    @Nonnull
-    @Override
-    protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet>> getTables() {
-        return ImmutableList.of(
-                Pair.of(AetherBlockLootData::new, LootContextParamSets.BLOCK),
-                Pair.of(AetherEntityLootData::new, LootContextParamSets.ENTITY),
-                Pair.of(AetherDungeonLootData::new, LootContextParamSets.CHEST),
-                Pair.of(AetherAdvancementLootData::new, LootContextParamSets.ADVANCEMENT_REWARD),
-                Pair.of(AetherSelectorLootData::new, LootContextParamSets.SELECTOR),
-                Pair.of(AetherStrippingLootData::new, AetherLootContexts.STRIPPING));
-    }
-
-    @Override
-    protected void validate(@Nonnull Map<ResourceLocation, LootTable> map, @Nonnull ValidationContext validationtracker) { }
 }

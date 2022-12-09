@@ -46,7 +46,9 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
@@ -176,7 +178,7 @@ public class Aether {
 
         // Server Data
         generator.addProvider(event.includeServer(), new AetherRecipeData(generator));
-        generator.addProvider(event.includeServer(), new AetherLootTableData(generator));
+        generator.addProvider(event.includeServer(), (DataProvider.Factory<LootTableProvider>) AetherLootTableData::create);
         generator.addProvider(event.includeServer(), new AetherLootModifierData(generator));
         generator.addProvider(event.includeServer(), new AetherAdvancementData(generator, helper));
         AetherBlockTagData blockTags = new AetherBlockTagData(packOutput, lookupProvider, helper);

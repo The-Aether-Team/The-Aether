@@ -5,21 +5,17 @@ import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.AetherTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-import javax.annotation.Nonnull;
 import java.util.concurrent.CompletableFuture;
 
 public class AetherBlockTagData extends BlockTagsProvider {
-    public AetherBlockTagData(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> provider, ExistingFileHelper existingFileHelper) {
-        super(packOutput, provider, Aether.MODID, existingFileHelper);
+    public AetherBlockTagData(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
+        super(packOutput, lookupProvider, Aether.MODID, existingFileHelper);
     }
 
     @Override
@@ -30,8 +26,7 @@ public class AetherBlockTagData extends BlockTagsProvider {
     @SuppressWarnings("unchecked")
     @Override
     public void addTags(HolderLookup.Provider provider) {
-
-        //aether
+        // Aether
         tag(AetherTags.Blocks.TREATED_AS_VANILLA_BLOCK).add(
                 AetherBlocks.CHEST_MIMIC.get(),
                 AetherBlocks.UNSTABLE_OBSIDIAN.get());
@@ -168,7 +163,7 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherBlocks.LIGHT_ANGELIC_STONE.get());
         tag(AetherTags.Blocks.TREATED_AS_AETHER_BLOCK);
 
-        //vanilla
+        // Vanilla
         tag(BlockTags.STONE_BRICKS).add(AetherBlocks.HOLYSTONE_BRICKS.get()).addTag(AetherTags.Blocks.DUNGEON_BLOCKS);
         tag(BlockTags.WOODEN_STAIRS).add(AetherBlocks.SKYROOT_STAIRS.get());
         tag(BlockTags.WOODEN_SLABS).add(AetherBlocks.SKYROOT_SLAB.get());
@@ -402,7 +397,7 @@ public class AetherBlockTagData extends BlockTagsProvider {
         );
         tag(BlockTags.SNOW_LAYER_CANNOT_SURVIVE_ON).add(AetherBlocks.ICESTONE.get());
 
-        //forge
+        // Forge
         tag(Tags.Blocks.BOOKSHELVES).add(AetherBlocks.SKYROOT_BOOKSHELF.get());
         tag(Tags.Blocks.FENCE_GATES_WOODEN).add(AetherBlocks.SKYROOT_FENCE_GATE.get());
         tag(Tags.Blocks.FENCES_WOODEN).add(AetherBlocks.SKYROOT_FENCE.get());
@@ -420,10 +415,5 @@ public class AetherBlockTagData extends BlockTagsProvider {
         tag(Tags.Blocks.STORAGE_BLOCKS).add(
                 AetherBlocks.AMBROSIUM_BLOCK.get(),
                 AetherBlocks.ZANITE_BLOCK.get());
-    }
-
-    @Nonnull
-    protected TagsProvider.TagAppender<Block> tag(@Nonnull TagKey<Block> tag) {
-        return super.tag(tag);
     }
 }

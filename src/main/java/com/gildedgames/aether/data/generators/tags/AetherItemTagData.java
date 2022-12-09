@@ -374,9 +374,4 @@ public class AetherItemTagData extends ItemTagsProvider
                 AetherItems.VALKYRIE_BOOTS.get(),
                 AetherItems.SENTRY_BOOTS.get());
     }
-
-    @Nonnull
-    protected TagsProvider.TagAppender<Item> tag(@Nonnull TagKey<Item> tag) {
-        return super.tag(tag);
-    }
 }

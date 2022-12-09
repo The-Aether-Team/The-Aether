@@ -4,6 +4,9 @@ import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.data.providers.AetherBlockLootProvider;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.mixin.mixins.common.accessor.BlockLootAccessor;
+import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Block;
@@ -11,12 +14,17 @@ import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
 import javax.annotation.Nonnull;
+import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class AetherBlockLootData extends AetherBlockLootProvider {
+    public AetherBlockLootData() {
+        super(items, FeatureFlags.REGISTRY.allFlags());
+    }
+
     @Override
-    protected void addTables() {
+    protected void generate() {
         dropNone(AetherBlocks.AETHER_PORTAL);
 
         dropDoubleWithSilk(AetherBlocks.AETHER_GRASS_BLOCK, AetherBlocks.AETHER_DIRT);

@@ -12,6 +12,8 @@ import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.LocationPredicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.data.loot.BlockLoot;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -31,9 +33,14 @@ import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
+import java.util.Set;
 import java.util.function.Supplier;
 
-public abstract class AetherBlockLootProvider extends BlockLoot {
+public abstract class AetherBlockLootProvider extends BlockLootSubProvider {
+    public AetherBlockLootProvider(Set<Item> items, FeatureFlagSet flags) {
+        super(items, flags);
+    }
+
     public void dropNone(Supplier<? extends Block> block) {
         super.add(block.get(), noDrop());
     }
