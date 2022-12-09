@@ -41,10 +41,12 @@ import com.gildedgames.aether.world.structurepiece.AetherStructurePieceTypes;
 import com.gildedgames.aether.world.treedecorator.AetherTreeDecoratorTypes;
 import com.mojang.logging.LogUtils;
 import net.minecraft.SharedConstants;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Registry;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
@@ -72,6 +74,7 @@ import top.theillusivec4.curios.api.SlotTypeMessage;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Mod(Aether.MODID)
 @Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -161,6 +164,8 @@ public class Aether {
 
     public void dataSetup(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
+        PackOutput packOutput = generator.getPackOutput();
+        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
         ExistingFileHelper helper = event.getExistingFileHelper();
 
         // Client Data
@@ -174,7 +179,7 @@ public class Aether {
         generator.addProvider(event.includeServer(), new AetherLootTableData(generator));
         generator.addProvider(event.includeServer(), new AetherLootModifierData(generator));
         generator.addProvider(event.includeServer(), new AetherAdvancementData(generator, helper));
-        AetherBlockTagData blockTags = new AetherBlockTagData(generator, helper);
+        AetherBlockTagData blockTags = new AetherBlockTagData(packOutput, lookupProvider, helper);
         generator.addProvider(event.includeServer(), blockTags);
         generator.addProvider(event.includeServer(), new AetherItemTagData(generator, blockTags, helper));
         generator.addProvider(event.includeServer(), new AetherEntityTagData(generator, helper));

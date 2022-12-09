@@ -17,7 +17,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.world.level.block.state.properties.ChestType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
-import com.mojang.math.Vector3f;
+import org.joml.Vector3f;
 
 import javax.annotation.Nonnull;
 import java.util.Calendar;

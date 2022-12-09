@@ -14,8 +14,8 @@ public class DynamicMenuButton extends Button {
     private List<ForgeConfigSpec.ConfigValue<Boolean>> offsetConfigs;
     public boolean enabled = true;
 
-    public DynamicMenuButton(int x, int y, int width, int height, Component message, OnPress onPress, OnTooltip onTooltip) {
-        super(x, y, width, height, message, onPress, onTooltip);
+    public DynamicMenuButton(int x, int y, int width, int height, Component message, OnPress onPress, CreateNarration createNarration) {
+        super(x, y, width, height, message, onPress, createNarration);
         this.originX = x;
     }
 
@@ -30,7 +30,7 @@ public class DynamicMenuButton extends Button {
     public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
         if (this.shouldRender()) {
             this.enabled = true;
-            this.x = this.getOriginX() + gatherOffsets(this.offsetConfigs);
+            this.setX(this.getOriginX() + gatherOffsets(this.offsetConfigs));
             super.render(poseStack, mouseX, mouseY, partialTicks);
         } else {
             this.enabled = false;

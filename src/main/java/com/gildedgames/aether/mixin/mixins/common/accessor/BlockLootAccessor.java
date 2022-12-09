@@ -1,11 +1,11 @@
 package com.gildedgames.aether.mixin.mixins.common.accessor;
 
-import net.minecraft.data.loot.BlockLoot;
+import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-@Mixin(BlockLoot.class)
+@Mixin(BlockLootSubProvider.class)
 public interface BlockLootAccessor {
     @Accessor("HAS_SILK_TOUCH")
     static LootItemCondition.Builder hasSilkTouch() {
