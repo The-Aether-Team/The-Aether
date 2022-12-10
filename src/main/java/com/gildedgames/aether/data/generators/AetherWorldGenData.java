@@ -11,13 +11,12 @@ import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 
 public class AetherWorldGenData extends DatapackBuiltinEntriesProvider {
     private static final HolderLookup.Provider VANILLA = VanillaRegistries.createLookup();
-    private static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
+    public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
             .add(Registries.CONFIGURED_FEATURE, AetherConfiguredFeatures::bootstrap)
             .add(Registries.PLACED_FEATURE, AetherPlacedFeatures::bootstrap)
             .add(Registries.BIOME, (context) -> AetherBiomes.bootstrap(context, VANILLA))
             .add(Registries.NOISE_SETTINGS, (context) -> AetherNoiseSettings.bootstrap(context, VANILLA))
-            .add(Registries.DIMENSION_TYPE, AetherDimensions::bootstrapDimensionType)
-            .add(Registries.LEVEL_STEM, AetherDimensions::bootstrapLevelStem);
+            .add(Registries.DIMENSION_TYPE, AetherDimensions::bootstrap);
             //.add(Registries.STRUCTURE, AetherStructures::bootstrap)
             //.add(Registries.STRUCTURE_SET, AetherStructureSets::bootstrap);
 

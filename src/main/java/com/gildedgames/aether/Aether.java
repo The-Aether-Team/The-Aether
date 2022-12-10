@@ -173,6 +173,7 @@ public class Aether {
 
         // Server Data
         generator.addProvider(event.includeServer(), new AetherWorldGenData(packOutput));
+        generator.addProvider(event.includeServer(), AetherLevelStemData.create(generator, helper));
         generator.addProvider(event.includeServer(), new AetherRecipeData(packOutput));
 //        generator.addProvider(event.includeServer(), AetherLootTableData.create(packOutput));
 //        generator.addProvider(event.includeServer(), new AetherLootModifierData(generator));

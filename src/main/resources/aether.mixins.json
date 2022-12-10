@@ -24,7 +24,6 @@
     "common.accessor.LevelStorageAccessAccessor",
     "common.accessor.LootContextParamSetsAccessor",
     "common.accessor.MinecraftServerAccessor",
-    "common.accessor.NoiseRouterDataAccessor",
     "common.accessor.PlayerAccessor",
     "common.accessor.ServerGamePacketListenerImplAccessor",
     "common.accessor.ServerLevelAccessor",

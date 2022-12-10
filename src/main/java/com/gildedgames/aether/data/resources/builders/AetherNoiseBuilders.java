@@ -2,7 +2,6 @@ package com.gildedgames.aether.data.resources.builders;
 
 import com.gildedgames.aether.block.AetherBlockStateProperties;
 import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.mixin.mixins.common.accessor.NoiseRouterDataAccessor;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -57,7 +56,7 @@ public class AetherNoiseBuilders {
     }
 
     private static DensityFunction buildFinalDensity(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noise) {
-        DensityFunction density = densityFunctions.getOrThrow(NoiseRouterDataAccessor.getBase3DNoiseOverworld()).get();
+        DensityFunction density = getFunction(densityFunctions, ResourceKey.create(Registries.DENSITY_FUNCTION, new ResourceLocation("overworld/base_3d_noise")));
         density = DensityFunctions.mul(density, DensityFunctions.noise(noise.getOrThrow(Noises.JAGGED), 3, 1));
         density = buildSlide(density, 0, 128, 72, -184, -23.4375D, 4, 32, -0.234375D);
         density = DensityFunctions.blendDensity(density);
@@ -73,8 +72,8 @@ public class AetherNoiseBuilders {
 
     // [VANILLA COPY] - NoiseRouterData#noNewCaves() - Moved postProcess() logic to buildFinalDensity()
     private static NoiseRouter noNewCaves(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noise, DensityFunction finalDensity) {
-        DensityFunction shiftX = densityFunctions.getOrThrow(NoiseRouterDataAccessor.getShiftX()).get();
-        DensityFunction shiftZ = densityFunctions.getOrThrow(NoiseRouterDataAccessor.getShiftZ()).get();
+        DensityFunction shiftX = getFunction(densityFunctions, ResourceKey.create(Registries.DENSITY_FUNCTION, new ResourceLocation("shift_x")));
+        DensityFunction shiftZ = getFunction(densityFunctions, ResourceKey.create(Registries.DENSITY_FUNCTION, new ResourceLocation("shift_z")));
         DensityFunction temperature = DensityFunctions.shiftedNoise2d(shiftX, shiftZ, 0.25D, noise.getOrThrow(Noises.TEMPERATURE));
         DensityFunction vegetation = DensityFunctions.shiftedNoise2d(shiftX, shiftZ, 0.25D, noise.getOrThrow(Noises.VEGETATION));
         return new NoiseRouter(DensityFunctions.zero(),
@@ -92,5 +91,9 @@ public class AetherNoiseBuilders {
                 DensityFunctions.zero(),
                 DensityFunctions.zero(),
                 DensityFunctions.zero());
+    }
+
+    private static DensityFunction getFunction(HolderGetter<DensityFunction> p_256312_, ResourceKey<DensityFunction> p_256077_) {
+        return new DensityFunctions.HolderHolder(p_256312_.getOrThrow(p_256077_));
     }
 }
