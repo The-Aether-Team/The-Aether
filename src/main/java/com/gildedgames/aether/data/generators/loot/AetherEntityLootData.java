@@ -5,6 +5,7 @@ import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.loot.AetherLoot;
 import net.minecraft.data.loot.EntityLootSubProvider;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
@@ -20,6 +21,8 @@ import net.minecraft.world.level.storage.loot.functions.SmeltItemFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+
+import java.util.stream.Stream;
 
 public class AetherEntityLootData extends EntityLootSubProvider {
     public AetherEntityLootData() {
@@ -236,5 +239,10 @@ public class AetherEntityLootData extends EntityLootSubProvider {
         return LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(wool)))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootTableReference.lootTableReference(AetherEntityTypes.SHEEPUFF.get().getDefaultLootTable())));
+    }
+
+    @Override
+    public Stream<EntityType<?>> getKnownEntityTypes() {
+        return AetherEntityTypes.ENTITY_TYPES.getEntries().stream().flatMap(entityType -> Stream.of(entityType.get()));
     }
 }

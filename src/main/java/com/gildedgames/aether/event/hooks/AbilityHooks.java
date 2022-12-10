@@ -38,6 +38,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -231,9 +232,9 @@ public class AbilityHooks {
                     if (state.is(AetherTags.Blocks.GOLDEN_OAK_LOGS) && stack.is(AetherTags.Items.GOLDEN_AMBER_HARVESTERS)) {
                         if (level.getServer() != null && level instanceof ServerLevel serverLevel) {
                             Vec3 vector = context.getClickLocation();
-                            LootContext.Builder lootContext = new LootContext.Builder(serverLevel);
-                            LootTable loottable = level.getServer().getLootTables().get(AetherLoot.STRIP_GOLDEN_OAK);
-                            List<ItemStack> list = loottable.getRandomItems(lootContext.create(AetherLootContexts.STRIPPING));
+                            LootContext.Builder lootContext = new LootContext.Builder(serverLevel).withParameter(LootContextParams.TOOL, stack);
+                            LootTable lootTable = level.getServer().getLootTables().get(AetherLoot.STRIP_GOLDEN_OAK);
+                            List<ItemStack> list = lootTable.getRandomItems(lootContext.create(AetherLootContexts.STRIPPING));
                             for (ItemStack itemStack : list) {
                                 ItemEntity itemEntity = new ItemEntity(level, vector.x(), vector.y(), vector.z(), itemStack);
                                 itemEntity.setDefaultPickUpDelay();

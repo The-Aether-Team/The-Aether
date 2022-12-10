@@ -1,6 +1,0 @@
-{
-  "type": "aether:silver_dungeon",
-  "biomes": "#aether:has_silver_dungeon",
-  "spawn_overrides": {},
-  "step": "surface_structures"
-}

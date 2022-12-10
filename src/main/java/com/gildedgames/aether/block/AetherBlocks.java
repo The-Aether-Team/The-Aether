@@ -285,6 +285,7 @@ public class AetherBlocks {
             B block = Objects.requireNonNull(blockRegistryObject.get());
             if (block == ENCHANTED_AETHER_GRASS_BLOCK.get()
                     || block == QUICKSOIL_GLASS.get()
+                    || block == QUICKSOIL_GLASS_PANE.get()
                     || block == ENCHANTED_GRAVITITE.get()) {
                 return new BlockItem(block, new Item.Properties().rarity(Rarity.RARE));
             } else if (block == AEROGEL.get()

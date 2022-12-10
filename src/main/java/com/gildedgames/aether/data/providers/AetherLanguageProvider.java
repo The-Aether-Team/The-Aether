@@ -37,8 +37,8 @@ public abstract class AetherLanguageProvider extends LanguageProvider
         add("menu.aether." + key, name);
     }
 
-    public void addItemGroup(CreativeModeTab group, String name) {
-        add(group.getDisplayName().getString(), name);
+    public void addCreativeTab(CreativeModeTab tab, String name) {
+        add(tab.getDisplayName().getString(), name);
     }
 
     public void addAdvancement(String key, String name) {

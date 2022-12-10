@@ -5,6 +5,7 @@ import com.gildedgames.aether.data.providers.AetherLanguageProvider;
 import com.gildedgames.aether.effect.AetherEffects;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.inventory.menu.AetherMenuTypes;
+import com.gildedgames.aether.item.AetherCreativeTabs;
 import com.gildedgames.aether.item.AetherItems;
 import net.minecraft.data.DataGenerator;
 
@@ -434,14 +435,16 @@ public class AetherLanguageData extends AetherLanguageProvider
         addContainerType("sun_altar", "Sun Altar");
 
 
-//        addItemGroup(AetherItemGroups.AETHER_BLOCKS, "Aether Blocks");
-//        addItemGroup(AetherItemGroups.AETHER_TOOLS, "Aether Tools");
-//        addItemGroup(AetherItemGroups.AETHER_WEAPONS, "Aether Weapons");
-//        addItemGroup(AetherItemGroups.AETHER_ARMOR, "Aether Armor");
-//        addItemGroup(AetherItemGroups.AETHER_FOOD, "Aether Foods");
-//        addItemGroup(AetherItemGroups.AETHER_ACCESSORIES, "Aether Accessories");
-//        addItemGroup(AetherItemGroups.AETHER_MATERIALS, "Aether Materials");
-//        addItemGroup(AetherItemGroups.AETHER_MISC, "Aether Miscellaneous");
+        addCreativeTab(AetherCreativeTabs.AETHER_BUILDING_BLOCKS, "Aether Building Blocks");
+        addCreativeTab(AetherCreativeTabs.AETHER_DUNGEON_BLOCKS, "Aether Dungeon Blocks");
+        addCreativeTab(AetherCreativeTabs.AETHER_NATURAL_BLOCKS, "Aether Natural Blocks");
+        addCreativeTab(AetherCreativeTabs.AETHER_FUNCTIONAL_BLOCKS, "Aether Functional Blocks");
+        addCreativeTab(AetherCreativeTabs.AETHER_REDSTONE_BLOCKS, "Aether Redstone Blocks");
+        addCreativeTab(AetherCreativeTabs.AETHER_TOOLS_AND_UTILITIES, "Aether Tools & Utilities");
+        addCreativeTab(AetherCreativeTabs.AETHER_COMBAT, "Aether Combat");
+        addCreativeTab(AetherCreativeTabs.AETHER_FOOD_AND_DRINKS, "Aether Food & Drinks");
+        addCreativeTab(AetherCreativeTabs.AETHER_INGREDIENTS, "Aether Ingredients");
+        addCreativeTab(AetherCreativeTabs.AETHER_SPAWN_EGGS, "Aether Spawn Eggs");
 
 
         addAdvancement("enter_aether", "Hostile Paradise");

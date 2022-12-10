@@ -4,11 +4,13 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.inventory.AetherRecipeBookTypes;
+import com.gildedgames.aether.recipe.AetherBookCategory;
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
+import com.gildedgames.aether.recipe.recipes.item.AbstractAetherCookingRecipe;
+import com.gildedgames.aether.recipe.recipes.item.AltarRepairRecipe;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.RecipeBookCategories;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
@@ -39,24 +41,31 @@ public class AetherRecipeCategories {
      * search category as the first parameter.
      */
     @SubscribeEvent
-    public static void registerRecipeCategories(RegisterRecipeBookCategoriesEvent event) { //todo make based off of recipe data for categories.
+    public static void registerRecipeCategories(RegisterRecipeBookCategoriesEvent event) {
         event.registerBookCategories(AetherRecipeBookTypes.ALTAR, ImmutableList.of(ENCHANTING_SEARCH.get(), ENCHANTING_FOOD.get(), ENCHANTING_BLOCKS.get(), ENCHANTING_MISC.get(), ENCHANTING_REPAIR.get()));
         event.registerAggregateCategory(ENCHANTING_SEARCH.get(), ImmutableList.of(ENCHANTING_FOOD.get(), ENCHANTING_BLOCKS.get(), ENCHANTING_MISC.get(), ENCHANTING_REPAIR.get()));
         event.registerRecipeCategoryFinder(AetherRecipeTypes.ENCHANTING.get(), recipe -> {
-            if (recipe.getIngredients().get(0).getItems()[0].is(recipe.getResultItem().getItem())) {
+            if (recipe instanceof AltarRepairRecipe || (recipe instanceof AbstractAetherCookingRecipe abstractAetherCookingRecipe && abstractAetherCookingRecipe.aetherCategory() == AetherBookCategory.ENCHANTING_REPAIR)) {
                 return ENCHANTING_REPAIR.get();
-            }
-            if (recipe.getResultItem().isEdible()) {
-                return ENCHANTING_FOOD.get();
-            }
-            if (recipe.getResultItem().getItem() instanceof BlockItem) {
-                return ENCHANTING_BLOCKS.get();
+            } else if (recipe instanceof AbstractAetherCookingRecipe abstractAetherCookingRecipe) {
+                if (abstractAetherCookingRecipe.aetherCategory() == AetherBookCategory.ENCHANTING_FOOD) {
+                    return ENCHANTING_FOOD.get();
+                } else if (abstractAetherCookingRecipe.aetherCategory() == AetherBookCategory.ENCHANTING_BLOCKS) {
+                    return ENCHANTING_BLOCKS.get();
+                }
             }
             return ENCHANTING_MISC.get();
         });
         event.registerBookCategories(AetherRecipeBookTypes.FREEZER, ImmutableList.of(FREEZABLE_SEARCH.get(), FREEZABLE_BLOCKS.get(), FREEZABLE_MISC.get()));
         event.registerAggregateCategory(FREEZABLE_SEARCH.get(), ImmutableList.of(FREEZABLE_BLOCKS.get(), FREEZABLE_MISC.get()));
-        event.registerRecipeCategoryFinder(AetherRecipeTypes.FREEZING.get(), recipe -> recipe.getResultItem().getItem() instanceof BlockItem ? FREEZABLE_BLOCKS.get() : FREEZABLE_MISC.get());
+        event.registerRecipeCategoryFinder(AetherRecipeTypes.FREEZING.get(), recipe -> {
+            if (recipe instanceof AbstractAetherCookingRecipe abstractAetherCookingRecipe) {
+                if (abstractAetherCookingRecipe.aetherCategory() == AetherBookCategory.FREEZABLE_BLOCKS) {
+                    return FREEZABLE_BLOCKS.get();
+                }
+            }
+            return FREEZABLE_MISC.get();
+        });
 
         event.registerBookCategories(AetherRecipeBookTypes.INCUBATOR, ImmutableList.of(INCUBATION_SEARCH.get(), INCUBATION_MISC.get()));
         event.registerAggregateCategory(INCUBATION_SEARCH.get(), ImmutableList.of(INCUBATION_MISC.get()));

@@ -114,6 +114,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .define('P', AetherBlocks.SKYROOT_PLANKS.get().asItem())
                 .define('S', AetherTags.Items.SKYROOT_STICKS)
                 .unlockedBy("has_skyroot", has(AetherBlocks.SKYROOT_PLANKS.get()))
+                .group("wooden_sign")
                 .save(consumer);
 
         makeFence(AetherBlocks.SKYROOT_FENCE, AetherBlocks.SKYROOT_PLANKS).save(consumer);
