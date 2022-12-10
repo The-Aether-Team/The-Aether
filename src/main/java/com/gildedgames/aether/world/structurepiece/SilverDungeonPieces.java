@@ -11,7 +11,7 @@ import com.gildedgames.aether.loot.AetherLoot;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -107,7 +107,7 @@ public class SilverDungeonPieces {
                         new AABB(this.boundingBox.minX(), this.boundingBox.minY(), this.boundingBox.minZ(), this.boundingBox.maxX() + 1, this.boundingBox.maxY() + 1, this.boundingBox.maxZ() + 1),
                         new ArrayList<>()));
                 StructureManager manager = level.getLevel().structureManager();
-                Structure temple = manager.registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY).get(AetherStructures.SILVER_DUNGEON);
+                Structure temple = manager.registryAccess().registryOrThrow(Registries.STRUCTURE).get(AetherStructures.SILVER_DUNGEON);
                 if (temple != null) {
                     BoundingBox box = manager.getStructureAt(pos, temple).getBoundingBox();
                     AABB dungeonBounds = new AABB(box.minX(), box.minY(), box.minZ(), box.maxX() + 1, box.maxY() + 1, box.maxZ() + 1);

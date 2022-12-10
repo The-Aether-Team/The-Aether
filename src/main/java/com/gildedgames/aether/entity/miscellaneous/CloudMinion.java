@@ -193,10 +193,4 @@ public class CloudMinion extends FlyingMob {
     public void setShouldShoot(boolean shouldShoot) {
         this.shouldShoot = shouldShoot;
     }
-
-    @Nonnull
-    @Override
-    public Packet<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
 }

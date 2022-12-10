@@ -37,10 +37,4 @@ public class SkyrootChestBoat extends ChestBoat implements SkyrootBoatBehavior {
     protected void checkFallDamage(double y, boolean onGround, @Nonnull BlockState state, @Nonnull BlockPos pos) {
         this.fall(this, y, onGround);
     }
-
-    @Nonnull
-    @Override
-    public Packet<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
 }

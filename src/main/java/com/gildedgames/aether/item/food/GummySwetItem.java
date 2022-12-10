@@ -1,6 +1,5 @@
 package com.gildedgames.aether.item.food;
 
-import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.item.miscellaneous.ConsumableItem;
@@ -16,7 +15,7 @@ import net.minecraft.world.level.Level;
 
 public class GummySwetItem extends Item implements ConsumableItem {
 	public GummySwetItem() {
-		super(new Item.Properties().rarity(AetherItems.AETHER_LOOT).food(AetherFoods.GUMMY_SWET).tab(AetherItemGroups.AETHER_FOOD));
+		super(new Item.Properties().rarity(AetherItems.AETHER_LOOT).food(AetherFoods.GUMMY_SWET));
 	}
 
 	/**

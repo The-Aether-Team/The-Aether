@@ -20,7 +20,7 @@ public class LorePageButton extends Button
     private boolean isActive;
 
     public LorePageButton(int x, int y, int width, int height, Component title, OnPress pressedAction) {
-        super(x, y, width, height, title, pressedAction);
+        super(x, y, width, height, title, pressedAction, DEFAULT_NARRATION);
         this.isActive = false;
     }
 
@@ -43,11 +43,11 @@ public class LorePageButton extends Button
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.enableDepthTest();
-        this.blit(matrixStack, this.x, this.y, 0, 46 + i * 20, this.width / 2, this.height);
-        this.blit(matrixStack, this.x + this.width / 2, this.y, 200 - this.width / 2, 46 + i * 20, this.width / 2, this.height);
+        this.blit(matrixStack, this.getX(), this.getY(), 0, 46 + i * 20, this.width / 2, this.height);
+        this.blit(matrixStack, this.getX() + this.width / 2, this.getY(), 200 - this.width / 2, 46 + i * 20, this.width / 2, this.height);
         this.renderBg(matrixStack, minecraft, mouseX, mouseY);
         int j = getFGColor();
-        drawCenteredString(matrixStack, fontrenderer, this.getMessage(), this.x + this.width / 2, this.y + (this.height - 8) / 2, j | Mth.ceil(this.alpha * 255.0F) << 24);
+        drawCenteredString(matrixStack, fontrenderer, this.getMessage(), this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2, j | Mth.ceil(this.alpha * 255.0F) << 24);
     }
 
     public void setIsActive(boolean active) {

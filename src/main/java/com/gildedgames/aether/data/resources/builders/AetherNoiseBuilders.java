@@ -2,9 +2,8 @@ package com.gildedgames.aether.data.resources.builders;
 
 import com.gildedgames.aether.block.AetherBlockStateProperties;
 import com.gildedgames.aether.block.AetherBlocks;
-import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
-import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
@@ -18,17 +17,13 @@ public class AetherNoiseBuilders {
     private static final SurfaceRules.RuleSource GRASS_BLOCK = makeStateRule(AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true));
     private static final SurfaceRules.RuleSource DIRT = makeStateRule(AetherBlocks.AETHER_DIRT.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true));
 
-    public static NoiseGeneratorSettings skylandsNoiseSettings() {
+    public static NoiseGeneratorSettings skylandsNoiseSettings(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noise) {
         BlockState holystone = AetherBlocks.HOLYSTONE.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
         return new NoiseGeneratorSettings(
-                //new StructureSettings(Optional.empty(), Map.of(
-                //        //AetherStructures.BRONZE_DUNGEON_INSTANCE, new StructureFeatureConfiguration(6, 4, 16811681)//,
-                //        //AetherStructures.GOLD_DUNGEON.get(), new StructureFeatureConfiguration(24, 12, 120320420)
-                //)),
                 new NoiseSettings(0, 128, 2, 1),
                 holystone,
                 Blocks.WATER.defaultBlockState(),
-                makeNoiseRouter(),
+                makeNoiseRouter(densityFunctions, noise),
                 aetherSurfaceRules(),
                 List.of(), // spawnTarget
                 -64, // seaLevel
@@ -55,14 +50,14 @@ public class AetherNoiseBuilders {
      * Everything below is based off of NoiseRouterData
      * @see NoiseRouterData
      */
-    public static NoiseRouter makeNoiseRouter() {
-        DensityFunction finalDensity = buildFinalDensity();
-        return noNewCaves(finalDensity);
+    public static NoiseRouter makeNoiseRouter(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noise) {
+        DensityFunction finalDensity = buildFinalDensity(densityFunctions, noise);
+        return noNewCaves(densityFunctions, noise, finalDensity);
     }
 
-    private static DensityFunction buildFinalDensity() {
-        DensityFunction density = getFunction(createKey("overworld/base_3d_noise"));
-        density = DensityFunctions.mul(density, DensityFunctions.noise(getNoise(Noises.JAGGED), 3, 1));
+    private static DensityFunction buildFinalDensity(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noise) {
+        DensityFunction density = densityFunctions.getOrThrow(createKey("overworld/base_3d_noise")).get();
+        density = DensityFunctions.mul(density, DensityFunctions.noise(noise.getOrThrow(Noises.JAGGED), 3, 1));
         density = buildSlide(density, 0, 128, 72, -184, -23.4375D, 4, 32, -0.234375D);
         density = DensityFunctions.blendDensity(density);
         return DensityFunctions.mul(DensityFunctions.interpolated(density), DensityFunctions.constant(0.64D)).squeeze();
@@ -76,11 +71,11 @@ public class AetherNoiseBuilders {
     }
 
     // [VANILLA COPY] - NoiseRouterData#noNewCaves() - Moved postProcess() logic to buildFinalDensity()
-    private static NoiseRouter noNewCaves(DensityFunction finalDensity) {
-        DensityFunction shiftX = getFunction(createKey("shift_x"));
-        DensityFunction shiftZ = getFunction(createKey("shift_z"));
-        DensityFunction temperature = DensityFunctions.shiftedNoise2d(shiftX, shiftZ, 0.25D, getNoise(Noises.TEMPERATURE));
-        DensityFunction vegetation = DensityFunctions.shiftedNoise2d(shiftX, shiftZ, 0.25D, getNoise(Noises.VEGETATION));
+    private static NoiseRouter noNewCaves(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noise, DensityFunction finalDensity) {
+        DensityFunction shiftX = densityFunctions.getOrThrow(createKey("shift_x")).get();
+        DensityFunction shiftZ = densityFunctions.getOrThrow(createKey("shift_z")).get();
+        DensityFunction temperature = DensityFunctions.shiftedNoise2d(shiftX, shiftZ, 0.25D, noise.getOrThrow(Noises.TEMPERATURE));
+        DensityFunction vegetation = DensityFunctions.shiftedNoise2d(shiftX, shiftZ, 0.25D, noise.getOrThrow(Noises.VEGETATION));
         return new NoiseRouter(DensityFunctions.zero(),
                 DensityFunctions.zero(),
                 DensityFunctions.zero(),
@@ -98,15 +93,7 @@ public class AetherNoiseBuilders {
                 DensityFunctions.zero());
     }
 
-    private static DensityFunction getFunction(ResourceKey<DensityFunction> p_224466_) {
-        return new DensityFunctions.HolderHolder(BuiltinRegistries.DENSITY_FUNCTION.getHolderOrThrow(p_224466_));
-    }
-
-    private static Holder<NormalNoise.NoiseParameters> getNoise(ResourceKey<NormalNoise.NoiseParameters> noiseKey) {
-        return BuiltinRegistries.NOISE.getHolderOrThrow(noiseKey);
-    }
-
     private static ResourceKey<DensityFunction> createKey(String pLocation) {
-        return ResourceKey.create(Registry.DENSITY_FUNCTION_REGISTRY, new ResourceLocation(pLocation));
+        return ResourceKey.create(Registries.DENSITY_FUNCTION, new ResourceLocation(pLocation));
     }
 }

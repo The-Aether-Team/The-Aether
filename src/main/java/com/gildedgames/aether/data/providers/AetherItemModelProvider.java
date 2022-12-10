@@ -16,8 +16,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Supplier;
 
-public abstract class AetherItemModelProvider extends ItemModelProvider
-{
+public abstract class AetherItemModelProvider extends ItemModelProvider {
     public AetherItemModelProvider(DataGenerator generator, ExistingFileHelper fileHelper) {
         super(generator, Aether.MODID, fileHelper);
     }

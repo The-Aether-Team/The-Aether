@@ -10,9 +10,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -23,6 +23,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
@@ -216,10 +217,10 @@ public class FloatingBlockEntity extends Entity {
             DamageSource damageSource;
             if (this.blockState.getBlock() instanceof Floatable floatable) {
                 predicate = floatable.getHurtsEntitySelector();
-                damageSource = floatable.getFallDamageSource();
+                damageSource = floatable.getFallDamageSource(this);
             } else {
                 predicate = EntitySelector.NO_SPECTATORS;
-                damageSource = DamageSource.FALLING_BLOCK;
+                damageSource = new EntityDamageSource("floatingBlock", this).damageHelmet();
             }
 
             float f = (float) Math.min(Mth.floor((float) this.floatDistance * this.fallDamagePerDistance), this.fallDamageMax);
@@ -299,7 +300,7 @@ public class FloatingBlockEntity extends Entity {
     @Override
     protected void readAdditionalSaveData(CompoundTag tag) {
         if (tag.contains("BlockState")) {
-            this.blockState = NbtUtils.readBlockState(tag.getCompound("BlockState"));
+            this.blockState = NbtUtils.readBlockState(this.level.holderLookup(Registries.BLOCK), tag.getCompound("BlockState"));
         }
         if (tag.contains("Time")) {
             this.time = tag.getInt("Time");
@@ -320,12 +321,6 @@ public class FloatingBlockEntity extends Entity {
         if (this.blockState.isAir()) {
             this.blockState = Blocks.SAND.defaultBlockState();
         }
-    }
-
-    @Nonnull
-    @Override
-    public Packet<?> getAddEntityPacket() {
-        return new ClientboundAddEntityPacket(this, Block.getId(this.getBlockState()));
     }
 
     @Override

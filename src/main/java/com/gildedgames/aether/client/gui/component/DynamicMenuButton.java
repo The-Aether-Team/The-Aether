@@ -14,8 +14,8 @@ public class DynamicMenuButton extends Button {
     private List<ForgeConfigSpec.ConfigValue<Boolean>> offsetConfigs;
     public boolean enabled = true;
 
-    public DynamicMenuButton(int x, int y, int width, int height, Component message, OnPress onPress, CreateNarration createNarration) {
-        super(x, y, width, height, message, onPress, createNarration);
+    public DynamicMenuButton(int x, int y, int width, int height, Component message, OnPress onPress) {
+        super(x, y, width, height, message, onPress, DEFAULT_NARRATION);
         this.originX = x;
     }
 

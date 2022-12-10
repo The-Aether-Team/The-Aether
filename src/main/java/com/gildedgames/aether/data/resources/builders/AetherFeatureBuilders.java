@@ -26,14 +26,11 @@ import net.minecraft.world.level.material.FluidState;
 
 import java.util.List;
 
-import static net.minecraft.data.worldgen.placement.VegetationPlacements.TREE_THRESHOLD;
-
 public class AetherFeatureBuilders {
     public static AercloudConfiguration createAercloudConfig(int bounds, BlockState blockState) {
         return new AercloudConfiguration(bounds, BlockStateProvider.simple(blockState.setValue(AetherBlockStateProperties.DOUBLE_DROPS, true)));
     }
 
-    // TODO investigate changing this to triangle
     public static List<PlacementModifier> createAercloudPlacements(int height, int chance) {
         return List.of(HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(height)), InSquarePlacement.spread(), RarityFilter.onAverageOnceEvery(chance), new DungeonBlacklistFilter());
     }
@@ -46,17 +43,17 @@ public class AetherFeatureBuilders {
                 new ConfigFilter(AetherConfig.COMMON.generate_pink_aerclouds));
     }
 
+    public static List<PlacementModifier> treePlacement(PlacementModifier p_195480_) {
+        return treePlacementBase(p_195480_).build();
+    }
+
     private static ImmutableList.Builder<PlacementModifier> treePlacementBase(PlacementModifier p_195485_) {
         return ImmutableList.<PlacementModifier>builder()
                 .add(p_195485_)
                 .add(ImprovedLayerPlacementModifier.of(Heightmap.Types.OCEAN_FLOOR, UniformInt.of(0, 1), 4))
-                .add(TREE_THRESHOLD)
+                .add(SurfaceWaterDepthFilter.forMaxDepth(0))
                 .add(BiomeFilter.biome())
                 .add(new DungeonBlacklistFilter());
-    }
-
-    public static List<PlacementModifier> treePlacement(PlacementModifier p_195480_) {
-        return treePlacementBase(p_195480_).build();
     }
 
     public static RandomPatchConfiguration grassPatch(BlockStateProvider block, int p_195204_) {

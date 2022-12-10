@@ -141,10 +141,4 @@ public class ThunderCrystal extends AbstractCrystal {
             this.target = this.level.getEntity(tag.getInt("Target"));
         }
     }
-
-    @Nonnull
-    @Override
-    public Packet<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
 }

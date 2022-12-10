@@ -11,7 +11,6 @@ import net.minecraft.advancements.critereon.BlockPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.LocationPredicate;
 import net.minecraft.core.BlockPos;
-import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.Item;
@@ -42,15 +41,15 @@ public abstract class AetherBlockLootProvider extends BlockLootSubProvider {
     }
 
     public void dropNone(Supplier<? extends Block> block) {
-        super.add(block.get(), noDrop());
+        this.add(block.get(), noDrop());
     }
 
     public void dropDoubleWithSilk(Supplier<? extends Block> block, Supplier<? extends ItemLike> drop) {
-        add(block.get(), (result) -> droppingDoubleWithSilkTouch(result, drop.get()));
+        this.add(block.get(), (result) -> droppingDoubleWithSilkTouch(result, drop.get()));
     }
 
     public void dropSelfDouble(Supplier<? extends Block> block) {
-        super.add(block.get(), droppingDouble(block.get()));
+        this.add(block.get(), droppingDouble(block.get()));
     }
 
     public void dropSelf(Supplier<? extends Block> block) {
@@ -58,15 +57,15 @@ public abstract class AetherBlockLootProvider extends BlockLootSubProvider {
     }
 
     public void dropDoubleWithFortune(Supplier<? extends Block> block, Supplier<? extends Item> drop) {
-        super.add(block.get(), (result) -> droppingDoubleItemsWithFortune(result, drop.get()));
+        this.add(block.get(), (result) -> droppingDoubleItemsWithFortune(result, drop.get()));
     }
 
     public void dropWithFortune(Supplier<? extends Block> block, Supplier<? extends Item> drop) {
-        super.add(block.get(), (result) -> createOreDrop(result, drop.get()));
+        this.add(block.get(), (result) -> createOreDrop(result, drop.get()));
     }
 
     public void dropSilk(Supplier<? extends Block> block) {
-        super.dropWhenSilkTouch(block.get());
+        this.dropWhenSilkTouch(block.get());
     }
 
     public void drop(Supplier<? extends Block> block, Supplier<? extends Block> drop) {
@@ -77,72 +76,72 @@ public abstract class AetherBlockLootProvider extends BlockLootSubProvider {
         this.dropPottedContents(block.get());
     }
 
-    protected static LootTable.Builder droppingDoubleWithSilkTouch(Block block, ItemLike noSilkTouch) {
-        return droppingDoubleWithSilkTouch(block, applyExplosionCondition(block, LootItem.lootTableItem(noSilkTouch)));
+    public LootTable.Builder droppingDoubleWithSilkTouch(Block block, ItemLike noSilkTouch) {
+        return this.droppingDoubleWithSilkTouch(block, this.applyExplosionCondition(block, LootItem.lootTableItem(noSilkTouch)));
     }
 
-    protected static LootTable.Builder droppingDoubleWithSilkTouch(Block block, LootPoolEntryContainer.Builder<?> builder) {
-        return droppingDouble(block, BlockLootAccessor.hasSilkTouch(), builder);
+    public LootTable.Builder droppingDoubleWithSilkTouch(Block block, LootPoolEntryContainer.Builder<?> builder) {
+        return this.droppingDouble(block, BlockLootAccessor.hasSilkTouch(), builder);
     }
 
-    protected static LootTable.Builder droppingDouble(ItemLike item) {
-        return LootTable.lootTable().withPool(applyExplosionCondition(item, LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+    public LootTable.Builder droppingDouble(ItemLike item) {
+        return LootTable.lootTable().withPool(this.applyExplosionCondition(item, LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                         .add(LootItem.lootTableItem(item))))
                 .apply(DoubleDrops.builder());
     }
 
-    protected static LootTable.Builder droppingDouble(Block block, LootItemCondition.Builder conditionBuilder, LootPoolEntryContainer.Builder<?> p_218494_2_) {
+    public LootTable.Builder droppingDouble(Block block, LootItemCondition.Builder conditionBuilder, LootPoolEntryContainer.Builder<?> p_218494_2_) {
         return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                         .add(LootItem.lootTableItem(block).when(conditionBuilder).otherwise(p_218494_2_)))
                 .apply(DoubleDrops.builder());
     }
 
-    protected static LootTable.Builder droppingWithChancesAndSkyrootSticks(Block block, Block sapling, float... chances) {
-        return createSilkTouchOrShearsDispatchTable(block, applyExplosionCondition(block, LootItem.lootTableItem(sapling)).when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, chances)))
+    public LootTable.Builder droppingWithChancesAndSkyrootSticks(Block block, Block sapling, float... chances) {
+        return createSilkTouchOrShearsDispatchTable(block, this.applyExplosionCondition(block, LootItem.lootTableItem(sapling)).when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, chances)))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).when(BlockLootAccessor.hasShearsOrSilkTouch().invert())
-                        .add(applyExplosionDecay(block,
+                        .add(this.applyExplosionDecay(block,
                                 LootItem.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
                                 .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
                 .apply(DoubleDrops.builder());
     }
 
-    protected static LootTable.Builder droppingGoldenOakLeaves(Block block, Block sapling, float... chances) {
-        return droppingWithChancesAndSkyrootSticks(block, sapling, chances)
+    public LootTable.Builder droppingGoldenOakLeaves(Block block, Block sapling, float... chances) {
+        return this.droppingWithChancesAndSkyrootSticks(block, sapling, chances)
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).when(BlockLootAccessor.hasShearsOrSilkTouch().invert())
-                        .add(applyExplosionCondition(block,
+                        .add(this.applyExplosionCondition(block,
                                 LootItem.lootTableItem(Items.GOLDEN_APPLE))
                                 .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.00005F, 0.000055555557F, 0.0000625F, 0.00008333334F, 0.00025F))));
     }
 
-    protected static LootTable.Builder droppingDoubleItemsWithFortune(Block block, Item item) {
-        return createSilkTouchDispatchTable(block, applyExplosionDecay(block, LootItem.lootTableItem(item)
+    public LootTable.Builder droppingDoubleItemsWithFortune(Block block, Item item) {
+        return createSilkTouchDispatchTable(block, this.applyExplosionDecay(block, LootItem.lootTableItem(item)
                 .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))))
                 .apply(DoubleDrops.builder());
     }
 
-    protected static LootTable.Builder droppingWithSkyrootSticks(Block block) {
-        return createSilkTouchOrShearsDispatchTable(block, applyExplosionDecay(block,
+    public LootTable.Builder droppingWithSkyrootSticks(Block block) {
+        return createSilkTouchOrShearsDispatchTable(block, this.applyExplosionDecay(block,
                 LootItem.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
                 .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F)))
                 .apply(DoubleDrops.builder());
     }
 
-    protected static LootTable.Builder droppingWithFruitAndSkyrootSticks(Block block, Item fruit) {
-        return createSilkTouchOrShearsDispatchTable(block, applyExplosionDecay(block, LootItem.lootTableItem(fruit)))
+    public LootTable.Builder droppingWithFruitAndSkyrootSticks(Block block, Item fruit) {
+        return createSilkTouchOrShearsDispatchTable(block, this.applyExplosionDecay(block, LootItem.lootTableItem(fruit)))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).when(BlockLootAccessor.hasShearsOrSilkTouch().invert())
-                        .add(applyExplosionDecay(block,
+                        .add(this.applyExplosionDecay(block,
                                 LootItem.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
                                 .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
                 .apply(DoubleDrops.builder());
     }
 
-    protected static LootTable.Builder droppingDoubleGoldenOak(Block original, Block block, Item item) {
+    public LootTable.Builder droppingDoubleGoldenOak(Block original, Block block, Item item) {
         return LootTable.lootTable()
-                .withPool(applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(original)
+                .withPool(this.applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(original)
                         .when(BlockLootAccessor.hasSilkTouch()))))
-                .withPool(applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(block)
+                .withPool(this.applyExplosionDecay(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(block)
                         .when(BlockLootAccessor.hasSilkTouch().invert()))))
-                .withPool(applyExplosionDecay(item, LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(item)
+                .withPool(this.applyExplosionDecay(item, LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(item)
                         .when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(AetherTags.Items.GOLDEN_AMBER_HARVESTERS)))
                         .when(BlockLootAccessor.hasSilkTouch().invert())
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
@@ -150,16 +149,16 @@ public abstract class AetherBlockLootProvider extends BlockLootSubProvider {
                 .apply(DoubleDrops.builder());
     }
 
-    protected static LootTable.Builder droppingNameableBlockEntityTable(Block block) {
-        return LootTable.lootTable().withPool(applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+    public LootTable.Builder droppingNameableBlockEntityTable(Block block) {
+        return LootTable.lootTable().withPool(this.applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                 .add(LootItem.lootTableItem(block)
                         .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))))
         );
     }
 
-    protected static LootTable.Builder droppingBerryBush(Block block, Block stem, Item drop) {
+    public LootTable.Builder droppingBerryBush(Block block, Block stem, Item drop) {
         return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                .add(applyExplosionDecay(block, LootItem.lootTableItem(drop)
+                .add(this.applyExplosionDecay(block, LootItem.lootTableItem(drop)
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))
                                 .when(LocationCheck.checkLocation(
                                         LocationPredicate.Builder.location().setBlock(
@@ -181,8 +180,8 @@ public abstract class AetherBlockLootProvider extends BlockLootSubProvider {
         );
     }
 
-    protected static LootTable.Builder droppingTreasureChest(Block block) {
-        return LootTable.lootTable().withPool(applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+    public LootTable.Builder droppingTreasureChest(Block block) {
+        return LootTable.lootTable().withPool(this.applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                 .add(LootItem.lootTableItem(block)
                         .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
                         .apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
@@ -191,7 +190,7 @@ public abstract class AetherBlockLootProvider extends BlockLootSubProvider {
         );
     }
 
-    protected static LootTable.Builder droppingPresentLoot(Block block) {
+    public LootTable.Builder droppingPresentLoot(Block block) {
         return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                 .add(LootItem.lootTableItem(Items.AIR).setWeight(18)
                         .apply(SpawnTNT.builder()))

@@ -5,7 +5,6 @@ import com.gildedgames.aether.data.providers.AetherLanguageProvider;
 import com.gildedgames.aether.effect.AetherEffects;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.inventory.menu.AetherMenuTypes;
-import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.AetherItems;
 import net.minecraft.data.DataGenerator;
 
@@ -435,14 +434,14 @@ public class AetherLanguageData extends AetherLanguageProvider
         addContainerType("sun_altar", "Sun Altar");
 
 
-        addItemGroup(AetherItemGroups.AETHER_BLOCKS, "Aether Blocks");
-        addItemGroup(AetherItemGroups.AETHER_TOOLS, "Aether Tools");
-        addItemGroup(AetherItemGroups.AETHER_WEAPONS, "Aether Weapons");
-        addItemGroup(AetherItemGroups.AETHER_ARMOR, "Aether Armor");
-        addItemGroup(AetherItemGroups.AETHER_FOOD, "Aether Foods");
-        addItemGroup(AetherItemGroups.AETHER_ACCESSORIES, "Aether Accessories");
-        addItemGroup(AetherItemGroups.AETHER_MATERIALS, "Aether Materials");
-        addItemGroup(AetherItemGroups.AETHER_MISC, "Aether Miscellaneous");
+//        addItemGroup(AetherItemGroups.AETHER_BLOCKS, "Aether Blocks");
+//        addItemGroup(AetherItemGroups.AETHER_TOOLS, "Aether Tools");
+//        addItemGroup(AetherItemGroups.AETHER_WEAPONS, "Aether Weapons");
+//        addItemGroup(AetherItemGroups.AETHER_ARMOR, "Aether Armor");
+//        addItemGroup(AetherItemGroups.AETHER_FOOD, "Aether Foods");
+//        addItemGroup(AetherItemGroups.AETHER_ACCESSORIES, "Aether Accessories");
+//        addItemGroup(AetherItemGroups.AETHER_MATERIALS, "Aether Materials");
+//        addItemGroup(AetherItemGroups.AETHER_MISC, "Aether Miscellaneous");
 
 
         addAdvancement("enter_aether", "Hostile Paradise");

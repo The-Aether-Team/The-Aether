@@ -127,10 +127,4 @@ public class HammerProjectile extends ThrowableProjectile {
     public boolean getIsJeb() {
         return this.entityData.get(DATA_JEB_ID);
     }
-
-    @Nonnull
-    @Override
-    public Packet<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
 }

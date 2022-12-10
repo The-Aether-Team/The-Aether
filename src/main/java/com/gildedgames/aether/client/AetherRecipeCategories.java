@@ -33,14 +33,13 @@ public class AetherRecipeCategories {
     public static final Supplier<RecipeBookCategories> INCUBATION_SEARCH = Suppliers.memoize(() -> RecipeBookCategories.create("INCUBATION_SEARCH", new ItemStack(Items.COMPASS)));
     public static final Supplier<RecipeBookCategories> INCUBATION_MISC = Suppliers.memoize(() -> RecipeBookCategories.create("INCUBATION_MISC", new ItemStack(AetherItems.BLUE_MOA_EGG.get())));
 
-
     /**
      * Registers the mod's categories to be used in-game, along with functions to sort items.
      * To add sub-categories to be used by the search, use addAggregateCategories with the
      * search category as the first parameter.
      */
     @SubscribeEvent
-    public static void registerRecipeCategories(RegisterRecipeBookCategoriesEvent event) {
+    public static void registerRecipeCategories(RegisterRecipeBookCategoriesEvent event) { //todo make based off of recipe data for categories.
         event.registerBookCategories(AetherRecipeBookTypes.ALTAR, ImmutableList.of(ENCHANTING_SEARCH.get(), ENCHANTING_FOOD.get(), ENCHANTING_BLOCKS.get(), ENCHANTING_MISC.get(), ENCHANTING_REPAIR.get()));
         event.registerAggregateCategory(ENCHANTING_SEARCH.get(), ImmutableList.of(ENCHANTING_FOOD.get(), ENCHANTING_BLOCKS.get(), ENCHANTING_MISC.get(), ENCHANTING_REPAIR.get()));
         event.registerRecipeCategoryFinder(AetherRecipeTypes.ENCHANTING.get(), recipe -> {

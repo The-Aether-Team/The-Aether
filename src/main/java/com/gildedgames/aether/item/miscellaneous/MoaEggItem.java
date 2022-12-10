@@ -79,10 +79,9 @@ public class MoaEggItem extends Item {
                 if (blockState.is(Blocks.SPAWNER)) {
                     BlockEntity blockEntity = level.getBlockEntity(blockPos);
                     if (blockEntity instanceof SpawnerBlockEntity spawnerBlockEntity) {
-                        BaseSpawner baseSpawner = spawnerBlockEntity.getSpawner();
-                        BaseSpawnerAccessor baseSpawnerAccessor = (BaseSpawnerAccessor) baseSpawner;
+                        BaseSpawnerAccessor baseSpawnerAccessor = (BaseSpawnerAccessor) spawnerBlockEntity.getSpawner();
                         EntityType<Moa> entityType = AetherEntityTypes.MOA.get();
-                        baseSpawner.setEntityId(entityType);
+                        spawnerBlockEntity.setEntityId(entityType, level.getRandom());
                         baseSpawnerAccessor.getNextSpawnData().getEntityToSpawn().putString("MoaType", this.getMoaTypeId().toString());
                         baseSpawnerAccessor.getNextSpawnData().getEntityToSpawn().putBoolean("PlayerGrown", true); // Moas spawned from a Mob Spawner as set by a Moa Egg will always be tamed.
                         blockEntity.setChanged();

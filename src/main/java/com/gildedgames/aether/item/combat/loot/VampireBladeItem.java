@@ -2,7 +2,6 @@ package com.gildedgames.aether.item.combat.loot;
 
 import com.gildedgames.aether.capability.player.AetherPlayer;
 import com.gildedgames.aether.capability.player.AetherPlayerCapability;
-import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.combat.AetherItemTiers;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.util.EquipmentUtil;
@@ -15,7 +14,7 @@ import net.minecraft.world.item.SwordItem;
 
 public class VampireBladeItem extends SwordItem {
     public VampireBladeItem() {
-        super(AetherItemTiers.VAMPIRE, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
+        super(AetherItemTiers.VAMPIRE, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
     }
 
     /**

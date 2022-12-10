@@ -6,7 +6,7 @@ import com.google.gson.JsonSyntaxException;
 import net.minecraft.commands.CommandFunction;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
@@ -110,7 +110,7 @@ public class BlockStateRecipeUtil {
             return null;
         } else {
             ResourceLocation biomeLocation = buf.readResourceLocation();
-            return ResourceKey.create(Registry.BIOME_REGISTRY, biomeLocation);
+            return ResourceKey.create(Registries.BIOME, biomeLocation);
         }
     }
 
@@ -119,7 +119,7 @@ public class BlockStateRecipeUtil {
             return null;
         } else {
             ResourceLocation tagLocation = buf.readResourceLocation();
-            return TagKey.create(Registry.BIOME_REGISTRY, tagLocation);
+            return TagKey.create(Registries.BIOME, tagLocation);
         }
     }
 
@@ -193,13 +193,13 @@ public class BlockStateRecipeUtil {
     public static ResourceKey<Biome> biomeKeyFromJson(JsonObject json) {
         String biomeName = GsonHelper.getAsString(json, "biome");
         String[] nameWithId = biomeName.split(":");
-        return ResourceKey.create(Registry.BIOME_REGISTRY, (nameWithId.length > 1) ? new ResourceLocation(nameWithId[0], nameWithId[1]) : new ResourceLocation(biomeName));
+        return ResourceKey.create(Registries.BIOME, (nameWithId.length > 1) ? new ResourceLocation(nameWithId[0], nameWithId[1]) : new ResourceLocation(biomeName));
     }
 
     public static TagKey<Biome> biomeTagFromJson(JsonObject json) {
         String biomeName = GsonHelper.getAsString(json, "biome").replace("#", "");
         String[] nameWithId = biomeName.split(":");
-        return TagKey.create(Registry.BIOME_REGISTRY, (nameWithId.length > 1) ? new ResourceLocation(nameWithId[0], nameWithId[1]) : new ResourceLocation(biomeName));
+        return TagKey.create(Registries.BIOME, (nameWithId.length > 1) ? new ResourceLocation(nameWithId[0], nameWithId[1]) : new ResourceLocation(biomeName));
     }
 
     public static void biomeKeyToJson(JsonObject json, ResourceKey<Biome> biomeKey) {

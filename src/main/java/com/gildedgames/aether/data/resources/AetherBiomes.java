@@ -2,25 +2,31 @@ package com.gildedgames.aether.data.resources;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.data.resources.builders.AetherBiomeBuilders;
-import net.minecraft.core.Registry;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
-
-import java.util.HashMap;
-import java.util.Map;
+import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class AetherBiomes {
-    public static final Map<ResourceLocation, Biome> BIOMES = new HashMap<>();
+    public static final ResourceKey<Biome> SKYROOT_GROVE = createKey("skyroot_grove");
+    public static final ResourceKey<Biome> SKYROOT_FOREST = createKey("skyroot_forest");
+    public static final ResourceKey<Biome> SKYROOT_THICKET = createKey("skyroot_thicket");
+    public static final ResourceKey<Biome> GOLDEN_FOREST = createKey("golden_forest");
 
-    public static final ResourceKey<Biome> SKYROOT_GROVE = register("skyroot_grove", AetherBiomeBuilders.skyrootGroveBiome());
-    public static final ResourceKey<Biome> SKYROOT_FOREST = register("skyroot_forest", AetherBiomeBuilders.skyrootForestBiome());
-    public static final ResourceKey<Biome> SKYROOT_THICKET = register("skyroot_thicket", AetherBiomeBuilders.skyrootThicketBiome());
-    public static final ResourceKey<Biome> GOLDEN_FOREST = register("golden_forest", AetherBiomeBuilders.goldenForestBiome());
+    public static ResourceKey<Biome> createKey(String name) {
+        return ResourceKey.create(Registries.BIOME, new ResourceLocation(Aether.MODID, name));
+    }
 
-    public static ResourceKey<Biome> register(String name, Biome biome) {
-        ResourceLocation location = new ResourceLocation(Aether.MODID, name);
-        BIOMES.putIfAbsent(location, biome);
-        return ResourceKey.create(Registry.BIOME_REGISTRY, location);
+    public static void bootstrap(BootstapContext<Biome> context) {
+        HolderGetter<PlacedFeature> placedFeatures = context.lookup(Registries.PLACED_FEATURE);
+        HolderGetter<ConfiguredWorldCarver<?>> configuredCarvers = context.lookup(Registries.CONFIGURED_CARVER);
+        context.register(SKYROOT_GROVE, AetherBiomeBuilders.skyrootGroveBiome(placedFeatures, configuredCarvers));
+        context.register(SKYROOT_FOREST, AetherBiomeBuilders.skyrootForestBiome(placedFeatures, configuredCarvers));
+        context.register(SKYROOT_THICKET, AetherBiomeBuilders.skyrootThicketBiome(placedFeatures, configuredCarvers));
+        context.register(GOLDEN_FOREST, AetherBiomeBuilders.goldenForestBiome(placedFeatures, configuredCarvers));
     }
 }

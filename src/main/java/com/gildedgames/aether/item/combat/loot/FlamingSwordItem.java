@@ -1,7 +1,6 @@
 package com.gildedgames.aether.item.combat.loot;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.combat.AetherItemTiers;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.util.EquipmentUtil;
@@ -19,7 +18,7 @@ import net.minecraft.world.item.SwordItem;
 @Mod.EventBusSubscriber(modid = Aether.MODID)
 public class FlamingSwordItem extends SwordItem {
 	public FlamingSwordItem() {
-		super(AetherItemTiers.FLAMING, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
+		super(AetherItemTiers.FLAMING, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
 	}
 
 	/**

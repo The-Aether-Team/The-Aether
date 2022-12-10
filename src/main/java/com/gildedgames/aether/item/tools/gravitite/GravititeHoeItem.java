@@ -1,6 +1,5 @@
 package com.gildedgames.aether.item.tools.gravitite;
 
-import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.combat.AetherItemTiers;
 import com.gildedgames.aether.item.tools.abilities.GravititeTool;
 import net.minecraft.core.BlockPos;
@@ -16,7 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class GravititeHoeItem extends HoeItem implements GravititeTool {
     public GravititeHoeItem() {
-        super(AetherItemTiers.GRAVITITE, -3, 0, new Item.Properties().tab(AetherItemGroups.AETHER_TOOLS));
+        super(AetherItemTiers.GRAVITITE, -3, 0, new Item.Properties());
     }
 
     /**

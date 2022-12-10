@@ -47,10 +47,10 @@ public class AccessoryButton extends ImageButton
     @Override
     public void render(@Nonnull PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
         Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(this.parentGui);
-        this.x = this.parentGui.getGuiLeft() + offsets.getA();
-        this.y = this.parentGui.getGuiTop() + offsets.getB();
+        this.setX(this.parentGui.getGuiLeft() + offsets.getA());
+        this.setY(this.parentGui.getGuiTop() + offsets.getB());
         if (this.parentGui instanceof CreativeModeInventoryScreen screen) {
-            boolean isInventoryTab = screen.getSelectedTab() == CreativeModeTab.TAB_INVENTORY.getId();
+            boolean isInventoryTab = screen.isInventoryOpen();
             this.active = isInventoryTab;
             if (isInventoryTab) {
                 super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);

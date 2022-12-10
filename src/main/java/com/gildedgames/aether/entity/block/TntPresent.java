@@ -7,7 +7,6 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
@@ -60,7 +59,7 @@ public class TntPresent extends Entity {
         if (i <= 0) {
             this.discard();
             if (!this.level.isClientSide) {
-                this.level.explode(this, null, null, this.getX(), this.getY(0.0625D), this.getZ(), 1.0F, false, Explosion.BlockInteraction.NONE);
+                this.level.explode(this, null, null, this.getX(), this.getY(0.0625D), this.getZ(), 1.0F, false, Level.ExplosionInteraction.TNT);
             }
         } else {
             this.updateInWaterStateAndDoFluidPushing();
@@ -104,11 +103,5 @@ public class TntPresent extends Entity {
         if (tag.contains("Fuse")) {
             this.setFuse(tag.getShort("Fuse"));
         }
-    }
-
-    @Nonnull
-    @Override
-    public Packet<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

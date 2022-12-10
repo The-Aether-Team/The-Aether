@@ -135,9 +135,7 @@ public class GuiHooks {
                         AetherConfig.CLIENT.enable_world_preview.set(!AetherConfig.CLIENT.enable_world_preview.get());
                         AetherConfig.CLIENT.enable_world_preview.save();
                         WorldDisplayHelper.toggleWorldPreview(AetherConfig.CLIENT.enable_world_preview.get());
-                    },
-                    (button, matrixStack, x, y) ->
-                            screen.renderTooltip(matrixStack, Component.translatable("gui.aether.menu.preview"), x + 4, y + 12));
+                    });
             dynamicMenuButton.setDisplayConfigs(AetherConfig.CLIENT.enable_world_preview_button);
             return dynamicMenuButton;
         }
@@ -153,9 +151,7 @@ public class GuiHooks {
                         Minecraft.getInstance().setScreen(getMenu());
                         Minecraft.getInstance().getMusicManager().stopPlaying();
                         AetherMusicManager.stopPlaying();
-                    },
-                    (button, matrixStack, x, y) ->
-                            screen.renderTooltip(matrixStack, Component.translatable(AetherConfig.CLIENT.enable_aether_menu.get() ? "gui.aether.menu.minecraft" : "gui.aether.menu.aether"), x + 4, y + 12));
+                    });
             dynamicMenuButton.setOffsetConfigs(AetherConfig.CLIENT.enable_world_preview_button);
             dynamicMenuButton.setDisplayConfigs(AetherConfig.CLIENT.enable_aether_menu_button);
             return dynamicMenuButton;
@@ -170,9 +166,7 @@ public class GuiHooks {
                         WorldDisplayHelper.quickLoad();
                         Minecraft.getInstance().getMusicManager().stopPlaying();
                         AetherMusicManager.stopPlaying(); //todo doesn't quite work. might need to stop it through the sound manager
-                    },
-                    (button, matrixStack, x, y) ->
-                            screen.renderTooltip(matrixStack, Component.translatable("gui.aether.menu.load"), x + 4, y + 12));
+                    });
             dynamicMenuButton.setOffsetConfigs(AetherConfig.CLIENT.enable_world_preview_button, AetherConfig.CLIENT.enable_aether_menu_button);
             dynamicMenuButton.setDisplayConfigs(AetherConfig.CLIENT.enable_world_preview, AetherConfig.CLIENT.enable_quick_load_button);
             return dynamicMenuButton;

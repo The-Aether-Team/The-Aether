@@ -2,6 +2,7 @@ package com.gildedgames.aether.data.generators.loot;
 
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.loot.AetherLoot;
+import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -12,10 +13,10 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
-public class AetherStrippingLootData implements Consumer<BiConsumer<ResourceLocation, LootTable.Builder>> {
-    public void accept(BiConsumer<ResourceLocation, LootTable.Builder> builder) {
+public class AetherStrippingLootData implements LootTableSubProvider {
+    @Override
+    public void generate(BiConsumer<ResourceLocation, LootTable.Builder> builder) {
         builder.accept(AetherLoot.STRIP_GOLDEN_OAK, LootTable.lootTable()
                 .withPool(LootPool.lootPool().add(LootItem.lootTableItem(AetherItems.GOLDEN_AMBER.get())
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))

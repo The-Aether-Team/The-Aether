@@ -52,10 +52,4 @@ public abstract class AbstractDart extends AbstractArrow {
     protected SoundEvent getDefaultHitGroundSoundEvent() {
         return AetherSoundEvents.ENTITY_DART_HIT.get();
     }
-
-    @Nonnull
-    @Override
-    public Packet<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
 }

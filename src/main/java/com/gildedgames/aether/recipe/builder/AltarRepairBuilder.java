@@ -9,6 +9,7 @@ import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -18,8 +19,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
-public class AltarRepairBuilder implements RecipeBuilder
-{
+public class AltarRepairBuilder implements RecipeBuilder {
+    private final RecipeCategory category;
     private final Ingredient ingredient;
     private final int repairTime;
     private final Advancement.Builder advancement = Advancement.Builder.advancement();
@@ -27,14 +28,15 @@ public class AltarRepairBuilder implements RecipeBuilder
     private String group;
     private final RecipeSerializer<AltarRepairRecipe> serializer;
 
-    private AltarRepairBuilder(Ingredient ingredient, int repairTime, RecipeSerializer<AltarRepairRecipe> serializer) {
+    private AltarRepairBuilder(RecipeCategory category, Ingredient ingredient, int repairTime, RecipeSerializer<AltarRepairRecipe> serializer) {
+        this.category = category;
         this.ingredient = ingredient;
         this.repairTime = repairTime;
         this.serializer = serializer;
     }
 
-    public static AltarRepairBuilder repair(Ingredient item, int repairTime, RecipeSerializer<AltarRepairRecipe> serializer) {
-        return new AltarRepairBuilder(item, repairTime, serializer);
+    public static AltarRepairBuilder repair(Ingredient item, RecipeCategory category, int repairTime, RecipeSerializer<AltarRepairRecipe> serializer) {
+        return new AltarRepairBuilder(category, item, repairTime, serializer);
     }
 
     @Override
@@ -60,7 +62,7 @@ public class AltarRepairBuilder implements RecipeBuilder
     public void save(Consumer<FinishedRecipe> consumer, @Nonnull ResourceLocation pRecipeId) {
         this.ensureValid(pRecipeId);
         this.advancement.parent(new ResourceLocation("recipes/root")).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pRecipeId)).rewards(AdvancementRewards.Builder.recipe(pRecipeId)).requirements(RequirementsStrategy.OR);
-        consumer.accept(new AltarRepairBuilder.Result(pRecipeId, this.group == null ? "" : this.group, this.ingredient, this.repairTime, this.advancement, new ResourceLocation(pRecipeId.getNamespace(), "recipes/" + this.ingredient.getItems()[0].getItem().getItemCategory().getRecipeFolderName() + "/" + pRecipeId.getPath()), this.serializer));
+        consumer.accept(new AltarRepairBuilder.Result(pRecipeId, this.group == null ? "" : this.group, this.ingredient, this.repairTime, this.advancement, pRecipeId.withPrefix("recipes/" + this.category.getFolderName() + "/"), this.serializer));
     }
 
     private void ensureValid(ResourceLocation p_218634_1_) {

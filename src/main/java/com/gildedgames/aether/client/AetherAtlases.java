@@ -25,25 +25,25 @@ public class AetherAtlases {
 	public static void registerWoodTypeAtlases() {
 		Sheets.addWoodType(AetherWoodTypes.SKYROOT);
 	}
-	
-	@SubscribeEvent
-	public static void onTextureStitchPre(TextureStitchEvent.Pre event) {
-		if (event.getAtlas().location().equals(Sheets.CHEST_SHEET)) {
-			event.addSprite(TREASURE_CHEST_MATERIAL.texture());
-			event.addSprite(TREASURE_CHEST_LEFT_MATERIAL.texture());
-			event.addSprite(TREASURE_CHEST_RIGHT_MATERIAL.texture());
-		}
-		if (event.getAtlas().location().equals(InventoryMenu.BLOCK_ATLAS)) {
-			event.addSprite(new ResourceLocation(Aether.MODID, "block/dungeon/door"));
-			event.addSprite(new ResourceLocation(Aether.MODID, "block/dungeon/exclamation"));
-			event.addSprite(new ResourceLocation(Aether.MODID, "block/dungeon/lock"));
-			event.addSprite(new ResourceLocation(Aether.MODID, "block/dungeon/treasure"));
-			event.addSprite(new ResourceLocation(Aether.MODID, "gui/slots/cape"));
-			event.addSprite(new ResourceLocation(Aether.MODID, "gui/slots/gloves"));
-			event.addSprite(new ResourceLocation(Aether.MODID, "gui/slots/misc"));
-			event.addSprite(new ResourceLocation(Aether.MODID, "gui/slots/pendant"));
-			event.addSprite(new ResourceLocation(Aether.MODID, "gui/slots/ring"));
-			event.addSprite(new ResourceLocation(Aether.MODID, "gui/slots/shield"));
-		}
-	}
+
+//	@SubscribeEvent
+//	public static void onTextureStitchPre(TextureStitchEvent.Pre event) {
+//		if (event.getAtlas().location().equals(Sheets.CHEST_SHEET)) {
+//			event.addSprite(TREASURE_CHEST_MATERIAL.texture());
+//			event.addSprite(TREASURE_CHEST_LEFT_MATERIAL.texture());
+//			event.addSprite(TREASURE_CHEST_RIGHT_MATERIAL.texture());
+//		}
+//		if (event.getAtlas().location().equals(InventoryMenu.BLOCK_ATLAS)) {
+//			event.addSprite(new ResourceLocation(Aether.MODID, "block/dungeon/door"));
+//			event.addSprite(new ResourceLocation(Aether.MODID, "block/dungeon/exclamation"));
+//			event.addSprite(new ResourceLocation(Aether.MODID, "block/dungeon/lock"));
+//			event.addSprite(new ResourceLocation(Aether.MODID, "block/dungeon/treasure"));
+//			event.addSprite(new ResourceLocation(Aether.MODID, "gui/slots/cape"));
+//			event.addSprite(new ResourceLocation(Aether.MODID, "gui/slots/gloves"));
+//			event.addSprite(new ResourceLocation(Aether.MODID, "gui/slots/misc"));
+//			event.addSprite(new ResourceLocation(Aether.MODID, "gui/slots/pendant"));
+//			event.addSprite(new ResourceLocation(Aether.MODID, "gui/slots/ring"));
+//			event.addSprite(new ResourceLocation(Aether.MODID, "gui/slots/shield"));
+//		}
+//	}
 }

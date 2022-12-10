@@ -123,10 +123,4 @@ public class ZephyrSnowball extends Fireball implements ItemSupplier {
 	public ItemStack getItem() {
 		return new ItemStack(Items.SNOWBALL);
 	}
-
-	@Nonnull
-	@Override
-	public Packet<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
-	}
 }

@@ -3,34 +3,26 @@ package com.gildedgames.aether.data.generators.tags;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.AetherTags;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
-import net.minecraft.data.tags.TagsProvider;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.concurrent.CompletableFuture;
 
-public class AetherEntityTagData extends EntityTypeTagsProvider
-{
-    public AetherEntityTagData(DataGenerator generatorIn, @Nullable ExistingFileHelper existingFileHelper) {
-        super(generatorIn, Aether.MODID, existingFileHelper);
-    }
-
-    @Nonnull
-    @Override
-    public String getName() {
-        return "Aether Entity Tags";
+public class AetherEntityTagData extends EntityTypeTagsProvider {
+    public AetherEntityTagData(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
+        super(packOutput, lookupProvider, Aether.MODID, existingFileHelper);
     }
 
     @Override
-    protected void addTags() {
-        //aether
-        tag(AetherTags.Entities.PIGS).add(
+    public void addTags(HolderLookup.Provider provider) {
+        // Aether
+        this.tag(AetherTags.Entities.PIGS).add(
                 EntityType.PIG,
                 AetherEntityTypes.PHYG.get(),
                 EntityType.PIGLIN,
@@ -38,14 +30,14 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
                 EntityType.ZOMBIFIED_PIGLIN,
                 EntityType.HOGLIN,
                 EntityType.ZOGLIN);
-        tag(AetherTags.Entities.NO_SKYROOT_DOUBLE_DROPS).add(
+        this.tag(AetherTags.Entities.NO_SKYROOT_DOUBLE_DROPS).add(
                 EntityType.PLAYER,
                 EntityType.WITHER,
                 EntityType.ENDER_DRAGON);
-        tag(AetherTags.Entities.NO_AMBROSIUM_DROPS).add(EntityType.PLAYER);
-        tag(AetherTags.Entities.UNLAUNCHABLE);
-        tag(AetherTags.Entities.NO_CANDY_CANE_DROPS).add(EntityType.PLAYER);
-        tag(AetherTags.Entities.DEFLECTABLE_PROJECTILES).addTag(EntityTypeTags.ARROWS).add(
+        this.tag(AetherTags.Entities.NO_AMBROSIUM_DROPS).add(EntityType.PLAYER);
+        this.tag(AetherTags.Entities.UNLAUNCHABLE);
+        this.tag(AetherTags.Entities.NO_CANDY_CANE_DROPS).add(EntityType.PLAYER);
+        this.tag(AetherTags.Entities.DEFLECTABLE_PROJECTILES).addTag(EntityTypeTags.ARROWS).add(
                 EntityType.EGG,
                 EntityType.SMALL_FIREBALL,
                 EntityType.FIREBALL,
@@ -60,7 +52,7 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
                 AetherEntityTypes.ZEPHYR_SNOWBALL.get(),
                 AetherEntityTypes.LIGHTNING_KNIFE.get(),
                 AetherEntityTypes.HAMMER_PROJECTILE.get());
-        tag(AetherTags.Entities.SWET_TARGETS).add(
+        this.tag(AetherTags.Entities.SWET_TARGETS).add(
                 EntityType.CHICKEN,
                 EntityType.COW,
                 EntityType.PIG,
@@ -69,7 +61,7 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
                 AetherEntityTypes.PHYG.get(),
                 AetherEntityTypes.SHEEPUFF.get()
         );
-        tag(AetherTags.Entities.AECHOR_PLANT_TARGETS).add(
+        this.tag(AetherTags.Entities.AECHOR_PLANT_TARGETS).add(
                 EntityType.CHICKEN,
                 EntityType.COW,
                 EntityType.PIG,
@@ -78,35 +70,30 @@ public class AetherEntityTagData extends EntityTypeTagsProvider
                 AetherEntityTypes.PHYG.get(),
                 AetherEntityTypes.SHEEPUFF.get()
         );
-        tag(AetherTags.Entities.AERCLOUD_SPAWNABLE).add(
+        this.tag(AetherTags.Entities.AERCLOUD_SPAWNABLE).add(
                 AetherEntityTypes.AERWHALE.get(),
                 AetherEntityTypes.ZEPHYR.get()
         );
 
-        //forge
-        tag(Tags.EntityTypes.BOSSES).add(
+        // Forge
+        this.tag(Tags.EntityTypes.BOSSES).add(
                 AetherEntityTypes.SLIDER.get(),
                 AetherEntityTypes.VALKYRIE_QUEEN.get(),
                 AetherEntityTypes.SUN_SPIRIT.get()
         );
 
-        //vanilla
-        tag(EntityTypeTags.IMPACT_PROJECTILES).add(
+        // Vanilla
+        this.tag(EntityTypeTags.IMPACT_PROJECTILES).add(
                 AetherEntityTypes.GOLDEN_DART.get(),
                 AetherEntityTypes.POISON_DART.get(),
                 AetherEntityTypes.ENCHANTED_DART.get(),
                 AetherEntityTypes.LIGHTNING_KNIFE.get(),
                 AetherEntityTypes.HAMMER_PROJECTILE.get());
-        tag(EntityTypeTags.POWDER_SNOW_WALKABLE_MOBS).add(AetherEntityTypes.AERBUNNY.get());
-        tag(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES).add(AetherEntityTypes.FIRE_MINION.get());
-        tag(EntityTypeTags.FROG_FOOD).add(
+        this.tag(EntityTypeTags.POWDER_SNOW_WALKABLE_MOBS).add(AetherEntityTypes.AERBUNNY.get());
+        this.tag(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES).add(AetherEntityTypes.FIRE_MINION.get());
+        this.tag(EntityTypeTags.FROG_FOOD).add(
                 AetherEntityTypes.BLUE_SWET.get(),
                 AetherEntityTypes.GOLDEN_SWET.get(),
                 AetherEntityTypes.SENTRY.get());
-    }
-
-    @Nonnull
-    protected TagsProvider.TagAppender<EntityType<?>> tag(@Nonnull TagKey<EntityType<?>> tag) {
-        return super.tag(tag);
     }
 }

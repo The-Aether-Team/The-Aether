@@ -47,24 +47,19 @@ public class AetherCustomizationsScreen extends Screen
             int xPos = this.width / 2 - 65;
             int yPos = this.height / 2 - 10 - (int) (buttonCount * 12.5);
             int i = 0;
-            this.addRenderableWidget(new Button(xPos, yPos + (25 * i), 150, 20,
-                    Component.translatable(this.customizations.areSleeveGloves() ? "gui.aether.customization.gloves.sleeve" : "gui.aether.customization.gloves.arm"),
+            ;
+            this.addRenderableWidget(Button.builder(Component.translatable(this.customizations.areSleeveGloves() ? "gui.aether.customization.gloves.sleeve" : "gui.aether.customization.gloves.arm"),
                     (pressed) -> {
                         this.customizations.setAreSleeveGloves(!this.customizations.areSleeveGloves());
                         this.updateValues();
-                    },
-                    (button, poseStack, x, y) -> button.setMessage(Component.translatable(this.customizations.areSleeveGloves() ? "gui.aether.customization.gloves.sleeve" : "gui.aether.customization.gloves.arm"))
-            ));
+                    }).pos(xPos, yPos + (25 * i)).build());
             if (AetherPlayerRankings.hasHalo(playerUUID)) {
                 i++;
-                this.addRenderableWidget(new Button(xPos, yPos + (25 * i), 150, 20,
-                        Component.translatable(this.customizations.isHaloEnabled() ? "gui.aether.customization.halo.on" : "gui.aether.customization.halo.off"),
+                this.addRenderableWidget(Button.builder(Component.translatable(this.customizations.isHaloEnabled() ? "gui.aether.customization.halo.on" : "gui.aether.customization.halo.off"),
                         (pressed) -> {
                             this.customizations.setIsHaloEnabled(!this.customizations.isHaloEnabled());
                             this.updateValues();
-                        },
-                        (button, poseStack, x, y) -> button.setMessage(Component.translatable(this.customizations.isHaloEnabled() ? "gui.aether.customization.halo.on" : "gui.aether.customization.halo.off"))
-                ));
+                        }).pos(xPos, yPos + (25 * i)).build());
                 ColorBox colorBox = new ColorBox("haloEnabled", "haloColor", Minecraft.getInstance().font, xPos + 155, yPos + (25 * i), 60, 20, Component.translatable("gui.aether.customization.halo.color"));
                 if (this.customizations.getHaloHex() != null && !this.customizations.getHaloHex().isEmpty() && !this.customizations.getHaloHex().equals("null")) {
                     colorBox.setSavedValue(this.customizations.getHaloHex());
@@ -81,7 +76,6 @@ public class AetherCustomizationsScreen extends Screen
                                 }
                             }
                         },
-                        (button, poseStack, x, y) -> this.renderTooltip(poseStack, Component.translatable("gui.aether.customization.undo"), x, y),
                         Component.translatable("gui.aether.customization.undo"))
                 );
                 this.addRenderableWidget(new CustomizationSaveButton(colorBox, xPos + 245, yPos + (25 * i), 20, 20, 0, 20, 20, SAVE_BUTTON, 20, 60,
@@ -92,20 +86,18 @@ public class AetherCustomizationsScreen extends Screen
                                 this.updateValues();
                             }
                         },
-                        (button, poseStack, x, y) -> this.renderTooltip(poseStack, Component.translatable("gui.aether.customization.save"), x, y),
                         Component.translatable("gui.aether.customization.save"))
                 );
             }
             if (AetherPlayerRankings.hasDevGlow(playerUUID)) {
                 i++;
-                this.addRenderableWidget(new Button(xPos, yPos + (25 * i), 150, 20,
-                        Component.translatable(this.customizations.isDeveloperGlowEnabled() ? "gui.aether.customization.developer_glow.on" : "gui.aether.customization.developer_glow.off"),
+
+
+                this.addRenderableWidget(Button.builder(Component.translatable(this.customizations.isDeveloperGlowEnabled() ? "gui.aether.customization.developer_glow.on" : "gui.aether.customization.developer_glow.off"),
                         (pressed) -> {
                             this.customizations.setIsDeveloperGlowEnabled(!this.customizations.isDeveloperGlowEnabled());
                             this.updateValues();
-                        },
-                        (button, poseStack, x, y) -> button.setMessage(Component.translatable(this.customizations.isDeveloperGlowEnabled() ? "gui.aether.customization.developer_glow.on" : "gui.aether.customization.developer_glow.off"))
-                ));
+                        }).pos(xPos, yPos + (25 * i)).build());
                 ColorBox colorBox = new ColorBox("developerGlowEnabled", "developerGlowColor", Minecraft.getInstance().font, xPos + 155, yPos + (25 * i), 60, 20, Component.translatable("gui.aether.customization.developer_glow.color"));
                 if (this.customizations.getDeveloperGlowHex() != null && !this.customizations.getDeveloperGlowHex().isEmpty() && !this.customizations.getDeveloperGlowHex().equals("null")) {
                     colorBox.setSavedValue(this.customizations.getDeveloperGlowHex());
@@ -123,7 +115,6 @@ public class AetherCustomizationsScreen extends Screen
                             }
 
                         },
-                        (button, poseStack, x, y) -> this.renderTooltip(poseStack, Component.translatable("gui.aether.customization.undo"), x, y),
                         Component.translatable("gui.aether.customization.undo"))
                 );
                 this.addRenderableWidget(new CustomizationSaveButton(colorBox, xPos + 245, yPos + (25 * i), 20, 20, 0, 20, 20, SAVE_BUTTON, 20, 60,
@@ -134,12 +125,11 @@ public class AetherCustomizationsScreen extends Screen
                                 this.updateValues();
                             }
                         },
-                        (button, poseStack, x, y) -> this.renderTooltip(poseStack, Component.translatable("gui.aether.customization.save"), x, y),
                         Component.translatable("gui.aether.customization.save"))
                 );
             }
         }
-        this.addRenderableWidget(new Button(this.width / 2 - 100, this.height - 30, 200, 20, CommonComponents.GUI_DONE, (pressed) -> this.onClose()));
+        this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, (pressed) -> this.onClose()).size(this.width / 2 - 100, this.height - 30).size(200, 20).build());
     }
 
     @Override

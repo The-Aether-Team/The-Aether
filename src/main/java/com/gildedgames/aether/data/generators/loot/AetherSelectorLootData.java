@@ -2,6 +2,7 @@ package com.gildedgames.aether.data.generators.loot;
 
 import com.gildedgames.aether.loot.AetherLoot;
 import com.gildedgames.aether.loot.functions.WhirlwindSpawnEntity;
+import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
@@ -12,10 +13,10 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
-public class AetherSelectorLootData implements Consumer<BiConsumer<ResourceLocation, LootTable.Builder>> {
-    public void accept(BiConsumer<ResourceLocation, LootTable.Builder> builder) {
+public class AetherSelectorLootData implements LootTableSubProvider {
+    @Override
+    public void generate(BiConsumer<ResourceLocation, LootTable.Builder> builder) {
         builder.accept(AetherLoot.WHIRLWIND_JUNK, LootTable.lootTable()
                 .withPool(this.whirlwindLoot())
         );

@@ -3,7 +3,6 @@ package com.gildedgames.aether.item.combat.loot;
 import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.capability.player.AetherPlayerCapability;
 import com.gildedgames.aether.entity.miscellaneous.CloudMinion;
-import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.capability.player.AetherPlayer;
 import com.gildedgames.aether.util.EntityUtil;
@@ -21,7 +20,7 @@ import net.minecraft.world.level.Level;
 
 public class CloudStaffItem extends Item {
     public CloudStaffItem() {
-        super(new Item.Properties().durability(60).rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_MISC));
+        super(new Item.Properties().durability(60).rarity(AetherItems.AETHER_LOOT));
     }
 
     /**

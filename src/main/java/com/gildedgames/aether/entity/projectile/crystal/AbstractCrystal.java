@@ -107,10 +107,4 @@ public abstract class AbstractCrystal extends Projectile {
             this.ticksInAir = tag.getInt("TicksInAir");
         }
     }
-
-    @Nonnull
-    @Override
-    public Packet<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
 }

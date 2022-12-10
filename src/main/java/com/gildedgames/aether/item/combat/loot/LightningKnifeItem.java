@@ -1,7 +1,6 @@
 package com.gildedgames.aether.item.combat.loot;
 
 import com.gildedgames.aether.entity.projectile.weapon.ThrownLightningKnife;
-import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.client.AetherSoundEvents;
 
@@ -18,7 +17,7 @@ import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 
 public class LightningKnifeItem extends Item {
 	public LightningKnifeItem() {
-		super(new Item.Properties().rarity(AetherItems.AETHER_LOOT).stacksTo(16).tab(AetherItemGroups.AETHER_WEAPONS));
+		super(new Item.Properties().rarity(AetherItems.AETHER_LOOT).stacksTo(16));
 	}
 
 	/**

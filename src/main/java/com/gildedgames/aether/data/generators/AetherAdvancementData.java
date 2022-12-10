@@ -7,50 +7,36 @@ import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.loot.AetherLoot;
 import com.gildedgames.aether.data.resources.AetherDimensions;
-import com.google.common.collect.ImmutableList;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.*;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.commands.CommandFunction;
 import net.minecraft.data.advancements.AdvancementProvider;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
-public class AetherAdvancementData extends AdvancementProvider
-{
-    public final List<Consumer<Consumer<Advancement>>> advancements = ImmutableList.of(new AetherAdvancements());
+public class AetherAdvancementData {
 
-    public AetherAdvancementData(DataGenerator generatorIn, ExistingFileHelper existingFileHelper) {
-        super(generatorIn, existingFileHelper);
+    public static AdvancementProvider create(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
+        return new AdvancementProvider(packOutput, lookupProvider, List.of(new AetherAdvancements()), existingFileHelper);
     }
 
-    @Nonnull
-    @Override
-    public String getName() {
-        return "Aether Advancements";
-    }
-
-    @Override
-    protected void registerAdvancements(Consumer<Advancement> consumer, ExistingFileHelper fileHelper) {
-        for (Consumer<Consumer<Advancement>> consumer1 : this.advancements) {
-            consumer1.accept(consumer);
-        }
-    }
-
-    public static class AetherAdvancements implements Consumer<Consumer<Advancement>>
-    {
+    public static class AetherAdvancements implements AdvancementSubProvider {
         @Override
-        public void accept(Consumer<Advancement> consumer) {
+        public void generate(HolderLookup.Provider provider, Consumer<Advancement> consumer) {
             Advancement enterAether = Advancement.Builder.advancement()
                     .display(Blocks.GLOWSTONE,
                             Component.translatable("advancement.aether.enter_aether"),

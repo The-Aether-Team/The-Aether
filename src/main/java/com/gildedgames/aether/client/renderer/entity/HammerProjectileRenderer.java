@@ -5,6 +5,7 @@ import com.gildedgames.aether.entity.projectile.weapon.HammerProjectile;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -30,7 +31,7 @@ public class HammerProjectileRenderer extends EntityRenderer<HammerProjectile> {
     public void render(@Nonnull HammerProjectile hammer, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
         poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
+        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
         VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutout(this.getTextureLocation(hammer)));
         PoseStack.Pose pose = poseStack.last();
         Matrix4f matrix4f = pose.pose();

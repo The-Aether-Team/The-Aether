@@ -3,6 +3,7 @@ package com.gildedgames.aether.block;
 import com.gildedgames.aether.entity.block.FloatingBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.level.Level;
@@ -18,8 +19,8 @@ public interface Floatable {
 
     default void onBrokenAfterCollide(Level level, BlockPos pos, FloatingBlockEntity floatingBlock) { }
 
-    default DamageSource getFallDamageSource() {
-        return DamageSource.FALLING_BLOCK;
+    default DamageSource getFallDamageSource(Entity entity) {
+        return new EntityDamageSource("floatingBlock", entity).damageHelmet();
     }
 
     default Predicate<Entity> getHurtsEntitySelector() {

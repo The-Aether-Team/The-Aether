@@ -5,7 +5,7 @@ import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.loot.AetherLoot;
 import com.gildedgames.aether.loot.conditions.ConfigEnabled;
-import net.minecraft.data.loot.ChestLoot;
+import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -15,12 +15,11 @@ import net.minecraft.world.level.storage.loot.entries.LootTableReference;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
-import javax.annotation.Nonnull;
 import java.util.function.BiConsumer;
 
-public class AetherDungeonLootData extends ChestLoot {
+public class AetherDungeonLootData implements LootTableSubProvider {
     @Override
-    public void accept(@Nonnull BiConsumer<ResourceLocation, LootTable.Builder> builder) {
+    public void generate(BiConsumer<ResourceLocation, LootTable.Builder> builder) {
         builder.accept(AetherLoot.BRONZE_DUNGEON, LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(3.0F, 5.0F))
                         .add(LootItem.lootTableItem(AetherItems.ZANITE_PICKAXE.get()).setWeight(1))

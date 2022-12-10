@@ -1,11 +1,11 @@
-package com.gildedgames.aether.data.generators;
+package com.gildedgames.aether.data.generators.loot;
 
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.loot.AetherLoot;
-import net.minecraft.data.loot.EntityLoot;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.data.loot.EntityLootSubProvider;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
@@ -21,13 +21,13 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyC
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
-import javax.annotation.Nonnull;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
+public class AetherEntityLootData extends EntityLootSubProvider {
+    public AetherEntityLootData() {
+        super(FeatureFlags.REGISTRY.allFlags());
+    }
 
-public class AetherEntityLootData extends EntityLoot {
     @Override
-    protected void addTables() {
+    public void generate() {
         this.add(AetherEntityTypes.PHYG.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                         .add(LootItem.lootTableItem(Items.PORKCHOP)
@@ -69,22 +69,22 @@ public class AetherEntityLootData extends EntityLoot {
                         )
                 )
         );
-        this.add(AetherLoot.ENTITIES_SHEEPUFF_BLACK, sheepLootTableBuilderWithDrop(Blocks.BLACK_WOOL));
-        this.add(AetherLoot.ENTITIES_SHEEPUFF_BLUE, sheepLootTableBuilderWithDrop(Blocks.BLUE_WOOL));
-        this.add(AetherLoot.ENTITIES_SHEEPUFF_BROWN, sheepLootTableBuilderWithDrop(Blocks.BROWN_WOOL));
-        this.add(AetherLoot.ENTITIES_SHEEPUFF_CYAN, sheepLootTableBuilderWithDrop(Blocks.CYAN_WOOL));
-        this.add(AetherLoot.ENTITIES_SHEEPUFF_GRAY, sheepLootTableBuilderWithDrop(Blocks.GRAY_WOOL));
-        this.add(AetherLoot.ENTITIES_SHEEPUFF_GREEN, sheepLootTableBuilderWithDrop(Blocks.GREEN_WOOL));
-        this.add(AetherLoot.ENTITIES_SHEEPUFF_LIGHT_BLUE, sheepLootTableBuilderWithDrop(Blocks.LIGHT_BLUE_WOOL));
-        this.add(AetherLoot.ENTITIES_SHEEPUFF_LIGHT_GRAY, sheepLootTableBuilderWithDrop(Blocks.LIGHT_GRAY_WOOL));
-        this.add(AetherLoot.ENTITIES_SHEEPUFF_LIME, sheepLootTableBuilderWithDrop(Blocks.LIME_WOOL));
-        this.add(AetherLoot.ENTITIES_SHEEPUFF_MAGENTA, sheepLootTableBuilderWithDrop(Blocks.MAGENTA_WOOL));
-        this.add(AetherLoot.ENTITIES_SHEEPUFF_ORANGE, sheepLootTableBuilderWithDrop(Blocks.ORANGE_WOOL));
-        this.add(AetherLoot.ENTITIES_SHEEPUFF_PINK, sheepLootTableBuilderWithDrop(Blocks.PINK_WOOL));
-        this.add(AetherLoot.ENTITIES_SHEEPUFF_PURPLE, sheepLootTableBuilderWithDrop(Blocks.PURPLE_WOOL));
-        this.add(AetherLoot.ENTITIES_SHEEPUFF_RED, sheepLootTableBuilderWithDrop(Blocks.RED_WOOL));
-        this.add(AetherLoot.ENTITIES_SHEEPUFF_WHITE, sheepLootTableBuilderWithDrop(Blocks.WHITE_WOOL));
-        this.add(AetherLoot.ENTITIES_SHEEPUFF_YELLOW, sheepLootTableBuilderWithDrop(Blocks.YELLOW_WOOL));
+        this.add(AetherEntityTypes.SHEEPUFF.get(), AetherLoot.ENTITIES_SHEEPUFF_BLACK, createSheepuffTable(Blocks.BLACK_WOOL));
+        this.add(AetherEntityTypes.SHEEPUFF.get(), AetherLoot.ENTITIES_SHEEPUFF_BLUE, createSheepuffTable(Blocks.BLUE_WOOL));
+        this.add(AetherEntityTypes.SHEEPUFF.get(), AetherLoot.ENTITIES_SHEEPUFF_BROWN, createSheepuffTable(Blocks.BROWN_WOOL));
+        this.add(AetherEntityTypes.SHEEPUFF.get(), AetherLoot.ENTITIES_SHEEPUFF_CYAN, createSheepuffTable(Blocks.CYAN_WOOL));
+        this.add(AetherEntityTypes.SHEEPUFF.get(), AetherLoot.ENTITIES_SHEEPUFF_GRAY, createSheepuffTable(Blocks.GRAY_WOOL));
+        this.add(AetherEntityTypes.SHEEPUFF.get(), AetherLoot.ENTITIES_SHEEPUFF_GREEN, createSheepuffTable(Blocks.GREEN_WOOL));
+        this.add(AetherEntityTypes.SHEEPUFF.get(), AetherLoot.ENTITIES_SHEEPUFF_LIGHT_BLUE, createSheepuffTable(Blocks.LIGHT_BLUE_WOOL));
+        this.add(AetherEntityTypes.SHEEPUFF.get(), AetherLoot.ENTITIES_SHEEPUFF_LIGHT_GRAY, createSheepuffTable(Blocks.LIGHT_GRAY_WOOL));
+        this.add(AetherEntityTypes.SHEEPUFF.get(), AetherLoot.ENTITIES_SHEEPUFF_LIME, createSheepuffTable(Blocks.LIME_WOOL));
+        this.add(AetherEntityTypes.SHEEPUFF.get(), AetherLoot.ENTITIES_SHEEPUFF_MAGENTA, createSheepuffTable(Blocks.MAGENTA_WOOL));
+        this.add(AetherEntityTypes.SHEEPUFF.get(), AetherLoot.ENTITIES_SHEEPUFF_ORANGE, createSheepuffTable(Blocks.ORANGE_WOOL));
+        this.add(AetherEntityTypes.SHEEPUFF.get(), AetherLoot.ENTITIES_SHEEPUFF_PINK, createSheepuffTable(Blocks.PINK_WOOL));
+        this.add(AetherEntityTypes.SHEEPUFF.get(), AetherLoot.ENTITIES_SHEEPUFF_PURPLE, createSheepuffTable(Blocks.PURPLE_WOOL));
+        this.add(AetherEntityTypes.SHEEPUFF.get(), AetherLoot.ENTITIES_SHEEPUFF_RED, createSheepuffTable(Blocks.RED_WOOL));
+        this.add(AetherEntityTypes.SHEEPUFF.get(), AetherLoot.ENTITIES_SHEEPUFF_WHITE, createSheepuffTable(Blocks.WHITE_WOOL));
+        this.add(AetherEntityTypes.SHEEPUFF.get(), AetherLoot.ENTITIES_SHEEPUFF_YELLOW, createSheepuffTable(Blocks.YELLOW_WOOL));
 
         this.add(AetherEntityTypes.MOA.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
@@ -232,15 +232,9 @@ public class AetherEntityLootData extends EntityLoot {
         );
     }
 
-    private static LootTable.Builder sheepLootTableBuilderWithDrop(ItemLike wool) {
+    private static LootTable.Builder createSheepuffTable(ItemLike wool) {
         return LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(wool)))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootTableReference.lootTableReference(AetherEntityTypes.SHEEPUFF.get().getDefaultLootTable())));
-    }
-
-    @Nonnull
-    @Override
-    protected Iterable<EntityType<?>> getKnownEntities() {
-        return AetherEntityTypes.ENTITY_TYPES.getEntries().stream().map(Supplier::get).collect(Collectors.toList());
     }
 }

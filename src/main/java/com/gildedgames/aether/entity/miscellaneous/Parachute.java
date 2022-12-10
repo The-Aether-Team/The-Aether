@@ -150,10 +150,4 @@ public class Parachute extends Entity {
 
     @Override
     protected void readAdditionalSaveData(@Nonnull CompoundTag tag) { }
-
-    @Nonnull
-    @Override
-    public Packet<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
 }
