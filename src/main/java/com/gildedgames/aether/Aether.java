@@ -172,6 +172,7 @@ public class Aether {
         generator.addProvider(event.includeClient(), new AetherSoundData(generator, helper));
 
         // Server Data
+        generator.addProvider(event.includeServer(), new AetherWorldGenData(packOutput));
         generator.addProvider(event.includeServer(), new AetherRecipeData(packOutput));
 //        generator.addProvider(event.includeServer(), AetherLootTableData.create(packOutput));
 //        generator.addProvider(event.includeServer(), new AetherLootModifierData(generator));
@@ -181,9 +182,8 @@ public class Aether {
         generator.addProvider(event.includeServer(), new AetherItemTagData(packOutput, lookupProvider, blockTags, helper));
         generator.addProvider(event.includeServer(), new AetherEntityTagData(packOutput, lookupProvider, helper));
         generator.addProvider(event.includeServer(), new AetherFluidTagData(packOutput, lookupProvider, helper));
-//        generator.addProvider(event.includeServer(), new AetherBiomeTagData(packOutput, lookupProvider, helper));
+        generator.addProvider(event.includeServer(), new AetherBiomeTagData(packOutput, lookupProvider, helper));
 //        generator.addProvider(event.includeServer(), new AetherStructureTagData(packOutput, lookupProvider, helper));
-//        generator.addProvider(event.includeServer(), new AetherWorldGenData(packOutput));
     }
 
     public void packSetup(AddPackFindersEvent event) {

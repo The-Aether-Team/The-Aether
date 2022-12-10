@@ -6,7 +6,6 @@
   "plugin": "com.gildedgames.aether.mixin.AetherMixinPlugin",
   "refmap": "aether.refmap.json",
   "mixins": [
-    "client.accessor.ButtonAccessor",
     "common.AbstractArrowMixin",
     "common.DimensionTypeMixin",
     "common.FeatureMixin",
@@ -25,6 +24,7 @@
     "common.accessor.LevelStorageAccessAccessor",
     "common.accessor.LootContextParamSetsAccessor",
     "common.accessor.MinecraftServerAccessor",
+    "common.accessor.NoiseRouterDataAccessor",
     "common.accessor.PlayerAccessor",
     "common.accessor.ServerGamePacketListenerImplAccessor",
     "common.accessor.ServerLevelAccessor",
@@ -44,6 +44,7 @@
     "client.TitleScreenMixin",
     "client.WorldListEntryMixin",
     "client.accessor.BlockColorsAccessor",
+    "client.accessor.ButtonAccessor",
     "client.accessor.EntityRendererAccessor",
     "client.accessor.GuiAccessor",
     "client.accessor.GuiComponentAccessor",
