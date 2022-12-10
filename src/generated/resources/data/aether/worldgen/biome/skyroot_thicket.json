@@ -1,0 +1,154 @@
+{
+  "carvers": {},
+  "downfall": 0.0,
+  "effects": {
+    "fog_color": 9671612,
+    "foliage_color": 11665355,
+    "grass_color": 11665355,
+    "music": {
+      "max_delay": 24000,
+      "min_delay": 12000,
+      "replace_current_music": true,
+      "sound": "aether:music.aether"
+    },
+    "sky_color": 12632319,
+    "water_color": 4159204,
+    "water_fog_color": 329011
+  },
+  "features": [
+    [
+      "aether:quicksoil_shelf"
+    ],
+    [
+      "aether:water_lake"
+    ],
+    [],
+    [],
+    [],
+    [],
+    [
+      "aether:aether_dirt_ore",
+      "aether:icestone_ore",
+      "aether:ambrosium_ore",
+      "aether:zanite_ore",
+      "aether:gravitite_ore_common",
+      "aether:gravitite_ore_dense"
+    ],
+    [],
+    [
+      "aether:water_spring"
+    ],
+    [
+      "aether:skyroot_thicket_trees",
+      "aether:grass_patch",
+      "aether:tall_grass_patch",
+      "aether:holiday_tree",
+      "aether:flower_patch"
+    ],
+    [
+      "aether:crystal_island",
+      "aether:cold_aercloud",
+      "aether:blue_aercloud",
+      "aether:golden_aercloud",
+      "aether:pink_aercloud"
+    ]
+  ],
+  "precipitation": "none",
+  "spawn_costs": {
+    "aether:zephyr": {
+      "charge": 0.7,
+      "energy_budget": 0.15
+    }
+  },
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [
+      {
+        "type": "aether:blue_swet",
+        "maxCount": 4,
+        "minCount": 3,
+        "weight": 15
+      },
+      {
+        "type": "aether:golden_swet",
+        "maxCount": 4,
+        "minCount": 3,
+        "weight": 15
+      },
+      {
+        "type": "aether:aechor_plant",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 29
+      },
+      {
+        "type": "aether:phyg",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 12
+      },
+      {
+        "type": "aether:aerbunny",
+        "maxCount": 3,
+        "minCount": 3,
+        "weight": 11
+      },
+      {
+        "type": "aether:sheepuff",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 10
+      },
+      {
+        "type": "aether:moa",
+        "maxCount": 3,
+        "minCount": 3,
+        "weight": 10
+      },
+      {
+        "type": "aether:flying_cow",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 10
+      },
+      {
+        "type": "aether:aerwhale",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 2
+      }
+    ],
+    "misc": [],
+    "monster": [
+      {
+        "type": "aether:whirlwind",
+        "maxCount": 2,
+        "minCount": 2,
+        "weight": 9
+      },
+      {
+        "type": "aether:evil_whirlwind",
+        "maxCount": 2,
+        "minCount": 2,
+        "weight": 1
+      },
+      {
+        "type": "aether:cockatrice",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 100
+      },
+      {
+        "type": "aether:zephyr",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 50
+      }
+    ],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.8
+}

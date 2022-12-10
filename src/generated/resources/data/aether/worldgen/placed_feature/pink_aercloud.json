@@ -1,0 +1,31 @@
+{
+  "feature": "aether:pink_aercloud",
+  "placement": [
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "max_inclusive": {
+          "absolute": 160
+        },
+        "min_inclusive": {
+          "above_bottom": 0
+        }
+      }
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 7
+    },
+    {
+      "type": "aether:dungeon_blacklist_filter"
+    },
+    {
+      "type": "aether:config_filter",
+      "value": "[World Generation, Generate Pink Aerclouds]"
+    }
+  ]
+}

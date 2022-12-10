@@ -3,6 +3,7 @@ package com.gildedgames.aether.data.resources;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.data.resources.builders.AetherNoiseBuilders;
 import net.minecraft.core.HolderGetter;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
@@ -18,9 +19,9 @@ public class AetherNoiseSettings {
         return ResourceKey.create(Registries.NOISE_SETTINGS, new ResourceLocation(Aether.MODID, name));
     }
 
-    public static void bootstrap(BootstapContext<NoiseGeneratorSettings> context) {
-        HolderGetter<DensityFunction> densityFunctions = context.lookup(Registries.DENSITY_FUNCTION);
-        HolderGetter<NormalNoise.NoiseParameters> noise = context.lookup(Registries.NOISE);
+    public static void bootstrap(BootstapContext<NoiseGeneratorSettings> context, HolderLookup.Provider vanillaRegistry) {
+        HolderGetter<DensityFunction> densityFunctions = vanillaRegistry.lookupOrThrow(Registries.DENSITY_FUNCTION);
+        HolderGetter<NormalNoise.NoiseParameters> noise = vanillaRegistry.lookupOrThrow(Registries.NOISE);
         context.register(SKYLANDS, AetherNoiseBuilders.skylandsNoiseSettings(densityFunctions, noise));
     }
 }

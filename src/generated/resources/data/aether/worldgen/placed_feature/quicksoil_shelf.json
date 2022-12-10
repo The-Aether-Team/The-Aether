@@ -1,0 +1,37 @@
+{
+  "feature": "aether:quicksoil_shelf",
+  "placement": [
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:heightmap",
+      "heightmap": "WORLD_SURFACE_WG"
+    },
+    {
+      "type": "aether:elevation_adjustment",
+      "value": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_inclusive": -2,
+          "min_inclusive": -4
+        }
+      }
+    },
+    {
+      "type": "aether:elevation_filter",
+      "maximum": 70,
+      "minimum": 47
+    },
+    {
+      "type": "aether:dungeon_blacklist_filter"
+    },
+    {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": {
+        "type": "minecraft:matching_block_tag",
+        "tag": "aether:quicksoil_can_generate"
+      }
+    }
+  ]
+}
