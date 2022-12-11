@@ -6,11 +6,8 @@ import com.gildedgames.aether.data.resources.AetherNoiseSettings;
 import com.gildedgames.aether.data.resources.builders.AetherBiomeBuilders;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
-import com.mojang.serialization.Lifecycle;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.MappedRegistry;
-import net.minecraft.core.WritableRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
@@ -31,24 +28,16 @@ import java.util.Map;
 
 public class AetherLevelStemData {
     public static DataProvider create(DataGenerator generator, ExistingFileHelper helper) {
-       //HolderLookup.Provider vanillaRegistry = AetherWorldGenData.getVanillaLookup();
-        HolderLookup.Provider aetherRegistry = AetherWorldGenData.createLookup(AetherWorldGenData.BUILDER);
-
+        HolderLookup.Provider aetherRegistry = AetherWorldGenData.createLookup();
         Map<ResourceLocation, LevelStem> map = new HashMap<>();
-
         RegistryOps<JsonElement> registryOps = RegistryOps.create(JsonOps.INSTANCE, aetherRegistry);
-
-
-
         HolderGetter<Biome> biomes = aetherRegistry.lookupOrThrow(Registries.BIOME);
         HolderGetter<NoiseGeneratorSettings> noiseSettings = aetherRegistry.lookupOrThrow(Registries.NOISE_SETTINGS);
         HolderGetter<DimensionType> dimensionTypes = aetherRegistry.lookupOrThrow(Registries.DIMENSION_TYPE);
         BiomeSource source = AetherBiomeBuilders.buildAetherBiomeSource(biomes);
         NoiseBasedChunkGenerator aetherChunkGen = new NoiseBasedChunkGenerator(source, noiseSettings.getOrThrow(AetherNoiseSettings.SKYLANDS));
         LevelStem levelStem = new LevelStem(dimensionTypes.getOrThrow(AetherDimensions.AETHER_DIMENSION_TYPE), aetherChunkGen);
-
         map.put(AetherDimensions.AETHER_LEVEL_STEM.location(), levelStem);
-
         final ResourceLocation registryId = Registries.LEVEL_STEM.location();
         final String registryFolder = registryId.getPath();
         return new JsonCodecProvider<>(generator, helper, Aether.MODID, registryOps, PackType.SERVER_DATA, registryFolder, LevelStem.CODEC, map);
