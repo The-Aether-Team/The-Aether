@@ -1,12 +1,3 @@
-allprojects {
-    // Allow 400 errors.
-    gradle.projectsEvaluated {
-        tasks.withType(JavaCompile) {
-            options.compilerArgs << "-Xmaxerrs" << "1000"
-        }
-    }
-}
-
 buildscript {
     repositories {
         maven {
@@ -130,7 +121,6 @@ dependencies {
         jarJar.ranged(it, "[${project.curios_version},)")
         jarJar.pin(it, "${project.curios_version}")
     }
-
 
     // compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-${project.crafttweaker_version}")
 

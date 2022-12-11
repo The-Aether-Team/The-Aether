@@ -6,10 +6,13 @@ import com.gildedgames.aether.block.AetherBlocks;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherCreativeTabs {
@@ -26,7 +29,10 @@ public class AetherCreativeTabs {
 
     @SubscribeEvent
     public static void registerCreativeModeTabs(CreativeModeTabEvent.Register event) {
-        AETHER_BUILDING_BLOCKS = event.registerCreativeModeTab(new ResourceLocation(Aether.MODID, "building_blocks"),
+        AETHER_BUILDING_BLOCKS = event.registerCreativeModeTab(
+                new ResourceLocation(Aether.MODID, "building_blocks"),
+                List.of(new ResourceLocation(Aether.MODID, "dungeon_blocks")),
+                List.of(CreativeModeTabs.SPAWN_EGGS),
                 builder -> builder.icon(() -> new ItemStack(AetherBlocks.HOLYSTONE_BRICKS.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".building_blocks"))
                         .displayItems((features, output, hasPermissions) -> {
@@ -73,7 +79,10 @@ public class AetherCreativeTabs {
                             output.accept(new ItemStack(AetherBlocks.AEROGEL_SLAB.get()));
                             output.accept(new ItemStack(AetherBlocks.AEROGEL_WALL.get()));
                         }));
-        AETHER_DUNGEON_BLOCKS = event.registerCreativeModeTab(new ResourceLocation(Aether.MODID, "dungeon_blocks"),
+        AETHER_DUNGEON_BLOCKS = event.registerCreativeModeTab(
+                new ResourceLocation(Aether.MODID, "dungeon_blocks"),
+                List.of(new ResourceLocation(Aether.MODID, "natural_blocks")),
+                List.of(new ResourceLocation(Aether.MODID, "building_blocks")),
                 builder -> builder.icon(() -> new ItemStack(AetherBlocks.SENTRY_STONE.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".dungeon_blocks"))
                         .displayItems((features, output, hasPermissions) -> {
@@ -121,7 +130,10 @@ public class AetherCreativeTabs {
                             output.accept(new ItemStack(AetherBlocks.TREASURE_CHEST.get()));
                             output.accept(new ItemStack(AetherBlocks.CHEST_MIMIC.get()));
                         }));
-        AETHER_NATURAL_BLOCKS = event.registerCreativeModeTab(new ResourceLocation(Aether.MODID, "natural_blocks"),
+        AETHER_NATURAL_BLOCKS = event.registerCreativeModeTab(
+                new ResourceLocation(Aether.MODID, "natural_blocks"),
+                List.of(new ResourceLocation(Aether.MODID, "functional_blocks")),
+                List.of(new ResourceLocation(Aether.MODID, "dungeon_blocks")),
                 builder -> builder.icon(() -> new ItemStack(AetherBlocks.AETHER_GRASS_BLOCK.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".natural_blocks"))
                         .displayItems((features, output, hasPermissions) -> {
@@ -157,7 +169,10 @@ public class AetherCreativeTabs {
                             output.accept(new ItemStack(AetherBlocks.PINK_AERCLOUD.get()));
                             output.accept(new ItemStack(AetherBlocks.PRESENT.get()));
                         }));
-        AETHER_FUNCTIONAL_BLOCKS = event.registerCreativeModeTab(new ResourceLocation(Aether.MODID, "functional_blocks"),
+        AETHER_FUNCTIONAL_BLOCKS = event.registerCreativeModeTab(
+                new ResourceLocation(Aether.MODID, "functional_blocks"),
+                List.of(new ResourceLocation(Aether.MODID, "redstone_blocks")),
+                List.of(new ResourceLocation(Aether.MODID, "natural_blocks")),
                 builder -> builder.icon(() -> new ItemStack(AetherBlocks.SKYROOT_SIGN.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".functional_blocks"))
                         .displayItems((features, output, hasPermissions) -> {
@@ -173,7 +188,10 @@ public class AetherCreativeTabs {
                             output.accept(new ItemStack(AetherBlocks.CHEST_MIMIC.get()));
                             output.accept(new ItemStack(AetherBlocks.PRESENT.get()));
                         }));
-        AETHER_REDSTONE_BLOCKS = event.registerCreativeModeTab(new ResourceLocation(Aether.MODID, "redstone_blocks"),
+        AETHER_REDSTONE_BLOCKS = event.registerCreativeModeTab(
+                new ResourceLocation(Aether.MODID, "redstone_blocks"),
+                List.of(new ResourceLocation(Aether.MODID, "tools_and_utilities")),
+                List.of(new ResourceLocation(Aether.MODID, "functional_blocks")),
                 builder -> builder.icon(() -> new ItemStack(AetherBlocks.SKYROOT_PRESSURE_PLATE.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".redstone_blocks"))
                         .displayItems((features, output, hasPermissions) -> {
@@ -191,7 +209,10 @@ public class AetherCreativeTabs {
                             output.accept(new ItemStack(AetherBlocks.SKYROOT_TRAPDOOR.get()));
                             output.accept(new ItemStack(AetherBlocks.ENCHANTED_GRAVITITE.get()));
                         }));
-        AETHER_TOOLS_AND_UTILITIES = event.registerCreativeModeTab(new ResourceLocation(Aether.MODID, "tools_and_utilities"),
+        AETHER_TOOLS_AND_UTILITIES = event.registerCreativeModeTab(
+                new ResourceLocation(Aether.MODID, "tools_and_utilities"),
+                List.of(new ResourceLocation(Aether.MODID, "combat")),
+                List.of(new ResourceLocation(Aether.MODID, "redstone_blocks")),
                 builder -> builder.icon(() -> new ItemStack(AetherItems.GRAVITITE_PICKAXE.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".tools_and_utilities"))
                         .displayItems((features, output, hasPermissions) -> {
@@ -266,7 +287,10 @@ public class AetherCreativeTabs {
                             output.accept(new ItemStack(AetherItems.MUSIC_DISC_LEGACY.get()));
                             output.accept(new ItemStack(AetherItems.MUSIC_DISC_CHINCHILLA.get()));
                         }));
-        AETHER_COMBAT = event.registerCreativeModeTab(new ResourceLocation(Aether.MODID, "combat"),
+        AETHER_COMBAT = event.registerCreativeModeTab(
+                new ResourceLocation(Aether.MODID, "combat"),
+                List.of(new ResourceLocation(Aether.MODID, "food_and_drinks")),
+                List.of(new ResourceLocation(Aether.MODID, "tools_and_utilities")),
                 builder -> builder.icon(() -> new ItemStack(AetherItems.HOLY_SWORD.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".combat"))
                         .displayItems((features, output, hasPermissions) -> {
@@ -340,7 +364,10 @@ public class AetherCreativeTabs {
                             output.accept(new ItemStack(AetherItems.IRON_BUBBLE.get()));
                             output.accept(new ItemStack(AetherItems.SHIELD_OF_REPULSION.get()));
                         }));
-        AETHER_FOOD_AND_DRINKS = event.registerCreativeModeTab(new ResourceLocation(Aether.MODID, "food_and_drinks"),
+        AETHER_FOOD_AND_DRINKS = event.registerCreativeModeTab(
+                new ResourceLocation(Aether.MODID, "food_and_drinks"),
+                List.of(new ResourceLocation(Aether.MODID, "ingredients")),
+                List.of(new ResourceLocation(Aether.MODID, "combat")),
                 builder -> builder.icon(() -> new ItemStack(AetherItems.BLUE_GUMMY_SWET.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".food_and_drinks"))
                         .displayItems((features, output, hasPermissions) -> {
@@ -361,7 +388,10 @@ public class AetherCreativeTabs {
                             output.accept(new ItemStack(AetherItems.AECHOR_PETAL.get()));
                             output.accept(new ItemStack(AetherItems.LIFE_SHARD.get()));
                         }));
-        AETHER_INGREDIENTS = event.registerCreativeModeTab(new ResourceLocation(Aether.MODID, "ingredients"),
+        AETHER_INGREDIENTS = event.registerCreativeModeTab(
+                new ResourceLocation(Aether.MODID, "ingredients"),
+                List.of(new ResourceLocation(Aether.MODID, "spawn_eggs")),
+                List.of(new ResourceLocation(Aether.MODID, "food_and_drinks")),
                 builder -> builder.icon(() -> new ItemStack(AetherItems.AMBROSIUM_SHARD.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".ingredients"))
                         .displayItems((features, output, hasPermissions) -> {
@@ -377,7 +407,10 @@ public class AetherCreativeTabs {
                             output.accept(new ItemStack(AetherItems.BLACK_MOA_EGG.get()));
                             output.accept(new ItemStack(AetherItems.ORANGE_MOA_EGG.get()));
                         }));
-        AETHER_SPAWN_EGGS = event.registerCreativeModeTab(new ResourceLocation(Aether.MODID, "spawn_eggs"),
+        AETHER_SPAWN_EGGS = event.registerCreativeModeTab(
+                new ResourceLocation(Aether.MODID, "spawn_eggs"),
+                List.of(),
+                List.of(new ResourceLocation(Aether.MODID, "ingredients")),
                 builder -> builder.icon(() -> new ItemStack(AetherItems.PHYG_SPAWN_EGG.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".spawn_eggs"))
                         .displayItems((features, output, hasPermissions) -> {
