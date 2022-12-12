@@ -8,11 +8,12 @@ import com.gildedgames.aether.inventory.menu.AetherMenuTypes;
 import com.gildedgames.aether.item.AetherCreativeTabs;
 import com.gildedgames.aether.item.AetherItems;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 
 public class AetherLanguageData extends AetherLanguageProvider
 {
-    public AetherLanguageData(DataGenerator gen) {
-        super(gen);
+    public AetherLanguageData(PackOutput packOutput) {
+        super(packOutput);
     }
 
     @Override

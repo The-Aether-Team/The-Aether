@@ -3,13 +3,14 @@ package com.gildedgames.aether.data.generators;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.SoundDefinitionsProvider;
 
 public class AetherSoundData extends SoundDefinitionsProvider
 {
-    public AetherSoundData(DataGenerator generator, ExistingFileHelper helper) {
-        super(generator, Aether.MODID, helper);
+    public AetherSoundData(PackOutput packOutput, ExistingFileHelper helper) {
+        super(packOutput, Aether.MODID, helper);
     }
 
     @Override

@@ -22,21 +22,21 @@ import net.minecraft.data.advancements.AdvancementProvider;
 import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.common.data.ForgeAdvancementProvider;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
-public class AetherAdvancementData {
-
-    public static AdvancementProvider create(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
-        return new AdvancementProvider(packOutput, lookupProvider, List.of(new AetherAdvancements()), existingFileHelper);
+public class AetherAdvancementData extends ForgeAdvancementProvider {
+    public AetherAdvancementData(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
+        super(packOutput, lookupProvider, existingFileHelper, List.of(new AetherAdvancements()));
     }
 
-    public static class AetherAdvancements implements AdvancementSubProvider {
+    public static class AetherAdvancements implements AdvancementGenerator {
         @Override
-        public void generate(HolderLookup.Provider provider, Consumer<Advancement> consumer) {
+        public void generate(HolderLookup.Provider provider, Consumer<Advancement> consumer, ExistingFileHelper existingFileHelper) { //todo rename values in here a bit to be more consistent
             Advancement enterAether = Advancement.Builder.advancement()
                     .display(Blocks.GLOWSTONE,
                             Component.translatable("advancement.aether.enter_aether"),
@@ -45,7 +45,7 @@ public class AetherAdvancementData {
                             FrameType.TASK, true, true, false)
                     .addCriterion("enter_aether", ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(AetherDimensions.AETHER_LEVEL))
                     .rewards(new AdvancementRewards(0, new ResourceLocation[]{AetherLoot.ENTER_AETHER}, new ResourceLocation[0], CommandFunction.CacheableFunction.NONE))
-                    .save(consumer, "aether:enter_aether");
+                    .save(consumer, new ResourceLocation(Aether.MODID, "enter_aether"), existingFileHelper);
 
             Advancement moreYouKnow = Advancement.Builder.advancement()
                     .parent(enterAether)
@@ -55,7 +55,7 @@ public class AetherAdvancementData {
                             null,
                             FrameType.TASK, true, true, false)
                     .addCriterion("lore_book_entry", LoreTrigger.Instance.forAny())
-                    .save(consumer, "aether:read_lore");
+                    .save(consumer, new ResourceLocation(Aether.MODID, "read_lore"), existingFileHelper);
             Advancement loreception = Advancement.Builder.advancement()
                     .parent(moreYouKnow)
                     .display(AetherItems.BOOK_OF_LORE.get(),
@@ -64,7 +64,7 @@ public class AetherAdvancementData {
                             null,
                             FrameType.TASK, true, true, true)
                     .addCriterion("lore_book_entry", LoreTrigger.Instance.forItem(AetherItems.BOOK_OF_LORE.get()))
-                    .save(consumer, "aether:loreception");
+                    .save(consumer, new ResourceLocation(Aether.MODID, "loreception"), existingFileHelper);
 
             Advancement toInfinityAndBeyond = Advancement.Builder.advancement()
                     .parent(enterAether)
@@ -74,7 +74,7 @@ public class AetherAdvancementData {
                             null,
                             FrameType.TASK, true, true, false)
                     .addCriterion("to_infinity_and_beyond", EnterBlockTrigger.TriggerInstance.entersBlock(AetherBlocks.BLUE_AERCLOUD.get()))
-                    .save(consumer, "aether:to_infinity_and_beyond");
+                    .save(consumer, new ResourceLocation(Aether.MODID, "to_infinity_and_beyond"), existingFileHelper);
             Advancement mountPhyg = Advancement.Builder.advancement()
                     .parent(toInfinityAndBeyond)
                     .display(Items.SADDLE,
@@ -83,7 +83,7 @@ public class AetherAdvancementData {
                             null,
                             FrameType.TASK, true, true, false)
                     .addCriterion("mount_phyg", StartRidingTrigger.TriggerInstance.playerStartsRiding(EntityPredicate.Builder.entity().vehicle(EntityPredicate.Builder.entity().of(AetherEntityTypes.PHYG.get()).build())))
-                    .save(consumer, "aether:mount_phyg");
+                    .save(consumer, new ResourceLocation(Aether.MODID, "mount_phyg"), existingFileHelper);
 
             Advancement craftIncubator = Advancement.Builder.advancement()
                     .parent(enterAether)
@@ -93,7 +93,7 @@ public class AetherAdvancementData {
                             null,
                             FrameType.TASK, true, true, false)
                     .addCriterion("craft_incubator", InventoryChangeTrigger.TriggerInstance.hasItems(AetherBlocks.INCUBATOR.get()))
-                    .save(consumer, "aether:craft_incubator");
+                    .save(consumer, new ResourceLocation(Aether.MODID, "craft_incubator"), existingFileHelper);
 
             Advancement craftAltar = Advancement.Builder.advancement()
                     .parent(enterAether)
@@ -103,7 +103,7 @@ public class AetherAdvancementData {
                             null,
                             FrameType.TASK, true, true, false)
                     .addCriterion("craft_altar", InventoryChangeTrigger.TriggerInstance.hasItems(AetherBlocks.ALTAR.get()))
-                    .save(consumer, "aether:craft_altar");
+                    .save(consumer, new ResourceLocation(Aether.MODID, "craft_altar"), existingFileHelper);
             Advancement gravititeTools = Advancement.Builder.advancement()
                     .parent(craftAltar)
                     .display(AetherItems.GRAVITITE_PICKAXE.get(),
@@ -116,7 +116,7 @@ public class AetherAdvancementData {
                     .addCriterion("gravitite_sword", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.GRAVITITE_SWORD.get()))
                     .addCriterion("gravitite_axe", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.GRAVITITE_AXE.get()))
                     .addCriterion("gravitite_shovel", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.GRAVITITE_SHOVEL.get()))
-                    .save(consumer, "aether:gravitite_tools");
+                    .save(consumer, new ResourceLocation(Aether.MODID, "gravitite_tools"), existingFileHelper);
 
             Advancement bronzeDungeon = Advancement.Builder.advancement()
                     .parent(enterAether)
@@ -126,7 +126,7 @@ public class AetherAdvancementData {
                             null,
                             FrameType.GOAL, true, true, false)
                     .addCriterion("kill_slider", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(AetherEntityTypes.SLIDER.get())))
-                    .save(consumer, "aether:bronze_dungeon");
+                    .save(consumer, new ResourceLocation(Aether.MODID, "bronze_dungeon"), existingFileHelper);
             Advancement silverDungeon = Advancement.Builder.advancement()
                     .parent(bronzeDungeon)
                     .display(AetherItems.SILVER_DUNGEON_KEY.get(),
@@ -135,7 +135,7 @@ public class AetherAdvancementData {
                             null,
                             FrameType.GOAL, true, true, false)
                     .addCriterion("kill_valkyrie_queen", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(AetherEntityTypes.VALKYRIE_QUEEN.get())))
-                    .save(consumer, "aether:silver_dungeon");
+                    .save(consumer, new ResourceLocation(Aether.MODID, "silver_dungeon"), existingFileHelper);
             Advancement goldDungeon = Advancement.Builder.advancement()
                     .parent(silverDungeon)
                     .display(AetherItems.GOLD_DUNGEON_KEY.get(),
@@ -144,7 +144,7 @@ public class AetherAdvancementData {
                             null,
                             FrameType.GOAL, true, true, false)
                     .addCriterion("kill_sun_spirit", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(AetherEntityTypes.SUN_SPIRIT.get())))
-                    .save(consumer, "aether:gold_dungeon");
+                    .save(consumer, new ResourceLocation(Aether.MODID, "gold_dungeon"), existingFileHelper);
         }
     }
 }

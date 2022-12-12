@@ -1,0 +1,29 @@
+{
+  "type": "aether:remove_seeds",
+  "conditions": [
+    {
+      "condition": "minecraft:alternative",
+      "terms": [
+        {
+          "block": "minecraft:grass",
+          "condition": "minecraft:block_state_property"
+        },
+        {
+          "block": "minecraft:tall_grass",
+          "condition": "minecraft:block_state_property"
+        }
+      ]
+    },
+    {
+      "condition": "minecraft:inverted",
+      "term": {
+        "condition": "minecraft:match_tool",
+        "predicate": {
+          "items": [
+            "minecraft:shears"
+          ]
+        }
+      }
+    }
+  ]
+}

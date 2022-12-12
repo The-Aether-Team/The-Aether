@@ -4,12 +4,13 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.data.providers.AetherBlockStateProvider;
 import com.gildedgames.aether.block.AetherBlocks;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class AetherBlockStateData extends AetherBlockStateProvider {
-    public AetherBlockStateData(DataGenerator dataGenerator, ExistingFileHelper existingFileHelper) {
-        super(dataGenerator, Aether.MODID, existingFileHelper);
+    public AetherBlockStateData(PackOutput packOutput, ExistingFileHelper existingFileHelper) {
+        super(packOutput, Aether.MODID, existingFileHelper);
     }
 
     @Override

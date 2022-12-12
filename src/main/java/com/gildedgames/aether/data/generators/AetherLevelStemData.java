@@ -11,6 +11,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
@@ -26,7 +27,7 @@ import net.minecraftforge.common.data.JsonCodecProvider;
 import java.util.Map;
 
 public class AetherLevelStemData {
-    public static DataProvider create(DataGenerator generator, ExistingFileHelper helper) {
+    public static DataProvider create(PackOutput packOutput, ExistingFileHelper helper) {
         HolderLookup.Provider aetherRegistry = AetherWorldGenData.createLookup();
         RegistryOps<JsonElement> registryOps = RegistryOps.create(JsonOps.INSTANCE, aetherRegistry);
         HolderGetter<Biome> biomes = aetherRegistry.lookupOrThrow(Registries.BIOME);
@@ -38,6 +39,6 @@ public class AetherLevelStemData {
         Map<ResourceLocation, LevelStem> map = Map.of(AetherDimensions.AETHER_LEVEL_STEM.location(), levelStem);
         final ResourceLocation registryId = Registries.LEVEL_STEM.location();
         final String registryFolder = registryId.getPath();
-        return new JsonCodecProvider<>(generator, helper, Aether.MODID, registryOps, PackType.SERVER_DATA, registryFolder, LevelStem.CODEC, map);
+        return new JsonCodecProvider<>(packOutput, helper, Aether.MODID, registryOps, PackType.SERVER_DATA, registryFolder, LevelStem.CODEC, map);
     }
 }

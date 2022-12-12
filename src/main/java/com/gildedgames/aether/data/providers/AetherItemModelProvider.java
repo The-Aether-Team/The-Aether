@@ -3,6 +3,7 @@ package com.gildedgames.aether.data.providers;
 import com.gildedgames.aether.Aether;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.core.Direction;
+import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Item;
@@ -17,8 +18,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.function.Supplier;
 
 public abstract class AetherItemModelProvider extends ItemModelProvider {
-    public AetherItemModelProvider(DataGenerator generator, ExistingFileHelper fileHelper) {
-        super(generator, Aether.MODID, fileHelper);
+    public AetherItemModelProvider(PackOutput packOutput, ExistingFileHelper fileHelper) {
+        super(packOutput, Aether.MODID, fileHelper);
     }
 
     public String blockName(Supplier<? extends Block> block) {

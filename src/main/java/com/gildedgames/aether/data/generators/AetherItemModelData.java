@@ -4,11 +4,12 @@ import com.gildedgames.aether.data.providers.AetherItemModelProvider;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.item.AetherItems;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class AetherItemModelData extends AetherItemModelProvider {
-    public AetherItemModelData(DataGenerator generator, ExistingFileHelper fileHelper) {
-        super(generator, fileHelper);
+    public AetherItemModelData(PackOutput packOutput, ExistingFileHelper fileHelper) {
+        super(packOutput, fileHelper);
     }
 
     @Override

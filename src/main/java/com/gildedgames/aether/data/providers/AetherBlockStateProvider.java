@@ -5,6 +5,7 @@ import com.gildedgames.aether.block.AetherBlockStateProperties;
 import com.gildedgames.aether.block.dungeon.DoorwayBlock;
 import com.gildedgames.aether.block.miscellaneous.UnstableObsidianBlock;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -18,8 +19,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.function.Supplier;
 
 public abstract class AetherBlockStateProvider extends BlockStateProvider {
-    public AetherBlockStateProvider(DataGenerator dataGenerator, String modId, ExistingFileHelper existingFileHelper) {
-        super(dataGenerator, modId, existingFileHelper);
+    public AetherBlockStateProvider(PackOutput packOutput, String modId, ExistingFileHelper existingFileHelper) {
+        super(packOutput, modId, existingFileHelper);
     }
 
     public ResourceLocation texture(String name) {

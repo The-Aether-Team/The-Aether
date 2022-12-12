@@ -2,6 +2,7 @@ package com.gildedgames.aether.data.providers;
 
 import com.gildedgames.aether.Aether;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -13,8 +14,8 @@ import java.util.function.Supplier;
 
 public abstract class AetherLanguageProvider extends LanguageProvider
 {
-    public AetherLanguageProvider(DataGenerator gen) {
-        super(gen, Aether.MODID, "en_us");
+    public AetherLanguageProvider(PackOutput packOutput) {
+        super(packOutput, Aether.MODID, "en_us");
     }
 
     public void addDiscDesc(Supplier<? extends Item> key, String name) {

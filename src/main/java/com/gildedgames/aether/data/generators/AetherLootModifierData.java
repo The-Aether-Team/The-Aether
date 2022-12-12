@@ -4,6 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.loot.modifiers.RemoveSeedsModifier;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.predicates.AlternativeLootItemCondition;
@@ -15,8 +16,8 @@ import net.minecraftforge.common.data.GlobalLootModifierProvider;
 import javax.annotation.Nonnull;
 
 public class AetherLootModifierData extends GlobalLootModifierProvider {
-    public AetherLootModifierData(DataGenerator dataGenerator) {
-        super(dataGenerator, Aether.MODID);
+    public AetherLootModifierData(PackOutput packOutput) {
+        super(packOutput, Aether.MODID);
     }
 
     @Nonnull

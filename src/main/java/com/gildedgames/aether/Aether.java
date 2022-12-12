@@ -102,13 +102,13 @@ public class Aether {
                 AetherFoliagePlacerTypes.FOLIAGE_PLACERS,
                 AetherTreeDecoratorTypes.TREE_DECORATORS,
                 AetherPoi.POI,
-                //AetherStructureTypes.STRUCTURE_TYPES,
-                //AetherStructurePieceTypes.STRUCTURE_PIECE_TYPES,
-                //AetherStructureProcessors.STRUCTURE_PROCESSOR_TYPES,
+                AetherStructureTypes.STRUCTURE_TYPES,
+                AetherStructurePieceTypes.STRUCTURE_PIECE_TYPES,
+                AetherStructureProcessors.STRUCTURE_PROCESSOR_TYPES,
                 AetherRecipeTypes.RECIPE_TYPES,
                 AetherRecipeSerializers.RECIPE_SERIALIZERS,
-                //AetherLootFunctions.LOOT_FUNCTION_TYPES,
-                //AetherLootConditions.LOOT_CONDITION_TYPES,
+                AetherLootFunctions.LOOT_FUNCTION_TYPES,
+                AetherLootConditions.LOOT_CONDITION_TYPES,
                 AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,
                 AetherSoundEvents.SOUNDS,
                 AetherGameEvents.GAME_EVENTS,
@@ -166,25 +166,25 @@ public class Aether {
         ExistingFileHelper helper = event.getExistingFileHelper();
 
         // Client Data
-        generator.addProvider(event.includeClient(), new AetherBlockStateData(generator, helper));
-        generator.addProvider(event.includeClient(), new AetherItemModelData(generator, helper));
-        generator.addProvider(event.includeClient(), new AetherLanguageData(generator));
-        generator.addProvider(event.includeClient(), new AetherSoundData(generator, helper));
+        generator.addProvider(event.includeClient(), new AetherBlockStateData(packOutput, helper));
+        generator.addProvider(event.includeClient(), new AetherItemModelData(packOutput, helper));
+        generator.addProvider(event.includeClient(), new AetherLanguageData(packOutput));
+        generator.addProvider(event.includeClient(), new AetherSoundData(packOutput, helper));
 
         // Server Data
         generator.addProvider(event.includeServer(), new AetherWorldGenData(packOutput));
-        generator.addProvider(event.includeServer(), AetherLevelStemData.create(generator, helper));
+        generator.addProvider(event.includeServer(), AetherLevelStemData.create(packOutput, helper));
         generator.addProvider(event.includeServer(), new AetherRecipeData(packOutput));
-//        generator.addProvider(event.includeServer(), AetherLootTableData.create(packOutput));
-//        generator.addProvider(event.includeServer(), new AetherLootModifierData(generator));
-        generator.addProvider(event.includeServer(), AetherAdvancementData.create(packOutput, lookupProvider, helper));
+        generator.addProvider(event.includeServer(), AetherLootTableData.create(packOutput));
+        generator.addProvider(event.includeServer(), new AetherLootModifierData(packOutput));
+        generator.addProvider(event.includeServer(), new AetherAdvancementData(packOutput, lookupProvider, helper));
         AetherBlockTagData blockTags = new AetherBlockTagData(packOutput, lookupProvider, helper);
         generator.addProvider(event.includeServer(), blockTags);
         generator.addProvider(event.includeServer(), new AetherItemTagData(packOutput, lookupProvider, blockTags, helper));
         generator.addProvider(event.includeServer(), new AetherEntityTagData(packOutput, lookupProvider, helper));
         generator.addProvider(event.includeServer(), new AetherFluidTagData(packOutput, lookupProvider, helper));
         generator.addProvider(event.includeServer(), new AetherBiomeTagData(packOutput, lookupProvider, helper));
-//        generator.addProvider(event.includeServer(), new AetherStructureTagData(packOutput, lookupProvider, helper));
+        generator.addProvider(event.includeServer(), new AetherStructureTagData(packOutput, lookupProvider, helper));
     }
 
     public void packSetup(AddPackFindersEvent event) {
