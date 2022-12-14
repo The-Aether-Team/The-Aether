@@ -1,6 +1,5 @@
 package com.gildedgames.aether;
 
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
