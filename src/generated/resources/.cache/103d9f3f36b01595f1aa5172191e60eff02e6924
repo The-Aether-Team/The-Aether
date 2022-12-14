@@ -1,4 +1,4 @@
-// 1.19.3	2022-12-12T12:51:18.8813938	Registries
+// 1.19.3	2022-12-13T21:19:02.5944878	Registries
 5655d4cd818dbc73a0baa2590d80dd274f85927d data/aether/dimension_type/the_aether.json
 a89f0e3dbdd783366860d85ce52f274b674cb174 data/aether/worldgen/biome/golden_forest.json
 f854a336e46654b1e33f12e9e3915dc6b96557b8 data/aether/worldgen/biome/skyroot_forest.json
@@ -27,7 +27,7 @@ ad9a38a87e4927b4b215fd473dbc459ed0a462bf data/aether/worldgen/configured_feature
 e3a804c5d61371bc4fdfe9132d82488a30f465e8 data/aether/worldgen/configured_feature/water_lake.json
 07742c52dac96e2e6dff9d8a1385bd2e81dcc4d5 data/aether/worldgen/configured_feature/water_spring.json
 d42cdab79461449679a4a4ba478d5ca037b578ab data/aether/worldgen/configured_feature/zanite_ore.json
-643a5d94b24d8abb0c5e0b232953d4e6d0d6a8dc data/aether/worldgen/noise_settings/skylands.json
+074fd227247dd9813023f1443ce697b34337da96 data/aether/worldgen/noise_settings/skylands.json
 ae63d0e0f5d9c44eb75e02fc596fb3564e1c1ab8 data/aether/worldgen/placed_feature/aether_dirt_ore.json
 abcf2c1d93a2b2e6fbb0a13571253e76d8768747 data/aether/worldgen/placed_feature/ambrosium_ore.json
 1d87df9577a9df7d5dc62b1930fedb1e4183d4f9 data/aether/worldgen/placed_feature/blue_aercloud.json

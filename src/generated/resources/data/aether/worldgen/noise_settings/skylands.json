@@ -66,37 +66,10 @@
                         "argument1": 23.4375,
                         "argument2": {
                           "type": "minecraft:mul",
-                          "argument1": {
-                            "type": "minecraft:old_blended_noise",
-                            "smear_scale_multiplier": 8.0,
-                            "xz_factor": 80.0,
-                            "xz_scale": 0.25,
-                            "y_factor": 160.0,
-                            "y_scale": 0.125
-                          },
+                          "argument1": "minecraft:overworld/base_3d_noise",
                           "argument2": {
                             "type": "minecraft:noise",
-                            "noise": {
-                              "amplitudes": [
-                                1.0,
-                                1.0,
-                                1.0,
-                                1.0,
-                                1.0,
-                                1.0,
-                                1.0,
-                                1.0,
-                                1.0,
-                                1.0,
-                                1.0,
-                                1.0,
-                                1.0,
-                                1.0,
-                                1.0,
-                                1.0
-                              ],
-                              "firstOctave": -16
-                            },
+                            "noise": "minecraft:jagged",
                             "xz_scale": 3.0,
                             "y_scale": 1.0
                           }
@@ -118,107 +91,19 @@
     "ridges": 0.0,
     "temperature": {
       "type": "minecraft:shifted_noise",
-      "noise": {
-        "amplitudes": [
-          1.5,
-          0.0,
-          1.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "firstOctave": -10
-      },
-      "shift_x": {
-        "type": "minecraft:flat_cache",
-        "argument": {
-          "type": "minecraft:cache_2d",
-          "argument": {
-            "type": "minecraft:shift_a",
-            "argument": {
-              "amplitudes": [
-                1.0,
-                1.0,
-                1.0,
-                0.0
-              ],
-              "firstOctave": -3
-            }
-          }
-        }
-      },
+      "noise": "minecraft:temperature",
+      "shift_x": "minecraft:shift_x",
       "shift_y": 0.0,
-      "shift_z": {
-        "type": "minecraft:flat_cache",
-        "argument": {
-          "type": "minecraft:cache_2d",
-          "argument": {
-            "type": "minecraft:shift_b",
-            "argument": {
-              "amplitudes": [
-                1.0,
-                1.0,
-                1.0,
-                0.0
-              ],
-              "firstOctave": -3
-            }
-          }
-        }
-      },
+      "shift_z": "minecraft:shift_z",
       "xz_scale": 0.25,
       "y_scale": 0.0
     },
     "vegetation": {
       "type": "minecraft:shifted_noise",
-      "noise": {
-        "amplitudes": [
-          1.0,
-          1.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "firstOctave": -8
-      },
-      "shift_x": {
-        "type": "minecraft:flat_cache",
-        "argument": {
-          "type": "minecraft:cache_2d",
-          "argument": {
-            "type": "minecraft:shift_a",
-            "argument": {
-              "amplitudes": [
-                1.0,
-                1.0,
-                1.0,
-                0.0
-              ],
-              "firstOctave": -3
-            }
-          }
-        }
-      },
+      "noise": "minecraft:vegetation",
+      "shift_x": "minecraft:shift_x",
       "shift_y": 0.0,
-      "shift_z": {
-        "type": "minecraft:flat_cache",
-        "argument": {
-          "type": "minecraft:cache_2d",
-          "argument": {
-            "type": "minecraft:shift_b",
-            "argument": {
-              "amplitudes": [
-                1.0,
-                1.0,
-                1.0,
-                0.0
-              ],
-              "firstOctave": -3
-            }
-          }
-        }
-      },
+      "shift_z": "minecraft:shift_z",
       "xz_scale": 0.25,
       "y_scale": 0.0
     },

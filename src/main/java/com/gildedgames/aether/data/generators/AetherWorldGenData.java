@@ -12,6 +12,8 @@ import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 
 public class AetherWorldGenData extends DatapackBuiltinEntriesProvider {
     public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
+            .add(Registries.NOISE, (context) -> {})
+            .add(Registries.DENSITY_FUNCTION, (context) -> {})
             .add(Registries.CONFIGURED_FEATURE, AetherConfiguredFeatures::bootstrap)
             .add(Registries.PLACED_FEATURE, AetherPlacedFeatures::bootstrap)
             .add(Registries.BIOME, AetherBiomes::bootstrap)
