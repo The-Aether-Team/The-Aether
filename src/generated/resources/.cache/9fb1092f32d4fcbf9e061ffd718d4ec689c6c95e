@@ -1,4 +1,4 @@
-// 1.19.3	2022-12-09T20:01:04.4780298	Recipes
+// 1.19.3	2022-12-14T13:45:09.5678544	Recipes
 1d7abc4c8c4e7132f31bd563a8dd82a8f3285d0d data/aether/advancements/recipes/building_blocks/aerogel_slab.json
 dbe4c5ba304edd15e0d2f32943f1af7635b34037 data/aether/advancements/recipes/building_blocks/aerogel_slab_stonecutting.json
 6e53af7c3f7e89910ad337753c6d70a4cdcf0440 data/aether/advancements/recipes/building_blocks/aerogel_stairs.json
@@ -609,4 +609,3 @@ be914f8c3179f0dc58c3b1696f50d0acfb3828b7 data/aether/recipes/zanite_shovel.json
 f772375407117eb533abd226dd5a4ec000b0477a data/aether/recipes/zanite_shovel_repairing.json
 c559888f1adc6c022f4563d59c64d5f16d3e320f data/aether/recipes/zanite_sword.json
 b3d48d2640589055d05bbc11141e3794a690a575 data/aether/recipes/zanite_sword_repairing.json
-d248c5232893b08a0d5830d0f2f575fd11fe9f3a data/minecraft/advancements/recipes/root.json

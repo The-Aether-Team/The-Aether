@@ -30,11 +30,6 @@ public class AetherRecipeData extends AetherRecipeProvider {
     }
 
     @Override
-    public CompletableFuture<?> run(CachedOutput p_254376_) {
-        return CompletableFuture.allOf(super.run(p_254376_), this.buildAdvancement(p_254376_, RecipeBuilder.ROOT_RECIPE_ADVANCEMENT, Advancement.Builder.advancement().addCriterion("impossible", new ImpossibleTrigger.TriggerInstance())));
-    }
-
-    @Override
     protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.MOSSY_HOLYSTONE.get())
                 .requires(AetherBlocks.HOLYSTONE.get())
