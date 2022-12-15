@@ -14,6 +14,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.StackedContents;
@@ -211,7 +212,12 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 			EntityType<?> entityType = recipe.getEntity();
 			BlockPos spawnPos = this.getBlockPos().above();
 			if (this.getLevel() != null && !this.getLevel().isClientSide() && this.getLevel() instanceof ServerLevel serverLevel) {
-				entityType.spawn(serverLevel, itemStack, null, spawnPos, MobSpawnType.TRIGGERED, true, false);
+				CompoundTag tag = recipe.getTag();
+				Component customName = itemStack.hasCustomHoverName() ? itemStack.getHoverName() : null;
+				Entity entity = entityType.spawn(serverLevel, tag, null, spawnPos, MobSpawnType.TRIGGERED, true, false);
+				if (entity != null) {
+					entity.setCustomName(customName);
+				}
 			}
 			itemStack.shrink(1);
 			return true;
