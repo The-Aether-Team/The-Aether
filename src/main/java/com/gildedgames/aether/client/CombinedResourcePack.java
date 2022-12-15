@@ -53,16 +53,6 @@ public class CombinedResourcePack extends DelegatingPackResources {
         return String.format(Locale.ROOT, "%s/%s/%s", pType.getDirectory(), pLocation.getNamespace(), pLocation.getPath());
     }
 
-
-//    @Nonnull
-//    @Override
-//    protected InputStream getResource(@Nonnull String name) throws IOException {
-//        final Path path = resolve(name);
-//        if(!Files.exists(path))
-//            throw new FileNotFoundException("Can't find resource " + name + " at " + getSource());
-//        return Files.newInputStream(path, StandardOpenOption.READ);
-//    }
-
     @Override
     public String toString() {
         return String.format("%s: %s", getClass().getName(), getSource());
