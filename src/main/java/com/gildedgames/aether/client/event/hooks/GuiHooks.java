@@ -23,6 +23,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.LerpingBossEvent;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
@@ -136,6 +137,7 @@ public class GuiHooks {
                         AetherConfig.CLIENT.enable_world_preview.save();
                         WorldDisplayHelper.toggleWorldPreview(AetherConfig.CLIENT.enable_world_preview.get());
                     });
+            dynamicMenuButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.menu.preview")));
             dynamicMenuButton.setDisplayConfigs(AetherConfig.CLIENT.enable_world_preview_button);
             return dynamicMenuButton;
         }
@@ -152,6 +154,7 @@ public class GuiHooks {
                         Minecraft.getInstance().getMusicManager().stopPlaying();
                         AetherMusicManager.stopPlaying();
                     });
+            dynamicMenuButton.setTooltip(Tooltip.create(Component.translatable(AetherConfig.CLIENT.enable_aether_menu.get() ? "gui.aether.menu.minecraft" : "gui.aether.menu.aether")));
             dynamicMenuButton.setOffsetConfigs(AetherConfig.CLIENT.enable_world_preview_button);
             dynamicMenuButton.setDisplayConfigs(AetherConfig.CLIENT.enable_aether_menu_button);
             return dynamicMenuButton;
@@ -167,6 +170,7 @@ public class GuiHooks {
                         Minecraft.getInstance().getMusicManager().stopPlaying();
                         AetherMusicManager.stopPlaying(); //todo doesn't quite work. might need to stop it through the sound manager
                     });
+            dynamicMenuButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.menu.load")));
             dynamicMenuButton.setOffsetConfigs(AetherConfig.CLIENT.enable_world_preview_button, AetherConfig.CLIENT.enable_aether_menu_button);
             dynamicMenuButton.setDisplayConfigs(AetherConfig.CLIENT.enable_world_preview, AetherConfig.CLIENT.enable_quick_load_button);
             return dynamicMenuButton;

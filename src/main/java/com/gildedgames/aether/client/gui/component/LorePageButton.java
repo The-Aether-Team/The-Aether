@@ -11,8 +11,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.network.chat.Component;
 
-import net.minecraft.client.gui.components.Button.OnPress;
-
 public class LorePageButton extends Button
 {
     private static final ResourceLocation BUTTON_TEXTURES = new ResourceLocation(Aether.MODID, "textures/gui/menu/lore_widgets.png");
