@@ -123,7 +123,7 @@ public class GuiHooks {
         Player entity = minecraft.player;
         if (entity != null) {
             if (AetherKeys.OPEN_ACCESSORY_INVENTORY.consumeClick() && minecraft.isWindowActive()) {
-                AetherPacketHandler.sendToServer(new OpenAccessoriesPacket(entity.getId(), ItemStack.EMPTY));
+                AetherPacketHandler.sendToServer(new OpenAccessoriesPacket(ItemStack.EMPTY));
                 shouldAddButton = false;
             }
         }

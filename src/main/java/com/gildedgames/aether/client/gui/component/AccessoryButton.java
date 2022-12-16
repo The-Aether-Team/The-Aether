@@ -34,9 +34,9 @@ public class AccessoryButton extends ImageButton
                             InventoryScreen inventory = new InventoryScreen(player);
                             minecraft.setScreen(inventory);
                             player.inventoryMenu.setCarried(stack);
-                            AetherPacketHandler.sendToServer(new OpenInventoryPacket(player.getId(), stack));
+                            AetherPacketHandler.sendToServer(new OpenInventoryPacket(stack));
                         } else {
-                            AetherPacketHandler.sendToServer(new OpenAccessoriesPacket(player.getId(), stack));
+                            AetherPacketHandler.sendToServer(new OpenAccessoriesPacket(stack));
                         }
                     }
                 });

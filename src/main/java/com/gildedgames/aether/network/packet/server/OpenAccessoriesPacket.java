@@ -12,28 +12,26 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkHooks;
 
-public record OpenAccessoriesPacket(int playerID, ItemStack carryStack) implements AetherPacket {
+public record OpenAccessoriesPacket(ItemStack carryStack) implements AetherPacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
-        buf.writeInt(this.playerID);
         buf.writeItem(this.carryStack);
     }
 
     public static OpenAccessoriesPacket decode(FriendlyByteBuf buf) {
-        int playerID = buf.readInt();
         ItemStack carryStack = buf.readItem();
-        return new OpenAccessoriesPacket(playerID, carryStack);
+        return new OpenAccessoriesPacket(carryStack);
     }
 
     @Override
     public void execute(Player player) {
-        if (player != null && player.getServer() != null && player.level.getEntity(this.playerID) instanceof ServerPlayer serverPlayer) {
+        if (player != null && player.getServer() != null && player instanceof ServerPlayer serverPlayer) {
             ItemStack itemStack = serverPlayer.isCreative() ? this.carryStack : serverPlayer.containerMenu.getCarried();
             serverPlayer.containerMenu.setCarried(ItemStack.EMPTY);
             NetworkHooks.openScreen(serverPlayer, new SimpleMenuProvider((id, inventory, playerEntity) -> new AccessoriesMenu(id, inventory), Component.translatable("container.crafting")));
             if (!itemStack.isEmpty()) {
                 serverPlayer.containerMenu.setCarried(itemStack);
-                AetherPacketHandler.sendToPlayer(new ClientGrabItemPacket(serverPlayer.getId(), itemStack), serverPlayer);
+                AetherPacketHandler.sendToPlayer(new ClientGrabItemPacket(itemStack), serverPlayer);
             }
         }
     }
