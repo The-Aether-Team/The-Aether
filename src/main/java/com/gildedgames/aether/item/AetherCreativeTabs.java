@@ -311,6 +311,7 @@ public class AetherCreativeTabs {
                             output.accept(new ItemStack(AetherItems.CANDY_CANE_SWORD.get()));
                             output.accept(new ItemStack(AetherItems.HAMMER_OF_NOTCH.get()));
                             output.accept(new ItemStack(AetherItems.LIGHTNING_KNIFE.get()));
+                            output.accept(new ItemStack(AetherItems.CLOUD_STAFF.get()));
                             output.accept(new ItemStack(AetherItems.LEATHER_GLOVES.get()));
                             output.accept(new ItemStack(AetherItems.CHAINMAIL_GLOVES.get()));
                             output.accept(new ItemStack(AetherItems.IRON_GLOVES.get()));

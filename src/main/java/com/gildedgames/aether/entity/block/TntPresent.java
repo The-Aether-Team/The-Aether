@@ -3,6 +3,7 @@ package com.gildedgames.aether.entity.block;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -103,5 +104,11 @@ public class TntPresent extends Entity {
         if (tag.contains("Fuse")) {
             this.setFuse(tag.getShort("Fuse"));
         }
+    }
+
+    @Nonnull
+    @Override
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
     }
 }
