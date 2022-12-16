@@ -329,13 +329,12 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
      * Allows the valkyrie to establish a path through the air while descending.
      */
     public static class ValkyrieNodeEvaluator extends FlyNodeEvaluator {
-
         /**
          * Returns a mapped point or creates and adds one
          */
         @Override
         @Nullable
-        protected Node getNode(int pX, int pY, int pZ) {
+        protected Node findAcceptedNode(int pX, int pY, int pZ) {
             Node node = null;
             FlyNodeEvaluatorAccessor flyNodeEvaluatorAccessor = (FlyNodeEvaluatorAccessor) this;
             BlockPathTypes blockpathtypes = flyNodeEvaluatorAccessor.callGetCachedBlockPathType(pX, pY, pZ);
