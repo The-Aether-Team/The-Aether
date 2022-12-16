@@ -12,7 +12,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Quaternionf;
-import org.joml.Vector3f;
 import net.minecraft.world.inventory.InventoryMenu;
 
 import javax.annotation.Nonnull;

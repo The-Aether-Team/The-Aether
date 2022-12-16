@@ -20,7 +20,6 @@ import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.block.DoubleBlockCombiner;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import org.joml.Vector3f;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
