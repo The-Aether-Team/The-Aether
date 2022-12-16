@@ -391,9 +391,9 @@
   "gui.aether.valkyrie.dialog.medal.1": "嗯哼？……不错的奖牌。",
   "gui.aether.valkyrie.dialog.medal.2": "那倒是挺令人印象深刻的，但你不会想要挑战一名真正的武神族人的。",
   "gui.aether.valkyrie.dialog.medal.3": "好吧，你觉得自己是个硬汉？那就来吧！",
-  "gui.aether.valkyrie.dialog.playerdead.1": "你想要奖章？那就试着别那么软弱吧！",
-  "gui.aether.valkyrie.dialog.playerdead.2": "会有那么一天的， %s... 会有的。",
-  "gui.aether.valkyrie.dialog.playerdead.3": "人类真是过于自信的物种，不是么？",
+  "gui.aether.valkyrie.dialog.playerdeath.1": "你想要奖章？那就试着别那么软弱吧！",
+  "gui.aether.valkyrie.dialog.playerdeath.2": "会有那么一天的， %s... 会有的。",
+  "gui.aether.valkyrie.dialog.playerdeath.3": "人类真是过于自信的物种，不是么？",
 
   "item.aether.aechor_petal": "箭毒花瓣",
   "item.aether.aechor_plant_spawn_egg": "生成 箭毒花",

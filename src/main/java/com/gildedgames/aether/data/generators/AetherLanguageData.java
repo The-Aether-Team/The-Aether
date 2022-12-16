@@ -648,9 +648,9 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("valkyrie.dialog.medal.2", "That's pretty impressive, but you won't defeat me.");
         addGuiText("valkyrie.dialog.medal.3", "You think you're a tough guy, eh? Well, bring it on!");
 
-        addGuiText("valkyrie.dialog.playerdead.1", "You want a medallion? Try being less pathetic.");
-        addGuiText("valkyrie.dialog.playerdead.2", "Maybe some day, %s... maybe some day.");
-        addGuiText("valkyrie.dialog.playerdead.3", "Humans aren't nearly as cute when they're dead.");
+        addGuiText("valkyrie.dialog.playerdeath.1", "You want a medallion? Try being less pathetic.");
+        addGuiText("valkyrie.dialog.playerdeath.2", "Maybe some day, %s... maybe some day.");
+        addGuiText("valkyrie.dialog.playerdeath.3", "Humans aren't nearly as cute when they're dead.");
 
         //Valkyrie queen dialogue
         addGuiText("queen.dialog.answer", "This is a sanctuary for us Valkyries who seek rest.");
