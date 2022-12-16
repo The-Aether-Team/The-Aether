@@ -2,7 +2,6 @@ package com.gildedgames.aether.network.packet.client;
 
 import com.gildedgames.aether.network.AetherPacket;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
