@@ -83,7 +83,7 @@ public class AetherCreativeTabs {
                 new ResourceLocation(Aether.MODID, "dungeon_blocks"),
                 List.of(new ResourceLocation(Aether.MODID, "natural_blocks")),
                 List.of(new ResourceLocation(Aether.MODID, "building_blocks")),
-                builder -> builder.icon(() -> new ItemStack(AetherBlocks.SENTRY_STONE.get()))
+                builder -> builder.icon(() -> new ItemStack(AetherBlocks.LIGHT_ANGELIC_STONE.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".dungeon_blocks"))
                         .displayItems((features, output, hasPermissions) -> {
                             output.accept(new ItemStack(AetherBlocks.CARVED_STONE.get()));
@@ -192,7 +192,7 @@ public class AetherCreativeTabs {
                 new ResourceLocation(Aether.MODID, "redstone_blocks"),
                 List.of(new ResourceLocation(Aether.MODID, "tools_and_utilities")),
                 List.of(new ResourceLocation(Aether.MODID, "functional_blocks")),
-                builder -> builder.icon(() -> new ItemStack(AetherBlocks.SKYROOT_PRESSURE_PLATE.get()))
+                builder -> builder.icon(() -> new ItemStack(AetherBlocks.SKYROOT_FENCE_GATE.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".redstone_blocks"))
                         .displayItems((features, output, hasPermissions) -> {
                             output.accept(new ItemStack(AetherBlocks.SKYROOT_BUTTON.get()));
@@ -216,51 +216,46 @@ public class AetherCreativeTabs {
                 builder -> builder.icon(() -> new ItemStack(AetherItems.GRAVITITE_PICKAXE.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".equipment_and_utilities"))
                         .displayItems((features, output, hasPermissions) -> {
+                            output.accept(new ItemStack(AetherItems.SKYROOT_SWORD.get()));
                             output.accept(new ItemStack(AetherItems.SKYROOT_SHOVEL.get()));
                             output.accept(new ItemStack(AetherItems.SKYROOT_PICKAXE.get()));
                             output.accept(new ItemStack(AetherItems.SKYROOT_AXE.get()));
                             output.accept(new ItemStack(AetherItems.SKYROOT_HOE.get()));
+                            output.accept(new ItemStack(AetherItems.HOLYSTONE_SWORD.get()));
                             output.accept(new ItemStack(AetherItems.HOLYSTONE_SHOVEL.get()));
                             output.accept(new ItemStack(AetherItems.HOLYSTONE_PICKAXE.get()));
                             output.accept(new ItemStack(AetherItems.HOLYSTONE_AXE.get()));
                             output.accept(new ItemStack(AetherItems.HOLYSTONE_HOE.get()));
+                            output.accept(new ItemStack(AetherItems.ZANITE_SWORD.get()));
                             output.accept(new ItemStack(AetherItems.ZANITE_SHOVEL.get()));
                             output.accept(new ItemStack(AetherItems.ZANITE_PICKAXE.get()));
                             output.accept(new ItemStack(AetherItems.ZANITE_AXE.get()));
                             output.accept(new ItemStack(AetherItems.ZANITE_HOE.get()));
+                            output.accept(new ItemStack(AetherItems.GRAVITITE_SWORD.get()));
                             output.accept(new ItemStack(AetherItems.GRAVITITE_SHOVEL.get()));
                             output.accept(new ItemStack(AetherItems.GRAVITITE_PICKAXE.get()));
                             output.accept(new ItemStack(AetherItems.GRAVITITE_AXE.get()));
                             output.accept(new ItemStack(AetherItems.GRAVITITE_HOE.get()));
+                            output.accept(new ItemStack(AetherItems.VALKYRIE_LANCE.get()));
                             output.accept(new ItemStack(AetherItems.VALKYRIE_SHOVEL.get()));
                             output.accept(new ItemStack(AetherItems.VALKYRIE_PICKAXE.get()));
                             output.accept(new ItemStack(AetherItems.VALKYRIE_AXE.get()));
                             output.accept(new ItemStack(AetherItems.VALKYRIE_HOE.get()));
-                            output.accept(new ItemStack(AetherItems.SKYROOT_SWORD.get()));
-                            output.accept(new ItemStack(AetherItems.HOLYSTONE_SWORD.get()));
-                            output.accept(new ItemStack(AetherItems.ZANITE_SWORD.get()));
-                            output.accept(new ItemStack(AetherItems.GRAVITITE_SWORD.get()));
-                            output.accept(new ItemStack(AetherItems.VALKYRIE_LANCE.get()));
-                            output.accept(new ItemStack(AetherItems.SKYROOT_AXE.get()));
-                            output.accept(new ItemStack(AetherItems.HOLYSTONE_AXE.get()));
-                            output.accept(new ItemStack(AetherItems.ZANITE_AXE.get()));
-                            output.accept(new ItemStack(AetherItems.GRAVITITE_AXE.get()));
-                            output.accept(new ItemStack(AetherItems.VALKYRIE_AXE.get()));
-                            output.accept(new ItemStack(AetherItems.FLAMING_SWORD.get()));
-                            output.accept(new ItemStack(AetherItems.LIGHTNING_SWORD.get()));
-                            output.accept(new ItemStack(AetherItems.HOLY_SWORD.get()));
-                            output.accept(new ItemStack(AetherItems.VAMPIRE_BLADE.get()));
-                            output.accept(new ItemStack(AetherItems.CANDY_CANE_SWORD.get()));
-                            output.accept(new ItemStack(AetherItems.HAMMER_OF_NOTCH.get()));
-                            output.accept(new ItemStack(AetherItems.LIGHTNING_KNIFE.get()));
-                            output.accept(new ItemStack(AetherItems.CLOUD_STAFF.get()));
                             output.accept(new ItemStack(AetherItems.GOLDEN_DART_SHOOTER.get()));
                             output.accept(new ItemStack(AetherItems.GOLDEN_DART.get()));
                             output.accept(new ItemStack(AetherItems.POISON_DART_SHOOTER.get()));
                             output.accept(new ItemStack(AetherItems.POISON_DART.get()));
                             output.accept(new ItemStack(AetherItems.ENCHANTED_DART_SHOOTER.get()));
                             output.accept(new ItemStack(AetherItems.ENCHANTED_DART.get()));
+                            output.accept(new ItemStack(AetherItems.CANDY_CANE_SWORD.get()));
+                            output.accept(new ItemStack(AetherItems.HOLY_SWORD.get()));
+                            output.accept(new ItemStack(AetherItems.VAMPIRE_BLADE.get()));
+                            output.accept(new ItemStack(AetherItems.LIGHTNING_SWORD.get()));
+                            output.accept(new ItemStack(AetherItems.LIGHTNING_KNIFE.get()));
+                            output.accept(new ItemStack(AetherItems.FLAMING_SWORD.get()));
                             output.accept(new ItemStack(AetherItems.PHOENIX_BOW.get()));
+                            output.accept(new ItemStack(AetherItems.HAMMER_OF_NOTCH.get()));
+                            output.accept(new ItemStack(AetherItems.CLOUD_STAFF.get()));
                             output.accept(new ItemStack(AetherItems.SKYROOT_BUCKET.get()));
                             output.accept(new ItemStack(AetherItems.SKYROOT_WATER_BUCKET.get()));
                             output.accept(new ItemStack(AetherItems.SKYROOT_PUFFERFISH_BUCKET.get()));
@@ -276,13 +271,13 @@ public class AetherCreativeTabs {
                             output.accept(new ItemStack(AetherItems.BOOK_OF_LORE.get()));
                             output.accept(new ItemStack(AetherItems.COLD_PARACHUTE.get()));
                             output.accept(new ItemStack(AetherItems.GOLDEN_PARACHUTE.get()));
+                            output.accept(new ItemStack(AetherItems.AMBROSIUM_SHARD.get()));
+                            output.accept(new ItemStack(AetherItems.SWET_BALL.get()));
                             output.accept(new ItemStack(AetherItems.BLUE_MOA_EGG.get()));
                             output.accept(new ItemStack(AetherItems.WHITE_MOA_EGG.get()));
                             output.accept(new ItemStack(AetherItems.BLACK_MOA_EGG.get()));
                             output.accept(new ItemStack(AetherItems.ORANGE_MOA_EGG.get()));
                             output.accept(new ItemStack(AetherItems.NATURE_STAFF.get()));
-                            output.accept(new ItemStack(AetherItems.AMBROSIUM_SHARD.get()));
-                            output.accept(new ItemStack(AetherItems.SWET_BALL.get()));
                             output.accept(new ItemStack(AetherItems.SKYROOT_BOAT.get()));
                             output.accept(new ItemStack(AetherItems.SKYROOT_CHEST_BOAT.get()));
                             output.accept(new ItemStack(AetherItems.BRONZE_DUNGEON_KEY.get()));
@@ -300,7 +295,7 @@ public class AetherCreativeTabs {
                 new ResourceLocation(Aether.MODID, "armor_and_accessories"),
                 List.of(new ResourceLocation(Aether.MODID, "food_and_drinks")),
                 List.of(new ResourceLocation(Aether.MODID, "equipment_and_utilities")),
-                builder -> builder.icon(() -> new ItemStack(AetherItems.GRAVITITE_CHESTPLATE.get()))
+                builder -> builder.icon(() -> new ItemStack(AetherItems.VALKYRIE_CHESTPLATE.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".armor_and_accessories"))
                         .displayItems((features, output, hasPermissions) -> {
                             output.accept(new ItemStack(AetherItems.LEATHER_GLOVES.get()));
@@ -397,6 +392,7 @@ public class AetherCreativeTabs {
                             output.accept(new ItemStack(AetherBlocks.ENCHANTED_GRAVITITE.get()));
                             output.accept(new ItemStack(AetherItems.SKYROOT_STICK.get()));
                             output.accept(new ItemStack(AetherItems.GOLDEN_AMBER.get()));
+                            output.accept(new ItemStack(AetherItems.SWET_BALL.get()));
                             output.accept(new ItemStack(AetherItems.AECHOR_PETAL.get()));
                             output.accept(new ItemStack(AetherItems.SKYROOT_POISON_BUCKET.get()));
                         }));
@@ -404,7 +400,7 @@ public class AetherCreativeTabs {
                 new ResourceLocation(Aether.MODID, "spawn_eggs"),
                 List.of(),
                 List.of(new ResourceLocation(Aether.MODID, "ingredients")),
-                builder -> builder.icon(() -> new ItemStack(AetherItems.PHYG_SPAWN_EGG.get()))
+                builder -> builder.icon(() -> new ItemStack(AetherItems.AERBUNNY_SPAWN_EGG.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".spawn_eggs"))
                         .displayItems((features, output, hasPermissions) -> {
                             output.accept(new ItemStack(AetherItems.BLUE_MOA_EGG.get()));
