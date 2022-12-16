@@ -1,7 +1,6 @@
 package com.gildedgames.aether.loot.conditions;
 
 import com.gildedgames.aether.Aether;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.minecraftforge.registries.DeferredRegister;

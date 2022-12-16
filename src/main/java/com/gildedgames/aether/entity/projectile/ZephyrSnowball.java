@@ -8,6 +8,7 @@ import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.ZephyrSnowballHitPacket;
 import com.gildedgames.aether.util.EquipmentUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -122,5 +123,11 @@ public class ZephyrSnowball extends Fireball implements ItemSupplier {
 	@Override
 	public ItemStack getItem() {
 		return new ItemStack(Items.SNOWBALL);
+	}
+
+	@Nonnull
+	@Override
+	public Packet<ClientGamePacketListener> getAddEntityPacket() {
+		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

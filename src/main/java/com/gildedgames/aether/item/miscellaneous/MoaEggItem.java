@@ -21,7 +21,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -100,7 +99,7 @@ public class MoaEggItem extends Item {
 
                 ItemStack spawnStack = this.getStackWithTags(itemStack, false, this.getMoaType(), false, true); // Setup tags for spawning entity.
                 Entity entity = AetherEntityTypes.MOA.get().spawn(serverLevel, spawnStack, player, relativePos, MobSpawnType.SPAWN_EGG, true, !Objects.equals(blockPos, relativePos) && direction == Direction.UP);
-                if (entity instanceof Moa) {
+                if (entity != null) {
                     level.gameEvent(player, GameEvent.ENTITY_PLACE, blockPos);
                 }
                 return InteractionResult.CONSUME;

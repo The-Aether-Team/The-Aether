@@ -3,7 +3,6 @@ package com.gildedgames.aether.client.renderer.entity;
 import com.gildedgames.aether.entity.miscellaneous.Parachute;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import org.joml.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;

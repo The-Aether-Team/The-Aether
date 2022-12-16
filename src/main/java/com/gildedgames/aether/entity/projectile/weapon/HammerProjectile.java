@@ -1,7 +1,7 @@
 package com.gildedgames.aether.entity.projectile.weapon;
 
-import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.entity.AetherEntityTypes;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -126,5 +126,11 @@ public class HammerProjectile extends ThrowableProjectile {
 
     public boolean getIsJeb() {
         return this.entityData.get(DATA_JEB_ID);
+    }
+
+    @Nonnull
+    @Override
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

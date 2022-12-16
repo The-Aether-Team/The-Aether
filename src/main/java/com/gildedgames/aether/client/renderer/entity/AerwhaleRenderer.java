@@ -11,7 +11,6 @@ import com.mojang.math.Axis;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.joml.Vector3f;
 
 import javax.annotation.Nonnull;
 
