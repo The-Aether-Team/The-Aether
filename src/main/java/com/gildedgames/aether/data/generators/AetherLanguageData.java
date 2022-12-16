@@ -1038,7 +1038,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addProTip("zephyr_shooting", "Zephyrs shoot snowballs with a force that can throw you off islands.");
         addProTip("aether_day_length", "Days in the Aether realm last three times longer than surface days.");
         addProTip("sheepuff_puff", "Sheepuff occasionally puff their wool out, making them float.");
-        addProTip("victory_medal_drop", "When Valkyrie's are defeated they will drop a Victory Medal.");
+        addProTip("victory_medal_drop", "When Valkyries are defeated they will drop a Victory Medal.");
         addProTip("dig_straight_down", "Never dig straight down.");
         addProTip("drops", "If a drop looks too big, it probably is.");
         addProTip("shelter", "A shelter made of dirt is still a shelter.");
