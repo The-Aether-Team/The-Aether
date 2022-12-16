@@ -441,8 +441,8 @@ public class AetherLanguageData extends AetherLanguageProvider
         addCreativeTab(AetherCreativeTabs.AETHER_NATURAL_BLOCKS, "Aether Natural Blocks");
         addCreativeTab(AetherCreativeTabs.AETHER_FUNCTIONAL_BLOCKS, "Aether Functional Blocks");
         addCreativeTab(AetherCreativeTabs.AETHER_REDSTONE_BLOCKS, "Aether Redstone Blocks");
-        addCreativeTab(AetherCreativeTabs.AETHER_TOOLS_AND_UTILITIES, "Aether Tools & Utilities");
-        addCreativeTab(AetherCreativeTabs.AETHER_COMBAT, "Aether Combat");
+        addCreativeTab(AetherCreativeTabs.AETHER_EQUIPMENT_AND_UTILITIES, "Aether Equipment & Utilities");
+        addCreativeTab(AetherCreativeTabs.AETHER_ARMOR_AND_ACCESSORIES, "Aether Armor & Accessories");
         addCreativeTab(AetherCreativeTabs.AETHER_FOOD_AND_DRINKS, "Aether Food & Drinks");
         addCreativeTab(AetherCreativeTabs.AETHER_INGREDIENTS, "Aether Ingredients");
         addCreativeTab(AetherCreativeTabs.AETHER_SPAWN_EGGS, "Aether Spawn Eggs");
