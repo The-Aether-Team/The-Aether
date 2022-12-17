@@ -123,7 +123,7 @@ public class MoaEggItem extends Item {
             if (hitResult.getType() != HitResult.Type.BLOCK) {
                 return InteractionResultHolder.pass(heldStack);
             } else if (!(level instanceof ServerLevel serverLevel)) {
-                return InteractionResultHolder.success(heldStack);
+                return InteractionResultHolder.fail(heldStack);
             } else {
                 BlockPos blockpos = hitResult.getBlockPos();
                 if (!(level.getBlockState(blockpos).getBlock() instanceof LiquidBlock)) {
