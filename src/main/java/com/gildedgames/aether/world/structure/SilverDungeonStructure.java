@@ -39,6 +39,7 @@ public class SilverDungeonStructure extends Structure {
         Rotation rotation = Rotation.getRandom(randomSource);
         Direction direction = rotation.rotate(Direction.SOUTH);
         this.buildCloudBed(builder, randomSource, elevatedPos, direction);
+
         SilverDungeonPieces.BossRoom bossRoom = new SilverDungeonPieces.BossRoom(
                 context.structureTemplateManager(),
                 "back",
@@ -46,15 +47,18 @@ public class SilverDungeonStructure extends Structure {
                 rotation
         );
         builder.addPiece(bossRoom);
+
         int xOffset = direction.getStepX() * bossRoom.getBoundingBox().getXSpan();
         int zOffset = direction.getStepZ() * bossRoom.getBoundingBox().getZSpan();
-        SilverDungeonPieces.TemplePiece front = new SilverDungeonPieces.TemplePiece(
+        SilverDungeonPieces.TemplePiece exterior = new SilverDungeonPieces.TemplePiece(
                 context.structureTemplateManager(),
-                "front",
+                "skeleton",
                 elevatedPos.offset(xOffset, 0, zOffset),
                 rotation
         );
-        builder.addPiece(front);
+        builder.addPiece(exterior);
+
+        SilverDungeonPieces.SilverDungeonGrid grid = new SilverDungeonPieces.SilverDungeonGrid(randomSource, 3, 3, 3);
 
         BoundingBox box = builder.getBoundingBox();
         int height = 30;

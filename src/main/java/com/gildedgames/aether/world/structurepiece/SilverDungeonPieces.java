@@ -46,6 +46,72 @@ public class SilverDungeonPieces {
         long i = randomsource.nextLong();
         System.out.println("Seed: " + i);
         randomsource.setSeed(i);
+        SilverDungeonGrid grid = new SilverDungeonGrid(randomsource, 3, 3, 3);
+        grid.print();
+    }
+
+    public static class SilverDungeonGrid {
+        public static final int EMPTY_ROOM = 0b1;
+        public static final int CHEST_ROOM = 0b10;
+        public static final int STAIRS = 0b100;
+        public static final int STAIRS_TOP = 0b101;
+        public static final int FINAL_STAIRS = 0b111;
+        public static final int NORTH_DOOR = 0b1000;
+        public static final int WEST_DOOR = 0b10000;
+        public static final int EAST_DOOR = 0b100000;
+        public static final int SOUTH_DOOR = 0b1000000;
+
+
+
+        public final RandomSource random;
+        public final int[][][] grid;
+
+        public SilverDungeonGrid(RandomSource random, int x, int y, int z) {
+            this.random = random;
+            this.grid = new int[x][y][z];
+
+            this.grid[1][0][0] = (this.random.nextBoolean() ? CHEST_ROOM : EMPTY_ROOM) | SOUTH_DOOR;
+
+            // Place the stairs
+            int finalStairsX = random.nextInt(this.grid.length);
+
+            this.grid[finalStairsX][0][2] = FINAL_STAIRS;
+            this.grid[finalStairsX][1][2] = FINAL_STAIRS;
+            this.grid[finalStairsX][2][2] = FINAL_STAIRS;
+
+//            int firstStairsX = random.nextInt(this.grid);
+
+
+        }
+
+        public void assembleDungeon(StructurePieceAccessor builder) {
+
+        }
+
+        public void print() {
+            StringBuilder output = new StringBuilder();
+            for (int y = 0; y < this.grid[0].length; y++) {
+                for (int z = 0; z < this.grid[0][0].length; z++) {
+
+                    for (int i = 0; i < 3; i++) {
+                        for (int x = 0; x < this.grid.length; x++) {
+                            if ((this.grid[x][y][z] & NORTH_DOOR) == NORTH_DOOR) {
+                                output.append("+ +");
+                            } else {
+                                output.append("+-+");
+                            }
+
+                        }
+                    }
+
+                }
+
+                output.append("\n");
+            }
+
+            output.append("\n");
+            System.out.println(output);
+        }
     }
 
     public static class TemplePiece extends SilverDungeonPiece {
