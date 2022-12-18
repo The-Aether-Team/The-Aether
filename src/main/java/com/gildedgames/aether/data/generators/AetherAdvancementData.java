@@ -1,6 +1,8 @@
 package com.gildedgames.aether.data.generators;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.AetherTags;
+import com.gildedgames.aether.advancement.IncubationTrigger;
 import com.gildedgames.aether.advancement.LoreTrigger;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.entity.AetherEntityTypes;
@@ -14,17 +16,14 @@ import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.commands.CommandFunction;
-import net.minecraft.data.advancements.AdvancementProvider;
 import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeAdvancementProvider;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
@@ -85,15 +84,15 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("mount_phyg", StartRidingTrigger.TriggerInstance.playerStartsRiding(EntityPredicate.Builder.entity().vehicle(EntityPredicate.Builder.entity().of(AetherEntityTypes.PHYG.get()).build())))
                     .save(consumer, new ResourceLocation(Aether.MODID, "mount_phyg"), existingFileHelper);
 
-            Advancement craftIncubator = Advancement.Builder.advancement()
+            Advancement incubator = Advancement.Builder.advancement()
                     .parent(enterAether)
                     .display(AetherBlocks.INCUBATOR.get(),
                             Component.translatable("advancement.aether.incubator"),
                             Component.translatable("advancement.aether.incubator.desc"),
                             null,
                             FrameType.TASK, true, true, false)
-                    .addCriterion("craft_incubator", InventoryChangeTrigger.TriggerInstance.hasItems(AetherBlocks.INCUBATOR.get()))
-                    .save(consumer, new ResourceLocation(Aether.MODID, "craft_incubator"), existingFileHelper);
+                    .addCriterion("incubator", IncubationTrigger.Instance.forItem(ItemPredicate.Builder.item().of(AetherTags.Items.MOA_EGGS).build()))
+                    .save(consumer, new ResourceLocation(Aether.MODID, "incubator"), existingFileHelper);
 
             Advancement craftAltar = Advancement.Builder.advancement()
                     .parent(enterAether)

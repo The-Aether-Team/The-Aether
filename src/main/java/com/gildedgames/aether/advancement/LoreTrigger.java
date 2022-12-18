@@ -53,8 +53,7 @@ public class LoreTrigger extends SimpleCriterionTrigger<LoreTrigger.Instance> {
         }
 
         public static LoreTrigger.Instance forItem(ItemLike item) {
-            ItemPredicate itemPredicate = new ItemPredicate(null, ImmutableSet.of(item.asItem()), MinMaxBounds.Ints.ANY, MinMaxBounds.Ints.ANY, EnchantmentPredicate.NONE, EnchantmentPredicate.NONE, null, NbtPredicate.ANY);
-            return forItem(itemPredicate);
+            return forItem(ItemPredicate.Builder.item().of(item).build());
         }
 
         public static LoreTrigger.Instance forAny() {

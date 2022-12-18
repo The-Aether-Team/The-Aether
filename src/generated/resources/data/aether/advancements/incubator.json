@@ -1,17 +1,13 @@
 {
   "parent": "aether:enter_aether",
   "criteria": {
-    "craft_incubator": {
+    "incubator": {
       "conditions": {
-        "items": [
-          {
-            "items": [
-              "aether:incubator"
-            ]
-          }
-        ]
+        "item": {
+          "tag": "aether:moa_eggs"
+        }
       },
-      "trigger": "minecraft:inventory_changed"
+      "trigger": "aether:incubation_trigger"
     }
   },
   "display": {
@@ -31,7 +27,7 @@
   },
   "requirements": [
     [
-      "craft_incubator"
+      "incubator"
     ]
   ]
 }
