@@ -15,7 +15,6 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.Property;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -59,8 +58,8 @@ public class BiomeParameterRecipeBuilder extends BlockStateRecipeBuilder {
     }
 
     @Override
-    public void save(@Nonnull Consumer<FinishedRecipe> finishedRecipeConsumer, @Nonnull ResourceLocation recipeId) {
-        finishedRecipeConsumer.accept(new BiomeParameterRecipeBuilder.Result(recipeId, this.biomeKey, this.biomeTag, this.getIngredient(), this.getResultPair(), this.getSerializer()));
+    public void save(Consumer<FinishedRecipe> finishedRecipeConsumer, ResourceLocation id) {
+        finishedRecipeConsumer.accept(new BiomeParameterRecipeBuilder.Result(id, this.biomeKey, this.biomeTag, this.getIngredient(), this.getResultPair(), this.getSerializer()));
     }
 
     public static class Result extends BlockStateRecipeBuilder.Result {

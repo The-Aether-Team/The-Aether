@@ -8,7 +8,6 @@ import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -18,10 +17,14 @@ import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
+/**
+ * Based on {@link net.minecraft.data.recipes.SimpleCookingRecipeBuilder}.
+ */
 public class AetherCookingRecipeBuilder implements RecipeBuilder {
     private final RecipeCategory category;
     private final AetherBookCategory bookCategory;
@@ -49,12 +52,6 @@ public class AetherCookingRecipeBuilder implements RecipeBuilder {
     }
 
     @Override
-    public AetherCookingRecipeBuilder unlockedBy(String criterionName, CriterionTriggerInstance criterionTrigger) {
-        this.advancement.addCriterion(criterionName, criterionTrigger);
-        return this;
-    }
-
-    @Override
     public AetherCookingRecipeBuilder group(@Nullable String group) {
         this.group = group;
         return this;
@@ -66,10 +63,16 @@ public class AetherCookingRecipeBuilder implements RecipeBuilder {
     }
 
     @Override
-    public void save(Consumer<FinishedRecipe> finishedRecipeConsumer, ResourceLocation recipeId) {
-        this.ensureValid(recipeId);
-        this.advancement.parent(ROOT_RECIPE_ADVANCEMENT).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(recipeId)).rewards(AdvancementRewards.Builder.recipe(recipeId)).requirements(RequirementsStrategy.OR);
-        finishedRecipeConsumer.accept(new AetherCookingRecipeBuilder.Result(recipeId, this.group == null ? "" : this.group, this.bookCategory, this.ingredient, this.result, this.experience, this.cookingTime, this.advancement, recipeId.withPrefix("recipes/" + this.category.getFolderName() + "/"), this.serializer));
+    public AetherCookingRecipeBuilder unlockedBy(String criterionName, CriterionTriggerInstance criterionTrigger) {
+        this.advancement.addCriterion(criterionName, criterionTrigger);
+        return this;
+    }
+
+    @Override
+    public void save(Consumer<FinishedRecipe> finishedRecipeConsumer, ResourceLocation id) {
+        this.ensureValid(id);
+        this.advancement.parent(ROOT_RECIPE_ADVANCEMENT).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(RequirementsStrategy.OR);
+        finishedRecipeConsumer.accept(new AetherCookingRecipeBuilder.Result(id, this.group == null ? "" : this.group, this.bookCategory, this.ingredient, this.result, this.experience, this.cookingTime, this.advancement, id.withPrefix("recipes/" + this.category.getFolderName() + "/"), this.serializer));
     }
 
     private static AetherBookCategory determineRecipeCategory(RecipeSerializer<? extends AbstractCookingRecipe> serializer, RecipeCategory category) {
@@ -94,9 +97,9 @@ public class AetherCookingRecipeBuilder implements RecipeBuilder {
         }
     }
 
-    private void ensureValid(ResourceLocation pId) {
+    private void ensureValid(ResourceLocation id) {
         if (this.advancement.getCriteria().isEmpty()) {
-            throw new IllegalStateException("No way of obtaining recipe " + pId);
+            throw new IllegalStateException("No way of obtaining recipe " + id);
         }
     }
 
@@ -132,7 +135,12 @@ public class AetherCookingRecipeBuilder implements RecipeBuilder {
             }
             json.addProperty("category", this.category.getSerializedName());
             json.add("ingredient", this.ingredient.toJson());
-            json.addProperty("result", BuiltInRegistries.ITEM.getKey(this.result).toString());
+            ResourceLocation itemLocation = ForgeRegistries.ITEMS.getKey(this.result);
+            if (itemLocation != null) {
+                json.addProperty("result", itemLocation.toString());
+            } else {
+                throw new IllegalStateException("Item: " + this.result + " does not exist");
+            }
             json.addProperty("experience", this.experience);
             json.addProperty("cookingtime", this.cookingTime);
         }
@@ -142,28 +150,19 @@ public class AetherCookingRecipeBuilder implements RecipeBuilder {
             return this.serializer;
         }
 
-        /**
-         * Gets the ID for the recipe.
-         */
         @Override
         public ResourceLocation getId() {
             return this.id;
         }
 
-        /**
-         * Gets the JSON for the advancement that unlocks this recipe. Null if there is no advancement.
-         */
-        @Override
         @Nullable
+        @Override
         public JsonObject serializeAdvancement() {
             return this.advancement.serializeToJson();
         }
 
-        /**
-         * Gets the ID for the advancement associated with this recipe.
-         */
-        @Override
         @Nullable
+        @Override
         public ResourceLocation getAdvancementId() {
             return this.advancementId;
         }

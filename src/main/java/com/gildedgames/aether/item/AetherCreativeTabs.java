@@ -358,12 +358,12 @@ public class AetherCreativeTabs {
                 builder -> builder.icon(() -> new ItemStack(AetherItems.BLUE_GUMMY_SWET.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".food_and_drinks"))
                         .displayItems((features, output, hasPermissions) -> {
-                            if (AetherConfig.COMMON.edible_ambrosium.get()) {
-                                output.accept(AetherItems.AMBROSIUM_SHARD.get());
-                            }
                             output.accept(AetherItems.BLUE_BERRY.get());
                             output.accept(AetherItems.ENCHANTED_BERRY.get());
                             output.accept(AetherItems.WHITE_APPLE.get());
+                            if (AetherConfig.COMMON.edible_ambrosium.get()) {
+                                output.accept(AetherItems.AMBROSIUM_SHARD.get());
+                            }
                             output.accept(AetherItems.HEALING_STONE.get());
                             output.accept(AetherItems.BLUE_GUMMY_SWET.get());
                             output.accept(AetherItems.GOLDEN_GUMMY_SWET.get());

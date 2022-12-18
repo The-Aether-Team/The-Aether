@@ -10,8 +10,8 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.resources.ResourceLocation;
 
 public class EnchantingRecipe extends AbstractAetherCookingRecipe {
-	public EnchantingRecipe(ResourceLocation idIn, String groupIn, AetherBookCategory category, Ingredient ingredientIn, ItemStack resultIn, float experienceIn, int cookTimeIn) {
-		super(AetherRecipeTypes.ENCHANTING.get(), idIn, groupIn, category, ingredientIn, resultIn, experienceIn, cookTimeIn);
+	public EnchantingRecipe(ResourceLocation id, String group, AetherBookCategory category, Ingredient ingredient, ItemStack result, float experience, int enchantingTime) {
+		super(AetherRecipeTypes.ENCHANTING.get(), id, group, category, ingredient, result, experience, enchantingTime);
 	}
 
 	@Override

@@ -13,7 +13,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 import org.apache.commons.lang3.tuple.Pair;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class BiomeParameterRecipeSerializer<T extends AbstractBiomeParameterRecipe> extends BlockStateRecipeSerializer<T> {
@@ -24,32 +23,31 @@ public class BiomeParameterRecipeSerializer<T extends AbstractBiomeParameterReci
         this.factory = factory;
     }
 
-    @Nonnull
     @Override
-    public T fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject serializedRecipe) {
-        Pair<ResourceKey<Biome>, TagKey<Biome>> biomeRecipeData = BlockStateRecipeUtil.biomeRecipeDataFromJson(serializedRecipe);
+    public T fromJson(ResourceLocation id, JsonObject json) {
+        Pair<ResourceKey<Biome>, TagKey<Biome>> biomeRecipeData = BlockStateRecipeUtil.biomeRecipeDataFromJson(json);
         ResourceKey<Biome> biomeKey = biomeRecipeData.getLeft();
         TagKey<Biome> biomeTag = biomeRecipeData.getRight();
-        T recipe = super.fromJson(recipeId, serializedRecipe);
-        return this.factory.create(recipeId, biomeKey, biomeTag, recipe.getIngredient(), recipe.getResult(), recipe.getFunction());
+        T recipe = super.fromJson(id, json);
+        return this.factory.create(id, biomeKey, biomeTag, recipe.getIngredient(), recipe.getResult(), recipe.getFunction());
     }
 
     @Nullable
     @Override
-    public T fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull FriendlyByteBuf buf) {
-        ResourceKey<Biome> biomeKey = BlockStateRecipeUtil.readBiomeKey(buf);
-        TagKey<Biome> biomeTag = BlockStateRecipeUtil.readBiomeTag(buf);
-        BlockStateIngredient ingredient = BlockStateIngredient.fromNetwork(buf);
-        BlockPropertyPair result = BlockStateRecipeUtil.readPair(buf);
-        CommandFunction.CacheableFunction function = BlockStateRecipeUtil.readFunction(buf);
-        return this.factory.create(recipeId, biomeKey, biomeTag, ingredient, result, function);
+    public T fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
+        ResourceKey<Biome> biomeKey = BlockStateRecipeUtil.readBiomeKey(buffer);
+        TagKey<Biome> biomeTag = BlockStateRecipeUtil.readBiomeTag(buffer);
+        BlockStateIngredient ingredient = BlockStateIngredient.fromNetwork(buffer);
+        BlockPropertyPair result = BlockStateRecipeUtil.readPair(buffer);
+        CommandFunction.CacheableFunction function = BlockStateRecipeUtil.readFunction(buffer);
+        return this.factory.create(id, biomeKey, biomeTag, ingredient, result, function);
     }
 
     @Override
-    public void toNetwork(@Nonnull FriendlyByteBuf buf, T recipe) {
-        BlockStateRecipeUtil.writeBiomeKey(buf, recipe.getBiomeKey());
-        BlockStateRecipeUtil.writeBiomeTag(buf, recipe.getBiomeTag());
-        super.toNetwork(buf, recipe);
+    public void toNetwork(FriendlyByteBuf buffer, T recipe) {
+        BlockStateRecipeUtil.writeBiomeKey(buffer, recipe.getBiomeKey());
+        BlockStateRecipeUtil.writeBiomeTag(buffer, recipe.getBiomeTag());
+        super.toNetwork(buffer, recipe);
     }
 
     public interface CookieBaker<T extends AbstractBiomeParameterRecipe> {

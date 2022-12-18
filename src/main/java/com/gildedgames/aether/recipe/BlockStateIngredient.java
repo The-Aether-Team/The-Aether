@@ -19,6 +19,9 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+/**
+ * Based on {@link net.minecraft.world.item.crafting.Ingredient}, except based on a {@link Predicate}<{@link BlockState}>.
+ */
 public class BlockStateIngredient implements Predicate<BlockState> {
     public static final BlockStateIngredient EMPTY = new BlockStateIngredient(Stream.empty());
     private final BlockStateIngredient.Value[] values;
@@ -35,6 +38,10 @@ public class BlockStateIngredient implements Predicate<BlockState> {
         }
     }
 
+    /**
+     * Warning for "ConstantConditions" is suppressed because the potential of {@link BlockStateIngredient#pairs} being null is avoided by {@link BlockStateIngredient#dissolve()}.
+     */
+    @SuppressWarnings("ConstantConditions")
     @Override
     public boolean test(BlockState state) {
         this.dissolve();
@@ -82,6 +89,10 @@ public class BlockStateIngredient implements Predicate<BlockState> {
         return fromValues(Stream.of(new BlockStateIngredient.TagValue(tag)));
     }
 
+    /**
+     * Warning for "ConstantConditions" is suppressed because the potential of {@link BlockStateIngredient#pairs} being null is avoided by {@link BlockStateIngredient#dissolve()}.
+     */
+    @SuppressWarnings("ConstantConditions")
     public final void toNetwork(FriendlyByteBuf buf) {
         this.dissolve();
         buf.writeCollection(Arrays.asList(this.pairs), BlockStateRecipeUtil::writePair);
@@ -116,7 +127,7 @@ public class BlockStateIngredient implements Predicate<BlockState> {
                 if (jsonArray.size() == 0) {
                     throw new JsonSyntaxException("Block array cannot be empty, at least one item must be defined");
                 } else {
-                    return fromValues(StreamSupport.stream(jsonArray.spliterator(), false).map((p_151264_) -> valueFromJson(GsonHelper.convertToJsonObject(p_151264_, "block"))));
+                    return fromValues(StreamSupport.stream(jsonArray.spliterator(), false).map((element) -> valueFromJson(GsonHelper.convertToJsonObject(element, "block"))));
                 }
             } else {
                 throw new JsonSyntaxException("Expected block to be object or array of objects");

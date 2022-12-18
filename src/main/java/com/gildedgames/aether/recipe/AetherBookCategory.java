@@ -9,7 +9,7 @@ public enum AetherBookCategory implements StringRepresentable {
     ENCHANTING_REPAIR("enchanting_repair"),
     FREEZABLE_BLOCKS("freezable_blocks"),
     FREEZABLE_MISC("freezable_misc"),
-    MISC("misc");
+    UNKNOWN("unknown");
 
     public static final StringRepresentable.EnumCodec<AetherBookCategory> CODEC = StringRepresentable.fromEnum(AetherBookCategory::values);
     private final String name;

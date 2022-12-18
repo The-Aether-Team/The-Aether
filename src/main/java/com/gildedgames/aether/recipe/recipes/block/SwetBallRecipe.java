@@ -17,7 +17,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class SwetBallRecipe extends AbstractBiomeParameterRecipe implements MatchEventRecipe {
@@ -29,11 +28,11 @@ public class SwetBallRecipe extends AbstractBiomeParameterRecipe implements Matc
         this(id, null, null, ingredient, result, function);
     }
 
+    @Override
     public boolean matches(Player player, Level level, BlockPos pos, ItemStack stack, BlockState oldState, BlockState newState) {
         return MatchEventRecipe.super.matches(player, level, pos, stack, oldState, newState) && this.matches(level, pos, oldState);
     }
 
-    @Nonnull
     @Override
     public RecipeSerializer<?> getSerializer() {
         return AetherRecipeSerializers.SWET_BALL_CONVERSION.get();

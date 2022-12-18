@@ -4,13 +4,19 @@ import com.gildedgames.aether.recipe.AetherBookCategory;
 import com.gildedgames.aether.recipe.recipes.item.AbstractAetherCookingRecipe;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.core.registries.BuiltInRegistries;
+import com.google.gson.JsonSyntaxException;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
+import net.minecraftforge.registries.ForgeRegistries;
 
+import javax.annotation.Nullable;
+
+/**
+ * Based on {@link SimpleCookingSerializer}.
+ */
 public class AetherCookingSerializer<T extends AbstractAetherCookingRecipe> implements RecipeSerializer<T> {
     private final int defaultCookingTime;
     private final AetherCookingSerializer.CookieBaker<T> factory;
@@ -20,28 +26,36 @@ public class AetherCookingSerializer<T extends AbstractAetherCookingRecipe> impl
         this.factory = factory;
     }
 
+    @Override
     public T fromJson(ResourceLocation id, JsonObject json) {
         String group = GsonHelper.getAsString(json, "group", "");
-        AetherBookCategory aetherBookCategory = AetherBookCategory.CODEC.byName(GsonHelper.getAsString(json, "category", null), AetherBookCategory.MISC);
+        AetherBookCategory aetherBookCategory = AetherBookCategory.CODEC.byName(GsonHelper.getAsString(json, "category", null), AetherBookCategory.UNKNOWN);
         JsonElement ingredientJson = GsonHelper.isArrayNode(json, "ingredient") ? GsonHelper.getAsJsonArray(json, "ingredient") : GsonHelper.getAsJsonObject(json, "ingredient");
         Ingredient ingredient = Ingredient.fromJson(ingredientJson);
-        // Forge: Check if primitive string to keep vanilla or a object which can contain a count field.
-        if (!json.has("result")) {
-            throw new com.google.gson.JsonSyntaxException("Missing result, expected to find a string or object");
-        }
+
         ItemStack result;
+        if (!json.has("result")) {
+            throw new JsonSyntaxException("Missing result, expected to find a string or object");
+        }
         if (json.get("result").isJsonObject()) {
             result = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
         } else {
             String resultString = GsonHelper.getAsString(json, "result");
             ResourceLocation resultLocation = new ResourceLocation(resultString);
-            result = new ItemStack(BuiltInRegistries.ITEM.getOptional(resultLocation).orElseThrow(() -> new IllegalStateException("Item: " + resultString + " does not exist")));
+            result = new ItemStack(ForgeRegistries.ITEMS.getValue(resultLocation));
+            if (result.isEmpty()) {
+                throw new IllegalStateException("Item: " + resultString + " does not exist");
+            }
         }
+
         float experience = GsonHelper.getAsFloat(json, "experience", 0.0F);
         int cookingTime = GsonHelper.getAsInt(json, "cookingtime", this.defaultCookingTime);
+
         return this.factory.create(id, group, aetherBookCategory, ingredient, result, experience, cookingTime);
     }
 
+    @Nullable
+    @Override
     public T fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
         String group = buffer.readUtf();
         AetherBookCategory aetherBookCategory = buffer.readEnum(AetherBookCategory.class);
@@ -52,6 +66,7 @@ public class AetherCookingSerializer<T extends AbstractAetherCookingRecipe> impl
         return this.factory.create(id, group, aetherBookCategory, ingredient, result, experience, cookingTime);
     }
 
+    @Override
     public void toNetwork(FriendlyByteBuf buffer, T recipe) {
         buffer.writeUtf(recipe.getGroup());
         buffer.writeEnum(recipe.aetherCategory());

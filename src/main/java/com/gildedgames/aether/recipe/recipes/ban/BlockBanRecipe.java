@@ -10,17 +10,19 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class BlockBanRecipe extends AbstractPlacementBanRecipe<BlockState, BlockStateIngredient> {
@@ -32,6 +34,15 @@ public class BlockBanRecipe extends AbstractPlacementBanRecipe<BlockState, Block
         this(id, biomeKey, biomeTag, bypassBlock, BlockStateIngredient.EMPTY);
     }
 
+    /**
+     * Checks if the recipe matches the given parameters using {@link AbstractPlacementBanRecipe#matches(Level, BlockPos, Object)}.<br><br>
+     * Then checks an event hook through {@link AetherEventDispatch#isBlockPlacementBanned(LevelAccessor, BlockPos, BlockState)}.<br><br>
+     * Before calling {@link AetherEventDispatch#onPlacementSpawnParticles(LevelAccessor, BlockPos, Direction, ItemStack, BlockState)} to spawn particles on block ban.
+     * @param level The {@link Level} the recipe is performed in.
+     * @param pos The {@link BlockPos} the recipe is performed at.
+     * @param state The {@link BlockState} being used that is being checked.
+     * @return Whether the given {@link BlockState} is banned from placement.
+     */
     public boolean banBlock(Level level, BlockPos pos, BlockState state) {
         if (this.matches(level, pos.below(), state)) {
             if (AetherEventDispatch.isBlockPlacementBanned(level, pos, state)) {
@@ -42,7 +53,6 @@ public class BlockBanRecipe extends AbstractPlacementBanRecipe<BlockState, Block
         return false;
     }
 
-    @Nonnull
     @Override
     public RecipeSerializer<?> getSerializer() {
         return AetherRecipeSerializers.BLOCK_PLACEMENT_BAN.get();
@@ -53,30 +63,31 @@ public class BlockBanRecipe extends AbstractPlacementBanRecipe<BlockState, Block
             super(BlockBanRecipe::new);
         }
 
-        @Nonnull
         @Override
-        public BlockBanRecipe fromJson(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject serializedRecipe) {
-            BlockBanRecipe recipe = super.fromJson(recipeId, serializedRecipe);
-            if (!serializedRecipe.has("ingredient")) throw new JsonSyntaxException("Missing ingredient, expected to find an object or array");
-            JsonElement jsonElement = GsonHelper.isArrayNode(serializedRecipe, "ingredient") ? GsonHelper.getAsJsonArray(serializedRecipe, "ingredient") : GsonHelper.getAsJsonObject(serializedRecipe, "ingredient");
+        public BlockBanRecipe fromJson(ResourceLocation id, JsonObject json) {
+            BlockBanRecipe recipe = super.fromJson(id, json);
+            if (!json.has("ingredient")) {
+                throw new JsonSyntaxException("Missing ingredient, expected to find an object or array");
+            }
+            JsonElement jsonElement = GsonHelper.isArrayNode(json, "ingredient") ? GsonHelper.getAsJsonArray(json, "ingredient") : GsonHelper.getAsJsonObject(json, "ingredient");
             BlockStateIngredient ingredient = BlockStateIngredient.fromJson(jsonElement);
-            return new BlockBanRecipe(recipeId, recipe.getBiomeKey(), recipe.getBiomeTag(), recipe.getBypassBlock(), ingredient);
+            return new BlockBanRecipe(id, recipe.getBiomeKey(), recipe.getBiomeTag(), recipe.getBypassBlock(), ingredient);
         }
 
         @Nullable
         @Override
-        public BlockBanRecipe fromNetwork(@Nonnull ResourceLocation recipeId, @Nonnull FriendlyByteBuf buf) {
-            ResourceKey<Biome> biomeKey = BlockStateRecipeUtil.readBiomeKey(buf);
-            TagKey<Biome> biomeTag = BlockStateRecipeUtil.readBiomeTag(buf);
-            BlockStateIngredient bypassBlock = BlockStateIngredient.fromNetwork(buf);
-            BlockStateIngredient ingredient = BlockStateIngredient.fromNetwork(buf);
-            return new BlockBanRecipe(recipeId, biomeKey, biomeTag, bypassBlock, ingredient);
+        public BlockBanRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
+            ResourceKey<Biome> biomeKey = BlockStateRecipeUtil.readBiomeKey(buffer);
+            TagKey<Biome> biomeTag = BlockStateRecipeUtil.readBiomeTag(buffer);
+            BlockStateIngredient bypassBlock = BlockStateIngredient.fromNetwork(buffer);
+            BlockStateIngredient ingredient = BlockStateIngredient.fromNetwork(buffer);
+            return new BlockBanRecipe(id, biomeKey, biomeTag, bypassBlock, ingredient);
         }
 
         @Override
-        public void toNetwork(@Nonnull FriendlyByteBuf buf, @Nonnull BlockBanRecipe recipe) {
-            super.toNetwork(buf, recipe);
-            recipe.getIngredient().toNetwork(buf);
+        public void toNetwork(FriendlyByteBuf buffer, BlockBanRecipe recipe) {
+            super.toNetwork(buffer, recipe);
+            recipe.getIngredient().toNetwork(buffer);
         }
     }
 }

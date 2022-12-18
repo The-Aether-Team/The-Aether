@@ -11,8 +11,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.resources.ResourceLocation;
 
 public class FreezingRecipe extends AbstractAetherCookingRecipe {
-	public FreezingRecipe(ResourceLocation idIn, String groupIn, AetherBookCategory category, Ingredient ingredientIn, ItemStack resultIn, float experienceIn, int cookTimeIn) {
-		super(AetherRecipeTypes.FREEZING.get(), idIn, groupIn, category, ingredientIn, resultIn, experienceIn, cookTimeIn);
+	public FreezingRecipe(ResourceLocation id, String group, AetherBookCategory category, Ingredient ingredient, ItemStack result, float experience, int freezingTime) {
+		super(AetherRecipeTypes.FREEZING.get(), id, group, category, ingredient, result, experience, freezingTime);
 	}
 
 	@Override
