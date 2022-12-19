@@ -24,8 +24,8 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 import java.util.stream.Stream;
 
-public class AetherEntityLootData extends EntityLootSubProvider {
-    public AetherEntityLootData() {
+public class AetherEntityLoot extends EntityLootSubProvider {
+    public AetherEntityLoot() {
         super(FeatureFlags.REGISTRY.allFlags());
     }
 

@@ -8,7 +8,7 @@ import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.loot.AetherLoot;
-import com.gildedgames.aether.data.resources.AetherDimensions;
+import com.gildedgames.aether.data.resources.registries.AetherDimensions;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.FrameType;

@@ -35,8 +35,8 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import java.util.Set;
 import java.util.function.Supplier;
 
-public abstract class AetherBlockLootProvider extends BlockLootSubProvider {
-    public AetherBlockLootProvider(Set<Item> items, FeatureFlagSet flags) {
+public abstract class AetherBlockLootSubProvider extends BlockLootSubProvider {
+    public AetherBlockLootSubProvider(Set<Item> items, FeatureFlagSet flags) {
         super(items, flags);
     }
 

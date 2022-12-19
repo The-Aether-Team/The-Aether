@@ -2,7 +2,7 @@ package com.gildedgames.aether.data.generators.tags;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.AetherTags;
-import com.gildedgames.aether.data.resources.AetherStructures;
+import com.gildedgames.aether.data.resources.registries.AetherStructures;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.StructureTagsProvider;

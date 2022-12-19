@@ -1,6 +1,6 @@
 package com.gildedgames.aether;
 
-import com.gildedgames.aether.data.resources.AetherDimensions;
+import com.gildedgames.aether.data.resources.registries.AetherDimensions;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;

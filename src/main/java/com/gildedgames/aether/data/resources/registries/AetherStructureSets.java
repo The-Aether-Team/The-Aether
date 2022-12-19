@@ -1,8 +1,7 @@
-package com.gildedgames.aether.data.resources;
+package com.gildedgames.aether.data.resources.registries;
 
 import com.gildedgames.aether.Aether;
 import net.minecraft.core.HolderGetter;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
@@ -12,16 +11,13 @@ import net.minecraft.world.level.levelgen.structure.StructureSet;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class AetherStructureSets {
     public static final ResourceKey<StructureSet> LARGE_AERCLOUD = createKey("large_aercloud");
     public static final ResourceKey<StructureSet> BRONZE_DUNGEON = createKey("bronze_dungeon");
     public static final ResourceKey<StructureSet> SILVER_DUNGEON = createKey("silver_dungeon");
     public static final ResourceKey<StructureSet> GOLD_DUNGEON = createKey("gold_dungeon");
 
-    public static ResourceKey<StructureSet> createKey(String name) {
+    private static ResourceKey<StructureSet> createKey(String name) {
         return ResourceKey.create(Registries.STRUCTURE_SET, new ResourceLocation(Aether.MODID, name));
     }
 

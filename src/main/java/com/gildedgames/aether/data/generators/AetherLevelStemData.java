@@ -1,15 +1,14 @@
 package com.gildedgames.aether.data.generators;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.data.resources.AetherDimensions;
-import com.gildedgames.aether.data.resources.AetherNoiseSettings;
+import com.gildedgames.aether.data.resources.registries.AetherDimensions;
+import com.gildedgames.aether.data.resources.registries.AetherNoiseSettings;
 import com.gildedgames.aether.data.resources.builders.AetherBiomeBuilders;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.RegistryOps;

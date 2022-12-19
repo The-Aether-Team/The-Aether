@@ -1,8 +1,7 @@
 package com.gildedgames.aether.data.generators;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.data.resources.*;
-import net.minecraft.Util;
+import com.gildedgames.aether.data.resources.registries.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.RegistrySetBuilder;

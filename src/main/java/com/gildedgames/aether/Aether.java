@@ -161,9 +161,9 @@ public class Aether {
 
     public void dataSetup(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
-        PackOutput packOutput = generator.getPackOutput();
-        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
         ExistingFileHelper helper = event.getExistingFileHelper();
+        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+        PackOutput packOutput = generator.getPackOutput();
 
         // Client Data
         generator.addProvider(event.includeClient(), new AetherBlockStateData(packOutput, helper));

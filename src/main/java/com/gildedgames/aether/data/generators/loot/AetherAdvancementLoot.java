@@ -13,7 +13,7 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
 import java.util.function.BiConsumer;
 
-public class AetherAdvancementLootData implements LootTableSubProvider {
+public class AetherAdvancementLoot implements LootTableSubProvider {
     @Override
     public void generate(BiConsumer<ResourceLocation, LootTable.Builder> builder) {
         builder.accept(AetherLoot.ENTER_AETHER, LootTable.lootTable()

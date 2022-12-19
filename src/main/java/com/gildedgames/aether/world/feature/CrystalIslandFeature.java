@@ -1,6 +1,6 @@
 package com.gildedgames.aether.world.feature;
 
-import com.gildedgames.aether.data.resources.AetherConfiguredFeatures;
+import com.gildedgames.aether.data.resources.registries.AetherConfiguredFeatures;
 import com.gildedgames.aether.data.resources.AetherFeatureStates;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.Direction;

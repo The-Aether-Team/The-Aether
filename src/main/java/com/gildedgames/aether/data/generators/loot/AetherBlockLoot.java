@@ -1,7 +1,7 @@
 package com.gildedgames.aether.data.generators.loot;
 
 import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.data.providers.AetherBlockLootProvider;
+import com.gildedgames.aether.data.providers.AetherBlockLootSubProvider;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.mixin.mixins.common.accessor.BlockLootAccessor;
 import net.minecraft.world.flag.FeatureFlags;
@@ -18,10 +18,10 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class AetherBlockLootData extends AetherBlockLootProvider {
+public class AetherBlockLoot extends AetherBlockLootSubProvider {
     private static final Set<Item> EXPLOSION_RESISTANT = Stream.of(AetherBlocks.TREASURE_CHEST.get()).map(ItemLike::asItem).collect(Collectors.toSet());
 
-    public AetherBlockLootData() {
+    public AetherBlockLoot() {
         super(EXPLOSION_RESISTANT, FeatureFlags.REGISTRY.allFlags());
     }
 

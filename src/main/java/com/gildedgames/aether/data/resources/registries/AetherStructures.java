@@ -1,4 +1,4 @@
-package com.gildedgames.aether.data.resources;
+package com.gildedgames.aether.data.resources.registries;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.AetherTags;
@@ -26,7 +26,7 @@ public class AetherStructures {
     public static final ResourceKey<Structure> SILVER_DUNGEON = createKey("silver_dungeon");
     public static final ResourceKey<Structure> GOLD_DUNGEON = createKey("gold_dungeon");
 
-    public static ResourceKey<Structure> createKey(String name) {
+    private static ResourceKey<Structure> createKey(String name) {
         return ResourceKey.create(Registries.STRUCTURE, new ResourceLocation(Aether.MODID, name));
     }
 

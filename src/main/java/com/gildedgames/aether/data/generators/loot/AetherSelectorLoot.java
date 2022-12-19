@@ -14,7 +14,7 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
 import java.util.function.BiConsumer;
 
-public class AetherSelectorLootData implements LootTableSubProvider {
+public class AetherSelectorLoot implements LootTableSubProvider {
     @Override
     public void generate(BiConsumer<ResourceLocation, LootTable.Builder> builder) {
         builder.accept(AetherLoot.WHIRLWIND_JUNK, LootTable.lootTable()

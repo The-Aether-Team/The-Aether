@@ -1,4 +1,4 @@
-package com.gildedgames.aether.data.resources;
+package com.gildedgames.aether.data.resources.registries;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.data.resources.builders.AetherBiomeBuilders;
@@ -17,7 +17,7 @@ public class AetherBiomes {
     public static final ResourceKey<Biome> SKYROOT_THICKET = createKey("skyroot_thicket");
     public static final ResourceKey<Biome> GOLDEN_FOREST = createKey("golden_forest");
 
-    public static ResourceKey<Biome> createKey(String name) {
+    private static ResourceKey<Biome> createKey(String name) {
         return ResourceKey.create(Registries.BIOME, new ResourceLocation(Aether.MODID, name));
     }
 

@@ -1,6 +1,7 @@
 package com.gildedgames.aether.event.hooks;
 
 import com.gildedgames.aether.capability.lightning.LightningTrackerCapability;
+import com.gildedgames.aether.data.generators.loot.AetherStrippingLoot;
 import com.gildedgames.aether.entity.projectile.PoisonNeedle;
 import com.gildedgames.aether.entity.projectile.dart.EnchantedDart;
 import com.gildedgames.aether.entity.projectile.dart.GoldenDart;
@@ -218,7 +219,7 @@ public class AbilityHooks {
 
         /**
          * Spawns Golden Amber at the user's click position when stripping Golden Oak Logs ({@link AetherTags.Blocks#GOLDEN_OAK_LOGS}), as long as the tool in usage can harvest Golden Amber ({@link AetherTags.Items#GOLDEN_AMBER_HARVESTERS}).<br><br>
-         * The drops are handled using a special loot context type {@link AetherLootContexts#STRIPPING}, used for a loot table found in {@link com.gildedgames.aether.data.generators.loot.AetherStrippingLootData}.
+         * The drops are handled using a special loot context type {@link AetherLootContexts#STRIPPING}, used for a loot table found in {@link AetherStrippingLoot}.
          * @param accessor The {@link LevelAccessor} of the level.
          * @param state The {@link BlockState} an action is being performed on.
          * @param stack The {@link ItemStack} performing an action.

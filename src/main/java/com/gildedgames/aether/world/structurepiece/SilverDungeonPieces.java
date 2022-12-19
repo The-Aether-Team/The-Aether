@@ -4,7 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.api.DungeonTracker;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.blockentity.TreasureChestBlockEntity;
-import com.gildedgames.aether.data.resources.AetherStructures;
+import com.gildedgames.aether.data.resources.registries.AetherStructures;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.monster.dungeon.boss.ValkyrieQueen;
 import com.gildedgames.aether.loot.AetherLoot;

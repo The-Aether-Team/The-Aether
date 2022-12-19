@@ -1,4 +1,4 @@
-package com.gildedgames.aether.data.resources;
+package com.gildedgames.aether.data.resources.registries;
 
 import com.gildedgames.aether.Aether;
 import net.minecraft.core.registries.Registries;
@@ -16,11 +16,11 @@ import java.util.OptionalLong;
 public class AetherDimensions {
 	private final static ResourceLocation AETHER_LEVEL_ID = new ResourceLocation(Aether.MODID, "the_aether");
 
-	// Dimension Type - Specifies logic that impacts an entire dimension
+	// DimensionType - Specifies the logic and settings for a dimension.
 	public static ResourceKey<DimensionType> AETHER_DIMENSION_TYPE = ResourceKey.create(Registries.DIMENSION_TYPE, AETHER_LEVEL_ID);
-	// Level - Actual runtime dimension
+	// Level - The dimension during runtime.
 	public static final ResourceKey<Level> AETHER_LEVEL = ResourceKey.create(Registries.DIMENSION, AETHER_LEVEL_ID);
-	// Level Stem - Begins the dimension's lifecycle
+	// LevelStem - The dimension during lifecycle start and datagen.
 	public static final ResourceKey<LevelStem> AETHER_LEVEL_STEM = ResourceKey.create(Registries.LEVEL_STEM, AETHER_LEVEL_ID);
 
 	public static void bootstrap(BootstapContext<DimensionType> context) {

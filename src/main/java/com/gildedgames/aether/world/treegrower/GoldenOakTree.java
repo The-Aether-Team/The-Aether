@@ -1,6 +1,6 @@
 package com.gildedgames.aether.world.treegrower;
 
-import com.gildedgames.aether.data.resources.AetherConfiguredFeatures;
+import com.gildedgames.aether.data.resources.registries.AetherConfiguredFeatures;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.RandomSource;
 

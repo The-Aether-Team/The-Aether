@@ -1,4 +1,4 @@
-package com.gildedgames.aether.data.resources;
+package com.gildedgames.aether.data.resources.registries;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.data.resources.builders.AetherNoiseBuilders;
@@ -14,7 +14,7 @@ import net.minecraft.world.level.levelgen.synth.NormalNoise;
 public class AetherNoiseSettings {
     public static final ResourceKey<NoiseGeneratorSettings> SKYLANDS = createKey("skylands");
 
-    public static ResourceKey<NoiseGeneratorSettings> createKey(String name) {
+    private static ResourceKey<NoiseGeneratorSettings> createKey(String name) {
         return ResourceKey.create(Registries.NOISE_SETTINGS, new ResourceLocation(Aether.MODID, name));
     }
 

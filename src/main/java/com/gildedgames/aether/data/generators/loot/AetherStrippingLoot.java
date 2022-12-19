@@ -14,7 +14,7 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 import java.util.function.BiConsumer;
 
-public class AetherStrippingLootData implements LootTableSubProvider {
+public class AetherStrippingLoot implements LootTableSubProvider {
     @Override
     public void generate(BiConsumer<ResourceLocation, LootTable.Builder> builder) {
         builder.accept(AetherLoot.STRIP_GOLDEN_OAK, LootTable.lootTable()

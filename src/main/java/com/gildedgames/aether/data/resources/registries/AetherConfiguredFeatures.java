@@ -1,8 +1,10 @@
-package com.gildedgames.aether.data.resources;
+package com.gildedgames.aether.data.resources.registries;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.data.resources.builders.AetherFeatureBuilders;
+import com.gildedgames.aether.data.resources.AetherFeatureRules;
+import com.gildedgames.aether.data.resources.AetherFeatureStates;
+import com.gildedgames.aether.data.resources.builders.AetherConfiguredFeatureBuilders;
 import com.gildedgames.aether.world.configuration.SimpleDiskConfiguration;
 import com.gildedgames.aether.world.feature.AetherFeatures;
 import com.gildedgames.aether.world.foliageplacer.CrystalFoliagePlacer;
@@ -64,16 +66,16 @@ public class AetherConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> TREES_SKYROOT_AND_GOLDEN_OAK_CONFIGURATION = createKey("trees_skyroot_and_golden_oak");
     public static final ResourceKey<ConfiguredFeature<?, ?>> TREES_GOLDEN_OAK_AND_SKYROOT_CONFIGURATION = createKey("trees_golden_oak_and_skyroot");
 
-    public static ResourceKey<ConfiguredFeature<?, ?>> createKey(String name) {
+    private static ResourceKey<ConfiguredFeature<?, ?>> createKey(String name) {
         return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(Aether.MODID, name));
     }
 
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
-        register(context, COLD_AERCLOUD_CONFIGURATION, AetherFeatures.AERCLOUD.get(), AetherFeatureBuilders.createAercloudConfig(16, AetherFeatureStates.COLD_AERCLOUD));
-        register(context, BLUE_AERCLOUD_CONFIGURATION, AetherFeatures.AERCLOUD.get(), AetherFeatureBuilders.createAercloudConfig(8, AetherFeatureStates.BLUE_AERCLOUD));
-        register(context, GOLDEN_AERCLOUD_CONFIGURATION, AetherFeatures.AERCLOUD.get(), AetherFeatureBuilders.createAercloudConfig(4, AetherFeatureStates.GOLDEN_AERCLOUD));
-        register(context, PINK_AERCLOUD_CONFIGURATION, AetherFeatures.AERCLOUD.get(), AetherFeatureBuilders.createAercloudConfig(1, AetherFeatureStates.PINK_AERCLOUD));
+        register(context, COLD_AERCLOUD_CONFIGURATION, AetherFeatures.AERCLOUD.get(), AetherConfiguredFeatureBuilders.aercloud(16, AetherFeatureStates.COLD_AERCLOUD));
+        register(context, BLUE_AERCLOUD_CONFIGURATION, AetherFeatures.AERCLOUD.get(), AetherConfiguredFeatureBuilders.aercloud(8, AetherFeatureStates.BLUE_AERCLOUD));
+        register(context, GOLDEN_AERCLOUD_CONFIGURATION, AetherFeatures.AERCLOUD.get(), AetherConfiguredFeatureBuilders.aercloud(4, AetherFeatureStates.GOLDEN_AERCLOUD));
+        register(context, PINK_AERCLOUD_CONFIGURATION, AetherFeatures.AERCLOUD.get(), AetherConfiguredFeatureBuilders.aercloud(1, AetherFeatureStates.PINK_AERCLOUD));
         register(context, CRYSTAL_ISLAND_CONFIGURATION, AetherFeatures.CRYSTAL_ISLAND.get(), NoneFeatureConfiguration.INSTANCE);
         register(context, SKYROOT_TREE_CONFIGURATION, Feature.TREE,
                 new TreeConfiguration.TreeConfigurationBuilder(
@@ -108,20 +110,20 @@ public class AetherConfiguredFeatures {
                         .decorators(ImmutableList.of(new HolidayTreeDecorator(new WeightedStateProvider(new SimpleWeightedRandomList.Builder<BlockState>().add(AetherFeatureStates.SNOW, 10).add(AetherFeatureStates.PRESENT, 1).build()))))
                         .build());
         register(context, FLOWER_PATCH_CONFIGURATION, Feature.FLOWER,
-                AetherFeatureBuilders.grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
+                AetherConfiguredFeatureBuilders.grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
                         .add(AetherFeatureStates.PURPLE_FLOWER, 2)
                         .add(AetherFeatureStates.WHITE_FLOWER, 2)
                         .add(AetherFeatureStates.BERRY_BUSH, 1)), 64));
-        register(context, GRASS_PATCH_CONFIGURATION, Feature.RANDOM_PATCH, AetherFeatureBuilders.grassPatch(BlockStateProvider.simple(Blocks.GRASS), 32));
-        register(context, TALL_GRASS_PATCH_CONFIGURATION, Feature.RANDOM_PATCH, AetherFeatureBuilders.tallGrassPatch(BlockStateProvider.simple(Blocks.TALL_GRASS)));
+        register(context, GRASS_PATCH_CONFIGURATION, Feature.RANDOM_PATCH, AetherConfiguredFeatureBuilders.grassPatch(BlockStateProvider.simple(Blocks.GRASS), 32));
+        register(context, TALL_GRASS_PATCH_CONFIGURATION, Feature.RANDOM_PATCH, AetherConfiguredFeatureBuilders.tallGrassPatch(BlockStateProvider.simple(Blocks.TALL_GRASS)));
         register(context, QUICKSOIL_SHELF_CONFIGURATION, AetherFeatures.SIMPLE_DISK.get(),
                 new SimpleDiskConfiguration(
                         UniformFloat.of(Mth.sqrt(12), 5), // sqrt(12) was an old static value
                         BlockStateProvider.simple(AetherFeatureStates.QUICKSOIL),
                         3));
-        register(context, WATER_LAKE_CONFIGURATION, AetherFeatures.LAKE.get(), AetherFeatureBuilders.lake(BlockStateProvider.simple(Blocks.WATER), BlockStateProvider.simple(AetherBlocks.AETHER_GRASS_BLOCK.get())));
+        register(context, WATER_LAKE_CONFIGURATION, AetherFeatures.LAKE.get(), AetherConfiguredFeatureBuilders.lake(BlockStateProvider.simple(Blocks.WATER), BlockStateProvider.simple(AetherBlocks.AETHER_GRASS_BLOCK.get())));
         register(context, WATER_SPRING_CONFIGURATION, Feature.SPRING,
-                AetherFeatureBuilders.spring(Fluids.WATER.defaultFluidState(), true, 4, 1, HolderSet.direct(Block::builtInRegistryHolder, AetherBlocks.HOLYSTONE.get(), AetherBlocks.AETHER_DIRT.get())));
+                AetherConfiguredFeatureBuilders.spring(Fluids.WATER.defaultFluidState(), true, 4, 1, HolderSet.direct(Block::builtInRegistryHolder, AetherBlocks.HOLYSTONE.get(), AetherBlocks.AETHER_DIRT.get())));
         register(context, ORE_AETHER_DIRT_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.AETHER_DIRT, 33));
         register(context, ORE_ICESTONE_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.ICESTONE, 16));
         register(context, ORE_AMBROSIUM_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.AMBROSIUM_ORE, 16));
@@ -137,11 +139,7 @@ public class AetherConfiguredFeatures {
                         PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(GOLDEN_OAK_TREE_CONFIGURATION), PlacementUtils.filteredByBlockSurvival(AetherBlocks.GOLDEN_OAK_SAPLING.get()))));
     }
 
-    public static void register(BootstapContext<ConfiguredFeature<?, ?>> context, ResourceKey<ConfiguredFeature<?, ?>> key, Feature<NoneFeatureConfiguration> feature) {
-        register(context, key, feature, FeatureConfiguration.NONE);
-    }
-
-    public static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(BootstapContext<ConfiguredFeature<?, ?>> context, ResourceKey<ConfiguredFeature<?, ?>> key, F feature, FC configuration) {
+    private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(BootstapContext<ConfiguredFeature<?, ?>> context, ResourceKey<ConfiguredFeature<?, ?>> key, F feature, FC configuration) {
         context.register(key, new ConfiguredFeature<>(feature, configuration));
     }
 }

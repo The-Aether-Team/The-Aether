@@ -1,11 +1,10 @@
 package com.gildedgames.aether.data.resources.builders;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
-import com.gildedgames.aether.data.resources.AetherBiomes;
-import com.gildedgames.aether.data.resources.AetherPlacedFeatures;
+import com.gildedgames.aether.data.resources.registries.AetherBiomes;
+import com.gildedgames.aether.data.resources.registries.AetherPlacedFeatures;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.sounds.Music;
 import net.minecraft.world.entity.MobCategory;

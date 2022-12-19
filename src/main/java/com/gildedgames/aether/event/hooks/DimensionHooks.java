@@ -13,7 +13,7 @@ import com.gildedgames.aether.recipe.recipes.ban.BlockBanRecipe;
 import com.gildedgames.aether.recipe.recipes.ban.ItemBanRecipe;
 import com.gildedgames.aether.recipe.recipes.block.PlacementConversionRecipe;
 import com.gildedgames.aether.util.LevelUtil;
-import com.gildedgames.aether.data.resources.AetherDimensions;
+import com.gildedgames.aether.data.resources.registries.AetherDimensions;
 import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.capability.time.AetherTime;
 import com.gildedgames.aether.network.AetherPacketHandler;
