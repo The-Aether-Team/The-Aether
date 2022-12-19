@@ -2,15 +2,19 @@ package com.gildedgames.aether.world.structure;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.data.resources.AetherConfiguredFeatures;
+import com.gildedgames.aether.data.resources.AetherPlacedFeatures;
 import com.gildedgames.aether.world.structurepiece.GoldDungeonPieces;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
@@ -41,18 +45,6 @@ public class GoldDungeonStructure extends Structure {
 
         Rotation rotation = Rotation.getRandom(randomSource);
 
-        BoundingBox box = context.structureTemplateManager().get(room).get().getBoundingBox(elevatedPos, rotation, elevatedPos, Mirror.NONE);
-        int offsetX = (box.maxX() - box.minX()) / 2;
-        int offsetZ = (box.maxZ() - box.minZ()) / 2;
-
-        BlockPos islandPos = elevatedPos.above(24).north(offsetZ).west(offsetX);
-
-        GoldDungeonPieces.Island island = new GoldDungeonPieces.Island(
-                AetherConfiguredFeatures.HOLYSTONE_SPHERE_CONFIGURATION,
-                access,
-                islandPos
-        );
-
         GoldDungeonPieces.BossRoom bossRoom = new GoldDungeonPieces.BossRoom(
                 context.structureTemplateManager(),
                 room,
@@ -64,14 +56,18 @@ public class GoldDungeonStructure extends Structure {
         GoldDungeonPieces.TemplateIsland templateIsland = new GoldDungeonPieces.TemplateIsland(
                 context.structureTemplateManager(),
                 new ResourceLocation(Aether.MODID,"gold_dungeon/main_sphere"),
-                elevatedPos.below(19).south(offsetZ).east(offsetX),
+                elevatedPos.below(19).relative(rotation.rotate(Direction.WEST), 10).relative(rotation.rotate(Direction.NORTH), 11),
                 randomSource,
                 rotation
         );
+//        GoldDungeonPieces.Island island = new GoldDungeonPieces.Island(
+//                    AetherConfiguredFeatures.HOLYSTONE_SPHERE_CONFIGURATION,
+//                    access,
+//                    elevatedPos.north(randomSource.nextInt(30)-15).east(randomSource.nextInt(30)-15));
 
-        //builder.addPiece(island);
         builder.addPiece(templateIsland);
         builder.addPiece(bossRoom);
+        //builder.addPiece(island);
     }
 
     @Override

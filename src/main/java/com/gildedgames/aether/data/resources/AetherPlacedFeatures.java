@@ -56,6 +56,8 @@ public class AetherPlacedFeatures {
             RarityFilter.onAverageOnceEvery(48),
             PlacementUtils.filteredByBlockSurvival(AetherBlocks.SKYROOT_SAPLING.get()));
 
+    public static final ResourceKey<PlacedFeature> HOLYSTONE_SPHERE_PLACEMENT = register("holystone_sphere", AetherConfiguredFeatures.dataHolder(AetherConfiguredFeatures.HOLYSTONE_SPHERE_CONFIGURATION),
+            HeightRangePlacement.uniform(VerticalAnchor.absolute(60), VerticalAnchor.top()));
     public static final ResourceKey<PlacedFeature> FLOWER_PATCH_PLACEMENT = register("flower_patch", AetherConfiguredFeatures.dataHolder(AetherConfiguredFeatures.FLOWER_PATCH_CONFIGURATION),
             InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
 

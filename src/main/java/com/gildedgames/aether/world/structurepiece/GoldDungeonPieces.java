@@ -88,12 +88,8 @@ public class GoldDungeonPieces {
      * The chunks of land surrounding the boss room to form an island.
      */
     public static class Island extends FeatureStructurePiece {
-        public Island(ResourceKey<ConfiguredFeature<?, ?>> feature, RegistryAccess access, BlockPos pos) {
-            super(AetherStructurePieceTypes.GOLD_ISLAND.get(), PlacementUtils.inlinePlaced(access.registryOrThrow(Registry.CONFIGURED_FEATURE_REGISTRY).getOrCreateHolderOrThrow(feature)).get(), pos);
-        }
-
-        public Island(StructurePieceSerializationContext context, CompoundTag tag) {
-            super(AetherStructurePieceTypes.GOLD_BOSS_ROOM.get(), tag);
+        public Island(ResourceKey<PlacedFeature> feature, RegistryAccess access, BlockPos pos) {
+            super(AetherStructurePieceTypes.GOLD_ISLAND.get(), feature, pos);
         }
 
         @Override
