@@ -172,7 +172,7 @@ public class Aether {
         generator.addProvider(event.includeClient(), new AetherSoundData(packOutput, helper));
 
         // Server Data
-        generator.addProvider(event.includeServer(), new AetherWorldGenData(packOutput));
+        generator.addProvider(event.includeServer(), new AetherWorldGenData(packOutput, lookupProvider));
         generator.addProvider(event.includeServer(), AetherLevelStemData.create(packOutput, helper));
         generator.addProvider(event.includeServer(), new AetherRecipeData(packOutput));
         generator.addProvider(event.includeServer(), AetherLootTableData.create(packOutput));
