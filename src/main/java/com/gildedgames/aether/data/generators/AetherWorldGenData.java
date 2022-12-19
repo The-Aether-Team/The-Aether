@@ -1,6 +1,8 @@
 package com.gildedgames.aether.data.generators;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.data.resources.*;
+import net.minecraft.Util;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.RegistrySetBuilder;
@@ -9,6 +11,9 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.registries.VanillaRegistries;
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
+
+import java.util.Collections;
+import java.util.concurrent.CompletableFuture;
 
 public class AetherWorldGenData extends DatapackBuiltinEntriesProvider {
     public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
@@ -23,7 +28,7 @@ public class AetherWorldGenData extends DatapackBuiltinEntriesProvider {
             .add(Registries.STRUCTURE_SET, AetherStructureSets::bootstrap);
 
     public AetherWorldGenData(PackOutput output) {
-        super(output, AetherWorldGenData::createLookup);
+        super(output, CompletableFuture.supplyAsync(AetherWorldGenData::createLookup, Util.backgroundExecutor()), Collections.singleton(Aether.MODID));
     }
 
     public static HolderLookup.Provider createLookup() {
