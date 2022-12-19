@@ -3,13 +3,13 @@
   "category": "misc",
   "group": "minecraft:crafting_table",
   "key": {
-    "S": {
+    "P": {
       "tag": "aether:planks_crafting"
     }
   },
   "pattern": [
-    "SS",
-    "SS"
+    "PP",
+    "PP"
   ],
   "result": {
     "item": "minecraft:crafting_table"

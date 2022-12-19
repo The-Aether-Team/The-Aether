@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_quicksoil_glass": {
+    "has_has_quicksoil_glass": {
       "conditions": {
         "items": [
           {
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_quicksoil_glass",
+      "has_has_quicksoil_glass",
       "has_the_recipe"
     ]
   ],

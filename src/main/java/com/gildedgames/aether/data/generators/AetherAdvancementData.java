@@ -29,13 +29,13 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class AetherAdvancementData extends ForgeAdvancementProvider {
-    public AetherAdvancementData(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
-        super(packOutput, lookupProvider, existingFileHelper, List.of(new AetherAdvancements()));
+    public AetherAdvancementData(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, ExistingFileHelper helper) {
+        super(output, registries, helper, List.of(new AetherAdvancements()));
     }
 
     public static class AetherAdvancements implements AdvancementGenerator {
         @Override
-        public void generate(HolderLookup.Provider provider, Consumer<Advancement> consumer, ExistingFileHelper existingFileHelper) { //todo rename values in here a bit to be more consistent
+        public void generate(HolderLookup.Provider provider, Consumer<Advancement> consumer, ExistingFileHelper existingFileHelper) {
             Advancement enterAether = Advancement.Builder.advancement()
                     .display(Blocks.GLOWSTONE,
                             Component.translatable("advancement.aether.enter_aether"),
@@ -46,7 +46,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .rewards(new AdvancementRewards(0, new ResourceLocation[]{AetherLoot.ENTER_AETHER}, new ResourceLocation[0], CommandFunction.CacheableFunction.NONE))
                     .save(consumer, new ResourceLocation(Aether.MODID, "enter_aether"), existingFileHelper);
 
-            Advancement moreYouKnow = Advancement.Builder.advancement()
+            Advancement readLore = Advancement.Builder.advancement()
                     .parent(enterAether)
                     .display(AetherItems.BOOK_OF_LORE.get(),
                             Component.translatable("advancement.aether.read_lore"),
@@ -56,7 +56,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("lore_book_entry", LoreTrigger.Instance.forAny())
                     .save(consumer, new ResourceLocation(Aether.MODID, "read_lore"), existingFileHelper);
             Advancement loreception = Advancement.Builder.advancement()
-                    .parent(moreYouKnow)
+                    .parent(readLore)
                     .display(AetherItems.BOOK_OF_LORE.get(),
                             Component.translatable("advancement.aether.loreception"),
                             Component.translatable("advancement.aether.loreception.desc"),
@@ -65,17 +65,17 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("lore_book_entry", LoreTrigger.Instance.forItem(AetherItems.BOOK_OF_LORE.get()))
                     .save(consumer, new ResourceLocation(Aether.MODID, "loreception"), existingFileHelper);
 
-            Advancement toInfinityAndBeyond = Advancement.Builder.advancement()
+            Advancement blueAercloud = Advancement.Builder.advancement()
                     .parent(enterAether)
                     .display(AetherBlocks.BLUE_AERCLOUD.get(),
                             Component.translatable("advancement.aether.blue_aercloud"),
                             Component.translatable("advancement.aether.blue_aercloud.desc"),
                             null,
                             FrameType.TASK, true, true, false)
-                    .addCriterion("to_infinity_and_beyond", EnterBlockTrigger.TriggerInstance.entersBlock(AetherBlocks.BLUE_AERCLOUD.get()))
-                    .save(consumer, new ResourceLocation(Aether.MODID, "to_infinity_and_beyond"), existingFileHelper);
+                    .addCriterion("blue_aercloud", EnterBlockTrigger.TriggerInstance.entersBlock(AetherBlocks.BLUE_AERCLOUD.get()))
+                    .save(consumer, new ResourceLocation(Aether.MODID, "blue_aercloud"), existingFileHelper);
             Advancement mountPhyg = Advancement.Builder.advancement()
-                    .parent(toInfinityAndBeyond)
+                    .parent(blueAercloud)
                     .display(Items.SADDLE,
                             Component.translatable("advancement.aether.mount_phyg"),
                             Component.translatable("advancement.aether.mount_phyg.desc"),
@@ -84,21 +84,21 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("mount_phyg", StartRidingTrigger.TriggerInstance.playerStartsRiding(EntityPredicate.Builder.entity().vehicle(EntityPredicate.Builder.entity().of(AetherEntityTypes.PHYG.get()).build())))
                     .save(consumer, new ResourceLocation(Aether.MODID, "mount_phyg"), existingFileHelper);
 
-            Advancement incubator = Advancement.Builder.advancement()
+            Advancement incubateMoa = Advancement.Builder.advancement()
                     .parent(enterAether)
                     .display(AetherBlocks.INCUBATOR.get(),
-                            Component.translatable("advancement.aether.incubator"),
-                            Component.translatable("advancement.aether.incubator.desc"),
+                            Component.translatable("advancement.aether.incubate_moa"),
+                            Component.translatable("advancement.aether.incubate_moa.desc"),
                             null,
                             FrameType.TASK, true, true, false)
-                    .addCriterion("incubator", IncubationTrigger.Instance.forItem(ItemPredicate.Builder.item().of(AetherTags.Items.MOA_EGGS).build()))
-                    .save(consumer, new ResourceLocation(Aether.MODID, "incubator"), existingFileHelper);
+                    .addCriterion("incubate_moa", IncubationTrigger.Instance.forItem(ItemPredicate.Builder.item().of(AetherTags.Items.MOA_EGGS).build()))
+                    .save(consumer, new ResourceLocation(Aether.MODID, "incubate_moa"), existingFileHelper);
 
             Advancement craftAltar = Advancement.Builder.advancement()
                     .parent(enterAether)
                     .display(AetherBlocks.ALTAR.get(),
-                            Component.translatable("advancement.aether.altar"),
-                            Component.translatable("advancement.aether.altar.desc"),
+                            Component.translatable("advancement.aether.craft_altar"),
+                            Component.translatable("advancement.aether.craft_altar.desc"),
                             null,
                             FrameType.TASK, true, true, false)
                     .addCriterion("craft_altar", InventoryChangeTrigger.TriggerInstance.hasItems(AetherBlocks.ALTAR.get()))

@@ -5,14 +5,14 @@
     "B": {
       "item": "minecraft:book"
     },
-    "S": {
+    "P": {
       "item": "aether:skyroot_planks"
     }
   },
   "pattern": [
-    "SSS",
+    "PPP",
     "BBB",
-    "SSS"
+    "PPP"
   ],
   "result": {
     "item": "aether:skyroot_bookshelf"

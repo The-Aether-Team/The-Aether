@@ -26,7 +26,7 @@ import net.minecraftforge.common.data.JsonCodecProvider;
 import java.util.Map;
 
 public class AetherLevelStemData {
-    public static DataProvider create(PackOutput packOutput, ExistingFileHelper helper) {
+    public static DataProvider create(PackOutput output, ExistingFileHelper helper) {
         HolderLookup.Provider aetherRegistry = AetherWorldGenData.createLookup();
         RegistryOps<JsonElement> registryOps = RegistryOps.create(JsonOps.INSTANCE, aetherRegistry);
         HolderGetter<Biome> biomes = aetherRegistry.lookupOrThrow(Registries.BIOME);
@@ -38,6 +38,6 @@ public class AetherLevelStemData {
         Map<ResourceLocation, LevelStem> map = Map.of(AetherDimensions.AETHER_LEVEL_STEM.location(), levelStem);
         final ResourceLocation registryId = Registries.LEVEL_STEM.location();
         final String registryFolder = registryId.getPath();
-        return new JsonCodecProvider<>(packOutput, helper, Aether.MODID, registryOps, PackType.SERVER_DATA, registryFolder, LevelStem.CODEC, map);
+        return new JsonCodecProvider<>(output, helper, Aether.MODID, registryOps, PackType.SERVER_DATA, registryFolder, LevelStem.CODEC, map);
     }
 }

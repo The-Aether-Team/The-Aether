@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_gravitite": {
+    "has_enchanted_gravitite": {
       "conditions": {
         "items": [
           {
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_gravitite",
+      "has_enchanted_gravitite",
       "has_the_recipe"
     ]
   ],

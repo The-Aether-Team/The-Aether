@@ -3,7 +3,7 @@
   "category": "misc",
   "group": "minecraft:loom",
   "key": {
-    "S": {
+    "P": {
       "tag": "aether:planks_crafting"
     },
     "T": {
@@ -12,7 +12,7 @@
   },
   "pattern": [
     "TT",
-    "SS"
+    "PP"
   ],
   "result": {
     "item": "minecraft:loom"

@@ -3,20 +3,20 @@
   "category": "redstone",
   "group": "minecraft:tripwire_hook",
   "key": {
+    "/": {
+      "tag": "forge:rods/wooden"
+    },
     "I": {
       "tag": "forge:ingots/iron"
     },
-    "S": {
+    "P": {
       "tag": "aether:planks_crafting"
-    },
-    "T": {
-      "tag": "forge:rods/wooden"
     }
   },
   "pattern": [
     "I",
-    "T",
-    "S"
+    "/",
+    "P"
   ],
   "result": {
     "count": 2,

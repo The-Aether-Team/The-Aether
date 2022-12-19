@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
-  "group": "wooden_sign",
+  "group": "sign",
   "key": {
+    "/": {
+      "tag": "aether:skyroot_stick"
+    },
     "P": {
       "item": "aether:skyroot_planks"
-    },
-    "S": {
-      "tag": "aether:skyroot_stick"
     }
   },
   "pattern": [
     "PPP",
     "PPP",
-    " S "
+    " / "
   ],
   "result": {
     "count": 3,

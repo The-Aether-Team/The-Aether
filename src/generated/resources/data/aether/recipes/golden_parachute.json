@@ -2,13 +2,13 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": {
+    "#": {
       "item": "aether:golden_aercloud"
     }
   },
   "pattern": [
-    "AA",
-    "AA"
+    "##",
+    "##"
   ],
   "result": {
     "item": "aether:golden_parachute"

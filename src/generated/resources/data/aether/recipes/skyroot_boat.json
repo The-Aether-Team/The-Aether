@@ -3,13 +3,13 @@
   "category": "misc",
   "group": "boat",
   "key": {
-    "P": {
+    "#": {
       "item": "aether:skyroot_planks"
     }
   },
   "pattern": [
-    "P P",
-    "PPP"
+    "# #",
+    "###"
   ],
   "result": {
     "item": "aether:skyroot_boat"

@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "S": {
+    "P": {
       "item": "aether:skyroot_planks"
     },
     "W": {
@@ -11,7 +11,7 @@
   },
   "pattern": [
     "WWW",
-    "SSS"
+    "PPP"
   ],
   "result": {
     "item": "aether:skyroot_bed"

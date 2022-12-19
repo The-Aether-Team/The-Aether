@@ -66,6 +66,7 @@ public class AetherTags {
 		public static final TagKey<Item> ANGELIC_BLOCKS = tag("angelic_blocks");
 		public static final TagKey<Item> HELLFIRE_BLOCKS = tag("hellfire_blocks");
 
+		public static final TagKey<Item> CRAFTS_SKYROOT_PLANKS = tag("crafts_skyroot_planks");
 		public static final TagKey<Item> PLANKS_CRAFTING = tag("planks_crafting");
 
 		public static final TagKey<Item> AETHER_PORTAL_ACTIVATION_ITEMS = tag("aether_portal_activation_items");

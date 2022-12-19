@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_icestone": {
+    "has_has_icestone": {
       "conditions": {
         "items": [
           {
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_icestone",
+      "has_has_icestone",
       "has_the_recipe"
     ]
   ],

@@ -7,7 +7,7 @@
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "has_zanite": {
+    "has_zanite_gemstone": {
       "conditions": {
         "items": [
           {
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_zanite",
+      "has_zanite_gemstone",
       "has_the_recipe"
     ]
   ],

@@ -13,7 +13,7 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_poison_bucket": {
+    "has_skyroot_poison_bucket": {
       "conditions": {
         "items": [
           {
@@ -35,7 +35,7 @@
   "requirements": [
     [
       "has_golden_dart",
-      "has_poison_bucket",
+      "has_skyroot_poison_bucket",
       "has_the_recipe"
     ]
   ],

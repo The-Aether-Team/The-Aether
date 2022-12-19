@@ -33,47 +33,30 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 import java.util.Set;
-import java.util.function.Supplier;
 
 public abstract class AetherBlockLootSubProvider extends BlockLootSubProvider {
     public AetherBlockLootSubProvider(Set<Item> items, FeatureFlagSet flags) {
         super(items, flags);
     }
 
-    public void dropNone(Supplier<? extends Block> block) {
-        this.add(block.get(), noDrop());
+    public void dropNone(Block block) {
+        this.add(block, noDrop());
     }
 
-    public void dropDoubleWithSilk(Supplier<? extends Block> block, Supplier<? extends ItemLike> drop) {
-        this.add(block.get(), (result) -> droppingDoubleWithSilkTouch(result, drop.get()));
+    public void dropDoubleWithSilk(Block block, ItemLike drop) {
+        this.add(block, (result) -> this.droppingDoubleWithSilkTouch(result, drop));
     }
 
-    public void dropSelfDouble(Supplier<? extends Block> block) {
-        this.add(block.get(), droppingDouble(block.get()));
+    public void dropSelfDouble(Block block) {
+        this.add(block, this.droppingDouble(block));
     }
 
-    public void dropSelf(Supplier<? extends Block> block) {
-        super.dropSelf(block.get());
+    public void dropDoubleWithFortune(Block block, Item drop) {
+        this.add(block, (result) -> this.droppingDoubleItemsWithFortune(result, drop));
     }
 
-    public void dropDoubleWithFortune(Supplier<? extends Block> block, Supplier<? extends Item> drop) {
-        this.add(block.get(), (result) -> droppingDoubleItemsWithFortune(result, drop.get()));
-    }
-
-    public void dropWithFortune(Supplier<? extends Block> block, Supplier<? extends Item> drop) {
-        this.add(block.get(), (result) -> createOreDrop(result, drop.get()));
-    }
-
-    public void dropSilk(Supplier<? extends Block> block) {
-        this.dropWhenSilkTouch(block.get());
-    }
-
-    public void drop(Supplier<? extends Block> block, Supplier<? extends Block> drop) {
-        this.dropOther(block.get(), drop.get());
-    }
-
-    public void dropPot(Supplier<? extends Block> block) {
-        this.dropPottedContents(block.get());
+    public void dropWithFortune(Block block, Item drop) {
+        this.add(block, (result) -> this.createOreDrop(result, drop));
     }
 
     public LootTable.Builder droppingDoubleWithSilkTouch(Block block, ItemLike noSilkTouch) {
@@ -90,9 +73,9 @@ public abstract class AetherBlockLootSubProvider extends BlockLootSubProvider {
                 .apply(DoubleDrops.builder());
     }
 
-    public LootTable.Builder droppingDouble(Block block, LootItemCondition.Builder conditionBuilder, LootPoolEntryContainer.Builder<?> p_218494_2_) {
+    public LootTable.Builder droppingDouble(Block block, LootItemCondition.Builder conditionBuilder, LootPoolEntryContainer.Builder<?> builder) {
         return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                        .add(LootItem.lootTableItem(block).when(conditionBuilder).otherwise(p_218494_2_)))
+                        .add(LootItem.lootTableItem(block).when(conditionBuilder).otherwise(builder)))
                 .apply(DoubleDrops.builder());
     }
 
@@ -196,9 +179,9 @@ public abstract class AetherBlockLootSubProvider extends BlockLootSubProvider {
                         .apply(SpawnTNT.builder()))
                 .add(LootItem.lootTableItem(Items.AIR).setWeight(9)
                         .apply(SpawnXP.builder()))
-                .add((applyExplosionDecay(block, LootItem.lootTableItem(AetherItems.GINGERBREAD_MAN.get()).setWeight(8)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(5.0F, 6.0F))))))
-                .add((applyExplosionDecay(block, LootItem.lootTableItem(AetherItems.CANDY_CANE_SWORD.get()).setWeight(1))))
+                .add(this.applyExplosionDecay(block, LootItem.lootTableItem(AetherItems.GINGERBREAD_MAN.get()).setWeight(8)
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(5.0F, 6.0F)))))
+                .add(this.applyExplosionDecay(block, LootItem.lootTableItem(AetherItems.CANDY_CANE_SWORD.get()).setWeight(1)))
         );
     }
 }

@@ -10,8 +10,8 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import java.util.List;
 
 public class AetherLootTableData {
-    public static LootTableProvider create(PackOutput packOutput) {
-        return new LootTableProvider(packOutput, AetherLoot.IMMUTABLE_LOOT_TABLES, List.of(
+    public static LootTableProvider create(PackOutput output) {
+        return new LootTableProvider(output, AetherLoot.IMMUTABLE_LOOT_TABLES, List.of(
                 new LootTableProvider.SubProviderEntry(AetherDungeonLoot::new, LootContextParamSets.CHEST),
                 new LootTableProvider.SubProviderEntry(AetherEntityLoot::new, LootContextParamSets.ENTITY),
                 new LootTableProvider.SubProviderEntry(AetherBlockLoot::new, LootContextParamSets.BLOCK),

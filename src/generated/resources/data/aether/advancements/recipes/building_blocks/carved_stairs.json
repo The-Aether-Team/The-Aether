@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_carved_stone": {
+    "has_has_carved_stone": {
       "conditions": {
         "items": [
           {
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_carved_stone",
+      "has_has_carved_stone",
       "has_the_recipe"
     ]
   ],

@@ -3,13 +3,13 @@
   "category": "redstone",
   "group": "wooden_trapdoor",
   "key": {
-    "S": {
+    "#": {
       "item": "aether:skyroot_planks"
     }
   },
   "pattern": [
-    "SSS",
-    "SSS"
+    "###",
+    "###"
   ],
   "result": {
     "count": 2,

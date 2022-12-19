@@ -7,15 +7,14 @@ import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.SoundDefinitionsProvider;
 
-public class AetherSoundData extends SoundDefinitionsProvider
-{
-    public AetherSoundData(PackOutput packOutput, ExistingFileHelper helper) {
-        super(packOutput, Aether.MODID, helper);
+public class AetherSoundData extends SoundDefinitionsProvider {
+    public AetherSoundData(PackOutput output, ExistingFileHelper helper) {
+        super(output, Aether.MODID, helper);
     }
 
     @Override
     public void registerSounds() {
-        //Blocks
+        // Blocks
         this.add(AetherSoundEvents.BLOCK_AETHER_PORTAL_AMBIENT,
                 definition().with(sound("minecraft:portal/portal").attenuationDistance(10))
                 .subtitle("subtitles.block.aether_portal.ambient")

@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_aercloud": {
+    "has_cold_aercloud": {
       "conditions": {
         "items": [
           {
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_aercloud",
+      "has_cold_aercloud",
       "has_the_recipe"
     ]
   ],

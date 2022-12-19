@@ -15,8 +15,8 @@ import javax.annotation.Nullable;
 import java.util.concurrent.CompletableFuture;
 
 public class AetherBlockTagData extends BlockTagsProvider {
-    public AetherBlockTagData(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
-        super(packOutput, lookupProvider, Aether.MODID, existingFileHelper);
+    public AetherBlockTagData(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, @Nullable ExistingFileHelper helper) {
+        super(output, registries, Aether.MODID, helper);
     }
 
     @SuppressWarnings("unchecked")

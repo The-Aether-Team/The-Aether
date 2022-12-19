@@ -1,12 +1,12 @@
-// 1.19.3	2022-12-17T16:44:28.7812025	Advancements
+// 1.19.3	2022-12-19T15:43:57.9754473	Advancements
+a6a7ec78b783342af08b1021cf32a7f5cf76d6a7 data/aether/advancements/blue_aercloud.json
 0ffa419eb9f5dda55e78c995d924240b48224359 data/aether/advancements/bronze_dungeon.json
-fe1e6314a0041e401114d49d6f45ad3d05066994 data/aether/advancements/craft_altar.json
+f6a6be4e57c569b5f2ec79502f88dc002a1f00a3 data/aether/advancements/craft_altar.json
 fc4733d6f2cc4d41ada90fa033747390a16acc33 data/aether/advancements/enter_aether.json
 c41c1d6881e4341910e07288ec92215e7af160d6 data/aether/advancements/gold_dungeon.json
 50d29ae55dabef082a198baeb3d34d2fe56aaecc data/aether/advancements/gravitite_tools.json
-003c3897228847ea079ad442e563b8d0ea3e4258 data/aether/advancements/incubator.json
+81cfc0e2cbef00003795cf335007fa65eb5a6659 data/aether/advancements/incubate_moa.json
 1955122ec904e00330255b333a4e0cd6affbd298 data/aether/advancements/loreception.json
-67b89417187fecf6f86b1f9b7afe649b808ede1a data/aether/advancements/mount_phyg.json
+f7555059c9b97f02d6a1340f93ecf1db1182792e data/aether/advancements/mount_phyg.json
 d33843f197963009639ff064068cf88b2a55df9b data/aether/advancements/read_lore.json
 f892614048e1d93bec2c8862fc488a9f92cee7b9 data/aether/advancements/silver_dungeon.json
-bf2ad7b0f45af96fecd59d9bd053e471afb2d123 data/aether/advancements/to_infinity_and_beyond.json

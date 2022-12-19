@@ -75,7 +75,7 @@ public class ThunderCrystal extends AbstractCrystal {
     @Override
     protected void onHitEntity(EntityHitResult pResult) {
         if (pResult.getEntity() instanceof LivingEntity target && target != this.getOwner()) {
-            target.hurt(new IndirectEntityDamageSource("thunder_crystal", this, this.getOwner()).setProjectile(), 5.0F);
+            target.hurt(new IndirectEntityDamageSource("aether.thunder_crystal", this, this.getOwner()).setProjectile(), 5.0F);
             this.knockback(0.1, this.position().subtract(target.position()));
             target.knockback(0.25, this.getX() - target.getX(), this.getZ() - target.getZ());
         }

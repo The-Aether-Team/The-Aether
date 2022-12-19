@@ -1,5 +1,6 @@
 package com.gildedgames.aether.data.generators;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.data.providers.AetherLanguageProvider;
 import com.gildedgames.aether.effect.AetherEffects;
@@ -7,13 +8,11 @@ import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.inventory.menu.AetherMenuTypes;
 import com.gildedgames.aether.item.AetherCreativeTabs;
 import com.gildedgames.aether.item.AetherItems;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 
-public class AetherLanguageData extends AetherLanguageProvider
-{
-    public AetherLanguageData(PackOutput packOutput) {
-        super(packOutput);
+public class AetherLanguageData extends AetherLanguageProvider {
+    public AetherLanguageData(PackOutput output) {
+        super(output, Aether.MODID);
     }
 
     @Override
@@ -162,9 +161,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addBlock(AetherBlocks.AEROGEL_SLAB, "Aerogel Slab");
 
         addBlock(AetherBlocks.SUN_ALTAR, "Sun Altar");
-
         addBlock(AetherBlocks.SKYROOT_BOOKSHELF, "Skyroot Bookshelf");
-
         addBlock(AetherBlocks.SKYROOT_BED, "Skyroot Bed");
 
         addBlock(AetherBlocks.UNSTABLE_OBSIDIAN, "Unstable Obsidian");
@@ -452,21 +449,20 @@ public class AetherLanguageData extends AetherLanguageProvider
         addAdvancement("read_lore", "The More You Know!");
         addAdvancement("loreception", "Lore-Ception!");
         addAdvancement("blue_aercloud", "To Infinity and Beyond!");
-        addAdvancement("incubator", "Now You're Family");
-        addAdvancement("altar", "Do You Believe in Magic?");
+        addAdvancement("incubate_moa", "Now You're Family");
+        addAdvancement("craft_altar", "Do You Believe in Magic?");
         addAdvancement("gravitite_tools", "Pink is the New Blue");
         addAdvancement("mount_phyg", "When Phygs Fly");
         addAdvancement("bronze_dungeon", "Like a Bossaru!");
         addAdvancement("silver_dungeon", "Dethroned");
         addAdvancement("gold_dungeon", "Extinguished");
 
-
         addAdvancementDesc("enter_aether", "Enter the Aether");
         addAdvancementDesc("read_lore", "Read a Book of Lore");
         addAdvancementDesc("loreception", "Put a Book of Lore inside a Book of Lore");
         addAdvancementDesc("blue_aercloud", "Bounce on a Blue Aercloud");
-        addAdvancementDesc("incubator", "Incubate a Moa");
-        addAdvancementDesc("altar", "Craft an Altar");
+        addAdvancementDesc("incubate_moa", "Incubate a Moa");
+        addAdvancementDesc("craft_altar", "Craft an Altar");
         addAdvancementDesc("gravitite_tools", "Craft a Gravitite tool");
         addAdvancementDesc("mount_phyg", "Fly on a Phyg!");
         addAdvancementDesc("bronze_dungeon", "Defeat the bronze boss");
@@ -589,7 +585,8 @@ public class AetherLanguageData extends AetherLanguageProvider
         addSubtitle("entity", "dart.hit", "Dart hits");
 
 
-
+        addDeath("floating_block", "%1$s was squashed by a floating block");
+        addDeath("floating_block.player", "%1$s was squashed by a floating block whilst fighting %2$s");
         addDeath("inebriation", "%1$s was inebriated");
         addDeath("inebriation.player", "%1$s was inebriated by %2$s");
         addDeath("crush", "%1$s was crushed by %2$s");
@@ -599,21 +596,17 @@ public class AetherLanguageData extends AetherLanguageProvider
         addDeath("incineration", "%1$s was incinerated by %2$s");
 
 
-
         addMenuText("minecraft", "Normal Theme");
         addMenuText("aether", "Aether Theme");
         addMenuText("preview", "Toggle World");
         addMenuText("load", "Quick Load");
 
-
         addGuiText("pro_tip", "Pro Tip:");
         addGuiText("ascending", "Ascending to the Aether");
         addGuiText("descending", "Descending from the Aether");
 
-
         addGuiText("accessories.skins_button", "Skins");
         addGuiText("accessories.customization_button", "Customization");
-
 
         addGuiText("sun_altar.time", "Time");
 
@@ -627,11 +620,10 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("jei.incubating", "Incubating");
         addGuiText("jei.fuel", "Aether Fuel");
 
-
         addGuiText("slider.title", "the Slider");
         addGuiText("slider.message.attack.invalid", "Hmm. Perhaps I need to attack it with a Pickaxe?");
 
-        //Valkyrie dialogue
+        // Valkyrie Dialogue
         addGuiText("valkyrie.dialog.1", "What's that? You want to fight? Aww, what a cute little human.");
         addGuiText("valkyrie.dialog.2", "You're not thinking of fighting a big, strong Valkyrie are you?");
         addGuiText("valkyrie.dialog.3", "I don't think you should bother me, you could get really hurt.");
@@ -652,7 +644,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("valkyrie.dialog.playerdeath.2", "Maybe some day, %s... maybe some day.");
         addGuiText("valkyrie.dialog.playerdeath.3", "Humans aren't nearly as cute when they're dead.");
 
-        //Valkyrie queen dialogue
+        // Valkyrie Queen Dialogue
         addGuiText("queen.dialog.answer", "This is a sanctuary for us Valkyries who seek rest.");
         addGuiText("queen.dialog.challenge", "Very well then. Bring me ten medals from my subordinates to prove your worth, then we'll see.");
         addGuiText("queen.dialog.defeated", "You are truly... a mighty warrior...");
@@ -673,7 +665,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("player.dialog.no_medals", "I'll return when I have them.");
         addGuiText("player.dialog.question", "What can you tell me about this place?");
 
-        //Sun spirit dialogue
+        // Sun Spirit Dialogue
         addGuiText("sun_spirit.title", "the Sun Spirit");
         addGuiText("sun_spirit.dead", "Such bitter cold... is this the feeling... of pain?");
         addGuiText("sun_spirit.playerdeath", "Such is the fate of a being who opposes the might of the sun.");
@@ -691,7 +683,6 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("sun_spirit.line8", "This is your final warning. Leave now, or prepare to burn.");
         addGuiText("sun_spirit.line9", "As you wish, your death will be slow and agonizing.");
         addGuiText("sun_spirit.line10", "Did your previous death not satisfy your curiosity, human?");
-
 
 
         addCustomizationText("title", "Customization");
@@ -716,7 +707,6 @@ public class AetherLanguageData extends AetherLanguageProvider
 
         addMessage("hammer_of_notch_cooldown", "Cooldown");
 
-
         addMessage("life_shard_limit", "You can only use a total of %s Life Shards.");
         addMessage("bronze_treasure_chest_locked", "This Treasure Chest must be unlocked with a Bronze Key.");
         addMessage("silver_treasure_chest_locked", "This Treasure Chest must be unlocked with a Silver Key.");
@@ -724,6 +714,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addMessage("sun_altar.in_control", "The sun spirit is still in control of this realm.");
         addMessage("sun_altar.no_permission", "You don't have permission to use this.");
         addMessage("sun_altar.no_power", "The sun spirit has no power over this realm.");
+
 
         addCommand("menu.fix", "Reset world preview values");
 
@@ -745,11 +736,9 @@ public class AetherLanguageData extends AetherLanguageProvider
         addCommand("sun_altar_whitelist.remove.failed", "Player is not whitelisted to use the Sun Altar");
 
 
-
         addKeyInfo("category", "Aether");
         addKeyInfo("open_accessories.desc", "Open/Close Accessories Inventory");
         addKeyInfo("gravitite_jump_ability.desc", "Activate Gravitite Jump");
-
 
 
         addCuriosIdentifier("aether_pendant", "Pendant");
@@ -998,7 +987,6 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherItems.MUSIC_DISC_LEGACY, "A music disc that plays Legacy by Jon Lachney.");
         addLore(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "A music disc that plays Welcoming Skies by Voyed.");
         addLore(AetherItems.MUSIC_DISC_CHINCHILLA,"A music disc that plays chinchilla by RENREN.");
-
         addLoreUnique("item.aether.hammer_of_jeb", "A mysterious hammer that can shoot projectiles. At one point it vanished from existence. It's said this was actually Jeb's hammer at one point.");
 
 

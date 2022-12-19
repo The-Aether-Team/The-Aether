@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_stripped_skyroot_log": {
+    "has_log": {
       "conditions": {
         "items": [
           {
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_stripped_skyroot_log",
+      "has_log",
       "has_the_recipe"
     ]
   ],

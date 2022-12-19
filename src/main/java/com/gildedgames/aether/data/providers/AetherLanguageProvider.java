@@ -1,8 +1,7 @@
 package com.gildedgames.aether.data.providers;
 
-import com.gildedgames.aether.Aether;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -12,97 +11,99 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Supplier;
 
-public abstract class AetherLanguageProvider extends LanguageProvider
-{
-    public AetherLanguageProvider(PackOutput packOutput) {
-        super(packOutput, Aether.MODID, "en_us");
+public abstract class AetherLanguageProvider extends LanguageProvider {
+    public AetherLanguageProvider(PackOutput output, String id) {
+        super(output, id, "en_us");
     }
 
     public void addDiscDesc(Supplier<? extends Item> key, String name) {
-        add(key.get().getDescriptionId() + ".desc", name);
-    }
-
-    public void addSubtitle(String category, String key, String name) {
-        add("subtitles." + category + "." + key, name);
-    }
-
-    public void addDeath(String key, String name) {
-        add("death.attack." + key, name);
+        this.add(key.get().getDescriptionId() + ".desc", name);
     }
 
     public void addContainerType(Supplier<? extends MenuType<?>> key, String name) {
-        add("menu." + ForgeRegistries.MENU_TYPES.getKey(key.get()).toString().replace(":", "."), name);
+        ResourceLocation location = ForgeRegistries.MENU_TYPES.getKey(key.get());
+        if (location != null) {
+            this.add("menu." + location.toString().replace(":", "."), name);
+        }
     }
 
     public void addContainerType(String key, String name) {
-        add("menu.aether." + key, name);
+        this.add("menu.aether." + key, name);
     }
 
     public void addCreativeTab(CreativeModeTab tab, String name) {
-        add(tab.getDisplayName().getString(), name);
+        this.add(tab.getDisplayName().getString(), name);
     }
 
     public void addAdvancement(String key, String name) {
-        add("advancement.aether." + key, name);
+        this.add("advancement.aether." + key, name);
     }
 
     public void addAdvancementDesc(String key, String name) {
-        add("advancement.aether." + key + ".desc", name);
+        this.add("advancement.aether." + key + ".desc", name);
     }
 
-    public void addGuiText(String key, String name) {
-        add("gui.aether." + key, name);
+    public void addSubtitle(String category, String key, String name) {
+        this.add("subtitles." + category + "." + key, name);
     }
 
-    public void addCustomizationText(String key, String name) {
-        addGuiText("customization." + key, name);
+    public void addDeath(String key, String name) {
+        this.add("death.attack.aether." + key, name);
     }
 
     public void addMenuText(String key, String name) {
-        addGuiText("menu." + key, name);
+        this.addGuiText("menu." + key, name);
+    }
+
+    public void addGuiText(String key, String name) {
+        this.add("gui.aether." + key, name);
+    }
+
+    public void addCustomizationText(String key, String name) {
+        this.addGuiText("customization." + key, name);
     }
 
     public void addLoreBookText(String key, String name) {
-        addGuiText("book_of_lore." + key, name);
+        this.addGuiText("book_of_lore." + key, name);
     }
 
     public void addMessage(String key, String name) {
-        add("aether." + key, name);
+        this.add("aether." + key, name);
     }
 
     public void addCommand(String key, String name) {
-        add("commands.aether." + key, name);
+        this.add("commands.aether." + key, name);
     }
 
     public void addKeyInfo(String key, String name) {
-        add("key.aether." + key, name);
+        this.add("key.aether." + key, name);
     }
 
     public void addCuriosIdentifier(String key, String name) {
-        add("curios.identifier." + key, name);
+        this.add("curios.identifier." + key, name);
     }
 
     public void addCuriosModifier(String key, String name) {
-        add("curios.modifiers." + key, name);
+        this.add("curios.modifiers." + key, name);
     }
 
     public void addLore(Supplier<? extends ItemLike> key, String name) {
-        add("lore." + key.get().asItem().getDescriptionId(), name);
+        this.add("lore." + key.get().asItem().getDescriptionId(), name);
     }
 
     public void addLoreUnique(String key, String name) {
-        add("lore." + key, name);
+        this.add("lore." + key, name);
     }
 
     public void addProTip(String key, String name) {
-        add("aether.pro_tips.line.aether." + key, name);
+        this.add("aether.pro_tips.line.aether." + key, name);
     }
 
     public void addCommonConfig(String prefix, String key, String name) {
-        add("config.aether.common." + prefix + "." + key, name);
+        this.add("config.aether.common." + prefix + "." + key, name);
     }
 
     public void addClientConfig(String prefix, String key, String name) {
-        add("config.aether.client." + prefix + "." + key, name);
+        this.add("config.aether.client." + prefix + "." + key, name);
     }
 }

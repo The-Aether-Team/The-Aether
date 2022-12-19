@@ -20,8 +20,8 @@ import javax.annotation.Nullable;
 import java.util.concurrent.CompletableFuture;
 
 public class AetherItemTagData extends ItemTagsProvider {
-    public AetherItemTagData(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, TagsProvider<Block> blockTagsProvider, @Nullable ExistingFileHelper existingFileHelper) {
-        super(packOutput, lookupProvider, blockTagsProvider, Aether.MODID, existingFileHelper);
+    public AetherItemTagData(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, TagsProvider<Block> blockTags, @Nullable ExistingFileHelper helper) {
+        super(output, registries, blockTags, Aether.MODID, helper);
     }
 
     @SuppressWarnings("unchecked")
@@ -43,6 +43,9 @@ public class AetherItemTagData extends ItemTagsProvider {
         this.copy(AetherTags.Blocks.ANGELIC_BLOCKS, AetherTags.Items.ANGELIC_BLOCKS);
         this.copy(AetherTags.Blocks.HELLFIRE_BLOCKS, AetherTags.Items.HELLFIRE_BLOCKS);
 
+        this.tag(AetherTags.Items.CRAFTS_SKYROOT_PLANKS).addTags(
+                AetherTags.Items.SKYROOT_LOGS,
+                AetherTags.Items.GOLDEN_OAK_LOGS);
         this.tag(AetherTags.Items.PLANKS_CRAFTING).add(AetherBlocks.SKYROOT_PLANKS.get().asItem());
 
         this.tag(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS);

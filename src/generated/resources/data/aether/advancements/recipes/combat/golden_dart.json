@@ -1,23 +1,23 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_amber": {
+    "has_feather": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:feathers"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_golden_amber": {
       "conditions": {
         "items": [
           {
             "items": [
               "aether:golden_amber"
             ]
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "has_feather": {
-      "conditions": {
-        "items": [
-          {
-            "tag": "forge:feathers"
           }
         ]
       },
@@ -33,7 +33,7 @@
   "requirements": [
     [
       "has_feather",
-      "has_amber",
+      "has_golden_amber",
       "has_the_recipe"
     ]
   ],

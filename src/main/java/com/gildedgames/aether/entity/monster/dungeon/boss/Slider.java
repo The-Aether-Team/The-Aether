@@ -229,7 +229,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
             AABB collisionBounds = new AABB(this.getBoundingBox().minX - 0.1, this.getBoundingBox().minY - 0.1, this.getBoundingBox().minZ - 0.1,
                     this.getBoundingBox().maxX + 0.1, this.getBoundingBox().maxY + 0.1, this.getBoundingBox().maxZ + 0.1);
             for (Entity entity : this.getLevel().getEntities(this, collisionBounds)) {
-                if (entity instanceof LivingEntity livingEntity && entity.hurt(new EntityDamageSource("crush", this), 6)) {
+                if (entity instanceof LivingEntity livingEntity && entity.hurt(new EntityDamageSource("aether.crush", this), 6)) {
                     if (livingEntity instanceof Player player && player.getUseItem().is(Items.SHIELD) && player.isBlocking()) {
                         player.getCooldowns().addCooldown(Items.SHIELD, 100);
                         player.stopUsingItem();

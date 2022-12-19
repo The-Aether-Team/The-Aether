@@ -3,14 +3,14 @@
   "category": "misc",
   "group": "minecraft:chest",
   "key": {
-    "S": {
+    "P": {
       "tag": "aether:planks_crafting"
     }
   },
   "pattern": [
-    "SSS",
-    "S S",
-    "SSS"
+    "PPP",
+    "P P",
+    "PPP"
   ],
   "result": {
     "item": "minecraft:chest"

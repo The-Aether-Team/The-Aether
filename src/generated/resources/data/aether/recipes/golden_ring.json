@@ -2,14 +2,14 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "M": {
+    "#": {
       "item": "minecraft:gold_ingot"
     }
   },
   "pattern": [
-    " M ",
-    "M M",
-    " M "
+    " # ",
+    "# #",
+    " # "
   ],
   "result": {
     "item": "aether:golden_ring"

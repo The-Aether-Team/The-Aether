@@ -6,14 +6,14 @@
     "C": {
       "item": "minecraft:honeycomb"
     },
-    "S": {
+    "P": {
       "tag": "aether:planks_crafting"
     }
   },
   "pattern": [
-    "SSS",
+    "PPP",
     "CCC",
-    "SSS"
+    "PPP"
   ],
   "result": {
     "item": "minecraft:beehive"

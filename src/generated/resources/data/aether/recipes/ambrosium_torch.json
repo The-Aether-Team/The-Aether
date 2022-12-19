@@ -2,16 +2,16 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
+    "/": {
+      "tag": "aether:skyroot_stick"
+    },
     "A": {
       "item": "aether:ambrosium_shard"
-    },
-    "S": {
-      "tag": "aether:skyroot_stick"
     }
   },
   "pattern": [
     "A",
-    "S"
+    "/"
   ],
   "result": {
     "count": 4,

@@ -3,19 +3,19 @@
   "category": "misc",
   "group": "minecraft:grindstone",
   "key": {
+    "/": {
+      "tag": "forge:rods/wooden"
+    },
     "H": {
       "item": "minecraft:stone_slab"
     },
-    "S": {
+    "P": {
       "tag": "aether:planks_crafting"
-    },
-    "T": {
-      "tag": "forge:rods/wooden"
     }
   },
   "pattern": [
-    "THT",
-    "S S"
+    "/H/",
+    "P P"
   ],
   "result": {
     "item": "minecraft:grindstone"

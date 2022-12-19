@@ -57,7 +57,7 @@ public class FireCrystal extends AbstractCrystal {
     protected void onHitEntity(EntityHitResult result) {
         Entity entity = result.getEntity();
         if (entity instanceof LivingEntity livingEntity) {
-            if (livingEntity.hurt(new IndirectEntityDamageSource("fire_crystal", this, this.getOwner()).setProjectile(), 5.0F)) {
+            if (livingEntity.hurt(new IndirectEntityDamageSource("aether.fire_crystal", this, this.getOwner()).setProjectile(), 5.0F)) {
                 livingEntity.setSecondsOnFire(5);
                 this.level.playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
                 this.spawnExplosionParticles();

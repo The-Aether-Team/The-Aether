@@ -18,14 +18,14 @@ public class AetherSelectorLoot implements LootTableSubProvider {
     @Override
     public void generate(BiConsumer<ResourceLocation, LootTable.Builder> builder) {
         builder.accept(AetherLoot.WHIRLWIND_JUNK, LootTable.lootTable()
-                .withPool(this.whirlwindLoot())
+                .withPool(whirlwindLoot())
         );
         builder.accept(AetherLoot.EVIL_WHIRLWIND_JUNK, LootTable.lootTable()
-                .withPool(this.whirlwindLoot().add(LootItem.lootTableItem(Items.AIR).apply(WhirlwindSpawnEntity.builder(EntityType.CREEPER, 1)).setWeight(60)))
+                .withPool(whirlwindLoot().add(LootItem.lootTableItem(Items.AIR).apply(WhirlwindSpawnEntity.builder(EntityType.CREEPER, 1)).setWeight(60)))
         );
     }
 
-    private LootPool.Builder whirlwindLoot() {
+    private static LootPool.Builder whirlwindLoot() {
         return LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                 .add(LootItem.lootTableItem(Items.DIAMOND).setWeight(1))
                 .add(LootItem.lootTableItem(Items.IRON_INGOT).setWeight(4))

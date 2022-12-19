@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "M": {
+    "#": {
       "item": "minecraft:iron_ingot"
     },
     "S": {
@@ -12,7 +12,7 @@
   "pattern": [
     "SSS",
     "S S",
-    " M "
+    " # "
   ],
   "result": {
     "item": "aether:iron_pendant"

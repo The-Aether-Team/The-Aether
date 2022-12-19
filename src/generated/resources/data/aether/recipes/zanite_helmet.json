@@ -2,13 +2,13 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "M": {
+    "#": {
       "item": "aether:zanite_gemstone"
     }
   },
   "pattern": [
-    "MMM",
-    "M M"
+    "###",
+    "# #"
   ],
   "result": {
     "item": "aether:zanite_helmet"

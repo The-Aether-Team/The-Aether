@@ -8,14 +8,14 @@
     "I": {
       "item": "aether:icestone"
     },
-    "S": {
+    "P": {
       "item": "aether:skyroot_planks"
     }
   },
   "pattern": [
     "HHH",
     "HIH",
-    "SSS"
+    "PPP"
   ],
   "result": {
     "item": "aether:freezer"

@@ -152,7 +152,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
         List<Entity> entities = this.level.getEntities(this, this.getBoundingBox().expandTowards(0, 4, 0));
         for (Entity target : entities) {
             if (target instanceof LivingEntity) {
-                target.hurt(new EntityDamageSource("incineration", this), 10);
+                target.hurt(new EntityDamageSource("aether.incineration", this), 10);
                 target.setSecondsOnFire(15);
             }
         }

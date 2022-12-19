@@ -6,14 +6,14 @@
     "F": {
       "item": "minecraft:flint"
     },
-    "S": {
+    "P": {
       "tag": "aether:planks_crafting"
     }
   },
   "pattern": [
     "FF",
-    "SS",
-    "SS"
+    "PP",
+    "PP"
   ],
   "result": {
     "item": "minecraft:fletching_table"

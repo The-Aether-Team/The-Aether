@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_purple_flower": {
+    "has_has_purple_flower": {
       "conditions": {
         "items": [
           {
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_purple_flower",
+      "has_has_purple_flower",
       "has_the_recipe"
     ]
   ],
