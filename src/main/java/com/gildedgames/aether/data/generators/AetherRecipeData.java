@@ -280,8 +280,8 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .unlockedBy(getHasName(AetherBlocks.SKYROOT_PLANKS.get()), has(AetherBlocks.SKYROOT_PLANKS.get()))
                 .save(consumer);
 
-        twoByTwoPacker(consumer, RecipeCategory.MISC, AetherItems.COLD_PARACHUTE.get(), AetherBlocks.COLD_AERCLOUD.get());
-        twoByTwoPacker(consumer, RecipeCategory.MISC, AetherItems.GOLDEN_PARACHUTE.get(), AetherBlocks.GOLDEN_AERCLOUD.get());
+        twoByTwoPacker(consumer, RecipeCategory.TOOLS, AetherItems.COLD_PARACHUTE.get(), AetherBlocks.COLD_AERCLOUD.get());
+        twoByTwoPacker(consumer, RecipeCategory.TOOLS, AetherItems.GOLDEN_PARACHUTE.get(), AetherBlocks.GOLDEN_AERCLOUD.get());
 
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, AetherItems.NATURE_STAFF.get(), 1)
                 .define('Z', AetherItems.ZANITE_GEMSTONE.get())
