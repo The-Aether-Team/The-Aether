@@ -1,5 +1,6 @@
 package com.gildedgames.aether.data.providers;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.api.registers.MoaType;
 import com.gildedgames.aether.recipe.BlockPropertyPair;
@@ -10,8 +11,10 @@ import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.recipe.conditions.ConfigCondition;
 import net.minecraft.data.recipes.*;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.data.*;
@@ -32,6 +35,15 @@ import net.minecraftforge.common.crafting.conditions.NotCondition;
 public abstract class AetherRecipeProvider extends RecipeProvider {
     public AetherRecipeProvider(PackOutput output) {
         super(output);
+    }
+
+    protected static ResourceLocation name(String name) {
+        return new ResourceLocation(Aether.MODID, name);
+    }
+
+    protected static void oreBlockStorageRecipesRecipesWithCustomUnpacking(Consumer<FinishedRecipe> consumer, RecipeCategory itemCategory, ItemLike item, RecipeCategory blockCategory, ItemLike block, String itemRecipeName, String itemGroup) {
+        ShapelessRecipeBuilder.shapeless(itemCategory, item, 9).requires(block).group(itemGroup).unlockedBy(getHasName(block), has(block)).save(consumer, name(itemRecipeName));
+        ShapedRecipeBuilder.shaped(blockCategory, block).define('#', item).pattern("###").pattern("###").pattern("###").unlockedBy(getHasName(item), has(item)).save(consumer, name(getSimpleRecipeName(block)));
     }
 
     protected static ShapedRecipeBuilder fence(Supplier<? extends Block> fence, Supplier<? extends Block> material) {
@@ -275,6 +287,10 @@ public abstract class AetherRecipeProvider extends RecipeProvider {
                 .unlockedBy(getHasName(material), has(material));
     }
 
+    protected static void netheriteSmithingRecipe(Consumer<FinishedRecipe> consumer, Item ingredient, RecipeCategory category, Item item) {
+        UpgradeRecipeBuilder.smithing(Ingredient.of(ingredient), Ingredient.of(Items.NETHERITE_INGOT), category, item).unlocks(getHasName(Items.NETHERITE_INGOT), has(Items.NETHERITE_INGOT)).save(consumer, name(getItemName(item) + "_smithing"));
+    }
+
     protected static SimpleCookingRecipeBuilder smeltingOreRecipe(ItemLike result, ItemLike ingredient, float experience) {
         return SimpleCookingRecipeBuilder.smelting(Ingredient.of(ingredient), RecipeCategory.MISC, result, experience, 200)
                 .unlockedBy(getHasName(ingredient), has(ingredient));
@@ -283,6 +299,14 @@ public abstract class AetherRecipeProvider extends RecipeProvider {
     protected static SimpleCookingRecipeBuilder blastingOreRecipe(ItemLike result, ItemLike ingredient, float experience) {
         return SimpleCookingRecipeBuilder.blasting(Ingredient.of(ingredient), RecipeCategory.MISC, result, experience, 100)
                 .unlockedBy(getHasName(ingredient), has(ingredient));
+    }
+
+    protected static void stonecuttingRecipe(Consumer<FinishedRecipe> consumer, RecipeCategory category, ItemLike item, ItemLike ingredient) {
+        stonecuttingRecipe(consumer, category, item, ingredient, 1);
+    }
+
+    protected static void stonecuttingRecipe(Consumer<FinishedRecipe> consumer, RecipeCategory category, ItemLike item, ItemLike ingredient, int count) {
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(ingredient), category, item, count).unlockedBy(getHasName(ingredient), has(ingredient)).save(consumer, name(getConversionRecipeName(item, ingredient) + "_stonecutting"));
     }
 
     protected static AltarRepairBuilder repairingRecipe(RecipeCategory category, ItemLike item, int duration) {

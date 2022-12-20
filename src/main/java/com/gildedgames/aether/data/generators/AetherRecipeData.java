@@ -1,6 +1,5 @@
 package com.gildedgames.aether.data.generators;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.api.AetherMoaTypes;
 import com.gildedgames.aether.data.providers.AetherRecipeProvider;
 import com.gildedgames.aether.block.AetherBlocks;
@@ -14,7 +13,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.item.Items;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.CandleBlock;
 import net.minecraftforge.common.Tags;
@@ -54,8 +52,8 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .unlockedBy(getHasName(AetherBlocks.HOLYSTONE.get()), has(AetherBlocks.HOLYSTONE.get()))
                 .save(consumer);
 
-        nineBlockStorageRecipesRecipesWithCustomUnpacking(consumer, RecipeCategory.MISC, AetherItems.AMBROSIUM_SHARD.get(), RecipeCategory.BUILDING_BLOCKS, AetherBlocks.AMBROSIUM_BLOCK.get(), "ambrosium_shard_from_ambrosium_block", "ambrosium_shard");
-        nineBlockStorageRecipesRecipesWithCustomUnpacking(consumer, RecipeCategory.MISC, AetherItems.ZANITE_GEMSTONE.get(), RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ZANITE_BLOCK.get(), "zanite_gemstone_from_zanite_block", "zanite_gemstone");
+        oreBlockStorageRecipesRecipesWithCustomUnpacking(consumer, RecipeCategory.MISC, AetherItems.AMBROSIUM_SHARD.get(), RecipeCategory.BUILDING_BLOCKS, AetherBlocks.AMBROSIUM_BLOCK.get(), "ambrosium_shard_from_ambrosium_block", "ambrosium_shard");
+        oreBlockStorageRecipesRecipesWithCustomUnpacking(consumer, RecipeCategory.MISC, AetherItems.ZANITE_GEMSTONE.get(), RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ZANITE_BLOCK.get(), "zanite_gemstone_from_zanite_block", "zanite_gemstone");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, AetherBlocks.QUICKSOIL_GLASS_PANE.get(), 16)
                 .define('#', AetherBlocks.QUICKSOIL_GLASS.get())
@@ -265,7 +263,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
         makeGlovesWithTag(AetherItems.IRON_GLOVES, Tags.Items.INGOTS_IRON, "iron").save(consumer);
         makeGlovesWithTag(AetherItems.GOLDEN_GLOVES, Tags.Items.INGOTS_GOLD, "gold").save(consumer);
         makeGlovesWithTag(AetherItems.DIAMOND_GLOVES, Tags.Items.GEMS_DIAMOND, "diamond").save(consumer);
-        netheriteSmithing(consumer, AetherItems.DIAMOND_GLOVES.get(), RecipeCategory.COMBAT, AetherItems.NETHERITE_GLOVES.get());
+        netheriteSmithingRecipe(consumer, AetherItems.DIAMOND_GLOVES.get(), RecipeCategory.COMBAT, AetherItems.NETHERITE_GLOVES.get());
         makeGloves(AetherItems.ZANITE_GLOVES, AetherItems.ZANITE_GEMSTONE).save(consumer);
         makeGlovesWithBlock(AetherItems.GRAVITITE_GLOVES, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
 
@@ -502,50 +500,50 @@ public class AetherRecipeData extends AetherRecipeProvider {
         smeltingOreRecipe(AetherItems.ZANITE_GEMSTONE.get(), AetherBlocks.ZANITE_ORE.get(), 0.7F).save(consumer, name("zanite_gemstone_from_smelting"));
         blastingOreRecipe(AetherItems.ZANITE_GEMSTONE.get(), AetherBlocks.ZANITE_ORE.get(), 0.7F).save(consumer, name("zanite_gemstone_from_blasting"));
 
-        stonecutterResultFromBase(consumer, RecipeCategory.DECORATIONS, AetherBlocks.CARVED_WALL.get(), AetherBlocks.CARVED_STONE.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.CARVED_STAIRS.get(), AetherBlocks.CARVED_STONE.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.CARVED_SLAB.get(), AetherBlocks.CARVED_STONE.get(), 2);
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.SENTRY_STONE.get(), AetherBlocks.CARVED_STONE.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.CARVED_STONE.get(), AetherBlocks.SENTRY_STONE.get());
+        stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.CARVED_WALL.get(), AetherBlocks.CARVED_STONE.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.CARVED_STAIRS.get(), AetherBlocks.CARVED_STONE.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.CARVED_SLAB.get(), AetherBlocks.CARVED_STONE.get(), 2);
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.SENTRY_STONE.get(), AetherBlocks.CARVED_STONE.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.CARVED_STONE.get(), AetherBlocks.SENTRY_STONE.get());
 
-        stonecutterResultFromBase(consumer, RecipeCategory.DECORATIONS, AetherBlocks.ANGELIC_WALL.get(), AetherBlocks.ANGELIC_STONE.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ANGELIC_STAIRS.get(), AetherBlocks.ANGELIC_STONE.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ANGELIC_SLAB.get(), AetherBlocks.ANGELIC_STONE.get(), 2);
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.PILLAR.get(), AetherBlocks.ANGELIC_STONE.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.PILLAR_TOP.get(), AetherBlocks.ANGELIC_STONE.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ANGELIC_STONE.get(), AetherBlocks.PILLAR.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ANGELIC_STONE.get(), AetherBlocks.PILLAR_TOP.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.PILLAR_TOP.get(), AetherBlocks.PILLAR.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.PILLAR.get(), AetherBlocks.PILLAR_TOP.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.LIGHT_ANGELIC_STONE.get(), AetherBlocks.ANGELIC_STONE.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ANGELIC_STONE.get(), AetherBlocks.LIGHT_ANGELIC_STONE.get());
+        stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.ANGELIC_WALL.get(), AetherBlocks.ANGELIC_STONE.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ANGELIC_STAIRS.get(), AetherBlocks.ANGELIC_STONE.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ANGELIC_SLAB.get(), AetherBlocks.ANGELIC_STONE.get(), 2);
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.PILLAR.get(), AetherBlocks.ANGELIC_STONE.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.PILLAR_TOP.get(), AetherBlocks.ANGELIC_STONE.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ANGELIC_STONE.get(), AetherBlocks.PILLAR.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ANGELIC_STONE.get(), AetherBlocks.PILLAR_TOP.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.PILLAR_TOP.get(), AetherBlocks.PILLAR.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.PILLAR.get(), AetherBlocks.PILLAR_TOP.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.LIGHT_ANGELIC_STONE.get(), AetherBlocks.ANGELIC_STONE.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ANGELIC_STONE.get(), AetherBlocks.LIGHT_ANGELIC_STONE.get());
 
-        stonecutterResultFromBase(consumer, RecipeCategory.DECORATIONS, AetherBlocks.HELLFIRE_WALL.get(), AetherBlocks.HELLFIRE_STONE.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HELLFIRE_STAIRS.get(), AetherBlocks.HELLFIRE_STONE.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HELLFIRE_SLAB.get(), AetherBlocks.HELLFIRE_STONE.get(), 2);
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.LIGHT_HELLFIRE_STONE.get(), AetherBlocks.HELLFIRE_STONE.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HELLFIRE_STONE.get(), AetherBlocks.LIGHT_HELLFIRE_STONE.get());
+        stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.HELLFIRE_WALL.get(), AetherBlocks.HELLFIRE_STONE.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HELLFIRE_STAIRS.get(), AetherBlocks.HELLFIRE_STONE.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HELLFIRE_SLAB.get(), AetherBlocks.HELLFIRE_STONE.get(), 2);
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.LIGHT_HELLFIRE_STONE.get(), AetherBlocks.HELLFIRE_STONE.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HELLFIRE_STONE.get(), AetherBlocks.LIGHT_HELLFIRE_STONE.get());
 
-        stonecutterResultFromBase(consumer, RecipeCategory.DECORATIONS, AetherBlocks.HOLYSTONE_WALL.get(), AetherBlocks.HOLYSTONE.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_STAIRS.get(), AetherBlocks.HOLYSTONE.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_SLAB.get(), AetherBlocks.HOLYSTONE.get(), 2);
+        stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.HOLYSTONE_WALL.get(), AetherBlocks.HOLYSTONE.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_STAIRS.get(), AetherBlocks.HOLYSTONE.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_SLAB.get(), AetherBlocks.HOLYSTONE.get(), 2);
 
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_BRICKS.get(), AetherBlocks.HOLYSTONE.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.DECORATIONS, AetherBlocks.HOLYSTONE_BRICK_WALL.get(), AetherBlocks.HOLYSTONE.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_BRICK_STAIRS.get(), AetherBlocks.HOLYSTONE.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_BRICK_SLAB.get(), AetherBlocks.HOLYSTONE.get(), 2);
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_BRICKS.get(), AetherBlocks.HOLYSTONE.get());
+        stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.HOLYSTONE_BRICK_WALL.get(), AetherBlocks.HOLYSTONE.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_BRICK_STAIRS.get(), AetherBlocks.HOLYSTONE.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_BRICK_SLAB.get(), AetherBlocks.HOLYSTONE.get(), 2);
 
-        stonecutterResultFromBase(consumer, RecipeCategory.DECORATIONS, AetherBlocks.MOSSY_HOLYSTONE_WALL.get(), AetherBlocks.MOSSY_HOLYSTONE.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.MOSSY_HOLYSTONE_STAIRS.get(), AetherBlocks.MOSSY_HOLYSTONE.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.MOSSY_HOLYSTONE_SLAB.get(), AetherBlocks.MOSSY_HOLYSTONE.get(), 2);
+        stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.MOSSY_HOLYSTONE_WALL.get(), AetherBlocks.MOSSY_HOLYSTONE.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.MOSSY_HOLYSTONE_STAIRS.get(), AetherBlocks.MOSSY_HOLYSTONE.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.MOSSY_HOLYSTONE_SLAB.get(), AetherBlocks.MOSSY_HOLYSTONE.get(), 2);
 
-        stonecutterResultFromBase(consumer, RecipeCategory.DECORATIONS, AetherBlocks.HOLYSTONE_BRICK_WALL.get(), AetherBlocks.HOLYSTONE_BRICKS.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_BRICK_STAIRS.get(), AetherBlocks.HOLYSTONE_BRICKS.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_BRICK_SLAB.get(), AetherBlocks.HOLYSTONE_BRICKS.get(), 2);
+        stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.HOLYSTONE_BRICK_WALL.get(), AetherBlocks.HOLYSTONE_BRICKS.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_BRICK_STAIRS.get(), AetherBlocks.HOLYSTONE_BRICKS.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_BRICK_SLAB.get(), AetherBlocks.HOLYSTONE_BRICKS.get(), 2);
 
-        stonecutterResultFromBase(consumer, RecipeCategory.DECORATIONS, AetherBlocks.AEROGEL_WALL.get(), AetherBlocks.AEROGEL.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.AEROGEL_STAIRS.get(), AetherBlocks.AEROGEL.get());
-        stonecutterResultFromBase(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.AEROGEL_SLAB.get(), AetherBlocks.AEROGEL.get(), 2);
+        stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.AEROGEL_WALL.get(), AetherBlocks.AEROGEL.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.AEROGEL_STAIRS.get(), AetherBlocks.AEROGEL.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.AEROGEL_SLAB.get(), AetherBlocks.AEROGEL.get(), 2);
 
 
         repairingRecipe(RecipeCategory.TOOLS, Items.FISHING_ROD, 600).save(consumer, name("fishing_rod_repairing"));
@@ -728,9 +726,5 @@ public class AetherRecipeData extends AetherRecipeProvider {
         banBlockPlacementWithBypass(Blocks.FIRE, AetherTags.Blocks.ALLOWED_FLAMMABLES, AetherTags.Biomes.ULTRACOLD).save(consumer, name("fire_block_ban"));
         banBlockPlacement(Blocks.TORCH, AetherTags.Biomes.ULTRACOLD).save(consumer, name("torch_block_ban"));
         banBlockPlacement(Blocks.LANTERN, AetherTags.Biomes.ULTRACOLD).save(consumer, name("lantern_block_ban"));
-    }
-
-    private ResourceLocation name(String name) {
-        return new ResourceLocation(Aether.MODID, name);
     }
 }
