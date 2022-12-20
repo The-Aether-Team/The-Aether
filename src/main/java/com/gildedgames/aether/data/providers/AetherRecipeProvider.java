@@ -14,7 +14,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.data.*;
@@ -33,12 +32,15 @@ import net.minecraftforge.common.crafting.ConditionalRecipe;
 import net.minecraftforge.common.crafting.conditions.NotCondition;
 
 public abstract class AetherRecipeProvider extends RecipeProvider {
-    public AetherRecipeProvider(PackOutput output) {
+    private static String ID;
+
+    public AetherRecipeProvider(PackOutput output, String id) {
         super(output);
+        ID = id;
     }
 
     protected static ResourceLocation name(String name) {
-        return new ResourceLocation(Aether.MODID, name);
+        return new ResourceLocation(ID, name);
     }
 
     protected static void oreBlockStorageRecipesRecipesWithCustomUnpacking(Consumer<FinishedRecipe> consumer, RecipeCategory itemCategory, ItemLike item, RecipeCategory blockCategory, ItemLike block, String itemRecipeName, String itemGroup) {

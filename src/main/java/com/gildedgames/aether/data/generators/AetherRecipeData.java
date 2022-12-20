@@ -1,5 +1,6 @@
 package com.gildedgames.aether.data.generators;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.api.AetherMoaTypes;
 import com.gildedgames.aether.data.providers.AetherRecipeProvider;
 import com.gildedgames.aether.block.AetherBlocks;
@@ -22,7 +23,7 @@ import java.util.function.Consumer;
 
 public class AetherRecipeData extends AetherRecipeProvider {
     public AetherRecipeData(PackOutput output) {
-        super(output);
+        super(output, Aether.MODID);
     }
 
     @Override
