@@ -299,7 +299,12 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .save(consumer);
 
         woodenBoat(consumer, AetherItems.SKYROOT_BOAT.get(), AetherBlocks.SKYROOT_PLANKS.get());
-        chestBoat(consumer, AetherItems.SKYROOT_CHEST_BOAT.get(), AetherItems.SKYROOT_BOAT.get());
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, AetherItems.SKYROOT_CHEST_BOAT.get())
+                .group("chest_boat")
+                .requires(Tags.Items.CHESTS_WOODEN)
+                .requires(AetherItems.SKYROOT_BOAT.get())
+                .unlockedBy("has_boat", has(ItemTags.BOATS))
+                .save(consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, Items.SADDLE, 1)
                 .define('L', Items.LEATHER)
