@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_has_mossy_holystone": {
+    "has_mossy_holystone": {
       "conditions": {
         "items": [
           {
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_has_mossy_holystone",
+      "has_mossy_holystone",
       "has_the_recipe"
     ]
   ],

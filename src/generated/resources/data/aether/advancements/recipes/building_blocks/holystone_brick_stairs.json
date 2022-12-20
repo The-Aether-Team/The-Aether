@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_has_holystone_bricks": {
+    "has_holystone_bricks": {
       "conditions": {
         "items": [
           {
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_has_holystone_bricks",
+      "has_holystone_bricks",
       "has_the_recipe"
     ]
   ],

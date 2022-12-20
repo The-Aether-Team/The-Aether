@@ -55,7 +55,7 @@ public abstract class AetherRecipeProvider extends RecipeProvider {
     }
 
     protected static RecipeBuilder stairs(Supplier<? extends Block> stairs, Supplier<? extends Block> material) {
-        return stairBuilder(stairs.get(), Ingredient.of(material.get())).unlockedBy("has_" + getHasName(material.get()), has(material.get()));
+        return stairBuilder(stairs.get(), Ingredient.of(material.get())).unlockedBy(getHasName(material.get()), has(material.get()));
     }
 
     protected static ShapedRecipeBuilder makePickaxeWithBlock(Supplier<? extends Item> pickaxe, Supplier<? extends Block> material) {
