@@ -1,4 +1,4 @@
-// 1.19.3	2022-12-19T16:13:05.8073481	Recipes
+// 1.19.3	2022-12-19T16:39:44.6943471	Recipes
 1d7abc4c8c4e7132f31bd563a8dd82a8f3285d0d data/aether/advancements/recipes/building_blocks/aerogel_slab.json
 6e53af7c3f7e89910ad337753c6d70a4cdcf0440 data/aether/advancements/recipes/building_blocks/aerogel_stairs.json
 3ffa4ca877710f6de8a32aceb60ccda1d46a9ed3 data/aether/advancements/recipes/building_blocks/angelic_slab.json
@@ -348,7 +348,7 @@ b9dead23ee31207c99acd686d627f39ff67ed1f8 data/aether/recipes/healing_stone_encha
 939f8a20279e051e908aa8b548c469444ce6a859 data/aether/recipes/hellfire_wall.json
 c16d0b3a7ab28d886d752b5bd3481e392939bc8e data/aether/recipes/holystone_axe.json
 426ce55576d4759f7cf1dc43e99c9a58adfac867 data/aether/recipes/holystone_axe_repairing.json
-e941cbe3d765d375685cdb3a09a3dce4aaeb34a8 data/aether/recipes/holystone_bricks.json
+d7ce0a0d876081714a87ea173ef3e84df2b8de1e data/aether/recipes/holystone_bricks.json
 7f9087f93e11f865766f7bedf44edcba9a389d8a data/aether/recipes/holystone_brick_slab.json
 de665a46f58748ec6fa3906dbbf061ad8b533192 data/aether/recipes/holystone_brick_stairs.json
 abe9709f0c289c3cffe3104f97a5d91bab11dadc data/aether/recipes/holystone_brick_wall.json
