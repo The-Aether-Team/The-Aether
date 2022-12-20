@@ -103,7 +103,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, AetherBlocks.SKYROOT_SIGN.get(), 3)
                 .group("wooden_sign")
                 .define('P', AetherBlocks.SKYROOT_PLANKS.get().asItem())
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
+                .define('/', Tags.Items.RODS_WOODEN)
                 .pattern("PPP")
                 .pattern("PPP")
                 .pattern(" / ")
