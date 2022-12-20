@@ -2,7 +2,6 @@ package com.gildedgames.aether.data.generators;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.AetherSoundEvents;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.SoundDefinitionsProvider;
