@@ -161,30 +161,30 @@ public class Aether {
 
     public void dataSetup(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
-        ExistingFileHelper helper = event.getExistingFileHelper();
+        ExistingFileHelper fileHelper = event.getExistingFileHelper();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
         PackOutput packOutput = generator.getPackOutput();
 
         // Client Data
-        generator.addProvider(event.includeClient(), new AetherBlockStateData(packOutput, helper));
-        generator.addProvider(event.includeClient(), new AetherItemModelData(packOutput, helper));
+        generator.addProvider(event.includeClient(), new AetherBlockStateData(packOutput, fileHelper));
+        generator.addProvider(event.includeClient(), new AetherItemModelData(packOutput, fileHelper));
         generator.addProvider(event.includeClient(), new AetherLanguageData(packOutput));
-        generator.addProvider(event.includeClient(), new AetherSoundData(packOutput, helper));
+        generator.addProvider(event.includeClient(), new AetherSoundData(packOutput, fileHelper));
 
         // Server Data
         generator.addProvider(event.includeServer(), new AetherWorldGenData(packOutput, lookupProvider));
-        generator.addProvider(event.includeServer(), AetherLevelStemData.create(packOutput, helper));
+        generator.addProvider(event.includeServer(), AetherLevelStemData.create(packOutput, fileHelper));
         generator.addProvider(event.includeServer(), new AetherRecipeData(packOutput));
         generator.addProvider(event.includeServer(), AetherLootTableData.create(packOutput));
         generator.addProvider(event.includeServer(), new AetherLootModifierData(packOutput));
-        generator.addProvider(event.includeServer(), new AetherAdvancementData(packOutput, lookupProvider, helper));
-        AetherBlockTagData blockTags = new AetherBlockTagData(packOutput, lookupProvider, helper);
+        generator.addProvider(event.includeServer(), new AetherAdvancementData(packOutput, lookupProvider, fileHelper));
+        AetherBlockTagData blockTags = new AetherBlockTagData(packOutput, lookupProvider, fileHelper);
         generator.addProvider(event.includeServer(), blockTags);
-        generator.addProvider(event.includeServer(), new AetherItemTagData(packOutput, lookupProvider, blockTags, helper));
-        generator.addProvider(event.includeServer(), new AetherEntityTagData(packOutput, lookupProvider, helper));
-        generator.addProvider(event.includeServer(), new AetherFluidTagData(packOutput, lookupProvider, helper));
-        generator.addProvider(event.includeServer(), new AetherBiomeTagData(packOutput, lookupProvider, helper));
-        generator.addProvider(event.includeServer(), new AetherStructureTagData(packOutput, lookupProvider, helper));
+        generator.addProvider(event.includeServer(), new AetherItemTagData(packOutput, lookupProvider, blockTags, fileHelper));
+        generator.addProvider(event.includeServer(), new AetherEntityTagData(packOutput, lookupProvider, fileHelper));
+        generator.addProvider(event.includeServer(), new AetherFluidTagData(packOutput, lookupProvider, fileHelper));
+        generator.addProvider(event.includeServer(), new AetherBiomeTagData(packOutput, lookupProvider, fileHelper));
+        generator.addProvider(event.includeServer(), new AetherStructureTagData(packOutput, lookupProvider, fileHelper));
     }
 
     public void packSetup(AddPackFindersEvent event) {
