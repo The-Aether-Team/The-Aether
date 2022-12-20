@@ -1,5 +1,6 @@
 package com.gildedgames.aether.world.structure;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.entity.monster.dungeon.boss.ValkyrieQueen;
 import com.gildedgames.aether.world.structurepiece.SilverDungeonPieces;
 import com.mojang.serialization.Codec;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import net.minecraft.world.phys.AABB;
 
 import java.util.*;
@@ -38,11 +40,13 @@ public class SilverDungeonStructure extends Structure {
         RandomSource randomSource = context.random();
         Rotation rotation = Rotation.getRandom(randomSource);
         Direction direction = rotation.rotate(Direction.SOUTH);
+        StructureTemplateManager manager = context.structureTemplateManager();
+
         this.buildCloudBed(builder, randomSource, elevatedPos, direction);
 
         SilverDungeonPieces.BossRoom bossRoom = new SilverDungeonPieces.BossRoom(
-                context.structureTemplateManager(),
-                "back",
+                manager,
+                "boss_room",
                 elevatedPos,
                 rotation
         );
@@ -50,15 +54,19 @@ public class SilverDungeonStructure extends Structure {
 
         int xOffset = direction.getStepX() * bossRoom.getBoundingBox().getXSpan();
         int zOffset = direction.getStepZ() * bossRoom.getBoundingBox().getZSpan();
+
+        BlockPos offsetPos = elevatedPos.offset(xOffset, 0, zOffset);
+
         SilverDungeonPieces.TemplePiece exterior = new SilverDungeonPieces.TemplePiece(
-                context.structureTemplateManager(),
+                manager,
                 "skeleton",
-                elevatedPos.offset(xOffset, 0, zOffset),
+                offsetPos,
                 rotation
         );
         builder.addPiece(exterior);
 
         SilverDungeonPieces.SilverDungeonGrid grid = new SilverDungeonPieces.SilverDungeonGrid(randomSource, 3, 3, 3);
+        grid.assembleDungeon(builder, manager, offsetPos, rotation, direction);
 
         BoundingBox box = builder.getBoundingBox();
         int height = 30;

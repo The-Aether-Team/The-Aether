@@ -24,6 +24,7 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.structure.*;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 import net.minecraft.world.phys.AABB;
 
@@ -39,78 +40,125 @@ public class SilverDungeonPieces {
     ));
 
     /**
-     * For testing the silver dungeon grid.
+     * This class is for randomly assembling the silver dungeon.
      */
-    public static void main(String[] args) {
-        RandomSource randomsource = RandomSource.create();
-        long i = randomsource.nextLong();
-        System.out.println("Seed: " + i);
-        randomsource.setSeed(i);
-        SilverDungeonGrid grid = new SilverDungeonGrid(randomsource, 3, 3, 3);
-        grid.print();
-    }
-
     public static class SilverDungeonGrid {
-        public static final int EMPTY_ROOM = 0b1;
-        public static final int CHEST_ROOM = 0b10;
-        public static final int STAIRS = 0b100;
-        public static final int STAIRS_TOP = 0b101;
-        public static final int FINAL_STAIRS = 0b111;
-        public static final int NORTH_DOOR = 0b1000;
-        public static final int WEST_DOOR = 0b10000;
-        public static final int EAST_DOOR = 0b100000;
-        public static final int SOUTH_DOOR = 0b1000000;
-
-
+        public static final int EMPTY_ROOM = 0;
+        public static final int CHEST_ROOM = 0b1;
+        public static final int STAIRS = 0b10;
+        public static final int FINAL_STAIRS = 0b100;
+        public static final int STAIRS_TOP = 0b1000;
+        public static final int NORTH_DOOR = 0b10000;
+        public static final int WEST_DOOR = 0b100000;
+        public static final int BOSS_DOOR = 0b1000000;
 
         public final RandomSource random;
         public final int[][][] grid;
+        private final int width;
+        private final int height;
+        private final int length;
 
         public SilverDungeonGrid(RandomSource random, int x, int y, int z) {
             this.random = random;
             this.grid = new int[x][y][z];
+            this.width = x;
+            this.height = y;
+            this.length = z;
 
-            this.grid[1][0][0] = (this.random.nextBoolean() ? CHEST_ROOM : EMPTY_ROOM) | SOUTH_DOOR;
+            this.populateGrid();
+        }
 
+        /**
+         * Set up all rooms in the dungeon
+         */
+        public void populateGrid() {
             // Place the stairs
-            int finalStairsX = random.nextInt(this.grid.length);
+            int finalStairsX = random.nextInt(this.width);
 
-            this.grid[finalStairsX][0][2] = FINAL_STAIRS;
-            this.grid[finalStairsX][1][2] = FINAL_STAIRS;
-            this.grid[finalStairsX][2][2] = FINAL_STAIRS;
+            this.grid[finalStairsX][0][0] = FINAL_STAIRS | BOSS_DOOR;
+            this.grid[finalStairsX][1][0] = STAIRS_TOP;
+            this.grid[finalStairsX][2][0] = STAIRS_TOP;
 
-//            int firstStairsX = random.nextInt(this.grid);
+            int firstStairsX = random.nextInt(this.width);
 
+            this.grid[firstStairsX][0][1] = STAIRS;
+            this.grid[firstStairsX][1][1] = STAIRS_TOP;
 
-        }
+            int secondStairsX = random.nextInt(this.width);
 
-        public void assembleDungeon(StructurePieceAccessor builder) {
+            this.grid[secondStairsX][1][2] = STAIRS;
+            this.grid[secondStairsX][2][2] = STAIRS_TOP;
 
-        }
-
-        public void print() {
-            StringBuilder output = new StringBuilder();
-            for (int y = 0; y < this.grid[0].length; y++) {
-                for (int z = 0; z < this.grid[0][0].length; z++) {
-
-                    for (int i = 0; i < 3; i++) {
-                        for (int x = 0; x < this.grid.length; x++) {
-                            if ((this.grid[x][y][z] & NORTH_DOOR) == NORTH_DOOR) {
-                                output.append("+ +");
-                            } else {
-                                output.append("+-+");
-                            }
-
+            for (int y = 0; y < this.height; y++) {
+                for (int z = 0; z < this.length; z++) {
+                    for (int x = 0; x < this.width; x++) {
+                        int room = this.grid[x][y][z];
+                        if ((room & 0b111) == 0) { // Check for an empty room
+                            room = this.random.nextBoolean() ? CHEST_ROOM : 0;
                         }
+                        if (x != 0) {
+                            room |= WEST_DOOR;
+                        }
+                        if (z != 0) {
+                            room |= NORTH_DOOR;
+                        }
+                        this.grid[x][y][z] = room;
                     }
-
                 }
-
-                output.append("\n");
             }
 
-            output.append("\n");
-            System.out.println(output);
+            for (int y = 0; y < this.height - 1; y++) {
+                this.grid[finalStairsX][y][0] &= ~WEST_DOOR;
+                this.grid[finalStairsX][y][1] &= ~NORTH_DOOR;
+                if (finalStairsX < this.width) {
+                    this.grid[finalStairsX + 1][y][0] &= ~WEST_DOOR;
+                }
+            }
+
+            if (firstStairsX == secondStairsX) {
+                this.grid[secondStairsX][1][2] &= ~NORTH_DOOR;
+            }
+        }
+
+        /**
+         * Assemble the rooms based on the grid
+         */
+        public void assembleDungeon(StructurePiecesBuilder builder, StructureTemplateManager manager, BlockPos startPos, Rotation rotation, Direction direction) {
+            startPos = startPos.offset(direction.getStepZ() * 5 - direction.getStepX(), 5, -direction.getStepX() * 5 - direction.getStepZ());
+            BlockPos.MutableBlockPos offset = new BlockPos.MutableBlockPos();
+            Rotation sideways = rotation.getRotated(Rotation.CLOCKWISE_90);
+
+            for (int y = 0; y < this.height; y++) {
+                offset.setY(startPos.getY() + y * 5);
+
+                for (int z = 0; z < this.length; z++) {
+                    for (int x = 0; x < this.width; x++) {
+                        offset.set(startPos.getX() + x * 7, offset.getY(), startPos.getZ() + z * 7);
+                        int room = this.grid[x][y][z];
+                        if ((room & FINAL_STAIRS) == FINAL_STAIRS) {
+                            builder.addPiece(new TemplePiece(manager, "tall_staircase", offset.offset(2, 0, 2), rotation));
+                        } else if ((room & STAIRS) == STAIRS) {
+                            builder.addPiece(new TemplePiece(manager, "staircase", offset.offset(2, 0, 2), rotation));
+                        } else if ((room & CHEST_ROOM) == CHEST_ROOM) {
+                            builder.addPiece(new TemplePiece(manager, "chest_room", offset.offset(3, 0, 3), rotation));
+                        }
+
+                        if ((room & NORTH_DOOR) == NORTH_DOOR) {
+                            builder.addPiece(new TemplePiece(manager, "door",
+                                    offset.offset(direction.getStepZ() * 3, 0, direction.getStepX() * 3), rotation));
+                        }
+
+                        if ((room & WEST_DOOR) == WEST_DOOR) {
+                            builder.addPiece(new TemplePiece(manager, "door", offset.relative(direction, 3), sideways));
+                        }
+
+                        if ((room & BOSS_DOOR) == BOSS_DOOR) {
+                            builder.addPiece(new TemplePiece(manager, "boss_door",
+                                    offset.offset(direction.getStepZ() * 3, 0, direction.getStepX() * 3), rotation));
+                        }
+                    }
+                }
+            }
         }
     }
 
