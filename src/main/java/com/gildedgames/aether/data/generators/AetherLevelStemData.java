@@ -36,8 +36,8 @@ public class AetherLevelStemData {
         NoiseBasedChunkGenerator aetherChunkGen = new NoiseBasedChunkGenerator(source, noiseSettings.getOrThrow(AetherNoiseSettings.SKYLANDS));
         LevelStem levelStem = new LevelStem(dimensionTypes.getOrThrow(AetherDimensions.AETHER_DIMENSION_TYPE), aetherChunkGen);
         Map<ResourceLocation, LevelStem> map = Map.of(AetherDimensions.AETHER_LEVEL_STEM.location(), levelStem);
-        final ResourceLocation registryId = Registries.LEVEL_STEM.location();
-        final String registryFolder = registryId.getPath();
+        ResourceLocation registryId = Registries.LEVEL_STEM.location();
+        String registryFolder = registryId.getPath();
         return new JsonCodecProvider<>(output, helper, Aether.MODID, registryOps, PackType.SERVER_DATA, registryFolder, LevelStem.CODEC, map);
     }
 }
