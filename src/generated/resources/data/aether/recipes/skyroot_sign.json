@@ -1,7 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
-  "group": "sign",
+  "group": "wooden_sign",
   "key": {
     "/": {
       "tag": "aether:skyroot_stick"

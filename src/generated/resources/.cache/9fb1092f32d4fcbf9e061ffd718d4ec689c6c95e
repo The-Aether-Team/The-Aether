@@ -1,4 +1,4 @@
-// 1.19.3	2022-12-19T16:58:39.3613603	Recipes
+// 1.19.3	2022-12-19T17:16:10.8803556	Recipes
 1d7abc4c8c4e7132f31bd563a8dd82a8f3285d0d data/aether/advancements/recipes/building_blocks/aerogel_slab.json
 6e53af7c3f7e89910ad337753c6d70a4cdcf0440 data/aether/advancements/recipes/building_blocks/aerogel_stairs.json
 3ffa4ca877710f6de8a32aceb60ccda1d46a9ed3 data/aether/advancements/recipes/building_blocks/angelic_slab.json
@@ -455,11 +455,11 @@ dcf1162781924918731877fc68b11609eedc9be7 data/aether/recipes/skyroot_planks.json
 5a8d9b54f23513736d80909ccf33fcdc2cd108ca data/aether/recipes/skyroot_shield.json
 c5b4c7be5b65e89f49f241fcf65ccf6d27301612 data/aether/recipes/skyroot_shovel.json
 2276b0c0871d23fe1f0b6e7ec5f34309e603b723 data/aether/recipes/skyroot_shovel_repairing.json
-555b9117c1ea197d5b2a7e8d781f61464276d4ae data/aether/recipes/skyroot_sign.json
-fd5755bc02eb1c87506e5b7725dd87e5591214dc data/aether/recipes/skyroot_slab.json
+762a39c413b71f1a436ee5b508c68a6073d840f2 data/aether/recipes/skyroot_sign.json
+e0a9079c04478af8077768aaaff762e445b23646 data/aether/recipes/skyroot_slab.json
 c47896e0cab9e53d0025cb115d5f3d224e7624ce data/aether/recipes/skyroot_smithing_table.json
-988a06462d5b5b3f940aaa741bf533e6613549f2 data/aether/recipes/skyroot_stairs.json
-6db91f795a00c2948235b4d4b3fbb53b80b4073c data/aether/recipes/skyroot_stick.json
+620850e5e39196738d2dc983abe80e4018e7150c data/aether/recipes/skyroot_stairs.json
+28b4b022a579c83b6d7a854608c4ef07584cb158 data/aether/recipes/skyroot_stick.json
 6f35ce244b9dc9c7c1aa12584d3b9644eb58cb22 data/aether/recipes/skyroot_sword.json
 937d6d32847366a5227ade39543e3c958a819129 data/aether/recipes/skyroot_sword_repairing.json
 bc188835c3ea5fa95fffa85dffd6482fdced08ec data/aether/recipes/skyroot_trapdoor.json
