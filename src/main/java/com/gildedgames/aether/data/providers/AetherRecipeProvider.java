@@ -1,6 +1,5 @@
 package com.gildedgames.aether.data.providers;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.api.registers.MoaType;
 import com.gildedgames.aether.recipe.BlockPropertyPair;
