@@ -7,11 +7,8 @@ import net.minecraft.world.level.block.StandingSignBlock;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-import javax.annotation.Nonnull;
-
 public class SkyrootSignBlock extends StandingSignBlock {
-    public SkyrootSignBlock(Properties properties, WoodType woodType)
-    {
+    public SkyrootSignBlock(Properties properties, WoodType woodType) {
         super(properties, woodType);
     }
 
