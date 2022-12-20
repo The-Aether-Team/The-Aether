@@ -33,13 +33,13 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .group("mossy_holystone")
                 .requires(AetherBlocks.HOLYSTONE.get())
                 .requires(Blocks.VINE)
-                .unlockedBy("has_" + getHasName(AetherBlocks.HOLYSTONE.get()), has(AetherBlocks.HOLYSTONE.get()))
+                .unlockedBy(getHasName(AetherBlocks.HOLYSTONE.get()), has(AetherBlocks.HOLYSTONE.get()))
                 .save(consumer, name("mossy_holystone_with_vine"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.MOSSY_HOLYSTONE.get())
                 .group("mossy_holystone")
                 .requires(AetherBlocks.HOLYSTONE.get())
                 .requires(Blocks.MOSS_BLOCK)
-                .unlockedBy("has_" + getHasName(AetherBlocks.HOLYSTONE.get()), has(AetherBlocks.HOLYSTONE.get()))
+                .unlockedBy(getHasName(AetherBlocks.HOLYSTONE.get()), has(AetherBlocks.HOLYSTONE.get()))
                 .save(consumer, name("mossy_holystone_with_moss"));
 
         woodFromLogs(consumer, AetherBlocks.SKYROOT_WOOD.get(), AetherBlocks.SKYROOT_LOG.get());
@@ -56,7 +56,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .define('#', AetherBlocks.QUICKSOIL_GLASS.get())
                 .pattern("###")
                 .pattern("###")
-                .unlockedBy("has_" + getHasName(AetherBlocks.QUICKSOIL_GLASS.get()), has(AetherBlocks.QUICKSOIL_GLASS.get()))
+                .unlockedBy(getHasName(AetherBlocks.QUICKSOIL_GLASS.get()), has(AetherBlocks.QUICKSOIL_GLASS.get()))
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, AetherBlocks.ALTAR.get(), 1)
@@ -65,7 +65,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("HHH")
                 .pattern("HZH")
                 .pattern("HHH")
-                .unlockedBy("has_" + getHasName(AetherBlocks.HOLYSTONE.get()), has(AetherBlocks.HOLYSTONE.get()))
+                .unlockedBy(getHasName(AetherBlocks.HOLYSTONE.get()), has(AetherBlocks.HOLYSTONE.get()))
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, AetherBlocks.FREEZER.get(), 1)
@@ -75,7 +75,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("HHH")
                 .pattern("HIH")
                 .pattern("PPP")
-                .unlockedBy("has_" + getHasName(AetherBlocks.HOLYSTONE.get()), has(AetherBlocks.HOLYSTONE.get()))
+                .unlockedBy(getHasName(AetherBlocks.HOLYSTONE.get()), has(AetherBlocks.HOLYSTONE.get()))
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, AetherBlocks.INCUBATOR.get(), 1)
@@ -84,7 +84,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("HHH")
                 .pattern("HTH")
                 .pattern("HHH")
-                .unlockedBy("has_" + getHasName(AetherBlocks.HOLYSTONE.get()), has(AetherBlocks.HOLYSTONE.get()))
+                .unlockedBy(getHasName(AetherBlocks.HOLYSTONE.get()), has(AetherBlocks.HOLYSTONE.get()))
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, AetherBlocks.AMBROSIUM_TORCH.get(), 4)
@@ -92,7 +92,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .define('/', AetherTags.Items.SKYROOT_STICKS)
                 .pattern("A")
                 .pattern("/")
-                .unlockedBy("has_" + getHasName(AetherItems.HOLYSTONE_PICKAXE.get()), has(AetherItems.HOLYSTONE_PICKAXE.get()))
+                .unlockedBy(getHasName(AetherItems.HOLYSTONE_PICKAXE.get()), has(AetherItems.HOLYSTONE_PICKAXE.get()))
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, AetherBlocks.SKYROOT_SIGN.get(), 3)
@@ -102,7 +102,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("PPP")
                 .pattern("PPP")
                 .pattern(" / ")
-                .unlockedBy("has_" + getHasName(AetherBlocks.SKYROOT_PLANKS.get()), has(AetherBlocks.SKYROOT_PLANKS.get()))
+                .unlockedBy(getHasName(AetherBlocks.SKYROOT_PLANKS.get()), has(AetherBlocks.SKYROOT_PLANKS.get()))
                 .save(consumer);
 
         fence(AetherBlocks.SKYROOT_FENCE, AetherBlocks.SKYROOT_PLANKS).save(consumer);
@@ -143,7 +143,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("PPP")
                 .pattern("BBB")
                 .pattern("PPP")
-                .unlockedBy("has_" + getHasName(Items.BOOK), has(Items.BOOK))
+                .unlockedBy(getHasName(Items.BOOK), has(Items.BOOK))
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, AetherBlocks.SKYROOT_BED.get(), 1)
@@ -158,13 +158,13 @@ public class AetherRecipeData extends AetherRecipeProvider {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.PURPLE_DYE)
                 .group("purple_dye")
                 .requires(AetherBlocks.PURPLE_FLOWER.get())
-                .unlockedBy("has_" + getHasName(AetherBlocks.PURPLE_FLOWER.get()), has(AetherBlocks.PURPLE_FLOWER.get()))
+                .unlockedBy(getHasName(AetherBlocks.PURPLE_FLOWER.get()), has(AetherBlocks.PURPLE_FLOWER.get()))
                 .save(consumer, name("flower_to_purple_dye"));
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.WHITE_DYE)
                 .group("white_dye")
                 .requires(AetherBlocks.WHITE_FLOWER.get())
-                .unlockedBy("has_" + getHasName(AetherBlocks.WHITE_FLOWER.get()), has(AetherBlocks.WHITE_FLOWER.get()))
+                .unlockedBy(getHasName(AetherBlocks.WHITE_FLOWER.get()), has(AetherBlocks.WHITE_FLOWER.get()))
                 .save(consumer, name("flower_to_white_dye"));
 
 
