@@ -1,6 +1,5 @@
 package com.gildedgames.aether.world.structure;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.entity.monster.dungeon.boss.ValkyrieQueen;
 import com.gildedgames.aether.world.structurepiece.SilverDungeonPieces;
 import com.mojang.serialization.Codec;

@@ -7,6 +7,7 @@ import com.gildedgames.aether.blockentity.TreasureChestBlockEntity;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.monster.dungeon.boss.ValkyrieQueen;
 import com.gildedgames.aether.loot.AetherLoot;
+import com.gildedgames.aether.world.processor.TrappedBlockProcessor;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -39,11 +40,13 @@ public class SilverDungeonPieces {
             new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.HOLYSTONE.get(), 0.3F), AlwaysTrueTest.INSTANCE, AetherBlocks.MOSSY_HOLYSTONE.get().defaultBlockState())
     ));
 
+    public static final TrappedBlockProcessor TRAPPED_ANGELIC_STONE = new TrappedBlockProcessor(AetherBlocks.LOCKED_ANGELIC_STONE.get(), AetherBlocks.TRAPPED_ANGELIC_STONE.get(), 0.05F);
+    public static final TrappedBlockProcessor TRAPPED_LIGHT_ANGELIC_STONE = new TrappedBlockProcessor(AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get(), AetherBlocks.TRAPPED_LIGHT_ANGELIC_STONE.get(), 0.05F);
+
     /**
      * This class is for randomly assembling the silver dungeon.
      */
     public static class SilverDungeonGrid {
-        public static final int EMPTY_ROOM = 0;
         public static final int CHEST_ROOM = 0b1;
         public static final int STAIRS = 0b10;
         public static final int FINAL_STAIRS = 0b100;
@@ -93,8 +96,8 @@ public class SilverDungeonPieces {
                 for (int z = 0; z < this.length; z++) {
                     for (int x = 0; x < this.width; x++) {
                         int room = this.grid[x][y][z];
-                        if ((room & 0b111) == 0) { // Check for an empty room
-                            room = this.random.nextBoolean() ? CHEST_ROOM : 0;
+                        if ((room & 0b111) == 0 && this.random.nextBoolean()) { // Check for an empty room
+                            room = CHEST_ROOM;
                         }
                         if (x != 0) {
                             room |= WEST_DOOR;
@@ -110,7 +113,7 @@ public class SilverDungeonPieces {
             for (int y = 0; y < this.height - 1; y++) {
                 this.grid[finalStairsX][y][0] &= ~WEST_DOOR;
                 this.grid[finalStairsX][y][1] &= ~NORTH_DOOR;
-                if (finalStairsX < this.width) {
+                if (finalStairsX < this.width - 1) {
                     this.grid[finalStairsX + 1][y][0] &= ~WEST_DOOR;
                 }
             }
@@ -174,7 +177,7 @@ public class SilverDungeonPieces {
         }
 
         private static StructurePlaceSettings makeSettings() {
-            return new StructurePlaceSettings().addProcessor(LOCKED_ANGELIC_STONE);
+            return new StructurePlaceSettings().addProcessor(LOCKED_ANGELIC_STONE).addProcessor(TRAPPED_ANGELIC_STONE).addProcessor(TRAPPED_LIGHT_ANGELIC_STONE);
         }
 
         @Override
