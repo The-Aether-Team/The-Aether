@@ -5,17 +5,17 @@ import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.projectile.weapon.HammerProjectile;
 import com.gildedgames.aether.item.combat.AetherItemTiers;
 import com.gildedgames.aether.item.AetherItems;
+import com.gildedgames.aether.item.combat.AetherSwordItem;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SwordItem;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 
-public class HammerOfNotchItem extends SwordItem {
+public class HammerOfNotchItem extends AetherSwordItem {
     public HammerOfNotchItem() {
         super(AetherItemTiers.HAMMER_OF_NOTCH, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
     }

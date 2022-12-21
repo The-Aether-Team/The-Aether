@@ -2,6 +2,7 @@ package com.gildedgames.aether.item.combat.loot;
 
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.item.combat.AetherItemTiers;
+import com.gildedgames.aether.item.combat.AetherSwordItem;
 import com.gildedgames.aether.item.tools.abilities.ValkyrieTool;
 import com.google.common.collect.Multimap;
 import net.minecraft.world.item.*;
@@ -14,7 +15,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 
-public class ValkyrieLanceItem extends SwordItem implements ValkyrieTool {
+public class ValkyrieLanceItem extends AetherSwordItem implements ValkyrieTool {
     public ValkyrieLanceItem() {
         super(AetherItemTiers.VALKYRIE, 3, -2.7F, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
     }

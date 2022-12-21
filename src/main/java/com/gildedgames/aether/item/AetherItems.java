@@ -2,6 +2,9 @@ package com.gildedgames.aether.item;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.Aether;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.world.item.*;
 import com.gildedgames.aether.item.food.*;
 import com.gildedgames.aether.item.accessories.ring.*;
@@ -39,6 +42,10 @@ public class AetherItems {
 
 	public static final Rarity AETHER_LOOT = Rarity.create("AETHER_LOOT", ChatFormatting.GREEN);
 
+	public static final Component BRONZE_DUNGEON_TOOLTIP = Component.translatable("aether.dungeon.bronze_dungeon").withStyle(Style.EMPTY.withItalic(true).withColor(TextColor.parseColor("#D9AB7E")));
+	public static final Component SILVER_DUNGEON_TOOLTIP = Component.translatable("aether.dungeon.silver_dungeon").withStyle(Style.EMPTY.withItalic(true).withColor(TextColor.parseColor("#E0E0E0")));
+	public static final Component GOLD_DUNGEON_TOOLTIP = Component.translatable("aether.dungeon.gold_dungeon").withStyle(Style.EMPTY.withItalic(true).withColor(TextColor.parseColor("#FDF55F")));
+
 	// Tools
 	public static final RegistryObject<PickaxeItem> SKYROOT_PICKAXE = ITEMS.register("skyroot_pickaxe", SkyrootPickaxeItem::new);
 	public static final RegistryObject<AxeItem> SKYROOT_AXE = ITEMS.register("skyroot_axe", SkyrootAxeItem::new);
@@ -71,16 +78,16 @@ public class AetherItems {
 	public static final RegistryObject<SwordItem> ZANITE_SWORD = ITEMS.register("zanite_sword", ZaniteSwordItem::new);
 	public static final RegistryObject<SwordItem> GRAVITITE_SWORD = ITEMS.register("gravitite_sword", GravititeSwordItem::new);
 
-	public static final RegistryObject<SwordItem> VALKYRIE_LANCE = ITEMS.register("valkyrie_lance", ValkyrieLanceItem::new);
+	public static final RegistryObject<SwordItem> VALKYRIE_LANCE = ITEMS.register("valkyrie_lance", () -> new ValkyrieLanceItem().addDungeonTooltip(BRONZE_DUNGEON_TOOLTIP));
 
-	public static final RegistryObject<SwordItem> FLAMING_SWORD = ITEMS.register("flaming_sword", FlamingSwordItem::new);
-	public static final RegistryObject<SwordItem> LIGHTNING_SWORD = ITEMS.register("lightning_sword", LightningSwordItem::new);
-	public static final RegistryObject<SwordItem> HOLY_SWORD = ITEMS.register("holy_sword", HolySwordItem::new);
-	public static final RegistryObject<SwordItem> VAMPIRE_BLADE = ITEMS.register("vampire_blade", VampireBladeItem::new);
-	public static final RegistryObject<SwordItem> PIG_SLAYER = ITEMS.register("pig_slayer", PigSlayerItem::new);
+	public static final RegistryObject<SwordItem> FLAMING_SWORD = ITEMS.register("flaming_sword", () -> new FlamingSwordItem().addDungeonTooltip(BRONZE_DUNGEON_TOOLTIP));
+	public static final RegistryObject<SwordItem> LIGHTNING_SWORD = ITEMS.register("lightning_sword", () -> new LightningSwordItem().addDungeonTooltip(SILVER_DUNGEON_TOOLTIP));
+	public static final RegistryObject<SwordItem> HOLY_SWORD = ITEMS.register("holy_sword", () -> new HolySwordItem().addDungeonTooltip(SILVER_DUNGEON_TOOLTIP));
+	public static final RegistryObject<SwordItem> VAMPIRE_BLADE = ITEMS.register("vampire_blade", () -> new VampireBladeItem().addDungeonTooltip(GOLD_DUNGEON_TOOLTIP));
+	public static final RegistryObject<SwordItem> PIG_SLAYER = ITEMS.register("pig_slayer", () -> new PigSlayerItem().addDungeonTooltip(GOLD_DUNGEON_TOOLTIP));
 	public static final RegistryObject<SwordItem> CANDY_CANE_SWORD = ITEMS.register("candy_cane_sword", CandyCaneSwordItem::new);
 
-	public static final RegistryObject<SwordItem> HAMMER_OF_NOTCH = ITEMS.register("hammer_of_notch", HammerOfNotchItem::new);
+	public static final RegistryObject<SwordItem> HAMMER_OF_NOTCH = ITEMS.register("hammer_of_notch", () -> new HammerOfNotchItem().addDungeonTooltip(BRONZE_DUNGEON_TOOLTIP));
 
 	public static final RegistryObject<Item> LIGHTNING_KNIFE = ITEMS.register("lightning_knife", LightningKnifeItem::new);
 
@@ -105,27 +112,27 @@ public class AetherItems {
 	public static final RegistryObject<Item> GRAVITITE_LEGGINGS = ITEMS.register("gravitite_leggings", () -> new AetherArmorItem(AetherArmorMaterials.GRAVITITE, EquipmentSlot.LEGS, new Item.Properties()));
 	public static final RegistryObject<Item> GRAVITITE_BOOTS = ITEMS.register("gravitite_boots", () -> new AetherArmorItem(AetherArmorMaterials.GRAVITITE, EquipmentSlot.FEET, new Item.Properties()));
 
-	public static final RegistryObject<Item> NEPTUNE_HELMET = ITEMS.register("neptune_helmet", () -> new AetherArmorItem(AetherArmorMaterials.NEPTUNE, EquipmentSlot.HEAD, new Item.Properties().rarity(AETHER_LOOT)));
-	public static final RegistryObject<Item> NEPTUNE_CHESTPLATE = ITEMS.register("neptune_chestplate", () -> new AetherArmorItem(AetherArmorMaterials.NEPTUNE, EquipmentSlot.CHEST, new Item.Properties().rarity(AETHER_LOOT)));
-	public static final RegistryObject<Item> NEPTUNE_LEGGINGS = ITEMS.register("neptune_leggings", () -> new AetherArmorItem(AetherArmorMaterials.NEPTUNE, EquipmentSlot.LEGS, new Item.Properties().rarity(AETHER_LOOT)));
-	public static final RegistryObject<Item> NEPTUNE_BOOTS = ITEMS.register("neptune_boots", () -> new AetherArmorItem(AetherArmorMaterials.NEPTUNE, EquipmentSlot.FEET, new Item.Properties().rarity(AETHER_LOOT)));
+	public static final RegistryObject<Item> VALKYRIE_HELMET = ITEMS.register("valkyrie_helmet", () -> new AetherArmorItem(AetherArmorMaterials.VALKYRIE, EquipmentSlot.HEAD, new Item.Properties().rarity(AETHER_LOOT)).addDungeonTooltip(SILVER_DUNGEON_TOOLTIP));
+	public static final RegistryObject<Item> VALKYRIE_CHESTPLATE = ITEMS.register("valkyrie_chestplate", () -> new AetherArmorItem(AetherArmorMaterials.VALKYRIE, EquipmentSlot.CHEST, new Item.Properties().rarity(AETHER_LOOT)).addDungeonTooltip(SILVER_DUNGEON_TOOLTIP));
+	public static final RegistryObject<Item> VALKYRIE_LEGGINGS = ITEMS.register("valkyrie_leggings", () -> new AetherArmorItem(AetherArmorMaterials.VALKYRIE, EquipmentSlot.LEGS, new Item.Properties().rarity(AETHER_LOOT)).addDungeonTooltip(SILVER_DUNGEON_TOOLTIP));
+	public static final RegistryObject<Item> VALKYRIE_BOOTS = ITEMS.register("valkyrie_boots", () -> new AetherArmorItem(AetherArmorMaterials.VALKYRIE, EquipmentSlot.FEET, new Item.Properties().rarity(AETHER_LOOT)).addDungeonTooltip(SILVER_DUNGEON_TOOLTIP));
 
-	public static final RegistryObject<Item> PHOENIX_HELMET = ITEMS.register("phoenix_helmet", () -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, EquipmentSlot.HEAD, new Item.Properties().rarity(AETHER_LOOT).fireResistant()));
-	public static final RegistryObject<Item> PHOENIX_CHESTPLATE = ITEMS.register("phoenix_chestplate", () -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, EquipmentSlot.CHEST, new Item.Properties().rarity(AETHER_LOOT).fireResistant()));
-	public static final RegistryObject<Item> PHOENIX_LEGGINGS = ITEMS.register("phoenix_leggings", () -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, EquipmentSlot.LEGS, new Item.Properties().rarity(AETHER_LOOT).fireResistant()));
-	public static final RegistryObject<Item> PHOENIX_BOOTS = ITEMS.register("phoenix_boots", () -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, EquipmentSlot.FEET, new Item.Properties().rarity(AETHER_LOOT).fireResistant()));
+	public static final RegistryObject<Item> NEPTUNE_HELMET = ITEMS.register("neptune_helmet", () -> new AetherArmorItem(AetherArmorMaterials.NEPTUNE, EquipmentSlot.HEAD, new Item.Properties().rarity(AETHER_LOOT)).addDungeonTooltip(SILVER_DUNGEON_TOOLTIP));
+	public static final RegistryObject<Item> NEPTUNE_CHESTPLATE = ITEMS.register("neptune_chestplate", () -> new AetherArmorItem(AetherArmorMaterials.NEPTUNE, EquipmentSlot.CHEST, new Item.Properties().rarity(AETHER_LOOT)).addDungeonTooltip(SILVER_DUNGEON_TOOLTIP));
+	public static final RegistryObject<Item> NEPTUNE_LEGGINGS = ITEMS.register("neptune_leggings", () -> new AetherArmorItem(AetherArmorMaterials.NEPTUNE, EquipmentSlot.LEGS, new Item.Properties().rarity(AETHER_LOOT)).addDungeonTooltip(SILVER_DUNGEON_TOOLTIP));
+	public static final RegistryObject<Item> NEPTUNE_BOOTS = ITEMS.register("neptune_boots", () -> new AetherArmorItem(AetherArmorMaterials.NEPTUNE, EquipmentSlot.FEET, new Item.Properties().rarity(AETHER_LOOT)).addDungeonTooltip(SILVER_DUNGEON_TOOLTIP));
+
+	public static final RegistryObject<Item> PHOENIX_HELMET = ITEMS.register("phoenix_helmet", () -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, EquipmentSlot.HEAD, new Item.Properties().rarity(AETHER_LOOT).fireResistant()).addDungeonTooltip(GOLD_DUNGEON_TOOLTIP));
+	public static final RegistryObject<Item> PHOENIX_CHESTPLATE = ITEMS.register("phoenix_chestplate", () -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, EquipmentSlot.CHEST, new Item.Properties().rarity(AETHER_LOOT).fireResistant()).addDungeonTooltip(GOLD_DUNGEON_TOOLTIP));
+	public static final RegistryObject<Item> PHOENIX_LEGGINGS = ITEMS.register("phoenix_leggings", () -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, EquipmentSlot.LEGS, new Item.Properties().rarity(AETHER_LOOT).fireResistant()).addDungeonTooltip(GOLD_DUNGEON_TOOLTIP));
+	public static final RegistryObject<Item> PHOENIX_BOOTS = ITEMS.register("phoenix_boots", () -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, EquipmentSlot.FEET, new Item.Properties().rarity(AETHER_LOOT).fireResistant()).addDungeonTooltip(GOLD_DUNGEON_TOOLTIP));
 
 	public static final RegistryObject<Item> OBSIDIAN_HELMET = ITEMS.register("obsidian_helmet", () -> new AetherArmorItem(AetherArmorMaterials.OBSIDIAN, EquipmentSlot.HEAD, new Item.Properties().rarity(AETHER_LOOT)));
 	public static final RegistryObject<Item> OBSIDIAN_CHESTPLATE = ITEMS.register("obsidian_chestplate", () -> new AetherArmorItem(AetherArmorMaterials.OBSIDIAN, EquipmentSlot.CHEST, new Item.Properties().rarity(AETHER_LOOT)));
 	public static final RegistryObject<Item> OBSIDIAN_LEGGINGS = ITEMS.register("obsidian_leggings", () -> new AetherArmorItem(AetherArmorMaterials.OBSIDIAN, EquipmentSlot.LEGS, new Item.Properties().rarity(AETHER_LOOT)));
 	public static final RegistryObject<Item> OBSIDIAN_BOOTS = ITEMS.register("obsidian_boots", () -> new AetherArmorItem(AetherArmorMaterials.OBSIDIAN, EquipmentSlot.FEET, new Item.Properties().rarity(AETHER_LOOT)));
 
-	public static final RegistryObject<Item> VALKYRIE_HELMET = ITEMS.register("valkyrie_helmet", () -> new AetherArmorItem(AetherArmorMaterials.VALKYRIE, EquipmentSlot.HEAD, new Item.Properties().rarity(AETHER_LOOT)));
-	public static final RegistryObject<Item> VALKYRIE_CHESTPLATE = ITEMS.register("valkyrie_chestplate", () -> new AetherArmorItem(AetherArmorMaterials.VALKYRIE, EquipmentSlot.CHEST, new Item.Properties().rarity(AETHER_LOOT)));
-	public static final RegistryObject<Item> VALKYRIE_LEGGINGS = ITEMS.register("valkyrie_leggings", () -> new AetherArmorItem(AetherArmorMaterials.VALKYRIE, EquipmentSlot.LEGS, new Item.Properties().rarity(AETHER_LOOT)));
-	public static final RegistryObject<Item> VALKYRIE_BOOTS = ITEMS.register("valkyrie_boots", () -> new AetherArmorItem(AetherArmorMaterials.VALKYRIE, EquipmentSlot.FEET, new Item.Properties().rarity(AETHER_LOOT)));
-
-	public static final RegistryObject<Item> SENTRY_BOOTS = ITEMS.register("sentry_boots", () -> new AetherArmorItem(AetherArmorMaterials.SENTRY, EquipmentSlot.FEET, new Item.Properties().rarity(AETHER_LOOT)));
+	public static final RegistryObject<Item> SENTRY_BOOTS = ITEMS.register("sentry_boots", () -> new AetherArmorItem(AetherArmorMaterials.SENTRY, EquipmentSlot.FEET, new Item.Properties().rarity(AETHER_LOOT)).addDungeonTooltip(BRONZE_DUNGEON_TOOLTIP));
 
 	// Food
 	public static final RegistryObject<Item> BLUE_BERRY = ITEMS.register("blue_berry", () -> new Item(new Item.Properties().food(AetherFoods.BLUE_BERRY)));
@@ -156,24 +163,24 @@ public class AetherItems {
 	public static final RegistryObject<Item> NETHERITE_GLOVES = ITEMS.register("netherite_gloves", () -> new GlovesItem(1.0, "netherite_gloves", () -> SoundEvents.ARMOR_EQUIP_NETHERITE, new Item.Properties().durability(2031).fireResistant()));
 	public static final RegistryObject<Item> ZANITE_GLOVES = ITEMS.register("zanite_gloves", () -> new ZaniteGlovesItem(0.5, new Item.Properties().durability(250)));
 	public static final RegistryObject<Item> GRAVITITE_GLOVES = ITEMS.register("gravitite_gloves", () -> new GlovesItem(0.75, "gravitite_gloves", AetherSoundEvents.ITEM_ARMOR_EQUIP_GRAVITITE, new Item.Properties().durability(1561)));
-	public static final RegistryObject<Item> NEPTUNE_GLOVES = ITEMS.register("neptune_gloves", () -> new GlovesItem(1.0, "neptune_gloves", AetherSoundEvents.ITEM_ARMOR_EQUIP_NEPTUNE, new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).durability(2031)));
-	public static final RegistryObject<Item> PHOENIX_GLOVES = ITEMS.register("phoenix_gloves", () -> new GlovesItem(1.0, "phoenix_gloves", AetherSoundEvents.ITEM_ARMOR_EQUIP_PHOENIX, new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant().durability(2031)));
+	public static final RegistryObject<Item> VALKYRIE_GLOVES = ITEMS.register("valkyrie_gloves", () -> new GlovesItem(1.0, "valkyrie_gloves", AetherSoundEvents.ITEM_ARMOR_EQUIP_VALKYRIE, new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).durability(2031)).addDungeonTooltip(SILVER_DUNGEON_TOOLTIP));
+	public static final RegistryObject<Item> NEPTUNE_GLOVES = ITEMS.register("neptune_gloves", () -> new GlovesItem(1.0, "neptune_gloves", AetherSoundEvents.ITEM_ARMOR_EQUIP_NEPTUNE, new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).durability(2031)).addDungeonTooltip(SILVER_DUNGEON_TOOLTIP));
+	public static final RegistryObject<Item> PHOENIX_GLOVES = ITEMS.register("phoenix_gloves", () -> new GlovesItem(1.0, "phoenix_gloves", AetherSoundEvents.ITEM_ARMOR_EQUIP_PHOENIX, new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant().durability(2031)).addDungeonTooltip(GOLD_DUNGEON_TOOLTIP));
 	public static final RegistryObject<Item> OBSIDIAN_GLOVES = ITEMS.register("obsidian_gloves", () -> new GlovesItem(1.0, "obsidian_gloves", AetherSoundEvents.ITEM_ARMOR_EQUIP_OBSIDIAN, new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).durability(2031)));
-	public static final RegistryObject<Item> VALKYRIE_GLOVES = ITEMS.register("valkyrie_gloves", () -> new GlovesItem(1.0, "valkyrie_gloves", AetherSoundEvents.ITEM_ARMOR_EQUIP_VALKYRIE, new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).durability(2031)));
 
 	public static final RegistryObject<Item> RED_CAPE = ITEMS.register("red_cape", () -> new CapeItem("red_cape", new Item.Properties().stacksTo(1)));
 	public static final RegistryObject<Item> BLUE_CAPE = ITEMS.register("blue_cape", () -> new CapeItem("blue_cape", new Item.Properties().stacksTo(1)));
 	public static final RegistryObject<Item> YELLOW_CAPE = ITEMS.register("yellow_cape", () -> new CapeItem("yellow_cape", new Item.Properties().stacksTo(1)));
 	public static final RegistryObject<Item> WHITE_CAPE = ITEMS.register("white_cape", () -> new CapeItem("white_cape", new Item.Properties().stacksTo(1)));
-	public static final RegistryObject<Item> SWET_CAPE = ITEMS.register("swet_cape", () -> new CapeItem("swet_cape", new Item.Properties().stacksTo(1)));
-	public static final RegistryObject<Item> INVISIBILITY_CLOAK = ITEMS.register("invisibility_cloak", () -> new InvisibilityCloakItem(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT)));
-	public static final RegistryObject<Item> AGILITY_CAPE = ITEMS.register("agility_cape", () -> new AgilityCapeItem("agility_cape", new Item.Properties().stacksTo(1).rarity(AETHER_LOOT)));
-	public static final RegistryObject<Item> VALKYRIE_CAPE = ITEMS.register("valkyrie_cape", () -> new ValkyrieCapeItem(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT)));
+	public static final RegistryObject<Item> AGILITY_CAPE = ITEMS.register("agility_cape", () -> new AgilityCapeItem("agility_cape", new Item.Properties().stacksTo(1).rarity(AETHER_LOOT)).addDungeonTooltip(BRONZE_DUNGEON_TOOLTIP));
+	public static final RegistryObject<Item> SWET_CAPE = ITEMS.register("swet_cape", () -> new CapeItem("swet_cape", new Item.Properties().stacksTo(1)).addDungeonTooltip(BRONZE_DUNGEON_TOOLTIP));
+	public static final RegistryObject<Item> INVISIBILITY_CLOAK = ITEMS.register("invisibility_cloak", () -> new InvisibilityCloakItem(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT)).addDungeonTooltip(SILVER_DUNGEON_TOOLTIP));
+	public static final RegistryObject<Item> VALKYRIE_CAPE = ITEMS.register("valkyrie_cape", () -> new ValkyrieCapeItem(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT)).addDungeonTooltip(SILVER_DUNGEON_TOOLTIP));
 
-	public static final RegistryObject<Item> GOLDEN_FEATHER = ITEMS.register("golden_feather", () -> new GoldenFeatherItem(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT)));
-	public static final RegistryObject<Item> REGENERATION_STONE = ITEMS.register("regeneration_stone", () -> new RegenerationStoneItem(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT)));
-	public static final RegistryObject<Item> IRON_BUBBLE = ITEMS.register("iron_bubble", () -> new IronBubbleItem(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT)));
-	public static final RegistryObject<Item> SHIELD_OF_REPULSION = ITEMS.register("shield_of_repulsion", () -> new ShieldOfRepulsionItem(new Item.Properties().durability(512).rarity(AETHER_LOOT)));
+	public static final RegistryObject<Item> GOLDEN_FEATHER = ITEMS.register("golden_feather", () -> new GoldenFeatherItem(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT)).addDungeonTooltip(SILVER_DUNGEON_TOOLTIP));
+	public static final RegistryObject<Item> REGENERATION_STONE = ITEMS.register("regeneration_stone", () -> new RegenerationStoneItem(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT)).addDungeonTooltip(SILVER_DUNGEON_TOOLTIP));
+	public static final RegistryObject<Item> IRON_BUBBLE = ITEMS.register("iron_bubble", () -> new IronBubbleItem(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT)).addDungeonTooltip(GOLD_DUNGEON_TOOLTIP));
+	public static final RegistryObject<Item> SHIELD_OF_REPULSION = ITEMS.register("shield_of_repulsion", () -> new ShieldOfRepulsionItem(new Item.Properties().durability(512).rarity(AETHER_LOOT)).addDungeonTooltip(BRONZE_DUNGEON_TOOLTIP));
 
 	// Materials
 	public static final RegistryObject<Item> SKYROOT_STICK = ITEMS.register("skyroot_stick", () -> new SkyrootStickItem(new Item.Properties()));
@@ -190,8 +197,8 @@ public class AetherItems {
 	public static final RegistryObject<Item> SILVER_DUNGEON_KEY = ITEMS.register("silver_dungeon_key", () -> new DungeonKeyItem(new ResourceLocation(Aether.MODID, "silver"), new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant()));
 	public static final RegistryObject<Item> GOLD_DUNGEON_KEY = ITEMS.register("gold_dungeon_key", () -> new DungeonKeyItem(new ResourceLocation(Aether.MODID, "gold"), new Item.Properties().stacksTo(1).rarity(AETHER_LOOT).fireResistant()));
 
-	public static final RegistryObject<Item> MUSIC_DISC_AETHER_TUNE = ITEMS.register("music_disc_aether_tune", () -> new RecordItem(1, AetherSoundEvents.ITEM_MUSIC_DISC_AETHER_TUNE, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 2980));
-	public static final RegistryObject<Item> MUSIC_DISC_ASCENDING_DAWN  = ITEMS.register("music_disc_ascending_dawn", () -> new RecordItem(2, AetherSoundEvents.ITEM_MUSIC_DISC_ASCENDING_DAWN, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 7000));
+	public static final RegistryObject<Item> MUSIC_DISC_AETHER_TUNE = ITEMS.register("music_disc_aether_tune", () -> new AetherRecordItem(1, AetherSoundEvents.ITEM_MUSIC_DISC_AETHER_TUNE, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 2980).addDungeonTooltip(BRONZE_DUNGEON_TOOLTIP).addDungeonTooltip(SILVER_DUNGEON_TOOLTIP));
+	public static final RegistryObject<Item> MUSIC_DISC_ASCENDING_DAWN  = ITEMS.register("music_disc_ascending_dawn", () -> new AetherRecordItem(2, AetherSoundEvents.ITEM_MUSIC_DISC_ASCENDING_DAWN, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 7000).addDungeonTooltip(SILVER_DUNGEON_TOOLTIP));
 	public static final RegistryObject<Item> MUSIC_DISC_WELCOMING_SKIES  = ITEMS.register("music_disc_welcoming_skies", () -> new RecordItem(3, AetherSoundEvents.ITEM_MUSIC_DISC_WELCOMING_SKIES, new Item.Properties().stacksTo(1).rarity(AETHER_LOOT), 4400));
 	public static final RegistryObject<Item> MUSIC_DISC_LEGACY  = ITEMS.register("music_disc_legacy", () -> new RecordItem(4, AetherSoundEvents.ITEM_MUSIC_DISC_LEGACY, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 6040));
 	public static final RegistryObject<Item> MUSIC_DISC_CHINCHILLA  = ITEMS.register("music_disc_chinchilla", () -> new RecordItem(5, AetherSoundEvents.ITEM_MUSIC_DISC_CHINCHILLA, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 3260));

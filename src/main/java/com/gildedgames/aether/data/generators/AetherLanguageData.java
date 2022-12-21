@@ -715,6 +715,10 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addMessage("sun_altar.no_permission", "You don't have permission to use this.");
         addMessage("sun_altar.no_power", "The sun spirit has no power over this realm.");
 
+        addMessage("dungeon.bronze_dungeon", "Bronze Dungeon");
+        addMessage("dungeon.silver_dungeon", "Silver Dungeon");
+        addMessage("dungeon.gold_dungeon", "Gold Dungeon");
+
 
         addCommand("menu.fix", "Reset world preview values");
 

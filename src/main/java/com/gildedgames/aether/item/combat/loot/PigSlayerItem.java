@@ -5,6 +5,7 @@ import com.gildedgames.aether.item.combat.AetherItemTiers;
 import com.gildedgames.aether.item.AetherItems;
 
 import com.gildedgames.aether.AetherTags;
+import com.gildedgames.aether.item.combat.AetherSwordItem;
 import com.gildedgames.aether.mixin.mixins.common.accessor.ZombifiedPiglinAccessor;
 import com.gildedgames.aether.util.EquipmentUtil;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,10 +25,9 @@ import java.util.Collection;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SwordItem;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID)
-public class PigSlayerItem extends SwordItem {
+public class PigSlayerItem extends AetherSwordItem {
 	public PigSlayerItem() {
 		super(AetherItemTiers.PIG_SLAYER, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
 	}
