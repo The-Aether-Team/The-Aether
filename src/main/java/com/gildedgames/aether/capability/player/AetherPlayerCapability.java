@@ -52,6 +52,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	private boolean isMoving;
 	private boolean isJumping;
 	private boolean isGravititeJumpActive;
+	private boolean seenSunSpiritDialogue;
 
 	private int goldenDartCount;
 	private int poisonDartCount;
@@ -65,6 +66,8 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	private int impactedMaximum;
 	private int impactedTimer;
+
+	private boolean performVampireHealing;
 
 	private Aerbunny mountedAerbunny;
 	private CompoundTag mountedAerbunnyTag;
@@ -100,6 +103,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		tag.putInt("ProjectileImpactedTimer", this.getProjectileImpactedTimer());
 		tag.putFloat("SavedHealth", this.getSavedHealth());
 		tag.putInt("LifeShardCount", this.getLifeShardCount());
+		tag.putBoolean("HasSeenSunSpirit", this.hasSeenSunSpiritDialogue());
 		if (this.getMountedAerbunnyTag() != null) {
 			tag.put("MountedAerbunnyTag", this.getMountedAerbunnyTag());
 		}
@@ -128,6 +132,9 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		}
 		if (tag.contains("LifeShardCount")) {
 			this.setLifeShardCount(tag.getInt("LifeShardCount"));
+		}
+		if (tag.contains("HasSeenSunSpirit")) {
+			this.setSeenSunSpiritDialogue(tag.getBoolean("HasSeenSunSpirit"));
 		}
 		if (tag.contains("MountedAerbunnyTag")) {
 			this.setMountedAerbunnyTag(tag.getCompound("MountedAerbunnyTag"));
@@ -219,6 +226,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		this.handleRemoveDarts();
 		this.tickDownRemedy();
 		this.tickDownProjectileImpact();
+		this.handleVampireHealing();
 		this.checkToRemoveAerbunny();
 		this.checkToRemoveCloudMinions();
 		this.handleSavedHealth();
@@ -368,6 +376,13 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 				this.setProjectileImpactedMaximum(0);
 				this.setProjectileImpactedTimer(0);
 			}
+		}
+	}
+
+	private void handleVampireHealing() {
+		if (!this.getPlayer().getLevel().isClientSide() && this.performVampireHealing()) {
+			this.getPlayer().heal(1.0F);
+			this.setVampireHealing(false);
 		}
 	}
 
@@ -528,6 +543,16 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	}
 
 	@Override
+	public void setSeenSunSpiritDialogue(boolean seenDialogue) {
+		this.seenSunSpiritDialogue = seenDialogue;
+	}
+
+	@Override
+	public boolean hasSeenSunSpiritDialogue() {
+		return this.seenSunSpiritDialogue;
+	}
+
+	@Override
 	public void setGoldenDartCount(int count) {
 		this.markDirty(true);
 		this.goldenDartCount = count;
@@ -602,6 +627,16 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	@Override
 	public int getProjectileImpactedTimer() {
 		return this.impactedTimer;
+	}
+
+	@Override
+	public void setVampireHealing(boolean performVampireHealing) {
+		this.performVampireHealing = performVampireHealing;
+	}
+
+	@Override
+	public boolean performVampireHealing() {
+		return this.performVampireHealing;
 	}
 
 	@Override

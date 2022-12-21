@@ -7,16 +7,13 @@ import net.minecraft.world.level.block.WallSignBlock;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-import javax.annotation.Nonnull;
-
-public class SkyrootWallSignBlock extends WallSignBlock
-{
-    public SkyrootWallSignBlock(Properties propertiesIn, WoodType woodTypeIn) {
-        super(propertiesIn, woodTypeIn);
+public class SkyrootWallSignBlock extends WallSignBlock {
+    public SkyrootWallSignBlock(Properties properties, WoodType woodType) {
+        super(properties, woodType);
     }
 
     @Override
-    public BlockEntity newBlockEntity(@Nonnull BlockPos pos, @Nonnull BlockState state) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new SkyrootSignBlockEntity(pos, state);
     }
 }

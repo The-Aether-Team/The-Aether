@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "jukebox",
+  "category": "misc",
+  "group": "minecraft:jukebox",
   "key": {
     "G": {
       "item": "aether:enchanted_gravitite"

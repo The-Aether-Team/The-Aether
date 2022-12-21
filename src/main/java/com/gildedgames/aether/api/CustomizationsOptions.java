@@ -18,7 +18,7 @@ public class CustomizationsOptions {
 
     private static final File CUSTOMIZATIONS_FILE = new File(Aether.DIRECTORY.toString(), "aether_customizations.txt");
 
-    private final LinkedHashMap<String, Object> customizations = Maps.newLinkedHashMap();
+    private final LinkedHashMap<String, Object> customizations = new LinkedHashMap<>();
 
     public CustomizationsOptions() {
         if (CUSTOMIZATIONS_FILE.exists()) {

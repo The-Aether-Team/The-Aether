@@ -5,7 +5,10 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityMountEvent;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -14,6 +17,12 @@ import java.util.Optional;
 
 @Mod.EventBusSubscriber
 public class EntityListener {
+    @SubscribeEvent
+    public static void onEntityJoin(EntityJoinLevelEvent event) {
+        Entity entity = event.getEntity();
+        EntityHooks.addGoals(entity);
+    }
+
     @SubscribeEvent
     public static void onMountEntity(EntityMountEvent event) {
         Entity riderEntity = event.getEntityMounting();
@@ -31,5 +40,12 @@ public class EntityListener {
         Optional<InteractionResult> result = EntityHooks.pickupBucketable(targetEntity, player, interactionHand);
         result.ifPresent(event::setCancellationResult);
         event.setCanceled(result.isPresent());
+    }
+
+    @SubscribeEvent
+    public static void onProjectileHitEntity(ProjectileImpactEvent event) {
+        Entity projectileEntity = event.getEntity();
+        HitResult rayTraceResult = event.getRayTraceResult();
+        event.setCanceled(EntityHooks.preventSliderHooked(projectileEntity, rayTraceResult));
     }
 }

@@ -2,6 +2,9 @@ package com.gildedgames.aether.item.accessories;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.block.dispenser.AetherDispenseBehaviors;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -12,13 +15,16 @@ import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class AccessoryItem extends Item implements ICurioItem, Vanishable
-{
+public class AccessoryItem extends Item implements ICurioItem, Vanishable {
+    private final List<Component> dungeonTooltips = new ArrayList<>();
+
     public AccessoryItem(Properties properties) {
         super(properties);
-        DispenserBlock.registerBehavior(this, AetherDispenseBehaviors.DISPENSE_ACCESSORY_BEHAVIOR);
+        DispenserBlock.registerBehavior(this, AetherDispenseBehaviors.DISPENSE_ACCESSORY_BEHAVIOR); // Behavior to allow accessories to be equipped from a Dispenser.
     }
 
     @Override
@@ -26,14 +32,33 @@ public class AccessoryItem extends Item implements ICurioItem, Vanishable
         return true;
     }
 
-    @Nonnull
     @Override
     public ICurio.SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
-        return new ICurio.SoundInfo(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_GENERIC.get(), 1.0f, 1.0f);
+        return new ICurio.SoundInfo(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_GENERIC.get(), 1.0F, 1.0F);
     }
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         return super.canApplyAtEnchantingTable(stack, enchantment) || enchantment == Enchantments.BINDING_CURSE;
+    }
+
+    /**
+     * When in a creative tab, this adds a tooltip to an item indicating what dungeon it can be found in.
+     * @param stack The {@link ItemStack} with the tooltip.
+     * @param level The {@link Level} the item is rendered in.
+     * @param components A {@link List} of {@link Component}s making up this item's tooltip.
+     * @param flag A {@link TooltipFlag} for the tooltip type.
+     */
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
+        super.appendHoverText(stack, level, components, flag);
+        if (flag.isCreative()) {
+            components.addAll(this.dungeonTooltips);
+        }
+    }
+
+    public AccessoryItem addDungeonTooltip(Component dungeonTooltip) {
+        this.dungeonTooltips.add(dungeonTooltip);
+        return this;
     }
 }

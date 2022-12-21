@@ -9,6 +9,13 @@
       "heightmap": "WORLD_SURFACE_WG"
     },
     {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": {
+        "type": "minecraft:matching_block_tag",
+        "tag": "aether:quicksoil_can_generate"
+      }
+    },
+    {
       "type": "aether:elevation_adjustment",
       "value": {
         "type": "minecraft:uniform",
@@ -21,14 +28,13 @@
     {
       "type": "aether:elevation_filter",
       "maximum": 70,
-      "minimum": 47
+      "minimum": 63
     },
     {
-      "type": "minecraft:block_predicate_filter",
-      "predicate": {
-        "type": "minecraft:matching_block_tag",
-        "tag": "aether:quicksoil_can_generate"
-      }
+      "type": "minecraft:biome"
+    },
+    {
+      "type": "aether:dungeon_blacklist_filter"
     }
   ]
 }

@@ -2,6 +2,7 @@ package com.gildedgames.aether.recipe.recipes.block;
 
 import com.gildedgames.aether.recipe.BlockPropertyPair;
 import com.gildedgames.aether.recipe.BlockStateIngredient;
+import net.minecraft.commands.CommandFunction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -9,8 +10,9 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nonnull;
-
+/**
+ * Overrides anything container-related or item-related because these in-world recipes have no container and are {@link BlockState}-based. Instead, custom behavior is implemented by recipes that extend this.
+ */
 public interface BlockStateRecipe extends Recipe<Container> {
     BlockStateIngredient getIngredient();
 
@@ -18,14 +20,15 @@ public interface BlockStateRecipe extends Recipe<Container> {
 
     BlockState getResultState(BlockState originalState);
 
+    CommandFunction.CacheableFunction getFunction();
+
     @Override
-    default boolean matches(@Nonnull Container container, @Nonnull Level level) {
+    default boolean matches(Container container, Level level) {
         return false;
     }
 
-    @Nonnull
     @Override
-    default ItemStack assemble(@Nonnull Container container) {
+    default ItemStack assemble(Container container) {
         return ItemStack.EMPTY;
     }
 
@@ -34,15 +37,13 @@ public interface BlockStateRecipe extends Recipe<Container> {
         return false;
     }
 
-    @Nonnull
     @Override
     default ItemStack getResultItem() {
         return ItemStack.EMPTY;
     }
 
-    @Nonnull
     @Override
-    default NonNullList<ItemStack> getRemainingItems(@Nonnull Container container) {
+    default NonNullList<ItemStack> getRemainingItems(Container container) {
         return NonNullList.create();
     }
 

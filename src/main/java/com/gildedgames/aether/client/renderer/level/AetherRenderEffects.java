@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.renderer.level;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.data.resources.AetherDimensions;
+import com.gildedgames.aether.data.resources.registries.AetherDimensions;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;

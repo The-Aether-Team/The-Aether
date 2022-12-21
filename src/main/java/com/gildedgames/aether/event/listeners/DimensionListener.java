@@ -3,11 +3,13 @@ package com.gildedgames.aether.event.listeners;
 import com.gildedgames.aether.event.events.PlacementBanEvent;
 import com.gildedgames.aether.event.events.PlacementConvertEvent;
 import com.gildedgames.aether.event.hooks.DimensionHooks;
-import com.gildedgames.aether.data.resources.AetherDimensions;
+import com.gildedgames.aether.data.resources.registries.AetherDimensions;
+import com.gildedgames.aether.mixin.mixins.common.accessor.ServerLevelAccessor;
 import com.gildedgames.aether.world.AetherLevelData;
 import com.gildedgames.aether.capability.time.AetherTime;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
@@ -15,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -30,6 +33,30 @@ import net.minecraft.core.Direction;
 
 @Mod.EventBusSubscriber
 public class DimensionListener {
+    @SubscribeEvent
+    public static void onInteractWithPortalFrame(PlayerInteractEvent.RightClickBlock event) {
+        Player player = event.getEntity();
+        Level level = event.getLevel();
+        BlockPos blockPos = event.getPos();
+        Direction direction = event.getFace();
+        ItemStack itemStack = event.getItemStack();
+        InteractionHand interactionHand = event.getHand();
+        if (DimensionHooks.createPortal(player, level, blockPos, direction, itemStack, interactionHand)) {
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onWaterExistsInsidePortalFrame(BlockEvent.NeighborNotifyEvent event) {
+        LevelAccessor level = event.getLevel();
+        BlockPos blockPos = event.getPos();
+        BlockState blockState = level.getBlockState(blockPos);
+        FluidState fluidState = level.getFluidState(blockPos);
+        if (DimensionHooks.detectWaterInFrame(level, blockPos, blockState, fluidState)) {
+            event.setCanceled(true);
+        }
+    }
+
     @SubscribeEvent
     public static void checkBanned(PlayerInteractEvent.RightClickBlock event) {
         Player player = event.getEntity();
@@ -98,8 +125,10 @@ public class DimensionListener {
         if (event.getLevel() instanceof ServerLevel level && level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
             AetherTime.get(level).ifPresent(cap -> {
                 AetherLevelData levelData = new AetherLevelData(level.getServer().getWorldData(), level.getServer().getWorldData().overworldData(), cap.getDayTime());
-                level.serverLevelData = levelData;
-                level.levelData = levelData;
+                ServerLevelAccessor serverLevelAccessor = (ServerLevelAccessor) level;
+                com.gildedgames.aether.mixin.mixins.common.accessor.LevelAccessor levelAccessor = (com.gildedgames.aether.mixin.mixins.common.accessor.LevelAccessor) event.getLevel();
+                serverLevelAccessor.setServerLevelData(levelData);
+                levelAccessor.setLevelData(levelData);
             });
         }
     }
@@ -111,10 +140,11 @@ public class DimensionListener {
     public static void onSleepFinish(SleepFinishedTimeEvent event) {
         ServerLevel level = (ServerLevel) event.getLevel();
         if (level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
-            level.serverLevelData.setRainTime(0);
-            level.serverLevelData.setRaining(false);
-            level.serverLevelData.setThunderTime(0);
-            level.serverLevelData.setThundering(false);
+            ServerLevelAccessor serverLevelAccessor = (ServerLevelAccessor) level;
+            serverLevelAccessor.getServerLevelData().setRainTime(0);
+            serverLevelAccessor.getServerLevelData().setRaining(false);
+            serverLevelAccessor.getServerLevelData().setThunderTime(0);
+            serverLevelAccessor.getServerLevelData().setThundering(false);
         }
     }
 }

@@ -17,7 +17,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
@@ -45,34 +44,32 @@ public class IncubationBuilder implements RecipeBuilder {
     }
 
     @Override
-    @Nonnull
-    public IncubationBuilder unlockedBy(@Nonnull String criterionName, @Nonnull CriterionTriggerInstance criterionTrigger) {
-        this.advancement.addCriterion(criterionName, criterionTrigger);
-        return this;
-    }
-
-    @Override
-    @Nonnull
     public IncubationBuilder group(@Nullable String group) {
         this.group = group;
         return this;
     }
 
     @Override
-    @Nonnull
     public Item getResult() {
         return Items.AIR;
     }
 
-    public void save(Consumer<FinishedRecipe> consumer, @Nonnull ResourceLocation recipeId) {
-        this.ensureValid(recipeId);
-        this.advancement.parent(new ResourceLocation("recipes/root")).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(recipeId)).rewards(AdvancementRewards.Builder.recipe(recipeId)).requirements(RequirementsStrategy.OR);
-        consumer.accept(new IncubationBuilder.Result(recipeId, this.group == null ? "" : this.group, this.ingredient, this.entity, this.tag, this.incubationTime, this.advancement, new ResourceLocation(recipeId.getNamespace(), "recipes/incubation/" + recipeId.getPath()), this.serializer));
+    @Override
+    public IncubationBuilder unlockedBy(String criterionName, CriterionTriggerInstance criterionTrigger) {
+        this.advancement.addCriterion(criterionName, criterionTrigger);
+        return this;
     }
 
-    private void ensureValid(ResourceLocation pId) {
+    @Override
+    public void save(Consumer<FinishedRecipe> consumer, ResourceLocation id) {
+        this.ensureValid(id);
+        this.advancement.parent(new ResourceLocation("recipes/root")).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(RequirementsStrategy.OR);
+        consumer.accept(new IncubationBuilder.Result(id, this.group == null ? "" : this.group, this.ingredient, this.entity, this.tag, this.incubationTime, this.advancement, new ResourceLocation(id.getNamespace(), "recipes/incubation/" + id.getPath()), this.serializer));
+    }
+
+    private void ensureValid(ResourceLocation id) {
         if (this.advancement.getCriteria().isEmpty()) {
-            throw new IllegalStateException("No way of obtaining recipe " + pId);
+            throw new IllegalStateException("No way of obtaining recipe " + id);
         }
     }
 
@@ -99,7 +96,8 @@ public class IncubationBuilder implements RecipeBuilder {
             this.serializer = serializer;
         }
 
-        public void serializeRecipeData(@Nonnull JsonObject json) {
+        @Override
+        public void serializeRecipeData(JsonObject json) {
             if (!this.group.isEmpty()) {
                 json.addProperty("group", this.group);
             }
@@ -111,22 +109,24 @@ public class IncubationBuilder implements RecipeBuilder {
             json.addProperty("incubationtime", this.incubationTime);
         }
 
-        @Nonnull
+        @Override
         public RecipeSerializer<?> getType() {
             return this.serializer;
         }
 
-        @Nonnull
+        @Override
         public ResourceLocation getId() {
             return this.id;
         }
 
         @Nullable
+        @Override
         public JsonObject serializeAdvancement() {
             return this.advancement.serializeToJson();
         }
 
         @Nullable
+        @Override
         public ResourceLocation getAdvancementId() {
             return this.advancementId;
         }

@@ -15,7 +15,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.Property;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -24,6 +23,8 @@ public class BlockStateRecipeBuilder implements RecipeBuilder {
     private final BlockPropertyPair result;
     private final BlockStateIngredient ingredient;
     private final BlockStateRecipeSerializer<?> serializer;
+    @Nullable
+    private ResourceLocation function;
 
     public BlockStateRecipeBuilder(BlockPropertyPair result, BlockStateIngredient ingredient, BlockStateRecipeSerializer<?> serializer) {
         this.result = result;
@@ -43,39 +44,41 @@ public class BlockStateRecipeBuilder implements RecipeBuilder {
         return new BlockStateRecipeBuilder(result, ingredient, serializer);
     }
 
-    public BlockStateIngredient getIngredient() {
-        return this.ingredient;
+    @Override
+    public RecipeBuilder group(@Nullable String groupName) {
+        return this;
+    }
+
+    public RecipeBuilder function(@Nullable ResourceLocation function) {
+        this.function = function;
+        return this;
     }
 
     public BlockPropertyPair getResultPair() {
         return this.result;
     }
 
+    public BlockStateIngredient getIngredient() {
+        return this.ingredient;
+    }
+
     public BlockStateRecipeSerializer<?> getSerializer() {
         return this.serializer;
     }
 
-    @Nonnull
-    @Override
-    public RecipeBuilder unlockedBy(@Nonnull String criterionName, @Nonnull CriterionTriggerInstance criterionTriggerInstance) {
-        return this;
-    }
-
-    @Nonnull
-    @Override
-    public RecipeBuilder group(@Nullable String groupName) {
-        return this;
-    }
-
-    @Nonnull
     @Override
     public Item getResult() {
         return Items.AIR;
     }
 
     @Override
-    public void save(@Nonnull Consumer<FinishedRecipe> finishedRecipeConsumer, @Nonnull ResourceLocation recipeId) {
-        finishedRecipeConsumer.accept(new BlockStateRecipeBuilder.Result(recipeId, this.ingredient, this.result, this.serializer));
+    public RecipeBuilder unlockedBy(String criterionName, CriterionTriggerInstance criterionTrigger) {
+        return this;
+    }
+
+    @Override
+    public void save(Consumer<FinishedRecipe> finishedRecipeConsumer, ResourceLocation id) {
+        finishedRecipeConsumer.accept(new BlockStateRecipeBuilder.Result(id, this.ingredient, this.result, this.serializer, this.function));
     }
 
     public static class Result implements FinishedRecipe {
@@ -83,12 +86,19 @@ public class BlockStateRecipeBuilder implements RecipeBuilder {
         private final BlockStateIngredient ingredient;
         private final BlockPropertyPair result;
         private final RecipeSerializer<? extends AbstractBlockStateRecipe> serializer;
+        @Nullable
+        private final ResourceLocation function;
 
         public Result(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result, RecipeSerializer<? extends AbstractBlockStateRecipe> serializer) {
+            this(id, ingredient, result, serializer, null);
+        }
+
+        public Result(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result, RecipeSerializer<? extends AbstractBlockStateRecipe> serializer, @Nullable ResourceLocation function) {
             this.id = id;
             this.ingredient = ingredient;
             this.result = result;
             this.serializer = serializer;
+            this.function = function;
         }
 
         @Override
@@ -99,15 +109,16 @@ public class BlockStateRecipeBuilder implements RecipeBuilder {
             } else {
                 json.add("result", BlockStateIngredient.of(this.result).toJson());
             }
+            if (this.function != null) {
+                json.addProperty("mcfunction", this.function.toString());
+            }
         }
 
-        @Nonnull
         @Override
         public RecipeSerializer<?> getType() {
             return this.serializer;
         }
 
-        @Nonnull
         @Override
         public ResourceLocation getId() {
             return this.id;

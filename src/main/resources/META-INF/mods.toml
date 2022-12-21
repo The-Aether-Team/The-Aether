@@ -1,33 +1,34 @@
 modLoader = "javafml"
-loaderVersion = "[43,)"
-license = "LGPL-3.0 License"
+loaderVersion = "[44,)"
+license = "Assets: All Rights Reserved; Code: LGPL-3.0"
 
 [[mods]]
 modId = "aether"
 version = "${file.jarVersion}"
 displayName = "The Aether"
-displayURL = "https://www.curseforge.com/minecraft/mc-mods/the-aether"
+displayURL = "https://www.curseforge.com/minecraft/mc-mods/aether"
 logoFile = "aether.png"
-credits = "Credits go to Gilded Games for maintaining the Aether mod, the Aether Collaboration Team (Kingbdogz, Shockah, Kodaichi, Flan, and 303) for creating the original Aether mod, Modding Legacy (115kino, KingPhygieBoo, and Lachney) for originally porting and developing the mod in newer versions, and GitHub contributors for their help throughout development. Credit goes to C4 as well for Curios API, the source code of which can be found at https://github.com/TheIllusiveC4/Curios"
-authors = "bconlon, Burning Cactus, Drullkus, Hugo Payn, Jaryt, Oscar Payn, quek, Raptor, reetam"
+credits = "The Aether Team AKA 'Gilded Games', former Aether Team Collaborators for their prior work on The Aether Mod, Modding Legacy for their work on Aether Legacy, GitHub contributors for their additional help, and C4 for Curios API, the source code of which can be found at https://github.com/TheIllusiveC4/Curios"
+authors = "bconlon, Burning Cactus, Drullkus, Hugo Payn, Jaryt, Oscar Payn, quek, Raptor, reetam, RENREN"
 description = '''
-    Gilded Games presents the original Aether mod! Up to date for modern Minecraft versions and fully compatible with multiplayer! The Aether is a dimension high in the sky comprised of floating islands! Ascend through a Glowstone portal and begin a new survival adventure packed with new ores, mythical creatures and perilous Dungeons!'''
+    Gilded Games presents the original Aether mod! Up to date for modern Minecraft versions and fully compatible with multiplayer. The Aether is a dimension of floating islands high in the sky. Ascend through a Glowstone portal and begin a new survival adventure packed with new ores, mythical creatures and perilous Dungeons!
+'''
 
 [[dependencies.aether]]
     modId = "forge"
     mandatory = true
-    versionRange = "[43.0.19,)"
+    versionRange = "[44.0.36,)"
     ordering = "NONE"
     side = "BOTH"
 [[dependencies.aether]]
     modId = "curios"
     mandatory = true
-    versionRange = "[1.19.2-5.1.1.0,)"
+    versionRange = "[1.19.3-5.1.1.2,)"
     ordering = "NONE"
     side = "BOTH"
 [[dependencies.aether]]
     modId = "minecraft"
     mandatory = true
-    versionRange = "[1.19.2]"
+    versionRange = "[1.19.3]"
     ordering = "NONE"
     side = "BOTH"

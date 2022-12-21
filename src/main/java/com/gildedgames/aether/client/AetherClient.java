@@ -5,18 +5,18 @@ import com.gildedgames.aether.api.CustomizationsOptions;
 import com.gildedgames.aether.client.gui.screen.SunAltarScreen;
 import com.gildedgames.aether.client.gui.screen.inventory.*;
 import com.gildedgames.aether.client.renderer.AetherRenderers;
-import com.gildedgames.aether.item.miscellaneous.MoaEggItem;
+import com.gildedgames.aether.entity.AetherEntityTypes;
+import com.gildedgames.aether.inventory.menu.LoreBookMenu;
 import com.gildedgames.aether.inventory.menu.AetherMenuTypes;
 
 import com.gildedgames.aether.item.AetherItems;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RegisterEntitySpectatorShadersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -31,8 +31,8 @@ public class AetherClient {
             AetherAtlases.registerWoodTypeAtlases();
             registerGuiFactories();
             registerItemModelProperties();
-            registerColors();
         });
+        registerLoreOverrides();
     }
 
     public static void registerGuiFactories() {
@@ -61,14 +61,13 @@ public class AetherClient {
                 -> stack.getHoverName().getString().equalsIgnoreCase("hammer of jeb") ? 1.0F : 0.0F);
     }
 
-    public static void registerColors() {
-        ItemColors colors = Minecraft.getInstance().getItemColors();
+    public static void registerLoreOverrides() {
+        LoreBookMenu.addLoreEntryOverride(stack -> stack.getHoverName().getString().equalsIgnoreCase("hammer of jeb"), "lore.item.aether.hammer_of_jeb");
+    }
 
-        colors.register((color, itemProvider) -> itemProvider > 0 ? -1 : ((DyeableLeatherItem) color.getItem()).getColor(color), AetherItems.LEATHER_GLOVES.get());
-
-        for (MoaEggItem moaEggItem : MoaEggItem.moaEggs()) {
-            colors.register((color, itemProvider) -> moaEggItem.getColor(), moaEggItem);
-        }
+    @SubscribeEvent
+    public static void registerSpectatorShaders(RegisterEntitySpectatorShadersEvent event) {
+        event.register(AetherEntityTypes.SUN_SPIRIT.get(), new ResourceLocation(Aether.MODID, "shaders/post/sun_spirit.json"));
     }
 
     /**

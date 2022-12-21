@@ -3,154 +3,167 @@ package com.gildedgames.aether.data.providers;
 import com.gildedgames.aether.Aether;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.core.Direction;
+import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Item;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.GlassBlock;
-import net.minecraft.world.level.block.IronBarsBlock;
-import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.function.Supplier;
-
-public abstract class AetherItemModelProvider extends ItemModelProvider
-{
-    public AetherItemModelProvider(DataGenerator generator, ExistingFileHelper fileHelper) {
-        super(generator, Aether.MODID, fileHelper);
+public abstract class AetherItemModelProvider extends ItemModelProvider {
+    public AetherItemModelProvider(PackOutput output, String id, ExistingFileHelper helper) {
+        super(output, id, helper);
     }
 
-    public String blockName(Supplier<? extends Block> block) {
-        return ForgeRegistries.BLOCKS.getKey(block.get()).getPath();
+    public String blockName(Block block) {
+        ResourceLocation location = ForgeRegistries.BLOCKS.getKey(block);
+        if (location != null) {
+            return location.getPath();
+        } else {
+            throw new IllegalStateException("Unknown block: " + block.toString());
+        }
+    }
+
+    public String itemName(Item item) {
+        ResourceLocation location = ForgeRegistries.ITEMS.getKey(item);
+        if (location != null) {
+            return location.getPath();
+        } else {
+            throw new IllegalStateException("Unknown item: " + item.toString());
+        }
     }
 
     protected ResourceLocation texture(String name) {
-        return modLoc("block/" + name);
+        return this.modLoc("block/" + name);
     }
 
     protected ResourceLocation texture(String name, String location) {
-        return modLoc("block/" + location + name);
+        return this.modLoc("block/" + location + name);
     }
 
-    public ItemModelBuilder item(Supplier<? extends Item> item, String location) {
-        ResourceLocation id = ForgeRegistries.ITEMS.getKey(item.get());
-        return withExistingParent(id.getPath(), mcLoc("item/generated"))
-                .texture("layer0", modLoc("item/" + location + id.getPath()));
+    public void item(Item item, String location) {
+        this.withExistingParent(this.itemName(item), mcLoc("item/generated"))
+                .texture("layer0", modLoc("item/" + location + this.itemName(item)));
     }
 
-    public ItemModelBuilder lookalikeBlock(Supplier<? extends Block> block, ResourceLocation lookalike) {
-        return withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), lookalike);
+    public void handheldItem(Item item, String location) {
+        this.withExistingParent(this.itemName(item), this.mcLoc("item/handheld"))
+                .texture("layer0", this.modLoc("item/" + location + this.itemName(item)));
     }
 
-    public ItemModelBuilder handheldItem(Supplier<? extends Item> item, String location) {
-        ResourceLocation id = ForgeRegistries.ITEMS.getKey(item.get());
-        return withExistingParent(id.getPath(), mcLoc("item/handheld"))
-                .texture("layer0", modLoc("item/" + location + id.getPath()));
-    }
-
-    public ItemModelBuilder lanceItem(Supplier<? extends Item> item, String location) {
-        ResourceLocation id = ForgeRegistries.ITEMS.getKey(item.get());
-        return withExistingParent(id.getPath(), mcLoc("item/handheld"))
-                .texture("layer0", modLoc("item/" + location + id.getPath()))
+    public void lanceItem(Item item, String location) {
+        this.withExistingParent(this.itemName(item), this.mcLoc("item/handheld"))
+                .texture("layer0", this.modLoc("item/" + location + this.itemName(item)))
                 .transforms()
                 .transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND).rotation(0.0F, -90.0F, 45.0F).translation(0.0F, 1.0F, -5.0F).scale(0.85F, 0.85F, 0.85F).end()
                 .transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND).rotation(0.0F, 90.0F, -45.0F).translation(0.0F, 1.0F, -5.0F).scale(0.85F, 0.85F, 0.85F).end()
                 .end();
     }
 
-    public ItemModelBuilder nameableWeapon(Supplier<? extends Item> item, String location, String renamedVariant) {
-        withExistingParent(renamedVariant, mcLoc("item/handheld")).texture("layer0", modLoc("item/" + location + renamedVariant));
-        ResourceLocation id = ForgeRegistries.ITEMS.getKey(item.get());
-        return withExistingParent(id.getPath(), mcLoc("item/handheld"))
-                .texture("layer0", modLoc("item/" + location + id.getPath()))
-                .override().predicate(new ResourceLocation(Aether.MODID, "named"), 1).model(getExistingFile(modLoc("item/" + renamedVariant))).end();
+    public void nameableWeapon(Item item, String location, String renamedVariant) {
+        this.withExistingParent(renamedVariant, this.mcLoc("item/handheld")).texture("layer0", this.modLoc("item/" + location + renamedVariant));
+        this.withExistingParent(this.itemName(item), this.mcLoc("item/handheld"))
+                .texture("layer0", this.modLoc("item/" + location + this.itemName(item)))
+                .override().predicate(new ResourceLocation(Aether.MODID, "named"), 1).model(this.getExistingFile(modLoc("item/" + renamedVariant))).end();
     }
 
-    public ItemModelBuilder dartShooterItem(Supplier<? extends Item> item, String location) {
-        ResourceLocation id = ForgeRegistries.ITEMS.getKey(item.get());
-        return withExistingParent(id.getPath(), mcLoc("item/handheld"))
-                .texture("layer0", modLoc("item/" + location + id.getPath()))
+    public void dartShooterItem(Item item, String location) {
+        this.withExistingParent(this.itemName(item), this.mcLoc("item/handheld"))
+                .texture("layer0", this.modLoc("item/" + location + this.itemName(item)))
                 .transforms()
                 .transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND).rotation(0.0F, -90.0F, 45.0F).translation(0.0F, 1.5F, -1.0F).scale(0.85F, 0.85F, 0.85F).end()
                 .transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND).rotation(0.0F, 90.0F, -45.0F).translation(0.0F, 1.5F, -1.0F).scale(0.85F, 0.85F, 0.85F).end()
                 .end();
     }
 
-    public ItemModelBuilder bowItem(Supplier<? extends Item> item, String location) {
-        ResourceLocation id = ForgeRegistries.ITEMS.getKey(item.get());
-        withExistingParent(id.getPath() + "_pulling_0", mcLoc("item/bow")).texture("layer0", modLoc("item/" + location + id.getPath() + "_pulling_0"));
-        withExistingParent(id.getPath() + "_pulling_1", mcLoc("item/bow")).texture("layer0", modLoc("item/" + location + id.getPath() + "_pulling_1"));
-        withExistingParent(id.getPath() + "_pulling_2", mcLoc("item/bow")).texture("layer0", modLoc("item/" + location + id.getPath() + "_pulling_2"));
-        return withExistingParent(id.getPath(), mcLoc("item/bow"))
-                .texture("layer0", modLoc("item/" + location + id.getPath()))
-                .override().predicate(new ResourceLocation("pulling"), 1).model(getExistingFile(modLoc("item/" + id.getPath() + "_pulling_0"))).end()
-                .override().predicate(new ResourceLocation("pulling"), 1).predicate(new ResourceLocation("pull"), 0.65F).model(getExistingFile(modLoc("item/" + id.getPath() + "_pulling_1"))).end()
-                .override().predicate(new ResourceLocation("pulling"), 1).predicate(new ResourceLocation("pull"), 0.9F).model(getExistingFile(modLoc("item/" + id.getPath() + "_pulling_2"))).end();
+    public void bowItem(Item item, String location) {
+        this.withExistingParent(this.itemName(item) + "_pulling_0", this.mcLoc("item/bow")).texture("layer0", this.modLoc("item/" + location + this.itemName(item) + "_pulling_0"));
+        this.withExistingParent(this.itemName(item) + "_pulling_1", this.mcLoc("item/bow")).texture("layer0", this.modLoc("item/" + location + this.itemName(item) + "_pulling_1"));
+        this.withExistingParent(this.itemName(item) + "_pulling_2", this.mcLoc("item/bow")).texture("layer0", this.modLoc("item/" + location + this.itemName(item) + "_pulling_2"));
+        this.withExistingParent(this.itemName(item), this.mcLoc("item/bow"))
+                .texture("layer0", this.modLoc("item/" + location + this.itemName(item)))
+                .override().predicate(new ResourceLocation("pulling"), 1).model(this.getExistingFile(this.modLoc("item/" + this.itemName(item) + "_pulling_0"))).end()
+                .override().predicate(new ResourceLocation("pulling"), 1).predicate(new ResourceLocation("pull"), 0.65F).model(this.getExistingFile(this.modLoc("item/" + this.itemName(item) + "_pulling_1"))).end()
+                .override().predicate(new ResourceLocation("pulling"), 1).predicate(new ResourceLocation("pull"), 0.9F).model(this.getExistingFile(this.modLoc("item/" + this.itemName(item) + "_pulling_2"))).end();
     }
 
-    public ItemModelBuilder dyedItem(Supplier<? extends Item> item, String location) {
-        ResourceLocation id = ForgeRegistries.ITEMS.getKey(item.get());
-        return withExistingParent(id.getPath(), mcLoc("item/generated"))
-                .texture("layer0", modLoc("item/" + location + id.getPath()))
-                .texture("layer1", modLoc("item/" + location + id.getPath() + "_overlay"));
+    public void dyedItem(Item item, String location) {
+        this.withExistingParent(this.itemName(item), this.mcLoc("item/generated"))
+                .texture("layer0", this.modLoc("item/" + location + this.itemName(item)))
+                .texture("layer1", this.modLoc("item/" + location + this.itemName(item) + "_overlay"));
     }
 
-    public ItemModelBuilder moaEggItem(Supplier<? extends Item> item, String location) {
-        return withExistingParent(ForgeRegistries.ITEMS.getKey(item.get()).getPath(), mcLoc("item/generated"))
-                .texture("layer0", modLoc("item/" + location + "moa_egg"))
-                .texture("layer1", modLoc("item/" + location + "moa_egg_spot"));
+    public void keyItem(Item item, String location) {
+        this.withExistingParent(this.itemName(item), this.mcLoc("item/generated"))
+                .texture("layer0", this.modLoc("item/" + location + this.itemName(item)))
+                .transforms()
+                .transform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND).rotation(90.0F, -90.0F, 25.0F).translation(1.13F, 3.2F, 1.13F).scale(0.68F, 0.68F, 0.68F).end()
+                .transform(ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND).rotation(90.0F, 90.0F, -25.0F).translation(1.13F, 3.2F, 1.13F).scale(0.68F, 0.68F, 0.68F).end()
+                .end();
     }
 
-    public ItemModelBuilder portalItem(Supplier<? extends Item> item, String location) {
-        ResourceLocation id = ForgeRegistries.ITEMS.getKey(item.get());
-        return withExistingParent(id.getPath(), mcLoc("item/generated"))
-                .texture("layer0", modLoc("item/" + location + id.getPath()))
-                .texture("layer1", modLoc("item/" + location + id.getPath() + "_inside"));
+    public void moaEggItem(Item item, String location) {
+        this.withExistingParent(this.itemName(item), this.mcLoc("item/generated"))
+                .texture("layer0", this.modLoc("item/" + location + "moa_egg"))
+                .texture("layer1", this.modLoc("item/" + location + "moa_egg_spot"));
     }
 
-    public ItemModelBuilder eggItem(Supplier<? extends Item> item) {
-        return withExistingParent(ForgeRegistries.ITEMS.getKey(item.get()).getPath(), mcLoc("item/template_spawn_egg"));
+    public void portalItem(Item item, String location) {
+        this.withExistingParent(this.itemName(item), this.mcLoc("item/generated"))
+                .texture("layer0", this.modLoc("item/" + location + this.itemName(item)))
+                .texture("layer1", this.modLoc("item/" + location + this.itemName(item) + "_inside"));
     }
 
-    public ItemModelBuilder itemBlock(Supplier<? extends Block> block) {
-        return withExistingParent(blockName(block), texture(blockName(block)));
+    public void eggItem(Item item) {
+        this.withExistingParent(this.itemName(item), this.mcLoc("item/template_spawn_egg"));
     }
 
-    public ItemModelBuilder itemBlock(Supplier<? extends Block> block, String suffix) {
-        return withExistingParent(blockName(block), texture(blockName(block) + suffix));
+    public void itemBlock(Block block) {
+        this.withExistingParent(this.blockName(block), this.texture(this.blockName(block)));
     }
 
-    public ItemModelBuilder pane(Supplier<? extends IronBarsBlock> block, Supplier<? extends GlassBlock> glass, String location) {
-        return withExistingParent(blockName(block), mcLoc("item/generated"))
-                .texture("layer0", texture(blockName(glass), location))
+    public void itemBlock(Block block, String suffix) {
+        this.withExistingParent(this.blockName(block), this.texture(this.blockName(block) + suffix));
+    }
+
+    public void pane(Block block, Block glass, String location) {
+        this.withExistingParent(this.blockName(block), this.mcLoc("item/generated"))
+                .texture("layer0", this.texture(this.blockName(glass), location))
                 .renderType(new ResourceLocation("translucent"));
     }
 
-    public ItemModelBuilder itemBlockFlat(Supplier<? extends Block> block, String location) {
-        return withExistingParent(blockName(block), mcLoc("item/generated"))
-                .texture("layer0", texture(blockName(block), location));
+    public void itemTorch(Block block, String location) {
+        this.withExistingParent(this.blockName(block), this.mcLoc("item/generated"))
+                .texture("layer0", this.texture(this.blockName(block), location));
     }
 
-    public ItemModelBuilder itemTorch(Supplier<? extends Block> block, String location) {
-        return withExistingParent(blockName(block), mcLoc("item/generated"))
-                .texture("layer0", texture(blockName(block), location));
+    public void itemBlockFlat(Block block, String location) {
+        this.withExistingParent(this.blockName(block), this.mcLoc("item/generated"))
+                .texture("layer0", this.texture(this.blockName(block), location));
     }
 
-    public ItemModelBuilder itemLockedDungeonBlock(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock) {
-        return itemOverlayDungeonBlock(block, baseBlock, "lock");
+    public void itemLockedDungeonBlock(Block block, Block baseBlock) {
+        this.itemOverlayDungeonBlock(block, baseBlock, "lock");
     }
 
-    public ItemModelBuilder itemTrappedDungeonBlock(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock) {
-        return itemOverlayDungeonBlock(block, baseBlock, "exclamation");
+    public void itemTrappedDungeonBlock(Block block, Block baseBlock) {
+        this.itemOverlayDungeonBlock(block, baseBlock, "exclamation");
     }
 
-    public ItemModelBuilder itemOverlayDungeonBlock(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock, String overlay) {
-        return withExistingParent(blockName(block), mcLoc("block/cube"))
-                .texture("overlay", texture(overlay, "dungeon/")).texture("face", texture(blockName(baseBlock), "dungeon/"))
+    public void itemBossDoorwayDungeonBlock(Block block, Block baseBlock) {
+        this.itemOverlayDungeonBlock(block, baseBlock, "door");
+    }
+
+    public void itemTreasureDoorwayDungeonBlock(Block block, Block baseBlock) {
+        this.itemOverlayDungeonBlock(block, baseBlock, "treasure");
+    }
+
+    public void itemOverlayDungeonBlock(Block block, Block baseBlock, String overlay) {
+        this.withExistingParent(this.blockName(block), this.mcLoc("block/cube"))
+                .texture("overlay", this.texture(overlay, "dungeon/")).texture("face", this.texture(this.blockName(baseBlock), "dungeon/"))
                 .element().from(0.0F, 0.0F, 0.0F).to(16.0F, 16.0F, 16.0F).allFaces((direction, builder) -> builder.texture("#face").cullface(direction).end()).end()
-                .element().from(0.0F, 0.0F, -0.1F).to(16.0F, 16.0F, -0.1F).rotation().angle(0.0F).axis(Direction.Axis.Y).origin(8.0F, 8.0F, 6.9F).end().face(Direction.NORTH).texture("#overlay").end().end()
+                .element().from(0.0F, 0.0F, -0.1F).to(16.0F, 16.0F, -0.1F).rotation().angle(0.0F).axis(Direction.Axis.Y).origin(8.0F, 8.0F, 6.9F).end().face(Direction.NORTH).texture("#overlay").emissive().end().end()
                 .transforms()
                 .transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND).rotation(75.0F, 45.0F, 0.0F).translation(0.0F, 2.5F, 0.0F).scale(0.375F, 0.375F, 0.375F).end()
                 .transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND).rotation(75.0F, 45.0F, 0.0F).translation(0.0F, 2.5F, 0.0F).scale(0.375F, 0.375F, 0.375F).end()
@@ -162,21 +175,25 @@ public abstract class AetherItemModelProvider extends ItemModelProvider
                 .end();
     }
 
-    public ItemModelBuilder itemFence(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock, String location) {
-        return withExistingParent(blockName(block), mcLoc("block/fence_inventory"))
-                .texture("texture", texture(blockName(baseBlock), location));
+    public void lookalikeBlock(Block block, ResourceLocation lookalike) {
+        this.withExistingParent(this.blockName(block), lookalike);
     }
 
-    public ItemModelBuilder itemWallBlock(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock, String location) {
-        return wallInventory(blockName(block), texture(blockName(baseBlock), location));
+    public void itemFence(Block block, Block baseBlock, String location) {
+        this.withExistingParent(this.blockName(block), this.mcLoc("block/fence_inventory"))
+                .texture("texture", this.texture(this.blockName(baseBlock), location));
     }
 
-    public ItemModelBuilder translucentItemWallBlock(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock, String location) {
-        return singleTexture(blockName(block), new ResourceLocation(Aether.MODID, BLOCK_FOLDER + "/template_translucent_wall_inventory"), "wall", texture(blockName(baseBlock), location));
+    public void itemButton(Block block, Block baseBlock, String location) {
+        this.withExistingParent(this.blockName(block), this.mcLoc("block/button_inventory"))
+                .texture("texture", this.texture(this.blockName(baseBlock), location));
     }
 
-    public ItemModelBuilder itemButton(Supplier<? extends Block> block, Supplier<? extends Block> baseBlock, String location) {
-        return withExistingParent(blockName(block), mcLoc("block/button_inventory"))
-                .texture("texture", texture(blockName(baseBlock), location));
+    public void itemWallBlock(Block block, Block baseBlock, String location) {
+        this.wallInventory(this.blockName(block), this.texture(this.blockName(baseBlock), location));
+    }
+
+    public void translucentItemWallBlock(Block block, Block baseBlock, String location) {
+        this.singleTexture(this.blockName(block), new ResourceLocation(Aether.MODID, BLOCK_FOLDER + "/template_translucent_wall_inventory"), "wall", this.texture(this.blockName(baseBlock), location));
     }
 }

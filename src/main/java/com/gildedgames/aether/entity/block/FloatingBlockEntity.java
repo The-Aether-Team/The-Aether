@@ -4,14 +4,17 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.Floatable;
 import com.gildedgames.aether.block.miscellaneous.FloatingBlock;
 import com.gildedgames.aether.entity.AetherEntityTypes;
+import com.gildedgames.aether.mixin.mixins.common.accessor.ConcretePowderBlockAccessor;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -22,6 +25,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
@@ -134,14 +138,15 @@ public class FloatingBlockEntity extends Entity {
                                     this.blockState = this.blockState.setValue(BlockStateProperties.WATERLOGGED, true);
                                 }
 
-                                if (this.level.setBlock(blockPos1, this.blockState, 3)) {
+                                if (this.level.setBlock(blockPos1, this.blockState, 1 | 2)) {
                                     ((ServerLevel) this.level).getChunkSource().chunkMap.broadcast(this, new ClientboundBlockUpdatePacket(blockPos1, this.level.getBlockState(blockPos1)));
                                     this.discard();
                                     if (block instanceof Floatable floatable) {
                                         floatable.onCollide(this.level, blockPos1, this.blockState, blockState, this);
                                     } else if (block instanceof ConcretePowderBlock concretePowderBlock) {
-                                        if (ConcretePowderBlock.shouldSolidify(this.level, blockPos1, blockState)) {
-                                            this.level.setBlock(blockPos1, concretePowderBlock.concrete, 3);
+                                        if (ConcretePowderBlockAccessor.callShouldSolidify(this.level, blockPos1, blockState)) {
+                                            ConcretePowderBlockAccessor concretePowderBlockAccessor = (ConcretePowderBlockAccessor) concretePowderBlock;
+                                            this.level.setBlock(blockPos1, concretePowderBlockAccessor.getConcrete(), 1 | 2);
                                         }
                                     } else if (block instanceof AnvilBlock) {
                                         if (!this.isSilent()) {
@@ -214,10 +219,10 @@ public class FloatingBlockEntity extends Entity {
             DamageSource damageSource;
             if (this.blockState.getBlock() instanceof Floatable floatable) {
                 predicate = floatable.getHurtsEntitySelector();
-                damageSource = floatable.getFallDamageSource();
+                damageSource = floatable.getFallDamageSource(this);
             } else {
                 predicate = EntitySelector.NO_SPECTATORS;
-                damageSource = DamageSource.FALLING_BLOCK;
+                damageSource = new EntityDamageSource("aether.floatingBlock", this).damageHelmet();
             }
 
             float f = (float) Math.min(Mth.floor((float) this.floatDistance * this.fallDamagePerDistance), this.fallDamageMax);
@@ -297,7 +302,7 @@ public class FloatingBlockEntity extends Entity {
     @Override
     protected void readAdditionalSaveData(CompoundTag tag) {
         if (tag.contains("BlockState")) {
-            this.blockState = NbtUtils.readBlockState(tag.getCompound("BlockState"));
+            this.blockState = NbtUtils.readBlockState(this.level.holderLookup(Registries.BLOCK), tag.getCompound("BlockState"));
         }
         if (tag.contains("Time")) {
             this.time = tag.getInt("Time");
@@ -320,9 +325,8 @@ public class FloatingBlockEntity extends Entity {
         }
     }
 
-    @Nonnull
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return new ClientboundAddEntityPacket(this, Block.getId(this.getBlockState()));
     }
 

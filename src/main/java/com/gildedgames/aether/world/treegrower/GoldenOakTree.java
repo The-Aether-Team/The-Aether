@@ -1,19 +1,18 @@
 package com.gildedgames.aether.world.treegrower;
 
-import com.gildedgames.aether.data.resources.AetherConfiguredFeatures;
-import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
-import net.minecraft.server.level.ServerLevel;
+import com.gildedgames.aether.data.resources.registries.AetherConfiguredFeatures;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.RandomSource;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.world.level.block.grower.AbstractTreeGrower;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 
-public class GoldenOakTree extends LevelTreeGrower {
+public class GoldenOakTree extends AbstractTreeGrower {
 	@Nullable
 	@Override
-	protected Holder<? extends ConfiguredFeature<?, ?>> getConfiguredFeature(ServerLevel serverLevel, RandomSource randomSource, boolean largeHive) {
-		return serverLevel.registryAccess().registryOrThrow(Registry.CONFIGURED_FEATURE_REGISTRY).getOrCreateHolderOrThrow(AetherConfiguredFeatures.GOLDEN_OAK_TREE_CONFIGURATION);
+	protected ResourceKey<ConfiguredFeature<?, ?>> getConfiguredFeature(RandomSource random, boolean largeHive) {
+		return AetherConfiguredFeatures.GOLDEN_OAK_TREE_CONFIGURATION;
 	}
 }

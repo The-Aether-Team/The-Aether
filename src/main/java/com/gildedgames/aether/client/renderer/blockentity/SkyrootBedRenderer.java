@@ -7,6 +7,7 @@ import com.gildedgames.aether.block.utility.SkyrootBedBlock;
 import com.gildedgames.aether.blockentity.AetherBlockEntityTypes;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.ChestBlock;
@@ -19,7 +20,6 @@ import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.block.DoubleBlockCombiner;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import com.mojang.math.Vector3f;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
@@ -50,9 +50,9 @@ public class SkyrootBedRenderer implements BlockEntityRenderer<SkyrootBedBlockEn
     private void renderPiece(PoseStack poseStack, MultiBufferSource buffer, ModelPart model, Direction direction, int packedLight, int packedOverlay, boolean foot) {
         poseStack.pushPose();
         poseStack.translate(0.0D, 0.5625D, foot ? -1.0D : 0.0D);
-        poseStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
+        poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
         poseStack.translate(0.5D, 0.5D, 0.5D);
-        poseStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F + direction.toYRot()));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F + direction.toYRot()));
         poseStack.translate(-0.5D, -0.5D, -0.5D);
         VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entitySolid(new ResourceLocation(Aether.MODID, "textures/entity/tiles/bed/skyroot_bed.png")));
         model.render(poseStack, vertexconsumer, packedLight, packedOverlay);

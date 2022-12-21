@@ -1,5 +1,6 @@
 package com.gildedgames.aether.api;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.FreezingBlock;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -16,7 +17,7 @@ import javax.annotation.Nonnull;
 import java.util.Map;
 
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = Aether.MODID)
 public class ReloadListeners {
     @SubscribeEvent
     public static void reloadListenerSetup(AddReloadListenerEvent event) {

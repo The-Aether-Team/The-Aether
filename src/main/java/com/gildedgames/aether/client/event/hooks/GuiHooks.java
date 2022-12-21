@@ -11,21 +11,26 @@ import com.gildedgames.aether.client.gui.screen.menu.VanillaLeftTitleScreen;
 import com.gildedgames.aether.client.AetherKeys;
 import com.gildedgames.aether.event.hooks.DimensionHooks;
 import com.gildedgames.aether.AetherConfig;
+import com.gildedgames.aether.mixin.mixins.client.accessor.GuiComponentAccessor;
+import com.gildedgames.aether.mixin.mixins.client.accessor.RealmsPlayerScreenAccessor;
+import com.gildedgames.aether.mixin.mixins.client.accessor.TitleScreenAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.server.OpenAccessoriesPacket;
-import com.mojang.realmsclient.gui.screens.RealmsPlayerScreen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.LerpingBossEvent;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.player.Player;
@@ -56,10 +61,10 @@ public class GuiHooks {
                 OLD_LOCATION = GuiComponent.BACKGROUND_LOCATION;
             }
             if (OLD_REALMS_LOCATION == null) {
-                OLD_REALMS_LOCATION = RealmsPlayerScreen.OPTIONS_BACKGROUND;
+                OLD_REALMS_LOCATION = RealmsPlayerScreenAccessor.getOptionsBackground();
             }
-            GuiComponent.BACKGROUND_LOCATION = AetherConfig.CLIENT.enable_aether_menu.get() ? BACKGROUND_LOCATION : OLD_LOCATION;
-            RealmsPlayerScreen.OPTIONS_BACKGROUND = AetherConfig.CLIENT.enable_aether_menu.get() ? BACKGROUND_LOCATION : OLD_REALMS_LOCATION;
+            GuiComponentAccessor.setBackgroundLocation(AetherConfig.CLIENT.enable_aether_menu.get() ? BACKGROUND_LOCATION : OLD_LOCATION);
+            RealmsPlayerScreenAccessor.setOptionsBackground(AetherConfig.CLIENT.enable_aether_menu.get() ? BACKGROUND_LOCATION : OLD_REALMS_LOCATION);
         }
     }
 
@@ -103,10 +108,12 @@ public class GuiHooks {
 
     public static void setupSplash(Screen screen) {
         if (screen instanceof TitleScreen titleScreen) {
-            if (default_menu.splash != null) {
-                titleScreen.splash = default_menu.splash;
+            TitleScreenAccessor titleScreenAccessor = (TitleScreenAccessor) titleScreen;
+            TitleScreenAccessor defaultMenuAccessor = (TitleScreenAccessor) default_menu;
+            if (defaultMenuAccessor.getSplash() != null) {
+                titleScreenAccessor.setSplash(defaultMenuAccessor.getSplash());
             } else {
-                default_menu.splash = titleScreen.splash;
+                defaultMenuAccessor.setSplash(titleScreenAccessor.getSplash());
             }
         }
     }
@@ -116,7 +123,7 @@ public class GuiHooks {
         Player entity = minecraft.player;
         if (entity != null) {
             if (AetherKeys.OPEN_ACCESSORY_INVENTORY.consumeClick() && minecraft.isWindowActive()) {
-                AetherPacketHandler.sendToServer(new OpenAccessoriesPacket(entity.getId(), ItemStack.EMPTY));
+                AetherPacketHandler.sendToServer(new OpenAccessoriesPacket(ItemStack.EMPTY));
                 shouldAddButton = false;
             }
         }
@@ -129,9 +136,8 @@ public class GuiHooks {
                         AetherConfig.CLIENT.enable_world_preview.set(!AetherConfig.CLIENT.enable_world_preview.get());
                         AetherConfig.CLIENT.enable_world_preview.save();
                         WorldDisplayHelper.toggleWorldPreview(AetherConfig.CLIENT.enable_world_preview.get());
-                    },
-                    (button, matrixStack, x, y) ->
-                            screen.renderTooltip(matrixStack, Component.translatable("gui.aether.menu.preview"), x + 4, y + 12));
+                    });
+            dynamicMenuButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.menu.preview")));
             dynamicMenuButton.setDisplayConfigs(AetherConfig.CLIENT.enable_world_preview_button);
             return dynamicMenuButton;
         }
@@ -147,9 +153,8 @@ public class GuiHooks {
                         Minecraft.getInstance().setScreen(getMenu());
                         Minecraft.getInstance().getMusicManager().stopPlaying();
                         AetherMusicManager.stopPlaying();
-                    },
-                    (button, matrixStack, x, y) ->
-                            screen.renderTooltip(matrixStack, Component.translatable(AetherConfig.CLIENT.enable_aether_menu.get() ? "gui.aether.menu.minecraft" : "gui.aether.menu.aether"), x + 4, y + 12));
+                    });
+            dynamicMenuButton.setTooltip(Tooltip.create(Component.translatable(AetherConfig.CLIENT.enable_aether_menu.get() ? "gui.aether.menu.minecraft" : "gui.aether.menu.aether")));
             dynamicMenuButton.setOffsetConfigs(AetherConfig.CLIENT.enable_world_preview_button);
             dynamicMenuButton.setDisplayConfigs(AetherConfig.CLIENT.enable_aether_menu_button);
             return dynamicMenuButton;
@@ -164,9 +169,8 @@ public class GuiHooks {
                         WorldDisplayHelper.quickLoad();
                         Minecraft.getInstance().getMusicManager().stopPlaying();
                         AetherMusicManager.stopPlaying(); //todo doesn't quite work. might need to stop it through the sound manager
-                    },
-                    (button, matrixStack, x, y) ->
-                            screen.renderTooltip(matrixStack, Component.translatable("gui.aether.menu.load"), x + 4, y + 12));
+                    });
+            dynamicMenuButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.menu.load")));
             dynamicMenuButton.setOffsetConfigs(AetherConfig.CLIENT.enable_world_preview_button, AetherConfig.CLIENT.enable_aether_menu_button);
             dynamicMenuButton.setDisplayConfigs(AetherConfig.CLIENT.enable_world_preview, AetherConfig.CLIENT.enable_quick_load_button);
             return dynamicMenuButton;
@@ -181,7 +185,8 @@ public class GuiHooks {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         if (calendar.get(Calendar.MONTH) + 1 == 7 && calendar.get(Calendar.DATE) == 22) {
-            screen.splash = "Happy anniversary to the Aether!";
+            TitleScreenAccessor titleScreenAccessor = (TitleScreenAccessor) screen;
+            titleScreenAccessor.setSplash("Happy anniversary to the Aether!");
         }
     }
 
@@ -196,8 +201,9 @@ public class GuiHooks {
                 default_left_menu.fadeInStart = 0L;
                 return default_left_menu;
             } else {
-                default_menu.fading = true;
-                default_menu.fadeInStart = 0L;
+                TitleScreenAccessor defaultMenuAccessor = (TitleScreenAccessor) default_menu;
+                defaultMenuAccessor.setFading(true);
+                defaultMenuAccessor.setFadeInStart(0L);
                 return default_menu;
             }
         }
@@ -250,7 +256,12 @@ public class GuiHooks {
         if (screen instanceof GenericDirtMessageScreen || screen instanceof LevelLoadingScreen || screen instanceof ReceivingLevelScreen) {
             Component triviaLine = Aether.TRIVIA_READER.getTriviaLine();
             if (triviaLine != null && AetherConfig.CLIENT.enable_trivia.get()) {
-                Screen.drawCenteredString(poseStack, screen.getMinecraft().font, triviaLine, screen.width / 2, screen.height - 16, 16777113);
+                Font font = Minecraft.getInstance().font;
+                int y = (screen.height - 7) - font.wordWrapHeight(triviaLine, screen.width);
+                for (FormattedCharSequence sequence : font.split(triviaLine, screen.width)) {
+                    Screen.drawCenteredString(poseStack, font, sequence, screen.width / 2, y, 16777113);
+                    y += 9;
+                }
             }
             if (screen != lastScreen) {
                 if (!Aether.TRIVIA_READER.getTrivia().isEmpty()) {
@@ -337,5 +348,9 @@ public class GuiHooks {
         if (health > 0) {
             GuiComponent.blit(pPoseStack, pX, pY, -90, 0, 0, health, 16, 256, 256);
         }
+    }
+
+    public static boolean hideOverlays() {
+        return AetherConfig.CLIENT.enable_world_preview.get() && WorldDisplayHelper.loadedLevel != null && WorldDisplayHelper.loadedSummary != null;
     }
 }

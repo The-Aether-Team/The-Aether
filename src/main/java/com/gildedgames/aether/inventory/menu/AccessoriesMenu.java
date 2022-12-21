@@ -1,5 +1,6 @@
 package com.gildedgames.aether.inventory.menu;
 
+import com.gildedgames.aether.mixin.mixins.common.accessor.AbstractContainerMenuAccessor;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.MinecraftServer;
@@ -31,12 +32,13 @@ import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
 import top.theillusivec4.curios.common.inventory.CurioSlot;
 
-import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.Optional;
 
-public class AccessoriesMenu extends InventoryMenu
-{
+/**
+ * Based on {@link top.theillusivec4.curios.common.inventory.container.CuriosContainer}
+ */
+public class AccessoriesMenu extends InventoryMenu {
     private static final ResourceLocation[] ARMOR_SLOT_TEXTURES = new ResourceLocation[] {
             InventoryMenu.EMPTY_ARMOR_SLOT_BOOTS,
             InventoryMenu.EMPTY_ARMOR_SLOT_LEGGINGS,
@@ -49,7 +51,7 @@ public class AccessoriesMenu extends InventoryMenu
             EquipmentSlot.LEGS,
             EquipmentSlot.FEET
     };
-    private static final String[] AETHER_IDENTIFIERS = new String[] {
+    public static final String[] AETHER_IDENTIFIERS = new String[] {
             "aether_pendant",
             "aether_cape",
             "aether_shield",
@@ -64,18 +66,19 @@ public class AccessoriesMenu extends InventoryMenu
     private final CraftingContainer craftMatrix = new CraftingContainer(this, 2, 2);
     private final ResultContainer craftResult = new ResultContainer();
 
-    public boolean hasButton;
+    public final boolean hasButton;
 
     public AccessoriesMenu(int containerId, Inventory playerInventory) {
         this(containerId, playerInventory, true);
     }
 
     public AccessoriesMenu(int containerId, Inventory playerInventory, boolean hasButton) {
-        super(playerInventory, playerInventory.player.level.isClientSide, playerInventory.player);
-        this.menuType = AetherMenuTypes.ACCESSORIES.get();
-        this.containerId = containerId;
-        this.remoteSlots.clear();
-        this.lastSlots.clear();
+        super(playerInventory, playerInventory.player.getLevel().isClientSide(), playerInventory.player);
+        AbstractContainerMenuAccessor abstractContainerMenuAccessor = (AbstractContainerMenuAccessor) this;
+        abstractContainerMenuAccessor.setMenuType(AetherMenuTypes.ACCESSORIES.get());
+        abstractContainerMenuAccessor.setContainerId(containerId);
+        abstractContainerMenuAccessor.getRemoteSlots().clear();
+        abstractContainerMenuAccessor.getLastSlots().clear();
         this.slots.clear();
         this.player = playerInventory.player;
         this.curiosHandler = CuriosApi.getCuriosHelper().getCuriosHandler(this.player);
@@ -91,20 +94,19 @@ public class AccessoriesMenu extends InventoryMenu
 
         for (int k = 0; k < 4; ++k) {
             final EquipmentSlot equipmentSlotType = VALID_EQUIPMENT_SLOTS[k];
-            this.addSlot(new Slot(playerInventory, 36 + (3 - k), 59, 8 + k * 18)
-            {
+            this.addSlot(new Slot(playerInventory, 36 + (3 - k), 59, 8 + k * 18) {
                 @Override
                 public int getMaxStackSize() {
                     return 1;
                 }
 
                 @Override
-                public boolean mayPlace(@Nonnull ItemStack stack) {
+                public boolean mayPlace(ItemStack stack) {
                     return stack.canEquip(equipmentSlotType, AccessoriesMenu.this.player);
                 }
 
                 @Override
-                public boolean mayPickup(@Nonnull Player player) {
+                public boolean mayPickup(Player player) {
                     ItemStack itemStack = this.getItem();
                     return (itemStack.isEmpty() || player.isCreative() || !EnchantmentHelper.hasBindingCurse(itemStack)) && super.mayPickup(player);
                 }
@@ -127,8 +129,7 @@ public class AccessoriesMenu extends InventoryMenu
             this.addSlot(new Slot(playerInventory, i1, 8 + i1 * 18, 142));
         }
 
-        this.addSlot(new Slot(playerInventory, 40, 116, 62)
-        {
+        this.addSlot(new Slot(playerInventory, 40, 116, 62) {
             @Override
             @OnlyIn(Dist.CLIENT)
             public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
@@ -141,7 +142,7 @@ public class AccessoriesMenu extends InventoryMenu
             int slots = 0;
             int xOffset = 77;
             int yOffset = 8;
-            for (String identifier : AETHER_IDENTIFIERS) {
+            for (String identifier : AETHER_IDENTIFIERS) { // Creates the slots for all the Aether Curios identifiers.
                 ICurioStacksHandler stacksHandler = curioMap.get(identifier);
                 IDynamicStackHandler stackHandler = stacksHandler.getStacks();
                 if (!stacksHandler.isVisible()) {
@@ -169,20 +170,56 @@ public class AccessoriesMenu extends InventoryMenu
     }
 
     @Override
-    public void slotsChanged(@Nonnull Container inventoryIn) {
-        if (!this.player.level.isClientSide) {
+    public void fillCraftSlotsStackedContents(StackedContents contents) {
+        this.craftMatrix.fillStackedContents(contents);
+    }
+
+    @Override
+    public void clearCraftingContent() {
+        this.craftMatrix.clearContent();
+        this.craftResult.clearContent();
+    }
+
+    @Override
+    public boolean recipeMatches(Recipe<? super CraftingContainer> recipe) {
+        return recipe.matches(this.craftMatrix, this.player.getLevel());
+    }
+
+    @Override
+    public int getResultSlotIndex() {
+        return 0;
+    }
+
+    @Override
+    public int getGridWidth() {
+        return this.craftMatrix.getWidth();
+    }
+
+    @Override
+    public int getGridHeight() {
+        return this.craftMatrix.getHeight();
+    }
+
+    @Override
+    public int getSize() {
+        return 5;
+    }
+
+    @Override
+    public void slotsChanged(Container container) {
+        if (!this.player.getLevel().isClientSide()) {
             ServerPlayer playerMP = (ServerPlayer) this.player;
             ItemStack itemStack = ItemStack.EMPTY;
-            MinecraftServer server = this.player.level.getServer();
+            MinecraftServer server = this.player.getLevel().getServer();
 
             if (server == null) {
                 return;
             }
-            Optional<CraftingRecipe> recipe = server.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, this.craftMatrix, this.player.level);
+            Optional<CraftingRecipe> recipe = server.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, this.craftMatrix, this.player.getLevel());
 
             if (recipe.isPresent()) {
                 CraftingRecipe craftingRecipe = recipe.get();
-                if (this.craftResult.setRecipeUsed(this.player.level, playerMP, craftingRecipe)) {
+                if (this.craftResult.setRecipeUsed(this.player.getLevel(), playerMP, craftingRecipe)) {
                     itemStack = craftingRecipe.assemble(this.craftMatrix);
                 }
             }
@@ -193,25 +230,23 @@ public class AccessoriesMenu extends InventoryMenu
     }
 
     @Override
-    public void removed(@Nonnull Player playerIn) {
-        super.removed(playerIn);
+    public void removed(Player player) {
+        super.removed(player);
         this.craftResult.clearContent();
-        if (!playerIn.level.isClientSide) {
-            this.clearContainer(playerIn, this.craftMatrix);
+        if (!player.getLevel().isClientSide()) {
+            this.clearContainer(player, this.craftMatrix);
         }
     }
 
     @Override
-    public boolean stillValid(@Nonnull Player playerIn) {
+    public boolean stillValid(Player player) {
         return true;
     }
 
-    @Nonnull
     @Override
-    public ItemStack quickMoveStack(@Nonnull Player playerIn, int index) {
+    public ItemStack quickMoveStack(Player player, int index) {
         ItemStack itemStack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
-
         if (slot.hasItem()) {
             ItemStack itemStack1 = slot.getItem();
             itemStack = itemStack1.copy();
@@ -253,64 +288,24 @@ public class AccessoriesMenu extends InventoryMenu
             } else if (!this.moveItemStackTo(itemStack1, 9, 45, false)) {
                 return ItemStack.EMPTY;
             }
-
             if (itemStack1.isEmpty()) {
                 slot.set(ItemStack.EMPTY);
             } else {
                 slot.setChanged();
             }
-
             if (itemStack1.getCount() == itemStack.getCount()) {
                 return ItemStack.EMPTY;
             }
-            slot.onTake(playerIn, itemStack1);
-
+            slot.onTake(player, itemStack1);
             if (index == 0) {
-                playerIn.drop(itemStack1, false);
+                player.drop(itemStack1, false);
             }
         }
         return itemStack;
     }
 
-    @Nonnull
     @Override
     public RecipeBookType getRecipeBookType() {
         return RecipeBookType.CRAFTING;
-    }
-
-    @Override
-    public void fillCraftSlotsStackedContents(@Nonnull StackedContents itemHelper) {
-        this.craftMatrix.fillStackedContents(itemHelper);
-    }
-
-    @Override
-    public void clearCraftingContent() {
-        this.craftMatrix.clearContent();
-        this.craftResult.clearContent();
-    }
-
-    @Override
-    public boolean recipeMatches(Recipe<? super CraftingContainer> recipe) {
-        return recipe.matches(this.craftMatrix, this.player.level);
-    }
-
-    @Override
-    public int getResultSlotIndex() {
-        return 0;
-    }
-
-    @Override
-    public int getGridWidth() {
-        return this.craftMatrix.getWidth();
-    }
-
-    @Override
-    public int getGridHeight() {
-        return this.craftMatrix.getHeight();
-    }
-
-    @Override
-    public int getSize() {
-        return 5;
     }
 }

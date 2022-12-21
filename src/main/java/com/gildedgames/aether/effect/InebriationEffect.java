@@ -14,43 +14,48 @@ import net.minecraft.world.item.Items;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InebriationEffect extends MobEffect
-{
+public class InebriationEffect extends MobEffect {
     private int effectDuration;
-
     private double rotationDirection, motionDirection;
 
     public InebriationEffect() {
         super(MobEffectCategory.HARMFUL, 5319035);
     }
 
+    /**
+     * Damages the affected entity with Inebriation damage every 50 ticks, and performs distraction behavior in {@link InebriationEffect#distractEntity(LivingEntity)} every tick.
+     * @param livingEntity The affected {@link LivingEntity}.
+     * @param amplifier The {@link Integer} amplifier for the effect.
+     */
     @Override
-    public void applyEffectTick(LivingEntity entityLivingBaseIn, int amplifier) {
+    public void applyEffectTick(LivingEntity livingEntity, int amplifier) {
         if (this.effectDuration % 50 == 0) {
-            entityLivingBaseIn.hurt(new DamageSource("inebriation").bypassArmor(), 1.0F);
+            livingEntity.hurt(new DamageSource("aether.inebriation").bypassArmor(), 1.0F);
         }
-        this.distractEntity(entityLivingBaseIn);
+        this.distractEntity(livingEntity);
     }
 
-    private void distractEntity(LivingEntity entityLivingBaseIn) {
-        double gaussian = entityLivingBaseIn.level.random.nextGaussian();
-        double newMotD = 0.1D * gaussian;
-        double newRotD = (Math.PI / 4D) * gaussian;
+    /**
+     * Distraction code for Inebriation, which randomly modifies the affected entity's motion and rotation, moving them around and rotating their camera.
+     * It also spawns red dye particles from the player's head position.
+     * @param livingEntity The affected {@link LivingEntity}.
+     */
+    private void distractEntity(LivingEntity livingEntity) {
+        double gaussian = livingEntity.getLevel().getRandom().nextGaussian();
+        double newMotionDirection = 0.1 * gaussian;
+        double newRotationDirection = (Math.PI / 4.0) * gaussian;
 
-        this.motionDirection = 0.2D * newMotD + (0.8D) * this.motionDirection;
+        this.motionDirection = 0.2 * newMotionDirection + 0.8 * this.motionDirection;
+        livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().add(this.motionDirection, 0, this.motionDirection));
 
-        entityLivingBaseIn.setDeltaMovement(entityLivingBaseIn.getDeltaMovement().add(this.motionDirection, 0, this.motionDirection));
-        this.rotationDirection = 0.125D * newRotD + (1.0D - 0.125D) * this.rotationDirection;
+        this.rotationDirection = 0.125 * newRotationDirection + (1.0 - 0.125) * this.rotationDirection;
+        livingEntity.setYRot((float) (livingEntity.getYRot() + this.rotationDirection));
+        livingEntity.setXRot((float) (livingEntity.getXRot() + this.rotationDirection));
 
-        entityLivingBaseIn.setYRot((float) ((double) entityLivingBaseIn.getYRot() + rotationDirection));
-        entityLivingBaseIn.setXRot((float) ((double) entityLivingBaseIn.getXRot() + rotationDirection));
-
-        if (entityLivingBaseIn.level instanceof ServerLevel world) {
-            world.sendParticles(new ItemParticleOption(ParticleTypes.ITEM, Items.RED_DYE.getDefaultInstance()),
-                    entityLivingBaseIn.getX(),
-                    entityLivingBaseIn.getY() + entityLivingBaseIn.getBbHeight() * 0.8,
-                    entityLivingBaseIn.getZ(),
-                    1, 0.0, 0.0, 0.0, 0.0F);
+        if (livingEntity.getLevel() instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(new ItemParticleOption(ParticleTypes.ITEM, Items.RED_DYE.getDefaultInstance()),
+                    livingEntity.getX(), livingEntity.getY() + livingEntity.getBbHeight() * 0.8, livingEntity.getZ(),
+                    1, 0.0, 0.0, 0.0, 0.0);
         }
     }
 
@@ -65,6 +70,10 @@ public class InebriationEffect extends MobEffect
         return false;
     }
 
+    /**
+     * Sets up Skyroot Remedy Buckets and White Apples as able to cure Inebriation.
+     * @return A {@link List} of {@link ItemStack}s that are allowed to cure this effect.
+     */
     @Override
     public List<ItemStack> getCurativeItems() {
         ArrayList<ItemStack> curatives = new ArrayList<>();

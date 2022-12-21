@@ -4,6 +4,7 @@ import com.gildedgames.aether.client.renderer.AetherModelLayers;
 import com.gildedgames.aether.item.accessories.miscellaneous.ShieldOfRepulsionItem;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.capability.player.AetherPlayer;
+import com.gildedgames.aether.mixin.mixins.client.accessor.PlayerModelAccessor;
 import com.gildedgames.aether.util.ConstantsUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -28,6 +29,8 @@ import net.minecraft.world.phys.Vec3;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.client.ICurioRenderer;
+
+import java.util.Optional;
 
 public class ShieldOfRepulsionRenderer implements ICurioRenderer {
     private final HumanoidModel<LivingEntity> shieldModel;
@@ -57,12 +60,17 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
                         HumanoidModel<LivingEntity> model;
 
                         if (livingEntity instanceof Player player && renderLayerParent.getModel() instanceof PlayerModel<?> playerModel) {
-                            model = playerModel.slim ? this.shieldModelSlim : this.shieldModel;
-                            AetherPlayer aetherPlayer = AetherPlayer.get(player).orElse(null);
-                            if (!aetherPlayer.isMoving()) {
-                                texture = playerModel.slim ? shield.getShieldOfRepulsionSlimTexture() : shield.getShieldOfRepulsionTexture();
+                            PlayerModelAccessor playerModelAccessor = (PlayerModelAccessor) playerModel;
+                            model = playerModelAccessor.getSlim() ? this.shieldModelSlim : this.shieldModel;
+                            Optional<AetherPlayer> aetherPlayerOptional = AetherPlayer.get(player).resolve();
+                            if (aetherPlayerOptional.isPresent()) {
+                                if (!aetherPlayerOptional.get().isMoving()) {
+                                    texture = playerModelAccessor.getSlim() ? shield.getShieldOfRepulsionSlimTexture() : shield.getShieldOfRepulsionTexture();
+                                } else {
+                                    texture = playerModelAccessor.getSlim() ? shield.getShieldOfRepulsionSlimInactiveTexture() : shield.getShieldOfRepulsionInactiveTexture();
+                                }
                             } else {
-                                texture = playerModel.slim ? shield.getShieldOfRepulsionSlimInactiveTexture() : shield.getShieldOfRepulsionInactiveTexture();
+                                texture = playerModelAccessor.getSlim() ? shield.getShieldOfRepulsionSlimInactiveTexture() : shield.getShieldOfRepulsionInactiveTexture();
                             }
                         } else {
                             model = this.shieldModel;
@@ -95,9 +103,13 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
         ResourceLocation texture;
         ShieldOfRepulsionItem shield = (ShieldOfRepulsionItem) stack.getItem();
 
-        AetherPlayer aetherPlayer = AetherPlayer.get(player).orElse(null);
-        if (!aetherPlayer.isMoving()) {
-            texture = isSlim ? shield.getShieldOfRepulsionSlimTexture() : shield.getShieldOfRepulsionTexture();
+        Optional<AetherPlayer> aetherPlayerOptional = AetherPlayer.get(player).resolve();
+        if (aetherPlayerOptional.isPresent()) {
+            if (!aetherPlayerOptional.get().isMoving()) {
+                texture = isSlim ? shield.getShieldOfRepulsionSlimTexture() : shield.getShieldOfRepulsionTexture();
+            } else {
+                texture = isSlim ? shield.getShieldOfRepulsionSlimInactiveTexture() : shield.getShieldOfRepulsionInactiveTexture();
+            }
         } else {
             texture = isSlim ? shield.getShieldOfRepulsionSlimInactiveTexture() : shield.getShieldOfRepulsionInactiveTexture();
         }
@@ -113,13 +125,15 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
     private void setupHand(PlayerModel<LivingEntity> model, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, AbstractClientPlayer player, HumanoidArm arm) {
         this.setupModel(model, player);
 
-        AetherPlayer aetherPlayer = AetherPlayer.get(player).orElse(null);
-        if (!aetherPlayer.isMoving()) {
-            VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entityTranslucent(player.getSkinTextureLocation()));
-            if (arm == HumanoidArm.RIGHT) {
-                this.renderHand(model.rightArm, model.rightSleeve, poseStack, combinedLight, vertexConsumer);
-            } else if (arm == HumanoidArm.LEFT) {
-                this.renderHand(model.leftArm, model.leftSleeve, poseStack, combinedLight, vertexConsumer);
+        Optional<AetherPlayer> aetherPlayerOptional = AetherPlayer.get(player).resolve();
+        if (aetherPlayerOptional.isPresent()) {
+            if (!aetherPlayerOptional.get().isMoving()) {
+                VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entityTranslucent(player.getSkinTextureLocation()));
+                if (arm == HumanoidArm.RIGHT) {
+                    this.renderHand(model.rightArm, model.rightSleeve, poseStack, combinedLight, vertexConsumer);
+                } else if (arm == HumanoidArm.LEFT) {
+                    this.renderHand(model.leftArm, model.leftSleeve, poseStack, combinedLight, vertexConsumer);
+                }
             }
         }
     }

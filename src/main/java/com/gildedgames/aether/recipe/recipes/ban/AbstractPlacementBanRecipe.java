@@ -11,8 +11,8 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.function.Predicate;
 
@@ -33,6 +33,16 @@ public abstract class AbstractPlacementBanRecipe<T, S extends Predicate<T>> impl
         this.ingredient = ingredient;
     }
 
+    /**
+     * Tests if the given object matches with the recipe.<br><br>
+     * First it checks if there is no {@link AbstractPlacementBanRecipe#bypassBlock} or it doesn't match the interacted block.
+     * Then if there is a {@link AbstractPlacementBanRecipe#biomeKey} or a {@link AbstractPlacementBanRecipe#biomeTag} it will test one of those alongside {@link BlockStateIngredient#test(BlockState)}.
+     * Otherwise, it will only test {@link BlockStateIngredient#test(BlockState)}.
+     * @param level The {@link Level} the recipe is performed in.
+     * @param pos The {@link BlockPos} the recipe is performed at.
+     * @param object The object being used that is being checked.
+     * @return Whether the given object is banned from placement.
+     */
     public boolean matches(Level level, BlockPos pos, T object) {
         if (this.bypassBlock.isEmpty() || !this.bypassBlock.test(level.getBlockState(pos))) {
             if (this.biomeKey != null) {
@@ -64,26 +74,23 @@ public abstract class AbstractPlacementBanRecipe<T, S extends Predicate<T>> impl
         return this.ingredient;
     }
 
-    @Nonnull
     @Override
     public RecipeType<?> getType() {
         return this.type;
     }
 
-    @Nonnull
     @Override
     public ResourceLocation getId() {
         return this.id;
     }
 
     @Override
-    public boolean matches(@Nonnull Container container, @Nonnull Level level) {
+    public boolean matches(Container container, Level level) {
         return false;
     }
 
-    @Nonnull
     @Override
-    public ItemStack assemble(@Nonnull Container container) {
+    public ItemStack assemble(Container container) {
         return ItemStack.EMPTY;
     }
 
@@ -92,7 +99,6 @@ public abstract class AbstractPlacementBanRecipe<T, S extends Predicate<T>> impl
         return false;
     }
 
-    @Nonnull
     @Override
     public ItemStack getResultItem() {
         return ItemStack.EMPTY;

@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import com.gildedgames.aether.event.events.*;
 
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -54,6 +55,12 @@ public class AetherEventDispatch {
 		ItemUseConvertEvent event = new ItemUseConvertEvent(player, world, pos, stack, oldState, newState);
 		MinecraftForge.EVENT_BUS.post(event);
 		return event;
+	}
+
+	public static boolean onTriggerTrap(Player player, Level level, BlockPos pos, BlockState state) {
+		TriggerTrapEvent event = new TriggerTrapEvent(player, level, pos, state);
+		MinecraftForge.EVENT_BUS.post(event);
+		return !event.isCanceled();
 	}
 
 	public static ValkyrieTeleportEvent onValkyrieTeleport(LivingEntity entity, double targetX, double targetY, double targetZ) {

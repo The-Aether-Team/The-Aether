@@ -1,8 +1,7 @@
 package com.gildedgames.aether.event.hooks;
 
 import com.gildedgames.aether.api.CustomizationsOptions;
-import com.gildedgames.aether.data.resources.AetherDimensions;
-import com.gildedgames.aether.capability.cape.CapeEntity;
+import com.gildedgames.aether.data.resources.registries.AetherDimensions;
 import com.gildedgames.aether.capability.player.AetherPlayer;
 import com.gildedgames.aether.capability.player.AetherPlayerCapability;
 import com.gildedgames.aether.capability.rankings.AetherRankings;
@@ -119,12 +118,6 @@ public class CapabilityHooks {
                     AetherTime.get(serverPlayer.level).ifPresent(cap -> cap.updateEternalDay(serverPlayer));
                 }
             }
-        }
-    }
-
-    public static class CapeEntityHooks {
-        public static void update(LivingEntity entity) {
-            CapeEntity.get(entity).ifPresent(CapeEntity::onUpdate);
         }
     }
 }

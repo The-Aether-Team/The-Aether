@@ -1,7 +1,8 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "equipment",
   "key": {
-    "S": {
+    "/": {
       "tag": "aether:skyroot_stick"
     },
     "Z": {
@@ -10,7 +11,7 @@
   },
   "pattern": [
     "Z",
-    "S"
+    "/"
   ],
   "result": {
     "item": "aether:nature_staff"

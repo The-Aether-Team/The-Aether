@@ -3,6 +3,7 @@ package com.gildedgames.aether.entity.projectile.crystal;
 import com.gildedgames.aether.client.particle.AetherParticleTypes;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.AetherEntityTypes;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -12,7 +13,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
 
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -34,7 +34,7 @@ public class CloudCrystal extends AbstractCrystal {
         Entity entity = result.getEntity();
         if (entity instanceof LivingEntity livingEntity) {
             float bonus = entity instanceof Blaze ? 3.0F : 0.0F;
-            if (livingEntity.hurt(new IndirectEntityDamageSource("ice_crystal", this, this.getOwner()).setProjectile(), 5.0F + bonus)) {
+            if (livingEntity.hurt(new IndirectEntityDamageSource("aether.cloud_crystal", this, this.getOwner()).setProjectile(), 5.0F + bonus)) {
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 10));
                 this.level.playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
                 this.spawnExplosionParticles();
@@ -44,15 +44,14 @@ public class CloudCrystal extends AbstractCrystal {
     }
 
     @Override
-    public void spawnExplosionParticles() {
-        if (this.level instanceof ServerLevel level) {
-            for (int i = 0; i < 20; i++) {
-                double d0 = (this.random.nextFloat() - 0.5F) * 0.5;
-                double d1 = (this.random.nextFloat() - 0.5F) * 0.5;
-                double d2 = (this.random.nextFloat() - 0.5F) * 0.5;
-                level.sendParticles(AetherParticleTypes.FROZEN.get(), this.getX(), this.getY(), this.getZ(), 1, d0 * 0.5, d1 * 0.5, d2 * 0.5, 0.0F);
-            }
-        }
+    protected ParticleOptions getExplosionParticle() {
+        return AetherParticleTypes.FROZEN.get();
+    }
+
+    @Override
+    protected void tickMovement() {
+        super.tickMovement();
+        this.setDeltaMovement(this.getDeltaMovement().scale(0.99F));
     }
 
     @Override

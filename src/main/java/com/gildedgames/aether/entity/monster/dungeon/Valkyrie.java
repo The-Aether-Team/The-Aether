@@ -41,7 +41,6 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
 
     public Valkyrie(EntityType<? extends Valkyrie> type, Level worldIn) {
         super(type, worldIn);
-        this.teleportTimer = this.getRandom().nextInt(200);
     }
 
     @Override
@@ -52,7 +51,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
     }
 
     @Nonnull
-    public static AttributeSupplier.Builder createValkyrieAttributes() {
+    public static AttributeSupplier.Builder createMobAttributes() {
         return createAttributes()
                 .add(Attributes.FOLLOW_RANGE, 16.0)
                 .add(Attributes.ATTACK_DAMAGE, 10.0)

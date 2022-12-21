@@ -1,18 +1,18 @@
 package com.gildedgames.aether.data.generators;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.data.providers.AetherLanguageProvider;
 import com.gildedgames.aether.effect.AetherEffects;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.inventory.menu.AetherMenuTypes;
-import com.gildedgames.aether.item.AetherItemGroups;
+import com.gildedgames.aether.item.AetherCreativeTabs;
 import com.gildedgames.aether.item.AetherItems;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 
-public class AetherLanguageData extends AetherLanguageProvider
-{
-    public AetherLanguageData(DataGenerator gen) {
-        super(gen);
+public class AetherLanguageData extends AetherLanguageProvider {
+    public AetherLanguageData(PackOutput output) {
+        super(output, Aether.MODID);
     }
 
     @Override
@@ -99,6 +99,20 @@ public class AetherLanguageData extends AetherLanguageProvider
         addBlock(AetherBlocks.TRAPPED_HELLFIRE_STONE, "Trapped Hellfire Stone");
         addBlock(AetherBlocks.TRAPPED_LIGHT_HELLFIRE_STONE, "Trapped Light Hellfire Stone");
 
+        addBlock(AetherBlocks.BOSS_DOORWAY_CARVED_STONE, "Boss Doorway Carved Stone");
+        addBlock(AetherBlocks.BOSS_DOORWAY_SENTRY_STONE, "Boss Doorway Sentry Stone");
+        addBlock(AetherBlocks.BOSS_DOORWAY_ANGELIC_STONE, "Boss Doorway Angelic Stone");
+        addBlock(AetherBlocks.BOSS_DOORWAY_LIGHT_ANGELIC_STONE, "Boss Doorway Light Angelic Stone");
+        addBlock(AetherBlocks.BOSS_DOORWAY_HELLFIRE_STONE, "Boss Doorway Hellfire Stone");
+        addBlock(AetherBlocks.BOSS_DOORWAY_LIGHT_HELLFIRE_STONE, "Boss Doorway Light Hellfire Stone");
+
+        addBlock(AetherBlocks.TREASURE_DOORWAY_CARVED_STONE, "Treasure Doorway Carved Stone");
+        addBlock(AetherBlocks.TREASURE_DOORWAY_SENTRY_STONE, "Treasure Doorway Sentry Stone");
+        addBlock(AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE, "Treasure Doorway Angelic Stone");
+        addBlock(AetherBlocks.TREASURE_DOORWAY_LIGHT_ANGELIC_STONE, "Treasure Doorway Light Angelic Stone");
+        addBlock(AetherBlocks.TREASURE_DOORWAY_HELLFIRE_STONE, "Treasure Doorway Hellfire Stone");
+        addBlock(AetherBlocks.TREASURE_DOORWAY_LIGHT_HELLFIRE_STONE, "Treasure Doorway Light Hellfire Stone");
+
         addBlock(AetherBlocks.CHEST_MIMIC, "Chest Mimic");
         addBlock(AetherBlocks.TREASURE_CHEST, "Treasure Chest");
 
@@ -147,10 +161,10 @@ public class AetherLanguageData extends AetherLanguageProvider
         addBlock(AetherBlocks.AEROGEL_SLAB, "Aerogel Slab");
 
         addBlock(AetherBlocks.SUN_ALTAR, "Sun Altar");
-
         addBlock(AetherBlocks.SKYROOT_BOOKSHELF, "Skyroot Bookshelf");
-
         addBlock(AetherBlocks.SKYROOT_BED, "Skyroot Bed");
+
+        addBlock(AetherBlocks.UNSTABLE_OBSIDIAN, "Unstable Obsidian");
 
 
         addItem(AetherItems.SKYROOT_PICKAXE, "Skyroot Pickaxe");
@@ -295,7 +309,7 @@ public class AetherLanguageData extends AetherLanguageProvider
 
         addItem(AetherItems.BRONZE_DUNGEON_KEY, "Bronze Key");
         addItem(AetherItems.SILVER_DUNGEON_KEY, "Silver Key");
-        addItem(AetherItems.GOLD_DUNGEON_KEY, "Golden Key");
+        addItem(AetherItems.GOLD_DUNGEON_KEY, "Gold Key");
 
         addItem(AetherItems.MUSIC_DISC_AETHER_TUNE, "Blue Music Disc");
         addDiscDesc(AetherItems.MUSIC_DISC_AETHER_TUNE, "Noisestorm - Aether Tune");
@@ -358,6 +372,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addItem(AetherItems.EVIL_WHIRLWIND_SPAWN_EGG, "Evil Whirlwind Spawn Egg");
         addItem(AetherItems.VALKYRIE_SPAWN_EGG, "Valkyrie Spawn Egg");
         addItem(AetherItems.VALKYRIE_QUEEN_SPAWN_EGG, "Valkyrie Queen Spawn Egg");
+        addItem(AetherItems.SLIDER_SPAWN_EGG, "Slider Spawn Egg");
         addItem(AetherItems.SUN_SPIRIT_SPAWN_EGG, "Sun Spirit Spawn Egg");
         addItem(AetherItems.ZEPHYR_SPAWN_EGG, "Zephyr Spawn Egg");
 
@@ -382,6 +397,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addEntityType(AetherEntityTypes.VALKYRIE, "Valkyrie");
         addEntityType(AetherEntityTypes.FIRE_MINION, "Fire Minion");
 
+        addEntityType(AetherEntityTypes.SLIDER, "Slider");
         addEntityType(AetherEntityTypes.VALKYRIE_QUEEN, "Valkyrie Queen");
         addEntityType(AetherEntityTypes.SUN_SPIRIT, "Sun Spirit");
 
@@ -411,52 +427,54 @@ public class AetherLanguageData extends AetherLanguageProvider
         addContainerType(AetherMenuTypes.ALTAR, "Altar");
         addContainerType(AetherMenuTypes.FREEZER, "Freezer");
         addContainerType(AetherMenuTypes.INCUBATOR, "Incubator");
-        addContainerType("bronze_dungeon_chest", "Bronze Dungeon Chest");
-        addContainerType("silver_dungeon_chest", "Silver Dungeon Chest");
-        addContainerType("gold_dungeon_chest", "Gold Dungeon Chest");
+        addContainerType("bronze_treasure_chest", "Bronze Treasure Chest");
+        addContainerType("silver_treasure_chest", "Silver Treasure Chest");
+        addContainerType("gold_treasure_chest", "Gold Treasure Chest");
         addContainerType("sun_altar", "Sun Altar");
 
 
-        addItemGroup(AetherItemGroups.AETHER_BLOCKS, "Aether Blocks");
-        addItemGroup(AetherItemGroups.AETHER_TOOLS, "Aether Tools");
-        addItemGroup(AetherItemGroups.AETHER_WEAPONS, "Aether Weapons");
-        addItemGroup(AetherItemGroups.AETHER_ARMOR, "Aether Armor");
-        addItemGroup(AetherItemGroups.AETHER_FOOD, "Aether Foods");
-        addItemGroup(AetherItemGroups.AETHER_ACCESSORIES, "Aether Accessories");
-        addItemGroup(AetherItemGroups.AETHER_MATERIALS, "Aether Materials");
-        addItemGroup(AetherItemGroups.AETHER_MISC, "Aether Miscellaneous");
+        addCreativeTab(AetherCreativeTabs.AETHER_BUILDING_BLOCKS, "Aether Building Blocks");
+        addCreativeTab(AetherCreativeTabs.AETHER_DUNGEON_BLOCKS, "Aether Dungeon Blocks");
+        addCreativeTab(AetherCreativeTabs.AETHER_NATURAL_BLOCKS, "Aether Natural Blocks");
+        addCreativeTab(AetherCreativeTabs.AETHER_FUNCTIONAL_BLOCKS, "Aether Functional Blocks");
+        addCreativeTab(AetherCreativeTabs.AETHER_REDSTONE_BLOCKS, "Aether Redstone Blocks");
+        addCreativeTab(AetherCreativeTabs.AETHER_EQUIPMENT_AND_UTILITIES, "Aether Equipment & Utilities");
+        addCreativeTab(AetherCreativeTabs.AETHER_ARMOR_AND_ACCESSORIES, "Aether Armor & Accessories");
+        addCreativeTab(AetherCreativeTabs.AETHER_FOOD_AND_DRINKS, "Aether Food & Drinks");
+        addCreativeTab(AetherCreativeTabs.AETHER_INGREDIENTS, "Aether Ingredients");
+        addCreativeTab(AetherCreativeTabs.AETHER_SPAWN_EGGS, "Aether Spawn Eggs");
 
 
         addAdvancement("enter_aether", "Hostile Paradise");
         addAdvancement("read_lore", "The More You Know!");
         addAdvancement("loreception", "Lore-Ception!");
         addAdvancement("blue_aercloud", "To Infinity and Beyond!");
-        addAdvancement("incubator", "Now You're Family");
-        addAdvancement("altar", "Do You Believe in Magic?");
+        addAdvancement("incubate_moa", "Now You're Family");
+        addAdvancement("craft_altar", "Do You Believe in Magic?");
         addAdvancement("gravitite_tools", "Pink is the New Blue");
         addAdvancement("mount_phyg", "When Phygs Fly");
         addAdvancement("bronze_dungeon", "Like a Bossaru!");
         addAdvancement("silver_dungeon", "Dethroned");
         addAdvancement("gold_dungeon", "Extinguished");
 
-
         addAdvancementDesc("enter_aether", "Enter the Aether");
         addAdvancementDesc("read_lore", "Read a Book of Lore");
         addAdvancementDesc("loreception", "Put a Book of Lore inside a Book of Lore");
         addAdvancementDesc("blue_aercloud", "Bounce on a Blue Aercloud");
-        addAdvancementDesc("incubator", "Incubate a Moa");
-        addAdvancementDesc("altar", "Craft an Altar");
+        addAdvancementDesc("incubate_moa", "Incubate a Moa");
+        addAdvancementDesc("craft_altar", "Craft an Altar");
         addAdvancementDesc("gravitite_tools", "Craft a Gravitite tool");
-        addAdvancementDesc("mount_phyg", "Fly on a Phyg");
-        addAdvancementDesc("bronze_dungeon", "Defeat the Bronze Dungeon boss");
-        addAdvancementDesc("silver_dungeon", "Defeat the Silver Dungeon boss");
-        addAdvancementDesc("gold_dungeon", "Defeat the Golden Dungeon boss");
+        addAdvancementDesc("mount_phyg", "Fly on a Phyg!");
+        addAdvancementDesc("bronze_dungeon", "Defeat the bronze boss");
+        addAdvancementDesc("silver_dungeon", "Defeat the silver boss");
+        addAdvancementDesc("gold_dungeon", "Defeat the gold boss");
 
 
         addSubtitle("block", "aether_portal.ambient", "Aether Portal whooshes");
         addSubtitle("block", "aether_portal.trigger", "Aether Portal noise intensifies");
         addSubtitle("block", "chest_mimic.open", "Mimic awakens");
         addSubtitle("block", "dungeon_trap.trigger", "Dungeon Trap activated");
+        addSubtitle("block", "aether.water.evaporate", "Water evaporated");
 
         addSubtitle("item", "dart_shooter.shoot", "Dart Shooter fired");
         addSubtitle("item", "lightning_knife.shoot", "Lightning Knife flies");
@@ -543,8 +561,10 @@ public class AetherLanguageData extends AetherLanguageProvider
         addSubtitle("entity", "mimic.kill", "Mimic burps");
 
         addSubtitle("entity", "slider.awaken", "Slider awakens");
+        addSubtitle("entity", "slider.ambient", "Slider drones");
         addSubtitle("entity", "slider.collide", "Slider smashes");
         addSubtitle("entity", "slider.move", "Slider slides");
+        addSubtitle("entity", "slider.hurt", "Slider hurts");
         addSubtitle("entity", "slider.death", "Slider breaks");
 
         addSubtitle("entity", "valkyrie.death", "Valkyrie dies");
@@ -558,16 +578,22 @@ public class AetherLanguageData extends AetherLanguageProvider
         addSubtitle("entity", "cloud_minion.shoot", "Cloud Minion spits");
 
         addSubtitle("entity", "cloud_crystal.explode", "Crystal explodes");
+        addSubtitle("entity", "fire_crystal.explode", "Crystal explodes");
+        addSubtitle("entity", "ice_crystal.explode", "Crystal explodes");
         addSubtitle("entity", "thunder_crystal.explode", "Crystal explodes");
 
         addSubtitle("entity", "dart.hit", "Dart hits");
 
 
-
+        addDeath("floating_block", "%1$s was squashed by a floating block");
+        addDeath("floating_block.player", "%1$s was squashed by a floating block whilst fighting %2$s");
         addDeath("inebriation", "%1$s was inebriated");
         addDeath("inebriation.player", "%1$s was inebriated by %2$s");
+        addDeath("crush", "%1$s was crushed by %2$s");
+        addDeath("fire_crystal", "%1$s was incinerated by %2$s's Fire Crystal");
         addDeath("ice_crystal", "%1$s was chilled by %2$s's Ice Crystal");
-
+        addDeath("thunder_crystal", "%1$s was zapped by %2$s's Thunder Crystal");
+        addDeath("incineration", "%1$s was incinerated by %2$s");
 
 
         addMenuText("minecraft", "Normal Theme");
@@ -575,15 +601,12 @@ public class AetherLanguageData extends AetherLanguageProvider
         addMenuText("preview", "Toggle World");
         addMenuText("load", "Quick Load");
 
-
         addGuiText("pro_tip", "Pro Tip:");
         addGuiText("ascending", "Ascending to the Aether");
         addGuiText("descending", "Descending from the Aether");
 
-
         addGuiText("accessories.skins_button", "Skins");
         addGuiText("accessories.customization_button", "Customization");
-
 
         addGuiText("sun_altar.time", "Time");
 
@@ -591,7 +614,16 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("recipebook.toggleRecipes.freezable", "Showing Freezable");
         addGuiText("recipebook.toggleRecipes.incubatable", "Showing Incubatable");
 
-        //Valkyrie dialogue
+        addGuiText("jei.altar.enchanting", "Enchanting");
+        addGuiText("jei.altar.repairing", "Repairing");
+        addGuiText("jei.freezing", "Freezing");
+        addGuiText("jei.incubating", "Incubating");
+        addGuiText("jei.fuel", "Aether Fuel");
+
+        addGuiText("slider.title", "the Slider");
+        addGuiText("slider.message.attack.invalid", "Hmm. Perhaps I need to attack it with a Pickaxe?");
+
+        // Valkyrie Dialogue
         addGuiText("valkyrie.dialog.1", "What's that? You want to fight? Aww, what a cute little human.");
         addGuiText("valkyrie.dialog.2", "You're not thinking of fighting a big, strong Valkyrie are you?");
         addGuiText("valkyrie.dialog.3", "I don't think you should bother me, you could get really hurt.");
@@ -608,11 +640,11 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("valkyrie.dialog.medal.2", "That's pretty impressive, but you won't defeat me.");
         addGuiText("valkyrie.dialog.medal.3", "You think you're a tough guy, eh? Well, bring it on!");
 
-        addGuiText("valkyrie.dialog.playerdead.1", "You want a medallion? Try being less pathetic.");
-        addGuiText("valkyrie.dialog.playerdead.2", "Maybe some day, %s... maybe some day.");
-        addGuiText("valkyrie.dialog.playerdead.3", "Humans aren't nearly as cute when they're dead.");
+        addGuiText("valkyrie.dialog.playerdeath.1", "You want a medallion? Try being less pathetic.");
+        addGuiText("valkyrie.dialog.playerdeath.2", "Maybe some day, %s... maybe some day.");
+        addGuiText("valkyrie.dialog.playerdeath.3", "Humans aren't nearly as cute when they're dead.");
 
-        //Valkyrie queen dialogue
+        // Valkyrie Queen Dialogue
         addGuiText("queen.dialog.answer", "This is a sanctuary for us Valkyries who seek rest.");
         addGuiText("queen.dialog.challenge", "Very well then. Bring me ten medals from my subordinates to prove your worth, then we'll see.");
         addGuiText("queen.dialog.defeated", "You are truly... a mighty warrior...");
@@ -622,6 +654,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("queen.dialog.no_medals", "Take your time.");
         addGuiText("queen.dialog.peaceful", "Sorry, I don't fight with weaklings.");
         addGuiText("queen.dialog.playerdeath", "As expected of a human.");
+        addGuiText("queen.dialog.begin", "Now then, let's begin!");
         addGuiText("queen.dialog.ready", "If you wish to challenge me, strike at any time.");
         addGuiText("queen.title", "the Valkyrie Queen");
 
@@ -632,9 +665,24 @@ public class AetherLanguageData extends AetherLanguageProvider
         addGuiText("player.dialog.no_medals", "I'll return when I have them.");
         addGuiText("player.dialog.question", "What can you tell me about this place?");
 
-        //Sun spirit dialogue
+        // Sun Spirit Dialogue
         addGuiText("sun_spirit.title", "the Sun Spirit");
-
+        addGuiText("sun_spirit.dead", "Such bitter cold... is this the feeling... of pain?");
+        addGuiText("sun_spirit.playerdeath", "Such is the fate of a being who opposes the might of the sun.");
+        addGuiText("sun_spirit.line0", "You are certainly a brave soul to have entered this chamber.");
+        addGuiText("sun_spirit.line1", "Begone human, you serve no purpose here.");
+        addGuiText("sun_spirit.line2", "Your presence annoys me. Do you not fear my burning aura?");
+        addGuiText("sun_spirit.line3", "I have nothing to offer you, fool. Leave me at peace.");
+        addGuiText("sun_spirit.line4", "Perhaps you are ignorant. Do you wish to know who I am?");
+        addGuiText("sun_spirit.line5.1", "I am a sun spirit, embodiment of Aether's eternal daylight. As");
+        addGuiText("sun_spirit.line5.2", "long as I am alive, the sun will never set on this world.");
+        addGuiText("sun_spirit.line6.1", "My body burns with the anger of a thousand beasts. No man,");
+        addGuiText("sun_spirit.line6.2", "hero, or villain can harm me. You are no exception.");
+        addGuiText("sun_spirit.line7.1", "You wish to challenge the might of the sun? You are mad.");
+        addGuiText("sun_spirit.line7.2", "Do not further insult me or you will feel my wrath.");
+        addGuiText("sun_spirit.line8", "This is your final warning. Leave now, or prepare to burn.");
+        addGuiText("sun_spirit.line9", "As you wish, your death will be slow and agonizing.");
+        addGuiText("sun_spirit.line10", "Did your previous death not satisfy your curiosity, human?");
 
 
         addCustomizationText("title", "Customization");
@@ -659,14 +707,18 @@ public class AetherLanguageData extends AetherLanguageProvider
 
         addMessage("hammer_of_notch_cooldown", "Cooldown");
 
-
         addMessage("life_shard_limit", "You can only use a total of %s Life Shards.");
-        addMessage("bronze_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Bronze Key.");
-        addMessage("silver_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Silver Key.");
-        addMessage("gold_dungeon_chest_locked", "This Treasure Chest must be unlocked with a Golden Key.");
+        addMessage("bronze_treasure_chest_locked", "This Treasure Chest must be unlocked with a Bronze Key.");
+        addMessage("silver_treasure_chest_locked", "This Treasure Chest must be unlocked with a Silver Key.");
+        addMessage("gold_treasure_chest_locked", "This Treasure Chest must be unlocked with a Gold Key.");
         addMessage("sun_altar.in_control", "The sun spirit is still in control of this realm.");
         addMessage("sun_altar.no_permission", "You don't have permission to use this.");
         addMessage("sun_altar.no_power", "The sun spirit has no power over this realm.");
+
+        addMessage("dungeon.bronze_dungeon", "Bronze Dungeon");
+        addMessage("dungeon.silver_dungeon", "Silver Dungeon");
+        addMessage("dungeon.gold_dungeon", "Gold Dungeon");
+
 
         addCommand("menu.fix", "Reset world preview values");
 
@@ -688,11 +740,9 @@ public class AetherLanguageData extends AetherLanguageProvider
         addCommand("sun_altar_whitelist.remove.failed", "Player is not whitelisted to use the Sun Altar");
 
 
-
         addKeyInfo("category", "Aether");
         addKeyInfo("open_accessories.desc", "Open/Close Accessories Inventory");
         addKeyInfo("gravitite_jump_ability.desc", "Activate Gravitite Jump");
-
 
 
         addCuriosIdentifier("aether_pendant", "Pendant");
@@ -714,7 +764,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherItems.AETHER_PORTAL_FRAME, "A portable frame containing the power to travel to the Aether or back to the Overworld. Not something you're likely to find naturally.");
         addLore(AetherBlocks.AETHER_GRASS_BLOCK, "Grass found in the Aether dimension. It can be used to grow the trees native to the Aether. It is much more pale than normal Grass.");
         addLore(AetherItems.AGILITY_CAPE, "A slightly rare cape, it can be seen in Bronze and Silver Dungeons. It makes the wearer's legs stronger, therefore they can walk up blocks instantly.");
-        addLore(AetherBlocks.ALTAR, "Used to enchant items and repair armor. They are powered by Ambrosium Shards. The enchanting process can take some time, but if you place an Enchanted Gravitite block under it, the process is sped up by a huge amount.");
+        addLore(AetherBlocks.ALTAR, "Used to enchant items and repair armor. They are powered by Ambrosium Shards.");
         addLore(AetherBlocks.AMBROSIUM_ORE, "The most common ore in the Aether. The drops can be doubled with Skyroot tools.");
         addLore(AetherItems.AMBROSIUM_SHARD, "Aether's coal equivalent, they have a healing property when eaten, and restore a small amount of health.");
         addLore(AetherBlocks.AMBROSIUM_BLOCK, "A block of pure Ambrosium, useful for storing large quantities of fuel.");
@@ -754,7 +804,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherItems.ENCHANTED_DART_SHOOTER, "A Dart Shooter which shoots Enchanted Darts, the strongest one!");
         addLore(AetherBlocks.ENCHANTED_GRAVITITE, "After putting Gravitite Ore into an Altar and enchanting it, you get Enchanted Gravitite. This can be made into Gravitite Tools and Armor. When powered with a Redstone signal, Enchanted Gravitite Blocks will float into the air, similarly to Gravitite Ore.");
         addLore(AetherItems.FLAMING_SWORD, "An ancient sword which flames its foes to a burning crisp. It almost hurts to touch! Using this on animals can make them drop cooked meat!");
-        addLore(AetherBlocks.FREEZER, "You can freeze various items using this, such as Aerclouds, or Water Buckets. It's source of power is Icestone. You can speed up the freezing process by placing an Icestone under the Freezer.");
+        addLore(AetherBlocks.FREEZER, "You can freeze various items using this, such as Aerclouds, or Water Buckets. It's source of power is Icestone.");
         addLore(AetherItems.GINGERBREAD_MAN, "Found in presents under Holiday trees, these are the most common of Christmas items. They are very abundant when dropped from presents.");
         addLore(AetherItems.GOLD_DUNGEON_KEY, "A key that has a shiny finish. It is dropped by the Sun Spirit after you defeat him. You can use it to claim the legendary treasure in the back room!");
         addLore(AetherBlocks.GOLDEN_AERCLOUD, "A golden cloud found in small quantities, higher in the air than normal. The properties are similar to Cold Aerclouds, but the Parachutes they produce have much more durability.");
@@ -941,6 +991,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addLore(AetherItems.MUSIC_DISC_LEGACY, "A music disc that plays Legacy by Jon Lachney.");
         addLore(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "A music disc that plays Welcoming Skies by Voyed.");
         addLore(AetherItems.MUSIC_DISC_CHINCHILLA,"A music disc that plays chinchilla by RENREN.");
+        addLoreUnique("item.aether.hammer_of_jeb", "A mysterious hammer that can shoot projectiles. At one point it vanished from existence. It's said this was actually Jeb's hammer at one point.");
 
 
         addProTip("skyroot_tool_ability", "Skyroot tools gain double drops from blocks.");
@@ -979,7 +1030,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addProTip("zephyr_shooting", "Zephyrs shoot snowballs with a force that can throw you off islands.");
         addProTip("aether_day_length", "Days in the Aether realm last three times longer than surface days.");
         addProTip("sheepuff_puff", "Sheepuff occasionally puff their wool out, making them float.");
-        addProTip("victory_medal_drop", "When Valkyrie's are defeated they will drop a Victory Medal.");
+        addProTip("victory_medal_drop", "When Valkyries are defeated they will drop a Victory Medal.");
         addProTip("dig_straight_down", "Never dig straight down.");
         addProTip("drops", "If a drop looks too big, it probably is.");
         addProTip("shelter", "A shelter made of dirt is still a shelter.");
@@ -999,6 +1050,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addProTip("difficulty", "Easier rarely means funner.");
         addProTip("portal_misclick", "Be careful not to misclick when building portals.");
         addProTip("the_game", "The game is only as fun as you make it.");
+        addProTip("golden_apples", "The leaves of Golden Oak trees occasionally drop Golden Apples.");
 
 
         addCommonConfig("gameplay", "enable_bed_explosions", "Vanilla's beds will explode in the Aether");
@@ -1007,7 +1059,10 @@ public class AetherLanguageData extends AetherLanguageProvider
         addCommonConfig("gameplay", "tools_debuff", "Tools that aren't from the Aether will mine all blocks slower than ones that are from the Aether");
         addCommonConfig("gameplay", "edible_ambrosium", "Ambrosium Shards can be eaten to restore a half heart of health");
         addCommonConfig("gameplay", "healing_gummy_swets", "Gummy Swets when eaten restore full health instead of full hunger");
+        addCommonConfig("gameplay", "temporary_ice_accessory_conversion", "Ice Accessories will create temporary blocks instead of permanent blocks from conversions");
         addCommonConfig("gameplay", "maximum_life_shards", "Determines the limit of the amount of Life Shards a player can consume to increase their health");
+        addCommonConfig("gameplay", "hammer_of_notch_cooldown", "Determines the cooldown in ticks for the Hammer of Notch's ability");
+        addCommonConfig("gameplay", "cloud_staff_cooldown", "Determines the cooldown in ticks for the Cloud Staff's ability");
         addCommonConfig("gameplay", "repeat_sun_spirit_dialogue", "Determines whether the Sun Spirit's dialogue when meeting him should play through every time you meet him");
 
         addCommonConfig("loot", "spawn_golden_feather", "Allows the Golden Feather to spawn in the Silver Dungeon loot table");
@@ -1039,6 +1094,7 @@ public class AetherLanguageData extends AetherLanguageProvider
         addClientConfig("gui", "align_vanilla_menu_elements_left", "Aligns the elements of the vanilla menu to the left, only works if 'Align menu left with world preview' is set to false");
         addClientConfig("gui", "align_aether_menu_elements_left", "Aligns the elements of the Aether menu to the left, only works if 'Align menu left with world preview' is set to false");
         addClientConfig("gui", "enable_trivia", "Adds random trivia and tips to the bottom of loading screens");
+        addClientConfig("gui", "enable_silver_hearts", "Makes the extra hearts given by life shards display as silver colored");
 
         addClientConfig("audio", "music_backup_min_delay", "Sets the minimum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");
         addClientConfig("audio", "music_backup_max_delay", "Sets the maximum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");

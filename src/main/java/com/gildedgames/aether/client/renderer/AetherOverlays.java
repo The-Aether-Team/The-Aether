@@ -1,29 +1,41 @@
 package com.gildedgames.aether.client.renderer;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.entity.passive.Moa;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.effect.AetherEffects;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.capability.player.AetherPlayer;
+import com.gildedgames.aether.mixin.mixins.client.accessor.GuiAccessor;
+import com.gildedgames.aether.mixin.mixins.client.accessor.HeartTypeAccessor;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.platform.Window;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
+import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -34,6 +46,7 @@ public class AetherOverlays {
     private static final ResourceLocation TEXTURE_SHIELD_OF_REPULSION_VIGNETTE = new ResourceLocation(Aether.MODID, "textures/blur/shield_of_repulsion_vignette.png");
     private static final ResourceLocation TEXTURE_COOLDOWN_BAR = new ResourceLocation(Aether.MODID, "textures/gui/cooldown_bar.png");
     private static final ResourceLocation TEXTURE_JUMPS = new ResourceLocation(Aether.MODID, "textures/gui/jumps.png");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_HEARTS = new ResourceLocation(Aether.MODID, "textures/gui/life_shard_hearts.png");
 
     @SubscribeEvent
     public static void registerOverlays(RegisterGuiOverlaysEvent event) {
@@ -85,8 +98,22 @@ public class AetherOverlays {
                 renderMoaJumps(pStack, window, player);
             }
         });
+        event.registerAbove(new ResourceLocation("player_health"), "silver_life_shard_hearts", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+            Minecraft minecraft = Minecraft.getInstance();
+            LocalPlayer player = minecraft.player;
+            int[] lastLifeShardHealth = {0};
+            int[] lastOverallHealth = {0};
+            if (player != null) {
+                renderSilverLifeShardHearts(pStack, gui, player, screenWidth, screenHeight, lastLifeShardHealth, lastOverallHealth);
+            }
+        });
     }
 
+
+    /**
+     * Warning for "deprecation" is suppressed because vanilla calls {@link net.minecraft.client.renderer.block.BlockModelShaper#getParticleIcon(BlockState)} just fine.
+     */
+    @SuppressWarnings("deprecation")
     private static void renderAetherPortalOverlay(PoseStack poseStack, Minecraft mc, Window window, AetherPlayer handler, float partialTicks) {
         float timeInPortal = handler.getPrevPortalAnimTime() + (handler.getPortalAnimTime() - handler.getPrevPortalAnimTime()) * partialTicks;
         if (timeInPortal > 0.0F) {
@@ -102,7 +129,7 @@ public class AetherOverlays {
             RenderSystem.depthMask(false);
             RenderSystem.defaultBlendFunc();
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, timeInPortal);
-            RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
+            RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             TextureAtlasSprite textureatlassprite = mc.getBlockRenderer().getBlockModelShaper().getParticleIcon(AetherBlocks.AETHER_PORTAL.get().defaultBlockState());
             float f = textureatlassprite.getU0();
@@ -219,6 +246,82 @@ public class AetherOverlays {
                 } else {
                     GuiComponent.blit(poseStack, xPos, yPos, 10, 0, 9, 11, 256, 256);
                 }
+            }
+        }
+    }
+
+    private static void renderSilverLifeShardHearts(PoseStack poseStack, ForgeGui gui, LocalPlayer player, int width, int height, int[] lastLifeShardHealth, int[] lastOverallHealth) {
+        GuiAccessor guiAccessor = (GuiAccessor) gui;
+        if (AetherConfig.CLIENT.enable_silver_hearts.get() && gui.shouldDrawSurvivalElements()) {
+            AetherPlayer.get(player).ifPresent(aetherPlayer -> {
+                if (aetherPlayer.getLifeShardCount() > 0) {
+                    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+                    RenderSystem.setShaderTexture(0, TEXTURE_LIFE_SHARD_HEARTS);
+                    RenderSystem.enableBlend();
+
+                    double overallHealth = player.getAttribute(Attributes.MAX_HEALTH).getValue();
+                    double maxLifeShardHealth = aetherPlayer.getLifeShardHealthAttributeModifier().getAmount();
+
+                    int maxDefaultHealth = Mth.ceil(overallHealth - maxLifeShardHealth);
+
+                    int currentOverallHealth = Mth.ceil(player.getHealth());
+                    int currentLifeShardHealth = Mth.ceil(maxDefaultHealth > 20 ? Mth.clamp(currentOverallHealth - 20, 0, maxLifeShardHealth) : currentOverallHealth - maxDefaultHealth);
+
+                    boolean highlight = guiAccessor.getHealthBlinkTime() > (long) gui.getGuiTicks() && (guiAccessor.getHealthBlinkTime() - (long) gui.getGuiTicks()) / 3L % 2L == 1L;
+                    if (Util.getMillis() - guiAccessor.getLastHealthTime() > 1000L) {
+                        lastOverallHealth[0] = currentOverallHealth;
+                        lastLifeShardHealth[0] = currentLifeShardHealth;
+                    }
+
+                    float displayOverallHealth = Math.max((float) overallHealth, Math.max(lastOverallHealth[0], currentOverallHealth));
+                    float displayLifeShardHealth = Math.max((float) maxLifeShardHealth, Math.max(lastLifeShardHealth[0], currentLifeShardHealth));
+                    int absorption = Mth.ceil(player.getAbsorptionAmount());
+
+                    int healthRows = Mth.ceil((displayOverallHealth + absorption) / 2.0F / 10.0F);
+                    int rowHeight = Math.max(10 - (healthRows - 2), 3);
+
+                    int left = width / 2 - 91;
+                    int top = height - 39;
+
+                    int regen = -1;
+                    if (player.hasEffect(MobEffects.REGENERATION)) {
+                        regen = gui.getGuiTicks() % Mth.ceil(displayOverallHealth + 5.0F);
+                    }
+
+                    renderHearts(poseStack, player, gui, left, top, regen, displayOverallHealth, displayLifeShardHealth, maxDefaultHealth, currentLifeShardHealth, rowHeight, absorption, highlight);
+
+                    RenderSystem.disableBlend();
+                }
+            });
+        }
+    }
+
+    private static void renderHearts(PoseStack poseStack, Player player, ForgeGui gui, int left, int top, int regen, float displayOverallHealth, float displayLifeShardHealth, int maxDefaultHealth, int lifeShardHealth, int rowHeight, int absorption, boolean highlight) {
+        GuiAccessor guiAccessor = (GuiAccessor) gui;
+        Gui.HeartType heartType = HeartTypeAccessor.callForPlayer(player);
+        int overallHearts = Mth.ceil((double) displayOverallHealth / 2.0D);
+        int lifeShardHearts = Mth.ceil((double) displayLifeShardHealth / 2.0D);
+        int maxDefaultHearts = Mth.ceil((double) maxDefaultHealth / 2.0D);
+        boolean tooManyHearts = overallHearts > 50;
+        boolean tooLittleHearts = maxDefaultHearts < 10;
+        for (int currentHeart = lifeShardHearts - 1; currentHeart >= 0; --currentHeart) {
+            int x = left + (currentHeart + (tooLittleHearts ? overallHearts - lifeShardHearts : 0)) % 10 * 8;
+            int y = top - (currentHeart + (tooManyHearts ? 0 : maxDefaultHearts + currentHeart < 10 ? 0 : 10)) / 10 * rowHeight;
+
+            if (displayOverallHealth + absorption <= 4) {
+                y += guiAccessor.getRandom().nextInt(2);
+            }
+            if (currentHeart + (maxDefaultHearts > 10 ? overallHearts - 10 : maxDefaultHearts) < overallHearts && currentHeart + Math.min(maxDefaultHearts, 10) - (tooManyHearts ? overallHearts : 0) == regen) {
+                y -= 2;
+            }
+            int selectedContainer = currentHeart * 2;
+            if (highlight && selectedContainer < displayLifeShardHealth) {
+                boolean halfHeart = selectedContainer + 1 == displayLifeShardHealth;
+                guiAccessor.callRenderHeart(poseStack, heartType, x, y, 0, true, halfHeart);
+            }
+            if (selectedContainer < lifeShardHealth) {
+                boolean halfHeart = selectedContainer + 1 == lifeShardHealth;
+                guiAccessor.callRenderHeart(poseStack, heartType, x, y, 0, false, halfHeart);
             }
         }
     }

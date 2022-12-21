@@ -7,22 +7,25 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.*;
-
-import javax.annotation.Nonnull;
+import net.minecraft.world.phys.Vec3;
 
 public class IcestoneBlockEntity extends BlockEntity implements FreezingBlock {
     private final FreezingListener listener;
 
-    public IcestoneBlockEntity(BlockPos pWorldPosition, BlockState pBlockState) {
-        super(AetherBlockEntityTypes.ICESTONE.get(), pWorldPosition, pBlockState);
-        PositionSource positionsource = new BlockPositionSource(this.worldPosition);
-        this.listener = new FreezingListener(positionsource, 4);
+    public IcestoneBlockEntity(BlockPos pos, BlockState state) {
+        super(AetherBlockEntityTypes.ICESTONE.get(), pos, state);
+        PositionSource positionSource = new BlockPositionSource(this.getBlockPos());
+        this.listener = new FreezingListener(positionSource, 4);
     }
 
     public FreezingListener getListener() {
         return this.listener;
     }
 
+    /**
+     * Handles freezing blocks around Icestone when the {@link FreezingListener} detects certain update events in the radius of the block.
+     * This makes it so that Icestone will only check to freeze blocks under certain circumstances, making this behavior more performant.
+     */
     class FreezingListener implements GameEventListener {
         private final PositionSource listenerSource;
         private final int listenerRadius;
@@ -32,7 +35,6 @@ public class IcestoneBlockEntity extends BlockEntity implements FreezingBlock {
             this.listenerRadius = radius;
         }
 
-        @Nonnull
         @Override
         public PositionSource getListenerSource() {
             return this.listenerSource;
@@ -44,8 +46,8 @@ public class IcestoneBlockEntity extends BlockEntity implements FreezingBlock {
         }
 
         @Override
-        public boolean handleGameEvent(@Nonnull ServerLevel level, @Nonnull GameEvent.Message event) {
-            if (event.gameEvent() == AetherGameEvents.ICESTONE_FREEZABLE_UPDATE.get() || event.gameEvent() == GameEvent.BLOCK_PLACE || event.gameEvent() == GameEvent.FLUID_PLACE || event.gameEvent() == GameEvent.ENTITY_PLACE) {
+        public boolean handleGameEvent(ServerLevel level, GameEvent event, GameEvent.Context context, Vec3 pos) {
+            if (event == AetherGameEvents.ICESTONE_FREEZABLE_UPDATE.get() || event == GameEvent.BLOCK_PLACE || event == GameEvent.FLUID_PLACE || event == GameEvent.ENTITY_PLACE) {
                 IcestoneBlockEntity.this.freezeBlocks(level, IcestoneBlockEntity.this.getBlockPos(), IcestoneBlockEntity.this.getBlockState(), FreezingBlock.SQRT_8);
                 return true;
             } else {

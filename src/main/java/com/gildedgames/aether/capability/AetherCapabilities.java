@@ -4,9 +4,6 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.capability.arrow.PhoenixArrow;
 import com.gildedgames.aether.capability.arrow.PhoenixArrowCapability;
 import com.gildedgames.aether.capability.arrow.PhoenixArrowProvider;
-import com.gildedgames.aether.capability.cape.CapeEntity;
-import com.gildedgames.aether.capability.cape.CapeEntityCapability;
-import com.gildedgames.aether.capability.cape.CapeEntityProvider;
 import com.gildedgames.aether.capability.lightning.LightningTracker;
 import com.gildedgames.aether.capability.lightning.LightningTrackerCapability;
 import com.gildedgames.aether.capability.lightning.LightningTrackerProvider;
@@ -19,7 +16,7 @@ import com.gildedgames.aether.capability.rankings.AetherRankingsProvider;
 import com.gildedgames.aether.capability.time.AetherTime;
 import com.gildedgames.aether.capability.time.AetherTimeCapability;
 import com.gildedgames.aether.capability.time.AetherTimeProvider;
-import com.gildedgames.aether.data.resources.AetherDimensions;
+import com.gildedgames.aether.data.resources.registries.AetherDimensions;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -39,7 +36,6 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherCapabilities {
-	public static final Capability<CapeEntity> CAPE_ENTITY_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
 	public static final Capability<AetherPlayer> AETHER_PLAYER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
 	public static final Capability<AetherRankings> AETHER_RANKINGS_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
 	public static final Capability<AetherTime> AETHER_TIME_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
@@ -48,7 +44,6 @@ public class AetherCapabilities {
 
 	@SubscribeEvent
 	public static void register(RegisterCapabilitiesEvent event) {
-		event.register(CapeEntity.class);
 		event.register(AetherPlayer.class);
 		event.register(AetherRankings.class);
 		event.register(AetherTime.class);
@@ -61,7 +56,6 @@ public class AetherCapabilities {
 		@SubscribeEvent
 		public static void attachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
 			if (event.getObject() instanceof LivingEntity livingEntity) {
-				event.addCapability(new ResourceLocation(Aether.MODID, "cape_entity"), new CapeEntityProvider(new CapeEntityCapability(livingEntity)));
 				if (livingEntity instanceof Player player) {
 					event.addCapability(new ResourceLocation(Aether.MODID, "aether_player"), new AetherPlayerProvider(new AetherPlayerCapability(player)));
 					event.addCapability(new ResourceLocation(Aether.MODID, "aether_rankings"), new AetherRankingsProvider(new AetherRankingsCapability(player)));

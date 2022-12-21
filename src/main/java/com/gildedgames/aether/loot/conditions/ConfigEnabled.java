@@ -1,6 +1,5 @@
 package com.gildedgames.aether.loot.conditions;
 
-import com.gildedgames.aether.loot.AetherLoot;
 import com.gildedgames.aether.util.ConfigSerializationUtil;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
@@ -11,8 +10,9 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.util.GsonHelper;
 import net.minecraftforge.common.ForgeConfigSpec;
 
-import javax.annotation.Nonnull;
-
+/**
+ * Checks if a config value is true or false for a loot table.
+ */
 public class ConfigEnabled implements LootItemCondition {
     private final ForgeConfigSpec.ConfigValue<Boolean> config;
 
@@ -21,7 +21,6 @@ public class ConfigEnabled implements LootItemCondition {
     }
 
     @Override
-    @Nonnull
     public LootItemConditionType getType() {
         return AetherLootConditions.CONFIG_ENABLED.get();
     }
@@ -36,13 +35,14 @@ public class ConfigEnabled implements LootItemCondition {
     }
 
     public static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<ConfigEnabled> {
-        public void serialize(JsonObject object, ConfigEnabled condition, @Nonnull JsonSerializationContext context) {
-            object.addProperty("config", ConfigSerializationUtil.serialize(condition.config));
+        @Override
+        public void serialize(JsonObject json, ConfigEnabled instance, JsonSerializationContext context) {
+            json.addProperty("config", ConfigSerializationUtil.serialize(instance.config));
         }
 
-        @Nonnull
-        public ConfigEnabled deserialize(@Nonnull JsonObject object, @Nonnull JsonDeserializationContext context) {
-            return new ConfigEnabled(ConfigSerializationUtil.deserialize(GsonHelper.getAsString(object, "config")));
+        @Override
+        public ConfigEnabled deserialize(JsonObject json, JsonDeserializationContext context) {
+            return new ConfigEnabled(ConfigSerializationUtil.deserialize(GsonHelper.getAsString(json, "config")));
         }
     }
 }

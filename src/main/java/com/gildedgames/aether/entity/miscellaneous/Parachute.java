@@ -1,10 +1,11 @@
 package com.gildedgames.aether.entity.miscellaneous;
 
+import com.gildedgames.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.ExplosionParticlePacket;
-import com.gildedgames.aether.util.EntityUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -76,8 +77,9 @@ public class Parachute extends Entity {
             this.setDeltaMovement(movement.x * (double) 0.91F, Math.max(d2, fallSpeed), movement.z * (double) 0.91F);
 
             if (passenger instanceof ServerPlayer serverPlayer) {
-                serverPlayer.connection.aboveGroundTickCount = 0;
-                serverPlayer.connection.aboveGroundVehicleTickCount = 0;
+                ServerGamePacketListenerImplAccessor serverGamePacketListenerImplAccessor = (ServerGamePacketListenerImplAccessor) serverPlayer.connection;
+                serverGamePacketListenerImplAccessor.setAboveGroundTickCount(0);
+                serverGamePacketListenerImplAccessor.setAboveGroundVehicleTickCount(0);
             }
         }
     }
@@ -152,7 +154,7 @@ public class Parachute extends Entity {
 
     @Nonnull
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

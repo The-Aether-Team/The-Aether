@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "invisible=false": {
+      "model": "aether:block/angelic_stone"
+    },
+    "invisible=true": {
+      "model": "aether:block/boss_doorway_angelic_stone"
+    }
+  }
+}

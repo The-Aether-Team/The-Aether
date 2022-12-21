@@ -14,23 +14,26 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 
-import javax.annotation.Nonnull;
-
 public class RemoveSeedsModifier extends LootModifier {
-    public static final Codec<RemoveSeedsModifier> CODEC = RecordCodecBuilder.create(inst -> LootModifier.codecStart(inst).apply(inst, RemoveSeedsModifier::new));
+    public static final Codec<RemoveSeedsModifier> CODEC = RecordCodecBuilder.create((instance) -> LootModifier.codecStart(instance).apply(instance, RemoveSeedsModifier::new));
 
-    public RemoveSeedsModifier(LootItemCondition[] conditionsIn) {
-        super(conditionsIn);
+    public RemoveSeedsModifier(LootItemCondition[] conditions) {
+        super(conditions);
     }
 
-    @Nonnull
+    /**
+     * Removes Wheat Seeds from loot tables within the Aether (determined by {@link AetherTags.Biomes#NO_WHEAT_SEEDS}).
+     * @param lootStacks Result items from a loot table as an {@link ObjectArrayList} of {@link ItemStack}s.
+     * @param context The {@link LootContext}.
+     * @return A new {@link ObjectArrayList} of {@link ItemStack}s that a loot table will give.
+     */
     @Override
-    public ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-        Vec3 vec3 = context.getParamOrNull(LootContextParams.ORIGIN);
-        if (vec3 != null && context.getLevel().getBiome(new BlockPos(vec3)).is(AetherTags.Biomes.NO_WHEAT_SEEDS)) {
-            generatedLoot.removeIf((itemStack) -> itemStack.is(Items.WHEAT_SEEDS));
+    public ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> lootStacks, LootContext context) {
+        Vec3 originVec = context.getParamOrNull(LootContextParams.ORIGIN);
+        if (originVec != null && context.getLevel().getBiome(new BlockPos(originVec)).is(AetherTags.Biomes.NO_WHEAT_SEEDS)) {
+            lootStacks.removeIf((itemStack) -> itemStack.is(Items.WHEAT_SEEDS));
         }
-        return generatedLoot;
+        return lootStacks;
     }
 
     @Override

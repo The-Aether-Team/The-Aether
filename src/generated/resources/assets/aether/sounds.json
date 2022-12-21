@@ -36,6 +36,12 @@
     ],
     "subtitle": "subtitles.block.dungeon_trap.trigger"
   },
+  "block.water.evaporate": {
+    "sounds": [
+      "random/fizz"
+    ],
+    "subtitle": "subtitles.block.aether.water.evaporate"
+  },
   "entity.aechor_plant.death": {
     "sounds": [
       "damage/fallbig"
@@ -134,6 +140,15 @@
     ],
     "subtitle": "subtitles.entity.dart.hit"
   },
+  "entity.fire_crystal.explode": {
+    "sounds": [
+      "random/explode1",
+      "random/explode2",
+      "random/explode3",
+      "random/explode4"
+    ],
+    "subtitle": "subtitles.entity.fire_crystal.explode"
+  },
   "entity.flying_cow.ambient": {
     "sounds": [
       "mob/cow/say1",
@@ -182,6 +197,14 @@
     ],
     "subtitle": "subtitles.block.generic.footsteps"
   },
+  "entity.ice_crystal.explode": {
+    "sounds": [
+      "random/glass1",
+      "random/glass2",
+      "random/glass3"
+    ],
+    "subtitle": "subtitles.entity.ice_crystal.explode"
+  },
   "entity.mimic.attack": {
     "sounds": [
       "random/eat1",
@@ -192,7 +215,7 @@
   },
   "entity.mimic.death": {
     "sounds": [
-      "block/chest/close",
+      "block/chest/close1",
       "block/chest/close2",
       "block/chest/close3"
     ],
@@ -354,6 +377,30 @@
     ],
     "subtitle": "subtitles.block.generic.footsteps"
   },
+  "entity.slider.ambient": {
+    "sounds": [
+      "ambient/cave/cave1",
+      "ambient/cave/cave2",
+      "ambient/cave/cave3",
+      "ambient/cave/cave4",
+      "ambient/cave/cave5",
+      "ambient/cave/cave6",
+      "ambient/cave/cave7",
+      "ambient/cave/cave8",
+      "ambient/cave/cave9",
+      "ambient/cave/cave10",
+      "ambient/cave/cave11",
+      "ambient/cave/cave12",
+      "ambient/cave/cave13",
+      "ambient/cave/cave14",
+      "ambient/cave/cave15",
+      "ambient/cave/cave16",
+      "ambient/cave/cave17",
+      "ambient/cave/cave18",
+      "ambient/cave/cave19"
+    ],
+    "subtitle": "subtitles.entity.slider.ambient"
+  },
   "entity.slider.awaken": {
     "sounds": [
       "aether:entity/slider/awaken"
@@ -371,6 +418,17 @@
       "aether:entity/slider/death"
     ],
     "subtitle": "subtitles.entity.slider.death"
+  },
+  "entity.slider.hurt": {
+    "sounds": [
+      "step/stone1",
+      "step/stone2",
+      "step/stone3",
+      "step/stone4",
+      "step/stone5",
+      "step/stone6"
+    ],
+    "subtitle": "subtitles.entity.slider.hurt"
   },
   "entity.slider.move": {
     "sounds": [

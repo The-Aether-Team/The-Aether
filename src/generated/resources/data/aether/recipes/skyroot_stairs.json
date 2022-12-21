@@ -1,14 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "wooden_stairs",
   "key": {
-    "M": {
+    "#": {
       "item": "aether:skyroot_planks"
     }
   },
   "pattern": [
-    "M  ",
-    "MM ",
-    "MMM"
+    "#  ",
+    "## ",
+    "###"
   ],
   "result": {
     "count": 4,

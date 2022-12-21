@@ -1,12 +1,13 @@
 package com.gildedgames.aether.entity.monster.dungeon;
 
+import com.gildedgames.aether.entity.AetherEntityTypes;
+import com.gildedgames.aether.entity.ai.goal.ContinuousMeleeAttackGoal;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
@@ -23,8 +24,7 @@ public class FireMinion extends Monster {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 1.0));
-        this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.5, true));
+        this.goalSelector.addGoal(4, new ContinuousMeleeAttackGoal(this, 1.5, true));
         this.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(this, 1.0));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }
@@ -32,7 +32,7 @@ public class FireMinion extends Monster {
     @Nonnull
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.FOLLOW_RANGE, 30.0)
+                .add(Attributes.FOLLOW_RANGE, 40.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.25)
                 .add(Attributes.ATTACK_DAMAGE, 10.0)
                 .add(Attributes.MAX_HEALTH, 40.0);
@@ -43,7 +43,7 @@ public class FireMinion extends Monster {
         super.tick();
         ParticleOptions particle = ParticleTypes.FLAME;
         if (this.hasCustomName()) {
-            String name = this.getName().getContents().toString();
+            String name = this.getName().getString();
             if (name.equals("JorgeQ") || name.equals("Jorge_SunSpirit")) {
                 particle = ParticleTypes.ITEM_SNOWBALL;
             }
@@ -57,5 +57,10 @@ public class FireMinion extends Monster {
             double z = this.getZ() + d2 * d1;
             this.level.addParticle(particle, x, y, z, 0.0, -0.075, 0.0);
         }
+    }
+
+    @Override
+    public boolean isInvulnerableTo(DamageSource source) {
+        return super.isInvulnerableTo(source) || source.getEntity() != null && source.getEntity().getType() == AetherEntityTypes.SUN_SPIRIT.get();
     }
 }

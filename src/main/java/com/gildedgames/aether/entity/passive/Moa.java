@@ -5,7 +5,7 @@ import javax.annotation.Nullable;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.WingedBird;
-import com.gildedgames.aether.entity.ai.FallingRandomStrollGoal;
+import com.gildedgames.aether.entity.ai.goal.FallingRandomStrollGoal;
 import com.gildedgames.aether.entity.ai.navigator.FallPathNavigation;
 
 import com.gildedgames.aether.item.miscellaneous.MoaEggItem;
@@ -96,11 +96,10 @@ public class Moa extends MountableAnimal implements WingedBird {
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
-		MoaType moaType = AetherMoaTypes.random(this.random);
-		this.entityData.define(DATA_MOA_TYPE_ID, moaType.toString());
+		this.entityData.define(DATA_MOA_TYPE_ID, "");
 		this.entityData.define(DATA_RIDER_UUID, Optional.empty());
 		this.entityData.define(DATA_LAST_RIDER_UUID, Optional.empty());
-		this.entityData.define(DATA_REMAINING_JUMPS_ID, moaType.getMaxJumps());
+		this.entityData.define(DATA_REMAINING_JUMPS_ID, 0);
 		this.entityData.define(DATA_HUNGRY_ID, false);
 		this.entityData.define(DATA_AMOUNT_FED_ID, 0);
 		this.entityData.define(DATA_PLAYER_GROWN_ID, false);
@@ -122,6 +121,8 @@ public class Moa extends MountableAnimal implements WingedBird {
 			if (tag.contains("PlayerGrown")) {
 				this.setPlayerGrown(tag.getBoolean("PlayerGrown"));
 			}
+		} else {
+			this.setMoaType(AetherMoaTypes.random(this.random));
 		}
 		return super.finalizeSpawn(level, difficulty, reason, spawnData, tag);
 	}
@@ -418,11 +419,6 @@ public class Moa extends MountableAnimal implements WingedBird {
 	@Override
 	protected SoundEvent getSaddledSound() {
 		return AetherSoundEvents.ENTITY_MOA_SADDLE.get();
-	}
-
-	@Override
-	protected float getSoundVolume() {
-		return 0.25F;
 	}
 
 	@Override

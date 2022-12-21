@@ -18,8 +18,8 @@ public class InactiveImageButton extends ImageButton {
     public final int textureWidth;
     public final int textureHeight;
 
-    public InactiveImageButton(int x, int y, int width, int height, int xTexStart, int yTexStart, int yDiffTex, ResourceLocation resourceLocation, int textureWidth, int textureHeight, Button.OnPress onPress, Button.OnTooltip onTooltip, Component message) {
-        super(x, y, width, height, xTexStart, yTexStart, yDiffTex, resourceLocation, textureWidth, textureHeight, onPress, onTooltip, message);
+    public InactiveImageButton(int x, int y, int width, int height, int xTexStart, int yTexStart, int yDiffTex, ResourceLocation resourceLocation, int textureWidth, int textureHeight, Button.OnPress onPress, Component message) {
+        super(x, y, width, height, xTexStart, yTexStart, yDiffTex, resourceLocation, textureWidth, textureHeight, onPress, message);
         this.textureWidth = textureWidth;
         this.textureHeight = textureHeight;
         this.xTexStart = xTexStart;
@@ -39,9 +39,6 @@ public class InactiveImageButton extends ImageButton {
             i += this.yDiffTex;
         }
         RenderSystem.enableDepthTest();
-        blit(poseStack, this.x, this.y, (float)this.xTexStart, (float)i, this.width, this.height, this.textureWidth, this.textureHeight);
-        if (this.isHovered) {
-            this.renderToolTip(poseStack, mouseX, mouseY);
-        }
+        blit(poseStack, this.getX(), this.getY(), (float)this.xTexStart, (float)i, this.width, this.height, this.textureWidth, this.textureHeight);
     }
 }

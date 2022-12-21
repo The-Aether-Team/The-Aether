@@ -1,21 +1,22 @@
 package com.gildedgames.aether;
 
-import com.gildedgames.aether.data.resources.AetherDimensions;
+import com.gildedgames.aether.data.resources.registries.AetherDimensions;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import org.apache.commons.lang3.tuple.Pair;
 
-public class AetherConfig
-{
-    public static class Common
-    {
+public class AetherConfig {
+    public static class Common {
         public final ConfigValue<Boolean> enable_bed_explosions;
         public final ConfigValue<Boolean> start_with_portal;
         public final ConfigValue<Boolean> enable_startup_loot;
         public final ConfigValue<Boolean> edible_ambrosium;
         public final ConfigValue<Boolean> tools_debuff;
         public final ConfigValue<Boolean> healing_gummy_swets;
+        public final ConfigValue<Boolean> temporary_ice_accessory_conversion;
+        public final ConfigValue<Integer> hammer_of_notch_cooldown;
+        public final ConfigValue<Integer> cloud_staff_cooldown;
         public final ConfigValue<Integer> maximum_life_shards;
         public final ConfigValue<Boolean> repeat_sun_spirit_dialogue;
 
@@ -65,6 +66,18 @@ public class AetherConfig
                     .comment("Determines the limit of the amount of Life Shards a player can consume to increase their health")
                     .translation("config.aether.common.gameplay.maximum_life_shards")
                     .define("Maximum consumable Life Shards", 10);
+            temporary_ice_accessory_conversion = builder
+                    .comment("Ice Accessories will create temporary blocks instead of permanent blocks from conversions")
+                    .translation("config.aether.common.gameplay.temporary_ice_accessory_conversion")
+                    .define("Temporary blocks from Ice Accessories", false);
+            hammer_of_notch_cooldown = builder
+                    .comment("Determines the cooldown in ticks for the Hammer of Notch's ability")
+                    .translation("config.aether.common.gameplay.hammer_of_notch_cooldown")
+                    .define("Cooldown for the Hammer of Notch", 200);
+            cloud_staff_cooldown = builder
+                    .comment("Determines the cooldown in ticks for the Cloud Staff's ability")
+                    .translation("config.aether.common.gameplay.cloud_staff_cooldown")
+                    .define("Cooldown for the Cloud Staff", 40);
             repeat_sun_spirit_dialogue = builder
                     .comment("Determines whether the Sun Spirit's dialogue when meeting him should play through every time you meet him")
                     .translation("config.aether.common.gameplay.repeat_sun_spirit_dialogue")
@@ -133,8 +146,7 @@ public class AetherConfig
         }
     }
 
-    public static class Client
-    {
+    public static class Client {
         public final ConfigValue<Boolean> legacy_models;
         public final ConfigValue<Boolean> disable_aether_skybox;
 
@@ -147,6 +159,7 @@ public class AetherConfig
         public final ConfigValue<Boolean> align_vanilla_menu_elements_left;
         public final ConfigValue<Boolean> align_aether_menu_elements_left;
         public final ConfigValue<Boolean> enable_trivia;
+        public final ConfigValue<Boolean> enable_silver_hearts;
 
         public final ConfigValue<Integer> music_backup_min_delay;
         public final ConfigValue<Integer> music_backup_max_delay;
@@ -204,6 +217,10 @@ public class AetherConfig
                     .comment("Adds random trivia and tips to the bottom of loading screens")
                     .translation("config.aether.client.gui.enable_trivia")
                     .define("Enables random trivia", true);
+            enable_silver_hearts = builder
+                    .comment("Makes the extra hearts given by life shards display as silver colored")
+                    .translation("config.aether.client.gui.enable_silver_hearts")
+                    .define("Enables silver life shard hearts", true);
             builder.pop();
 
             builder.push("Audio");

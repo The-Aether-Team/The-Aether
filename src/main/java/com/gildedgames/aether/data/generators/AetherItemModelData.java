@@ -1,362 +1,369 @@
 package com.gildedgames.aether.data.generators;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.data.providers.AetherItemModelProvider;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.item.AetherItems;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-import javax.annotation.Nonnull;
-
-public class AetherItemModelData extends AetherItemModelProvider
-{
-    public AetherItemModelData(DataGenerator generator, ExistingFileHelper fileHelper) {
-        super(generator, fileHelper);
-    }
-
-    @Nonnull
-    @Override
-    public String getName() {
-        return "Aether Item Models";
+public class AetherItemModelData extends AetherItemModelProvider {
+    public AetherItemModelData(PackOutput output, ExistingFileHelper helper) {
+        super(output, Aether.MODID, helper);
     }
 
     @Override
     protected void registerModels() {
-        handheldItem(AetherItems.SKYROOT_PICKAXE, "tools/");
-        handheldItem(AetherItems.SKYROOT_AXE, "tools/");
-        handheldItem(AetherItems.SKYROOT_SHOVEL, "tools/");
-        handheldItem(AetherItems.SKYROOT_HOE, "tools/");
-
-        handheldItem(AetherItems.HOLYSTONE_PICKAXE, "tools/");
-        handheldItem(AetherItems.HOLYSTONE_AXE, "tools/");
-        handheldItem(AetherItems.HOLYSTONE_SHOVEL, "tools/");
-        handheldItem(AetherItems.HOLYSTONE_HOE, "tools/");
-
-        handheldItem(AetherItems.ZANITE_PICKAXE, "tools/");
-        handheldItem(AetherItems.ZANITE_AXE, "tools/");
-        handheldItem(AetherItems.ZANITE_SHOVEL, "tools/");
-        handheldItem(AetherItems.ZANITE_HOE, "tools/");
-
-        handheldItem(AetherItems.GRAVITITE_PICKAXE, "tools/");
-        handheldItem(AetherItems.GRAVITITE_AXE, "tools/");
-        handheldItem(AetherItems.GRAVITITE_SHOVEL, "tools/");
-        handheldItem(AetherItems.GRAVITITE_HOE, "tools/");
-
-        handheldItem(AetherItems.VALKYRIE_PICKAXE, "tools/");
-        handheldItem(AetherItems.VALKYRIE_AXE, "tools/");
-        handheldItem(AetherItems.VALKYRIE_SHOVEL, "tools/");
-        handheldItem(AetherItems.VALKYRIE_HOE, "tools/");
-
-        handheldItem(AetherItems.SKYROOT_SWORD, "weapons/");
-        handheldItem(AetherItems.HOLYSTONE_SWORD, "weapons/");
-        handheldItem(AetherItems.ZANITE_SWORD, "weapons/");
-        handheldItem(AetherItems.GRAVITITE_SWORD, "weapons/");
-
-        lanceItem(AetherItems.VALKYRIE_LANCE, "weapons/");
-
-        handheldItem(AetherItems.FLAMING_SWORD, "weapons/");
-        handheldItem(AetherItems.LIGHTNING_SWORD, "weapons/");
-        handheldItem(AetherItems.HOLY_SWORD, "weapons/");
-        handheldItem(AetherItems.VAMPIRE_BLADE, "weapons/");
-        handheldItem(AetherItems.PIG_SLAYER, "weapons/");
-        nameableWeapon(AetherItems.CANDY_CANE_SWORD, "weapons/", "green_candy_cane_sword");
-
-        nameableWeapon(AetherItems.HAMMER_OF_NOTCH, "weapons/", "hammer_of_jeb");
-
-        handheldItem(AetherItems.LIGHTNING_KNIFE, "weapons/");
-
-        item(AetherItems.GOLDEN_DART, "weapons/");
-        item(AetherItems.POISON_DART, "weapons/");
-        item(AetherItems.ENCHANTED_DART, "weapons/");
-
-        dartShooterItem(AetherItems.GOLDEN_DART_SHOOTER, "weapons/");
-        dartShooterItem(AetherItems.POISON_DART_SHOOTER, "weapons/");
-        dartShooterItem(AetherItems.ENCHANTED_DART_SHOOTER, "weapons/");
-
-        bowItem(AetherItems.PHOENIX_BOW, "weapons/");
-
-        item(AetherItems.ZANITE_HELMET, "armor/");
-        item(AetherItems.ZANITE_CHESTPLATE, "armor/");
-        item(AetherItems.ZANITE_LEGGINGS, "armor/");
-        item(AetherItems.ZANITE_BOOTS, "armor/");
-
-        item(AetherItems.GRAVITITE_HELMET, "armor/");
-        item(AetherItems.GRAVITITE_CHESTPLATE, "armor/");
-        item(AetherItems.GRAVITITE_LEGGINGS, "armor/");
-        item(AetherItems.GRAVITITE_BOOTS, "armor/");
-
-        item(AetherItems.NEPTUNE_HELMET, "armor/");
-        item(AetherItems.NEPTUNE_CHESTPLATE, "armor/");
-        item(AetherItems.NEPTUNE_LEGGINGS, "armor/");
-        item(AetherItems.NEPTUNE_BOOTS, "armor/");
-
-        item(AetherItems.PHOENIX_HELMET, "armor/");
-        item(AetherItems.PHOENIX_CHESTPLATE, "armor/");
-        item(AetherItems.PHOENIX_LEGGINGS, "armor/");
-        item(AetherItems.PHOENIX_BOOTS, "armor/");
-
-        item(AetherItems.OBSIDIAN_HELMET, "armor/");
-        item(AetherItems.OBSIDIAN_CHESTPLATE, "armor/");
-        item(AetherItems.OBSIDIAN_LEGGINGS, "armor/");
-        item(AetherItems.OBSIDIAN_BOOTS, "armor/");
-
-        item(AetherItems.VALKYRIE_HELMET, "armor/");
-        item(AetherItems.VALKYRIE_CHESTPLATE, "armor/");
-        item(AetherItems.VALKYRIE_LEGGINGS, "armor/");
-        item(AetherItems.VALKYRIE_BOOTS, "armor/");
-
-        item(AetherItems.SENTRY_BOOTS, "armor/");
-
-        item(AetherItems.BLUE_BERRY, "food/");
-        item(AetherItems.ENCHANTED_BERRY, "food/");
-        item(AetherItems.WHITE_APPLE, "food/");
-        item(AetherItems.BLUE_GUMMY_SWET, "food/");
-        item(AetherItems.GOLDEN_GUMMY_SWET, "food/");
-        item(AetherItems.HEALING_STONE, "food/");
-        item(AetherItems.CANDY_CANE, "food/");
-        item(AetherItems.GINGERBREAD_MAN, "food/");
-
-        item(AetherItems.IRON_RING, "accessories/");
-        item(AetherItems.GOLDEN_RING, "accessories/");
-        item(AetherItems.ZANITE_RING, "accessories/");
-        item(AetherItems.ICE_RING, "accessories/");
-
-        item(AetherItems.IRON_PENDANT, "accessories/");
-        item(AetherItems.GOLDEN_PENDANT, "accessories/");
-        item(AetherItems.ZANITE_PENDANT, "accessories/");
-        item(AetherItems.ICE_PENDANT, "accessories/");
-
-        dyedItem(AetherItems.LEATHER_GLOVES, "accessories/");
-        item(AetherItems.CHAINMAIL_GLOVES, "accessories/");
-        item(AetherItems.IRON_GLOVES, "accessories/");
-        item(AetherItems.GOLDEN_GLOVES, "accessories/");
-        item(AetherItems.DIAMOND_GLOVES, "accessories/");
-        item(AetherItems.NETHERITE_GLOVES, "accessories/");
-        item(AetherItems.ZANITE_GLOVES, "accessories/");
-        item(AetherItems.GRAVITITE_GLOVES, "accessories/");
-        item(AetherItems.NEPTUNE_GLOVES, "accessories/");
-        item(AetherItems.PHOENIX_GLOVES, "accessories/");
-        item(AetherItems.OBSIDIAN_GLOVES, "accessories/");
-        item(AetherItems.VALKYRIE_GLOVES, "accessories/");
-
-        item(AetherItems.RED_CAPE, "accessories/");
-        item(AetherItems.BLUE_CAPE, "accessories/");
-        item(AetherItems.YELLOW_CAPE, "accessories/");
-        item(AetherItems.WHITE_CAPE, "accessories/");
-        item(AetherItems.SWET_CAPE, "accessories/");
-        item(AetherItems.INVISIBILITY_CLOAK, "accessories/");
-        item(AetherItems.AGILITY_CAPE, "accessories/");
-        item(AetherItems.VALKYRIE_CAPE, "accessories/");
-
-        item(AetherItems.GOLDEN_FEATHER, "accessories/");
-        item(AetherItems.REGENERATION_STONE, "accessories/");
-        item(AetherItems.IRON_BUBBLE, "accessories/");
-        item(AetherItems.SHIELD_OF_REPULSION, "accessories/");
-
-        handheldItem(AetherItems.SKYROOT_STICK, "materials/");
-        item(AetherItems.GOLDEN_AMBER, "materials/");
-        item(AetherItems.SWET_BALL, "materials/");
-        item(AetherItems.AECHOR_PETAL, "materials/");
-        item(AetherItems.AMBROSIUM_SHARD, "materials/");
-        item(AetherItems.ZANITE_GEMSTONE, "materials/");
-
-        item(AetherItems.VICTORY_MEDAL, "miscellaneous/");
-
-        item(AetherItems.BRONZE_DUNGEON_KEY, "miscellaneous/");
-        item(AetherItems.SILVER_DUNGEON_KEY, "miscellaneous/");
-        item(AetherItems.GOLD_DUNGEON_KEY, "miscellaneous/");
-
-        item(AetherItems.SKYROOT_BUCKET, "miscellaneous/");
-        item(AetherItems.SKYROOT_WATER_BUCKET, "miscellaneous/");
-        item(AetherItems.SKYROOT_POISON_BUCKET, "miscellaneous/");
-        item(AetherItems.SKYROOT_REMEDY_BUCKET, "miscellaneous/");
-        item(AetherItems.SKYROOT_MILK_BUCKET, "miscellaneous/");
-        item(AetherItems.SKYROOT_POWDER_SNOW_BUCKET, "miscellaneous/");
-        item(AetherItems.SKYROOT_COD_BUCKET, "miscellaneous/");
-        item(AetherItems.SKYROOT_SALMON_BUCKET, "miscellaneous/");
-        item(AetherItems.SKYROOT_PUFFERFISH_BUCKET, "miscellaneous/");
-        item(AetherItems.SKYROOT_TROPICAL_FISH_BUCKET, "miscellaneous/");
-        item(AetherItems.SKYROOT_AXOLOTL_BUCKET, "miscellaneous/");
-        item(AetherItems.SKYROOT_TADPOLE_BUCKET, "miscellaneous/");
-
-        item(AetherItems.SKYROOT_BOAT, "miscellaneous/");
-        item(AetherItems.SKYROOT_CHEST_BOAT, "miscellaneous/");
-
-        item(AetherItems.COLD_PARACHUTE, "miscellaneous/");
-        item(AetherItems.GOLDEN_PARACHUTE, "miscellaneous/");
-
-        handheldItem(AetherItems.NATURE_STAFF, "miscellaneous/");
-        handheldItem(AetherItems.CLOUD_STAFF, "miscellaneous/");
-
-        moaEggItem(AetherItems.BLUE_MOA_EGG, "miscellaneous/");
-        moaEggItem(AetherItems.WHITE_MOA_EGG, "miscellaneous/");
-        moaEggItem(AetherItems.BLACK_MOA_EGG, "miscellaneous/");
-        moaEggItem(AetherItems.ORANGE_MOA_EGG, "miscellaneous/");
-
-        item(AetherItems.LIFE_SHARD, "miscellaneous/");
-
-        item(AetherItems.MUSIC_DISC_AETHER_TUNE, "miscellaneous/");
-        item(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "miscellaneous/");
-        item(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "miscellaneous/");
-        item(AetherItems.MUSIC_DISC_LEGACY, "miscellaneous/");
-        item(AetherItems.MUSIC_DISC_CHINCHILLA, "miscellaneous/");
-
-        item(AetherItems.BOOK_OF_LORE, "miscellaneous/");
-
-        portalItem(AetherItems.AETHER_PORTAL_FRAME, "miscellaneous/");
-
-        eggItem(AetherItems.PHYG_SPAWN_EGG);
-        eggItem(AetherItems.FLYING_COW_SPAWN_EGG);
-        eggItem(AetherItems.SHEEPUFF_SPAWN_EGG);
-        eggItem(AetherItems.MOA_SPAWN_EGG);
-        eggItem(AetherItems.AERWHALE_SPAWN_EGG);
-        eggItem(AetherItems.AERBUNNY_SPAWN_EGG);
-        eggItem(AetherItems.WHIRLWIND_SPAWN_EGG);
-        eggItem(AetherItems.BLUE_SWET_SPAWN_EGG);
-        eggItem(AetherItems.GOLDEN_SWET_SPAWN_EGG);
-        eggItem(AetherItems.EVIL_WHIRLWIND_SPAWN_EGG);
-        eggItem(AetherItems.AECHOR_PLANT_SPAWN_EGG);
-        eggItem(AetherItems.COCKATRICE_SPAWN_EGG);
-        eggItem(AetherItems.ZEPHYR_SPAWN_EGG);
-        eggItem(AetherItems.SENTRY_SPAWN_EGG);
-        eggItem(AetherItems.MIMIC_SPAWN_EGG);
-        eggItem(AetherItems.VALKYRIE_SPAWN_EGG);
-        eggItem(AetherItems.FIRE_MINION_SPAWN_EGG);
-
-        eggItem(AetherItems.VALKYRIE_QUEEN_SPAWN_EGG);
-        eggItem(AetherItems.SUN_SPIRIT_SPAWN_EGG);
-
-        itemBlock(AetherBlocks.AETHER_GRASS_BLOCK);
-        itemBlock(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK);
-        itemBlock(AetherBlocks.AETHER_DIRT);
-        itemBlock(AetherBlocks.QUICKSOIL);
-        itemBlock(AetherBlocks.HOLYSTONE);
-        itemBlock(AetherBlocks.MOSSY_HOLYSTONE);
-        itemBlock(AetherBlocks.AETHER_FARMLAND);
-        itemBlock(AetherBlocks.AETHER_DIRT_PATH);
-
-        itemBlock(AetherBlocks.COLD_AERCLOUD);
-        itemBlock(AetherBlocks.BLUE_AERCLOUD);
-        itemBlock(AetherBlocks.GOLDEN_AERCLOUD);
-        itemBlock(AetherBlocks.PINK_AERCLOUD);
-
-        itemBlock(AetherBlocks.ICESTONE);
-        itemBlock(AetherBlocks.AMBROSIUM_ORE);
-        itemBlock(AetherBlocks.ZANITE_ORE);
-        itemBlock(AetherBlocks.GRAVITITE_ORE);
-
-        itemBlock(AetherBlocks.SKYROOT_LEAVES);
-        itemBlock(AetherBlocks.GOLDEN_OAK_LEAVES);
-        itemBlock(AetherBlocks.CRYSTAL_LEAVES);
-        itemBlock(AetherBlocks.CRYSTAL_FRUIT_LEAVES);
-        itemBlock(AetherBlocks.HOLIDAY_LEAVES);
-        itemBlock(AetherBlocks.DECORATED_HOLIDAY_LEAVES);
-
-        itemBlock(AetherBlocks.SKYROOT_LOG);
-        itemBlock(AetherBlocks.GOLDEN_OAK_LOG);
-        itemBlock(AetherBlocks.STRIPPED_SKYROOT_LOG);
-        itemBlock(AetherBlocks.SKYROOT_WOOD);
-        itemBlock(AetherBlocks.GOLDEN_OAK_WOOD);
-        itemBlock(AetherBlocks.STRIPPED_SKYROOT_WOOD);
-
-        itemBlock(AetherBlocks.SKYROOT_PLANKS);
-        itemBlock(AetherBlocks.HOLYSTONE_BRICKS);
-        itemBlock(AetherBlocks.QUICKSOIL_GLASS);
-        pane(AetherBlocks.QUICKSOIL_GLASS_PANE, AetherBlocks.QUICKSOIL_GLASS, "construction/");
-        itemBlock(AetherBlocks.AEROGEL);
-
-        itemBlock(AetherBlocks.AMBROSIUM_BLOCK);
-        itemBlock(AetherBlocks.ZANITE_BLOCK);
-        itemBlock(AetherBlocks.ENCHANTED_GRAVITITE);
-
-        itemBlock(AetherBlocks.ALTAR);
-        itemBlock(AetherBlocks.FREEZER);
-        itemBlock(AetherBlocks.INCUBATOR);
-
-        itemTorch(AetherBlocks.AMBROSIUM_TORCH, "utility/");
-        item(() -> AetherBlocks.SKYROOT_SIGN.get().asItem(), "miscellaneous/");
-
-        itemBlock(AetherBlocks.BERRY_BUSH);
-        itemBlockFlat(AetherBlocks.BERRY_BUSH_STEM, "natural/");
-
-        itemBlockFlat(AetherBlocks.WHITE_FLOWER, "natural/");
-        itemBlockFlat(AetherBlocks.PURPLE_FLOWER, "natural/");
-
-        itemBlockFlat(AetherBlocks.SKYROOT_SAPLING, "natural/");
-        itemBlockFlat(AetherBlocks.GOLDEN_OAK_SAPLING, "natural/");
-
-        itemBlock(AetherBlocks.CARVED_STONE);
-        itemBlock(AetherBlocks.SENTRY_STONE);
-        itemBlock(AetherBlocks.ANGELIC_STONE);
-        itemBlock(AetherBlocks.LIGHT_ANGELIC_STONE);
-        itemBlock(AetherBlocks.HELLFIRE_STONE);
-        itemBlock(AetherBlocks.LIGHT_HELLFIRE_STONE);
-
-        itemLockedDungeonBlock(AetherBlocks.LOCKED_CARVED_STONE, AetherBlocks.CARVED_STONE);
-        itemLockedDungeonBlock(AetherBlocks.LOCKED_SENTRY_STONE, AetherBlocks.SENTRY_STONE);
-        itemLockedDungeonBlock(AetherBlocks.LOCKED_ANGELIC_STONE, AetherBlocks.ANGELIC_STONE);
-        itemLockedDungeonBlock(AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE, AetherBlocks.LIGHT_ANGELIC_STONE);
-        itemLockedDungeonBlock(AetherBlocks.LOCKED_HELLFIRE_STONE, AetherBlocks.HELLFIRE_STONE);
-        itemLockedDungeonBlock(AetherBlocks.LOCKED_LIGHT_HELLFIRE_STONE, AetherBlocks.LIGHT_HELLFIRE_STONE);
-
-        itemTrappedDungeonBlock(AetherBlocks.TRAPPED_CARVED_STONE, AetherBlocks.CARVED_STONE);
-        itemTrappedDungeonBlock(AetherBlocks.TRAPPED_SENTRY_STONE, AetherBlocks.SENTRY_STONE);
-        itemTrappedDungeonBlock(AetherBlocks.TRAPPED_ANGELIC_STONE, AetherBlocks.ANGELIC_STONE);
-        itemTrappedDungeonBlock(AetherBlocks.TRAPPED_LIGHT_ANGELIC_STONE, AetherBlocks.LIGHT_ANGELIC_STONE);
-        itemTrappedDungeonBlock(AetherBlocks.TRAPPED_HELLFIRE_STONE, AetherBlocks.HELLFIRE_STONE);
-        itemTrappedDungeonBlock(AetherBlocks.TRAPPED_LIGHT_HELLFIRE_STONE, AetherBlocks.LIGHT_HELLFIRE_STONE);
-
-        lookalikeBlock(AetherBlocks.CHEST_MIMIC, mcLoc("item/chest"));
-        lookalikeBlock(AetherBlocks.TREASURE_CHEST, mcLoc("item/chest"));
-
-        itemBlock(AetherBlocks.PILLAR);
-        itemBlock(AetherBlocks.PILLAR_TOP);
-
-        itemBlock(AetherBlocks.PRESENT);
-
-        itemFence(AetherBlocks.SKYROOT_FENCE, AetherBlocks.SKYROOT_PLANKS, "construction/");
-        itemBlock(AetherBlocks.SKYROOT_FENCE_GATE);
-        item(() -> AetherBlocks.SKYROOT_DOOR.get().asItem(), "miscellaneous/");
-        itemBlock(AetherBlocks.SKYROOT_TRAPDOOR, "_bottom");
-        itemButton(AetherBlocks.SKYROOT_BUTTON, AetherBlocks.SKYROOT_PLANKS, "construction/");
-        itemBlock(AetherBlocks.SKYROOT_PRESSURE_PLATE);
-
-        itemButton(AetherBlocks.HOLYSTONE_BUTTON, AetherBlocks.HOLYSTONE, "natural/");
-        itemBlock(AetherBlocks.HOLYSTONE_PRESSURE_PLATE);
-
-        itemWallBlock(AetherBlocks.CARVED_WALL, AetherBlocks.CARVED_STONE, "dungeon/");
-        itemWallBlock(AetherBlocks.ANGELIC_WALL, AetherBlocks.ANGELIC_STONE, "dungeon/");
-        itemWallBlock(AetherBlocks.HELLFIRE_WALL, AetherBlocks.HELLFIRE_STONE, "dungeon/");
-        itemWallBlock(AetherBlocks.HOLYSTONE_WALL, AetherBlocks.HOLYSTONE, "natural/");
-        itemWallBlock(AetherBlocks.MOSSY_HOLYSTONE_WALL, AetherBlocks.MOSSY_HOLYSTONE, "natural/");
-        itemWallBlock(AetherBlocks.ICESTONE_WALL, AetherBlocks.ICESTONE, "natural/");
-        itemWallBlock(AetherBlocks.HOLYSTONE_BRICK_WALL, AetherBlocks.HOLYSTONE_BRICKS, "construction/");
-        translucentItemWallBlock(AetherBlocks.AEROGEL_WALL, AetherBlocks.AEROGEL, "construction/");
-
-        itemBlock(AetherBlocks.SKYROOT_STAIRS);
-        itemBlock(AetherBlocks.CARVED_STAIRS);
-        itemBlock(AetherBlocks.ANGELIC_STAIRS);
-        itemBlock(AetherBlocks.HELLFIRE_STAIRS);
-        itemBlock(AetherBlocks.HOLYSTONE_STAIRS);
-        itemBlock(AetherBlocks.MOSSY_HOLYSTONE_STAIRS);
-        itemBlock(AetherBlocks.ICESTONE_STAIRS);
-        itemBlock(AetherBlocks.HOLYSTONE_BRICK_STAIRS);
-        itemBlock(AetherBlocks.AEROGEL_STAIRS);
-
-        itemBlock(AetherBlocks.SKYROOT_SLAB);
-        itemBlock(AetherBlocks.CARVED_SLAB);
-        itemBlock(AetherBlocks.ANGELIC_SLAB);
-        itemBlock(AetherBlocks.HELLFIRE_SLAB);
-        itemBlock(AetherBlocks.HOLYSTONE_SLAB);
-        itemBlock(AetherBlocks.MOSSY_HOLYSTONE_SLAB);
-        itemBlock(AetherBlocks.ICESTONE_SLAB);
-        itemBlock(AetherBlocks.HOLYSTONE_BRICK_SLAB);
-        itemBlock(AetherBlocks.AEROGEL_SLAB);
-
-        itemBlock(AetherBlocks.SUN_ALTAR);
-
-        itemBlock(AetherBlocks.SKYROOT_BOOKSHELF);
-
-        lookalikeBlock(AetherBlocks.SKYROOT_BED, mcLoc("item/template_bed"));
+        this.handheldItem(AetherItems.SKYROOT_PICKAXE.get(), "tools/");
+        this.handheldItem(AetherItems.SKYROOT_AXE.get(), "tools/");
+        this.handheldItem(AetherItems.SKYROOT_SHOVEL.get(), "tools/");
+        this.handheldItem(AetherItems.SKYROOT_HOE.get(), "tools/");
+
+        this.handheldItem(AetherItems.HOLYSTONE_PICKAXE.get(), "tools/");
+        this.handheldItem(AetherItems.HOLYSTONE_AXE.get(), "tools/");
+        this.handheldItem(AetherItems.HOLYSTONE_SHOVEL.get(), "tools/");
+        this.handheldItem(AetherItems.HOLYSTONE_HOE.get(), "tools/");
+
+        this.handheldItem(AetherItems.ZANITE_PICKAXE.get(), "tools/");
+        this.handheldItem(AetherItems.ZANITE_AXE.get(), "tools/");
+        this.handheldItem(AetherItems.ZANITE_SHOVEL.get(), "tools/");
+        this.handheldItem(AetherItems.ZANITE_HOE.get(), "tools/");
+
+        this.handheldItem(AetherItems.GRAVITITE_PICKAXE.get(), "tools/");
+        this.handheldItem(AetherItems.GRAVITITE_AXE.get(), "tools/");
+        this.handheldItem(AetherItems.GRAVITITE_SHOVEL.get(), "tools/");
+        this.handheldItem(AetherItems.GRAVITITE_HOE.get(), "tools/");
+
+        this.handheldItem(AetherItems.VALKYRIE_PICKAXE.get(), "tools/");
+        this.handheldItem(AetherItems.VALKYRIE_AXE.get(), "tools/");
+        this.handheldItem(AetherItems.VALKYRIE_SHOVEL.get(), "tools/");
+        this.handheldItem(AetherItems.VALKYRIE_HOE.get(), "tools/");
+
+        this.handheldItem(AetherItems.SKYROOT_SWORD.get(), "weapons/");
+        this.handheldItem(AetherItems.HOLYSTONE_SWORD.get(), "weapons/");
+        this.handheldItem(AetherItems.ZANITE_SWORD.get(), "weapons/");
+        this.handheldItem(AetherItems.GRAVITITE_SWORD.get(), "weapons/");
+
+        this.lanceItem(AetherItems.VALKYRIE_LANCE.get(), "weapons/");
+
+        this.handheldItem(AetherItems.FLAMING_SWORD.get(), "weapons/");
+        this.handheldItem(AetherItems.LIGHTNING_SWORD.get(), "weapons/");
+        this.handheldItem(AetherItems.HOLY_SWORD.get(), "weapons/");
+        this.handheldItem(AetherItems.VAMPIRE_BLADE.get(), "weapons/");
+        this.handheldItem(AetherItems.PIG_SLAYER.get(), "weapons/");
+        this.nameableWeapon(AetherItems.CANDY_CANE_SWORD.get(), "weapons/", "green_candy_cane_sword");
+
+        this.nameableWeapon(AetherItems.HAMMER_OF_NOTCH.get(), "weapons/", "hammer_of_jeb");
+
+        this.handheldItem(AetherItems.LIGHTNING_KNIFE.get(), "weapons/");
+
+        this.item(AetherItems.GOLDEN_DART.get(), "weapons/");
+        this.item(AetherItems.POISON_DART.get(), "weapons/");
+        this.item(AetherItems.ENCHANTED_DART.get(), "weapons/");
+
+        this.dartShooterItem(AetherItems.GOLDEN_DART_SHOOTER.get(), "weapons/");
+        this.dartShooterItem(AetherItems.POISON_DART_SHOOTER.get(), "weapons/");
+        this.dartShooterItem(AetherItems.ENCHANTED_DART_SHOOTER.get(), "weapons/");
+
+        this.bowItem(AetherItems.PHOENIX_BOW.get(), "weapons/");
+
+        this.item(AetherItems.ZANITE_HELMET.get(), "armor/");
+        this.item(AetherItems.ZANITE_CHESTPLATE.get(), "armor/");
+        this.item(AetherItems.ZANITE_LEGGINGS.get(), "armor/");
+        this.item(AetherItems.ZANITE_BOOTS.get(), "armor/");
+
+        this.item(AetherItems.GRAVITITE_HELMET.get(), "armor/");
+        this.item(AetherItems.GRAVITITE_CHESTPLATE.get(), "armor/");
+        this.item(AetherItems.GRAVITITE_LEGGINGS.get(), "armor/");
+        this.item(AetherItems.GRAVITITE_BOOTS.get(), "armor/");
+
+        this.item(AetherItems.NEPTUNE_HELMET.get(), "armor/");
+        this.item(AetherItems.NEPTUNE_CHESTPLATE.get(), "armor/");
+        this.item(AetherItems.NEPTUNE_LEGGINGS.get(), "armor/");
+        this.item(AetherItems.NEPTUNE_BOOTS.get(), "armor/");
+
+        this.item(AetherItems.PHOENIX_HELMET.get(), "armor/");
+        this.item(AetherItems.PHOENIX_CHESTPLATE.get(), "armor/");
+        this.item(AetherItems.PHOENIX_LEGGINGS.get(), "armor/");
+        this.item(AetherItems.PHOENIX_BOOTS.get(), "armor/");
+
+        this.item(AetherItems.OBSIDIAN_HELMET.get(), "armor/");
+        this.item(AetherItems.OBSIDIAN_CHESTPLATE.get(), "armor/");
+        this.item(AetherItems.OBSIDIAN_LEGGINGS.get(), "armor/");
+        this.item(AetherItems.OBSIDIAN_BOOTS.get(), "armor/");
+
+        this.item(AetherItems.VALKYRIE_HELMET.get(), "armor/");
+        this.item(AetherItems.VALKYRIE_CHESTPLATE.get(), "armor/");
+        this.item(AetherItems.VALKYRIE_LEGGINGS.get(), "armor/");
+        this.item(AetherItems.VALKYRIE_BOOTS.get(), "armor/");
+
+        this.item(AetherItems.SENTRY_BOOTS.get(), "armor/");
+
+        this.item(AetherItems.BLUE_BERRY.get(), "food/");
+        this.item(AetherItems.ENCHANTED_BERRY.get(), "food/");
+        this.item(AetherItems.WHITE_APPLE.get(), "food/");
+        this.item(AetherItems.BLUE_GUMMY_SWET.get(), "food/");
+        this.item(AetherItems.GOLDEN_GUMMY_SWET.get(), "food/");
+        this.item(AetherItems.HEALING_STONE.get(), "food/");
+        this.item(AetherItems.CANDY_CANE.get(), "food/");
+        this.item(AetherItems.GINGERBREAD_MAN.get(), "food/");
+
+        this.item(AetherItems.IRON_RING.get(), "accessories/");
+        this.item(AetherItems.GOLDEN_RING.get(), "accessories/");
+        this.item(AetherItems.ZANITE_RING.get(), "accessories/");
+        this.item(AetherItems.ICE_RING.get(), "accessories/");
+
+        this.item(AetherItems.IRON_PENDANT.get(), "accessories/");
+        this.item(AetherItems.GOLDEN_PENDANT.get(), "accessories/");
+        this.item(AetherItems.ZANITE_PENDANT.get(), "accessories/");
+        this.item(AetherItems.ICE_PENDANT.get(), "accessories/");
+
+        this.dyedItem(AetherItems.LEATHER_GLOVES.get(), "accessories/");
+        this.item(AetherItems.CHAINMAIL_GLOVES.get(), "accessories/");
+        this.item(AetherItems.IRON_GLOVES.get(), "accessories/");
+        this.item(AetherItems.GOLDEN_GLOVES.get(), "accessories/");
+        this.item(AetherItems.DIAMOND_GLOVES.get(), "accessories/");
+        this.item(AetherItems.NETHERITE_GLOVES.get(), "accessories/");
+        this.item(AetherItems.ZANITE_GLOVES.get(), "accessories/");
+        this.item(AetherItems.GRAVITITE_GLOVES.get(), "accessories/");
+        this.item(AetherItems.NEPTUNE_GLOVES.get(), "accessories/");
+        this.item(AetherItems.PHOENIX_GLOVES.get(), "accessories/");
+        this.item(AetherItems.OBSIDIAN_GLOVES.get(), "accessories/");
+        this.item(AetherItems.VALKYRIE_GLOVES.get(), "accessories/");
+
+        this.item(AetherItems.RED_CAPE.get(), "accessories/");
+        this.item(AetherItems.BLUE_CAPE.get(), "accessories/");
+        this.item(AetherItems.YELLOW_CAPE.get(), "accessories/");
+        this.item(AetherItems.WHITE_CAPE.get(), "accessories/");
+        this.item(AetherItems.SWET_CAPE.get(), "accessories/");
+        this.item(AetherItems.INVISIBILITY_CLOAK.get(), "accessories/");
+        this.item(AetherItems.AGILITY_CAPE.get(), "accessories/");
+        this.item(AetherItems.VALKYRIE_CAPE.get(), "accessories/");
+
+        this.item(AetherItems.GOLDEN_FEATHER.get(), "accessories/");
+        this.item(AetherItems.REGENERATION_STONE.get(), "accessories/");
+        this.item(AetherItems.IRON_BUBBLE.get(), "accessories/");
+        this.item(AetherItems.SHIELD_OF_REPULSION.get(), "accessories/");
+
+        this.handheldItem(AetherItems.SKYROOT_STICK.get(), "materials/");
+        this.item(AetherItems.GOLDEN_AMBER.get(), "materials/");
+        this.item(AetherItems.SWET_BALL.get(), "materials/");
+        this.item(AetherItems.AECHOR_PETAL.get(), "materials/");
+        this.item(AetherItems.AMBROSIUM_SHARD.get(), "materials/");
+        this.item(AetherItems.ZANITE_GEMSTONE.get(), "materials/");
+
+        this.item(AetherItems.VICTORY_MEDAL.get(), "miscellaneous/");
+
+        this.keyItem(AetherItems.BRONZE_DUNGEON_KEY.get(), "miscellaneous/");
+        this.keyItem(AetherItems.SILVER_DUNGEON_KEY.get(), "miscellaneous/");
+        this.keyItem(AetherItems.GOLD_DUNGEON_KEY.get(), "miscellaneous/");
+
+        this.item(AetherItems.SKYROOT_BUCKET.get(), "miscellaneous/");
+        this.item(AetherItems.SKYROOT_WATER_BUCKET.get(), "miscellaneous/");
+        this.item(AetherItems.SKYROOT_POISON_BUCKET.get(), "miscellaneous/");
+        this.item(AetherItems.SKYROOT_REMEDY_BUCKET.get(), "miscellaneous/");
+        this.item(AetherItems.SKYROOT_MILK_BUCKET.get(), "miscellaneous/");
+        this.item(AetherItems.SKYROOT_POWDER_SNOW_BUCKET.get(), "miscellaneous/");
+        this.item(AetherItems.SKYROOT_COD_BUCKET.get(), "miscellaneous/");
+        this.item(AetherItems.SKYROOT_SALMON_BUCKET.get(), "miscellaneous/");
+        this.item(AetherItems.SKYROOT_PUFFERFISH_BUCKET.get(), "miscellaneous/");
+        this.item(AetherItems.SKYROOT_TROPICAL_FISH_BUCKET.get(), "miscellaneous/");
+        this.item(AetherItems.SKYROOT_AXOLOTL_BUCKET.get(), "miscellaneous/");
+        this.item(AetherItems.SKYROOT_TADPOLE_BUCKET.get(), "miscellaneous/");
+
+        this.item(AetherItems.SKYROOT_BOAT.get(), "miscellaneous/");
+        this.item(AetherItems.SKYROOT_CHEST_BOAT.get(), "miscellaneous/");
+
+        this.item(AetherItems.COLD_PARACHUTE.get(), "miscellaneous/");
+        this.item(AetherItems.GOLDEN_PARACHUTE.get(), "miscellaneous/");
+
+        this.handheldItem(AetherItems.NATURE_STAFF.get(), "miscellaneous/");
+        this.handheldItem(AetherItems.CLOUD_STAFF.get(), "miscellaneous/");
+
+        this.moaEggItem(AetherItems.BLUE_MOA_EGG.get(), "miscellaneous/");
+        this.moaEggItem(AetherItems.WHITE_MOA_EGG.get(), "miscellaneous/");
+        this.moaEggItem(AetherItems.BLACK_MOA_EGG.get(), "miscellaneous/");
+        this.moaEggItem(AetherItems.ORANGE_MOA_EGG.get(), "miscellaneous/");
+
+        this.item(AetherItems.LIFE_SHARD.get(), "miscellaneous/");
+
+        this.item(AetherItems.MUSIC_DISC_AETHER_TUNE.get(), "miscellaneous/");
+        this.item(AetherItems.MUSIC_DISC_ASCENDING_DAWN.get(), "miscellaneous/");
+        this.item(AetherItems.MUSIC_DISC_WELCOMING_SKIES.get(), "miscellaneous/");
+        this.item(AetherItems.MUSIC_DISC_LEGACY.get(), "miscellaneous/");
+        this.item(AetherItems.MUSIC_DISC_CHINCHILLA.get(), "miscellaneous/");
+
+        this.item(AetherItems.BOOK_OF_LORE.get(), "miscellaneous/");
+
+        this.portalItem(AetherItems.AETHER_PORTAL_FRAME.get(), "miscellaneous/");
+
+        this.eggItem(AetherItems.PHYG_SPAWN_EGG.get());
+        this.eggItem(AetherItems.FLYING_COW_SPAWN_EGG.get());
+        this.eggItem(AetherItems.SHEEPUFF_SPAWN_EGG.get());
+        this.eggItem(AetherItems.MOA_SPAWN_EGG.get());
+        this.eggItem(AetherItems.AERWHALE_SPAWN_EGG.get());
+        this.eggItem(AetherItems.AERBUNNY_SPAWN_EGG.get());
+        this.eggItem(AetherItems.WHIRLWIND_SPAWN_EGG.get());
+        this.eggItem(AetherItems.BLUE_SWET_SPAWN_EGG.get());
+        this.eggItem(AetherItems.GOLDEN_SWET_SPAWN_EGG.get());
+        this.eggItem(AetherItems.EVIL_WHIRLWIND_SPAWN_EGG.get());
+        this.eggItem(AetherItems.AECHOR_PLANT_SPAWN_EGG.get());
+        this.eggItem(AetherItems.COCKATRICE_SPAWN_EGG.get());
+        this.eggItem(AetherItems.ZEPHYR_SPAWN_EGG.get());
+        this.eggItem(AetherItems.SENTRY_SPAWN_EGG.get());
+        this.eggItem(AetherItems.MIMIC_SPAWN_EGG.get());
+        this.eggItem(AetherItems.VALKYRIE_SPAWN_EGG.get());
+        this.eggItem(AetherItems.FIRE_MINION_SPAWN_EGG.get());
+
+        this.eggItem(AetherItems.SLIDER_SPAWN_EGG.get());
+        this.eggItem(AetherItems.VALKYRIE_QUEEN_SPAWN_EGG.get());
+        this.eggItem(AetherItems.SUN_SPIRIT_SPAWN_EGG.get());
+
+        this.itemBlock(AetherBlocks.AETHER_GRASS_BLOCK.get());
+        this.itemBlock(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get());
+        this.itemBlock(AetherBlocks.AETHER_DIRT.get());
+        this.itemBlock(AetherBlocks.QUICKSOIL.get());
+        this.itemBlock(AetherBlocks.HOLYSTONE.get());
+        this.itemBlock(AetherBlocks.MOSSY_HOLYSTONE.get());
+        this.itemBlock(AetherBlocks.AETHER_FARMLAND.get());
+        this.itemBlock(AetherBlocks.AETHER_DIRT_PATH.get());
+
+        this.itemBlock(AetherBlocks.COLD_AERCLOUD.get());
+        this.itemBlock(AetherBlocks.BLUE_AERCLOUD.get());
+        this.itemBlock(AetherBlocks.GOLDEN_AERCLOUD.get());
+        this.itemBlock(AetherBlocks.PINK_AERCLOUD.get());
+
+        this.itemBlock(AetherBlocks.ICESTONE.get());
+        this.itemBlock(AetherBlocks.AMBROSIUM_ORE.get());
+        this.itemBlock(AetherBlocks.ZANITE_ORE.get());
+        this.itemBlock(AetherBlocks.GRAVITITE_ORE.get());
+
+        this.itemBlock(AetherBlocks.SKYROOT_LEAVES.get());
+        this.itemBlock(AetherBlocks.GOLDEN_OAK_LEAVES.get());
+        this.itemBlock(AetherBlocks.CRYSTAL_LEAVES.get());
+        this.itemBlock(AetherBlocks.CRYSTAL_FRUIT_LEAVES.get());
+        this.itemBlock(AetherBlocks.HOLIDAY_LEAVES.get());
+        this.itemBlock(AetherBlocks.DECORATED_HOLIDAY_LEAVES.get());
+
+        this.itemBlock(AetherBlocks.SKYROOT_LOG.get());
+        this.itemBlock(AetherBlocks.GOLDEN_OAK_LOG.get());
+        this.itemBlock(AetherBlocks.STRIPPED_SKYROOT_LOG.get());
+        this.itemBlock(AetherBlocks.SKYROOT_WOOD.get());
+        this.itemBlock(AetherBlocks.GOLDEN_OAK_WOOD.get());
+        this.itemBlock(AetherBlocks.STRIPPED_SKYROOT_WOOD.get());
+
+        this.itemBlock(AetherBlocks.SKYROOT_PLANKS.get());
+        this.itemBlock(AetherBlocks.HOLYSTONE_BRICKS.get());
+        this.itemBlock(AetherBlocks.QUICKSOIL_GLASS.get());
+        this.pane(AetherBlocks.QUICKSOIL_GLASS_PANE.get(), AetherBlocks.QUICKSOIL_GLASS.get(), "construction/");
+        this.itemBlock(AetherBlocks.AEROGEL.get());
+
+        this.itemBlock(AetherBlocks.AMBROSIUM_BLOCK.get());
+        this.itemBlock(AetherBlocks.ZANITE_BLOCK.get());
+        this.itemBlock(AetherBlocks.ENCHANTED_GRAVITITE.get());
+
+        this.itemBlock(AetherBlocks.ALTAR.get());
+        this.itemBlock(AetherBlocks.FREEZER.get());
+        this.itemBlock(AetherBlocks.INCUBATOR.get());
+
+        this.itemTorch(AetherBlocks.AMBROSIUM_TORCH.get(), "utility/");
+        this.item(AetherBlocks.SKYROOT_SIGN.get().asItem(), "miscellaneous/");
+
+        this.itemBlock(AetherBlocks.BERRY_BUSH.get());
+        this.itemBlockFlat(AetherBlocks.BERRY_BUSH_STEM.get(), "natural/");
+
+        this.itemBlockFlat(AetherBlocks.WHITE_FLOWER.get(), "natural/");
+        this.itemBlockFlat(AetherBlocks.PURPLE_FLOWER.get(), "natural/");
+
+        this.itemBlockFlat(AetherBlocks.SKYROOT_SAPLING.get(), "natural/");
+        this.itemBlockFlat(AetherBlocks.GOLDEN_OAK_SAPLING.get(), "natural/");
+
+        this.itemBlock(AetherBlocks.CARVED_STONE.get());
+        this.itemBlock(AetherBlocks.SENTRY_STONE.get());
+        this.itemBlock(AetherBlocks.ANGELIC_STONE.get());
+        this.itemBlock(AetherBlocks.LIGHT_ANGELIC_STONE.get());
+        this.itemBlock(AetherBlocks.HELLFIRE_STONE.get());
+        this.itemBlock(AetherBlocks.LIGHT_HELLFIRE_STONE.get());
+
+        this.itemLockedDungeonBlock(AetherBlocks.LOCKED_CARVED_STONE.get(), AetherBlocks.CARVED_STONE.get());
+        this.itemLockedDungeonBlock(AetherBlocks.LOCKED_SENTRY_STONE.get(), AetherBlocks.SENTRY_STONE.get());
+        this.itemLockedDungeonBlock(AetherBlocks.LOCKED_ANGELIC_STONE.get(), AetherBlocks.ANGELIC_STONE.get());
+        this.itemLockedDungeonBlock(AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get(), AetherBlocks.LIGHT_ANGELIC_STONE.get());
+        this.itemLockedDungeonBlock(AetherBlocks.LOCKED_HELLFIRE_STONE.get(), AetherBlocks.HELLFIRE_STONE.get());
+        this.itemLockedDungeonBlock(AetherBlocks.LOCKED_LIGHT_HELLFIRE_STONE.get(), AetherBlocks.LIGHT_HELLFIRE_STONE.get());
+
+        this.itemTrappedDungeonBlock(AetherBlocks.TRAPPED_CARVED_STONE.get(), AetherBlocks.CARVED_STONE.get());
+        this.itemTrappedDungeonBlock(AetherBlocks.TRAPPED_SENTRY_STONE.get(), AetherBlocks.SENTRY_STONE.get());
+        this.itemTrappedDungeonBlock(AetherBlocks.TRAPPED_ANGELIC_STONE.get(), AetherBlocks.ANGELIC_STONE.get());
+        this.itemTrappedDungeonBlock(AetherBlocks.TRAPPED_LIGHT_ANGELIC_STONE.get(), AetherBlocks.LIGHT_ANGELIC_STONE.get());
+        this.itemTrappedDungeonBlock(AetherBlocks.TRAPPED_HELLFIRE_STONE.get(), AetherBlocks.HELLFIRE_STONE.get());
+        this.itemTrappedDungeonBlock(AetherBlocks.TRAPPED_LIGHT_HELLFIRE_STONE.get(), AetherBlocks.LIGHT_HELLFIRE_STONE.get());
+
+        this.itemBossDoorwayDungeonBlock(AetherBlocks.BOSS_DOORWAY_CARVED_STONE.get(), AetherBlocks.CARVED_STONE.get());
+        this.itemBossDoorwayDungeonBlock(AetherBlocks.BOSS_DOORWAY_SENTRY_STONE.get(), AetherBlocks.SENTRY_STONE.get());
+        this.itemBossDoorwayDungeonBlock(AetherBlocks.BOSS_DOORWAY_ANGELIC_STONE.get(), AetherBlocks.ANGELIC_STONE.get());
+        this.itemBossDoorwayDungeonBlock(AetherBlocks.BOSS_DOORWAY_LIGHT_ANGELIC_STONE.get(), AetherBlocks.LIGHT_ANGELIC_STONE.get());
+        this.itemBossDoorwayDungeonBlock(AetherBlocks.BOSS_DOORWAY_HELLFIRE_STONE.get(), AetherBlocks.HELLFIRE_STONE.get());
+        this.itemBossDoorwayDungeonBlock(AetherBlocks.BOSS_DOORWAY_LIGHT_HELLFIRE_STONE.get(), AetherBlocks.LIGHT_HELLFIRE_STONE.get());
+
+        this.itemTreasureDoorwayDungeonBlock(AetherBlocks.TREASURE_DOORWAY_CARVED_STONE.get(), AetherBlocks.CARVED_STONE.get());
+        this.itemTreasureDoorwayDungeonBlock(AetherBlocks.TREASURE_DOORWAY_SENTRY_STONE.get(), AetherBlocks.SENTRY_STONE.get());
+        this.itemTreasureDoorwayDungeonBlock(AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE.get(), AetherBlocks.ANGELIC_STONE.get());
+        this.itemTreasureDoorwayDungeonBlock(AetherBlocks.TREASURE_DOORWAY_LIGHT_ANGELIC_STONE.get(), AetherBlocks.LIGHT_ANGELIC_STONE.get());
+        this.itemTreasureDoorwayDungeonBlock(AetherBlocks.TREASURE_DOORWAY_HELLFIRE_STONE.get(), AetherBlocks.HELLFIRE_STONE.get());
+        this.itemTreasureDoorwayDungeonBlock(AetherBlocks.TREASURE_DOORWAY_LIGHT_HELLFIRE_STONE.get(), AetherBlocks.LIGHT_HELLFIRE_STONE.get());
+
+        this.lookalikeBlock(AetherBlocks.CHEST_MIMIC.get(), this.mcLoc("item/chest"));
+        this.lookalikeBlock(AetherBlocks.TREASURE_CHEST.get(), this.mcLoc("item/chest"));
+
+        this.itemBlock(AetherBlocks.PILLAR.get());
+        this.itemBlock(AetherBlocks.PILLAR_TOP.get());
+
+        this.itemBlock(AetherBlocks.PRESENT.get());
+
+        this.itemFence(AetherBlocks.SKYROOT_FENCE.get(), AetherBlocks.SKYROOT_PLANKS.get(), "construction/");
+        this.itemBlock(AetherBlocks.SKYROOT_FENCE_GATE.get());
+        this.item(AetherBlocks.SKYROOT_DOOR.get().asItem(), "miscellaneous/");
+        this.itemBlock(AetherBlocks.SKYROOT_TRAPDOOR.get(), "_bottom");
+        this.itemButton(AetherBlocks.SKYROOT_BUTTON.get(), AetherBlocks.SKYROOT_PLANKS.get(), "construction/");
+        this.itemBlock(AetherBlocks.SKYROOT_PRESSURE_PLATE.get());
+
+        this.itemButton(AetherBlocks.HOLYSTONE_BUTTON.get(), AetherBlocks.HOLYSTONE.get(), "natural/");
+        this.itemBlock(AetherBlocks.HOLYSTONE_PRESSURE_PLATE.get());
+
+        this.itemWallBlock(AetherBlocks.CARVED_WALL.get(), AetherBlocks.CARVED_STONE.get(), "dungeon/");
+        this.itemWallBlock(AetherBlocks.ANGELIC_WALL.get(), AetherBlocks.ANGELIC_STONE.get(), "dungeon/");
+        this.itemWallBlock(AetherBlocks.HELLFIRE_WALL.get(), AetherBlocks.HELLFIRE_STONE.get(), "dungeon/");
+        this.itemWallBlock(AetherBlocks.HOLYSTONE_WALL.get(), AetherBlocks.HOLYSTONE.get(), "natural/");
+        this.itemWallBlock(AetherBlocks.MOSSY_HOLYSTONE_WALL.get(), AetherBlocks.MOSSY_HOLYSTONE.get(), "natural/");
+        this.itemWallBlock(AetherBlocks.ICESTONE_WALL.get(), AetherBlocks.ICESTONE.get(), "natural/");
+        this.itemWallBlock(AetherBlocks.HOLYSTONE_BRICK_WALL.get(), AetherBlocks.HOLYSTONE_BRICKS.get(), "construction/");
+        this.translucentItemWallBlock(AetherBlocks.AEROGEL_WALL.get(), AetherBlocks.AEROGEL.get(), "construction/");
+
+        this.itemBlock(AetherBlocks.SKYROOT_STAIRS.get());
+        this.itemBlock(AetherBlocks.CARVED_STAIRS.get());
+        this.itemBlock(AetherBlocks.ANGELIC_STAIRS.get());
+        this.itemBlock(AetherBlocks.HELLFIRE_STAIRS.get());
+        this.itemBlock(AetherBlocks.HOLYSTONE_STAIRS.get());
+        this.itemBlock(AetherBlocks.MOSSY_HOLYSTONE_STAIRS.get());
+        this.itemBlock(AetherBlocks.ICESTONE_STAIRS.get());
+        this.itemBlock(AetherBlocks.HOLYSTONE_BRICK_STAIRS.get());
+        this.itemBlock(AetherBlocks.AEROGEL_STAIRS.get());
+
+        this.itemBlock(AetherBlocks.SKYROOT_SLAB.get());
+        this.itemBlock(AetherBlocks.CARVED_SLAB.get());
+        this.itemBlock(AetherBlocks.ANGELIC_SLAB.get());
+        this.itemBlock(AetherBlocks.HELLFIRE_SLAB.get());
+        this.itemBlock(AetherBlocks.HOLYSTONE_SLAB.get());
+        this.itemBlock(AetherBlocks.MOSSY_HOLYSTONE_SLAB.get());
+        this.itemBlock(AetherBlocks.ICESTONE_SLAB.get());
+        this.itemBlock(AetherBlocks.HOLYSTONE_BRICK_SLAB.get());
+        this.itemBlock(AetherBlocks.AEROGEL_SLAB.get());
+
+        this.itemBlock(AetherBlocks.SUN_ALTAR.get());
+
+        this.itemBlock(AetherBlocks.SKYROOT_BOOKSHELF.get());
+
+        this.lookalikeBlock(AetherBlocks.SKYROOT_BED.get(), this.mcLoc("item/template_bed"));
     }
 }

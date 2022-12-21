@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "lead",
+  "category": "equipment",
+  "group": "minecraft:lead",
   "key": {
     "B": {
       "item": "aether:swet_ball"

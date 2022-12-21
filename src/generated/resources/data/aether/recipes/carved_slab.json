@@ -1,12 +1,13 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "building",
   "key": {
-    "M": {
+    "#": {
       "item": "aether:carved_stone"
     }
   },
   "pattern": [
-    "MMM"
+    "###"
   ],
   "result": {
     "count": 6,

@@ -18,6 +18,9 @@ import net.minecraft.server.players.UserWhiteListEntry;
 
 import java.util.Collection;
 
+/**
+ * Based on {@link net.minecraft.server.commands.WhitelistCommand}
+ */
 public class SunAltarWhitelistCommand {
     private static final SimpleCommandExceptionType ERROR_ALREADY_ENABLED = new SimpleCommandExceptionType(Component.translatable("commands.aether.sun_altar_whitelist.alreadyOn"));
     private static final SimpleCommandExceptionType ERROR_ALREADY_DISABLED = new SimpleCommandExceptionType(Component.translatable("commands.aether.sun_altar_whitelist.alreadyOff"));
@@ -60,7 +63,7 @@ public class SunAltarWhitelistCommand {
         UserWhiteList sunAltarWhiteList = SunAltarWhitelist.INSTANCE.getSunAltarWhiteList();
         int i = 0;
 
-        for(GameProfile gameProfile : players) {
+        for (GameProfile gameProfile : players) {
             if (!sunAltarWhiteList.isWhiteListed(gameProfile)) {
                 UserWhiteListEntry entry = new UserWhiteListEntry(gameProfile);
                 sunAltarWhiteList.add(entry);
@@ -80,7 +83,7 @@ public class SunAltarWhitelistCommand {
         UserWhiteList sunAltarWhiteList = SunAltarWhitelist.INSTANCE.getSunAltarWhiteList();
         int i = 0;
 
-        for(GameProfile gameProfile : players) {
+        for (GameProfile gameProfile : players) {
             if (sunAltarWhiteList.isWhiteListed(gameProfile)) {
                 UserWhiteListEntry userwhitelistentry = new UserWhiteListEntry(gameProfile);
                 sunAltarWhiteList.remove(userwhitelistentry);

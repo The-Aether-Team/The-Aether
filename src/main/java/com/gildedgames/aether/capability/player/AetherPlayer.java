@@ -51,6 +51,9 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 	void setGravititeJumpActive(boolean isGravititeJumpActive);
 	boolean isGravititeJumpActive();
 
+	void setSeenSunSpiritDialogue(boolean seenDialogue);
+	boolean hasSeenSunSpiritDialogue();
+
 	void setGoldenDartCount(int count);
 	int getGoldenDartCount();
 	void setPoisonDartCount(int count);
@@ -67,6 +70,9 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 	int getProjectileImpactedMaximum();
 	void setProjectileImpactedTimer(int timer);
 	int getProjectileImpactedTimer();
+
+	void setVampireHealing(boolean performVampireHealing);
+	boolean performVampireHealing();
 
 	void setMountedAerbunny(Aerbunny mountedAerbunny);
 	Aerbunny getMountedAerbunny();

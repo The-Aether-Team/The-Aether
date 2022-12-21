@@ -1,10 +1,8 @@
 package com.gildedgames.aether.recipe;
 
 import com.gildedgames.aether.util.BlockStateRecipeUtil;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import com.google.gson.*;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -12,6 +10,8 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.tags.ITagManager;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -19,6 +19,9 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+/**
+ * Based on {@link net.minecraft.world.item.crafting.Ingredient}, except based on a {@link Predicate}<{@link BlockState}>.
+ */
 public class BlockStateIngredient implements Predicate<BlockState> {
     public static final BlockStateIngredient EMPTY = new BlockStateIngredient(Stream.empty());
     private final BlockStateIngredient.Value[] values;
@@ -35,12 +38,18 @@ public class BlockStateIngredient implements Predicate<BlockState> {
         }
     }
 
+    /**
+     * Warning for "ConstantConditions" is suppressed because the potential of {@link BlockStateIngredient#pairs} being null is avoided by {@link BlockStateIngredient#dissolve()}.
+     */
+    @SuppressWarnings("ConstantConditions")
     @Override
     public boolean test(BlockState state) {
         this.dissolve();
         if (this.pairs.length != 0) {
             for (BlockPropertyPair pair : this.pairs) {
-                return pair.matches(state);
+                if (pair.matches(state)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -80,6 +89,10 @@ public class BlockStateIngredient implements Predicate<BlockState> {
         return fromValues(Stream.of(new BlockStateIngredient.TagValue(tag)));
     }
 
+    /**
+     * Warning for "ConstantConditions" is suppressed because the potential of {@link BlockStateIngredient#pairs} being null is avoided by {@link BlockStateIngredient#dissolve()}.
+     */
+    @SuppressWarnings("ConstantConditions")
     public final void toNetwork(FriendlyByteBuf buf) {
         this.dissolve();
         buf.writeCollection(Arrays.asList(this.pairs), BlockStateRecipeUtil::writePair);
@@ -114,7 +127,7 @@ public class BlockStateIngredient implements Predicate<BlockState> {
                 if (jsonArray.size() == 0) {
                     throw new JsonSyntaxException("Block array cannot be empty, at least one item must be defined");
                 } else {
-                    return fromValues(StreamSupport.stream(jsonArray.spliterator(), false).map((p_151264_) -> valueFromJson(GsonHelper.convertToJsonObject(p_151264_, "block"))));
+                    return fromValues(StreamSupport.stream(jsonArray.spliterator(), false).map((element) -> valueFromJson(GsonHelper.convertToJsonObject(element, "block"))));
                 }
             } else {
                 throw new JsonSyntaxException("Expected block to be object or array of objects");
@@ -137,7 +150,7 @@ public class BlockStateIngredient implements Predicate<BlockState> {
             }
         } else if (json.has("tag")) {
             ResourceLocation resourcelocation = new ResourceLocation(GsonHelper.getAsString(json, "tag"));
-            TagKey<Block> tagKey = TagKey.create(Registry.BLOCK_REGISTRY, resourcelocation);
+            TagKey<Block> tagKey = TagKey.create(Registries.BLOCK, resourcelocation);
             return new BlockStateIngredient.TagValue(tagKey);
         } else {
             throw new JsonParseException("An ingredient entry needs either a tag or a block");
@@ -171,7 +184,12 @@ public class BlockStateIngredient implements Predicate<BlockState> {
         @Override
         public JsonObject serialize() {
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("block", Registry.BLOCK.getKey(this.block).toString());
+            ResourceLocation blockLocation = ForgeRegistries.BLOCKS.getKey(this.block);
+            if (blockLocation == null) {
+                throw new JsonParseException("Block for ingredient StateValue serialization shouldn't be null");
+            } else {
+                jsonObject.addProperty("block", blockLocation.toString());
+            }
             JsonObject jsonObject1 = new JsonObject();
             if (!this.properties.isEmpty()) {
                 for (Map.Entry<Property<?>, Comparable<?>> entry : this.properties.entrySet()) {
@@ -199,7 +217,12 @@ public class BlockStateIngredient implements Predicate<BlockState> {
         @Override
         public JsonObject serialize() {
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("block", Registry.BLOCK.getKey(this.block).toString());
+            ResourceLocation blockLocation = ForgeRegistries.BLOCKS.getKey(this.block);
+            if (blockLocation == null) {
+                throw new JsonParseException("Block for ingredient StateValue serialization shouldn't be null");
+            } else {
+                jsonObject.addProperty("block", blockLocation.toString());
+            }
             return jsonObject;
         }
     }
@@ -213,8 +236,11 @@ public class BlockStateIngredient implements Predicate<BlockState> {
 
         @Override
         public Collection<BlockPropertyPair> getPairs() {
-            List<BlockPropertyPair> list = Lists.newArrayList();
-            Registry.BLOCK.getTagOrEmpty(this.tag).forEach(holder -> list.add(BlockPropertyPair.of(holder.value(), Map.of())));
+            List<BlockPropertyPair> list = new ArrayList<>();
+            ITagManager<Block> tags = ForgeRegistries.BLOCKS.tags();
+            if (tags != null) {
+                tags.getTag(this.tag).stream().forEach((block) -> list.add(BlockPropertyPair.of(block, Map.of())));
+            }
             return list;
         }
 

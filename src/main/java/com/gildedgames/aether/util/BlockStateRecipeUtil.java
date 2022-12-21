@@ -1,70 +1,103 @@
 package com.gildedgames.aether.util;
 
 import com.gildedgames.aether.recipe.BlockPropertyPair;
-import com.google.common.collect.Maps;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import net.minecraft.core.Registry;
+import net.minecraft.commands.CommandFunction;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 public class BlockStateRecipeUtil {
-    public static void writePair(FriendlyByteBuf buf, BlockPropertyPair pair) {
-        if (pair.block().defaultBlockState().isAir() && pair.properties().isEmpty()) {
-            buf.writeBoolean(false);
+    public static void executeFunction(Level level, BlockPos pos, CommandFunction.CacheableFunction function) {
+        if (level instanceof ServerLevel serverLevel && function != null) {
+            MinecraftServer minecraftServer = serverLevel.getServer();
+            function.get(minecraftServer.getFunctions()).ifPresent(command -> {
+                CommandSourceStack context = minecraftServer.getFunctions().getGameLoopSender()
+                        .withPosition(Vec3.atBottomCenterOf(pos))
+                        .withLevel(serverLevel);
+                minecraftServer.getFunctions().execute(command, context);
+            });
+        }
+    }
+
+    // Buffer write methods.
+
+    public static void writePair(FriendlyByteBuf buffer, BlockPropertyPair pair) {
+        ResourceLocation blockLocation = ForgeRegistries.BLOCKS.getKey(pair.block());
+        if ((pair.block().defaultBlockState().isAir() && pair.properties().isEmpty()) || blockLocation == null) {
+            buffer.writeBoolean(false);
         } else {
-            buf.writeBoolean(true);
-            buf.writeVarInt(Registry.BLOCK.getId(pair.block()));
+            buffer.writeBoolean(true);
+            buffer.writeUtf(blockLocation.toString());
             CompoundTag tag = new CompoundTag();
             for (Map.Entry<Property<?>, Comparable<?>> entry : pair.properties().entrySet()) {
                 Property<?> property = entry.getKey();
                 tag.putString(property.getName(), getName(property, entry.getValue()));
             }
-            buf.writeNbt(tag);
+            buffer.writeNbt(tag);
         }
     }
 
-    public static void writeBiomeKey(FriendlyByteBuf buf, ResourceKey<Biome> biomeKey) {
+    public static void writeBiomeKey(FriendlyByteBuf buffer, ResourceKey<Biome> biomeKey) {
         if (biomeKey == null) {
-            buf.writeBoolean(false);
+            buffer.writeBoolean(false);
         } else {
-            buf.writeBoolean(true);
-            buf.writeResourceLocation(biomeKey.location());
+            buffer.writeBoolean(true);
+            buffer.writeResourceLocation(biomeKey.location());
         }
     }
 
-    public static void writeBiomeTag(FriendlyByteBuf buf, TagKey<Biome> biomeTag) {
+    public static void writeBiomeTag(FriendlyByteBuf buffer, TagKey<Biome> biomeTag) {
         if (biomeTag == null) {
-            buf.writeBoolean(false);
+            buffer.writeBoolean(false);
         } else {
-            buf.writeBoolean(true);
-            buf.writeResourceLocation(biomeTag.location());
+            buffer.writeBoolean(true);
+            buffer.writeResourceLocation(biomeTag.location());
         }
     }
 
-    public static BlockPropertyPair readPair(FriendlyByteBuf buf) {
-        if (!buf.readBoolean()) {
-            return BlockPropertyPair.of(Blocks.AIR, Maps.newHashMap());
-        } else {
-            int id = buf.readVarInt();
-            Block block = Registry.BLOCK.byId(id);
+    // Buffer read methods.
 
-            Map<Property<?>, Comparable<?>> properties = Maps.newHashMap();
-            CompoundTag tag = buf.readNbt();
+    /**
+     * Warning for "unchecked" is suppressed because casting within this method works fine.
+     */
+    @SuppressWarnings("unchecked")
+    public static BlockPropertyPair readPair(FriendlyByteBuf buffer) {
+        if (!buffer.readBoolean()) {
+            return BlockPropertyPair.of(Blocks.AIR, new HashMap<>());
+        } else {
+            String blockString = buffer.readUtf();
+            ResourceLocation blockLocation = new ResourceLocation(blockString);
+            Block block = ForgeRegistries.BLOCKS.getValue(blockLocation);
+            if (block == null) {
+                throw new JsonSyntaxException("Unknown block '" + blockLocation + "'");
+            }
+
+            Map<Property<?>, Comparable<?>> properties = new HashMap<>();
+            CompoundTag tag = buffer.readNbt();
 
             if (tag != null) {
                 for (String propertyName : tag.getAllKeys()) {
@@ -80,23 +113,47 @@ public class BlockStateRecipeUtil {
         }
     }
 
-    public static ResourceKey<Biome> readBiomeKey(FriendlyByteBuf buf) {
-        if (!buf.readBoolean()) {
+    public static ResourceKey<Biome> readBiomeKey(FriendlyByteBuf buffer) {
+        if (!buffer.readBoolean()) {
             return null;
         } else {
-            ResourceLocation biomeLocation = buf.readResourceLocation();
-            return ResourceKey.create(Registry.BIOME_REGISTRY, biomeLocation);
+            ResourceLocation biomeLocation = buffer.readResourceLocation();
+            return ResourceKey.create(Registries.BIOME, biomeLocation);
         }
     }
 
-    public static TagKey<Biome> readBiomeTag(FriendlyByteBuf buf) {
-        if (!buf.readBoolean()) {
+    public static TagKey<Biome> readBiomeTag(FriendlyByteBuf buffer) {
+        if (!buffer.readBoolean()) {
             return null;
         } else {
-            ResourceLocation tagLocation = buf.readResourceLocation();
-            return TagKey.create(Registry.BIOME_REGISTRY, tagLocation);
+            ResourceLocation tagLocation = buffer.readResourceLocation();
+            return TagKey.create(Registries.BIOME, tagLocation);
         }
     }
+
+    public static CommandFunction.CacheableFunction readFunction(FriendlyByteBuf buffer) {
+        String functionString = buffer.readUtf();
+        ResourceLocation functionLocation = functionString.isEmpty() ? null : new ResourceLocation(functionString);
+        return functionLocation == null ? CommandFunction.CacheableFunction.NONE : new CommandFunction.CacheableFunction(functionLocation);
+    }
+
+    // JSON write methods.
+
+    public static void biomeKeyToJson(JsonObject json, ResourceKey<Biome> biomeKey) {
+        if (biomeKey != null) {
+            ResourceLocation biomeLocation = biomeKey.location();
+            json.addProperty("biome", biomeLocation.toString());
+        }
+    }
+
+    public static void biomeTagToJson(JsonObject json, TagKey<Biome> biomeTag) {
+        if (biomeTag != null) {
+            ResourceLocation tagLocation = biomeTag.location();
+            json.addProperty("biome", "#" + tagLocation);
+        }
+    }
+
+    // JSON read methods.
 
     public static BlockPropertyPair pairFromJson(JsonObject json) {
         Block block;
@@ -118,16 +175,24 @@ public class BlockStateRecipeUtil {
 
     public static Block blockFromJson(JsonObject json) {
         String blockName = GsonHelper.getAsString(json, "block");
-        Block block = Registry.BLOCK.getOptional(new ResourceLocation(blockName)).orElseThrow(() -> new JsonSyntaxException("Unknown block '" + blockName + "'"));
+        ResourceLocation blockLocation = new ResourceLocation(blockName);
+        Block block = ForgeRegistries.BLOCKS.getValue(blockLocation);
+        if (block == null) {
+            throw new JsonSyntaxException("Unknown block '" + blockLocation + "'");
+        }
         if (block.defaultBlockState().isAir()) {
-            throw new JsonSyntaxException("Invalid block: " + blockName);
+            throw new JsonSyntaxException("Invalid block: " + blockLocation);
         } else {
             return block;
         }
     }
 
+    /**
+     * Warning for "unchecked" is suppressed because casting within this method works fine.
+     */
+    @SuppressWarnings("unchecked")
     public static Map<Property<?>, Comparable<?>> propertiesFromJson(JsonObject json, Block block) {
-        Map<Property<?>, Comparable<?>> properties = Maps.newHashMap();
+        Map<Property<?>, Comparable<?>> properties = new HashMap<>();
         StateDefinition<Block, BlockState> stateDefinition = block.getStateDefinition();
         JsonObject propertyObject = GsonHelper.getAsJsonObject(json, "properties");
         for (String propertyName : propertyObject.keySet()) {
@@ -158,33 +223,29 @@ public class BlockStateRecipeUtil {
     public static ResourceKey<Biome> biomeKeyFromJson(JsonObject json) {
         String biomeName = GsonHelper.getAsString(json, "biome");
         String[] nameWithId = biomeName.split(":");
-        return ResourceKey.create(Registry.BIOME_REGISTRY, (nameWithId.length > 1) ? new ResourceLocation(nameWithId[0], nameWithId[1]) : new ResourceLocation(biomeName));
+        return ResourceKey.create(Registries.BIOME, (nameWithId.length > 1) ? new ResourceLocation(nameWithId[0], nameWithId[1]) : new ResourceLocation(biomeName));
     }
 
     public static TagKey<Biome> biomeTagFromJson(JsonObject json) {
         String biomeName = GsonHelper.getAsString(json, "biome").replace("#", "");
         String[] nameWithId = biomeName.split(":");
-        return TagKey.create(Registry.BIOME_REGISTRY, (nameWithId.length > 1) ? new ResourceLocation(nameWithId[0], nameWithId[1]) : new ResourceLocation(biomeName));
+        return TagKey.create(Registries.BIOME, (nameWithId.length > 1) ? new ResourceLocation(nameWithId[0], nameWithId[1]) : new ResourceLocation(biomeName));
     }
 
-    public static void biomeKeyToJson(JsonObject json, ResourceKey<Biome> biomeKey) {
-        if (biomeKey != null) {
-            ResourceLocation biomeLocation = biomeKey.location();
-            json.addProperty("biome", biomeLocation.toString());
-        }
-    }
+    // Extra methods.
 
-    public static void biomeTagToJson(JsonObject json, TagKey<Biome> biomeTag) {
-        if (biomeTag != null) {
-            ResourceLocation tagLocation = biomeTag.location();
-            json.addProperty("biome", "#" + tagLocation);
-        }
-    }
-
+    /**
+     * Warning for "unchecked" is suppressed because casting within this method works fine.
+     */
+    @SuppressWarnings("unchecked")
     public static <T extends Comparable<T>, V extends T> BlockState setHelper(Map.Entry<Property<?>, Comparable<?>> properties, BlockState state) {
         return state.setValue((Property<T>) properties.getKey(), (V) properties.getValue());
     }
 
+    /**
+     * Warning for "unchecked" is suppressed because casting within this method works fine.
+     */
+    @SuppressWarnings("unchecked")
     public static <T extends Comparable<T>> String getName(Property<T> pProperty, Comparable<?> pValue) {
         return pProperty.getName((T) pValue);
     }

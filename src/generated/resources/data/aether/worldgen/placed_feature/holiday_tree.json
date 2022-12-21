@@ -2,15 +2,16 @@
   "feature": "aether:holiday_tree",
   "placement": [
     {
-      "type": "aether:holiday_filter"
-    },
-    {
-      "type": "minecraft:count_on_every_layer",
-      "count": 1
-    },
-    {
-      "type": "minecraft:rarity_filter",
-      "chance": 48
+      "type": "aether:improved_layer_placement",
+      "count": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_inclusive": 1,
+          "min_inclusive": 0
+        }
+      },
+      "heightmap": "OCEAN_FLOOR",
+      "verticalBounds": 4
     },
     {
       "type": "minecraft:block_predicate_filter",
@@ -23,6 +24,16 @@
           }
         }
       }
+    },
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 48
+    },
+    {
+      "type": "minecraft:biome"
+    },
+    {
+      "type": "aether:holiday_filter"
     }
   ]
 }

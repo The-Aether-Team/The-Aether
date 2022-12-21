@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_aechor_petal": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:aechor_petal"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_golden_dart_shooter": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:golden_dart_shooter"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "aether:poison_dart_shooter"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_golden_dart_shooter",
+      "has_aechor_petal",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "aether:poison_dart_shooter"
+    ]
+  }
+}

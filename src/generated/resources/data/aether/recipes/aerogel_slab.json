@@ -1,12 +1,13 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "building",
   "key": {
-    "M": {
+    "#": {
       "item": "aether:aerogel"
     }
   },
   "pattern": [
-    "MMM"
+    "###"
   ],
   "result": {
     "count": 6,

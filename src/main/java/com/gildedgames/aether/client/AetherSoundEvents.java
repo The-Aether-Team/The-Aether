@@ -18,6 +18,8 @@ public class AetherSoundEvents {
 
 	public static final RegistryObject<SoundEvent> BLOCK_DUNGEON_TRAP_TRIGGER = register("block.dungeon_trap.trigger");
 
+	public static final RegistryObject<SoundEvent> WATER_EVAPORATE = register("block.water.evaporate");
+
 	public static final RegistryObject<SoundEvent> ITEM_DART_SHOOTER_SHOOT = register("item.dart_shooter.shoot");
 	public static final RegistryObject<SoundEvent> ITEM_LIGHTNING_KNIFE_SHOOT = register("item.lightning_knife.shoot");
 	public static final RegistryObject<SoundEvent> ITEM_HAMMER_OF_NOTCH_SHOOT = register("item.hammer_of_notch.shoot");
@@ -116,8 +118,10 @@ public class AetherSoundEvents {
 	public static final RegistryObject<SoundEvent> ENTITY_MIMIC_KILL = register("entity.mimic.kill");
 
 	public static final RegistryObject<SoundEvent> ENTITY_SLIDER_AWAKEN = register("entity.slider.awaken");
+	public static final RegistryObject<SoundEvent> ENTITY_SLIDER_AMBIENT = register("entity.slider.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_SLIDER_COLLIDE = register("entity.slider.collide");
 	public static final RegistryObject<SoundEvent> ENTITY_SLIDER_MOVE = register("entity.slider.move");
+	public static final RegistryObject<SoundEvent> ENTITY_SLIDER_HURT = register("entity.slider.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_SLIDER_DEATH = register("entity.slider.death");
 
 	public static final RegistryObject<SoundEvent> ENTITY_VALKYRIE_DEATH = register("entity.valkyrie.death");
@@ -131,6 +135,8 @@ public class AetherSoundEvents {
 	public static final RegistryObject<SoundEvent> ENTITY_CLOUD_MINION_SHOOT = register("entity.cloud_minion.shoot");
 
 	public static final RegistryObject<SoundEvent> ENTITY_CLOUD_CRYSTAL_EXPLODE = register("entity.cloud_crystal.explode");
+	public static final RegistryObject<SoundEvent> ENTITY_FIRE_CRYSTAL_EXPLODE = register("entity.fire_crystal.explode");
+	public static final RegistryObject<SoundEvent> ENTITY_ICE_CRYSTAL_EXPLODE = register("entity.ice_crystal.explode");
 
 	public static final RegistryObject<SoundEvent> ENTITY_THUNDER_CRYSTAL_EXPLODE = register("entity.thunder_crystal.explode");
 
@@ -144,6 +150,6 @@ public class AetherSoundEvents {
 	public static final RegistryObject<SoundEvent> MUSIC_AETHER = register("music.aether");
 
 	private static RegistryObject<SoundEvent> register(String name) {
-		return SOUNDS.register(name, () -> new SoundEvent(new ResourceLocation(Aether.MODID, name)));
+		return SOUNDS.register(name, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Aether.MODID, name)));
 	}
 }

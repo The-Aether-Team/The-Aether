@@ -1,5 +1,6 @@
 {
   "type": "aether:freezing",
+  "category": "freezable_blocks",
   "cookingtime": 100,
   "experience": 0.1,
   "ingredient": {

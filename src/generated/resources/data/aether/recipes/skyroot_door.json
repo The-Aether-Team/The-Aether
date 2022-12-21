@@ -1,15 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "redstone",
   "group": "wooden_door",
   "key": {
-    "S": {
+    "#": {
       "item": "aether:skyroot_planks"
     }
   },
   "pattern": [
-    "SS",
-    "SS",
-    "SS"
+    "##",
+    "##",
+    "##"
   ],
   "result": {
     "count": 3,

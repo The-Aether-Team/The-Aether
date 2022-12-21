@@ -1,14 +1,15 @@
 package com.gildedgames.aether.client.gui.screen.menu;
 
 import com.gildedgames.aether.client.gui.component.DynamicMenuButton;
+import com.gildedgames.aether.mixin.mixins.client.accessor.TitleScreenAccessor;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.Util;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -44,12 +45,12 @@ public class VanillaLeftTitleScreen extends TitleScreen {
 
     public void setupButtons() {
         int buttonCount = 0;
-        for (Widget widget : this.renderables) {
-            if (widget instanceof Button button) {
+        for (Renderable renderable : this.renderables) {
+            if (renderable instanceof Button button) {
                 Component buttonText = button.getMessage();
                 if (isButtonLeft(buttonText)) {
-                    button.x = 47;
-                    button.y = 80 + buttonCount * 25;
+                    button.setX(47);
+                    button.setY(80 + buttonCount * 25);
                     button.setWidth(200);
                     buttonCount++;
                     if (button.getMessage().equals(Component.translatable("fml.menu.mods"))) {
@@ -62,6 +63,7 @@ public class VanillaLeftTitleScreen extends TitleScreen {
 
     @Override
     public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+        TitleScreenAccessor titleScreenAccessor = (TitleScreenAccessor) this;
         if (this.minecraft != null) {
             if (this.fadeInStart == 0L && this.fading) {
                 this.fadeInStart = Util.getMillis();
@@ -81,7 +83,7 @@ public class VanillaLeftTitleScreen extends TitleScreen {
                 RenderSystem.setShader(GameRenderer::getPositionTexShader);
                 RenderSystem.setShaderTexture(0, MINECRAFT_LOGO);
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, f1);
-                if (this.minceraftEasterEgg) {
+                if (titleScreenAccessor.getMinceraftEasterEgg()) {
                     this.blitOutlineBlack(j, 15, (x, y) -> {
                         this.blit(poseStack, x, y, 0, 0, 99, 44);
                         this.blit(poseStack, x + 99, y, 129, 0, 27, 44);
@@ -101,13 +103,13 @@ public class VanillaLeftTitleScreen extends TitleScreen {
 
                 net.minecraftforge.client.ForgeHooksClient.renderMainMenu(this, poseStack, this.font, this.width, this.height, l);
 
-                if (this.splash != null) {
+                if (titleScreenAccessor.getSplash() != null) {
                     poseStack.pushPose();
                     poseStack.translate(250.0F, 50.0F, 0.0F);
-                    poseStack.mulPose(Vector3f.ZP.rotationDegrees(-20.0F));
+                    poseStack.mulPose(Axis.ZP.rotationDegrees(-20.0F));
                     float f2 = 1.8F - Mth.abs(Mth.sin((float) (Util.getMillis() % 1000L) / 1000.0F * ((float) Math.PI * 2F)) * 0.1F);
-                    f2 = f2 * 100.0F / (float) (this.font.width(this.splash) + 32); poseStack.scale(f2, f2, f2);
-                    drawCenteredString(poseStack, this.font, this.splash, 0, -8, 16776960 | l);
+                    f2 = f2 * 100.0F / (float) (this.font.width(titleScreenAccessor.getSplash()) + 32); poseStack.scale(f2, f2, f2);
+                    drawCenteredString(poseStack, this.font, titleScreenAccessor.getSplash(), 0, -8, 16776960 | l);
                     poseStack.popPose();
                 }
 
@@ -131,23 +133,23 @@ public class VanillaLeftTitleScreen extends TitleScreen {
             }
 
             int offset = 0;
-            for (Widget widget : this.renderables) {
-                widget.render(poseStack, mouseX, mouseY, partialTicks);
-                if (widget instanceof DynamicMenuButton dynamicMenuButton) {
+            for (Renderable renderable : this.renderables) {
+                renderable.render(poseStack, mouseX, mouseY, partialTicks);
+                if (renderable instanceof DynamicMenuButton dynamicMenuButton) {
                     if (dynamicMenuButton.enabled) {
                         offset -= 24;
                     }
                 }
             }
-            for (Widget widget : this.renderables) {
-                if (widget instanceof Button button) {
+            for (Renderable renderable : this.renderables) {
+                if (renderable instanceof Button button) {
                     Component buttonText = button.getMessage();
                     if (buttonText.equals(Component.translatable("narrator.button.accessibility"))) {
-                        button.x = this.width - 48 + offset;
-                        button.y = 4;
+                        button.setX(this.width - 48 + offset);
+                        button.setY(4);
                     } else if (buttonText.equals(Component.translatable("narrator.button.language"))) {
-                        button.x = this.width - 24 + offset;
-                        button.y = 4;
+                        button.setX(this.width - 24 + offset);
+                        button.setY(4);
                     }
                 }
             }

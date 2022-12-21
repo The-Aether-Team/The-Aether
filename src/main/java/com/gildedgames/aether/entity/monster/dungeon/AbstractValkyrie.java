@@ -1,11 +1,15 @@
 package com.gildedgames.aether.entity.monster.dungeon;
 
+import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.entity.NotGrounded;
 import com.gildedgames.aether.entity.ai.goal.target.MostDamageTargetGoal;
 import com.gildedgames.aether.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.event.events.ValkyrieTeleportEvent;
+import com.gildedgames.aether.mixin.mixins.common.accessor.FlyNodeEvaluatorAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.ExplosionParticlePacket;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -29,8 +33,10 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.*;
 import net.minecraft.world.phys.Vec2;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -40,8 +46,6 @@ import javax.annotation.Nullable;
  */
 public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(AbstractValkyrie.class, EntityDataSerializers.BOOLEAN);
-    /** Increments every tick to decide when the valkyries are ready to teleport. */
-    protected int teleportTimer;
     /** Goal for targeting in groups of entities */
     MostDamageTargetGoal mostDamageTargetGoal;
 
@@ -54,7 +58,8 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     public void registerGoals() {
         this.goalSelector.addGoal(1, new ValkyrieTeleportGoal(this));
         this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 0.65, true));
-        this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.5));
+        this.goalSelector.addGoal(4, new LungeGoal(this));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.5));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F, 8.0F));
         this.mostDamageTargetGoal = new MostDamageTargetGoal(this);
         this.targetSelector.addGoal(1, this.mostDamageTargetGoal);
@@ -110,7 +115,6 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     @Override
     public void customServerAiStep() {
         super.customServerAiStep();
-        this.teleportTimer++;
     }
 
     @Override
@@ -124,6 +128,11 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
      */
     @Override
     public boolean causeFallDamage(float pFallDistance, float pMultiplier, @Nonnull DamageSource pSource) {
+        return false;
+    }
+
+    @Override
+    protected boolean canRide(@Nonnull Entity vehicle) {
         return false;
     }
 
@@ -154,22 +163,21 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         double x = target.getX() + targetVec.x * 7;
         double y = target.getY();
         double z = target.getZ() + targetVec.y * 7;
-        return this.teleport(x, y, z);
-    }
-
-    /**
-     * Teleports to the specified position. Returns false if it fails.
-     */
-    protected boolean teleport(double pX, double pY, double pZ) {
-        /*BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos(pX, pY, pZ);
+        BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos(x, y, z);
 
         while(blockpos$mutableblockpos.getY() > this.level.getMinBuildHeight() && !this.level.getBlockState(blockpos$mutableblockpos).getMaterial().blocksMotion()) {
             blockpos$mutableblockpos.move(Direction.DOWN);
         }
 
         BlockState blockstate = this.level.getBlockState(blockpos$mutableblockpos);
-        boolean flag = blockstate.is(AetherTags.Blocks.VALKYRIE_TELEPORTABLE_ON);*/
-        //TODO: Lock teleporting to tagged blocks.
+        boolean isValidSpot = blockstate.is(AetherTags.Blocks.VALKYRIE_TELEPORTABLE_ON);
+        return isValidSpot && this.teleport(x, y, z);
+    }
+
+    /**
+     * Teleports to the specified position. Returns false if it fails.
+     */
+    protected boolean teleport(double pX, double pY, double pZ) {
         ValkyrieTeleportEvent event = AetherEventDispatch.onValkyrieTeleport(this, pX, pY, pZ);
         if (event.isCanceled()) return false;
         boolean flag = this.randomTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ(), false);
@@ -206,22 +214,75 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
      */
     public static class ValkyrieTeleportGoal extends Goal {
         private final AbstractValkyrie valkyrie;
+        protected int teleportTimer;
         public ValkyrieTeleportGoal(AbstractValkyrie mob) {
             this.valkyrie = mob;
+            this.teleportTimer = this.valkyrie.getRandom().nextInt(200);
         }
 
         @Override
         public boolean canUse() {
-            return this.valkyrie.getTarget() != null && this.valkyrie.teleportTimer >= 450;
+            return this.valkyrie.getTarget() != null && this.teleportTimer++ >= 450;
         }
 
         @Override
         public void start() {
             if (this.valkyrie.teleportAroundTarget(valkyrie.getTarget())) {
-                this.valkyrie.teleportTimer = this.valkyrie.random.nextInt(40);
+                this.teleportTimer = this.valkyrie.random.nextInt(40);
             } else {
-                this.valkyrie.teleportTimer -= 20;
+                this.teleportTimer -= 20;
             }
+        }
+
+        @Override
+        public boolean requiresUpdateEveryTick() {
+            return true;
+        }
+    }
+
+    /**
+     * Lunge back at the target after being attacked.
+     */
+    public static class LungeGoal extends Goal {
+        private final AbstractValkyrie valkyrie;
+        private int counter;
+        private int timestamp;
+        public LungeGoal(AbstractValkyrie mob) {
+            this.valkyrie = mob;
+        }
+
+        @Override
+        public boolean canUse() {
+            int timestamp = this.valkyrie.getLastHurtByMobTimestamp();
+            if (this.timestamp != timestamp) {
+                this.timestamp = timestamp;
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return !this.valkyrie.onGround && this.counter >= 0;
+        }
+
+        @Override
+        public void tick() {
+            if (this.counter-- <= 0 && this.valkyrie.getTarget() != null) {
+                Vec3 distance = this.valkyrie.getTarget().position().subtract(this.valkyrie.position());
+                double angle = Math.atan2(distance.x, distance.z);
+                this.valkyrie.setDeltaMovement(this.valkyrie.getDeltaMovement().add(Math.sin(angle) * 0.35, 0, Math.cos(angle) * 0.35));
+            }
+        }
+
+        @Override
+        public void stop() {
+            this.counter = 8;
+        }
+
+        @Override
+        public boolean requiresUpdateEveryTick() {
+            return true;
         }
     }
 
@@ -268,15 +329,15 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
      * Allows the valkyrie to establish a path through the air while descending.
      */
     public static class ValkyrieNodeEvaluator extends FlyNodeEvaluator {
-
         /**
          * Returns a mapped point or creates and adds one
          */
         @Override
         @Nullable
-        protected Node getNode(int pX, int pY, int pZ) {
+        protected Node findAcceptedNode(int pX, int pY, int pZ) {
             Node node = null;
-            BlockPathTypes blockpathtypes = this.getCachedBlockPathType(pX, pY, pZ);
+            FlyNodeEvaluatorAccessor flyNodeEvaluatorAccessor = (FlyNodeEvaluatorAccessor) this;
+            BlockPathTypes blockpathtypes = flyNodeEvaluatorAccessor.callGetCachedBlockPathType(pX, pY, pZ);
             float f = this.mob.getPathfindingMalus(blockpathtypes);
             if (f >= 0.0F) {
                 node = this.nodes.computeIfAbsent(Node.createHash(pX, pY, pZ), (p_77332_) -> new Node(pX, pY, pZ));

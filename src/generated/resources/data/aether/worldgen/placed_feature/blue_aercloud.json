@@ -19,6 +19,12 @@
     {
       "type": "minecraft:rarity_filter",
       "chance": 5
+    },
+    {
+      "type": "minecraft:biome"
+    },
+    {
+      "type": "aether:dungeon_blacklist_filter"
     }
   ]
 }

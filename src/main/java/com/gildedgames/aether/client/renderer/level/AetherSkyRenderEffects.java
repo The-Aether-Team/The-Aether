@@ -3,8 +3,9 @@ package com.gildedgames.aether.client.renderer.level;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
@@ -66,10 +67,10 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
             RenderSystem.disableTexture();
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             pPoseStack.pushPose();
-            pPoseStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
+            pPoseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
             float f3 = Mth.sin(world.getSunAngle(pPartialTick)) < 0.0F ? 180.0F : 0.0F;
-            pPoseStack.mulPose(Vector3f.ZP.rotationDegrees(f3));
-            pPoseStack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
+            pPoseStack.mulPose(Axis.ZP.rotationDegrees(f3));
+            pPoseStack.mulPose(Axis.ZP.rotationDegrees(90.0F));
             float f4 = sunRiseRGBA[0];
             float f5 = sunRiseRGBA[1];
             float f6 = sunRiseRGBA[2];
@@ -145,8 +146,8 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
         moonOpacity -= world.getRainLevel(pPartialTick);
 
         //Render celestial bodies
-        pPoseStack.mulPose(Vector3f.YP.rotationDegrees(-90.0F));
-        pPoseStack.mulPose(Vector3f.XP.rotationDegrees(world.getTimeOfDay(pPartialTick) * 360.0F));
+        pPoseStack.mulPose(Axis.YP.rotationDegrees(-90.0F));
+        pPoseStack.mulPose(Axis.XP.rotationDegrees(world.getTimeOfDay(pPartialTick) * 360.0F));
         Matrix4f matrix4f1 = pPoseStack.last().pose();
         float celestialOffset = 30.0F;
 

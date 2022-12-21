@@ -21,6 +21,12 @@
       "chance": 7
     },
     {
+      "type": "minecraft:biome"
+    },
+    {
+      "type": "aether:dungeon_blacklist_filter"
+    },
+    {
       "type": "aether:config_filter",
       "value": "[World Generation, Generate Pink Aerclouds]"
     }

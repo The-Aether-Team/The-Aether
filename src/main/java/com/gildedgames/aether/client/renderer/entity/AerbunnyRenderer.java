@@ -6,10 +6,10 @@ import com.gildedgames.aether.client.renderer.entity.model.AerbunnyModel;
 import com.gildedgames.aether.entity.passive.Aerbunny;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import com.mojang.math.Axis;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
-import com.mojang.math.Vector3f;
 import net.minecraft.util.Mth;
 
 import javax.annotation.Nonnull;
@@ -22,7 +22,7 @@ public class AerbunnyRenderer extends MobRenderer<Aerbunny, AerbunnyModel> {
     }
 
     @Override
-    protected void scale(Aerbunny aerbunny, PoseStack poseStack, float scale) {
+    protected void scale(Aerbunny aerbunny, PoseStack poseStack, float partialTickTime) {
         poseStack.translate(0.0, 0.2, 0.0);
         if (aerbunny.isBaby()) {
             poseStack.scale(0.5F, 0.5F, 0.5F);
@@ -34,13 +34,13 @@ public class AerbunnyRenderer extends MobRenderer<Aerbunny, AerbunnyModel> {
         super.setupRotations(aerbunny, poseStack, ageInTicks, rotationYaw, partialTicks);
         if (!aerbunny.isOnGround()) {
             if (aerbunny.getDeltaMovement().y > 0.5) {
-                poseStack.mulPose(Vector3f.XN.rotationDegrees(Mth.rotLerp(partialTicks, 0.0F, 15.0F)));
+                poseStack.mulPose(Axis.XN.rotationDegrees(Mth.rotLerp(partialTicks, 0.0F, 15.0F)));
             }
             else if (aerbunny.getDeltaMovement().y < -0.5) {
-                poseStack.mulPose(Vector3f.XN.rotationDegrees(Mth.rotLerp(partialTicks, 0.0F, -15.0F)));
+                poseStack.mulPose(Axis.XN.rotationDegrees(Mth.rotLerp(partialTicks, 0.0F, -15.0F)));
             }
             else {
-                poseStack.mulPose(Vector3f.XN.rotationDegrees((float)(aerbunny.getDeltaMovement().y * 30.0)));
+                poseStack.mulPose(Axis.XN.rotationDegrees((float)(aerbunny.getDeltaMovement().y * 30.0)));
             }
         }
     }

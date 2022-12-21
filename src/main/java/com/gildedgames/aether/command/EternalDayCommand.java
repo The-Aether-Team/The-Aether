@@ -26,7 +26,7 @@ public class EternalDayCommand {
         ServerLevel level = source.getLevel();
         AetherTime.get(level).ifPresent(aetherTime -> {
             aetherTime.setEternalDay(value);
-            aetherTime.updateEternalDay();
+            aetherTime.updateEternalDay(); // Syncs to client.
             source.sendSuccess(Component.translatable("commands.aether.capability.time.eternal_day.set", value), true);
         });
         return 1;

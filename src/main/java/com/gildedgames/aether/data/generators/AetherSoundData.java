@@ -2,19 +2,18 @@ package com.gildedgames.aether.data.generators;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.AetherSoundEvents;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.SoundDefinitionsProvider;
 
-public class AetherSoundData extends SoundDefinitionsProvider
-{
-    public AetherSoundData(DataGenerator generator, ExistingFileHelper helper) {
-        super(generator, Aether.MODID, helper);
+public class AetherSoundData extends SoundDefinitionsProvider {
+    public AetherSoundData(PackOutput output, ExistingFileHelper helper) {
+        super(output, Aether.MODID, helper);
     }
 
     @Override
     public void registerSounds() {
-        //Blocks
+        // Blocks
         this.add(AetherSoundEvents.BLOCK_AETHER_PORTAL_AMBIENT,
                 definition().with(sound("minecraft:portal/portal").attenuationDistance(10))
                 .subtitle("subtitles.block.aether_portal.ambient")
@@ -39,6 +38,10 @@ public class AetherSoundData extends SoundDefinitionsProvider
                         sound("aether:block/dungeon_trap/trigger5"),
                         sound("aether:block/dungeon_trap/trigger6")
                 ).subtitle("subtitles.block.dungeon_trap.trigger")
+        );
+        this.add(AetherSoundEvents.WATER_EVAPORATE,
+                definition().with(sound("minecraft:random/fizz")
+                ).subtitle("subtitles.block.aether.water.evaporate")
         );
 
 
@@ -516,7 +519,7 @@ public class AetherSoundData extends SoundDefinitionsProvider
         );
         this.add(AetherSoundEvents.ENTITY_MIMIC_DEATH,
                 definition().with(
-                        sound("minecraft:block/chest/close"),
+                        sound("minecraft:block/chest/close1"),
                         sound("minecraft:block/chest/close2"),
                         sound("minecraft:block/chest/close3")
                 ).subtitle("subtitles.entity.mimic.death")
@@ -538,6 +541,28 @@ public class AetherSoundData extends SoundDefinitionsProvider
                 definition().with(sound("aether:entity/slider/awaken"))
                 .subtitle("subtitles.entity.slider.awaken")
         );
+        this.add(AetherSoundEvents.ENTITY_SLIDER_AMBIENT,
+                definition().with(sound("minecraft:ambient/cave/cave1"),
+                                sound("minecraft:ambient/cave/cave2"),
+                                sound("minecraft:ambient/cave/cave3"),
+                                sound("minecraft:ambient/cave/cave4"),
+                                sound("minecraft:ambient/cave/cave5"),
+                                sound("minecraft:ambient/cave/cave6"),
+                                sound("minecraft:ambient/cave/cave7"),
+                                sound("minecraft:ambient/cave/cave8"),
+                                sound("minecraft:ambient/cave/cave9"),
+                                sound("minecraft:ambient/cave/cave10"),
+                                sound("minecraft:ambient/cave/cave11"),
+                                sound("minecraft:ambient/cave/cave12"),
+                                sound("minecraft:ambient/cave/cave13"),
+                                sound("minecraft:ambient/cave/cave14"),
+                                sound("minecraft:ambient/cave/cave15"),
+                                sound("minecraft:ambient/cave/cave16"),
+                                sound("minecraft:ambient/cave/cave17"),
+                                sound("minecraft:ambient/cave/cave18"),
+                                sound("minecraft:ambient/cave/cave19"))
+                        .subtitle("subtitles.entity.slider.ambient")
+        );
         this.add(AetherSoundEvents.ENTITY_SLIDER_COLLIDE,
                 definition().with(sound("aether:entity/slider/collide"))
                 .subtitle("subtitles.entity.slider.collide")
@@ -545,6 +570,15 @@ public class AetherSoundData extends SoundDefinitionsProvider
         this.add(AetherSoundEvents.ENTITY_SLIDER_MOVE,
                 definition().with(sound("aether:entity/slider/move"))
                         .subtitle("subtitles.entity.slider.move")
+        );
+        this.add(AetherSoundEvents.ENTITY_SLIDER_HURT,
+                definition().with(sound("minecraft:step/stone1"),
+                                sound("minecraft:step/stone2"),
+                                sound("minecraft:step/stone3"),
+                                sound("minecraft:step/stone4"),
+                                sound("minecraft:step/stone5"),
+                                sound("minecraft:step/stone6"))
+                        .subtitle("subtitles.entity.slider.hurt")
         );
         this.add(AetherSoundEvents.ENTITY_SLIDER_DEATH,
                 definition().with(sound("aether:entity/slider/death"))
@@ -588,6 +622,21 @@ public class AetherSoundData extends SoundDefinitionsProvider
                         sound("minecraft:random/glass2"),
                         sound("minecraft:random/glass3")
                 ).subtitle("subtitles.entity.cloud_crystal.explode")
+        );
+        this.add(AetherSoundEvents.ENTITY_FIRE_CRYSTAL_EXPLODE,
+                definition().with(
+                        sound("minecraft:random/explode1"),
+                        sound("minecraft:random/explode2"),
+                        sound("minecraft:random/explode3"),
+                        sound("minecraft:random/explode4")
+                ).subtitle("subtitles.entity.fire_crystal.explode")
+        );
+        this.add(AetherSoundEvents.ENTITY_ICE_CRYSTAL_EXPLODE,
+                definition().with(
+                        sound("minecraft:random/glass1"),
+                        sound("minecraft:random/glass2"),
+                        sound("minecraft:random/glass3")
+                ).subtitle("subtitles.entity.ice_crystal.explode")
         );
         this.add(AetherSoundEvents.ENTITY_THUNDER_CRYSTAL_EXPLODE,
                 definition().with(
