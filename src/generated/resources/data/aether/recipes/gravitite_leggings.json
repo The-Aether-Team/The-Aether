@@ -1,14 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "equipment",
   "key": {
-    "M": {
+    "#": {
       "item": "aether:enchanted_gravitite"
     }
   },
   "pattern": [
-    "MMM",
-    "M M",
-    "M M"
+    "###",
+    "# #",
+    "# #"
   ],
   "result": {
     "item": "aether:gravitite_leggings"

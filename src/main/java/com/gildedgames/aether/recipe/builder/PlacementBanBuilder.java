@@ -14,7 +14,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.biome.Biome;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public abstract class PlacementBanBuilder implements RecipeBuilder {
@@ -28,6 +27,11 @@ public abstract class PlacementBanBuilder implements RecipeBuilder {
         this.biomeKey = biomeKey;
         this.biomeTag = biomeTag;
         this.serializer = serializer;
+    }
+
+    @Override
+    public RecipeBuilder group(@Nullable String group) {
+        return this;
     }
 
     public BlockStateIngredient getBypassBlock() {
@@ -46,22 +50,14 @@ public abstract class PlacementBanBuilder implements RecipeBuilder {
         return this.serializer;
     }
 
-    @Nonnull
-    @Override
-    public RecipeBuilder unlockedBy(@Nonnull String criterionName, @Nonnull CriterionTriggerInstance criterionTriggerInstance) {
-        return this;
-    }
-
-    @Nonnull
-    @Override
-    public RecipeBuilder group(@Nullable String groupName) {
-        return this;
-    }
-
-    @Nonnull
     @Override
     public Item getResult() {
         return Items.AIR;
+    }
+
+    @Override
+    public RecipeBuilder unlockedBy(String criterionName, CriterionTriggerInstance criterionTrigger) {
+        return this;
     }
 
     public static class Result implements FinishedRecipe {
@@ -80,7 +76,7 @@ public abstract class PlacementBanBuilder implements RecipeBuilder {
         }
 
         @Override
-        public void serializeRecipeData(@Nonnull JsonObject json) {
+        public void serializeRecipeData(JsonObject json) {
             BlockStateRecipeUtil.biomeKeyToJson(json, this.biomeKey);
             BlockStateRecipeUtil.biomeTagToJson(json, this.biomeTag);
             if (!this.bypassBlock.isEmpty()) {
@@ -88,13 +84,11 @@ public abstract class PlacementBanBuilder implements RecipeBuilder {
             }
         }
 
-        @Nonnull
         @Override
         public RecipeSerializer<?> getType() {
             return this.serializer;
         }
 
-        @Nonnull
         @Override
         public ResourceLocation getId() {
             return this.id;

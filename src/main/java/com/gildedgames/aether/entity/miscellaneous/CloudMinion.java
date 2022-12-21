@@ -4,6 +4,7 @@ import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.projectile.crystal.CloudCrystal;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.util.EntityUtil;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -196,7 +197,7 @@ public class CloudMinion extends FlyingMob {
 
     @Nonnull
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

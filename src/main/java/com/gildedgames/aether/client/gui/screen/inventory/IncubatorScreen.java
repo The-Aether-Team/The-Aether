@@ -124,10 +124,4 @@ public class IncubatorScreen extends AbstractContainerScreen<IncubatorMenu> impl
 	public RecipeBookComponent getRecipeBookComponent() {
 		return this.recipeBookComponent;
 	}
-
-	@Override
-	public void removed() {
-		this.recipeBookComponent.removed();
-		super.removed();
-	}
 }

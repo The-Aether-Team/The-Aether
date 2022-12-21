@@ -9,7 +9,7 @@ import com.gildedgames.aether.network.packet.server.NpcPlayerInteractPacket;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -101,10 +101,10 @@ public class ValkyrieQueenDialogueScreen extends Screen {
     private void positionDialogueOptions() {
         this.dialogue.reposition(this.width, this.height);
         int lineNumber = this.dialogue.height / 12 + 1;
-        for (Widget widget : this.renderables) {
-            if (widget instanceof PlayerDialogueButton option) {
-                option.x = this.width / 2 - option.getWidth() / 2;
-                option.y = this.height / 2 + 12 * lineNumber;
+        for (Renderable renderable : this.renderables) {
+            if (renderable instanceof PlayerDialogueButton option) {
+                option.setX(this.width / 2 - option.getWidth() / 2);
+                option.setY(this.height / 2 + 12 * lineNumber);
                 lineNumber++;
             }
         }

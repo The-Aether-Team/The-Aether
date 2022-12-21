@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "cookingtime": 200,
-  "experience": 0.7,
-  "ingredient": {
-    "item": "aether:zanite_ore"
-  },
-  "result": "aether:zanite_gemstone"
-}

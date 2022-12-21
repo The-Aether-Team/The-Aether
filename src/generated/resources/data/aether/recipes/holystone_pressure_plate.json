@@ -1,12 +1,13 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "redstone",
   "key": {
-    "H": {
+    "#": {
       "item": "aether:holystone"
     }
   },
   "pattern": [
-    "HH"
+    "##"
   ],
   "result": {
     "item": "aether:holystone_pressure_plate"

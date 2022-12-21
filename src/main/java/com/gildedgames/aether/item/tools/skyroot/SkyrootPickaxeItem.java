@@ -1,6 +1,5 @@
 package com.gildedgames.aether.item.tools.skyroot;
 
-import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.combat.AetherItemTiers;
 import com.gildedgames.aether.item.tools.abilities.SkyrootTool;
 import net.minecraft.world.item.Item;
@@ -15,7 +14,7 @@ import javax.annotation.Nullable;
  */
 public class SkyrootPickaxeItem extends PickaxeItem implements SkyrootTool {
     public SkyrootPickaxeItem() {
-        super(AetherItemTiers.SKYROOT, 1, -2.8F, new Item.Properties().tab(AetherItemGroups.AETHER_TOOLS));
+        super(AetherItemTiers.SKYROOT, 1, -2.8F, new Item.Properties());
     }
 
     @Override

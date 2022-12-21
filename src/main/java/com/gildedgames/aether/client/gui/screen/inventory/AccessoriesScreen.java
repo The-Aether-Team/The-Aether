@@ -11,7 +11,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ImageButton;
-import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.gui.components.Renderable;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
@@ -53,7 +54,6 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
     public static final ResourceLocation CUSTOMIZATION_BUTTON = new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/customization_button.png");
 
     private final RecipeBookComponent recipeBookComponent = new RecipeBookComponent();
-    private boolean recipeBookComponentInitialized;
     private boolean widthTooNarrow;
     private boolean buttonClicked;
     private boolean isRenderButtonHovered;
@@ -98,12 +98,11 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
             }
             this.widthTooNarrow = this.width < 379;
             this.recipeBookComponent.init(this.width, this.height, this.minecraft, this.widthTooNarrow, this.menu);
-            this.recipeBookComponentInitialized = true;
             this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
             this.addRenderableWidget(new ImageButton(this.leftPos + 142, this.height / 2 - 22, 20, 18, 0, 0, 19, RECIPE_BUTTON_LOCATION, (pressed) -> {
                 this.recipeBookComponent.toggleVisibility();
                 this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
-                ((ImageButton) pressed).setPosition(this.leftPos + 142, this.height / 2 - 22);
+                pressed.setPosition(this.leftPos + 142, this.height / 2 - 22);
                 this.buttonClicked = true;
             }));
             this.addWidget(this.recipeBookComponent);
@@ -111,40 +110,41 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
 
             this.updateRenderButtons();
 
-            this.addRenderableWidget(new ImageButton(this.leftPos - 22, this.topPos + 2, 20, 20, 0, 0, 20, SKINS_BUTTON, 20, 40,
-                    (pressed) -> Aether.LOGGER.info("WIP"), //todo
-                    (button, poseStack, x, y) -> this.renderTooltip(poseStack, Component.translatable("gui.aether.accessories.skins_button"), x, y),
-                    Component.translatable("gui.aether.accessories.skins_button"))
-            {
-                 @Override
-                 public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-                     super.render(poseStack, mouseX, mouseY, partialTick);
-                     if (!AccessoriesScreen.this.recipeBookComponent.isVisible()) {
-                         this.x = AccessoriesScreen.this.leftPos - 22;
-                         this.y = AccessoriesScreen.this.topPos + 2;
-                     } else {
-                         this.x = AccessoriesScreen.this.leftPos + 2;
-                         this.y = AccessoriesScreen.this.topPos - 22;
-                     }
-                 }
-            });
-            this.addRenderableWidget(new ImageButton(this.leftPos - 22, this.topPos + 24, 20, 20, 0, 0, 20, CUSTOMIZATION_BUTTON, 20, 40,
-                    (pressed) -> this.minecraft.setScreen(new AetherCustomizationsScreen(this)),
-                    (button, poseStack, x, y) -> this.renderTooltip(poseStack, Component.translatable("gui.aether.accessories.customization_button"), x, y),
-                    Component.translatable("gui.aether.accessories.customization_button"))
-            {
+            ImageButton skinsButton = new ImageButton(this.leftPos - 22, this.topPos + 2, 20, 20, 0, 0, 20, SKINS_BUTTON, 20, 40,
+                    (pressed) -> Aether.LOGGER.info("WIP"), //todo,
+                    Component.translatable("gui.aether.accessories.skins_button")) {
                 @Override
                 public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
                     super.render(poseStack, mouseX, mouseY, partialTick);
                     if (!AccessoriesScreen.this.recipeBookComponent.isVisible()) {
-                        this.x = AccessoriesScreen.this.leftPos - 22;
-                        this.y = AccessoriesScreen.this.topPos + 24;
+                        this.setX(AccessoriesScreen.this.leftPos - 22);
+                        this.setY(AccessoriesScreen.this.topPos + 2);
                     } else {
-                        this.x = AccessoriesScreen.this.leftPos + 24;
-                        this.y = AccessoriesScreen.this.topPos - 22;
+                        this.setX(AccessoriesScreen.this.leftPos + 2);
+                        this.setY(AccessoriesScreen.this.topPos - 22);
                     }
                 }
-            });
+            };
+            skinsButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.skins_button")));
+            this.addRenderableWidget(skinsButton);
+
+            ImageButton customizationButton = new ImageButton(this.leftPos - 22, this.topPos + 24, 20, 20, 0, 0, 20, CUSTOMIZATION_BUTTON, 20, 40,
+                    (pressed) -> this.minecraft.setScreen(new AetherCustomizationsScreen(this)),
+                    Component.translatable("gui.aether.accessories.customization_button")) {
+                @Override
+                public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+                    super.render(poseStack, mouseX, mouseY, partialTick);
+                    if (!AccessoriesScreen.this.recipeBookComponent.isVisible()) {
+                        this.setX(AccessoriesScreen.this.leftPos - 22);
+                        this.setY(AccessoriesScreen.this.topPos + 24);
+                    } else {
+                        this.setX(AccessoriesScreen.this.leftPos + 24);
+                        this.setY(AccessoriesScreen.this.topPos - 22);
+                    }
+                }
+            };
+            customizationButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.customization_button")));
+            this.addRenderableWidget(customizationButton);
         }
     }
 
@@ -160,8 +160,8 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
                 {
                     @Override
                     public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-                        this.x = AccessoriesScreen.this.leftPos + inventorySlot.x + 11;
-                        this.y = AccessoriesScreen.this.topPos + inventorySlot.y - 3;
+                        this.setX(AccessoriesScreen.this.leftPos + inventorySlot.x + 11);
+                        this.setY(AccessoriesScreen.this.topPos + inventorySlot.y - 3);
                     }
                 });
             }
@@ -187,8 +187,8 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
             this.recipeBookComponent.renderGhostRecipe(poseStack, this.leftPos, this.topPos, false, partialTicks);
 
             boolean isButtonHovered = false;
-            for (Widget button : this.renderables) {
-                if (button instanceof RenderButton renderButton) {
+            for (Renderable renderable : this.renderables) {
+                if (renderable instanceof RenderButton renderButton) {
                     renderButton.renderButtonOverlay(poseStack, mouseX, mouseY, partialTicks);
                     if (renderButton.isHoveredOrFocused()) {
                         isButtonHovered = true;
@@ -340,14 +340,6 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
     @Override
     public void recipesUpdated() {
         this.recipeBookComponent.recipesUpdated();
-    }
-
-    @Override
-    public void removed() {
-        if (this.recipeBookComponentInitialized) {
-            this.recipeBookComponent.removed();
-        }
-        super.removed();
     }
 
     @Nonnull

@@ -80,7 +80,7 @@ public class AetherPortalForcer implements ITeleporter {
                     axis = Direction.Axis.X;
                     vec3 = new Vec3(0.5, 0.0, 0.0);
                 }
-                return PortalShape.createPortalInfo(destinationLevel, rectangle, axis, vec3, entity.getDimensions(entity.getPose()), entity.getDeltaMovement(), entity.getYRot(), entity.getXRot());
+                return PortalShape.createPortalInfo(destinationLevel, rectangle, axis, vec3, entity, entity.getDeltaMovement(), entity.getYRot(), entity.getXRot());
             }).orElse(null);
         }
     }
@@ -178,7 +178,7 @@ public class AetherPortalForcer implements ITeleporter {
         }
 
         if (d0 == -1.0) {
-            int k1 = Math.max(this.level.getMinBuildHeight() - -1, 70);
+            int k1 = Math.max(this.level.getMinBuildHeight() + 1, 70);
             int i2 = i - 9;
             if (i2 < k1) {
                 return Optional.empty();

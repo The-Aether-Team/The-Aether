@@ -23,6 +23,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.LerpingBossEvent;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
@@ -122,7 +123,7 @@ public class GuiHooks {
         Player entity = minecraft.player;
         if (entity != null) {
             if (AetherKeys.OPEN_ACCESSORY_INVENTORY.consumeClick() && minecraft.isWindowActive()) {
-                AetherPacketHandler.sendToServer(new OpenAccessoriesPacket(entity.getId(), ItemStack.EMPTY));
+                AetherPacketHandler.sendToServer(new OpenAccessoriesPacket(ItemStack.EMPTY));
                 shouldAddButton = false;
             }
         }
@@ -135,9 +136,8 @@ public class GuiHooks {
                         AetherConfig.CLIENT.enable_world_preview.set(!AetherConfig.CLIENT.enable_world_preview.get());
                         AetherConfig.CLIENT.enable_world_preview.save();
                         WorldDisplayHelper.toggleWorldPreview(AetherConfig.CLIENT.enable_world_preview.get());
-                    },
-                    (button, matrixStack, x, y) ->
-                            screen.renderTooltip(matrixStack, Component.translatable("gui.aether.menu.preview"), x + 4, y + 12));
+                    });
+            dynamicMenuButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.menu.preview")));
             dynamicMenuButton.setDisplayConfigs(AetherConfig.CLIENT.enable_world_preview_button);
             return dynamicMenuButton;
         }
@@ -153,9 +153,8 @@ public class GuiHooks {
                         Minecraft.getInstance().setScreen(getMenu());
                         Minecraft.getInstance().getMusicManager().stopPlaying();
                         AetherMusicManager.stopPlaying();
-                    },
-                    (button, matrixStack, x, y) ->
-                            screen.renderTooltip(matrixStack, Component.translatable(AetherConfig.CLIENT.enable_aether_menu.get() ? "gui.aether.menu.minecraft" : "gui.aether.menu.aether"), x + 4, y + 12));
+                    });
+            dynamicMenuButton.setTooltip(Tooltip.create(Component.translatable(AetherConfig.CLIENT.enable_aether_menu.get() ? "gui.aether.menu.minecraft" : "gui.aether.menu.aether")));
             dynamicMenuButton.setOffsetConfigs(AetherConfig.CLIENT.enable_world_preview_button);
             dynamicMenuButton.setDisplayConfigs(AetherConfig.CLIENT.enable_aether_menu_button);
             return dynamicMenuButton;
@@ -170,9 +169,8 @@ public class GuiHooks {
                         WorldDisplayHelper.quickLoad();
                         Minecraft.getInstance().getMusicManager().stopPlaying();
                         AetherMusicManager.stopPlaying(); //todo doesn't quite work. might need to stop it through the sound manager
-                    },
-                    (button, matrixStack, x, y) ->
-                            screen.renderTooltip(matrixStack, Component.translatable("gui.aether.menu.load"), x + 4, y + 12));
+                    });
+            dynamicMenuButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.menu.load")));
             dynamicMenuButton.setOffsetConfigs(AetherConfig.CLIENT.enable_world_preview_button, AetherConfig.CLIENT.enable_aether_menu_button);
             dynamicMenuButton.setDisplayConfigs(AetherConfig.CLIENT.enable_world_preview, AetherConfig.CLIENT.enable_quick_load_button);
             return dynamicMenuButton;

@@ -9,12 +9,14 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
 
+/**
+ * Checks if a config value is true or false for a recipe.
+ */
 public class ConfigCondition implements ICondition {
     private static final ResourceLocation NAME = new ResourceLocation(Aether.MODID, "config");
     private final ForgeConfigSpec.ConfigValue<Boolean> config;
 
-    public ConfigCondition(ForgeConfigSpec.ConfigValue<Boolean> config)
-    {
+    public ConfigCondition(ForgeConfigSpec.ConfigValue<Boolean> config) {
         this.config = config;
     }
 
@@ -37,13 +39,13 @@ public class ConfigCondition implements ICondition {
         public static final ConfigCondition.Serializer INSTANCE = new ConfigCondition.Serializer();
 
         @Override
-        public void write(JsonObject object, ConfigCondition condition) {
-            object.addProperty("config", ConfigSerializationUtil.serialize(condition.config));
+        public void write(JsonObject json, ConfigCondition condition) {
+            json.addProperty("config", ConfigSerializationUtil.serialize(condition.config));
         }
 
         @Override
-        public ConfigCondition read(JsonObject object) {
-            return new ConfigCondition(ConfigSerializationUtil.deserialize(GsonHelper.getAsString(object, "config")));
+        public ConfigCondition read(JsonObject json) {
+            return new ConfigCondition(ConfigSerializationUtil.deserialize(GsonHelper.getAsString(json, "config")));
         }
 
         @Override

@@ -5,7 +5,6 @@ import com.gildedgames.aether.client.particle.AetherParticleTypes;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
@@ -17,7 +16,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 
@@ -77,7 +75,7 @@ public class ThunderCrystal extends AbstractCrystal {
     @Override
     protected void onHitEntity(EntityHitResult pResult) {
         if (pResult.getEntity() instanceof LivingEntity target && target != this.getOwner()) {
-            target.hurt(new IndirectEntityDamageSource("thunder_crystal", this, this.getOwner()).setProjectile(), 5.0F);
+            target.hurt(new IndirectEntityDamageSource("aether.thunder_crystal", this, this.getOwner()).setProjectile(), 5.0F);
             this.knockback(0.1, this.position().subtract(target.position()));
             target.knockback(0.25, this.getX() - target.getX(), this.getZ() - target.getZ());
         }
@@ -140,11 +138,5 @@ public class ThunderCrystal extends AbstractCrystal {
         if (tag.contains("Target")) {
             this.target = this.level.getEntity(tag.getInt("Target"));
         }
-    }
-
-    @Nonnull
-    @Override
-    public Packet<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

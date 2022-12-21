@@ -1,6 +1,5 @@
 package com.gildedgames.aether.item.tools.zanite;
 
-import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.combat.AetherItemTiers;
 import com.gildedgames.aether.item.tools.abilities.ZaniteTool;
 import net.minecraft.world.item.AxeItem;
@@ -12,6 +11,6 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
  */
 public class ZaniteAxeItem extends AxeItem implements ZaniteTool {
     public ZaniteAxeItem() {
-        super(AetherItemTiers.ZANITE, 6.0F, -3.1F, new Item.Properties().tab(AetherItemGroups.AETHER_TOOLS));
+        super(AetherItemTiers.ZANITE, 6.0F, -3.1F, new Item.Properties());
     }
 }

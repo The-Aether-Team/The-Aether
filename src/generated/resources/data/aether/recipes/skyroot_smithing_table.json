@@ -1,18 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "group": "minecraft:smithing_table",
   "key": {
     "I": {
       "tag": "forge:ingots/iron"
     },
-    "S": {
+    "P": {
       "tag": "aether:planks_crafting"
     }
   },
   "pattern": [
     "II",
-    "SS",
-    "SS"
+    "PP",
+    "PP"
   ],
   "result": {
     "item": "minecraft:smithing_table"

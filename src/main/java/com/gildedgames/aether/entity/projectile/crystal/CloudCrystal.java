@@ -34,7 +34,7 @@ public class CloudCrystal extends AbstractCrystal {
         Entity entity = result.getEntity();
         if (entity instanceof LivingEntity livingEntity) {
             float bonus = entity instanceof Blaze ? 3.0F : 0.0F;
-            if (livingEntity.hurt(new IndirectEntityDamageSource("cloud_crystal", this, this.getOwner()).setProjectile(), 5.0F + bonus)) {
+            if (livingEntity.hurt(new IndirectEntityDamageSource("aether.cloud_crystal", this, this.getOwner()).setProjectile(), 5.0F + bonus)) {
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 10));
                 this.level.playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
                 this.spawnExplosionParticles();

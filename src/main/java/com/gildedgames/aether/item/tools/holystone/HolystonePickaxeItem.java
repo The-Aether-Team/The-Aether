@@ -1,6 +1,5 @@
 package com.gildedgames.aether.item.tools.holystone;
 
-import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.combat.AetherItemTiers;
 import com.gildedgames.aether.item.tools.abilities.HolystoneTool;
 import net.minecraft.world.item.Item;
@@ -12,6 +11,6 @@ import net.minecraftforge.event.level.BlockEvent;
  */
 public class HolystonePickaxeItem extends PickaxeItem implements HolystoneTool {
     public HolystonePickaxeItem() {
-        super(AetherItemTiers.HOLYSTONE, 1, -2.8F, new Item.Properties().tab(AetherItemGroups.AETHER_TOOLS));
+        super(AetherItemTiers.HOLYSTONE, 1, -2.8F, new Item.Properties());
     }
 }

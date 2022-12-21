@@ -1,18 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "group": "minecraft:jukebox",
   "key": {
     "G": {
       "item": "aether:enchanted_gravitite"
     },
-    "S": {
+    "P": {
       "tag": "aether:planks_crafting"
     }
   },
   "pattern": [
-    "SSS",
-    "SGS",
-    "SSS"
+    "PPP",
+    "PGP",
+    "PPP"
   ],
   "result": {
     "item": "minecraft:jukebox"

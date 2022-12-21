@@ -1,0 +1,33 @@
+{
+  "parent": "aether:enter_aether",
+  "criteria": {
+    "incubate_moa": {
+      "conditions": {
+        "item": {
+          "tag": "aether:moa_eggs"
+        }
+      },
+      "trigger": "aether:incubation_trigger"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.aether.incubate_moa.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aether:incubator"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.aether.incubate_moa"
+    }
+  },
+  "requirements": [
+    [
+      "incubate_moa"
+    ]
+  ]
+}
