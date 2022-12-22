@@ -40,8 +40,10 @@ public class SilverDungeonPieces {
             new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.HOLYSTONE.get(), 0.3F), AlwaysTrueTest.INSTANCE, AetherBlocks.MOSSY_HOLYSTONE.get().defaultBlockState())
     ));
 
-    public static final TrappedBlockProcessor TRAPPED_ANGELIC_STONE = new TrappedBlockProcessor(AetherBlocks.LOCKED_ANGELIC_STONE.get(), AetherBlocks.TRAPPED_ANGELIC_STONE.get(), 0.05F);
-    public static final TrappedBlockProcessor TRAPPED_LIGHT_ANGELIC_STONE = new TrappedBlockProcessor(AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get(), AetherBlocks.TRAPPED_LIGHT_ANGELIC_STONE.get(), 0.05F);
+    public static final RuleProcessor TRAPPED_ANGELIC_STONE = new RuleProcessor(ImmutableList.of(
+            new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.LOCKED_ANGELIC_STONE.get(), 0.15F), AlwaysTrueTest.INSTANCE, AetherBlocks.TRAPPED_ANGELIC_STONE.get().defaultBlockState()),
+            new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get(), 0.15F), AlwaysTrueTest.INSTANCE, AetherBlocks.TRAPPED_LIGHT_ANGELIC_STONE.get().defaultBlockState())
+    ));
 
     /**
      * This class is for randomly assembling the silver dungeon.
@@ -97,7 +99,7 @@ public class SilverDungeonPieces {
             for (int y = 0; y < this.height; y++) {
                 for (int z = 0; z < this.length; z++) {
                     for (int x = 0; x < this.width; x++) {
-                        if ((this.grid[x][y][z] & 0b11111) == 0 && this.random.nextBoolean()) { // Check for an empty room
+                        if ((this.grid[x][y][z] & 0b11111) == 0 && this.random.nextInt(3) != 0) { // Check for an empty room
                             this.grid[x][y][z] |= CHEST_ROOM;
                         }
 
@@ -123,6 +125,7 @@ public class SilverDungeonPieces {
         /**
          * Recursively traverse through the rooms to build a path through them.
          * Returns false if the path must not be made.
+         *
          * @param typesToAvoid - A bitmask of the types of rooms that should not be connected to.
          */
         private boolean traverseRooms(int x, int y, int z, int typesToAvoid) {
@@ -250,7 +253,7 @@ public class SilverDungeonPieces {
         }
 
         private static StructurePlaceSettings makeSettings() {
-            return new StructurePlaceSettings().addProcessor(LOCKED_ANGELIC_STONE)/*.addProcessor(TRAPPED_ANGELIC_STONE).addProcessor(TRAPPED_LIGHT_ANGELIC_STONE)*/;
+            return new StructurePlaceSettings().addProcessor(LOCKED_ANGELIC_STONE).addProcessor(TRAPPED_ANGELIC_STONE);
         }
 
         @Override
@@ -281,21 +284,21 @@ public class SilverDungeonPieces {
         }
 
         @Override
-        protected void addAdditionalSaveData(StructurePieceSerializationContext context, CompoundTag tag) {
-            super.addAdditionalSaveData(context, tag);
-        }
-
-        @Override
         protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox box) {
             level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
             if (name.equals("Chest")) {
-                if (random.nextBoolean()) {
-                    level.setBlock(pos, Blocks.CHEST.defaultBlockState(), 2);
-                    if (level.getBlockEntity(pos) instanceof ChestBlockEntity chest) {
-                        chest.setLootTable(AetherLoot.SILVER_DUNGEON, random.nextLong());
+                BlockPos.MutableBlockPos chestPos = pos.mutable();
+                int y = pos.getY();
+                chestPos.set(this.boundingBox.minX() + random.nextInt(this.boundingBox.getXSpan()), y, this.boundingBox.minZ() + random.nextInt(this.boundingBox.getZSpan()));
+                if (level.isEmptyBlock(chestPos)) {
+                    if (random.nextBoolean()) {
+                        level.setBlock(chestPos, Blocks.CHEST.defaultBlockState(), 2);
+                        if (level.getBlockEntity(chestPos) instanceof ChestBlockEntity chest) {
+                            chest.setLootTable(AetherLoot.SILVER_DUNGEON, random.nextLong());
+                        }
+                    } else {
+                        level.setBlock(chestPos, AetherBlocks.CHEST_MIMIC.get().defaultBlockState(), 1 | 2);
                     }
-                } else {
-                    level.setBlock(pos, AetherBlocks.CHEST_MIMIC.get().defaultBlockState(), 1 | 2);
                 }
             }
         }
