@@ -5,6 +5,7 @@ import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.block.dungeon.ChestMimicBlock;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
@@ -17,7 +18,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.world.level.block.state.properties.ChestType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
-import com.mojang.math.Vector3f;
 
 import javax.annotation.Nonnull;
 import java.util.Calendar;
@@ -47,7 +47,7 @@ public class ChestMimicRenderer<T extends BlockEntity> implements BlockEntityRen
 			poseStack.pushPose();
 			float f = blockState.getValue(ChestBlock.FACING).toYRot();
 			poseStack.translate(0.5D, 0.5D, 0.5D);
-			poseStack.mulPose(Vector3f.YP.rotationDegrees(-f));
+			poseStack.mulPose(Axis.YP.rotationDegrees(-f));
 			poseStack.translate(-0.5D, -0.5D, -0.5D);
 			Material material = this.getMaterial(blockEntity);
 			VertexConsumer vertexconsumer = material.buffer(buffer, RenderType::entityCutout);

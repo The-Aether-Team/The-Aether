@@ -17,7 +17,7 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class IncubationRecipe implements Recipe<Container> {
     protected final RecipeType<?> type;
@@ -39,17 +39,21 @@ public class IncubationRecipe implements Recipe<Container> {
     }
 
     @Override
-    public boolean matches(Container menu, @Nonnull Level level) {
+    public boolean matches(Container menu, Level level) {
         return this.ingredient.test(menu.getItem(0));
     }
 
-    @Nonnull
+    /**
+     * @return An empty {@link ItemStack}, as there is no item output.
+     */
     @Override
-    public ItemStack assemble(@Nonnull Container menu) {
+    public ItemStack assemble(Container menu) {
         return ItemStack.EMPTY;
     }
 
-    @Nonnull
+    /**
+     * @return The original {@link ItemStack} ingredient for Recipe Book display.
+     */
     @Override
     public ItemStack getResultItem() {
         return this.ingredient.getItems()[0];
@@ -59,11 +63,11 @@ public class IncubationRecipe implements Recipe<Container> {
     public boolean canCraftInDimensions(int width, int height) {
         return true;
     }
+
     public int getIncubationTime() {
         return this.incubationTime;
     }
 
-    @Nonnull
     public EntityType<?> getEntity() {
         return this.entity;
     }
@@ -72,7 +76,6 @@ public class IncubationRecipe implements Recipe<Container> {
         return this.tag;
     }
 
-    @Nonnull
     @Override
     public NonNullList<Ingredient> getIngredients() {
         NonNullList<Ingredient> nonNullList = NonNullList.create();
@@ -80,39 +83,34 @@ public class IncubationRecipe implements Recipe<Container> {
         return nonNullList;
     }
 
-    @Nonnull
     @Override
     public String getGroup() {
         return this.group;
     }
 
-    @Nonnull
     @Override
     public ResourceLocation getId() {
         return this.id;
     }
 
-    @Nonnull
     @Override
     public ItemStack getToastSymbol() {
         return new ItemStack(AetherBlocks.INCUBATOR.get());
     }
 
-    @Nonnull
     @Override
     public RecipeSerializer<?> getSerializer() {
         return AetherRecipeSerializers.INCUBATION.get();
     }
 
-    @Nonnull
     @Override
     public RecipeType<?> getType() {
         return this.type;
     }
 
     public static class Serializer implements RecipeSerializer<IncubationRecipe> {
-        @Nonnull
-        public IncubationRecipe fromJson(@Nonnull ResourceLocation recipeLocation, @Nonnull JsonObject jsonObject) {
+        @Override
+        public IncubationRecipe fromJson(ResourceLocation recipeLocation, JsonObject jsonObject) {
             String group = GsonHelper.getAsString(jsonObject, "group", "");
             Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(jsonObject, "ingredient"));
             EntityType<?> entityType = EntityType.byString(GsonHelper.getAsString(jsonObject, "entity")).orElseThrow(() -> new JsonSyntaxException("Entity type cannot be found"));
@@ -124,7 +122,9 @@ public class IncubationRecipe implements Recipe<Container> {
             return new IncubationRecipe(recipeLocation, group, ingredient, entityType, tag, incubationTime);
         }
 
-        public IncubationRecipe fromNetwork(@Nonnull ResourceLocation recipeLocation, FriendlyByteBuf buffer) {
+        @Nullable
+        @Override
+        public IncubationRecipe fromNetwork(ResourceLocation recipeLocation, FriendlyByteBuf buffer) {
             String group = buffer.readUtf();
             Ingredient ingredient = Ingredient.fromNetwork(buffer);
             EntityType<?> entityType = EntityType.byString(buffer.readUtf()).orElseThrow(() -> new JsonSyntaxException("Entity type cannot be found"));
@@ -136,6 +136,7 @@ public class IncubationRecipe implements Recipe<Container> {
             return new IncubationRecipe(recipeLocation, group, ingredient, entityType, tag, incubationTime);
         }
 
+        @Override
         public void toNetwork(FriendlyByteBuf buffer, IncubationRecipe recipe) {
             buffer.writeUtf(recipe.group);
             recipe.ingredient.toNetwork(buffer);

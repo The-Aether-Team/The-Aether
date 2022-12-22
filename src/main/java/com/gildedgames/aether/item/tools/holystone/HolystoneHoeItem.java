@@ -1,6 +1,5 @@
 package com.gildedgames.aether.item.tools.holystone;
 
-import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.combat.AetherItemTiers;
 import com.gildedgames.aether.item.tools.abilities.HolystoneTool;
 import net.minecraft.world.item.HoeItem;
@@ -12,6 +11,6 @@ import net.minecraftforge.event.level.BlockEvent;
  */
 public class HolystoneHoeItem extends HoeItem implements HolystoneTool {
     public HolystoneHoeItem() {
-        super(AetherItemTiers.HOLYSTONE, -1, -2.0F, new Item.Properties().tab(AetherItemGroups.AETHER_TOOLS));
+        super(AetherItemTiers.HOLYSTONE, -1, -2.0F, new Item.Properties());
     }
 }

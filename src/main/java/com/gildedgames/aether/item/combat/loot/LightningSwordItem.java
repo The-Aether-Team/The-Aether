@@ -1,9 +1,9 @@
 package com.gildedgames.aether.item.combat.loot;
 
-import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.combat.AetherItemTiers;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.capability.lightning.LightningTracker;
+import com.gildedgames.aether.item.combat.AetherSwordItem;
 import com.gildedgames.aether.util.EquipmentUtil;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,12 +11,11 @@ import net.minecraft.world.entity.LightningBolt;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SwordItem;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 
-public class LightningSwordItem extends SwordItem {
+public class LightningSwordItem extends AetherSwordItem {
     public LightningSwordItem() {
-        super(AetherItemTiers.LIGHTNING, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_WEAPONS));
+        super(AetherItemTiers.LIGHTNING, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
     }
 
     /**

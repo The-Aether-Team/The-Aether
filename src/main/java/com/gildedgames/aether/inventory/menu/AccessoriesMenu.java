@@ -66,7 +66,7 @@ public class AccessoriesMenu extends InventoryMenu {
     private final CraftingContainer craftMatrix = new CraftingContainer(this, 2, 2);
     private final ResultContainer craftResult = new ResultContainer();
 
-    public boolean hasButton;
+    public final boolean hasButton;
 
     public AccessoriesMenu(int containerId, Inventory playerInventory) {
         this(containerId, playerInventory, true);

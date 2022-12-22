@@ -1,14 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "equipment",
   "key": {
-    "M": {
+    "#": {
       "item": "minecraft:red_wool"
     }
   },
   "pattern": [
-    "MM",
-    "MM",
-    "MM"
+    "##",
+    "##",
+    "##"
   ],
   "result": {
     "item": "aether:red_cape"

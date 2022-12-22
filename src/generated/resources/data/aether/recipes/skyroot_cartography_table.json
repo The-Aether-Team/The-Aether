@@ -1,18 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "group": "minecraft:cartography_table",
   "key": {
-    "P": {
+    "#": {
       "item": "minecraft:paper"
     },
-    "S": {
+    "P": {
       "tag": "aether:planks_crafting"
     }
   },
   "pattern": [
+    "##",
     "PP",
-    "SS",
-    "SS"
+    "PP"
   ],
   "result": {
     "item": "minecraft:cartography_table"

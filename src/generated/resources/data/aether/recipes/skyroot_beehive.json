@@ -1,18 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "group": "minecraft:beehive",
   "key": {
     "C": {
       "item": "minecraft:honeycomb"
     },
-    "S": {
+    "P": {
       "tag": "aether:planks_crafting"
     }
   },
   "pattern": [
-    "SSS",
+    "PPP",
     "CCC",
-    "SSS"
+    "PPP"
   ],
   "result": {
     "item": "minecraft:beehive"

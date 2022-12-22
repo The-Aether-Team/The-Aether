@@ -3,6 +3,7 @@ package com.gildedgames.aether.block.natural;
 import com.gildedgames.aether.block.AetherBlockStateProperties;
 import com.gildedgames.aether.block.AetherBlocks;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.BonemealableBlock;
@@ -77,7 +78,7 @@ public class BerryBushStemBlock extends AetherBushBlock implements BonemealableB
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(BlockGetter level, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean isClient) {
 		return true;
 	}
 

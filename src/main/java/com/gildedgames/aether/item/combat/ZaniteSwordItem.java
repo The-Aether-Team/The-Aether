@@ -1,6 +1,5 @@
 package com.gildedgames.aether.item.combat;
 
-import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.combat.abilities.weapon.ZaniteWeapon;
 import com.google.common.collect.Multimap;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -12,7 +11,7 @@ import net.minecraft.world.item.SwordItem;
 
 public class ZaniteSwordItem extends SwordItem implements ZaniteWeapon {
     public ZaniteSwordItem() {
-        super(AetherItemTiers.ZANITE, 3, -2.4F, new Item.Properties().tab(AetherItemGroups.AETHER_WEAPONS));
+        super(AetherItemTiers.ZANITE, 3, -2.4F, new Item.Properties());
     }
 
     @Override

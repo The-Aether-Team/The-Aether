@@ -138,6 +138,7 @@
     {
       "faces": {
         "north": {
+          "emissivity": 15,
           "texture": "#overlay"
         }
       },

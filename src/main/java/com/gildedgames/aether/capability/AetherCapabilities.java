@@ -16,7 +16,7 @@ import com.gildedgames.aether.capability.rankings.AetherRankingsProvider;
 import com.gildedgames.aether.capability.time.AetherTime;
 import com.gildedgames.aether.capability.time.AetherTimeCapability;
 import com.gildedgames.aether.capability.time.AetherTimeProvider;
-import com.gildedgames.aether.data.resources.AetherDimensions;
+import com.gildedgames.aether.data.resources.registries.AetherDimensions;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;

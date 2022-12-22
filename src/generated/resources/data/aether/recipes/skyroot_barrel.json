@@ -1,18 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "group": "minecraft:barrel",
   "key": {
     "H": {
       "tag": "minecraft:wooden_slabs"
     },
-    "S": {
+    "P": {
       "tag": "aether:planks_crafting"
     }
   },
   "pattern": [
-    "SHS",
-    "S S",
-    "SHS"
+    "PHP",
+    "P P",
+    "PHP"
   ],
   "result": {
     "item": "minecraft:barrel"

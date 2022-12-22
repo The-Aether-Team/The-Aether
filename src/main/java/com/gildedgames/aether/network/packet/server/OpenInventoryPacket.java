@@ -8,28 +8,28 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
 
-public record OpenInventoryPacket(int playerID, ItemStack carryStack) implements AetherPacket {
+public record OpenInventoryPacket(ItemStack carryStack) implements AetherPacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
-        buf.writeInt(this.playerID);
         buf.writeItem(this.carryStack);
     }
 
     public static OpenInventoryPacket decode(FriendlyByteBuf buf) {
-        int playerID = buf.readInt();
         ItemStack carryStack = buf.readItem();
-        return new OpenInventoryPacket(playerID, carryStack);
+        return new OpenInventoryPacket(carryStack);
     }
 
     @Override
     public void execute(Player playerEntity) {
-        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level.getEntity(this.playerID) instanceof ServerPlayer serverPlayer) {
+        if (playerEntity != null && playerEntity.getServer() != null && playerEntity instanceof ServerPlayer serverPlayer) {
             ItemStack itemStack = serverPlayer.isCreative() ? this.carryStack : serverPlayer.containerMenu.getCarried();
             serverPlayer.containerMenu.setCarried(ItemStack.EMPTY);
             serverPlayer.doCloseContainer();
             if (!itemStack.isEmpty()) {
-                serverPlayer.containerMenu.setCarried(itemStack);
-                AetherPacketHandler.sendToPlayer(new ClientGrabItemPacket(serverPlayer.getId(), itemStack), serverPlayer);
+                if (!serverPlayer.isCreative()) {
+                    serverPlayer.containerMenu.setCarried(itemStack);
+                    AetherPacketHandler.sendToPlayer(new ClientGrabItemPacket(itemStack), serverPlayer);
+                }
             }
         }
     }

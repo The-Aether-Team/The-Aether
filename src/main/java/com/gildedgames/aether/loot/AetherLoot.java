@@ -1,5 +1,6 @@
 package com.gildedgames.aether.loot;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class AetherLoot {
 	private static final Set<ResourceLocation> LOOT_TABLES = new HashSet<>();
+	public static final Set<ResourceLocation> IMMUTABLE_LOOT_TABLES = Collections.unmodifiableSet(LOOT_TABLES);
 
 	public static final ResourceLocation ENTITIES_SHEEPUFF_WHITE = register("entities/sheepuff/white");
 	public static final ResourceLocation ENTITIES_SHEEPUFF_ORANGE = register("entities/sheepuff/orange");

@@ -1,7 +1,6 @@
 package com.gildedgames.aether.advancement;
 
 import com.gildedgames.aether.Aether;
-import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonObject;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
@@ -11,11 +10,8 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.resources.ResourceLocation;
 
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
-import net.minecraft.advancements.critereon.EnchantmentPredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.advancements.critereon.MinMaxBounds;
-import net.minecraft.advancements.critereon.NbtPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 
 /**
@@ -53,8 +49,7 @@ public class LoreTrigger extends SimpleCriterionTrigger<LoreTrigger.Instance> {
         }
 
         public static LoreTrigger.Instance forItem(ItemLike item) {
-            ItemPredicate itemPredicate = new ItemPredicate(null, ImmutableSet.of(item.asItem()), MinMaxBounds.Ints.ANY, MinMaxBounds.Ints.ANY, EnchantmentPredicate.NONE, EnchantmentPredicate.NONE, null, NbtPredicate.ANY);
-            return forItem(itemPredicate);
+            return forItem(ItemPredicate.Builder.item().of(item).build());
         }
 
         public static LoreTrigger.Instance forAny() {

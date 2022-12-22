@@ -3,6 +3,7 @@ package com.gildedgames.aether.blockentity;
 import javax.annotation.Nullable;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.advancement.IncubationTrigger;
 import com.gildedgames.aether.inventory.menu.IncubatorMenu;
 
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
@@ -11,9 +12,11 @@ import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.StackedContents;
@@ -56,10 +59,14 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 	private static final int[] SLOTS_NS = {0};
 	private static final int[] SLOTS_EW = {1};
 	protected NonNullList<ItemStack> items = NonNullList.withSize(2, ItemStack.EMPTY);
+	private ServerPlayer player; // The last player to put an item in the egg slot.
 	private int litTime; // The current fuel burning progress time.
 	private int litDuration; // Total time it takes a fuel item to burn.
 	private int incubationProgress; // The current incubation progress time.
 	private int incubationTotalTime; // Total time a recipe takes to incubate.
+    private int x; // The x position of the block entity.
+	private int y; // The y position of the block entity.
+	private int z; // The z position of the block entity.
 	protected final ContainerData dataAccess = new ContainerData() {
 		@Override
 		public int get(int index) {
@@ -68,6 +75,9 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 				case 1 -> IncubatorBlockEntity.this.litDuration;
 				case 2 -> IncubatorBlockEntity.this.incubationProgress;
 				case 3 -> IncubatorBlockEntity.this.incubationTotalTime;
+                case 4 -> IncubatorBlockEntity.this.x;
+				case 5 -> IncubatorBlockEntity.this.y;
+				case 6 -> IncubatorBlockEntity.this.z;
 				default -> 0;
 			};
 		}
@@ -79,12 +89,15 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 				case 1 -> IncubatorBlockEntity.this.litDuration = value;
 				case 2 -> IncubatorBlockEntity.this.incubationProgress = value;
 				case 3 -> IncubatorBlockEntity.this.incubationTotalTime = value;
+				case 4 -> IncubatorBlockEntity.this.x = value;
+				case 5 -> IncubatorBlockEntity.this.y = value;
+				case 6 -> IncubatorBlockEntity.this.z = value;
 			}
 		}
 
 		@Override
 		public int getCount() {
-			return 4;
+			return 7;
 		}
 	};
 	private static final Map<Item, Integer> incubatingMap = new LinkedHashMap<>();
@@ -99,6 +112,9 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 	public IncubatorBlockEntity(BlockPos pos, BlockState state, RecipeType<IncubationRecipe> recipeType) {
 		super(AetherBlockEntityTypes.INCUBATOR.get(), pos, state);
 		this.quickCheck = RecipeManager.createCheck(recipeType);
+		this.x = pos.getX();
+		this.y = pos.getY();
+		this.z = pos.getZ();
 	}
 
 	@Override
@@ -197,6 +213,16 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 		if (flag1) {
 			setChanged(level, pos, state);
 		}
+
+		if (blockEntity.x != pos.getX()) {
+			blockEntity.x = pos.getX();
+		}
+		if (blockEntity.y != pos.getY()) {
+			blockEntity.y = pos.getY();
+		}
+		if (blockEntity.z != pos.getZ()) {
+			blockEntity.z = pos.getZ();
+		}
 	}
 
 	/**
@@ -213,7 +239,13 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 			if (this.getLevel() != null && !this.getLevel().isClientSide() && this.getLevel() instanceof ServerLevel serverLevel) {
 				CompoundTag tag = recipe.getTag();
 				Component customName = itemStack.hasCustomHoverName() ? itemStack.getHoverName() : null;
-				entityType.spawn(serverLevel, tag, customName, null, spawnPos, MobSpawnType.TRIGGERED, true, false);
+				Entity entity = entityType.spawn(serverLevel, tag, null, spawnPos, MobSpawnType.TRIGGERED, true, false);
+				if (entity != null) {
+					entity.setCustomName(customName);
+					if (this.player != null) {
+						IncubationTrigger.INSTANCE.trigger(this.player, itemStack);
+					}
+				}
 			}
 			itemStack.shrink(1);
 			return true;
@@ -256,6 +288,10 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 	public static void addItemIncubatingTime(ItemLike itemProvider, int burnTime) {
 		Item item = itemProvider.asItem();
 		getIncubatingMap().put(item, burnTime);
+	}
+
+	public void setPlayer(ServerPlayer player) {
+		this.player = player;
 	}
 
 	@Override

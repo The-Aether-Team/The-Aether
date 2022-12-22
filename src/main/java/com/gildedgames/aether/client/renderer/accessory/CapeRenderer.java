@@ -6,7 +6,7 @@ import com.gildedgames.aether.client.renderer.accessory.model.CapeModel;
 import com.gildedgames.aether.item.accessories.cape.CapeItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -72,9 +72,9 @@ public class CapeRenderer implements ICurioRenderer {
                         f1 += 25.0F;
                     }
 
-                    poseStack.mulPose(Vector3f.XP.rotationDegrees(6.0F + f2 / 2.0F + f1));
-                    poseStack.mulPose(Vector3f.ZP.rotationDegrees(f3 / 2.0F));
-                    poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F - f3 / 2.0F));
+                    poseStack.mulPose(Axis.XP.rotationDegrees(6.0F + f2 / 2.0F + f1));
+                    poseStack.mulPose(Axis.ZP.rotationDegrees(f3 / 2.0F));
+                    poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - f3 / 2.0F));
                     this.renderCape(poseStack, buffer, stack, capeItem, light);
                     poseStack.popPose();
                 }
@@ -82,7 +82,7 @@ public class CapeRenderer implements ICurioRenderer {
                 this.cape.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
                 poseStack.pushPose();
                 poseStack.translate(0.0D, 0.0D, 0.125D);
-                poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
+                poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
                 this.renderCape(poseStack, buffer, stack, capeItem, light);
                 poseStack.popPose();
             }

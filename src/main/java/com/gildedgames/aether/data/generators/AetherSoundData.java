@@ -2,19 +2,18 @@ package com.gildedgames.aether.data.generators;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.AetherSoundEvents;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.SoundDefinitionsProvider;
 
-public class AetherSoundData extends SoundDefinitionsProvider
-{
-    public AetherSoundData(DataGenerator generator, ExistingFileHelper helper) {
-        super(generator, Aether.MODID, helper);
+public class AetherSoundData extends SoundDefinitionsProvider {
+    public AetherSoundData(PackOutput output, ExistingFileHelper helper) {
+        super(output, Aether.MODID, helper);
     }
 
     @Override
     public void registerSounds() {
-        //Blocks
+        // Blocks
         this.add(AetherSoundEvents.BLOCK_AETHER_PORTAL_AMBIENT,
                 definition().with(sound("minecraft:portal/portal").attenuationDistance(10))
                 .subtitle("subtitles.block.aether_portal.ambient")
@@ -520,7 +519,7 @@ public class AetherSoundData extends SoundDefinitionsProvider
         );
         this.add(AetherSoundEvents.ENTITY_MIMIC_DEATH,
                 definition().with(
-                        sound("minecraft:block/chest/close"),
+                        sound("minecraft:block/chest/close1"),
                         sound("minecraft:block/chest/close2"),
                         sound("minecraft:block/chest/close3")
                 ).subtitle("subtitles.entity.mimic.death")

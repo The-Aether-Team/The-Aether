@@ -21,7 +21,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -79,10 +78,9 @@ public class MoaEggItem extends Item {
                 if (blockState.is(Blocks.SPAWNER)) {
                     BlockEntity blockEntity = level.getBlockEntity(blockPos);
                     if (blockEntity instanceof SpawnerBlockEntity spawnerBlockEntity) {
-                        BaseSpawner baseSpawner = spawnerBlockEntity.getSpawner();
-                        BaseSpawnerAccessor baseSpawnerAccessor = (BaseSpawnerAccessor) baseSpawner;
+                        BaseSpawnerAccessor baseSpawnerAccessor = (BaseSpawnerAccessor) spawnerBlockEntity.getSpawner();
                         EntityType<Moa> entityType = AetherEntityTypes.MOA.get();
-                        baseSpawner.setEntityId(entityType);
+                        spawnerBlockEntity.setEntityId(entityType, level.getRandom());
                         baseSpawnerAccessor.getNextSpawnData().getEntityToSpawn().putString("MoaType", this.getMoaTypeId().toString());
                         baseSpawnerAccessor.getNextSpawnData().getEntityToSpawn().putBoolean("PlayerGrown", true); // Moas spawned from a Mob Spawner as set by a Moa Egg will always be tamed.
                         blockEntity.setChanged();
@@ -101,7 +99,7 @@ public class MoaEggItem extends Item {
 
                 ItemStack spawnStack = this.getStackWithTags(itemStack, false, this.getMoaType(), false, true); // Setup tags for spawning entity.
                 Entity entity = AetherEntityTypes.MOA.get().spawn(serverLevel, spawnStack, player, relativePos, MobSpawnType.SPAWN_EGG, true, !Objects.equals(blockPos, relativePos) && direction == Direction.UP);
-                if (entity instanceof Moa) {
+                if (entity != null) {
                     level.gameEvent(player, GameEvent.ENTITY_PLACE, blockPos);
                 }
                 return InteractionResult.CONSUME;
@@ -125,7 +123,7 @@ public class MoaEggItem extends Item {
             if (hitResult.getType() != HitResult.Type.BLOCK) {
                 return InteractionResultHolder.pass(heldStack);
             } else if (!(level instanceof ServerLevel serverLevel)) {
-                return InteractionResultHolder.success(heldStack);
+                return InteractionResultHolder.fail(heldStack);
             } else {
                 BlockPos blockpos = hitResult.getBlockPos();
                 if (!(level.getBlockState(blockpos).getBlock() instanceof LiquidBlock)) {

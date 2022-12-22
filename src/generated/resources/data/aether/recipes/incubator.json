@@ -1,16 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
-    "A": {
-      "item": "aether:ambrosium_torch"
-    },
     "H": {
       "item": "aether:holystone"
+    },
+    "T": {
+      "item": "aether:ambrosium_torch"
     }
   },
   "pattern": [
     "HHH",
-    "HAH",
+    "HTH",
     "HHH"
   ],
   "result": {

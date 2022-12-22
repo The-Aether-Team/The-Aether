@@ -1,13 +1,12 @@
 package com.gildedgames.aether.item.food;
 
-import com.gildedgames.aether.item.AetherItemGroups;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 
 public class HealingStoneItem extends Item {
     public HealingStoneItem() {
-        super(new Item.Properties().rarity(Rarity.RARE).food(AetherFoods.HEALING_STONE).tab(AetherItemGroups.AETHER_FOOD));
+        super(new Item.Properties().rarity(Rarity.RARE).food(AetherFoods.HEALING_STONE));
     }
 
     /**

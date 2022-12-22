@@ -6,6 +6,9 @@
   "plugin": "com.gildedgames.aether.mixin.AetherMixinPlugin",
   "refmap": "aether.refmap.json",
   "mixins": [
+    "common.AbstractArrowMixin",
+    "common.DimensionTypeMixin",
+    "common.FeatureMixin",
     "common.accessor.AbstractContainerMenuAccessor",
     "common.accessor.AbstractFurnaceBlockEntityAccessor",
     "common.accessor.BaseSpawnerAccessor",
@@ -27,13 +30,20 @@
     "common.accessor.SpreadingSnowyDirtBlockAccessor",
     "common.accessor.StoredUserListAccessor",
     "common.accessor.WorldGenRegionAccessor",
-    "common.accessor.ZombifiedPiglinAccessor",
-    "common.AbstractArrowMixin",
-    "common.DimensionTypeMixin",
-    "common.FeatureMixin"
+    "common.accessor.ZombifiedPiglinAccessor"
   ],
   "client": [
+    "client.AdvancementToastMixin",
+    "client.ConnectScreenMixin",
+    "client.CreateWorldScreenMixin",
+    "client.ElytraLayerMixin",
+    "client.LocalPlayerMixin",
+    "client.PanoramaRendererMixin",
+    "client.TippableArrowRendererMixin",
+    "client.TitleScreenMixin",
+    "client.WorldListEntryMixin",
     "client.accessor.BlockColorsAccessor",
+    "client.accessor.ButtonAccessor",
     "client.accessor.EntityRendererAccessor",
     "client.accessor.GuiAccessor",
     "client.accessor.GuiComponentAccessor",
@@ -43,16 +53,7 @@
     "client.accessor.QuadrupedModelAccessor",
     "client.accessor.RealmsPlayerScreenAccessor",
     "client.accessor.ScreenAccessor",
-    "client.accessor.TitleScreenAccessor",
-    "client.AdvancementToastMixin",
-    "client.ConnectScreenMixin",
-    "client.CreateWorldScreenMixin",
-    "client.ElytraLayerMixin",
-    "client.LocalPlayerMixin",
-    "client.PanoramaRendererMixin",
-    "client.TippableArrowRendererMixin",
-    "client.TitleScreenMixin",
-    "client.WorldListEntryMixin"
+    "client.accessor.TitleScreenAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

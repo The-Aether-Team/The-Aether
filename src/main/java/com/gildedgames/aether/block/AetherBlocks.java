@@ -12,7 +12,6 @@ import com.gildedgames.aether.block.natural.*;
 import com.gildedgames.aether.block.utility.*;
 import com.gildedgames.aether.client.particle.AetherParticleTypes;
 import com.gildedgames.aether.block.portal.AetherPortalBlock;
-import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.item.block.BurnableBlockItem;
 import com.gildedgames.aether.item.block.EntityBlockItem;
@@ -23,7 +22,9 @@ import com.gildedgames.aether.mixin.mixins.common.accessor.FireBlockAccessor;
 import com.gildedgames.aether.world.treegrower.GoldenOakTree;
 import com.gildedgames.aether.world.treegrower.SkyrootTree;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -163,14 +164,14 @@ public class AetherBlocks {
             () -> new Block(Block.Properties.of(Material.GRASS, MaterialColor.COLOR_GREEN).strength(0.6F).sound(SoundType.WOOL)));
 
     public static final RegistryObject<FenceBlock> SKYROOT_FENCE = register("skyroot_fence", () -> new FenceBlock(Block.Properties.copy(Blocks.OAK_FENCE)));
-    public static final RegistryObject<FenceGateBlock> SKYROOT_FENCE_GATE = register("skyroot_fence_gate", () -> new FenceGateBlock(Block.Properties.copy(Blocks.OAK_FENCE_GATE)));
-    public static final RegistryObject<DoorBlock> SKYROOT_DOOR = register("skyroot_door", () -> new DoorBlock(Block.Properties.copy(Blocks.OAK_DOOR)));
-    public static final RegistryObject<TrapDoorBlock> SKYROOT_TRAPDOOR = register("skyroot_trapdoor", () -> new TrapDoorBlock(Block.Properties.copy(Blocks.OAK_TRAPDOOR)));
-    public static final RegistryObject<ButtonBlock> SKYROOT_BUTTON = register("skyroot_button", () -> new WoodButtonBlock(Block.Properties.copy(Blocks.OAK_BUTTON)));
-    public static final RegistryObject<PressurePlateBlock> SKYROOT_PRESSURE_PLATE = register("skyroot_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, Block.Properties.copy(Blocks.OAK_PRESSURE_PLATE)));
+    public static final RegistryObject<FenceGateBlock> SKYROOT_FENCE_GATE = register("skyroot_fence_gate", () -> new FenceGateBlock(Block.Properties.copy(Blocks.OAK_FENCE_GATE), SoundEvents.FENCE_GATE_CLOSE, SoundEvents.FENCE_GATE_OPEN));
+    public static final RegistryObject<DoorBlock> SKYROOT_DOOR = register("skyroot_door", () -> new DoorBlock(Block.Properties.copy(Blocks.OAK_DOOR), SoundEvents.WOODEN_DOOR_CLOSE, SoundEvents.WOODEN_DOOR_OPEN));
+    public static final RegistryObject<TrapDoorBlock> SKYROOT_TRAPDOOR = register("skyroot_trapdoor", () -> new TrapDoorBlock(Block.Properties.copy(Blocks.OAK_TRAPDOOR), SoundEvents.BAMBOO_WOOD_TRAPDOOR_CLOSE, SoundEvents.BAMBOO_WOOD_TRAPDOOR_OPEN));
+    public static final RegistryObject<ButtonBlock> SKYROOT_BUTTON = register("skyroot_button", () -> new ButtonBlock(Block.Properties.copy(Blocks.OAK_BUTTON), 30, true, SoundEvents.WOODEN_BUTTON_CLICK_OFF, SoundEvents.WOODEN_BUTTON_CLICK_ON));
+    public static final RegistryObject<PressurePlateBlock> SKYROOT_PRESSURE_PLATE = register("skyroot_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, Block.Properties.copy(Blocks.OAK_PRESSURE_PLATE), SoundEvents.WOODEN_PRESSURE_PLATE_CLICK_OFF, SoundEvents.WOODEN_PRESSURE_PLATE_CLICK_ON));
 
-    public static final RegistryObject<ButtonBlock> HOLYSTONE_BUTTON = register("holystone_button", () -> new StoneButtonBlock(Block.Properties.copy(Blocks.STONE_BUTTON)));
-    public static final RegistryObject<PressurePlateBlock> HOLYSTONE_PRESSURE_PLATE = register("holystone_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, Block.Properties.of(Material.STONE, MaterialColor.WOOL).requiresCorrectToolForDrops().noCollission().strength(0.5F)));
+    public static final RegistryObject<ButtonBlock> HOLYSTONE_BUTTON = register("holystone_button", () -> new ButtonBlock(Block.Properties.copy(Blocks.STONE_BUTTON), 20, false, SoundEvents.STONE_BUTTON_CLICK_OFF, SoundEvents.STONE_BUTTON_CLICK_ON));
+    public static final RegistryObject<PressurePlateBlock> HOLYSTONE_PRESSURE_PLATE = register("holystone_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, Block.Properties.of(Material.STONE, MaterialColor.WOOL).requiresCorrectToolForDrops().noCollission().strength(0.5F), SoundEvents.STONE_PRESSURE_PLATE_CLICK_OFF, SoundEvents.STONE_PRESSURE_PLATE_CLICK_ON));
 
     public static final RegistryObject<WallBlock> CARVED_WALL = register("carved_wall", () -> new WallBlock(Block.Properties.copy(AetherBlocks.CARVED_STONE.get())));
     public static final RegistryObject<WallBlock> ANGELIC_WALL = register("angelic_wall", () -> new WallBlock(Block.Properties.copy(AetherBlocks.ANGELIC_STONE.get())));
@@ -284,32 +285,33 @@ public class AetherBlocks {
             B block = Objects.requireNonNull(blockRegistryObject.get());
             if (block == ENCHANTED_AETHER_GRASS_BLOCK.get()
                     || block == QUICKSOIL_GLASS.get()
+                    || block == QUICKSOIL_GLASS_PANE.get()
                     || block == ENCHANTED_GRAVITITE.get()) {
-                return new BlockItem(block, new Item.Properties().rarity(Rarity.RARE).tab(AetherItemGroups.AETHER_BLOCKS));
+                return new BlockItem(block, new Item.Properties().rarity(Rarity.RARE));
             } else if (block == AEROGEL.get()
                     || block == AEROGEL_WALL.get()
                     || block == AEROGEL_STAIRS.get()
                     || block == AEROGEL_SLAB.get()) {
-                return new BlockItem(block, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherItemGroups.AETHER_BLOCKS));
+                return new BlockItem(block, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
             } else if (block == AMBROSIUM_TORCH.get()) {
-                return new StandingAndWallBlockItem(AMBROSIUM_TORCH.get(), AMBROSIUM_WALL_TORCH.get(), new Item.Properties().tab(AetherItemGroups.AETHER_BLOCKS));
+                return new StandingAndWallBlockItem(AMBROSIUM_TORCH.get(), AMBROSIUM_WALL_TORCH.get(), new Item.Properties(), Direction.DOWN);
             } else if (block == SKYROOT_SIGN.get()) {
-                return new SignItem((new Item.Properties()).stacksTo(16).tab(AetherItemGroups.AETHER_BLOCKS), SKYROOT_SIGN.get(), SKYROOT_WALL_SIGN.get());
+                return new SignItem((new Item.Properties()).stacksTo(16), SKYROOT_SIGN.get(), SKYROOT_WALL_SIGN.get());
             } else if (block == CHEST_MIMIC.get()) {
-                return new EntityBlockItem(block, ChestMimicBlockEntity::new, new Item.Properties().tab(AetherItemGroups.AETHER_BLOCKS));
+                return new EntityBlockItem(block, ChestMimicBlockEntity::new, new Item.Properties());
             } else if (block == TREASURE_CHEST.get()) {
-                return new EntityBlockItem(block, TreasureChestBlockEntity::new, new Item.Properties().tab(AetherItemGroups.AETHER_BLOCKS));
+                return new EntityBlockItem(block, TreasureChestBlockEntity::new, new Item.Properties());
             } else if (block == SKYROOT_PLANKS.get()
                     || block == SKYROOT_FENCE_GATE.get()
                     || block == SKYROOT_FENCE.get()
                     || block == SKYROOT_BOOKSHELF.get()) {
-                return new BurnableBlockItem(block, new Item.Properties().tab(AetherItemGroups.AETHER_BLOCKS));
+                return new BurnableBlockItem(block, new Item.Properties());
             } else if (block == SUN_ALTAR.get()) {
-                return new BlockItem(block, new Item.Properties().fireResistant().tab(AetherItemGroups.AETHER_BLOCKS));
+                return new BlockItem(block, new Item.Properties().fireResistant());
             } else if (block == SKYROOT_BED.get()) {
-                return new EntityBlockItem(block, SkyrootBedBlockEntity::new, new Item.Properties().stacksTo(1).tab(AetherItemGroups.AETHER_BLOCKS));
+                return new EntityBlockItem(block, SkyrootBedBlockEntity::new, new Item.Properties().stacksTo(1));
             } else {
-                return new BlockItem(block, new Item.Properties().tab(AetherItemGroups.AETHER_BLOCKS));
+                return new BlockItem(block, new Item.Properties());
             }
         };
     }

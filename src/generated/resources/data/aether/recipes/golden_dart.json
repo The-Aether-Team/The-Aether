@@ -1,19 +1,20 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "equipment",
   "key": {
+    "/": {
+      "tag": "aether:skyroot_stick"
+    },
     "F": {
       "tag": "forge:feathers"
     },
     "G": {
       "item": "aether:golden_amber"
-    },
-    "S": {
-      "tag": "aether:skyroot_stick"
     }
   },
   "pattern": [
     "F",
-    "S",
+    "/",
     "G"
   ],
   "result": {

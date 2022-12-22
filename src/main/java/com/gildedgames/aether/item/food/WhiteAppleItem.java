@@ -1,6 +1,5 @@
 package com.gildedgames.aether.item.food;
 
-import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.capability.player.AetherPlayer;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -14,7 +13,7 @@ import net.minecraft.world.level.Level;
 
 public class WhiteAppleItem extends Item {
     public WhiteAppleItem() {
-        super(new Item.Properties().food(AetherFoods.WHITE_APPLE).tab(AetherItemGroups.AETHER_FOOD));
+        super(new Item.Properties().food(AetherFoods.WHITE_APPLE));
     }
 
     /**

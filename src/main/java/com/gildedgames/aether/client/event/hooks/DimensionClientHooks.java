@@ -1,7 +1,7 @@
 package com.gildedgames.aether.client.event.hooks;
 
 import com.gildedgames.aether.client.renderer.level.AetherSkyRenderEffects;
-import com.gildedgames.aether.data.resources.AetherDimensions;
+import com.gildedgames.aether.data.resources.registries.AetherDimensions;
 import com.gildedgames.aether.capability.time.AetherTime;
 import com.gildedgames.aether.mixin.mixins.common.accessor.LevelAccessor;
 import net.minecraft.client.Camera;

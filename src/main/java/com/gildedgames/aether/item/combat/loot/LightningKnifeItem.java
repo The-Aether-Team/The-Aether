@@ -1,10 +1,11 @@
 package com.gildedgames.aether.item.combat.loot;
 
 import com.gildedgames.aether.entity.projectile.weapon.ThrownLightningKnife;
-import com.gildedgames.aether.item.AetherItemGroups;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.client.AetherSoundEvents;
 
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -16,9 +17,12 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 
+import javax.annotation.Nullable;
+import java.util.List;
+
 public class LightningKnifeItem extends Item {
 	public LightningKnifeItem() {
-		super(new Item.Properties().rarity(AetherItems.AETHER_LOOT).stacksTo(16).tab(AetherItemGroups.AETHER_WEAPONS));
+		super(new Item.Properties().rarity(AetherItems.AETHER_LOOT).stacksTo(16));
 	}
 
 	/**
@@ -43,5 +47,20 @@ public class LightningKnifeItem extends Item {
 		level.playLocalSound(player.getX(), player.getY(), player.getZ(), AetherSoundEvents.ITEM_LIGHTNING_KNIFE_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 0.8F), false);
 		player.awardStat(Stats.ITEM_USED.get(this));
 		return InteractionResultHolder.success(heldStack);
+	}
+
+	/**
+	 * When in a creative tab, this adds a tooltip to an item indicating what dungeon it can be found in.
+	 * @param stack The {@link ItemStack} with the tooltip.
+	 * @param level The {@link Level} the item is rendered in.
+	 * @param components A {@link List} of {@link Component}s making up this item's tooltip.
+	 * @param flag A {@link TooltipFlag} for the tooltip type.
+	 */
+	@Override
+	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
+		super.appendHoverText(stack, level, components, flag);
+		if (flag.isCreative()) {
+			components.add(AetherItems.BRONZE_DUNGEON_TOOLTIP);
+		}
 	}
 }

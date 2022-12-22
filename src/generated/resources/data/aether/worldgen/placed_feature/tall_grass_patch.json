@@ -2,8 +2,11 @@
   "feature": "aether:tall_grass_patch",
   "placement": [
     {
-      "type": "aether:config_filter",
-      "value": "[World Generation, Generate Tall Grass in the Aether]"
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:heightmap",
+      "heightmap": "MOTION_BLOCKING"
     },
     {
       "type": "minecraft:noise_threshold_count",
@@ -16,14 +19,11 @@
       "chance": 32
     },
     {
-      "type": "minecraft:in_square"
-    },
-    {
-      "type": "minecraft:heightmap",
-      "heightmap": "MOTION_BLOCKING"
-    },
-    {
       "type": "minecraft:biome"
+    },
+    {
+      "type": "aether:config_filter",
+      "value": "[World Generation, Generate Tall Grass in the Aether]"
     }
   ]
 }

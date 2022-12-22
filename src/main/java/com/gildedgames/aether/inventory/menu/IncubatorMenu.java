@@ -4,7 +4,9 @@ import com.gildedgames.aether.blockentity.IncubatorBlockEntity;
 
 import com.gildedgames.aether.inventory.AetherRecipeBookTypes;
 import com.gildedgames.aether.inventory.menu.slot.IncubatorFuelSlot;
+import com.gildedgames.aether.inventory.menu.slot.IncubatorItemSlot;
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.Container;
@@ -21,17 +23,17 @@ public class IncubatorMenu extends RecipeBookMenu<Container> {
 	public final Level level;
 
 	public IncubatorMenu(int containerId, Inventory playerInventory) {
-		this(containerId, playerInventory, new SimpleContainer(2), new SimpleContainerData(4));
+		this(containerId, playerInventory, new SimpleContainer(2), new SimpleContainerData(7));
 	}
 	
 	public IncubatorMenu(int containerId, Inventory playerInventory, Container container, ContainerData data) {
 		super(AetherMenuTypes.INCUBATOR.get(), containerId);
 		checkContainerSize(container, 2);
-		checkContainerDataCount(data, 4);
+		checkContainerDataCount(data, 7);
 		this.container = container;
 		this.data = data;
 		this.level = playerInventory.player.getLevel();
-		this.addSlot(new Slot(container, 0, 73, 17));
+		this.addSlot(new IncubatorItemSlot(this, container, 0, 73, 17, playerInventory.player));
 		this.addSlot(new IncubatorFuelSlot(this, container, 1, 73, 53));
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 9; ++j) {
@@ -148,6 +150,13 @@ public class IncubatorMenu extends RecipeBookMenu<Container> {
 			i = 1000;
 		}
 		return (this.data.get(0) * 11) / i;
+	}
+
+	public BlockPos getIncubatorPos() {
+		int x = this.data.get(4);
+		int y = this.data.get(5);
+		int z = this.data.get(6);
+		return new BlockPos(x, y, z);
 	}
 
 	@Override

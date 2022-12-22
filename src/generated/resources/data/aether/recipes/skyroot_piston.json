@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "redstone",
   "group": "minecraft:piston",
   "key": {
     "C": {
@@ -8,15 +9,15 @@
     "I": {
       "tag": "forge:ingots/iron"
     },
+    "P": {
+      "tag": "aether:planks_crafting"
+    },
     "R": {
       "tag": "forge:dusts/redstone"
-    },
-    "S": {
-      "tag": "aether:planks_crafting"
     }
   },
   "pattern": [
-    "SSS",
+    "PPP",
     "CIC",
     "CRC"
   ],

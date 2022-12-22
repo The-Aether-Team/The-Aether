@@ -11,7 +11,7 @@ public class AudioHooks {
     public static boolean shouldCancelSound(SoundInstance sound) {
         if (!AetherConfig.CLIENT.disable_music_manager.get()) {
             if (sound.getSource() == SoundSource.MUSIC) {
-                return AetherMusicManager.getSituationalMusic() != null && !sound.getLocation().equals(SimpleSoundInstance.forMusic(AetherMusicManager.getSituationalMusic().getEvent()).getLocation())
+                return AetherMusicManager.getSituationalMusic() != null && !sound.getLocation().equals(SimpleSoundInstance.forMusic(AetherMusicManager.getSituationalMusic().getEvent().get()).getLocation())
                         || (AetherMusicManager.getCurrentMusic() != null && !sound.getLocation().equals(AetherMusicManager.getCurrentMusic().getLocation()));
             }
         }

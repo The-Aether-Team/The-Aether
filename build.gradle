@@ -109,8 +109,8 @@ dependencies {
     compileOnly "top.theillusivec4.caelus:caelus-forge:${project.caelus_version}:api"
     compileOnly "top.theillusivec4.caelus:caelus-forge:${project.caelus_version}"
 
-    compileOnly "mezz.jei:jei-${project.mc_version}-common-api:${project.jei_version}"
-    compileOnly "mezz.jei:jei-${project.mc_version}-forge-api:${project.jei_version}"
+//    compileOnly "mezz.jei:jei-${project.mc_version}-common-api:${project.jei_version}"
+//    compileOnly "mezz.jei:jei-${project.mc_version}-forge-api:${project.jei_version}"
 
 //    jarJar fg.deobf("com.gildedgames.nitrogen:nitrogen:${project.nitrogen_version}") {
 //        jarJar.ranged(it, "[${project.nitrogen_version},)")

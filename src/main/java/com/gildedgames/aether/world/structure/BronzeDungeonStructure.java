@@ -8,6 +8,7 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
@@ -43,6 +44,14 @@ public class BronzeDungeonStructure extends Structure {
         BronzeDungeonGraph graph = new BronzeDungeonGraph(builder, context, this.maxRooms);
         graph.initializeDungeon(startPos);
         graph.populatePiecesBuilder();
+    }
+
+    /**
+     * Override to prevent beardifier bounding box adjustment
+     */
+    @Override
+    public BoundingBox adjustBoundingBox(BoundingBox box) {
+        return box;
     }
 
     @Override

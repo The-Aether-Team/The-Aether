@@ -1,6 +1,7 @@
 package com.gildedgames.aether.recipe.recipes.item;
 
 import com.gildedgames.aether.block.AetherBlocks;
+import com.gildedgames.aether.recipe.AetherBookCategory;
 import com.gildedgames.aether.recipe.AetherRecipeSerializers;
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.google.gson.JsonObject;
@@ -10,25 +11,32 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
 
-import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 
-public class AltarRepairRecipe extends AbstractCookingRecipe
-{
+import javax.annotation.Nullable;
+
+public class AltarRepairRecipe extends AbstractAetherCookingRecipe {
     public final Ingredient ingredient;
 
-    public AltarRepairRecipe(ResourceLocation recipeLocation, String groupIn, Ingredient ingredient, int cookingTime) {
-        super(AetherRecipeTypes.ENCHANTING.get(), recipeLocation, groupIn, ingredient, ingredient.getItems()[0], 0.0F, cookingTime);
+    public AltarRepairRecipe(ResourceLocation id, String group, AetherBookCategory category, Ingredient ingredient, int repairTime) {
+        super(AetherRecipeTypes.ENCHANTING.get(), id, group, category, ingredient, ingredient.getItems()[0], 0.0F, repairTime);
         this.ingredient = ingredient;
     }
 
+    /**
+     * @param inventory The crafting {@link Container}.
+     * @return The original {@link ItemStack} ingredient, because repairing always outputs the same item as the input.
+     */
     @Override
     public ItemStack assemble(Container inventory) {
         return this.ingredient.getItems()[0];
     }
 
+    /**
+     * @return The original {@link ItemStack} ingredient for Recipe Book display, because repairing always outputs the same item as the input.
+     */
     @Override
     public ItemStack getResultItem() {
         return this.ingredient.getItems()[0];
@@ -49,24 +57,30 @@ public class AltarRepairRecipe extends AbstractCookingRecipe
         return AetherRecipeTypes.ENCHANTING.get();
     }
 
-    public static class Serializer implements RecipeSerializer<AltarRepairRecipe>
-    {
-        public AltarRepairRecipe fromJson(ResourceLocation recipeLocation, JsonObject jsonObject) {
-            String group = GsonHelper.getAsString(jsonObject, "group", "");
-            Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(jsonObject, "ingredient"));
-            int cookingTime = GsonHelper.getAsInt(jsonObject, "repairTime", 200);
-            return new AltarRepairRecipe(recipeLocation, group, ingredient, cookingTime);
+    public static class Serializer implements RecipeSerializer<AltarRepairRecipe> {
+        @Override
+        public AltarRepairRecipe fromJson(ResourceLocation id, JsonObject json) {
+            String group = GsonHelper.getAsString(json, "group", "");
+            AetherBookCategory aetherBookCategory = AetherBookCategory.CODEC.byName(GsonHelper.getAsString(json, "category", null), AetherBookCategory.UNKNOWN);
+            Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "ingredient"));
+            int cookingTime = GsonHelper.getAsInt(json, "repairTime", 200);
+            return new AltarRepairRecipe(id, group, aetherBookCategory, ingredient, cookingTime);
         }
 
-        public AltarRepairRecipe fromNetwork(ResourceLocation recipeLocation, FriendlyByteBuf buffer) {
+        @Nullable
+        @Override
+        public AltarRepairRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
             String group = buffer.readUtf();
+            AetherBookCategory aetherBookCategory = buffer.readEnum(AetherBookCategory.class);
             Ingredient ingredient = Ingredient.fromNetwork(buffer);
             int cookingTime = buffer.readVarInt();
-            return new AltarRepairRecipe(recipeLocation, group, ingredient, cookingTime);
+            return new AltarRepairRecipe(id, group, aetherBookCategory, ingredient, cookingTime);
         }
 
+        @Override
         public void toNetwork(FriendlyByteBuf buffer, AltarRepairRecipe recipe) {
             buffer.writeUtf(recipe.group);
+            buffer.writeEnum(recipe.aetherCategory());
             recipe.ingredient.toNetwork(buffer);
             buffer.writeVarInt(recipe.cookingTime);
         }

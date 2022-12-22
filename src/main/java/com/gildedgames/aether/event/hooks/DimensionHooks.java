@@ -13,7 +13,7 @@ import com.gildedgames.aether.recipe.recipes.ban.BlockBanRecipe;
 import com.gildedgames.aether.recipe.recipes.ban.ItemBanRecipe;
 import com.gildedgames.aether.recipe.recipes.block.PlacementConversionRecipe;
 import com.gildedgames.aether.util.LevelUtil;
-import com.gildedgames.aether.data.resources.AetherDimensions;
+import com.gildedgames.aether.data.resources.registries.AetherDimensions;
 import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.capability.time.AetherTime;
 import com.gildedgames.aether.network.AetherPacketHandler;
@@ -37,7 +37,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -49,6 +48,7 @@ import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -118,7 +118,8 @@ public class DimensionHooks {
                     if (level.getBlockState(blockpos).is(BlockTags.BEDS) && level.getBlockState(blockpos).getBlock() != AetherBlocks.SKYROOT_BED.get()) {
                         level.removeBlock(blockpos, false);
                     }
-                    level.explode(null, DamageSource.badRespawnPointExplosion(), null, (double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5, 5.0F, true, Explosion.BlockInteraction.DESTROY);
+                    Vec3 vec3 = pos.getCenter();
+                    level.explode(null, DamageSource.badRespawnPointExplosion(vec3), null, (double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5, 5.0F, true, Level.ExplosionInteraction.BLOCK);
                 }
                 player.swing(InteractionHand.MAIN_HAND);
                 return true;

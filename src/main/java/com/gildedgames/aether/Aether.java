@@ -15,7 +15,6 @@ import com.gildedgames.aether.blockentity.AltarBlockEntity;
 import com.gildedgames.aether.blockentity.FreezerBlockEntity;
 import com.gildedgames.aether.data.generators.*;
 import com.gildedgames.aether.data.generators.tags.*;
-import com.gildedgames.aether.data.resources.*;
 import com.gildedgames.aether.effect.AetherEffects;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.event.AetherGameEvents;
@@ -41,16 +40,17 @@ import com.gildedgames.aether.world.structurepiece.AetherStructurePieceTypes;
 import com.gildedgames.aether.world.treedecorator.AetherTreeDecoratorTypes;
 import com.mojang.logging.LogUtils;
 import net.minecraft.SharedConstants;
-import net.minecraft.core.Registry;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.cauldron.CauldronInteraction;
-import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
+import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -65,13 +65,13 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.resource.PathPackResources;
 import org.slf4j.Logger;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Mod(Aether.MODID)
 @Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -161,34 +161,30 @@ public class Aether {
 
     public void dataSetup(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
-        ExistingFileHelper helper = event.getExistingFileHelper();
+        ExistingFileHelper fileHelper = event.getExistingFileHelper();
+        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+        PackOutput packOutput = generator.getPackOutput();
 
         // Client Data
-        generator.addProvider(event.includeClient(), new AetherBlockStateData(generator, helper));
-        generator.addProvider(event.includeClient(), new AetherItemModelData(generator, helper));
-        generator.addProvider(event.includeClient(), new AetherLanguageData(generator));
-        generator.addProvider(event.includeClient(), new AetherSoundData(generator, helper));
+        generator.addProvider(event.includeClient(), new AetherBlockStateData(packOutput, fileHelper));
+        generator.addProvider(event.includeClient(), new AetherItemModelData(packOutput, fileHelper));
+        generator.addProvider(event.includeClient(), new AetherLanguageData(packOutput));
+        generator.addProvider(event.includeClient(), new AetherSoundData(packOutput, fileHelper));
 
         // Server Data
-        generator.addProvider(event.includeServer(), new AetherRecipeData(generator));
-        generator.addProvider(event.includeServer(), new AetherLootTableData(generator));
-        generator.addProvider(event.includeServer(), new AetherLootModifierData(generator));
-        generator.addProvider(event.includeServer(), new AetherAdvancementData(generator, helper));
-        AetherBlockTagData blockTags = new AetherBlockTagData(generator, helper);
+        generator.addProvider(event.includeServer(), new AetherWorldGenData(packOutput, lookupProvider));
+        generator.addProvider(event.includeServer(), AetherLevelStemData.create(packOutput, fileHelper));
+        generator.addProvider(event.includeServer(), new AetherRecipeData(packOutput));
+        generator.addProvider(event.includeServer(), AetherLootTableData.create(packOutput));
+        generator.addProvider(event.includeServer(), new AetherLootModifierData(packOutput));
+        generator.addProvider(event.includeServer(), new AetherAdvancementData(packOutput, lookupProvider, fileHelper));
+        AetherBlockTagData blockTags = new AetherBlockTagData(packOutput, lookupProvider, fileHelper);
         generator.addProvider(event.includeServer(), blockTags);
-        generator.addProvider(event.includeServer(), new AetherItemTagData(generator, blockTags, helper));
-        generator.addProvider(event.includeServer(), new AetherEntityTagData(generator, helper));
-        generator.addProvider(event.includeServer(), new AetherFluidTagData(generator, helper));
-        generator.addProvider(event.includeServer(), new AetherBiomeTagData(generator, helper));
-        generator.addProvider(event.includeServer(), new AetherStructureTagData(generator, helper));
-        generator.addProvider(event.includeServer(), AetherDataGenerators.create(generator, helper, AetherConfiguredFeatures.CONFIGURED_FEATURES, Registry.CONFIGURED_FEATURE_REGISTRY));
-        generator.addProvider(event.includeServer(), AetherDataGenerators.create(generator, helper, AetherPlacedFeatures.PLACED_FEATURES, Registry.PLACED_FEATURE_REGISTRY));
-        generator.addProvider(event.includeServer(), AetherDataGenerators.create(generator, helper, AetherStructures.STRUCTURES, Registry.STRUCTURE_REGISTRY));
-        generator.addProvider(event.includeServer(), AetherDataGenerators.create(generator, helper, AetherStructureSets.STRUCTURE_SETS, Registry.STRUCTURE_SET_REGISTRY));
-        generator.addProvider(event.includeServer(), AetherDataGenerators.create(generator, helper, AetherBiomes.BIOMES, ForgeRegistries.Keys.BIOMES));
-        generator.addProvider(event.includeServer(), AetherDataGenerators.create(generator, helper, AetherDimensions.DIMENSION_TYPES, Registry.DIMENSION_TYPE_REGISTRY));
-        generator.addProvider(event.includeServer(), AetherDataGenerators.create(BuiltinRegistries.ACCESS, generator, helper, AetherNoiseGeneratorSettings.NOISE_GENERATOR_SETTINGS, Registry.NOISE_GENERATOR_SETTINGS_REGISTRY));
-        generator.addProvider(event.includeServer(), AetherDataGenerators.levelStem(generator, helper));
+        generator.addProvider(event.includeServer(), new AetherItemTagData(packOutput, lookupProvider, blockTags, fileHelper));
+        generator.addProvider(event.includeServer(), new AetherEntityTagData(packOutput, lookupProvider, fileHelper));
+        generator.addProvider(event.includeServer(), new AetherFluidTagData(packOutput, lookupProvider, fileHelper));
+        generator.addProvider(event.includeServer(), new AetherBiomeTagData(packOutput, lookupProvider, fileHelper));
+        generator.addProvider(event.includeServer(), new AetherStructureTagData(packOutput, lookupProvider, fileHelper));
     }
 
     public void packSetup(AddPackFindersEvent event) {
@@ -203,7 +199,7 @@ public class Aether {
     private void setupReleasePack(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.CLIENT_RESOURCES) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_125");
-            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, resourcePath);
+            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, false, resourcePath);
             this.createCombinedPack(event, resourcePath, pack, "builtin/aether_125_art", "Aether 1.2.5 Textures", "The classic look of the Aether from 1.2.5");
         }
     }
@@ -214,7 +210,7 @@ public class Aether {
     private void setupBetaPack(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.CLIENT_RESOURCES) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_b173");
-            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, resourcePath);
+            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, false, resourcePath);
             this.createCombinedPack(event, resourcePath, pack, "builtin/aether_b173_art", "Aether b1.7.3 Textures", "The original look of the Aether from b1.7.3");
         }
     }
@@ -229,14 +225,24 @@ public class Aether {
      */
     private void createCombinedPack(AddPackFindersEvent event, Path sourcePath, PathPackResources pack, String name, String title, String description) {
         Path baseResourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_base");
-        PathPackResources basePack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + baseResourcePath, baseResourcePath);
+        PathPackResources basePack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + baseResourcePath, false, baseResourcePath);
         List<PathPackResources> mergedPacks = List.of(pack, basePack);
-        event.addRepositorySource((packConsumer, packConstructor) ->
-                packConsumer.accept(Pack.create(
-                        name, false,
-                        () -> new CombinedResourcePack(name, title, new PackMetadataSection(Component.literal(description), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion())), mergedPacks, sourcePath),
-                        packConstructor, Pack.Position.TOP, PackSource.BUILT_IN)
-                ));
+        Pack.ResourcesSupplier resourcesSupplier = (string) -> new CombinedResourcePack(name, new PackMetadataSection(Component.literal(description), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion())), mergedPacks, sourcePath);
+        Pack.Info info = Pack.readPackInfo(name, resourcesSupplier);
+        if (info != null) {
+            event.addRepositorySource((source) ->
+                    source.accept(Pack.create(
+                            name,
+                            Component.literal(title),
+                            false,
+                            resourcesSupplier,
+                            info,
+                            PackType.CLIENT_RESOURCES,
+                            Pack.Position.TOP,
+                            false,
+                            PackSource.BUILT_IN)
+                    ));
+        }
     }
 
     /**
@@ -246,12 +252,19 @@ public class Aether {
     private void setupCTMFixPack(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.CLIENT_RESOURCES && ModList.get().isLoaded("ctm")) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/ctm_fix");
-            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, resourcePath);
-            event.addRepositorySource((packConsumer, packConstructor) ->
-                packConsumer.accept(packConstructor.create(
-                        "builtin/aether_ctm_fix", Component.literal("Aether CTM Fix"), true, () -> pack,
-                        new PackMetadataSection(Component.literal("Fixes Quicksoil Glass Panes when using CTM"), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion())),
-                        Pack.Position.TOP, PackSource.BUILT_IN, false)
+            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
+            PackMetadataSection metadata = new PackMetadataSection(Component.literal("Fixes Quicksoil Glass Panes when using CTM"), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion()));
+            event.addRepositorySource((source) ->
+                    source.accept(Pack.create(
+                        "builtin/aether_ctm_fix",
+                            Component.literal("Aether CTM Fix"),
+                            true,
+                            (string) -> pack,
+                            new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
+                            PackType.CLIENT_RESOURCES,
+                            Pack.Position.TOP,
+                            false,
+                            PackSource.BUILT_IN)
                 ));
         }
     }

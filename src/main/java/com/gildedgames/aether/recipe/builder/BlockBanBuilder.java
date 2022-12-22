@@ -12,7 +12,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
@@ -45,8 +44,8 @@ public class BlockBanBuilder extends PlacementBanBuilder {
     }
 
     @Override
-    public void save(@Nonnull Consumer<FinishedRecipe> finishedRecipeConsumer, @Nonnull ResourceLocation recipeId) {
-        finishedRecipeConsumer.accept(new BlockBanBuilder.Result(recipeId, this.getBiomeKey(), this.getBiomeTag(), this.getBypassBlock(), this.ingredient, this.getSerializer()));
+    public void save(Consumer<FinishedRecipe> finishedRecipeConsumer, ResourceLocation id) {
+        finishedRecipeConsumer.accept(new BlockBanBuilder.Result(id, this.getBiomeKey(), this.getBiomeTag(), this.getBypassBlock(), this.ingredient, this.getSerializer()));
     }
 
     public static class Result extends PlacementBanBuilder.Result {
@@ -58,7 +57,7 @@ public class BlockBanBuilder extends PlacementBanBuilder {
         }
 
         @Override
-        public void serializeRecipeData(@Nonnull JsonObject json) {
+        public void serializeRecipeData(JsonObject json) {
             super.serializeRecipeData(json);
             json.add("ingredient", this.ingredient.toJson());
         }

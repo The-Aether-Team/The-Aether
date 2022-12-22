@@ -1,6 +1,7 @@
 package com.gildedgames.aether.entity.projectile.dart;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -55,7 +56,7 @@ public abstract class AbstractDart extends AbstractArrow {
 
     @Nonnull
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

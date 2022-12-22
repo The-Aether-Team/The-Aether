@@ -10,9 +10,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.renderer.GameRenderer;
@@ -30,7 +30,7 @@ import net.minecraftforge.internal.BrandingControl;
 import javax.annotation.Nonnull;
 
 public class AetherTitleScreen extends TitleScreen {
-	public static final Music MENU = new Music(AetherSoundEvents.MUSIC_MENU.get(), 20, 600, true);
+	public static final Music MENU = new Music(AetherSoundEvents.MUSIC_MENU.getHolder().orElseThrow(), 20, 600, true);
 
 	private final PanoramaRenderer panorama = new PanoramaRenderer(new CubeMap(new ResourceLocation(Aether.MODID, "textures/gui/title/panorama/panorama")));
 	private static final ResourceLocation PANORAMA_OVERLAY = new ResourceLocation("textures/gui/title/background/panorama_overlay.png");
@@ -57,15 +57,15 @@ public class AetherTitleScreen extends TitleScreen {
 
 	public void setupButtons() {
 		int buttonCount = 0;
-		for (Widget widget : this.renderables) {
-			if (widget instanceof AetherMenuButton aetherMenuButton) {
+		for (Renderable renderable : this.renderables) {
+			if (renderable instanceof AetherMenuButton aetherMenuButton) {
 				if (this.alignElementsLeft()) {
-					aetherMenuButton.x = 30;
-					aetherMenuButton.y = 80 + buttonCount * 25;
+					aetherMenuButton.setX(30);
+					aetherMenuButton.setY(80 + buttonCount * 25);
 					aetherMenuButton.setWidth(200);
 				} else {
-					aetherMenuButton.x = aetherMenuButton.initialX;
-					aetherMenuButton.y = aetherMenuButton.initialY - 10;
+					aetherMenuButton.setX(aetherMenuButton.initialX);
+					aetherMenuButton.setY(aetherMenuButton.initialY - 10);
 					aetherMenuButton.setWidth(aetherMenuButton.initialWidth);
 				}
 				buttonCount++;
@@ -110,7 +110,7 @@ public class AetherTitleScreen extends TitleScreen {
 					float splashY = this.alignElementsLeft() ? 50.0F : 70.0F;
 					poseStack.pushPose();
 					poseStack.translate(splashX, splashY, 0.0F);
-					poseStack.mulPose(Vector3f.ZP.rotationDegrees(-20.0F));
+					poseStack.mulPose(Axis.ZP.rotationDegrees(-20.0F));
 					float f2 = 1.8F - Mth.abs(Mth.sin((float) (Util.getMillis() % 1000L) / 1000.0F * ((float) Math.PI * 2F)) * 0.1F);
 					f2 = f2 * 100.0F / (float) (this.font.width(titleScreenAccessor.getSplash()) + 32); poseStack.scale(f2, f2, f2);
 					drawCenteredString(poseStack, this.font, titleScreenAccessor.getSplash(), 0, -8, 16776960 | l);
@@ -146,9 +146,9 @@ public class AetherTitleScreen extends TitleScreen {
 			}
 
 			int offset = 0;
-			for (Widget widget : this.renderables) {
-				widget.render(poseStack, mouseX, mouseY, partialTicks);
-				if (widget instanceof AetherMenuButton aetherButton) {
+			for (Renderable renderable : this.renderables) {
+				renderable.render(poseStack, mouseX, mouseY, partialTicks);
+				if (renderable instanceof AetherMenuButton aetherButton) {
 					if (aetherButton.isMouseOver(mouseX, mouseY)) {
 						if (aetherButton.renderOffset < 15) {
 							aetherButton.renderOffset += 4;
@@ -159,21 +159,21 @@ public class AetherTitleScreen extends TitleScreen {
 						}
 					}
 				}
-				if (widget instanceof DynamicMenuButton dynamicMenuButton) {
+				if (renderable instanceof DynamicMenuButton dynamicMenuButton) {
 					if (dynamicMenuButton.enabled) {
 						offset -= 24;
 					}
 				}
 			}
-			for (Widget widget : this.renderables) {
-				if (widget instanceof Button button) {
+			for (Renderable renderable : this.renderables) {
+				if (renderable instanceof Button button) {
 					Component buttonText = button.getMessage();
 					if (buttonText.equals(Component.translatable("narrator.button.accessibility"))) {
-						button.x = this.width - 48 + offset;
-						button.y = 4;
+						button.setX(this.width - 48 + offset);
+						button.setY(4);
 					} else if (buttonText.equals(Component.translatable("narrator.button.language"))) {
-						button.x = this.width - 24 + offset;
-						button.y = 4;
+						button.setX(this.width - 24 + offset);
+						button.setY(4);
 					}
 				}
 			}
@@ -187,14 +187,14 @@ public class AetherTitleScreen extends TitleScreen {
 	@SuppressWarnings("unchecked")
 	@Nonnull
 	@Override
-	protected <T extends GuiEventListener & Widget & NarratableEntry> T addRenderableWidget(@Nonnull T widget) {
-		if (widget instanceof Button button) {
+	protected <T extends GuiEventListener & Renderable & NarratableEntry> T addRenderableWidget(@Nonnull T renderable) {
+		if (renderable instanceof Button button) {
 			if (this.isButtonAether(button.getMessage())) {
 				AetherMenuButton aetherButton = new AetherMenuButton(button);
 				return (T) super.addRenderableWidget(aetherButton);
 			}
 		}
-		return super.addRenderableWidget(widget);
+		return super.addRenderableWidget(renderable);
 	}
 
 	public boolean isButtonAether(Component buttonText) {

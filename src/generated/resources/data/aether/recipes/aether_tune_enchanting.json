@@ -1,5 +1,6 @@
 {
   "type": "aether:enchanting",
+  "category": "enchanting_misc",
   "cookingtime": 2500,
   "experience": 1.0,
   "ingredient": {

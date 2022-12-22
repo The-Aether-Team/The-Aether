@@ -1,14 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "equipment",
   "key": {
-    "M": {
+    "#": {
       "item": "minecraft:yellow_wool"
     }
   },
   "pattern": [
-    "MM",
-    "MM",
-    "MM"
+    "##",
+    "##",
+    "##"
   ],
   "result": {
     "item": "aether:yellow_cape"

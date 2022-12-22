@@ -1,12 +1,13 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "equipment",
   "key": {
-    "M": {
+    "#": {
       "tag": "forge:ingots/iron"
     }
   },
   "pattern": [
-    "M M"
+    "# #"
   ],
   "result": {
     "item": "aether:iron_gloves"

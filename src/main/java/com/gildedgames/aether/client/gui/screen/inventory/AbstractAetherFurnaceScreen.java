@@ -121,10 +121,4 @@ public class AbstractAetherFurnaceScreen<T extends AbstractAetherFurnaceMenu> ex
     public RecipeBookComponent getRecipeBookComponent() {
         return this.recipeBookComponent;
     }
-
-    @Override
-    public void removed() {
-        this.recipeBookComponent.removed();
-        super.removed();
-    }
 }
