@@ -96,7 +96,7 @@ public class SilverDungeonPieces {
                 for (int z = 0; z < this.length; z++) {
                     for (int x = 0; x < this.width; x++) {
                         int room = this.grid[x][y][z];
-                        if ((room & 0b111) == 0 && this.random.nextBoolean()) { // Check for an empty room
+                        if ((room & 0b1111) == 0 && this.random.nextBoolean()) { // Check for an empty room
                             room = CHEST_ROOM;
                         }
                         if (x != 0) {
@@ -136,19 +136,22 @@ public class SilverDungeonPieces {
 
                 for (int z = 0; z < this.length; z++) {
                     for (int x = 0; x < this.width; x++) {
-                        offset.set(startPos.getX() + x * 7, offset.getY(), startPos.getZ() + z * 7);
+                        int xOffset = startPos.getX() + (direction.getStepZ() * x * 7) + (direction.getStepX() * z * 7);
+                        int zOffset = startPos.getZ() + (direction.getStepZ() * z * 7) - (direction.getStepX() * x * 7);
+                        offset.set(xOffset, offset.getY(), zOffset);
+
                         int room = this.grid[x][y][z];
                         if ((room & FINAL_STAIRS) == FINAL_STAIRS) {
-                            builder.addPiece(new TemplePiece(manager, "tall_staircase", offset.offset(2, 0, 2), rotation));
+                            builder.addPiece(new DungeonRoom(manager, "tall_staircase", offset.offset(2, 0, 2), rotation));
                         } else if ((room & STAIRS) == STAIRS) {
-                            builder.addPiece(new TemplePiece(manager, "staircase", offset.offset(2, 0, 2), rotation));
+                            builder.addPiece(new DungeonRoom(manager, "staircase", offset.offset(2, 0, 2), rotation));
                         } else if ((room & CHEST_ROOM) == CHEST_ROOM) {
-                            builder.addPiece(new TemplePiece(manager, "chest_room", offset.offset(3, 0, 3), rotation));
+                            builder.addPiece(new DungeonRoom(manager, "chest_room", offset.offset(3, 0, 3), rotation));
                         }
 
                         if ((room & NORTH_DOOR) == NORTH_DOOR) {
                             builder.addPiece(new TemplePiece(manager, "door",
-                                    offset.offset(direction.getStepZ() * 3, 0, direction.getStepX() * 3), rotation));
+                                    offset.offset(direction.getStepZ() * 3, 0, -direction.getStepX() * 3), rotation));
                         }
 
                         if ((room & WEST_DOOR) == WEST_DOOR) {
@@ -157,7 +160,7 @@ public class SilverDungeonPieces {
 
                         if ((room & BOSS_DOOR) == BOSS_DOOR) {
                             builder.addPiece(new TemplePiece(manager, "boss_door",
-                                    offset.offset(direction.getStepZ() * 3, 0, direction.getStepX() * 3), rotation));
+                                    offset.offset(direction.getStepZ() * 3, 0, -direction.getStepX() * 3), rotation));
                         }
                     }
                 }
@@ -168,16 +171,48 @@ public class SilverDungeonPieces {
     public static class TemplePiece extends SilverDungeonPiece {
 
         public TemplePiece(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
-            super(AetherStructurePieceTypes.SILVER_DUNGEON_PIECE.get(), manager, name, makeSettings().setRotation(rotation), pos);
+            super(AetherStructurePieceTypes.SILVER_TEMPLE_PIECE.get(), manager, name, makeSettings().setRotation(rotation), pos);
             this.setOrientation(rotation.rotate(Direction.SOUTH));
         }
 
         public TemplePiece(StructurePieceSerializationContext context, CompoundTag tag) {
-            super(AetherStructurePieceTypes.SILVER_DUNGEON_PIECE.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
+            super(AetherStructurePieceTypes.SILVER_TEMPLE_PIECE.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
         }
 
         private static StructurePlaceSettings makeSettings() {
             return new StructurePlaceSettings().addProcessor(LOCKED_ANGELIC_STONE).addProcessor(TRAPPED_ANGELIC_STONE).addProcessor(TRAPPED_LIGHT_ANGELIC_STONE);
+        }
+
+        @Override
+        protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox box) {
+
+        }
+    }
+
+    public static class DungeonRoom extends SilverDungeonPiece {
+
+        public DungeonRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
+            super(AetherStructurePieceTypes.SILVER_DUNGEON_ROOM.get(), manager, name, makeSettings(manager, rotation, new ResourceLocation(Aether.MODID, "silver_dungeon/" + name)), pos);
+            this.setOrientation(rotation.rotate(Direction.SOUTH));
+        }
+
+        public DungeonRoom(StructurePieceSerializationContext context, CompoundTag tag) {
+            super(AetherStructurePieceTypes.SILVER_DUNGEON_ROOM.get(), tag, context.structureTemplateManager(), id -> makeSettings(context.structureTemplateManager(), id));
+        }
+
+        private static StructurePlaceSettings makeSettings(StructureTemplateManager manager, Rotation rotation, ResourceLocation id) {
+            return makeSettings(manager, id).setRotation(rotation);
+        }
+
+        private static StructurePlaceSettings makeSettings(StructureTemplateManager manager, ResourceLocation id) {
+            StructureTemplate template = manager.getOrCreate(id);
+            BlockPos pivot = new BlockPos(template.getSize().getX() / 2 - 4, 0, template.getSize().getZ() / 2 - 4);
+            return new StructurePlaceSettings().setRotationPivot(pivot).addProcessor(LOCKED_ANGELIC_STONE);
+        }
+
+        @Override
+        protected void addAdditionalSaveData(StructurePieceSerializationContext context, CompoundTag tag) {
+            super.addAdditionalSaveData(context, tag);
         }
 
         @Override
