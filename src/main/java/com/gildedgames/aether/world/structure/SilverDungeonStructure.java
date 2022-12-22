@@ -1,6 +1,5 @@
 package com.gildedgames.aether.world.structure;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.entity.monster.dungeon.boss.ValkyrieQueen;
 import com.gildedgames.aether.world.structurepiece.SilverDungeonPieces;
 import com.mojang.serialization.Codec;
@@ -56,8 +55,6 @@ public class SilverDungeonStructure extends Structure {
         int zOffset = direction.getStepZ() * bossRoom.getBoundingBox().getZSpan();
 
         BlockPos offsetPos = elevatedPos.offset(xOffset, 0, zOffset);
-
-        Aether.LOGGER.info(offsetPos.toString());
 
         SilverDungeonPieces.TemplePiece exterior = new SilverDungeonPieces.TemplePiece(
                 manager,
