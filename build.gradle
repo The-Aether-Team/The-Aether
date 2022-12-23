@@ -99,8 +99,8 @@ dependencies {
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-//    compileOnly "com.gildedgames.nitrogen:nitrogen:${project.nitrogen_version}"
-//    runtimeOnly fg.deobf("com.gildedgames.nitrogen:nitrogen:${project.nitrogen_version}")
+    compileOnly "com.gildedgames.nitrogen:nitrogen:${project.nitrogen_version}"
+    runtimeOnly fg.deobf("com.gildedgames.nitrogen:nitrogen:${project.nitrogen_version}")
 
     compileOnly "top.theillusivec4.curios:curios-forge:${project.curios_version}:api"
     compileOnly "top.theillusivec4.curios:curios-forge:${project.curios_version}"
@@ -112,10 +112,10 @@ dependencies {
 //    compileOnly "mezz.jei:jei-${project.mc_version}-common-api:${project.jei_version}"
 //    compileOnly "mezz.jei:jei-${project.mc_version}-forge-api:${project.jei_version}"
 
-//    jarJar fg.deobf("com.gildedgames.nitrogen:nitrogen:${project.nitrogen_version}") {
-//        jarJar.ranged(it, "[${project.nitrogen_version},)")
-//        jarJar.pin(it, "${project.nitrogen_version}")
-//    }
+    jarJar fg.deobf("com.gildedgames.nitrogen:nitrogen:${project.nitrogen_version}") {
+        jarJar.ranged(it, "[${project.nitrogen_version},)")
+        jarJar.pin(it, "${project.nitrogen_version}")
+    }
 
     jarJar fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}") {
         jarJar.ranged(it, "[${project.curios_version},)")
@@ -137,7 +137,7 @@ repositories {
     maven { url = "https://maven.theillusivec4.top/" }
     maven { url = "https://www.cursemaven.com" }
     maven { url = "https://dvs1.progwml6.com/files/maven/"}
-//    maven githubPackage.invoke("Gilded-Games/Nitrogen")
+    maven githubPackage.invoke("Gilded-Games/Nitrogen")
 }
 
 jar {
