@@ -59,7 +59,6 @@ public class SilverDungeonStructure extends Structure {
                 bossRoomPos,
                 rotation
         );
-
         builder.addPiece(bossRoom);
 
         int xOffset = direction.getStepX() * rear.getBoundingBox().getXSpan();
@@ -161,10 +160,13 @@ public class SilverDungeonStructure extends Structure {
         }));
     }
 
+    /**
+     * Set the dungeon bounds when using the place command
+     */
     @Override
     public void afterPlace(WorldGenLevel level, StructureManager manager, ChunkGenerator generator, RandomSource random, BoundingBox chunkBox, ChunkPos chunkPos, PiecesContainer piecesContainer) {
         AABB chunkBounds = new AABB(chunkBox.minX(), chunkBox.minY(), chunkBox.minZ(), chunkBox.maxX(), chunkBox.maxY(), chunkBox.maxZ());
-        level.getEntitiesOfClass(ValkyrieQueen.class, chunkBounds).forEach(queen -> {
+        level.getLevel().getEntitiesOfClass(ValkyrieQueen.class, chunkBounds).forEach(queen -> {
             BoundingBox box = piecesContainer.calculateBoundingBox();
             AABB dungeonBounds = new AABB(box.minX(), box.minY(), box.minZ(), box.maxX() + 1, box.maxY() + 1, box.maxZ() + 1);
             queen.setDungeonBounds(dungeonBounds);

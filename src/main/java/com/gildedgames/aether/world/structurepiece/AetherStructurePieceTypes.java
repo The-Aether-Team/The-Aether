@@ -16,6 +16,7 @@ public class AetherStructurePieceTypes {
     public static final RegistryObject<StructurePieceType> BRONZE_DUNGEON_ROOM = register("BDungeonRoom", BronzeDungeonPieces.DungeonRoom::new);
     public static final RegistryObject<StructurePieceType> BRONZE_TUNNEL = register("BTunnel", BronzeDungeonPieces.HolystoneTunnel::new);
     public static final RegistryObject<StructurePieceType> SILVER_TEMPLE_PIECE = register("STemplePiece", SilverDungeonPieces.TemplePiece::new);
+    public static final RegistryObject<StructurePieceType> SILVER_FLOOR_PIECE = register("SFloorPiece", SilverDungeonPieces.FloorPiece::new);
     public static final RegistryObject<StructurePieceType> SILVER_DUNGEON_ROOM = register("SDungeonRoom", SilverDungeonPieces.DungeonRoom::new);
     public static final RegistryObject<StructurePieceType> SILVER_BOSS_ROOM = register("SBossRoom", SilverDungeonPieces.BossRoom::new);
     public static final RegistryObject<StructurePieceType> LEGACY_CLOUD_BED = register("LegacyCloudBed", SilverDungeonPieces.LegacyCloudBed::new);

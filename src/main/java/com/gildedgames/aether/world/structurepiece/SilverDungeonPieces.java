@@ -4,12 +4,14 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.api.DungeonTracker;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.blockentity.TreasureChestBlockEntity;
+import com.gildedgames.aether.data.resources.registries.AetherStructures;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.monster.dungeon.boss.ValkyrieQueen;
 import com.gildedgames.aether.loot.AetherLoot;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -106,17 +108,6 @@ public class SilverDungeonPieces {
                     }
                 }
             }
-
-            /*for (int y = 0; y < this.height; y++) {
-                for (int z = 0; z < this.length; z++) {
-                    for (int x = 0; x < this.width; x++) {
-                        Aether.LOGGER.info(String.format("x: %d y: %d z: %d ", x, y, z)
-                                + ((this.grid[x][y][z] & VISITED) == VISITED ? "Visited, " : "Not visited, ")
-                                + ((this.grid[x][y][z] & NORTH_DOOR) == NORTH_DOOR ? "North door, " : "No north door, ")
-                                + ((this.grid[x][y][z] & WEST_DOOR) == WEST_DOOR ? "West door" : "No west door"));
-                    }
-                }
-            }*/
         }
 
         /**
@@ -193,7 +184,7 @@ public class SilverDungeonPieces {
             BlockPos.MutableBlockPos offset = new BlockPos.MutableBlockPos();
             Rotation sideways = rotation.getRotated(Rotation.CLOCKWISE_90);
 
-            for (int y = 0; y < this.height; y++) {
+            for (int y = this.height - 1; y >= 0; y--) {
                 offset.setY(startPos.getY() + y * 5);
 
                 for (int z = 0; z < this.length; z++) {
@@ -203,6 +194,13 @@ public class SilverDungeonPieces {
                         offset.set(xOffset, offset.getY(), zOffset);
 
                         int room = this.grid[x][y][z];
+                        builder.addPiece(new FloorPiece(manager, "floor",
+                                offset.offset(direction.getStepX() + direction.getStepZ(), -1, direction.getStepZ() - direction.getStepX()), rotation));
+                        builder.addPiece(new TemplePiece(manager, (room & NORTH_DOOR) == NORTH_DOOR ? "door" : "wall",
+                                offset.offset(direction.getStepZ(), 0, -direction.getStepX()), rotation));
+                        builder.addPiece(new TemplePiece(manager, (room & WEST_DOOR) == WEST_DOOR ? "door" : "wall",
+                                offset.relative(direction), sideways));
+
                         if ((room & FINAL_STAIRS) == FINAL_STAIRS) {
                             builder.addPiece(new DungeonRoom(manager, "tall_staircase", offset.offset(2, 0, 2), rotation));
                             builder.addPiece(new TemplePiece(manager, "boss_door",
@@ -211,15 +209,6 @@ public class SilverDungeonPieces {
                             builder.addPiece(new DungeonRoom(manager, "staircase", offset.offset(2, 0, 2), rotation));
                         } else if ((room & CHEST_ROOM) == CHEST_ROOM) {
                             builder.addPiece(new DungeonRoom(manager, "chest_room", offset.offset(3, 0, 3), rotation));
-                        }
-
-                        if ((room & NORTH_DOOR) == NORTH_DOOR) {
-                            builder.addPiece(new TemplePiece(manager, "door",
-                                    offset.offset(direction.getStepZ() * 3, 0, -direction.getStepX() * 3), rotation));
-                        }
-
-                        if ((room & WEST_DOOR) == WEST_DOOR) {
-                            builder.addPiece(new TemplePiece(manager, "door", offset.relative(direction, 3), sideways));
                         }
                     }
                 }
@@ -236,6 +225,26 @@ public class SilverDungeonPieces {
 
         public TemplePiece(StructurePieceSerializationContext context, CompoundTag tag) {
             super(AetherStructurePieceTypes.SILVER_TEMPLE_PIECE.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
+        }
+
+        private static StructurePlaceSettings makeSettings() {
+            return new StructurePlaceSettings().addProcessor(LOCKED_ANGELIC_STONE);
+        }
+
+        @Override
+        protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox box) {
+
+        }
+    }
+
+    public static class FloorPiece extends SilverDungeonPiece {
+        public FloorPiece(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
+            super(AetherStructurePieceTypes.SILVER_FLOOR_PIECE.get(), manager, name, makeSettings().setRotation(rotation), pos);
+            this.setOrientation(rotation.rotate(Direction.SOUTH));
+        }
+
+        public FloorPiece(StructurePieceSerializationContext context, CompoundTag tag) {
+            super(AetherStructurePieceTypes.SILVER_FLOOR_PIECE.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
         }
 
         private static StructurePlaceSettings makeSettings() {
@@ -315,6 +324,20 @@ public class SilverDungeonPieces {
                         queen.position(),
                         new AABB(this.boundingBox.minX(), this.boundingBox.minY(), this.boundingBox.minZ(), this.boundingBox.maxX() + 1, this.boundingBox.maxY() + 1, this.boundingBox.maxZ() + 1),
                         new ArrayList<>()));
+                // Set the bounds for the whole dungeon
+                StructureManager manager = level.getLevel().structureManager();
+                manager.registryAccess().registry(Registries.STRUCTURE).ifPresent(registry -> {
+                            Structure temple = registry.get(AetherStructures.SILVER_DUNGEON);
+                            if (temple != null) {
+                                StructureStart start = manager.getStructureAt(pos, temple);
+                                if (start != StructureStart.INVALID_START) {
+                                    BoundingBox box = start.getBoundingBox();
+                                    AABB dungeonBounds = new AABB(box.minX(), box.minY(), box.minZ(), box.maxX() + 1, box.maxY() + 1, box.maxZ() + 1);
+                                    queen.setDungeonBounds(dungeonBounds);
+                                }
+                            }
+                        }
+                );
                 queen.finalizeSpawn(level, level.getCurrentDifficultyAt(pos), MobSpawnType.STRUCTURE, null, null);
                 level.getLevel().addFreshEntity(queen);
                 level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
