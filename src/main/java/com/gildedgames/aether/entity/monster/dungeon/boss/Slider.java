@@ -122,15 +122,9 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
 
     @Override
     public void tick() {
-        if (!this.level.isClientSide() && this.getDungeon() == null) {
-            DungeonTracker.createDebugDungeon(this);
-        }
         super.tick();
         if (!this.isAwake() || (this.getTarget() instanceof Player player && (player.isCreative() || player.isSpectator()))) {
             this.setTarget(null);
-        }
-        if (!this.level.isClientSide() && this.getDungeon() == null && (this.getTarget() == null || !this.getTarget().isAlive() || this.getTarget().getHealth() <= 0.0)) {
-            this.reset();
         }
         this.collide();
         this.evaporate();
@@ -330,7 +324,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
     public void startSeenByPlayer(@Nonnull ServerPlayer player) {
         super.startSeenByPlayer(player);
         AetherPacketHandler.sendToPlayer(new BossInfoPacket.Display(this.bossFight.getId()), player);
-        if (this.getDungeon() != null && this.getDungeon().isPlayerWithinRoom(player)) {
+        if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoom(player)) {
             this.bossFight.addPlayer(player);
         }
     }
