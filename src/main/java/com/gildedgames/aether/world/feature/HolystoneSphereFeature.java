@@ -21,7 +21,7 @@ public class HolystoneSphereFeature extends Feature<NoneFeatureConfiguration> {
         BlockPos pos = context.origin();
         WorldGenLevel reader = context.level();
 
-        BlockPlacementUtil.placeSphere(pos, 10.5F, reader, BlockStateProvider.simple(AetherBlocks.HOLYSTONE.get().defaultBlockState()), context.random());
+        BlockPlacementUtil.placeSphere(pos, 6.5F, reader, BlockStateProvider.simple(AetherBlocks.QUICKSOIL_GLASS.get().defaultBlockState()), context.random());
 
         return true;
     }

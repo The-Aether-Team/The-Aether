@@ -13,7 +13,9 @@ public class AetherStructurePieceTypes {
 
     public static RegistryObject<StructurePieceType> LARGE_AERCLOUD = register("ALC", LargeAercloudPiece::new);
     public static final RegistryObject<StructurePieceType> GOLD_BOSS_ROOM = register("GBossRoom", GoldDungeonPieces.BossRoom::new);
-    public static final RegistryObject<StructurePieceType> GOLD_ISLAND = register("GIsland", GoldDungeonPieces.TemplateIsland::new);
+    public static final RegistryObject<StructurePieceType> GOLD_ISLAND = register("GIsland", GoldDungeonPieces.MainIsland::new);
+
+    public static final RegistryObject<StructurePieceType> SMALL_GOLD_ISLAND = register("GSmallIsland", GoldDungeonPieces.SmallIsland::new);
 
     private static RegistryObject<StructurePieceType> register(String name, StructurePieceType structurePieceType) {
         return STRUCTURE_PIECE_TYPES.register(name.toLowerCase(Locale.ROOT), () -> structurePieceType);
