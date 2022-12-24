@@ -7,7 +7,6 @@ import com.gildedgames.aether.blockentity.TreasureChestBlockEntity;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.monster.dungeon.boss.ValkyrieQueen;
 import com.gildedgames.aether.loot.AetherLoot;
-import com.gildedgames.aether.world.processor.TrappedBlockProcessor;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -41,8 +40,8 @@ public class SilverDungeonPieces {
     ));
 
     public static final RuleProcessor TRAPPED_ANGELIC_STONE = new RuleProcessor(ImmutableList.of(
-            new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.LOCKED_ANGELIC_STONE.get(), 0.15F), AlwaysTrueTest.INSTANCE, AetherBlocks.TRAPPED_ANGELIC_STONE.get().defaultBlockState()),
-            new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get(), 0.15F), AlwaysTrueTest.INSTANCE, AetherBlocks.TRAPPED_LIGHT_ANGELIC_STONE.get().defaultBlockState())
+            new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.LOCKED_ANGELIC_STONE.get(), 0.05F), AlwaysTrueTest.INSTANCE, AetherBlocks.TRAPPED_ANGELIC_STONE.get().defaultBlockState()),
+            new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get(), 0.05F), AlwaysTrueTest.INSTANCE, AetherBlocks.TRAPPED_LIGHT_ANGELIC_STONE.get().defaultBlockState())
     ));
 
     /**
@@ -79,13 +78,13 @@ public class SilverDungeonPieces {
          */
         public void populateGrid() {
             // Place the stairs
-            int finalStairsX = random.nextInt(this.width);
+            int finalStairsX = this.random.nextInt(this.width);
 
-            this.grid[finalStairsX][0][0] = FINAL_STAIRS | VISITED;
-            this.grid[finalStairsX][1][0] = STAIRS_MIDDLE | VISITED;
+            this.grid[finalStairsX][0][0] = FINAL_STAIRS;
+            this.grid[finalStairsX][1][0] = STAIRS_MIDDLE;
             this.grid[finalStairsX][2][0] = STAIRS_TOP;
 
-            int firstStairsX = random.nextInt(this.width);
+            int firstStairsX = this.random.nextInt(this.width);
 
             this.grid[firstStairsX][0][1] = STAIRS;
             this.grid[firstStairsX][1][1] = STAIRS_TOP;
@@ -97,14 +96,12 @@ public class SilverDungeonPieces {
 
 
             for (int y = 0; y < this.height; y++) {
+                this.traverseRooms(1, y, 1, 0);
+
                 for (int z = 0; z < this.length; z++) {
                     for (int x = 0; x < this.width; x++) {
                         if ((this.grid[x][y][z] & 0b11111) == 0 && this.random.nextInt(3) != 0) { // Check for an empty room
                             this.grid[x][y][z] |= CHEST_ROOM;
-                        }
-
-                        if ((this.grid[x][y][z] & VISITED) != VISITED) { // Check if there is a path to the room
-                            this.traverseRooms(x, y, z, FINAL_STAIRS | STAIRS_MIDDLE);
                         }
                     }
                 }
@@ -129,7 +126,11 @@ public class SilverDungeonPieces {
          * @param typesToAvoid - A bitmask of the types of rooms that should not be connected to.
          */
         private boolean traverseRooms(int x, int y, int z, int typesToAvoid) {
-//            Aether.LOGGER.info(String.format("x: %d y: %d z: %d", x, y, z));
+            // Check if out of bounds of the array
+            if (x < 0 || x >= this.width || z < 0 || z >= this.length) {
+                return false;
+            }
+
             int room = this.grid[x][y][z];
 
             if ((room & typesToAvoid) > 0) { // Make sure the stairs are not next to each other.
@@ -137,10 +138,11 @@ public class SilverDungeonPieces {
             }
 
             if ((room & VISITED) == VISITED) {
-                return true;
+                return random.nextInt(3) == 0;
             }
 
             int blacklist = FINAL_STAIRS | STAIRS_MIDDLE;
+
             if ((room & STAIRS_TOP) == STAIRS_TOP) {
                 blacklist |= STAIRS;
             }
@@ -149,54 +151,38 @@ public class SilverDungeonPieces {
                 blacklist |= STAIRS_TOP;
             }
 
-            boolean hasPath = (x != 0 && (room & WEST_DOOR) == WEST_DOOR)  // Make sure the room has at least one path in.
-                    || (x != this.width - 1 && ((this.grid[x + 1][y][z] & WEST_DOOR) == WEST_DOOR))
-                    || (z != 0 && (room & NORTH_DOOR) == NORTH_DOOR)
-                    || (z != this.length - 1 && ((this.grid[x][y][z + 1] & NORTH_DOOR) == NORTH_DOOR));
-
             this.grid[x][y][z] |= VISITED;
 
-            int i = 0;
-            do {
-                boolean isDoor;
-                if (z != 0 && this.random.nextBoolean()) {
-                    isDoor = this.traverseRooms(x, y, z - 1, blacklist);
-                    if (isDoor) {
-                        this.grid[x][y][z] |= NORTH_DOOR;
-                        hasPath = true;
+            List<Direction> directions = new ArrayList<>(4);
+            Collections.addAll(directions, Direction.NORTH, Direction.WEST, Direction.SOUTH, Direction.EAST);
+
+            for (int i = directions.size(); i > 0; i--) {
+                int index = this.random.nextInt(i);
+                switch (directions.remove(index)) {
+                    case NORTH -> {
+                        if (this.traverseRooms(x, y, z - 1, blacklist)) {
+                            this.grid[x][y][z] |= NORTH_DOOR;
+                        }
+                    }
+                    case SOUTH -> {
+                        if (this.traverseRooms(x, y, z + 1, blacklist)) {
+                            this.grid[x][y][z + 1] |= NORTH_DOOR;
+                        }
+                    }
+                    case WEST -> {
+                        if (this.traverseRooms(x - 1, y, z, blacklist)) {
+                            this.grid[x][y][z] |= WEST_DOOR;
+                        }
+                    }
+                    case EAST -> {
+                        if (this.traverseRooms(x + 1, y, z, blacklist)) {
+                            this.grid[x + 1][y][z] |= WEST_DOOR;
+                        }
                     }
                 }
-
-                if (z < this.length - 1 && this.random.nextBoolean()) {
-                    isDoor = this.traverseRooms(x, y, z + 1, blacklist);
-                    if (isDoor) {
-                        this.grid[x][y][z + 1] |= NORTH_DOOR;
-                        hasPath = true;
-                    }
-                }
-
-                if (x != 0 && this.random.nextBoolean()) {
-                    isDoor = this.traverseRooms(x - 1, y, z, blacklist);
-                    if (isDoor) {
-                        this.grid[x][y][z] |= WEST_DOOR;
-                        hasPath = true;
-                    }
-                }
-
-                if (x < this.width - 1 && this.random.nextBoolean()) {
-                    isDoor = this.traverseRooms(x + 1, y, z, blacklist);
-                    if (isDoor) {
-                        this.grid[x + 1][y][z] |= WEST_DOOR;
-                        hasPath = true;
-                    }
-                }
-
-            } while (!hasPath && i++ < 5);
-
-            if (!hasPath) {
-                this.grid[x][y][z] &= ~VISITED;
             }
-            return hasPath;
+
+            return true;
         }
 
         /**
@@ -288,7 +274,7 @@ public class SilverDungeonPieces {
             level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
             if (name.equals("Chest")) {
                 BlockPos.MutableBlockPos chestPos = pos.mutable();
-                int y = pos.getY();
+                int y = pos.getY() - 1;
                 chestPos.set(this.boundingBox.minX() + random.nextInt(this.boundingBox.getXSpan()), y, this.boundingBox.minZ() + random.nextInt(this.boundingBox.getZSpan()));
                 if (level.isEmptyBlock(chestPos)) {
                     if (random.nextBoolean()) {
