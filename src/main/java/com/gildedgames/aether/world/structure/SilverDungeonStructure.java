@@ -43,16 +43,27 @@ public class SilverDungeonStructure extends Structure {
 
         this.buildCloudBed(builder, randomSource, elevatedPos, direction);
 
-        SilverDungeonPieces.BossRoom bossRoom = new SilverDungeonPieces.BossRoom(
+        SilverDungeonPieces.TemplePiece rear = new SilverDungeonPieces.TemplePiece(
                 manager,
-                "boss_room",
+                "rear",
                 elevatedPos,
                 rotation
         );
+        builder.addPiece(rear);
+
+        BlockPos bossRoomPos = elevatedPos.offset((direction.getStepX() + direction.getStepZ()) * 5, 3, (direction.getStepZ() - direction.getStepX()) * 5);
+
+        SilverDungeonPieces.BossRoom bossRoom = new SilverDungeonPieces.BossRoom(
+                manager,
+                "boss_room",
+                bossRoomPos,
+                rotation
+        );
+
         builder.addPiece(bossRoom);
 
-        int xOffset = direction.getStepX() * bossRoom.getBoundingBox().getXSpan();
-        int zOffset = direction.getStepZ() * bossRoom.getBoundingBox().getZSpan();
+        int xOffset = direction.getStepX() * rear.getBoundingBox().getXSpan();
+        int zOffset = direction.getStepZ() * rear.getBoundingBox().getZSpan();
 
         BlockPos offsetPos = elevatedPos.offset(xOffset, 0, zOffset);
 
