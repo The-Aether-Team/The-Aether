@@ -364,10 +364,10 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     @Override
     @Nullable
     public BlockState convertBlock(BlockState state) {
-        if (state.is(AetherBlocks.LOCKED_ANGELIC_STONE.get())) {
+        if (state.is(AetherBlocks.LOCKED_ANGELIC_STONE.get()) || state.is(AetherBlocks.TRAPPED_ANGELIC_STONE.get())) {
             return AetherBlocks.ANGELIC_STONE.get().defaultBlockState();
         }
-        if (state.is(AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get())) {
+        if (state.is(AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get()) || state.is(AetherBlocks.TRAPPED_LIGHT_ANGELIC_STONE.get())) {
             return AetherBlocks.LIGHT_ANGELIC_STONE.get().defaultBlockState();
         }
         if (state.is(AetherBlocks.BOSS_DOORWAY_ANGELIC_STONE.get())) {
