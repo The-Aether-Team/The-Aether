@@ -1,17 +1,24 @@
 package com.gildedgames.aether.world.structure;
 
+import com.gildedgames.aether.entity.monster.dungeon.boss.ValkyrieQueen;
 import com.gildedgames.aether.world.structurepiece.SilverDungeonPieces;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.StructureManager;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
+import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
+import net.minecraft.world.phys.AABB;
 
 import java.util.*;
 
@@ -32,23 +39,43 @@ public class SilverDungeonStructure extends Structure {
         RandomSource randomSource = context.random();
         Rotation rotation = Rotation.getRandom(randomSource);
         Direction direction = rotation.rotate(Direction.SOUTH);
+        StructureTemplateManager manager = context.structureTemplateManager();
+
         this.buildCloudBed(builder, randomSource, elevatedPos, direction);
-        SilverDungeonPieces.BossRoom bossRoom = new SilverDungeonPieces.BossRoom(
-                context.structureTemplateManager(),
-                "back",
+
+        SilverDungeonPieces.TemplePiece rear = new SilverDungeonPieces.TemplePiece(
+                manager,
+                "rear",
                 elevatedPos,
                 rotation
         );
-        builder.addPiece(bossRoom);
-        int xOffset = direction.getStepX() * bossRoom.getBoundingBox().getXSpan();
-        int zOffset = direction.getStepZ() * bossRoom.getBoundingBox().getZSpan();
-        SilverDungeonPieces.TemplePiece front = new SilverDungeonPieces.TemplePiece(
-                context.structureTemplateManager(),
-                "front",
-                elevatedPos.offset(xOffset, 0, zOffset),
+        builder.addPiece(rear);
+
+        BlockPos bossRoomPos = elevatedPos.offset((direction.getStepX() + direction.getStepZ()) * 5, 3, (direction.getStepZ() - direction.getStepX()) * 5);
+
+        SilverDungeonPieces.BossRoom bossRoom = new SilverDungeonPieces.BossRoom(
+                manager,
+                "boss_room",
+                bossRoomPos,
                 rotation
         );
-        builder.addPiece(front);
+        builder.addPiece(bossRoom);
+
+        int xOffset = direction.getStepX() * rear.getBoundingBox().getXSpan();
+        int zOffset = direction.getStepZ() * rear.getBoundingBox().getZSpan();
+
+        BlockPos offsetPos = elevatedPos.offset(xOffset, 0, zOffset);
+
+        SilverDungeonPieces.TemplePiece exterior = new SilverDungeonPieces.TemplePiece(
+                manager,
+                "skeleton",
+                offsetPos,
+                rotation
+        );
+        builder.addPiece(exterior);
+
+        SilverDungeonPieces.SilverDungeonGrid grid = new SilverDungeonPieces.SilverDungeonGrid(randomSource, 3, 3, 3);
+        grid.assembleDungeon(builder, manager, offsetPos, rotation, direction);
 
         BoundingBox box = builder.getBoundingBox();
         int height = 30;
@@ -131,6 +158,19 @@ public class SilverDungeonStructure extends Structure {
                     new BoundingBox(chunkPos.getMinBlockX(), origin.getY(), chunkPos.getMinBlockZ(), chunkPos.getMaxBlockX(), origin.getY(), chunkPos.getMaxBlockZ()),
                     direction));
         }));
+    }
+
+    /**
+     * Set the dungeon bounds when using the place command
+     */
+    @Override
+    public void afterPlace(WorldGenLevel level, StructureManager manager, ChunkGenerator generator, RandomSource random, BoundingBox chunkBox, ChunkPos chunkPos, PiecesContainer piecesContainer) {
+        AABB chunkBounds = new AABB(chunkBox.minX(), chunkBox.minY(), chunkBox.minZ(), chunkBox.maxX(), chunkBox.maxY(), chunkBox.maxZ());
+        level.getLevel().getEntitiesOfClass(ValkyrieQueen.class, chunkBounds).forEach(queen -> {
+            BoundingBox box = piecesContainer.calculateBoundingBox();
+            AABB dungeonBounds = new AABB(box.minX(), box.minY(), box.minZ(), box.maxX() + 1, box.maxY() + 1, box.maxZ() + 1);
+            queen.setDungeonBounds(dungeonBounds);
+        });
     }
 
     @Override
