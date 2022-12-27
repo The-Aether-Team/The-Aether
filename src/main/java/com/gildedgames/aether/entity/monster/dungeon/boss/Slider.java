@@ -788,13 +788,14 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         protected boolean crush() {
             boolean collided = false;
             boolean crushed = false;
+            boolean shouldCrush = this.slider.getDungeon() != null;
             if ((this.slider.horizontalCollision || this.slider.verticalCollision) && ForgeEventFactory.getMobGriefingEvent(this.slider.level, this.slider)) {
                 AABB crushBox = this.slider.getBoundingBox().inflate(0.2);
                 for(BlockPos pos : BlockPos.betweenClosed(Mth.floor(crushBox.minX), Mth.floor(crushBox.minY), Mth.floor(crushBox.minZ), Mth.floor(crushBox.maxX), Mth.floor(crushBox.maxY), Mth.floor(crushBox.maxZ))) {
                     BlockState blockState = this.slider.level.getBlockState(pos);
                     if (!blockState.isAir()) {
                         collided = true;
-                        if (!blockState.is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
+                        if (shouldCrush && !blockState.is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
                             crushed = this.slider.level.destroyBlock(pos, true, this.slider) || crushed;
                             this.slider.blockDestroySmoke(pos);
                         }
@@ -817,7 +818,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         }
 
         protected float getVelocityIncrease() {
-            return this.slider.isCritical() ? 0.035F : 0.0175F;
+            return this.slider.isCritical() ? 0.035F : 0.02F;
         }
 
         protected float getMaxVelocity() {
