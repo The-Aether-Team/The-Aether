@@ -1,5 +1,6 @@
 package com.gildedgames.aether.event.hooks;
 
+import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.ai.goal.BeeGrowBerryBushGoal;
 import com.gildedgames.aether.entity.ai.goal.FoxEatBerryBushGoal;
@@ -19,6 +20,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.*;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.ItemStack;
@@ -97,5 +99,13 @@ public class EntityHooks {
             return entityHitResult.getEntity() instanceof Slider && projectileEntity instanceof FishingHook;
         }
         return false;
+    }
+
+    public static boolean lightningHitKeys(Entity entity) {
+        if (entity instanceof ItemEntity itemEntity) {
+            return itemEntity.getItem().is(AetherTags.Items.DUNGEON_KEYS);
+        } else {
+            return false;
+        }
     }
 }
