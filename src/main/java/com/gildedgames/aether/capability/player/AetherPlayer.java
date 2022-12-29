@@ -10,6 +10,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.LazyOptional;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 	Player getPlayer();
@@ -20,6 +21,8 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 
 	void onLogout();
 	void onLogin();
+
+	void onJoinLevel();
 
 	void copyFrom(AetherPlayer other, boolean isWasDeath);
 
@@ -78,6 +81,9 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 	Aerbunny getMountedAerbunny();
 	void setMountedAerbunnyTag(CompoundTag mountedAerbunny);
 	CompoundTag getMountedAerbunnyTag();
+
+	void setLastRiddenMoa(UUID lastRiddenMoa);
+	UUID getLastRiddenMoa();
 
 	void setCloudMinions(CloudMinion cloudMinionRight, CloudMinion cloudMinionLeft);
 	List<CloudMinion> getCloudMinions();

@@ -1,8 +1,10 @@
 package com.gildedgames.aether.event.listeners.capability;
 
 import com.gildedgames.aether.event.hooks.CapabilityHooks;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -20,6 +22,12 @@ public class AetherPlayerListener {
     public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent event) {
         Player player = event.getEntity();
         CapabilityHooks.AetherPlayerHooks.logout(player);
+    }
+
+    @SubscribeEvent
+    public static void onPlayerJoinLevel(EntityJoinLevelEvent event) {
+        Entity entity = event.getEntity();
+        CapabilityHooks.AetherPlayerHooks.joinLevel(entity);
     }
 
     @SubscribeEvent

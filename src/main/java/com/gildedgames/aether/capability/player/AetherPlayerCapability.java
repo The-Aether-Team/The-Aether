@@ -16,6 +16,8 @@ import com.gildedgames.aether.capability.CapabilitySyncing;
 import com.gildedgames.aether.network.AetherPacket;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.AetherPlayerSyncPacket;
+import com.gildedgames.aether.perk.CustomizationsOptions;
+import com.gildedgames.aether.perk.data.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -72,6 +74,8 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	private Aerbunny mountedAerbunny;
 	private CompoundTag mountedAerbunnyTag;
 
+	private UUID lastRiddenMoa;
+
 	private final List<CloudMinion> cloudMinions = new ArrayList<>(2);
 
 	private float wingRotation;
@@ -107,6 +111,9 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		if (this.getMountedAerbunnyTag() != null) {
 			tag.put("MountedAerbunnyTag", this.getMountedAerbunnyTag());
 		}
+		if (this.getLastRiddenMoa() != null) {
+			tag.putUUID("LastRiddenMoa", this.getLastRiddenMoa());
+		}
 		return tag;
 	}
 
@@ -139,6 +146,9 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		if (tag.contains("MountedAerbunnyTag")) {
 			this.setMountedAerbunnyTag(tag.getCompound("MountedAerbunnyTag"));
 		}
+		if (tag.contains("LastRiddenMoa")) {
+			this.setLastRiddenMoa(tag.getUUID("LastRiddenMoa"));
+		}
 	}
 
 	@Override
@@ -155,6 +165,9 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		tag.putInt("FlightTimer_Syncing", this.getFlightTimer());
 		tag.putFloat("FlightModifier_Syncing", this.getFlightModifier());
 		tag.putInt("LifeShardCount_Syncing", this.getLifeShardCount());
+		if (this.getLastRiddenMoa() != null) {
+			tag.putUUID("LastRiddenMoa_Syncing", this.getLastRiddenMoa());
+		}
 		return tag;
 	}
 
@@ -193,6 +206,9 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		if (tag.contains("LifeShardCount_Syncing")) {
 			this.setLifeShardCount(tag.getInt("LifeShardCount_Syncing"));
 		}
+		if (tag.contains("LastRiddenMoa_Syncing")) {
+			this.setLastRiddenMoa(tag.getUUID("LastRiddenMoa_Syncing"));
+		}
 	}
 
 	@Override
@@ -204,6 +220,16 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	public void onLogin() {
 		this.handleGivePortal();
 		this.remountAerbunny();
+		ServerMoaSkinPerkData.INSTANCE.syncFromServer(this.getPlayer());
+		ServerHaloPerkData.INSTANCE.syncFromServer(this.getPlayer());
+		ServerDeveloperGlowPerkData.INSTANCE.syncFromServer(this.getPlayer());
+	}
+
+	@Override
+	public void onJoinLevel() {
+		if (this.getPlayer().getLevel().isClientSide()) {
+			CustomizationsOptions.INSTANCE.load();
+		}
 	}
 
 	@Override
@@ -231,6 +257,9 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		this.checkToRemoveCloudMinions();
 		this.handleSavedHealth();
 		this.handleLifeShardModifier();
+		ClientMoaSkinPerkData.INSTANCE.syncFromClient(this.getPlayer());
+		ClientHaloPerkData.INSTANCE.syncFromClient(this.getPlayer());
+		ClientDeveloperGlowPerkData.INSTANCE.syncFromClient(this.getPlayer());
 	}
 
 	private void handleGivePortal() {
@@ -657,6 +686,16 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	@Override
 	public CompoundTag getMountedAerbunnyTag() {
 		return this.mountedAerbunnyTag;
+	}
+
+	@Override
+	public void setLastRiddenMoa(UUID lastRiddenMoa) {
+		this.lastRiddenMoa = lastRiddenMoa;
+	}
+
+	@Override
+	public UUID getLastRiddenMoa() {
+		return this.lastRiddenMoa;
 	}
 
 	@Override

@@ -1,18 +1,24 @@
 package com.gildedgames.aether.client.renderer.entity;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.client.gui.screen.perks.MoaSkinsScreen;
 import com.gildedgames.aether.client.renderer.AetherModelLayers;
+import com.gildedgames.aether.client.renderer.entity.layers.MoaEmissiveLayer;
 import com.gildedgames.aether.client.renderer.entity.layers.MoaSaddleLayer;
 import com.gildedgames.aether.client.renderer.entity.model.MoaModel;
 import com.gildedgames.aether.entity.passive.Moa;
 import com.gildedgames.aether.api.AetherMoaTypes;
+import com.gildedgames.aether.perk.data.ClientMoaSkinPerkData;
+import com.gildedgames.aether.perk.types.MoaData;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
+import java.util.Map;
 import java.util.UUID;
 
 public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
@@ -21,6 +27,7 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
 
 	public MoaRenderer(EntityRendererProvider.Context context) {
 		super(context, new MoaModel(context.bakeLayer(AetherModelLayers.MOA)), 0.7F);
+		this.addLayer(new MoaEmissiveLayer<>(this));
 		this.addLayer(new MoaSaddleLayer(this, new MoaModel(context.bakeLayer(AetherModelLayers.MOA_SADDLE))));
 	}
 
@@ -41,6 +48,10 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
 	@Nonnull
 	@Override
 	public ResourceLocation getTextureLocation(Moa moa) {
+		ResourceLocation moaSkin = this.getMoaSkinLocation(moa);
+		if (moaSkin != null) {
+			return moaSkin;
+		}
 		if (moa.hasCustomName() && moa.getName().getString().equals("Mos") && moa.getMoaType() == AetherMoaTypes.ORANGE.get()) {
 			return MOS_TEXTURE;
 		}
@@ -49,5 +60,17 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
 			return RAPTOR_TEXTURE;
 		}
 		return moa.getMoaType().getMoaTexture();
+	}
+
+	private ResourceLocation getMoaSkinLocation(Moa moa) {
+		UUID lastRiderUUID = moa.getLastRider();
+		UUID moaUUID = moa.getMoaUUID();
+		Map<UUID, MoaData> userSkinsData = ClientMoaSkinPerkData.INSTANCE.getClientPerkData();
+		if (Minecraft.getInstance().screen instanceof MoaSkinsScreen moaSkinsScreen && moaSkinsScreen.getSelectedSkin() != null && moaSkinsScreen.getPreviewMoa() != null && moaSkinsScreen.getPreviewMoa().getMoaUUID().equals(moaUUID)) {
+			return moaSkinsScreen.getSelectedSkin().getSkinLocation();
+		} else if (userSkinsData.containsKey(lastRiderUUID) && userSkinsData.get(lastRiderUUID).moaUUID() != null && userSkinsData.get(lastRiderUUID).moaUUID().equals(moaUUID)) {
+			return userSkinsData.get(lastRiderUUID).moaSkin().getSkinLocation();
+		}
+		return null;
 	}
 }

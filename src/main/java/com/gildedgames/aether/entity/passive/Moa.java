@@ -3,6 +3,7 @@ package com.gildedgames.aether.entity.passive;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.gildedgames.aether.capability.player.AetherPlayer;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.WingedBird;
 import com.gildedgames.aether.entity.ai.goal.FallingRandomStrollGoal;
@@ -15,6 +16,8 @@ import com.gildedgames.aether.api.registers.MoaType;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.MoaInteractPacket;
 import com.gildedgames.aether.api.AetherMoaTypes;
+import com.gildedgames.aether.perk.data.ServerMoaSkinPerkData;
+import com.gildedgames.aether.perk.types.MoaData;
 import com.gildedgames.aether.util.EntityUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -42,10 +45,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
 public class Moa extends MountableAnimal implements WingedBird {
+	private static final EntityDataAccessor<Optional<UUID>> DATA_MOA_UUID_ID = SynchedEntityData.defineId(Moa.class, EntityDataSerializers.OPTIONAL_UUID);
 	private static final EntityDataAccessor<String> DATA_MOA_TYPE_ID = SynchedEntityData.defineId(Moa.class, EntityDataSerializers.STRING);
 	private static final EntityDataAccessor<Optional<UUID>> DATA_RIDER_UUID = SynchedEntityData.defineId(Moa.class, EntityDataSerializers.OPTIONAL_UUID);
 	private static final EntityDataAccessor<Optional<UUID>> DATA_LAST_RIDER_UUID = SynchedEntityData.defineId(Moa.class, EntityDataSerializers.OPTIONAL_UUID);
@@ -96,6 +101,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
+		this.entityData.define(DATA_MOA_UUID_ID, Optional.empty());
 		this.entityData.define(DATA_MOA_TYPE_ID, "");
 		this.entityData.define(DATA_RIDER_UUID, Optional.empty());
 		this.entityData.define(DATA_LAST_RIDER_UUID, Optional.empty());
@@ -108,6 +114,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 
 	@Override
 	public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor level, @Nonnull DifficultyInstance difficulty, @Nonnull MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
+		this.generateMoaUUID();
 		if (tag != null) {
 			if (tag.contains("IsBaby")) {
 				this.setBaby(tag.getBoolean("IsBaby"));
@@ -182,6 +189,16 @@ public class Moa extends MountableAnimal implements WingedBird {
 			this.setHungry(false);
 			this.setAmountFed(0);
 		}
+
+		if (this.getControllingPassenger() instanceof Player player) {
+			if (this.getRider() == null) {
+				this.setRider(player.getUUID());
+			}
+		} else {
+			if (this.getRider() != null) {
+				this.setRider(null);
+			}
+		}
 	}
 
 	@Override
@@ -198,6 +215,23 @@ public class Moa extends MountableAnimal implements WingedBird {
 			}
 			this.resetFallDistance();
 		}
+	}
+
+	@Override
+	protected void addPassenger(Entity passenger) {
+		if (passenger instanceof Player player) {
+			if (this.getLastRider() == null || this.getLastRider() != player.getUUID()) {
+				this.setLastRider(player.getUUID());
+			}
+			if (!player.getLevel().isClientSide()) {
+				AetherPlayer.get(player).ifPresent((aetherPlayer) -> aetherPlayer.setLastRiddenMoa(this.getMoaUUID()));
+				Map<UUID, MoaData> userSkinsData = ServerMoaSkinPerkData.INSTANCE.getServerPerkData(player.getServer());
+				if (userSkinsData.containsKey(this.getLastRider())) {
+					ServerMoaSkinPerkData.INSTANCE.applyPerkWithVerification(player.getServer(), this.getLastRider(), new MoaData(this.getMoaUUID(), userSkinsData.get(this.getLastRider()).moaSkin()));
+				}
+			}
+		}
+		super.addPassenger(passenger);
 	}
 
 	@Override
@@ -269,6 +303,21 @@ public class Moa extends MountableAnimal implements WingedBird {
 		for (int i = 0; i < 20; ++i) {
 			EntityUtil.spawnMovementExplosionParticles(this);
 		}
+	}
+
+	public void generateMoaUUID() {
+		if (this.getMoaUUID() == null) {
+			this.setMoaUUID(UUID.randomUUID());
+		}
+	}
+
+	@Nullable
+	public UUID getMoaUUID() {
+		return this.entityData.get(DATA_MOA_UUID_ID).orElse(null);
+	}
+
+	private void setMoaUUID(@Nullable UUID uuid) {
+		this.entityData.set(DATA_MOA_UUID_ID, Optional.ofNullable(uuid));
 	}
 
 	public MoaType getMoaType() {
@@ -486,6 +535,9 @@ public class Moa extends MountableAnimal implements WingedBird {
 	@Override
 	public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
 		super.readAdditionalSaveData(tag);
+		if (tag.contains("MoaUUID")) {
+			this.setMoaUUID(tag.getUUID("MoaUUID"));
+		}
 		if (tag.contains("IsBaby")) {
 			this.setBaby(tag.getBoolean("IsBaby"));
 		}
@@ -518,6 +570,9 @@ public class Moa extends MountableAnimal implements WingedBird {
 	@Override
 	public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
 		super.addAdditionalSaveData(tag);
+		if (this.getMoaUUID() != null) {
+			tag.putUUID("MoaUUID", this.getMoaUUID());
+		}
 		tag.putBoolean("IsBaby", this.isBaby());
 		tag.putString("MoaType", this.getMoaType().toString());
 		if (this.getRider() != null) {

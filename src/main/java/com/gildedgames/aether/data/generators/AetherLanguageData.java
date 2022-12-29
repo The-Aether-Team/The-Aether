@@ -605,7 +605,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addGuiText("ascending", "Ascending to the Aether");
         addGuiText("descending", "Descending from the Aether");
 
-        addGuiText("accessories.skins_button", "Skins");
+        addGuiText("accessories.skins_button", "Moa Skins");
         addGuiText("accessories.customization_button", "Customization");
 
         addGuiText("sun_altar.time", "Time");
@@ -685,6 +685,45 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addGuiText("sun_spirit.line10", "Did your previous death not satisfy your curiosity, human?");
 
 
+        addMoaSkinsText("title", "Moa Skins");
+
+        addMoaSkinsText("text.donate", "Donate to the project to get Moa Skins!");
+        addMoaSkinsText("text.reward", "Thank you for donating to the project!");
+
+        addMoaSkinsText("button.apply", "Apply");
+        addMoaSkinsText("button.remove", "Remove");
+        addMoaSkinsText("button.donate", "Donate");
+        addMoaSkinsText("button.info", "?");
+
+        addMoaSkinsText("pack.natural_moa_skins", "Natural Moa Skins");
+        addMoaSkinsText("pack.lifetime_angel_moa_skins", "Lifetime Angel Moa Skins");
+        addMoaSkinsText("pack.lifetime_valkyrie_moa_skins", "Lifetime Valkyrie Moa Skins");
+
+        addMoaSkinsText("skin.blue_moa", "Blue Moa");
+        addMoaSkinsText("skin.white_moa", "White Moa");
+        addMoaSkinsText("skin.black_moa", "Black Moa");
+        addMoaSkinsText("skin.orange_moa", "Orange Moa");
+        addMoaSkinsText("skin.boko_yellow", "Boko Yellow");
+        addMoaSkinsText("skin.crookjaw_purple", "Crookjaw Purple");
+        addMoaSkinsText("skin.gharrix_red", "Gharrix Red");
+        addMoaSkinsText("skin.halcian_pink", "Halcian Pink");
+        addMoaSkinsText("skin.tivalier_green", "Tivalier Green");
+        addMoaSkinsText("skin.arctic_moa", "Arctic Moa");
+        addMoaSkinsText("skin.cockatrice_moa", "Cockatrice");
+        addMoaSkinsText("skin.phoenix_moa", "Phoenix Moa");
+        addMoaSkinsText("skin.sentry_moa", "Sentry Moa");
+        addMoaSkinsText("skin.valkyrie_moa", "Valkyrie Moa");
+
+        addMoaSkinsText("tooltip.title.access.pledging", "Pledge Access");
+        addMoaSkinsText("tooltip.title.access.lifetime", "Lifetime Access");
+
+        addMoaSkinsText("tooltip.pledging", "You have access to this skin while pledging to the %s tier!");
+        addMoaSkinsText("tooltip.lifetime", "You have lifetime access to this skin!");
+
+        addMoaSkinsText("tooltip.access.pledging", "Pledging to the %s tier will give you access to this skin during the pledge duration!");
+        addMoaSkinsText("tooltip.access.lifetime", "Pledging to the %s tier will give you lifetime access to this skin!");
+
+
         addCustomizationText("title", "Customization");
         addCustomizationText("gloves.arm", "Glove Layer: Arm");
         addCustomizationText("gloves.sleeve", "Glove Layer: Sleeve");
@@ -705,19 +744,19 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLoreBookText("item", "Item:");
 
 
-        addMessage("hammer_of_notch_cooldown", "Cooldown");
+        addGeneric("hammer_of_notch_cooldown", "Cooldown");
 
-        addMessage("life_shard_limit", "You can only use a total of %s Life Shards.");
-        addMessage("bronze_treasure_chest_locked", "This Treasure Chest must be unlocked with a Bronze Key.");
-        addMessage("silver_treasure_chest_locked", "This Treasure Chest must be unlocked with a Silver Key.");
-        addMessage("gold_treasure_chest_locked", "This Treasure Chest must be unlocked with a Gold Key.");
-        addMessage("sun_altar.in_control", "The sun spirit is still in control of this realm.");
-        addMessage("sun_altar.no_permission", "You don't have permission to use this.");
-        addMessage("sun_altar.no_power", "The sun spirit has no power over this realm.");
+        addGeneric("life_shard_limit", "You can only use a total of %s Life Shards.");
+        addGeneric("bronze_treasure_chest_locked", "This Treasure Chest must be unlocked with a Bronze Key.");
+        addGeneric("silver_treasure_chest_locked", "This Treasure Chest must be unlocked with a Silver Key.");
+        addGeneric("gold_treasure_chest_locked", "This Treasure Chest must be unlocked with a Gold Key.");
+        addGeneric("sun_altar.in_control", "The sun spirit is still in control of this realm.");
+        addGeneric("sun_altar.no_permission", "You don't have permission to use this.");
+        addGeneric("sun_altar.no_power", "The sun spirit has no power over this realm.");
 
-        addMessage("dungeon.bronze_dungeon", "Bronze Dungeon");
-        addMessage("dungeon.silver_dungeon", "Silver Dungeon");
-        addMessage("dungeon.gold_dungeon", "Gold Dungeon");
+        addGeneric("dungeon.bronze_dungeon", "Bronze Dungeon");
+        addGeneric("dungeon.silver_dungeon", "Silver Dungeon");
+        addGeneric("dungeon.gold_dungeon", "Gold Dungeon");
 
 
         addCommand("menu.fix", "Reset world preview values");

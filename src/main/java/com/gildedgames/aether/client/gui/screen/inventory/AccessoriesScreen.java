@@ -3,6 +3,7 @@ package com.gildedgames.aether.client.gui.screen.inventory;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.gui.screen.perks.AetherCustomizationsScreen;
 import com.gildedgames.aether.client.AetherKeys;
+import com.gildedgames.aether.client.gui.screen.perks.MoaSkinsScreen;
 import com.gildedgames.aether.inventory.menu.AccessoriesMenu;
 import com.gildedgames.aether.mixin.mixins.client.accessor.ScreenAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
@@ -111,7 +112,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
             this.updateRenderButtons();
 
             ImageButton skinsButton = new ImageButton(this.leftPos - 22, this.topPos + 2, 20, 20, 0, 0, 20, SKINS_BUTTON, 20, 40,
-                    (pressed) -> Aether.LOGGER.info("WIP"), //todo,
+                    (pressed) -> this.getMinecraft().setScreen(new MoaSkinsScreen(this)),
                     Component.translatable("gui.aether.accessories.skins_button")) {
                 @Override
                 public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
@@ -129,7 +130,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
             this.addRenderableWidget(skinsButton);
 
             ImageButton customizationButton = new ImageButton(this.leftPos - 22, this.topPos + 24, 20, 20, 0, 0, 20, CUSTOMIZATION_BUTTON, 20, 40,
-                    (pressed) -> this.minecraft.setScreen(new AetherCustomizationsScreen(this)),
+                    (pressed) -> this.getMinecraft().setScreen(new AetherCustomizationsScreen(this)),
                     Component.translatable("gui.aether.accessories.customization_button")) {
                 @Override
                 public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {

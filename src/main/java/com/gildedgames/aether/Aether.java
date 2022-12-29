@@ -24,6 +24,8 @@ import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.loot.conditions.AetherLootConditions;
 import com.gildedgames.aether.loot.functions.AetherLootFunctions;
 import com.gildedgames.aether.loot.modifiers.AetherLootModifiers;
+import com.gildedgames.aether.perk.types.MoaPacks;
+import com.gildedgames.aether.perk.types.MoaSkins;
 import com.gildedgames.aether.recipe.AetherRecipeSerializers;
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.gildedgames.aether.world.AetherPoi;
@@ -74,7 +76,6 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @Mod(Aether.MODID)
-@Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Aether {
     public static final String MODID = "aether";
     public static final Logger LOGGER = LogUtils.getLogger();
@@ -136,6 +137,9 @@ public class Aether {
         AetherRecipeBookTypes.init();
 
         SunAltarWhitelist.initialize();
+
+        MoaSkins.registerMoaSkins();
+        MoaPacks.registerMoaPacks();
 
         this.registerFuels();
 

@@ -3,7 +3,6 @@ package com.gildedgames.aether.network;
 import com.gildedgames.aether.Aether;
 
 import com.gildedgames.aether.network.packet.AetherPlayerSyncPacket;
-import com.gildedgames.aether.network.packet.AetherRankingsSyncPacket;
 import com.gildedgames.aether.network.packet.client.*;
 import com.gildedgames.aether.network.packet.server.*;
 import net.minecraft.server.level.ServerPlayer;
@@ -32,7 +31,16 @@ public class AetherPacketHandler {
 		register(BossInfoPacket.Display.class, BossInfoPacket.Display::decode);
 		register(BossInfoPacket.Remove.class, BossInfoPacket.Remove::decode);
 		register(CloudMinionPacket.class, CloudMinionPacket::decode);
+		register(ClientDeveloperGlowPacket.Apply.class, ClientDeveloperGlowPacket.Apply::decode);
+		register(ClientDeveloperGlowPacket.Remove.class, ClientDeveloperGlowPacket.Remove::decode);
+		register(ClientDeveloperGlowPacket.Sync.class, ClientDeveloperGlowPacket.Sync::decode);
 		register(ClientGrabItemPacket.class, ClientGrabItemPacket::decode);
+        register(ClientHaloPacket.Apply.class, ClientHaloPacket.Apply::decode);
+        register(ClientHaloPacket.Remove.class, ClientHaloPacket.Remove::decode);
+        register(ClientHaloPacket.Sync.class, ClientHaloPacket.Sync::decode);
+		register(ClientMoaSkinPacket.Apply.class, ClientMoaSkinPacket.Apply::decode);
+		register(ClientMoaSkinPacket.Remove.class, ClientMoaSkinPacket.Remove::decode);
+		register(ClientMoaSkinPacket.Sync.class, ClientMoaSkinPacket.Sync::decode);
 		register(EternalDayPacket.class, EternalDayPacket::decode);
 		register(ExplosionParticlePacket.class, ExplosionParticlePacket::decode);
 		register(HealthResetPacket.class, HealthResetPacket::decode);
@@ -60,12 +68,16 @@ public class AetherPacketHandler {
 		register(NpcPlayerInteractPacket.class, NpcPlayerInteractPacket::decode);
 		register(OpenAccessoriesPacket.class, OpenAccessoriesPacket::decode);
 		register(OpenInventoryPacket.class, OpenInventoryPacket::decode);
-		register(RankingsForcePacket.class, RankingsForcePacket::decode);
+		register(ServerDeveloperGlowPacket.Apply.class, ServerDeveloperGlowPacket.Apply::decode);
+		register(ServerDeveloperGlowPacket.Remove.class, ServerDeveloperGlowPacket.Remove::decode);
+        register(ServerHaloPacket.Apply.class, ServerHaloPacket.Apply::decode);
+        register(ServerHaloPacket.Remove.class, ServerHaloPacket.Remove::decode);
+		register(ServerMoaSkinPacket.Apply.class, ServerMoaSkinPacket.Apply::decode);
+		register(ServerMoaSkinPacket.Remove.class, ServerMoaSkinPacket.Remove::decode);
 		register(SunAltarUpdatePacket.class, SunAltarUpdatePacket::decode);
 
 		// BOTH
 		register(AetherPlayerSyncPacket.class, AetherPlayerSyncPacket::decode);
-		register(AetherRankingsSyncPacket.class, AetherRankingsSyncPacket::decode);
 	}
 
 	private static <MSG extends AetherPacket> void register(final Class<MSG> packet, Function<FriendlyByteBuf, MSG> decoder) {

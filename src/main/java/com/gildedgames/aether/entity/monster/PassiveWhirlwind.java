@@ -2,7 +2,6 @@ package com.gildedgames.aether.entity.monster;
 
 import com.gildedgames.aether.client.particle.AetherParticleTypes;
 import com.gildedgames.aether.loot.AetherLoot;
-import com.gildedgames.aether.api.AetherPlayerRankings;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.DifficultyInstance;
