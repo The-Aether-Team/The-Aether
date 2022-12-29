@@ -185,14 +185,12 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherItems.GOLDEN_FEATHER.get(),
                 AetherItems.REGENERATION_STONE.get(),
                 AetherItems.IRON_BUBBLE.get())
-                .addOptionalTag(new ResourceLocation(Curios.MODID, "curio"))
                 .addOptionalTag(new ResourceLocation(Curios.MODID, "charm"));
         this.tag(AetherTags.Items.AETHER_SHIELD).add(AetherItems.SHIELD_OF_REPULSION.get());
         this.tag(AetherTags.Items.RING).addTag(AetherTags.Items.AETHER_RING);
         this.tag(AetherTags.Items.NECKLACE).addTag(AetherTags.Items.AETHER_PENDANT);
         this.tag(AetherTags.Items.HANDS).addTag(AetherTags.Items.AETHER_GLOVES);
         this.tag(AetherTags.Items.BACK).addTag(AetherTags.Items.AETHER_CAPE);
-        this.tag(AetherTags.Items.CURIO).addTag(AetherTags.Items.AETHER_ACCESSORY);
         this.tag(AetherTags.Items.CHARM).addTag(AetherTags.Items.AETHER_ACCESSORY);
 
         this.tag(AetherTags.Items.ACCESSORIES).addTags(
