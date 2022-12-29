@@ -20,7 +20,7 @@ public class MoaSkins {
     public static void registerMoaSkins() {
         register("blue_moa", new MoaSkin("blue_moa", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.blue_moa"))
-                .userPredicate((user) -> PerkUtil.hasBaseAngelMoaSkins("blue_moa").test(user))
+                .userPredicate((user) -> PerkUtil.hasLifetimeAngelMoaSkins("blue_moa").test(user))
                 .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/blue_moa_icon.png"))
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/blue_moa.png"))
                 .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png"))
@@ -28,7 +28,7 @@ public class MoaSkins {
         ));
         register("white_moa", new MoaSkin("white_moa", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.white_moa"))
-                .userPredicate((user) -> PerkUtil.hasBaseAngelMoaSkins("white_moa").test(user))
+                .userPredicate((user) -> PerkUtil.hasLifetimeAngelMoaSkins("white_moa").test(user))
                 .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/white_moa_icon.png"))
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/white_moa.png"))
                 .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png"))
@@ -36,7 +36,7 @@ public class MoaSkins {
         ));
         register("black_moa", new MoaSkin("black_moa", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.black_moa"))
-                .userPredicate((user) -> PerkUtil.hasBaseAngelMoaSkins("black_moa").test(user))
+                .userPredicate((user) -> PerkUtil.hasLifetimeAngelMoaSkins("black_moa").test(user))
                 .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/black_moa_icon.png"))
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/black_moa.png"))
                 .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/black_moa_saddle.png"))
@@ -44,7 +44,7 @@ public class MoaSkins {
         ));
         register("orange_moa", new MoaSkin("orange_moa", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.orange_moa"))
-                .userPredicate((user) -> PerkUtil.hasBaseAngelMoaSkins("orange_moa").test(user))
+                .userPredicate((user) -> PerkUtil.hasLifetimeAngelMoaSkins("orange_moa").test(user))
                 .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/orange_moa_icon.png"))
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/orange_moa.png"))
                 .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png"))
@@ -52,7 +52,7 @@ public class MoaSkins {
         ));
         register("boko_yellow", new MoaSkin("boko_yellow", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.boko_yellow"))
-                .userPredicate((user) -> PerkUtil.hasBaseAngelMoaSkins("boko_yellow").test(user))
+                .userPredicate((user) -> PerkUtil.hasLifetimeAngelMoaSkins("boko_yellow").test(user))
                 .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/boko_yellow_icon.png"))
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/boko_yellow/boko_yellow.png"))
                 .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/boko_yellow/boko_yellow_saddle.png"))
@@ -60,7 +60,7 @@ public class MoaSkins {
         ));
         register("crookjaw_purple", new MoaSkin("crookjaw_purple", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.crookjaw_purple"))
-                .userPredicate((user) -> PerkUtil.hasBaseAngelMoaSkins("crookjaw_purple").test(user))
+                .userPredicate((user) -> PerkUtil.hasLifetimeAngelMoaSkins("crookjaw_purple").test(user))
                 .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/crookjaw_purple_icon.png"))
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/crookjaw_purple/crookjaw_purple.png"))
                 .emissiveLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/crookjaw_purple/crookjaw_purple_emissive.png"))
@@ -69,7 +69,7 @@ public class MoaSkins {
         ));
         register("gharrix_red", new MoaSkin("gharrix_red", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.gharrix_red"))
-                .userPredicate((user) -> PerkUtil.hasBaseAngelMoaSkins("gharrix_red").test(user))
+                .userPredicate((user) -> PerkUtil.hasLifetimeAngelMoaSkins("gharrix_red").test(user))
                 .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/gharrix_red_icon.png"))
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/gharrix_red/gharrix_red.png"))
                 .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/gharrix_red/gharrix_red_saddle.png"))
@@ -77,7 +77,7 @@ public class MoaSkins {
         ));
         register("halcian_pink", new MoaSkin("halcian_pink", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.halcian_pink"))
-                .userPredicate((user) -> PerkUtil.hasBaseAngelMoaSkins("halcian_pink").test(user))
+                .userPredicate((user) -> PerkUtil.hasLifetimeAngelMoaSkins("halcian_pink").test(user))
                 .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/halcian_pink_icon.png"))
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/halcian_pink/halcian_pink.png"))
                 .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/halcian_pink/halcian_pink_saddle.png"))
@@ -85,7 +85,7 @@ public class MoaSkins {
         ));
         register("tivalier_green", new MoaSkin("tivalier_green", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.tivalier_green"))
-                .userPredicate((user) -> PerkUtil.hasBaseAngelMoaSkins("tivalier_green").test(user))
+                .userPredicate((user) -> PerkUtil.hasLifetimeAngelMoaSkins("tivalier_green").test(user))
                 .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/tivalier_green_icon.png"))
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/tivalier_green/tivalier_green.png"))
                 .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/tivalier_green/tivalier_green_saddle.png"))
@@ -93,7 +93,7 @@ public class MoaSkins {
         ));
         register("arctic_moa", new MoaSkin("arctic_moa", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.arctic_moa"))
-                .userPredicate((user) -> PerkUtil.hasValkyrieMoaSkins("arctic_moa").test(user))
+                .userPredicate((user) -> PerkUtil.hasLifetimeValkyrieMoaSkins("arctic_moa").test(user))
                 .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/arctic_moa_icon.png"))
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/arctic_moa/arctic_moa.png"))
                 .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/arctic_moa/arctic_moa_saddle.png"))
@@ -101,7 +101,7 @@ public class MoaSkins {
         ));
         register("cockatrice_moa", new MoaSkin("cockatrice_moa", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.cockatrice_moa"))
-                .userPredicate((user) -> PerkUtil.hasValkyrieMoaSkins("cockatrice_moa").test(user))
+                .userPredicate((user) -> PerkUtil.hasLifetimeValkyrieMoaSkins("cockatrice_moa").test(user))
                 .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/cockatrice_moa_icon.png"))
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/cockatrice_moa/cockatrice_moa.png"))
                 .emissiveLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/cockatrice_moa/cockatrice_moa_emissive.png"))
@@ -110,7 +110,7 @@ public class MoaSkins {
         ));
         register("phoenix_moa", new MoaSkin("phoenix_moa", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.phoenix_moa"))
-                .userPredicate((user) -> PerkUtil.hasValkyrieMoaSkins("phoenix_moa").test(user))
+                .userPredicate((user) -> PerkUtil.hasLifetimeValkyrieMoaSkins("phoenix_moa").test(user))
                 .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/phoenix_moa_icon.png"))
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/phoenix_moa/phoenix_moa.png"))
                 .emissiveLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/phoenix_moa/phoenix_moa_emissive.png"))
@@ -119,7 +119,7 @@ public class MoaSkins {
         ));
         register("sentry_moa", new MoaSkin("sentry_moa", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.sentry_moa"))
-                .userPredicate((user) -> PerkUtil.hasValkyrieMoaSkins("sentry_moa").test(user))
+                .userPredicate((user) -> PerkUtil.hasLifetimeValkyrieMoaSkins("sentry_moa").test(user))
                 .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/sentry_moa_icon.png"))
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/sentry_moa/sentry_moa.png"))
                 .emissiveLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/sentry_moa/sentry_moa_emissive.png"))
@@ -128,7 +128,7 @@ public class MoaSkins {
         ));
         register("valkyrie_moa", new MoaSkin("valkyrie_moa", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.valkyrie_moa"))
-                .userPredicate((user) -> PerkUtil.hasValkyrieMoaSkins("valkyrie_moa").test(user))
+                .userPredicate((user) -> PerkUtil.hasLifetimeValkyrieMoaSkins("valkyrie_moa").test(user))
                 .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/valkyrie_moa_icon.png"))
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/valkyrie_moa/valkyrie_moa.png"))
                 .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/valkyrie_moa/valkyrie_moa_saddle.png"))
