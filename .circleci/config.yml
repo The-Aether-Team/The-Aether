@@ -15,7 +15,7 @@ jobs:
     resource_class: large
     environment:
       _JAVA_OPTIONS: -Xmx9600m
-      GRADLE_OPTS: -Dorg.gradle.daemon=false
+      GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.logging.level=info
     steps:
       - setup
       - run:
