@@ -1102,5 +1102,15 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addClientConfig("audio", "disable_aether_menu_music", "Disables the Aether's menu music in case another mod implements its own, only works if 'Disables Aether music manager' is false");
         addClientConfig("audio", "disable_vanilla_world_preview_menu_music", "Disables the menu music on the vanilla world preview menu, only works if 'Disables Aether music manager' is false");
         addClientConfig("audio", "disable_aether_world_preview_menu_music", "Disables the menu music on the Aether world preview menu, only works if 'Disables Aether music manager' is false");
+
+
+        addPackTitle("125", "Aether 1.2.5 Textures");
+        addPackTitle("b173", "Aether b1.7.3 Textures");
+        addPackTitle("ctm", "Aether CTM Fix");
+
+        addPackDescription("mod", "Aether Resources");
+        addPackDescription("125", "The classic look of the Aether from 1.2.5");
+        addPackDescription("b173", "The original look of the Aether from b1.7.3");
+        addPackDescription("ctm", "Fixes Quicksoil Glass Panes when using CTM");
     }
 }
