@@ -102,16 +102,17 @@ public class AetherBiomeBuilders {
     public static BiomeSource buildAetherBiomeSource(HolderGetter<Biome> biomes) {
         final Climate.Parameter FULL_RANGE = Climate.Parameter.span(-1.0F, 1.0F);
         return new MultiNoiseBiomeSource(new Climate.ParameterList<>(List.of(
-                Pair.of(new Climate.ParameterPoint(FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, Climate.Parameter.span(1.0F, 2.0F), 0),
-                        biomes.getOrThrow(AetherBiomes.GOLDEN_FOREST)),
-                Pair.of(new Climate.ParameterPoint(FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, Climate.Parameter.span(0.5F, 1.0F), 0),
+        		Pair.of(new Climate.ParameterPoint(FULL_RANGE, Climate.Parameter.span(-1.0F, -0.7F), FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, 0),
+                        biomes.getOrThrow(AetherBiomes.SKYROOT_GROVE)),                
+                Pair.of(new Climate.ParameterPoint(FULL_RANGE, Climate.Parameter.span(-0.7F, -0.1F), FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, 0),
                         biomes.getOrThrow(AetherBiomes.SKYROOT_FOREST)),
-                Pair.of(new Climate.ParameterPoint(FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, Climate.Parameter.span(-0.1F, 0.5F), 0),
+                Pair.of(new Climate.ParameterPoint(FULL_RANGE, Climate.Parameter.span(-0.1F, 0.5F), FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, 0),
                         biomes.getOrThrow(AetherBiomes.SKYROOT_THICKET)),
-                Pair.of(new Climate.ParameterPoint(FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, Climate.Parameter.span(-0.7F, -0.1F), 0),
+                Pair.of(new Climate.ParameterPoint(FULL_RANGE, Climate.Parameter.span(0.5F, 0.85F), FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, 0),
                         biomes.getOrThrow(AetherBiomes.SKYROOT_FOREST)),
-                Pair.of(new Climate.ParameterPoint(FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, Climate.Parameter.span(-2.0F, -0.7F), 0),
-                        biomes.getOrThrow(AetherBiomes.SKYROOT_GROVE))
+                Pair.of(new Climate.ParameterPoint(FULL_RANGE, Climate.Parameter.span(0.85F, 1.0F), FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, 0),
+                        biomes.getOrThrow(AetherBiomes.GOLDEN_FOREST))
+                
         )));
     }
 }
