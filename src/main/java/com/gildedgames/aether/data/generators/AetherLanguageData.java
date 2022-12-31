@@ -596,6 +596,10 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addDeath("incineration", "%1$s was incinerated by %2$s");
 
 
+        addMenuText("button.world_preview", "W");
+        addMenuText("button.theme", "T");
+        addMenuText("button.quick_load", "Q");
+
         addMenuText("minecraft", "Normal Theme");
         addMenuText("aether", "Aether Theme");
         addMenuText("preview", "Toggle World");
