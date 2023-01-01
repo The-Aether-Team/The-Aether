@@ -131,7 +131,7 @@ public class GuiHooks {
 
     public static Button setupToggleWorldButton(Screen screen) {
         if (screen instanceof TitleScreen) {
-            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24, 4, 20, 20, Component.literal("W"),
+            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24, 4, 20, 20, Component.translatable("gui.aether.menu.button.world_preview"),
                     (pressed) -> {
                         AetherConfig.CLIENT.enable_world_preview.set(!AetherConfig.CLIENT.enable_world_preview.get());
                         AetherConfig.CLIENT.enable_world_preview.save();
@@ -146,7 +146,7 @@ public class GuiHooks {
 
     public static Button setupMenuSwitchButton(Screen screen) {
         if (screen instanceof TitleScreen) {
-            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24, 4, 20, 20, Component.literal("T"),
+            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24, 4, 20, 20, Component.translatable("gui.aether.menu.button.theme"),
                     (pressed) -> {
                         AetherConfig.CLIENT.enable_aether_menu.set(!AetherConfig.CLIENT.enable_aether_menu.get());
                         AetherConfig.CLIENT.enable_aether_menu.save();
@@ -164,7 +164,7 @@ public class GuiHooks {
 
     public static Button setupQuickLoadButton(Screen screen) {
         if (screen instanceof TitleScreen) {
-            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24, 4, 20, 20, Component.literal("Q"),
+            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24, 4, 20, 20, Component.translatable("gui.aether.menu.button.quick_load"),
                     (pressed) -> {
                         WorldDisplayHelper.quickLoad();
                         Minecraft.getInstance().getMusicManager().stopPlaying();

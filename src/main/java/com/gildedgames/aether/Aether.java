@@ -199,7 +199,7 @@ public class Aether {
         if (event.getPackType() == PackType.CLIENT_RESOURCES) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_125");
             PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, false, resourcePath);
-            this.createCombinedPack(event, resourcePath, pack, "builtin/aether_125_art", "Aether 1.2.5 Textures", "The classic look of the Aether from 1.2.5");
+            this.createCombinedPack(event, resourcePath, pack, "builtin/aether_125_art", "pack.aether.125.title", "pack.aether.125.description");
         }
     }
 
@@ -210,7 +210,7 @@ public class Aether {
         if (event.getPackType() == PackType.CLIENT_RESOURCES) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_b173");
             PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, false, resourcePath);
-            this.createCombinedPack(event, resourcePath, pack, "builtin/aether_b173_art", "Aether b1.7.3 Textures", "The original look of the Aether from b1.7.3");
+            this.createCombinedPack(event, resourcePath, pack, "builtin/aether_b173_art", "pack.aether.b173.title", "pack.aether.b173.description");
         }
     }
 
@@ -226,13 +226,13 @@ public class Aether {
         Path baseResourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_base");
         PathPackResources basePack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + baseResourcePath, false, baseResourcePath);
         List<PathPackResources> mergedPacks = List.of(pack, basePack);
-        Pack.ResourcesSupplier resourcesSupplier = (string) -> new CombinedResourcePack(name, new PackMetadataSection(Component.literal(description), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion())), mergedPacks, sourcePath);
+        Pack.ResourcesSupplier resourcesSupplier = (string) -> new CombinedResourcePack(name, new PackMetadataSection(Component.translatable(description), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion())), mergedPacks, sourcePath);
         Pack.Info info = Pack.readPackInfo(name, resourcesSupplier);
         if (info != null) {
             event.addRepositorySource((source) ->
                     source.accept(Pack.create(
                             name,
-                            Component.literal(title),
+                            Component.translatable(title),
                             false,
                             resourcesSupplier,
                             info,
@@ -252,11 +252,11 @@ public class Aether {
         if (event.getPackType() == PackType.CLIENT_RESOURCES && ModList.get().isLoaded("ctm")) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/ctm_fix");
             PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
-            PackMetadataSection metadata = new PackMetadataSection(Component.literal("Fixes Quicksoil Glass Panes when using CTM"), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion()));
+            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.ctm.description"), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion()));
             event.addRepositorySource((source) ->
                     source.accept(Pack.create(
                         "builtin/aether_ctm_fix",
-                            Component.literal("Aether CTM Fix"),
+                            Component.translatable("pack.aether.ctm.title"),
                             true,
                             (string) -> pack,
                             new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
