@@ -8,6 +8,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityMountEvent;
+import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -47,5 +48,11 @@ public class EntityListener {
         Entity projectileEntity = event.getEntity();
         HitResult rayTraceResult = event.getRayTraceResult();
         event.setCanceled(EntityHooks.preventSliderHooked(projectileEntity, rayTraceResult));
+    }
+
+    @SubscribeEvent
+    public static void onLightningStrike(EntityStruckByLightningEvent event) {
+        Entity entity = event.getEntity();
+        event.setCanceled(EntityHooks.lightningHitKeys(entity));
     }
 }
