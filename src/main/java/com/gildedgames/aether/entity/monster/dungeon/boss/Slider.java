@@ -539,31 +539,16 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
     @Override
     public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putString("BossName", Component.Serializer.toJson(this.getBossName()));
-        tag.putBoolean("BossFight", this.isBossFight());
+        this.addBossSaveData(tag);
         tag.putBoolean("Awake", this.isAwake());
-        if (this.getDungeon() != null) {
-            tag.put("Dungeon", this.getDungeon().addAdditionalSaveData());
-        }
     }
 
     @Override
     public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
-        super.readAdditionalSaveData(tag); //todo: Should abstract this duplicated code to the boss interface
-        if (tag.contains("BossName")) {
-            Component name = Component.Serializer.fromJson(tag.getString("BossName"));
-            if (name != null) {
-                this.setBossName(name);
-            }
-        }
-        if (tag.contains("BossFight")) {
-            this.setBossFight(tag.getBoolean("BossFight"));
-        }
+        super.readAdditionalSaveData(tag);
+        this.readBossSaveData(tag);
         if (tag.contains("Awake")) {
             this.setAwake(tag.getBoolean("Awake"));
-        }
-        if (tag.contains("Dungeon") && tag.get("Dungeon") instanceof CompoundTag dungeonTag) {
-            this.setDungeon(DungeonTracker.readAdditionalSaveData(dungeonTag, this));
         }
     }
 
