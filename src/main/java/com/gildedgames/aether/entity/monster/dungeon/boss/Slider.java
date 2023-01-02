@@ -566,7 +566,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
     public static class SliderMoveGoal extends Goal {
         protected final Slider slider;
         @Nullable
-        protected BlockPos targetPoint;
+        private BlockPos targetPoint;
         private Direction moveDir;
         private float velocity;
         private int moveDelay;
@@ -581,6 +581,45 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         }
 
         @Override
+        public void tick() {
+            LivingEntity target = this.slider.getTarget();
+            if (target == null) {
+                return;
+            }
+            Vec3 targetPos = target.position();
+            Vec3 currentPos = this.slider.position();
+            Vec3 difference = targetPos.subtract(currentPos);
+            Direction lastDirection = this.moveDir;
+
+            // Calculate a new target position for the slider to use
+            if (this.targetPoint == null || this.moveDir != null && this.axisDistance(difference.x, this.targetPoint.getY() - currentPos.y, difference.z, this.moveDir) <= 0) {
+                this.moveDir = this.calculateDirection(difference.x, difference.y, difference.z);
+                AABB pathBox = this.calculatePathBox(this.slider.getBoundingBox(), difference, this.moveDir);
+
+                // If the block next to the slider is unbreakable, move up first.
+                if (this.moveDir.getAxis() == Direction.Axis.Y || !this.avoidObstacles(currentPos, this.moveDir) && !this.setPathUpOrDown(pathBox, currentPos, targetPos, difference)) {
+                    BlockPos.MutableBlockPos offset = new BlockPos.MutableBlockPos(currentPos.x, currentPos.y, currentPos.z);
+                    // Find the next point in the path.
+                    while (Math.abs(offset.getX()) <= Math.abs(difference.x) && Math.abs(offset.getY()) <= Math.abs(difference.y) && Math.abs(offset.getZ()) <= Math.abs(difference.z)) {
+                        offset.move(this.moveDir);
+                        if (this.slider.level.getBlockState(offset).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
+                            break;
+                        }
+                    }
+                    offset.move(this.moveDir.getOpposite());
+                    this.targetPoint = offset.immutable();
+                }
+                if (this.moveDir != lastDirection) {
+                    this.stop();
+                }
+            }
+
+
+
+            this.move();
+        }
+
+        /*@Override
         public void tick() {
             LivingEntity target = this.slider.getTarget();
             if (target == null) {
@@ -644,17 +683,15 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                     this.slider.setDeltaMovement(movement);
                 }
             }
-        }
+        }*/
+
 
         /**
-         * Checks if the slider should move up or down. If so, set the path in that direction and return true;
-         * @param currentPath - The expanded AABB including both the slider and its target point
+         * Move the slider up to avoid an unbreakable block.
          * @param currentPos - The slider's current position
-         * @param targetPos - The slider's target's position
-         * @param direction - The direction the slider wants to move in
-         * @return - True if the slider changes direction to move up or down
+         * @param direction - The slider's current direction
          */
-        private boolean setPathUpOrDown(AABB currentPath, BlockPos currentPos, BlockPos targetPos, BlockPos difference, Direction direction) {
+        private boolean avoidObstacles(Vec3 currentPos, Direction direction) {
             if (direction.getAxis() == Direction.Axis.Y) {
                 return true;
             }
@@ -683,37 +720,54 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                         }
                     }
                 }
-                this.targetPoint = currentPos.atY(y);
+                this.targetPoint = new BlockPos(currentPos.x, y, currentPos.z);
                 this.moveDir = Direction.UP;
                 return true;
-            } else if (this.slider.getY() > targetPos.getY()) { // Bring the slider back to the ground before attacking again.
-                BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
-                currentPath = this.calculateAdjacentBox(currentPath, Direction.DOWN);
-                currentPath = currentPath.expandTowards(difference.getX(), difference.getY(), difference.getZ());
-                // If there's a block in the way, don't take the low road.
-                for (int x = Mth.floor(currentPath.minX); x < currentPath.maxX; x++) {
-                    for (int z = Mth.floor(currentPath.minZ); z < currentPath.maxZ; z++) {
-                        BlockState state = this.slider.level.getBlockState(pos.set(x, targetPos.getY(), z));
-                        if (!state.isAir()) {
-                            isTouchingWall = true;
-                            break;
-                        }
-                    }
-                }
-                if (!isTouchingWall) {
-                    this.targetPoint = currentPos.atY(targetPos.getY());
-                    this.moveDir = Direction.DOWN;
-                    return true;
-                }
             }
             return false;
         }
 
         /**
+         * Checks if the slider should move up or down. If so, set the path in that direction and return true.
+         * @param currentPath - The expanded AABB including both the slider and its target point.
+         * @param currentPos - The slider's current position.
+         * @param targetPos - The slider's target's position.
+         * @param difference - The distance between the two positions.
+         * @return - True if the slider changes direction to move up or down.
+         */
+        private boolean setPathUpOrDown(AABB currentPath, Vec3 currentPos, Vec3 targetPos, Vec3 difference) {
+            if (this.slider.random.nextInt(3) != 0) {
+                return false;
+            }
+
+            Direction direction = currentPos.y > targetPos.y ? Direction.DOWN : Direction.UP;
+
+            BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+            currentPath = this.calculateAdjacentBox(currentPath, direction);
+            currentPath = currentPath.expandTowards(0, difference.y, 0);
+
+            // If there's a block in the way, don't take the low road.
+            for (int x = Mth.floor(currentPath.minX); x < currentPath.maxX; x++) {
+                for (int z = Mth.floor(currentPath.minZ); z < currentPath.maxZ; z++) {
+                    BlockState state = this.slider.level.getBlockState(pos.set(x, targetPos.y, z));
+                    if (!state.isAir()) {
+                        return false;
+                    }
+                }
+            }
+
+            double y = direction == Direction.UP ? Math.max(targetPos.y, currentPos.y + 1) : targetPos.y;
+
+            this.targetPoint = new BlockPos(currentPos.x, y, currentPos.z);
+            this.moveDir = direction;
+            return true;
+        }
+
+        /**
          * Creates an AABB expanded to the point the slider wants to go to.
          */
-        public AABB calculatePathBox(AABB box, BlockPos length, Direction direction) {
-            return box.expandTowards((length.getX() - box.getXsize()) * direction.getStepX(), (length.getY() - box.getYsize()) * direction.getStepY(), (length.getZ() - box.getZsize()) * direction.getStepZ());
+        public AABB calculatePathBox(AABB box, Vec3 length, Direction direction) {
+            return box.expandTowards((length.x - box.getXsize()) * direction.getStepX(), (length.y - box.getYsize()) * direction.getStepY(), (length.z - box.getZsize()) * direction.getStepZ());
         }
 
         /**
@@ -764,6 +818,42 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
 
         public double axisDistance(double x, double y, double z, Direction direction) {
             return x * direction.getStepX() + y * direction.getStepY() + z * direction.getStepZ();
+        }
+
+        /**
+         * Move in the calculated direction
+         */
+        private void move() {
+            // Move along the calculated path
+            if (this.targetPoint != null) {
+                if (this.moveDelay > 0) {
+                    if (--this.moveDelay <= 0) {
+                        this.slider.playSound(this.slider.getMoveSound(), 2.5F, 1.0F / (this.slider.getRandom().nextFloat() * 0.2F + 0.9F));
+                    }
+                } else {
+                    if (this.crush()) {
+                        this.stop();
+                        return;
+                    }
+
+                    if (this.velocity < this.getMaxVelocity()) {
+                        // The Slider increases its speed based on the speed it has saved
+                        this.velocity = Math.min(this.getMaxVelocity(), this.velocity + this.getVelocityIncrease());
+                    }
+
+                    if (this.moveDir == null) { // If the direction has changed
+                        double x = this.targetPoint.getX() - this.slider.getX();
+                        double y = this.targetPoint.getY() - this.slider.getY();
+                        double z = this.targetPoint.getZ() - this.slider.getZ();
+                        this.moveDir = this.calculateDirection(x, y, z);
+                    }
+
+                    Vec3 directionVec = new Vec3(this.moveDir.getStepX(), this.moveDir.getStepY(), this.moveDir.getStepZ());
+                    Vec3 movement = directionVec.scale(this.velocity);
+
+                    this.slider.setDeltaMovement(movement);
+                }
+            }
         }
 
         /**
