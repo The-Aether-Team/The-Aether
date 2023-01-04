@@ -110,4 +110,12 @@ public abstract class AetherLanguageProvider extends LanguageProvider {
     public void addClientConfig(String prefix, String key, String name) {
         this.add("config.aether.client." + prefix + "." + key, name);
     }
+
+    public void addPackTitle(String packName, String description) {
+        this.add("pack.aether." + packName + ".title", description);
+    }
+
+    public void addPackDescription(String packName, String description) {
+        this.add("pack.aether." + packName + ".description", description);
+    }
 }
