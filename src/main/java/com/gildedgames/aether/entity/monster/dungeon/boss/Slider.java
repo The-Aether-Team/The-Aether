@@ -503,7 +503,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
 
     @Override
     public boolean canBeCollidedWith() {
-        return true;
+        return !this.isAwake();
     }
 
     @Override
