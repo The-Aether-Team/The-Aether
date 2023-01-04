@@ -229,7 +229,13 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                         player.stopUsingItem();
                         this.level.broadcastEntityEvent(player, (byte) 30);
                     }
-                    entity.setDeltaMovement(entity.getDeltaMovement().multiply(4.0, 1.0, 4.0).add(0.0, 0.25, 0.0));
+                    if (this.moveGoal != null) {
+                        if (this.moveGoal.moveDir.getAxis().isHorizontal() || this.moveGoal.moveDir == Direction.DOWN) {
+                            livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().multiply(5.0, 1.0, 5.0).add(0.0, 0.5, 0.0));
+                        } else {
+                            livingEntity.setDeltaMovement(new Vec3(0.0, 0.65, 0.0));
+                        }
+                    }
                     this.playSound(this.getCollideSound(), 2.5F, 1.0F / (this.random.nextFloat() * 0.2F + 0.9F));
                     if (this.moveGoal != null) {
                         this.moveGoal.stop();
