@@ -59,7 +59,7 @@ public class SliderAi { // TODO: Most damage targeting
     }
 
     private static void initFightActivity(Brain<Slider> brain) {
-        brain.addActivity(Activity.FIGHT, 10, ImmutableList.of(new Collide(), /*new AvoidObstacles(),*/ new SetPathUpOrDown(), new Move()));
+        brain.addActivity(Activity.FIGHT, 10, ImmutableList.of(new Collide(), new AvoidObstacles(), new SetPathUpOrDown(), new Move()));
     }
 
     public static void updateActivity(Slider slider) {
@@ -81,6 +81,19 @@ public class SliderAi { // TODO: Most damage targeting
         } else {
             Optional<Player> target = brain.getMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER);
             return target.map(Entity::position).orElse(null);
+        }
+    }
+
+    private static Direction calculateDirection(double x, double y, double z) {
+        double absX = Math.abs(x);
+        double absY = Math.abs(y);
+        double absZ = Math.abs(z);
+        if (absY > absX && absY > absZ) {
+            return y > 0 ? Direction.UP : Direction.DOWN;
+        } else if (absX > absZ) {
+            return x > 0 ? Direction.EAST : Direction.WEST;
+        } else {
+            return z > 0 ? Direction.SOUTH : Direction.NORTH;
         }
     }
 
@@ -153,7 +166,7 @@ public class SliderAi { // TODO: Most damage targeting
                 return false;
             }
 
-            return true;
+            return !slider.horizontalCollision;
         }
 
         @Override
@@ -217,19 +230,6 @@ public class SliderAi { // TODO: Most damage targeting
                 moveDir = optionalDir.get();
             }
             return moveDir;
-        }
-
-        private static Direction calculateDirection(double x, double y, double z) {
-            double absX = Math.abs(x);
-            double absY = Math.abs(y);
-            double absZ = Math.abs(z);
-            if (absY > absX && absY > absZ) {
-                return y > 0 ? Direction.UP : Direction.DOWN;
-            } else if (absX > absZ) {
-                return x > 0 ? Direction.EAST : Direction.WEST;
-            } else {
-                return z > 0 ? Direction.SOUTH : Direction.NORTH;
-            }
         }
 
         private static double axisDistance(double x, double y, double z, Direction direction) {
@@ -315,25 +315,32 @@ public class SliderAi { // TODO: Most damage targeting
      */
     static class AvoidObstacles extends Behavior<Slider> {
         public AvoidObstacles() {
-            super(ImmutableMap.of(AetherMemoryModuleTypes.MOVE_DIRECTION.get(), MemoryStatus.VALUE_PRESENT));
+            super(ImmutableMap.of(AetherMemoryModuleTypes.MOVE_DIRECTION.get(), MemoryStatus.REGISTERED));
         }
 
         @Override
         protected boolean checkExtraStartConditions(ServerLevel level, Slider slider) {
-            if (!slider.isAwake() || slider.isDeadOrDying() || slider.getBrain().getMemory(AetherMemoryModuleTypes.MOVE_DELAY.get()).orElse(1) > 0) {
+            if (!slider.isAwake() || slider.isDeadOrDying() || slider.getBrain().getMemory(AetherMemoryModuleTypes.MOVE_DELAY.get()).orElse(1) != 1) {
                 return false;
             }
 
             Brain<?> brain = slider.getBrain();
             Direction direction = brain.getMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get()).orElse(Direction.UP);
-            if (direction.getAxis() == Direction.Axis.Y) {
-                return false;
+            return direction.getAxis() != Direction.Axis.Y;
+        }
+
+        @Override
+        protected void start(ServerLevel level, Slider slider, long gameTime) {
+            Brain<?> brain = slider.getBrain();
+            Vec3 targetPos = getTargetPoint(brain);
+            if (targetPos == null) {
+                return;
             }
 
-
+            Direction direction = calculateDirection(targetPos.x - slider.getX(), targetPos.y - slider.getY(), targetPos.z - slider.getZ());
             AABB collisionBox = calculateAdjacentBox(slider.getBoundingBox(), direction);
-            boolean isTouchingWall = false;
 
+            boolean isTouchingWall = false;
             for (BlockPos pos : BlockPos.betweenClosed(Mth.floor(collisionBox.minX), Mth.floor(collisionBox.minY), Mth.floor(collisionBox.minZ), Mth.ceil(collisionBox.maxX - 1), Mth.ceil(collisionBox.maxY - 1), Mth.ceil(collisionBox.maxZ - 1))) {
                 if (slider.level.getBlockState(pos).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
                     isTouchingWall = true;
@@ -359,7 +366,6 @@ public class SliderAi { // TODO: Most damage targeting
                 brain.setMemory(AetherMemoryModuleTypes.TARGET_POSITION.get(), new Vec3(currentPos.x, y, currentPos.z));
                 brain.setMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get(), Direction.UP);
             }
-            return false;
         }
     }
 
