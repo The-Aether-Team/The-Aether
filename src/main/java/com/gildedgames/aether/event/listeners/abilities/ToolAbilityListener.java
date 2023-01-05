@@ -90,7 +90,8 @@ public class ToolAbilityListener {
 
     /**
      * @see ToolAbilityListener#checkEntityTooFar(PlayerEvent, Entity, Player, InteractionHand)
-     * @see ToolAbilityListener#checkBlockTooFar(PlayerEvent, BlockPos, Player, InteractionHand)
+     * @see ToolAbilityListener#checkBlockTooFar(PlayerEvent, Player, InteractionHand)
+     * @see ToolAbilityListener#checkInteractionTooFar(PlayerEvent, Player, InteractionHand)
      */
     @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent event) {
@@ -99,9 +100,11 @@ public class ToolAbilityListener {
         } else if (event instanceof PlayerInteractEvent.EntityInteract entityInteract) {
             checkEntityTooFar(entityInteract, entityInteract.getTarget(), entityInteract.getEntity(), entityInteract.getHand());
         } else if (event instanceof PlayerInteractEvent.RightClickBlock rightClickBlock) {
-            checkBlockTooFar(event, rightClickBlock.getPos(), rightClickBlock.getEntity(), rightClickBlock.getHand());
+            checkBlockTooFar(event, rightClickBlock.getEntity(), rightClickBlock.getHand());
         } else if (event instanceof PlayerInteractEvent.LeftClickBlock leftClickBlock) {
-            checkBlockTooFar(event, leftClickBlock.getPos(), leftClickBlock.getEntity(), leftClickBlock.getHand());
+            checkBlockTooFar(event, leftClickBlock.getEntity(), leftClickBlock.getHand());
+        } else if (event instanceof PlayerInteractEvent.RightClickItem rightClickItem) {
+            checkInteractionTooFar(event, rightClickItem.getEntity(), rightClickItem.getHand());
         }
     }
 
@@ -117,10 +120,20 @@ public class ToolAbilityListener {
 
     /**
      * Cancels the given event if the targeted block is too far away.
-     * @see AbilityHooks.ToolHooks#blockTooFar(BlockPos, Player, InteractionHand)
+     * @see AbilityHooks.ToolHooks#blockTooFar(Player, InteractionHand)
      */
-    private static void checkBlockTooFar(PlayerEvent event, BlockPos target, Player player, InteractionHand hand) {
-        if (!event.isCanceled() && AbilityHooks.ToolHooks.blockTooFar(target, player, hand)) {
+    private static void checkBlockTooFar(PlayerEvent event, Player player, InteractionHand hand) {
+        if (!event.isCanceled() && AbilityHooks.ToolHooks.blockTooFar(player, hand)) {
+            event.setCanceled(true);
+        }
+    }
+
+    /**
+     * Cancels the given event if the targeted interaction is too far away.
+     * @see AbilityHooks.ToolHooks#interactionTooFar(Player, InteractionHand)
+     */
+    private static void checkInteractionTooFar(PlayerEvent event, Player player, InteractionHand hand) {
+        if (!event.isCanceled() && AbilityHooks.ToolHooks.interactionTooFar(player, hand)) {
             event.setCanceled(true);
         }
     }

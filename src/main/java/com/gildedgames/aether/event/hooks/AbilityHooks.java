@@ -22,6 +22,7 @@ import com.gildedgames.aether.util.EquipmentUtil;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -33,6 +34,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -40,6 +42,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -274,12 +277,11 @@ public class AbilityHooks {
 
         /**
          * Checks if a block is too far away for the player to be able to interact with if they're trying to interact using a hand that doesn't contain a {@link ValkyrieTool}, but are still holding a Valkyrie Tool in another hand.
-         * @param pos The target {@link BlockPos} of a block being interacted with.
          * @param player The {@link Player} attempting to interact.
          * @param hand The {@link InteractionHand} used to interact.
          * @return Whether the player is too far to interact, as a {@link Boolean}.
          */
-        public static boolean blockTooFar(BlockPos pos, Player player, InteractionHand hand) {
+        public static boolean blockTooFar(Player player, InteractionHand hand) {
             ItemStack heldStack = player.getItemInHand(hand);
             if (hasValkyrieItemInOneHand(player) && !(heldStack.getItem() instanceof ValkyrieTool)) {
                 UUID uuidForOppositeHand = hand == InteractionHand.MAIN_HAND ? ValkyrieTool.REACH_DISTANCE_MODIFIER_OFFHAND_UUID : ValkyrieTool.REACH_DISTANCE_MODIFIER_MAINHAND_UUID; // We're checking the hand being used to interact, which won't contain a Valkyrie Tool, so we must get the UUID of the opposite hand, which will contain a tool.
@@ -290,7 +292,35 @@ public class AbilityHooks {
                         double totalReach = player.getReachDistance(); // Gets the total reach from the modifier along with the bonus range granted by creative mode.
                         double valkyrieReach = valkyrieModifier.getAmount();
                         double baseReach = totalReach - valkyrieReach; // Whatever the normal reach is, vanilla or modified, without the Valkyrie Tool modifier.
-                        return player.getEyePosition().distanceToSqr(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) > baseReach * baseReach; // Taken from IForgePlayer#canInteractWith(BlockPos, double), but reversed.
+                        return player.pick(baseReach, 0.0F, false).getType() != HitResult.Type.BLOCK; // Based on GameRenderer#pick(float).
+                    }
+                }
+            }
+            return false;
+        }
+
+        /**
+         * Checks if a block-item interaction is too far away for the player to be able to interact with if they're trying to interact using a hand that doesn't contain a {@link ValkyrieTool}, but are still holding a Valkyrie Tool in another hand.
+         * @param player The {@link Player} attempting to interact.
+         * @param hand The {@link InteractionHand} used to interact.
+         * @return Whether the player is too far to interact, as a {@link Boolean}.
+         */
+        public static boolean interactionTooFar(Player player, InteractionHand hand) {
+            ItemStack heldStack = player.getItemInHand(hand);
+            if (hasValkyrieItemInOneHand(player) && !(heldStack.getItem() instanceof ValkyrieTool)) {
+                UUID uuidForOppositeHand = hand == InteractionHand.MAIN_HAND ? ValkyrieTool.REACH_DISTANCE_MODIFIER_OFFHAND_UUID : ValkyrieTool.REACH_DISTANCE_MODIFIER_MAINHAND_UUID; // We're checking the hand being used to interact, which won't contain a Valkyrie Tool, so we must get the UUID of the opposite hand, which will contain a tool.
+                AttributeInstance reachDistance = player.getAttribute(ForgeMod.REACH_DISTANCE.get());
+                if (reachDistance != null) {
+                    AttributeModifier valkyrieModifier = reachDistance.getModifier(uuidForOppositeHand);
+                    if (valkyrieModifier != null) {
+                        double totalReach = player.getReachDistance(); // Gets the total reach from the modifier along with the bonus range granted by creative mode.
+                        double valkyrieReach = valkyrieModifier.getAmount();
+                        double baseReach = totalReach - valkyrieReach; // Whatever the normal reach is, vanilla or modified, without the Valkyrie Tool modifier.
+                        if (player.pick(totalReach, 0.0F, true).getType() == HitResult.Type.BLOCK) { // Checks if there's a fluid interaction first, as fluids are closer than blocks.
+                            return getPlayerPOVHitResult(player.getLevel(), player, baseReach, ClipContext.Fluid.ANY).getType() != HitResult.Type.BLOCK; // Checks if a fluid interaction fails with the actual baseReach.
+                        } else if (player.pick(totalReach, 0.0F, false).getType() == HitResult.Type.BLOCK) { // Checks if there's a block interaction next.
+                            return getPlayerPOVHitResult(player.getLevel(), player, baseReach, ClipContext.Fluid.NONE).getType() != HitResult.Type.BLOCK; // Checks if a block interaction fails with the actual baseReach.
+                        }
                     }
                 }
             }
@@ -306,6 +336,23 @@ public class AbilityHooks {
             ItemStack mainHandStack = player.getMainHandItem();
             ItemStack offHandStack = player.getOffhandItem();
             return (mainHandStack.getItem() instanceof ValkyrieTool && !(offHandStack.getItem() instanceof ValkyrieTool)) || (offHandStack.getItem() instanceof ValkyrieTool && !(mainHandStack.getItem() instanceof ValkyrieTool));
+        }
+
+        /**
+         * Based on {@link net.minecraft.world.item.Item#getPlayerPOVHitResult(Level, Player, ClipContext.Fluid)}.
+         */
+        private static BlockHitResult getPlayerPOVHitResult(Level level, Player player, double reach, ClipContext.Fluid fluidClip) {
+            float f = player.getXRot();
+            float f1 = player.getYRot();
+            Vec3 vec3 = player.getEyePosition();
+            float f2 = Mth.cos(-f1 * ((float) Math.PI / 180.0F) - (float) Math.PI);
+            float f3 = Mth.sin(-f1 * ((float) Math.PI / 180.0F) - (float) Math.PI);
+            float f4 = -Mth.cos(-f * ((float) Math.PI / 180.0F));
+            float f5 = Mth.sin(-f * ((float) Math.PI / 180.0F));
+            float f6 = f3 * f4;
+            float f7 = f2 * f4;
+            Vec3 vec31 = vec3.add((double) f6 * reach, (double) f5 * reach, (double) f7 * reach);
+            return level.clip(new ClipContext(vec3, vec31, ClipContext.Block.OUTLINE, fluidClip, player));
         }
     }
 
