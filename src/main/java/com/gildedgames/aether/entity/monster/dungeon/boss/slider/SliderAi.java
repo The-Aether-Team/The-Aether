@@ -9,6 +9,8 @@ import com.mojang.serialization.Dynamic;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.Entity;
@@ -25,9 +27,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.event.ForgeEventFactory;
 
 import javax.annotation.Nullable;
-import java.util.Map;
 import java.util.Optional;
 
 public class SliderAi { // TODO: Most damage targeting
@@ -59,7 +61,7 @@ public class SliderAi { // TODO: Most damage targeting
     }
 
     private static void initFightActivity(Brain<Slider> brain) {
-        brain.addActivity(Activity.FIGHT, 10, ImmutableList.of(new Collide(), new AvoidObstacles(), new SetPathUpOrDown(), new Move()));
+        brain.addActivity(Activity.FIGHT, 10, ImmutableList.of(new Collide(), new Crush(), new AvoidObstacles(), new SetPathUpOrDown(), new Move()));
     }
 
     public static void updateActivity(Slider slider) {
@@ -165,6 +167,7 @@ public class SliderAi { // TODO: Most damage targeting
         @Override
         protected void start(ServerLevel level, Slider slider, long pGameTime) {
             slider.getBrain().eraseMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get());
+            slider.playSound(slider.getMoveSound(), 2.5F, 1.0F / (slider.getRandom().nextFloat() * 0.2F + 0.9F));
         }
 
         @Override
@@ -278,7 +281,7 @@ public class SliderAi { // TODO: Most damage targeting
             for (int x = Mth.floor(currentPath.minX); x < currentPath.maxX; x++) {
                 for (int z = Mth.floor(currentPath.minZ); z < currentPath.maxZ; z++) {
                     BlockState state = level.getBlockState(pos.set(x, targetPos.y, z));
-                    if (!state.isAir()) {
+                    if (state.is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
                         return;
                     }
                 }
@@ -362,6 +365,40 @@ public class SliderAi { // TODO: Most damage targeting
         }
     }
 
+    static class Crush extends Behavior<Slider> {
+        public Crush() {
+            super(ImmutableMap.of());
+        }
+
+        @Override
+        protected boolean checkExtraStartConditions(ServerLevel level, Slider slider) {
+            return slider.isAwake() && !slider.isDeadOrDying() && (slider.horizontalCollision || slider.verticalCollision);
+        }
+
+        @Override
+        protected void start(ServerLevel level, Slider slider, long gameTime) {
+            boolean crushed = false;
+            if (ForgeEventFactory.getMobGriefingEvent(level, slider)) {
+                AABB crushBox = slider.getBoundingBox().inflate(0.2);
+                for(BlockPos pos : BlockPos.betweenClosed(Mth.floor(crushBox.minX), Mth.floor(crushBox.minY), Mth.floor(crushBox.minZ), Mth.floor(crushBox.maxX), Mth.floor(crushBox.maxY), Mth.floor(crushBox.maxZ))) {
+                    BlockState blockState = slider.level.getBlockState(pos);
+                    if (!blockState.isAir()) {
+                        if (!blockState.is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
+                            crushed = slider.level.destroyBlock(pos, true, slider) || crushed;
+                            slider.blockDestroySmoke(pos);
+                        }
+                    }
+                }
+            }
+            if (crushed) {
+                slider.level.playSound(null, slider.blockPosition(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 3.0F, (0.625F + (slider.getRandom().nextFloat() - slider.getRandom().nextFloat()) * 0.2F) * 0.7F);
+                slider.playSound(slider.getCollideSound(), 2.5F, 1.0F / (slider.getRandom().nextFloat() * 0.2F + 0.9F));
+                slider.getBrain().setMemory(AetherMemoryModuleTypes.MOVE_DELAY.get(), slider.calculateMoveDelay());
+                slider.setDeltaMovement(Vec3.ZERO);
+            }
+        }
+    }
+
     static class Collide extends Behavior<Slider> {
         public Collide() {
             super(ImmutableMap.of());
@@ -389,9 +426,9 @@ public class SliderAi { // TODO: Most damage targeting
                         level.broadcastEntityEvent(player, (byte) 30);
                     }
                     entity.setDeltaMovement(entity.getDeltaMovement().multiply(4.0, 1.0, 4.0).add(0.0, 0.25, 0.0));
-                    slider.playSound(slider.getCollideSound(), 2.5F, 1.0F / (slider.getRandom().nextFloat() * 0.2F + 0.9F));
 
                     // Stop the slider moving
+                    slider.playSound(slider.getCollideSound(), 2.5F, 1.0F / (slider.getRandom().nextFloat() * 0.2F + 0.9F));
                     slider.getBrain().setMemory(AetherMemoryModuleTypes.MOVE_DELAY.get(), slider.calculateMoveDelay());
                     slider.getBrain().setMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get(), Optional.empty());
                     slider.setDeltaMovement(Vec3.ZERO);

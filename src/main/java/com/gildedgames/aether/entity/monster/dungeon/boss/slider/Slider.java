@@ -270,7 +270,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         }
     }
 
-    private void blockDestroySmoke(BlockPos pos) {
+    protected void blockDestroySmoke(BlockPos pos) {
         double a = pos.getX() + 0.5D + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375D;
         double b = pos.getY() + 0.5D + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375D;
         double c = pos.getZ() + 0.5D + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375D;
