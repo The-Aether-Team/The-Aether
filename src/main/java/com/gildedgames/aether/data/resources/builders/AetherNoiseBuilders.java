@@ -78,13 +78,13 @@ public class AetherNoiseBuilders {
                 DensityFunctions.zero(), // fluid level floodedness noise
                 DensityFunctions.zero(), // fluid level spread noise
                 DensityFunctions.zero(), // lava noise
-                temperature, // temperature noise, needs to changed to use a custom density function
-                vegetation, // vegetation, same deal
+                temperature, // temperature
+                vegetation, // vegetation
                 DensityFunctions.zero(), // continentalness noise
                 DensityFunctions.zero(), // erosion noise
                 DensityFunctions.zero(), // depth
                 DensityFunctions.zero(), // ridges
-                DensityFunctions.zero(), // initial density without jaggedness
+                DensityFunctions.zero(), // initial density without jaggedness, not sure if this is needed. Some vanilla dimensions use this while others don't.
                 finalDensity, // finaldensity
                 DensityFunctions.zero(), // veinToggle
                 DensityFunctions.zero(), // veinRidged
