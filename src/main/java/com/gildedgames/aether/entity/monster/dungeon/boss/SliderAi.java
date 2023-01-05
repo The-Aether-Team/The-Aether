@@ -133,7 +133,7 @@ public class SliderAi { // TODO: Most damage targeting
 
         @Override
         protected boolean canStillUse(ServerLevel level, Slider slider, long gameTime) {
-            return slider.isAwake() && !slider.isDeadOrDying();
+            return slider.isAwake() && !slider.isDeadOrDying() && slider.getBrain().getMemory(AetherMemoryModuleTypes.MOVE_DELAY.get()).orElse(1) <= 0;
         }
 
         @Override
@@ -317,17 +317,6 @@ public class SliderAi { // TODO: Most damage targeting
                     entity.setDeltaMovement(slider.getDeltaMovement().multiply(4.0, 1.0, 4.0).add(0.0, 0.25, 0.0));
                 }
             }
-        }
-    }
-
-    static abstract class MoveBehavior extends Behavior<Slider> {
-        public MoveBehavior(Map<MemoryModuleType<?>, MemoryStatus> pEntryCondition) {
-            super(pEntryCondition);
-        }
-
-        @Override
-        protected boolean checkExtraStartConditions(ServerLevel level, Slider slider) {
-            return slider.isAwake() && !slider.isDeadOrDying() && slider.getBrain().getMemory(AetherMemoryModuleTypes.MOVE_DELAY.get()).get() <= 0;
         }
     }
 
