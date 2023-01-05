@@ -66,13 +66,6 @@ public class SliderAi { // TODO: Most damage targeting
         slider.getBrain().setActiveActivityToFirstValid(ACTIVITY_PRIORITY);
     }
 
-    /**
-     * Creates an AABB expanded to the point the slider wants to go to.
-     */
-    private static AABB calculatePathBox(AABB box, Vec3 length, Direction direction) {
-        return box.expandTowards((length.x - box.getXsize()) * direction.getStepX(), (length.y - box.getYsize()) * direction.getStepY(), (length.z - box.getZsize()) * direction.getStepZ());
-    }
-
     @Nullable
     private static Vec3 getTargetPoint(Brain<?> brain) {
         Optional<Vec3> pos = brain.getMemory(AetherMemoryModuleTypes.TARGET_POSITION.get());

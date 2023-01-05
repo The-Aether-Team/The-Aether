@@ -7,7 +7,6 @@ import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.BossMob;
 import com.gildedgames.aether.entity.ai.controller.BlankMoveControl;
-import com.gildedgames.aether.entity.ai.goal.target.MostDamageTargetGoal;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.BossInfoPacket;
 import com.mojang.serialization.Dynamic;
@@ -32,7 +31,6 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -55,7 +53,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
 
     private DungeonTracker<Slider> bronzeDungeon;
     private final ServerBossEvent bossFight;
-    private MostDamageTargetGoal mostDamageTargetGoal;
 
     private int chatCooldown;
 
@@ -90,13 +87,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
      */
     protected void alignSpawnPos() {
         this.moveTo(Mth.floor(this.getX()), this.getY(), Mth.floor(this.getZ()));
-    }
-
-    @Override
-    protected void registerGoals() {
-        this.mostDamageTargetGoal = new MostDamageTargetGoal(this);
-        this.targetSelector.addGoal(1, this.mostDamageTargetGoal);
-        this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
     }
 
     public static AttributeSupplier.Builder createSliderAttributes() {
@@ -169,8 +159,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                     this.setHurtAngle(0.7F - (this.getHealth() / 875.0F));
 
                     livingEntity.getMainHandItem().hurtAndBreak(1, livingEntity, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
-
-                    this.mostDamageTargetGoal.addAggro(livingEntity, amount);
 
                     return true;
                 }
@@ -546,210 +534,4 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
     public void setChatCooldown(int cooldown) {
         this.chatCooldown = cooldown;
     }
-
-    /*public static class SliderMoveGoal extends Goal {
-        protected final Slider slider;
-        @Nullable
-        private BlockPos targetPoint;
-        private Direction moveDir;
-
-        public SliderMoveGoal(Slider slider) {
-            this.slider = slider;
-        }
-
-        @Override
-        public boolean canUse() {
-            return this.slider.isAwake() && this.slider.getTarget() != null;
-        }
-
-        @Override
-        public void tick() {
-            LivingEntity target = this.slider.getTarget();
-            if (target == null) {
-                return;
-            }
-            Vec3 targetPos = target.position();
-            Vec3 currentPos = this.slider.position();
-            Vec3 difference = targetPos.subtract(currentPos);
-            Direction lastDirection = this.moveDir;
-
-            // Calculate a new target position for the slider to use
-            if (this.targetPoint == null || this.moveDir != null && this.axisDistance(difference.x, this.targetPoint.getY() - currentPos.y, difference.z, this.moveDir) <= 0) {
-                this.moveDir = this.calculateDirection(difference.x, difference.y, difference.z);
-                AABB pathBox = this.calculatePathBox(this.slider.getBoundingBox(), difference, this.moveDir);
-
-                // If the block next to the slider is unbreakable, move up first.
-                if (this.moveDir.getAxis() == Direction.Axis.Y || !this.avoidObstacles(currentPos, this.moveDir) && !this.setPathUpOrDown(pathBox, currentPos, targetPos, difference)) {
-                    BlockPos.MutableBlockPos offset = new BlockPos.MutableBlockPos(currentPos.x, currentPos.y, currentPos.z);
-                    // Find the next point in the path.
-                    while (Math.abs(offset.getX()) <= Math.abs(difference.x) && Math.abs(offset.getY()) <= Math.abs(difference.y) && Math.abs(offset.getZ()) <= Math.abs(difference.z)) {
-                        offset.move(this.moveDir);
-                        if (this.slider.level.getBlockState(offset).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
-                            break;
-                        }
-                    }
-                    offset.move(this.moveDir.getOpposite());
-                    this.targetPoint = offset.immutable();
-                }
-                if (this.moveDir != lastDirection) {
-                    this.stop();
-                }
-            }
-
-        }
-
-        *//*@Override
-        public void tick() {
-            LivingEntity target = this.slider.getTarget();
-            if (target == null) {
-                return;
-            }
-            BlockPos targetPos = target.blockPosition();
-            BlockPos currentPos = this.slider.blockPosition();
-            BlockPos difference = targetPos.subtract(currentPos);
-            Direction lastDirection = this.moveDir;
-
-            // Calculate a new target position for the slider to use
-            if (this.targetPoint == null || this.moveDir != null && this.axisDistance(difference.getX(), difference.getY(), difference.getZ(), this.moveDir) <= 0) {
-                this.moveDir = this.calculateDirection(difference.getX(), difference.getY(), difference.getZ());
-                AABB pathBox = this.calculatePathBox(this.slider.getBoundingBox(), difference, this.moveDir);
-
-                // If the block next to the slider is unbreakable, move up first.
-                if (this.moveDir.getAxis() == Direction.Axis.Y || !this.setPathUpOrDown(pathBox, currentPos, targetPos, difference, this.moveDir)) {
-                    BlockPos.MutableBlockPos offset = new BlockPos.MutableBlockPos();
-                    // Find the next point in the path.
-                    while (Math.abs(offset.getX()) <= Math.abs(difference.getX()) && Math.abs(offset.getY()) <= Math.abs(difference.getY()) && Math.abs(offset.getZ()) <= Math.abs(difference.getZ())) {
-                        offset.move(this.moveDir);
-                        if (this.slider.level.getBlockState(currentPos.offset(offset)).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
-                            break;
-                        }
-                    }
-                    offset.move(this.moveDir.getOpposite());
-                    this.targetPoint = currentPos.offset(offset);
-                }
-                if (this.moveDir != lastDirection) {
-                    this.stop();
-                }
-            }
-
-            // Move along the calculated path
-            if (this.targetPoint != null) {
-                if (this.moveDelay > 0) {
-                    if (--this.moveDelay <= 0) {
-                        this.slider.playSound(this.slider.getMoveSound(), 2.5F, 1.0F / (this.slider.getRandom().nextFloat() * 0.2F + 0.9F));
-                    }
-                } else {
-                    if (this.crush()) {
-                        this.stop();
-                        return;
-                    }
-
-                    if (this.velocity < this.getMaxVelocity()) {
-                        // The Slider increases its speed based on the speed it has saved
-                        this.velocity = Math.min(this.getMaxVelocity(), this.velocity + this.getVelocityIncrease());
-                    }
-
-                    if (this.moveDir == null) { // If the direction has changed
-                        double x = this.targetPoint.getX() - this.slider.getX();
-                        double y = this.targetPoint.getY() - this.slider.getY();
-                        double z = this.targetPoint.getZ() - this.slider.getZ();
-                        this.moveDir = this.calculateDirection(x, y, z);
-                    }
-
-                    Vec3 directionVec = new Vec3(this.moveDir.getStepX(), this.moveDir.getStepY(), this.moveDir.getStepZ());
-                    Vec3 movement = directionVec.scale(this.velocity);
-
-                    this.slider.setDeltaMovement(movement);
-                }
-            }
-        }*//*
-
-        *//**
-         * Checks if the slider should move up or down. If so, set the path in that direction and return true.
-         * @param currentPath - The expanded AABB including both the slider and its target point.
-         * @param currentPos - The slider's current position.
-         * @param targetPos - The slider's target's position.
-         * @param difference - The distance between the two positions.
-         * @return - True if the slider changes direction to move up or down.
-         *//*
-        private boolean setPathUpOrDown(AABB currentPath, Vec3 currentPos, Vec3 targetPos, Vec3 difference) {
-            if (this.slider.random.nextInt(3) != 0) {
-                return false;
-            }
-
-            Direction direction = currentPos.y > targetPos.y ? Direction.DOWN : Direction.UP;
-
-            BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
-            currentPath = this.calculateAdjacentBox(currentPath, direction);
-            currentPath = currentPath.expandTowards(0, difference.y, 0);
-
-            // If there's a block in the way, don't take the low road.
-            for (int x = Mth.floor(currentPath.minX); x < currentPath.maxX; x++) {
-                for (int z = Mth.floor(currentPath.minZ); z < currentPath.maxZ; z++) {
-                    BlockState state = this.slider.level.getBlockState(pos.set(x, targetPos.y, z));
-                    if (!state.isAir()) {
-                        return false;
-                    }
-                }
-            }
-
-            double y = direction == Direction.UP ? Math.max(targetPos.y, currentPos.y + 1) : targetPos.y;
-
-            this.targetPoint = new BlockPos(currentPos.x, y, currentPos.z);
-            this.moveDir = direction;
-            return true;
-        }
-
-        *//**
-         * Creates an AABB expanded to the point the slider wants to go to.
-         *//*
-        public AABB calculatePathBox(AABB box, Vec3 length, Direction direction) {
-            return box.expandTowards((length.x - box.getXsize()) * direction.getStepX(), (length.y - box.getYsize()) * direction.getStepY(), (length.z - box.getZsize()) * direction.getStepZ());
-        }
-
-        *//**
-         * Crushes any blocks in the slider's way.
-         * @return True if there is a collision with a block.
-         *//*
-        protected boolean crush() {
-            boolean collided = false;
-            boolean crushed = false;
-            boolean shouldCrush = this.slider.getDungeon() != null;
-            if ((this.slider.horizontalCollision || this.slider.verticalCollision) && ForgeEventFactory.getMobGriefingEvent(this.slider.level, this.slider)) {
-                AABB crushBox = this.slider.getBoundingBox().inflate(0.2);
-                for(BlockPos pos : BlockPos.betweenClosed(Mth.floor(crushBox.minX), Mth.floor(crushBox.minY), Mth.floor(crushBox.minZ), Mth.floor(crushBox.maxX), Mth.floor(crushBox.maxY), Mth.floor(crushBox.maxZ))) {
-                    BlockState blockState = this.slider.level.getBlockState(pos);
-                    if (!blockState.isAir()) {
-                        collided = true;
-                        if (shouldCrush && !blockState.is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
-                            crushed = this.slider.level.destroyBlock(pos, true, this.slider) || crushed;
-                            this.slider.blockDestroySmoke(pos);
-                        }
-                    }
-                }
-            }
-            if (crushed) {
-                this.slider.level.playSound(null, this.slider.blockPosition(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 3.0F, (0.625F + (this.slider.random.nextFloat() - this.slider.random.nextFloat()) * 0.2F) * 0.7F);
-                this.slider.playSound(this.slider.getCollideSound(), 2.5F, 1.0F / (this.slider.random.nextFloat() * 0.2F + 0.9F));
-            }
-            return collided;
-        }
-
-        @Override
-        public void stop() {
-            this.velocity = 0;
-            this.moveDelay = this.calculateMoveDelay();
-            this.slider.setDeltaMovement(Vec3.ZERO);
-            this.targetPoint = null;
-        }
-
-        protected int calculateMoveDelay() {
-            return this.slider.isCritical() ? 4 : 8;
-        }
-
-        @Override
-        public boolean requiresUpdateEveryTick() {
-            return true;
-        }
-    }*/
 }
