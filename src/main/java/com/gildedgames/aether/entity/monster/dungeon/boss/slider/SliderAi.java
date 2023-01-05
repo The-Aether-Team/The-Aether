@@ -1,4 +1,4 @@
-package com.gildedgames.aether.entity.monster.dungeon.boss;
+package com.gildedgames.aether.entity.monster.dungeon.boss.slider;
 
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.entity.ai.brain.memory.AetherMemoryModuleTypes;
@@ -22,6 +22,7 @@ import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -33,7 +34,6 @@ public class SliderAi { // TODO: Most damage targeting
     /* TODO
     Most damage targeting
     Movement
-
      */
 
     private static final ImmutableList<SensorType<? extends Sensor<Slider>>> SENSOR_TYPES = ImmutableList.of(AetherSensorTypes.SLIDER_PLAYER_SENSOR.get());
@@ -45,7 +45,6 @@ public class SliderAi { // TODO: Most damage targeting
             AetherMemoryModuleTypes.MOVE_DIRECTION.get(),
             AetherMemoryModuleTypes.TARGET_POSITION.get()
     );
-
     private static final ImmutableList<Activity> ACTIVITY_PRIORITY = ImmutableList.of(Activity.FIGHT, Activity.IDLE);
 
     public static Brain<Slider> makeBrain(Dynamic<?> dynamic) {
@@ -60,7 +59,7 @@ public class SliderAi { // TODO: Most damage targeting
     }
 
     private static void initFightActivity(Brain<Slider> brain) {
-        brain.addActivity(Activity.FIGHT, 10, ImmutableList.of(new Collide(), /*new AvoidObstacles(),*/ new Move()));
+        brain.addActivity(Activity.FIGHT, 10, ImmutableList.of(new Collide(), /*new AvoidObstacles(),*/ new SetPathUpOrDown(), new Move()));
     }
 
     public static void updateActivity(Slider slider) {
@@ -72,6 +71,17 @@ public class SliderAi { // TODO: Most damage targeting
      */
     private static AABB calculatePathBox(AABB box, Vec3 length, Direction direction) {
         return box.expandTowards((length.x - box.getXsize()) * direction.getStepX(), (length.y - box.getYsize()) * direction.getStepY(), (length.z - box.getZsize()) * direction.getStepZ());
+    }
+
+    @Nullable
+    private static Vec3 getTargetPoint(Brain<?> brain) {
+        Optional<Vec3> pos = brain.getMemory(AetherMemoryModuleTypes.TARGET_POSITION.get());
+        if (pos.isPresent()) {
+            return pos.get();
+        } else {
+            Optional<Player> target = brain.getMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER);
+            return target.map(Entity::position).orElse(null);
+        }
     }
 
     /**
@@ -125,7 +135,7 @@ public class SliderAi { // TODO: Most damage targeting
 
             Brain<?> brain = slider.getBrain();
 
-            int moveDelay = brain.getMemory(AetherMemoryModuleTypes.MOVE_DELAY.get()).orElse(1);
+            int moveDelay = brain.getMemory(AetherMemoryModuleTypes.MOVE_DELAY.get()).orElse(0);
             brain.setMemory(AetherMemoryModuleTypes.MOVE_DELAY.get(), --moveDelay);
 
             return moveDelay <= 0;
@@ -133,7 +143,17 @@ public class SliderAi { // TODO: Most damage targeting
 
         @Override
         protected boolean canStillUse(ServerLevel level, Slider slider, long gameTime) {
-            return slider.isAwake() && !slider.isDeadOrDying() && slider.getBrain().getMemory(AetherMemoryModuleTypes.MOVE_DELAY.get()).orElse(1) <= 0;
+            if (!slider.isAwake() || slider.isDeadOrDying()) {
+                return false;
+            }
+
+            Brain<?> brain = slider.getBrain();
+
+            if (brain.getMemory(AetherMemoryModuleTypes.MOVE_DELAY.get()).orElse(0) > 0) {
+                return false;
+            }
+
+            return true;
         }
 
         @Override
@@ -144,7 +164,7 @@ public class SliderAi { // TODO: Most damage targeting
         @Override
         protected void tick(ServerLevel level, Slider slider, long gameTime) {
             Brain<?> brain = slider.getBrain();
-            BlockPos targetPoint = getTargetPoint(brain);
+            Vec3 targetPoint = getTargetPoint(brain);
 
             // Move along the calculated path
             if (targetPoint == null) {
@@ -154,7 +174,7 @@ public class SliderAi { // TODO: Most damage targeting
 
             Direction moveDir = getMoveDirection(slider, targetPoint);
 
-            if (axisDistance(targetPoint.getX() - slider.getX(), targetPoint.getY() - slider.getY(), targetPoint.getZ() - slider.getZ(), moveDir) <= 0) {
+            if (axisDistance(targetPoint.x - slider.getX(), targetPoint.y - slider.getY(), targetPoint.z - slider.getZ(), moveDir) <= 0) {
                 this.doStop(level, slider, gameTime);
                 return;
             }
@@ -179,29 +199,18 @@ public class SliderAi { // TODO: Most damage targeting
             slider.setDeltaMovement(Vec3.ZERO);
         }
 
-        @Nullable
-        private static BlockPos getTargetPoint(Brain<?> brain) {
-            Optional<BlockPos> pos = brain.getMemory(AetherMemoryModuleTypes.TARGET_POSITION.get());
-            if (pos.isPresent()) {
-                return pos.get();
-            } else {
-                Optional<Player> target = brain.getMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER);
-                return target.map(Entity::blockPosition).orElse(null);
-            }
-        }
-
         /**
          * Get the move direction if it already exists, or calculate a new one.
          */
-        private static Direction getMoveDirection(Slider slider, BlockPos targetPoint) {
+        private static Direction getMoveDirection(Slider slider, Vec3 targetPoint) {
             Brain<?> brain = slider.getBrain();
             Optional<Direction> optionalDir = brain.getMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get());
             Direction moveDir;
 
             if (optionalDir.isEmpty()) { // If the direction has changed
-                double x = targetPoint.getX() - slider.getX();
-                double y = targetPoint.getY() - slider.getY();
-                double z = targetPoint.getZ() - slider.getZ();
+                double x = targetPoint.x - slider.getX();
+                double y = targetPoint.y - slider.getY();
+                double z = targetPoint.z - slider.getZ();
                 moveDir = calculateDirection(x, y, z);
                 brain.setMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get(), moveDir);
             } else {
@@ -228,12 +237,85 @@ public class SliderAi { // TODO: Most damage targeting
         }
     }
 
+    static class SetPathUpOrDown extends Behavior<Slider> {
+        public SetPathUpOrDown() {
+            super(ImmutableMap.of(AetherMemoryModuleTypes.MOVE_DIRECTION.get(), MemoryStatus.REGISTERED, AetherMemoryModuleTypes.TARGET_POSITION.get(), MemoryStatus.VALUE_ABSENT));
+        }
+
+        @Override
+        protected boolean checkExtraStartConditions(ServerLevel pLevel, Slider slider) {
+            Brain<?> brain = slider.getBrain();
+            // Run this behavior only once between each movement cycle.
+            if (brain.getMemory(AetherMemoryModuleTypes.MOVE_DELAY.get()).orElse(2) != 1) {
+                return false;
+            }
+
+            if (slider.getRandom().nextInt(3) != 0) {
+                return false;
+            }
+
+            Optional<Direction> optionalDir = slider.getBrain().getMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get());
+            if (optionalDir.isPresent() && optionalDir.get().getAxis() == Direction.Axis.Y) {
+                return false;
+            }
+
+            return true;
+        }
+
+        @Override
+        protected void start(ServerLevel level, Slider slider, long gameTime) {
+            Brain<?> brain = slider.getBrain();
+
+            Vec3 targetPos = getTargetOrCurrentPosition(slider);
+            if (targetPos == null) {
+                return;
+            }
+            Vec3 currentPos = slider.position();
+
+            AABB currentPath = calculatePathBox(slider.getBoundingBox(), targetPos.x - currentPos.x, targetPos.y - currentPos.y, targetPos.z - currentPos.z);
+
+            Direction direction = currentPos.y > targetPos.y ? Direction.DOWN : Direction.UP;
+
+            currentPath = calculateAdjacentBox(currentPath, direction);
+            currentPath = currentPath.expandTowards(0, targetPos.y - currentPos.y, 0);
+
+            BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+
+            // If there's a block in the way, don't take the low road.
+            for (int x = Mth.floor(currentPath.minX); x < currentPath.maxX; x++) {
+                for (int z = Mth.floor(currentPath.minZ); z < currentPath.maxZ; z++) {
+                    BlockState state = level.getBlockState(pos.set(x, targetPos.y, z));
+                    if (!state.isAir()) {
+                        return;
+                    }
+                }
+            }
+
+            double y = direction == Direction.UP ? Math.max(targetPos.y, currentPos.y + 1) : targetPos.y;
+            brain.setMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get(), direction);
+            brain.setMemoryWithExpiry(AetherMemoryModuleTypes.TARGET_POSITION.get(), new Vec3(currentPos.x, y, currentPos.z), 100);
+        }
+
+        @Nullable
+        private static Vec3 getTargetOrCurrentPosition(Slider slider) {
+            Optional<Player> player = slider.getBrain().getMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER);
+            return player.map(Entity::position).orElse(null);
+        }
+
+        /**
+         * Creates an AABB expanded to the point the slider wants to go to.
+         */
+        private static AABB calculatePathBox(AABB box, double x, double y, double z) {
+            return box.expandTowards(x - box.getXsize(), y - box.getYsize(), z - box.getZsize());
+        }
+    }
+
     /**
      * Set the path up to avoid an unbreakable block.
      */
     static class AvoidObstacles extends Behavior<Slider> {
         public AvoidObstacles() {
-            super(ImmutableMap.of(AetherMemoryModuleTypes.MOVE_DIRECTION.get(), MemoryStatus.REGISTERED));
+            super(ImmutableMap.of(AetherMemoryModuleTypes.MOVE_DIRECTION.get(), MemoryStatus.VALUE_PRESENT));
         }
 
         @Override
@@ -273,7 +355,8 @@ public class SliderAi { // TODO: Most damage targeting
                         }
                     }
                 }
-                brain.setMemory(AetherMemoryModuleTypes.TARGET_POSITION.get(), slider.blockPosition().atY(y));
+                Vec3 currentPos = slider.position();
+                brain.setMemory(AetherMemoryModuleTypes.TARGET_POSITION.get(), new Vec3(currentPos.x, y, currentPos.z));
                 brain.setMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get(), Direction.UP);
             }
             return false;

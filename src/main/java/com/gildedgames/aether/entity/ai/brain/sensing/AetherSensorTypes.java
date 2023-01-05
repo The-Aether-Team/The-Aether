@@ -1,7 +1,7 @@
 package com.gildedgames.aether.entity.ai.brain.sensing;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.entity.monster.dungeon.boss.Slider;
+import com.gildedgames.aether.entity.monster.dungeon.boss.slider.Slider;
 import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
