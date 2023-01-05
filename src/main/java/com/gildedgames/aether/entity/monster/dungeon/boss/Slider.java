@@ -7,10 +7,10 @@ import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.BossMob;
 import com.gildedgames.aether.entity.ai.controller.BlankMoveControl;
-import com.gildedgames.aether.entity.ai.goal.target.InBossRoomTargetGoal;
 import com.gildedgames.aether.entity.ai.goal.target.MostDamageTargetGoal;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.BossInfoPacket;
+import com.mojang.serialization.Dynamic;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -30,15 +30,14 @@ import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.*;
@@ -64,8 +63,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
 
     private int chatCooldown;
 
-    private SliderMoveGoal moveGoal;
-
     public Slider(EntityType<? extends Slider> entityType, Level level) {
         super(entityType, level);
         this.bossFight = new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
@@ -74,6 +71,11 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         this.setRot(0, 0);
         this.moveControl = new BlankMoveControl(this);
         this.setPersistenceRequired();
+    }
+
+    @Override
+    protected Brain<?> makeBrain(Dynamic<?> dynamic) {
+        return SliderAi.makeBrain(dynamic);
     }
 
     /**
@@ -99,9 +101,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         this.mostDamageTargetGoal = new MostDamageTargetGoal(this);
         this.targetSelector.addGoal(1, this.mostDamageTargetGoal);
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
-        this.targetSelector.addGoal(3, new InBossRoomTargetGoal<>(this, Player.class));
-        this.moveGoal = new SliderMoveGoal(this);
-        this.goalSelector.addGoal(1, this.moveGoal);
     }
 
     public static AttributeSupplier.Builder createSliderAttributes() {
@@ -126,7 +125,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         if (!this.isAwake() || (this.getTarget() instanceof Player player && (player.isCreative() || player.isSpectator()))) {
             this.setTarget(null);
         }
-        this.collide();
         this.evaporate();
 
         if (this.getChatCooldown() > 0) {
@@ -134,11 +132,15 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void customServerAiStep() {
         super.customServerAiStep();
         this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
         this.trackDungeon();
+        Brain<Slider> brain = (Brain<Slider>) this.getBrain();
+        brain.tick((ServerLevel)this.level, this);
+        SliderAi.updateActivity(this);
     }
 
     @Override
@@ -215,29 +217,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         this.setBossFight(true);
         if (this.getDungeon() != null) {
             this.closeRoom();
-        }
-    }
-
-    private void collide() {
-        if (this.isAwake() && !this.isDeadOrDying()) {
-            AABB collisionBounds = new AABB(this.getBoundingBox().minX - 0.1, this.getBoundingBox().minY - 0.1, this.getBoundingBox().minZ - 0.1,
-                    this.getBoundingBox().maxX + 0.1, this.getBoundingBox().maxY + 0.1, this.getBoundingBox().maxZ + 0.1);
-            for (Entity entity : this.getLevel().getEntities(this, collisionBounds)) {
-                if (entity instanceof LivingEntity livingEntity && entity.hurt(new EntityDamageSource("aether.crush", this), 6)) {
-                    if (livingEntity instanceof Player player && player.getUseItem().is(Items.SHIELD) && player.isBlocking()) {
-                        player.getCooldowns().addCooldown(Items.SHIELD, 100);
-                        player.stopUsingItem();
-                        this.level.broadcastEntityEvent(player, (byte) 30);
-                    }
-                    entity.setDeltaMovement(entity.getDeltaMovement().multiply(4.0, 1.0, 4.0).add(0.0, 0.25, 0.0));
-                    this.playSound(this.getCollideSound(), 2.5F, 1.0F / (this.random.nextFloat() * 0.2F + 0.9F));
-                    if (this.moveGoal != null) {
-                        this.moveGoal.stop();
-                    }
-                } else if (!(entity instanceof Player player && player.isCreative()) && !(entity instanceof Slider)) {
-                    entity.setDeltaMovement(this.getDeltaMovement().multiply(4.0, 1.0, 4.0).add(0.0, 0.25, 0.0));
-                }
-            }
         }
     }
 
@@ -426,6 +405,18 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         return this.getHealth() <= 100;
     }
 
+    public int calculateMoveDelay() {
+        return this.isCritical() ? 4 : 8;
+    }
+
+    protected float getVelocityIncrease() {
+        return this.isCritical() ? 0.035F : 0.02F;
+    }
+
+    protected float getMaxVelocity() {
+        return 2.0F;
+    }
+
     protected SoundEvent getAwakenSound() {
         return AetherSoundEvents.ENTITY_SLIDER_AWAKEN.get();
     }
@@ -560,16 +551,11 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         this.chatCooldown = cooldown;
     }
 
-    /**
-     * This goal allows the slider to pick a spot to move to while avoiding unbreakable blocks.
-     */
-    public static class SliderMoveGoal extends Goal {
+    /*public static class SliderMoveGoal extends Goal {
         protected final Slider slider;
         @Nullable
         private BlockPos targetPoint;
         private Direction moveDir;
-        private float velocity;
-        private int moveDelay;
 
         public SliderMoveGoal(Slider slider) {
             this.slider = slider;
@@ -614,12 +600,9 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                 }
             }
 
-
-
-            this.move();
         }
 
-        /*@Override
+        *//*@Override
         public void tick() {
             LivingEntity target = this.slider.getTarget();
             if (target == null) {
@@ -683,58 +666,16 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
                     this.slider.setDeltaMovement(movement);
                 }
             }
-        }*/
+        }*//*
 
-
-        /**
-         * Move the slider up to avoid an unbreakable block.
-         * @param currentPos - The slider's current position
-         * @param direction - The slider's current direction
-         */
-        private boolean avoidObstacles(Vec3 currentPos, Direction direction) {
-            if (direction.getAxis() == Direction.Axis.Y) {
-                return true;
-            }
-
-            AABB collisionBox = this.calculateAdjacentBox(this.slider.getBoundingBox(), direction);
-            boolean isTouchingWall = false;
-
-            for (BlockPos pos : BlockPos.betweenClosed(Mth.floor(collisionBox.minX), Mth.floor(collisionBox.minY), Mth.floor(collisionBox.minZ), Mth.ceil(collisionBox.maxX - 1), Mth.ceil(collisionBox.maxY - 1), Mth.ceil(collisionBox.maxZ - 1))) {
-                if (this.slider.level.getBlockState(pos).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
-                    isTouchingWall = true;
-                    break;
-                }
-            }
-
-            if (isTouchingWall) {
-                BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
-                int y = Mth.floor(collisionBox.minY);
-                while (isTouchingWall) {
-                    y++;
-                    isTouchingWall = false;
-                    for (int x = Mth.floor(collisionBox.minX); x < collisionBox.maxX; x++) {
-                        for (int z = Mth.floor(collisionBox.minZ); z < collisionBox.maxZ; z++) {
-                            if (this.slider.level.getBlockState(pos.set(x, y, z)).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
-                                isTouchingWall = true;
-                            }
-                        }
-                    }
-                }
-                this.targetPoint = new BlockPos(currentPos.x, y, currentPos.z);
-                this.moveDir = Direction.UP;
-                return true;
-            }
-            return false;
-        }
-
-        /**
+        *//**
          * Checks if the slider should move up or down. If so, set the path in that direction and return true.
          * @param currentPath - The expanded AABB including both the slider and its target point.
          * @param currentPos - The slider's current position.
          * @param targetPos - The slider's target's position.
          * @param difference - The distance between the two positions.
          * @return - True if the slider changes direction to move up or down.
-         */
+         *//*
         private boolean setPathUpOrDown(AABB currentPath, Vec3 currentPos, Vec3 targetPos, Vec3 difference) {
             if (this.slider.random.nextInt(3) != 0) {
                 return false;
@@ -763,103 +704,17 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
             return true;
         }
 
-        /**
+        *//**
          * Creates an AABB expanded to the point the slider wants to go to.
-         */
+         *//*
         public AABB calculatePathBox(AABB box, Vec3 length, Direction direction) {
             return box.expandTowards((length.x - box.getXsize()) * direction.getStepX(), (length.y - box.getYsize()) * direction.getStepY(), (length.z - box.getZsize()) * direction.getStepZ());
         }
 
-        /**
-         * Calculates a box adjacent to the original, with equal dimensions except for the axis it's translated along.
-         */
-        public AABB calculateAdjacentBox(AABB box, Direction direction) {
-            double minX = box.minX;
-            double minY = box.minY;
-            double minZ = box.minZ;
-            double maxX = box.maxX;
-            double maxY = box.maxY;
-            double maxZ = box.maxZ;
-            if (direction == Direction.UP) {
-                minY = maxY;
-                maxY += 1;
-            } else if (direction == Direction.DOWN) {
-                maxY = minY;
-                minY -= 1;
-            } else if (direction == Direction.NORTH) {
-                maxZ = minZ;
-                minZ -= 1;
-            } else if (direction == Direction.SOUTH) {
-                minZ = maxZ;
-                maxZ += 1;
-            } else if (direction == Direction.EAST) {
-                minX = maxX;
-                maxX += 1;
-            } else { // West
-                maxX = minX;
-                minX -= 1;
-            }
-
-            return new AABB(minX, minY, minZ, maxX, maxY, maxZ);
-        }
-
-        public Direction calculateDirection(double x, double y, double z) {
-            double absX = Math.abs(x);
-            double absY = Math.abs(y);
-            double absZ = Math.abs(z);
-            if (absY > absX && absY > absZ) {
-                return y > 0 ? Direction.UP : Direction.DOWN;
-            } else if (absX > absZ) {
-                return x > 0 ? Direction.EAST : Direction.WEST;
-            } else {
-                return z > 0 ? Direction.SOUTH : Direction.NORTH;
-            }
-        }
-
-        public double axisDistance(double x, double y, double z, Direction direction) {
-            return x * direction.getStepX() + y * direction.getStepY() + z * direction.getStepZ();
-        }
-
-        /**
-         * Move in the calculated direction
-         */
-        private void move() {
-            // Move along the calculated path
-            if (this.targetPoint != null) {
-                if (this.moveDelay > 0) {
-                    if (--this.moveDelay <= 0) {
-                        this.slider.playSound(this.slider.getMoveSound(), 2.5F, 1.0F / (this.slider.getRandom().nextFloat() * 0.2F + 0.9F));
-                    }
-                } else {
-                    if (this.crush()) {
-                        this.stop();
-                        return;
-                    }
-
-                    if (this.velocity < this.getMaxVelocity()) {
-                        // The Slider increases its speed based on the speed it has saved
-                        this.velocity = Math.min(this.getMaxVelocity(), this.velocity + this.getVelocityIncrease());
-                    }
-
-                    if (this.moveDir == null) { // If the direction has changed
-                        double x = this.targetPoint.getX() - this.slider.getX();
-                        double y = this.targetPoint.getY() - this.slider.getY();
-                        double z = this.targetPoint.getZ() - this.slider.getZ();
-                        this.moveDir = this.calculateDirection(x, y, z);
-                    }
-
-                    Vec3 directionVec = new Vec3(this.moveDir.getStepX(), this.moveDir.getStepY(), this.moveDir.getStepZ());
-                    Vec3 movement = directionVec.scale(this.velocity);
-
-                    this.slider.setDeltaMovement(movement);
-                }
-            }
-        }
-
-        /**
+        *//**
          * Crushes any blocks in the slider's way.
          * @return True if there is a collision with a block.
-         */
+         *//*
         protected boolean crush() {
             boolean collided = false;
             boolean crushed = false;
@@ -892,14 +747,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
             this.targetPoint = null;
         }
 
-        protected float getVelocityIncrease() {
-            return this.slider.isCritical() ? 0.035F : 0.02F;
-        }
-
-        protected float getMaxVelocity() {
-            return 2.0F;
-        }
-
         protected int calculateMoveDelay() {
             return this.slider.isCritical() ? 4 : 8;
         }
@@ -908,5 +755,5 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         public boolean requiresUpdateEveryTick() {
             return true;
         }
-    }
+    }*/
 }
