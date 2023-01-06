@@ -2,6 +2,7 @@ package com.gildedgames.aether.entity;
 
 import com.gildedgames.aether.api.DungeonTracker;
 import com.gildedgames.aether.block.dungeon.DoorwayBlock;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -52,7 +53,6 @@ public interface BossMob<T extends Mob & BossMob<T>> {
         this.getDungeon().modifyRoom(this::convertBlock);
     }
 
-
     default void closeRoom() {
         this.getDungeon().modifyRoom(state -> {
             if (state.getBlock() instanceof DoorwayBlock) {
@@ -75,4 +75,27 @@ public interface BossMob<T extends Mob & BossMob<T>> {
 
     @Nullable
     BlockState convertBlock(BlockState state);
+
+    default void addBossSaveData(CompoundTag tag) {
+        tag.putString("BossName", Component.Serializer.toJson(this.getBossName()));
+        tag.putBoolean("BossFight", this.isBossFight());
+        if (this.getDungeon() != null) {
+            tag.put("Dungeon", this.getDungeon().addAdditionalSaveData());
+        }
+    }
+
+    default void readBossSaveData(CompoundTag tag) {
+        if (tag.contains("BossName")) {
+            Component name = Component.Serializer.fromJson(tag.getString("BossName"));
+            if (name != null) {
+                this.setBossName(name);
+            }
+        }
+        if (tag.contains("BossFight")) {
+            this.setBossFight(tag.getBoolean("BossFight"));
+        }
+        if (tag.contains("Dungeon") && tag.get("Dungeon") instanceof CompoundTag dungeonTag) {
+            this.setDungeon(DungeonTracker.readAdditionalSaveData(dungeonTag, self()));
+        }
+    }
 }

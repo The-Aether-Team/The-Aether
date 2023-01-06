@@ -17,6 +17,8 @@ import com.gildedgames.aether.data.generators.*;
 import com.gildedgames.aether.data.generators.tags.*;
 import com.gildedgames.aether.effect.AetherEffects;
 import com.gildedgames.aether.entity.AetherEntityTypes;
+import com.gildedgames.aether.entity.ai.brain.memory.AetherMemoryModuleTypes;
+import com.gildedgames.aether.entity.ai.brain.sensing.AetherSensorTypes;
 import com.gildedgames.aether.event.AetherGameEvents;
 import com.gildedgames.aether.inventory.menu.AetherMenuTypes;
 import com.gildedgames.aether.inventory.AetherRecipeBookTypes;
@@ -112,7 +114,9 @@ public class Aether {
                 AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,
                 AetherSoundEvents.SOUNDS,
                 AetherGameEvents.GAME_EVENTS,
-                AetherMoaTypes.MOA_TYPES
+                AetherMoaTypes.MOA_TYPES,
+                AetherSensorTypes.SENSOR_TYPES,
+                AetherMemoryModuleTypes.MEMORY_TYPES
         };
 
         for (DeferredRegister<?> register : registers) {

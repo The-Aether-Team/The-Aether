@@ -47,7 +47,6 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -403,29 +402,16 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     @Override
     public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putString("BossName", Component.Serializer.toJson(this.getBossName()));
-        tag.putBoolean("BossFight", this.isBossFight());
+        this.addBossSaveData(tag);
         tag.putInt("ChatLine", this.chatLine);
-        if (this.getDungeon() != null) {
-            tag.put("Dungeon", this.getDungeon().addAdditionalSaveData());
-        }
     }
 
     @Override
     public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        Component name = Component.Serializer.fromJson(tag.getString("BossName"));
-        if (name != null) {
-            this.setBossName(name);
-        }
-        if (tag.contains("BossFight")) {
-            this.setBossFight(tag.getBoolean("BossFight"));
-        }
+        this.readBossSaveData(tag);
         if (tag.contains("ChatLine")) {
             this.chatLine = tag.getInt("ChatLine");
-        }
-        if (tag.contains("Dungeon") && tag.get("Dungeon") instanceof CompoundTag dungeonTag) {
-            this.setDungeon(DungeonTracker.readAdditionalSaveData(dungeonTag, this));
         }
     }
 
