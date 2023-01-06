@@ -64,7 +64,15 @@ public class SliderAi {
     }
 
     private static void initFightActivity(Brain<Slider> brain) {
-        brain.addActivity(Activity.FIGHT, 10, ImmutableList.of(StartAttacking.create(SliderAi::findNearestValidAttackTarget), new Collide(), new Crush(), new SetPathUpOrDown(), new AvoidObstacles(), new Move()));
+        brain.addActivity(Activity.FIGHT, 10, ImmutableList.of(
+                StartAttacking.create(SliderAi::findNearestValidAttackTarget),
+                new Collide(),
+                new Crush(),
+                new BackOffAfterAttack(),
+                new SetPathUpOrDown(),
+                new AvoidObstacles(),
+                new Move()
+        ));
     }
 
     public static void updateActivity(Slider slider) {
@@ -205,6 +213,10 @@ public class SliderAi {
         @Override
         protected boolean canStillUse(ServerLevel level, Slider slider, long gameTime) {
             if (!slider.isAwake() || slider.isDeadOrDying()) {
+                return false;
+            }
+
+            if (slider.getBrain().hasMemoryValue(AetherMemoryModuleTypes.MOVE_DELAY.get())) {
                 return false;
             }
 
@@ -354,6 +366,35 @@ public class SliderAi {
     }
 
     /**
+     * Have the slider back off if the player is still nearby after an attack. This is used to prevent stun locks.
+     */
+    static class BackOffAfterAttack extends Behavior<Slider> {
+        public BackOffAfterAttack() {
+            super(ImmutableMap.of(AetherMemoryModuleTypes.HAS_ATTACKED.get(), MemoryStatus.VALUE_PRESENT, AetherMemoryModuleTypes.MOVE_DELAY.get(), MemoryStatus.VALUE_PRESENT));
+        }
+
+        @Override
+        protected boolean checkExtraStartConditions(ServerLevel level, Slider slider) {
+            return slider.getBrain().getTimeUntilExpiry(AetherMemoryModuleTypes.MOVE_DELAY.get()) == 1;
+        }
+
+        @Override
+        protected void start(ServerLevel level, Slider slider, long pGameTime) {
+            Brain<?> brain = slider.getBrain();
+            brain.eraseMemory(AetherMemoryModuleTypes.HAS_ATTACKED.get());
+            Optional<LivingEntity> optional = brain.getMemory(MemoryModuleType.ATTACK_TARGET);
+            if (optional.isPresent()) {
+                LivingEntity target = optional.get();
+                if (slider.getBoundingBox().inflate(1.5).contains(target.position())) {
+                    // Move one block in the opposite direction of the target
+                    Direction direction = calculateDirection(slider.getX() - target.getX(), 0, slider.getZ() - target.getZ());
+                    brain.setMemory(AetherMemoryModuleTypes.TARGET_POSITION.get(), slider.position().relative(direction, 2));
+                }
+            }
+        }
+    }
+
+    /**
      * Set the path up to avoid an unbreakable block.
      */
     static class AvoidObstacles extends Behavior<Slider> {
@@ -453,7 +494,7 @@ public class SliderAi {
 
         @Override
         protected boolean checkExtraStartConditions(ServerLevel level, Slider slider) {
-            return slider.isAwake() && !slider.isDeadOrDying() && !slider.getDeltaMovement().equals(Vec3.ZERO);
+            return slider.isAwake() && !slider.isDeadOrDying() && slider.getDeltaMovement().length() > 0.08;
         }
 
         @Override
@@ -488,12 +529,4 @@ public class SliderAi {
             }
         }
     }
-
-    static class BackOffAfterAttack extends Behavior<Slider> {
-
-        public BackOffAfterAttack(Map<MemoryModuleType<?>, MemoryStatus> pEntryCondition) {
-            super(pEntryCondition);
-        }
-    }
-
 }
