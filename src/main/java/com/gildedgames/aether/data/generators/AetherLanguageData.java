@@ -1054,7 +1054,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addProTip("altar_repairing", "Altars can repair damaged items and enhance existing items.");
         addProTip("glowstone_portal_forming", "Place water into a Glowstone frame for a Hostile Paradise.");
         addProTip("champs", "The Champs and Champettes are pretty baller.");
-        addProTip("ambrosium_shard_fuel", "Ambrosium Shards are great for fueling Altars and food.");
+        addProTip("ambrosium_shard_fuel", "Ambrosium Shards are great for fueling Altars.");
         addProTip("icestone_freezing_blocks", "Icestone freezes water into ice and lava into obsidian.");
         addProTip("mimic_chest", "Some dungeons in the Aether contain chests which are Mimics.");
         addProTip("cold_parachute_crafting", "Cloud Parachutes can be crafted with four Cold Aercloud blocks.");
