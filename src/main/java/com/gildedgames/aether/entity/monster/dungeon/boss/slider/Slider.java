@@ -127,43 +127,46 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         Brain<Slider> brain = (Brain<Slider>) this.getBrain();
         brain.tick((ServerLevel)this.level, this);
         SliderAi.updateActivity(this);
+        SliderAi.tick(this);
     }
 
     @Override
     public boolean hurt(@Nonnull DamageSource source, float amount) {
         if (source == DamageSource.OUT_OF_WORLD) {
             super.hurt(source, amount);
-        } else if (source.getDirectEntity() instanceof LivingEntity livingEntity && this.level.getDifficulty() != Difficulty.PEACEFUL) {
-            if (livingEntity.getMainHandItem().is(AetherTags.Items.SLIDER_DAMAGING_ITEMS)) {
+        } else if (source.getDirectEntity() instanceof LivingEntity attacker && this.level.getDifficulty() != Difficulty.PEACEFUL) {
+            if (attacker.getMainHandItem().is(AetherTags.Items.SLIDER_DAMAGING_ITEMS)) {
                 if (super.hurt(source, amount) && this.getHealth() > 0) {
                     if (!this.isBossFight()) {
                         this.start();
                     }
                     this.setDeltaMovement(this.getDeltaMovement().scale(0.75F));
 
-                    double a = Math.abs(this.position().x() - livingEntity.position().x());
-                    double c = Math.abs(this.position().z() - livingEntity.position().z());
+                    double a = Math.abs(this.position().x() - attacker.position().x());
+                    double c = Math.abs(this.position().z() - attacker.position().z());
                     if (a > c) {
                         this.setHurtAngleZ(1);
                         this.setHurtAngleX(0);
-                        if (this.position().x() > livingEntity.position().x()) {
+                        if (this.position().x() > attacker.position().x()) {
                             this.setHurtAngleZ(-1);
                         }
                     } else {
                         this.setHurtAngleX(1);
                         this.setHurtAngleZ(0);
-                        if (this.position().z() > livingEntity.position().z()) {
+                        if (this.position().z() > attacker.position().z()) {
                             this.setHurtAngleX(-1);
                         }
                     }
                     this.setHurtAngle(0.7F - (this.getHealth() / 875.0F));
 
-                    livingEntity.getMainHandItem().hurtAndBreak(1, livingEntity, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+                    attacker.getMainHandItem().hurtAndBreak(1, attacker, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+
+                    SliderAi.wasHurtBy(this, attacker, amount);
 
                     return true;
                 }
             } else {
-                if (!this.level.isClientSide && livingEntity instanceof Player player) {
+                if (!this.level.isClientSide && attacker instanceof Player player) {
                     if (this.getChatCooldown() <= 0) {
                         this.displayInvalidToolMessage(player);
                         this.setChatCooldown(15);

@@ -6,6 +6,8 @@ import com.gildedgames.aether.entity.ai.brain.sensing.AetherSensorTypes;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.Dynamic;
+import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
+import it.unimi.dsi.fastutil.objects.Object2DoubleOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -17,6 +19,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.Behavior;
+import net.minecraft.world.entity.ai.behavior.StartAttacking;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.sensing.Sensor;
@@ -30,19 +33,20 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 
 import javax.annotation.Nullable;
+import java.util.Comparator;
+import java.util.Map;
 import java.util.Optional;
 
-public class SliderAi { // TODO: Most damage targeting
-    /* TODO
-    Most damage targeting
-    Movement
-     */
+public class SliderAi {
 
     private static final ImmutableList<SensorType<? extends Sensor<Slider>>> SENSOR_TYPES = ImmutableList.of(AetherSensorTypes.SLIDER_PLAYER_SENSOR.get());
     private static final ImmutableList<MemoryModuleType<?>> MEMORY_TYPES = ImmutableList.of(
             MemoryModuleType.NEAREST_PLAYERS,
             MemoryModuleType.NEAREST_VISIBLE_PLAYER,
             MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER,
+            MemoryModuleType.ATTACK_TARGET,
+            MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE, // For the StartAttacking behavior
+            AetherMemoryModuleTypes.AGGRO_TRACKER.get(),
             AetherMemoryModuleTypes.MOVE_DELAY.get(),
             AetherMemoryModuleTypes.MOVE_DIRECTION.get(),
             AetherMemoryModuleTypes.TARGET_POSITION.get()
@@ -53,6 +57,8 @@ public class SliderAi { // TODO: Most damage targeting
         Brain<Slider> brain = Brain.provider(MEMORY_TYPES, SENSOR_TYPES).makeBrain(dynamic);
         initIdleActivity(brain);
         initFightActivity(brain);
+        // Initialize the aggro tracker
+        brain.setMemory(AetherMemoryModuleTypes.AGGRO_TRACKER.get(), new Object2DoubleOpenHashMap<>());
         return brain;
     }
 
@@ -61,11 +67,70 @@ public class SliderAi { // TODO: Most damage targeting
     }
 
     private static void initFightActivity(Brain<Slider> brain) {
-        brain.addActivity(Activity.FIGHT, 10, ImmutableList.of(new Collide(), new Crush(), new AvoidObstacles(), new SetPathUpOrDown(), new Move()));
+        brain.addActivity(Activity.FIGHT, 10, ImmutableList.of(StartAttacking.create(SliderAi::findNearestValidAttackTarget), new Collide(), new Crush(), new AvoidObstacles(), new SetPathUpOrDown(), new Move()));
     }
 
     public static void updateActivity(Slider slider) {
         slider.getBrain().setActiveActivityToFirstValid(ACTIVITY_PRIORITY);
+    }
+
+    /**
+     * Reduces the aggro every second.
+     */
+    protected static void tick(Slider slider) {
+        if (slider.tickCount % 20 != 0) {
+            return;
+        }
+
+        Brain<?> brain = slider.getBrain();
+        Optional<Object2DoubleMap<LivingEntity>> optional = brain.getMemory(AetherMemoryModuleTypes.AGGRO_TRACKER.get());
+        if (optional.isPresent()) {
+            Object2DoubleMap<LivingEntity> attackers = optional.get();
+            attackers.forEach((target, oldAggro) -> {
+                double aggro = oldAggro - 1;
+                if (!target.isAlive() || (aggro <= 0 && !Sensor.isEntityAttackable(slider, target) || (target instanceof Player player && (player.isCreative() || player.isSpectator())))) {
+                    attackers.removeDouble(target);
+                } else {
+                    attackers.put(target, aggro);
+                }
+            });
+        }
+    }
+
+    /**
+     * Adds aggro when attacked by a player.
+     */
+    protected static void wasHurtBy(Slider slider, LivingEntity attacker, float damage) {
+        Brain<?> brain = slider.getBrain();
+        Optional<Object2DoubleMap<LivingEntity>> optional = brain.getMemory(AetherMemoryModuleTypes.AGGRO_TRACKER.get());
+        if (optional.isPresent()) {
+            Object2DoubleMap<LivingEntity> attackers = optional.get();
+            attackers.mergeDouble(attacker, damage, (Double::sum));
+            LivingEntity target = getStrongestAttacker(slider, attackers);
+            brain.eraseMemory(MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE);
+            brain.setMemory(MemoryModuleType.ATTACK_TARGET, target);
+        }
+    }
+
+    /**
+     * Returns the entity within the targeting range that has dealt the most damage.
+     */
+    private static LivingEntity getStrongestAttacker(Slider slider, Object2DoubleMap<LivingEntity> attackers) {
+        Map.Entry<LivingEntity, Double> entry = attackers.object2DoubleEntrySet().stream().filter((entityEntry) ->
+                Sensor.isEntityAttackable(slider, entityEntry.getKey())
+        ).max(Comparator.comparingDouble(Map.Entry::getValue)).orElse(null);
+        if (entry == null) {
+            return null;
+        } else {
+            return entry.getKey();
+        }
+    }
+
+    /**
+     * Finds a new target if there isn't one currently.
+     */
+    private static Optional<? extends LivingEntity> findNearestValidAttackTarget(Slider slider) {
+        return slider.isAwake() && !slider.isDeadOrDying() ? slider.getBrain().getMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER) : Optional.empty();
     }
 
     @Nullable
@@ -74,7 +139,7 @@ public class SliderAi { // TODO: Most damage targeting
         if (pos.isPresent()) {
             return pos.get();
         } else {
-            Optional<Player> target = brain.getMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER);
+            Optional<LivingEntity> target = brain.getMemory(MemoryModuleType.ATTACK_TARGET);
             return target.map(Entity::position).orElse(null);
         }
     }
@@ -132,7 +197,7 @@ public class SliderAi { // TODO: Most damage targeting
         private float velocity;
 
         public Move() {
-            super(ImmutableMap.of(AetherMemoryModuleTypes.MOVE_DIRECTION.get(), MemoryStatus.REGISTERED, AetherMemoryModuleTypes.TARGET_POSITION.get(), MemoryStatus.REGISTERED, MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER, MemoryStatus.REGISTERED));
+            super(ImmutableMap.of(AetherMemoryModuleTypes.MOVE_DIRECTION.get(), MemoryStatus.REGISTERED, AetherMemoryModuleTypes.TARGET_POSITION.get(), MemoryStatus.REGISTERED, MemoryModuleType.ATTACK_TARGET, MemoryStatus.REGISTERED));
         }
 
         @Override
@@ -294,7 +359,7 @@ public class SliderAi { // TODO: Most damage targeting
 
         @Nullable
         private static Vec3 getTargetOrCurrentPosition(Slider slider) {
-            Optional<Player> player = slider.getBrain().getMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER);
+            Optional<LivingEntity> player = slider.getBrain().getMemory(MemoryModuleType.ATTACK_TARGET);
             return player.map(Entity::position).orElse(null);
         }
 
