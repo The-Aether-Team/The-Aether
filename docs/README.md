@@ -104,6 +104,8 @@ If you have a reason that you wish to use our brand or any unlicensed material, 
 
 ## :star2: Special mentions
 ### :speech_balloon: Translations
+[![OneSky translations](https://custom-icon-badges.demolab.com/badge/onesky-translate-2fa9e7?style=flat-square&logo=onesky)](https://patreon.com/GildedGames)
+
 The Aether is available in these languages thanks to the following contributors:
 
 | Language             | Locale  | Translators                                                 |
