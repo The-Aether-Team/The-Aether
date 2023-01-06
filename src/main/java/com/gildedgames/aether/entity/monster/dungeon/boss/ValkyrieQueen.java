@@ -463,12 +463,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     @Override
     public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putString("BossName", Component.Serializer.toJson(this.getBossName()));
-        tag.putBoolean("BossFight", this.isBossFight());
-        tag.putBoolean("Ready", this.isReady());
-        if (this.getDungeon() != null) {
-            tag.put("Dungeon", this.getDungeon().addAdditionalSaveData());
-        }
+        this.addBossSaveData(tag);
         if (this.dungeonBounds != null) {
             tag.putDouble("DungeonBoundsMinX", this.dungeonBounds.minX);
             tag.putDouble("DungeonBoundsMinY", this.dungeonBounds.minY);
@@ -477,26 +472,13 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
             tag.putDouble("DungeonBoundsMaxY", this.dungeonBounds.maxY);
             tag.putDouble("DungeonBoundsMaxZ", this.dungeonBounds.maxZ);
         }
+        tag.putBoolean("Ready", this.isReady());
     }
 
     @Override
     public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        if (tag.contains("BossName")) {
-            Component name = Component.Serializer.fromJson(tag.getString("BossName"));
-            if (name != null) {
-                this.setBossName(name);
-            }
-        }
-        if (tag.contains("BossFight")) {
-            this.setBossFight(tag.getBoolean("BossFight"));
-        }
-        if (tag.contains("Ready")) {
-            this.setReady(tag.getBoolean("Ready"));
-        }
-        if (tag.contains("Dungeon") && tag.get("Dungeon") instanceof CompoundTag dungeonTag) {
-            this.setDungeon(DungeonTracker.readAdditionalSaveData(dungeonTag, this));
-        }
+        this.readBossSaveData(tag);
         if (tag.contains("DungeonBoundsMinX")) {
             double minX = tag.getDouble("DungeonBoundsMinX");
             double minY = tag.getDouble("DungeonBoundsMinY");
@@ -505,6 +487,9 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
             double maxY = tag.getDouble("DungeonBoundsMaxY");
             double maxZ = tag.getDouble("DungeonBoundsMaxZ");
             this.dungeonBounds = new AABB(minX, minY, minZ, maxX, maxY, maxZ);
+        }
+        if (tag.contains("Ready")) {
+            this.setReady(tag.getBoolean("Ready"));
         }
     }
 

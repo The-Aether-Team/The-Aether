@@ -5,7 +5,7 @@ import com.gildedgames.aether.api.DungeonTracker;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.blockentity.TreasureChestBlockEntity;
 import com.gildedgames.aether.entity.AetherEntityTypes;
-import com.gildedgames.aether.entity.monster.dungeon.boss.Slider;
+import com.gildedgames.aether.entity.monster.dungeon.boss.slider.Slider;
 import com.gildedgames.aether.loot.AetherLoot;
 import com.gildedgames.aether.world.processor.NoReplaceProcessor;
 import com.google.common.collect.ImmutableList;

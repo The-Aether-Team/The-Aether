@@ -5,7 +5,7 @@ import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.ai.goal.BeeGrowBerryBushGoal;
 import com.gildedgames.aether.entity.ai.goal.FoxEatBerryBushGoal;
 import com.gildedgames.aether.entity.monster.Swet;
-import com.gildedgames.aether.entity.monster.dungeon.boss.Slider;
+import com.gildedgames.aether.entity.monster.dungeon.boss.slider.Slider;
 import com.gildedgames.aether.entity.passive.FlyingCow;
 import com.gildedgames.aether.entity.passive.MountableAnimal;
 import com.gildedgames.aether.item.miscellaneous.bucket.SkyrootBucketItem;
