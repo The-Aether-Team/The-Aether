@@ -202,7 +202,7 @@
   "commands.aether.sun_altar_whitelist.reloaded": "Liste blanche de l'altar du Soleil actualisée.",
   "commands.aether.sun_altar_whitelist.remove.failed": "Ce joueur n'est pas dans la liste blanche.",
   "commands.aether.sun_altar_whitelist.remove.success": "Le joueur %s a été retiré de la liste blanche de l'altar du Soleil.",
-  "container.aether.altar": "Altar",
+  "menu.aether.altar": "Altar",
   "menu.aether.book_of_lore": "Livre du Savoir",
   "menu.aether.freezer": "Congélateur",
   "menu.aether.incubator": "Incubator",
