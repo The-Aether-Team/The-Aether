@@ -14,6 +14,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.Unit;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -47,6 +48,7 @@ public class SliderAi {
             MemoryModuleType.ATTACK_TARGET,
             MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE, // For the StartAttacking behavior
             AetherMemoryModuleTypes.AGGRO_TRACKER.get(),
+            AetherMemoryModuleTypes.HAS_ATTACKED.get(),
             AetherMemoryModuleTypes.MOVE_DELAY.get(),
             AetherMemoryModuleTypes.MOVE_DIRECTION.get(),
             AetherMemoryModuleTypes.TARGET_POSITION.get()
@@ -55,15 +57,10 @@ public class SliderAi {
 
     public static Brain<Slider> makeBrain(Dynamic<?> dynamic) {
         Brain<Slider> brain = Brain.provider(MEMORY_TYPES, SENSOR_TYPES).makeBrain(dynamic);
-        initIdleActivity(brain);
         initFightActivity(brain);
         // Initialize the aggro tracker
         brain.setMemory(AetherMemoryModuleTypes.AGGRO_TRACKER.get(), new Object2DoubleOpenHashMap<>());
         return brain;
-    }
-
-    private static void initIdleActivity(Brain<Slider> brain) {
-//        brain.addActivity(Activity.IDLE, ImmutableList.of(0, new Stay));
     }
 
     private static void initFightActivity(Brain<Slider> brain) {
@@ -197,32 +194,17 @@ public class SliderAi {
         private float velocity;
 
         public Move() {
-            super(ImmutableMap.of(AetherMemoryModuleTypes.MOVE_DIRECTION.get(), MemoryStatus.REGISTERED, AetherMemoryModuleTypes.TARGET_POSITION.get(), MemoryStatus.REGISTERED, MemoryModuleType.ATTACK_TARGET, MemoryStatus.REGISTERED));
+            super(ImmutableMap.of(AetherMemoryModuleTypes.MOVE_DELAY.get(), MemoryStatus.VALUE_ABSENT, AetherMemoryModuleTypes.MOVE_DIRECTION.get(), MemoryStatus.REGISTERED, AetherMemoryModuleTypes.TARGET_POSITION.get(), MemoryStatus.REGISTERED, MemoryModuleType.ATTACK_TARGET, MemoryStatus.REGISTERED));
         }
 
         @Override
         protected boolean checkExtraStartConditions(ServerLevel level, Slider slider) {
-            if (!slider.isAwake() || slider.isDeadOrDying()) {
-                return false;
-            }
-
-            Brain<?> brain = slider.getBrain();
-
-            int moveDelay = brain.getMemory(AetherMemoryModuleTypes.MOVE_DELAY.get()).orElse(0);
-            brain.setMemory(AetherMemoryModuleTypes.MOVE_DELAY.get(), --moveDelay);
-
-            return moveDelay <= 0;
+            return slider.isAwake() && !slider.isDeadOrDying();
         }
 
         @Override
         protected boolean canStillUse(ServerLevel level, Slider slider, long gameTime) {
             if (!slider.isAwake() || slider.isDeadOrDying()) {
-                return false;
-            }
-
-            Brain<?> brain = slider.getBrain();
-
-            if (brain.getMemory(AetherMemoryModuleTypes.MOVE_DELAY.get()).orElse(0) > 0) {
                 return false;
             }
 
@@ -267,7 +249,7 @@ public class SliderAi {
 
         @Override
         protected void stop(ServerLevel level, Slider slider, long gameTime) {
-            slider.getBrain().setMemory(AetherMemoryModuleTypes.MOVE_DELAY.get(), slider.calculateMoveDelay());
+            slider.getBrain().setMemoryWithExpiry(AetherMemoryModuleTypes.MOVE_DELAY.get(), Unit.INSTANCE, slider.calculateMoveDelay());
             slider.getBrain().eraseMemory(AetherMemoryModuleTypes.TARGET_POSITION.get());
             this.velocity = 0;
             slider.setDeltaMovement(Vec3.ZERO);
@@ -307,7 +289,7 @@ public class SliderAi {
         protected boolean checkExtraStartConditions(ServerLevel pLevel, Slider slider) {
             Brain<?> brain = slider.getBrain();
             // Run this behavior only once between each movement cycle.
-            if (brain.getMemory(AetherMemoryModuleTypes.MOVE_DELAY.get()).orElse(2) != 1) {
+            if (brain.getTimeUntilExpiry(AetherMemoryModuleTypes.MOVE_DELAY.get()) != 1) {
                 return false;
             }
 
@@ -381,7 +363,7 @@ public class SliderAi {
 
         @Override
         protected boolean checkExtraStartConditions(ServerLevel level, Slider slider) {
-            if (!slider.isAwake() || slider.isDeadOrDying() || slider.getBrain().getMemory(AetherMemoryModuleTypes.MOVE_DELAY.get()).orElse(1) != 1) {
+            if (!slider.isAwake() || slider.isDeadOrDying() || slider.getBrain().getTimeUntilExpiry(AetherMemoryModuleTypes.MOVE_DELAY.get()) != 1) {
                 return false;
             }
 
@@ -458,7 +440,7 @@ public class SliderAi {
             if (crushed) {
                 slider.level.playSound(null, slider.blockPosition(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 3.0F, (0.625F + (slider.getRandom().nextFloat() - slider.getRandom().nextFloat()) * 0.2F) * 0.7F);
                 slider.playSound(slider.getCollideSound(), 2.5F, 1.0F / (slider.getRandom().nextFloat() * 0.2F + 0.9F));
-                slider.getBrain().setMemory(AetherMemoryModuleTypes.MOVE_DELAY.get(), slider.calculateMoveDelay());
+                slider.getBrain().setMemoryWithExpiry(AetherMemoryModuleTypes.MOVE_DELAY.get(), Unit.INSTANCE, slider.calculateMoveDelay());
                 slider.setDeltaMovement(Vec3.ZERO);
             }
         }
@@ -481,6 +463,7 @@ public class SliderAi {
 
         @Override
         protected void tick(ServerLevel level, Slider slider, long gameTime) {
+            Brain<?> brain = slider.getBrain();
             AABB collisionBounds = new AABB(slider.getBoundingBox().minX - 0.1, slider.getBoundingBox().minY - 0.1, slider.getBoundingBox().minZ - 0.1,
                     slider.getBoundingBox().maxX + 0.1, slider.getBoundingBox().maxY + 0.1, slider.getBoundingBox().maxZ + 0.1);
             for (Entity entity : level.getEntities(slider, collisionBounds)) {
@@ -492,15 +475,24 @@ public class SliderAi {
                     }
                     entity.setDeltaMovement(entity.getDeltaMovement().multiply(4.0, 1.0, 4.0).add(0.0, 0.25, 0.0));
 
-                    // Stop the slider moving
+                    brain.setMemoryWithExpiry(AetherMemoryModuleTypes.HAS_ATTACKED.get(), Unit.INSTANCE, 20);
+                    brain.setMemoryWithExpiry(AetherMemoryModuleTypes.MOVE_DELAY.get(), Unit.INSTANCE, slider.calculateMoveDelay());
+                    brain.eraseMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get());
+
+                    // Stop the slider movement
                     slider.playSound(slider.getCollideSound(), 2.5F, 1.0F / (slider.getRandom().nextFloat() * 0.2F + 0.9F));
-                    slider.getBrain().setMemory(AetherMemoryModuleTypes.MOVE_DELAY.get(), slider.calculateMoveDelay());
-                    slider.getBrain().setMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get(), Optional.empty());
                     slider.setDeltaMovement(Vec3.ZERO);
                 } else if (!(entity instanceof Player player && player.isCreative()) && !(entity instanceof Slider)) {
                     entity.setDeltaMovement(slider.getDeltaMovement().multiply(4.0, 1.0, 4.0).add(0.0, 0.25, 0.0));
                 }
             }
+        }
+    }
+
+    static class BackOffAfterAttack extends Behavior<Slider> {
+
+        public BackOffAfterAttack(Map<MemoryModuleType<?>, MemoryStatus> pEntryCondition) {
+            super(pEntryCondition);
         }
     }
 
