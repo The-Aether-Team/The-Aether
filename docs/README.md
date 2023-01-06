@@ -104,7 +104,7 @@ If you have a reason that you wish to use our brand or any unlicensed material, 
 
 ## :star2: Special mentions
 ### :speech_balloon: Translations
-[![OneSky translations](https://custom-icon-badges.demolab.com/badge/onesky-aether-2fa9e7?style=flat-square&logo=onesky)](http://aether.oneskyapp.com/collaboration/project?id=189081)
+[![OneSky translations](https://custom-icon-badges.demolab.com/badge/onesky-aether-2fa9e7?style=flat-square&logo=onesky)](http://aether.oneskyapp.com/collaboration)
 
 The Aether is available in these languages thanks to the following contributors:
 
