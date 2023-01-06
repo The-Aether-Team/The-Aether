@@ -381,7 +381,6 @@ public class SliderAi {
         @Override
         protected void start(ServerLevel level, Slider slider, long pGameTime) {
             Brain<?> brain = slider.getBrain();
-            brain.eraseMemory(AetherMemoryModuleTypes.HAS_ATTACKED.get());
             Optional<LivingEntity> optional = brain.getMemory(MemoryModuleType.ATTACK_TARGET);
             if (optional.isPresent()) {
                 LivingEntity target = optional.get();
@@ -494,7 +493,10 @@ public class SliderAi {
 
         @Override
         protected boolean checkExtraStartConditions(ServerLevel level, Slider slider) {
-            return slider.isAwake() && !slider.isDeadOrDying() && slider.getDeltaMovement().length() > 0.08;
+            if (!slider.isAwake() || slider.isDeadOrDying()) {
+                return false;
+            }
+            return !slider.getBrain().hasMemoryValue(AetherMemoryModuleTypes.HAS_ATTACKED.get()) || slider.getDeltaMovement().length() > 0.08;
         }
 
         @Override
