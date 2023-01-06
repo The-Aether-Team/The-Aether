@@ -129,7 +129,7 @@ The Aether is available in these languages thanks to the following contributors:
 
 _\* Indicates only partial language support._
 
-If your name is missing from the above list, please contact us.
+If you are interested in contributing translations to The Aether, check out our [OneSky](http://aether.oneskyapp.com/collaboration) and our [Discord](https://discord.gg/aethermod)! If you have contributed translations in the past and your name is missing from the above list, please contact us.
 
 ### :hammer: Contributions
 All of our code contribution credits can be found [here](https://github.com/Gilded-Games/The-Aether/blob/1.19/CREDITS.txt). If you contributed to the project and do not see your name, please contact us.
