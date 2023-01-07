@@ -40,6 +40,7 @@ import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.EnumSet;
 
 /**
  * Abstract class that holds common code for Valkyrie and ValkyrieQueen, both of which are children of this class.
@@ -56,9 +57,9 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
 
     @Override
     public void registerGoals() {
-//        this.goalSelector.addGoal(1, new ValkyrieTeleportGoal(this));
-        this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 0.65, true));
-//        this.goalSelector.addGoal(4, new LungeGoal(this));
+        this.goalSelector.addGoal(1, new ValkyrieTeleportGoal(this));
+        this.goalSelector.addGoal(3, new LungeGoal(this));
+        this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 0.65, true));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.5));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F, 8.0F));
         this.mostDamageTargetGoal = new MostDamageTargetGoal(this);
@@ -255,6 +256,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         private int timestamp;
         public LungeGoal(AbstractValkyrie mob) {
             this.valkyrie = mob;
+            this.setFlags(EnumSet.of(Flag.MOVE));
         }
 
         @Override
@@ -283,7 +285,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
 
         @Override
         public void stop() {
-            this.counter = 8;
+            this.counter = 8 + this.valkyrie.random.nextInt(6);
         }
 
         @Override
