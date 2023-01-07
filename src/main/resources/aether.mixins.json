@@ -30,7 +30,9 @@
     "common.accessor.SpreadingSnowyDirtBlockAccessor",
     "common.accessor.StoredUserListAccessor",
     "common.accessor.WorldGenRegionAccessor",
-    "common.accessor.ZombifiedPiglinAccessor"
+    "common.accessor.ZombifiedPiglinAccessor",
+    "debug.DebugPacketsMixin",
+    "debug.PathAccessor"
   ],
   "client": [
     "client.AdvancementToastMixin",
@@ -53,7 +55,8 @@
     "client.accessor.QuadrupedModelAccessor",
     "client.accessor.RealmsPlayerScreenAccessor",
     "client.accessor.ScreenAccessor",
-    "client.accessor.TitleScreenAccessor"
+    "client.accessor.TitleScreenAccessor",
+    "debug.DebugRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

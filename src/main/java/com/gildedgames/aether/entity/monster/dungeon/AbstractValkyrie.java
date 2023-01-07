@@ -56,9 +56,9 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
 
     @Override
     public void registerGoals() {
-        this.goalSelector.addGoal(1, new ValkyrieTeleportGoal(this));
+//        this.goalSelector.addGoal(1, new ValkyrieTeleportGoal(this));
         this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 0.65, true));
-        this.goalSelector.addGoal(4, new LungeGoal(this));
+//        this.goalSelector.addGoal(4, new LungeGoal(this));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.5));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F, 8.0F));
         this.mostDamageTargetGoal = new MostDamageTargetGoal(this);
@@ -107,6 +107,12 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
                 this.setEntityOnGround(false);
             }
         }
+    }
+
+    @Override
+    public void travel(Vec3 pTravelVector) {
+        this.flyingSpeed = this.getSpeed() * 0.21600002F;
+        super.travel(pTravelVector);
     }
 
     /**
@@ -297,9 +303,9 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         @Override
         public void tick() {
             super.tick();
-            if (!this.mob.isOnGround()) {
-                this.mob.setZza(1.5F);
-            }
+//            if (!this.mob.isOnGround()) {
+//                this.mob.setZza(1.5F);
+//            }
         }
     }
 
