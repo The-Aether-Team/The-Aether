@@ -143,10 +143,6 @@ public class AetherBlockTagData extends BlockTagsProvider {
         this.tag(AetherTags.Blocks.SWET_SPAWNABLE_ON).add(AetherBlocks.AETHER_GRASS_BLOCK.get());
         this.tag(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_ON).add(AetherBlocks.AETHER_GRASS_BLOCK.get());
         this.tag(AetherTags.Blocks.ZEPHYR_SPAWNABLE_ON).addTag(AetherTags.Blocks.AERCLOUDS);
-        this.tag(AetherTags.Blocks.COCKATRICE_SPAWNABLE_BLACKLIST).addTags(
-                AetherTags.Blocks.DUNGEON_BLOCKS,
-                AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
-                AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS);
         this.tag(AetherTags.Blocks.INFINIBURN).addTag(BlockTags.INFINIBURN_OVERWORLD);
         this.tag(AetherTags.Blocks.ALLOWED_FLAMMABLES).add(Blocks.SOUL_SAND, Blocks.SOUL_SOIL).addTags(
                 AetherTags.Blocks.INFINIBURN,
