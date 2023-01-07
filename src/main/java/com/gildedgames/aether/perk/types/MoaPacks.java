@@ -1,5 +1,7 @@
 package com.gildedgames.aether.perk.types;
 
+import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.api.AetherMoaTypes;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.network.chat.Component;
 
@@ -13,7 +15,7 @@ public class MoaPacks {
         register("lifetime_angel_moa_skins", Component.translatable("gui.aether.moa_skins.pack.lifetime_angel_moa_skins"), List.of("blue_moa", "white_moa", "black_moa", "orange_moa", "boko_yellow", "crookjaw_purple", "gharrix_red", "halcian_pink", "tivalier_green"));
         register("lifetime_valkyrie_moa_skins", Component.translatable("gui.aether.moa_skins.pack.lifetime_valkyrie_moa_skins"), List.of("arctic_moa", "cockatrice_moa", "phoenix_moa", "sentry_moa", "valkyrie_moa"));
 
-        register("natural_moa_skins", Component.translatable("gui.aether.moa_skins.pack.natural_moa_skins"), List.of("blue_moa", "white_moa", "black_moa", "orange_moa"));
+        register("natural_moa_skins", Component.translatable("gui.aether.moa_skins.pack.natural_moa_skins"), AetherMoaTypes.MOA_TYPES.getEntries().stream().map((entry) -> (entry.getId().getNamespace().equals(Aether.MODID) ? entry.getId().getPath() : entry.getId().toString().replace(":", ".")) + "_moa").toList());
         register("color_theme_moa_skins", Component.translatable("gui.aether.moa_skins.pack.natural_moa_skins"), List.of("boko_yellow", "crookjaw_purple", "gharrix_red", "halcian_pink", "tivalier_green"));
         register("gotv_moa_skins", Component.translatable("gui.aether.moa_skins.pack.natural_moa_skins"), List.of("arctic_moa", "cockatrice_moa", "phoenix_moa", "sentry_moa", "valkyrie_moa"));
     }

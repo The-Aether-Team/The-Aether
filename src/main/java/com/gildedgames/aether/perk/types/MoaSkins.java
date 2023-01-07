@@ -1,6 +1,8 @@
 package com.gildedgames.aether.perk.types;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.api.AetherMoaTypes;
+import com.gildedgames.aether.api.registers.MoaType;
 import com.gildedgames.aether.util.PerkUtil;
 import com.gildedgames.nitrogen.api.users.Patron;
 import com.gildedgames.nitrogen.api.users.User;
@@ -8,6 +10,7 @@ import com.google.common.collect.ImmutableMap;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.registries.RegistryObject;
 
 import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
@@ -18,30 +21,17 @@ public class MoaSkins {
     private static final Map<String, MoaSkin> MOA_SKINS = new LinkedHashMap<>();
 
     public static void registerMoaSkins() {
-        register("blue_moa", new MoaSkin("blue_moa", new MoaSkin.Properties()
-                .displayName(Component.translatable("gui.aether.moa_skins.skin.blue_moa"))
-                .userPredicate((user) -> PerkUtil.hasLifetimeAngelMoaSkins("blue_moa").test(user))
-                .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/blue_moa_icon.png"))
-                .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/blue_moa.png"))
-                .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png"))
-                .info(new MoaSkin.Info(Patron.Tier.ANGEL, true))
-        ));
-        register("white_moa", new MoaSkin("white_moa", new MoaSkin.Properties()
-                .displayName(Component.translatable("gui.aether.moa_skins.skin.white_moa"))
-                .userPredicate((user) -> PerkUtil.hasLifetimeAngelMoaSkins("white_moa").test(user))
-                .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/white_moa_icon.png"))
-                .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/white_moa.png"))
-                .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png"))
-                .info(new MoaSkin.Info(Patron.Tier.ANGEL, true))
-        ));
-        register("black_moa", new MoaSkin("black_moa", new MoaSkin.Properties()
-                .displayName(Component.translatable("gui.aether.moa_skins.skin.black_moa"))
-                .userPredicate((user) -> PerkUtil.hasLifetimeAngelMoaSkins("black_moa").test(user))
-                .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/black_moa_icon.png"))
-                .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/black_moa.png"))
-                .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/black_moa_saddle.png"))
-                .info(new MoaSkin.Info(Patron.Tier.ANGEL, true))
-        ));
+        for (MoaType moaType : AetherMoaTypes.MOA_TYPES.getEntries().stream().map(RegistryObject::get).toList()) {
+            String name = (moaType.getId().getNamespace().equals(Aether.MODID) ? moaType.getId().getPath() : moaType.getId().toString().replace(":", ".")) + "_moa";
+            register(name, new MoaSkin(name, new MoaSkin.Properties()
+                    .displayName(Component.translatable("gui.aether.moa_skins.skin." + name))
+                    .userPredicate((user) -> PerkUtil.hasLifetimeAngelMoaSkins(name).test(user))
+                    .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/" + name + "_icon.png"))
+                    .skinLocation(moaType.getMoaTexture())
+                    .saddleLocation(moaType.getSaddleTexture())
+                    .info(new MoaSkin.Info(Patron.Tier.ANGEL, true))
+            ));
+        }
         register("orange_moa", new MoaSkin("orange_moa", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.orange_moa"))
                 .userPredicate((user) -> PerkUtil.hasLifetimeAngelMoaSkins("orange_moa").test(user))
