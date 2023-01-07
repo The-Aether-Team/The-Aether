@@ -349,6 +349,16 @@ public class SilverDungeonPieces {
         }
     }
 
+    public static class BossDetail extends SilverDungeonPiece {
+        public BossDetail(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
+            super(AetherStructurePieceTypes.SILVER_BOSS_DETAIL.get(), manager, name, new StructurePlaceSettings().setRotation(rotation), pos);
+        }
+
+        public BossDetail(StructurePieceSerializationContext context, CompoundTag tag) {
+            super(AetherStructurePieceTypes.SILVER_BOSS_DETAIL.get(), tag, context.structureTemplateManager(), (id) -> new StructurePlaceSettings());
+        }
+    }
+
     public static class LegacyCloudBed extends StructurePiece {
         private final Set<BlockPos> positions;
 
@@ -412,6 +422,11 @@ public class SilverDungeonPieces {
         protected void addAdditionalSaveData(StructurePieceSerializationContext context, CompoundTag tag) {
             super.addAdditionalSaveData(context, tag);
             tag.putString("Rotation", this.placeSettings.getRotation().name());
+        }
+
+        @Override
+        protected void handleDataMarker(String pName, BlockPos pPos, ServerLevelAccessor pLevel, RandomSource pRandom, BoundingBox pBox) {
+
         }
     }
 }
