@@ -1,4 +1,4 @@
-// 1.19.3	2022-12-26T15:31:02.601299731	Registries
+// 1.19.3	2023-01-07T02:31:18.9189965	Registries
 3c827e33b3adaea91c5043a542772dffeea61fdd data/aether/dimension/the_aether.json
 5655d4cd818dbc73a0baa2590d80dd274f85927d data/aether/dimension_type/the_aether.json
 a89f0e3dbdd783366860d85ce52f274b674cb174 data/aether/worldgen/biome/golden_forest.json
@@ -51,10 +51,10 @@ a206fc916937d21470bfb99c6a3549a2b153ae06 data/aether/worldgen/placed_feature/sky
 c0257210b58e2e3cf09cd0a140e56f66e63849d5 data/aether/worldgen/placed_feature/water_lake.json
 d6594222a1792b2d047d2ece7870337455eef006 data/aether/worldgen/placed_feature/water_spring.json
 f77bf9f1f4d11796afbe51e4af30c42fa5ffc996 data/aether/worldgen/placed_feature/zanite_ore.json
-ddaec3fcac2f8f73f94831385e39eefc2d36e2e8 data/aether/worldgen/structure/bronze_dungeon.json
-25469d369b63550f721e5ea8bf5205d41e999c3b data/aether/worldgen/structure/gold_dungeon.json
+1b340fd9fba3bd2298810b1e35abae05de9ea23a data/aether/worldgen/structure/bronze_dungeon.json
+d99a68f91e842938610ec350bfa30cd8b361ef27 data/aether/worldgen/structure/gold_dungeon.json
 5d95d82aa273637160cb12c0d82e31d722ace6cd data/aether/worldgen/structure/large_aercloud.json
-9f37f292b5ede93d396eb6bb65b5ab7e121916a7 data/aether/worldgen/structure/silver_dungeon.json
+37e9319a16872ebc480c3f088fa7d4bfa6ff6419 data/aether/worldgen/structure/silver_dungeon.json
 c6f5828f13a1f05ed7c94913a3cacfe5c93ef904 data/aether/worldgen/structure_set/bronze_dungeon.json
 c128b9af7f6959fe80ca2fff258309a9baf90cf9 data/aether/worldgen/structure_set/gold_dungeon.json
 e37ae90b21149e5827318fb1d6523d0f8363bbc0 data/aether/worldgen/structure_set/large_aercloud.json
