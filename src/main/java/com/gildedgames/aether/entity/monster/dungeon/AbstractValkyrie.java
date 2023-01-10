@@ -10,7 +10,6 @@ import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.ExplosionParticlePacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -63,7 +62,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     @Override
     public void registerGoals() {
         this.goalSelector.addGoal(1, new ValkyrieTeleportGoal(this));
-        this.goalSelector.addGoal(3, new LungeGoal(this));
+        this.goalSelector.addGoal(3, new LungeGoal(this, 0.65));
         this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 0.65, true));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.5));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F, 8.0F));
@@ -87,7 +86,8 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     @Override
     @Nonnull
     protected PathNavigation createNavigation(@Nonnull Level level) {
-        return new ValkyriePathNavigation(this, level);
+//        return new ValkyriePathNavigation(this, level);
+        return super.createNavigation(level);
     }
 
     /**
@@ -274,10 +274,13 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
      */
     public static class LungeGoal extends Goal {
         private final AbstractValkyrie valkyrie;
-
+        private final double speedModifier;
         private int flyingTicks;
-        public LungeGoal(AbstractValkyrie mob) {
+
+        public LungeGoal(AbstractValkyrie mob, double speedModifier) {
             this.valkyrie = mob;
+            this.speedModifier = speedModifier;
+            this.setFlags(EnumSet.of(Flag.MOVE));
         }
 
         @Override
@@ -313,6 +316,8 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
                         this.valkyrie.setEntityOnGround(false);
                     }
                 }
+                Vec3 position = target.position();
+                this.valkyrie.getMoveControl().setWantedPosition(position.x, position.y, position.z, this.speedModifier);
             }
         }
 
