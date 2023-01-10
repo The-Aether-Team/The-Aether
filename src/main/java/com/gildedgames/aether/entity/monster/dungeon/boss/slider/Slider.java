@@ -50,6 +50,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
     public static final EntityDataAccessor<Float> DATA_HURT_ANGLE_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.FLOAT);
     public static final EntityDataAccessor<Float> DATA_HURT_ANGLE_X_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.FLOAT);
     public static final EntityDataAccessor<Float> DATA_HURT_ANGLE_Z_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.FLOAT);
+    public static final EntityDataAccessor<CompoundTag> DATA_DUNGEON_TAG_SNAPSHOT_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.COMPOUND_TAG);
 
     private DungeonTracker<Slider> bronzeDungeon;
     private final ServerBossEvent bossFight;
@@ -82,6 +83,13 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         return data;
     }
 
+    @Override
+    public void onAddedToWorld() {
+        if (!this.getLevel().isClientSide() && this.getDungeon() != null) {
+            this.setDungeonTagSnapshot(this.getDungeon().addAdditionalSaveData());
+        }
+    }
+
     /**
      * Aligns the slider with the blocks below it
      */
@@ -103,6 +111,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         this.entityData.define(DATA_HURT_ANGLE_ID, 0.0F);
         this.entityData.define(DATA_HURT_ANGLE_X_ID, 0.0F);
         this.entityData.define(DATA_HURT_ANGLE_Z_ID, 0.0F);
+        this.entityData.define(DATA_DUNGEON_TAG_SNAPSHOT_ID, new CompoundTag());
     }
 
     @Override
@@ -135,40 +144,51 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         if (source == DamageSource.OUT_OF_WORLD) {
             super.hurt(source, amount);
         } else if (source.getDirectEntity() instanceof LivingEntity attacker && this.level.getDifficulty() != Difficulty.PEACEFUL) {
-            if (attacker.getMainHandItem().is(AetherTags.Items.SLIDER_DAMAGING_ITEMS)) {
-                if (super.hurt(source, amount) && this.getHealth() > 0) {
-                    if (!this.isBossFight()) {
-                        this.start();
-                    }
-                    this.setDeltaMovement(this.getDeltaMovement().scale(0.75F));
-
-                    double a = Math.abs(this.position().x() - attacker.position().x());
-                    double c = Math.abs(this.position().z() - attacker.position().z());
-                    if (a > c) {
-                        this.setHurtAngleZ(1);
-                        this.setHurtAngleX(0);
-                        if (this.position().x() > attacker.position().x()) {
-                            this.setHurtAngleZ(-1);
+            DungeonTracker<Slider> trackerSnapshot = DungeonTracker.readAdditionalSaveData(this.getDungeonTagSnapshot(), this);
+            if (trackerSnapshot.roomBounds().getSize() == 0.0 || trackerSnapshot.isPlayerWithinRoomInterior(attacker)) {
+                if (attacker.getMainHandItem().is(AetherTags.Items.SLIDER_DAMAGING_ITEMS)) {
+                    if (super.hurt(source, amount) && this.getHealth() > 0) {
+                        if (!this.isBossFight()) {
+                            this.start();
                         }
-                    } else {
-                        this.setHurtAngleX(1);
-                        this.setHurtAngleZ(0);
-                        if (this.position().z() > attacker.position().z()) {
-                            this.setHurtAngleX(-1);
+                        this.setDeltaMovement(this.getDeltaMovement().scale(0.75F));
+
+                        double a = Math.abs(this.position().x() - attacker.position().x());
+                        double c = Math.abs(this.position().z() - attacker.position().z());
+                        if (a > c) {
+                            this.setHurtAngleZ(1);
+                            this.setHurtAngleX(0);
+                            if (this.position().x() > attacker.position().x()) {
+                                this.setHurtAngleZ(-1);
+                            }
+                        } else {
+                            this.setHurtAngleX(1);
+                            this.setHurtAngleZ(0);
+                            if (this.position().z() > attacker.position().z()) {
+                                this.setHurtAngleX(-1);
+                            }
+                        }
+                        this.setHurtAngle(0.7F - (this.getHealth() / 875.0F));
+
+                        attacker.getMainHandItem().hurtAndBreak(1, attacker, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+
+                        SliderAi.wasHurtBy(this, attacker, amount);
+
+                        return true;
+                    }
+                } else {
+                    if (!this.level.isClientSide && attacker instanceof Player player) {
+                        if (this.getChatCooldown() <= 0) {
+                            this.displayInvalidToolMessage(player);
+                            this.setChatCooldown(15);
+                            return false;
                         }
                     }
-                    this.setHurtAngle(0.7F - (this.getHealth() / 875.0F));
-
-                    attacker.getMainHandItem().hurtAndBreak(1, attacker, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
-
-                    SliderAi.wasHurtBy(this, attacker, amount);
-
-                    return true;
                 }
             } else {
                 if (!this.level.isClientSide && attacker instanceof Player player) {
                     if (this.getChatCooldown() <= 0) {
-                        this.displayInvalidToolMessage(player);
+                        this.displayTooFarMessage(player);
                         this.setChatCooldown(15);
                         return false;
                     }
@@ -290,7 +310,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
     public void startSeenByPlayer(@Nonnull ServerPlayer player) {
         super.startSeenByPlayer(player);
         AetherPacketHandler.sendToPlayer(new BossInfoPacket.Display(this.bossFight.getId()), player);
-        if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoom(player)) {
+        if (this.getDungeon() == null || this.getDungeon().isPlayerTracked(player)) {
             this.bossFight.addPlayer(player);
         }
     }
@@ -362,6 +382,14 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         this.entityData.set(DATA_HURT_ANGLE_ID, hurtAngle);
     }
 
+    public CompoundTag getDungeonTagSnapshot() {
+        return this.entityData.get(DATA_DUNGEON_TAG_SNAPSHOT_ID);
+    }
+
+    public void setDungeonTagSnapshot(CompoundTag dungeonTag) {
+        this.entityData.set(DATA_DUNGEON_TAG_SNAPSHOT_ID, dungeonTag);
+    }
+
     @Override
     public DungeonTracker<Slider> getDungeon() {
         return this.bronzeDungeon;
@@ -371,7 +399,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
     public void setDungeon(DungeonTracker<Slider> dungeon) {
         this.bronzeDungeon = dungeon;
     }
-
 
     @Override
     public int getDeathScore() {
