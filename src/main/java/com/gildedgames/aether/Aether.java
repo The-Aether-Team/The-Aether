@@ -17,6 +17,7 @@ import com.gildedgames.aether.data.generators.*;
 import com.gildedgames.aether.data.generators.tags.*;
 import com.gildedgames.aether.effect.AetherEffects;
 import com.gildedgames.aether.entity.AetherEntityTypes;
+import com.gildedgames.aether.entity.ai.AetherBlockPathTypes;
 import com.gildedgames.aether.entity.ai.brain.memory.AetherMemoryModuleTypes;
 import com.gildedgames.aether.entity.ai.brain.sensing.AetherSensorTypes;
 import com.gildedgames.aether.event.AetherGameEvents;
@@ -138,6 +139,7 @@ public class Aether {
         AetherAdvancementTriggers.init();
         AetherPlacementModifiers.init();
         AetherRecipeBookTypes.init();
+        AetherBlockPathTypes.init();
 
         SunAltarWhitelist.initialize();
 

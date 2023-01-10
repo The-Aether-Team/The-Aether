@@ -1,5 +1,6 @@
 package com.gildedgames.aether.entity.projectile.crystal;
 
+import com.gildedgames.aether.capability.lightning.LightningTracker;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.client.particle.AetherParticleTypes;
 import net.minecraft.core.particles.ParticleOptions;
@@ -49,6 +50,7 @@ public class ThunderCrystal extends AbstractCrystal {
             if (this.ticksInAir >= this.getLifeSpan() || this.target == null || !this.target.isAlive()) {
                 LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(this.level);
                 if (lightningBolt != null) {
+                    LightningTracker.get(lightningBolt).ifPresent(lightningTracker -> lightningTracker.setOwner(this.getOwner()));
                     lightningBolt.setPos(this.getX(), this.getY(), this.getZ());
                     this.level.addFreshEntity(lightningBolt);
                 }
