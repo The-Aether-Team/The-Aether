@@ -56,7 +56,6 @@ import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 
 /**
  * This class holds the implementation of valkyrie queens. They are the boss version of valkyries, and they fight
@@ -90,15 +89,6 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor pLevel, @Nonnull DifficultyInstance pDifficulty, @Nonnull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
         SpawnGroupData data = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
         this.setBossName(BossNameGenerator.generateValkyrieName());
-        if (this.dungeon == null) {
-            this.dungeon = new DungeonTracker<>(this,
-                    this.position(),
-                    new AABB(this.position().subtract(15, 0, 15), this.position().add(15, 15, 15)),
-                    new ArrayList<>());
-        }
-        if (this.dungeonBounds == null) {
-            this.dungeonBounds = this.dungeon.roomBounds();
-        }
         return data;
     }
 
@@ -163,7 +153,11 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
      */
     @Override
     public boolean hurt(@Nonnull DamageSource source, float amount) {
-        if (this.isReady() || source == DamageSource.OUT_OF_WORLD) {
+        if (source == DamageSource.OUT_OF_WORLD) {
+            return super.hurt(source, amount);
+        }
+
+        if (this.isReady()) {
             if (source.getDirectEntity() instanceof LivingEntity attacker && this.level.getDifficulty() != Difficulty.PEACEFUL) {
                 if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoomInterior(attacker)) {
                     if (super.hurt(source, amount) && this.getHealth() > 0) {
@@ -275,7 +269,8 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
      * Sends a message to nearby players. Useful for boss fights.
      */
     protected void chatWithNearby(Component message) {
-        this.level.getNearbyPlayers(NON_COMBAT, this, this.dungeon.roomBounds()).forEach(player -> this.chatItUp(player, message));
+        AABB room = this.dungeon == null ? this.getBoundingBox().inflate(16) : this.dungeon.roomBounds();
+        this.level.getNearbyPlayers(NON_COMBAT, this, room).forEach(player -> this.chatItUp(player, message));
     }
 
     /**
@@ -358,6 +353,9 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     @Override
     public void setDungeon(DungeonTracker<ValkyrieQueen> dungeon) {
         this.dungeon = dungeon;
+        if (this.dungeonBounds == null) {
+            this.dungeonBounds = dungeon.roomBounds();
+        }
     }
 
     public void setDungeonBounds(AABB dungeonBounds) {
