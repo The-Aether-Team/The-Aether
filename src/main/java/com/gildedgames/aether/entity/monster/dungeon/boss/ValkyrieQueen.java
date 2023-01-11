@@ -21,8 +21,11 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -48,6 +51,8 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.entity.IEntityAdditionalSpawnData;
+import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -57,10 +62,9 @@ import java.util.ArrayList;
  * This class holds the implementation of valkyrie queens. They are the boss version of valkyries, and they fight
  * in the same way, with the additional ability to shoot thunder crystal projectiles at their enemies.
  */
-public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQueen>, NpcDialogue {
+public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQueen>, NpcDialogue, IEntityAdditionalSpawnData {
     public static final EntityDataAccessor<Boolean> DATA_IS_READY = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.COMPONENT);
-    public static final EntityDataAccessor<CompoundTag> DATA_DUNGEON_TAG_SNAPSHOT_ID = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.COMPOUND_TAG);
 
     /**
      * The player whom the valkyrie queen is currently conversing with
@@ -99,13 +103,6 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     }
 
     @Override
-    public void onAddedToWorld() {
-        if (!this.getLevel().isClientSide() && this.getDungeon() != null) {
-            this.setDungeonTagSnapshot(this.getDungeon().addAdditionalSaveData());
-        }
-    }
-
-    @Override
     public void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(1, new NpcDialogueGoal<>(this));
@@ -127,7 +124,6 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
         super.defineSynchedData();
         this.entityData.define(DATA_IS_READY, false);
         this.entityData.define(DATA_BOSS_NAME, Component.literal("Valkyrie Queen"));
-        this.entityData.define(DATA_DUNGEON_TAG_SNAPSHOT_ID, new CompoundTag());
     }
 
     @Override
@@ -169,8 +165,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     public boolean hurt(@Nonnull DamageSource source, float amount) {
         if (this.isReady() || source == DamageSource.OUT_OF_WORLD) {
             if (source.getDirectEntity() instanceof LivingEntity attacker && this.level.getDifficulty() != Difficulty.PEACEFUL) {
-                DungeonTracker<ValkyrieQueen> trackerSnapshot = DungeonTracker.readAdditionalSaveData(this.getDungeonTagSnapshot(), this);
-                if (trackerSnapshot.roomBounds().getSize() == 0.0 || trackerSnapshot.isPlayerWithinRoomInterior(attacker)) {
+                if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoomInterior(attacker)) {
                     if (super.hurt(source, amount) && this.getHealth() > 0) {
                         if (!this.level.isClientSide() && !this.isBossFight()) {
                             this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.fight"));
@@ -345,14 +340,6 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
         this.bossFight.setName(component);
     }
 
-    public CompoundTag getDungeonTagSnapshot() {
-        return this.entityData.get(DATA_DUNGEON_TAG_SNAPSHOT_ID);
-    }
-
-    public void setDungeonTagSnapshot(CompoundTag dungeonTag) {
-        this.entityData.set(DATA_DUNGEON_TAG_SNAPSHOT_ID, dungeonTag);
-    }
-
     @Override
     public boolean isBossFight() {
         return this.bossFight.isVisible();
@@ -525,6 +512,26 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
         if (tag.contains("Ready")) {
             this.setReady(tag.getBoolean("Ready"));
         }
+    }
+
+    @Override
+    public void writeSpawnData(FriendlyByteBuf buffer) {
+        CompoundTag tag = new CompoundTag();
+        this.addBossSaveData(tag);
+        buffer.writeNbt(tag);
+    }
+
+    @Override
+    public void readSpawnData(FriendlyByteBuf additionalData) {
+        CompoundTag tag = additionalData.readNbt();
+        if (tag != null) {
+            this.readBossSaveData(tag);
+        }
+    }
+
+    @Override
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     /**

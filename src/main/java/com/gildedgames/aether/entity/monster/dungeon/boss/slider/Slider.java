@@ -13,7 +13,10 @@ import com.mojang.serialization.Dynamic;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -40,17 +43,18 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.entity.IEntityAdditionalSpawnData;
+import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
+public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy, IEntityAdditionalSpawnData {
     public static final EntityDataAccessor<Boolean> DATA_AWAKE_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Component> DATA_BOSS_NAME_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.COMPONENT);
     public static final EntityDataAccessor<Float> DATA_HURT_ANGLE_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.FLOAT);
     public static final EntityDataAccessor<Float> DATA_HURT_ANGLE_X_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.FLOAT);
     public static final EntityDataAccessor<Float> DATA_HURT_ANGLE_Z_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.FLOAT);
-    public static final EntityDataAccessor<CompoundTag> DATA_DUNGEON_TAG_SNAPSHOT_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.COMPOUND_TAG);
 
     private DungeonTracker<Slider> bronzeDungeon;
     private final ServerBossEvent bossFight;
@@ -83,13 +87,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         return data;
     }
 
-    @Override
-    public void onAddedToWorld() {
-        if (!this.getLevel().isClientSide() && this.getDungeon() != null) {
-            this.setDungeonTagSnapshot(this.getDungeon().addAdditionalSaveData());
-        }
-    }
-
     /**
      * Aligns the slider with the blocks below it
      */
@@ -111,7 +108,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         this.entityData.define(DATA_HURT_ANGLE_ID, 0.0F);
         this.entityData.define(DATA_HURT_ANGLE_X_ID, 0.0F);
         this.entityData.define(DATA_HURT_ANGLE_Z_ID, 0.0F);
-        this.entityData.define(DATA_DUNGEON_TAG_SNAPSHOT_ID, new CompoundTag());
     }
 
     @Override
@@ -144,8 +140,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         if (source == DamageSource.OUT_OF_WORLD) {
             super.hurt(source, amount);
         } else if (source.getDirectEntity() instanceof LivingEntity attacker && this.level.getDifficulty() != Difficulty.PEACEFUL) {
-            DungeonTracker<Slider> trackerSnapshot = DungeonTracker.readAdditionalSaveData(this.getDungeonTagSnapshot(), this);
-            if (trackerSnapshot.roomBounds().getSize() == 0.0 || trackerSnapshot.isPlayerWithinRoomInterior(attacker)) {
+            if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoomInterior(attacker)) {
                 if (attacker.getMainHandItem().is(AetherTags.Items.SLIDER_DAMAGING_ITEMS)) {
                     if (super.hurt(source, amount) && this.getHealth() > 0) {
                         if (!this.isBossFight()) {
@@ -382,14 +377,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         this.entityData.set(DATA_HURT_ANGLE_ID, hurtAngle);
     }
 
-    public CompoundTag getDungeonTagSnapshot() {
-        return this.entityData.get(DATA_DUNGEON_TAG_SNAPSHOT_ID);
-    }
-
-    public void setDungeonTagSnapshot(CompoundTag dungeonTag) {
-        this.entityData.set(DATA_DUNGEON_TAG_SNAPSHOT_ID, dungeonTag);
-    }
-
     @Override
     public DungeonTracker<Slider> getDungeon() {
         return this.bronzeDungeon;
@@ -555,6 +542,26 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy {
         if (tag.contains("Awake")) {
             this.setAwake(tag.getBoolean("Awake"));
         }
+    }
+
+    @Override
+    public void writeSpawnData(FriendlyByteBuf buffer) {
+        CompoundTag tag = new CompoundTag();
+        this.addBossSaveData(tag);
+        buffer.writeNbt(tag);
+    }
+
+    @Override
+    public void readSpawnData(FriendlyByteBuf additionalData) {
+        CompoundTag tag = additionalData.readNbt();
+        if (tag != null) {
+            this.readBossSaveData(tag);
+        }
+    }
+
+    @Override
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     public int getChatCooldown() {
