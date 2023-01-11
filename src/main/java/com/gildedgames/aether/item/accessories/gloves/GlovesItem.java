@@ -23,9 +23,9 @@ public class GlovesItem extends AccessoryItem {
     protected final double damage;
     protected ResourceLocation GLOVES_TEXTURE;
     protected ResourceLocation GLOVES_SLIM_TEXTURE;
-    protected final Supplier<SoundEvent> equipSound;
+    protected final Supplier<? extends SoundEvent> equipSound;
 
-    public GlovesItem(double punchDamage, String glovesName, Supplier<SoundEvent> glovesSound, Properties properties) {
+    public GlovesItem(double punchDamage, String glovesName, Supplier<? extends SoundEvent> glovesSound, Properties properties) {
         super(properties);
         this.damage = punchDamage;
         this.setRenderTexture(Aether.MODID, glovesName);

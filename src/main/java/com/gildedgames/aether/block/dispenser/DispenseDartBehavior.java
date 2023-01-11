@@ -16,9 +16,9 @@ import net.minecraft.world.level.Level;
 import java.util.function.Supplier;
 
 public class DispenseDartBehavior extends AbstractProjectileDispenseBehavior {
-    protected final Supplier<Item> dartItem;
+    protected final Supplier<? extends Item> dartItem;
 
-    public DispenseDartBehavior(Supplier<Item> dartItem) {
+    public DispenseDartBehavior(Supplier<? extends Item> dartItem) {
         this.dartItem = dartItem;
     }
 
