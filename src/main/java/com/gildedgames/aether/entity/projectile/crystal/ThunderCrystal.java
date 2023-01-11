@@ -90,9 +90,9 @@ public class ThunderCrystal extends AbstractCrystal {
     public boolean hurt(@Nonnull DamageSource source, float pAmount) {
         if (!this.level.isClientSide && source.getSourcePosition() != null) {
             ((ServerLevel) this.level).sendParticles(ParticleTypes.CRIT, this.getX(), this.getY(), this.getZ(), 15, 0.2D, 0.2D, 0.2D, 0.0D);
-            this.ticksInAir += pAmount * 10;
             this.knockback(0.15 + pAmount / 8, this.position().subtract(source.getSourcePosition()));
         }
+        this.ticksInAir += pAmount * 10;
         return true;
     }
 
