@@ -14,11 +14,10 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class CustomizationsOptions {
-    public static CustomizationsOptions INSTANCE;
-
     private static final File CUSTOMIZATIONS_FILE = new File(Aether.DIRECTORY.toString(), "aether_customizations.txt");
-
     private final LinkedHashMap<String, Object> customizations = new LinkedHashMap<>();
+
+    public static final CustomizationsOptions INSTANCE = new CustomizationsOptions();
 
     public CustomizationsOptions() {
         if (CUSTOMIZATIONS_FILE.exists()) {
@@ -31,10 +30,6 @@ public class CustomizationsOptions {
             this.customizations.put("developerGlowColor", null);
             this.save();
         }
-    }
-
-    public static void initialize() {
-        INSTANCE = new CustomizationsOptions();
     }
 
     public void load() {

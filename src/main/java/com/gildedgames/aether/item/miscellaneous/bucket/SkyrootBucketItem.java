@@ -36,21 +36,10 @@ public class SkyrootBucketItem extends BucketItem {
     /**
      * Map of replacements for vanilla buckets to Skyroot buckets.
      */
-    public static final Map<Supplier<Item>, Supplier<Item>> REPLACEMENTS = new HashMap<>();
+    public static final Map<Supplier<? extends Item>, Supplier<? extends Item>> REPLACEMENTS = new HashMap<>();
 
-    /**
-     * Sets up the possible replacements for vanilla buckets to Skyroot buckets.
-     */
     public SkyrootBucketItem(Supplier<? extends Fluid> supplier, Item.Properties properties) {
         super(supplier, properties);
-        REPLACEMENTS.put(ForgeRegistries.ITEMS.getDelegateOrThrow(Items.WATER_BUCKET), AetherItems.SKYROOT_WATER_BUCKET);
-        REPLACEMENTS.put(ForgeRegistries.ITEMS.getDelegateOrThrow(Items.POWDER_SNOW_BUCKET), AetherItems.SKYROOT_POWDER_SNOW_BUCKET);
-        REPLACEMENTS.put(ForgeRegistries.ITEMS.getDelegateOrThrow(Items.COD_BUCKET), AetherItems.SKYROOT_COD_BUCKET);
-        REPLACEMENTS.put(ForgeRegistries.ITEMS.getDelegateOrThrow(Items.SALMON_BUCKET), AetherItems.SKYROOT_SALMON_BUCKET);
-        REPLACEMENTS.put(ForgeRegistries.ITEMS.getDelegateOrThrow(Items.PUFFERFISH_BUCKET), AetherItems.SKYROOT_PUFFERFISH_BUCKET);
-        REPLACEMENTS.put(ForgeRegistries.ITEMS.getDelegateOrThrow(Items.TROPICAL_FISH_BUCKET), AetherItems.SKYROOT_TROPICAL_FISH_BUCKET);
-        REPLACEMENTS.put(ForgeRegistries.ITEMS.getDelegateOrThrow(Items.AXOLOTL_BUCKET), AetherItems.SKYROOT_AXOLOTL_BUCKET);
-        REPLACEMENTS.put(ForgeRegistries.ITEMS.getDelegateOrThrow(Items.TADPOLE_BUCKET), AetherItems.SKYROOT_TADPOLE_BUCKET);
     }
 
     /**
@@ -119,15 +108,16 @@ public class SkyrootBucketItem extends BucketItem {
      * @return  The replacement bucket as an {@link ItemStack}.
      */
     public static ItemStack swapBucketType(ItemStack filledStack) {
-        Supplier<Item> filledItem = ForgeRegistries.ITEMS.getDelegateOrThrow(filledStack.getItem());
-        if (REPLACEMENTS.containsKey(filledItem)) {
-            Item replacedItem = REPLACEMENTS.get(filledItem).get();
-            ItemStack newStack = new ItemStack(replacedItem);
-            newStack.setTag(filledStack.getTag());
-            return newStack;
-        } else {
-            return ItemStack.EMPTY;
+        Supplier<? extends Item> filledItem = filledStack::getItem;
+        for (Map.Entry<Supplier<? extends Item>, Supplier<? extends Item>> entry : REPLACEMENTS.entrySet()) {
+            if (filledItem.get() == entry.getKey().get()) {
+                Item replacedItem = entry.getValue().get();
+                ItemStack newStack = new ItemStack(replacedItem);
+                newStack.setTag(filledStack.getTag());
+                return newStack;
+            }
         }
+        return ItemStack.EMPTY;
     }
 
     /**
