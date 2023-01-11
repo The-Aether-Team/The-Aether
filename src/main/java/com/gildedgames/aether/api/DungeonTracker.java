@@ -1,6 +1,5 @@
 package com.gildedgames.aether.api;
 
-import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.entity.BossMob;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -21,52 +20,32 @@ import java.util.UUID;
 import java.util.function.Function;
 
 public record DungeonTracker<T extends Mob & BossMob<T>>(T boss, Vec3 originCoordinates, AABB roomBounds, List<UUID> dungeonPlayers) {
-
-    //this is a backup if for some reason the boss isnt spawned with a dungeon bounds. might just be used for debugging as well and will be removed.
-    public static <T extends Mob & BossMob<T>> void createDebugDungeon(T boss) {
-        DungeonTracker<T> dungeon = new DungeonTracker<>(
-                boss,
-                boss.position(),
-                new AABB(boss.position().x() - 7, boss.position().y() - 1, boss.position().z() - 7,
-                        boss.position().x() + 7, boss.position().y() + 7, boss.position().z() + 7),
-                new ArrayList<>()
-        );
-        boss.setDungeon(dungeon);
-    }
-
-    //debugging
-    public void debugBounds() {
-        for (int x = (int) Math.floor(this.roomBounds().minX); x <= Math.ceil(this.roomBounds().maxX); x++) {
-            for (int y = (int) Math.floor(this.roomBounds().minY); y <= Math.ceil(this.roomBounds().maxY); y++) {
-                for (int z = (int) Math.floor(this.roomBounds().minZ); z <= Math.ceil(this.roomBounds().maxZ); z++) {
-                    if (x == Math.floor(this.roomBounds().minX) || x == Math.ceil(this.roomBounds().maxX)
-                            || y == Math.floor(this.roomBounds().minY) || y == Math.ceil(this.roomBounds().maxY)
-                            || z == Math.floor(this.roomBounds().minZ) || z == Math.ceil(this.roomBounds().maxZ)) {
-                        this.boss().getLevel().setBlockAndUpdate(new BlockPos(x, y, z), AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get().defaultBlockState());
-                    }
-                }
-            }
-        }
-    }
-
     public boolean isBossWithinRoom() {
         return this.roomBounds().contains(this.boss().position());
     }
 
-    public boolean isPlayerWithinRoom(Player player) {
+    public boolean isPlayerWithinRoom(Entity entity) {
+        return this.roomBounds().contains(entity.position());
+    }
+
+    public boolean isPlayerWithinRoomInterior(Entity entity) {
+        return this.roomBounds().deflate(1.0, 1.0, 1.0).contains(entity.position());
+    }
+
+    public boolean isPlayerTracked(Player player) {
         return this.dungeonPlayers().contains(player.getUUID());
     }
 
     public void trackPlayers() {
         this.boss().getLevel().getEntities(EntityType.PLAYER, this.roomBounds(), Entity::isAlive).forEach(player -> {
-            if (!isPlayerWithinRoom(player)) {
+            if (!isPlayerTracked(player)) {
                 this.boss().onDungeonPlayerAdded(player);
                 this.dungeonPlayers().add(player.getUUID());
             }
         });
         this.dungeonPlayers().removeIf(uuid -> {
             Player player = this.boss().getLevel().getPlayerByUUID(uuid);
-            boolean shouldRemove = player != null && (!this.roomBounds().contains(player.position()) || !player.isAlive());
+            boolean shouldRemove = player != null && (!this.isPlayerWithinRoom(player) || !player.isAlive());
             if (shouldRemove) {
                 this.boss().onDungeonPlayerRemoved(player);
             }

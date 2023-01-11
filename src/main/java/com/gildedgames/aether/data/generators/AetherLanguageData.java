@@ -624,6 +624,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addGuiText("jei.incubating", "Incubating");
         addGuiText("jei.fuel", "Aether Fuel");
 
+        addGuiText("boss.message.far", "You must be in the boss room to interact.");
+
         addGuiText("slider.title", "the Slider");
         addGuiText("slider.message.attack.invalid", "Hmm. Perhaps I need to attack it with a Pickaxe?");
 

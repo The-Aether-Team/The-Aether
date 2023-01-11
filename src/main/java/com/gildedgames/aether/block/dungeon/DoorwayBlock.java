@@ -1,6 +1,7 @@
 package com.gildedgames.aether.block.dungeon;
 
 import com.gildedgames.aether.client.particle.AetherParticleTypes;
+import com.gildedgames.aether.entity.ai.AetherBlockPathTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
@@ -9,6 +10,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -22,11 +24,13 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
 public class DoorwayBlock extends Block {
     public static final BooleanProperty INVISIBLE = BooleanProperty.create("invisible");
@@ -150,5 +154,19 @@ public class DoorwayBlock extends Block {
     @Override
     public RenderShape getRenderShape(BlockState state) {
         return state.getValue(INVISIBLE) ? RenderShape.INVISIBLE : super.getRenderShape(state);
+    }
+
+    /**
+     * Gets the {@link BlockPathTypes} corresponding to this block for mob navigation checks.
+     * @param state The {@link BlockState} of the block.
+     * @param level The {@link Level} the block is in.
+     * @param pos The {@link BlockPos} of the block.
+     * @param mob The {@link Mob} trying to pathfind in respect to this block.
+     * @return The {@link BlockPathTypes} corresponding to this block.
+     */
+    @Nullable
+    @Override
+    public BlockPathTypes getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob mob) {
+        return AetherBlockPathTypes.BOSS_DOORWAY;
     }
 }

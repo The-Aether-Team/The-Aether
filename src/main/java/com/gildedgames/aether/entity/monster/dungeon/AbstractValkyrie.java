@@ -5,7 +5,6 @@ import com.gildedgames.aether.entity.NotGrounded;
 import com.gildedgames.aether.entity.ai.goal.target.MostDamageTargetGoal;
 import com.gildedgames.aether.event.dispatch.AetherEventDispatch;
 import com.gildedgames.aether.event.events.ValkyrieTeleportEvent;
-import com.gildedgames.aether.mixin.mixins.common.accessor.FlyNodeEvaluatorAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.ExplosionParticlePacket;
 import net.minecraft.core.BlockPos;
@@ -14,6 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -28,24 +28,24 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
-import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.pathfinder.*;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import java.util.EnumSet;
 
 /**
  * Abstract class that holds common code for Valkyrie and ValkyrieQueen, both of which are children of this class.
  */
 public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(AbstractValkyrie.class, EntityDataSerializers.BOOLEAN);
+
+    private double lastMotionY;
+
     /** Goal for targeting in groups of entities */
     MostDamageTargetGoal mostDamageTargetGoal;
 
@@ -57,8 +57,8 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     @Override
     public void registerGoals() {
         this.goalSelector.addGoal(1, new ValkyrieTeleportGoal(this));
-        this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 0.65, true));
-        this.goalSelector.addGoal(4, new LungeGoal(this));
+        this.goalSelector.addGoal(3, new LungeGoal(this, 0.65));
+        this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 0.65, true));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.5));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F, 8.0F));
         this.mostDamageTargetGoal = new MostDamageTargetGoal(this);
@@ -78,12 +78,6 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         this.entityData.define(DATA_ENTITY_ON_GROUND_ID, true);
     }
 
-    @Override
-    @Nonnull
-    protected PathNavigation createNavigation(@Nonnull Level level) {
-        return new ValkyriePathNavigation(this, level);
-    }
-
     /**
      * Handles some movement logic for the valkyrie.
      */
@@ -93,20 +87,19 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         if (this.isOnGround()) {
             this.setEntityOnGround(true);
         }
-        if (!this.onGround) {
-            double fallSpeed;
-            AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
-            if (gravity != null) {
-                fallSpeed = Math.max(gravity.getValue() * -0.625, -0.275);
-            } else {
-                fallSpeed = -0.275;
-            }
+
+        double motionY = this.getDeltaMovement().y;
+
+        if (!this.onGround && Math.abs(motionY - this.lastMotionY) > 0.07D && Math.abs(motionY - this.lastMotionY) < 0.09D) {
             this.setDeltaMovement(this.getDeltaMovement().add(0, 0.055, 0));
-            if (this.getDeltaMovement().y < fallSpeed) {
-                this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
-                this.setEntityOnGround(false);
-            }
         }
+    }
+
+    @Override
+    public void travel(Vec3 motion) {
+        this.lastMotionY = this.getDeltaMovement().y;
+        this.flyingSpeed = this.getSpeed() * 0.21600002F;
+        super.travel(motion);
     }
 
     /**
@@ -122,6 +115,27 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         super.jumpFromGround();
         this.setEntityOnGround(false);
     }
+
+    /*@Override
+    protected float getJumpPower() {
+        return 0.6F * this.getBlockJumpFactor();
+    }*/
+
+    /*@Override
+    public void knockback(double pStrength, double pX, double pZ) {
+        net.minecraftforge.event.entity.living.LivingKnockBackEvent event = net.minecraftforge.common.ForgeHooks.onLivingKnockBack(this, (float) pStrength, pX, pZ);
+        if(event.isCanceled()) return;
+        pStrength = event.getStrength();
+        pX = event.getRatioX();
+        pZ = event.getRatioZ();
+        pStrength *= 1.0D - this.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
+        if (!(pStrength <= 0.0D)) {
+            this.hasImpulse = true;
+            Vec3 vec3 = this.getDeltaMovement();
+            Vec3 vec31 = (new Vec3(pX, 0.0D, pZ)).normalize().scale(pStrength);
+            this.setDeltaMovement(vec3.x / 2.0D - vec31.x, this.onGround ? 0.4D : vec3.y, vec3.z / 2.0D - vec31.z);
+        }
+    }*/
 
     /**
      * Valkyries don't take fall damage.
@@ -222,12 +236,15 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
 
         @Override
         public boolean canUse() {
-            return this.valkyrie.getTarget() != null && this.teleportTimer++ >= 450;
+            return true;
         }
 
         @Override
-        public void start() {
-            if (this.valkyrie.teleportAroundTarget(valkyrie.getTarget())) {
+        public void tick() {
+            if (this.teleportTimer++ < 450) {
+                return;
+            }
+            if (this.valkyrie.getTarget() != null && this.valkyrie.teleportAroundTarget(valkyrie.getTarget())) {
                 this.teleportTimer = this.valkyrie.random.nextInt(40);
             } else {
                 this.teleportTimer -= 20;
@@ -241,43 +258,56 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     }
 
     /**
-     * Lunge back at the target after being attacked.
+     * Lunge at the target when in the air.
      */
     public static class LungeGoal extends Goal {
         private final AbstractValkyrie valkyrie;
-        private int counter;
-        private int timestamp;
-        public LungeGoal(AbstractValkyrie mob) {
+        private final double speedModifier;
+        private int flyingTicks;
+
+        public LungeGoal(AbstractValkyrie mob, double speedModifier) {
             this.valkyrie = mob;
+            this.speedModifier = speedModifier;
+            this.setFlags(EnumSet.of(Flag.MOVE));
         }
 
         @Override
         public boolean canUse() {
-            int timestamp = this.valkyrie.getLastHurtByMobTimestamp();
-            if (this.timestamp != timestamp) {
-                this.timestamp = timestamp;
-                return true;
-            }
-            return false;
-        }
-
-        @Override
-        public boolean canContinueToUse() {
-            return !this.valkyrie.onGround && this.counter >= 0;
+            return !this.valkyrie.onGround;
         }
 
         @Override
         public void tick() {
-            if (this.counter-- <= 0 && this.valkyrie.getTarget() != null) {
-                Vec3 distance = this.valkyrie.getTarget().position().subtract(this.valkyrie.position());
-                double angle = Math.atan2(distance.x, distance.z);
-                this.valkyrie.setDeltaMovement(this.valkyrie.getDeltaMovement().add(Math.sin(angle) * 0.35, 0, Math.cos(angle) * 0.35));
-            }
-        }
+            LivingEntity target = this.valkyrie.getTarget();
+            double motionY = this.valkyrie.getDeltaMovement().y;
+            if (target != null) {
+                if (motionY < 0.2 && this.valkyrie.lastMotionY >= 0.2 && this.valkyrie.distanceTo(target) <= 16) {
+                    double x = target.getX() - this.valkyrie.getX();
+                    double z = target.getZ() - this.valkyrie.getZ();
+                    motionY -= 0.1;
+                    double angle = Math.atan2(x, z);
+                    this.valkyrie.setDeltaMovement(Math.sin(angle) * 0.3, motionY, Math.cos(angle) * 0.3);
+                    this.valkyrie.setYRot((float) angle * 180 / Mth.PI);
+                    this.flyingTicks = 8;
+                }
 
-        @Override
-        public void stop() {
-            this.counter = 8;
+                if (this.flyingTicks > 0) {
+                    this.flyingTicks--;
+                    double fallSpeed;
+                    AttributeInstance gravity = this.valkyrie.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
+                    if (gravity != null) {
+                        fallSpeed = Math.max(gravity.getValue() * -0.625, -0.275);
+                    } else {
+                        fallSpeed = -0.275;
+                    }
+                    if (motionY < fallSpeed) {
+                        this.valkyrie.setDeltaMovement(this.valkyrie.getDeltaMovement().x, fallSpeed, this.valkyrie.getDeltaMovement().z);
+                        this.valkyrie.setEntityOnGround(false);
+                    }
+                }
+                Vec3 position = target.position();
+                this.valkyrie.getMoveControl().setWantedPosition(position.x, position.y, position.z, this.speedModifier);
+            }
         }
 
         @Override
@@ -296,55 +326,10 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
 
         @Override
         public void tick() {
+            if (this.operation == Operation.JUMPING) {
+                this.operation = Operation.MOVE_TO;
+            }
             super.tick();
-            if (!this.mob.isOnGround()) {
-                this.mob.setZza(1.5F);
-            }
-        }
-    }
-
-    /**
-     * Allows the valkyrie to update paths when in the sky.
-     */
-    public static class ValkyriePathNavigation extends GroundPathNavigation {
-        public ValkyriePathNavigation(Mob mob, Level level) {
-            super(mob, level);
-        }
-
-        @Override
-        @Nonnull
-        protected PathFinder createPathFinder(int maxVisitedNodes) {
-            this.nodeEvaluator = new ValkyrieNodeEvaluator();
-            this.nodeEvaluator.setCanPassDoors(true);
-            return new PathFinder(this.nodeEvaluator, maxVisitedNodes);
-        }
-
-        @Override
-        protected boolean canUpdatePath() {
-            return true;
-        }
-    }
-
-    /**
-     * Allows the valkyrie to establish a path through the air while descending.
-     */
-    public static class ValkyrieNodeEvaluator extends FlyNodeEvaluator {
-        /**
-         * Returns a mapped point or creates and adds one
-         */
-        @Override
-        @Nullable
-        protected Node findAcceptedNode(int pX, int pY, int pZ) {
-            Node node = null;
-            FlyNodeEvaluatorAccessor flyNodeEvaluatorAccessor = (FlyNodeEvaluatorAccessor) this;
-            BlockPathTypes blockpathtypes = flyNodeEvaluatorAccessor.callGetCachedBlockPathType(pX, pY, pZ);
-            float f = this.mob.getPathfindingMalus(blockpathtypes);
-            if (f >= 0.0F) {
-                node = this.nodes.computeIfAbsent(Node.createHash(pX, pY, pZ), (p_77332_) -> new Node(pX, pY, pZ));
-                node.type = blockpathtypes;
-                node.costMalus = Math.max(node.costMalus, f);
-            }
-            return node;
         }
     }
 }

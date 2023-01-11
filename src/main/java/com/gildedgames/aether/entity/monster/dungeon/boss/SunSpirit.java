@@ -187,7 +187,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
 
     @Override
     public boolean isInvulnerableTo(DamageSource source) {
-        return this.isRemoved() || source != DamageSource.OUT_OF_WORLD && !source.getMsgId().equals("ice_crystal");
+        return this.isRemoved() || source != DamageSource.OUT_OF_WORLD && !source.getMsgId().equals("aether.ice_crystal");
     }
 
     /**
@@ -228,45 +228,49 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
         if (!this.level.isClientSide && !this.isBossFight()) {
             if (this.chatCooldown <= 0) {
                 this.chatCooldown = 14;
-                LazyOptional<AetherPlayer> aetherPlayer = player.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
-                if (!AetherConfig.COMMON.repeat_sun_spirit_dialogue.get()) {
-                    aetherPlayer.ifPresent(cap -> {
-                        if (cap.hasSeenSunSpiritDialogue() && this.chatLine == 0) {
-                            this.chatLine = 10;
+                if (this.getDungeon().isPlayerWithinRoomInterior(player)) {
+                    LazyOptional<AetherPlayer> aetherPlayer = player.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
+                    if (!AetherConfig.COMMON.repeat_sun_spirit_dialogue.get()) {
+                        aetherPlayer.ifPresent(cap -> {
+                            if (cap.hasSeenSunSpiritDialogue() && this.chatLine == 0) {
+                                this.chatLine = 10;
+                            }
+                        });
+                    }
+                    switch (this.chatLine++) {
+                        case 0 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line0").withStyle(ChatFormatting.RED));
+                        case 1 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line1").withStyle(ChatFormatting.RED));
+                        case 2 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line2").withStyle(ChatFormatting.RED));
+                        case 3 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line3").withStyle(ChatFormatting.RED));
+                        case 4 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line4").withStyle(ChatFormatting.RED));
+                        case 5 -> {
+                            this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line5.1").withStyle(ChatFormatting.RED));
+                            this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line5.2").withStyle(ChatFormatting.RED));
                         }
-                    });
-                }
-                switch (this.chatLine++) {
-                    case 0 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line0").withStyle(ChatFormatting.RED));
-                    case 1 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line1").withStyle(ChatFormatting.RED));
-                    case 2 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line2").withStyle(ChatFormatting.RED));
-                    case 3 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line3").withStyle(ChatFormatting.RED));
-                    case 4 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line4").withStyle(ChatFormatting.RED));
-                    case 5 -> {
-                        this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line5.1").withStyle(ChatFormatting.RED));
-                        this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line5.2").withStyle(ChatFormatting.RED));
-                    }
-                    case 6 -> {
-                        this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line6.1").withStyle(ChatFormatting.RED));
-                        this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line6.2").withStyle(ChatFormatting.RED));
-                    }
-                    case 7 -> {
-                        this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line7.1").withStyle(ChatFormatting.RED));
-                        this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line7.2").withStyle(ChatFormatting.RED));
-                    }
-                    case 8 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line8").withStyle(ChatFormatting.RED));
-                    case 9 -> {
-                        this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line9").withStyle(ChatFormatting.RED));
-                        this.setBossFight(true);
-                        if (this.goldDungeon != null) {
-                            this.closeRoom();
+                        case 6 -> {
+                            this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line6.1").withStyle(ChatFormatting.RED));
+                            this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line6.2").withStyle(ChatFormatting.RED));
                         }
-                        aetherPlayer.ifPresent(cap -> cap.setSeenSunSpiritDialogue(true));
+                        case 7 -> {
+                            this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line7.1").withStyle(ChatFormatting.RED));
+                            this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line7.2").withStyle(ChatFormatting.RED));
+                        }
+                        case 8 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line8").withStyle(ChatFormatting.RED));
+                        case 9 -> {
+                            this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line9").withStyle(ChatFormatting.RED));
+                            this.setBossFight(true);
+                            if (this.goldDungeon != null) {
+                                this.closeRoom();
+                            }
+                            aetherPlayer.ifPresent(cap -> cap.setSeenSunSpiritDialogue(true));
+                        }
+                        default -> {
+                            this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line10").withStyle(ChatFormatting.RED));
+                            this.chatLine = 9;
+                        }
                     }
-                    default -> {
-                        this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line10").withStyle(ChatFormatting.RED));
-                        this.chatLine = 9;
-                    }
+                } else {
+                    this.displayTooFarMessage(player);
                 }
             }
         }
@@ -338,7 +342,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     public void startSeenByPlayer(@Nonnull ServerPlayer pPlayer) {
         super.startSeenByPlayer(pPlayer);
         AetherPacketHandler.sendToPlayer(new BossInfoPacket.Display(this.bossFight.getId()), pPlayer);
-        if (this.getDungeon() != null && this.getDungeon().isPlayerWithinRoom(pPlayer)) {
+        if (this.getDungeon() != null && this.getDungeon().isPlayerTracked(pPlayer)) {
             this.bossFight.addPlayer(pPlayer);
         }
     }

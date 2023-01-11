@@ -19,7 +19,6 @@
     "common.accessor.ConcretePowderBlockAccessor",
     "common.accessor.EntityAccessor",
     "common.accessor.FireBlockAccessor",
-    "common.accessor.FlyNodeEvaluatorAccessor",
     "common.accessor.LevelAccessor",
     "common.accessor.LevelStorageAccessAccessor",
     "common.accessor.LootContextParamSetsAccessor",
