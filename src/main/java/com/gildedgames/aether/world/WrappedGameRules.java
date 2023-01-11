@@ -26,9 +26,4 @@ public class WrappedGameRules extends GameRules {
     public boolean getBoolean(Key<GameRules.BooleanValue> pKey) {
         return !blacklist.contains(pKey) && this.getRule(pKey).get();
     }
-
-    @Override
-    public int getInt(Key<IntegerValue> pKey) {
-        return super.getInt(pKey);
-    }
 }
