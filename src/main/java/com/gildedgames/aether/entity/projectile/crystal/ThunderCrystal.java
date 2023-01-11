@@ -47,7 +47,13 @@ public class ThunderCrystal extends AbstractCrystal {
     @Override
     public void tickMovement() {
         if (!this.level.isClientSide) {
-            if (this.ticksInAir >= this.getLifeSpan() || this.target == null || !this.target.isAlive()) {
+            if (this.target == null || !this.target.isAlive()) {
+                this.spawnExplosionParticles();
+                this.discard();
+                this.playSound(AetherSoundEvents.ENTITY_THUNDER_CRYSTAL_EXPLODE.get(), 1.0F, 1.0F);
+                return;
+            }
+            if (this.ticksInAir >= this.getLifeSpan()) {
                 LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(this.level);
                 if (lightningBolt != null) {
                     LightningTracker.get(lightningBolt).ifPresent(lightningTracker -> lightningTracker.setOwner(this.getOwner()));
