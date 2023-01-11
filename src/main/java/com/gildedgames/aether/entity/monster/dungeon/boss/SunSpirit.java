@@ -187,7 +187,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
 
     @Override
     public boolean isInvulnerableTo(DamageSource source) {
-        return this.isRemoved() || source != DamageSource.OUT_OF_WORLD && !source.getMsgId().equals("ice_crystal");
+        return this.isRemoved() || source != DamageSource.OUT_OF_WORLD && !source.getMsgId().equals("aether.ice_crystal");
     }
 
     /**
