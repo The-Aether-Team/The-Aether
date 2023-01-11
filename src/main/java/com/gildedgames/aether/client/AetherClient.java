@@ -10,6 +10,7 @@ import com.gildedgames.aether.inventory.menu.LoreBookMenu;
 import com.gildedgames.aether.inventory.menu.AetherMenuTypes;
 
 import com.gildedgames.aether.item.AetherItems;
+import com.google.common.reflect.Reflection;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -25,7 +26,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public class AetherClient {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
-        CustomizationsOptions.initialize();
+        Reflection.initialize(CustomizationsOptions.class);
         AetherRenderers.registerCuriosRenderers();
         event.enqueueWork(() -> {
             AetherAtlases.registerWoodTypeAtlases();

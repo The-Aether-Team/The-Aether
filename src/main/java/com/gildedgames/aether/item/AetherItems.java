@@ -256,4 +256,18 @@ public class AetherItems {
 	public static final RegistryObject<SpawnEggItem> SLIDER_SPAWN_EGG = ITEMS.register("slider_spawn_egg", () -> new SliderSpawnEggItem(AetherEntityTypes.SLIDER, 0xA7A7A7, 0x5C9FF2, new Item.Properties()));
 	public static final RegistryObject<SpawnEggItem> SUN_SPIRIT_SPAWN_EGG = ITEMS.register("sun_spirit_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.SUN_SPIRIT, 0xFEF500, 0xFF6D01, new Item.Properties()));
 	public static final RegistryObject<SpawnEggItem> ZEPHYR_SPAWN_EGG = ITEMS.register("zephyr_spawn_egg", () -> new ForgeSpawnEggItem(AetherEntityTypes.ZEPHYR, 0xDFDFDF, 0x99CFE8, new Item.Properties()));
+
+	/**
+	 * Sets up the possible replacements for vanilla buckets to Skyroot buckets.
+	 */
+	public static void setupBucketReplacements() {
+		SkyrootBucketItem.REPLACEMENTS.put(() -> Items.WATER_BUCKET, AetherItems.SKYROOT_WATER_BUCKET);
+		SkyrootBucketItem.REPLACEMENTS.put(() -> Items.POWDER_SNOW_BUCKET, AetherItems.SKYROOT_POWDER_SNOW_BUCKET);
+		SkyrootBucketItem.REPLACEMENTS.put(() -> Items.COD_BUCKET, AetherItems.SKYROOT_COD_BUCKET);
+		SkyrootBucketItem.REPLACEMENTS.put(() -> Items.SALMON_BUCKET, AetherItems.SKYROOT_SALMON_BUCKET);
+		SkyrootBucketItem.REPLACEMENTS.put(() -> Items.PUFFERFISH_BUCKET, AetherItems.SKYROOT_PUFFERFISH_BUCKET);
+		SkyrootBucketItem.REPLACEMENTS.put(() -> Items.TROPICAL_FISH_BUCKET, AetherItems.SKYROOT_TROPICAL_FISH_BUCKET);
+		SkyrootBucketItem.REPLACEMENTS.put(() -> Items.AXOLOTL_BUCKET, AetherItems.SKYROOT_AXOLOTL_BUCKET);
+		SkyrootBucketItem.REPLACEMENTS.put(() -> Items.TADPOLE_BUCKET, AetherItems.SKYROOT_TADPOLE_BUCKET);
+	}
 }
