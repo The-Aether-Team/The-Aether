@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 
 public class MoaType
 {
-    private final Supplier<Item> egg;
+    private final Supplier<? extends Item> egg;
     private final int maxJumps;
     private final float speed;
     private final ResourceLocation texture;
@@ -20,7 +20,7 @@ public class MoaType
         this(properties.egg, properties.maxJumps, properties.speed, properties.texture, properties.saddleTexture);
     }
 
-    public MoaType(Supplier<Item> egg, int maxJumps, float speed, ResourceLocation texture, ResourceLocation saddleTexture) {
+    public MoaType(Supplier<? extends Item> egg, int maxJumps, float speed, ResourceLocation texture, ResourceLocation saddleTexture) {
         this.egg = egg;
         this.maxJumps = maxJumps;
         this.speed = speed;
@@ -58,13 +58,13 @@ public class MoaType
 
     public static class Properties
     {
-        private Supplier<Item> egg = AetherItems.BLUE_MOA_EGG;
+        private Supplier<? extends Item> egg = AetherItems.BLUE_MOA_EGG;
         private int maxJumps = 3;
         private float speed = 0.1F;
         private ResourceLocation texture = new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/blue_moa.png");
         private ResourceLocation saddleTexture = new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png");
 
-        public MoaType.Properties egg(Supplier<Item> egg) {
+        public MoaType.Properties egg(Supplier<? extends Item> egg) {
             this.egg = egg;
             return this;
         }
