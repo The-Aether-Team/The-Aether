@@ -143,24 +143,23 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     @Override
     @Nonnull
     protected InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
-        if (!this.isBossFight() && !this.level.isClientSide) {
-            if (!this.isReady()) {
-                this.lookAt(player, 180F, 180F);
-                if (player instanceof ServerPlayer serverPlayer) {
-                    if (!this.isTrading()) {
-                        AetherPacketHandler.sendToPlayer(new OpenNpcDialoguePacket(this.getId()), serverPlayer);
-                        this.setTradingPlayer(serverPlayer);
+        if (hand == InteractionHand.MAIN_HAND) {
+            if (!this.isBossFight() && !this.level.isClientSide) {
+                if (!this.isReady()) {
+                    this.lookAt(player, 180F, 180F);
+                    if (player instanceof ServerPlayer serverPlayer) {
+                        if (!this.isTrading()) {
+                            AetherPacketHandler.sendToPlayer(new OpenNpcDialoguePacket(this.getId()), serverPlayer);
+                            this.setTradingPlayer(serverPlayer);
+                        }
                     }
-                }
-            } else {
-                if (hand == InteractionHand.MAIN_HAND) {
+                } else {
                     this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.ready"));
                 }
+                return InteractionResult.SUCCESS;
             }
-            return InteractionResult.SUCCESS;
-        } else {
-            return InteractionResult.PASS;
         }
+        return InteractionResult.PASS;
     }
 
     /**

@@ -77,26 +77,28 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
     @Nonnull
     protected InteractionResult mobInteract(Player player, @Nonnull InteractionHand hand) {
         ItemStack item = player.getItemInHand(hand);
-        if (this.getTarget() == null) {
-            this.lookAt(player, 180.0F, 180.0F);
-            if (!this.level.isClientSide && this.chatTimer <= 0) {
-                String translationId;
-                if (item.getItem() == AetherItems.VICTORY_MEDAL.get()) {
-                    if (item.getCount() >= 10) {
-                        translationId = "gui.aether.valkyrie.dialog.medal.1";
-                    } else if (item.getCount() >= 5) {
-                        translationId = "gui.aether.valkyrie.dialog.medal.2";
+        if (hand == InteractionHand.MAIN_HAND) {
+            if (this.getTarget() == null) {
+                this.lookAt(player, 180.0F, 180.0F);
+                if (!this.level.isClientSide && this.chatTimer <= 0) {
+                    String translationId;
+                    if (item.getItem() == AetherItems.VICTORY_MEDAL.get()) {
+                        if (item.getCount() >= 10) {
+                            translationId = "gui.aether.valkyrie.dialog.medal.1";
+                        } else if (item.getCount() >= 5) {
+                            translationId = "gui.aether.valkyrie.dialog.medal.2";
+                        } else {
+                            translationId = "gui.aether.valkyrie.dialog.medal.3";
+                        }
                     } else {
-                        translationId = "gui.aether.valkyrie.dialog.medal.3";
+                        translationId = "gui.aether.valkyrie.dialog." + (char) (random.nextInt(3) + '1');
                     }
-                } else {
-                    translationId = "gui.aether.valkyrie.dialog." + (char) (random.nextInt(3) + '1');
+                    this.chatItUp(player, Component.translatable(translationId));
+                    this.chatTimer = 60;
                 }
-                this.chatItUp(player, Component.translatable(translationId));
-                this.chatTimer = 60;
             }
         }
-        return super.mobInteract(player, hand);
+        return InteractionResult.PASS;
     }
 
     /**
