@@ -21,9 +21,9 @@ import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
 public class ParachuteRenderer extends EntityRenderer<Parachute> {
-    private final Supplier<Block> parachuteBlock;
+    private final Supplier<? extends Block> parachuteBlock;
 
-    public ParachuteRenderer(EntityRendererProvider.Context context, Supplier<Block> parachuteBlock) {
+    public ParachuteRenderer(EntityRendererProvider.Context context, Supplier<? extends Block> parachuteBlock) {
         super(context);
         this.parachuteBlock = parachuteBlock;
         this.shadowRadius = 0.0F;

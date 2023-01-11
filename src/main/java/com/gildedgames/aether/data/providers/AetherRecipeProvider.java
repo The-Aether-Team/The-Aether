@@ -350,7 +350,7 @@ public abstract class AetherRecipeProvider extends RecipeProvider {
                 .unlockedBy(getHasName(result), has(result));
     }
 
-    protected static IncubationBuilder moaIncubationRecipe(EntityType<?> entity, Supplier<MoaType> moaType, ItemLike ingredient) {
+    protected static IncubationBuilder moaIncubationRecipe(EntityType<?> entity, Supplier<? extends MoaType> moaType, ItemLike ingredient) {
         CompoundTag tag = new CompoundTag();
         tag.putBoolean("IsBaby", true);
         tag.putString("MoaType", moaType.get().toString());

@@ -1,6 +1,7 @@
 package com.gildedgames.aether.block.natural;
 
 import com.gildedgames.aether.block.AetherBlockStateProperties;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -13,9 +14,9 @@ import net.minecraft.world.level.Level;
 import java.util.function.Supplier;
 
 public class LeavesWithParticlesBlock extends LeavesBlock {
-	private final Supplier<SimpleParticleType> particle;
+	private final Supplier<? extends ParticleOptions> particle;
 
-	public LeavesWithParticlesBlock(Supplier<SimpleParticleType> particle, Properties properties) {
+	public LeavesWithParticlesBlock(Supplier<? extends ParticleOptions> particle, Properties properties) {
 		super(properties);
 		this.registerDefaultState(this.defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, false));
 		this.particle = particle;
