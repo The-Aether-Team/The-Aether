@@ -286,7 +286,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
                     double z = target.getZ() - this.valkyrie.getZ();
                     motionY -= 0.1;
                     double angle = Math.atan2(x, z);
-                    this.valkyrie.setDeltaMovement(Math.sin(angle) * 0.25, motionY, Math.cos(angle) * 0.25);
+                    this.valkyrie.setDeltaMovement(Math.sin(angle) * 0.3, motionY, Math.cos(angle) * 0.3);
                     this.valkyrie.setYRot((float) angle * 180 / Mth.PI);
                     this.flyingTicks = 8;
                 }
