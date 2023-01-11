@@ -140,6 +140,7 @@ public class Aether {
         Reflection.initialize(AetherRecipeBookTypes.class);
 
         AetherAdvancementTriggers.init();
+        AetherBlockPathTypes.init();
 
         this.registerFuels();
 
