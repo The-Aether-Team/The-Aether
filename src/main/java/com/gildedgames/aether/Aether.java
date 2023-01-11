@@ -138,9 +138,9 @@ public class Aether {
         Reflection.initialize(SunAltarWhitelist.class);
         Reflection.initialize(AetherPlacementModifiers.class);
         Reflection.initialize(AetherRecipeBookTypes.class);
+        Reflection.initialize(AetherBlockPathTypes.class);
 
         AetherAdvancementTriggers.init();
-        AetherBlockPathTypes.init();
 
         this.registerFuels();
 
