@@ -31,6 +31,7 @@ InsomniaKitten
 
 Jonathing
 - Refactors to use Supplier instead of RegistryObject for parameters taking a MoaType.
+- Refactors to use wildcards for Suppliers for public API.
 - Refactors to use constructors instead of Google's helper methods for data structures.
 - Fixes to jarJar-built file not reobfuscating.
 
