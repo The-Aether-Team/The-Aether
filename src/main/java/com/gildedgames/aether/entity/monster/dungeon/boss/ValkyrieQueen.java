@@ -281,7 +281,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     public void startSeenByPlayer(@Nonnull ServerPlayer pPlayer) {
         super.startSeenByPlayer(pPlayer);
         AetherPacketHandler.sendToPlayer(new BossInfoPacket.Display(this.bossFight.getId()), pPlayer);
-        if (this.getDungeon() != null && this.getDungeon().isPlayerTracked(pPlayer)) {
+        if (this.getDungeon() == null || this.getDungeon().isPlayerTracked(pPlayer)) {
             this.bossFight.addPlayer(pPlayer);
         }
     }
