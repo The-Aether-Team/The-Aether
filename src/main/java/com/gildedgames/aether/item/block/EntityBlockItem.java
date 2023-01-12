@@ -11,14 +11,14 @@ import net.minecraftforge.common.util.NonNullSupplier;
 import java.util.function.Consumer;
 
 public class EntityBlockItem extends BlockItem {
-    private final LazyOptional<BlockEntity> blockEntity;
+    private final LazyOptional<? extends BlockEntity> blockEntity;
 
-    public <B extends Block> EntityBlockItem(B block, NonNullSupplier<BlockEntity> blockEntity, Properties properties) {
+    public <B extends Block> EntityBlockItem(B block, NonNullSupplier<? extends BlockEntity> blockEntity, Properties properties) {
         super(block, properties);
         this.blockEntity = LazyOptional.of(blockEntity);
     }
 
-    public LazyOptional<BlockEntity> getBlockEntity() {
+    public LazyOptional<? extends BlockEntity> getBlockEntity() {
         return this.blockEntity;
     }
 

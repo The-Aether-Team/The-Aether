@@ -1,5 +1,6 @@
 package com.gildedgames.aether.entity.projectile.crystal;
 
+import com.gildedgames.aether.capability.lightning.LightningTracker;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.client.particle.AetherParticleTypes;
 import net.minecraft.core.particles.ParticleOptions;
@@ -46,9 +47,16 @@ public class ThunderCrystal extends AbstractCrystal {
     @Override
     public void tickMovement() {
         if (!this.level.isClientSide) {
-            if (this.ticksInAir >= this.getLifeSpan() || this.target == null || !this.target.isAlive()) {
+            if (this.target == null || !this.target.isAlive()) {
+                this.spawnExplosionParticles();
+                this.discard();
+                this.playSound(AetherSoundEvents.ENTITY_THUNDER_CRYSTAL_EXPLODE.get(), 1.0F, 1.0F);
+                return;
+            }
+            if (this.ticksInAir >= this.getLifeSpan()) {
                 LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(this.level);
                 if (lightningBolt != null) {
+                    LightningTracker.get(lightningBolt).ifPresent(lightningTracker -> lightningTracker.setOwner(this.getOwner()));
                     lightningBolt.setPos(this.getX(), this.getY(), this.getZ());
                     this.level.addFreshEntity(lightningBolt);
                 }
@@ -88,9 +96,9 @@ public class ThunderCrystal extends AbstractCrystal {
     public boolean hurt(@Nonnull DamageSource source, float pAmount) {
         if (!this.level.isClientSide && source.getSourcePosition() != null) {
             ((ServerLevel) this.level).sendParticles(ParticleTypes.CRIT, this.getX(), this.getY(), this.getZ(), 15, 0.2D, 0.2D, 0.2D, 0.0D);
-            this.ticksInAir += pAmount * 10;
             this.knockback(0.15 + pAmount / 8, this.position().subtract(source.getSourcePosition()));
         }
+        this.ticksInAir += pAmount * 10;
         return true;
     }
 

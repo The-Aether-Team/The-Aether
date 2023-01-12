@@ -17,6 +17,7 @@ import com.gildedgames.aether.data.generators.*;
 import com.gildedgames.aether.data.generators.tags.*;
 import com.gildedgames.aether.effect.AetherEffects;
 import com.gildedgames.aether.entity.AetherEntityTypes;
+import com.gildedgames.aether.entity.ai.AetherBlockPathTypes;
 import com.gildedgames.aether.entity.ai.brain.memory.AetherMemoryModuleTypes;
 import com.gildedgames.aether.entity.ai.brain.sensing.AetherSensorTypes;
 import com.gildedgames.aether.event.AetherGameEvents;
@@ -42,6 +43,7 @@ import com.gildedgames.aether.world.processor.AetherStructureProcessors;
 import com.gildedgames.aether.world.structure.AetherStructureTypes;
 import com.gildedgames.aether.world.structurepiece.AetherStructurePieceTypes;
 import com.gildedgames.aether.world.treedecorator.AetherTreeDecoratorTypes;
+import com.google.common.reflect.Reflection;
 import com.mojang.logging.LogUtils;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.HolderLookup;
@@ -83,7 +85,7 @@ public class Aether {
     public static final Logger LOGGER = LogUtils.getLogger();
     public static final Path DIRECTORY = FMLPaths.CONFIGDIR.get().resolve(Aether.MODID);
 
-    public static TriviaGenerator TRIVIA_READER;
+    public static final TriviaGenerator TRIVIA_READER = new TriviaGenerator();
 
     public Aether() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -129,18 +131,17 @@ public class Aether {
         DIRECTORY.toFile().mkdirs(); // Ensures the Aether's config folder is generated.
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
-
-        TRIVIA_READER = new TriviaGenerator();
     }
 
     public void commonSetup(FMLCommonSetupEvent event) {
         AetherPacketHandler.register();
 
-        AetherAdvancementTriggers.init();
-        AetherPlacementModifiers.init();
-        AetherRecipeBookTypes.init();
+        Reflection.initialize(SunAltarWhitelist.class);
+        Reflection.initialize(AetherPlacementModifiers.class);
+        Reflection.initialize(AetherRecipeBookTypes.class);
+        Reflection.initialize(AetherBlockPathTypes.class);
 
-        SunAltarWhitelist.initialize();
+        AetherAdvancementTriggers.init();
 
         MoaSkins.registerMoaSkins();
         MoaPacks.registerMoaPacks();
@@ -150,6 +151,8 @@ public class Aether {
         event.enqueueWork(() -> {
             AetherBlocks.registerPots();
             AetherBlocks.registerFlammability();
+
+            AetherItems.setupBucketReplacements();
 
             this.registerDispenserBehaviors();
             this.registerCauldronInteractions();

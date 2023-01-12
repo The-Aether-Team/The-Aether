@@ -9,9 +9,9 @@ import top.theillusivec4.curios.api.type.capability.ICurio;
 import java.util.function.Supplier;
 
 public class RingItem extends AccessoryItem {
-    protected final Supplier<SoundEvent> equipSound;
+    protected final Supplier<? extends SoundEvent> equipSound;
 
-    public RingItem(Supplier<SoundEvent> ringSound, Properties properties) {
+    public RingItem(Supplier<? extends SoundEvent> ringSound, Properties properties) {
         super(properties);
         this.equipSound = ringSound;
     }
