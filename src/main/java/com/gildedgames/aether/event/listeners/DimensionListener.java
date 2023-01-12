@@ -135,11 +135,15 @@ public class DimensionListener {
 
     /**
      * Resets the weather cycle if players finish sleeping in an Aether dimension.
+     * Sets the time in the Aether according to the Aether's day/night cycle.
      */
     @SubscribeEvent
     public static void onSleepFinish(SleepFinishedTimeEvent event) {
         ServerLevel level = (ServerLevel) event.getLevel();
         if (level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
+            long time = event.getNewTime() + 48000L;
+            event.setTimeAddition(time - time % 72000L);
+
             ServerLevelAccessor serverLevelAccessor = (ServerLevelAccessor) level;
             serverLevelAccessor.getServerLevelData().setRainTime(0);
             serverLevelAccessor.getServerLevelData().setRaining(false);
