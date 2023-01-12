@@ -267,7 +267,7 @@ public class AbilityHooks {
                     if (valkyrieModifier != null) {
                         attackRange.removeModifier(valkyrieModifier);
                         double range = player.getAttributeValue(ForgeMod.ATTACK_RANGE.get());
-                        double trueReach = range == 0 ? 0 : range + (player.isCreative() ? 3 : 0);
+                        double trueReach = range == 0 ? 0 : range + (player.isCreative() ? 3 : 0); // Copied from IForgePlayer#getAttackRange().
                         boolean tooFar = !player.isCloseEnough(target, trueReach);
                         attackRange.addTransientModifier(valkyrieModifier);
                         return tooFar;
@@ -293,7 +293,7 @@ public class AbilityHooks {
                     if (valkyrieModifier != null) {
                         reachDistance.removeModifier(valkyrieModifier);
                         double reach = player.getAttributeValue(ForgeMod.REACH_DISTANCE.get());
-                        double trueReach = reach == 0 ? 0 : reach + (player.isCreative() ? 0.5 : 0);
+                        double trueReach = reach == 0 ? 0 : reach + (player.isCreative() ? 0.5 : 0); // Copied from IForgePlayer#getReachDistance().
                         boolean tooFar = player.pick(trueReach, 0.0F, false).getType() != HitResult.Type.BLOCK;
                         reachDistance.addTransientModifier(valkyrieModifier);
                         return tooFar;
@@ -320,7 +320,7 @@ public class AbilityHooks {
                         double extendedReach = player.getAttributeValue(ForgeMod.REACH_DISTANCE.get());
                         reachDistance.removeModifier(valkyrieModifier);
                         double reach = player.getAttributeValue(ForgeMod.REACH_DISTANCE.get());
-                        double trueReach = reach == 0 ? 0 : reach + (player.isCreative() ? 0.5 : 0);
+                        double trueReach = reach == 0 ? 0 : reach + (player.isCreative() ? 0.5 : 0); // Copied from IForgePlayer#getReachDistance().
                         boolean tooFar = false;
                         if (player.pick(extendedReach, 0.0F, true).getType() == HitResult.Type.BLOCK) { // Checks if there's a fluid interaction first, as fluids are closer than blocks.
                             tooFar = getPlayerPOVHitResult(player.getLevel(), player, trueReach, ClipContext.Fluid.ANY).getType() != HitResult.Type.BLOCK; // Checks if a fluid interaction fails with the actual baseReach.
