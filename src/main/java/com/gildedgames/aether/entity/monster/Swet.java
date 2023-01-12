@@ -207,7 +207,7 @@ public class Swet extends MountableAnimal {
 
         this.setPos(livingEntity.getX(), livingEntity.getY() + 0.01, livingEntity.getZ());
 
-        livingEntity.startRiding(this);
+        livingEntity.startRiding(this, true);
 
         this.setXRot(this.random.nextFloat() * 360.0F);
     }
