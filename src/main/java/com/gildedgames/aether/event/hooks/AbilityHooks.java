@@ -265,10 +265,12 @@ public class AbilityHooks {
                 if (attackRange != null) {
                     AttributeModifier valkyrieModifier = attackRange.getModifier(uuidForOppositeHand);
                     if (valkyrieModifier != null) {
-                        double totalRange = player.getAttackRange(); // Gets the total range from the modifier along with the bonus range granted by creative mode.
-                        double valkyrieRange = valkyrieModifier.getAmount();
-                        double baseRange = totalRange - valkyrieRange; // Whatever the normal range is, vanilla or modified, without the Valkyrie Tool modifier.
-                        return !player.isCloseEnough(target, baseRange); // Taken from IForgePlayer#canInteractWith(Entity, double), but reversed.
+                        attackRange.removeModifier(valkyrieModifier);
+                        double range = player.getAttributeValue(ForgeMod.ATTACK_RANGE.get());
+                        double trueReach = range == 0 ? 0 : range + (player.isCreative() ? 3 : 0);
+                        boolean tooFar = !player.isCloseEnough(target, trueReach);
+                        attackRange.addTransientModifier(valkyrieModifier);
+                        return tooFar;
                     }
                 }
             }
@@ -289,10 +291,12 @@ public class AbilityHooks {
                 if (reachDistance != null) {
                     AttributeModifier valkyrieModifier = reachDistance.getModifier(uuidForOppositeHand);
                     if (valkyrieModifier != null) {
-                        double totalReach = player.getReachDistance(); // Gets the total reach from the modifier along with the bonus range granted by creative mode.
-                        double valkyrieReach = valkyrieModifier.getAmount();
-                        double baseReach = totalReach - valkyrieReach; // Whatever the normal reach is, vanilla or modified, without the Valkyrie Tool modifier.
-                        return player.pick(baseReach, 0.0F, false).getType() != HitResult.Type.BLOCK; // Based on GameRenderer#pick(float).
+                        reachDistance.removeModifier(valkyrieModifier);
+                        double reach = player.getAttributeValue(ForgeMod.REACH_DISTANCE.get());
+                        double trueReach = reach == 0 ? 0 : reach + (player.isCreative() ? 0.5 : 0);
+                        boolean tooFar = player.pick(trueReach, 0.0F, false).getType() != HitResult.Type.BLOCK;
+                        reachDistance.addTransientModifier(valkyrieModifier);
+                        return tooFar;
                     }
                 }
             }
@@ -313,14 +317,18 @@ public class AbilityHooks {
                 if (reachDistance != null) {
                     AttributeModifier valkyrieModifier = reachDistance.getModifier(uuidForOppositeHand);
                     if (valkyrieModifier != null) {
-                        double totalReach = player.getReachDistance(); // Gets the total reach from the modifier along with the bonus range granted by creative mode.
-                        double valkyrieReach = valkyrieModifier.getAmount();
-                        double baseReach = totalReach - valkyrieReach; // Whatever the normal reach is, vanilla or modified, without the Valkyrie Tool modifier.
-                        if (player.pick(totalReach, 0.0F, true).getType() == HitResult.Type.BLOCK) { // Checks if there's a fluid interaction first, as fluids are closer than blocks.
-                            return getPlayerPOVHitResult(player.getLevel(), player, baseReach, ClipContext.Fluid.ANY).getType() != HitResult.Type.BLOCK; // Checks if a fluid interaction fails with the actual baseReach.
-                        } else if (player.pick(totalReach, 0.0F, false).getType() == HitResult.Type.BLOCK) { // Checks if there's a block interaction next.
-                            return getPlayerPOVHitResult(player.getLevel(), player, baseReach, ClipContext.Fluid.NONE).getType() != HitResult.Type.BLOCK; // Checks if a block interaction fails with the actual baseReach.
+                        double extendedReach = player.getAttributeValue(ForgeMod.REACH_DISTANCE.get());
+                        reachDistance.removeModifier(valkyrieModifier);
+                        double reach = player.getAttributeValue(ForgeMod.REACH_DISTANCE.get());
+                        double trueReach = reach == 0 ? 0 : reach + (player.isCreative() ? 0.5 : 0);
+                        boolean tooFar = false;
+                        if (player.pick(extendedReach, 0.0F, true).getType() == HitResult.Type.BLOCK) { // Checks if there's a fluid interaction first, as fluids are closer than blocks.
+                            tooFar = getPlayerPOVHitResult(player.getLevel(), player, trueReach, ClipContext.Fluid.ANY).getType() != HitResult.Type.BLOCK; // Checks if a fluid interaction fails with the actual baseReach.
+                        } else if (player.pick(extendedReach, 0.0F, false).getType() == HitResult.Type.BLOCK) { // Checks if there's a block interaction next.
+                            tooFar = getPlayerPOVHitResult(player.getLevel(), player, trueReach, ClipContext.Fluid.NONE).getType() != HitResult.Type.BLOCK; // Checks if a block interaction fails with the actual baseReach.
                         }
+                        reachDistance.addTransientModifier(valkyrieModifier);
+                        return tooFar;
                     }
                 }
             }
