@@ -7,6 +7,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.ItemStack;
@@ -18,9 +19,12 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID)
 public class ToolAbilityListener {
+    public static InteractionHand INTERACTION_HAND;
+
     /**
      * @see AbilityHooks.ToolHooks#setupToolActions(LevelAccessor, BlockPos, BlockState, ToolAction)
      */
@@ -91,7 +95,7 @@ public class ToolAbilityListener {
     /**
      * @see ToolAbilityListener#checkEntityTooFar(PlayerEvent, Entity, Player, InteractionHand)
      * @see ToolAbilityListener#checkBlockTooFar(PlayerEvent, Player, InteractionHand)
-     * @see ToolAbilityListener#checkInteractionTooFar(PlayerEvent, Player, InteractionHand)
+     * @see com.gildedgames.aether.mixin.mixins.common.ItemMixin#getPlayerPOVHitResult(Level, Player, ClipContext.Fluid, CallbackInfoReturnable)
      */
     @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent event) {
@@ -104,7 +108,7 @@ public class ToolAbilityListener {
         } else if (event instanceof PlayerInteractEvent.LeftClickBlock leftClickBlock) {
             checkBlockTooFar(event, leftClickBlock.getEntity(), leftClickBlock.getHand());
         } else if (event instanceof PlayerInteractEvent.RightClickItem rightClickItem) {
-            checkInteractionTooFar(event, rightClickItem.getEntity(), rightClickItem.getHand());
+            INTERACTION_HAND = rightClickItem.getHand();
         }
     }
 
@@ -124,16 +128,6 @@ public class ToolAbilityListener {
      */
     private static void checkBlockTooFar(PlayerEvent event, Player player, InteractionHand hand) {
         if (!event.isCanceled() && AbilityHooks.ToolHooks.blockTooFar(player, hand)) {
-            event.setCanceled(true);
-        }
-    }
-
-    /**
-     * Cancels the given event if the targeted interaction is too far away.
-     * @see AbilityHooks.ToolHooks#interactionTooFar(Player, InteractionHand)
-     */
-    private static void checkInteractionTooFar(PlayerEvent event, Player player, InteractionHand hand) {
-        if (!event.isCanceled() && AbilityHooks.ToolHooks.interactionTooFar(player, hand)) {
             event.setCanceled(true);
         }
     }
