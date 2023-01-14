@@ -9,6 +9,6 @@ import java.util.List;
 
 @Mixin(Screen.class)
 public interface ScreenAccessor {
-    @Accessor
-    List<NarratableEntry> getNarratables();
+    @Accessor("narratables")
+    List<NarratableEntry> aether$getNarratables();
 }

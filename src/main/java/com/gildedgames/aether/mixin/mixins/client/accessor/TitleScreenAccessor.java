@@ -7,19 +7,19 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(TitleScreen.class)
 public interface TitleScreenAccessor {
-    @Accessor
-    String getSplash();
+    @Accessor("splash")
+    String aether$getSplash();
 
-    @Accessor
-    void setSplash(String splash);
+    @Accessor("splash")
+    void aether$setSplash(String splash);
 
-    @Accessor
-    boolean getMinceraftEasterEgg();
+    @Accessor("minceraftEasterEgg")
+    boolean aether$getMinceraftEasterEgg();
 
     @Mutable
-    @Accessor
-    void setFading(boolean fading);
+    @Accessor("fading")
+    void aether$setFading(boolean fading);
 
-    @Accessor
-    void setFadeInStart(long fadeInStart);
+    @Accessor("fadeInStart")
+    void aether$setFadeInStart(long fadeInStart);
 }

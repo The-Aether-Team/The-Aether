@@ -61,10 +61,10 @@ public class GuiHooks {
                 OLD_LOCATION = GuiComponent.BACKGROUND_LOCATION;
             }
             if (OLD_REALMS_LOCATION == null) {
-                OLD_REALMS_LOCATION = RealmsPlayerScreenAccessor.getOptionsBackground();
+                OLD_REALMS_LOCATION = RealmsPlayerScreenAccessor.aether$getOptionsBackground();
             }
-            GuiComponentAccessor.setBackgroundLocation(AetherConfig.CLIENT.enable_aether_menu.get() ? BACKGROUND_LOCATION : OLD_LOCATION);
-            RealmsPlayerScreenAccessor.setOptionsBackground(AetherConfig.CLIENT.enable_aether_menu.get() ? BACKGROUND_LOCATION : OLD_REALMS_LOCATION);
+            GuiComponentAccessor.aether$setBackgroundLocation(AetherConfig.CLIENT.enable_aether_menu.get() ? BACKGROUND_LOCATION : OLD_LOCATION);
+            RealmsPlayerScreenAccessor.aether$setOptionsBackground(AetherConfig.CLIENT.enable_aether_menu.get() ? BACKGROUND_LOCATION : OLD_REALMS_LOCATION);
         }
     }
 
@@ -110,10 +110,10 @@ public class GuiHooks {
         if (screen instanceof TitleScreen titleScreen) {
             TitleScreenAccessor titleScreenAccessor = (TitleScreenAccessor) titleScreen;
             TitleScreenAccessor defaultMenuAccessor = (TitleScreenAccessor) default_menu;
-            if (defaultMenuAccessor.getSplash() != null) {
-                titleScreenAccessor.setSplash(defaultMenuAccessor.getSplash());
+            if (defaultMenuAccessor.aether$getSplash() != null) {
+                titleScreenAccessor.aether$setSplash(defaultMenuAccessor.aether$getSplash());
             } else {
-                defaultMenuAccessor.setSplash(titleScreenAccessor.getSplash());
+                defaultMenuAccessor.aether$setSplash(titleScreenAccessor.aether$getSplash());
             }
         }
     }
@@ -186,7 +186,7 @@ public class GuiHooks {
         calendar.setTime(new Date());
         if (calendar.get(Calendar.MONTH) + 1 == 7 && calendar.get(Calendar.DATE) == 22) {
             TitleScreenAccessor titleScreenAccessor = (TitleScreenAccessor) screen;
-            titleScreenAccessor.setSplash("Happy anniversary to the Aether!");
+            titleScreenAccessor.aether$setSplash("Happy anniversary to the Aether!");
         }
     }
 
@@ -202,8 +202,8 @@ public class GuiHooks {
                 return default_left_menu;
             } else {
                 TitleScreenAccessor defaultMenuAccessor = (TitleScreenAccessor) default_menu;
-                defaultMenuAccessor.setFading(true);
-                defaultMenuAccessor.setFadeInStart(0L);
+                defaultMenuAccessor.aether$setFading(true);
+                defaultMenuAccessor.aether$setFadeInStart(0L);
                 return default_menu;
             }
         }

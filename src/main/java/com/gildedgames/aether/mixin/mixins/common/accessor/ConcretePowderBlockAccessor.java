@@ -10,8 +10,8 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(ConcretePowderBlock.class)
 public interface ConcretePowderBlockAccessor {
-    @Accessor
-    BlockState getConcrete();
+    @Accessor("concrete")
+    BlockState aether$getConcrete();
 
     @Invoker
     static boolean callShouldSolidify(BlockGetter level, BlockPos pos, BlockState state) {

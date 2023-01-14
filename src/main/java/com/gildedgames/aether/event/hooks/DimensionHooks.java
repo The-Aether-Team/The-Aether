@@ -197,9 +197,9 @@ public class DimensionHooks {
         if (level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location()) && level instanceof ServerLevel serverLevel) {
             ServerLevelAccessor serverLevelAccessor = (ServerLevelAccessor) serverLevel;
             com.gildedgames.aether.mixin.mixins.common.accessor.LevelAccessor levelAccessor = (com.gildedgames.aether.mixin.mixins.common.accessor.LevelAccessor) level;
-            long i = levelAccessor.getLevelData().getGameTime() + 1L;
-            serverLevelAccessor.getServerLevelData().setGameTime(i);
-            if (serverLevelAccessor.getServerLevelData().getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
+            long i = levelAccessor.aether$getLevelData().getGameTime() + 1L;
+            serverLevelAccessor.aether$getServerLevelData().setGameTime(i);
+            if (serverLevelAccessor.aether$getServerLevelData().getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
                 AetherTime.get(level).ifPresent(cap -> serverLevel.setDayTime(cap.tickTime(level)));
             }
         }
@@ -286,8 +286,8 @@ public class DimensionHooks {
         if (player instanceof ServerPlayer serverPlayer) {
             if (teleportationTimer > 0) {
                 ServerGamePacketListenerImplAccessor serverGamePacketListenerImplAccessor = (ServerGamePacketListenerImplAccessor) serverPlayer.connection;
-                serverGamePacketListenerImplAccessor.setAboveGroundTickCount(0);
-                serverGamePacketListenerImplAccessor.setAboveGroundVehicleTickCount(0);
+                serverGamePacketListenerImplAccessor.aether$setAboveGroundTickCount(0);
+                serverGamePacketListenerImplAccessor.aether$setAboveGroundVehicleTickCount(0);
                 teleportationTimer--;
             }
             if (teleportationTimer < 0 || serverPlayer.verticalCollisionBelow) {

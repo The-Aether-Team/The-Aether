@@ -48,9 +48,9 @@ public class AetherBlockLoot extends AetherBlockLootSubProvider {
         this.dropWithFortune(AetherBlocks.ZANITE_ORE.get(), AetherItems.ZANITE_GEMSTONE.get());
         this.dropSelf(AetherBlocks.GRAVITITE_ORE.get());
         this.add(AetherBlocks.SKYROOT_LEAVES.get(),
-                (leaves) -> droppingWithChancesAndSkyrootSticks(leaves, AetherBlocks.SKYROOT_SAPLING.get(), BlockLootAccessor.getNormalLeavesSaplingChances()));
+                (leaves) -> droppingWithChancesAndSkyrootSticks(leaves, AetherBlocks.SKYROOT_SAPLING.get(), BlockLootAccessor.aether$getNormalLeavesSaplingChances()));
         this.add(AetherBlocks.GOLDEN_OAK_LEAVES.get(),
-                (leaves) -> droppingGoldenOakLeaves(leaves, AetherBlocks.GOLDEN_OAK_SAPLING.get(), BlockLootAccessor.getNormalLeavesSaplingChances()));
+                (leaves) -> droppingGoldenOakLeaves(leaves, AetherBlocks.GOLDEN_OAK_SAPLING.get(), BlockLootAccessor.aether$getNormalLeavesSaplingChances()));
         this.add(AetherBlocks.CRYSTAL_LEAVES.get(),
                 this::droppingWithSkyrootSticks);
         this.add(AetherBlocks.CRYSTAL_FRUIT_LEAVES.get(),

@@ -105,15 +105,15 @@ public class AetherTitleScreen extends TitleScreen {
 
 				net.minecraftforge.client.ForgeHooksClient.renderMainMenu(this, poseStack, this.font, this.width, this.height, l);
 
-				if (titleScreenAccessor.getSplash() != null) {
+				if (titleScreenAccessor.aether$getSplash() != null) {
 					float splashX = this.alignElementsLeft() ? 200.0F : (float) this.width / 2 + 90;
 					float splashY = this.alignElementsLeft() ? 50.0F : 70.0F;
 					poseStack.pushPose();
 					poseStack.translate(splashX, splashY, 0.0F);
 					poseStack.mulPose(Axis.ZP.rotationDegrees(-20.0F));
 					float f2 = 1.8F - Mth.abs(Mth.sin((float) (Util.getMillis() % 1000L) / 1000.0F * ((float) Math.PI * 2F)) * 0.1F);
-					f2 = f2 * 100.0F / (float) (this.font.width(titleScreenAccessor.getSplash()) + 32); poseStack.scale(f2, f2, f2);
-					drawCenteredString(poseStack, this.font, titleScreenAccessor.getSplash(), 0, -8, 16776960 | l);
+					f2 = f2 * 100.0F / (float) (this.font.width(titleScreenAccessor.aether$getSplash()) + 32); poseStack.scale(f2, f2, f2);
+					drawCenteredString(poseStack, this.font, titleScreenAccessor.aether$getSplash(), 0, -8, 16776960 | l);
 					poseStack.popPose();
 				}
 

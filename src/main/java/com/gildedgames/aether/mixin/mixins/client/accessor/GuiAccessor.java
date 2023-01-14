@@ -9,14 +9,14 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(Gui.class)
 public interface GuiAccessor {
-    @Accessor
-    RandomSource getRandom();
+    @Accessor("random")
+    RandomSource aether$getRandom();
 
-    @Accessor
-    long getLastHealthTime();
+    @Accessor("lastHealthTime")
+    long aether$getLastHealthTime();
 
-    @Accessor
-    long getHealthBlinkTime();
+    @Accessor("healthBlinkTime")
+    long aether$getHealthBlinkTime();
 
     @Invoker
     void callRenderHeart(PoseStack poseStack, Gui.HeartType heartType, int x, int y, int p_168705_, boolean p_168706_, boolean p_168707_);

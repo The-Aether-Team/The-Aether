@@ -127,8 +127,8 @@ public class DimensionListener {
                 AetherLevelData levelData = new AetherLevelData(level.getServer().getWorldData(), level.getServer().getWorldData().overworldData(), cap.getDayTime());
                 ServerLevelAccessor serverLevelAccessor = (ServerLevelAccessor) level;
                 com.gildedgames.aether.mixin.mixins.common.accessor.LevelAccessor levelAccessor = (com.gildedgames.aether.mixin.mixins.common.accessor.LevelAccessor) event.getLevel();
-                serverLevelAccessor.setServerLevelData(levelData);
-                levelAccessor.setLevelData(levelData);
+                serverLevelAccessor.aether$setServerLevelData(levelData);
+                levelAccessor.aether$setLevelData(levelData);
             });
         }
     }
@@ -145,10 +145,10 @@ public class DimensionListener {
             event.setTimeAddition(time - time % 72000L);
 
             ServerLevelAccessor serverLevelAccessor = (ServerLevelAccessor) level;
-            serverLevelAccessor.getServerLevelData().setRainTime(0);
-            serverLevelAccessor.getServerLevelData().setRaining(false);
-            serverLevelAccessor.getServerLevelData().setThunderTime(0);
-            serverLevelAccessor.getServerLevelData().setThundering(false);
+            serverLevelAccessor.aether$getServerLevelData().setRainTime(0);
+            serverLevelAccessor.aether$getServerLevelData().setRaining(false);
+            serverLevelAccessor.aether$getServerLevelData().setThunderTime(0);
+            serverLevelAccessor.aether$getServerLevelData().setThundering(false);
         }
     }
 }

@@ -134,8 +134,8 @@ public abstract class MountableAnimal extends AetherAnimal implements ItemSteera
 				}
 				if (entity instanceof ServerPlayer serverPlayer) {
 					ServerGamePacketListenerImplAccessor serverGamePacketListenerImplAccessor = (ServerGamePacketListenerImplAccessor) serverPlayer.connection;
-					serverGamePacketListenerImplAccessor.setAboveGroundTickCount(0);
-					serverGamePacketListenerImplAccessor.setAboveGroundVehicleTickCount(0);
+					serverGamePacketListenerImplAccessor.aether$setAboveGroundTickCount(0);
+					serverGamePacketListenerImplAccessor.aether$setAboveGroundVehicleTickCount(0);
 				}
 				this.calculateEntityAnimation(this, false);
 			} else {

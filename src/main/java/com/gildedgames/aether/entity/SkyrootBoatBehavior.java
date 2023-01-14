@@ -11,11 +11,11 @@ import net.minecraft.world.level.GameRules;
 public interface SkyrootBoatBehavior {
     default void fall(Boat boat, double y, boolean onGround) {
         BoatAccessor boatAccessor = (BoatAccessor) boat;
-        boatAccessor.setLastYd(boat.getDeltaMovement().y);
+        boatAccessor.aether$setLastYd(boat.getDeltaMovement().y);
         if (!boat.isPassenger()) {
             if (onGround) {
                 if (boat.fallDistance > 3.0F) {
-                    if (boatAccessor.getStatus() != Boat.Status.ON_LAND) {
+                    if (boatAccessor.aether$getStatus() != Boat.Status.ON_LAND) {
                         boat.resetFallDistance();
                         return;
                     }
