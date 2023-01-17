@@ -3,44 +3,29 @@ package com.gildedgames.aether.entity.ai.goal;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.world.level.pathfinder.Path;
 
 /**
- * Attack goal to make sure the entity finds a path as quickly as possible.
- * DO NOT USE THIS IF IT'S NOT NECESSARY! Continuous checks every tick for navigation
- * are not good for performance, and you don't want them to add up.
+ * Attack goal to make sure the entity attacks right away after spawning.
  */
 public class ContinuousMeleeAttackGoal extends MeleeAttackGoal {
-    private Path path;
+    private final double speedModifier;
     public ContinuousMeleeAttackGoal(PathfinderMob pMob, double pSpeedModifier, boolean pFollowingTargetEvenIfNotSeen) {
         super(pMob, pSpeedModifier, pFollowingTargetEvenIfNotSeen);
-    }
-
-    /** [VANILLA COPY] MeleeAttackGoal.canUse()
-     * Method override to make the mob recalculate the path right away if the path is null
-     */
-    @Override
-    public boolean canUse() {
-        LivingEntity livingentity = this.mob.getTarget();
-        if (livingentity == null) {
-            return false;
-        } else if (!livingentity.isAlive()) {
-            return false;
-        } else {
-            this.path = this.mob.getNavigation().createPath(livingentity, 0);
-            if (this.path != null) {
-                return true;
-            } else {
-                return this.getAttackReachSqr(livingentity) >= this.mob.distanceToSqr(livingentity.getX(), livingentity.getY(), livingentity.getZ());
-            }
-        }
+        this.speedModifier = pSpeedModifier;
     }
 
     /**
-     * Execute a one shot task or start executing a continuous task
+     * Method override to make the mob walk toward its enemy if there is no path.
      */
-    public void start() {
-        super.start();
-        this.mob.getNavigation().moveTo(this.path, 1.5);
+    @Override
+    public boolean canUse() {
+        if (!super.canUse()) {
+            LivingEntity target = this.mob.getTarget();
+            if (target != null) {
+                this.mob.getMoveControl().setWantedPosition(target.getX(), target.getY(), target.getZ(), this.speedModifier);
+            }
+            return false;
+        }
+        return true;
     }
 }
