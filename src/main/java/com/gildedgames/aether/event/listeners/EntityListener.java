@@ -1,5 +1,6 @@
 package com.gildedgames.aether.event.listeners;
 
+import com.gildedgames.aether.entity.monster.dungeon.boss.slider.Slider;
 import com.gildedgames.aether.event.hooks.EntityHooks;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -10,6 +11,7 @@ import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -48,6 +50,13 @@ public class EntityListener {
         Entity projectileEntity = event.getEntity();
         HitResult rayTraceResult = event.getRayTraceResult();
         event.setCanceled(EntityHooks.preventSliderHooked(projectileEntity, rayTraceResult));
+    }
+
+    @SubscribeEvent
+    public static void onShieldBlock(ShieldBlockEvent event) {
+        if (!event.isCanceled()) {
+            event.setCanceled(EntityHooks.preventSliderShieldBlock(event.getDamageSource()));
+        }
     }
 
     @SubscribeEvent
