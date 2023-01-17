@@ -15,12 +15,18 @@ import net.minecraftforge.common.ForgeMod;
 
 import java.util.UUID;
 
+/**
+ * This interface has several methods for handling the movement for mounted mobs.
+ */
 public interface MountableMob {
     UUID MOUNT_HEIGHT_UUID = UUID.fromString("B2D5A57A-8DA5-4127-8091-14A4CCD000F1");
     UUID DEFAULT_HEIGHT_UUID = UUID.fromString("31535561-F99D-4E14-ACE7-F636EAAD6180");
     AttributeModifier STEP_HEIGHT_MODIFIER = new AttributeModifier(MOUNT_HEIGHT_UUID, "Mounted step height increase", 0.4, AttributeModifier.Operation.ADDITION);
     AttributeModifier DEFAULT_STEP_HEIGHT_MODIFIER = new AttributeModifier(DEFAULT_HEIGHT_UUID, "Default step height increase", -0.1, AttributeModifier.Operation.ADDITION);
 
+    /**
+     * Call this at the beginning of your entity's tick method to update the state of the entity.
+     */
     default void riderTick(Mob vehicle) {
         if (vehicle.getControllingPassenger() instanceof Player player) {
             AetherPlayer.get(player).ifPresent(aetherPlayer -> {
@@ -31,6 +37,9 @@ public interface MountableMob {
         }
     }
 
+    /**
+     * Call this from your entity's travel method.
+     */
     default <T extends Mob & MountableMob> void travel(T vehicle, Vec3 motion) {
         if (vehicle.isAlive()) {
             Entity entity = vehicle.getControllingPassenger();
@@ -98,6 +107,9 @@ public interface MountableMob {
         }
     }
 
+    /**
+     * Usually, this just calls the entity's super$travel method.
+     */
     void travelWithInput(Vec3 motion);
 
     boolean getPlayerJumped();
