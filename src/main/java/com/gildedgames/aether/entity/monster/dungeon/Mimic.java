@@ -2,6 +2,7 @@ package com.gildedgames.aether.entity.monster.dungeon;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
 
+import com.gildedgames.aether.entity.ai.goal.ContinuousMeleeAttackGoal;
 import com.gildedgames.aether.util.EntityUtil;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
@@ -34,7 +35,7 @@ public class Mimic extends Monster {
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new FloatGoal(this));
-		this.goalSelector.addGoal(2,  new MeleeAttackGoal(this, 1.0, false));
+		this.goalSelector.addGoal(2,  new ContinuousMeleeAttackGoal(this, 1.0, false));
 		this.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(this, 1.0));
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0));
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this, Mimic.class));
