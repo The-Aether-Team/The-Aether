@@ -16,6 +16,7 @@ import javax.annotation.Nullable;
  * This also handles dungeon tracking.
  */
 public interface BossMob<T extends Mob & BossMob<T>> {
+    @SuppressWarnings("unchecked")
     private T self() {
         return (T) this;
     }
