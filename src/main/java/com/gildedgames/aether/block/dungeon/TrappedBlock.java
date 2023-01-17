@@ -42,7 +42,7 @@ public class TrappedBlock extends Block {
 			if (level instanceof ServerLevel serverLevel) {
 				Entity spawnableEntity = this.spawnableEntityTypeSupplier.get().create(level);
 				if (spawnableEntity != null) {
-					spawnableEntity.absMoveTo(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, ((EntityAccessor) entity).getRandom().nextFloat() * 360.0F, 0.0F);
+					spawnableEntity.absMoveTo(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, ((EntityAccessor) entity).aether$getRandom().nextFloat() * 360.0F, 0.0F);
 					if (spawnableEntity instanceof Mob spawnableMob) {
 						spawnableMob.finalizeSpawn(serverLevel, level.getCurrentDifficultyAt(spawnableEntity.blockPosition()), MobSpawnType.TRIGGERED, null, null);
 					}

@@ -20,10 +20,10 @@ public class EntityRenderHooks {
     public static void adjustShadow(EntityRenderer<?> renderer, boolean flag) {
         EntityRendererAccessor entityRendererAccessor = (EntityRendererAccessor) renderer;
         if (flag) {
-            entityRendererAccessor.setShadowRadius(0.0F);
+            entityRendererAccessor.aether$setShadowRadius(0.0F);
         } else {
-            if (entityRendererAccessor.getShadowRadius() == 0.0F) {
-                entityRendererAccessor.setShadowRadius(0.5F);
+            if (entityRendererAccessor.aether$getShadowRadius() == 0.0F) {
+                entityRendererAccessor.aether$setShadowRadius(0.5F);
             }
         }
     }

@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface GuiComponentAccessor {
     @Mutable
     @Accessor("BACKGROUND_LOCATION")
-    static void setBackgroundLocation(ResourceLocation location) {
+    static void aether$setBackgroundLocation(ResourceLocation location) {
         throw new AssertionError();
     }
 }

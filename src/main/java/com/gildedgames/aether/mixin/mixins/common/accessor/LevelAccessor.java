@@ -8,10 +8,10 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(Level.class)
 public interface LevelAccessor {
-    @Accessor
-    WritableLevelData getLevelData();
+    @Accessor("levelData")
+    WritableLevelData aether$getLevelData();
 
     @Mutable
-    @Accessor
-    void setLevelData(WritableLevelData levelData);
+    @Accessor("levelData")
+    void aether$setLevelData(WritableLevelData levelData);
 }

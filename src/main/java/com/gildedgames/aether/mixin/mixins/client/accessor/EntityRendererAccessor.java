@@ -6,9 +6,9 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(EntityRenderer.class)
 public interface EntityRendererAccessor {
-    @Accessor
-    float getShadowRadius();
+    @Accessor("shadowRadius")
+    float aether$getShadowRadius();
 
-    @Accessor
-    void setShadowRadius(float shadowRadius);
+    @Accessor("shadowRadius")
+    void aether$setShadowRadius(float shadowRadius);
 }

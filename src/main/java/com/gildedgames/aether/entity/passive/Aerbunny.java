@@ -128,7 +128,7 @@ public class Aerbunny extends AetherAnimal {
             }
             if (player instanceof ServerPlayer serverPlayer) {
                 ServerGamePacketListenerImplAccessor serverGamePacketListenerImplAccessor = (ServerGamePacketListenerImplAccessor) serverPlayer.connection;
-                serverGamePacketListenerImplAccessor.setAboveGroundTickCount(0);
+                serverGamePacketListenerImplAccessor.aether$setAboveGroundTickCount(0);
             }
         }
         if (this.isOnGround() || (this.getVehicle() != null && this.getVehicle().isOnGround())) {

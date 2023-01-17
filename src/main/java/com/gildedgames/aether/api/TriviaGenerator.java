@@ -15,7 +15,7 @@ public class TriviaGenerator {
     public TriviaGenerator() { }
 
     public void generateTriviaList() {
-        for (String string : I18nAccessor.getLanguage().getLanguageData().keySet()) {
+        for (String string : I18nAccessor.aether$getLanguage().getLanguageData().keySet()) {
             if (string.startsWith("aether.pro_tips.line.")) {
                 this.getTrivia().add(Component.translatable(string));
             }

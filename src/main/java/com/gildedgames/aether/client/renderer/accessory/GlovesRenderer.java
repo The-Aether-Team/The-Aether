@@ -52,8 +52,8 @@ public class GlovesRenderer implements ICurioRenderer {
             texture = glovesItem.getGlovesTexture();
         } else {
             PlayerModelAccessor playerModelAccessor = (PlayerModelAccessor) playerModel;
-            model = playerModelAccessor.getSlim() ? this.glovesModelSlim : this.glovesModel;
-            texture = playerModelAccessor.getSlim() ? glovesItem.getGlovesSlimTexture() : glovesItem.getGlovesTexture();
+            model = playerModelAccessor.aether$getSlim() ? this.glovesModelSlim : this.glovesModel;
+            texture = playerModelAccessor.aether$getSlim() ? glovesItem.getGlovesSlimTexture() : glovesItem.getGlovesTexture();
         }
         ICurioRenderer.followBodyRotations(slotContext.entity(), model);
 
