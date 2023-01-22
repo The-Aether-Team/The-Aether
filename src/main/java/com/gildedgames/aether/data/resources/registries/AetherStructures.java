@@ -64,6 +64,7 @@ public class AetherStructures {
                 biomes.getOrThrow(AetherTags.Biomes.HAS_GOLD_DUNGEON),
                 mobSpawns,
                 GenerationStep.Decoration.SURFACE_STRUCTURES,
-                TerrainAdjustment.NONE)));
+                TerrainAdjustment.NONE),
+                8));
     }
 }

@@ -35,5 +35,6 @@
       "spawns": []
     }
   },
-  "step": "surface_structures"
+  "step": "surface_structures",
+  "stubcount": 8
 }

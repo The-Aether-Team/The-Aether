@@ -4,12 +4,17 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.api.DungeonTracker;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.blockentity.TreasureChestBlockEntity;
+import com.gildedgames.aether.data.resources.registries.AetherConfiguredFeatures;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.monster.dungeon.boss.SunSpirit;
 import com.gildedgames.aether.loot.AetherLoot;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.features.TreeFeatures;
+import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -19,14 +24,18 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 import net.minecraft.world.phys.AABB;
 
@@ -85,7 +94,7 @@ public class GoldDungeonPieces {
     /**
      * The chunks of land surrounding the boss room to form an island.
      */
-    public static class Island extends TemplateStructurePiece { // TODO: This might be unnecessary.
+    public static class Island extends TemplateStructurePiece {
 
         public Island(StructureTemplateManager manager, ResourceLocation id, BlockPos pos) {
             super(AetherStructurePieceTypes.GOLD_ISLAND.get(), 0, manager, id, id.toString(), makeSettings(), pos);
@@ -109,7 +118,6 @@ public class GoldDungeonPieces {
         public LegacyIslandPiece(BoundingBox pBox) {
             super(AetherStructurePieceTypes.GOLD_LEGACY_ISLAND.get(), 0, pBox);
             this.setOrientation(Direction.NORTH);
-            Aether.LOGGER.info(this.boundingBox.toString());
         }
 
         public LegacyIslandPiece(StructurePieceSerializationContext context, CompoundTag pTag) {
@@ -123,20 +131,20 @@ public class GoldDungeonPieces {
         }
 
         @Override
-        public void postProcess(WorldGenLevel world, StructureManager pStructureManager, ChunkGenerator pGenerator, RandomSource random, BoundingBox chunkBox, ChunkPos pChunkPos, BlockPos startPos) {
-            for(int x = -24; x <= 24; x++) {
-                for(int y = 24; y >= -24; y--) {
-                    for(int z = -24; z <= 24; z++) {
+        public void postProcess(WorldGenLevel level, StructureManager pStructureManager, ChunkGenerator generator, RandomSource random, BoundingBox chunkBox, ChunkPos pChunkPos, BlockPos startPos) {
+            RegistryAccess registry = level.registryAccess();
+
+            for (int x = -24; x <= 24; x++) {
+                for (int y = 24; y >= -24; y--) {
+                    for (int z = -24; z <= 24; z++) {
                         int width = Mth.floor(x * (1 + y / 240.0) / 0.8);
                         int height = y;
 
-                        if(y > 15)
-                        {
+                        if (y > 15) {
                             height = Mth.floor(height * 1.375);
                             height -= 6;
                         }
-                        else if(y < -15)
-                        {
+                        else if (y < -15) {
                             height = Mth.floor(height * 1.3500000238418579);
                             height += 6;
                         }
@@ -147,40 +155,31 @@ public class GoldDungeonPieces {
                             int xOffset = x + 24;
                             int yOffset = y + 24;
                             int zOffset = z + 24;
-                            if(this.getBlock(world, xOffset, yOffset + 1, zOffset, chunkBox).isAir() && y > 4) {
-                                this.placeBlock(world, AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState(), xOffset, yOffset, zOffset, chunkBox);
-                                this.placeBlock(world, AetherBlocks.AETHER_DIRT.get().defaultBlockState(), xOffset, yOffset - 1, zOffset, chunkBox);
-                                this.placeBlock(world, AetherBlocks.AETHER_DIRT.get().defaultBlockState(), xOffset, yOffset - (1 + random.nextInt(2)), zOffset, chunkBox);
 
-                                /*if(l2 >= 24 / 2)
-                                {
-                                    int j5 = this.random.nextInt(48);
+                            BlockPos worldPos = this.getWorldPos(xOffset, yOffset, zOffset);
 
-                                    if(j5 < 2)
-                                    {
-                                        //AetherGenUtils.generateGoldenOakTree(this, i2, l2 + 1, i3);
+                            if (!chunkBox.isInside(worldPos)) {
+                                continue;
+                            }
+
+                            if (y > 4 && this.getBlock(level, xOffset, yOffset + 1, zOffset, chunkBox).isAir()) {
+                                this.placeBlock(level, AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState(), xOffset, yOffset, zOffset, chunkBox);
+                                this.placeBlock(level, AetherBlocks.AETHER_DIRT.get().defaultBlockState(), xOffset, yOffset - 1, zOffset, chunkBox);
+                                this.placeBlock(level, AetherBlocks.AETHER_DIRT.get().defaultBlockState(), xOffset, yOffset - (1 + random.nextInt(2)), zOffset, chunkBox);
+
+                                if (y >= 12) {
+                                    int featureType = random.nextInt(48);
+
+                                    if (featureType < 2) {
+                                        PlacedFeature tree = PlacementUtils.inlinePlaced(registry.registryOrThrow(Registries.CONFIGURED_FEATURE).getHolderOrThrow(AetherConfiguredFeatures.GOLDEN_OAK_TREE_CONFIGURATION)).get();
+                                        tree.place(level, generator, random, worldPos.above());
+                                    } else if(featureType == 3) {
+                                        Block flower = random.nextBoolean() ? Blocks.DANDELION : Blocks.POPPY;
+                                        this.placeBlock(level, flower.defaultBlockState(), xOffset, yOffset + 1, zOffset, chunkBox);
                                     }
-                                    else if(j5 == 3)
-                                    {
-                                        if(this.random.nextInt(2) == 0)
-                                        {
-                                            //new WorldGenLakes(Blocks.FLOWING_WATER).generate(world, random, new BlockPos.MutableBlockPos((i2 + i + random.nextInt(3)) - random.nextInt(3), l2 + j, (i3 + k + random.nextInt(3)) - random.nextInt(3)));
-                                        }
-                                    }
-                                    else if(j5 == 4)
-                                    {
-                                        if(this.random.nextInt(2) == 0)
-                                        {
-                                            AetherGenUtils.generateFlower(this, Blocks.RED_FLOWER.getDefaultState().withProperty(Blocks.RED_FLOWER.getTypeProperty(), EnumFlowerType.POPPY), (i2 + this.random.nextInt(3)) - this.random.nextInt(3), l2 + 1, (i3 + this.random.nextInt(3)) - this.random.nextInt(3));
-                                        }
-                                        else
-                                        {
-                                            AetherGenUtils.generateFlower(this, Blocks.YELLOW_FLOWER.getDefaultState().withProperty(Blocks.YELLOW_FLOWER.getTypeProperty(), EnumFlowerType.DANDELION), (i2 + this.random.nextInt(3)) - this.random.nextInt(3), l2 + 1, (i3 + this.random.nextInt(3)) - this.random.nextInt(3));
-                                        }
-                                    }
-                                }*/
-                            } else if(this.getBlock(world, xOffset, yOffset, zOffset, chunkBox).isAir()) {
-                                this.placeBlock(world, AetherBlocks.HOLYSTONE.get().defaultBlockState(), xOffset, yOffset, zOffset, chunkBox);
+                                }
+                            } else if(this.getBlock(level, xOffset, yOffset, zOffset, chunkBox).isAir()) {
+                                this.placeBlock(level, AetherBlocks.HOLYSTONE.get().defaultBlockState(), xOffset, yOffset, zOffset, chunkBox);
                             }
                         }
                     }
@@ -196,76 +195,75 @@ public class GoldDungeonPieces {
                 int l5 = random.nextInt(24) - random.nextInt(24);
                 int j6 = random.nextInt(24) - random.nextInt(24);
 
-//                this.generateCaves(i5, l5, j6, 24 + l3 / 3);
+//                this.generateCaves(i5, l5, j6, 24 + l3 / 3); TODO: Caves
             }
         }
+    }
 
-        public boolean smallSphere(WorldGenLevel world, BoundingBox chunkBox, RandomSource random, int xFactor, int yFactor, int zFactor, int radius, boolean flag) {
-            BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+    public static class LegacyStubPiece extends StructurePiece {
 
-            if(yFactor - radius <= 0) {
-                yFactor = radius + 1;
-            }
+        public LegacyStubPiece(BoundingBox pBox) {
+            super(AetherStructurePieceTypes.GOLD_LEGACY_STUB.get(), 0, pBox);
+            this.setOrientation(Direction.NORTH);
+        }
 
-            if(yFactor + radius >= 127) {
-                yFactor = 127 - radius - 1;
-            }
+        public LegacyStubPiece(StructurePieceSerializationContext context, CompoundTag pTag) {
+            super(AetherStructurePieceTypes.GOLD_LEGACY_STUB.get(), pTag);
+            this.setOrientation(Direction.NORTH);
+        }
 
-            float f = 1.0F;
+        @Override
+        protected void addAdditionalSaveData(StructurePieceSerializationContext pContext, CompoundTag pTag) {
 
-            int x;
-            int y;
-            int z;
-            int l2;
-            int j3;
-            for(x = -radius; x <= radius; ++x) {
-                for(y = radius; y >= -radius; --y) {
-                    for(z = -radius; z <= radius; ++z) {
-                        l2 = Mth.floor((double) x / (double)f);
-                        j3 = y;
-                        if(y > radius * 0.625D) {
-                            j3 = Mth.floor(y * 1.375D);
-                            j3 -= Mth.floor(radius * 0.25D);
-                        } else if(y < radius * -0.625D) {
-                            j3 = Mth.floor(y * 1.350000023841858D);
-                            j3 += Mth.floor(radius * 0.25D);
+        }
+
+        @Override
+        public void postProcess(WorldGenLevel level, StructureManager structureManager, ChunkGenerator generator, RandomSource random, BoundingBox chunkBox, ChunkPos chunkPos, BlockPos startPos) {
+
+            for(int x = -8; x <= 8; x++) {
+                for(int y = 8; y >= -8; y--) {
+                    for(int z = -8; z <= 8; z++) {
+                        int width = Mth.floor((double)x);
+                        int height = y;
+
+                        if(y > 5) {
+                            height = Mth.floor((double)height * 1.375D);
+                            height -= 2;
+                        } else if(y < -5) {
+                            height = Mth.floor((double)height * 1.3500000238418579D);
+                            height += 2;
                         }
+                        int length = Mth.floor((double)z);
 
-                        int k3 = Mth.floor(z / f);
-                        if(Math.sqrt((l2 * l2 + j3 * j3 + k3 * k3)) <= radius) {
-                            if(world.isEmptyBlock(mutable.set(x + xFactor, y + yFactor + 1, z + zFactor)) && y > Mth.floor(radius / 5.0D)) {
-                                this.placeBlock(world, AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState(), x + xFactor, y + yFactor, z + zFactor, chunkBox);
-                                this.placeBlock(world, AetherBlocks.AETHER_DIRT.get().defaultBlockState(), x + xFactor, y + yFactor - 1, z + zFactor, chunkBox);
-                                this.placeBlock(world, AetherBlocks.AETHER_DIRT.get().defaultBlockState(), x + xFactor, y + yFactor - (1 + random.nextInt(2)), z + zFactor, chunkBox);
+                        if (Math.sqrt(width * width + height * height + length * length) <= 8.0D) {
+                            int xOffset = x + 8;
+                            int yOffset = y + 8;
+                            int zOffset = z + 8;
 
-                                /*if(y >= radius / 2) {
+                            if (this.getBlock(level, xOffset, yOffset + 1, zOffset, chunkBox).isAir() && y > 1) {
+                                this.placeBlock(level, AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState(), xOffset, yOffset, zOffset, chunkBox);
+                                this.placeBlock(level, AetherBlocks.AETHER_DIRT.get().defaultBlockState(), xOffset, yOffset - 1, zOffset, chunkBox);
+                                this.placeBlock(level, AetherBlocks.AETHER_DIRT.get().defaultBlockState(), xOffset, yOffset - (1 + random.nextInt(2)), zOffset, chunkBox);
+
+                                if (y >= 4) {
                                     int l3 = random.nextInt(64);
-                                    if(l3 == 0) {
-                                        (new AetherGenGoldenOak()).generate(world, random, x + xFactor, y + yFactor + 1, z + zFactor);
-                                    } else if(l3 == 5 && random.nextInt(3) == 0) {
-                                        (new WorldGenLakes(Block.waterStill.blockID)).generate(world, random, x + xFactor + random.nextInt(3) - random.nextInt(3), y + yFactor, z + zFactor + random.nextInt(3) - random.nextInt(3));
+
+                                    if (l3 == 0) {
+                                        //AetherGenUtils.generateGoldenOakTree(this, i1 + x, k1 + y + 1, i2 + z);
+                                    } else if (l3 == 5) {
+                                        if (random.nextInt(3) == 0) {
+                                            //new WorldGenLakes(Blocks.FLOWING_WATER).generate(world, random, new BlockPos.MutableBlockPos((i1 + i + random.nextInt(3)) - random.nextInt(3), k1 + j, (i2 + k + random.nextInt(3)) - random.nextInt(3)));
+                                        }
                                     }
-                                }*/
-                            } else if (world.isEmptyBlock(mutable.set(x + xFactor, y + yFactor, z + zFactor))) {
-                                this.placeBlock(world, AetherBlocks.HOLYSTONE.get().defaultBlockState(), x + xFactor, y + yFactor, z + zFactor, chunkBox);
+                                }
+                            } else if (this.getBlock(level, xOffset, yOffset, zOffset, chunkBox).isAir()) {
+                                this.placeBlock(level, AetherBlocks.HOLYSTONE.get().defaultBlockState(), xOffset, yOffset, zOffset, chunkBox);
                             }
                         }
                     }
+
                 }
             }
-
-            if(!flag) {
-                x = Mth.floor(radius * 1.25D);
-
-                /*for(y = 0; y < x; ++y) {
-                    z = xFactor + random.nextInt(radius) - random.nextInt(radius);
-                    l2 = yFactor + random.nextInt(radius) - random.nextInt(radius);
-                    j3 = zFactor + random.nextInt(radius) - random.nextInt(radius);
-                    (new AetherGenGumdropCaves(0, 16 + x / 3)).generate(world, random, z, l2, j3);
-                }*/
-            }
-
-            return true;
         }
     }
 
