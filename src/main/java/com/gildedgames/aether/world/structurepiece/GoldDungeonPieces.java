@@ -7,7 +7,7 @@ import com.gildedgames.aether.blockentity.TreasureChestBlockEntity;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.monster.dungeon.boss.SunSpirit;
 import com.gildedgames.aether.loot.AetherLoot;
-import com.gildedgames.aether.world.processor.DungeonStoneProcessor;
+import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -27,8 +27,7 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
+import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 import net.minecraft.world.phys.AABB;
 
 import java.util.ArrayList;
@@ -37,6 +36,10 @@ import java.util.ArrayList;
  * Class for all the pieces of the gold dungeon.
  */
 public class GoldDungeonPieces {
+
+    public static final RuleProcessor LOCKED_HELLFIRE_STONE = new RuleProcessor(ImmutableList.of(
+            new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.LOCKED_HELLFIRE_STONE.get(), 0.1F), AlwaysTrueTest.INSTANCE, AetherBlocks.LOCKED_LIGHT_HELLFIRE_STONE.get().defaultBlockState())
+    ));
 
     /**
      * A room inside the island. This should contain the sun spirit.
@@ -53,7 +56,7 @@ public class GoldDungeonPieces {
         }
 
         private static StructurePlaceSettings makeSettings() {
-            return new StructurePlaceSettings().addProcessor(DungeonStoneProcessor.HELLFIRE);
+            return new StructurePlaceSettings().addProcessor(LOCKED_HELLFIRE_STONE);
         }
 
         @Override

@@ -35,13 +35,13 @@ public class GoldDungeonStructure extends Structure {
         BlockPos elevatedPos = new BlockPos(worldPos.getX(), 80, worldPos.getZ());
         StructureTemplateManager templateManager = context.structureTemplateManager();
 
-        /*GoldDungeonPieces.BossRoom bossRoom = new GoldDungeonPieces.BossRoom(
+        GoldDungeonPieces.BossRoom bossRoom = new GoldDungeonPieces.BossRoom(
                 templateManager,
                 new ResourceLocation(Aether.MODID, "gold_dungeon/boss_room"),
                 elevatedPos,
                 randomSource
-        );*/
-//        builder.addPiece(bossRoom);
+        );
+        builder.addPiece(bossRoom);
 
         /*GoldDungeonPieces.Island mainIsland = new GoldDungeonPieces.Island(
                 templateManager,
@@ -49,8 +49,8 @@ public class GoldDungeonStructure extends Structure {
                 elevatedPos
         );*/
 
-        GoldDungeonPieces.LegacyIslandPiece legacyPiece = new GoldDungeonPieces.LegacyIslandPiece(BoundingBox.fromCorners(elevatedPos.offset(-24, -24, -24), elevatedPos.offset(24, 24, 24)));
-        builder.addPiece(legacyPiece);
+        /*GoldDungeonPieces.LegacyIslandPiece legacyPiece = new GoldDungeonPieces.LegacyIslandPiece(BoundingBox.fromCorners(elevatedPos.offset(-24, -24, -24), elevatedPos.offset(24, 24, 24)));
+        builder.addPiece(legacyPiece);*/
     }
 
     @Override
