@@ -1,16 +1,20 @@
 package com.gildedgames.aether.world.structure;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.util.BlockLogicUtil;
 import com.gildedgames.aether.world.structurepiece.GoldDungeonPieces;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
@@ -54,16 +58,21 @@ public class GoldDungeonStructure extends Structure {
         Vec3i stubOffset = this.getStubOffset(templateManager);
         this.addIslandStubs(templateManager, builder, random, centerPos, stubOffset);
 
-        /*GoldDungeonPieces.BossRoom bossRoom = new GoldDungeonPieces.BossRoom(
+        BlockPos bossPos = centerPos.offset(this.getBossRoomOffset(templateManager));
+        GoldDungeonPieces.BossRoom bossRoom = new GoldDungeonPieces.BossRoom(
                 templateManager,
                 "boss_room",
-                elevatedPos,
-//                Rotation.getRandom(random)
-                Rotation.NONE
-        );*/
-//        builder.addPiece(bossRoom);
+                bossPos,
+                Rotation.getRandom(random)
+        );
+        this.tunnelFromBossRoom(templateManager, builder, bossRoom);
+        builder.addPiece(bossRoom);
+
     }
 
+    /**
+     * Decorate the island with smaller spheres on the edges.
+     */
     private void addIslandStubs(StructureTemplateManager templateManager, StructurePiecesBuilder builder, RandomSource random, BlockPos center, Vec3i stubOffset) {
         int stubCount = this.stubIslandCount + random.nextInt(5);
 
@@ -91,6 +100,27 @@ public class GoldDungeonStructure extends Structure {
         StructureTemplate template = templateManager.getOrCreate(new ResourceLocation(Aether.MODID, "gold_dungeon/stub"));
         Vec3i size = template.getSize();
         return new Vec3i(size.getX() / -2, size.getY() / -2, size.getZ() / -2);
+    }
+
+    private Vec3i getBossRoomOffset(StructureTemplateManager templateManager) {
+        StructureTemplate template = templateManager.getOrCreate(new ResourceLocation(Aether.MODID, "gold_dungeon/boss_room"));
+        Vec3i size = template.getSize();
+        return new Vec3i(size.getX() / -2, size.getY() / -2, (size.getZ() - 5) / -2);
+    }
+
+    /**
+     * Place the tunnel so that it connects to the boss room's door.
+     */
+    private void tunnelFromBossRoom(StructureTemplateManager templateManager, StructurePiecesBuilder builder, StructurePiece room) {
+        StructureTemplate template = templateManager.getOrCreate(new ResourceLocation(Aether.MODID, "gold_dungeon/tunnel"));
+        int width = template.getSize().getX();
+        Rotation rotation = room.getRotation();
+        Direction direction = rotation.rotate(Direction.SOUTH);
+
+        BlockPos startPos = BlockLogicUtil.tunnelFromOddSquareRoom(room.getBoundingBox(), direction, width);
+        startPos = startPos.offset(direction.getStepX() * 3, 1, direction.getStepZ() * 3);
+        GoldDungeonPieces.Tunnel tunnel = new GoldDungeonPieces.Tunnel(templateManager, "tunnel", startPos, rotation);
+        builder.addPiece(tunnel);
     }
 
     @Override

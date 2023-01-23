@@ -7,6 +7,7 @@ import com.gildedgames.aether.blockentity.TreasureChestBlockEntity;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.monster.dungeon.boss.SunSpirit;
 import com.gildedgames.aether.loot.AetherLoot;
+import com.gildedgames.aether.world.processor.NoReplaceProcessor;
 import com.gildedgames.aether.world.processor.VegetationProcessor;
 import com.gildedgames.aether.world.processor.VerticalGradientProcessor;
 import com.google.common.collect.ImmutableList;
@@ -16,16 +17,11 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.StructureManager;
-import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
@@ -39,9 +35,11 @@ import java.util.function.Function;
  * Class for all the pieces of the gold dungeon.
  */
 public class GoldDungeonPieces {
-
     public static final RuleProcessor LOCKED_HELLFIRE_STONE = new RuleProcessor(ImmutableList.of(
             new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.LOCKED_HELLFIRE_STONE.get(), 0.1F), AlwaysTrueTest.INSTANCE, AetherBlocks.LOCKED_LIGHT_HELLFIRE_STONE.get().defaultBlockState())
+    ));
+    public static final RuleProcessor MOSSY_HOLYSTONE = new RuleProcessor(ImmutableList.of(
+            new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.HOLYSTONE.get(), 0.2F), AlwaysTrueTest.INSTANCE, AetherBlocks.MOSSY_HOLYSTONE.get().defaultBlockState())
     ));
 
     /**
@@ -74,8 +72,7 @@ public class GoldDungeonPieces {
                 sunSpirit.finalizeSpawn(level, level.getCurrentDifficultyAt(pos), MobSpawnType.STRUCTURE, null, null);
                 level.getLevel().addFreshEntity(sunSpirit);
                 level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
-            }
-            else if (name.equals("Treasure Chest")) {
+            } else if (name.equals("Treasure Chest")) {
                 BlockPos chest = pos.below();
                 RandomizableContainerBlockEntity.setLootTable(level, random, chest, AetherLoot.GOLD_DUNGEON_REWARD);
                 TreasureChestBlockEntity.setDungeonType(level, chest, new ResourceLocation(Aether.MODID, "gold"));
@@ -100,9 +97,6 @@ public class GoldDungeonPieces {
         private static StructurePlaceSettings makeSettings() {
             return new StructurePlaceSettings().addProcessor(VerticalGradientProcessor.INSTANCE).addProcessor(VegetationProcessor.INSTANCE);
         }
-
-        @Override
-        protected void handleDataMarker(String p_226906_, BlockPos p_226907_, ServerLevelAccessor p_226908_, RandomSource p_226909_, BoundingBox p_226910_) {}
     }
 
     /**
@@ -121,68 +115,23 @@ public class GoldDungeonPieces {
         private static StructurePlaceSettings makeSettings() {
             return new StructurePlaceSettings().addProcessor(VerticalGradientProcessor.INSTANCE).addProcessor(VegetationProcessor.STUB_PROCESSOR);
         }
-
-        @Override
-        protected void handleDataMarker(String p_226906_, BlockPos p_226907_, ServerLevelAccessor p_226908_, RandomSource p_226909_, BoundingBox p_226910_) {}
     }
 
-    public static class LegacyTunnelPiece extends StructurePiece {
+    /**
+     * The tunnel leading from the side of the island to the boss room.
+     */
+    public static class Tunnel extends GoldDungeonPiece {
 
-        public LegacyTunnelPiece(BoundingBox pBox) {
-            super(AetherStructurePieceTypes.GOLD_LEGACY_TUNNEL.get(), 0, pBox);
-            this.setOrientation(Direction.NORTH);
+        public Tunnel(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
+            super(AetherStructurePieceTypes.GOLD_TUNNEL.get(), manager, name, makeSettings().setRotation(rotation), pos);
         }
 
-        public LegacyTunnelPiece(StructurePieceSerializationContext context, CompoundTag pTag) {
-            super(AetherStructurePieceTypes.GOLD_LEGACY_TUNNEL.get(), pTag);
-            this.setOrientation(Direction.NORTH);
+        public Tunnel(StructurePieceSerializationContext context, CompoundTag tag) {
+            super(AetherStructurePieceTypes.GOLD_TUNNEL.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
         }
 
-        @Override
-        protected void addAdditionalSaveData(StructurePieceSerializationContext pContext, CompoundTag pTag) {
-
-        }
-
-        @Override
-        public void postProcess(WorldGenLevel world, StructureManager pStructureManager, ChunkGenerator pGenerator, RandomSource random, BoundingBox pBox, ChunkPos pChunkPos, BlockPos pPos) {
-
-            int radius = 13;
-            BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
-
-            for(int z = radius; z < radius + 32; ++z) { // loop: 13 - 44 [z offset]
-                boolean var18 = false;
-
-                for (int y = -3; y < 2; ++y) { // y offset
-                    for (int x = -3; x < 4; ++x) { // x offset
-
-                        if (world.isEmptyBlock(mutable.set(x, y, pPos.getZ() + z))) {
-                            var18 = true;
-                            if (y == -3) {
-                                this.placeBlock(world, AetherBlocks.HOLYSTONE.get().defaultBlockState(), x, y, z, pBox);
-                            } else if (y < 1) {
-                                if (z == radius) {
-                                    if (x < 2 && x > -2 && y < 0) {
-                                        this.placeBlock(world, Blocks.AIR.defaultBlockState(), x, y, z, pBox);
-                                    } else {
-                                        this.placeBlock(world, AetherBlocks.HELLFIRE_STONE.get().defaultBlockState(), x, y, z, pBox);
-                                    }
-                                } else if (x != 3 && x != -3) {
-                                    this.placeBlock(world, Blocks.AIR.defaultBlockState(), x, y, z, pBox);
-                                    if (y == -1 && (x == 2 || x == -2) && (z - radius - 2) % 3 == 0) {
-                                        this.placeBlock(world, Blocks.AIR.defaultBlockState(), x, y, z, pBox);
-                                    }
-                                } else {
-                                    this.placeBlock(world, AetherBlocks.HOLYSTONE.get().defaultBlockState(), x, y, z, pBox);
-                                }
-                            } else if (z == radius) {
-                                this.placeBlock(world, AetherBlocks.HELLFIRE_STONE.get().defaultBlockState(), x, y, z, pBox);
-                            } else {
-                                this.placeBlock(world, AetherBlocks.HOLYSTONE.get().defaultBlockState(), x, y, z, pBox);
-                            }
-                        }
-                    }
-                }
-            }
+        private static StructurePlaceSettings makeSettings() {
+            return new StructurePlaceSettings().addProcessor(MOSSY_HOLYSTONE).addProcessor(NoReplaceProcessor.AIR);
         }
     }
 
@@ -190,12 +139,12 @@ public class GoldDungeonPieces {
 
         public GoldDungeonPiece(StructurePieceType type, StructureTemplateManager manager, String name, StructurePlaceSettings settings, BlockPos pos) {
             super(type, 0, manager, new ResourceLocation(Aether.MODID, "gold_dungeon/" + name), name, settings, pos);
-            this.setOrientation(this.getRotation().rotate(Direction.NORTH));
+            this.setOrientation(this.getRotation().rotate(Direction.SOUTH));
         }
 
         public GoldDungeonPiece(StructurePieceType type, CompoundTag tag, StructureTemplateManager manager, Function<ResourceLocation, StructurePlaceSettings> settingsFactory) {
             super(type, tag, manager, settingsFactory.andThen(settings -> settings.setRotation(Rotation.valueOf(tag.getString("Rotation")))));
-            this.setOrientation(this.getRotation().rotate(Direction.NORTH));
+            this.setOrientation(this.getRotation().rotate(Direction.SOUTH));
         }
 
         @Override
