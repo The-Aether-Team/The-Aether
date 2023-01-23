@@ -33,7 +33,7 @@
           "type": "minecraft:blend_density",
           "argument": {
             "type": "minecraft:add",
-            "argument1": -0.1,
+            "argument1": -0.05,
             "argument2": {
               "type": "minecraft:add",
               "argument1": -0.05,
@@ -59,12 +59,16 @@
                         "from_value": 1.0,
                         "from_y": 56,
                         "to_value": 0.0,
-                        "to_y": 312
+                        "to_y": 352
                       },
                       "argument2": {
                         "type": "minecraft:add",
                         "argument1": 2.0,
-                        "argument2": "aether:base_3d_noise_aether"
+                        "argument2": {
+                          "type": "minecraft:add",
+                          "argument1": -0.13,
+                          "argument2": "aether:base_3d_noise_aether"
+                        }
                       }
                     }
                   }
