@@ -152,11 +152,11 @@ public class AetherItemModelData extends AetherItemModelProvider {
         this.item(AetherItems.AMBROSIUM_SHARD.get(), "materials/");
         this.item(AetherItems.ZANITE_GEMSTONE.get(), "materials/");
 
-        this.item(AetherItems.VICTORY_MEDAL.get(), "miscellaneous/");
+        this.rotatedItem(AetherItems.VICTORY_MEDAL.get(), "miscellaneous/");
 
-        this.keyItem(AetherItems.BRONZE_DUNGEON_KEY.get(), "miscellaneous/");
-        this.keyItem(AetherItems.SILVER_DUNGEON_KEY.get(), "miscellaneous/");
-        this.keyItem(AetherItems.GOLD_DUNGEON_KEY.get(), "miscellaneous/");
+        this.rotatedItem(AetherItems.BRONZE_DUNGEON_KEY.get(), "miscellaneous/");
+        this.rotatedItem(AetherItems.SILVER_DUNGEON_KEY.get(), "miscellaneous/");
+        this.rotatedItem(AetherItems.GOLD_DUNGEON_KEY.get(), "miscellaneous/");
 
         this.item(AetherItems.SKYROOT_BUCKET.get(), "miscellaneous/");
         this.item(AetherItems.SKYROOT_WATER_BUCKET.get(), "miscellaneous/");

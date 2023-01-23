@@ -94,7 +94,7 @@ public abstract class AetherItemModelProvider extends ItemModelProvider {
                 .texture("layer1", this.modLoc("item/" + location + this.itemName(item) + "_overlay"));
     }
 
-    public void keyItem(Item item, String location) {
+    public void rotatedItem(Item item, String location) {
         this.withExistingParent(this.itemName(item), this.mcLoc("item/generated"))
                 .texture("layer0", this.modLoc("item/" + location + this.itemName(item)))
                 .transforms()
