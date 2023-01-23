@@ -13,6 +13,7 @@ import com.gildedgames.aether.world.processor.VerticalGradientProcessor;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -48,11 +49,21 @@ public class GoldDungeonPieces {
     public static class BossRoom extends GoldDungeonPiece {
 
         public BossRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
-            super(AetherStructurePieceTypes.GOLD_BOSS_ROOM.get(), manager, name, makeSettings().setRotation(rotation), pos);
+            super(AetherStructurePieceTypes.GOLD_BOSS_ROOM.get(), manager, name, makeSettingsWithPivot(manager, name).setRotation(rotation), pos);
         }
 
         public BossRoom(StructurePieceSerializationContext context, CompoundTag tag) {
             super(AetherStructurePieceTypes.GOLD_BOSS_ROOM.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
+        }
+
+        private static StructurePlaceSettings makeSettingsWithPivot(StructureTemplateManager templateManager, String name) {
+            StructurePlaceSettings settings = makeSettings();
+            StructureTemplate template = templateManager.getOrCreate(new ResourceLocation(Aether.MODID, "gold_dungeon/" + name));
+            Vec3i size = template.getSize();
+            int forwardOffset = ((size.getZ() - 5) >> 1) + 5; // Accounts for the treasure room
+            BlockPos pivot = new BlockPos(size.getX() >> 1, size.getY() >> 1, forwardOffset);
+            settings.setRotationPivot(pivot);
+            return settings;
         }
 
         private static StructurePlaceSettings makeSettings() {
