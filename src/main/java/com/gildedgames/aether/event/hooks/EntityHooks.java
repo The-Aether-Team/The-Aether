@@ -5,7 +5,7 @@ import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.ai.goal.BeeGrowBerryBushGoal;
 import com.gildedgames.aether.entity.ai.goal.FoxEatBerryBushGoal;
 import com.gildedgames.aether.entity.monster.Swet;
-import com.gildedgames.aether.entity.monster.dungeon.boss.Slider;
+import com.gildedgames.aether.entity.monster.dungeon.boss.slider.Slider;
 import com.gildedgames.aether.entity.passive.FlyingCow;
 import com.gildedgames.aether.entity.passive.MountableAnimal;
 import com.gildedgames.aether.item.miscellaneous.bucket.SkyrootBucketItem;
@@ -17,6 +17,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.*;
@@ -99,6 +100,10 @@ public class EntityHooks {
             return entityHitResult.getEntity() instanceof Slider && projectileEntity instanceof FishingHook;
         }
         return false;
+    }
+
+    public static boolean preventSliderShieldBlock(DamageSource source) {
+        return source.getEntity() instanceof Slider;
     }
 
     public static boolean lightningHitKeys(Entity entity) {

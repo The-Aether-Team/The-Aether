@@ -13,6 +13,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
@@ -57,6 +58,14 @@ public class FireMinion extends Monster {
             double z = this.getZ() + d2 * d1;
             this.level.addParticle(particle, x, y, z, 0.0, -0.075, 0.0);
         }
+    }
+
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        if (source.getDirectEntity() instanceof Snowball) {
+            amount += 3;
+        }
+        return super.hurt(source, amount);
     }
 
     @Override

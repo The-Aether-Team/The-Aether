@@ -9,13 +9,13 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(RealmsPlayerScreen.class)
 public interface RealmsPlayerScreenAccessor {
     @Accessor("OPTIONS_BACKGROUND")
-    static ResourceLocation getOptionsBackground() {
+    static ResourceLocation aether$getOptionsBackground() {
         throw new AssertionError();
     }
 
     @Mutable
     @Accessor("OPTIONS_BACKGROUND")
-    static void setOptionsBackground(ResourceLocation location) {
+    static void aether$setOptionsBackground(ResourceLocation location) {
         throw new AssertionError();
     }
 }

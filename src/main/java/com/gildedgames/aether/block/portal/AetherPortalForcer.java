@@ -69,12 +69,12 @@ public class AetherPortalForcer implements ITeleporter {
             double scale = DimensionType.getTeleportationScale(this.level.dimensionType(), destinationLevel.dimensionType());
             BlockPos scaledEntityPos = worldBorder.clampToBounds(entity.getX() * scale, entity.getY(), entity.getZ() * scale);
             return this.getExitPortal(entity, scaledEntityPos, worldBorder).map((rectangle) -> {
-                BlockState blockState = this.level.getBlockState(entityAccessor.getPortalEntrancePos());
+                BlockState blockState = this.level.getBlockState(entityAccessor.aether$getPortalEntrancePos());
                 Direction.Axis axis;
                 Vec3 vec3;
                 if (blockState.hasProperty(BlockStateProperties.HORIZONTAL_AXIS)) {
                     axis = blockState.getValue(BlockStateProperties.HORIZONTAL_AXIS);
-                    BlockUtil.FoundRectangle foundRectangle = BlockUtil.getLargestRectangleAround(entityAccessor.getPortalEntrancePos(), axis, 21, Direction.Axis.Y, 21, (blockPos) -> this.level.getBlockState(blockPos) == blockState);
+                    BlockUtil.FoundRectangle foundRectangle = BlockUtil.getLargestRectangleAround(entityAccessor.aether$getPortalEntrancePos(), axis, 21, Direction.Axis.Y, 21, (blockPos) -> this.level.getBlockState(blockPos) == blockState);
                     vec3 = entityAccessor.callGetRelativePortalPosition(axis, foundRectangle);
                 } else {
                     axis = Direction.Axis.X;
@@ -95,7 +95,7 @@ public class AetherPortalForcer implements ITeleporter {
             if (optional.isPresent()) {
                 return optional;
             } else {
-                Direction.Axis direction$axis = this.level.getBlockState(entityAccessor.getPortalEntrancePos()).getOptionalValue(AetherPortalBlock.AXIS).orElse(Direction.Axis.X);
+                Direction.Axis direction$axis = this.level.getBlockState(entityAccessor.aether$getPortalEntrancePos()).getOptionalValue(AetherPortalBlock.AXIS).orElse(Direction.Axis.X);
                 Optional<BlockUtil.FoundRectangle> portalOptional = this.createPortal(findFrom, direction$axis);
                 if (portalOptional.isEmpty()) {
                     Aether.LOGGER.error("Unable to create an Aether Portal, likely target out of worldborder");

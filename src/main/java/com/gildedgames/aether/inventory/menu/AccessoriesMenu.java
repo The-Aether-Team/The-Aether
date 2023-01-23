@@ -75,10 +75,10 @@ public class AccessoriesMenu extends InventoryMenu {
     public AccessoriesMenu(int containerId, Inventory playerInventory, boolean hasButton) {
         super(playerInventory, playerInventory.player.getLevel().isClientSide(), playerInventory.player);
         AbstractContainerMenuAccessor abstractContainerMenuAccessor = (AbstractContainerMenuAccessor) this;
-        abstractContainerMenuAccessor.setMenuType(AetherMenuTypes.ACCESSORIES.get());
-        abstractContainerMenuAccessor.setContainerId(containerId);
-        abstractContainerMenuAccessor.getRemoteSlots().clear();
-        abstractContainerMenuAccessor.getLastSlots().clear();
+        abstractContainerMenuAccessor.aether$setMenuType(AetherMenuTypes.ACCESSORIES.get());
+        abstractContainerMenuAccessor.aether$setContainerId(containerId);
+        abstractContainerMenuAccessor.aether$getRemoteSlots().clear();
+        abstractContainerMenuAccessor.aether$getLastSlots().clear();
         this.slots.clear();
         this.player = playerInventory.player;
         this.curiosHandler = CuriosApi.getCuriosHelper().getCuriosHandler(this.player);

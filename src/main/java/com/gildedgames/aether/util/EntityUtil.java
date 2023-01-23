@@ -14,7 +14,7 @@ public class EntityUtil {
     }
 
     public static void spawnMovementExplosionParticles(Entity entity) {
-        RandomSource random = ((EntityAccessor) entity).getRandom();
+        RandomSource random = ((EntityAccessor) entity).aether$getRandom();
         double d0 = random.nextGaussian() * 0.02;
         double d1 = random.nextGaussian() * 0.02;
         double d2 = random.nextGaussian() * 0.02;
@@ -26,7 +26,7 @@ public class EntityUtil {
     }
 
     public static void spawnSummoningExplosionParticles(Entity entity) {
-        RandomSource random = ((EntityAccessor) entity).getRandom();
+        RandomSource random = ((EntityAccessor) entity).aether$getRandom();
         for (int i = 0; i < 20; ++i) {
             double d0 = random.nextGaussian() * 0.02;
             double d1 = random.nextGaussian() * 0.02;

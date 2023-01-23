@@ -12,9 +12,9 @@ import java.util.function.Supplier;
 
 public class PendantItem extends AccessoryItem {
     protected ResourceLocation PENDANT_LOCATION;
-    protected final Supplier<SoundEvent> equipSound;
+    protected final Supplier<? extends SoundEvent> equipSound;
 
-    public PendantItem(String pendantLocation, Supplier<SoundEvent> pendantSound, Properties properties) {
+    public PendantItem(String pendantLocation, Supplier<? extends SoundEvent> pendantSound, Properties properties) {
         super(properties);
         this.setRenderTexture(Aether.MODID, pendantLocation);
         this.equipSound = pendantSound;

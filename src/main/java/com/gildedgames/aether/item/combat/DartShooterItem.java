@@ -25,9 +25,9 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.event.ForgeEventFactory;
 
 public class DartShooterItem extends ProjectileWeaponItem implements Vanishable {
-    private final Supplier<Item> dartType;
+    private final Supplier<? extends Item> dartType;
 
-    public DartShooterItem(Supplier<Item> dartType, Properties properties) {
+    public DartShooterItem(Supplier<? extends Item> dartType, Properties properties) {
         super(properties);
         this.dartType = dartType;
     }
@@ -161,9 +161,9 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
     }
 
     /**
-     * @return A {@link Supplier Supplier&lt;Item&gt;} that gives the Dart item that this Dart Shooter is capable of using as ammo.
+     * @return A {@link Supplier Supplier&lt;? extends Item&gt;} that gives the Dart item that this Dart Shooter is capable of using as ammo.
      */
-    public Supplier<Item> getDartType() {
+    public Supplier<? extends Item> getDartType() {
         return this.dartType;
     }
 }

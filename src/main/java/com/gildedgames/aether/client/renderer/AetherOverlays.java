@@ -18,7 +18,6 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -31,7 +30,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
@@ -267,8 +265,8 @@ public class AetherOverlays {
                     int currentOverallHealth = Mth.ceil(player.getHealth());
                     int currentLifeShardHealth = Mth.ceil(maxDefaultHealth > 20 ? Mth.clamp(currentOverallHealth - 20, 0, maxLifeShardHealth) : currentOverallHealth - maxDefaultHealth);
 
-                    boolean highlight = guiAccessor.getHealthBlinkTime() > (long) gui.getGuiTicks() && (guiAccessor.getHealthBlinkTime() - (long) gui.getGuiTicks()) / 3L % 2L == 1L;
-                    if (Util.getMillis() - guiAccessor.getLastHealthTime() > 1000L) {
+                    boolean highlight = guiAccessor.aether$getHealthBlinkTime() > (long) gui.getGuiTicks() && (guiAccessor.aether$getHealthBlinkTime() - (long) gui.getGuiTicks()) / 3L % 2L == 1L;
+                    if (Util.getMillis() - guiAccessor.aether$getLastHealthTime() > 1000L) {
                         lastOverallHealth[0] = currentOverallHealth;
                         lastLifeShardHealth[0] = currentLifeShardHealth;
                     }
@@ -309,7 +307,7 @@ public class AetherOverlays {
             int y = top - (currentHeart + (tooManyHearts ? 0 : maxDefaultHearts + currentHeart < 10 ? 0 : 10)) / 10 * rowHeight;
 
             if (displayOverallHealth + absorption <= 4) {
-                y += guiAccessor.getRandom().nextInt(2);
+                y += guiAccessor.aether$getRandom().nextInt(2);
             }
             if (currentHeart + (maxDefaultHearts > 10 ? overallHearts - 10 : maxDefaultHearts) < overallHearts && currentHeart + Math.min(maxDefaultHearts, 10) - (tooManyHearts ? overallHearts : 0) == regen) {
                 y -= 2;

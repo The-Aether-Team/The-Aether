@@ -127,24 +127,28 @@ public class DimensionListener {
                 AetherLevelData levelData = new AetherLevelData(level.getServer().getWorldData(), level.getServer().getWorldData().overworldData(), cap.getDayTime());
                 ServerLevelAccessor serverLevelAccessor = (ServerLevelAccessor) level;
                 com.gildedgames.aether.mixin.mixins.common.accessor.LevelAccessor levelAccessor = (com.gildedgames.aether.mixin.mixins.common.accessor.LevelAccessor) event.getLevel();
-                serverLevelAccessor.setServerLevelData(levelData);
-                levelAccessor.setLevelData(levelData);
+                serverLevelAccessor.aether$setServerLevelData(levelData);
+                levelAccessor.aether$setLevelData(levelData);
             });
         }
     }
 
     /**
      * Resets the weather cycle if players finish sleeping in an Aether dimension.
+     * Sets the time in the Aether according to the Aether's day/night cycle.
      */
     @SubscribeEvent
     public static void onSleepFinish(SleepFinishedTimeEvent event) {
         ServerLevel level = (ServerLevel) event.getLevel();
         if (level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
+            long time = event.getNewTime() + 48000L;
+            event.setTimeAddition(time - time % 72000L);
+
             ServerLevelAccessor serverLevelAccessor = (ServerLevelAccessor) level;
-            serverLevelAccessor.getServerLevelData().setRainTime(0);
-            serverLevelAccessor.getServerLevelData().setRaining(false);
-            serverLevelAccessor.getServerLevelData().setThunderTime(0);
-            serverLevelAccessor.getServerLevelData().setThundering(false);
+            serverLevelAccessor.aether$getServerLevelData().setRainTime(0);
+            serverLevelAccessor.aether$getServerLevelData().setRaining(false);
+            serverLevelAccessor.aether$getServerLevelData().setThunderTime(0);
+            serverLevelAccessor.aether$getServerLevelData().setThundering(false);
         }
     }
 }

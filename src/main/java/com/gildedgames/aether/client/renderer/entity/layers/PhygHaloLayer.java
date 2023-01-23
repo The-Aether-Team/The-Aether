@@ -29,8 +29,8 @@ public class PhygHaloLayer extends RenderLayer<Phyg, PigModel<Phyg>> {
     public void render(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, Phyg phyg, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (phyg.hasCustomName() && phyg.getName().getString().equals("KingPhygieBoo")) {
             QuadrupedModelAccessor quadrupedModelAccessor = (QuadrupedModelAccessor) this.getParentModel();
-            this.phygHalo.halo.yRot = quadrupedModelAccessor.getHead().yRot;
-            this.phygHalo.halo.xRot = quadrupedModelAccessor.getHead().xRot;
+            this.phygHalo.halo.yRot = quadrupedModelAccessor.aether$getHead().yRot;
+            this.phygHalo.halo.xRot = quadrupedModelAccessor.aether$getHead().xRot;
             this.phygHalo.setupAnim(phyg, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
             VertexConsumer consumer = buffer.getBuffer(RenderType.eyes(HALO_LOCATION));
             this.phygHalo.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 0.25F);

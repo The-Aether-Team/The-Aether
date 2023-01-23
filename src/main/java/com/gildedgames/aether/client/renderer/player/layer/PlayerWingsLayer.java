@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 
 import javax.annotation.Nonnull;
@@ -34,26 +35,21 @@ public class PlayerWingsLayer<T extends Player, M extends PlayerModel<T>> extend
         if (EquipmentUtil.hasFullValkyrieSet(entity)) {
             AetherPlayer.get(entity).ifPresent((aetherPlayer) -> {
                 if (!Minecraft.getInstance().isPaused()) {
-                    this.handleWingRotation(aetherPlayer);
+                    this.handleWingRotation(aetherPlayer, partialTicks);
                 }
-                this.setupWingRotation(entity, aetherPlayer.getWingRotation());
+                this.setupWingRotation(entity, aetherPlayer.getWingRotation() * (float) (Math.PI / 180.0F));
                 VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutoutNoCull(VALKYRIE_TEXTURE));
                 this.wings.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
             });
         }
     }
 
-    private void handleWingRotation(AetherPlayer aetherPlayer) {
+    private void handleWingRotation(AetherPlayer aetherPlayer, float partialTicks) {
         if (EquipmentUtil.hasFullValkyrieSet(aetherPlayer.getPlayer())) {
             if (!aetherPlayer.getPlayer().isOnGround() && (aetherPlayer.getPlayer().getFirstPassenger() != null && !aetherPlayer.getPlayer().getFirstPassenger().isOnGround())) {
-                aetherPlayer.setWingRotation(aetherPlayer.getWingRotation() + (0.75F / 4.0F));
+                aetherPlayer.setWingRotation(Mth.wrapDegrees((Mth.lerp(partialTicks, aetherPlayer.getWingRotation(), aetherPlayer.getWingRotation() + ((0.75F / 4.0F) * (float) (180.0F / Math.PI))))));
             } else {
-                aetherPlayer.setWingRotation(aetherPlayer.getWingRotation() + (0.15F / 4.0F));
-            }
-            if (aetherPlayer.getWingRotation() > (Math.PI * 2.0F)) {
-                aetherPlayer.setWingRotation(aetherPlayer.getWingRotation() - ((float) Math.PI * 2.0F));
-            } else {
-                aetherPlayer.setWingRotation(aetherPlayer.getWingRotation() + (0.1F / 4.0F));
+                aetherPlayer.setWingRotation(Mth.wrapDegrees((Mth.lerp(partialTicks, aetherPlayer.getWingRotation(), aetherPlayer.getWingRotation() + ((0.15F / 4.0F) * (float) (180.0F / Math.PI))))));
             }
         } else {
             aetherPlayer.setWingRotation(0.0F);

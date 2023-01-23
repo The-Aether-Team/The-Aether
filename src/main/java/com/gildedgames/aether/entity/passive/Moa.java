@@ -224,8 +224,8 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	@Override
-	public void onJump() {
-		super.onJump();
+	public void onJump(Mob moa) {
+		super.onJump(moa);
 		this.setJumpCooldown(10);
 		if (!this.isOnGround()) {
 			this.setRemainingJumps(this.getRemainingJumps() - 1);
@@ -442,7 +442,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	@Override
-	protected double getMountJumpStrength() {
+	public double getMountJumpStrength() {
 		return this.isOnGround() ? 0.9 : 0.75;
 	}
 

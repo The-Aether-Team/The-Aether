@@ -17,9 +17,9 @@ public class ParachuteItem extends Item {
     /**
      * The {@link Parachute} that this item can spawn in.
      */
-    protected final Supplier<EntityType<Parachute>> parachuteEntity;
+    protected final Supplier<? extends EntityType<? extends Parachute>> parachuteEntity;
 
-    public ParachuteItem(Supplier<EntityType<Parachute>> parachuteEntity, Properties properties) {
+    public ParachuteItem(Supplier<? extends EntityType<? extends Parachute>> parachuteEntity, Properties properties) {
         super(properties);
         this.parachuteEntity = parachuteEntity;
     }
@@ -59,7 +59,7 @@ public class ParachuteItem extends Item {
         return InteractionResultHolder.pass(heldStack);
     }
 
-    public Supplier<EntityType<Parachute>> getParachuteEntity() {
+    public Supplier<? extends EntityType<? extends Parachute>> getParachuteEntity() {
         return this.parachuteEntity;
     }
 }

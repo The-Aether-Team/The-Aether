@@ -6,6 +6,7 @@ import com.gildedgames.aether.client.gui.screen.ValkyrieQueenDialogueScreen;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.BossMob;
 import com.gildedgames.aether.entity.NpcDialogue;
+import com.gildedgames.aether.entity.ai.AetherBlockPathTypes;
 import com.gildedgames.aether.entity.ai.goal.NpcDialogueGoal;
 import com.gildedgames.aether.entity.monster.dungeon.AbstractValkyrie;
 import com.gildedgames.aether.entity.projectile.crystal.ThunderCrystal;
@@ -20,8 +21,11 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -47,18 +51,20 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.entity.IEntityAdditionalSpawnData;
+import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 
 /**
  * This class holds the implementation of valkyrie queens. They are the boss version of valkyries, and they fight
  * in the same way, with the additional ability to shoot thunder crystal projectiles at their enemies.
  */
-public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQueen>, NpcDialogue {
+public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQueen>, NpcDialogue, IEntityAdditionalSpawnData {
     public static final EntityDataAccessor<Boolean> DATA_IS_READY = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.COMPONENT);
+
     /**
      * The player whom the valkyrie queen is currently conversing with
      */
@@ -73,6 +79,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
         this.bossFight = new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
         this.bossFight.setVisible(false);
         this.xpReward = XP_REWARD_BOSS;
+        this.setPathfindingMalus(AetherBlockPathTypes.BOSS_DOORWAY, -1.0F);
     }
 
     /**
@@ -82,15 +89,6 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor pLevel, @Nonnull DifficultyInstance pDifficulty, @Nonnull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
         SpawnGroupData data = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
         this.setBossName(BossNameGenerator.generateValkyrieName());
-        if (this.dungeon == null) {
-            this.dungeon = new DungeonTracker<>(this,
-                    this.position(),
-                    new AABB(this.position().subtract(15, 0, 15), this.position().add(15, 15, 15)),
-                    new ArrayList<>());
-        }
-        if (this.dungeonBounds == null) {
-            this.dungeonBounds = this.dungeon.roomBounds();
-        }
         return data;
     }
 
@@ -131,39 +129,56 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     @Override
     @Nonnull
     protected InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
-        if (!this.isBossFight() && !this.level.isClientSide) {
-            if (!this.isReady()) {
-                this.lookAt(player, 180F, 180F);
-                if (player instanceof ServerPlayer serverPlayer) {
-                    if (!this.isTrading()) {
-                        AetherPacketHandler.sendToPlayer(new OpenNpcDialoguePacket(this.getId()), serverPlayer);
-                        this.setTradingPlayer(serverPlayer);
+        if (hand == InteractionHand.MAIN_HAND) {
+            if (!this.isBossFight() && !this.level.isClientSide) {
+                if (!this.isReady()) {
+                    this.lookAt(player, 180F, 180F);
+                    if (player instanceof ServerPlayer serverPlayer) {
+                        if (!this.isTrading()) {
+                            AetherPacketHandler.sendToPlayer(new OpenNpcDialoguePacket(this.getId()), serverPlayer);
+                            this.setTradingPlayer(serverPlayer);
+                        }
                     }
+                } else {
+                    this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.ready"));
                 }
-            } else {
-                MutableComponent message = Component.translatable("gui.aether.queen.dialog.ready");
-                this.chatWithNearby(message);
+                return InteractionResult.SUCCESS;
             }
-            return InteractionResult.SUCCESS;
-        } else {
-            return InteractionResult.PASS;
         }
+        return InteractionResult.PASS;
     }
 
     /**
      * The valkyrie queen is invulnerable until 10 victory medals are presented.
      */
     @Override
-    public boolean hurt(@Nonnull DamageSource source, float pDamageAmount) {
-        boolean flag = (this.isReady() || source == DamageSource.OUT_OF_WORLD) && super.hurt(source, pDamageAmount);
-        if (!this.level.isClientSide && !this.isBossFight() && flag && level.getDifficulty() != Difficulty.PEACEFUL && this.getHealth() > 0) {
-            chatWithNearby(Component.translatable("gui.aether.queen.dialog.fight"));
-            this.setBossFight(true);
-            if (this.getDungeon() != null) {
-                this.closeRoom();
+    public boolean hurt(@Nonnull DamageSource source, float amount) {
+        if (source == DamageSource.OUT_OF_WORLD) {
+            return super.hurt(source, amount);
+        }
+
+        if (this.isReady()) {
+            if (source.getDirectEntity() instanceof LivingEntity attacker && this.level.getDifficulty() != Difficulty.PEACEFUL) {
+                if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoomInterior(attacker)) {
+                    if (super.hurt(source, amount) && this.getHealth() > 0) {
+                        if (!this.level.isClientSide() && !this.isBossFight()) {
+                            this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.fight"));
+                            this.setBossFight(true);
+                            if (this.getDungeon() != null) {
+                                this.closeRoom();
+                            }
+                        }
+                        return true;
+                    }
+                } else {
+                    if (!this.level.isClientSide() && attacker instanceof Player player) {
+                        this.displayTooFarMessage(player);
+                        return false;
+                    }
+                }
             }
         }
-        return flag;
+        return false;
     }
 
     /**
@@ -254,7 +269,8 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
      * Sends a message to nearby players. Useful for boss fights.
      */
     protected void chatWithNearby(Component message) {
-        this.level.getNearbyPlayers(NON_COMBAT, this, this.dungeon.roomBounds()).forEach(player -> this.chatItUp(player, message));
+        AABB room = this.dungeon == null ? this.getBoundingBox().inflate(16) : this.dungeon.roomBounds();
+        this.level.getNearbyPlayers(NON_COMBAT, this, room).forEach(player -> this.chatItUp(player, message));
     }
 
     /**
@@ -265,7 +281,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     public void startSeenByPlayer(@Nonnull ServerPlayer pPlayer) {
         super.startSeenByPlayer(pPlayer);
         AetherPacketHandler.sendToPlayer(new BossInfoPacket.Display(this.bossFight.getId()), pPlayer);
-        if (this.getDungeon() != null && this.getDungeon().isPlayerWithinRoom(pPlayer)) {
+        if (this.getDungeon() == null || this.getDungeon().isPlayerTracked(pPlayer)) {
             this.bossFight.addPlayer(pPlayer);
         }
     }
@@ -337,6 +353,9 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     @Override
     public void setDungeon(DungeonTracker<ValkyrieQueen> dungeon) {
         this.dungeon = dungeon;
+        if (this.dungeonBounds == null) {
+            this.dungeonBounds = dungeon.roomBounds();
+        }
     }
 
     public void setDungeonBounds(AABB dungeonBounds) {
@@ -463,12 +482,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     @Override
     public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putString("BossName", Component.Serializer.toJson(this.getBossName()));
-        tag.putBoolean("BossFight", this.isBossFight());
-        tag.putBoolean("Ready", this.isReady());
-        if (this.getDungeon() != null) {
-            tag.put("Dungeon", this.getDungeon().addAdditionalSaveData());
-        }
+        this.addBossSaveData(tag);
         if (this.dungeonBounds != null) {
             tag.putDouble("DungeonBoundsMinX", this.dungeonBounds.minX);
             tag.putDouble("DungeonBoundsMinY", this.dungeonBounds.minY);
@@ -477,26 +491,13 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
             tag.putDouble("DungeonBoundsMaxY", this.dungeonBounds.maxY);
             tag.putDouble("DungeonBoundsMaxZ", this.dungeonBounds.maxZ);
         }
+        tag.putBoolean("Ready", this.isReady());
     }
 
     @Override
     public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        if (tag.contains("BossName")) {
-            Component name = Component.Serializer.fromJson(tag.getString("BossName"));
-            if (name != null) {
-                this.setBossName(name);
-            }
-        }
-        if (tag.contains("BossFight")) {
-            this.setBossFight(tag.getBoolean("BossFight"));
-        }
-        if (tag.contains("Ready")) {
-            this.setReady(tag.getBoolean("Ready"));
-        }
-        if (tag.contains("Dungeon") && tag.get("Dungeon") instanceof CompoundTag dungeonTag) {
-            this.setDungeon(DungeonTracker.readAdditionalSaveData(dungeonTag, this));
-        }
+        this.readBossSaveData(tag);
         if (tag.contains("DungeonBoundsMinX")) {
             double minX = tag.getDouble("DungeonBoundsMinX");
             double minY = tag.getDouble("DungeonBoundsMinY");
@@ -506,6 +507,29 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
             double maxZ = tag.getDouble("DungeonBoundsMaxZ");
             this.dungeonBounds = new AABB(minX, minY, minZ, maxX, maxY, maxZ);
         }
+        if (tag.contains("Ready")) {
+            this.setReady(tag.getBoolean("Ready"));
+        }
+    }
+
+    @Override
+    public void writeSpawnData(FriendlyByteBuf buffer) {
+        CompoundTag tag = new CompoundTag();
+        this.addBossSaveData(tag);
+        buffer.writeNbt(tag);
+    }
+
+    @Override
+    public void readSpawnData(FriendlyByteBuf additionalData) {
+        CompoundTag tag = additionalData.readNbt();
+        if (tag != null) {
+            this.readBossSaveData(tag);
+        }
+    }
+
+    @Override
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     /**

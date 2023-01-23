@@ -115,7 +115,7 @@ public class Aerbunny extends AetherAnimal {
                             if (this.lastPos == null) {
                                 this.lastPos = this.position();
                             }
-                            if (!player.isOnGround() && aetherPlayer.isJumping() && player.getDeltaMovement().y <= 0.0 && this.position().y() < this.lastPos.y() - 0.75) {
+                            if (!player.isOnGround() && aetherPlayer.isJumping() && player.getDeltaMovement().y <= 0.0 && this.position().y() < this.lastPos.y() - 0.55) {
                                 player.setDeltaMovement(player.getDeltaMovement().x, 0.125, player.getDeltaMovement().z);
                                 AetherPacketHandler.sendToServer(new AerbunnyPuffPacket(this.getId()));
                                 this.lastPos = null;
@@ -128,7 +128,7 @@ public class Aerbunny extends AetherAnimal {
             }
             if (player instanceof ServerPlayer serverPlayer) {
                 ServerGamePacketListenerImplAccessor serverGamePacketListenerImplAccessor = (ServerGamePacketListenerImplAccessor) serverPlayer.connection;
-                serverGamePacketListenerImplAccessor.setAboveGroundTickCount(0);
+                serverGamePacketListenerImplAccessor.aether$setAboveGroundTickCount(0);
             }
         }
         if (this.isOnGround() || (this.getVehicle() != null && this.getVehicle().isOnGround())) {

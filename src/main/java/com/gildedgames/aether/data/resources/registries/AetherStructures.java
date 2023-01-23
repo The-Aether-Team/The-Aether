@@ -14,11 +14,18 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureSpawnOverride;
 import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
+
+import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class AetherStructures {
     public static final ResourceKey<Structure> LARGE_AERCLOUD = createKey("large_aercloud");
@@ -31,21 +38,31 @@ public class AetherStructures {
     }
 
     public static void bootstrap(BootstapContext<Structure> context) {
+        Map<MobCategory, StructureSpawnOverride> mobSpawns = Arrays.stream(MobCategory.values()).collect(Collectors.toMap((category) -> {
+            return category;
+        }, (category) -> {
+            return new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.PIECE, WeightedRandomList.create());
+        }));
+
+
         HolderGetter<Biome> biomes = context.lookup(Registries.BIOME);
         context.register(LARGE_AERCLOUD, new LargeAercloudStructure(
                 AetherStructureBuilders.structure(biomes.getOrThrow(AetherTags.Biomes.HAS_LARGE_AERCLOUD), GenerationStep.Decoration.SURFACE_STRUCTURES, TerrainAdjustment.NONE),
                 BlockStateProvider.simple(AetherBlocks.COLD_AERCLOUD.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true)), 3));
         context.register(BRONZE_DUNGEON, new BronzeDungeonStructure(AetherStructureBuilders.structure(
                 biomes.getOrThrow(AetherTags.Biomes.HAS_BRONZE_DUNGEON),
+                mobSpawns,
                 GenerationStep.Decoration.SURFACE_STRUCTURES,
                 TerrainAdjustment.BURY),
                 8));
         context.register(SILVER_DUNGEON, new SilverDungeonStructure(AetherStructureBuilders.structure(
                 biomes.getOrThrow(AetherTags.Biomes.HAS_SILVER_DUNGEON),
+                mobSpawns,
                 GenerationStep.Decoration.SURFACE_STRUCTURES,
                 TerrainAdjustment.NONE)));
         context.register(GOLD_DUNGEON, new GoldDungeonStructure(AetherStructureBuilders.structure(
                 biomes.getOrThrow(AetherTags.Biomes.HAS_GOLD_DUNGEON),
+                mobSpawns,
                 GenerationStep.Decoration.SURFACE_STRUCTURES,
                 TerrainAdjustment.NONE)));
     }
