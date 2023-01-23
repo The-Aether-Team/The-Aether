@@ -21,8 +21,12 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * This structure processor plants trees and flowers on top of the island.
+ * It's only used for the gold dungeon island currently.
+ */
 public class VegetationProcessor extends StructureProcessor {
-    public static final Codec<VegetationProcessor> CODEC = Codec.unit(() -> VegetationProcessor.INSTANCE);
+    public static final Codec<VegetationProcessor> CODEC = Codec.unit(() -> VegetationProcessor.INSTANCE); //TODO: Make a proper codec
 
     public static final VegetationProcessor INSTANCE = new VegetationProcessor(48, 2, true);
     public static final VegetationProcessor STUB_PROCESSOR = new VegetationProcessor(64, 1, false);
@@ -42,13 +46,13 @@ public class VegetationProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo process(LevelReader reader, BlockPos templatePos, BlockPos pPos, StructureTemplate.StructureBlockInfo blockInfo, StructureTemplate.StructureBlockInfo relativeBlockInfo, StructurePlaceSettings settings, @Nullable StructureTemplate template) {
         if (template != null) {
             BoundingBox box = template.getBoundingBox(settings, templatePos);
-            int y = Mth.floor(box.maxY() - box.minY() * 0.75) + 1;
+            int y = Mth.floor((box.maxY() - box.minY()) * 0.75) + 1;
             if (relativeBlockInfo.pos.getY() < y) {
                 return relativeBlockInfo.state.isAir() ? null : relativeBlockInfo;
             }
         }
 
-        if (reader instanceof WorldGenLevel level && level.getChunkSource() instanceof ServerChunkCache chunkSource) {
+        if (reader instanceof WorldGenLevel level && level.getChunkSource() instanceof ServerChunkCache chunkSource) { // During worldgen, this should always be true.
             if (relativeBlockInfo.state.isAir()) {
                 if (level.getBlockState(relativeBlockInfo.pos.below()).is(AetherTags.Blocks.AETHER_DIRT)) {
                     RandomSource random = settings.getRandom(relativeBlockInfo.pos);
