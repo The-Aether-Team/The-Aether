@@ -60,8 +60,10 @@ public class GoldDungeonPieces {
             StructurePlaceSettings settings = makeSettings();
             StructureTemplate template = templateManager.getOrCreate(new ResourceLocation(Aether.MODID, "gold_dungeon/" + name));
             Vec3i size = template.getSize();
-            int forwardOffset = ((size.getZ() - 5) >> 1) + 5; // Accounts for the treasure room
-            BlockPos pivot = new BlockPos(size.getX() >> 1, size.getY() >> 1, forwardOffset);
+            int xOffset = ((size.getX()) >> 1);
+            int zOffset = ((size.getZ()) >> 1);
+            BlockPos pivot = new BlockPos(xOffset, 0, zOffset);
+            Aether.LOGGER.info("Pivot:" + pivot);
             settings.setRotationPivot(pivot);
             return settings;
         }
