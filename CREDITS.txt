@@ -23,6 +23,9 @@ CartoonishVillain:
 CDAGaming:
 - Fixes to the Aether main menu.
 
+FlashFyreMods
+- Implementation of more beta-accurate terrain generation for the Aether dimension.
+
 GizmoTheMoonPig
 - Fixes to the Life Shard silver heart overlay rendering.
 
