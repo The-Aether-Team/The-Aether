@@ -5,14 +5,15 @@ import com.gildedgames.aether.world.structurepiece.GoldDungeonPieces;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 import java.util.Optional;
@@ -39,37 +40,57 @@ public class GoldDungeonStructure extends Structure {
 
     private void generatePieces(StructurePiecesBuilder builder, GenerationContext context) {
         RandomSource random = context.random();
-        BlockPos elevatedPos = context.chunkPos().getBlockAt(2, 80, 2);
+        BlockPos elevatedPos = context.chunkPos().getBlockAt(2, 128, 2);
         StructureTemplateManager templateManager = context.structureTemplateManager();
 
-        GoldDungeonPieces.LegacyIslandPiece legacyPiece = new GoldDungeonPieces.LegacyIslandPiece(BoundingBox.fromCorners(elevatedPos.offset(-24, -24, -24), elevatedPos.offset(24, 24, 24)));
-        builder.addPiece(legacyPiece);
+        GoldDungeonPieces.Island island = new GoldDungeonPieces.Island(
+                templateManager,
+                "island",
+                elevatedPos
+        );
+        builder.addPiece(island);
 
+        BlockPos centerPos = island.getBoundingBox().getCenter();
+        Vec3i stubOffset = this.getStubOffset(templateManager);
+        this.addIslandStubs(templateManager, builder, random, centerPos, stubOffset);
+
+        /*GoldDungeonPieces.BossRoom bossRoom = new GoldDungeonPieces.BossRoom(
+                templateManager,
+                "boss_room",
+                elevatedPos,
+//                Rotation.getRandom(random)
+                Rotation.NONE
+        );*/
+//        builder.addPiece(bossRoom);
+    }
+
+    private void addIslandStubs(StructureTemplateManager templateManager, StructurePiecesBuilder builder, RandomSource random, BlockPos center, Vec3i stubOffset) {
         int stubCount = this.stubIslandCount + random.nextInt(5);
+
         for (int stubIslands = 0; stubIslands < stubCount; ++stubIslands) {
             float angle = random.nextFloat() * 360F * Mth.DEG_TO_RAD;
             float distance = ((random.nextFloat() * 0.125F) + 0.7F) * 24.0F;
 
-            int xOffset = Mth.floor(Math.cos(angle) * (double)distance);
-            int yOffset = -Mth.floor(24.0D * (double)random.nextFloat() * 0.3D);
-            int zOffset = Mth.floor(-Math.sin(angle) * (double)distance);
+            int xOffset = Mth.floor(Math.cos(angle) * distance);
+            int yOffset = -Mth.floor(24.0D * random.nextFloat() * 0.3D);
+            int zOffset = Mth.floor(-Math.sin(angle) * distance);
 
-            BlockPos stubPos = elevatedPos.offset(xOffset, yOffset, zOffset);
-
-            GoldDungeonPieces.LegacyStubPiece stub = new GoldDungeonPieces.LegacyStubPiece(new BoundingBox(stubPos).inflatedBy(8));
+            BlockPos stubPos = center.offset(xOffset, yOffset, zOffset);
+            stubPos = stubPos.offset(stubOffset);
+            GoldDungeonPieces.Stub stub = new GoldDungeonPieces.Stub(
+                    templateManager,
+                    "stub",
+                    stubPos
+            );
             builder.addPiece(stub);
 
-            //this.generateStubIsland(l4, k5, i6, 8);
-//            builder.addPiece(new ComponentGoldenIslandStub((chunkX << 4) + 2, (chunkZ << 4) + 2, l4, k5, i6, 8));
         }
+    }
 
-        /*GoldDungeonPieces.BossRoom bossRoom = new GoldDungeonPieces.BossRoom(
-                templateManager,
-                new ResourceLocation(Aether.MODID, "gold_dungeon/boss_room"),
-                elevatedPos,
-                random
-        );
-        builder.addPiece(bossRoom);*/
+    private Vec3i getStubOffset(StructureTemplateManager templateManager) {
+        StructureTemplate template = templateManager.getOrCreate(new ResourceLocation(Aether.MODID, "gold_dungeon/stub"));
+        Vec3i size = template.getSize();
+        return new Vec3i(size.getX() / -2, size.getY() / -2, size.getZ() / -2);
     }
 
     @Override

@@ -4,33 +4,26 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.api.DungeonTracker;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.blockentity.TreasureChestBlockEntity;
-import com.gildedgames.aether.data.resources.registries.AetherConfiguredFeatures;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.monster.dungeon.boss.SunSpirit;
 import com.gildedgames.aether.loot.AetherLoot;
+import com.gildedgames.aether.world.processor.VegetationProcessor;
+import com.gildedgames.aether.world.processor.VerticalGradientProcessor;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.features.TreeFeatures;
-import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
@@ -40,6 +33,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 import net.minecraft.world.phys.AABB;
 
 import java.util.ArrayList;
+import java.util.function.Function;
 
 /**
  * Class for all the pieces of the gold dungeon.
@@ -53,11 +47,10 @@ public class GoldDungeonPieces {
     /**
      * A room inside the island. This should contain the sun spirit.
      */
-    public static class BossRoom extends TemplateStructurePiece {
+    public static class BossRoom extends GoldDungeonPiece {
 
-        public BossRoom(StructureTemplateManager manager, ResourceLocation id, BlockPos pos, RandomSource random) {
-            super(AetherStructurePieceTypes.GOLD_BOSS_ROOM.get(), 0, manager, id, id.toString(), makeSettings().setRotation(Rotation.getRandom(random)), pos);
-            this.setOrientation(this.getRotation().rotate(Direction.NORTH));
+        public BossRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
+            super(AetherStructurePieceTypes.GOLD_BOSS_ROOM.get(), manager, name, makeSettings().setRotation(rotation), pos);
         }
 
         public BossRoom(StructurePieceSerializationContext context, CompoundTag tag) {
@@ -94,10 +87,10 @@ public class GoldDungeonPieces {
     /**
      * The chunks of land surrounding the boss room to form an island.
      */
-    public static class Island extends TemplateStructurePiece {
+    public static class Island extends GoldDungeonPiece {
 
-        public Island(StructureTemplateManager manager, ResourceLocation id, BlockPos pos) {
-            super(AetherStructurePieceTypes.GOLD_ISLAND.get(), 0, manager, id, id.toString(), makeSettings(), pos);
+        public Island(StructureTemplateManager manager, String name, BlockPos pos) {
+            super(AetherStructurePieceTypes.GOLD_ISLAND.get(), manager, name, makeSettings(), pos);
         }
 
         public Island(StructurePieceSerializationContext context, CompoundTag tag) {
@@ -105,166 +98,32 @@ public class GoldDungeonPieces {
         }
 
         private static StructurePlaceSettings makeSettings() {
-            return new StructurePlaceSettings();
+            return new StructurePlaceSettings().addProcessor(VerticalGradientProcessor.INSTANCE).addProcessor(VegetationProcessor.INSTANCE);
         }
 
         @Override
         protected void handleDataMarker(String p_226906_, BlockPos p_226907_, ServerLevelAccessor p_226908_, RandomSource p_226909_, BoundingBox p_226910_) {}
     }
 
-    public static class LegacyIslandPiece extends StructurePiece {
-        public final int radius = 24;
+    /**
+     * The chunks of land surrounding the boss room to form an island.
+     */
+    public static class Stub extends GoldDungeonPiece {
 
-        public LegacyIslandPiece(BoundingBox pBox) {
-            super(AetherStructurePieceTypes.GOLD_LEGACY_ISLAND.get(), 0, pBox);
-            this.setOrientation(Direction.NORTH);
+        public Stub(StructureTemplateManager manager, String name, BlockPos pos) {
+            super(AetherStructurePieceTypes.GOLD_STUB.get(), manager, name, makeSettings(), pos);
         }
 
-        public LegacyIslandPiece(StructurePieceSerializationContext context, CompoundTag pTag) {
-            super(AetherStructurePieceTypes.GOLD_LEGACY_ISLAND.get(), pTag);
-            this.setOrientation(Direction.NORTH);
+        public Stub(StructurePieceSerializationContext context, CompoundTag tag) {
+            super(AetherStructurePieceTypes.GOLD_STUB.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
         }
 
-        @Override
-        protected void addAdditionalSaveData(StructurePieceSerializationContext pContext, CompoundTag pTag) {
-
-        }
-
-        @Override
-        public void postProcess(WorldGenLevel level, StructureManager pStructureManager, ChunkGenerator generator, RandomSource random, BoundingBox chunkBox, ChunkPos pChunkPos, BlockPos startPos) {
-            RegistryAccess registry = level.registryAccess();
-
-            for (int x = -24; x <= 24; x++) {
-                for (int y = 24; y >= -24; y--) {
-                    for (int z = -24; z <= 24; z++) {
-                        int width = Mth.floor(x * (1 + y / 240.0) / 0.8);
-                        int height = y;
-
-                        if (y > 15) {
-                            height = Mth.floor(height * 1.375);
-                            height -= 6;
-                        }
-                        else if (y < -15) {
-                            height = Mth.floor(height * 1.3500000238418579);
-                            height += 6;
-                        }
-
-                        int length = Mth.floor(z * (1 + y / 240.0) / 0.8);
-
-                        if(Math.sqrt(width * width + height * height + length * length) <= 24) {
-                            int xOffset = x + 24;
-                            int yOffset = y + 24;
-                            int zOffset = z + 24;
-
-                            BlockPos worldPos = this.getWorldPos(xOffset, yOffset, zOffset);
-
-                            if (!chunkBox.isInside(worldPos)) {
-                                continue;
-                            }
-
-                            if (y > 4 && this.getBlock(level, xOffset, yOffset + 1, zOffset, chunkBox).isAir()) {
-                                this.placeBlock(level, AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState(), xOffset, yOffset, zOffset, chunkBox);
-                                this.placeBlock(level, AetherBlocks.AETHER_DIRT.get().defaultBlockState(), xOffset, yOffset - 1, zOffset, chunkBox);
-                                this.placeBlock(level, AetherBlocks.AETHER_DIRT.get().defaultBlockState(), xOffset, yOffset - (1 + random.nextInt(2)), zOffset, chunkBox);
-
-                                if (y >= 12) {
-                                    int featureType = random.nextInt(48);
-
-                                    if (featureType < 2) {
-                                        PlacedFeature tree = PlacementUtils.inlinePlaced(registry.registryOrThrow(Registries.CONFIGURED_FEATURE).getHolderOrThrow(AetherConfiguredFeatures.GOLDEN_OAK_TREE_CONFIGURATION)).get();
-                                        tree.place(level, generator, random, worldPos.above());
-                                    } else if(featureType == 3) {
-                                        Block flower = random.nextBoolean() ? Blocks.DANDELION : Blocks.POPPY;
-                                        this.placeBlock(level, flower.defaultBlockState(), xOffset, yOffset + 1, zOffset, chunkBox);
-                                    }
-                                }
-                            } else if(this.getBlock(level, xOffset, yOffset, zOffset, chunkBox).isAir()) {
-                                this.placeBlock(level, AetherBlocks.HOLYSTONE.get().defaultBlockState(), xOffset, yOffset, zOffset, chunkBox);
-                            }
-                        }
-                    }
-
-                }
-
-            }
-
-            int l3 = 18;
-
-            for(int j4 = 0; j4 < l3; j4++) {
-                int i5 = random.nextInt(24) - random.nextInt(24);
-                int l5 = random.nextInt(24) - random.nextInt(24);
-                int j6 = random.nextInt(24) - random.nextInt(24);
-
-//                this.generateCaves(i5, l5, j6, 24 + l3 / 3); TODO: Caves
-            }
-        }
-    }
-
-    public static class LegacyStubPiece extends StructurePiece {
-
-        public LegacyStubPiece(BoundingBox pBox) {
-            super(AetherStructurePieceTypes.GOLD_LEGACY_STUB.get(), 0, pBox);
-            this.setOrientation(Direction.NORTH);
-        }
-
-        public LegacyStubPiece(StructurePieceSerializationContext context, CompoundTag pTag) {
-            super(AetherStructurePieceTypes.GOLD_LEGACY_STUB.get(), pTag);
-            this.setOrientation(Direction.NORTH);
+        private static StructurePlaceSettings makeSettings() {
+            return new StructurePlaceSettings().addProcessor(VerticalGradientProcessor.INSTANCE).addProcessor(VegetationProcessor.STUB_PROCESSOR);
         }
 
         @Override
-        protected void addAdditionalSaveData(StructurePieceSerializationContext pContext, CompoundTag pTag) {
-
-        }
-
-        @Override
-        public void postProcess(WorldGenLevel level, StructureManager structureManager, ChunkGenerator generator, RandomSource random, BoundingBox chunkBox, ChunkPos chunkPos, BlockPos startPos) {
-
-            for(int x = -8; x <= 8; x++) {
-                for(int y = 8; y >= -8; y--) {
-                    for(int z = -8; z <= 8; z++) {
-                        int width = Mth.floor((double)x);
-                        int height = y;
-
-                        if(y > 5) {
-                            height = Mth.floor((double)height * 1.375D);
-                            height -= 2;
-                        } else if(y < -5) {
-                            height = Mth.floor((double)height * 1.3500000238418579D);
-                            height += 2;
-                        }
-                        int length = Mth.floor((double)z);
-
-                        if (Math.sqrt(width * width + height * height + length * length) <= 8.0D) {
-                            int xOffset = x + 8;
-                            int yOffset = y + 8;
-                            int zOffset = z + 8;
-
-                            if (this.getBlock(level, xOffset, yOffset + 1, zOffset, chunkBox).isAir() && y > 1) {
-                                this.placeBlock(level, AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState(), xOffset, yOffset, zOffset, chunkBox);
-                                this.placeBlock(level, AetherBlocks.AETHER_DIRT.get().defaultBlockState(), xOffset, yOffset - 1, zOffset, chunkBox);
-                                this.placeBlock(level, AetherBlocks.AETHER_DIRT.get().defaultBlockState(), xOffset, yOffset - (1 + random.nextInt(2)), zOffset, chunkBox);
-
-                                if (y >= 4) {
-                                    int l3 = random.nextInt(64);
-
-                                    if (l3 == 0) {
-                                        //AetherGenUtils.generateGoldenOakTree(this, i1 + x, k1 + y + 1, i2 + z);
-                                    } else if (l3 == 5) {
-                                        if (random.nextInt(3) == 0) {
-                                            //new WorldGenLakes(Blocks.FLOWING_WATER).generate(world, random, new BlockPos.MutableBlockPos((i1 + i + random.nextInt(3)) - random.nextInt(3), k1 + j, (i2 + k + random.nextInt(3)) - random.nextInt(3)));
-                                        }
-                                    }
-                                }
-                            } else if (this.getBlock(level, xOffset, yOffset, zOffset, chunkBox).isAir()) {
-                                this.placeBlock(level, AetherBlocks.HOLYSTONE.get().defaultBlockState(), xOffset, yOffset, zOffset, chunkBox);
-                            }
-                        }
-                    }
-
-                }
-            }
-        }
+        protected void handleDataMarker(String p_226906_, BlockPos p_226907_, ServerLevelAccessor p_226908_, RandomSource p_226909_, BoundingBox p_226910_) {}
     }
 
     public static class LegacyTunnelPiece extends StructurePiece {
@@ -324,6 +183,30 @@ public class GoldDungeonPieces {
                     }
                 }
             }
+        }
+    }
+
+    public static abstract class GoldDungeonPiece extends TemplateStructurePiece {
+
+        public GoldDungeonPiece(StructurePieceType type, StructureTemplateManager manager, String name, StructurePlaceSettings settings, BlockPos pos) {
+            super(type, 0, manager, new ResourceLocation(Aether.MODID, "gold_dungeon/" + name), name, settings, pos);
+            this.setOrientation(this.getRotation().rotate(Direction.NORTH));
+        }
+
+        public GoldDungeonPiece(StructurePieceType type, CompoundTag tag, StructureTemplateManager manager, Function<ResourceLocation, StructurePlaceSettings> settingsFactory) {
+            super(type, tag, manager, settingsFactory.andThen(settings -> settings.setRotation(Rotation.valueOf(tag.getString("Rotation")))));
+            this.setOrientation(this.getRotation().rotate(Direction.NORTH));
+        }
+
+        @Override
+        protected void addAdditionalSaveData(StructurePieceSerializationContext context, CompoundTag tag) {
+            super.addAdditionalSaveData(context, tag);
+            tag.putString("Rotation", this.placeSettings.getRotation().name());
+        }
+
+        @Override
+        protected void handleDataMarker(String pName, BlockPos pPos, ServerLevelAccessor pLevel, RandomSource pRandom, BoundingBox pBox) {
+
         }
     }
 }
