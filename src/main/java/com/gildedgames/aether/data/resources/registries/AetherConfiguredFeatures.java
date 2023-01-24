@@ -51,9 +51,11 @@ public class AetherConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> GOLDEN_OAK_TREE_CONFIGURATION = createKey("golden_oak_tree");
     public static final ResourceKey<ConfiguredFeature<?, ?>> CRYSTAL_TREE_CONFIGURATION = createKey("crystal_tree");
     public static final ResourceKey<ConfiguredFeature<?, ?>> HOLIDAY_TREE_CONFIGURATION = createKey("holiday_tree");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> FLOWER_PATCH_CONFIGURATION = createKey("flower_patch");
     public static final ResourceKey<ConfiguredFeature<?, ?>> GRASS_PATCH_CONFIGURATION = createKey("grass_patch");
     public static final ResourceKey<ConfiguredFeature<?, ?>> TALL_GRASS_PATCH_CONFIGURATION = createKey("tall_grass_patch");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> WHITE_FLOWER_PATCH_CONFIGURATION = createKey("white_flower_patch");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> PURPLE_FLOWER_PATCH_CONFIGURATION = createKey("purple_flower_patch");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> BERRY_BUSH_PATCH_CONFIGURATION = createKey("berry_bush_patch");
     public static final ResourceKey<ConfiguredFeature<?, ?>> QUICKSOIL_SHELF_CONFIGURATION = createKey("quicksoil_shelf");
     public static final ResourceKey<ConfiguredFeature<?, ?>> WATER_LAKE_CONFIGURATION = createKey("water_lake");
     public static final ResourceKey<ConfiguredFeature<?, ?>> WATER_SPRING_CONFIGURATION = createKey("water_spring");
@@ -108,13 +110,14 @@ public class AetherConfiguredFeatures {
                         new TwoLayersFeatureSize(1, 0, 1)).ignoreVines()
                         .decorators(ImmutableList.of(new HolidayTreeDecorator(new WeightedStateProvider(new SimpleWeightedRandomList.Builder<BlockState>().add(AetherFeatureStates.SNOW, 10).add(AetherFeatureStates.PRESENT, 1).build()))))
                         .build());
-        register(context, FLOWER_PATCH_CONFIGURATION, Feature.FLOWER,
-                AetherConfiguredFeatureBuilders.grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
-                        .add(AetherFeatureStates.PURPLE_FLOWER, 2)
-                        .add(AetherFeatureStates.WHITE_FLOWER, 2)
-                        .add(AetherFeatureStates.BERRY_BUSH, 1)), 64));
         register(context, GRASS_PATCH_CONFIGURATION, Feature.RANDOM_PATCH, AetherConfiguredFeatureBuilders.grassPatch(BlockStateProvider.simple(Blocks.GRASS), 32));
         register(context, TALL_GRASS_PATCH_CONFIGURATION, Feature.RANDOM_PATCH, AetherConfiguredFeatureBuilders.tallGrassPatch(BlockStateProvider.simple(Blocks.TALL_GRASS)));
+        register(context, WHITE_FLOWER_PATCH_CONFIGURATION, Feature.FLOWER,
+                AetherConfiguredFeatureBuilders.grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(AetherFeatureStates.WHITE_FLOWER, 1)), 64));
+        register(context, PURPLE_FLOWER_PATCH_CONFIGURATION, Feature.FLOWER,
+                AetherConfiguredFeatureBuilders.grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(AetherFeatureStates.PURPLE_FLOWER, 1)), 64));
+        register(context, BERRY_BUSH_PATCH_CONFIGURATION, Feature.FLOWER,
+                AetherConfiguredFeatureBuilders.grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(AetherFeatureStates.BERRY_BUSH, 1)), 64));
         register(context, QUICKSOIL_SHELF_CONFIGURATION, AetherFeatures.SIMPLE_DISK.get(),
                 new SimpleDiskConfiguration(
                         UniformFloat.of(Mth.sqrt(12), 5), // sqrt(12) was an old static value

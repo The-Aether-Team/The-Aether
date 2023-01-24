@@ -10,18 +10,6 @@
             "entries": [
               {
                 "data": {
-                  "Name": "aether:purple_flower"
-                },
-                "weight": 2
-              },
-              {
-                "data": {
-                  "Name": "aether:white_flower"
-                },
-                "weight": 2
-              },
-              {
-                "data": {
                   "Name": "aether:berry_bush",
                   "Properties": {
                     "double_drops": "true"

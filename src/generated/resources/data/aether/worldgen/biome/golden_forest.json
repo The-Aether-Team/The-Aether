@@ -39,10 +39,12 @@
     ],
     [
       "aether:golden_forest_trees",
+      "aether:holiday_tree",
       "aether:grass_patch",
       "aether:tall_grass_patch",
-      "aether:holiday_tree",
-      "aether:flower_patch"
+      "aether:white_flower_patch",
+      "aether:purple_flower_patch",
+      "aether:berry_bush_patch"
     ],
     [
       "aether:crystal_island",

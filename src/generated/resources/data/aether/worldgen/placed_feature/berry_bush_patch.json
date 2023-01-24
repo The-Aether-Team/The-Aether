@@ -1,6 +1,10 @@
 {
-  "feature": "aether:flower_patch",
+  "feature": "aether:berry_bush_patch",
   "placement": [
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 8
+    },
     {
       "type": "minecraft:in_square"
     },

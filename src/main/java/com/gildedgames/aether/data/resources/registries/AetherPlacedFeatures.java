@@ -33,9 +33,11 @@ public class AetherPlacedFeatures {
     public static final ResourceKey<PlacedFeature> GOLDEN_FOREST_TREES_PLACEMENT = createKey("golden_forest_trees");
     public static final ResourceKey<PlacedFeature> CRYSTAL_ISLAND_PLACEMENT = createKey("crystal_island");
     public static final ResourceKey<PlacedFeature> HOLIDAY_TREE_PLACEMENT = createKey("holiday_tree");
-    public static final ResourceKey<PlacedFeature> FLOWER_PATCH_PLACEMENT = createKey("flower_patch");
     public static final ResourceKey<PlacedFeature> GRASS_PATCH_PLACEMENT = createKey("grass_patch");
     public static final ResourceKey<PlacedFeature> TALL_GRASS_PATCH_PLACEMENT = createKey("tall_grass_patch");
+    public static final ResourceKey<PlacedFeature> WHITE_FLOWER_PATCH_PLACEMENT = createKey("white_flower_patch");
+    public static final ResourceKey<PlacedFeature> PURPLE_FLOWER_PATCH_PLACEMENT = createKey("purple_flower_patch");
+    public static final ResourceKey<PlacedFeature> BERRY_BUSH_PATCH_PLACEMENT = createKey("berry_bush_patch");
     public static final ResourceKey<PlacedFeature> QUICKSOIL_SHELF_PLACEMENT = createKey("quicksoil_shelf");
     public static final ResourceKey<PlacedFeature> WATER_LAKE_PLACEMENT = createKey("water_lake");
     public static final ResourceKey<PlacedFeature> WATER_SPRING_PLACEMENT = createKey("water_spring");
@@ -75,12 +77,8 @@ public class AetherPlacedFeatures {
                 BiomeFilter.biome(),
                 new HolidayFilter(),
                 PlacementUtils.filteredByBlockSurvival(AetherBlocks.SKYROOT_SAPLING.get()));
-        register(context, FLOWER_PATCH_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.FLOWER_PATCH_CONFIGURATION),
-                InSquarePlacement.spread(),
-                PlacementUtils.HEIGHTMAP,
-                BiomeFilter.biome());
         register(context, GRASS_PATCH_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.GRASS_PATCH_CONFIGURATION),
-                CountPlacement.of(2),
+                NoiseThresholdCountPlacement.of(-0.8D, 5, 10),
                 InSquarePlacement.spread(),
                 PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
                 BiomeFilter.biome(),
@@ -92,6 +90,21 @@ public class AetherPlacedFeatures {
                 PlacementUtils.HEIGHTMAP,
                 BiomeFilter.biome(),
                 new ConfigFilter(AetherConfig.COMMON.generate_tall_grass));
+        register(context, WHITE_FLOWER_PATCH_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.WHITE_FLOWER_PATCH_CONFIGURATION),
+                RarityFilter.onAverageOnceEvery(8),
+                InSquarePlacement.spread(),
+                PlacementUtils.HEIGHTMAP,
+                BiomeFilter.biome());
+        register(context, PURPLE_FLOWER_PATCH_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.PURPLE_FLOWER_PATCH_CONFIGURATION),
+                RarityFilter.onAverageOnceEvery(16),
+                InSquarePlacement.spread(),
+                PlacementUtils.HEIGHTMAP,
+                BiomeFilter.biome());
+        register(context, BERRY_BUSH_PATCH_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.BERRY_BUSH_PATCH_CONFIGURATION),
+                RarityFilter.onAverageOnceEvery(8),
+                InSquarePlacement.spread(),
+                PlacementUtils.HEIGHTMAP,
+                BiomeFilter.biome());
         register(context, QUICKSOIL_SHELF_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.QUICKSOIL_SHELF_CONFIGURATION), //TODO modifier order and fixing
                 //CountPlacement.of(100),
                 InSquarePlacement.spread(),
