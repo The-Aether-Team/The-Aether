@@ -2,6 +2,10 @@
   "feature": "aether:crystal_island",
   "placement": [
     {
+      "type": "minecraft:rarity_filter",
+      "chance": 32
+    },
+    {
       "type": "minecraft:in_square"
     },
     {
@@ -15,10 +19,6 @@
           "absolute": 32
         }
       }
-    },
-    {
-      "type": "minecraft:rarity_filter",
-      "chance": 32
     },
     {
       "type": "minecraft:biome"

@@ -2,6 +2,10 @@
   "feature": "aether:holiday_tree",
   "placement": [
     {
+      "type": "minecraft:rarity_filter",
+      "chance": 48
+    },
+    {
       "type": "aether:improved_layer_placement",
       "count": {
         "type": "minecraft:uniform",
@@ -14,6 +18,12 @@
       "verticalBounds": 4
     },
     {
+      "type": "minecraft:biome"
+    },
+    {
+      "type": "aether:holiday_filter"
+    },
+    {
       "type": "minecraft:block_predicate_filter",
       "predicate": {
         "type": "minecraft:would_survive",
@@ -24,16 +34,6 @@
           }
         }
       }
-    },
-    {
-      "type": "minecraft:rarity_filter",
-      "chance": 48
-    },
-    {
-      "type": "minecraft:biome"
-    },
-    {
-      "type": "aether:holiday_filter"
     }
   ]
 }

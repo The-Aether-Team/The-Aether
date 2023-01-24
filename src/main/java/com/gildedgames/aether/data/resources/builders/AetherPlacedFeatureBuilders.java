@@ -16,8 +16,8 @@ public class AetherPlacedFeatureBuilders {
     public static List<PlacementModifier> aercloudPlacement(int minimum, int range, int chance) {
         return List.of(
                 HeightRangePlacement.uniform(VerticalAnchor.absolute(minimum), VerticalAnchor.absolute(minimum + range)),
-                InSquarePlacement.spread(),
                 RarityFilter.onAverageOnceEvery(chance),
+                InSquarePlacement.spread(),
                 BiomeFilter.biome(),
                 new DungeonBlacklistFilter());
     }
@@ -25,8 +25,8 @@ public class AetherPlacedFeatureBuilders {
     public static List<PlacementModifier> pinkAercloudPlacement(int minimum, int range, int chance) {
         return List.of(
                 HeightRangePlacement.uniform(VerticalAnchor.absolute(minimum), VerticalAnchor.absolute(minimum + range)),
-                InSquarePlacement.spread(),
                 RarityFilter.onAverageOnceEvery(chance),
+                InSquarePlacement.spread(),
                 BiomeFilter.biome(),
                 new DungeonBlacklistFilter(),
                 new ConfigFilter(AetherConfig.COMMON.generate_pink_aerclouds));
@@ -45,8 +45,8 @@ public class AetherPlacedFeatureBuilders {
     private static ImmutableList.Builder<PlacementModifier> treePlacementBase(PlacementModifier count) {
         return ImmutableList.<PlacementModifier>builder()
                 .add(count)
-                .add(ImprovedLayerPlacementModifier.of(Heightmap.Types.OCEAN_FLOOR, UniformInt.of(0, 1), 4))
                 .add(SurfaceWaterDepthFilter.forMaxDepth(0))
+                .add(ImprovedLayerPlacementModifier.of(Heightmap.Types.OCEAN_FLOOR, UniformInt.of(0, 1), 4))
                 .add(BiomeFilter.biome())
                 .add(new DungeonBlacklistFilter());
     }

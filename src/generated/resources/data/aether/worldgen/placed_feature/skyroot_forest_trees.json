@@ -18,6 +18,10 @@
       }
     },
     {
+      "type": "minecraft:surface_water_depth_filter",
+      "max_water_depth": 0
+    },
+    {
       "type": "aether:improved_layer_placement",
       "count": {
         "type": "minecraft:uniform",
@@ -28,10 +32,6 @@
       },
       "heightmap": "OCEAN_FLOOR",
       "verticalBounds": 4
-    },
-    {
-      "type": "minecraft:surface_water_depth_filter",
-      "max_water_depth": 0
     },
     {
       "type": "minecraft:biome"
