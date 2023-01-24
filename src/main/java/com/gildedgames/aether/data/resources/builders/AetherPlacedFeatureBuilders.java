@@ -13,18 +13,18 @@ import net.minecraft.world.level.levelgen.placement.*;
 import java.util.List;
 
 public class AetherPlacedFeatureBuilders {
-    public static List<PlacementModifier> aercloudPlacement(int height, int chance) {
+    public static List<PlacementModifier> aercloudPlacement(int minimum, int range, int chance) {
         return List.of(
-                HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(height)),
+                HeightRangePlacement.uniform(VerticalAnchor.absolute(minimum), VerticalAnchor.absolute(minimum + range)),
                 InSquarePlacement.spread(),
                 RarityFilter.onAverageOnceEvery(chance),
                 BiomeFilter.biome(),
                 new DungeonBlacklistFilter());
     }
 
-    public static List<PlacementModifier> pinkAercloudPlacement(int height, int chance) {
+    public static List<PlacementModifier> pinkAercloudPlacement(int minimum, int range, int chance) {
         return List.of(
-                HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(height)),
+                HeightRangePlacement.uniform(VerticalAnchor.absolute(minimum), VerticalAnchor.absolute(minimum + range)),
                 InSquarePlacement.spread(),
                 RarityFilter.onAverageOnceEvery(chance),
                 BiomeFilter.biome(),

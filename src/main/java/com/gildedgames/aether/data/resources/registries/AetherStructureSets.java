@@ -25,11 +25,11 @@ public class AetherStructureSets {
 
     public static void bootstrap(BootstapContext<StructureSet> context) {
         HolderGetter<Structure> structures = context.lookup(Registries.STRUCTURE);
-        context.register(LARGE_AERCLOUD, new StructureSet(structures.getOrThrow(AetherStructures.LARGE_AERCLOUD), new RandomSpreadStructurePlacement(4, 2, RandomSpreadType.LINEAR, 15536586)));
-        context.register(BRONZE_DUNGEON, new StructureSet(structures.getOrThrow(AetherStructures.BRONZE_DUNGEON), new RandomSpreadStructurePlacement(12, 10, RandomSpreadType.LINEAR, 32146754)));        
+        context.register(LARGE_AERCLOUD, new StructureSet(structures.getOrThrow(AetherStructures.LARGE_AERCLOUD), new RandomSpreadStructurePlacement(8, 4, RandomSpreadType.LINEAR, 15536586)));
+        context.register(BRONZE_DUNGEON, new StructureSet(structures.getOrThrow(AetherStructures.BRONZE_DUNGEON), new RandomSpreadStructurePlacement(12, 10, RandomSpreadType.LINEAR, 32146754)));
         context.register(SILVER_AND_GOLD_DUNGEONS, new StructureSet(List.of(
         		StructureSet.entry(structures.getOrThrow(AetherStructures.SILVER_DUNGEON), 3), 
         		StructureSet.entry(structures.getOrThrow(AetherStructures.GOLD_DUNGEON), 2)), 
-        	new RandomSpreadStructurePlacement(10, 6, RandomSpreadType.LINEAR, 4325806)));
+        	new RandomSpreadStructurePlacement(15, 13, RandomSpreadType.LINEAR, 4325806)));
     }
 }

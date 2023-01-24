@@ -9,7 +9,7 @@
           "absolute": 96
         },
         "min_inclusive": {
-          "above_bottom": 0
+          "absolute": 32
         }
       }
     },
@@ -18,7 +18,7 @@
     },
     {
       "type": "minecraft:rarity_filter",
-      "chance": 5
+      "chance": 24
     },
     {
       "type": "minecraft:biome"

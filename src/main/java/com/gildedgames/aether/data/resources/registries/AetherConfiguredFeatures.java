@@ -61,8 +61,7 @@ public class AetherConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_ICESTONE_CONFIGURATION = createKey("icestone_ore");
     public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_AMBROSIUM_CONFIGURATION = createKey("ambrosium_ore");
     public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_ZANITE_CONFIGURATION = createKey("zanite_ore");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_GRAVITITE_COMMON_CONFIGURATION = createKey("gravitite_ore_common");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_GRAVITITE_DENSE_CONFIGURATION = createKey("gravitite_ore_dense");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_GRAVITITE_CONFIGURATION = createKey("gravitite_ore");
     public static final ResourceKey<ConfiguredFeature<?, ?>> TREES_SKYROOT_AND_GOLDEN_OAK_CONFIGURATION = createKey("trees_skyroot_and_golden_oak");
     public static final ResourceKey<ConfiguredFeature<?, ?>> TREES_GOLDEN_OAK_AND_SKYROOT_CONFIGURATION = createKey("trees_golden_oak_and_skyroot");
 
@@ -128,8 +127,7 @@ public class AetherConfiguredFeatures {
         register(context, ORE_ICESTONE_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.ICESTONE, 16));
         register(context, ORE_AMBROSIUM_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.AMBROSIUM_ORE, 16));
         register(context, ORE_ZANITE_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.ZANITE_ORE, 8));
-        register(context, ORE_GRAVITITE_COMMON_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.GRAVITITE_ORE, 6, 0.9F));
-        register(context, ORE_GRAVITITE_DENSE_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.GRAVITITE_ORE, 3, 0.5F));
+        register(context, ORE_GRAVITITE_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.GRAVITITE_ORE, 6, 0.9F));
         register(context, TREES_SKYROOT_AND_GOLDEN_OAK_CONFIGURATION, Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(
                         PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(GOLDEN_OAK_TREE_CONFIGURATION), PlacementUtils.filteredByBlockSurvival(AetherBlocks.GOLDEN_OAK_SAPLING.get())), 0.01F)),
                         PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(SKYROOT_TREE_CONFIGURATION), PlacementUtils.filteredByBlockSurvival(AetherBlocks.SKYROOT_SAPLING.get()))));
