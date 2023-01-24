@@ -56,7 +56,7 @@ public class AetherPlacedFeatures {
         register(context, GOLDEN_AERCLOUD_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.GOLDEN_AERCLOUD_CONFIGURATION), AetherPlacedFeatureBuilders.aercloudPlacement(96, 32, 75));
         register(context, PINK_AERCLOUD_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.PINK_AERCLOUD_CONFIGURATION), AetherPlacedFeatureBuilders.pinkAercloudPlacement(96, 32, 100));
         register(context, CRYSTAL_ISLAND_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.CRYSTAL_ISLAND_CONFIGURATION),
-                RarityFilter.onAverageOnceEvery(32),
+                RarityFilter.onAverageOnceEvery(50),
                 InSquarePlacement.spread(),
                 HeightRangePlacement.uniform(VerticalAnchor.absolute(32), VerticalAnchor.absolute(96)),
                 BiomeFilter.biome(),
@@ -104,7 +104,7 @@ public class AetherPlacedFeatures {
                 PlacementUtils.HEIGHTMAP,
                 BiomeFilter.biome());
         register(context, QUICKSOIL_SHELF_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.QUICKSOIL_SHELF_CONFIGURATION),
-                RarityFilter.onAverageOnceEvery(5), //todo balance
+                RarityFilter.onAverageOnceEvery(5),
                 PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
                 BiomeFilter.biome(),
                 new DungeonBlacklistFilter());

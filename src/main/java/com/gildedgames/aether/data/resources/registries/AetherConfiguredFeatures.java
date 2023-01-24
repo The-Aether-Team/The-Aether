@@ -123,7 +123,7 @@ public class AetherConfiguredFeatures {
                 new ShelfConfiguration(
                         BlockStateProvider.simple(AetherFeatureStates.QUICKSOIL),
                         ConstantFloat.of(Mth.sqrt(12)),
-                        UniformInt.of(0, 56),
+                        UniformInt.of(0, 48),
                         HolderSet.direct(Block::builtInRegistryHolder, AetherBlocks.AETHER_GRASS_BLOCK.get())));
         register(context, WATER_LAKE_CONFIGURATION, AetherFeatures.LAKE.get(), AetherConfiguredFeatureBuilders.lake(BlockStateProvider.simple(Blocks.WATER), BlockStateProvider.simple(AetherBlocks.AETHER_GRASS_BLOCK.get())));
         register(context, WATER_SPRING_CONFIGURATION, Feature.SPRING,
