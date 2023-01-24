@@ -175,7 +175,7 @@ public class GoldDungeonPieces {
         }
 
         private static StructurePlaceSettings makeSettings() {
-            return new StructurePlaceSettings().addProcessor(VerticalGradientProcessor.INSTANCE).addProcessor(VegetationProcessor.STUB_PROCESSOR);
+            return new StructurePlaceSettings().addProcessor(VerticalGradientProcessor.INSTANCE)/*.addProcessor(VegetationProcessor.STUB_PROCESSOR)*/;
         }
     }
 

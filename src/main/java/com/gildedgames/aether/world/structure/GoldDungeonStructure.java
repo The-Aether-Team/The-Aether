@@ -87,7 +87,7 @@ public class GoldDungeonStructure extends Structure {
 
             BlockPos stubPos = center.offset(xOffset, yOffset, zOffset);
             stubPos = stubPos.offset(stubOffset);
-            GoldDungeonPieces.Stub stub = new GoldDungeonPieces.Stub(
+            GoldDungeonPieces.Island stub = new GoldDungeonPieces.Island(
                     templateManager,
                     "stub",
                     stubPos

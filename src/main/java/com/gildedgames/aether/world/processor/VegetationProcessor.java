@@ -73,8 +73,8 @@ public class VegetationProcessor extends StructureProcessor {
                     RandomSource random = settings.getRandom(relativeBlockInfo.pos);
                     int featureType = random.nextInt(this.randomBounds);
                     if (featureType < this.treeWeight) {
-                        /*PlacedFeature tree = PlacementUtils.inlinePlaced(level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).getHolderOrThrow(AetherConfiguredFeatures.GOLDEN_OAK_TREE_CONFIGURATION)).get();
-                        tree.place(level, chunkSource.getGenerator(), random, relativeBlockInfo.pos);*/
+                        PlacedFeature tree = PlacementUtils.inlinePlaced(level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).getHolderOrThrow(AetherConfiguredFeatures.GOLDEN_OAK_TREE_CONFIGURATION)).get();
+                        tree.place(level, chunkSource.getGenerator(), random, relativeBlockInfo.pos);
                     } else {
                         if (this.spawnFlowers && featureType == this.treeWeight) {
                             Block flower = random.nextBoolean() ? Blocks.DANDELION : Blocks.POPPY;
