@@ -78,7 +78,7 @@ public class GoldDungeonStructure extends Structure {
         int stubCount = this.stubIslandCount + random.nextInt(5);
 
         for (int stubIslands = 0; stubIslands < stubCount; ++stubIslands) {
-            float angle = random.nextFloat() * 360F * Mth.DEG_TO_RAD;
+            float angle = random.nextFloat() * Mth.TWO_PI;
             float distance = ((random.nextFloat() * 0.125F) + 0.7F) * 24.0F;
 
             int xOffset = Mth.floor(Math.cos(angle) * distance);
@@ -87,7 +87,7 @@ public class GoldDungeonStructure extends Structure {
 
             BlockPos stubPos = center.offset(xOffset, yOffset, zOffset);
             stubPos = stubPos.offset(stubOffset);
-            GoldDungeonPieces.Island stub = new GoldDungeonPieces.Island(
+            GoldDungeonPieces.Stub stub = new GoldDungeonPieces.Stub(
                     templateManager,
                     "stub",
                     stubPos

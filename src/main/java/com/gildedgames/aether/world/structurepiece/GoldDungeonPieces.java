@@ -1,6 +1,7 @@
 package com.gildedgames.aether.world.structurepiece;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.api.DungeonTracker;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.blockentity.TreasureChestBlockEntity;
@@ -9,7 +10,6 @@ import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.monster.dungeon.boss.SunSpirit;
 import com.gildedgames.aether.loot.AetherLoot;
 import com.gildedgames.aether.world.processor.NoReplaceProcessor;
-import com.gildedgames.aether.world.processor.VegetationProcessor;
 import com.gildedgames.aether.world.processor.VerticalGradientProcessor;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
@@ -19,6 +19,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.ChunkPos;
@@ -115,50 +116,21 @@ public class GoldDungeonPieces {
             super(AetherStructurePieceTypes.GOLD_ISLAND.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
         }
 
+        @Override
+        protected void addAdditionalSaveData(StructurePieceSerializationContext context, CompoundTag tag) {
+            super.addAdditionalSaveData(context, tag);
+        }
+
         private static StructurePlaceSettings makeSettings() {
-            return new StructurePlaceSettings().addProcessor(VerticalGradientProcessor.INSTANCE)/*.addProcessor(VegetationProcessor.INSTANCE)*/;
+            return new StructurePlaceSettings().addProcessor(VerticalGradientProcessor.INSTANCE);
         }
 
         @Override
         public void postProcess(WorldGenLevel level, StructureManager structureManager, ChunkGenerator generator, RandomSource random, BoundingBox chunkBox, ChunkPos pChunkPos, BlockPos pPos) {
             super.postProcess(level, structureManager, generator, random, chunkBox, pChunkPos, pPos);
-
-            BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
-            int minX = Math.max(chunkBox.minX(), this.boundingBox.minX());
-            int minZ = Math.max(chunkBox.minZ(), this.boundingBox.minZ());
-            int maxX = Math.min(chunkBox.maxX(), this.boundingBox.maxX());
-            int maxZ = Math.min(chunkBox.maxZ(), this.boundingBox.maxZ());
-            int minY = this.boundingBox.minY();
-            int maxY = this.boundingBox.maxY();
-
-            for (int x = minX; x < maxX; ++x) {
-                for (int z = minZ; z < maxZ; ++z) {
-                    int featureType = random.nextInt(48);
-                    if (featureType <= 2) {
-
-                        boolean hasLand = false;
-                        int y;
-                        for (y = maxY; y > minY; --y) {
-                            mutable.set(x, y, z);
-                            if (!level.isEmptyBlock(mutable)) {
-                                hasLand = true;
-                                break;
-                            }
-                        }
-
-                        if (hasLand) {
-                            if (featureType < 2) {
-                                PlacedFeature tree = PlacementUtils.inlinePlaced(level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).getHolderOrThrow(AetherConfiguredFeatures.GOLDEN_OAK_TREE_CONFIGURATION)).get();
-                                tree.place(level, generator, random, mutable.set(x, y + 1, z));
-                            } else {
-                                Block flower = random.nextBoolean() ? Blocks.DANDELION : Blocks.POPPY;
-                                this.placeBlock(level, flower.defaultBlockState(), x, y + 1, z, chunkBox);
-                            }
-                        }
-                    }
-                }
-            }
+            placeGoldenOaks(level, generator, random, this.getBoundingBox(), chunkBox, 48, 2, 1);
         }
+
     }
 
     /**
@@ -175,7 +147,13 @@ public class GoldDungeonPieces {
         }
 
         private static StructurePlaceSettings makeSettings() {
-            return new StructurePlaceSettings().addProcessor(VerticalGradientProcessor.INSTANCE)/*.addProcessor(VegetationProcessor.STUB_PROCESSOR)*/;
+            return new StructurePlaceSettings().addProcessor(VerticalGradientProcessor.INSTANCE);
+        }
+
+        @Override
+        public void postProcess(WorldGenLevel level, StructureManager structureManager, ChunkGenerator generator, RandomSource random, BoundingBox chunkBox, ChunkPos pChunkPos, BlockPos pPos) {
+            super.postProcess(level, structureManager, generator, random, chunkBox, pChunkPos, pPos);
+            placeGoldenOaks(level, generator, random, this.getBoundingBox(), chunkBox, 64, 1, 0);
         }
     }
 
@@ -219,5 +197,58 @@ public class GoldDungeonPieces {
         protected void handleDataMarker(String pName, BlockPos pPos, ServerLevelAccessor pLevel, RandomSource pRandom, BoundingBox pBox) {
 
         }
+    }
+
+    /**
+     * Randomly place golden oak trees and flowers on top of a structure piece.
+     * @param boundingBox - The structure piece's bounding box
+     * @param chunkBox - The current chunk's bounding box
+     * @param randomBounds - The parameter for random.nextInt()
+     * @param treeWeight - The chance out of randomBounds of placing a tree
+     * @param flowerWeight - The chance out of randomBounds of placing a flower
+     */
+    private static void placeGoldenOaks(WorldGenLevel level, ChunkGenerator generator, RandomSource random, BoundingBox boundingBox, BoundingBox chunkBox, int randomBounds, int treeWeight, int flowerWeight) {
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+        int minX = Math.max(chunkBox.minX(), boundingBox.minX());
+        int minZ = Math.max(chunkBox.minZ(), boundingBox.minZ());
+        int maxX = Math.min(chunkBox.maxX(), boundingBox.maxX());
+        int maxZ = Math.min(chunkBox.maxZ(), boundingBox.maxZ());
+        int minY = boundingBox.minY() + Mth.floor((boundingBox.maxY() - boundingBox.minY()) * 0.75);
+        int maxY = boundingBox.maxY();
+
+        for (int x = minX; x < maxX; ++x) {
+            for (int z = minZ; z < maxZ; ++z) {
+                int featureType = random.nextInt(randomBounds);
+                if (featureType < treeWeight + flowerWeight) {
+                    mutable.set(x, maxY, z);
+                    if (iterateColumn(level, mutable, minY, maxY)) {
+                        if (featureType < treeWeight) {
+                            PlacedFeature tree = PlacementUtils.inlinePlaced(level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).getHolderOrThrow(AetherConfiguredFeatures.GOLDEN_OAK_TREE_CONFIGURATION)).get();
+                            tree.place(level, generator, random, mutable);
+                        } else {
+                            Block flower = random.nextBoolean() ? Blocks.DANDELION : Blocks.POPPY;
+                            level.setBlock(mutable, flower.defaultBlockState(), 2);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Returns true if there is a solid block in the column. MutableBlockPos is set to the first empty block.
+     * @param level - The level to check for blocks.
+     * @param pos - This MutableBlockPos is set to the first empty block in the column.
+     */
+    private static boolean iterateColumn(WorldGenLevel level, BlockPos.MutableBlockPos pos, int minY, int maxY) {
+        int y;
+        for (y = maxY; y > minY; --y) {
+            pos.setY(y);
+            if (level.getBlockState(pos).is(AetherTags.Blocks.AETHER_DIRT)) {
+                pos.setY(++y);
+                return true;
+            }
+        }
+        return false;
     }
 }
