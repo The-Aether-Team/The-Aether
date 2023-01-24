@@ -1,4 +1,4 @@
-// 1.19.3	2023-01-24T01:05:12.0009861	Registries
+// 1.19.3	2023-01-24T09:56:17.1490822	Registries
 8f1b2a014a85ca43a62f62092f7a48219ace68c8 data/aether/dimension/the_aether.json
 5655d4cd818dbc73a0baa2590d80dd274f85927d data/aether/dimension_type/the_aether.json
 424521e51614b13bfc67a9a7578644f12dc59d56 data/aether/worldgen/biome/golden_forest.json
@@ -41,10 +41,10 @@ d8eebbd3094ceb6bed4ba1bb1c31fec48303add7 data/aether/worldgen/placed_feature/col
 3201adc85133ed2e60b9384e06b9d4dee0dde182 data/aether/worldgen/placed_feature/golden_forest_trees.json
 4eb67316d5bde59e6fcf0ab168bade8acf4ba02b data/aether/worldgen/placed_feature/grass_patch.json
 506ccb4de7267919b1409ec8587274a21d7eee00 data/aether/worldgen/placed_feature/gravitite_ore.json
-e80e59d3e8cd9008523b0d33a636fe0b2e6a9960 data/aether/worldgen/placed_feature/holiday_tree.json
+bb61de27f2349831d55911de630bf1d463937f91 data/aether/worldgen/placed_feature/holiday_tree.json
 9b6cc923d61c3df795239987cd2811c8169750fd data/aether/worldgen/placed_feature/icestone_ore.json
 6a11a9fca08e3c284fb00573710007d5817db574 data/aether/worldgen/placed_feature/pink_aercloud.json
-d61c08da92c09016a95443b56b165c2426cecff3 data/aether/worldgen/placed_feature/quicksoil_shelf.json
+81018238ac5c4c9eb0bc68ec0cfe7951618b9425 data/aether/worldgen/placed_feature/quicksoil_shelf.json
 627f58ac8221a5d5e0062514b6438fda70798f9e data/aether/worldgen/placed_feature/skyroot_forest_trees.json
 7bf135caf750f7c9e08e12b0d4a6047df54781a0 data/aether/worldgen/placed_feature/skyroot_grove_trees.json
 a335682fc4a6245cc0ca9eda3b65ccf347cbbf2b data/aether/worldgen/placed_feature/skyroot_thicket_trees.json

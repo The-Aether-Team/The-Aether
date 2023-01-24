@@ -3,7 +3,7 @@
   "placement": [
     {
       "type": "minecraft:rarity_filter",
-      "chance": 48
+      "chance": 75
     },
     {
       "type": "aether:improved_layer_placement",

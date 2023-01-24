@@ -70,7 +70,7 @@ public class AetherPlacedFeatures {
         register(context, GOLDEN_FOREST_TREES_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.TREES_GOLDEN_OAK_AND_SKYROOT_CONFIGURATION),
                 AetherPlacedFeatureBuilders.treePlacement(PlacementUtils.countExtra(10, 0.1F, 1)));
         register(context, HOLIDAY_TREE_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.HOLIDAY_TREE_CONFIGURATION),
-                RarityFilter.onAverageOnceEvery(48),
+                RarityFilter.onAverageOnceEvery(75),
                 ImprovedLayerPlacementModifier.of(Heightmap.Types.OCEAN_FLOOR, UniformInt.of(0, 1), 4),
                 BiomeFilter.biome(),
                 new HolidayFilter(),
@@ -93,13 +93,15 @@ public class AetherPlacedFeatures {
                 BiomeFilter.biome(),
                 new ConfigFilter(AetherConfig.COMMON.generate_tall_grass));
         register(context, QUICKSOIL_SHELF_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.QUICKSOIL_SHELF_CONFIGURATION), //TODO modifier order and fixing
-                //new ElevationAdjustmentModifier(UniformInt.of(-4, -2)),
+                //CountPlacement.of(100),
                 InSquarePlacement.spread(),
                 PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+                //HeightRangePlacement.uniform(VerticalAnchor.absolute(0), VerticalAnchor.absolute(128)),
+                new ElevationAdjustmentModifier(UniformInt.of(-4, -2)),
                 new ElevationFilter(0, 128), //todo maximum height was 48 in beta but thatll probably need to be increased slightly
+                BlockPredicateFilter.forPredicate(BlockPredicate.matchesTag(AetherTags.Blocks.QUICKSOIL_CAN_GENERATE)),
                 BiomeFilter.biome(),
-                new DungeonBlacklistFilter(),
-                BlockPredicateFilter.forPredicate(BlockPredicate.matchesTag(AetherTags.Blocks.QUICKSOIL_CAN_GENERATE)));
+                new DungeonBlacklistFilter());
         register(context, WATER_LAKE_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.WATER_LAKE_CONFIGURATION),
                 RarityFilter.onAverageOnceEvery(15),
                 InSquarePlacement.spread(),
