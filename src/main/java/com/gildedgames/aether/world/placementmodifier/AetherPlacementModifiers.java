@@ -9,8 +9,6 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
 public class AetherPlacementModifiers {
-    public static final PlacementModifierType<ElevationAdjustmentModifier> ELEVATION_ADJUSTMENT = register(new ResourceLocation(Aether.MODID, "elevation_adjustment"), ElevationAdjustmentModifier.CODEC);
-    public static final PlacementModifierType<ElevationFilter> ELEVATION_FILTER = register(new ResourceLocation(Aether.MODID, "elevation_filter"), ElevationFilter.CODEC);
     public static final PlacementModifierType<ConfigFilter> CONFIG_FILTER = register(new ResourceLocation(Aether.MODID, "config_filter"), ConfigFilter.CODEC);
     public static final PlacementModifierType<HolidayFilter> HOLIDAY_FILTER = register(new ResourceLocation(Aether.MODID, "holiday_filter"), HolidayFilter.CODEC);
     public static final PlacementModifierType<ImprovedLayerPlacementModifier> IMPROVED_LAYER_PLACEMENT = register(new ResourceLocation(Aether.MODID, "improved_layer_placement"), ImprovedLayerPlacementModifier.CODEC);

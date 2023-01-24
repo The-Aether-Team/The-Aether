@@ -41,7 +41,6 @@ public class AetherTags {
 		public static final TagKey<Block> COCKATRICE_SPAWNABLE_BLACKLIST = tag("cockatrice_spawnable_blacklist");
 		public static final TagKey<Block> INFINIBURN = tag("infiniburn");
 		public static final TagKey<Block> ALLOWED_FLAMMABLES = tag("allowed_flammables");
-		public static final TagKey<Block> QUICKSOIL_CAN_GENERATE = tag("quicksoil_can_generate");
 		public static final TagKey<Block> VALKYRIE_TELEPORTABLE_ON = tag("valkyrie_teleportable_on");
 		public static final TagKey<Block> TREATED_AS_AETHER_BLOCK = tag("treated_as_aether_block");
 

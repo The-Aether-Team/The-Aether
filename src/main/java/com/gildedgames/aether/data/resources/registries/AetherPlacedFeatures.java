@@ -2,7 +2,6 @@ package com.gildedgames.aether.data.resources.registries;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.AetherConfig;
-import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.data.resources.builders.AetherPlacedFeatureBuilders;
 import com.gildedgames.aether.world.placementmodifier.*;
@@ -16,7 +15,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
-import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.*;
 
@@ -105,14 +103,9 @@ public class AetherPlacedFeatures {
                 InSquarePlacement.spread(),
                 PlacementUtils.HEIGHTMAP,
                 BiomeFilter.biome());
-        register(context, QUICKSOIL_SHELF_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.QUICKSOIL_SHELF_CONFIGURATION), //TODO modifier order and fixing
-                //CountPlacement.of(100),
-                InSquarePlacement.spread(),
+        register(context, QUICKSOIL_SHELF_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.QUICKSOIL_SHELF_CONFIGURATION),
+                RarityFilter.onAverageOnceEvery(5), //todo balance
                 PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
-                //HeightRangePlacement.uniform(VerticalAnchor.absolute(0), VerticalAnchor.absolute(128)),
-                new ElevationAdjustmentModifier(UniformInt.of(-4, -2)),
-                new ElevationFilter(0, 128), //todo maximum height was 48 in beta but thatll probably need to be increased slightly
-                BlockPredicateFilter.forPredicate(BlockPredicate.matchesTag(AetherTags.Blocks.QUICKSOIL_CAN_GENERATE)),
                 BiomeFilter.biome(),
                 new DungeonBlacklistFilter());
         register(context, WATER_LAKE_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.WATER_LAKE_CONFIGURATION),

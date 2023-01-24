@@ -5,7 +5,7 @@ import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.data.resources.AetherFeatureRules;
 import com.gildedgames.aether.data.resources.AetherFeatureStates;
 import com.gildedgames.aether.data.resources.builders.AetherConfiguredFeatureBuilders;
-import com.gildedgames.aether.world.configuration.SimpleDiskConfiguration;
+import com.gildedgames.aether.world.configuration.ShelfConfiguration;
 import com.gildedgames.aether.world.feature.AetherFeatures;
 import com.gildedgames.aether.world.foliageplacer.CrystalFoliagePlacer;
 import com.gildedgames.aether.world.foliageplacer.HolidayFoliagePlacer;
@@ -20,8 +20,9 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.random.SimpleWeightedRandomList;
+import net.minecraft.util.valueproviders.ConstantFloat;
 import net.minecraft.util.valueproviders.ConstantInt;
-import net.minecraft.util.valueproviders.UniformFloat;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -118,11 +119,12 @@ public class AetherConfiguredFeatures {
                 AetherConfiguredFeatureBuilders.grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(AetherFeatureStates.PURPLE_FLOWER, 1)), 64));
         register(context, BERRY_BUSH_PATCH_CONFIGURATION, Feature.FLOWER,
                 AetherConfiguredFeatureBuilders.grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(AetherFeatureStates.BERRY_BUSH, 1)), 64));
-        register(context, QUICKSOIL_SHELF_CONFIGURATION, AetherFeatures.SIMPLE_DISK.get(),
-                new SimpleDiskConfiguration(
-                        UniformFloat.of(Mth.sqrt(12), 5), // sqrt(12) was an old static value
+        register(context, QUICKSOIL_SHELF_CONFIGURATION, AetherFeatures.SHELF.get(),
+                new ShelfConfiguration(
                         BlockStateProvider.simple(AetherFeatureStates.QUICKSOIL),
-                        3));
+                        ConstantFloat.of(Mth.sqrt(12)),
+                        UniformInt.of(0, 56),
+                        HolderSet.direct(Block::builtInRegistryHolder, AetherBlocks.AETHER_GRASS_BLOCK.get())));
         register(context, WATER_LAKE_CONFIGURATION, AetherFeatures.LAKE.get(), AetherConfiguredFeatureBuilders.lake(BlockStateProvider.simple(Blocks.WATER), BlockStateProvider.simple(AetherBlocks.AETHER_GRASS_BLOCK.get())));
         register(context, WATER_SPRING_CONFIGURATION, Feature.SPRING,
                 AetherConfiguredFeatureBuilders.spring(Fluids.WATER.defaultFluidState(), true, 4, 1, HolderSet.direct(Block::builtInRegistryHolder, AetherBlocks.HOLYSTONE.get(), AetherBlocks.AETHER_DIRT.get())));

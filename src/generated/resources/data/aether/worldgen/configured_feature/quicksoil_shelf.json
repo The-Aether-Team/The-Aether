@@ -1,5 +1,5 @@
 {
-  "type": "aether:simple_disk",
+  "type": "aether:shelf",
   "config": {
     "block": {
       "type": "minecraft:simple_state_provider",
@@ -10,10 +10,11 @@
         }
       }
     },
-    "clearance_radius": 3,
-    "radius": {
-      "max_exclusive": 5.0,
-      "min_inclusive": 3.4641016
+    "radius": 3.4641016,
+    "valid_blocks": "aether:aether_grass_block",
+    "y_range": {
+      "max_inclusive": 56,
+      "min_inclusive": 0
     }
   }
 }
