@@ -1,4 +1,4 @@
-// 1.19.3	2023-01-24T22:23:42.275964	Registries
+// 1.19.3	2023-01-24T22:33:48.355431	Registries
 f5deced101d2299e370ac067f29b5b355f28e634 data/aether/dimension/the_aether.json
 5655d4cd818dbc73a0baa2590d80dd274f85927d data/aether/dimension_type/the_aether.json
 526ac95dbbe79f92a53ae0612daf23cd666d2987 data/aether/worldgen/biome/skyroot_forest.json
@@ -48,7 +48,7 @@ aae684d7e1458ca092872de8907d926085831266 data/aether/worldgen/placed_feature/cry
 dcc23f37f169448a22a6f2e16ca49939e8947fc3 data/aether/worldgen/placed_feature/quicksoil_shelf.json
 e9682cb0ca5e9c56fecaa7056d4a2c97ce020929 data/aether/worldgen/placed_feature/skyroot_forest_trees.json
 7bf135caf750f7c9e08e12b0d4a6047df54781a0 data/aether/worldgen/placed_feature/skyroot_grove_trees.json
-dcaa45c50598f9b10c4fec524a4bbf448f0cdb58 data/aether/worldgen/placed_feature/skyroot_meadow_trees.json
+962dd472db05fa96fdf89b729cf44ce1861a30cc data/aether/worldgen/placed_feature/skyroot_meadow_trees.json
 6f6694fbadd02f320ae373eb1e083069789eb3a6 data/aether/worldgen/placed_feature/skyroot_woodland_trees.json
 c481c5e485a9933985435d13353759e599c775f2 data/aether/worldgen/placed_feature/tall_grass_patch.json
 2248be9a2847574a1c594ed27f36184352b05c54 data/aether/worldgen/placed_feature/water_lake.json

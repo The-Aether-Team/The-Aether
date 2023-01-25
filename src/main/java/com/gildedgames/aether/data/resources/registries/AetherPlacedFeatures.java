@@ -60,7 +60,7 @@ public class AetherPlacedFeatures {
                 BiomeFilter.biome(),
                 new DungeonBlacklistFilter());
         register(context, SKYROOT_MEADOW_TREES_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.TREES_SKYROOT_AND_GOLDEN_OAK_CONFIGURATION),
-                AetherPlacedFeatureBuilders.treePlacement(RarityFilter.onAverageOnceEvery(2)));
+                AetherPlacedFeatureBuilders.treePlacement(RarityFilter.onAverageOnceEvery(1)));
         register(context, SKYROOT_GROVE_TREES_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.TREES_SKYROOT_AND_GOLDEN_OAK_CONFIGURATION),
                 AetherPlacedFeatureBuilders.treePlacement(PlacementUtils.countExtra(2, 0.1F, 1)));
         register(context, SKYROOT_WOODLAND_TREES_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.TREES_SKYROOT_AND_GOLDEN_OAK_CONFIGURATION),
