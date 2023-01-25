@@ -12,8 +12,6 @@ import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.*;
@@ -25,10 +23,10 @@ public class AetherPlacedFeatures {
     public static final ResourceKey<PlacedFeature> BLUE_AERCLOUD_PLACEMENT = createKey("blue_aercloud");
     public static final ResourceKey<PlacedFeature> GOLDEN_AERCLOUD_PLACEMENT = createKey("golden_aercloud");
     public static final ResourceKey<PlacedFeature> PINK_AERCLOUD_PLACEMENT = createKey("pink_aercloud");
+    public static final ResourceKey<PlacedFeature> SKYROOT_MEADOW_TREES_PLACEMENT = createKey("skyroot_meadow_trees");
     public static final ResourceKey<PlacedFeature> SKYROOT_GROVE_TREES_PLACEMENT = createKey("skyroot_grove_trees");
+    public static final ResourceKey<PlacedFeature> SKYROOT_WOODLAND_TREES_PLACEMENT = createKey("skyroot_woodland_trees");
     public static final ResourceKey<PlacedFeature> SKYROOT_FOREST_TREES_PLACEMENT = createKey("skyroot_forest_trees");
-    public static final ResourceKey<PlacedFeature> SKYROOT_THICKET_TREES_PLACEMENT = createKey("skyroot_thicket_trees");
-    public static final ResourceKey<PlacedFeature> GOLDEN_FOREST_TREES_PLACEMENT = createKey("golden_forest_trees");
     public static final ResourceKey<PlacedFeature> CRYSTAL_ISLAND_PLACEMENT = createKey("crystal_island");
     public static final ResourceKey<PlacedFeature> HOLIDAY_TREE_PLACEMENT = createKey("holiday_tree");
     public static final ResourceKey<PlacedFeature> GRASS_PATCH_PLACEMENT = createKey("grass_patch");
@@ -61,14 +59,14 @@ public class AetherPlacedFeatures {
                 HeightRangePlacement.uniform(VerticalAnchor.absolute(32), VerticalAnchor.absolute(96)),
                 BiomeFilter.biome(),
                 new DungeonBlacklistFilter());
+        register(context, SKYROOT_MEADOW_TREES_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.TREES_SKYROOT_AND_GOLDEN_OAK_CONFIGURATION),
+                AetherPlacedFeatureBuilders.treePlacement(RarityFilter.onAverageOnceEvery(2)));
         register(context, SKYROOT_GROVE_TREES_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.TREES_SKYROOT_AND_GOLDEN_OAK_CONFIGURATION),
                 AetherPlacedFeatureBuilders.treePlacement(PlacementUtils.countExtra(2, 0.1F, 1)));
+        register(context, SKYROOT_WOODLAND_TREES_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.TREES_SKYROOT_AND_GOLDEN_OAK_CONFIGURATION),
+                AetherPlacedFeatureBuilders.treePlacement(PlacementUtils.countExtra(5, 0.1F, 1)));
         register(context, SKYROOT_FOREST_TREES_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.TREES_SKYROOT_AND_GOLDEN_OAK_CONFIGURATION),
-                AetherPlacedFeatureBuilders.treePlacement(PlacementUtils.countExtra(7, 0.1F, 1)));
-        register(context, SKYROOT_THICKET_TREES_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.TREES_SKYROOT_AND_GOLDEN_OAK_CONFIGURATION),
-                AetherPlacedFeatureBuilders.treePlacement(PlacementUtils.countExtra(15, 0.1F, 1)));
-        register(context, GOLDEN_FOREST_TREES_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.TREES_GOLDEN_OAK_AND_SKYROOT_CONFIGURATION),
-                AetherPlacedFeatureBuilders.treePlacement(PlacementUtils.countExtra(10, 0.1F, 1)));
+                AetherPlacedFeatureBuilders.treePlacement(PlacementUtils.countExtra(6, 0.1F, 1)));
         register(context, HOLIDAY_TREE_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.HOLIDAY_TREE_CONFIGURATION),
                 RarityFilter.onAverageOnceEvery(75),
                 InSquarePlacement.spread(),

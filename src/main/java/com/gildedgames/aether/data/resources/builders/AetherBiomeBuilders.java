@@ -16,20 +16,20 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import java.util.List;
 
 public class AetherBiomeBuilders {
+    public static Biome skyrootMeadowBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+        return makeDefaultBiome(new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers).addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherPlacedFeatures.SKYROOT_MEADOW_TREES_PLACEMENT));
+    }
+
     public static Biome skyrootGroveBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
         return makeDefaultBiome(new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers).addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherPlacedFeatures.SKYROOT_GROVE_TREES_PLACEMENT));
     }
 
+    public static Biome skyrootWoodlandBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+        return makeDefaultBiome(new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers).addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherPlacedFeatures.SKYROOT_WOODLAND_TREES_PLACEMENT));
+    }
+
     public static Biome skyrootForestBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
         return makeDefaultBiome(new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers).addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherPlacedFeatures.SKYROOT_FOREST_TREES_PLACEMENT));
-    }
-
-    public static Biome skyrootThicketBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
-        return makeDefaultBiome(new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers).addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherPlacedFeatures.SKYROOT_THICKET_TREES_PLACEMENT));
-    }
-
-    public static Biome goldenForestBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
-        return makeDefaultBiome(new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers).addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, AetherPlacedFeatures.GOLDEN_FOREST_TREES_PLACEMENT));
     }
 
     public static Biome makeDefaultBiome(BiomeGenerationSettings.Builder builder) {
@@ -101,23 +101,48 @@ public class AetherBiomeBuilders {
     }
     
     public static BiomeSource buildAetherBiomeSource(HolderGetter<Biome> biomes) {
-        final Climate.Parameter FULL_RANGE = Climate.Parameter.span(-1.0F, 1.0F);
-        final Climate.Parameter lowerTempRange = Climate.Parameter.span(-1.0F, 0.75F);
-        final Climate.Parameter upperTempRange = Climate.Parameter.span(0.7F, 1.0F);        
+        Climate.Parameter fullRange = Climate.Parameter.span(-1.0F, 1.0F);
+        Climate.Parameter temps1 = Climate.Parameter.span(-1.0F, -0.8F);
+        Climate.Parameter temps2 = Climate.Parameter.span(-0.8F, 0.0F);
+        Climate.Parameter temps3 = Climate.Parameter.span(0.0F, 0.4F);
+        Climate.Parameter temps4 = Climate.Parameter.span(0.4F, 0.93F);
+        Climate.Parameter temps5 = Climate.Parameter.span(0.93F, 0.94F);
+        Climate.Parameter temps6 = Climate.Parameter.span(0.94F, 1.0F);
         return new MultiNoiseBiomeSource(new Climate.ParameterList<>(List.of(
-        		Pair.of(new Climate.ParameterPoint(lowerTempRange, Climate.Parameter.span(-1.0F, -0.4F), FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, 0),
+                // Row 1
+                Pair.of(new Climate.ParameterPoint(temps1, fullRange, fullRange, fullRange, fullRange, fullRange, 0),
+                        biomes.getOrThrow(AetherBiomes.SKYROOT_MEADOW)),
+                // Row 2
+                Pair.of(new Climate.ParameterPoint(temps2, Climate.Parameter.span(-1.0F, 0.0F), fullRange, fullRange, fullRange, fullRange, 0),
+                        biomes.getOrThrow(AetherBiomes.SKYROOT_MEADOW)),
+                Pair.of(new Climate.ParameterPoint(temps2, Climate.Parameter.span(0.0F, 1.0F), fullRange, fullRange, fullRange, fullRange, 0),
                         biomes.getOrThrow(AetherBiomes.SKYROOT_FOREST)),
-        		Pair.of(new Climate.ParameterPoint(lowerTempRange, Climate.Parameter.span(-0.4F, -0.1F), FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, 0),
-                        biomes.getOrThrow(AetherBiomes.SKYROOT_GROVE)),  
-                Pair.of(new Climate.ParameterPoint(lowerTempRange, Climate.Parameter.span(-0.1F, 0.1F), FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, 0),
+                // Row 3
+                Pair.of(new Climate.ParameterPoint(temps3, Climate.Parameter.span(-1.0F, 0.0F), fullRange, fullRange, fullRange, fullRange, 0),
+                        biomes.getOrThrow(AetherBiomes.SKYROOT_GROVE)),
+                Pair.of(new Climate.ParameterPoint(temps3, Climate.Parameter.span(0.0F, 0.8F), fullRange, fullRange, fullRange, fullRange, 0),
                         biomes.getOrThrow(AetherBiomes.SKYROOT_FOREST)),
-                Pair.of(new Climate.ParameterPoint(lowerTempRange, Climate.Parameter.span(0.1F, 0.4F), FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, 0),
-                        biomes.getOrThrow(AetherBiomes.SKYROOT_THICKET)),
-                Pair.of(new Climate.ParameterPoint(lowerTempRange, Climate.Parameter.span(0.4F, 1.0F), FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, 0),
+                Pair.of(new Climate.ParameterPoint(temps3, Climate.Parameter.span(0.8F, 1.0F), fullRange, fullRange, fullRange, fullRange, 0),
+                        biomes.getOrThrow(AetherBiomes.SKYROOT_GROVE)),
+                // Row 4
+                Pair.of(new Climate.ParameterPoint(temps4, Climate.Parameter.span(-1.0F, -0.1F), fullRange, fullRange, fullRange, fullRange, 0),
+                        biomes.getOrThrow(AetherBiomes.SKYROOT_GROVE)),
+                Pair.of(new Climate.ParameterPoint(temps4, Climate.Parameter.span(-0.1F, 1.0F), fullRange, fullRange, fullRange, fullRange, 0),
                         biomes.getOrThrow(AetherBiomes.SKYROOT_FOREST)),
-                Pair.of(new Climate.ParameterPoint(upperTempRange, FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, FULL_RANGE, 0),
-                        biomes.getOrThrow(AetherBiomes.GOLDEN_FOREST))
-                
+                // Row 5
+                Pair.of(new Climate.ParameterPoint(temps5, Climate.Parameter.span(-1.0F, -0.6F), fullRange, fullRange, fullRange, fullRange, 0),
+                        biomes.getOrThrow(AetherBiomes.SKYROOT_MEADOW)),
+                Pair.of(new Climate.ParameterPoint(temps5, Climate.Parameter.span(-0.6F, -0.3F), fullRange, fullRange, fullRange, fullRange, 0),
+                        biomes.getOrThrow(AetherBiomes.SKYROOT_GROVE)),
+                Pair.of(new Climate.ParameterPoint(temps5, Climate.Parameter.span(-0.3F, 1.0F), fullRange, fullRange, fullRange, fullRange, 0),
+                        biomes.getOrThrow(AetherBiomes.SKYROOT_FOREST)),
+                // Row 6
+                Pair.of(new Climate.ParameterPoint(temps6, Climate.Parameter.span(-1.0F, -0.1F), fullRange, fullRange, fullRange, fullRange, 0),
+                        biomes.getOrThrow(AetherBiomes.SKYROOT_MEADOW)),
+                Pair.of(new Climate.ParameterPoint(temps6, Climate.Parameter.span(-0.1F, 0.8F), fullRange, fullRange, fullRange, fullRange, 0),
+                        biomes.getOrThrow(AetherBiomes.SKYROOT_WOODLAND)),
+                Pair.of(new Climate.ParameterPoint(temps5, Climate.Parameter.span(0.8F, 1.0F), fullRange, fullRange, fullRange, fullRange, 0),
+                        biomes.getOrThrow(AetherBiomes.SKYROOT_FOREST))
         )));
     }
 }

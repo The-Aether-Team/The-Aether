@@ -2,20 +2,8 @@
   "feature": "aether:trees_skyroot_and_golden_oak",
   "placement": [
     {
-      "type": "minecraft:count",
-      "count": {
-        "type": "minecraft:weighted_list",
-        "distribution": [
-          {
-            "data": 15,
-            "weight": 9
-          },
-          {
-            "data": 16,
-            "weight": 1
-          }
-        ]
-      }
+      "type": "minecraft:rarity_filter",
+      "chance": 2
     },
     {
       "type": "minecraft:surface_water_depth_filter",

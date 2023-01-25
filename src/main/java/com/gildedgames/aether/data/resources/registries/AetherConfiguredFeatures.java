@@ -66,7 +66,6 @@ public class AetherConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_ZANITE_CONFIGURATION = createKey("zanite_ore");
     public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_GRAVITITE_CONFIGURATION = createKey("gravitite_ore");
     public static final ResourceKey<ConfiguredFeature<?, ?>> TREES_SKYROOT_AND_GOLDEN_OAK_CONFIGURATION = createKey("trees_skyroot_and_golden_oak");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> TREES_GOLDEN_OAK_AND_SKYROOT_CONFIGURATION = createKey("trees_golden_oak_and_skyroot");
 
     private static ResourceKey<ConfiguredFeature<?, ?>> createKey(String name) {
         return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(Aether.MODID, name));
@@ -137,10 +136,6 @@ public class AetherConfiguredFeatures {
         register(context, TREES_SKYROOT_AND_GOLDEN_OAK_CONFIGURATION, Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(
                         PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(GOLDEN_OAK_TREE_CONFIGURATION), PlacementUtils.filteredByBlockSurvival(AetherBlocks.GOLDEN_OAK_SAPLING.get())), 0.01F)),
                         PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(SKYROOT_TREE_CONFIGURATION), PlacementUtils.filteredByBlockSurvival(AetherBlocks.SKYROOT_SAPLING.get()))));
-        register(context, TREES_GOLDEN_OAK_AND_SKYROOT_CONFIGURATION, Feature.RANDOM_SELECTOR,
-                new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(
-                        PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(SKYROOT_TREE_CONFIGURATION), PlacementUtils.filteredByBlockSurvival(AetherBlocks.SKYROOT_SAPLING.get())), 0.1F)),
-                        PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(GOLDEN_OAK_TREE_CONFIGURATION), PlacementUtils.filteredByBlockSurvival(AetherBlocks.GOLDEN_OAK_SAPLING.get()))));
     }
 
     private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(BootstapContext<ConfiguredFeature<?, ?>> context, ResourceKey<ConfiguredFeature<?, ?>> key, F feature, FC configuration) {
