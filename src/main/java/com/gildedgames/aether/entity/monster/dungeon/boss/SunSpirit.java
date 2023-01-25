@@ -73,8 +73,8 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     /** Boss health bar manager */
     private final ServerBossEvent bossFight;
 
-    private final int xMax = 11;
-    private final int zMax = 11;
+    private final int xMax = 9;
+    private final int zMax = 9;
 
     private int chatLine = 0;
     private int chatCooldown = 0;
