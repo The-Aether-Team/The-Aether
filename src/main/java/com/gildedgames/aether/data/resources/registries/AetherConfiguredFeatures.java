@@ -117,7 +117,7 @@ public class AetherConfiguredFeatures {
         register(context, PURPLE_FLOWER_PATCH_CONFIGURATION, Feature.FLOWER,
                 AetherConfiguredFeatureBuilders.grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(AetherFeatureStates.PURPLE_FLOWER, 1)), 64));
         register(context, BERRY_BUSH_PATCH_CONFIGURATION, Feature.FLOWER,
-                AetherConfiguredFeatureBuilders.grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(AetherFeatureStates.BERRY_BUSH, 1)), 64));
+                AetherConfiguredFeatureBuilders.grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(AetherFeatureStates.BERRY_BUSH, 1)), 32));
         register(context, QUICKSOIL_SHELF_CONFIGURATION, AetherFeatures.SHELF.get(),
                 new ShelfConfiguration(
                         BlockStateProvider.simple(AetherFeatureStates.QUICKSOIL),
