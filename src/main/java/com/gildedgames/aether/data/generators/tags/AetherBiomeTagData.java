@@ -21,10 +21,10 @@ public class AetherBiomeTagData extends BiomeTagsProvider {
     @Override
     public void addTags(HolderLookup.Provider provider) {
         this.tag(AetherTags.Biomes.IS_AETHER).add(
-                AetherBiomes.GOLDEN_FOREST,
-                AetherBiomes.SKYROOT_FOREST,
+                AetherBiomes.SKYROOT_MEADOW,
                 AetherBiomes.SKYROOT_GROVE,
-                AetherBiomes.SKYROOT_THICKET
+                AetherBiomes.SKYROOT_WOODLAND,
+                AetherBiomes.SKYROOT_FOREST
         );
         this.tag(AetherTags.Biomes.HAS_LARGE_AERCLOUD).addTag(AetherTags.Biomes.IS_AETHER);
         this.tag(AetherTags.Biomes.HAS_BRONZE_DUNGEON).addTag(AetherTags.Biomes.IS_AETHER);
