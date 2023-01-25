@@ -6,7 +6,7 @@
       "type": "minecraft:multi_noise",
       "biomes": [
         {
-          "biome": "aether:skyroot_forest",
+          "biome": "aether:skyroot_meadow",
           "parameters": {
             "continentalness": [
               -1.0,
@@ -22,12 +22,72 @@
             ],
             "humidity": [
               -1.0,
-              -0.4
+              1.0
             ],
             "offset": 0.0,
             "temperature": [
               -1.0,
-              0.75
+              -0.8
+            ],
+            "weirdness": [
+              -1.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "biome": "aether:skyroot_meadow",
+          "parameters": {
+            "continentalness": [
+              -1.0,
+              1.0
+            ],
+            "depth": [
+              -1.0,
+              1.0
+            ],
+            "erosion": [
+              -1.0,
+              1.0
+            ],
+            "humidity": [
+              -1.0,
+              0.0
+            ],
+            "offset": 0.0,
+            "temperature": [
+              -0.8,
+              0.0
+            ],
+            "weirdness": [
+              -1.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "biome": "aether:skyroot_forest",
+          "parameters": {
+            "continentalness": [
+              -1.0,
+              1.0
+            ],
+            "depth": [
+              -1.0,
+              1.0
+            ],
+            "erosion": [
+              -1.0,
+              1.0
+            ],
+            "humidity": [
+              0.0,
+              1.0
+            ],
+            "offset": 0.0,
+            "temperature": [
+              -0.8,
+              0.0
             ],
             "weirdness": [
               -1.0,
@@ -51,13 +111,103 @@
               1.0
             ],
             "humidity": [
-              -0.4,
+              -1.0,
+              0.0
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.0,
+              0.4
+            ],
+            "weirdness": [
+              -1.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "biome": "aether:skyroot_forest",
+          "parameters": {
+            "continentalness": [
+              -1.0,
+              1.0
+            ],
+            "depth": [
+              -1.0,
+              1.0
+            ],
+            "erosion": [
+              -1.0,
+              1.0
+            ],
+            "humidity": [
+              0.0,
+              0.8
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.0,
+              0.4
+            ],
+            "weirdness": [
+              -1.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "biome": "aether:skyroot_grove",
+          "parameters": {
+            "continentalness": [
+              -1.0,
+              1.0
+            ],
+            "depth": [
+              -1.0,
+              1.0
+            ],
+            "erosion": [
+              -1.0,
+              1.0
+            ],
+            "humidity": [
+              0.8,
+              1.0
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.0,
+              0.4
+            ],
+            "weirdness": [
+              -1.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "biome": "aether:skyroot_grove",
+          "parameters": {
+            "continentalness": [
+              -1.0,
+              1.0
+            ],
+            "depth": [
+              -1.0,
+              1.0
+            ],
+            "erosion": [
+              -1.0,
+              1.0
+            ],
+            "humidity": [
+              -1.0,
               -0.1
             ],
             "offset": 0.0,
             "temperature": [
-              -1.0,
-              0.75
+              0.4,
+              0.93
             ],
             "weirdness": [
               -1.0,
@@ -82,12 +232,12 @@
             ],
             "humidity": [
               -0.1,
-              0.1
+              1.0
             ],
             "offset": 0.0,
             "temperature": [
-              -1.0,
-              0.75
+              0.4,
+              0.93
             ],
             "weirdness": [
               -1.0,
@@ -96,7 +246,7 @@
           }
         },
         {
-          "biome": "aether:skyroot_thicket",
+          "biome": "aether:skyroot_meadow",
           "parameters": {
             "continentalness": [
               -1.0,
@@ -111,13 +261,43 @@
               1.0
             ],
             "humidity": [
-              0.1,
-              0.4
+              -1.0,
+              -0.6
             ],
             "offset": 0.0,
             "temperature": [
+              0.93,
+              0.94
+            ],
+            "weirdness": [
               -1.0,
-              0.75
+              1.0
+            ]
+          }
+        },
+        {
+          "biome": "aether:skyroot_grove",
+          "parameters": {
+            "continentalness": [
+              -1.0,
+              1.0
+            ],
+            "depth": [
+              -1.0,
+              1.0
+            ],
+            "erosion": [
+              -1.0,
+              1.0
+            ],
+            "humidity": [
+              -0.6,
+              -0.3
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.93,
+              0.94
             ],
             "weirdness": [
               -1.0,
@@ -141,13 +321,13 @@
               1.0
             ],
             "humidity": [
-              0.4,
+              -0.3,
               1.0
             ],
             "offset": 0.0,
             "temperature": [
-              -1.0,
-              0.75
+              0.93,
+              0.94
             ],
             "weirdness": [
               -1.0,
@@ -156,7 +336,7 @@
           }
         },
         {
-          "biome": "aether:golden_forest",
+          "biome": "aether:skyroot_meadow",
           "parameters": {
             "continentalness": [
               -1.0,
@@ -172,12 +352,72 @@
             ],
             "humidity": [
               -1.0,
+              -0.1
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.94,
+              1.0
+            ],
+            "weirdness": [
+              -1.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "biome": "aether:skyroot_woodland",
+          "parameters": {
+            "continentalness": [
+              -1.0,
+              1.0
+            ],
+            "depth": [
+              -1.0,
+              1.0
+            ],
+            "erosion": [
+              -1.0,
+              1.0
+            ],
+            "humidity": [
+              -0.1,
+              0.8
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.94,
+              1.0
+            ],
+            "weirdness": [
+              -1.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "biome": "aether:skyroot_forest",
+          "parameters": {
+            "continentalness": [
+              -1.0,
+              1.0
+            ],
+            "depth": [
+              -1.0,
+              1.0
+            ],
+            "erosion": [
+              -1.0,
+              1.0
+            ],
+            "humidity": [
+              0.8,
               1.0
             ],
             "offset": 0.0,
             "temperature": [
-              0.7,
-              1.0
+              0.93,
+              0.94
             ],
             "weirdness": [
               -1.0,

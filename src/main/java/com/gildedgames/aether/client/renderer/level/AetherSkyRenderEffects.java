@@ -24,7 +24,7 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
     private VertexBuffer starBuffer, skyBuffer;
 
     public AetherSkyRenderEffects() {
-        super(-5.0F, true, DimensionSpecialEffects.SkyType.NORMAL, false, false);
+        super(9.5F, true, DimensionSpecialEffects.SkyType.NORMAL, false, false);
     }
 
     @Override

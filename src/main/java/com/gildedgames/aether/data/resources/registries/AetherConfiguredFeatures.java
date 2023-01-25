@@ -5,7 +5,7 @@ import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.data.resources.AetherFeatureRules;
 import com.gildedgames.aether.data.resources.AetherFeatureStates;
 import com.gildedgames.aether.data.resources.builders.AetherConfiguredFeatureBuilders;
-import com.gildedgames.aether.world.configuration.SimpleDiskConfiguration;
+import com.gildedgames.aether.world.configuration.ShelfConfiguration;
 import com.gildedgames.aether.world.feature.AetherFeatures;
 import com.gildedgames.aether.world.foliageplacer.CrystalFoliagePlacer;
 import com.gildedgames.aether.world.foliageplacer.HolidayFoliagePlacer;
@@ -20,8 +20,9 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.random.SimpleWeightedRandomList;
+import net.minecraft.util.valueproviders.ConstantFloat;
 import net.minecraft.util.valueproviders.ConstantInt;
-import net.minecraft.util.valueproviders.UniformFloat;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -51,9 +52,11 @@ public class AetherConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> GOLDEN_OAK_TREE_CONFIGURATION = createKey("golden_oak_tree");
     public static final ResourceKey<ConfiguredFeature<?, ?>> CRYSTAL_TREE_CONFIGURATION = createKey("crystal_tree");
     public static final ResourceKey<ConfiguredFeature<?, ?>> HOLIDAY_TREE_CONFIGURATION = createKey("holiday_tree");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> FLOWER_PATCH_CONFIGURATION = createKey("flower_patch");
     public static final ResourceKey<ConfiguredFeature<?, ?>> GRASS_PATCH_CONFIGURATION = createKey("grass_patch");
     public static final ResourceKey<ConfiguredFeature<?, ?>> TALL_GRASS_PATCH_CONFIGURATION = createKey("tall_grass_patch");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> WHITE_FLOWER_PATCH_CONFIGURATION = createKey("white_flower_patch");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> PURPLE_FLOWER_PATCH_CONFIGURATION = createKey("purple_flower_patch");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> BERRY_BUSH_PATCH_CONFIGURATION = createKey("berry_bush_patch");
     public static final ResourceKey<ConfiguredFeature<?, ?>> QUICKSOIL_SHELF_CONFIGURATION = createKey("quicksoil_shelf");
     public static final ResourceKey<ConfiguredFeature<?, ?>> WATER_LAKE_CONFIGURATION = createKey("water_lake");
     public static final ResourceKey<ConfiguredFeature<?, ?>> WATER_SPRING_CONFIGURATION = createKey("water_spring");
@@ -61,10 +64,8 @@ public class AetherConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_ICESTONE_CONFIGURATION = createKey("icestone_ore");
     public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_AMBROSIUM_CONFIGURATION = createKey("ambrosium_ore");
     public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_ZANITE_CONFIGURATION = createKey("zanite_ore");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_GRAVITITE_COMMON_CONFIGURATION = createKey("gravitite_ore_common");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_GRAVITITE_DENSE_CONFIGURATION = createKey("gravitite_ore_dense");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_GRAVITITE_CONFIGURATION = createKey("gravitite_ore");
     public static final ResourceKey<ConfiguredFeature<?, ?>> TREES_SKYROOT_AND_GOLDEN_OAK_CONFIGURATION = createKey("trees_skyroot_and_golden_oak");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> TREES_GOLDEN_OAK_AND_SKYROOT_CONFIGURATION = createKey("trees_golden_oak_and_skyroot");
 
     private static ResourceKey<ConfiguredFeature<?, ?>> createKey(String name) {
         return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(Aether.MODID, name));
@@ -109,34 +110,32 @@ public class AetherConfiguredFeatures {
                         new TwoLayersFeatureSize(1, 0, 1)).ignoreVines()
                         .decorators(ImmutableList.of(new HolidayTreeDecorator(new WeightedStateProvider(new SimpleWeightedRandomList.Builder<BlockState>().add(AetherFeatureStates.SNOW, 10).add(AetherFeatureStates.PRESENT, 1).build()))))
                         .build());
-        register(context, FLOWER_PATCH_CONFIGURATION, Feature.FLOWER,
-                AetherConfiguredFeatureBuilders.grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
-                        .add(AetherFeatureStates.PURPLE_FLOWER, 2)
-                        .add(AetherFeatureStates.WHITE_FLOWER, 2)
-                        .add(AetherFeatureStates.BERRY_BUSH, 1)), 64));
         register(context, GRASS_PATCH_CONFIGURATION, Feature.RANDOM_PATCH, AetherConfiguredFeatureBuilders.grassPatch(BlockStateProvider.simple(Blocks.GRASS), 32));
         register(context, TALL_GRASS_PATCH_CONFIGURATION, Feature.RANDOM_PATCH, AetherConfiguredFeatureBuilders.tallGrassPatch(BlockStateProvider.simple(Blocks.TALL_GRASS)));
-        register(context, QUICKSOIL_SHELF_CONFIGURATION, AetherFeatures.SIMPLE_DISK.get(),
-                new SimpleDiskConfiguration(
-                        UniformFloat.of(Mth.sqrt(12), 5), // sqrt(12) was an old static value
+        register(context, WHITE_FLOWER_PATCH_CONFIGURATION, Feature.FLOWER,
+                AetherConfiguredFeatureBuilders.grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(AetherFeatureStates.WHITE_FLOWER, 1)), 64));
+        register(context, PURPLE_FLOWER_PATCH_CONFIGURATION, Feature.FLOWER,
+                AetherConfiguredFeatureBuilders.grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(AetherFeatureStates.PURPLE_FLOWER, 1)), 64));
+        register(context, BERRY_BUSH_PATCH_CONFIGURATION, Feature.FLOWER,
+                AetherConfiguredFeatureBuilders.grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(AetherFeatureStates.BERRY_BUSH, 1)), 32));
+        register(context, QUICKSOIL_SHELF_CONFIGURATION, AetherFeatures.SHELF.get(),
+                new ShelfConfiguration(
                         BlockStateProvider.simple(AetherFeatureStates.QUICKSOIL),
-                        3));
-        register(context, WATER_LAKE_CONFIGURATION, AetherFeatures.LAKE.get(), AetherConfiguredFeatureBuilders.lake(BlockStateProvider.simple(Blocks.WATER), BlockStateProvider.simple(AetherBlocks.AETHER_GRASS_BLOCK.get())));
+                        ConstantFloat.of(Mth.sqrt(12)),
+                        UniformInt.of(0, 48),
+                        HolderSet.direct(Block::builtInRegistryHolder, AetherBlocks.AETHER_GRASS_BLOCK.get())));
+        register(context, WATER_LAKE_CONFIGURATION, AetherFeatures.LAKE.get(),
+                AetherConfiguredFeatureBuilders.lake(BlockStateProvider.simple(Blocks.WATER), BlockStateProvider.simple(AetherBlocks.AETHER_GRASS_BLOCK.get())));
         register(context, WATER_SPRING_CONFIGURATION, Feature.SPRING,
                 AetherConfiguredFeatureBuilders.spring(Fluids.WATER.defaultFluidState(), true, 4, 1, HolderSet.direct(Block::builtInRegistryHolder, AetherBlocks.HOLYSTONE.get(), AetherBlocks.AETHER_DIRT.get())));
         register(context, ORE_AETHER_DIRT_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.AETHER_DIRT, 33));
-        register(context, ORE_ICESTONE_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.ICESTONE, 16));
+        register(context, ORE_ICESTONE_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.ICESTONE, 32));
         register(context, ORE_AMBROSIUM_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.AMBROSIUM_ORE, 16));
         register(context, ORE_ZANITE_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.ZANITE_ORE, 8));
-        register(context, ORE_GRAVITITE_COMMON_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.GRAVITITE_ORE, 6, 0.9F));
-        register(context, ORE_GRAVITITE_DENSE_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.GRAVITITE_ORE, 3, 0.5F));
+        register(context, ORE_GRAVITITE_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.GRAVITITE_ORE, 7, 0.9F));
         register(context, TREES_SKYROOT_AND_GOLDEN_OAK_CONFIGURATION, Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(
                         PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(GOLDEN_OAK_TREE_CONFIGURATION), PlacementUtils.filteredByBlockSurvival(AetherBlocks.GOLDEN_OAK_SAPLING.get())), 0.01F)),
                         PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(SKYROOT_TREE_CONFIGURATION), PlacementUtils.filteredByBlockSurvival(AetherBlocks.SKYROOT_SAPLING.get()))));
-        register(context, TREES_GOLDEN_OAK_AND_SKYROOT_CONFIGURATION, Feature.RANDOM_SELECTOR,
-                new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(
-                        PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(SKYROOT_TREE_CONFIGURATION), PlacementUtils.filteredByBlockSurvival(AetherBlocks.SKYROOT_SAPLING.get())), 0.1F)),
-                        PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(GOLDEN_OAK_TREE_CONFIGURATION), PlacementUtils.filteredByBlockSurvival(AetherBlocks.GOLDEN_OAK_SAPLING.get()))));
     }
 
     private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(BootstapContext<ConfiguredFeature<?, ?>> context, ResourceKey<ConfiguredFeature<?, ?>> key, F feature, FC configuration) {

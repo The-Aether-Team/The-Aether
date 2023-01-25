@@ -147,9 +147,6 @@ public class AetherBlockTagData extends BlockTagsProvider {
         this.tag(AetherTags.Blocks.ALLOWED_FLAMMABLES).add(Blocks.SOUL_SAND, Blocks.SOUL_SOIL).addTags(
                 AetherTags.Blocks.INFINIBURN,
                 AetherTags.Blocks.HELLFIRE_BLOCKS);
-        this.tag(AetherTags.Blocks.QUICKSOIL_CAN_GENERATE).add(
-                AetherBlocks.AETHER_DIRT.get(),
-                AetherBlocks.HOLYSTONE.get());
         this.tag(AetherTags.Blocks.VALKYRIE_TELEPORTABLE_ON).add(
                 AetherBlocks.ANGELIC_STONE.get(),
                 AetherBlocks.LIGHT_ANGELIC_STONE.get());
