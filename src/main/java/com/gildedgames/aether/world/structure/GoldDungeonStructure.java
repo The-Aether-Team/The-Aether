@@ -13,6 +13,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureType;
@@ -38,13 +39,13 @@ public class GoldDungeonStructure extends Structure {
     @Override
     public Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
         ChunkPos chunkpos = context.chunkPos();
-        BlockPos blockpos = new BlockPos(chunkpos.getMiddleBlockX(), 128, chunkpos.getMiddleBlockZ());
+        BlockPos blockpos = new BlockPos(chunkpos.getMiddleBlockX(), 80, chunkpos.getMiddleBlockZ());
         return Optional.of(new GenerationStub(blockpos, piecesBuilder -> this.generatePieces(piecesBuilder, context)));
     }
 
     private void generatePieces(StructurePiecesBuilder builder, GenerationContext context) {
         RandomSource random = context.random();
-        BlockPos elevatedPos = context.chunkPos().getBlockAt(2, 128, 2);
+        BlockPos elevatedPos = context.chunkPos().getBlockAt(2, 80, 2);
         StructureTemplateManager templateManager = context.structureTemplateManager();
 
         GoldDungeonPieces.Island island = new GoldDungeonPieces.Island(
@@ -57,6 +58,7 @@ public class GoldDungeonStructure extends Structure {
         BlockPos centerPos = island.getBoundingBox().getCenter();
         Vec3i stubOffset = this.getStubOffset(templateManager);
         this.addIslandStubs(templateManager, builder, random, centerPos, stubOffset);
+        this.placeGumdropCaves(builder, random, centerPos);
 
         Rotation rotation = Rotation.getRandom(random);
         BlockPos bossPos = centerPos.offset(this.getBossRoomOffset(templateManager, rotation.rotate(Direction.SOUTH)));
@@ -97,17 +99,16 @@ public class GoldDungeonStructure extends Structure {
         }
     }
 
-    private Vec3i getStubOffset(StructureTemplateManager templateManager) {
-        StructureTemplate template = templateManager.getOrCreate(new ResourceLocation(Aether.MODID, "gold_dungeon/stub"));
-        Vec3i size = template.getSize();
-        return new Vec3i(size.getX() / -2, size.getY() / -2, size.getZ() / -2);
-    }
-
-    private Vec3i getBossRoomOffset(StructureTemplateManager templateManager, Direction direction) {
-        StructureTemplate template = templateManager.getOrCreate(new ResourceLocation(Aether.MODID, "gold_dungeon/boss_room"));
-        Vec3i size = template.getSize();
-        Vec3i offset = new Vec3i(size.getX() / -2, size.getY() / -2, (size.getZ()) / -2);
-        return offset.relative(direction, -1);
+    /**
+     * Place small caves around the island.
+     */
+    private void placeGumdropCaves(StructurePiecesBuilder builder, RandomSource random, BlockPos centerPos) {
+        for(int count = 0; count < 18; ++count) {
+            int x = centerPos.getX() + random.nextInt(24) - random.nextInt(24);
+            int y = centerPos.getY() + random.nextInt(24) - random.nextInt(24);
+            int z = centerPos.getZ() + random.nextInt(24) - random.nextInt(24);
+            builder.addPiece(new GoldDungeonPieces.GumdropCave(new BoundingBox(new BlockPos(x, y, z))));
+        }
     }
 
     /**
@@ -123,6 +124,19 @@ public class GoldDungeonStructure extends Structure {
         startPos = startPos.offset(direction.getStepX() * 3, 1, direction.getStepZ() * 3);
         GoldDungeonPieces.Tunnel tunnel = new GoldDungeonPieces.Tunnel(templateManager, "tunnel", startPos, rotation);
         builder.addPiece(tunnel);
+    }
+
+    private Vec3i getStubOffset(StructureTemplateManager templateManager) {
+        StructureTemplate template = templateManager.getOrCreate(new ResourceLocation(Aether.MODID, "gold_dungeon/stub"));
+        Vec3i size = template.getSize();
+        return new Vec3i(size.getX() / -2, size.getY() / -2, size.getZ() / -2);
+    }
+
+    private Vec3i getBossRoomOffset(StructureTemplateManager templateManager, Direction direction) {
+        StructureTemplate template = templateManager.getOrCreate(new ResourceLocation(Aether.MODID, "gold_dungeon/boss_room"));
+        Vec3i size = template.getSize();
+        Vec3i offset = new Vec3i(size.getX() / -2, size.getY() / -2, (size.getZ()) / -2);
+        return offset.relative(direction, -1);
     }
 
     @Override
