@@ -6,16 +6,15 @@
       "chance": 75
     },
     {
-      "type": "aether:improved_layer_placement",
-      "count": {
-        "type": "minecraft:uniform",
-        "value": {
-          "max_inclusive": 1,
-          "min_inclusive": 0
-        }
-      },
-      "heightmap": "OCEAN_FLOOR",
-      "verticalBounds": 4
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:surface_water_depth_filter",
+      "max_water_depth": 0
+    },
+    {
+      "type": "minecraft:heightmap",
+      "heightmap": "OCEAN_FLOOR"
     },
     {
       "type": "minecraft:biome"
