@@ -1,4 +1,4 @@
-// 1.19.3	2023-01-24T17:29:05.1785163	Registries
+// 1.19.3	2023-01-24T18:12:08.800159	Registries
 8f1b2a014a85ca43a62f62092f7a48219ace68c8 data/aether/dimension/the_aether.json
 5655d4cd818dbc73a0baa2590d80dd274f85927d data/aether/dimension_type/the_aether.json
 792a6b3266b5e1976a0a57ac1994479fdc60461d data/aether/worldgen/biome/golden_forest.json
@@ -52,7 +52,7 @@ dcc23f37f169448a22a6f2e16ca49939e8947fc3 data/aether/worldgen/placed_feature/qui
 7bf135caf750f7c9e08e12b0d4a6047df54781a0 data/aether/worldgen/placed_feature/skyroot_grove_trees.json
 a335682fc4a6245cc0ca9eda3b65ccf347cbbf2b data/aether/worldgen/placed_feature/skyroot_thicket_trees.json
 c481c5e485a9933985435d13353759e599c775f2 data/aether/worldgen/placed_feature/tall_grass_patch.json
-486ded5f366dc119e4ce3bb839ab2e22808edd2d data/aether/worldgen/placed_feature/water_lake.json
+2248be9a2847574a1c594ed27f36184352b05c54 data/aether/worldgen/placed_feature/water_lake.json
 9faf4f67796cf1beefbffca6684bbcd570bf6104 data/aether/worldgen/placed_feature/water_spring.json
 040a5dd4598964087b10e7b6dfbf9a77ab997d1f data/aether/worldgen/placed_feature/white_flower_patch.json
 ab7134a13e253bb2d8cfe8afb0489680ed8c5e05 data/aether/worldgen/placed_feature/zanite_ore.json

@@ -112,7 +112,6 @@ public class AetherPlacedFeatures {
                 new DungeonBlacklistFilter());
         register(context, WATER_LAKE_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.WATER_LAKE_CONFIGURATION),
                 RarityFilter.onAverageOnceEvery(15),
-                InSquarePlacement.spread(),
                 PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
                 BiomeFilter.biome());
         register(context, WATER_SPRING_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.WATER_SPRING_CONFIGURATION),
