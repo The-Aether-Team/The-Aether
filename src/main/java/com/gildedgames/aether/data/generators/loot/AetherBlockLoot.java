@@ -63,11 +63,11 @@ public class AetherBlockLoot extends AetherBlockLootSubProvider {
         this.dropSelfDouble(AetherBlocks.SKYROOT_LOG.get());
         this.add(AetherBlocks.GOLDEN_OAK_LOG.get(),
                 (log) -> droppingDoubleGoldenOak(log, AetherBlocks.SKYROOT_LOG.get(), AetherItems.GOLDEN_AMBER.get()));
-        this.dropSelfDouble(AetherBlocks.STRIPPED_SKYROOT_LOG.get());
+        this.dropSelf(AetherBlocks.STRIPPED_SKYROOT_LOG.get());
         this.dropSelfDouble(AetherBlocks.SKYROOT_WOOD.get());
         this.add(AetherBlocks.GOLDEN_OAK_WOOD.get(),
                 (wood) -> droppingDoubleGoldenOak(wood, AetherBlocks.SKYROOT_WOOD.get(), AetherItems.GOLDEN_AMBER.get()));
-        this.dropSelfDouble(AetherBlocks.STRIPPED_SKYROOT_WOOD.get());
+        this.dropSelf(AetherBlocks.STRIPPED_SKYROOT_WOOD.get());
 
         this.dropSelf(AetherBlocks.SKYROOT_PLANKS.get());
         this.dropSelf(AetherBlocks.HOLYSTONE_BRICKS.get());
