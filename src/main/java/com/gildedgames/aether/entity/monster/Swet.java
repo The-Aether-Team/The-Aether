@@ -132,9 +132,6 @@ public class Swet extends Slime implements MountableMob {
             this.level.addParticle(ParticleTypes.SPLASH, d, d1 - 0.25, d2, 0.0, 0.0, 0.0);
         }
 
-        if (this.onGround && !this.wasOnGround) {
-            this.playSound(AetherSoundEvents.ENTITY_SWET_SQUISH.get(), this.getSoundVolume(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) / 0.8F);
-        }
         this.setMidJump(!this.onGround);
         if (this.level.isClientSide) {
             this.oSwetHeight = this.swetHeight;
@@ -163,6 +160,11 @@ public class Swet extends Slime implements MountableMob {
             this.resetFallDistance();
 
         this.wasOnGround = this.onGround;
+    }
+
+    @Override
+    protected boolean spawnCustomParticles() {
+        return true;
     }
 
     @Nullable
@@ -324,6 +326,11 @@ public class Swet extends Slime implements MountableMob {
     @Override
     protected SoundEvent getDeathSound() {
         return AetherSoundEvents.ENTITY_SWET_DEATH.get();
+    }
+
+    @Override
+    protected SoundEvent getSquishSound() {
+        return AetherSoundEvents.ENTITY_SWET_SQUISH.get();
     }
 
     /**
