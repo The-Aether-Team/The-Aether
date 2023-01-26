@@ -162,6 +162,11 @@ public class Swet extends Slime implements MountableMob {
         this.wasOnGround = this.onGround;
     }
 
+    @Override
+    protected boolean spawnCustomParticles() {
+        return true;
+    }
+
     @Nullable
     @Override
     public LivingEntity getControllingPassenger() {
