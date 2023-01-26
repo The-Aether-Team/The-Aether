@@ -237,9 +237,9 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
         double z = target.getZ() + targetVec.y * 7;
         if (this.dungeon != null) {
             AABB room = this.dungeon.roomBounds();
-            x = Mth.clamp(x, room.minX, room.maxX);
-            y = Mth.clamp(y, room.minY, room.maxY);
-            z = Mth.clamp(z, room.minZ, room.maxZ);
+            x = Mth.clamp(x, room.minX + 1, room.maxX - 1);
+            y = Mth.clamp(y, room.minY + 1, room.maxY - 1);
+            z = Mth.clamp(z, room.minZ + 1, room.maxZ - 1);
         }
         return this.teleport(x, y, z);
     }
