@@ -28,7 +28,7 @@ public class AccessoryAbilityClientListener {
      * Disables the player's first-person arm rendering completely if wearing an Invisibility Cloak.
      */
     @SubscribeEvent
-    public static void onRenderArm(RenderHandEvent event) {
+    public static void onRenderHand(RenderHandEvent event) {
         LocalPlayer player = Minecraft.getInstance().player;
         if (!event.isCanceled() && player != null && EquipmentUtil.hasInvisibilityCloak(player)) {
             event.setCanceled(true);
