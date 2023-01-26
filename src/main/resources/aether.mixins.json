@@ -49,6 +49,7 @@
     "client.accessor.GuiComponentAccessor",
     "client.accessor.HeartTypeAccessor",
     "client.accessor.I18nAccessor",
+    "client.accessor.ItemInHandRendererAccessor",
     "client.accessor.PlayerModelAccessor",
     "client.accessor.QuadrupedModelAccessor",
     "client.accessor.RealmsPlayerScreenAccessor",
