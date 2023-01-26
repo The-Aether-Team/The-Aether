@@ -1,37 +1,23 @@
 package com.gildedgames.aether.entity.monster.dungeon.boss.slider;
 
-import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.entity.ai.brain.memory.AetherMemoryModuleTypes;
 import com.gildedgames.aether.entity.ai.brain.sensing.AetherSensorTypes;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.Dynamic;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleOpenHashMap;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
-import net.minecraft.util.Unit;
-import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.Brain;
-import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.entity.ai.behavior.StartAttacking;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
-import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.sensing.Sensor;
 import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.schedule.Activity;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.ForgeEventFactory;
 
 import javax.annotation.Nullable;
 import java.util.Comparator;
@@ -139,7 +125,7 @@ public class SliderAi {
     }
 
     @Nullable
-    private static Vec3 getTargetPoint(Brain<?> brain) {
+    public static Vec3 getTargetPoint(Brain<?> brain) {
         Optional<Vec3> pos = brain.getMemory(AetherMemoryModuleTypes.TARGET_POSITION.get());
         if (pos.isPresent()) {
             return pos.get();
@@ -149,7 +135,7 @@ public class SliderAi {
         }
     }
 
-    private static Direction calculateDirection(double x, double y, double z) {
+    public static Direction calculateDirection(double x, double y, double z) {
         double absX = Math.abs(x);
         double absY = Math.abs(y);
         double absZ = Math.abs(z);
@@ -165,7 +151,7 @@ public class SliderAi {
     /**
      * Calculates a box adjacent to the original, with equal dimensions except for the axis it's translated along.
      */
-    private static AABB calculateAdjacentBox(AABB box, Direction direction) {
+    public static AABB calculateAdjacentBox(AABB box, Direction direction) {
         double minX = box.minX;
         double minY = box.minY;
         double minZ = box.minZ;
@@ -193,342 +179,5 @@ public class SliderAi {
         }
 
         return new AABB(minX, minY, minZ, maxX, maxY, maxZ);
-    }
-
-    /**
-     * Move to the defined target position.
-     */
-    static class Move extends Behavior<Slider> {
-        private float velocity;
-
-        public Move() {
-            super(ImmutableMap.of(AetherMemoryModuleTypes.MOVE_DELAY.get(), MemoryStatus.VALUE_ABSENT, AetherMemoryModuleTypes.MOVE_DIRECTION.get(), MemoryStatus.REGISTERED, AetherMemoryModuleTypes.TARGET_POSITION.get(), MemoryStatus.REGISTERED, MemoryModuleType.ATTACK_TARGET, MemoryStatus.REGISTERED));
-        }
-
-        @Override
-        protected boolean checkExtraStartConditions(ServerLevel level, Slider slider) {
-            return slider.isAwake() && !slider.isDeadOrDying();
-        }
-
-        @Override
-        protected boolean canStillUse(ServerLevel level, Slider slider, long gameTime) {
-            if (!slider.isAwake() || slider.isDeadOrDying()) {
-                return false;
-            }
-
-            if (slider.getBrain().hasMemoryValue(AetherMemoryModuleTypes.MOVE_DELAY.get())) {
-                return false;
-            }
-
-            return !slider.horizontalCollision && !slider.verticalCollision;
-        }
-
-        @Override
-        protected void start(ServerLevel level, Slider slider, long pGameTime) {
-            slider.getBrain().eraseMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get());
-            slider.playSound(slider.getMoveSound(), 2.5F, 1.0F / (slider.getRandom().nextFloat() * 0.2F + 0.9F));
-        }
-
-        @Override
-        protected void tick(ServerLevel level, Slider slider, long gameTime) {
-            Brain<?> brain = slider.getBrain();
-            Vec3 targetPoint = getTargetPoint(brain);
-
-            // Move along the calculated path
-            if (targetPoint == null) {
-                this.doStop(level, slider, gameTime);
-                return;
-            }
-
-            Direction moveDir = getMoveDirection(slider, targetPoint);
-
-            if (axisDistance(targetPoint.x - slider.getX(), targetPoint.y - slider.getY(), targetPoint.z - slider.getZ(), moveDir) <= 0) {
-                this.doStop(level, slider, gameTime);
-                return;
-            }
-
-            if (this.velocity < slider.getMaxVelocity()) {
-                // The Slider increases its speed based on the speed it has saved
-                this.velocity = Math.min(slider.getMaxVelocity(), this.velocity + slider.getVelocityIncrease());
-            }
-
-            Vec3 movement = new Vec3(moveDir.getStepX() * this.velocity,
-                    moveDir.getStepY() * this.velocity,
-                    moveDir.getStepZ() * this.velocity);
-
-            slider.setDeltaMovement(movement);
-        }
-
-        @Override
-        protected void stop(ServerLevel level, Slider slider, long gameTime) {
-            slider.getBrain().setMemoryWithExpiry(AetherMemoryModuleTypes.MOVE_DELAY.get(), Unit.INSTANCE, slider.calculateMoveDelay());
-            slider.getBrain().eraseMemory(AetherMemoryModuleTypes.TARGET_POSITION.get());
-            this.velocity = 0;
-            slider.setDeltaMovement(Vec3.ZERO);
-        }
-
-        /**
-         * Get the move direction if it already exists, or calculate a new one.
-         */
-        private static Direction getMoveDirection(Slider slider, Vec3 targetPoint) {
-            Brain<?> brain = slider.getBrain();
-            Optional<Direction> optionalDir = brain.getMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get());
-            Direction moveDir;
-
-            if (optionalDir.isEmpty()) { // If the direction has changed
-                double x = targetPoint.x - slider.getX();
-                double y = targetPoint.y - slider.getY();
-                double z = targetPoint.z - slider.getZ();
-                moveDir = calculateDirection(x, y, z);
-                brain.setMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get(), moveDir);
-            } else {
-                moveDir = optionalDir.get();
-            }
-            return moveDir;
-        }
-
-        private static double axisDistance(double x, double y, double z, Direction direction) {
-            return x * direction.getStepX() + y * direction.getStepY() + z * direction.getStepZ();
-        }
-    }
-
-    static class SetPathUpOrDown extends Behavior<Slider> {
-        public SetPathUpOrDown() {
-            super(ImmutableMap.of(AetherMemoryModuleTypes.MOVE_DIRECTION.get(), MemoryStatus.REGISTERED, AetherMemoryModuleTypes.TARGET_POSITION.get(), MemoryStatus.VALUE_ABSENT));
-        }
-
-        @Override
-        protected boolean checkExtraStartConditions(ServerLevel pLevel, Slider slider) {
-            Brain<?> brain = slider.getBrain();
-            // Run this behavior only once between each movement cycle.
-            if (brain.getTimeUntilExpiry(AetherMemoryModuleTypes.MOVE_DELAY.get()) != 1) {
-                return false;
-            }
-
-            if (slider.getRandom().nextInt(3) != 0) {
-                return false;
-            }
-
-            Optional<Direction> optionalDir = slider.getBrain().getMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get());
-            if (optionalDir.isPresent() && optionalDir.get().getAxis() == Direction.Axis.Y) {
-                return false;
-            }
-
-            return true;
-        }
-
-        @Override
-        protected void start(ServerLevel level, Slider slider, long gameTime) {
-            Brain<?> brain = slider.getBrain();
-
-            Vec3 targetPos = getTargetOrCurrentPosition(slider);
-            if (targetPos == null) {
-                return;
-            }
-            Vec3 currentPos = slider.position();
-
-            AABB currentPath = calculatePathBox(slider.getBoundingBox(), targetPos.x - currentPos.x, targetPos.y - currentPos.y, targetPos.z - currentPos.z);
-
-            Direction direction = currentPos.y > targetPos.y ? Direction.DOWN : Direction.UP;
-
-            currentPath = calculateAdjacentBox(currentPath, direction);
-            currentPath = currentPath.expandTowards(0, targetPos.y - currentPos.y, 0);
-
-            BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
-
-            // If there's a block in the way, don't take the low road.
-            for (int x = Mth.floor(currentPath.minX); x < currentPath.maxX; x++) {
-                for (int z = Mth.floor(currentPath.minZ); z < currentPath.maxZ; z++) {
-                    BlockState state = level.getBlockState(pos.set(x, targetPos.y, z));
-                    if (state.is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
-                        return;
-                    }
-                }
-            }
-
-            double y = direction == Direction.UP ? Math.max(targetPos.y, currentPos.y + 1) : targetPos.y;
-            brain.setMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get(), direction);
-            brain.setMemoryWithExpiry(AetherMemoryModuleTypes.TARGET_POSITION.get(), new Vec3(currentPos.x, y, currentPos.z), 100);
-        }
-
-        @Nullable
-        private static Vec3 getTargetOrCurrentPosition(Slider slider) {
-            Optional<LivingEntity> player = slider.getBrain().getMemory(MemoryModuleType.ATTACK_TARGET);
-            return player.map(Entity::position).orElse(null);
-        }
-
-        /**
-         * Creates an AABB expanded to the point the slider wants to go to.
-         */
-        private static AABB calculatePathBox(AABB box, double x, double y, double z) {
-            return box.expandTowards(x - box.getXsize(), y - box.getYsize(), z - box.getZsize());
-        }
-    }
-
-    /**
-     * Have the slider back off if the player is still nearby after an attack. This is used to prevent stun locks.
-     */
-    static class BackOffAfterAttack extends Behavior<Slider> {
-        public BackOffAfterAttack() {
-            super(ImmutableMap.of(AetherMemoryModuleTypes.HAS_ATTACKED.get(), MemoryStatus.VALUE_PRESENT, AetherMemoryModuleTypes.MOVE_DELAY.get(), MemoryStatus.VALUE_PRESENT));
-        }
-
-        @Override
-        protected boolean checkExtraStartConditions(ServerLevel level, Slider slider) {
-            return slider.getBrain().getTimeUntilExpiry(AetherMemoryModuleTypes.MOVE_DELAY.get()) == 1;
-        }
-
-        @Override
-        protected void start(ServerLevel level, Slider slider, long pGameTime) {
-            Brain<?> brain = slider.getBrain();
-            Optional<LivingEntity> optional = brain.getMemory(MemoryModuleType.ATTACK_TARGET);
-            if (optional.isPresent()) {
-                LivingEntity target = optional.get();
-                if (slider.getBoundingBox().inflate(1.5).contains(target.position())) {
-                    // Move one block in the opposite direction of the target
-                    Direction direction = calculateDirection(slider.getX() - target.getX(), 0, slider.getZ() - target.getZ());
-                    brain.setMemory(AetherMemoryModuleTypes.TARGET_POSITION.get(), slider.position().relative(direction, 2));
-                }
-            }
-        }
-    }
-
-    /**
-     * Set the path up to avoid an unbreakable block.
-     */
-    static class AvoidObstacles extends Behavior<Slider> {
-        public AvoidObstacles() {
-            super(ImmutableMap.of(AetherMemoryModuleTypes.MOVE_DIRECTION.get(), MemoryStatus.REGISTERED));
-        }
-
-        @Override
-        protected boolean checkExtraStartConditions(ServerLevel level, Slider slider) {
-            if (!slider.isAwake() || slider.isDeadOrDying() || slider.getBrain().getTimeUntilExpiry(AetherMemoryModuleTypes.MOVE_DELAY.get()) != 1) {
-                return false;
-            }
-
-            Brain<?> brain = slider.getBrain();
-            Direction direction = brain.getMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get()).orElse(Direction.UP);
-            return direction.getAxis() != Direction.Axis.Y;
-        }
-
-        @Override
-        protected void start(ServerLevel level, Slider slider, long gameTime) {
-            Brain<?> brain = slider.getBrain();
-            Vec3 targetPos = getTargetPoint(brain);
-            if (targetPos == null) {
-                return;
-            }
-
-            Direction direction = calculateDirection(targetPos.x - slider.getX(), targetPos.y - slider.getY(), targetPos.z - slider.getZ());
-            AABB collisionBox = calculateAdjacentBox(slider.getBoundingBox(), direction);
-
-            boolean isTouchingWall = false;
-            for (BlockPos pos : BlockPos.betweenClosed(Mth.floor(collisionBox.minX), Mth.floor(collisionBox.minY), Mth.floor(collisionBox.minZ), Mth.ceil(collisionBox.maxX - 1), Mth.ceil(collisionBox.maxY - 1), Mth.ceil(collisionBox.maxZ - 1))) {
-                if (slider.level.getBlockState(pos).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
-                    isTouchingWall = true;
-                    break;
-                }
-            }
-
-            if (isTouchingWall) {
-                BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
-                int y = Mth.floor(collisionBox.minY);
-                while (isTouchingWall) {
-                    y++;
-                    isTouchingWall = false;
-                    for (int x = Mth.floor(collisionBox.minX); x < collisionBox.maxX; x++) {
-                        for (int z = Mth.floor(collisionBox.minZ); z < collisionBox.maxZ; z++) {
-                            if (slider.level.getBlockState(pos.set(x, y, z)).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
-                                isTouchingWall = true;
-                            }
-                        }
-                    }
-                }
-                Vec3 currentPos = slider.position();
-                brain.setMemory(AetherMemoryModuleTypes.TARGET_POSITION.get(), new Vec3(currentPos.x, y, currentPos.z));
-                brain.setMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get(), Direction.UP);
-            }
-        }
-    }
-
-    static class Crush extends Behavior<Slider> {
-        public Crush() {
-            super(ImmutableMap.of());
-        }
-
-        @Override
-        protected boolean checkExtraStartConditions(ServerLevel level, Slider slider) {
-            return slider.isAwake() && !slider.isDeadOrDying() && (slider.horizontalCollision || slider.verticalCollision);
-        }
-
-        @Override
-        protected void start(ServerLevel level, Slider slider, long gameTime) {
-            boolean crushed = false;
-            if (ForgeEventFactory.getMobGriefingEvent(level, slider)) {
-                AABB crushBox = slider.getBoundingBox().inflate(0.2);
-                for(BlockPos pos : BlockPos.betweenClosed(Mth.floor(crushBox.minX), Mth.floor(crushBox.minY), Mth.floor(crushBox.minZ), Mth.floor(crushBox.maxX), Mth.floor(crushBox.maxY), Mth.floor(crushBox.maxZ))) {
-                    BlockState blockState = slider.level.getBlockState(pos);
-                    if (!blockState.isAir()) {
-                        if (!blockState.is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
-                            crushed = slider.level.destroyBlock(pos, true, slider) || crushed;
-                            slider.blockDestroySmoke(pos);
-                        }
-                    }
-                }
-            }
-            if (crushed) {
-                slider.level.playSound(null, slider.blockPosition(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 3.0F, (0.625F + (slider.getRandom().nextFloat() - slider.getRandom().nextFloat()) * 0.2F) * 0.7F);
-                slider.playSound(slider.getCollideSound(), 2.5F, 1.0F / (slider.getRandom().nextFloat() * 0.2F + 0.9F));
-                slider.getBrain().setMemoryWithExpiry(AetherMemoryModuleTypes.MOVE_DELAY.get(), Unit.INSTANCE, slider.calculateMoveDelay());
-                slider.setDeltaMovement(Vec3.ZERO);
-            }
-        }
-    }
-
-    static class Collide extends Behavior<Slider> {
-        public Collide() {
-            super(ImmutableMap.of());
-        }
-
-        @Override
-        protected boolean checkExtraStartConditions(ServerLevel level, Slider slider) {
-            if (!slider.isAwake() || slider.isDeadOrDying()) {
-                return false;
-            }
-            return !slider.getBrain().hasMemoryValue(AetherMemoryModuleTypes.HAS_ATTACKED.get()) || slider.getDeltaMovement().length() > 0.08;
-        }
-
-        @Override
-        protected boolean canStillUse(ServerLevel level, Slider slider, long gameTime) {
-            return this.checkExtraStartConditions(level, slider);
-        }
-
-        @Override
-        protected void tick(ServerLevel level, Slider slider, long gameTime) {
-            Brain<?> brain = slider.getBrain();
-            AABB collisionBounds = new AABB(slider.getBoundingBox().minX - 0.1, slider.getBoundingBox().minY - 0.1, slider.getBoundingBox().minZ - 0.1,
-                    slider.getBoundingBox().maxX + 0.1, slider.getBoundingBox().maxY + 0.1, slider.getBoundingBox().maxZ + 0.1);
-            for (Entity entity : level.getEntities(slider, collisionBounds)) {
-                if (entity instanceof LivingEntity livingEntity && entity.hurt(new EntityDamageSource("aether.crush", slider), 6)) {
-                    if (livingEntity instanceof Player player && player.getUseItem().is(Items.SHIELD) && player.isBlocking()) {
-                        player.getCooldowns().addCooldown(Items.SHIELD, 100);
-                        player.stopUsingItem();
-                        level.broadcastEntityEvent(player, (byte) 30);
-                    }
-                    entity.setDeltaMovement(entity.getDeltaMovement().multiply(4.0, 1.0, 4.0).add(0.0, 0.25, 0.0));
-
-                    brain.setMemoryWithExpiry(AetherMemoryModuleTypes.HAS_ATTACKED.get(), Unit.INSTANCE, 20);
-                    brain.setMemoryWithExpiry(AetherMemoryModuleTypes.MOVE_DELAY.get(), Unit.INSTANCE, slider.calculateMoveDelay());
-                    brain.eraseMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get());
-
-                    // Stop the slider movement
-                    slider.playSound(slider.getCollideSound(), 2.5F, 1.0F / (slider.getRandom().nextFloat() * 0.2F + 0.9F));
-                    slider.setDeltaMovement(Vec3.ZERO);
-                } else if (!(entity instanceof Player player && player.isCreative()) && !(entity instanceof Slider)) {
-                    entity.setDeltaMovement(slider.getDeltaMovement().multiply(4.0, 1.0, 4.0).add(0.0, 0.25, 0.0));
-                }
-            }
-        }
     }
 }
