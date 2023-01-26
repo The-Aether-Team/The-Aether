@@ -1,4 +1,4 @@
-// 1.19.3	2022-12-12T12:51:18.8533931	Loot Tables
+// 1.19.3	2023-01-25T16:31:22.6613679	Loot Tables
 d025471306910ea35dcf85d28fc188182a1b3c8d data/aether/loot_tables/advancements/enter_aether.json
 96aec873b17d2a5aed2a22fe094efa32b8d54645 data/aether/loot_tables/blocks/aerogel.json
 9e100e6de96b47a3a1b9533e76ad9847d364b9c0 data/aether/loot_tables/blocks/aerogel_slab.json
@@ -108,8 +108,8 @@ cfc73fcb394ffee4a7d2a7f275e1a2111bad1e05 data/aether/loot_tables/blocks/skyroot_
 85cd64805a006540ff2183eb1e5178b3e024be22 data/aether/loot_tables/blocks/skyroot_stairs.json
 71a989e5344b53a5c3e24361e1e657914d688c83 data/aether/loot_tables/blocks/skyroot_trapdoor.json
 c676bceba0fe3663247b0147e93a3a40c84936f2 data/aether/loot_tables/blocks/skyroot_wood.json
-644d70205edb14bb34e98264b04d17c55efc8b29 data/aether/loot_tables/blocks/stripped_skyroot_log.json
-aef28ccaa6b0f973eb16fbd41a29c98db3359637 data/aether/loot_tables/blocks/stripped_skyroot_wood.json
+1227c1918690907d66e6aa33368b50cc5c2b4745 data/aether/loot_tables/blocks/stripped_skyroot_log.json
+b02ecb8ce6bb9dacad9515006a448d17c65bcab2 data/aether/loot_tables/blocks/stripped_skyroot_wood.json
 99ffc1e2ef6f76b385d92eb314d8595f688e9d5d data/aether/loot_tables/blocks/sun_altar.json
 1d4929d7d6176f60e5ea991a577527ed251ef375 data/aether/loot_tables/blocks/trapped_angelic_stone.json
 1d4929d7d6176f60e5ea991a577527ed251ef375 data/aether/loot_tables/blocks/trapped_carved_stone.json
