@@ -85,6 +85,9 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 	void setWingRotation(float wingRotation);
 	float getWingRotation();
 
+	void setWearingInvisibilityCloak(boolean wearing);
+	boolean isWearingInvisibilityCloak();
+
 	int getFlightTimerMax();
 
 	float getFlightModifierMax();

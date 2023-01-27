@@ -93,7 +93,9 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
 
     public void renderFirstPerson(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, AbstractClientPlayer player, HumanoidArm arm) {
         boolean isSlim = player.getModelName().equals("slim");
-        this.setupHand(isSlim ? this.dummyArmSlim : this.dummyArm, poseStack, buffer, combinedLight, player, arm);
+        if (!player.isInvisible()) {
+            this.setupHand(isSlim ? this.dummyArmSlim : this.dummyArm, poseStack, buffer, combinedLight, player, arm);
+        }
         this.setupShield(stack, isSlim ? this.shieldModelArmSlim : this.shieldModelArm, poseStack, buffer, combinedLight, player, arm, isSlim);
     }
 
