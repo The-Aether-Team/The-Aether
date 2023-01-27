@@ -23,6 +23,9 @@ public class AetherStructurePieceTypes {
     public static final RegistryObject<StructurePieceType> LEGACY_CLOUD_BED = register("LegacyCloudBed", SilverDungeonPieces.LegacyCloudBed::new);
     public static final RegistryObject<StructurePieceType> GOLD_BOSS_ROOM = register("GBossRoom", GoldDungeonPieces.BossRoom::new);
     public static final RegistryObject<StructurePieceType> GOLD_ISLAND = register("GIsland", GoldDungeonPieces.Island::new);
+    public static final RegistryObject<StructurePieceType> GOLD_STUB = register("GStub", GoldDungeonPieces.Stub::new);
+    public static final RegistryObject<StructurePieceType> GOLD_TUNNEL = register("GTunnel", GoldDungeonPieces.Tunnel::new);
+    public static final RegistryObject<StructurePieceType> GUMDROP_CAVE = register("GumdropCave", GoldDungeonPieces.GumdropCave::new);
 
     private static RegistryObject<StructurePieceType> register(String name, StructurePieceType structurePieceType) {
         return STRUCTURE_PIECE_TYPES.register(name.toLowerCase(Locale.ROOT), () -> structurePieceType);

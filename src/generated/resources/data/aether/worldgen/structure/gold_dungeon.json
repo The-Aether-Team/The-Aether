@@ -3,37 +3,38 @@
   "biomes": "#aether:has_gold_dungeon",
   "spawn_overrides": {
     "ambient": {
-      "bounding_box": "piece",
+      "bounding_box": "full",
       "spawns": []
     },
     "axolotls": {
-      "bounding_box": "piece",
+      "bounding_box": "full",
       "spawns": []
     },
     "creature": {
-      "bounding_box": "piece",
+      "bounding_box": "full",
       "spawns": []
     },
     "misc": {
-      "bounding_box": "piece",
+      "bounding_box": "full",
       "spawns": []
     },
     "monster": {
-      "bounding_box": "piece",
+      "bounding_box": "full",
       "spawns": []
     },
     "underground_water_creature": {
-      "bounding_box": "piece",
+      "bounding_box": "full",
       "spawns": []
     },
     "water_ambient": {
-      "bounding_box": "piece",
+      "bounding_box": "full",
       "spawns": []
     },
     "water_creature": {
-      "bounding_box": "piece",
+      "bounding_box": "full",
       "spawns": []
     }
   },
-  "step": "surface_structures"
+  "step": "surface_structures",
+  "stubcount": 8
 }
