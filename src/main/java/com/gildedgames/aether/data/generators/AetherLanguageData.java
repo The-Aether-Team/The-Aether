@@ -810,14 +810,14 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.ENCHANTED_DART_SHOOTER, "A Dart Shooter which shoots Enchanted Darts, the strongest one!");
         addLore(AetherBlocks.ENCHANTED_GRAVITITE, "After putting Gravitite Ore into an Altar and enchanting it, you get Enchanted Gravitite. This can be made into Gravitite Tools and Armor. When powered with a Redstone signal, Enchanted Gravitite Blocks will float into the air, similarly to Gravitite Ore.");
         addLore(AetherItems.FLAMING_SWORD, "An ancient sword which flames its foes to a burning crisp. It almost hurts to touch! Using this on animals can make them drop cooked meat!");
-        addLore(AetherBlocks.FREEZER, "You can freeze various items using this, such as Aerclouds, or Water Buckets. It's source of power is Icestone.");
+        addLore(AetherBlocks.FREEZER, "You can freeze various items using this, such as Aerclouds, or Water Buckets. Its source of power is Icestone.");
         addLore(AetherItems.GINGERBREAD_MAN, "Found in presents under Holiday trees, these are the most common of Christmas items. They are very abundant when dropped from presents.");
         addLore(AetherItems.GOLD_DUNGEON_KEY, "A key that has a shiny finish. It is dropped by the Sun Spirit after you defeat him. You can use it to claim the legendary treasure in the back room!");
         addLore(AetherBlocks.GOLDEN_AERCLOUD, "A golden cloud found in small quantities, higher in the air than normal. The properties are similar to Cold Aerclouds, but the Parachutes they produce have much more durability.");
         addLore(AetherItems.GOLDEN_AMBER, "These round golden orbs can be obtained by mining Golden Oak Logs with a Gravitite Axe. Their main purpose is to craft Golden Darts, and Dart Shooters.");
         addLore(AetherItems.GOLDEN_GUMMY_SWET, "A sour tasting gummy, it can be found in random chests in Bronze and Silver dungeons. It restores the player's hunger to full. Very useful for boss fights.");
         addLore(AetherItems.GOLDEN_DART, "The ammo for Golden Dart Shooters. Crafted with Skyroot Sticks and Golden Amber, enchanting these converts them to Enchanted Darts.");
-        addLore(AetherItems.GOLDEN_DART_SHOOTER, "A Dart Shooter which shoots Golden Darts, enchanting it on an Altar improves it's attack power!");
+        addLore(AetherItems.GOLDEN_DART_SHOOTER, "A Dart Shooter which shoots Golden Darts, enchanting it on an Altar improves its attack power!");
         addLore(AetherItems.GOLDEN_FEATHER, "A fluffy feather found in Silver Dungeons. When worn, the wearer becomes lighter than air and can descend slowly.");
         addLore(AetherItems.GOLDEN_GLOVES, "Part of the Golden Armor set, it is needed to complete the Gold Armor set.");
         addLore(AetherBlocks.GOLDEN_OAK_LEAVES, "These golden Leaves generate with Golden Oak trees. They spawn golden particles in a radius of 5 blocks. They yield Golden Oak Saplings when decayed.");
@@ -837,7 +837,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.GRAVITITE_PICKAXE, "Part of Aether's best tool tier, when mining with this powerful tool, you can right-click on any stone block and it will levitate into the air! You can mine any ore with this Pickaxe.");
         addLore(AetherItems.GRAVITITE_SHOVEL, "Part of Aether's best tool tier, this shovel has the special ability to make dirt blocks, or sand levitate! When combined with enchantments such as Efficiency, it will instantly break Aether Dirt!");
         addLore(AetherItems.GRAVITITE_SWORD, "Part of Aether's best tool tier, when attacking with this powerful weapon, anything you hit will be flung into the air, causing lots of damage! Use this to your advantage, as it works even while your sword is cooling down!");
-        addLore(AetherItems.GRAVITITE_HOE, "Part of Aether's best tool tier, this hoe not only can make weirdly specific blocks float, but it can also till dirt which totally justifies it's existence.");
+        addLore(AetherItems.GRAVITITE_HOE, "Part of Aether's best tool tier, this hoe not only can make weirdly specific blocks float, but it can also till dirt which totally justifies its existence.");
         addLore(AetherItems.HEALING_STONE, "Obtained from enchanting Holystone, it can be used as a reliable healing source, providing Regeneration. It has a surprisingly juicy flavor.");
         addLore(AetherBlocks.HELLFIRE_SLAB, "Crafted from Hellfire Stone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building's roofing!");
         addLore(AetherBlocks.HELLFIRE_STONE, "A warm, red stone that makes up 90%% of Gold Dungeon interior. It cannot be destroyed until the Sun Spirit is defeated.");
@@ -875,7 +875,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.LEATHER_GLOVES, "Dyeable gloves to match your leather tunic! This is needed to complete the Leather armor set.");
         addLore(AetherItems.LIFE_SHARD, "A very rare item found in Gold Dungeons. Using this will give you an extra permanent heart! The feeling of using it is very strange, and hard to describe.");
         addLore(AetherBlocks.LIGHT_ANGELIC_STONE, "The Light version of Angelic Stone. It is less common than Angelic Stone, but it looks really nice as a decorative block.");
-        addLore(AetherBlocks.LIGHT_HELLFIRE_STONE, "The Light version of Hellfire Stone. It can be found in Gold Dungeons along with Hellfire stone, but like it's counterpart, it cannot be collected until the boss is defeated.");
+        addLore(AetherBlocks.LIGHT_HELLFIRE_STONE, "The Light version of Hellfire Stone. It can be found in Gold Dungeons along with Hellfire stone, but like its counterpart, it cannot be collected until the boss is defeated.");
         addLore(AetherItems.LIGHTNING_KNIFE, "Small knives that when thrown, summon lightning bolts where they land.");
         addLore(AetherItems.LIGHTNING_SWORD, "An ancient sword which summons lightning to its foes.");
         addLore(AetherBlocks.MOSSY_HOLYSTONE, "A more aged Holystone, it is found near dungeons, and has pale colored vines growing on it, very decorative.");
@@ -988,10 +988,10 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.ZANITE_LEGGINGS, "Part of the Zanite Armor set, the protection it grants increases as the durability decreases.");
         addLore(AetherBlocks.ZANITE_ORE, "A slightly rare ore that drops Zanite Gemstones when broken with Stone tools.");
         addLore(AetherItems.ZANITE_PENDANT, "A pendant which allows you to mine faster. It doesn't last for long, so use it wisely!");
-        addLore(AetherItems.ZANITE_PICKAXE, "One of Aether's mid-tier tools, it mines what Iron can, except as it's durability decreases, it gets faster. Be careful though, as when it's repaired it will be as slow as before!");
+        addLore(AetherItems.ZANITE_PICKAXE, "One of Aether's mid-tier tools, it mines what Iron can, except as its durability decreases, it gets faster. Be careful though, as when it's repaired it will be as slow as before!");
         addLore(AetherItems.ZANITE_RING, "A ring which allows you to mine faster. It doesn't last for long, so use it wisely!");
         addLore(AetherItems.ZANITE_SHOVEL, "One of Aether's mid-tier tools, as you mine dirt and Quicksoil, the durability will decrease, and get faster. If you wait long enough it will start to break blocks instantly! Be careful repairing it, as it will be slower when there is more durability.");
-        addLore(AetherItems.ZANITE_SWORD, "One of Aether's mid-tier tools, the attack damage on this sword starts at wood level, and will get to Diamond level when it's durability is low.");
+        addLore(AetherItems.ZANITE_SWORD, "One of Aether's mid-tier tools, the attack damage on this sword starts at wood level, and will get to Diamond level when its durability is low.");
         addLore(AetherItems.MUSIC_DISC_AETHER_TUNE, "A music disc that plays Aether Tune by Noisestorm.");
         addLore(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "A music disc that plays Ascending Dawn by Emile van Krieken.");
         addLore(AetherItems.MUSIC_DISC_LEGACY, "A music disc that plays Legacy by Jon Lachney.");
