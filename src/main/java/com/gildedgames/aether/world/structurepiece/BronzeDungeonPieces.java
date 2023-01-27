@@ -11,6 +11,7 @@ import com.gildedgames.aether.world.processor.NoReplaceProcessor;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -47,12 +48,24 @@ public class BronzeDungeonPieces {
     public static class BossRoom extends BronzeDungeonPiece implements PieceBeardifierModifier {
 
         public BossRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
-            super(AetherStructurePieceTypes.BRONZE_BOSS_ROOM.get(), 0, manager, name, makeSettings().setRotation(rotation), pos);
+            super(AetherStructurePieceTypes.BRONZE_BOSS_ROOM.get(), 0, manager, name, makeSettingsWithPivot(manager, name, rotation), pos);
             this.setOrientation(this.getRotation().rotate(Direction.SOUTH));
         }
 
         public BossRoom(StructurePieceSerializationContext context, CompoundTag tag) {
             super(AetherStructurePieceTypes.BRONZE_BOSS_ROOM.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
+        }
+
+        private static StructurePlaceSettings makeSettingsWithPivot(StructureTemplateManager templateManager, String name, Rotation rotation) {
+            StructurePlaceSettings settings = makeSettings();
+            StructureTemplate template = templateManager.getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/" + name));
+            Vec3i size = template.getSize();
+            int xOffset = ((size.getX()) >> 1);
+            int zOffset = ((size.getZ()) >> 1);
+            BlockPos pivot = new BlockPos(xOffset, 0, zOffset);
+            settings.setRotationPivot(pivot);
+            settings.setRotation(rotation);
+            return settings;
         }
 
         static StructurePlaceSettings makeSettings() {

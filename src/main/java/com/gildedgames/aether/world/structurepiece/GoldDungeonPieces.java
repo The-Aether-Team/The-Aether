@@ -5,7 +5,6 @@ import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.api.DungeonTracker;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.blockentity.TreasureChestBlockEntity;
-import com.gildedgames.aether.data.resources.registries.AetherConfiguredFeatures;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.monster.dungeon.boss.SunSpirit;
 import com.gildedgames.aether.loot.AetherLoot;
@@ -15,8 +14,6 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -26,13 +23,11 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
@@ -61,14 +56,14 @@ public class GoldDungeonPieces {
     public static class BossRoom extends GoldDungeonPiece {
 
         public BossRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
-            super(AetherStructurePieceTypes.GOLD_BOSS_ROOM.get(), manager, name, makeSettingsWithPivot(manager, name).setRotation(rotation), pos);
+            super(AetherStructurePieceTypes.GOLD_BOSS_ROOM.get(), manager, name, makeSettingsWithPivot(manager, name, rotation), pos);
         }
 
         public BossRoom(StructurePieceSerializationContext context, CompoundTag tag) {
             super(AetherStructurePieceTypes.GOLD_BOSS_ROOM.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
         }
 
-        private static StructurePlaceSettings makeSettingsWithPivot(StructureTemplateManager templateManager, String name) {
+        private static StructurePlaceSettings makeSettingsWithPivot(StructureTemplateManager templateManager, String name, Rotation rotation) {
             StructurePlaceSettings settings = makeSettings();
             StructureTemplate template = templateManager.getOrCreate(new ResourceLocation(Aether.MODID, "gold_dungeon/" + name));
             Vec3i size = template.getSize();
@@ -76,6 +71,7 @@ public class GoldDungeonPieces {
             int zOffset = ((size.getZ()) >> 1);
             BlockPos pivot = new BlockPos(xOffset, 0, zOffset);
             settings.setRotationPivot(pivot);
+            settings.setRotation(rotation);
             return settings;
         }
 

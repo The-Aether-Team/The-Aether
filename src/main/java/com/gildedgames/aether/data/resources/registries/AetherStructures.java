@@ -59,7 +59,7 @@ public class AetherStructures {
                 biomes.getOrThrow(AetherTags.Biomes.HAS_BRONZE_DUNGEON),
                 mobSpawnsPiece,
                 GenerationStep.Decoration.SURFACE_STRUCTURES,
-                TerrainAdjustment.BURY),
+                TerrainAdjustment.NONE),
                 8));
         context.register(SILVER_DUNGEON, new SilverDungeonStructure(AetherStructureBuilders.structure(
                 biomes.getOrThrow(AetherTags.Biomes.HAS_SILVER_DUNGEON),

@@ -197,7 +197,7 @@ public class BronzeDungeonGraph {
 
     public boolean hasConnection(StructurePiece node, Direction direction) {
         Map<Direction, Connection> map = this.edges.get(node);
-        return this.edges.get(node) != null && map.containsKey(direction);
+        return map != null && map.containsKey(direction);
     }
 
     /** An edge going in one direction. When iterating through the graph, you cannot go backward through these. */
