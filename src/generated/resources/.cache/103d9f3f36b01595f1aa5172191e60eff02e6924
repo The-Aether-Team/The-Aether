@@ -1,4 +1,4 @@
-// 1.19.3	2023-01-27T14:44:43.7326352	Registries
+// 1.19.3	2023-01-27T15:16:13.6218745	Registries
 f5deced101d2299e370ac067f29b5b355f28e634 data/aether/dimension/the_aether.json
 5655d4cd818dbc73a0baa2590d80dd274f85927d data/aether/dimension_type/the_aether.json
 526ac95dbbe79f92a53ae0612daf23cd666d2987 data/aether/worldgen/biome/skyroot_forest.json
@@ -27,7 +27,7 @@ ad9a38a87e4927b4b215fd473dbc459ed0a462bf data/aether/worldgen/configured_feature
 e3a804c5d61371bc4fdfe9132d82488a30f465e8 data/aether/worldgen/configured_feature/water_lake.json
 07742c52dac96e2e6dff9d8a1385bd2e81dcc4d5 data/aether/worldgen/configured_feature/water_spring.json
 e1e3d136f90240ebee24a9b93dc7a4225f5e35b3 data/aether/worldgen/configured_feature/white_flower_patch.json
-f187d402f3fd6feadad6e8a23752a337a78ae4d4 data/aether/worldgen/configured_feature/zanite_ore.json
+7cc464d75e21863cbb488992c0e6ef3a9005c23e data/aether/worldgen/configured_feature/zanite_ore.json
 0ce8695bc0d2b77adefe68a7be5a41314e50fce2 data/aether/worldgen/density_function/base_3d_noise_aether.json
 b994dbe2cb5a71e4a96d87e31aa723d37cd426cf data/aether/worldgen/noise/temperature.json
 0547b8f546b081ef94acc9834c288c90a2ae5ee3 data/aether/worldgen/noise/vegetation.json
