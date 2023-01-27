@@ -1,6 +1,7 @@
 package com.gildedgames.aether.client.event.listeners.abilities;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.capability.player.AetherPlayer;
 import com.gildedgames.aether.util.EquipmentUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -19,8 +20,12 @@ public class AccessoryAbilityClientListener {
     @SubscribeEvent
     public static void onRenderPlayer(RenderPlayerEvent.Pre event) {
         Player player = event.getEntity();
-        if (!event.isCanceled() && EquipmentUtil.hasInvisibilityCloak(player)) {
-            event.setCanceled(true);
+        if (!event.isCanceled()) {
+            AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
+                if (aetherPlayer.isWearingInvisibilityCloak()) {
+                    event.setCanceled(true);
+                }
+            });
         }
     }
 
@@ -30,8 +35,12 @@ public class AccessoryAbilityClientListener {
     @SubscribeEvent
     public static void onRenderHand(RenderHandEvent event) {
         LocalPlayer player = Minecraft.getInstance().player;
-        if (!event.isCanceled() && player != null && EquipmentUtil.hasInvisibilityCloak(player)) {
-            event.setCanceled(true);
+        if (!event.isCanceled() && player != null) {
+            AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
+                if (aetherPlayer.isWearingInvisibilityCloak()) {
+                    event.setCanceled(true);
+                }
+            });
         }
     }
 }

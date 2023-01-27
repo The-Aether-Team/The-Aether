@@ -1,8 +1,10 @@
 package com.gildedgames.aether.item.accessories.cape;
 
+import com.gildedgames.aether.capability.player.AetherPlayer;
 import com.gildedgames.aether.item.accessories.AccessoryItem;
 import com.gildedgames.aether.mixin.mixins.common.accessor.LivingEntityAccessor;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 import net.minecraftforge.client.event.RenderHandEvent;
@@ -23,6 +25,13 @@ public class InvisibilityCloakItem extends AccessoryItem {
     @Override
     public void curioTick(SlotContext slotContext, ItemStack stack) {
         LivingEntity livingEntity = slotContext.entity();
+        if (livingEntity instanceof Player player) {
+            AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
+                if (!aetherPlayer.isWearingInvisibilityCloak()) {
+                    aetherPlayer.setWearingInvisibilityCloak(true);
+                }
+            });
+        }
         if (!livingEntity.isInvisible()) {
             livingEntity.setInvisible(true);
         }
@@ -31,6 +40,9 @@ public class InvisibilityCloakItem extends AccessoryItem {
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
         LivingEntity livingEntity = slotContext.entity();
+        if (livingEntity instanceof Player player) {
+            AetherPlayer.get(player).ifPresent((aetherPlayer) -> aetherPlayer.setWearingInvisibilityCloak(false));
+        }
         livingEntity.setInvisible(false);
         ((LivingEntityAccessor) livingEntity).callUpdateEffectVisibility();
     }

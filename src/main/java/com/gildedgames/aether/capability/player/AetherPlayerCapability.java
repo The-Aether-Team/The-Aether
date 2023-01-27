@@ -76,6 +76,8 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	private float wingRotation;
 
+	private boolean wearingInvisibilityCloak;
+
 	private static final int FLIGHT_TIMER_MAX = 52;
 	private static final float FLIGHT_MODIFIER_MAX = 15.0F;
 	private int flightTimer;
@@ -154,6 +156,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		tag.putInt("ProjectileImpactedTimer_Syncing", this.getProjectileImpactedTimer());
 		tag.putInt("FlightTimer_Syncing", this.getFlightTimer());
 		tag.putFloat("FlightModifier_Syncing", this.getFlightModifier());
+		tag.putBoolean("WearingInvisibilityCloak_Syncing", this.isWearingInvisibilityCloak());
 		tag.putInt("LifeShardCount_Syncing", this.getLifeShardCount());
 		return tag;
 	}
@@ -192,6 +195,9 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		}
 		if (tag.contains("LifeShardCount_Syncing")) {
 			this.setLifeShardCount(tag.getInt("LifeShardCount_Syncing"));
+		}
+		if (tag.contains("WearingInvisibilityCloak_Syncing")) {
+			this.setWearingInvisibilityCloak(tag.getBoolean("WearingInvisibilityCloak_Syncing"));
 		}
 	}
 
@@ -679,6 +685,16 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	@Override
 	public float getWingRotation() {
 		return this.wingRotation;
+	}
+
+	@Override
+	public void setWearingInvisibilityCloak(boolean wearing) {
+		this.wearingInvisibilityCloak = wearing;
+	}
+
+	@Override
+	public boolean isWearingInvisibilityCloak() {
+		return this.wearingInvisibilityCloak;
 	}
 
 	@Override
