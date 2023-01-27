@@ -1,6 +1,7 @@
 package com.gildedgames.aether.block.portal;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.mixin.mixins.common.accessor.EntityAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
@@ -229,7 +230,11 @@ public class AetherPortalForcer implements ITeleporter {
         for (int i = -1; i < 3; ++i) {
             for (int j = -1; j < 4; ++j) {
                 offsetPos.setWithOffset(originalPos, direction.getStepX() * i + clockWiseDirection.getStepX() * offsetScale, j, direction.getStepZ() * i + clockWiseDirection.getStepZ() * offsetScale);
-                if (j < 0 && !this.level.getBlockState(offsetPos).getMaterial().isSolid()) {
+                BlockState blockState = this.level.getBlockState(offsetPos);
+                if (j < 0 && (!blockState.getMaterial().isSolid()
+                        || blockState.is(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)
+                        || blockState.is(AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS)
+                        || blockState.is(AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS))) {
                     return false;
                 }
                 if (j >= 0 && !this.level.isEmptyBlock(offsetPos)) {
