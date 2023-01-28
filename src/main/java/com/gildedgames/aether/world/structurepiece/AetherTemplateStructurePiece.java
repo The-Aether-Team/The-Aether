@@ -28,7 +28,7 @@ public abstract class AetherTemplateStructurePiece extends TemplateStructurePiec
     }
 
     public AetherTemplateStructurePiece(StructurePieceType type, CompoundTag tag, StructureTemplateManager manager, Function<ResourceLocation, StructurePlaceSettings> settingsFactory) {
-        super(type, tag, manager, settingsFactory.andThen(settings -> settings.setRotation(Rotation.valueOf(tag.getString("Rotation")))));
+        super(type, tag, manager, settingsFactory.andThen(settings -> readAdditionalSaveData(tag, settings)));
         this.setOrientation(this.getRotation().rotate(Direction.SOUTH));
     }
 
@@ -36,6 +36,17 @@ public abstract class AetherTemplateStructurePiece extends TemplateStructurePiec
     protected void addAdditionalSaveData(StructurePieceSerializationContext context, CompoundTag tag) {
         super.addAdditionalSaveData(context, tag);
         tag.putString("Rotation", this.placeSettings.getRotation().name());
+        if (this.placeSettings.getRotationPivot() != BlockPos.ZERO) {
+            tag.putLong("RotationPivot", this.placeSettings.getRotationPivot().asLong());
+        }
+    }
+
+    private static StructurePlaceSettings readAdditionalSaveData(CompoundTag tag, StructurePlaceSettings settings) {
+        settings.setRotation(Rotation.valueOf(tag.getString("Rotation")));
+        if (tag.contains("RotationPivot")) {
+            settings.setRotationPivot(BlockPos.of(tag.getLong("RotationPivot")));
+        }
+        return settings;
     }
 
     public static StructurePlaceSettings makeSettingsWithPivot(StructurePlaceSettings settings, StructureTemplateManager templateManager, ResourceLocation name, Rotation rotation) {
