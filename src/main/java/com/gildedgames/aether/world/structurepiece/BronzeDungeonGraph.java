@@ -24,7 +24,6 @@ import java.util.*;
  * https://en.wikipedia.org/wiki/Directed_graph
  */
 public class BronzeDungeonGraph {
-    public final StructurePiecesBuilder builder;
     public final Structure.GenerationContext context;
     public final StructureTemplateManager manager;
     public final RandomSource random;
@@ -38,8 +37,7 @@ public class BronzeDungeonGraph {
     public final Map<StructurePiece, Map<Direction, Connection>> edges = new HashMap<>();
 
 
-    public BronzeDungeonGraph(StructurePiecesBuilder builder, Structure.GenerationContext context, int maxSize) {
-        this.builder = builder;
+    public BronzeDungeonGraph(Structure.GenerationContext context, int maxSize) {
         this.context = context;
         this.manager = context.structureTemplateManager();
         this.random = context.random();
@@ -70,6 +68,7 @@ public class BronzeDungeonGraph {
         for (int i = 2; i < this.maxSize - 1; ++i) {
             propagateRooms(chestRoom, false);
         }
+
         propagateRooms(chestRoom, true);
         StructurePiece lobby = this.nodes.get(this.nodes.size() - 1);
         this.buildEndTunnel(lobby, startPos);
@@ -181,23 +180,27 @@ public class BronzeDungeonGraph {
     }
 
     /** Adds all the pieces to the StructurePieceAccessor so that it can generate in the world. */
-    public void populatePiecesBuilder() {
+    public void populatePiecesBuilder(StructurePiecesBuilder builder) {
         StructurePiece bossRoom = this.nodes.remove(0);
-        this.nodes.forEach(this.builder::addPiece);
-        this.edges.values().forEach(map -> map.values().forEach(connection -> this.builder.addPiece(connection.hallway)));
+        this.nodes.forEach(builder::addPiece);
+        this.edges.values().forEach(map -> map.values().forEach(connection -> builder.addPiece(connection.hallway)));
         // Add the tunnel at the end to make sure the tunnel doesn't dig into the boss room, since we have special doorway blocks.
-        this.builder.addPiece(bossRoom);
+        builder.addPiece(bossRoom);
     }
 
-    /** Returns true if the block at the specified position is air. */
-    public boolean checkForAirAtPos(int x, int y, int z) {
+    /** Returns true if there is a hallway going in the given direction from the room. */
+    public boolean hasConnection(StructurePiece node, Direction direction) {
+        Map<Direction, Connection> map = this.edges.get(node);
+        return map != null && map.containsKey(direction);
+    }
+
+    private boolean checkForAirAtPos(int x, int y, int z) {
         NoiseColumn column = this.context.chunkGenerator().getBaseColumn(x, z, this.context.heightAccessor(), this.context.randomState());
         return column.getBlock(y).isAir();
     }
 
-    public boolean hasConnection(StructurePiece node, Direction direction) {
-        Map<Direction, Connection> map = this.edges.get(node);
-        return map != null && map.containsKey(direction);
+    private boolean isCoveredAtPos(StructurePiece room, Direction direction) {
+        return false;
     }
 
     /** An edge going in one direction. When iterating through the graph, you cannot go backward through these. */

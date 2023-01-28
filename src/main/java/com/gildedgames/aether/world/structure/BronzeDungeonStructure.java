@@ -41,7 +41,7 @@ public class BronzeDungeonStructure extends Structure {
         ChunkGenerator chunkGenerator = context.chunkGenerator();
         LevelHeightAccessor heightAccessor = context.heightAccessor();
         int height = findStartingHeight(chunkGenerator, heightAccessor, chunkPos, context.randomState(), context.structureTemplateManager());
-        if (height < heightAccessor.getMinBuildHeight() + 30) {
+        if (height <= heightAccessor.getMinBuildHeight()) {
             return Optional.empty();
         }
         BlockPos blockPos = new BlockPos(context.chunkPos().getMinBlockX(), height, context.chunkPos().getMinBlockZ());
@@ -49,9 +49,9 @@ public class BronzeDungeonStructure extends Structure {
     }
 
     private void generatePieces(StructurePiecesBuilder builder, Structure.GenerationContext context, BlockPos startPos) {
-        BronzeDungeonGraph graph = new BronzeDungeonGraph(builder, context, this.maxRooms);
+        BronzeDungeonGraph graph = new BronzeDungeonGraph(context, this.maxRooms);
         graph.initializeDungeon(startPos);
-        graph.populatePiecesBuilder();
+        graph.populatePiecesBuilder(builder);
     }
 
     /**

@@ -48,7 +48,7 @@ public class BronzeDungeonPieces {
     public static class BossRoom extends BronzeDungeonPiece implements PieceBeardifierModifier {
 
         public BossRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
-            super(AetherStructurePieceTypes.BRONZE_BOSS_ROOM.get(), 0, manager, name, makeSettingsWithPivot(manager, name, rotation), pos);
+            super(AetherStructurePieceTypes.BRONZE_BOSS_ROOM.get(), 0, manager, name, makeSettings().setRotation(rotation), pos);
             this.setOrientation(this.getRotation().rotate(Direction.SOUTH));
         }
 
@@ -115,7 +115,7 @@ public class BronzeDungeonPieces {
 
         @Override
         public int getGroundLevelDelta() {
-            return 8;
+            return 0;
         }
     }
 
@@ -160,7 +160,7 @@ public class BronzeDungeonPieces {
 
         @Override
         public int getGroundLevelDelta() {
-            return 8;
+            return 0;
         }
     }
 
