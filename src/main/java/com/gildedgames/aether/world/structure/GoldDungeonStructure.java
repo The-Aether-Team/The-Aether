@@ -4,7 +4,7 @@ import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.data.resources.registries.AetherConfiguredFeatures;
 import com.gildedgames.aether.util.BlockLogicUtil;
-import com.gildedgames.aether.world.structurepiece.GoldDungeonPieces;
+import com.gildedgames.aether.world.structurepiece.golddungeon.*;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
@@ -59,7 +59,7 @@ public class GoldDungeonStructure extends Structure {
         BlockPos elevatedPos = context.chunkPos().getBlockAt(2, 80, 2);
         StructureTemplateManager templateManager = context.structureTemplateManager();
 
-        GoldDungeonPieces.Island island = new GoldDungeonPieces.Island(
+        GoldIsland island = new GoldIsland(
                 templateManager,
                 "island",
                 elevatedPos
@@ -73,7 +73,7 @@ public class GoldDungeonStructure extends Structure {
 
         Rotation rotation = Rotation.getRandom(random);
         BlockPos bossPos = centerPos.offset(this.getBossRoomOffset(templateManager, rotation.rotate(Direction.SOUTH)));
-        GoldDungeonPieces.BossRoom bossRoom = new GoldDungeonPieces.BossRoom(
+        GoldBossRoom bossRoom = new GoldBossRoom(
                 templateManager,
                 "boss_room",
                 bossPos,
@@ -100,7 +100,7 @@ public class GoldDungeonStructure extends Structure {
 
             BlockPos stubPos = center.offset(xOffset, yOffset, zOffset);
             stubPos = stubPos.offset(stubOffset);
-            GoldDungeonPieces.Stub stub = new GoldDungeonPieces.Stub(
+            GoldStub stub = new GoldStub(
                     templateManager,
                     "stub",
                     stubPos
@@ -118,7 +118,7 @@ public class GoldDungeonStructure extends Structure {
             int x = centerPos.getX() + random.nextInt(24) - random.nextInt(24);
             int y = centerPos.getY() + random.nextInt(24) - random.nextInt(24);
             int z = centerPos.getZ() + random.nextInt(24) - random.nextInt(24);
-            builder.addPiece(new GoldDungeonPieces.GumdropCave(new BoundingBox(new BlockPos(x, y, z))));
+            builder.addPiece(new GumdropCave(new BoundingBox(new BlockPos(x, y, z))));
         }
     }
 
@@ -133,7 +133,7 @@ public class GoldDungeonStructure extends Structure {
 
         BlockPos startPos = BlockLogicUtil.tunnelFromOddSquareRoom(room.getBoundingBox(), direction, width);
         startPos = startPos.offset(direction.getStepX() * 3, 1, direction.getStepZ() * 3);
-        GoldDungeonPieces.Tunnel tunnel = new GoldDungeonPieces.Tunnel(templateManager, "tunnel", startPos, rotation);
+        GoldTunnel tunnel = new GoldTunnel(templateManager, "tunnel", startPos, rotation);
         builder.addPiece(tunnel);
     }
 
@@ -156,9 +156,9 @@ public class GoldDungeonStructure extends Structure {
     @Override
     public void afterPlace(WorldGenLevel level, StructureManager structureManager, ChunkGenerator generator, RandomSource random, BoundingBox chunkBox, ChunkPos chunkPos, PiecesContainer pieces) {
         for (StructurePiece piece : pieces.pieces()) {
-            if (piece instanceof GoldDungeonPieces.Island island) {
+            if (piece instanceof GoldIsland island) {
                 placeGoldenOaks(level, generator, random, island.getBoundingBox(), chunkBox, 48, 2, 1);
-            } else if (piece instanceof GoldDungeonPieces.Stub stub) {
+            } else if (piece instanceof GoldStub stub) {
                 placeGoldenOaks(level, generator, random, stub.getBoundingBox(), chunkBox, 64, 1, 0);
             }
         }

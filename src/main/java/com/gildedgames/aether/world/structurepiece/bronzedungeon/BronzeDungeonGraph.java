@@ -1,4 +1,4 @@
-package com.gildedgames.aether.world.structurepiece;
+package com.gildedgames.aether.world.structurepiece.bronzedungeon;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.util.BlockLogicUtil;
@@ -53,13 +53,13 @@ public class BronzeDungeonGraph {
     }
 
     public void initializeDungeon(BlockPos startPos) {
-        BronzeDungeonPieces.BossRoom bossRoom = new BronzeDungeonPieces.BossRoom(this.manager, "boss_room", startPos, Rotation.getRandom(this.random));
+        BronzeBossRoom bossRoom = new BronzeBossRoom(this.manager, "boss_room", startPos, Rotation.getRandom(this.random));
         Direction direction = bossRoom.getOrientation();
 
         BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(bossRoom.getBoundingBox().moved(0, 2, 0), direction, this.edgeWidth);
-        BronzeDungeonPieces.DungeonRoom hallway = new BronzeDungeonPieces.DungeonRoom(this.manager, "square_tunnel", pos, bossRoom.getRotation());
+        BronzeDungeonRoom hallway = new BronzeDungeonRoom(this.manager, "square_tunnel", pos, bossRoom.getRotation());
         pos = BlockLogicUtil.tunnelFromEvenSquareRoom(hallway.getBoundingBox(), direction, this.nodeWidth);
-        BronzeDungeonPieces.DungeonRoom chestRoom = new BronzeDungeonPieces.DungeonRoom(manager, "chest_room", pos, hallway.getRotation());
+        BronzeDungeonRoom chestRoom = new BronzeDungeonRoom(manager, "chest_room", pos, hallway.getRotation());
 
         this.nodes.add(bossRoom);
         this.nodes.add(chestRoom);
@@ -77,7 +77,7 @@ public class BronzeDungeonGraph {
     /**
      * Recursively move through the graph of rooms to add new pieces. Returns true if successful in placing a new piece.
      */
-    public boolean propagateRooms(StructurePiece startNode, boolean placeLobby) {
+    private boolean propagateRooms(StructurePiece startNode, boolean placeLobby) {
         Rotation rotation = startNode.getRotation();
         List<Rotation> rotations = new ArrayList<>(3);
         rotations.add(rotation.getRotated(Rotation.COUNTERCLOCKWISE_90));
@@ -95,9 +95,9 @@ public class BronzeDungeonGraph {
                 }
             } else {
                 BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(startNode.getBoundingBox(), direction, this.edgeWidth);
-                BronzeDungeonPieces.DungeonRoom hallway = new BronzeDungeonPieces.DungeonRoom(this.manager, "square_tunnel", pos, rotation);
+                BronzeDungeonRoom hallway = new BronzeDungeonRoom(this.manager, "square_tunnel", pos, rotation);
                 pos = BlockLogicUtil.tunnelFromEvenSquareRoom(hallway.getBoundingBox(), direction, this.nodeWidth);
-                BronzeDungeonPieces.DungeonRoom room = new BronzeDungeonPieces.DungeonRoom(this.manager, roomName, pos, rotation);
+                BronzeDungeonRoom room = new BronzeDungeonRoom(this.manager, roomName, pos, rotation);
                 StructurePiece collisionPiece = StructurePiece.findCollisionPiece(this.nodes, room.getBoundingBox());
 
                 if (collisionPiece == null) {
@@ -116,7 +116,7 @@ public class BronzeDungeonGraph {
         return false;
     }
 
-    public void buildEndTunnel(StructurePiece lobby, BlockPos origin) {
+    private void buildEndTunnel(StructurePiece lobby, BlockPos origin) {
         Rotation rotation = lobby.getRotation();
         List<Rotation> rotations = new ArrayList<>(3);
         rotations.add(rotation.getRotated(Rotation.COUNTERCLOCKWISE_90));
@@ -149,7 +149,7 @@ public class BronzeDungeonGraph {
         int i = 0;
         do {
             pos = startPos.offset(direction.getStepX() * i, 0, direction.getStepZ() * i);
-            BronzeDungeonPieces.HolystoneTunnel tunnel = new BronzeDungeonPieces.HolystoneTunnel(this.manager, "end_corridor", pos, rotation);
+            BronzeTunnel tunnel = new BronzeTunnel(this.manager, "end_corridor", pos, rotation);
 
             //Skip the connected piece, since the tunnel will be digging into it.
             StructurePiece col = null;
@@ -189,7 +189,7 @@ public class BronzeDungeonGraph {
     }
 
     /** Returns true if there is a hallway going in the given direction from the room. */
-    public boolean hasConnection(StructurePiece node, Direction direction) {
+    private boolean hasConnection(StructurePiece node, Direction direction) {
         Map<Direction, Connection> map = this.edges.get(node);
         return map != null && map.containsKey(direction);
     }

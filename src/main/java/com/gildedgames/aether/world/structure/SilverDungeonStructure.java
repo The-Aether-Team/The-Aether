@@ -1,7 +1,7 @@
 package com.gildedgames.aether.world.structure;
 
 import com.gildedgames.aether.entity.monster.dungeon.boss.ValkyrieQueen;
-import com.gildedgames.aether.world.structurepiece.SilverDungeonPieces;
+import com.gildedgames.aether.world.structurepiece.silverdungeon.*;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,7 +17,7 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
+import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 import net.minecraft.world.phys.AABB;
 
 import java.util.*;
@@ -43,7 +43,7 @@ public class SilverDungeonStructure extends Structure {
 
         this.buildCloudBed(builder, randomSource, elevatedPos, direction);
 
-        SilverDungeonPieces.TemplePiece rear = new SilverDungeonPieces.TemplePiece(
+        SilverTemplePiece rear = new SilverTemplePiece(
                 manager,
                 "rear",
                 elevatedPos,
@@ -53,7 +53,7 @@ public class SilverDungeonStructure extends Structure {
 
         BlockPos bossRoomPos = elevatedPos.offset((direction.getStepX() + direction.getStepZ()) * 5, 3, (direction.getStepZ() - direction.getStepX()) * 5);
 
-        SilverDungeonPieces.BossRoom bossRoom = new SilverDungeonPieces.BossRoom(
+        SilverBossRoom bossRoom = new SilverBossRoom(
                 manager,
                 "boss_room",
                 bossRoomPos,
@@ -61,7 +61,7 @@ public class SilverDungeonStructure extends Structure {
         );
         builder.addPiece(bossRoom);
 
-        SilverDungeonPieces.BossDetail bossDetail = new SilverDungeonPieces.BossDetail(
+        SilverBossDetail bossDetail = new SilverBossDetail(
                 manager, "boss_detail",
                 bossRoomPos.offset(direction.getStepX() + direction.getStepZ(), 2, direction.getStepZ() - direction.getStepX()),
                 rotation
@@ -73,7 +73,7 @@ public class SilverDungeonStructure extends Structure {
 
         BlockPos offsetPos = elevatedPos.offset(xOffset, 0, zOffset);
 
-        SilverDungeonPieces.TemplePiece exterior = new SilverDungeonPieces.TemplePiece(
+        SilverTemplePiece exterior = new SilverTemplePiece(
                 manager,
                 "skeleton",
                 offsetPos,
@@ -81,7 +81,7 @@ public class SilverDungeonStructure extends Structure {
         );
         builder.addPiece(exterior);
 
-        SilverDungeonPieces.SilverDungeonGrid grid = new SilverDungeonPieces.SilverDungeonGrid(randomSource, 3, 3, 3);
+        SilverDungeonGrid grid = new SilverDungeonGrid(randomSource, 3, 3, 3);
         grid.assembleDungeon(builder, manager, offsetPos, rotation, direction);
 
         BoundingBox box = builder.getBoundingBox();
@@ -161,7 +161,7 @@ public class SilverDungeonStructure extends Structure {
 
         chunks.forEach(((chunkPos, blockPosSet) -> {
             blockPosSet.addAll(positions.stream().filter(pos -> (new ChunkPos(pos).equals(chunkPos))).toList());
-            builder.addPiece(new SilverDungeonPieces.LegacyCloudBed(blockPosSet,
+            builder.addPiece(new LegacyCloudBed(blockPosSet,
                     new BoundingBox(chunkPos.getMinBlockX(), origin.getY(), chunkPos.getMinBlockZ(), chunkPos.getMaxBlockX(), origin.getY(), chunkPos.getMaxBlockZ()),
                     direction));
         }));
