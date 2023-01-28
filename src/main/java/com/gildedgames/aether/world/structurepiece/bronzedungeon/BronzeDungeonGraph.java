@@ -7,8 +7,12 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.RandomState;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
@@ -24,14 +28,13 @@ import java.util.*;
  * https://en.wikipedia.org/wiki/Directed_graph
  */
 public class BronzeDungeonGraph {
-    public final Structure.GenerationContext context;
-    public final StructureTemplateManager manager;
-    public final RandomSource random;
+    private final Structure.GenerationContext context;
+    private final StructureTemplateManager manager;
+    private final RandomSource random;
 
-    public final int nodeWidth;
-    public final int edgeWidth;
-    public final int edgeLength;
-    public final int maxSize;
+    private final int nodeWidth;
+    private final int edgeWidth;
+    private final int maxSize;
 
     public final List<StructurePiece> nodes = new ArrayList<>();
     public final Map<StructurePiece, Map<Direction, Connection>> edges = new HashMap<>();
@@ -47,7 +50,6 @@ public class BronzeDungeonGraph {
 
         Vec3i edgeSize = context.structureTemplateManager().getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/square_tunnel")).getSize();
         this.edgeWidth = edgeSize.getX();
-        this.edgeLength = edgeSize.getZ();
 
         this.maxSize = Math.max(3, maxSize);
     }
@@ -100,15 +102,17 @@ public class BronzeDungeonGraph {
                 BronzeDungeonRoom room = new BronzeDungeonRoom(this.manager, roomName, pos, rotation);
                 StructurePiece collisionPiece = StructurePiece.findCollisionPiece(this.nodes, room.getBoundingBox());
 
-                if (collisionPiece == null) {
-                    new Connection(startNode, room, hallway, direction);
-                    this.nodes.add(room);
-                    return true;
-                } else { // If there's a piece in the way, see if there's a connection already. If not, make one. Then continue the loop.
-                    boolean flag = this.edges.computeIfAbsent(collisionPiece, piece -> new HashMap<>()).values().stream()
-                            .map(Connection::endPiece).anyMatch(piece -> piece == startNode);
-                    if (!flag) {
+                if (this.isCoveredAtPos(room.getBoundingBox())) {
+                    if (collisionPiece == null) {
                         new Connection(startNode, room, hallway, direction);
+                        this.nodes.add(room);
+                        return true;
+                    } else { // If there's a piece in the way, see if there's a connection already. If not, make one. Then continue the loop.
+                        boolean flag = this.edges.computeIfAbsent(collisionPiece, piece -> new HashMap<>()).values().stream()
+                                .map(Connection::endPiece).anyMatch(piece -> piece == startNode);
+                        if (!flag) {
+                            new Connection(startNode, room, hallway, direction);
+                        }
                     }
                 }
             }
@@ -199,8 +203,34 @@ public class BronzeDungeonGraph {
         return column.getBlock(y).isAir();
     }
 
-    private boolean isCoveredAtPos(StructurePiece room, Direction direction) {
-        return false;
+    private boolean isCoveredAtPos(BoundingBox room) {
+        ChunkGenerator chunkGenerator = this.context.chunkGenerator();
+        LevelHeightAccessor heightAccessor = this.context.heightAccessor();
+        RandomState randomState = this.context.randomState();
+        int minX = room.minX() - 1;
+        int maxX = room.maxX() + 1;
+        int minZ = room.minZ() - 1;
+        int maxZ = room.maxZ() + 1;
+
+        NoiseColumn[] columns = {
+                chunkGenerator.getBaseColumn(minX, minZ, heightAccessor, randomState),
+                chunkGenerator.getBaseColumn(minX, maxZ, heightAccessor, randomState),
+                chunkGenerator.getBaseColumn(maxX, minZ, heightAccessor, randomState),
+                chunkGenerator.getBaseColumn(maxX, maxZ, heightAccessor, randomState)
+        };
+
+        int maxY = room.maxY() + 1;
+        int minY = room.minY() - 1;
+
+        for (NoiseColumn column : columns) {
+            for (int y = room.minY() - 1; y <= maxY; ++y) {
+                if (column.getBlock(y).isAir()) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     /** An edge going in one direction. When iterating through the graph, you cannot go backward through these. */

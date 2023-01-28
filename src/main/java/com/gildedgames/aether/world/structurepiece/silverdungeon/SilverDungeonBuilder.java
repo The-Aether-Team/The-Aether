@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * This class is for randomly assembling the silver dungeon.
  */
-public class SilverDungeonGrid {
+public class SilverDungeonBuilder {
     public static final int CHEST_ROOM = 0b1;
     public static final int STAIRS = 0b10;
     public static final int FINAL_STAIRS = 0b100;
@@ -31,7 +31,7 @@ public class SilverDungeonGrid {
     private final int height;
     private final int length;
 
-    public SilverDungeonGrid(RandomSource random, int x, int y, int z) {
+    public SilverDungeonBuilder(RandomSource random, int x, int y, int z) {
         this.random = random;
         this.grid = new int[x][y][z];
         this.width = x;
@@ -44,7 +44,7 @@ public class SilverDungeonGrid {
     /**
      * Set up all rooms in the dungeon
      */
-    public void populateGrid() {
+    private void populateGrid() {
         // Place the stairs
         int finalStairsX = this.random.nextInt(this.width);
 

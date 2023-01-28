@@ -43,7 +43,7 @@ public class BronzeDungeonStructure extends Structure {
             return Optional.empty();
         }
         BlockPos blockPos = new BlockPos(context.chunkPos().getMinBlockX(), height, context.chunkPos().getMinBlockZ());
-        return Optional.of(new GenerationStub(blockPos, (builder -> this.generatePieces(builder, context, blockPos))));
+        return Optional.of(new GenerationStub(blockPos, builder -> this.generatePieces(builder, context, blockPos)));
     }
 
     private void generatePieces(StructurePiecesBuilder builder, Structure.GenerationContext context, BlockPos startPos) {
@@ -52,9 +52,7 @@ public class BronzeDungeonStructure extends Structure {
         graph.populatePiecesBuilder(builder);
     }
 
-    /**
-     * Check the density at all four corners of the chunk.
-     */
+    /** Try to find a place where the land is taller than the boss room. */
     private static int findStartingHeight(ChunkGenerator chunkGenerator, LevelHeightAccessor heightAccessor, ChunkPos chunkPos, RandomState random, StructureTemplateManager manager) {
         int minX = chunkPos.getMinBlockX();
         int minZ = chunkPos.getMinBlockZ();
@@ -85,7 +83,6 @@ public class BronzeDungeonStructure extends Structure {
                 }
                 currentThickness = 0;
             }
-
         }
 
         height -= thickness * 0.8;

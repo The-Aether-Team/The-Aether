@@ -81,7 +81,7 @@ public class SilverDungeonStructure extends Structure {
         );
         builder.addPiece(exterior);
 
-        SilverDungeonGrid grid = new SilverDungeonGrid(randomSource, 3, 3, 3);
+        SilverDungeonBuilder grid = new SilverDungeonBuilder(randomSource, 3, 3, 3);
         grid.assembleDungeon(builder, manager, offsetPos, rotation, direction);
 
         BoundingBox box = builder.getBoundingBox();
