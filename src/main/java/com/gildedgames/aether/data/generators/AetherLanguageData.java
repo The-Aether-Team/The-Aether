@@ -1062,7 +1062,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addCommonConfig("gameplay", "enable_bed_explosions", "Vanilla's beds will explode in the Aether");
         addCommonConfig("gameplay", "start_with_portal", "On world creation, the player is given an Aether Portal Frame item to automatically go to the Aether with");
         addCommonConfig("gameplay", "enable_startup_loot", "When the player enters the Aether, they are given a Book of Lore and Golden Parachutes as starting loot");
-        addCommonConfig("gameplay", "tools_debuff", "Tools that aren't from the Aether will mine all blocks slower than ones that are from the Aether");
+        addCommonConfig("gameplay", "tools_debuff", "Tools that aren't from the Aether will mine Aether blocks slower than tools that are from the Aether");
         addCommonConfig("gameplay", "edible_ambrosium", "Ambrosium Shards can be eaten to restore a half heart of health");
         addCommonConfig("gameplay", "healing_gummy_swets", "Gummy Swets when eaten restore full health instead of full hunger");
         addCommonConfig("gameplay", "temporary_ice_accessory_conversion", "Ice Accessories will create temporary blocks instead of permanent blocks from conversions");
