@@ -37,7 +37,7 @@
     },
     "trunk_placer": {
       "type": "aether:golden_oak_trunk_placer",
-      "base_height": 5,
+      "base_height": 6,
       "height_rand_a": 4,
       "height_rand_b": 0
     },
