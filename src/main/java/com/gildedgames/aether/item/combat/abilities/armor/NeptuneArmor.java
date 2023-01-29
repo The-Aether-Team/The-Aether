@@ -19,7 +19,7 @@ public interface NeptuneArmor {
                 float defaultBoost = 1.55F;
                 float depthStriderModifier = Math.min(EnchantmentHelper.getDepthStrider(entity), 3.0F);
                 if (depthStriderModifier > 0.0F) {
-                    defaultBoost += depthStriderModifier * 0.15F;
+                    defaultBoost += depthStriderModifier * 0.1125F;
                 }
                 Vec3 movement = entity.getDeltaMovement().multiply(defaultBoost, 1.0F, defaultBoost);
                 entity.move(MoverType.SELF, movement);
