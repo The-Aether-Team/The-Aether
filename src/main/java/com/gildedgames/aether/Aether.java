@@ -41,6 +41,7 @@ import com.gildedgames.aether.world.processor.AetherStructureProcessors;
 import com.gildedgames.aether.world.structure.AetherStructureTypes;
 import com.gildedgames.aether.world.structurepiece.AetherStructurePieceTypes;
 import com.gildedgames.aether.world.treedecorator.AetherTreeDecoratorTypes;
+import com.gildedgames.aether.world.trunkplacer.AetherTrunkPlacerTypes;
 import com.google.common.reflect.Reflection;
 import com.mojang.logging.LogUtils;
 import net.minecraft.SharedConstants;
@@ -104,6 +105,7 @@ public class Aether {
                 AetherParticleTypes.PARTICLES,
                 AetherFeatures.FEATURES,
                 AetherFoliagePlacerTypes.FOLIAGE_PLACERS,
+                AetherTrunkPlacerTypes.TRUNK_PLACERS,
                 AetherTreeDecoratorTypes.TREE_DECORATORS,
                 AetherPoi.POI,
                 AetherStructureTypes.STRUCTURE_TYPES,

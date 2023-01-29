@@ -9,10 +9,10 @@
       }
     },
     "foliage_placer": {
-      "type": "minecraft:fancy_foliage_placer",
-      "height": 4,
-      "offset": 4,
-      "radius": 2
+      "type": "aether:golden_oak_foliage_placer",
+      "offset": 3,
+      "radius": 3,
+      "trunk_height": 7
     },
     "foliage_provider": {
       "type": "minecraft:simple_state_provider",
@@ -36,9 +36,9 @@
       "upper_size": 0
     },
     "trunk_placer": {
-      "type": "minecraft:fancy_trunk_placer",
-      "base_height": 9,
-      "height_rand_a": 5,
+      "type": "aether:golden_oak_trunk_placer",
+      "base_height": 5,
+      "height_rand_a": 4,
       "height_rand_b": 0
     },
     "trunk_provider": {
