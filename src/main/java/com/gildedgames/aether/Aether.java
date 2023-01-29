@@ -34,6 +34,7 @@ import com.gildedgames.aether.world.foliageplacer.AetherFoliagePlacerTypes;
 import com.gildedgames.aether.world.feature.AetherFeatures;
 import com.gildedgames.aether.world.placementmodifier.AetherPlacementModifiers;
 import com.gildedgames.aether.network.AetherPacketHandler;
+import com.gildedgames.aether.client.CombinedPackResources;
 import com.gildedgames.aether.api.SunAltarWhitelist;
 import com.gildedgames.aether.api.TriviaGenerator;
 import com.gildedgames.aether.world.processor.AetherStructureProcessors;
@@ -68,7 +69,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.resource.DelegatingPackResources;
 import net.minecraftforge.resource.PathPackResources;
 import org.slf4j.Logger;
 import top.theillusivec4.curios.api.SlotTypeMessage;
@@ -206,7 +206,7 @@ public class Aether {
         if (event.getPackType() == PackType.CLIENT_RESOURCES) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_125");
             PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, false, resourcePath);
-            this.createCombinedPack(event, pack, "builtin/aether_125_art", "pack.aether.125.title", "pack.aether.125.description");
+            this.createCombinedPack(event, resourcePath, pack, "builtin/aether_125_art", "pack.aether.125.title", "pack.aether.125.description");
         }
     }
 
@@ -217,22 +217,23 @@ public class Aether {
         if (event.getPackType() == PackType.CLIENT_RESOURCES) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_b173");
             PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, false, resourcePath);
-            this.createCombinedPack(event, pack, "builtin/aether_b173_art", "pack.aether.b173.title", "pack.aether.b173.description");
+            this.createCombinedPack(event, resourcePath, pack, "builtin/aether_b173_art", "pack.aether.b173.title", "pack.aether.b173.description");
         }
     }
 
     /**
      * Creates a built-in resource pack that combines asset files from two different locations.
+     * @param sourcePath The {@link Path} of the non-base assets.
      * @param pack The {@link PathPackResources} that handles the non-base asset path for the resource pack.
      * @param name The {@link String} internal name of the resource pack.
      * @param title The {@link String} title of the resource pack.
      * @param description The {@link String} description of the resource pack.
      */
-    private void createCombinedPack(AddPackFindersEvent event, PathPackResources pack, String name, String title, String description) {
+    private void createCombinedPack(AddPackFindersEvent event, Path sourcePath, PathPackResources pack, String name, String title, String description) {
         Path baseResourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_base");
         PathPackResources basePack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + baseResourcePath, false, baseResourcePath);
         List<PathPackResources> mergedPacks = List.of(pack, basePack);
-        Pack.ResourcesSupplier resourcesSupplier = (string) -> new DelegatingPackResources(name, true, new PackMetadataSection(Component.translatable(description), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion())), mergedPacks);
+        Pack.ResourcesSupplier resourcesSupplier = (string) -> new CombinedPackResources(name, new PackMetadataSection(Component.translatable(description), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion())), mergedPacks, sourcePath);
         Pack.Info info = Pack.readPackInfo(name, resourcesSupplier);
         if (info != null) {
             event.addRepositorySource((source) ->
