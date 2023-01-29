@@ -96,6 +96,13 @@ public class AccessoriesMenu extends InventoryMenu {
             final EquipmentSlot equipmentSlotType = VALID_EQUIPMENT_SLOTS[k];
             this.addSlot(new Slot(playerInventory, 36 + (3 - k), 59, 8 + k * 18) {
                 @Override
+                public void set(ItemStack stack) {
+                    ItemStack itemStack = this.getItem();
+                    super.set(stack);
+                    AccessoriesMenu.this.player.onEquipItem(equipmentSlotType, itemStack, stack);
+                }
+
+                @Override
                 public int getMaxStackSize() {
                     return 1;
                 }
