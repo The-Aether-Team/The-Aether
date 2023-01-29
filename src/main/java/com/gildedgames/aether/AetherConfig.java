@@ -73,7 +73,7 @@ public class AetherConfig {
             hammer_of_notch_cooldown = builder
                     .comment("Determines the cooldown in ticks for the Hammer of Notch's ability")
                     .translation("config.aether.common.gameplay.hammer_of_notch_cooldown")
-                    .define("Cooldown for the Hammer of Notch", 200);
+                    .define("Cooldown for the Hammer of Notch", 100);
             cloud_staff_cooldown = builder
                     .comment("Determines the cooldown in ticks for the Cloud Staff's ability")
                     .translation("config.aether.common.gameplay.cloud_staff_cooldown")
