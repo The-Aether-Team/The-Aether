@@ -90,22 +90,22 @@ public class AetherSoundData extends SoundDefinitionsProvider {
         );
         this.add(AetherSoundEvents.ITEM_ARMOR_EQUIP_NEPTUNE,
                 definition().with(
-                        sound("minecraft:item/armor/equip_iron1"),
-                        sound("minecraft:item/armor/equip_iron2"),
-                        sound("minecraft:item/armor/equip_iron3"),
-                        sound("minecraft:item/armor/equip_iron4"),
-                        sound("minecraft:item/armor/equip_iron5"),
-                        sound("minecraft:item/armor/equip_iron6")
-                ).subtitle("subtitles.item.armor.equip_neptune")
-        );
-        this.add(AetherSoundEvents.ITEM_ARMOR_EQUIP_PHOENIX,
-                definition().with(
                         sound("minecraft:item/armor/equip_gold1"),
                         sound("minecraft:item/armor/equip_gold2"),
                         sound("minecraft:item/armor/equip_gold3"),
                         sound("minecraft:item/armor/equip_gold4"),
                         sound("minecraft:item/armor/equip_gold5"),
                         sound("minecraft:item/armor/equip_gold6")
+                ).subtitle("subtitles.item.armor.equip_neptune")
+        );
+        this.add(AetherSoundEvents.ITEM_ARMOR_EQUIP_PHOENIX,
+                definition().with(
+                        sound("minecraft:item/armor/equip_iron1"),
+                        sound("minecraft:item/armor/equip_iron2"),
+                        sound("minecraft:item/armor/equip_iron3"),
+                        sound("minecraft:item/armor/equip_iron4"),
+                        sound("minecraft:item/armor/equip_iron5"),
+                        sound("minecraft:item/armor/equip_iron6")
                 ).subtitle("subtitles.item.armor.equip_phoenix")
         );
         this.add(AetherSoundEvents.ITEM_ARMOR_EQUIP_OBSIDIAN,
@@ -126,42 +126,42 @@ public class AetherSoundData extends SoundDefinitionsProvider {
         );
         this.add(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_GENERIC,
                 definition().with(
-                        sound("minecraft:item/armor/equip_generic1"),
-                        sound("minecraft:item/armor/equip_generic2"),
-                        sound("minecraft:item/armor/equip_generic3"),
-                        sound("minecraft:item/armor/equip_generic4"),
-                        sound("minecraft:item/armor/equip_generic5"),
-                        sound("minecraft:item/armor/equip_generic6")
+                        sound("minecraft:item/armor/equip_chain1"),
+                        sound("minecraft:item/armor/equip_chain2"),
+                        sound("minecraft:item/armor/equip_chain3"),
+                        sound("minecraft:item/armor/equip_chain4"),
+                        sound("minecraft:item/armor/equip_chain5"),
+                        sound("minecraft:item/armor/equip_chain6")
                 ).subtitle("subtitles.item.accessory.equip_generic")
         );
         this.add(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_IRON_RING,
                 definition().with(
-                        sound("minecraft:item/armor/equip_iron1"),
-                        sound("minecraft:item/armor/equip_iron2"),
-                        sound("minecraft:item/armor/equip_iron3"),
-                        sound("minecraft:item/armor/equip_iron4"),
-                        sound("minecraft:item/armor/equip_iron5"),
-                        sound("minecraft:item/armor/equip_iron6")
+                        sound("minecraft:item/armor/equip_chain1"),
+                        sound("minecraft:item/armor/equip_chain2"),
+                        sound("minecraft:item/armor/equip_chain3"),
+                        sound("minecraft:item/armor/equip_chain4"),
+                        sound("minecraft:item/armor/equip_chain5"),
+                        sound("minecraft:item/armor/equip_chain6")
                 ).subtitle("subtitles.item.accessory.equip_iron_ring")
         );
         this.add(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_GOLD_RING,
                 definition().with(
-                        sound("minecraft:item/armor/equip_gold1"),
-                        sound("minecraft:item/armor/equip_gold2"),
-                        sound("minecraft:item/armor/equip_gold3"),
-                        sound("minecraft:item/armor/equip_gold4"),
-                        sound("minecraft:item/armor/equip_gold5"),
-                        sound("minecraft:item/armor/equip_gold6")
+                        sound("minecraft:item/armor/equip_chain1"),
+                        sound("minecraft:item/armor/equip_chain2"),
+                        sound("minecraft:item/armor/equip_chain3"),
+                        sound("minecraft:item/armor/equip_chain4"),
+                        sound("minecraft:item/armor/equip_chain5"),
+                        sound("minecraft:item/armor/equip_chain6")
                 ).subtitle("subtitles.item.accessory.equip_gold_ring")
         );
         this.add(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_ZANITE_RING,
                 definition().with(
-                        sound("minecraft:item/armor/equip_iron1"),
-                        sound("minecraft:item/armor/equip_iron2"),
-                        sound("minecraft:item/armor/equip_iron3"),
-                        sound("minecraft:item/armor/equip_iron4"),
-                        sound("minecraft:item/armor/equip_iron5"),
-                        sound("minecraft:item/armor/equip_iron6")
+                        sound("minecraft:item/armor/equip_chain1"),
+                        sound("minecraft:item/armor/equip_chain2"),
+                        sound("minecraft:item/armor/equip_chain3"),
+                        sound("minecraft:item/armor/equip_chain4"),
+                        sound("minecraft:item/armor/equip_chain5"),
+                        sound("minecraft:item/armor/equip_chain6")
                 ).subtitle("subtitles.item.accessory.equip_zanite_ring")
         );
         this.add(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_ICE_RING,
@@ -176,32 +176,32 @@ public class AetherSoundData extends SoundDefinitionsProvider {
         );
         this.add(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_IRON_PENDANT,
                 definition().with(
-                        sound("minecraft:item/armor/equip_iron1"),
-                        sound("minecraft:item/armor/equip_iron2"),
-                        sound("minecraft:item/armor/equip_iron3"),
-                        sound("minecraft:item/armor/equip_iron4"),
-                        sound("minecraft:item/armor/equip_iron5"),
-                        sound("minecraft:item/armor/equip_iron6")
+                        sound("minecraft:item/armor/equip_chain1"),
+                        sound("minecraft:item/armor/equip_chain2"),
+                        sound("minecraft:item/armor/equip_chain3"),
+                        sound("minecraft:item/armor/equip_chain4"),
+                        sound("minecraft:item/armor/equip_chain5"),
+                        sound("minecraft:item/armor/equip_chain6")
                 ).subtitle("subtitles.item.accessory.equip_iron_pendant")
         );
         this.add(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_GOLD_PENDANT,
                 definition().with(
-                        sound("minecraft:item/armor/equip_gold1"),
-                        sound("minecraft:item/armor/equip_gold2"),
-                        sound("minecraft:item/armor/equip_gold3"),
-                        sound("minecraft:item/armor/equip_gold4"),
-                        sound("minecraft:item/armor/equip_gold5"),
-                        sound("minecraft:item/armor/equip_gold6")
+                        sound("minecraft:item/armor/equip_chain1"),
+                        sound("minecraft:item/armor/equip_chain2"),
+                        sound("minecraft:item/armor/equip_chain3"),
+                        sound("minecraft:item/armor/equip_chain4"),
+                        sound("minecraft:item/armor/equip_chain5"),
+                        sound("minecraft:item/armor/equip_chain6")
                 ).subtitle("subtitles.item.accessory.equip_gold_pendant")
         );
         this.add(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_ZANITE_PENDANT,
                 definition().with(
-                        sound("minecraft:item/armor/equip_iron1"),
-                        sound("minecraft:item/armor/equip_iron2"),
-                        sound("minecraft:item/armor/equip_iron3"),
-                        sound("minecraft:item/armor/equip_iron4"),
-                        sound("minecraft:item/armor/equip_iron5"),
-                        sound("minecraft:item/armor/equip_iron6")
+                        sound("minecraft:item/armor/equip_chain1"),
+                        sound("minecraft:item/armor/equip_chain2"),
+                        sound("minecraft:item/armor/equip_chain3"),
+                        sound("minecraft:item/armor/equip_chain4"),
+                        sound("minecraft:item/armor/equip_chain5"),
+                        sound("minecraft:item/armor/equip_chain6")
                 ).subtitle("subtitles.item.accessory.equip_zanite_pendant")
         );
         this.add(AetherSoundEvents.ITEM_ACCESSORY_EQUIP_ICE_PENDANT,

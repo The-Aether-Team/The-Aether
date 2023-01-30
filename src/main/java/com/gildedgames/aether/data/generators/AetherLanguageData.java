@@ -483,8 +483,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addSubtitle("item", "armor.equip_zanite", "Zanite armor clangs");
         addSubtitle("item", "armor.equip_gravitite", "Gravitite armor clinks");
         addSubtitle("item", "armor.equip_valkyrie", "Valkyrie armor clanks");
-        addSubtitle("item", "armor.equip_neptune", "Neptune armor clanks");
-        addSubtitle("item", "armor.equip_phoenix", "Phoenix armor clinks");
+        addSubtitle("item", "armor.equip_neptune", "Neptune armor clinks");
+        addSubtitle("item", "armor.equip_phoenix", "Phoenix armor clanks");
         addSubtitle("item", "armor.equip_obsidian", "Obsidian armor clanks");
         addSubtitle("item", "armor.equip_sentry", "Sentry armor clanks");
 
