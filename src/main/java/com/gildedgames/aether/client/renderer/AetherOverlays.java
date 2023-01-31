@@ -208,7 +208,7 @@ public class AetherOverlays {
 
     private static void renderHammerCooldownOverlay(PoseStack poseStack, Minecraft mc, Window window, LocalPlayer player) {
         Inventory inventory = player.getInventory();
-        if (inventory.contains(new ItemStack(AetherItems.HAMMER_OF_NOTCH.get()))) {
+        if (inventory.hasAnyMatching((itemStack) -> itemStack.is(AetherItems.HAMMER_OF_NOTCH.get()))) {
             for (ItemStack itemStack : inventory.items) {
                 Item item = itemStack.getItem();
                 if (item == AetherItems.HAMMER_OF_NOTCH.get()) {
