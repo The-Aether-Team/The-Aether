@@ -59,6 +59,32 @@ public class DimensionClientHooks {
         return Triple.of(null, null, null);
     }
 
+    public static Triple<Float, Float, Float> adjustWeatherFogColors(Camera camera, float red, float green, float blue) {
+        if (camera.getEntity().level instanceof ClientLevel clientLevel) {
+            if (clientLevel.effects() instanceof AetherSkyRenderEffects) {
+                FogType fluidState = camera.getFluidInCamera();
+                if (fluidState == FogType.NONE) {
+                    if (clientLevel.rainLevel > 0.0) {
+                        float f14 = 1.0F + clientLevel.rainLevel * 0.8F;
+                        float f17 = 1.0F + clientLevel.rainLevel * 0.56F;
+                        red *= f14;
+                        green *= f14;
+                        blue *= f17;
+                    }
+                    if (clientLevel.thunderLevel > 0.0) {
+                        float f18 = 1.0F + clientLevel.thunderLevel * 0.66F;
+                        float f19 = 1.0F + clientLevel.thunderLevel * 0.76F;
+                        red *= f18;
+                        green *= f18;
+                        blue *= f19;
+                    }
+                    return Triple.of(red, green, blue);
+                }
+            }
+        }
+        return Triple.of(null, null, null);
+    }
+
     /**
      * Ticks time in clientside Aether levels.
      */
