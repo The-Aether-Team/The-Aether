@@ -1,6 +1,5 @@
 package com.gildedgames.aether.block.natural;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.AetherBlockStateProperties;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.Block;
@@ -94,7 +93,6 @@ public class AercloudBlock extends HalfTransparentBlock {
 			Entity entity = entityCollisionContext.getEntity();
 			if (entity != null) {
 				if (entity.fallDistance > 2.5F && (!(entity instanceof LivingEntity livingEntity) || !livingEntity.isFallFlying())) {
-					Aether.LOGGER.info(String.valueOf(entity.fallDistance));
 					return FALLING_COLLISION_SHAPE; // Alternate shape when falling fast enough.
 				}
 			}
