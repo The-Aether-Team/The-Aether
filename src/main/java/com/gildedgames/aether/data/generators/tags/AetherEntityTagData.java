@@ -59,7 +59,8 @@ public class AetherEntityTagData extends EntityTypeTagsProvider {
                 EntityType.SHEEP,
                 AetherEntityTypes.FLYING_COW.get(),
                 AetherEntityTypes.PHYG.get(),
-                AetherEntityTypes.SHEEPUFF.get()
+                AetherEntityTypes.SHEEPUFF.get(),
+                AetherEntityTypes.AERBUNNY.get()
         );
         this.tag(AetherTags.Entities.AECHOR_PLANT_TARGETS).add(
                 EntityType.CHICKEN,
