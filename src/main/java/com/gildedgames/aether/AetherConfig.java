@@ -51,7 +51,7 @@ public class AetherConfig {
                     .translation("config.aether.common.gameplay.enable_startup_loot")
                     .define("Gives starting loot on entry", true);
             tools_debuff = builder
-                    .comment("Tools that aren't from the Aether will mine all blocks slower than ones that are from the Aether")
+                    .comment("Tools that aren't from the Aether will mine Aether blocks slower than tools that are from the Aether")
                     .translation("config.aether.common.gameplay.tools_debuff")
                     .define("Debuff non-Aether tools", false);
             edible_ambrosium = builder
