@@ -11,12 +11,12 @@ public enum AetherItemTiers implements Tier {
 	HOLYSTONE(1, 131, 4.0F, 1.0F, 5, () -> Ingredient.of(AetherTags.Items.HOLYSTONE_REPAIRING)),
 	ZANITE(2, 250, 6.0F, 2.0F, 14, () -> Ingredient.of(AetherTags.Items.ZANITE_REPAIRING)),
 	GRAVITITE(3, 1561, 8.0F, 3.0F, 10, () -> Ingredient.of(AetherTags.Items.GRAVITITE_REPAIRING)),
-	VALKYRIE(3, 2031, 9.0F, 4.0F, 15, () -> Ingredient.of(AetherTags.Items.VALKYRIE_REPAIRING)),
-	FLAMING(3, 502, 9.0F, 4.0F, 15, () -> Ingredient.of(AetherTags.Items.FLAMING_REPAIRING)),
-	LIGHTNING(3, 502, 9.0F, 4.0F, 15, () -> Ingredient.of(AetherTags.Items.LIGHTNING_REPAIRING)),
-	HOLY(3, 502, 9.0F, 4.0F, 15, () -> Ingredient.of(AetherTags.Items.HOLY_REPAIRING)),
-	VAMPIRE(3, 2031, 9.0F, 4.0F, 15, () -> Ingredient.of(AetherTags.Items.VAMPIRE_REPAIRING)),
-	PIG_SLAYER(2, 200, 6.0F, 2.0F, 15, () -> Ingredient.of(AetherTags.Items.PIG_SLAYER_REPAIRING)),
+	VALKYRIE(3, 1561, 8.0F, 3.0F, 10, () -> Ingredient.of(AetherTags.Items.VALKYRIE_REPAIRING)),
+	FLAMING(3, 502, 8.0F, 3.0F, 10, () -> Ingredient.of(AetherTags.Items.FLAMING_REPAIRING)),
+	LIGHTNING(3, 502, 8.0F, 3.0F, 10, () -> Ingredient.of(AetherTags.Items.LIGHTNING_REPAIRING)),
+	HOLY(3, 502, 8.0F, 3.0F, 10, () -> Ingredient.of(AetherTags.Items.HOLY_REPAIRING)),
+	VAMPIRE(3, 2031, 8.0F, 3.0F, 10, () -> Ingredient.of(AetherTags.Items.VAMPIRE_REPAIRING)),
+	PIG_SLAYER(2, 200, 6.0F, 2.0F, 10, () -> Ingredient.of(AetherTags.Items.PIG_SLAYER_REPAIRING)),
 	HAMMER_OF_NOTCH(2, 250, 6.0F, 2.0F, 14, () -> Ingredient.of(AetherTags.Items.HAMMER_OF_NOTCH_REPAIRING)),
 	CANDY_CANE(0, 32, 12.0F, 0.0F, 22, () -> Ingredient.of(AetherTags.Items.CANDY_CANE_REPAIRING));
 
