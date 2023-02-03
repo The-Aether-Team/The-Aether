@@ -206,7 +206,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addItem(AetherItems.PIG_SLAYER, "Pig Slayer");
         addItem(AetherItems.CANDY_CANE_SWORD, "Candy Cane Sword");
 
-        addItem(AetherItems.HAMMER_OF_NOTCH, "Hammer of Notch");
+        addItem(AetherItems.HAMMER_OF_KINGBDOGZ, "Hammer of Kingbdogz");
 
         addItem(AetherItems.LIGHTNING_KNIFE, "Lightning Knife");
 
@@ -478,7 +478,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
 
         addSubtitle("item", "dart_shooter.shoot", "Dart Shooter fired");
         addSubtitle("item", "lightning_knife.shoot", "Lightning Knife flies");
-        addSubtitle("item", "hammer_of_notch.shoot", "Hammer fired");
+        addSubtitle("item", "hammer_of_kingbdogz.shoot", "Hammer fired");
 
         addSubtitle("item", "armor.equip_zanite", "Zanite armor clangs");
         addSubtitle("item", "armor.equip_gravitite", "Gravitite armor clinks");
@@ -711,7 +711,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLoreBookText("item", "Item:");
 
 
-        addMessage("hammer_of_notch_cooldown", "Cooldown");
+        addMessage("hammer_of_kingbdogz_cooldown", "Cooldown");
 
         addMessage("life_shard_limit", "You can only use a total of %s Life Shards.");
         addMessage("bronze_treasure_chest_locked", "This Treasure Chest must be unlocked with a Bronze Key.");
@@ -888,7 +888,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.NEPTUNE_GLOVES, "Found in Silver Dungeons, these gloves are requires to complete the Neptune Armor set, which allows for underwater walking.");
         addLore(AetherItems.NEPTUNE_HELMET, "Found in Silver Dungeons, this armor allows for water walking. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
         addLore(AetherItems.NEPTUNE_LEGGINGS, "Found in Silver Dungeons, this armor allows for water walking. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
-        addLore(AetherItems.HAMMER_OF_NOTCH, "A mighty hammer which shoots heavy projectiles at mobs. It's said that Notch actually held this hammer.");
+        addLore(AetherItems.HAMMER_OF_KINGBDOGZ, "A mighty hammer which shoots heavy projectiles at mobs. It's said that Kingbdogz actually held this hammer.");
         addLore(AetherItems.OBSIDIAN_BOOTS, "A super powerful armor, more powerful than Diamond, this armor is only obtainable by standing in water while wearing Phoenix Armor, converting it to Obsidian.");
         addLore(AetherItems.OBSIDIAN_CHESTPLATE, "A super powerful armor, more powerful than Diamond, this armor is only obtainable by standing in water while wearing Phoenix Armor, converting it to Obsidian.");
         addLore(AetherItems.OBSIDIAN_GLOVES, "Needed to complete the Obsidian Armor set, you can convert Phoenix Gloves into Obsidian by standing in water while wearing them.");
@@ -1067,7 +1067,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addCommonConfig("gameplay", "healing_gummy_swets", "Gummy Swets when eaten restore full health instead of full hunger");
         addCommonConfig("gameplay", "temporary_ice_accessory_conversion", "Ice Accessories will create temporary blocks instead of permanent blocks from conversions");
         addCommonConfig("gameplay", "maximum_life_shards", "Determines the limit of the amount of Life Shards a player can consume to increase their health");
-        addCommonConfig("gameplay", "hammer_of_notch_cooldown", "Determines the cooldown in ticks for the Hammer of Notch's ability");
+        addCommonConfig("gameplay", "hammer_of_kingbdogz_cooldown", "Determines the cooldown in ticks for the Hammer of Kingbdogz's ability");
         addCommonConfig("gameplay", "cloud_staff_cooldown", "Determines the cooldown in ticks for the Cloud Staff's ability");
         addCommonConfig("gameplay", "repeat_sun_spirit_dialogue", "Determines whether the Sun Spirit's dialogue when meeting him should play through every time you meet him");
 

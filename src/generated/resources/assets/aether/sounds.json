@@ -744,11 +744,11 @@
     ],
     "subtitle": "subtitles.item.dart_shooter.shoot"
   },
-  "item.hammer_of_notch.shoot": {
+  "item.hammer_of_kingbdogz.shoot": {
     "sounds": [
       "mob/ghast/fireball4"
     ],
-    "subtitle": "subtitles.item.hammer_of_notch.shoot"
+    "subtitle": "subtitles.item.hammer_of_kingbdogz.shoot"
   },
   "item.lightning_knife.shoot": {
     "sounds": [

@@ -87,7 +87,7 @@ public class AetherItems {
 	public static final RegistryObject<SwordItem> PIG_SLAYER = ITEMS.register("pig_slayer", () -> new PigSlayerItem().addDungeonTooltip(GOLD_DUNGEON_TOOLTIP));
 	public static final RegistryObject<SwordItem> CANDY_CANE_SWORD = ITEMS.register("candy_cane_sword", CandyCaneSwordItem::new);
 
-	public static final RegistryObject<SwordItem> HAMMER_OF_NOTCH = ITEMS.register("hammer_of_notch", () -> new HammerOfNotchItem().addDungeonTooltip(BRONZE_DUNGEON_TOOLTIP));
+	public static final RegistryObject<SwordItem> HAMMER_OF_KINGBDOGZ = ITEMS.register("hammer_of_kingbdogz", () -> new HammerOfKingbdogzItem().addDungeonTooltip(BRONZE_DUNGEON_TOOLTIP));
 
 	public static final RegistryObject<Item> LIGHTNING_KNIFE = ITEMS.register("lightning_knife", LightningKnifeItem::new);
 

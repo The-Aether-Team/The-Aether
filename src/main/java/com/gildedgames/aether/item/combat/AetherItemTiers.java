@@ -17,7 +17,7 @@ public enum AetherItemTiers implements Tier {
 	HOLY(3, 502, 8.0F, 3.0F, 10, () -> Ingredient.of(AetherTags.Items.HOLY_REPAIRING)),
 	VAMPIRE(3, 2031, 8.0F, 3.0F, 10, () -> Ingredient.of(AetherTags.Items.VAMPIRE_REPAIRING)),
 	PIG_SLAYER(2, 200, 6.0F, 2.0F, 10, () -> Ingredient.of(AetherTags.Items.PIG_SLAYER_REPAIRING)),
-	HAMMER_OF_NOTCH(2, 250, 6.0F, 2.0F, 14, () -> Ingredient.of(AetherTags.Items.HAMMER_OF_NOTCH_REPAIRING)),
+	HAMMER_OF_KINGBDOGZ(2, 250, 6.0F, 2.0F, 14, () -> Ingredient.of(AetherTags.Items.HAMMER_OF_KINGBDOGZ_REPAIRING)),
 	CANDY_CANE(0, 32, 12.0F, 0.0F, 22, () -> Ingredient.of(AetherTags.Items.CANDY_CANE_REPAIRING));
 
 	private final int harvestLevel;

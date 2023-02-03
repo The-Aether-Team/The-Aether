@@ -54,9 +54,9 @@ public class AetherSoundData extends SoundDefinitionsProvider {
                 definition().with(sound("minecraft:random/bow"))
                 .subtitle("subtitles.item.lightning_knife.shoot")
         );
-        this.add(AetherSoundEvents.ITEM_HAMMER_OF_NOTCH_SHOOT,
+        this.add(AetherSoundEvents.ITEM_HAMMER_OF_KINGBDOGZ_SHOOT,
                 definition().with(sound("minecraft:mob/ghast/fireball4"))
-                .subtitle("subtitles.item.hammer_of_notch.shoot")
+                .subtitle("subtitles.item.hammer_of_kingbdogz.shoot")
         );
         this.add(AetherSoundEvents.ITEM_ARMOR_EQUIP_ZANITE,
                 definition().with(
