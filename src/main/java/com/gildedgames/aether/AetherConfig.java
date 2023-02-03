@@ -51,7 +51,7 @@ public class AetherConfig {
                     .translation("config.aether.common.gameplay.enable_startup_loot")
                     .define("Gives starting loot on entry", true);
             tools_debuff = builder
-                    .comment("Tools that aren't from the Aether will mine all blocks slower than ones that are from the Aether")
+                    .comment("Tools that aren't from the Aether will mine Aether blocks slower than tools that are from the Aether")
                     .translation("config.aether.common.gameplay.tools_debuff")
                     .define("Debuff non-Aether tools", false);
             edible_ambrosium = builder
@@ -73,7 +73,7 @@ public class AetherConfig {
             hammer_of_kingbdogz_cooldown = builder
                     .comment("Determines the cooldown in ticks for the Hammer of Kingbdogz's ability")
                     .translation("config.aether.common.gameplay.hammer_of_kingbdogz_cooldown")
-                    .define("Cooldown for the Hammer of Kingbdogz", 200);
+                    .define("Cooldown for the Hammer of Kingbdogz", 75);
             cloud_staff_cooldown = builder
                     .comment("Determines the cooldown in ticks for the Cloud Staff's ability")
                     .translation("config.aether.common.gameplay.cloud_staff_cooldown")

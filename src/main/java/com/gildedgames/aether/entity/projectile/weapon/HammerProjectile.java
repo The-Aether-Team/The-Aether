@@ -97,9 +97,9 @@ public class HammerProjectile extends ThrowableProjectile {
     protected void onHitBlock(@Nonnull BlockHitResult result) {
         super.onHitBlock(result);
         if (!this.level.isClientSide) {
-            List<Entity> list = this.level.getEntities(this, this.getBoundingBox().inflate(3.0));
+            List<Entity> list = this.level.getEntities(this, this.getBoundingBox().inflate(5.0));
             for (Entity target : list) {
-                launchTarget(target);
+                this.launchTarget(target);
             }
         }
     }
