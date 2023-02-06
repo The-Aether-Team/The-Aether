@@ -1,7 +1,7 @@
 package com.gildedgames.aether.world.structure;
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.world.structurepiece.bronzedungeon.BronzeDungeonGraph;
+import com.gildedgames.aether.world.structurepiece.bronzedungeon.BronzeDungeonBuilder;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
@@ -38,26 +38,41 @@ public class BronzeDungeonStructure extends Structure {
         ChunkPos chunkPos = context.chunkPos();
         ChunkGenerator chunkGenerator = context.chunkGenerator();
         LevelHeightAccessor heightAccessor = context.heightAccessor();
-        int height = findStartingHeight(chunkGenerator, heightAccessor, chunkPos, context.randomState(), context.structureTemplateManager());
+        RandomState randomState = context.randomState();
+        StructureTemplateManager templateManager = context.structureTemplateManager();
+        int height = findStartingHeight(chunkGenerator, heightAccessor, chunkPos, randomState, templateManager);
         if (height <= heightAccessor.getMinBuildHeight()) {
-            return Optional.empty();
+            for (int x = -1; x <= 1; x++) {
+                for (int z = -1; z <= 1; z++) {
+                    if (x != 0 && z != 0) {
+                        ChunkPos offset = new ChunkPos(chunkPos.x + x, chunkPos.z + z);
+                        height = findStartingHeight(chunkGenerator, heightAccessor, offset, randomState, templateManager);
+                        if (height > heightAccessor.getMinBuildHeight()) {
+                            chunkPos = offset;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (height <= heightAccessor.getMinBuildHeight()) {
+                return Optional.empty();
+            }
         }
-        BlockPos blockPos = new BlockPos(context.chunkPos().getMinBlockX(), height, context.chunkPos().getMinBlockZ());
+        BlockPos blockPos = new BlockPos(chunkPos.getMinBlockX(), height, chunkPos.getMinBlockZ());
         return Optional.of(new GenerationStub(blockPos, builder -> this.generatePieces(builder, context, blockPos)));
     }
 
     private void generatePieces(StructurePiecesBuilder builder, Structure.GenerationContext context, BlockPos startPos) {
-        BronzeDungeonGraph graph = new BronzeDungeonGraph(context, this.maxRooms);
-        graph.initializeDungeon(startPos);
-        graph.populatePiecesBuilder(builder);
+        BronzeDungeonBuilder graph = new BronzeDungeonBuilder(context, this.maxRooms);
+        graph.initializeDungeon(startPos, builder);
     }
 
     /** Try to find a place where the land is taller than the boss room. */
     private static int findStartingHeight(ChunkGenerator chunkGenerator, LevelHeightAccessor heightAccessor, ChunkPos chunkPos, RandomState random, StructureTemplateManager manager) {
-        int minX = chunkPos.getMinBlockX();
-        int minZ = chunkPos.getMinBlockZ();
-        int maxX = chunkPos.getMaxBlockX();
-        int maxZ = chunkPos.getMaxBlockZ();
+        int minX = chunkPos.getMinBlockX() - 1;
+        int minZ = chunkPos.getMinBlockZ() - 1;
+        int maxX = chunkPos.getMaxBlockX() + 1;
+        int maxZ = chunkPos.getMaxBlockZ() + 1;
         NoiseColumn[] columns = {
                 chunkGenerator.getBaseColumn(minX, minZ, heightAccessor, random),
                 chunkGenerator.getBaseColumn(minX, maxZ, heightAccessor, random),
@@ -70,7 +85,7 @@ public class BronzeDungeonStructure extends Structure {
         int height = heightAccessor.getMinBuildHeight();
         int maxHeight = heightAccessor.getMaxBuildHeight() - 24;
 
-        int thickness = roomHeight + 10;
+        int thickness = roomHeight + 2;
         int currentThickness = 0;
 
         for (int y = height + 32; y <= maxHeight; y++) {
@@ -85,7 +100,7 @@ public class BronzeDungeonStructure extends Structure {
             }
         }
 
-        height -= thickness * 0.8;
+        height -= thickness;
         return height;
     }
 

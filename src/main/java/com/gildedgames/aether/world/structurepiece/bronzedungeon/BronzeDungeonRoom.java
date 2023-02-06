@@ -18,7 +18,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import net.minecraftforge.common.world.PieceBeardifierModifier;
 
-public class BronzeDungeonRoom extends BronzeDungeonPiece implements PieceBeardifierModifier {
+public class BronzeDungeonRoom extends BronzeDungeonPiece {
     public BronzeDungeonRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
         super(AetherStructurePieceTypes.BRONZE_DUNGEON_ROOM.get(), manager, name, makeSettings().setRotation(rotation), pos);
     }
@@ -44,20 +44,5 @@ public class BronzeDungeonRoom extends BronzeDungeonPiece implements PieceBeardi
                 level.setBlock(pos, AetherBlocks.CHEST_MIMIC.get().defaultBlockState(), 1 | 2);
             }
         }
-    }
-
-    @Override
-    public BoundingBox getBeardifierBox() {
-        return this.boundingBox;
-    }
-
-    @Override
-    public TerrainAdjustment getTerrainAdjustment() {
-        return TerrainAdjustment.BURY;
-    }
-
-    @Override
-    public int getGroundLevelDelta() {
-        return 0;
     }
 }

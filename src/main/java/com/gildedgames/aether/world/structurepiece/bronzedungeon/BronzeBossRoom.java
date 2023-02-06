@@ -18,19 +18,17 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.world.PieceBeardifierModifier;
 
 import java.util.ArrayList;
 
 /**
  * Starting piece for the bronze dungeon. Has the slider.
  */
-public class BronzeBossRoom extends BronzeDungeonPiece implements PieceBeardifierModifier {
+public class BronzeBossRoom extends BronzeDungeonPiece {
 
     public BronzeBossRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
         super(AetherStructurePieceTypes.BRONZE_BOSS_ROOM.get(), manager, name, makeSettingsWithPivot(makeSettings(), manager, makeLocation(name), rotation), pos);
@@ -73,20 +71,5 @@ public class BronzeBossRoom extends BronzeDungeonPiece implements PieceBeardifie
             TreasureChestBlockEntity.setDungeonType(level, chest, new ResourceLocation(Aether.MODID, "bronze"));
             level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
         }
-    }
-
-    @Override
-    public BoundingBox getBeardifierBox() {
-        return this.boundingBox;
-    }
-
-    @Override
-    public TerrainAdjustment getTerrainAdjustment() {
-        return TerrainAdjustment.BURY;
-    }
-
-    @Override
-    public int getGroundLevelDelta() {
-        return 0;
     }
 }

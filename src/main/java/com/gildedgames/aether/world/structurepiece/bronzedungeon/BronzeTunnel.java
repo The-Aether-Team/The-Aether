@@ -18,7 +18,7 @@ import net.minecraftforge.common.world.PieceBeardifierModifier;
 /**
  * The entrance to the bronze dungeon. It shouldn't replace air so that it matches the landscape.
  */
-public class BronzeTunnel extends BronzeDungeonPiece implements PieceBeardifierModifier {
+public class BronzeTunnel extends BronzeDungeonPiece {
 
     public BronzeTunnel(StructureTemplateManager pStructureTemplateManager, String name, BlockPos pTemplatePosition, Rotation rotation) {
         super(AetherStructurePieceTypes.BRONZE_TUNNEL.get(), pStructureTemplateManager, name, makeSettings().setRotation(rotation), pTemplatePosition);
@@ -35,20 +35,5 @@ public class BronzeTunnel extends BronzeDungeonPiece implements PieceBeardifierM
     @Override
     protected void handleDataMarker(String pName, BlockPos pPos, ServerLevelAccessor pLevel, RandomSource pRandom, BoundingBox pBox) {
 
-    }
-
-    @Override
-    public BoundingBox getBeardifierBox() {
-        return this.boundingBox;
-    }
-
-    @Override
-    public TerrainAdjustment getTerrainAdjustment() {
-        return TerrainAdjustment.NONE;
-    }
-
-    @Override
-    public int getGroundLevelDelta() {
-        return 0;
     }
 }

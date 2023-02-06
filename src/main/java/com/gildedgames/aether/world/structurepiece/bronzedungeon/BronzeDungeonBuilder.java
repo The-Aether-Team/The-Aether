@@ -27,20 +27,21 @@ import java.util.*;
  *
  * https://en.wikipedia.org/wiki/Directed_graph
  */
-public class BronzeDungeonGraph {
+public class BronzeDungeonBuilder {
     private final Structure.GenerationContext context;
     private final StructureTemplateManager manager;
     private final RandomSource random;
 
     private final int nodeWidth;
     private final int edgeWidth;
+    private final int edgeLength;
     private final int maxSize;
 
     public final List<StructurePiece> nodes = new ArrayList<>();
     public final Map<StructurePiece, Map<Direction, Connection>> edges = new HashMap<>();
 
 
-    public BronzeDungeonGraph(Structure.GenerationContext context, int maxSize) {
+    public BronzeDungeonBuilder(Structure.GenerationContext context, int maxSize) {
         this.context = context;
         this.manager = context.structureTemplateManager();
         this.random = context.random();
@@ -50,12 +51,19 @@ public class BronzeDungeonGraph {
 
         Vec3i edgeSize = context.structureTemplateManager().getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/square_tunnel")).getSize();
         this.edgeWidth = edgeSize.getX();
+        this.edgeLength = edgeSize.getZ();
 
         this.maxSize = Math.max(3, maxSize);
     }
 
-    public void initializeDungeon(BlockPos startPos) {
-        BronzeBossRoom bossRoom = new BronzeBossRoom(this.manager, "boss_room", startPos, Rotation.getRandom(this.random));
+    public void initializeDungeon(BlockPos startPos, StructurePiecesBuilder builder) {
+        StructureTemplate bossTemplate = this.context.structureTemplateManager().getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/boss_room"));
+
+        Rotation rotation = getBossRoomRotation(startPos, startPos.offset(bossTemplate.getSize()));
+        if (rotation == null) { // The space may not be big enough for multiple rooms. If so, stop trying.
+            return;
+        }
+        BronzeBossRoom bossRoom = new BronzeBossRoom(this.manager, "boss_room", startPos, rotation);
         Direction direction = bossRoom.getOrientation();
 
         BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(bossRoom.getBoundingBox().moved(0, 2, 0), direction, this.edgeWidth);
@@ -68,12 +76,14 @@ public class BronzeDungeonGraph {
         new Connection(bossRoom, chestRoom, hallway, direction);
 
         for (int i = 2; i < this.maxSize - 1; ++i) {
-            propagateRooms(chestRoom, false);
+            this.propagateRooms(chestRoom, false);
         }
 
-        propagateRooms(chestRoom, true);
+        this.propagateRooms(chestRoom, true);
         StructurePiece lobby = this.nodes.get(this.nodes.size() - 1);
         this.buildEndTunnel(lobby, startPos);
+
+        this.populatePiecesBuilder(builder);
     }
 
     /**
@@ -107,7 +117,7 @@ public class BronzeDungeonGraph {
                         new Connection(startNode, room, hallway, direction);
                         this.nodes.add(room);
                         return true;
-                    } else { // If there's a piece in the way, see if there's a connection already. If not, make one. Then continue the loop.
+                    } else if (!(collisionPiece instanceof BronzeBossRoom)) { // If there's a piece in the way, see if there's a connection already. If not, make one. Then continue the loop.
                         boolean flag = this.edges.computeIfAbsent(collisionPiece, piece -> new HashMap<>()).values().stream()
                                 .map(Connection::endPiece).anyMatch(piece -> piece == startNode);
                         if (!flag) {
@@ -219,17 +229,46 @@ public class BronzeDungeonGraph {
                 chunkGenerator.getBaseColumn(maxX, maxZ, heightAccessor, randomState)
         };
 
-        int maxY = room.maxY() + 1;
-        int minY = room.minY() - 1;
+        return isSolidInColumns(columns, room.minY() - 1, room.maxY() + 1);
+    }
 
+    /**
+     * Find a viable direction for the boss room to face. Returns null if there isn't one.
+     */
+    private Rotation getBossRoomRotation(BlockPos startPos, BlockPos cornerPos) {
+        ChunkGenerator chunkGenerator = this.context.chunkGenerator();
+        LevelHeightAccessor heightAccessor = this.context.heightAccessor();
+        RandomSource random = this.context.random();
+        RandomState randomState = this.context.randomState();
+
+        BoundingBox bossBox = new BoundingBox(startPos.getX(), startPos.getY() + 1, startPos.getZ(), cornerPos.getX(), cornerPos.getY(), cornerPos.getZ());
+
+        for (Rotation rotation : Rotation.getShuffled(random)) {
+            Direction direction = rotation.rotate(Direction.SOUTH);
+            BlockPos.MutableBlockPos neighbor = BlockLogicUtil.tunnelFromEvenSquareRoom(bossBox, direction, 16).mutable().move(direction.getStepX() << 4, 0, direction.getStepZ() << 4);
+            NoiseColumn column1 = chunkGenerator.getBaseColumn(neighbor.getX(), neighbor.getZ(), heightAccessor, randomState);
+            direction = direction.getClockWise();
+            neighbor = neighbor.move(direction.getStepX() << 4, 0, direction.getStepZ() << 4);
+            NoiseColumn column2 = chunkGenerator.getBaseColumn(neighbor.getX(), neighbor.getZ(), heightAccessor, randomState);
+            if (isSolidInColumns(new NoiseColumn[]{column1, column2}, bossBox.minY(), bossBox.maxY())) {
+                return rotation;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Iterates through an array of noise columns. If any of them have air in the range specified, return false.
+     */
+    private static boolean isSolidInColumns(NoiseColumn[] columns, int minY, int maxY) {
         for (NoiseColumn column : columns) {
-            for (int y = room.minY() - 1; y <= maxY; ++y) {
+            for (int y = minY; y <= maxY; ++y) {
                 if (column.getBlock(y).isAir()) {
                     return false;
                 }
             }
         }
-
         return true;
     }
 
@@ -244,7 +283,7 @@ public class BronzeDungeonGraph {
             this.start = start;
             this.end = end;
             this.hallway = hallway;
-            BronzeDungeonGraph.this.edges.computeIfAbsent(start, piece -> new HashMap<>()).put(direction, this);
+            BronzeDungeonBuilder.this.edges.computeIfAbsent(start, piece -> new HashMap<>()).put(direction, this);
         }
 
         public StructurePiece endPiece() {
