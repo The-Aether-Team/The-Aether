@@ -1,4 +1,4 @@
-// 1.19.3	2023-01-22T16:59:30.6320373	Item Models: aether
+// 1.19.3	2023-02-03T13:16:35.224403	Item Models: aether
 88dbeab79e0017737773db746d2e719a21fdb198 assets/aether/models/item/aechor_petal.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/aechor_plant_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/aerbunny_spawn_egg.json
@@ -95,7 +95,7 @@ f77ebba13ba5b5023828e9bcfdb0ddf9af454b0b assets/aether/models/item/gravitite_glo
 df1c42023354c16e351433c1751e939e0b72de00 assets/aether/models/item/gravitite_sword.json
 98fadc4b5a79f18c0b42e279fc79705a4282918b assets/aether/models/item/green_candy_cane_sword.json
 be69a1bdc67bc2945d9b51fa30d73ded7aacf6f9 assets/aether/models/item/hammer_of_jeb.json
-699de8e575707a0ca28d07db99442521d481d209 assets/aether/models/item/hammer_of_notch.json
+76e2b237917f8469448f667f5d780d85ca35a8b6 assets/aether/models/item/hammer_of_kingbdogz.json
 fe3c0addcb5bebab2cb450ef2eed63b110f77eb1 assets/aether/models/item/healing_stone.json
 3cf648c5b07a652e2572bf75aa5bcb91b076e1ef assets/aether/models/item/hellfire_slab.json
 c5dbee0a4fb9028b8e4cff172aa4379a41213560 assets/aether/models/item/hellfire_stairs.json

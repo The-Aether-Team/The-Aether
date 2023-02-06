@@ -134,7 +134,7 @@ public class AetherItemTagData extends ItemTagsProvider {
         this.tag(AetherTags.Items.HOLY_REPAIRING);
         this.tag(AetherTags.Items.VAMPIRE_REPAIRING);
         this.tag(AetherTags.Items.PIG_SLAYER_REPAIRING);
-        this.tag(AetherTags.Items.HAMMER_OF_NOTCH_REPAIRING);
+        this.tag(AetherTags.Items.HAMMER_OF_KINGBDOGZ_REPAIRING);
         this.tag(AetherTags.Items.CANDY_CANE_REPAIRING).add(AetherItems.CANDY_CANE.get());
         this.tag(AetherTags.Items.NEPTUNE_REPAIRING);
         this.tag(AetherTags.Items.PHOENIX_REPAIRING);
@@ -143,7 +143,7 @@ public class AetherItemTagData extends ItemTagsProvider {
         this.tag(AetherTags.Items.ICE_REPAIRING);
 
         this.tag(AetherTags.Items.TOOLS_LANCES).add(AetherItems.VALKYRIE_LANCE.get());
-        this.tag(AetherTags.Items.TOOLS_HAMMERS).add(AetherItems.HAMMER_OF_NOTCH.get());
+        this.tag(AetherTags.Items.TOOLS_HAMMERS).add(AetherItems.HAMMER_OF_KINGBDOGZ.get());
 
         this.tag(AetherTags.Items.AETHER_RING).add(
                 AetherItems.IRON_RING.get(),

@@ -15,9 +15,9 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 
-public class HammerOfNotchItem extends AetherSwordItem {
-    public HammerOfNotchItem() {
-        super(AetherItemTiers.HAMMER_OF_NOTCH, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
+public class HammerOfKingbdogzItem extends AetherSwordItem {
+    public HammerOfKingbdogzItem() {
+        super(AetherItemTiers.HAMMER_OF_KINGBDOGZ, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
     }
 
     /**
@@ -32,7 +32,7 @@ public class HammerOfNotchItem extends AetherSwordItem {
         ItemStack heldStack = player.getItemInHand(hand);
         if (!level.isClientSide()) {
             if (!player.getAbilities().instabuild) {
-                player.getCooldowns().addCooldown(this, AetherConfig.COMMON.hammer_of_notch_cooldown.get());
+                player.getCooldowns().addCooldown(this, AetherConfig.COMMON.hammer_of_kingbdogz_cooldown.get());
                 heldStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
             }
             HammerProjectile hammerProjectile = new HammerProjectile(player, level);
@@ -42,7 +42,7 @@ public class HammerOfNotchItem extends AetherSwordItem {
             }
             level.addFreshEntity(hammerProjectile);
         }
-        level.playLocalSound(player.getX(), player.getY(), player.getZ(), AetherSoundEvents.ITEM_HAMMER_OF_NOTCH_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (player.getRandom().nextFloat() * 0.4F + 0.8F), false);
+        level.playLocalSound(player.getX(), player.getY(), player.getZ(), AetherSoundEvents.ITEM_HAMMER_OF_KINGBDOGZ_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (player.getRandom().nextFloat() * 0.4F + 0.8F), false);
         player.awardStat(Stats.ITEM_USED.get(this));
         return InteractionResultHolder.success(heldStack);
     }
