@@ -29,7 +29,7 @@ public class AetherStructureSets {
         context.register(BRONZE_DUNGEON, new StructureSet(structures.getOrThrow(AetherStructures.BRONZE_DUNGEON), new RandomSpreadStructurePlacement(7, 4, RandomSpreadType.LINEAR, 32146754)));
         context.register(SILVER_AND_GOLD_DUNGEONS, new StructureSet(List.of(
         		StructureSet.entry(structures.getOrThrow(AetherStructures.SILVER_DUNGEON), 3),
-        		StructureSet.entry(structures.getOrThrow(AetherStructures.GOLD_DUNGEON), 2)),
-        	new RandomSpreadStructurePlacement(15, 13, RandomSpreadType.LINEAR, 4325806)));
+        		StructureSet.entry(structures.getOrThrow(AetherStructures.GOLD_DUNGEON), 1)),
+        	new RandomSpreadStructurePlacement(20, 13, RandomSpreadType.LINEAR, 4325806)));
     }
 }

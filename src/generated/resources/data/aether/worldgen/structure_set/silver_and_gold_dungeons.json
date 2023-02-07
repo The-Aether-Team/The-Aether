@@ -3,7 +3,7 @@
     "type": "minecraft:random_spread",
     "salt": 4325806,
     "separation": 13,
-    "spacing": 15
+    "spacing": 20
   },
   "structures": [
     {
@@ -12,7 +12,7 @@
     },
     {
       "structure": "aether:gold_dungeon",
-      "weight": 2
+      "weight": 1
     }
   ]
 }
