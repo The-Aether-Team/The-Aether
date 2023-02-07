@@ -11,7 +11,6 @@ import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
@@ -31,7 +30,8 @@ public class SilverDungeonStructure extends Structure {
     @Override
     public Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
         ChunkPos chunkpos = context.chunkPos();
-        BlockPos blockpos = new BlockPos(chunkpos.getMiddleBlockX(), 20 + context.random().nextInt(30), chunkpos.getMiddleBlockZ());
+
+        BlockPos blockpos = new BlockPos(chunkpos.getMiddleBlockX(), 20 + context.random().nextInt(75), chunkpos.getMiddleBlockZ());
         return Optional.of(new GenerationStub(blockpos, (piecesBuilder) -> this.generatePieces(piecesBuilder, context, blockpos)));
     }
 
@@ -83,14 +83,6 @@ public class SilverDungeonStructure extends Structure {
 
         SilverDungeonBuilder grid = new SilverDungeonBuilder(randomSource, 3, 3, 3);
         grid.assembleDungeon(builder, manager, offsetPos, rotation, direction);
-
-        BoundingBox box = builder.getBoundingBox();
-        int height = 30;
-        int[] corners = {box.minX(), box.minZ(), box.minX(), box.maxZ(), box.maxX(), box.minZ(), box.maxX(), box.maxZ()};
-        for (int index = 0; index < corners.length; index += 2) {
-            height = Math.max(height, context.chunkGenerator().getBaseHeight(corners[index], corners[index + 1], Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState()));
-        }
-        builder.offsetPiecesVertically(height);
     }
 
     /**

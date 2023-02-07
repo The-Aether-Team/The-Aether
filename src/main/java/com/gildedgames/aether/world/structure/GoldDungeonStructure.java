@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
@@ -49,14 +50,19 @@ public class GoldDungeonStructure extends Structure {
 
     @Override
     public Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
+        RandomSource random = context.random();
         ChunkPos chunkpos = context.chunkPos();
-        BlockPos blockpos = new BlockPos(chunkpos.getMiddleBlockX(), 80, chunkpos.getMiddleBlockZ());
-        return Optional.of(new GenerationStub(blockpos, piecesBuilder -> this.generatePieces(piecesBuilder, context)));
+        int x = chunkpos.getMiddleBlockX();
+        int z = chunkpos.getMiddleBlockZ();
+        int terrainHeight = context.chunkGenerator().getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState()) - 20;
+        int height = 40 + random.nextInt(60);
+        height = Math.max(terrainHeight, height);
+        BlockPos blockpos = new BlockPos(chunkpos.getMiddleBlockX(), height, chunkpos.getMiddleBlockZ());
+        return Optional.of(new GenerationStub(blockpos, piecesBuilder -> this.generatePieces(piecesBuilder, context, blockpos)));
     }
 
-    private void generatePieces(StructurePiecesBuilder builder, GenerationContext context) {
+    private void generatePieces(StructurePiecesBuilder builder, GenerationContext context, BlockPos elevatedPos) {
         RandomSource random = context.random();
-        BlockPos elevatedPos = context.chunkPos().getBlockAt(2, 80, 2);
         StructureTemplateManager templateManager = context.structureTemplateManager();
 
         GoldIsland island = new GoldIsland(
