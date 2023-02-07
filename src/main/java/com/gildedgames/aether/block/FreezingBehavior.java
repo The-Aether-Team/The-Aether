@@ -119,7 +119,7 @@ public interface FreezingBehavior<T> {
                 level.scheduleTick(pos, newBlockState.getBlock(), Mth.nextInt(level.getRandom(), 60, 120));
             }
             if (oldBlockState.getFluidState().is(FluidTags.LAVA)) {
-                level.playSound(null, pos, SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.playSound(null, pos, SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 0.75F, 1.0F);
             }
             BlockStateRecipeUtil.executeFunction(level, pos, function);
             return 1;
