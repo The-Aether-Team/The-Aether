@@ -99,6 +99,10 @@ public class Aerbunny extends AetherAnimal {
             this.setPuffiness(0);
         }
         if (this.getVehicle() instanceof Player player) {
+            if (player.isSpectator()) {
+                this.stopRiding();
+            }
+
             EntityUtil.copyRotations(this, player);
 
             player.resetFallDistance();
@@ -148,15 +152,15 @@ public class Aerbunny extends AetherAnimal {
     @Nonnull
     @Override
     public InteractionResult mobInteract(Player player, @Nonnull InteractionHand hand) {
-        if (player.isShiftKeyDown()) {
-            return this.ridePlayer(player);
-        } else {
-            InteractionResult result = super.mobInteract(player, hand);
-            if (result == InteractionResult.PASS || result == InteractionResult.FAIL) {
+        InteractionResult result = super.mobInteract(player, hand);
+        if (!(this.getVehicle() instanceof Player vehicle) || vehicle.equals(player)) {
+            if (player.isShiftKeyDown()) {
+                return this.ridePlayer(player);
+            } else if (result == InteractionResult.PASS || result == InteractionResult.FAIL) {
                 return this.ridePlayer(player);
             }
-            return result;
         }
+        return result;
     }
 
     private InteractionResult ridePlayer(Player player) {

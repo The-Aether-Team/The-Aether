@@ -4,10 +4,12 @@ import com.gildedgames.aether.client.renderer.level.AetherSkyRenderEffects;
 import com.gildedgames.aether.data.resources.registries.AetherDimensions;
 import com.gildedgames.aether.capability.time.AetherTime;
 import com.gildedgames.aether.mixin.mixins.common.accessor.LevelAccessor;
+import com.gildedgames.aether.util.EquipmentUtil;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.FogRenderer;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.material.FogType;
 import org.apache.commons.lang3.tuple.Triple;
@@ -19,6 +21,18 @@ public class DimensionClientHooks {
                 FogType fluidState = camera.getFluidInCamera();
                 if (mode == FogRenderer.FogMode.FOG_TERRAIN && fluidState == FogType.NONE) {
                     return far / 2.0F;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static Float reduceLavaFog(Camera camera, float nearDistance) {
+        if (camera.getEntity().level instanceof ClientLevel) {
+            if (camera.getEntity() instanceof LivingEntity livingEntity && EquipmentUtil.hasFullPhoenixSet(livingEntity)) {
+                FogType fluidState = camera.getFluidInCamera();
+                if (fluidState == FogType.LAVA) {
+                    return nearDistance * 5.0F;
                 }
             }
         }

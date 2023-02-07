@@ -104,7 +104,7 @@ public class AetherTags {
 		public static final TagKey<Item> HOLY_REPAIRING = tag("holy_repairing");
 		public static final TagKey<Item> VAMPIRE_REPAIRING = tag("vampire_repairing");
 		public static final TagKey<Item> PIG_SLAYER_REPAIRING = tag("pig_slayer_repairing");
-		public static final TagKey<Item> HAMMER_OF_NOTCH_REPAIRING = tag("hammer_of_notch_repairing");
+		public static final TagKey<Item> HAMMER_OF_KINGBDOGZ_REPAIRING = tag("hammer_of_kingbdogz_repairing");
 		public static final TagKey<Item> CANDY_CANE_REPAIRING = tag("candy_cane_repairing");
 		public static final TagKey<Item> NEPTUNE_REPAIRING = tag("neptune_repairing");
 		public static final TagKey<Item> PHOENIX_REPAIRING = tag("phoenix_repairing");

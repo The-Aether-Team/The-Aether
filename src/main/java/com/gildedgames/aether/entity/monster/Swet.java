@@ -333,6 +333,11 @@ public class Swet extends Slime implements MountableMob {
         return AetherSoundEvents.ENTITY_SWET_SQUISH.get();
     }
 
+    @Override
+    public double getPassengersRidingOffset() {
+        return 1.4;
+    }
+
     /**
      * The player can attack the swet to try to kill it before they finish the attack.
      */

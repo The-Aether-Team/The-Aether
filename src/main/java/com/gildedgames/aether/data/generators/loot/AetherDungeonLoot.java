@@ -74,7 +74,7 @@ public class AetherDungeonLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(AetherItems.AGILITY_CAPE.get()).setWeight(1))
                         .add(LootItem.lootTableItem(AetherItems.SENTRY_BOOTS.get()).setWeight(1))
                         .add(LootItem.lootTableItem(AetherItems.SHIELD_OF_REPULSION.get()).setWeight(1))
-                        .add(LootItem.lootTableItem(AetherItems.HAMMER_OF_NOTCH.get()).setWeight(1))
+                        .add(LootItem.lootTableItem(AetherItems.HAMMER_OF_KINGBDOGZ.get()).setWeight(1))
                         .add(LootItem.lootTableItem(AetherItems.CLOUD_STAFF.get()).setWeight(1))
                 )
         );

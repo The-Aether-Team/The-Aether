@@ -16,10 +16,17 @@ public class DimensionClientListener {
     public static void onRenderFog(ViewportEvent.RenderFog event) {
         Camera camera = event.getCamera();
         FogRenderer.FogMode fogMode = event.getMode();
+        float nearDistance = event.getNearPlaneDistance();
         float farDistance = event.getFarPlaneDistance();
         Float renderNearFog = DimensionClientHooks.renderNearFog(camera, fogMode, farDistance);
-        if (renderNearFog != null) {
+        if (!event.isCanceled() && renderNearFog != null) {
             event.setNearPlaneDistance(renderNearFog);
+            event.setCanceled(true);
+        }
+        Float reduceLavaFog = DimensionClientHooks.reduceLavaFog(camera, nearDistance);
+        if (!event.isCanceled() && reduceLavaFog != null) {
+            event.setNearPlaneDistance(reduceLavaFog);
+            event.setFarPlaneDistance(reduceLavaFog * 4);
             event.setCanceled(true);
         }
     }

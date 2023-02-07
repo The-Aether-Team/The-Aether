@@ -15,7 +15,7 @@ public class AetherConfig {
         public final ConfigValue<Boolean> tools_debuff;
         public final ConfigValue<Boolean> healing_gummy_swets;
         public final ConfigValue<Boolean> temporary_ice_accessory_conversion;
-        public final ConfigValue<Integer> hammer_of_notch_cooldown;
+        public final ConfigValue<Integer> hammer_of_kingbdogz_cooldown;
         public final ConfigValue<Integer> cloud_staff_cooldown;
         public final ConfigValue<Integer> maximum_life_shards;
         public final ConfigValue<Boolean> repeat_sun_spirit_dialogue;
@@ -51,7 +51,7 @@ public class AetherConfig {
                     .translation("config.aether.common.gameplay.enable_startup_loot")
                     .define("Gives starting loot on entry", true);
             tools_debuff = builder
-                    .comment("Tools that aren't from the Aether will mine all blocks slower than ones that are from the Aether")
+                    .comment("Tools that aren't from the Aether will mine Aether blocks slower than tools that are from the Aether")
                     .translation("config.aether.common.gameplay.tools_debuff")
                     .define("Debuff non-Aether tools", false);
             edible_ambrosium = builder
@@ -70,10 +70,10 @@ public class AetherConfig {
                     .comment("Ice Accessories will create temporary blocks instead of permanent blocks from conversions")
                     .translation("config.aether.common.gameplay.temporary_ice_accessory_conversion")
                     .define("Temporary blocks from Ice Accessories", false);
-            hammer_of_notch_cooldown = builder
-                    .comment("Determines the cooldown in ticks for the Hammer of Notch's ability")
-                    .translation("config.aether.common.gameplay.hammer_of_notch_cooldown")
-                    .define("Cooldown for the Hammer of Notch", 200);
+            hammer_of_kingbdogz_cooldown = builder
+                    .comment("Determines the cooldown in ticks for the Hammer of Kingbdogz's ability")
+                    .translation("config.aether.common.gameplay.hammer_of_kingbdogz_cooldown")
+                    .define("Cooldown for the Hammer of Kingbdogz", 75);
             cloud_staff_cooldown = builder
                     .comment("Determines the cooldown in ticks for the Cloud Staff's ability")
                     .translation("config.aether.common.gameplay.cloud_staff_cooldown")

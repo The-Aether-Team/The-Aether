@@ -1,5 +1,6 @@
 package com.gildedgames.aether.item.combat.abilities.armor;
 
+import com.gildedgames.aether.capability.player.AetherPlayer;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.util.EquipmentUtil;
 import net.minecraft.core.particles.ParticleTypes;
@@ -8,6 +9,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -23,7 +25,7 @@ import java.util.Map;
 
 public interface PhoenixArmor {
     /**
-     * Boosts the entity's movement in lava if wearing a full set of Phoenix Armor. The default boost is a multiplier of 10.5, but an extra 1.5 is added for every Depth Strider level up to Depth Strider 3.<br><br>
+     * Boosts the entity's movement in lava if wearing a full set of Phoenix Armor. The default boost is a multiplier of 10.5, but is modified based on duration in lava and whether the boots have Depth Strider.<br><br>
      * Wearing Phoenix Armor also clears any fire from the wearer and spawns flame particles around them.
      * @param entity The {@link LivingEntity} wearing the armor.
      * @see com.gildedgames.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(LivingEvent.LivingTickEvent)
@@ -33,13 +35,19 @@ public interface PhoenixArmor {
             entity.clearFire();
             if (entity.isInLava()) {
                 entity.resetFallDistance();
-                float defaultBoost = 10.5F;
-                float depthStriderModifier = Math.min(EnchantmentHelper.getDepthStrider(entity), 3.0F);
-                if (depthStriderModifier > 0.0F) {
-                    defaultBoost += depthStriderModifier * 1.5F;
+                if (entity instanceof Player player) {
+                    AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
+                        float defaultBoost = boostWithDepthStrider(entity);
+                        aetherPlayer.setPhoenixSubmergeLength(Math.min(aetherPlayer.getPhoenixSubmergeLength() + 0.1, 1.0));
+                        defaultBoost *= aetherPlayer.getPhoenixSubmergeLength();
+                        Vec3 movement = entity.getDeltaMovement().multiply(defaultBoost, 0.25F, defaultBoost);
+                        entity.move(MoverType.SELF, movement);
+                    });
+                } else {
+                    float defaultBoost = boostWithDepthStrider(entity);
+                    Vec3 movement = entity.getDeltaMovement().multiply(defaultBoost, 0.25F, defaultBoost);
+                    entity.move(MoverType.SELF, movement);
                 }
-                Vec3 movement = entity.getDeltaMovement().multiply(defaultBoost, 0.25F, defaultBoost);
-                entity.move(MoverType.SELF, movement);
             }
             if (entity.getLevel() instanceof ServerLevel level) {
                 level.sendParticles(ParticleTypes.FLAME,
@@ -49,6 +57,25 @@ public interface PhoenixArmor {
                         1, 0.0D, 0.0D, 0.0D, 0.0F);
             }
         }
+        if (!EquipmentUtil.hasFullPhoenixSet(entity) || !entity.isInLava()) {
+            if (entity instanceof Player player) {
+                AetherPlayer.get(player).ifPresent((aetherPlayer) -> aetherPlayer.setPhoenixSubmergeLength(0.0));
+            }
+        }
+    }
+
+    /**
+     * Adds an extra 1.5 to the boost for every Depth Strider level up to Depth Strider 3.
+     * @param entity The {@link LivingEntity} wearing the armor.
+     * @return The modified boost as a {@link Float}.
+     */
+    private static float boostWithDepthStrider(LivingEntity entity) {
+        float defaultBoost = 10.5F;
+        float depthStriderModifier = Math.min(EnchantmentHelper.getDepthStrider(entity), 3.0F);
+        if (depthStriderModifier > 0.0F) {
+            defaultBoost += depthStriderModifier * 1.5F;
+        }
+        return defaultBoost;
     }
 
     /**

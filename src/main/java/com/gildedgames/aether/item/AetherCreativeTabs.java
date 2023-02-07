@@ -256,7 +256,7 @@ public class AetherCreativeTabs {
                             output.accept(AetherItems.FLAMING_SWORD.get());
                             output.accept(AetherItems.PHOENIX_BOW.get());
                             output.accept(AetherItems.PIG_SLAYER.get());
-                            output.accept(AetherItems.HAMMER_OF_NOTCH.get());
+                            output.accept(AetherItems.HAMMER_OF_KINGBDOGZ.get());
                             output.accept(AetherItems.CLOUD_STAFF.get());
                             output.accept(AetherItems.SKYROOT_BUCKET.get());
                             output.accept(AetherItems.SKYROOT_WATER_BUCKET.get());

@@ -568,28 +568,105 @@
   },
   "item.accessory.equip_generic": {
     "sounds": [
-      "item/armor/equip_generic1",
-      "item/armor/equip_generic2",
-      "item/armor/equip_generic3",
-      "item/armor/equip_generic4",
-      "item/armor/equip_generic5",
-      "item/armor/equip_generic6"
+      "item/armor/equip_chain1",
+      "item/armor/equip_chain2",
+      "item/armor/equip_chain3",
+      "item/armor/equip_chain4",
+      "item/armor/equip_chain5",
+      "item/armor/equip_chain6"
     ],
     "subtitle": "subtitles.item.accessory.equip_generic"
   },
   "item.accessory.equip_gold_pendant": {
     "sounds": [
-      "item/armor/equip_gold1",
-      "item/armor/equip_gold2",
-      "item/armor/equip_gold3",
-      "item/armor/equip_gold4",
-      "item/armor/equip_gold5",
-      "item/armor/equip_gold6"
+      "item/armor/equip_chain1",
+      "item/armor/equip_chain2",
+      "item/armor/equip_chain3",
+      "item/armor/equip_chain4",
+      "item/armor/equip_chain5",
+      "item/armor/equip_chain6"
     ],
     "subtitle": "subtitles.item.accessory.equip_gold_pendant"
   },
   "item.accessory.equip_gold_ring": {
     "sounds": [
+      "item/armor/equip_chain1",
+      "item/armor/equip_chain2",
+      "item/armor/equip_chain3",
+      "item/armor/equip_chain4",
+      "item/armor/equip_chain5",
+      "item/armor/equip_chain6"
+    ],
+    "subtitle": "subtitles.item.accessory.equip_gold_ring"
+  },
+  "item.accessory.equip_ice_pendant": {
+    "sounds": [
+      "item/armor/equip_chain1",
+      "item/armor/equip_chain2",
+      "item/armor/equip_chain3",
+      "item/armor/equip_chain4",
+      "item/armor/equip_chain5",
+      "item/armor/equip_chain6"
+    ],
+    "subtitle": "subtitles.item.accessory.equip_ice_pendant"
+  },
+  "item.accessory.equip_ice_ring": {
+    "sounds": [
+      "item/armor/equip_chain1",
+      "item/armor/equip_chain2",
+      "item/armor/equip_chain3",
+      "item/armor/equip_chain4",
+      "item/armor/equip_chain5",
+      "item/armor/equip_chain6"
+    ],
+    "subtitle": "subtitles.item.accessory.equip_ice_ring"
+  },
+  "item.accessory.equip_iron_pendant": {
+    "sounds": [
+      "item/armor/equip_chain1",
+      "item/armor/equip_chain2",
+      "item/armor/equip_chain3",
+      "item/armor/equip_chain4",
+      "item/armor/equip_chain5",
+      "item/armor/equip_chain6"
+    ],
+    "subtitle": "subtitles.item.accessory.equip_iron_pendant"
+  },
+  "item.accessory.equip_iron_ring": {
+    "sounds": [
+      "item/armor/equip_chain1",
+      "item/armor/equip_chain2",
+      "item/armor/equip_chain3",
+      "item/armor/equip_chain4",
+      "item/armor/equip_chain5",
+      "item/armor/equip_chain6"
+    ],
+    "subtitle": "subtitles.item.accessory.equip_iron_ring"
+  },
+  "item.accessory.equip_zanite_pendant": {
+    "sounds": [
+      "item/armor/equip_chain1",
+      "item/armor/equip_chain2",
+      "item/armor/equip_chain3",
+      "item/armor/equip_chain4",
+      "item/armor/equip_chain5",
+      "item/armor/equip_chain6"
+    ],
+    "subtitle": "subtitles.item.accessory.equip_zanite_pendant"
+  },
+  "item.accessory.equip_zanite_ring": {
+    "sounds": [
+      "item/armor/equip_chain1",
+      "item/armor/equip_chain2",
+      "item/armor/equip_chain3",
+      "item/armor/equip_chain4",
+      "item/armor/equip_chain5",
+      "item/armor/equip_chain6"
+    ],
+    "subtitle": "subtitles.item.accessory.equip_zanite_ring"
+  },
+  "item.armor.equip_gravitite": {
+    "sounds": [
       "item/armor/equip_gold1",
       "item/armor/equip_gold2",
       "item/armor/equip_gold3",
@@ -597,141 +674,29 @@
       "item/armor/equip_gold5",
       "item/armor/equip_gold6"
     ],
-    "subtitle": "subtitles.item.accessory.equip_gold_ring"
-  },
-  "item.accessory.equip_ice_pendant": {
-    "sounds": [
-      "item/armor/equip_generic1",
-      "item/armor/equip_generic2",
-      "item/armor/equip_generic3",
-      "item/armor/equip_generic4",
-      "item/armor/equip_generic5",
-      "item/armor/equip_generic6"
-    ],
-    "subtitle": "subtitles.item.accessory.equip_ice_pendant"
-  },
-  "item.accessory.equip_ice_ring": {
-    "sounds": [
-      "item/armor/equip_generic1",
-      "item/armor/equip_generic2",
-      "item/armor/equip_generic3",
-      "item/armor/equip_generic4",
-      "item/armor/equip_generic5",
-      "item/armor/equip_generic6"
-    ],
-    "subtitle": "subtitles.item.accessory.equip_ice_ring"
-  },
-  "item.accessory.equip_iron_pendant": {
-    "sounds": [
-      "item/armor/equip_iron1",
-      "item/armor/equip_iron2",
-      "item/armor/equip_iron3",
-      "item/armor/equip_iron4",
-      "item/armor/equip_iron5",
-      "item/armor/equip_iron6"
-    ],
-    "subtitle": "subtitles.item.accessory.equip_iron_pendant"
-  },
-  "item.accessory.equip_iron_ring": {
-    "sounds": [
-      "item/armor/equip_iron1",
-      "item/armor/equip_iron2",
-      "item/armor/equip_iron3",
-      "item/armor/equip_iron4",
-      "item/armor/equip_iron5",
-      "item/armor/equip_iron6"
-    ],
-    "subtitle": "subtitles.item.accessory.equip_iron_ring"
-  },
-  "item.accessory.equip_zanite_pendant": {
-    "sounds": [
-      "item/armor/equip_iron1",
-      "item/armor/equip_iron2",
-      "item/armor/equip_iron3",
-      "item/armor/equip_iron4",
-      "item/armor/equip_iron5",
-      "item/armor/equip_iron6"
-    ],
-    "subtitle": "subtitles.item.accessory.equip_zanite_pendant"
-  },
-  "item.accessory.equip_zanite_ring": {
-    "sounds": [
-      "item/armor/equip_iron1",
-      "item/armor/equip_iron2",
-      "item/armor/equip_iron3",
-      "item/armor/equip_iron4",
-      "item/armor/equip_iron5",
-      "item/armor/equip_iron6"
-    ],
-    "subtitle": "subtitles.item.accessory.equip_zanite_ring"
-  },
-  "item.armor.equip_gravitite": {
-    "sounds": [
-      "item/armor/equip_diamond1",
-      "item/armor/equip_diamond2",
-      "item/armor/equip_diamond3",
-      "item/armor/equip_diamond4",
-      "item/armor/equip_diamond5",
-      "item/armor/equip_diamond6"
-    ],
     "subtitle": "subtitles.item.armor.equip_gravitite"
   },
   "item.armor.equip_neptune": {
     "sounds": [
-      "item/armor/equip_diamond1",
-      "item/armor/equip_diamond2",
-      "item/armor/equip_diamond3",
-      "item/armor/equip_diamond4",
-      "item/armor/equip_diamond5",
-      "item/armor/equip_diamond6"
+      "item/armor/equip_gold1",
+      "item/armor/equip_gold2",
+      "item/armor/equip_gold3",
+      "item/armor/equip_gold4",
+      "item/armor/equip_gold5",
+      "item/armor/equip_gold6"
     ],
     "subtitle": "subtitles.item.armor.equip_neptune"
   },
   "item.armor.equip_obsidian": {
     "sounds": [
-      "item/armor/equip_diamond1",
-      "item/armor/equip_diamond2",
-      "item/armor/equip_diamond3",
-      "item/armor/equip_diamond4",
-      "item/armor/equip_diamond5",
-      "item/armor/equip_diamond6"
+      "item/armor/equip_netherite1",
+      "item/armor/equip_netherite2",
+      "item/armor/equip_netherite3",
+      "item/armor/equip_netherite4"
     ],
     "subtitle": "subtitles.item.armor.equip_obsidian"
   },
   "item.armor.equip_phoenix": {
-    "sounds": [
-      "item/armor/equip_diamond1",
-      "item/armor/equip_diamond2",
-      "item/armor/equip_diamond3",
-      "item/armor/equip_diamond4",
-      "item/armor/equip_diamond5",
-      "item/armor/equip_diamond6"
-    ],
-    "subtitle": "subtitles.item.armor.equip_phoenix"
-  },
-  "item.armor.equip_sentry": {
-    "sounds": [
-      "item/armor/equip_diamond1",
-      "item/armor/equip_diamond2",
-      "item/armor/equip_diamond3",
-      "item/armor/equip_diamond4",
-      "item/armor/equip_diamond5",
-      "item/armor/equip_diamond6"
-    ],
-    "subtitle": "subtitles.item.armor.equip_sentry"
-  },
-  "item.armor.equip_valkyrie": {
-    "sounds": [
-      "item/armor/equip_diamond1",
-      "item/armor/equip_diamond2",
-      "item/armor/equip_diamond3",
-      "item/armor/equip_diamond4",
-      "item/armor/equip_diamond5",
-      "item/armor/equip_diamond6"
-    ],
-    "subtitle": "subtitles.item.armor.equip_valkyrie"
-  },
-  "item.armor.equip_zanite": {
     "sounds": [
       "item/armor/equip_iron1",
       "item/armor/equip_iron2",
@@ -739,6 +704,37 @@
       "item/armor/equip_iron4",
       "item/armor/equip_iron5",
       "item/armor/equip_iron6"
+    ],
+    "subtitle": "subtitles.item.armor.equip_phoenix"
+  },
+  "item.armor.equip_sentry": {
+    "sounds": [
+      "item/armor/equip_netherite1",
+      "item/armor/equip_netherite2",
+      "item/armor/equip_netherite3",
+      "item/armor/equip_netherite4"
+    ],
+    "subtitle": "subtitles.item.armor.equip_sentry"
+  },
+  "item.armor.equip_valkyrie": {
+    "sounds": [
+      "item/armor/equip_iron1",
+      "item/armor/equip_iron2",
+      "item/armor/equip_iron3",
+      "item/armor/equip_iron4",
+      "item/armor/equip_iron5",
+      "item/armor/equip_iron6"
+    ],
+    "subtitle": "subtitles.item.armor.equip_valkyrie"
+  },
+  "item.armor.equip_zanite": {
+    "sounds": [
+      "item/armor/equip_diamond1",
+      "item/armor/equip_diamond2",
+      "item/armor/equip_diamond3",
+      "item/armor/equip_diamond4",
+      "item/armor/equip_diamond5",
+      "item/armor/equip_diamond6"
     ],
     "subtitle": "subtitles.item.armor.equip_zanite"
   },
@@ -748,11 +744,11 @@
     ],
     "subtitle": "subtitles.item.dart_shooter.shoot"
   },
-  "item.hammer_of_notch.shoot": {
+  "item.hammer_of_kingbdogz.shoot": {
     "sounds": [
       "mob/ghast/fireball4"
     ],
-    "subtitle": "subtitles.item.hammer_of_notch.shoot"
+    "subtitle": "subtitles.item.hammer_of_kingbdogz.shoot"
   },
   "item.lightning_knife.shoot": {
     "sounds": [
