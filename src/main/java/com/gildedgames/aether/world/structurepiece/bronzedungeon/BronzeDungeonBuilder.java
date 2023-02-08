@@ -136,13 +136,19 @@ public class BronzeDungeonBuilder {
         rotations.add(rotation.getRotated(Rotation.COUNTERCLOCKWISE_90));
         rotations.add(rotation);
         rotations.add(rotation.getRotated(Rotation.CLOCKWISE_90));
+        List<StructurePiece> longestTunnel = null;
         for (int i = 3; i > 0; i--) {
+            List<StructurePiece> tunnel = new ArrayList<>();
             rotation = rotations.remove(this.random.nextInt(i));
             Direction direction = rotation.rotate(Direction.SOUTH);
-            if (buildTunnelFromRoom(lobby, rotation, direction, origin)) {
+            if (buildTunnelFromRoom(lobby, tunnel, rotation, direction, origin)) {
+                longestTunnel = tunnel;
                 break;
+            } else if (longestTunnel == null || tunnel.size() > longestTunnel.size()) {
+                longestTunnel = tunnel;
             }
         }
+        this.nodes.addAll(longestTunnel);
     }
 
     /**
@@ -153,7 +159,7 @@ public class BronzeDungeonBuilder {
      * @param direction     - The direction to build in
      * @param origin        - The start position of the structure
      */
-    public boolean buildTunnelFromRoom(StructurePiece connectedRoom, Rotation rotation, Direction direction, BlockPos origin) {
+    public boolean buildTunnelFromRoom(StructurePiece connectedRoom, List<StructurePiece> list, Rotation rotation, Direction direction, BlockPos origin) {
         StructureTemplate template = this.manager.getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/end_corridor"));
         BlockPos startPos = BlockLogicUtil.tunnelFromEvenSquareRoom(connectedRoom.getBoundingBox(), direction, template.getSize().getX());
         int length = template.getSize().getZ();
@@ -177,7 +183,7 @@ public class BronzeDungeonBuilder {
                 break;
             } else {
                 noOverlap = true;
-                this.nodes.add(tunnel);
+                list.add(tunnel);
                 connectedRoom = tunnel;
             }
             i += length;
