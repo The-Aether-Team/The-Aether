@@ -39,14 +39,14 @@ public class SilverDungeonStructure extends Structure {
         int x = chunkpos.getMiddleBlockX();
         int z = chunkpos.getMiddleBlockZ();
 
-        int maxHeight = heightAccessor.getMaxBuildHeight();
+        int maxHeight = 128;
 
         int height;
-        if (random.nextBoolean()) {
+        if (random.nextInt(5) < 3) {
             height = chunkGenerator.getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, heightAccessor, context.randomState()) + 20;
             height += random.nextInt(maxHeight - height);
         } else {
-            height = 20 + random.nextInt(75);
+            height = 35 + random.nextInt(70);
         }
 
         BlockPos blockpos = new BlockPos(chunkpos.getMiddleBlockX(), height, chunkpos.getMiddleBlockZ());
