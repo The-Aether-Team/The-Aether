@@ -44,7 +44,9 @@ public class SilverDungeonStructure extends Structure {
         int height;
         if (random.nextInt(5) < 3) {
             height = chunkGenerator.getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, heightAccessor, context.randomState()) + 20;
-            height += random.nextInt(maxHeight - height);
+            if (height < maxHeight) {
+                height += random.nextInt(maxHeight - height);
+            }
         } else {
             height = 35 + random.nextInt(70);
         }
