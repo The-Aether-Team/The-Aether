@@ -47,6 +47,12 @@ public class DimensionClientListener {
             event.setGreen(renderFogColors.getMiddle());
             event.setBlue(renderFogColors.getRight());
         }
+        Triple<Float, Float, Float> adjustWeatherFogColors = DimensionClientHooks.adjustWeatherFogColors(camera, red, green, blue);
+        if (adjustWeatherFogColors.getLeft() != null && adjustWeatherFogColors.getMiddle() != null && adjustWeatherFogColors.getRight() != null) {
+            event.setRed(adjustWeatherFogColors.getLeft());
+            event.setGreen(adjustWeatherFogColors.getMiddle());
+            event.setBlue(adjustWeatherFogColors.getRight());
+        }
     }
 
     /**
