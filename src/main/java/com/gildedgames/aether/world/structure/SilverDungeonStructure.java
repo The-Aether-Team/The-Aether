@@ -7,10 +7,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
@@ -29,10 +31,28 @@ public class SilverDungeonStructure extends Structure {
 
     @Override
     public Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
+        ChunkGenerator chunkGenerator = context.chunkGenerator();
+        LevelHeightAccessor heightAccessor = context.heightAccessor();
         ChunkPos chunkpos = context.chunkPos();
+        RandomSource random = context.random();
 
-        BlockPos blockpos = new BlockPos(chunkpos.getMiddleBlockX(), 20 + context.random().nextInt(75), chunkpos.getMiddleBlockZ());
-        return Optional.of(new GenerationStub(blockpos, (piecesBuilder) -> this.generatePieces(piecesBuilder, context, blockpos)));
+        int x = chunkpos.getMiddleBlockX();
+        int z = chunkpos.getMiddleBlockZ();
+
+        int maxHeight = heightAccessor.getMaxBuildHeight();
+
+        int height;
+        if (random.nextBoolean()) {
+            height = chunkGenerator.getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, heightAccessor, context.randomState()) + 20;
+            height += random.nextInt(maxHeight - height);
+        } else {
+            height = 20 + random.nextInt(75);
+        }
+
+        BlockPos blockpos = new BlockPos(chunkpos.getMiddleBlockX(), height, chunkpos.getMiddleBlockZ());
+
+
+        return Optional.of(new GenerationStub(blockpos, piecesBuilder -> this.generatePieces(piecesBuilder, context, blockpos)));
     }
 
     private void generatePieces(StructurePiecesBuilder builder, GenerationContext context, BlockPos elevatedPos) {
