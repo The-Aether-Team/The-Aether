@@ -220,6 +220,9 @@ public class BronzeDungeonBuilder {
     }
 
     private boolean isCoveredAtPos(BoundingBox room) {
+        if (false) {
+            return true;
+        }
         ChunkGenerator chunkGenerator = this.context.chunkGenerator();
         LevelHeightAccessor heightAccessor = this.context.heightAccessor();
         RandomState randomState = this.context.randomState();
@@ -242,6 +245,9 @@ public class BronzeDungeonBuilder {
      * Find a viable direction for the boss room to face. Returns null if there isn't one.
      */
     private Rotation getBossRoomRotation(BlockPos startPos, BlockPos cornerPos) {
+        if (false) {
+            return Rotation.getRandom(random);
+        }
         ChunkGenerator chunkGenerator = this.context.chunkGenerator();
         LevelHeightAccessor heightAccessor = this.context.heightAccessor();
         RandomSource random = this.context.random();

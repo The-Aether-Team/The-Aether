@@ -28,46 +28,50 @@
     "final_density": {
       "type": "minecraft:squeeze",
       "argument": {
-        "type": "minecraft:interpolated",
-        "argument": {
-          "type": "minecraft:blend_density",
+        "type": "minecraft:mul",
+        "argument1": 0.64,
+        "argument2": {
+          "type": "minecraft:interpolated",
           "argument": {
-            "type": "minecraft:add",
-            "argument1": -0.05,
-            "argument2": {
+            "type": "minecraft:blend_density",
+            "argument": {
               "type": "minecraft:add",
-              "argument1": -0.1,
+              "argument1": -0.05,
               "argument2": {
-                "type": "minecraft:mul",
-                "argument1": {
-                  "type": "minecraft:y_clamped_gradient",
-                  "from_value": 0.0,
-                  "from_y": 8,
-                  "to_value": 1.0,
-                  "to_y": 40
-                },
+                "type": "minecraft:add",
+                "argument1": -0.1,
                 "argument2": {
-                  "type": "minecraft:add",
-                  "argument1": 0.1,
+                  "type": "minecraft:mul",
+                  "argument1": {
+                    "type": "minecraft:y_clamped_gradient",
+                    "from_value": 0.0,
+                    "from_y": 0,
+                    "to_value": 1.0,
+                    "to_y": 40
+                  },
                   "argument2": {
                     "type": "minecraft:add",
-                    "argument1": -0.2,
+                    "argument1": 0.1,
                     "argument2": {
-                      "type": "minecraft:mul",
-                      "argument1": {
-                        "type": "minecraft:y_clamped_gradient",
-                        "from_value": 1.0,
-                        "from_y": 56,
-                        "to_value": 0.0,
-                        "to_y": 128
-                      },
+                      "type": "minecraft:add",
+                      "argument1": -0.2,
                       "argument2": {
-                        "type": "minecraft:add",
-                        "argument1": 0.2,
+                        "type": "minecraft:mul",
+                        "argument1": {
+                          "type": "minecraft:y_clamped_gradient",
+                          "from_value": 1.0,
+                          "from_y": 56,
+                          "to_value": 0.0,
+                          "to_y": 128
+                        },
                         "argument2": {
                           "type": "minecraft:add",
-                          "argument1": -0.13,
-                          "argument2": "aether:base_3d_noise_aether"
+                          "argument1": 0.2,
+                          "argument2": {
+                            "type": "minecraft:add",
+                            "argument1": -0.13,
+                            "argument2": "aether:base_3d_noise_aether"
+                          }
                         }
                       }
                     }

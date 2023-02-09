@@ -41,6 +41,7 @@ public class BronzeDungeonStructure extends Structure {
         RandomState randomState = context.randomState();
         StructureTemplateManager templateManager = context.structureTemplateManager();
         int height = findStartingHeight(chunkGenerator, heightAccessor, chunkPos, randomState, templateManager);
+//        height = 100;
         if (height <= heightAccessor.getMinBuildHeight()) {
             for (int x = -1; x <= 1; x++) {
                 for (int z = -1; z <= 1; z++) {
@@ -100,7 +101,9 @@ public class BronzeDungeonStructure extends Structure {
             }
         }
 
-        height -= thickness;
+        int offset = (thickness + roomHeight) >> 1;
+
+        height -= offset;
         return height;
     }
 
