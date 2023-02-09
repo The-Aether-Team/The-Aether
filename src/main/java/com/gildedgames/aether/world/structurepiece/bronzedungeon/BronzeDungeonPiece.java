@@ -22,8 +22,12 @@ public abstract class BronzeDungeonPiece extends AetherTemplateStructurePiece {
     ));
     public static RuleProcessor BRONZE_DUNGEON_STONE = new RuleProcessor(ImmutableList.of(
             new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.CARVED_STONE.get(), 0.1F), AlwaysTrueTest.INSTANCE, AetherBlocks.SENTRY_STONE.get().defaultBlockState()),
-            new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.TRAPPED_CARVED_STONE.get(), 0.1F), AlwaysTrueTest.INSTANCE, AetherBlocks.TRAPPED_SENTRY_STONE.get().defaultBlockState()),
             new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.HOLYSTONE.get(), 0.2F), AlwaysTrueTest.INSTANCE, AetherBlocks.MOSSY_HOLYSTONE.get().defaultBlockState())
+    ));
+
+    public static final RuleProcessor TRAPPED_CARVED_STONE = new RuleProcessor(ImmutableList.of(
+            new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.CARVED_STONE.get(), 0.117F), AlwaysTrueTest.INSTANCE, AetherBlocks.TRAPPED_CARVED_STONE.get().defaultBlockState()),
+            new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.CARVED_STONE.get(), 0.0034F), AlwaysTrueTest.INSTANCE, AetherBlocks.TRAPPED_SENTRY_STONE.get().defaultBlockState())
     ));
 
     public BronzeDungeonPiece(StructurePieceType type, StructureTemplateManager manager, String name, StructurePlaceSettings settings, BlockPos pos) {
