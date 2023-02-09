@@ -7,8 +7,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
@@ -117,9 +115,6 @@ public interface FreezingBehavior<T> {
             level.setBlock(pos, newBlockState, flag);
             if (newBlockState.isRandomlyTicking()) {
                 level.scheduleTick(pos, newBlockState.getBlock(), Mth.nextInt(level.getRandom(), 60, 120));
-            }
-            if (oldBlockState.getFluidState().is(FluidTags.LAVA)) {
-                level.playSound(null, pos, SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 1.0F);
             }
             BlockStateRecipeUtil.executeFunction(level, pos, function);
             return 1;
