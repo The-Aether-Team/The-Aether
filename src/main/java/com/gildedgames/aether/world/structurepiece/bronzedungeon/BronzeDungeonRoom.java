@@ -12,11 +12,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
-import net.minecraftforge.common.world.PieceBeardifierModifier;
 
 public class BronzeDungeonRoom extends BronzeDungeonPiece {
     public BronzeDungeonRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
@@ -28,7 +26,7 @@ public class BronzeDungeonRoom extends BronzeDungeonPiece {
     }
 
     static StructurePlaceSettings makeSettings() {
-        return new StructurePlaceSettings().addProcessor(BRONZE_DUNGEON_STONE);
+        return new StructurePlaceSettings().addProcessor(BRONZE_DUNGEON_STONE).addProcessor(TRAPPED_CARVED_STONE);
     }
 
     @Override
