@@ -1,10 +1,10 @@
-// 1.19.3	2023-02-09T23:30:21.0139874	Registries
+// 1.19.3	2023-02-10T12:52:35.0926541	Registries
 f5deced101d2299e370ac067f29b5b355f28e634 data/aether/dimension/the_aether.json
 5655d4cd818dbc73a0baa2590d80dd274f85927d data/aether/dimension_type/the_aether.json
-526ac95dbbe79f92a53ae0612daf23cd666d2987 data/aether/worldgen/biome/skyroot_forest.json
-9fd8917b2698d77a543a95b921019afc8ca26353 data/aether/worldgen/biome/skyroot_grove.json
-caa6c022a14a82b31ee8f2d694a25f784a0bab1f data/aether/worldgen/biome/skyroot_meadow.json
-1a0cabe45bddfd786c173f7507eee67a81585647 data/aether/worldgen/biome/skyroot_woodland.json
+11f29c7bb96b5ecbad209c4895fa85c411f18611 data/aether/worldgen/biome/skyroot_forest.json
+ecbf58b1242d394033eb4918c89ec46f79218a1d data/aether/worldgen/biome/skyroot_grove.json
+9c4931149b37523f600fed24028dbd66dda2a58d data/aether/worldgen/biome/skyroot_meadow.json
+9757c9d2413e6074fe4ece9b7aa99ee702097da2 data/aether/worldgen/biome/skyroot_woodland.json
 18a65f6608e5a7aca8d2a54e9c2d73c87bc03dd6 data/aether/worldgen/configured_feature/aether_dirt_ore.json
 16a2ae74f54e0744b412dfca906201c5df3d3653 data/aether/worldgen/configured_feature/ambrosium_ore.json
 059b24c9ed07c7e6561ae96f3588b0c495852ef8 data/aether/worldgen/configured_feature/berry_bush_patch.json
