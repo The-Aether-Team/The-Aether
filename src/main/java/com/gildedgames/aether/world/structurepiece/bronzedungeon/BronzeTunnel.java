@@ -15,11 +15,12 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
 import net.minecraft.world.level.levelgen.structure.templatesystem.ProtectedBlockProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
+import net.minecraftforge.common.world.PieceBeardifierModifier;
 
 /**
  * The entrance to the bronze dungeon. It shouldn't replace air so that it matches the landscape.
  */
-public class BronzeTunnel extends BronzeDungeonPiece {
+public class BronzeTunnel extends BronzeDungeonPiece implements PieceBeardifierModifier {
     private static final ProtectedBlockProcessor AVOID_DUNGEONS = new ProtectedBlockProcessor(AetherTags.Blocks.SENTRY_BLOCKS);
 
     public BronzeTunnel(StructureTemplateManager pStructureTemplateManager, String name, BlockPos pTemplatePosition, Rotation rotation) {

@@ -34,7 +34,6 @@ public class BronzeDungeonBuilder {
 
     private final int nodeWidth;
     private final int edgeWidth;
-    private final int edgeLength;
     private final int maxSize;
 
     public final List<StructurePiece> nodes = new ArrayList<>();
@@ -51,7 +50,6 @@ public class BronzeDungeonBuilder {
 
         Vec3i edgeSize = context.structureTemplateManager().getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/square_tunnel")).getSize();
         this.edgeWidth = edgeSize.getX();
-        this.edgeLength = edgeSize.getZ();
 
         this.maxSize = Math.max(3, maxSize);
     }
@@ -224,9 +222,6 @@ public class BronzeDungeonBuilder {
     }
 
     private boolean isCoveredAtPos(BoundingBox room) {
-        if (false) {
-            return true;
-        }
         ChunkGenerator chunkGenerator = this.context.chunkGenerator();
         LevelHeightAccessor heightAccessor = this.context.heightAccessor();
         RandomState randomState = this.context.randomState();
@@ -249,9 +244,6 @@ public class BronzeDungeonBuilder {
      * Find a viable direction for the boss room to face. Returns null if there isn't one.
      */
     private Rotation getBossRoomRotation(BlockPos startPos, BlockPos cornerPos) {
-        if (false) {
-            return Rotation.getRandom(random);
-        }
         ChunkGenerator chunkGenerator = this.context.chunkGenerator();
         LevelHeightAccessor heightAccessor = this.context.heightAccessor();
         RandomSource random = this.context.random();
