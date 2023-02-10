@@ -94,12 +94,6 @@
         "maxCount": 3,
         "minCount": 3,
         "weight": 10
-      },
-      {
-        "type": "aether:aerwhale",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 8
       }
     ],
     "misc": [],
@@ -145,6 +139,12 @@
         "maxCount": 1,
         "minCount": 1,
         "weight": 1
+      },
+      {
+        "type": "aether:aerwhale",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 8
       }
     ],
     "underground_water_creature": [],
