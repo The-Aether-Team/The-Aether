@@ -56,7 +56,7 @@ public class AetherEntityTypes {
             () -> EntityType.Builder.of(Moa::new, MobCategory.CREATURE).sized(1.0F, 2.0F).clientTrackingRange(10).build("moa"));
 
     public static final RegistryObject<EntityType<Aerwhale>> AERWHALE = ENTITY_TYPES.register("aerwhale",
-            () -> EntityType.Builder.of(Aerwhale::new, MobCategory.CREATURE).fireImmune().sized(3.0F, 3.0F).clientTrackingRange(10).build("aerwhale"));
+            () -> EntityType.Builder.of(Aerwhale::new, MobCategory.MONSTER).fireImmune().sized(3.0F, 3.0F).clientTrackingRange(10).build("aerwhale"));
 
     public static final RegistryObject<EntityType<Aerbunny>> AERBUNNY = ENTITY_TYPES.register("aerbunny",
             () -> EntityType.Builder.of(Aerbunny::new, MobCategory.CREATURE).sized(0.4F, 0.4F).clientTrackingRange(10).build("aerbunny"));
