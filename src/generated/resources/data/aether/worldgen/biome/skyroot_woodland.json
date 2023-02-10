@@ -99,7 +99,7 @@
         "type": "aether:aerwhale",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 1
+        "weight": 8
       }
     ],
     "misc": [],

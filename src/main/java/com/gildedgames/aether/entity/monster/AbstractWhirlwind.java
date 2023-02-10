@@ -211,7 +211,7 @@ public abstract class AbstractWhirlwind extends Mob {
 
     @Override
     public int getMaxSpawnClusterSize() {
-        return 2;
+        return 1;
     }
 
     @Override
