@@ -100,7 +100,7 @@ public class BronzeDungeonStructure extends Structure {
             }
         }
 
-        int offset = (thickness + roomHeight) >> 1;
+        int offset = (thickness + roomHeight) / 2;
 
         height -= offset;
         return height;

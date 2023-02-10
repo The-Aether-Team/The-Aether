@@ -235,10 +235,10 @@ public class BronzeDungeonBuilder {
         ChunkGenerator chunkGenerator = this.context.chunkGenerator();
         LevelHeightAccessor heightAccessor = this.context.heightAccessor();
         RandomState randomState = this.context.randomState();
-        int minX = room.minX() - 1;
-        int maxX = room.maxX() + 1;
-        int minZ = room.minZ() - 1;
-        int maxZ = room.maxZ() + 1;
+        int minX = room.minX();
+        int maxX = room.maxX();
+        int minZ = room.minZ();
+        int maxZ = room.maxZ();
 
         NoiseColumn[] columns = {
                 chunkGenerator.getBaseColumn(minX, minZ, heightAccessor, randomState),
