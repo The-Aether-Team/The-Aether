@@ -432,7 +432,7 @@ public class Swet extends Slime implements MountableMob {
 
     @Override
     public int getSize() {
-        return this.isVehicle() ? 2 : 1;
+        return !this.isDeadOrDying() && this.isVehicle() ? 2 : 1;
     }
 
     @Override

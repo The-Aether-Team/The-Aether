@@ -57,7 +57,7 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
                     }
                 }
             } else {
-                if (oldBlockState.getFluidState().isEmpty()) { // Default freezing behavior.
+                if (fluidState.isEmpty() || oldBlockState.is(fluidState.createLegacyBlock().getBlock())) { // Default freezing behavior.
                     BlockPropertyPair pair = matchesCache(oldBlock, oldBlockState);
                     if (pair != null) {
                         IcestoneFreezableRecipe freezableRecipe = cachedBlocks.get(oldBlock, pair);
@@ -68,7 +68,7 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
                         }
                     }
                 } else { // Breaks a block before freezing if it has a FluidState attached by default (this is different from waterlogging for blocks like Kelp and Seagrass).
-                    oldBlockState = oldBlockState.getFluidState().createLegacyBlock();
+                    oldBlockState = fluidState.createLegacyBlock();
                     BlockPropertyPair pair = matchesCache(oldBlock, oldBlockState);
                     if (pair != null) {
                         IcestoneFreezableRecipe freezableRecipe = cachedBlocks.get(oldBlock, pair);
