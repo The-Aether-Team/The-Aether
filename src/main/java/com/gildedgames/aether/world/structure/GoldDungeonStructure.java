@@ -16,6 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.RandomState;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
@@ -54,7 +56,7 @@ public class GoldDungeonStructure extends Structure {
         ChunkPos chunkpos = context.chunkPos();
         int x = chunkpos.getMiddleBlockX();
         int z = chunkpos.getMiddleBlockZ();
-        int terrainHeight = context.chunkGenerator().getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState()) - 10;
+        int terrainHeight = context.chunkGenerator().getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState()) - 20;
         int height = 40 + random.nextInt(60);
         height = Math.max(terrainHeight, height);
         BlockPos blockpos = new BlockPos(chunkpos.getMiddleBlockX(), height, chunkpos.getMiddleBlockZ());
@@ -85,9 +87,11 @@ public class GoldDungeonStructure extends Structure {
                 bossPos,
                 rotation
         );
-        this.tunnelFromBossRoom(templateManager, builder, bossRoom);
+        int verticalOffset = this.tunnelFromBossRoom(templateManager, builder, bossRoom, context.chunkGenerator(), context.heightAccessor(), context.randomState());
         builder.addPiece(bossRoom);
-
+        if (verticalOffset > 0) {
+            builder.offsetPiecesVertically(verticalOffset);
+        }
     }
 
     /**
@@ -112,7 +116,6 @@ public class GoldDungeonStructure extends Structure {
                     stubPos
             );
             builder.addPiece(stub);
-
         }
     }
 
@@ -130,8 +133,9 @@ public class GoldDungeonStructure extends Structure {
 
     /**
      * Place the tunnel so that it connects to the boss room's door.
+     * Returns the difference between the height of the world's surface and the tunnel.
      */
-    private void tunnelFromBossRoom(StructureTemplateManager templateManager, StructurePiecesBuilder builder, StructurePiece room) {
+    private int tunnelFromBossRoom(StructureTemplateManager templateManager, StructurePiecesBuilder builder, StructurePiece room, ChunkGenerator chunkGenerator, LevelHeightAccessor heightAccessor, RandomState randomState) {
         StructureTemplate template = templateManager.getOrCreate(new ResourceLocation(Aether.MODID, "gold_dungeon/tunnel"));
         int width = template.getSize().getX();
         Rotation rotation = room.getRotation();
@@ -141,6 +145,9 @@ public class GoldDungeonStructure extends Structure {
         startPos = startPos.offset(direction.getStepX() * 3, 1, direction.getStepZ() * 3);
         GoldTunnel tunnel = new GoldTunnel(templateManager, "tunnel", startPos, rotation);
         builder.addPiece(tunnel);
+        BlockPos endPos = BlockLogicUtil.tunnelFromEvenSquareRoom(tunnel.getBoundingBox(), direction, tunnel.template().getSize().getX());
+
+        return chunkGenerator.getFirstFreeHeight(endPos.getX(), endPos.getZ(), Heightmap.Types.WORLD_SURFACE_WG, heightAccessor, randomState) - startPos.getY();
     }
 
     private Vec3i getStubOffset(StructureTemplateManager templateManager) {
