@@ -36,6 +36,5 @@
       "spawns": []
     }
   },
-  "step": "surface_structures",
-  "terrain_adaptation": "bury"
+  "step": "surface_structures"
 }

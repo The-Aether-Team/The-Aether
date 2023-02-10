@@ -36,22 +36,22 @@
             "argument1": -0.05,
             "argument2": {
               "type": "minecraft:add",
-              "argument1": -0.05,
+              "argument1": -0.1,
               "argument2": {
                 "type": "minecraft:mul",
                 "argument1": {
                   "type": "minecraft:y_clamped_gradient",
                   "from_value": 0.0,
-                  "from_y": 4,
+                  "from_y": 8,
                   "to_value": 1.0,
-                  "to_y": 32
+                  "to_y": 40
                 },
                 "argument2": {
                   "type": "minecraft:add",
-                  "argument1": 0.05,
+                  "argument1": 0.1,
                   "argument2": {
                     "type": "minecraft:add",
-                    "argument1": -2.0,
+                    "argument1": -0.2,
                     "argument2": {
                       "type": "minecraft:mul",
                       "argument1": {
@@ -59,11 +59,11 @@
                         "from_value": 1.0,
                         "from_y": 56,
                         "to_value": 0.0,
-                        "to_y": 360
+                        "to_y": 128
                       },
                       "argument2": {
                         "type": "minecraft:add",
-                        "argument1": 2.0,
+                        "argument1": 0.2,
                         "argument2": {
                           "type": "minecraft:add",
                           "argument1": -0.13,
