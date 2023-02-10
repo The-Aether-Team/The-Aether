@@ -53,7 +53,6 @@ public class AetherNoiseBuilders {
         density = DensityFunctions.add(density, DensityFunctions.constant(-0.05));
         density = DensityFunctions.blendDensity(density);
         density = DensityFunctions.interpolated(density);
-        density = DensityFunctions.mul(DensityFunctions.constant(0.64), density);
         density = density.squeeze();
         return density;
     }

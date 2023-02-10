@@ -54,7 +54,7 @@ public class GoldDungeonStructure extends Structure {
         ChunkPos chunkpos = context.chunkPos();
         int x = chunkpos.getMiddleBlockX();
         int z = chunkpos.getMiddleBlockZ();
-        int terrainHeight = context.chunkGenerator().getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState()) - 20;
+        int terrainHeight = context.chunkGenerator().getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState()) - 10;
         int height = 40 + random.nextInt(60);
         height = Math.max(terrainHeight, height);
         BlockPos blockpos = new BlockPos(chunkpos.getMiddleBlockX(), height, chunkpos.getMiddleBlockZ());

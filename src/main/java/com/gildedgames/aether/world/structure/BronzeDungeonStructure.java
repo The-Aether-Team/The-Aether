@@ -64,7 +64,7 @@ public class BronzeDungeonStructure extends Structure {
 
     private void generatePieces(StructurePiecesBuilder builder, Structure.GenerationContext context, BlockPos startPos) {
         BronzeDungeonBuilder graph = new BronzeDungeonBuilder(context, this.maxRooms);
-        graph.initializeDungeon(startPos, builder);
+        graph.initializeDungeon(startPos, context.chunkPos(), builder);
     }
 
     /** Try to find a place where the land is taller than the boss room. */

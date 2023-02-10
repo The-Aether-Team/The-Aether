@@ -7,6 +7,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.block.Rotation;
@@ -54,7 +55,7 @@ public class BronzeDungeonBuilder {
         this.maxSize = Math.max(3, maxSize);
     }
 
-    public void initializeDungeon(BlockPos startPos, StructurePiecesBuilder builder) {
+    public void initializeDungeon(BlockPos startPos, ChunkPos chunkPos, StructurePiecesBuilder builder) {
         StructureTemplate bossTemplate = this.context.structureTemplateManager().getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/boss_room"));
 
         Rotation rotation = getBossRoomRotation(startPos, startPos.offset(bossTemplate.getSize()));
@@ -74,10 +75,10 @@ public class BronzeDungeonBuilder {
         new Connection(bossRoom, chestRoom, hallway, direction);
 
         for (int i = 2; i < this.maxSize - 1; ++i) {
-            this.propagateRooms(chestRoom, false);
+            this.propagateRooms(chestRoom, chunkPos, false);
         }
 
-        this.propagateRooms(chestRoom, true);
+        this.propagateRooms(chestRoom, chunkPos, true);
         StructurePiece lobby = this.nodes.get(this.nodes.size() - 1);
         this.buildEndTunnel(lobby, startPos);
 
@@ -87,8 +88,8 @@ public class BronzeDungeonBuilder {
     /**
      * Recursively move through the graph of rooms to add new pieces. Returns true if successful in placing a new piece.
      */
-    private boolean propagateRooms(StructurePiece startNode, boolean placeLobby) {
-        Rotation rotation = startNode.getRotation();
+    private boolean propagateRooms(StructurePiece currentNode, ChunkPos chunkPos, boolean placeLobby) {
+        Rotation rotation = currentNode.getRotation();
         List<Rotation> rotations = new ArrayList<>(3);
         rotations.add(rotation.getRotated(Rotation.COUNTERCLOCKWISE_90));
         rotations.add(rotation);
@@ -99,27 +100,29 @@ public class BronzeDungeonBuilder {
         for (int i = 3; i > 0; i--) {
             rotation = rotations.remove(this.random.nextInt(i));
             Direction direction = rotation.rotate(Direction.SOUTH);
-            if (this.hasConnection(startNode, direction)) {
-                if (propagateRooms(this.edges.get(startNode).get(direction).end, placeLobby)) {
+            if (this.hasConnection(currentNode, direction)) {
+                if (propagateRooms(this.edges.get(currentNode).get(direction).end, chunkPos, placeLobby)) {
                     return true;
                 }
             } else {
-                BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(startNode.getBoundingBox(), direction, this.edgeWidth);
+                BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(currentNode.getBoundingBox(), direction, this.edgeWidth);
+
+
                 BronzeDungeonRoom hallway = new BronzeDungeonRoom(this.manager, "square_tunnel", pos, rotation);
                 pos = BlockLogicUtil.tunnelFromEvenSquareRoom(hallway.getBoundingBox(), direction, this.nodeWidth);
                 BronzeDungeonRoom room = new BronzeDungeonRoom(this.manager, roomName, pos, rotation);
                 StructurePiece collisionPiece = StructurePiece.findCollisionPiece(this.nodes, room.getBoundingBox());
 
-                if (this.isCoveredAtPos(room.getBoundingBox())) {
+                if (this.isCloseToCenter(chunkPos, room.templatePosition()) && this.isCoveredAtPos(room.getBoundingBox())) {
                     if (collisionPiece == null) {
-                        new Connection(startNode, room, hallway, direction);
+                        new Connection(currentNode, room, hallway, direction);
                         this.nodes.add(room);
                         return true;
                     } else if (!(collisionPiece instanceof BronzeBossRoom)) { // If there's a piece in the way, see if there's a connection already. If not, make one. Then continue the loop.
                         boolean flag = this.edges.computeIfAbsent(collisionPiece, piece -> new HashMap<>()).values().stream()
-                                .map(Connection::endPiece).anyMatch(piece -> piece == startNode);
+                                .map(Connection::endPiece).anyMatch(piece -> piece == currentNode);
                         if (!flag) {
-                            new Connection(startNode, room, hallway, direction);
+                            new Connection(currentNode, room, hallway, direction);
                         }
                     }
                 }
@@ -221,6 +224,13 @@ public class BronzeDungeonBuilder {
         return column.getBlock(y).isAir();
     }
 
+    // Return false if the room is more than three chunks away.
+    private boolean isCloseToCenter(ChunkPos chunkPos, BlockPos pos) {
+        ChunkPos currentChunk = new ChunkPos(pos);
+        return chunkPos.getChessboardDistance(currentChunk) <= 3;
+    }
+
+    // Return true if the room is covered at all four corner columns.
     private boolean isCoveredAtPos(BoundingBox room) {
         ChunkGenerator chunkGenerator = this.context.chunkGenerator();
         LevelHeightAccessor heightAccessor = this.context.heightAccessor();
