@@ -160,15 +160,19 @@ public class BronzeDungeonBuilder {
      * @param origin        - The start position of the structure
      */
     public boolean buildTunnelFromRoom(StructurePiece connectedRoom, List<StructurePiece> list, Rotation rotation, Direction direction, BlockPos origin) {
-        StructureTemplate template = this.manager.getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/end_corridor"));
+        StructureTemplate template = this.manager.getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/entrance"));
         BlockPos startPos = BlockLogicUtil.tunnelFromEvenSquareRoom(connectedRoom.getBoundingBox(), direction, template.getSize().getX());
+        BronzeDungeonRoom entrance = new BronzeDungeonRoom(this.manager, "entrance", startPos, rotation);
+        list.add(entrance);
+        startPos = startPos.relative(direction);
+
         int length = template.getSize().getZ();
         boolean noOverlap = false;
         boolean reachedAir = false;
         BlockPos pos;
         int i = 0;
         do {
-            pos = startPos.offset(direction.getStepX() * i, 0, direction.getStepZ() * i);
+            pos = startPos.relative(direction, i);
             BronzeTunnel tunnel = new BronzeTunnel(this.manager, "end_corridor", pos, rotation);
 
             //Skip the connected piece, since the tunnel will be digging into it.
