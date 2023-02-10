@@ -232,10 +232,7 @@ public class AetherPortalForcer implements ITeleporter {
                 offsetPos.setWithOffset(originalPos, direction.getStepX() * i + clockWiseDirection.getStepX() * offsetScale, j, direction.getStepZ() * i + clockWiseDirection.getStepZ() * offsetScale);
                 BlockState blockState = this.level.getBlockState(offsetPos);
                 if (j < 0 && (!blockState.getMaterial().isSolid()
-                        || blockState.is(AetherTags.Blocks.AERCLOUDS)
-                        || blockState.is(AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS)
-                        || blockState.is(AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS)
-                        || blockState.is(AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS))) {
+                        || blockState.is(AetherTags.Blocks.AETHER_PORTAL_BLACKLIST))) {
                     return false;
                 }
                 if (j >= 0 && !this.level.isEmptyBlock(offsetPos)) {

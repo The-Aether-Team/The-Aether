@@ -15,6 +15,7 @@ public class AetherTags {
 	public static class Blocks {
 		public static final TagKey<Block> TREATED_AS_VANILLA_BLOCK = tag("treated_as_vanilla_block");
 		public static final TagKey<Block> AETHER_PORTAL_BLOCKS = tag("aether_portal_blocks");
+		public static final TagKey<Block> AETHER_PORTAL_BLACKLIST = tag("aether_portal_blacklist");
 		public static final TagKey<Block> AETHER_ISLAND_BLOCKS = tag("aether_island_blocks");
 		public static final TagKey<Block> AETHER_DIRT = tag("aether_dirt");
 		public static final TagKey<Block> HOLYSTONE = tag("holystone");

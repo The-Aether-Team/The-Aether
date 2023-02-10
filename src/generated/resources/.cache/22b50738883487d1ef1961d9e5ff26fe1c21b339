@@ -1,4 +1,4 @@
-// 1.19.3	2023-02-10T11:47:32.0601953	Tags for minecraft:block mod id aether
+// 1.19.3	2023-02-10T15:44:53.0088721	Tags for minecraft:block mod id aether
 fc9b66cee900f1b4f341fcec6da19eb45d575f43 data/aether/tags/blocks/aechor_plant_spawnable_on.json
 f2dedadb4e94e780ebd949b551d3349f0210feb9 data/aether/tags/blocks/aerclouds.json
 16a15f0767946dfa61ee9dfb544a3aeb3439340c data/aether/tags/blocks/aerogel.json
@@ -6,6 +6,7 @@ b322cfaf18dab472190eacef2ee8397cbf37c94c data/aether/tags/blocks/aerwhale_spawna
 fc9b66cee900f1b4f341fcec6da19eb45d575f43 data/aether/tags/blocks/aether_animals_spawnable_on.json
 d520be56403df209dca245912dc672e8c5c3bf0e data/aether/tags/blocks/aether_dirt.json
 8dbb60b4694de1a4b53c08884c91faef5771e5bd data/aether/tags/blocks/aether_island_blocks.json
+d7eec07d7c811e4b999ba3053c2aad4cbe1875bb data/aether/tags/blocks/aether_portal_blacklist.json
 2e32a7b83e54ddce24aaeff94c215bb46e0c6628 data/aether/tags/blocks/aether_portal_blocks.json
 bc8701774f57ab000a8f0f1d390702175a6cdbb8 data/aether/tags/blocks/allowed_bucket_pickup.json
 befda0e6594eed38bd37a692d75b8fcb44d812c5 data/aether/tags/blocks/allowed_flammables.json
