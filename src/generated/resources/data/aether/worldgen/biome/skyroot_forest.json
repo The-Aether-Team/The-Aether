@@ -58,7 +58,7 @@
   "spawn_costs": {
     "aether:zephyr": {
       "charge": 1.0,
-      "energy_budget": 0.1
+      "energy_budget": 0.05
     }
   },
   "spawners": {
@@ -136,14 +136,14 @@
       },
       {
         "type": "aether:whirlwind",
-        "maxCount": 2,
-        "minCount": 2,
+        "maxCount": 1,
+        "minCount": 1,
         "weight": 9
       },
       {
         "type": "aether:evil_whirlwind",
-        "maxCount": 2,
-        "minCount": 2,
+        "maxCount": 1,
+        "minCount": 1,
         "weight": 1
       }
     ],
