@@ -17,7 +17,7 @@ public class ValkyrieRenderer extends MobRenderer<Valkyrie, ValkyrieModel<Valkyr
 
     public ValkyrieRenderer(EntityRendererProvider.Context context) {
         super(context, new ValkyrieModel<>(context.bakeLayer(AetherModelLayers.VALKYRIE)), 0.3F);
-        this.addLayer(new ValkyrieWingsLayer<>(this, new ValkyrieWingsModel<>(context.bakeLayer(AetherModelLayers.VALKYRIE_WINGS))));
+        this.addLayer(new ValkyrieWingsLayer<>(this, VALKYRIE_TEXTURE, new ValkyrieWingsModel<>(context.bakeLayer(AetherModelLayers.VALKYRIE_WINGS))));
     }
 
     @Nonnull
