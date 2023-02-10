@@ -10,6 +10,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
+import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.RandomState;
@@ -35,6 +36,7 @@ public class BronzeDungeonBuilder {
 
     private final int nodeWidth;
     private final int edgeWidth;
+    private final int edgeLength;
     private final int maxSize;
 
     public final List<StructurePiece> nodes = new ArrayList<>();
@@ -51,6 +53,7 @@ public class BronzeDungeonBuilder {
 
         Vec3i edgeSize = context.structureTemplateManager().getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/square_tunnel")).getSize();
         this.edgeWidth = edgeSize.getX();
+        this.edgeLength = edgeSize.getZ();
 
         this.maxSize = Math.max(3, maxSize);
     }
@@ -106,7 +109,6 @@ public class BronzeDungeonBuilder {
                 }
             } else {
                 BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(currentNode.getBoundingBox(), direction, this.edgeWidth);
-
 
                 BronzeDungeonRoom hallway = new BronzeDungeonRoom(this.manager, "square_tunnel", pos, rotation);
                 pos = BlockLogicUtil.tunnelFromEvenSquareRoom(hallway.getBoundingBox(), direction, this.nodeWidth);
@@ -235,10 +237,10 @@ public class BronzeDungeonBuilder {
         ChunkGenerator chunkGenerator = this.context.chunkGenerator();
         LevelHeightAccessor heightAccessor = this.context.heightAccessor();
         RandomState randomState = this.context.randomState();
-        int minX = room.minX();
-        int maxX = room.maxX();
-        int minZ = room.minZ();
-        int maxZ = room.maxZ();
+        int minX = room.minX() - 1;
+        int minZ = room.minZ() - 1;
+        int maxX = room.maxX() + 1;
+        int maxZ = room.maxZ() + 1;
 
         NoiseColumn[] columns = {
                 chunkGenerator.getBaseColumn(minX, minZ, heightAccessor, randomState),
@@ -254,21 +256,15 @@ public class BronzeDungeonBuilder {
      * Find a viable direction for the boss room to face. Returns null if there isn't one.
      */
     private Rotation getBossRoomRotation(BlockPos startPos, BlockPos cornerPos) {
-        ChunkGenerator chunkGenerator = this.context.chunkGenerator();
-        LevelHeightAccessor heightAccessor = this.context.heightAccessor();
+        StructureTemplate template = this.context.structureTemplateManager().getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/chest_room"));
         RandomSource random = this.context.random();
-        RandomState randomState = this.context.randomState();
-
         BoundingBox bossBox = new BoundingBox(startPos.getX(), startPos.getY() + 1, startPos.getZ(), cornerPos.getX(), cornerPos.getY(), cornerPos.getZ());
 
         for (Rotation rotation : Rotation.getShuffled(random)) {
             Direction direction = rotation.rotate(Direction.SOUTH);
-            BlockPos.MutableBlockPos neighbor = BlockLogicUtil.tunnelFromEvenSquareRoom(bossBox, direction, 16).mutable().move(direction.getStepX() << 4, 0, direction.getStepZ() << 4);
-            NoiseColumn column1 = chunkGenerator.getBaseColumn(neighbor.getX(), neighbor.getZ(), heightAccessor, randomState);
-            direction = direction.getClockWise();
-            neighbor = neighbor.move(direction.getStepX() << 4, 0, direction.getStepZ() << 4);
-            NoiseColumn column2 = chunkGenerator.getBaseColumn(neighbor.getX(), neighbor.getZ(), heightAccessor, randomState);
-            if (isSolidInColumns(new NoiseColumn[]{column1, column2}, bossBox.minY(), bossBox.maxY())) {
+            BlockPos.MutableBlockPos neighbor = BlockLogicUtil.tunnelFromEvenSquareRoom(bossBox, direction, this.nodeWidth).mutable();
+            neighbor = neighbor.move(direction.getStepX() * (this.edgeLength + bossBox.getXSpan()), 0, direction.getStepZ() * (this.edgeLength + bossBox.getZSpan()));
+            if (isCoveredAtPos(template.getBoundingBox(neighbor, rotation, BlockPos.ZERO, Mirror.NONE))) {
                 return rotation;
             }
         }
