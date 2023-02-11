@@ -23,7 +23,7 @@
   "advancement.aether.silver_dungeon.desc": "Defeat the Silver Dungeon boss",
   "aether.bronze_dungeon_chest_locked": "This Treasure Chest must be unlocked with a Bronze Key.",
   "aether.gold_dungeon_chest_locked": "This Treasure Chest must be unlocked with a Golden Key.",
-  "aether.hammer_of_notch_cooldown": "クールダウン",
+  "aether.hammer_of_kingbdogz_cooldown": "クールダウン",
   "aether.life_shard_limit": "使用できるライフシャードは、合計%s個のみです",
   "aether.silver_dungeon_chest_locked": "This Treasure Chest must be unlocked with a Silver Key.",
   "block.aether.aerogel": "エアロジェル",
@@ -227,7 +227,7 @@
   "item.aether.gravitite_pickaxe": "グラビタイトのピッケル",
   "item.aether.gravitite_shovel": "グラビタイトのショベル",
   "item.aether.gravitite_sword": "グラビタイトの剣",
-  "item.aether.hammer_of_notch": "Hammer of Notch",
+  "item.aether.hammer_of_kingbdogz": "Hammer of Kingbdogz",
   "item.aether.healing_stone": "Healing Stone",
   "item.aether.holy_sword": "Holy Sword",
   "item.aether.holystone_axe": "Holystone Axe",
@@ -416,6 +416,6 @@
   "subtitles.item.armor.equip_valkyrie": "Valkyrie armor clinks",
   "subtitles.item.armor.equip_zanite": "Zanite armor clanks",
   "subtitles.item.dart_shooter.shoot": "Dart Shooter fired",
-  "subtitles.item.hammer_of_notch.shoot": "Hammer fired",
+  "subtitles.item.hammer_of_kingbdogz.shoot": "Hammer fired",
   "subtitles.item.lightning_knife.shoot": "Lightning Knife flies"
 }

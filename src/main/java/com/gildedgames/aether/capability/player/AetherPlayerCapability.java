@@ -83,6 +83,9 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	private int flightTimer;
 	private float flightModifier = 1.0F;
 
+	private double neptuneSubmergeLength;
+	private double phoenixSubmergeLength;
+
 	private float savedHealth = 0.0F;
 	private int lifeShards;
 	
@@ -737,6 +740,26 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	@Override
 	public float getSavedHealth() {
 		return this.savedHealth;
+	}
+
+	@Override
+	public void setNeptuneSubmergeLength(double length) {
+		this.neptuneSubmergeLength = length;
+	}
+
+	@Override
+	public double getNeptuneSubmergeLength() {
+		return this.neptuneSubmergeLength;
+	}
+
+	@Override
+	public void setPhoenixSubmergeLength(double length) {
+		this.phoenixSubmergeLength = length;
+	}
+
+	@Override
+	public double getPhoenixSubmergeLength() {
+		return this.phoenixSubmergeLength;
 	}
 
 	@Override

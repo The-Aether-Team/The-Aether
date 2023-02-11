@@ -15,6 +15,7 @@ public class AetherTags {
 	public static class Blocks {
 		public static final TagKey<Block> TREATED_AS_VANILLA_BLOCK = tag("treated_as_vanilla_block");
 		public static final TagKey<Block> AETHER_PORTAL_BLOCKS = tag("aether_portal_blocks");
+		public static final TagKey<Block> AETHER_PORTAL_BLACKLIST = tag("aether_portal_blacklist");
 		public static final TagKey<Block> AETHER_ISLAND_BLOCKS = tag("aether_island_blocks");
 		public static final TagKey<Block> AETHER_DIRT = tag("aether_dirt");
 		public static final TagKey<Block> HOLYSTONE = tag("holystone");
@@ -32,9 +33,9 @@ public class AetherTags {
 		public static final TagKey<Block> ANGELIC_BLOCKS = tag("angelic_blocks");
 		public static final TagKey<Block> HELLFIRE_BLOCKS = tag("hellfire_blocks");
 		public static final TagKey<Block> SLIDER_UNBREAKABLE = tag("slider_unbreakable");
+		public static final TagKey<Block> NON_TUNNEL_REPLACEABLE = tag("non_tunnel_replaceable");
 		public static final TagKey<Block> GRAVITITE_ABILITY_BLACKLIST = tag("gravitite_ability_blacklist");
 		public static final TagKey<Block> AETHER_ANIMALS_SPAWNABLE_ON = tag("aether_animals_spawnable_on");
-		public static final TagKey<Block> AERWHALE_SPAWNABLE_ON = tag("aerwhale_spawnable_on");
 		public static final TagKey<Block> SWET_SPAWNABLE_ON = tag("swet_spawnable_on");
 		public static final TagKey<Block> AECHOR_PLANT_SPAWNABLE_ON = tag("aechor_plant_spawnable_on");
 		public static final TagKey<Block> ZEPHYR_SPAWNABLE_ON = tag("zephyr_spawnable_on");
@@ -104,7 +105,7 @@ public class AetherTags {
 		public static final TagKey<Item> HOLY_REPAIRING = tag("holy_repairing");
 		public static final TagKey<Item> VAMPIRE_REPAIRING = tag("vampire_repairing");
 		public static final TagKey<Item> PIG_SLAYER_REPAIRING = tag("pig_slayer_repairing");
-		public static final TagKey<Item> HAMMER_OF_NOTCH_REPAIRING = tag("hammer_of_notch_repairing");
+		public static final TagKey<Item> HAMMER_OF_KINGBDOGZ_REPAIRING = tag("hammer_of_kingbdogz_repairing");
 		public static final TagKey<Item> CANDY_CANE_REPAIRING = tag("candy_cane_repairing");
 		public static final TagKey<Item> NEPTUNE_REPAIRING = tag("neptune_repairing");
 		public static final TagKey<Item> PHOENIX_REPAIRING = tag("phoenix_repairing");

@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -32,13 +33,17 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.Supplier;
+
 public class DoorwayBlock extends Block {
     public static final BooleanProperty INVISIBLE = BooleanProperty.create("invisible");
     public static final VoxelShape INVISIBLE_SHAPE = Block.box(5.0, 5.0, 5.0, 11.0, 11.0, 11.0);
+    private final Supplier<EntityType<?>> blockedEntityTypeSupplier;
 
-    public DoorwayBlock(Properties properties) {
+    public DoorwayBlock(Supplier<EntityType<?>> blockedEntityTypeSupplier, Properties properties) {
         super(properties);
         this.registerDefaultState(this.getStateDefinition().any().setValue(INVISIBLE, false));
+        this.blockedEntityTypeSupplier = blockedEntityTypeSupplier;
     }
 
     @Override
@@ -144,7 +149,11 @@ public class DoorwayBlock extends Block {
     @SuppressWarnings("deprecation")
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return state.getValue(INVISIBLE) ? Shapes.empty() : super.getCollisionShape(state, level, pos, context);
+        if (context instanceof EntityCollisionContext entity && entity.getEntity() != null && this.blockedEntityTypeSupplier.get() != null && entity.getEntity().getType() == this.blockedEntityTypeSupplier.get()) {
+            return Shapes.block();
+        } else {
+            return state.getValue(INVISIBLE) ? Shapes.empty() : super.getCollisionShape(state, level, pos, context);
+        }
     }
 
     /**

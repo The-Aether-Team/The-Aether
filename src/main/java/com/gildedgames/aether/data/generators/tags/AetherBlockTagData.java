@@ -27,6 +27,11 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherBlocks.CHEST_MIMIC.get(),
                 AetherBlocks.UNSTABLE_OBSIDIAN.get());
         this.tag(AetherTags.Blocks.AETHER_PORTAL_BLOCKS).add(Blocks.GLOWSTONE);
+        this.tag(AetherTags.Blocks.AETHER_PORTAL_BLACKLIST).add(AetherBlocks.BLUE_AERCLOUD.get()).addTags(
+                AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
+                AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS,
+                AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS
+        );
         this.tag(AetherTags.Blocks.AETHER_ISLAND_BLOCKS).add(
                 AetherBlocks.AETHER_DIRT.get(),
                 AetherBlocks.AETHER_GRASS_BLOCK.get(),
@@ -133,13 +138,23 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS,
                 AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS,
                 AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS);
+        this.tag(AetherTags.Blocks.NON_TUNNEL_REPLACEABLE).add(
+                Blocks.AIR,
+                Blocks.CHEST,
+                AetherBlocks.CHEST_MIMIC.get(),
+                AetherBlocks.TREASURE_CHEST.get()
+        ).addTags(
+                AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
+                AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS,
+                AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS,
+                AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS
+        );
         this.tag(AetherTags.Blocks.GRAVITITE_ABILITY_BLACKLIST).addTags(
                 BlockTags.BUTTONS,
                 BlockTags.PRESSURE_PLATES,
                 BlockTags.TRAPDOORS,
                 BlockTags.FENCE_GATES);
         this.tag(AetherTags.Blocks.AETHER_ANIMALS_SPAWNABLE_ON).add(AetherBlocks.AETHER_GRASS_BLOCK.get());
-        this.tag(AetherTags.Blocks.AERWHALE_SPAWNABLE_ON).addTag(AetherTags.Blocks.AERCLOUDS);
         this.tag(AetherTags.Blocks.SWET_SPAWNABLE_ON).add(AetherBlocks.AETHER_GRASS_BLOCK.get());
         this.tag(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_ON).add(AetherBlocks.AETHER_GRASS_BLOCK.get());
         this.tag(AetherTags.Blocks.ZEPHYR_SPAWNABLE_ON).addTag(AetherTags.Blocks.AERCLOUDS);

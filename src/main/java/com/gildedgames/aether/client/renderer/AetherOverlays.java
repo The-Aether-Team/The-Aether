@@ -208,10 +208,10 @@ public class AetherOverlays {
 
     private static void renderHammerCooldownOverlay(PoseStack poseStack, Minecraft mc, Window window, LocalPlayer player) {
         Inventory inventory = player.getInventory();
-        if (inventory.contains(new ItemStack(AetherItems.HAMMER_OF_NOTCH.get()))) {
+        if (inventory.hasAnyMatching((itemStack) -> itemStack.is(AetherItems.HAMMER_OF_KINGBDOGZ.get()))) {
             for (ItemStack itemStack : inventory.items) {
                 Item item = itemStack.getItem();
-                if (item == AetherItems.HAMMER_OF_NOTCH.get()) {
+                if (item == AetherItems.HAMMER_OF_KINGBDOGZ.get()) {
                     float cooldownPercent = player.getCooldowns().getCooldownPercent(item, 0.0F);
                     if (cooldownPercent > 0.0F) {
                         if (player.getMainHandItem().getItem() == item) {
@@ -219,7 +219,7 @@ public class AetherOverlays {
                         } else if (player.getOffhandItem().getItem() == item) {
                             itemStack = player.getOffhandItem();
                         }
-                        String text = itemStack.getHoverName().getString().concat(" ").concat(Component.translatable("aether.hammer_of_notch_cooldown").getString());
+                        String text = itemStack.getHoverName().getString().concat(" ").concat(Component.translatable("aether.hammer_of_kingbdogz_cooldown").getString());
                         mc.font.drawShadow(poseStack, text, (window.getGuiScaledWidth() / 2.0F) - (mc.font.width(text) / 2.0F), 32, 16777215);
                         RenderSystem.setShader(GameRenderer::getPositionTexShader);
                         RenderSystem.setShaderTexture(0, TEXTURE_COOLDOWN_BAR);

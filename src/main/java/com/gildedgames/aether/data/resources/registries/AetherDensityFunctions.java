@@ -22,7 +22,7 @@ public class AetherDensityFunctions {
         		0.25D, // xz scale
         		0.25D, // y scale
         		80D, // xz factor
-        		100D, // y factor
+        		160D, // y factor
         		8.0D)); // smear scale multiplier, capped at 8
     }
 							

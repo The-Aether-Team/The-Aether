@@ -48,11 +48,13 @@ public class AetherNoiseBuilders {
 
     private static DensityFunction buildFinalDensity(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noise) {
         DensityFunction density = getFunction(densityFunctions, ResourceKey.create(Registries.DENSITY_FUNCTION, new ResourceLocation(Aether.MODID,"base_3d_noise_aether")));
-        density = DensityFunctions.add(density, DensityFunctions.constant(-0.13D));
-        density = slide(density, 0, 128, 72, -232, -2D, 4, 32, -0.05D);
-        density = DensityFunctions.add(density, DensityFunctions.constant(-0.05D));
+        density = DensityFunctions.add(density, DensityFunctions.constant(-0.13));
+        density = slide(density, 0, 128, 72, 0, -0.2, 8, 40, -0.1);
+        density = DensityFunctions.add(density, DensityFunctions.constant(-0.05));
         density = DensityFunctions.blendDensity(density);
-        return DensityFunctions.interpolated(density).squeeze();
+        density = DensityFunctions.interpolated(density);
+        density = density.squeeze();
+        return density;
     }
 
     /**

@@ -53,7 +53,7 @@ public class AetherItemModelData extends AetherItemModelProvider {
         this.handheldItem(AetherItems.PIG_SLAYER.get(), "weapons/");
         this.nameableWeapon(AetherItems.CANDY_CANE_SWORD.get(), "weapons/", "green_candy_cane_sword");
 
-        this.nameableWeapon(AetherItems.HAMMER_OF_NOTCH.get(), "weapons/", "hammer_of_jeb");
+        this.nameableWeapon(AetherItems.HAMMER_OF_KINGBDOGZ.get(), "weapons/", "hammer_of_jeb");
 
         this.handheldItem(AetherItems.LIGHTNING_KNIFE.get(), "weapons/");
 
