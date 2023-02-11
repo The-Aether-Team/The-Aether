@@ -91,9 +91,9 @@ public class AetherConfiguredFeatures {
         register(context, GOLDEN_OAK_TREE_CONFIGURATION, Feature.TREE,
                 new TreeConfiguration.TreeConfigurationBuilder(
                         BlockStateProvider.simple(AetherFeatureStates.GOLDEN_OAK_LOG),
-                        new GoldenOakTrunkPlacer(6, 4, 0),
+                        new GoldenOakTrunkPlacer(10, 0, 0),
                         BlockStateProvider.simple(AetherFeatureStates.GOLDEN_OAK_LEAVES),
-                        new GoldenOakFoliagePlacer(ConstantInt.of(3), ConstantInt.of(3), ConstantInt.of(7)),
+                        new GoldenOakFoliagePlacer(ConstantInt.of(3), ConstantInt.of(1), ConstantInt.of(7)),
                         new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(10))
                 ).ignoreVines().build());
         register(context, CRYSTAL_TREE_CONFIGURATION, Feature.TREE,
