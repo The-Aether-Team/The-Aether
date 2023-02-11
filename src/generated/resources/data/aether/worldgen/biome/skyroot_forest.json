@@ -56,6 +56,26 @@
   ],
   "precipitation": "none",
   "spawn_costs": {
+    "aether:aechor_plant": {
+      "charge": 0.5,
+      "energy_budget": 1.2
+    },
+    "aether:blue_swet": {
+      "charge": 0.4,
+      "energy_budget": 0.9
+    },
+    "aether:evil_whirlwind": {
+      "charge": 0.7,
+      "energy_budget": 0.1
+    },
+    "aether:golden_swet": {
+      "charge": 0.4,
+      "energy_budget": 0.9
+    },
+    "aether:whirlwind": {
+      "charge": 0.7,
+      "energy_budget": 0.1
+    },
     "aether:zephyr": {
       "charge": 1.0,
       "energy_budget": 0.05
@@ -100,9 +120,9 @@
     "monster": [
       {
         "type": "aether:aechor_plant",
-        "maxCount": 2,
+        "maxCount": 3,
         "minCount": 1,
-        "weight": 10
+        "weight": 4
       },
       {
         "type": "aether:cockatrice",
@@ -119,14 +139,14 @@
       {
         "type": "aether:blue_swet",
         "maxCount": 4,
-        "minCount": 3,
-        "weight": 4
+        "minCount": 2,
+        "weight": 3
       },
       {
         "type": "aether:golden_swet",
         "maxCount": 4,
-        "minCount": 3,
-        "weight": 4
+        "minCount": 2,
+        "weight": 3
       },
       {
         "type": "aether:whirlwind",
