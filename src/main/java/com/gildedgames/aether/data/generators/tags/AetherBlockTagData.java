@@ -27,6 +27,11 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherBlocks.CHEST_MIMIC.get(),
                 AetherBlocks.UNSTABLE_OBSIDIAN.get());
         this.tag(AetherTags.Blocks.AETHER_PORTAL_BLOCKS).add(Blocks.GLOWSTONE);
+        this.tag(AetherTags.Blocks.AETHER_PORTAL_BLACKLIST).add(AetherBlocks.BLUE_AERCLOUD.get()).addTags(
+                AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
+                AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS,
+                AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS
+        );
         this.tag(AetherTags.Blocks.AETHER_ISLAND_BLOCKS).add(
                 AetherBlocks.AETHER_DIRT.get(),
                 AetherBlocks.AETHER_GRASS_BLOCK.get(),
