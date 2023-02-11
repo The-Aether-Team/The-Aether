@@ -8,8 +8,10 @@ import com.gildedgames.aether.data.resources.builders.AetherConfiguredFeatureBui
 import com.gildedgames.aether.world.configuration.ShelfConfiguration;
 import com.gildedgames.aether.world.feature.AetherFeatures;
 import com.gildedgames.aether.world.foliageplacer.CrystalFoliagePlacer;
+import com.gildedgames.aether.world.foliageplacer.GoldenOakFoliagePlacer;
 import com.gildedgames.aether.world.foliageplacer.HolidayFoliagePlacer;
 import com.gildedgames.aether.world.treedecorator.HolidayTreeDecorator;
+import com.gildedgames.aether.world.trunkplacer.GoldenOakTrunkPlacer;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
@@ -89,9 +91,9 @@ public class AetherConfiguredFeatures {
         register(context, GOLDEN_OAK_TREE_CONFIGURATION, Feature.TREE,
                 new TreeConfiguration.TreeConfigurationBuilder(
                         BlockStateProvider.simple(AetherFeatureStates.GOLDEN_OAK_LOG),
-                        new FancyTrunkPlacer(9, 5, 0),
+                        new GoldenOakTrunkPlacer(10, 0, 0),
                         BlockStateProvider.simple(AetherFeatureStates.GOLDEN_OAK_LEAVES),
-                        new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(4), 4),
+                        new GoldenOakFoliagePlacer(ConstantInt.of(3), ConstantInt.of(1), ConstantInt.of(7)),
                         new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(10))
                 ).ignoreVines().build());
         register(context, CRYSTAL_TREE_CONFIGURATION, Feature.TREE,
