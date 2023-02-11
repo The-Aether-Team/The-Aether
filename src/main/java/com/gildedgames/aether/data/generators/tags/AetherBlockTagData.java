@@ -156,7 +156,6 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 BlockTags.TRAPDOORS,
                 BlockTags.FENCE_GATES);
         this.tag(AetherTags.Blocks.AETHER_ANIMALS_SPAWNABLE_ON).add(AetherBlocks.AETHER_GRASS_BLOCK.get());
-        this.tag(AetherTags.Blocks.AERWHALE_SPAWNABLE_ON).addTag(AetherTags.Blocks.AERCLOUDS);
         this.tag(AetherTags.Blocks.SWET_SPAWNABLE_ON).add(AetherBlocks.AETHER_GRASS_BLOCK.get());
         this.tag(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_ON).add(AetherBlocks.AETHER_GRASS_BLOCK.get());
         this.tag(AetherTags.Blocks.ZEPHYR_SPAWNABLE_ON).addTag(AetherTags.Blocks.AERCLOUDS);
