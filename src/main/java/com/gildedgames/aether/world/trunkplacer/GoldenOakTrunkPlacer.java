@@ -47,7 +47,7 @@ public class GoldenOakTrunkPlacer extends TrunkPlacer {
         setDirtAt(level, blockSetter, random, pos.below(), config);
 
         for(int i = 0; i < height; ++i) {
-            if(i > 4 && random.nextInt(3) > 0 && i < 11) {
+            if(i > 4 && random.nextInt(3) > 0 && i < 9) {
                 this.branch(level, random, blockSetter, pos.getX(), pos.getY() + i, pos.getZ(), i / 4 - 1, config);
             }
 
