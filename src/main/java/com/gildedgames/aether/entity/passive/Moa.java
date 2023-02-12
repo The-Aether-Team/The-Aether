@@ -122,10 +122,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 				this.setPlayerGrown(tag.getBoolean("PlayerGrown"));
 			}
 		} else {
-			if (spawnData == null) {
-				spawnData = new MoaGroupData(AetherMoaTypes.random(this.random));
-			}
-			this.setMoaType(((MoaGroupData)spawnData).type);
+			this.setMoaType(AetherMoaTypes.getWeightedChance(this.random));
 		}
 		return super.finalizeSpawn(level, difficulty, reason, spawnData, tag);
 	}
@@ -537,13 +534,5 @@ public class Moa extends MountableAnimal implements WingedBird {
 		tag.putInt("AmountFed", this.getAmountFed());
 		tag.putBoolean("PlayerGrown", this.isPlayerGrown());
 		tag.putBoolean("Sitting", this.isSitting());
-	}
-
-	public static class MoaGroupData extends AgeableMob.AgeableMobGroupData {
-		public final MoaType type;
-		public MoaGroupData(MoaType type) {
-			super(false);
-			this.type = type;
-		}
 	}
 }

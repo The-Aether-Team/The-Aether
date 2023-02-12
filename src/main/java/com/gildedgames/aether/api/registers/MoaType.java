@@ -13,17 +13,19 @@ public class MoaType
     private final Supplier<? extends Item> egg;
     private final int maxJumps;
     private final float speed;
+    private final int spawnChance;
     private final ResourceLocation texture;
     private final ResourceLocation saddleTexture;
 
     public MoaType(MoaType.Properties properties) {
-        this(properties.egg, properties.maxJumps, properties.speed, properties.texture, properties.saddleTexture);
+        this(properties.egg, properties.maxJumps, properties.speed, properties.spawnChance, properties.texture, properties.saddleTexture);
     }
 
-    public MoaType(Supplier<? extends Item> egg, int maxJumps, float speed, ResourceLocation texture, ResourceLocation saddleTexture) {
+    public MoaType(Supplier<? extends Item> egg, int maxJumps, float speed, int spawnChance, ResourceLocation texture, ResourceLocation saddleTexture) {
         this.egg = egg;
         this.maxJumps = maxJumps;
         this.speed = speed;
+        this.spawnChance = spawnChance;
         this.texture = texture;
         this.saddleTexture = saddleTexture;
     }
@@ -38,6 +40,10 @@ public class MoaType
 
     public float getSpeed() {
         return this.speed;
+    }
+
+    public int getSpawnChance() {
+        return this.spawnChance;
     }
 
     public ResourceLocation getMoaTexture() {
@@ -61,6 +67,7 @@ public class MoaType
         private Supplier<? extends Item> egg = AetherItems.BLUE_MOA_EGG;
         private int maxJumps = 3;
         private float speed = 0.1F;
+        private int spawnChance = 50;
         private ResourceLocation texture = new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/blue_moa.png");
         private ResourceLocation saddleTexture = new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png");
 
@@ -76,6 +83,11 @@ public class MoaType
 
         public MoaType.Properties speed(float speed) {
             this.speed = speed;
+            return this;
+        }
+
+        public MoaType.Properties spawnChance(int spawnChance) {
+            this.spawnChance = spawnChance;
             return this;
         }
 
@@ -104,6 +116,7 @@ public class MoaType
             props.egg = moaType.egg;
             props.maxJumps = moaType.maxJumps;
             props.speed = moaType.speed;
+            props.spawnChance = moaType.spawnChance;
             props.texture = moaType.texture;
             props.saddleTexture = moaType.saddleTexture;
             return props;
