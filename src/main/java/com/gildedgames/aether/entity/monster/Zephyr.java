@@ -41,6 +41,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 	public Zephyr(EntityType<? extends Zephyr> type, Level level) {
 		super(type, level);
 		this.moveControl = new Zephyr.MoveHelperController(this);
+		this.xpReward = 5;
 	}
 
 	@Override

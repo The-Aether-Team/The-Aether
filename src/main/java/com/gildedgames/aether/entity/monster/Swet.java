@@ -58,6 +58,7 @@ public class Swet extends Slime implements MountableMob {
     public Swet(EntityType<? extends Swet> type, Level level) {
         super(type, level);
         this.moveControl = new Swet.MoveHelperController(this);
+        this.xpReward = 5;
     }
 
     @Override
