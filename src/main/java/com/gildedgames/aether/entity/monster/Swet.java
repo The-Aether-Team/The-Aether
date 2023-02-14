@@ -265,6 +265,15 @@ public class Swet extends Slime implements MountableMob {
         }
     }
 
+    /**
+     * Copy of {@link Entity#remove(RemovalReason)}.
+     */
+    @Override
+    public void remove(Entity.RemovalReason pReason) {
+        this.setRemoved(pReason);
+        this.invalidateCaps();
+    }
+
     @Override
     public boolean isDeadOrDying() {
         return super.isDeadOrDying() || this.getDeadInWater();
@@ -433,7 +442,7 @@ public class Swet extends Slime implements MountableMob {
 
     @Override
     public int getSize() {
-        return !this.isDeadOrDying() && this.isVehicle() ? 2 : 1;
+        return this.isVehicle() ? 2 : 1;
     }
 
     @Override
