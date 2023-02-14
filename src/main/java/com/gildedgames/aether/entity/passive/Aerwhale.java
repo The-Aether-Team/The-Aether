@@ -223,6 +223,11 @@ public class Aerwhale extends FlyingMob {
         return 2.0F;
     }
 
+    @Override
+    public int getExperienceReward() {
+        return 1 + this.level.random.nextInt(3);
+    }
+
     public static class SetTravelCourseGoal extends Goal {
         private final Mob mob;
         public SetTravelCourseGoal(Mob mob) {

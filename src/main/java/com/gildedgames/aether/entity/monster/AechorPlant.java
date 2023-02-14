@@ -49,6 +49,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
 
     public AechorPlant(EntityType<? extends AechorPlant> type, Level level) {
         super(type, level);
+        this.xpReward = 5;
     }
 
     @Override
