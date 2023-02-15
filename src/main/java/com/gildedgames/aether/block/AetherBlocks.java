@@ -17,7 +17,6 @@ import com.gildedgames.aether.item.block.BurnableBlockItem;
 import com.gildedgames.aether.item.block.EntityBlockItem;
 import com.gildedgames.aether.effect.AetherEffects;
 import com.gildedgames.aether.entity.AetherEntityTypes;
-import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.mixin.mixins.common.accessor.FireBlockAccessor;
 import com.gildedgames.aether.world.treegrower.GoldenOakTree;
 import com.gildedgames.aether.world.treegrower.SkyrootTree;
@@ -58,10 +57,10 @@ public class AetherBlocks {
     public static final RegistryObject<Block> AETHER_FARMLAND = register("aether_farmland", () -> new AetherFarmBlock(Block.Properties.of(Material.DIRT, MaterialColor.TERRACOTTA_CYAN).randomTicks().strength(0.2F).sound(SoundType.GRAVEL).isViewBlocking(AetherBlocks::always).isSuffocating(AetherBlocks::always)));
     public static final RegistryObject<Block> AETHER_DIRT_PATH = register("aether_dirt_path", () -> new AetherDirtPathBlock(Block.Properties.of(Material.DIRT, MaterialColor.TERRACOTTA_CYAN).strength(0.2F).sound(SoundType.GRASS).isViewBlocking(AetherBlocks::always).isSuffocating(AetherBlocks::always)));
 
-    public static final RegistryObject<Block> COLD_AERCLOUD = register("cold_aercloud", () -> new AercloudBlock(Block.Properties.of(Material.ICE, MaterialColor.SNOW).strength(0.3F).sound(SoundType.WOOL).noOcclusion().dynamicShape().isValidSpawn(AetherBlocks::aercloudSpawnable).isRedstoneConductor(AetherBlocks::never).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never)));
+    public static final RegistryObject<Block> COLD_AERCLOUD = register("cold_aercloud", () -> new AercloudBlock(Block.Properties.of(Material.ICE, MaterialColor.SNOW).strength(0.3F).sound(SoundType.WOOL).noOcclusion().dynamicShape().isRedstoneConductor(AetherBlocks::never).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never)));
     public static final RegistryObject<Block> BLUE_AERCLOUD = register("blue_aercloud", () -> new BlueAercloudBlock(Block.Properties.of(Material.ICE, MaterialColor.COLOR_LIGHT_BLUE).strength(0.3F).sound(SoundType.WOOL).noOcclusion().dynamicShape().isRedstoneConductor(AetherBlocks::never).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never)));
-    public static final RegistryObject<Block> GOLDEN_AERCLOUD = register("golden_aercloud", () -> new AercloudBlock(Block.Properties.of(Material.ICE, MaterialColor.COLOR_YELLOW).strength(0.3F).sound(SoundType.WOOL).noOcclusion().dynamicShape().isValidSpawn(AetherBlocks::aercloudSpawnable).isRedstoneConductor(AetherBlocks::never).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never)));
-    public static final RegistryObject<Block> PINK_AERCLOUD = register("pink_aercloud", () -> new PinkAercloudBlock(Block.Properties.of(Material.ICE, MaterialColor.COLOR_PINK).strength(0.3F).sound(SoundType.WOOL).noOcclusion().dynamicShape().isValidSpawn(AetherBlocks::aercloudSpawnable).isRedstoneConductor(AetherBlocks::never).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never)));
+    public static final RegistryObject<Block> GOLDEN_AERCLOUD = register("golden_aercloud", () -> new AercloudBlock(Block.Properties.of(Material.ICE, MaterialColor.COLOR_YELLOW).strength(0.3F).sound(SoundType.WOOL).noOcclusion().dynamicShape().isRedstoneConductor(AetherBlocks::never).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never)));
+    public static final RegistryObject<Block> PINK_AERCLOUD = register("pink_aercloud", () -> new PinkAercloudBlock(Block.Properties.of(Material.ICE, MaterialColor.COLOR_PINK).strength(0.3F).sound(SoundType.WOOL).noOcclusion().dynamicShape().isRedstoneConductor(AetherBlocks::never).isSuffocating(AetherBlocks::never).isViewBlocking(AetherBlocks::never)));
 
     public static final RegistryObject<Block> ICESTONE = register("icestone", () -> new IcestoneBlock(Block.Properties.of(Material.STONE, MaterialColor.ICE).strength(0.5F).randomTicks().sound(SoundType.GLASS).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> AMBROSIUM_ORE = register("ambrosium_ore", () -> new AetherDoubleDropsOreBlock(Block.Properties.of(Material.STONE, MaterialColor.WOOL).strength(3.0F).requiresCorrectToolForDrops(), UniformInt.of(0, 2)));
@@ -330,10 +329,6 @@ public class AetherBlocks {
 
     private static boolean ocelotOrParrot(BlockState p_235441_0_, BlockGetter p_235441_1_, BlockPos p_235441_2_, EntityType<?> p_235441_3_) {
         return p_235441_3_ == EntityType.OCELOT || p_235441_3_ == EntityType.PARROT;
-    }
-
-    private static boolean aercloudSpawnable(BlockState state, BlockGetter reader, BlockPos pos, EntityType<?> entity) {
-        return entity.is(AetherTags.Entities.AERCLOUD_SPAWNABLE) && state.getLightEmission(reader, pos) < 14;
     }
 
     private static int lightLevel11(BlockState state) {

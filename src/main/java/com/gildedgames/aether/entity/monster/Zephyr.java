@@ -2,12 +2,8 @@ package com.gildedgames.aether.entity.monster;
 
 import com.gildedgames.aether.entity.projectile.ZephyrSnowball;
 import com.gildedgames.aether.client.AetherSoundEvents;
-import com.gildedgames.aether.AetherTags;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.FlyingMob;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
@@ -66,7 +62,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 	}
 
 	public static boolean checkZephyrSpawnRules(EntityType<? extends Zephyr> zephyr, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
-		return level.getDifficulty() != Difficulty.PEACEFUL && (reason == MobSpawnType.SPAWNER || level.getBlockState(pos.below()).is(AetherTags.Blocks.ZEPHYR_SPAWNABLE_ON));
+		return level.getDifficulty() != Difficulty.PEACEFUL && Mob.checkMobSpawnRules(zephyr, level, reason, pos, random);
 	}
 
 	@Override
@@ -125,11 +121,6 @@ public class Zephyr extends FlyingMob implements Enemy {
 	@Override
 	protected SoundEvent getDeathSound() {
 		return AetherSoundEvents.ENTITY_ZEPHYR_DEATH.get();
-	}
-
-	@Override
-	public int getMaxSpawnClusterSize() {
-		return 1;
 	}
 
 	@Override

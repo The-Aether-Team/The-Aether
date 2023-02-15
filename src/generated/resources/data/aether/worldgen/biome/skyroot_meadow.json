@@ -58,27 +58,27 @@
   "spawn_costs": {
     "aether:aechor_plant": {
       "charge": 0.5,
-      "energy_budget": 1.2
+      "energy_budget": 0.1
     },
     "aether:blue_swet": {
-      "charge": 0.4,
-      "energy_budget": 0.9
+      "charge": 0.5,
+      "energy_budget": 0.15
     },
     "aether:evil_whirlwind": {
       "charge": 0.7,
       "energy_budget": 0.1
     },
     "aether:golden_swet": {
-      "charge": 0.4,
-      "energy_budget": 0.9
+      "charge": 0.5,
+      "energy_budget": 0.15
     },
     "aether:whirlwind": {
       "charge": 0.7,
       "energy_budget": 0.1
     },
     "aether:zephyr": {
-      "charge": 1.0,
-      "energy_budget": 0.05
+      "charge": 0.7,
+      "energy_budget": 0.1
     }
   },
   "spawners": {
@@ -120,8 +120,8 @@
     "monster": [
       {
         "type": "aether:aechor_plant",
-        "maxCount": 3,
-        "minCount": 1,
+        "maxCount": 4,
+        "minCount": 2,
         "weight": 4
       },
       {
