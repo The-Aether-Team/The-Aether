@@ -123,6 +123,9 @@ public class Moa extends MountableAnimal implements WingedBird {
 			}
 		} else {
 			this.setMoaType(AetherMoaTypes.getWeightedChance(this.random));
+			if (spawnData == null) {
+				spawnData = new AgeableMob.AgeableMobGroupData(false);
+			}
 		}
 		return super.finalizeSpawn(level, difficulty, reason, spawnData, tag);
 	}
