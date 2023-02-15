@@ -31,13 +31,9 @@ public class AdvancementToastMixin
      */
     @Inject(at = @At("HEAD"), method = "render")
     private void render(PoseStack poseStack, ToastComponent toastComponent, long timeSinceLastVisible, CallbackInfoReturnable<Toast.Visibility> cir) {
-        Aether.LOGGER.info("0");
         if (!this.playedSound) {
-            Aether.LOGGER.info("1");
             if (this.checkRoot()) {
-                Aether.LOGGER.info("2");
                 this.playedSound = true;
-                Aether.LOGGER.info(this.advancement.getId().getPath());
                 switch (this.advancement.getId().getPath()) {
                     case "bronze_dungeon" -> toastComponent.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(AetherSoundEvents.UI_TOAST_AETHER_BRONZE.get(), 1.0F, 1.0F));
                     case "silver_dungeon" -> toastComponent.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(AetherSoundEvents.UI_TOAST_AETHER_SILVER.get(), 1.0F, 1.0F));
