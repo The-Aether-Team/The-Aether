@@ -127,14 +127,14 @@
       },
       {
         "type": "aether:blue_swet",
-        "maxCount": 4,
-        "minCount": 2,
+        "maxCount": 3,
+        "minCount": 1,
         "weight": 2
       },
       {
         "type": "aether:golden_swet",
-        "maxCount": 4,
-        "minCount": 2,
+        "maxCount": 3,
+        "minCount": 1,
         "weight": 2
       },
       {
