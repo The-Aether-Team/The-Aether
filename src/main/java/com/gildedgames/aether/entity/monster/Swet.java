@@ -2,7 +2,6 @@ package com.gildedgames.aether.entity.monster;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.MountableMob;
-import com.gildedgames.aether.entity.ai.goal.target.NearestTaggedTargetGoal;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.SwetAttackPacket;
@@ -68,7 +67,6 @@ public class Swet extends Slime implements MountableMob {
         this.goalSelector.addGoal(2, new RandomFacingGoal(this));
         this.goalSelector.addGoal(4, new HopGoal(this));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, (target) -> !this.isFriendlyTowardEntity(target) && !(target.getRootVehicle() instanceof Swet)));
-        this.targetSelector.addGoal(2, new NearestTaggedTargetGoal(this, AetherTags.Entities.SWET_TARGETS, true, (target) -> !this.isFriendlyTowardEntity(target) && !(target.getRootVehicle() instanceof Swet)));
     }
 
     @Nonnull

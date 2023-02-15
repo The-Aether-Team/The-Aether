@@ -52,29 +52,6 @@ public class AetherEntityTagData extends EntityTypeTagsProvider {
                 AetherEntityTypes.ZEPHYR_SNOWBALL.get(),
                 AetherEntityTypes.LIGHTNING_KNIFE.get(),
                 AetherEntityTypes.HAMMER_PROJECTILE.get());
-        this.tag(AetherTags.Entities.SWET_TARGETS).add(
-                EntityType.CHICKEN,
-                EntityType.COW,
-                EntityType.PIG,
-                EntityType.SHEEP,
-                AetherEntityTypes.FLYING_COW.get(),
-                AetherEntityTypes.PHYG.get(),
-                AetherEntityTypes.SHEEPUFF.get(),
-                AetherEntityTypes.AERBUNNY.get()
-        );
-        this.tag(AetherTags.Entities.AECHOR_PLANT_TARGETS).add(
-                EntityType.CHICKEN,
-                EntityType.COW,
-                EntityType.PIG,
-                EntityType.SHEEP,
-                AetherEntityTypes.FLYING_COW.get(),
-                AetherEntityTypes.PHYG.get(),
-                AetherEntityTypes.SHEEPUFF.get()
-        );
-        this.tag(AetherTags.Entities.AERCLOUD_SPAWNABLE).add(
-                AetherEntityTypes.AERWHALE.get(),
-                AetherEntityTypes.ZEPHYR.get()
-        );
 
         // Forge
         this.tag(Tags.EntityTypes.BOSSES).add(

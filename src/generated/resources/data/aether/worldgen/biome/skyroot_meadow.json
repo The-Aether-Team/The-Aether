@@ -1,5 +1,6 @@
 {
   "carvers": {},
+  "creature_spawn_probability": 0.15,
   "downfall": 0.0,
   "effects": {
     "fog_color": 9671612,
@@ -56,29 +57,17 @@
   ],
   "precipitation": "none",
   "spawn_costs": {
-    "aether:aechor_plant": {
-      "charge": 0.5,
-      "energy_budget": 1.2
-    },
-    "aether:blue_swet": {
-      "charge": 0.4,
-      "energy_budget": 0.9
-    },
     "aether:evil_whirlwind": {
       "charge": 0.7,
       "energy_budget": 0.1
-    },
-    "aether:golden_swet": {
-      "charge": 0.4,
-      "energy_budget": 0.9
     },
     "aether:whirlwind": {
       "charge": 0.7,
       "energy_budget": 0.1
     },
     "aether:zephyr": {
-      "charge": 1.0,
-      "energy_budget": 0.05
+      "charge": 0.7,
+      "energy_budget": 0.07
     }
   },
   "spawners": {
@@ -119,12 +108,6 @@
     "misc": [],
     "monster": [
       {
-        "type": "aether:aechor_plant",
-        "maxCount": 3,
-        "minCount": 1,
-        "weight": 4
-      },
-      {
         "type": "aether:cockatrice",
         "maxCount": 4,
         "minCount": 1,
@@ -134,19 +117,25 @@
         "type": "aether:zephyr",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 100
+        "weight": 200
+      },
+      {
+        "type": "aether:aechor_plant",
+        "maxCount": 4,
+        "minCount": 2,
+        "weight": 4
       },
       {
         "type": "aether:blue_swet",
-        "maxCount": 4,
-        "minCount": 2,
-        "weight": 3
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 2
       },
       {
         "type": "aether:golden_swet",
-        "maxCount": 4,
-        "minCount": 2,
-        "weight": 3
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 2
       },
       {
         "type": "aether:whirlwind",
