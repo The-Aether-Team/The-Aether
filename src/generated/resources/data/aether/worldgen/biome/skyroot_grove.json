@@ -1,5 +1,6 @@
 {
   "carvers": {},
+  "creature_spawn_probability": 0.2,
   "downfall": 0.0,
   "effects": {
     "fog_color": 9671612,
@@ -110,7 +111,7 @@
         "type": "aether:cockatrice",
         "maxCount": 4,
         "minCount": 1,
-        "weight": 120
+        "weight": 60
       },
       {
         "type": "aether:zephyr",
@@ -122,19 +123,19 @@
         "type": "aether:aechor_plant",
         "maxCount": 4,
         "minCount": 2,
-        "weight": 2
+        "weight": 4
       },
       {
         "type": "aether:blue_swet",
         "maxCount": 4,
         "minCount": 2,
-        "weight": 1
+        "weight": 2
       },
       {
         "type": "aether:golden_swet",
         "maxCount": 4,
         "minCount": 2,
-        "weight": 1
+        "weight": 2
       },
       {
         "type": "aether:whirlwind",
