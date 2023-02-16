@@ -1,4 +1,4 @@
-// 1.19.3	2023-02-15T15:25:44.9778605	Registries
+// 1.19.3	2023-02-16T01:39:28.0572369	Registries
 f5deced101d2299e370ac067f29b5b355f28e634 data/aether/dimension/the_aether.json
 5655d4cd818dbc73a0baa2590d80dd274f85927d data/aether/dimension_type/the_aether.json
 9f53e09755713216c1110db9a66aa9703ec58a0a data/aether/worldgen/biome/skyroot_forest.json
@@ -61,4 +61,4 @@ aa7e50925cb356798844f47c61a11acc8f6d3ead data/aether/worldgen/structure/gold_dun
 051484619a25e72347d4afeb30e0660291ad40c9 data/aether/worldgen/structure/silver_dungeon.json
 b87a1bee531973babec39c870b7d9f367bc53944 data/aether/worldgen/structure_set/bronze_dungeon.json
 74c5f4f594d41486e3d8df1cbb87884d46154c50 data/aether/worldgen/structure_set/large_aercloud.json
-5880c9b3d1a79c0f7fac31528144359f70935864 data/aether/worldgen/structure_set/silver_and_gold_dungeons.json
+7d3446bf2d07cf5a14a1242206d65a96ed5f3853 data/aether/worldgen/structure_set/silver_and_gold_dungeons.json
