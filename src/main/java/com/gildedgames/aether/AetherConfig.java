@@ -57,7 +57,7 @@ public class AetherConfig {
             edible_ambrosium = builder
                     .comment("Ambrosium Shards can be eaten to restore a half heart of health")
                     .translation("config.aether.common.gameplay.edible_ambrosium")
-                    .define("Ambrosium Shards are edible", false);
+                    .define("Ambrosium Shards are edible", true);
             healing_gummy_swets = builder
                     .comment("Gummy Swets when eaten restore full health instead of full hunger")
                     .translation("config.aether.common.gameplay.healing_gummy_swets")
@@ -99,7 +99,7 @@ public class AetherConfig {
             generate_tall_grass = builder
                     .comment("Determines whether the Aether should generate Tall Grass blocks on terrain or not")
                     .translation("config.aether.common.world_generation.generate_tall_grass")
-                    .define("Generate Tall Grass in the Aether", false);
+                    .define("Generate Tall Grass in the Aether", true);
             generate_pink_aerclouds = builder
                     .comment("Determines whether Pink Aerclouds should generate in the skies of the Aether along with other Aerclouds")
                     .translation("config.aether.common.world_generation.generate_pink_aerclouds")
