@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -124,7 +125,8 @@ public abstract class AbstractWhirlwind extends Mob {
         /*
           This code is used to move other entities around the whirlwind.
          */
-        List<Entity> entityList = this.level.getEntities(this, this.getBoundingBox().expandTowards(2.5, 2.5, 2.5));
+        List<Entity> entityList = this.level.getEntities(this, this.getBoundingBox().expandTowards(2.5, 2.5, 2.5))
+                .stream().filter((entity -> !entity.getType().is(AetherTags.Entities.WHIRLWIND_UNAFFECTED))).toList();
         this.isPullingEntity = !entityList.isEmpty();
         for (Entity entity : entityList) {
             double x = (float) entity.getX();

@@ -141,6 +141,7 @@ public class AetherTags {
 	}
 
 	public static class Entities {
+		public static final TagKey<EntityType<?>> WHIRLWIND_UNAFFECTED = tag("whirlwind_unaffected");
 		public static final TagKey<EntityType<?>> PIGS = tag("pigs");
 		public static final TagKey<EntityType<?>> NO_SKYROOT_DOUBLE_DROPS = tag("no_skyroot_double_drops");
 		public static final TagKey<EntityType<?>> NO_AMBROSIUM_DROPS = tag("no_ambrosium_drops");
