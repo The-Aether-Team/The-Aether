@@ -32,6 +32,7 @@ public interface GravititeTool {
                     if (level.getBlockEntity(pos) == null && state.getDestroySpeed(level, pos) >= 0.0F && !state.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF) && !state.is(AetherTags.Blocks.GRAVITITE_ABILITY_BLACKLIST)) {
                         if (!level.isClientSide()) {
                             FloatingBlockEntity entity = new FloatingBlockEntity(level, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, state);
+                            entity.setNatural(false);
                             if (state.is(BlockTags.ANVIL)) {
                                 entity.setHurtsEntities(2.0F, 40);
                             }

@@ -53,6 +53,9 @@ public class FloatingBlock extends Block implements Floatable {
 		super.tick(state, level, pos, random);
 		if ((this.powered && level.hasNeighborSignal(pos)) || (!this.powered && isFree(level.getBlockState(pos.above())) && pos.getY() <= level.getMaxBuildHeight())) {
 			FloatingBlockEntity floatingBlockEntity = new FloatingBlockEntity(level, (double) pos.getX() + 0.5D, pos.getY(), (double) pos.getZ() + 0.5D, level.getBlockState(pos));
+			if (this.powered) {
+				floatingBlockEntity.setNatural(false);
+			}
 			level.addFreshEntity(floatingBlockEntity);
 			this.floating(floatingBlockEntity);
 		} else {

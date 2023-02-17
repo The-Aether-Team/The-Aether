@@ -60,6 +60,7 @@ public class FloatingBlockEntity extends Entity {
     private int floatDistance;
     @Nullable
     public CompoundTag blockData;
+    private boolean natural = true;
 
     public FloatingBlockEntity(EntityType<? extends FloatingBlockEntity> type, Level level) {
         super(type, level);
@@ -201,8 +202,10 @@ public class FloatingBlockEntity extends Entity {
 
     private void dropBlock() {
         if (this.level instanceof ServerLevel) {
-            for (ItemStack stack : Block.getDrops(this.blockState, (ServerLevel) this.level, this.blockPosition(), null)) {
-                this.spawnAtLocation(stack);
+            if (!this.natural || !this.blockState.requiresCorrectToolForDrops()) {
+                for (ItemStack stack : Block.getDrops(this.blockState, (ServerLevel) this.level, this.blockPosition(), null)) {
+                    this.spawnAtLocation(stack);
+                }
             }
         }
     }
@@ -260,6 +263,10 @@ public class FloatingBlockEntity extends Entity {
         return this.blockState;
     }
 
+    public void setNatural(boolean natural) {
+        this.natural = natural;
+    }
+
     @Override
     public boolean isAttackable() {
         return false;
@@ -297,6 +304,7 @@ public class FloatingBlockEntity extends Entity {
         if (this.blockData != null) {
             tag.put("TileEntityData", this.blockData);
         }
+        tag.putBoolean("Natural", this.natural);
     }
 
     @Override
@@ -322,6 +330,9 @@ public class FloatingBlockEntity extends Entity {
         }
         if (this.blockState.isAir()) {
             this.blockState = Blocks.SAND.defaultBlockState();
+        }
+        if (tag.contains("Natural", 99)) {
+            this.natural = tag.getBoolean("Natural");
         }
     }
 
