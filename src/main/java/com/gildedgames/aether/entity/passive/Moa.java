@@ -449,12 +449,17 @@ public class Moa extends MountableAnimal implements WingedBird {
 
 	@Override
 	public double getMountJumpStrength() {
-		return this.isOnGround() ? 0.9 : 0.75;
+		return this.isOnGround() ? 0.95 : 0.90;
 	}
 
 	@Override
 	public float getSteeringSpeed() {
 		return this.getMoaType().getSpeed();
+	}
+
+	@Override
+	public float getFlyingSpeed() {
+		return this.getSteeringSpeed() * 0.45F;
 	}
 
 	@Override
