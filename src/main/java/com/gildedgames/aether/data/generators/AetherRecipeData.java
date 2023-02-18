@@ -472,7 +472,27 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("PPP")
                 .pattern(" P ")
                 .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
-                .save(consumer, name("skyroot_shield"));
+                .save(consumer, name("skyroot_iron_vanilla_shield"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, Items.SHIELD, 1)
+                .group("minecraft:shield")
+                .define('P', AetherTags.Items.PLANKS_CRAFTING)
+                .define('Z', AetherItems.ZANITE_GEMSTONE.get())
+                .pattern("PZP")
+                .pattern("PPP")
+                .pattern(" P ")
+                .unlockedBy("has_zanite_gemstone", has(AetherItems.ZANITE_GEMSTONE.get()))
+                .save(consumer, name("skyroot_zanite_vanilla_shield"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, Items.SHIELD, 1)
+                .group("minecraft:shield")
+                .define('P', ItemTags.PLANKS)
+                .define('Z', AetherItems.ZANITE_GEMSTONE.get())
+                .pattern("PZP")
+                .pattern("PPP")
+                .pattern(" P ")
+                .unlockedBy("has_zanite_gemstone", has(AetherItems.ZANITE_GEMSTONE.get()))
+                .save(consumer, name("wood_zanite_vanilla_shield"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.SMITHING_TABLE, 1)
                 .group("minecraft:smithing_table")

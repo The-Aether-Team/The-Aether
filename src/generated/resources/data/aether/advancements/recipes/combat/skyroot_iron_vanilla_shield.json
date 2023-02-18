@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:skyroot_shield"
+        "recipe": "aether:skyroot_iron_vanilla_shield"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "aether:skyroot_shield"
+      "aether:skyroot_iron_vanilla_shield"
     ]
   }
 }

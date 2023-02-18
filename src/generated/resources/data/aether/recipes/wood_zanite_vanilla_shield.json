@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "minecraft:shield",
+  "key": {
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "Z": {
+      "item": "aether:zanite_gemstone"
+    }
+  },
+  "pattern": [
+    "PZP",
+    "PPP",
+    " P "
+  ],
+  "result": {
+    "item": "minecraft:shield"
+  }
+}
