@@ -143,7 +143,7 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
                 resultSlotStack.grow(resultStack.getCount());
             }
 
-            if (inputSlotStack.hasCraftingRemainingItem()) {
+            if (inputSlotStack.hasCraftingRemainingItem() && !inputSlotStack.getCraftingRemainingItem().is(resultStack.getCraftingRemainingItem().getItem())) {
                 stacks.set(0, inputSlotStack.getCraftingRemainingItem());
             } else {
                 inputSlotStack.shrink(1);
