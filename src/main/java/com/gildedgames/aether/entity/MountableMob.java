@@ -74,7 +74,7 @@ public interface MountableMob {
                         stepHeight.addTransientModifier(vehicle.getMountStepHeightModifier());
                     }
                 }
-                vehicle.flyingSpeed = vehicle.getSteeringSpeed() * 0.25F;
+                vehicle.flyingSpeed = vehicle.getFlyingSpeed();
                 if (vehicle.isControlledByLocalInstance()) {
                     vehicle.setSpeed(vehicle.getSteeringSpeed());
                     this.travelWithInput(new Vec3(f, motion.y, f1));
@@ -125,6 +125,8 @@ public interface MountableMob {
     void setMountJumping(boolean isMountJumping);
 
     float getSteeringSpeed();
+
+    float getFlyingSpeed();
 
     double jumpFactor();
 
