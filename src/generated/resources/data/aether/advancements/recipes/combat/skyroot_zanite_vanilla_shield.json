@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "aether:skyroot_zanite_vanilla_shield"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_zanite_gemstone": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:zanite_gemstone"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_zanite_gemstone",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "aether:skyroot_zanite_vanilla_shield"
+    ]
+  }
+}
