@@ -72,9 +72,9 @@ public class Swet extends Slime implements MountableMob {
     @Nonnull
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 25.0)
-                .add(Attributes.MOVEMENT_SPEED, 0.5)
-                .add(Attributes.FOLLOW_RANGE, 25.0);
+                .add(Attributes.MAX_HEALTH, 12.0)
+                .add(Attributes.MOVEMENT_SPEED, 0.4)
+                .add(Attributes.FOLLOW_RANGE, 14.0);
     }
 
     @Override
