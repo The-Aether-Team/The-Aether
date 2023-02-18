@@ -22,6 +22,7 @@ public class AetherEntityTagData extends EntityTypeTagsProvider {
     @Override
     public void addTags(HolderLookup.Provider provider) {
         // Aether
+        this.tag(AetherTags.Entities.WHIRLWIND_UNAFFECTED).add(AetherEntityTypes.AECHOR_PLANT.get()).addTag(Tags.EntityTypes.BOSSES);
         this.tag(AetherTags.Entities.PIGS).add(
                 EntityType.PIG,
                 AetherEntityTypes.PHYG.get(),
