@@ -19,6 +19,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.LiquidBlock;
 
 public class IcestoneFreezableRecipeCategory implements IRecipeCategory<IcestoneFreezableRecipe> {
     public static final ResourceLocation UID = new ResourceLocation(Aether.MODID, "icestone_freezable");
@@ -66,8 +67,12 @@ public class IcestoneFreezableRecipeCategory implements IRecipeCategory<Icestone
 
         int i = 0;
         for (BlockPropertyPair pair : pairs) {
-            builder.addSlot(RecipeIngredientRole.INPUT, 8, 6 + i).addIngredients(Ingredient.of(pair.block()));
-            i += 16;
+            if (pair.block() instanceof LiquidBlock liquidBlock) {
+                builder.addSlot(RecipeIngredientRole.INPUT, 8, 6 + i).addFluidStack(liquidBlock.getFluid(), 1000);
+                i += 16;
+            } else {
+                builder.addSlot(RecipeIngredientRole.INPUT, 8, 6 + i).addIngredients(Ingredient.of(pair.block()));
+            }
         }
         builder.addSlot(RecipeIngredientRole.OUTPUT, 60, 6).addIngredients(Ingredient.of(recipeResult.block()));
     }
