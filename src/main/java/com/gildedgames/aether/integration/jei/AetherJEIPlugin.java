@@ -2,12 +2,10 @@ package com.gildedgames.aether.integration.jei;
 
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.integration.jei.categories.AltarRepairRecipeCategory;
-import com.gildedgames.aether.integration.jei.categories.EnchantingCookingRecipeCategory;
-import com.gildedgames.aether.integration.jei.categories.FreezingRecipeCategory;
-import com.gildedgames.aether.integration.jei.categories.IncubationRecipeCategory;
+import com.gildedgames.aether.integration.jei.categories.*;
 import com.gildedgames.aether.integration.jei.categories.fuel.AetherFuelCategory;
 import com.gildedgames.aether.integration.jei.categories.fuel.AetherFuelRecipeMaker;
+import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.gildedgames.aether.recipe.recipes.item.AltarRepairRecipe;
 import com.gildedgames.aether.recipe.recipes.item.EnchantingRecipe;
@@ -41,6 +39,9 @@ public class AetherJEIPlugin implements IModPlugin {
         registration.addRecipeCategories(new FreezingRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
         registration.addRecipeCategories(new IncubationRecipeCategory((registration.getJeiHelpers().getGuiHelper())));
         registration.addRecipeCategories(new AetherFuelCategory((registration.getJeiHelpers().getGuiHelper())));
+        registration.addRecipeCategories(new SwetBallRecipeCategory((registration.getJeiHelpers().getGuiHelper())));
+        registration.addRecipeCategories(new AmbrosiumRecipeCategory((registration.getJeiHelpers().getGuiHelper())));
+        registration.addRecipeCategories(new IcestoneFreezableRecipeCategory((registration.getJeiHelpers().getGuiHelper())));
     }
 
     @Override
@@ -60,6 +61,10 @@ public class AetherJEIPlugin implements IModPlugin {
         registration.addRecipes(FreezingRecipeCategory.RECIPE_TYPE, rm.getAllRecipesFor(AetherRecipeTypes.FREEZING.get()));
         registration.addRecipes(IncubationRecipeCategory.RECIPE_TYPE, rm.getAllRecipesFor(AetherRecipeTypes.INCUBATION.get()));
         registration.addRecipes(AetherFuelCategory.RECIPE_TYPE, AetherFuelRecipeMaker.getFuelRecipes());
+        registration.addRecipes(SwetBallRecipeCategory.RECIPE_TYPE, rm.getAllRecipesFor(AetherRecipeTypes.SWET_BALL_CONVERSION.get()));
+        registration.addRecipes(AmbrosiumRecipeCategory.RECIPE_TYPE, rm.getAllRecipesFor(AetherRecipeTypes.AMBROSIUM_ENCHANTING.get()));
+        registration.addRecipes(IcestoneFreezableRecipeCategory.RECIPE_TYPE, rm.getAllRecipesFor(AetherRecipeTypes.ICESTONE_FREEZABLE.get()));
+
     }
 
     @Override
@@ -67,5 +72,8 @@ public class AetherJEIPlugin implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(AetherBlocks.ALTAR.get().asItem()), EnchantingCookingRecipeCategory.RECIPE_TYPE, AltarRepairRecipeCategory.RECIPE_TYPE, AetherFuelCategory.RECIPE_TYPE);
         registration.addRecipeCatalyst(new ItemStack(AetherBlocks.FREEZER.get().asItem()), FreezingRecipeCategory.RECIPE_TYPE, AetherFuelCategory.RECIPE_TYPE);
         registration.addRecipeCatalyst(new ItemStack(AetherBlocks.INCUBATOR.get().asItem()), IncubationRecipeCategory.RECIPE_TYPE, AetherFuelCategory.RECIPE_TYPE);
+        registration.addRecipeCatalyst(new ItemStack(AetherItems.SWET_BALL.get().asItem()), SwetBallRecipeCategory.RECIPE_TYPE);
+        registration.addRecipeCatalyst(new ItemStack(AetherItems.AMBROSIUM_SHARD.get().asItem()), AmbrosiumRecipeCategory.RECIPE_TYPE);
+        registration.addRecipeCatalyst(new ItemStack(AetherBlocks.ICESTONE.get().asItem()), IcestoneFreezableRecipeCategory.RECIPE_TYPE);
     }
 }
