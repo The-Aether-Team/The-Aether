@@ -2,6 +2,7 @@ package com.gildedgames.aether.world.structurepiece.bronzedungeon;
 
 
 import com.gildedgames.aether.AetherTags;
+import com.gildedgames.aether.world.processor.DoubleDropsProcessor;
 import com.gildedgames.aether.world.processor.NoReplaceProcessor;
 import com.gildedgames.aether.world.structurepiece.AetherStructurePieceTypes;
 import net.minecraft.core.BlockPos;
@@ -32,7 +33,7 @@ public class BronzeTunnel extends BronzeDungeonPiece implements PieceBeardifierM
     }
 
     static StructurePlaceSettings makeSettings() {
-        return new StructurePlaceSettings().addProcessor(AVOID_DUNGEONS).addProcessor(BRONZE_DUNGEON_STONE);
+        return new StructurePlaceSettings().addProcessor(AVOID_DUNGEONS).addProcessor(BRONZE_DUNGEON_STONE).addProcessor(DoubleDropsProcessor.INSTANCE);
     }
 
     @Override

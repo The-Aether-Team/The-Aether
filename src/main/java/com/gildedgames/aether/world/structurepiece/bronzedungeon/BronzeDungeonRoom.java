@@ -3,6 +3,7 @@ package com.gildedgames.aether.world.structurepiece.bronzedungeon;
 
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.loot.AetherLoot;
+import com.gildedgames.aether.world.processor.DoubleDropsProcessor;
 import com.gildedgames.aether.world.structurepiece.AetherStructurePieceTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -26,7 +27,7 @@ public class BronzeDungeonRoom extends BronzeDungeonPiece {
     }
 
     static StructurePlaceSettings makeSettings() {
-        return new StructurePlaceSettings().addProcessor(BRONZE_DUNGEON_STONE).addProcessor(TRAPPED_CARVED_STONE);
+        return new StructurePlaceSettings().addProcessor(BRONZE_DUNGEON_STONE).addProcessor(TRAPPED_CARVED_STONE).addProcessor(DoubleDropsProcessor.INSTANCE);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.gildedgames.aether.world.structurepiece.silverdungeon;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.loot.AetherLoot;
+import com.gildedgames.aether.world.processor.DoubleDropsProcessor;
 import com.gildedgames.aether.world.structurepiece.AetherStructurePieceTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -37,7 +38,7 @@ public class SilverDungeonRoom extends SilverDungeonPiece {
     private static StructurePlaceSettings makeSettings(StructureTemplateManager manager, ResourceLocation id) {
         StructureTemplate template = manager.getOrCreate(id);
         BlockPos pivot = new BlockPos(template.getSize().getX() / 2 - 4, 0, template.getSize().getZ() / 2 - 4);
-        return new StructurePlaceSettings().setRotationPivot(pivot).addProcessor(LOCKED_ANGELIC_STONE);
+        return new StructurePlaceSettings().setRotationPivot(pivot).addProcessor(LOCKED_ANGELIC_STONE).addProcessor(DoubleDropsProcessor.INSTANCE);
     }
 
     @Override

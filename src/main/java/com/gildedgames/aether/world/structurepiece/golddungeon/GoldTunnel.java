@@ -1,6 +1,7 @@
 package com.gildedgames.aether.world.structurepiece.golddungeon;
 
 
+import com.gildedgames.aether.world.processor.DoubleDropsProcessor;
 import com.gildedgames.aether.world.processor.NoReplaceProcessor;
 import com.gildedgames.aether.world.structurepiece.AetherStructurePieceTypes;
 import net.minecraft.core.BlockPos;
@@ -24,6 +25,6 @@ public class GoldTunnel extends GoldDungeonPiece {
     }
 
     private static StructurePlaceSettings makeSettings() {
-        return new StructurePlaceSettings().addProcessor(MOSSY_HOLYSTONE).addProcessor(NoReplaceProcessor.AIR);
+        return new StructurePlaceSettings().addProcessor(MOSSY_HOLYSTONE).addProcessor(NoReplaceProcessor.AIR).addProcessor(DoubleDropsProcessor.INSTANCE);
     }
 }
