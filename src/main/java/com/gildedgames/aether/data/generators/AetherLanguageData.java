@@ -625,7 +625,6 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addGuiText("jei.fuel", "Aether Fuel");
         addGuiText("jei.swet_ball_convert", "Swet Ball Convert");
         addGuiText("jei.ambrosium_convert", "Ambrosium Convert");
-        addGuiText("jei.icestone_freezable", "Ice Stone Freezable");
 
         addGuiText("boss.message.far", "You must be in the boss room to interact.");
 
