@@ -1,6 +1,7 @@
 package com.gildedgames.aether.world.structurepiece.golddungeon;
 
 
+import com.gildedgames.aether.world.processor.DoubleDropsProcessor;
 import com.gildedgames.aether.world.processor.VerticalGradientProcessor;
 import com.gildedgames.aether.world.structurepiece.AetherStructurePieceTypes;
 import net.minecraft.core.BlockPos;
@@ -28,6 +29,6 @@ public class GoldIsland extends GoldDungeonPiece {
     }
 
     private static StructurePlaceSettings makeSettings() {
-        return new StructurePlaceSettings().addProcessor(VerticalGradientProcessor.INSTANCE);
+        return new StructurePlaceSettings().addProcessor(VerticalGradientProcessor.INSTANCE).addProcessor(DoubleDropsProcessor.INSTANCE);
     }
 }

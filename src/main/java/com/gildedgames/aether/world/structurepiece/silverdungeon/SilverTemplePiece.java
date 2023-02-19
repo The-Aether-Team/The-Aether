@@ -1,5 +1,6 @@
 package com.gildedgames.aether.world.structurepiece.silverdungeon;
 
+import com.gildedgames.aether.world.processor.DoubleDropsProcessor;
 import com.gildedgames.aether.world.structurepiece.AetherStructurePieceTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -24,7 +25,7 @@ public class SilverTemplePiece extends SilverDungeonPiece {
     }
 
     private static StructurePlaceSettings makeSettings() {
-        return new StructurePlaceSettings().addProcessor(LOCKED_ANGELIC_STONE);
+        return new StructurePlaceSettings().addProcessor(LOCKED_ANGELIC_STONE).addProcessor(DoubleDropsProcessor.INSTANCE);
     }
 
     @Override
