@@ -1,5 +1,6 @@
 package com.gildedgames.aether.item.tools.abilities;
 
+import com.gildedgames.aether.block.miscellaneous.FloatingBlock;
 import com.gildedgames.aether.entity.block.FloatingBlockEntity;
 import com.gildedgames.aether.AetherTags;
 import net.minecraft.core.BlockPos;
@@ -28,10 +29,11 @@ public interface GravititeTool {
     default boolean floatBlock(Level level, BlockPos pos, ItemStack stack, BlockState state, Player player, InteractionHand hand) {
         if (stack.getItem() instanceof TieredItem tieredItem) {
             if (player != null && !player.isShiftKeyDown()) {
-                if ((stack.getDestroySpeed(state) == tieredItem.getTier().getSpeed() || stack.isCorrectToolForDrops(state)) && level.isEmptyBlock(pos.above())) {
+                if ((stack.getDestroySpeed(state) == tieredItem.getTier().getSpeed() || stack.isCorrectToolForDrops(state)) && FloatingBlock.isFree(level.getBlockState(pos.above()))) {
                     if (level.getBlockEntity(pos) == null && state.getDestroySpeed(level, pos) >= 0.0F && !state.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF) && !state.is(AetherTags.Blocks.GRAVITITE_ABILITY_BLACKLIST)) {
                         if (!level.isClientSide()) {
                             FloatingBlockEntity entity = new FloatingBlockEntity(level, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, state);
+                            entity.setNatural(false);
                             if (state.is(BlockTags.ANVIL)) {
                                 entity.setHurtsEntities(2.0F, 40);
                             }
