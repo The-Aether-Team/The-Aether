@@ -69,10 +69,11 @@ public class IcestoneFreezableRecipeCategory implements IRecipeCategory<Icestone
         for (BlockPropertyPair pair : pairs) {
             if (pair.block() instanceof LiquidBlock liquidBlock) {
                 builder.addSlot(RecipeIngredientRole.INPUT, 8, 6 + i).addFluidStack(liquidBlock.getFluid(), 1000);
-                i += 16;
+
             } else {
                 builder.addSlot(RecipeIngredientRole.INPUT, 8, 6 + i).addIngredients(Ingredient.of(pair.block()));
             }
+            i += 16;
         }
         builder.addSlot(RecipeIngredientRole.OUTPUT, 60, 6).addIngredients(Ingredient.of(recipeResult.block()));
     }
