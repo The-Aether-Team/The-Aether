@@ -22,16 +22,6 @@ public class AetherPlacedFeatureBuilders {
                 new DungeonBlacklistFilter());
     }
 
-    public static List<PlacementModifier> pinkAercloudPlacement(int above, int range, int chance) {
-        return List.of(
-                HeightRangePlacement.uniform(VerticalAnchor.absolute(above), VerticalAnchor.absolute(above + range)),
-                RarityFilter.onAverageOnceEvery(chance),
-                InSquarePlacement.spread(),
-                BiomeFilter.biome(),
-                new DungeonBlacklistFilter(),
-                new ConfigFilter(AetherConfig.COMMON.generate_pink_aerclouds));
-    }
-
     /**
      * Copy of {@link net.minecraft.data.worldgen.placement.VegetationPlacements#treePlacement(PlacementModifier)}
      */

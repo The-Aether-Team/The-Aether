@@ -24,7 +24,6 @@ public class AetherConfig {
         public final ConfigValue<Boolean> spawn_valkyrie_cape;
 
         public final ConfigValue<Boolean> generate_tall_grass;
-        public final ConfigValue<Boolean> generate_pink_aerclouds;
         public final ConfigValue<Boolean> generate_holiday_tree_always;
         public final ConfigValue<Boolean> generate_holiday_tree_seasonally;
 
@@ -100,10 +99,6 @@ public class AetherConfig {
                     .comment("Determines whether the Aether should generate Tall Grass blocks on terrain or not")
                     .translation("config.aether.common.world_generation.generate_tall_grass")
                     .define("Generate Tall Grass in the Aether", true);
-            generate_pink_aerclouds = builder
-                    .comment("Determines whether Pink Aerclouds should generate in the skies of the Aether along with other Aerclouds")
-                    .translation("config.aether.common.world_generation.generate_pink_aerclouds")
-                    .define("Generate Pink Aerclouds", false);
             generate_holiday_tree_always = builder
                     .comment("Determines whether Holiday Trees should always be able to generate when exploring new chunks in the Aether, if true, this overrides 'Generate Holiday Trees seasonally'")
                     .translation("config.aether.common.world_generation.generate_holiday_tree_always")
