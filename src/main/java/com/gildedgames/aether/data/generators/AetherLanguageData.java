@@ -30,7 +30,6 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addBlock(AetherBlocks.COLD_AERCLOUD, "Cold Aercloud");
         addBlock(AetherBlocks.BLUE_AERCLOUD, "Blue Aercloud");
         addBlock(AetherBlocks.GOLDEN_AERCLOUD, "Golden Aercloud");
-        addBlock(AetherBlocks.PINK_AERCLOUD, "Pink Aercloud");
 
         addBlock(AetherBlocks.ICESTONE, "Icestone");
         addBlock(AetherBlocks.AMBROSIUM_ORE, "Ambrosium Ore");
@@ -904,7 +903,6 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.PIG_SLAYER, "Kills any Pig type mobs with nothing with a single blow. But why would you want to do that? Great for traversing the Nether.");
         addLore(AetherBlocks.PILLAR, "The main part of the Silver Dungeon's decorative pillars, they spawn all around the dungeon, and are excellent for building.");
         addLore(AetherBlocks.PILLAR_TOP, "The top of the Silver Dungeon's decorative pillars, they look excellent, and are great for building.");
-        addLore(AetherBlocks.PINK_AERCLOUD, "A very soft cloud that is pink. It has natural healing properties, healing anyone's wounds when stepped in.");
         addLore(AetherItems.POISON_DART, "The ammo for Poison Dart Shooters, these are made by infecting Golden Darts with poison!");
         addLore(AetherItems.POISON_DART_SHOOTER, "A Dart Shooter which shoots Poison Darts. Shooting this at something infects them with a deadly poison!");
         addLore(AetherBlocks.PRESENT, "A wonderful holiday gift, open it for a surprise! Be careful, as there's a chance you could get ssssssurprised!");
@@ -1075,7 +1073,6 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addCommonConfig("loot", "spawn_valkyrie_cape", "Allows the Valkyrie Cape to spawn in the Silver Dungeon loot table");
 
         addCommonConfig("world_generation", "generate_tall_grass", "Determines whether the Aether should generate Tall Grass blocks on terrain or not");
-        addCommonConfig("world_generation", "generate_pink_aerclouds", "Determines whether Pink Aerclouds should generate in the skies of the Aether along with other Aerclouds");
         addCommonConfig("world_generation", "generate_holiday_tree_always", "Determines whether Holiday Trees should always be able to generate when exploring new chunks in the Aether, if true, this overrides 'Generate Holiday Trees seasonally'");
         addCommonConfig("world_generation", "generate_holiday_tree_seasonally", "Determines whether Holiday Trees should be able to generate during the time frame of December and January when exploring new chunks in the Aether, only works if 'Generate Holiday Trees always' is set to false");
 

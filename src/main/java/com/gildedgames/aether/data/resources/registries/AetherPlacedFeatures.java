@@ -22,7 +22,6 @@ public class AetherPlacedFeatures {
     public static final ResourceKey<PlacedFeature> COLD_AERCLOUD_PLACEMENT = createKey("cold_aercloud");
     public static final ResourceKey<PlacedFeature> BLUE_AERCLOUD_PLACEMENT = createKey("blue_aercloud");
     public static final ResourceKey<PlacedFeature> GOLDEN_AERCLOUD_PLACEMENT = createKey("golden_aercloud");
-    public static final ResourceKey<PlacedFeature> PINK_AERCLOUD_PLACEMENT = createKey("pink_aercloud");
     public static final ResourceKey<PlacedFeature> SKYROOT_MEADOW_TREES_PLACEMENT = createKey("skyroot_meadow_trees");
     public static final ResourceKey<PlacedFeature> SKYROOT_GROVE_TREES_PLACEMENT = createKey("skyroot_grove_trees");
     public static final ResourceKey<PlacedFeature> SKYROOT_WOODLAND_TREES_PLACEMENT = createKey("skyroot_woodland_trees");
@@ -52,7 +51,6 @@ public class AetherPlacedFeatures {
         register(context, COLD_AERCLOUD_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.COLD_AERCLOUD_CONFIGURATION), AetherPlacedFeatureBuilders.aercloudPlacement(32, 64, 7));
         register(context, BLUE_AERCLOUD_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.BLUE_AERCLOUD_CONFIGURATION), AetherPlacedFeatureBuilders.aercloudPlacement(32, 64, 24));
         register(context, GOLDEN_AERCLOUD_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.GOLDEN_AERCLOUD_CONFIGURATION), AetherPlacedFeatureBuilders.aercloudPlacement(96, 32, 75));
-        register(context, PINK_AERCLOUD_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.PINK_AERCLOUD_CONFIGURATION), AetherPlacedFeatureBuilders.pinkAercloudPlacement(96, 32, 100));
         register(context, CRYSTAL_ISLAND_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.CRYSTAL_ISLAND_CONFIGURATION),
                 RarityFilter.onAverageOnceEvery(50),
                 InSquarePlacement.spread(),

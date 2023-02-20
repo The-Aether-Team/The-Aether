@@ -48,7 +48,6 @@ public class AetherConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> COLD_AERCLOUD_CONFIGURATION = createKey("cold_aercloud");
     public static final ResourceKey<ConfiguredFeature<?, ?>> BLUE_AERCLOUD_CONFIGURATION = createKey("blue_aercloud");
     public static final ResourceKey<ConfiguredFeature<?, ?>> GOLDEN_AERCLOUD_CONFIGURATION = createKey("golden_aercloud");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> PINK_AERCLOUD_CONFIGURATION = createKey("pink_aercloud");
     public static final ResourceKey<ConfiguredFeature<?, ?>> CRYSTAL_ISLAND_CONFIGURATION = createKey("crystal_island");
     public static final ResourceKey<ConfiguredFeature<?, ?>> SKYROOT_TREE_CONFIGURATION = createKey("skyroot_tree");
     public static final ResourceKey<ConfiguredFeature<?, ?>> GOLDEN_OAK_TREE_CONFIGURATION = createKey("golden_oak_tree");
@@ -78,7 +77,6 @@ public class AetherConfiguredFeatures {
         register(context, COLD_AERCLOUD_CONFIGURATION, AetherFeatures.AERCLOUD.get(), AetherConfiguredFeatureBuilders.aercloud(16, AetherFeatureStates.COLD_AERCLOUD));
         register(context, BLUE_AERCLOUD_CONFIGURATION, AetherFeatures.AERCLOUD.get(), AetherConfiguredFeatureBuilders.aercloud(8, AetherFeatureStates.BLUE_AERCLOUD));
         register(context, GOLDEN_AERCLOUD_CONFIGURATION, AetherFeatures.AERCLOUD.get(), AetherConfiguredFeatureBuilders.aercloud(4, AetherFeatureStates.GOLDEN_AERCLOUD));
-        register(context, PINK_AERCLOUD_CONFIGURATION, AetherFeatures.AERCLOUD.get(), AetherConfiguredFeatureBuilders.aercloud(1, AetherFeatureStates.PINK_AERCLOUD));
         register(context, CRYSTAL_ISLAND_CONFIGURATION, AetherFeatures.CRYSTAL_ISLAND.get(), NoneFeatureConfiguration.INSTANCE);
         register(context, SKYROOT_TREE_CONFIGURATION, Feature.TREE,
                 new TreeConfiguration.TreeConfigurationBuilder(
