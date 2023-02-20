@@ -1,5 +1,6 @@
 package com.gildedgames.aether.world.structurepiece.silverdungeon;
 
+import com.gildedgames.aether.block.AetherBlockStateProperties;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.world.structurepiece.AetherStructurePieceTypes;
 import net.minecraft.core.BlockPos;
@@ -49,10 +50,11 @@ public class LegacyCloudBed extends StructurePiece {
         tag.put("Positions", positions);
     }
 
+    private final static BlockState COLD_CLOUD = AetherBlocks.COLD_AERCLOUD.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
     @Override
     public void postProcess(@Nonnull WorldGenLevel level, @Nonnull StructureManager manager, @Nonnull ChunkGenerator generator, @Nonnull RandomSource random, @Nonnull BoundingBox bounds, @Nonnull ChunkPos chunkPos, @Nonnull BlockPos blockPos) {
         if (!this.positions.isEmpty()) {
-            this.positions.removeIf(pos -> this.placeBlock(level, AetherBlocks.COLD_AERCLOUD.get().defaultBlockState(), pos.offset(0, blockPos.getY(), 0), bounds));
+            this.positions.removeIf(pos -> this.placeBlock(level, COLD_CLOUD, pos.offset(0, blockPos.getY(), 0), bounds));
         }
     }
 
