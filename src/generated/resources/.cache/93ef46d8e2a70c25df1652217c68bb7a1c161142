@@ -1,4 +1,4 @@
-// 1.19.3	2023-02-03T13:16:35.224403	Item Models: aether
+// 1.19.3	2023-02-20T09:04:28.2019008	Item Models: aether
 88dbeab79e0017737773db746d2e719a21fdb198 assets/aether/models/item/aechor_petal.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/aechor_plant_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/aerbunny_spawn_egg.json
@@ -151,6 +151,7 @@ efdafb22ff9ce0550d5de3490f93d7e5d246fe4f assets/aether/models/item/mossy_holysto
 5b99f239b760eaa60754eda8a296bb1467055847 assets/aether/models/item/music_disc_aether_tune.json
 06d4382138ed6e63f13ce799b854de9b933f398f assets/aether/models/item/music_disc_ascending_dawn.json
 9c6ed4e747204a8beb5115b0429c9aa97583606b assets/aether/models/item/music_disc_chinchilla.json
+55d686cff90f5dfc9d48adfcd47b299e5ce4876c assets/aether/models/item/music_disc_high.json
 86877ed7ed6f2dc3a5f0d8dbac3452f0795d58eb assets/aether/models/item/music_disc_legacy.json
 61dab9c93e31c29ca17012bb84b8d3fe69f4d18a assets/aether/models/item/music_disc_welcoming_skies.json
 902b04b2a7f9c6e8e1f4ec322698902ab4f714b6 assets/aether/models/item/nature_staff.json
