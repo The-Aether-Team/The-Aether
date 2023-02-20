@@ -1,6 +1,6 @@
 {
   "carvers": {},
-  "creature_spawn_probability": 0.15,
+  "creature_spawn_probability": 0.25,
   "downfall": 0.0,
   "effects": {
     "fog_color": 9671612,
@@ -66,7 +66,7 @@
     },
     "aether:zephyr": {
       "charge": 0.7,
-      "energy_budget": 0.07
+      "energy_budget": 0.06
     }
   },
   "spawners": {
@@ -76,20 +76,20 @@
       {
         "type": "aether:phyg",
         "maxCount": 4,
-        "minCount": 4,
-        "weight": 12
+        "minCount": 3,
+        "weight": 10
       },
       {
         "type": "aether:sheepuff",
         "maxCount": 4,
-        "minCount": 4,
-        "weight": 10
+        "minCount": 3,
+        "weight": 12
       },
       {
         "type": "aether:flying_cow",
-        "maxCount": 4,
-        "minCount": 4,
-        "weight": 10
+        "maxCount": 5,
+        "minCount": 2,
+        "weight": 12
       },
       {
         "type": "aether:aerbunny",
@@ -100,8 +100,8 @@
       {
         "type": "aether:moa",
         "maxCount": 3,
-        "minCount": 3,
-        "weight": 10
+        "minCount": 1,
+        "weight": 8
       }
     ],
     "misc": [],
@@ -110,37 +110,37 @@
         "type": "aether:cockatrice",
         "maxCount": 4,
         "minCount": 1,
-        "weight": 60
+        "weight": 15
       },
       {
         "type": "aether:zephyr",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 200
+        "weight": 30
       },
       {
         "type": "aether:aechor_plant",
         "maxCount": 4,
         "minCount": 2,
-        "weight": 4
+        "weight": 3
       },
       {
         "type": "aether:blue_swet",
         "maxCount": 3,
         "minCount": 1,
-        "weight": 2
+        "weight": 1
       },
       {
         "type": "aether:golden_swet",
         "maxCount": 3,
         "minCount": 1,
-        "weight": 2
+        "weight": 1
       },
       {
         "type": "aether:whirlwind",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 9
+        "weight": 12
       },
       {
         "type": "aether:evil_whirlwind",
