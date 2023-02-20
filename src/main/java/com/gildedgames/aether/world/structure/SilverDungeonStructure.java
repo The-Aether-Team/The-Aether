@@ -40,15 +40,16 @@ public class SilverDungeonStructure extends Structure {
         int z = chunkpos.getMiddleBlockZ();
 
         int maxHeight = 128;
+        int minHeight = chunkGenerator.getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, heightAccessor, context.randomState()) - 2;
 
         int height;
         if (random.nextInt(5) < 3) {
-            height = chunkGenerator.getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, heightAccessor, context.randomState()) + 20;
+            height = minHeight + 18;
             if (height < maxHeight) {
                 height += random.nextInt(maxHeight - height);
             }
         } else {
-            height = 35 + random.nextInt(70);
+            height = Math.max(minHeight, 35 + random.nextInt(70));
         }
 
         BlockPos blockpos = new BlockPos(chunkpos.getMiddleBlockX(), height, chunkpos.getMiddleBlockZ());
@@ -57,11 +58,13 @@ public class SilverDungeonStructure extends Structure {
         return Optional.of(new GenerationStub(blockpos, piecesBuilder -> this.generatePieces(piecesBuilder, context, blockpos)));
     }
 
-    private void generatePieces(StructurePiecesBuilder builder, GenerationContext context, BlockPos elevatedPos) {
+    private void generatePieces(StructurePiecesBuilder builder, GenerationContext context, BlockPos input) {
         RandomSource randomSource = context.random();
         Rotation rotation = Rotation.getRandom(randomSource);
         Direction direction = rotation.rotate(Direction.SOUTH);
         StructureTemplateManager manager = context.structureTemplateManager();
+
+        BlockPos elevatedPos = input.relative(rotation.rotate(Direction.NORTH), 54).relative(rotation.rotate(Direction.WEST), 15);
 
         this.buildCloudBed(builder, randomSource, elevatedPos, direction);
 
