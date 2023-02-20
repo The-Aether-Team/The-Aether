@@ -41,7 +41,6 @@ public class AetherBlockLoot extends AetherBlockLootSubProvider {
         this.dropSelfDouble(AetherBlocks.COLD_AERCLOUD.get());
         this.dropSelfDouble(AetherBlocks.BLUE_AERCLOUD.get());
         this.dropSelfDouble(AetherBlocks.GOLDEN_AERCLOUD.get());
-        this.dropSelfDouble(AetherBlocks.PINK_AERCLOUD.get());
 
         this.dropSelf(AetherBlocks.ICESTONE.get());
         this.dropDoubleWithFortune(AetherBlocks.AMBROSIUM_ORE.get(), AetherItems.AMBROSIUM_SHARD.get());

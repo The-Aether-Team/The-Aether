@@ -167,7 +167,6 @@ public class AetherCreativeTabs {
                             output.accept(AetherBlocks.COLD_AERCLOUD.get());
                             output.accept(AetherBlocks.BLUE_AERCLOUD.get());
                             output.accept(AetherBlocks.GOLDEN_AERCLOUD.get());
-                            output.accept(AetherBlocks.PINK_AERCLOUD.get());
                             output.accept(AetherBlocks.PRESENT.get());
                         }));
         AETHER_FUNCTIONAL_BLOCKS = event.registerCreativeModeTab(

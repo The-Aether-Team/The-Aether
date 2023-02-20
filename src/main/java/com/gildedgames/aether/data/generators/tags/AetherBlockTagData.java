@@ -46,8 +46,7 @@ public class AetherBlockTagData extends BlockTagsProvider {
         this.tag(AetherTags.Blocks.AERCLOUDS).add(
                 AetherBlocks.COLD_AERCLOUD.get(),
                 AetherBlocks.BLUE_AERCLOUD.get(),
-                AetherBlocks.GOLDEN_AERCLOUD.get(),
-                AetherBlocks.PINK_AERCLOUD.get());
+                AetherBlocks.GOLDEN_AERCLOUD.get());
         this.tag(AetherTags.Blocks.SKYROOT_LOGS).add(
                 AetherBlocks.SKYROOT_LOG.get(),
                 AetherBlocks.SKYROOT_WOOD.get(),
@@ -345,7 +344,6 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherBlocks.COLD_AERCLOUD.get(),
                 AetherBlocks.BLUE_AERCLOUD.get(),
                 AetherBlocks.GOLDEN_AERCLOUD.get(),
-                AetherBlocks.PINK_AERCLOUD.get(),
                 AetherBlocks.SKYROOT_LEAVES.get(),
                 AetherBlocks.GOLDEN_OAK_LEAVES.get(),
                 AetherBlocks.CRYSTAL_LEAVES.get(),
