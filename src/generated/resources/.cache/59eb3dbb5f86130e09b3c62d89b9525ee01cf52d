@@ -1,4 +1,4 @@
-// 1.19.3	2023-02-03T13:16:35.2114037	Loot Tables
+// 1.19.3	2023-02-19T23:04:22.9861004	Loot Tables
 d025471306910ea35dcf85d28fc188182a1b3c8d data/aether/loot_tables/advancements/enter_aether.json
 96aec873b17d2a5aed2a22fe094efa32b8d54645 data/aether/loot_tables/blocks/aerogel.json
 9e100e6de96b47a3a1b9533e76ad9847d364b9c0 data/aether/loot_tables/blocks/aerogel_slab.json
@@ -79,7 +79,6 @@ ea77e044d2fc8470a2e8847283b764df2a100577 data/aether/loot_tables/blocks/mossy_ho
 e78c405edb419bb3cf3a1b5c33fa0ae3b4ad5eea data/aether/loot_tables/blocks/mossy_holystone_wall.json
 8617489ea89245e07f51cd7ea4699b7c0ba4510c data/aether/loot_tables/blocks/pillar.json
 642819c399ee0c6e7c74adc36bfdfefc8164511b data/aether/loot_tables/blocks/pillar_top.json
-b850eb8f1852249555e03a06416a4deb1b13a37a data/aether/loot_tables/blocks/pink_aercloud.json
 ffbf5b91053e4bf26053c8059fb8c82869b65569 data/aether/loot_tables/blocks/potted_berry_bush.json
 ecb5fc73c6a2ecfe4421c9e11d4002527c096e67 data/aether/loot_tables/blocks/potted_berry_bush_stem.json
 a2bcad40febb0f2bf330833aff57eef851ef4a2c data/aether/loot_tables/blocks/potted_golden_oak_sapling.json

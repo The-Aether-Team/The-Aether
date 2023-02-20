@@ -51,8 +51,7 @@
       "aether:crystal_island",
       "aether:cold_aercloud",
       "aether:blue_aercloud",
-      "aether:golden_aercloud",
-      "aether:pink_aercloud"
+      "aether:golden_aercloud"
     ]
   ],
   "precipitation": "none",

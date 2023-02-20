@@ -231,7 +231,6 @@ public class AetherItemModelData extends AetherItemModelProvider {
         this.itemBlock(AetherBlocks.COLD_AERCLOUD.get());
         this.itemBlock(AetherBlocks.BLUE_AERCLOUD.get());
         this.itemBlock(AetherBlocks.GOLDEN_AERCLOUD.get());
-        this.itemBlock(AetherBlocks.PINK_AERCLOUD.get());
 
         this.itemBlock(AetherBlocks.ICESTONE.get());
         this.itemBlock(AetherBlocks.AMBROSIUM_ORE.get());
