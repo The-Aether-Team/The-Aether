@@ -34,8 +34,8 @@ public class AetherStructureSets {
         Holder<StructureSet> airborneSetHolder = context.register(SILVER_AND_GOLD_DUNGEONS, new StructureSet(List.of(
         		StructureSet.entry(structures.getOrThrow(AetherStructures.SILVER_DUNGEON), 3),
         		StructureSet.entry(structures.getOrThrow(AetherStructures.GOLD_DUNGEON), 1)),
-        	new RandomSpreadStructurePlacement(34, 18, RandomSpreadType.LINEAR, 4325806)));
+        	new RandomSpreadStructurePlacement(36, 24, RandomSpreadType.LINEAR, 4325806)));
 
-        context.register(BRONZE_DUNGEON, new StructureSet(structures.getOrThrow(AetherStructures.BRONZE_DUNGEON), new RandomSpreadStructurePlacement(Vec3i.ZERO, StructurePlacement.FrequencyReductionMethod.DEFAULT, 1.0F, 32146754, Optional.of(new StructurePlacement.ExclusionZone(airborneSetHolder, 4)), 6, 3, RandomSpreadType.TRIANGULAR)));
+        context.register(BRONZE_DUNGEON, new StructureSet(structures.getOrThrow(AetherStructures.BRONZE_DUNGEON), new RandomSpreadStructurePlacement(Vec3i.ZERO, StructurePlacement.FrequencyReductionMethod.DEFAULT, 1.0F, 32146754, Optional.of(new StructurePlacement.ExclusionZone(airborneSetHolder, 4)), 6, 5, RandomSpreadType.TRIANGULAR)));
     }
 }
