@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
@@ -38,6 +39,7 @@ public interface GravititeTool {
                                 entity.setHurtsEntities(2.0F, 40);
                             }
                             level.addFreshEntity(entity);
+                            level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
                             stack.hurtAndBreak(4, player, (p) -> p.broadcastBreakEvent(hand));
                         } else {
                             player.swing(hand);
