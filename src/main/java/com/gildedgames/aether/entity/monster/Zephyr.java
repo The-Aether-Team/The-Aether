@@ -168,7 +168,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 		@Override
 		public void tick() {
 			LivingEntity target = this.parentEntity.getTarget();
-			if (target.distanceToSqr(this.parentEntity) < 40 * 440 && this.parentEntity.hasLineOfSight(target)) {
+			if (target.distanceToSqr(this.parentEntity) < 40 * 40 && this.parentEntity.hasLineOfSight(target)) {
 				Level level = this.parentEntity.level;
 				++this.attackTimer;
 				if (this.attackTimer == 10) {
