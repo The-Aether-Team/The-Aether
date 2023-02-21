@@ -121,7 +121,7 @@ public class FloatingBlockEntity extends Entity {
 
                 if ((!this.verticalCollision || this.onGround) && !canConvert) {
                     if (!this.level.isClientSide && (this.time > 100 && (blockPos1.getY() <= this.level.getMinBuildHeight() || blockPos1.getY() > this.level.getMaxBuildHeight()) || this.time > 600)) {
-                        if (this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+                        if (!this.natural && this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                             this.dropBlock(this.blockState);
                         }
                         this.discard();
