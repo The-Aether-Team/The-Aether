@@ -277,6 +277,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 		}
 	}
 
+	@Nullable
 	public MoaType getMoaType() {
 		return AetherMoaTypes.get(this.entityData.get(DATA_MOA_TYPE_ID));
 	}
