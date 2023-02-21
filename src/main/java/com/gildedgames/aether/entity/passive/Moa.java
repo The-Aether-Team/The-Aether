@@ -185,10 +185,6 @@ public class Moa extends MountableAnimal implements WingedBird {
 			this.setHungry(false);
 			this.setAmountFed(0);
 		}
-
-		if (this.getControllingPassenger() instanceof Player) {
-			this.resetFallDistance();
-		}
 	}
 
 	@Override
@@ -203,6 +199,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 					this.setFlapCooldown(15);
 				}
 			}
+			this.resetFallDistance();
 		}
 	}
 

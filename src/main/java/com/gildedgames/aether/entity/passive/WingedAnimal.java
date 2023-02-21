@@ -37,6 +37,11 @@ public abstract class WingedAnimal extends MountableAnimal {
                 this.setEntityOnGround(false);
             }
         }
+    }
+
+    @Override
+    public void riderTick() {
+        super.riderTick();
         if (this.getControllingPassenger() instanceof Player) {
             this.resetFallDistance();
         }
