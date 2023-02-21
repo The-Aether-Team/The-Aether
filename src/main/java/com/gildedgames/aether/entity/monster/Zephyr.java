@@ -44,7 +44,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 	protected void registerGoals() {
 		this.goalSelector.addGoal(5, new Zephyr.RandomFlyGoal(this));
 		this.goalSelector.addGoal(7, new Zephyr.LookAroundGoal(this));
-		this.goalSelector.addGoal(7, new Zephyr.SnowballAttackGoal(this));
+		this.goalSelector.addGoal(5, new Zephyr.SnowballAttackGoal(this));
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, false));
 	}
 
@@ -52,7 +52,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 	public static AttributeSupplier.Builder createMobAttributes() {
 		return FlyingMob.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 5.0)
-				.add(Attributes.FOLLOW_RANGE, 100.0);
+				.add(Attributes.FOLLOW_RANGE, 50.0);
 	}
 
 	@Override
@@ -168,7 +168,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 		@Override
 		public void tick() {
 			LivingEntity target = this.parentEntity.getTarget();
-			if (target.distanceToSqr(this.parentEntity) < 64 * 64 && this.parentEntity.hasLineOfSight(target)) {
+			if (target.distanceToSqr(this.parentEntity) < 40 * 40 && this.parentEntity.hasLineOfSight(target)) {
 				Level level = this.parentEntity.level;
 				++this.attackTimer;
 				if (this.attackTimer == 10) {
