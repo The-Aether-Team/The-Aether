@@ -52,7 +52,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 	public static AttributeSupplier.Builder createMobAttributes() {
 		return FlyingMob.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 5.0)
-				.add(Attributes.FOLLOW_RANGE, 45.0);
+				.add(Attributes.FOLLOW_RANGE, 50.0);
 	}
 
 	@Override
@@ -168,7 +168,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 		@Override
 		public void tick() {
 			LivingEntity target = this.parentEntity.getTarget();
-			if (target.distanceToSqr(this.parentEntity) < 64 * 64 && this.parentEntity.hasLineOfSight(target)) {
+			if (target.distanceToSqr(this.parentEntity) < 40 * 440 && this.parentEntity.hasLineOfSight(target)) {
 				Level level = this.parentEntity.level;
 				++this.attackTimer;
 				if (this.attackTimer == 10) {
