@@ -119,7 +119,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     public static AttributeSupplier.Builder createSunSpiritAttributes() {
         return AbstractValkyrie.createAttributes()
                 .add(Attributes.MAX_HEALTH, 50.0)
-                .add(Attributes.MOVEMENT_SPEED, 0.5);
+                .add(Attributes.MOVEMENT_SPEED, 0.45);
     }
 
     @Override
@@ -148,11 +148,11 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
      * Burns all entities directly under the sun spirit
      */
     public void burnEntities() {
-        List<Entity> entities = this.level.getEntities(this, this.getBoundingBox().expandTowards(0, 4, 0));
+        List<Entity> entities = this.level.getEntities(this, this.getBoundingBox().expandTowards(0, -2, 0).contract(-0.8, 0, -0.8).contract(0.8, 0, 0.8));
         for (Entity target : entities) {
             if (target instanceof LivingEntity) {
                 target.hurt(new EntityDamageSource("aether.incineration", this), 10);
-                target.setSecondsOnFire(15);
+                target.setSecondsOnFire(5);
             }
         }
     }
