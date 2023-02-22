@@ -13,6 +13,7 @@ import com.gildedgames.aether.block.utility.*;
 import com.gildedgames.aether.client.particle.AetherParticleTypes;
 import com.gildedgames.aether.block.portal.AetherPortalBlock;
 import com.gildedgames.aether.item.AetherItems;
+import com.gildedgames.aether.item.block.AmbrosiumBlockItem;
 import com.gildedgames.aether.item.block.BurnableBlockItem;
 import com.gildedgames.aether.item.block.EntityBlockItem;
 import com.gildedgames.aether.effect.AetherEffects;
@@ -286,6 +287,8 @@ public class AetherBlocks {
                     || block == QUICKSOIL_GLASS_PANE.get()
                     || block == ENCHANTED_GRAVITITE.get()) {
                 return new BlockItem(block, new Item.Properties().rarity(Rarity.RARE));
+            } else if (block == AMBROSIUM_BLOCK.get()) {
+                return new AmbrosiumBlockItem(block, new Item.Properties());
             } else if (block == AEROGEL.get()
                     || block == AEROGEL_WALL.get()
                     || block == AEROGEL_STAIRS.get()

@@ -15,12 +15,12 @@ public interface WingedBird extends NotGrounded {
         this.setPrevWingRotation(this.getWingRotation());
         this.setPrevDestPos(this.getDestPos());
         if (!this.isEntityOnGround()) {
-            this.setDestPos(this.getDestPos() + 0.2F);
+            this.setDestPos(this.getDestPos() + 0.45F);
             this.setDestPos(Math.min(1.0F, Math.max(0.01F, this.getDestPos())));
         } else {
             this.setDestPos(0.0F);
             this.setWingRotation(0.0F);
         }
-        this.setWingRotation(this.getWingRotation() + 1.233F);
+        this.setWingRotation(this.getWingRotation() + 3.0F);
     }
 }

@@ -302,6 +302,16 @@
     ],
     "subtitle": "subtitles.aether.entity.moa.saddle"
   },
+  "entity.moa.step": {
+    "sounds": [
+      "mob/pig/step1",
+      "mob/pig/step2",
+      "mob/pig/step3",
+      "mob/pig/step4",
+      "mob/pig/step5"
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
   "entity.phyg.ambient": {
     "sounds": [
       "mob/pig/say1",

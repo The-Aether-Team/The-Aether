@@ -394,6 +394,15 @@ public class AetherSoundData extends SoundDefinitionsProvider {
                 definition().with(sound("minecraft:mob/horse/leather"))
                         .subtitle("subtitles.aether.entity.moa.saddle")
         );
+        this.add(AetherSoundEvents.ENTITY_MOA_STEP,
+                definition().with(
+                        sound("minecraft:mob/pig/step1"),
+                        sound("minecraft:mob/pig/step2"),
+                        sound("minecraft:mob/pig/step3"),
+                        sound("minecraft:mob/pig/step4"),
+                        sound("minecraft:mob/pig/step5")
+                ).subtitle("subtitles.block.generic.footsteps")
+        );
         this.add(AetherSoundEvents.ENTITY_MOA_FLAP,
                 definition().with(sound("minecraft:mob/bat/takeoff"))
                         .subtitle("subtitles.aether.entity.moa.flap")

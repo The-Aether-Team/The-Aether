@@ -135,7 +135,7 @@ public class Aerbunny extends AetherAnimal {
                 serverGamePacketListenerImplAccessor.aether$setAboveGroundTickCount(0);
             }
         }
-        if (this.isOnGround() || (this.getVehicle() != null && this.getVehicle().isOnGround())) {
+        if (this.isOnGround() || !this.getFeetBlockState().isAir() || (this.getVehicle() != null && (this.getVehicle().isOnGround() || !this.getVehicle().getFeetBlockState().isAir()))) {
             this.lastPos = null;
         }
     }
