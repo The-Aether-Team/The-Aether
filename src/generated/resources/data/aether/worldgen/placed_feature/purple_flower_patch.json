@@ -6,11 +6,16 @@
       "chance": 16
     },
     {
-      "type": "minecraft:in_square"
-    },
-    {
-      "type": "minecraft:heightmap",
-      "heightmap": "MOTION_BLOCKING"
+      "type": "aether:improved_layer_placement",
+      "count": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_inclusive": 1,
+          "min_inclusive": 0
+        }
+      },
+      "heightmap": "MOTION_BLOCKING",
+      "verticalBounds": 4
     },
     {
       "type": "minecraft:biome"

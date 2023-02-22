@@ -12,6 +12,8 @@ import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.*;
@@ -75,31 +77,26 @@ public class AetherPlacedFeatures {
                 PlacementUtils.filteredByBlockSurvival(AetherBlocks.SKYROOT_SAPLING.get()));
         register(context, GRASS_PATCH_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.GRASS_PATCH_CONFIGURATION),
                 NoiseThresholdCountPlacement.of(-0.8D, 5, 10),
-                InSquarePlacement.spread(),
-                PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+                ImprovedLayerPlacementModifier.of(Heightmap.Types.WORLD_SURFACE_WG, UniformInt.of(0, 1), 4),
                 BiomeFilter.biome(),
                 new ConfigFilter(AetherConfig.COMMON.generate_tall_grass));
         register(context, TALL_GRASS_PATCH_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.TALL_GRASS_PATCH_CONFIGURATION),
                 NoiseThresholdCountPlacement.of(-0.8D, 0, 7),
                 RarityFilter.onAverageOnceEvery(32),
-                InSquarePlacement.spread(),
-                PlacementUtils.HEIGHTMAP,
+                ImprovedLayerPlacementModifier.of(Heightmap.Types.MOTION_BLOCKING, UniformInt.of(0, 1), 4),
                 BiomeFilter.biome(),
                 new ConfigFilter(AetherConfig.COMMON.generate_tall_grass));
         register(context, WHITE_FLOWER_PATCH_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.WHITE_FLOWER_PATCH_CONFIGURATION),
                 RarityFilter.onAverageOnceEvery(8),
-                InSquarePlacement.spread(),
-                PlacementUtils.HEIGHTMAP,
+                ImprovedLayerPlacementModifier.of(Heightmap.Types.MOTION_BLOCKING, UniformInt.of(0, 1), 4),
                 BiomeFilter.biome());
         register(context, PURPLE_FLOWER_PATCH_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.PURPLE_FLOWER_PATCH_CONFIGURATION),
                 RarityFilter.onAverageOnceEvery(16),
-                InSquarePlacement.spread(),
-                PlacementUtils.HEIGHTMAP,
+                ImprovedLayerPlacementModifier.of(Heightmap.Types.MOTION_BLOCKING, UniformInt.of(0, 1), 4),
                 BiomeFilter.biome());
         register(context, BERRY_BUSH_PATCH_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.BERRY_BUSH_PATCH_CONFIGURATION),
                 RarityFilter.onAverageOnceEvery(8),
-                InSquarePlacement.spread(),
-                PlacementUtils.HEIGHTMAP,
+                ImprovedLayerPlacementModifier.of(Heightmap.Types.MOTION_BLOCKING, UniformInt.of(0, 1), 4),
                 BiomeFilter.biome());
         register(context, QUICKSOIL_SHELF_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.QUICKSOIL_SHELF_CONFIGURATION),
                 RarityFilter.onAverageOnceEvery(5),
