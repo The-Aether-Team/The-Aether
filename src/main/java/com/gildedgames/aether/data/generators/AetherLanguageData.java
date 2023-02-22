@@ -792,7 +792,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.BLUE_CAPE, "A Blue Cape that has a silky feeling to it. It's crafted using Blue Wool.");
         addLore(AetherItems.BLUE_GUMMY_SWET, "A sweet smelling gummy, it can be found in random chests in Bronze and Silver dungeons. It restores the player's hunger to full. Very useful for boss fights.");
         addLore(AetherItems.BLUE_MOA_EGG, "An Egg laid by a Blue Moa. Hatching this provides a Blue Moa with 3 mid-air jumps. The most common Moa.");
-        addLore(AetherItems.BOOK_OF_LORE, "A large book containing many lore entries written by the wise Lorist. It describes every object in detail.");
+        addLore(AetherItems.BOOK_OF_LORE, "A large book containing many lore entries. It describes every object in detail.");
         addLore(AetherItems.BRONZE_DUNGEON_KEY, "A dull key that is dropped from the Slider after being defeated. You can use it to claim the treasure you earned!");
         addLore(AetherItems.CANDY_CANE, "Found in presents under Holiday trees! They can be used to repair Candy Cane swords, and are a very tasty treat.");
         addLore(AetherItems.CANDY_CANE_SWORD, "A sword made from decorative candy. Randomly drops Candy Canes when used. These are dropped from presents that are under Holiday Trees.");
@@ -806,10 +806,10 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherBlocks.COLD_AERCLOUD, "A cold cloud found in the skies of the Aether. It can be used to make Parachutes, and break drops that would otherwise be very dangerous.");
         addLore(AetherItems.COLD_PARACHUTE, "A quickly made parachute. It's fluffy to the touch and is made from Cold Aerclouds. It has one use.");
         addLore(AetherBlocks.CRYSTAL_FRUIT_LEAVES, "Crystal Leaves that are home to White Apples.");
-        addLore(AetherBlocks.CRYSTAL_LEAVES, "Leaves that come from Crystal Trees, they generate on floating islands. Sometimes they have fruit on them, which can cure poison.");
+        addLore(AetherBlocks.CRYSTAL_LEAVES, "Leaves that come from Crystal Trees, they generate on floating islands. Sometimes they have fruit on them, which can cure Inebriation.");
         addLore(AetherBlocks.DECORATED_HOLIDAY_LEAVES, "Holiday Leaves that have been decorated with lovely little baubles for extra holiday cheer!");
         addLore(AetherItems.DIAMOND_GLOVES, "Part of the Diamond Armor set, it is needed to complete the Diamond Armor set.");
-        addLore(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK, "Aether Grass enchanted which allows for increasing harvest rates of Blue Berries.");
+        addLore(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK, "Aether Grass that has been enchanted to allow for increasing harvest rates of Blue Berries.");
         addLore(AetherItems.ENCHANTED_BERRY, "An excellent food source, it tastes quite good and restores a massive amount of hunger.");
         addLore(AetherItems.ENCHANTED_DART, "The ammo for Enchanted Dart Shooters. This is the strongest of the darts, made by enchanting Golden Darts.");
         addLore(AetherItems.ENCHANTED_DART_SHOOTER, "A Dart Shooter which shoots Enchanted Darts, the strongest one!");
@@ -819,7 +819,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.GINGERBREAD_MAN, "Found in presents under Holiday trees, these are the most common of Christmas items. They are very abundant when dropped from presents.");
         addLore(AetherItems.GOLD_DUNGEON_KEY, "A key that has a shiny finish. It is dropped by the Sun Spirit after you defeat him. You can use it to claim the legendary treasure in the back room!");
         addLore(AetherBlocks.GOLDEN_AERCLOUD, "A golden cloud found in small quantities, higher in the air than normal. The properties are similar to Cold Aerclouds, but the Parachutes they produce have much more durability.");
-        addLore(AetherItems.GOLDEN_AMBER, "These round golden orbs can be obtained by mining Golden Oak Logs with a Gravitite Axe. Their main purpose is to craft Golden Darts, and Dart Shooters.");
+        addLore(AetherItems.GOLDEN_AMBER, "These round golden orbs can be obtained by mining Golden Oak Logs with a Zanite or Gravitite Axe. Their main purpose is to craft Golden Darts, and Dart Shooters.");
         addLore(AetherItems.GOLDEN_GUMMY_SWET, "A sour tasting gummy, it can be found in random chests in Bronze and Silver dungeons. It restores the player's hunger to full. Very useful for boss fights.");
         addLore(AetherItems.GOLDEN_DART, "The ammo for Golden Dart Shooters. Crafted with Skyroot Sticks and Golden Amber, enchanting these converts them to Enchanted Darts.");
         addLore(AetherItems.GOLDEN_DART_SHOOTER, "A Dart Shooter which shoots Golden Darts, enchanting it on an Altar improves its attack power!");
@@ -865,8 +865,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherBlocks.HOLYSTONE_STAIRS, "Crafted from Holystone. Stairs are useful for adding verticality to builds and are often used for decoration too!");
         addLore(AetherItems.HOLYSTONE_SWORD, "One of Aether's stone tools, it can drop Ambrosium Shards at random while attacking.");
         addLore(AetherBlocks.HOLYSTONE_WALL, "Crafted from Holystone. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!");
-        addLore(AetherItems.ICE_PENDANT, "A pendant which allows you to freeze water, and lava when walked on.");
-        addLore(AetherItems.ICE_RING, "A ring which allows you to freeze water, and lava when walked on.");
+        addLore(AetherItems.ICE_PENDANT, "A pendant which allows you to freeze water and lava when walked on.");
+        addLore(AetherItems.ICE_RING, "A ring which allows you to freeze water and lava when walked on."); //todo bookmark
         addLore(AetherBlocks.ICESTONE, "Icestone is a common ore that can be used as fuel for a Freezer. It can be used to freeze nearby liquids such as Lava and Water.");
         addLore(AetherBlocks.ICESTONE_SLAB, "Crafted from Icestone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building's roofing!");
         addLore(AetherBlocks.ICESTONE_STAIRS, "Crafted from Icestone. Stairs are useful for adding verticality to builds and are often used for decoration too!");
