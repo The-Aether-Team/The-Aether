@@ -474,6 +474,9 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addSubtitle("block", "aether_portal.ambient", "Aether Portal whooshes");
         addSubtitle("block", "aether_portal.trigger", "Aether Portal noise intensifies");
         addSubtitle("block", "chest_mimic.open", "Mimic awakens");
+        addSubtitle("block", "altar.crackle", "Altar crackles");
+        addSubtitle("block", "freezer.crackle", "Freezer crackles");
+        addSubtitle("block", "incubator.crackle", "Incubator crackles");
         addSubtitle("block", "dungeon_trap.trigger", "Dungeon Trap activated");
         addSubtitle("block", "water.evaporate", "Water evaporated");
 
