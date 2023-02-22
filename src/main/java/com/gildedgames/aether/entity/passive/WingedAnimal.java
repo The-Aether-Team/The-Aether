@@ -61,6 +61,11 @@ public abstract class WingedAnimal extends MountableAnimal {
     }
 
     @Override
+    public boolean canJump() {
+        return this.isSaddled();
+    }
+
+    @Override
     protected int calculateFallDamage(float distance, float damageMultiplier) {
         return 0;
     }
