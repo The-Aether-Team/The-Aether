@@ -175,14 +175,14 @@ public class FloatingBlockEntity extends Entity {
                                             blockEntity.setChanged();
                                         }
                                     }
-                                } else if (this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+                                } else if (!this.natural && this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                                     this.discard();
                                     this.callOnBrokenAfterFall(block, blockPos1);
                                     this.dropBlock(this.blockState);
                                 }
                             } else {
                                 this.discard();
-                                if (this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+                                if (!this.natural && this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                                     this.callOnBrokenAfterFall(block, blockPos1);
                                     this.dropBlock(this.blockState);
                                 }
