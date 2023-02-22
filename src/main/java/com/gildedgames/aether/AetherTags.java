@@ -15,6 +15,7 @@ public class AetherTags {
 	public static class Blocks {
 		public static final TagKey<Block> TREATED_AS_VANILLA_BLOCK = tag("treated_as_vanilla_block");
 		public static final TagKey<Block> AETHER_PORTAL_BLOCKS = tag("aether_portal_blocks");
+		public static final TagKey<Block> AETHER_PORTAL_BLACKLIST = tag("aether_portal_blacklist");
 		public static final TagKey<Block> AETHER_ISLAND_BLOCKS = tag("aether_island_blocks");
 		public static final TagKey<Block> AETHER_DIRT = tag("aether_dirt");
 		public static final TagKey<Block> HOLYSTONE = tag("holystone");
@@ -32,12 +33,11 @@ public class AetherTags {
 		public static final TagKey<Block> ANGELIC_BLOCKS = tag("angelic_blocks");
 		public static final TagKey<Block> HELLFIRE_BLOCKS = tag("hellfire_blocks");
 		public static final TagKey<Block> SLIDER_UNBREAKABLE = tag("slider_unbreakable");
+		public static final TagKey<Block> NON_TUNNEL_REPLACEABLE = tag("non_tunnel_replaceable");
 		public static final TagKey<Block> GRAVITITE_ABILITY_BLACKLIST = tag("gravitite_ability_blacklist");
 		public static final TagKey<Block> AETHER_ANIMALS_SPAWNABLE_ON = tag("aether_animals_spawnable_on");
-		public static final TagKey<Block> AERWHALE_SPAWNABLE_ON = tag("aerwhale_spawnable_on");
 		public static final TagKey<Block> SWET_SPAWNABLE_ON = tag("swet_spawnable_on");
 		public static final TagKey<Block> AECHOR_PLANT_SPAWNABLE_ON = tag("aechor_plant_spawnable_on");
-		public static final TagKey<Block> ZEPHYR_SPAWNABLE_ON = tag("zephyr_spawnable_on");
 		public static final TagKey<Block> COCKATRICE_SPAWNABLE_BLACKLIST = tag("cockatrice_spawnable_blacklist");
 		public static final TagKey<Block> INFINIBURN = tag("infiniburn");
 		public static final TagKey<Block> ALLOWED_FLAMMABLES = tag("allowed_flammables");
@@ -104,7 +104,7 @@ public class AetherTags {
 		public static final TagKey<Item> HOLY_REPAIRING = tag("holy_repairing");
 		public static final TagKey<Item> VAMPIRE_REPAIRING = tag("vampire_repairing");
 		public static final TagKey<Item> PIG_SLAYER_REPAIRING = tag("pig_slayer_repairing");
-		public static final TagKey<Item> HAMMER_OF_NOTCH_REPAIRING = tag("hammer_of_notch_repairing");
+		public static final TagKey<Item> HAMMER_OF_KINGBDOGZ_REPAIRING = tag("hammer_of_kingbdogz_repairing");
 		public static final TagKey<Item> CANDY_CANE_REPAIRING = tag("candy_cane_repairing");
 		public static final TagKey<Item> NEPTUNE_REPAIRING = tag("neptune_repairing");
 		public static final TagKey<Item> PHOENIX_REPAIRING = tag("phoenix_repairing");
@@ -141,15 +141,13 @@ public class AetherTags {
 	}
 
 	public static class Entities {
+		public static final TagKey<EntityType<?>> WHIRLWIND_UNAFFECTED = tag("whirlwind_unaffected");
 		public static final TagKey<EntityType<?>> PIGS = tag("pigs");
 		public static final TagKey<EntityType<?>> NO_SKYROOT_DOUBLE_DROPS = tag("no_skyroot_double_drops");
 		public static final TagKey<EntityType<?>> NO_AMBROSIUM_DROPS = tag("no_ambrosium_drops");
 		public static final TagKey<EntityType<?>> UNLAUNCHABLE = tag("unlaunchable");
 		public static final TagKey<EntityType<?>> NO_CANDY_CANE_DROPS = tag("no_candy_cane_drops");
 		public static final TagKey<EntityType<?>> DEFLECTABLE_PROJECTILES = tag("deflectable_projectiles");
-		public static final TagKey<EntityType<?>> SWET_TARGETS = tag("swet_targets");
-		public static final TagKey<EntityType<?>> AECHOR_PLANT_TARGETS = tag("aechor_plant_targets");
-		public static final TagKey<EntityType<?>> AERCLOUD_SPAWNABLE = tag("aercloud_spawnable");
 
 		private static TagKey<EntityType<?>> tag(String name) {
 			return TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Aether.MODID, name));

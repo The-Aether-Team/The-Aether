@@ -2,7 +2,6 @@ package com.gildedgames.aether.entity.monster;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.effect.AetherEffects;
-import com.gildedgames.aether.entity.ai.goal.target.NearestTaggedTargetGoal;
 import com.gildedgames.aether.entity.projectile.PoisonNeedle;
 
 import com.gildedgames.aether.item.AetherItems;
@@ -49,13 +48,13 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
 
     public AechorPlant(EntityType<? extends AechorPlant> type, Level level) {
         super(type, level);
+        this.xpReward = 5;
     }
 
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0,  new RangedAttackGoal(this, 1.0, 60, 10.0F));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
-        this.targetSelector.addGoal(2, new NearestTaggedTargetGoal(this, AetherTags.Entities.AECHOR_PLANT_TARGETS, true));
     }
 
     @Nonnull

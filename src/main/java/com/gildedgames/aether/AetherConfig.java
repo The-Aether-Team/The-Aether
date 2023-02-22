@@ -15,7 +15,7 @@ public class AetherConfig {
         public final ConfigValue<Boolean> tools_debuff;
         public final ConfigValue<Boolean> healing_gummy_swets;
         public final ConfigValue<Boolean> temporary_ice_accessory_conversion;
-        public final ConfigValue<Integer> hammer_of_notch_cooldown;
+        public final ConfigValue<Integer> hammer_of_kingbdogz_cooldown;
         public final ConfigValue<Integer> cloud_staff_cooldown;
         public final ConfigValue<Integer> maximum_life_shards;
         public final ConfigValue<Boolean> repeat_sun_spirit_dialogue;
@@ -24,7 +24,6 @@ public class AetherConfig {
         public final ConfigValue<Boolean> spawn_valkyrie_cape;
 
         public final ConfigValue<Boolean> generate_tall_grass;
-        public final ConfigValue<Boolean> generate_pink_aerclouds;
         public final ConfigValue<Boolean> generate_holiday_tree_always;
         public final ConfigValue<Boolean> generate_holiday_tree_seasonally;
 
@@ -57,7 +56,7 @@ public class AetherConfig {
             edible_ambrosium = builder
                     .comment("Ambrosium Shards can be eaten to restore a half heart of health")
                     .translation("config.aether.common.gameplay.edible_ambrosium")
-                    .define("Ambrosium Shards are edible", false);
+                    .define("Ambrosium Shards are edible", true);
             healing_gummy_swets = builder
                     .comment("Gummy Swets when eaten restore full health instead of full hunger")
                     .translation("config.aether.common.gameplay.healing_gummy_swets")
@@ -70,10 +69,10 @@ public class AetherConfig {
                     .comment("Ice Accessories will create temporary blocks instead of permanent blocks from conversions")
                     .translation("config.aether.common.gameplay.temporary_ice_accessory_conversion")
                     .define("Temporary blocks from Ice Accessories", false);
-            hammer_of_notch_cooldown = builder
-                    .comment("Determines the cooldown in ticks for the Hammer of Notch's ability")
-                    .translation("config.aether.common.gameplay.hammer_of_notch_cooldown")
-                    .define("Cooldown for the Hammer of Notch", 75);
+            hammer_of_kingbdogz_cooldown = builder
+                    .comment("Determines the cooldown in ticks for the Hammer of Kingbdogz's ability")
+                    .translation("config.aether.common.gameplay.hammer_of_kingbdogz_cooldown")
+                    .define("Cooldown for the Hammer of Kingbdogz", 75);
             cloud_staff_cooldown = builder
                     .comment("Determines the cooldown in ticks for the Cloud Staff's ability")
                     .translation("config.aether.common.gameplay.cloud_staff_cooldown")
@@ -99,11 +98,7 @@ public class AetherConfig {
             generate_tall_grass = builder
                     .comment("Determines whether the Aether should generate Tall Grass blocks on terrain or not")
                     .translation("config.aether.common.world_generation.generate_tall_grass")
-                    .define("Generate Tall Grass in the Aether", false);
-            generate_pink_aerclouds = builder
-                    .comment("Determines whether Pink Aerclouds should generate in the skies of the Aether along with other Aerclouds")
-                    .translation("config.aether.common.world_generation.generate_pink_aerclouds")
-                    .define("Generate Pink Aerclouds", false);
+                    .define("Generate Tall Grass in the Aether", true);
             generate_holiday_tree_always = builder
                     .comment("Determines whether Holiday Trees should always be able to generate when exploring new chunks in the Aether, if true, this overrides 'Generate Holiday Trees seasonally'")
                     .translation("config.aether.common.world_generation.generate_holiday_tree_always")

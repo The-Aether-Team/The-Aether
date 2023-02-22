@@ -1,4 +1,4 @@
-// 1.19.3	2023-01-22T16:59:30.6320373	Item Models: aether
+// 1.19.3	2023-02-20T11:59:25.3893153	Item Models: aether
 88dbeab79e0017737773db746d2e719a21fdb198 assets/aether/models/item/aechor_petal.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/aechor_plant_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/aerbunny_spawn_egg.json
@@ -95,7 +95,7 @@ f77ebba13ba5b5023828e9bcfdb0ddf9af454b0b assets/aether/models/item/gravitite_glo
 df1c42023354c16e351433c1751e939e0b72de00 assets/aether/models/item/gravitite_sword.json
 98fadc4b5a79f18c0b42e279fc79705a4282918b assets/aether/models/item/green_candy_cane_sword.json
 be69a1bdc67bc2945d9b51fa30d73ded7aacf6f9 assets/aether/models/item/hammer_of_jeb.json
-699de8e575707a0ca28d07db99442521d481d209 assets/aether/models/item/hammer_of_notch.json
+76e2b237917f8469448f667f5d780d85ca35a8b6 assets/aether/models/item/hammer_of_kingbdogz.json
 fe3c0addcb5bebab2cb450ef2eed63b110f77eb1 assets/aether/models/item/healing_stone.json
 3cf648c5b07a652e2572bf75aa5bcb91b076e1ef assets/aether/models/item/hellfire_slab.json
 c5dbee0a4fb9028b8e4cff172aa4379a41213560 assets/aether/models/item/hellfire_stairs.json
@@ -151,6 +151,7 @@ efdafb22ff9ce0550d5de3490f93d7e5d246fe4f assets/aether/models/item/mossy_holysto
 5b99f239b760eaa60754eda8a296bb1467055847 assets/aether/models/item/music_disc_aether_tune.json
 06d4382138ed6e63f13ce799b854de9b933f398f assets/aether/models/item/music_disc_ascending_dawn.json
 9c6ed4e747204a8beb5115b0429c9aa97583606b assets/aether/models/item/music_disc_chinchilla.json
+55d686cff90f5dfc9d48adfcd47b299e5ce4876c assets/aether/models/item/music_disc_high.json
 86877ed7ed6f2dc3a5f0d8dbac3452f0795d58eb assets/aether/models/item/music_disc_legacy.json
 61dab9c93e31c29ca17012bb84b8d3fe69f4d18a assets/aether/models/item/music_disc_welcoming_skies.json
 902b04b2a7f9c6e8e1f4ec322698902ab4f714b6 assets/aether/models/item/nature_staff.json
@@ -179,7 +180,6 @@ ade1fe02681491cfdcb34af350cc0be35ec38e58 assets/aether/models/item/phoenix_glove
 23b5238dfe412ca5b5617cd66c687a3869326a3f assets/aether/models/item/pig_slayer.json
 8599566549a5492415574f72bd1d025a5ee6cabb assets/aether/models/item/pillar.json
 2eaaaa0edc19f5578e149f97213ea9e644574128 assets/aether/models/item/pillar_top.json
-12a1f94df8d63c3e440f0f6c38d00e14e018be38 assets/aether/models/item/pink_aercloud.json
 e0a966a34377ef0b3ef9cf745b0b68d821052c3b assets/aether/models/item/poison_dart.json
 8a27513261dd06a3e753b58f73e9caf29b10d90f assets/aether/models/item/poison_dart_shooter.json
 c9f836c1bd9aef3a48acf204f043b565700a1d26 assets/aether/models/item/present.json

@@ -1,6 +1,5 @@
 package com.gildedgames.aether.client.renderer.entity.layers;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.client.renderer.entity.model.ValkyrieModel;
 import com.gildedgames.aether.client.renderer.entity.model.ValkyrieWingsModel;
 import com.gildedgames.aether.entity.monster.dungeon.AbstractValkyrie;
@@ -18,18 +17,19 @@ import net.minecraft.util.Mth;
 import javax.annotation.Nonnull;
 
 public class ValkyrieWingsLayer<T extends AbstractValkyrie> extends RenderLayer<T, ValkyrieModel<T>> {
-    private static final ResourceLocation VALKYRIE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/valkyrie/valkyrie.png");
+    private final ResourceLocation wingsLocation;
     private final ValkyrieWingsModel<Valkyrie> wings;
 
-    public ValkyrieWingsLayer(RenderLayerParent<T, ValkyrieModel<T>> entityRenderer, ValkyrieWingsModel<Valkyrie> wingsModel) {
+    public ValkyrieWingsLayer(RenderLayerParent<T, ValkyrieModel<T>> entityRenderer, ResourceLocation wingsLocation, ValkyrieWingsModel<Valkyrie> wingsModel) {
         super(entityRenderer);
+        this.wingsLocation = wingsLocation;
         this.wings = wingsModel;
     }
 
     @Override
     public void render(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, @Nonnull T valkyrie, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         this.setupWingRotation(valkyrie, ageInTicks);
-        VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutoutNoCull(VALKYRIE_TEXTURE));
+        VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutoutNoCull(this.wingsLocation));
         this.wings.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
     }
 

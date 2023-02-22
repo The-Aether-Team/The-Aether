@@ -16,6 +16,7 @@ import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.MoaInteractPacket;
 import com.gildedgames.aether.api.AetherMoaTypes;
 import com.gildedgames.aether.util.EntityUtil;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -40,6 +41,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Optional;
@@ -122,7 +124,10 @@ public class Moa extends MountableAnimal implements WingedBird {
 				this.setPlayerGrown(tag.getBoolean("PlayerGrown"));
 			}
 		} else {
-			this.setMoaType(AetherMoaTypes.random(this.random));
+			this.setMoaType(AetherMoaTypes.getWeightedChance(this.random));
+			if (spawnData == null) {
+				spawnData = new AgeableMob.AgeableMobGroupData(false);
+			}
 		}
 		return super.finalizeSpawn(level, difficulty, reason, spawnData, tag);
 	}
@@ -186,17 +191,19 @@ public class Moa extends MountableAnimal implements WingedBird {
 
 	@Override
 	public void riderTick() {
-		super.riderTick();
-		if (this.getControllingPassenger() instanceof Player) {
-			if (this.getFlapCooldown() > 0) {
-				this.setFlapCooldown(this.getFlapCooldown() - 1);
-			} else if (this.getFlapCooldown() == 0) {
-				if (!this.isOnGround()) {
-					this.level.playSound(null, this, AetherSoundEvents.ENTITY_MOA_FLAP.get(), SoundSource.NEUTRAL, 0.15F, Mth.clamp(this.random.nextFloat(), 0.7F, 1.0F) + Mth.clamp(this.random.nextFloat(), 0.0F, 0.3F));
-					this.setFlapCooldown(15);
+		if (!this.isSitting()) {
+			super.riderTick();
+			if (this.getControllingPassenger() instanceof Player) {
+				if (this.getFlapCooldown() > 0) {
+					this.setFlapCooldown(this.getFlapCooldown() - 1);
+				} else if (this.getFlapCooldown() == 0) {
+					if (!this.isOnGround()) {
+						this.level.playSound(null, this, AetherSoundEvents.ENTITY_MOA_FLAP.get(), SoundSource.NEUTRAL, 0.15F, Mth.clamp(this.random.nextFloat(), 0.7F, 1.0F) + Mth.clamp(this.random.nextFloat(), 0.0F, 0.3F));
+						this.setFlapCooldown(15);
+					}
 				}
+				this.resetFallDistance();
 			}
-			this.resetFallDistance();
 		}
 	}
 
@@ -271,6 +278,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 		}
 	}
 
+	@Nullable
 	public MoaType getMoaType() {
 		return AetherMoaTypes.get(this.entityData.get(DATA_MOA_TYPE_ID));
 	}
@@ -422,6 +430,11 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	@Override
+	protected void playStepSound(@Nonnull BlockPos pos, @Nonnull BlockState state) {
+		this.playSound(AetherSoundEvents.ENTITY_MOA_STEP.get(), 0.15F, 1.0F);
+	}
+
+	@Override
 	public boolean isFood(@Nonnull ItemStack stack) {
 		return false;
 	}
@@ -443,12 +456,17 @@ public class Moa extends MountableAnimal implements WingedBird {
 
 	@Override
 	public double getMountJumpStrength() {
-		return this.isOnGround() ? 0.9 : 0.75;
+		return this.isOnGround() ? 0.95 : 0.90;
 	}
 
 	@Override
 	public float getSteeringSpeed() {
 		return this.getMoaType().getSpeed();
+	}
+
+	@Override
+	public float getFlyingSpeed() {
+		return this.getSteeringSpeed() * 0.45F;
 	}
 
 	@Override

@@ -70,6 +70,7 @@ public abstract class BipedBirdModel<T extends Entity & WingedBird & NotGrounded
             this.leftWing.xRot = this.rightWing.xRot;
             this.rightLeg.xRot = 0.6F;
             this.leftLeg.xRot = this.rightLeg.xRot;
+            this.rightWing.yRot = ageInTicks;
         } else {
             this.rightWing.setPos(-3.001F, -3.0F, 3.0F);
             this.leftWing.setPos(3.001F, -3.0F, 3.0F);
@@ -77,9 +78,9 @@ public abstract class BipedBirdModel<T extends Entity & WingedBird & NotGrounded
             this.leftWing.xRot = 0.0F;
             this.rightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
             this.leftLeg.xRot = Mth.cos((float) (limbSwing * 0.6662F + Math.PI)) * 1.4F * limbSwingAmount;
+            this.rightWing.yRot = 0.0F;
         }
 
-        this.rightWing.yRot = ageInTicks;
         this.leftWing.yRot = -this.rightWing.yRot;
     }
 

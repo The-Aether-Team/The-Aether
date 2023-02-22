@@ -16,14 +16,12 @@ public class DimensionClientListener {
     public static void onRenderFog(ViewportEvent.RenderFog event) {
         Camera camera = event.getCamera();
         FogRenderer.FogMode fogMode = event.getMode();
-        float nearDistance = event.getNearPlaneDistance();
-        float farDistance = event.getFarPlaneDistance();
-        Float renderNearFog = DimensionClientHooks.renderNearFog(camera, fogMode, farDistance);
+        Float renderNearFog = DimensionClientHooks.renderNearFog(camera, fogMode, event.getFarPlaneDistance());
         if (!event.isCanceled() && renderNearFog != null) {
             event.setNearPlaneDistance(renderNearFog);
             event.setCanceled(true);
         }
-        Float reduceLavaFog = DimensionClientHooks.reduceLavaFog(camera, nearDistance);
+        Float reduceLavaFog = DimensionClientHooks.reduceLavaFog(camera, event.getNearPlaneDistance());
         if (!event.isCanceled() && reduceLavaFog != null) {
             event.setNearPlaneDistance(reduceLavaFog);
             event.setFarPlaneDistance(reduceLavaFog * 4);
@@ -38,14 +36,17 @@ public class DimensionClientListener {
     @SubscribeEvent
     public static void onRenderFogColor(ViewportEvent.ComputeFogColor event) {
         Camera camera = event.getCamera();
-        float red = event.getRed();
-        float green = event.getGreen();
-        float blue = event.getBlue();
-        Triple<Float, Float, Float> renderFogColors = DimensionClientHooks.renderFogColors(camera, red, green, blue);
+        Triple<Float, Float, Float> renderFogColors = DimensionClientHooks.renderFogColors(camera, event.getRed(), event.getGreen(), event.getBlue());
         if (renderFogColors.getLeft() != null && renderFogColors.getMiddle() != null && renderFogColors.getRight() != null) {
             event.setRed(renderFogColors.getLeft());
             event.setGreen(renderFogColors.getMiddle());
             event.setBlue(renderFogColors.getRight());
+        }
+        Triple<Float, Float, Float> adjustWeatherFogColors = DimensionClientHooks.adjustWeatherFogColors(camera, event.getRed(), event.getGreen(), event.getBlue());
+        if (adjustWeatherFogColors.getLeft() != null && adjustWeatherFogColors.getMiddle() != null && adjustWeatherFogColors.getRight() != null) {
+            event.setRed(adjustWeatherFogColors.getLeft());
+            event.setGreen(adjustWeatherFogColors.getMiddle());
+            event.setBlue(adjustWeatherFogColors.getRight());
         }
     }
 

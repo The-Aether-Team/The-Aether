@@ -105,9 +105,9 @@ public class AetherDispenseBehaviors {
     };
 
     /**
-     * Behavior for dispensing Notch Hammer projectiles.
+     * Behavior for dispensing Kingbdogz Hammer projectiles.
      */
-    public static final DispenseItemBehavior DISPENSE_NOTCH_HAMMER_BEHAVIOR = new AbstractProjectileDispenseBehavior() {
+    public static final DispenseItemBehavior DISPENSE_KINGBDOGZ_HAMMER_BEHAVIOR = new AbstractProjectileDispenseBehavior() {
         @Override
         public ItemStack execute(BlockSource blockSource, ItemStack stack) {
             Projectile projectile = this.getProjectile(blockSource.getLevel(), DispenserBlock.getDispensePosition(blockSource), stack);

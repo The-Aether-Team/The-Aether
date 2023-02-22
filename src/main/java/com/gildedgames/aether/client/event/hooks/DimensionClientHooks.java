@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.material.FogType;
+import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.tuple.Triple;
 
 public class DimensionClientHooks {
@@ -53,6 +54,36 @@ public class DimensionClientHooks {
                     if (d0 != 0.0D) {
                         return Triple.of((float) ((double) red / d0), (float) ((double) green / d0), (float) ((double) blue / d0));
                     }
+                }
+            }
+        }
+        return Triple.of(null, null, null);
+    }
+
+    public static Triple<Float, Float, Float> adjustWeatherFogColors(Camera camera, float red, float green, float blue) {
+        if (camera.getEntity().level instanceof ClientLevel clientLevel) {
+            if (clientLevel.effects() instanceof AetherSkyRenderEffects) {
+                FogType fluidState = camera.getFluidInCamera();
+                if (fluidState == FogType.NONE) {
+                    Vec3 defaultSky = Vec3.fromRGB24(clientLevel.getBiome(camera.getBlockPosition()).get().getModifiedSpecialEffects().getFogColor());
+                    if (clientLevel.rainLevel > 0.0) {
+                        float f14 = 1.0F + clientLevel.rainLevel * 0.8F;
+                        float f17 = 1.0F + clientLevel.rainLevel * 0.56F;
+                        red *= f14;
+                        green *= f14;
+                        blue *= f17;
+                    }
+                    if (clientLevel.thunderLevel > 0.0) {
+                        float f18 = 1.0F + clientLevel.thunderLevel * 0.66F;
+                        float f19 = 1.0F + clientLevel.thunderLevel * 0.76F;
+                        red *= f18;
+                        green *= f18;
+                        blue *= f19;
+                    }
+                    red = (float) Math.min(red, defaultSky.x);
+                    green = (float) Math.min(green, defaultSky.y);
+                    blue = (float) Math.min(blue, defaultSky.z);
+                    return Triple.of(red, green, blue);
                 }
             }
         }

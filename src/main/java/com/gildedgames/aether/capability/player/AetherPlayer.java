@@ -101,6 +101,12 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 	void setSavedHealth(float health);
 	float getSavedHealth();
 
+	void setNeptuneSubmergeLength(double length);
+	double getNeptuneSubmergeLength();
+
+	void setPhoenixSubmergeLength(double length);
+	double getPhoenixSubmergeLength();
+
 	void addToLifeShardCount(int amountToAdd);
 	void setLifeShardCount(int amount);
 	int getLifeShardCount();

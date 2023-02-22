@@ -6,10 +6,7 @@ import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.storage.loot.predicates.AlternativeLootItemCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.world.level.storage.loot.predicates.MatchTool;
+import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
 
 public class AetherLootModifierData extends GlobalLootModifierProvider {
@@ -19,7 +16,7 @@ public class AetherLootModifierData extends GlobalLootModifierProvider {
 
     @Override
     protected void start() {
-        add("remove_seeds", new RemoveSeedsModifier(
+        this.add("remove_seeds", new RemoveSeedsModifier(
                 new LootItemCondition[] {
                         AlternativeLootItemCondition.alternative(LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.GRASS), LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.TALL_GRASS)).build(),
                         MatchTool.toolMatches(ItemPredicate.Builder.item().of(Items.SHEARS)).invert().build()

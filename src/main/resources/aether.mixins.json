@@ -51,6 +51,7 @@
     "client.accessor.HeartTypeAccessor",
     "client.accessor.I18nAccessor",
     "client.accessor.ItemInHandRendererAccessor",
+    "client.accessor.LevelRendererAccessor",
     "client.accessor.PlayerModelAccessor",
     "client.accessor.QuadrupedModelAccessor",
     "client.accessor.RealmsPlayerScreenAccessor",

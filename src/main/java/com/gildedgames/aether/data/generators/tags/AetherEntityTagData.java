@@ -22,6 +22,7 @@ public class AetherEntityTagData extends EntityTypeTagsProvider {
     @Override
     public void addTags(HolderLookup.Provider provider) {
         // Aether
+        this.tag(AetherTags.Entities.WHIRLWIND_UNAFFECTED).add(AetherEntityTypes.AECHOR_PLANT.get()).addTag(Tags.EntityTypes.BOSSES);
         this.tag(AetherTags.Entities.PIGS).add(
                 EntityType.PIG,
                 AetherEntityTypes.PHYG.get(),
@@ -52,29 +53,6 @@ public class AetherEntityTagData extends EntityTypeTagsProvider {
                 AetherEntityTypes.ZEPHYR_SNOWBALL.get(),
                 AetherEntityTypes.LIGHTNING_KNIFE.get(),
                 AetherEntityTypes.HAMMER_PROJECTILE.get());
-        this.tag(AetherTags.Entities.SWET_TARGETS).add(
-                EntityType.CHICKEN,
-                EntityType.COW,
-                EntityType.PIG,
-                EntityType.SHEEP,
-                AetherEntityTypes.FLYING_COW.get(),
-                AetherEntityTypes.PHYG.get(),
-                AetherEntityTypes.SHEEPUFF.get(),
-                AetherEntityTypes.AERBUNNY.get()
-        );
-        this.tag(AetherTags.Entities.AECHOR_PLANT_TARGETS).add(
-                EntityType.CHICKEN,
-                EntityType.COW,
-                EntityType.PIG,
-                EntityType.SHEEP,
-                AetherEntityTypes.FLYING_COW.get(),
-                AetherEntityTypes.PHYG.get(),
-                AetherEntityTypes.SHEEPUFF.get()
-        );
-        this.tag(AetherTags.Entities.AERCLOUD_SPAWNABLE).add(
-                AetherEntityTypes.AERWHALE.get(),
-                AetherEntityTypes.ZEPHYR.get()
-        );
 
         // Forge
         this.tag(Tags.EntityTypes.BOSSES).add(

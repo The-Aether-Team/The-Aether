@@ -472,7 +472,27 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("PPP")
                 .pattern(" P ")
                 .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
-                .save(consumer, name("skyroot_shield"));
+                .save(consumer, name("skyroot_iron_vanilla_shield"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, Items.SHIELD, 1)
+                .group("minecraft:shield")
+                .define('P', AetherTags.Items.PLANKS_CRAFTING)
+                .define('Z', AetherItems.ZANITE_GEMSTONE.get())
+                .pattern("PZP")
+                .pattern("PPP")
+                .pattern(" P ")
+                .unlockedBy("has_zanite_gemstone", has(AetherItems.ZANITE_GEMSTONE.get()))
+                .save(consumer, name("skyroot_zanite_vanilla_shield"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, Items.SHIELD, 1)
+                .group("minecraft:shield")
+                .define('P', ItemTags.PLANKS)
+                .define('Z', AetherItems.ZANITE_GEMSTONE.get())
+                .pattern("PZP")
+                .pattern("PPP")
+                .pattern(" P ")
+                .unlockedBy("has_zanite_gemstone", has(AetherItems.ZANITE_GEMSTONE.get()))
+                .save(consumer, name("wood_zanite_vanilla_shield"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.SMITHING_TABLE, 1)
                 .group("minecraft:smithing_table")
@@ -684,6 +704,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
         freezingRecipe(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.CRYSTAL_LEAVES.get(), AetherBlocks.SKYROOT_LEAVES.get(), 0.1F, 150).save(consumer, name("crystal_leaves_freezing"));
 
         hiddenFreezingRecipe(RecipeCategory.MISC, AetherItems.MUSIC_DISC_WELCOMING_SKIES.get(), AetherItems.MUSIC_DISC_ASCENDING_DAWN.get(), 1.0F, 800).save(consumer, name("welcoming_skies_freezing"));
+        hiddenFreezingRecipe(RecipeCategory.MISC, AetherItems.MUSIC_DISC_HIGH.get(), AetherItems.MUSIC_DISC_CHINCHILLA.get(), 1.0F, 800).save(consumer, name("high_freezing"));
 
         freezingRecipeWithUnlockTag(RecipeCategory.BUILDING_BLOCKS, Blocks.BLUE_ICE, Blocks.PACKED_ICE, AetherTags.Items.FREEZABLE_BUCKETS, 0.1F, 1000, "water_bucket").save(consumer, name("blue_ice_freezing"));
         freezingRecipeWithUnlockTag(RecipeCategory.BUILDING_BLOCKS, Blocks.PACKED_ICE, Blocks.ICE, AetherTags.Items.FREEZABLE_BUCKETS, 0.1F, 750, "water_bucket").save(consumer, name("packed_ice_freezing"));

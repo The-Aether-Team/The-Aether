@@ -8,8 +8,10 @@ import com.gildedgames.aether.data.resources.builders.AetherConfiguredFeatureBui
 import com.gildedgames.aether.world.configuration.ShelfConfiguration;
 import com.gildedgames.aether.world.feature.AetherFeatures;
 import com.gildedgames.aether.world.foliageplacer.CrystalFoliagePlacer;
+import com.gildedgames.aether.world.foliageplacer.GoldenOakFoliagePlacer;
 import com.gildedgames.aether.world.foliageplacer.HolidayFoliagePlacer;
 import com.gildedgames.aether.world.treedecorator.HolidayTreeDecorator;
+import com.gildedgames.aether.world.trunkplacer.GoldenOakTrunkPlacer;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
@@ -46,7 +48,6 @@ public class AetherConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> COLD_AERCLOUD_CONFIGURATION = createKey("cold_aercloud");
     public static final ResourceKey<ConfiguredFeature<?, ?>> BLUE_AERCLOUD_CONFIGURATION = createKey("blue_aercloud");
     public static final ResourceKey<ConfiguredFeature<?, ?>> GOLDEN_AERCLOUD_CONFIGURATION = createKey("golden_aercloud");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> PINK_AERCLOUD_CONFIGURATION = createKey("pink_aercloud");
     public static final ResourceKey<ConfiguredFeature<?, ?>> CRYSTAL_ISLAND_CONFIGURATION = createKey("crystal_island");
     public static final ResourceKey<ConfiguredFeature<?, ?>> SKYROOT_TREE_CONFIGURATION = createKey("skyroot_tree");
     public static final ResourceKey<ConfiguredFeature<?, ?>> GOLDEN_OAK_TREE_CONFIGURATION = createKey("golden_oak_tree");
@@ -76,7 +77,6 @@ public class AetherConfiguredFeatures {
         register(context, COLD_AERCLOUD_CONFIGURATION, AetherFeatures.AERCLOUD.get(), AetherConfiguredFeatureBuilders.aercloud(16, AetherFeatureStates.COLD_AERCLOUD));
         register(context, BLUE_AERCLOUD_CONFIGURATION, AetherFeatures.AERCLOUD.get(), AetherConfiguredFeatureBuilders.aercloud(8, AetherFeatureStates.BLUE_AERCLOUD));
         register(context, GOLDEN_AERCLOUD_CONFIGURATION, AetherFeatures.AERCLOUD.get(), AetherConfiguredFeatureBuilders.aercloud(4, AetherFeatureStates.GOLDEN_AERCLOUD));
-        register(context, PINK_AERCLOUD_CONFIGURATION, AetherFeatures.AERCLOUD.get(), AetherConfiguredFeatureBuilders.aercloud(1, AetherFeatureStates.PINK_AERCLOUD));
         register(context, CRYSTAL_ISLAND_CONFIGURATION, AetherFeatures.CRYSTAL_ISLAND.get(), NoneFeatureConfiguration.INSTANCE);
         register(context, SKYROOT_TREE_CONFIGURATION, Feature.TREE,
                 new TreeConfiguration.TreeConfigurationBuilder(
@@ -89,9 +89,9 @@ public class AetherConfiguredFeatures {
         register(context, GOLDEN_OAK_TREE_CONFIGURATION, Feature.TREE,
                 new TreeConfiguration.TreeConfigurationBuilder(
                         BlockStateProvider.simple(AetherFeatureStates.GOLDEN_OAK_LOG),
-                        new FancyTrunkPlacer(9, 5, 0),
+                        new GoldenOakTrunkPlacer(10, 0, 0),
                         BlockStateProvider.simple(AetherFeatureStates.GOLDEN_OAK_LEAVES),
-                        new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(4), 4),
+                        new GoldenOakFoliagePlacer(ConstantInt.of(3), ConstantInt.of(1), ConstantInt.of(7)),
                         new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(10))
                 ).ignoreVines().build());
         register(context, CRYSTAL_TREE_CONFIGURATION, Feature.TREE,
@@ -132,7 +132,7 @@ public class AetherConfiguredFeatures {
         register(context, ORE_ICESTONE_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.ICESTONE, 32));
         register(context, ORE_AMBROSIUM_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.AMBROSIUM_ORE, 16));
         register(context, ORE_ZANITE_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.ZANITE_ORE, 5, 0.5F));
-        register(context, ORE_GRAVITITE_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.GRAVITITE_ORE, 5, 0.9F));
+        register(context, ORE_GRAVITITE_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.GRAVITITE_ORE, 4, 0.9F));
         register(context, TREES_SKYROOT_AND_GOLDEN_OAK_CONFIGURATION, Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(
                         PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(GOLDEN_OAK_TREE_CONFIGURATION), PlacementUtils.filteredByBlockSurvival(AetherBlocks.GOLDEN_OAK_SAPLING.get())), 0.01F)),
                         PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(SKYROOT_TREE_CONFIGURATION), PlacementUtils.filteredByBlockSurvival(AetherBlocks.SKYROOT_SAPLING.get()))));

@@ -53,7 +53,7 @@ public class AetherItemModelData extends AetherItemModelProvider {
         this.handheldItem(AetherItems.PIG_SLAYER.get(), "weapons/");
         this.nameableWeapon(AetherItems.CANDY_CANE_SWORD.get(), "weapons/", "green_candy_cane_sword");
 
-        this.nameableWeapon(AetherItems.HAMMER_OF_NOTCH.get(), "weapons/", "hammer_of_jeb");
+        this.nameableWeapon(AetherItems.HAMMER_OF_KINGBDOGZ.get(), "weapons/", "hammer_of_jeb");
 
         this.handheldItem(AetherItems.LIGHTNING_KNIFE.get(), "weapons/");
 
@@ -192,6 +192,7 @@ public class AetherItemModelData extends AetherItemModelProvider {
         this.item(AetherItems.MUSIC_DISC_WELCOMING_SKIES.get(), "miscellaneous/");
         this.item(AetherItems.MUSIC_DISC_LEGACY.get(), "miscellaneous/");
         this.item(AetherItems.MUSIC_DISC_CHINCHILLA.get(), "miscellaneous/");
+        this.item(AetherItems.MUSIC_DISC_HIGH.get(), "miscellaneous/");
 
         this.item(AetherItems.BOOK_OF_LORE.get(), "miscellaneous/");
 
@@ -231,7 +232,6 @@ public class AetherItemModelData extends AetherItemModelProvider {
         this.itemBlock(AetherBlocks.COLD_AERCLOUD.get());
         this.itemBlock(AetherBlocks.BLUE_AERCLOUD.get());
         this.itemBlock(AetherBlocks.GOLDEN_AERCLOUD.get());
-        this.itemBlock(AetherBlocks.PINK_AERCLOUD.get());
 
         this.itemBlock(AetherBlocks.ICESTONE.get());
         this.itemBlock(AetherBlocks.AMBROSIUM_ORE.get());

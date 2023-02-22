@@ -5,18 +5,21 @@ import java.util.function.Supplier;
 import com.gildedgames.aether.client.AetherSoundEvents;
 
 import com.gildedgames.aether.event.dispatch.AetherEventDispatch;
-import com.gildedgames.aether.mixin.mixins.common.accessor.EntityAccessor;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 
 public class TrappedBlock extends Block {
 	private final Supplier<EntityType<?>> spawnableEntityTypeSupplier;
@@ -40,16 +43,17 @@ public class TrappedBlock extends Block {
 		if (entity instanceof Player player && AetherEventDispatch.onTriggerTrap(player, level, pos, state)) {
 			level.setBlockAndUpdate(pos, this.defaultStateSupplier.get());
 			if (level instanceof ServerLevel serverLevel) {
-				Entity spawnableEntity = this.spawnableEntityTypeSupplier.get().create(level);
-				if (spawnableEntity != null) {
-					spawnableEntity.absMoveTo(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, ((EntityAccessor) entity).aether$getRandom().nextFloat() * 360.0F, 0.0F);
-					if (spawnableEntity instanceof Mob spawnableMob) {
-						spawnableMob.finalizeSpawn(serverLevel, level.getCurrentDifficultyAt(spawnableEntity.blockPosition()), MobSpawnType.TRIGGERED, null, null);
-					}
-					level.addFreshEntity(spawnableEntity);
+				float yRot = player.getYRot() * Mth.DEG_TO_RAD;
+				Vec3 targetVec = new Vec3(pos.getX() + 0.5 - Mth.sin(yRot) * 3, pos.getY() + 1, pos.getZ() + 0.5 + Mth.cos(yRot) * 3);
+				ClipContext context = new ClipContext(player.position(), targetVec, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player);
+				BlockHitResult hitResult = serverLevel.clip(context);
+				BlockPos spawnPos = hitResult.getBlockPos();
+				if (hitResult.getType() == HitResult.Type.BLOCK) {
+					spawnPos = spawnPos.relative(hitResult.getDirection());
 				}
+				this.spawnableEntityTypeSupplier.get().spawn(serverLevel, spawnPos, MobSpawnType.TRIGGERED);
+				serverLevel.playSound(null, pos, AetherSoundEvents.BLOCK_DUNGEON_TRAP_TRIGGER.get(), SoundSource.BLOCKS, 0.5F, level.getRandom().nextFloat() * 0.1F + 0.9F);
 			}
-			level.playSound(null, pos, AetherSoundEvents.BLOCK_DUNGEON_TRAP_TRIGGER.get(), SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.1F + 0.9F);
 		}
 	}
 }

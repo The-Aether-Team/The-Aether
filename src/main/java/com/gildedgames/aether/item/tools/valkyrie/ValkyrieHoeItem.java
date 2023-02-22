@@ -19,7 +19,7 @@ import java.util.List;
 
 public class ValkyrieHoeItem extends HoeItem implements ValkyrieTool {
     public ValkyrieHoeItem() {
-        super(AetherItemTiers.VALKYRIE, -4, -0.3F, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
+        super(AetherItemTiers.VALKYRIE, -3, -0.3F, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
     }
 
     @Override

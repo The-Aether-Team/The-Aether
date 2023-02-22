@@ -24,7 +24,7 @@
 
   "aether.bronze_dungeon_chest_locked": "该宝箱必须使用钥匙开启",
   "aether.gold_dungeon_chest_locked": "该宝箱必须使用钥匙开启",
-  "aether.hammer_of_notch_cooldown": "冷却中",
+  "aether.hammer_of_kingbdogz_cooldown": "冷却中",
   "aether.life_shard_limit": "你最多只能使用 %s 枚生命幻片",
 
   "aether.pro_tips.line.aether.aerogel_explosion_resistance": "气凝胶可用作防爆的半透明块。",
@@ -199,7 +199,6 @@
   "block.aether.mossy_holystone_wall": "苔圣石围墙",
   "block.aether.pillar": "白金柱石",
   "block.aether.pillar_top": "浮雕顶柱",
-  "block.aether.pink_aercloud": "粉红境云",
   "block.aether.present": "礼物盒",
   "block.aether.purple_flower": "幻紫花",
   "block.aether.quicksoil": "速沙",
@@ -481,7 +480,7 @@
   "item.aether.neptune_helmet": "海皇头盔",
   "item.aether.neptune_leggings": "海皇护腿",
   "item.aether.netherite_gloves": "下界合金护手",
-  "item.aether.hammer_of_notch": "创世者飞锤",
+  "item.aether.hammer_of_kingbdogz": "创世者飞锤",
   "item.aether.obsidian_boots": "黑曜石长靴",
   "item.aether.obsidian_chestplate": "黑曜石胸甲",
   "item.aether.obsidian_gloves": "黑曜石护手",
@@ -639,7 +638,6 @@
   "lore.block.aether.mossy_holystone_wall": "由圣苔石制成的围墙。可用于装饰性外壳和防御。非常适合阻止讨厌的入侵者！",
   "lore.block.aether.pillar": "作为武神族神庙外围的支柱装饰的主要部分。它们在神庙周围生成，非常适合建造。",
   "lore.block.aether.pillar_top": "武神神庙外围支柱顶部的装饰浮雕，它们看起来很棒，非常适合建造。",
-  "lore.block.aether.pink_aercloud": "一种质地奇怪柔软的粉红色境云。它具有天然的愈合特性，在踏入时可以治愈任何人的伤口。",
   "lore.block.aether.present": "一个美妙的节日礼物，打开它获得一个惊喜！要小心，因为你有可能会得到大大大大大惊喜！",
   "lore.block.aether.purple_flower": "这些漂亮的类似紫罗兰的花朵可以在天境表面大量找到。当它们放入工作台时，它们可以制作成紫色染料。",
   "lore.block.aether.quicksoil": "一种颗粒极细的奇怪沙子，具有极强的滑感。可以看到它们大量聚集漂浮在天境空屿的边缘地带。小心它，否则你可能会滑下来。",
@@ -710,7 +708,7 @@
   "lore.item.aether.gravitite_pickaxe": "作为天境高级工具层的一部分，当使用这把强大的工具进行采矿时，您可以右键单击任何石块，它将悬浮在空中！你可以用这把镐来开采任何矿石。",
   "lore.item.aether.gravitite_shovel": "作为天境高级工具层的一部分，这把铲子具有铲土径或悬浮沙子的特殊能力！当与效率等附魔相结合时，它可以用于快速采集天壤！",
   "lore.item.aether.gravitite_sword": "一种较为高级的天境武器。当使用这种强大的武器进行攻击时，你击中的任何东西都会被抛向空中，造成大量伤害！利用这一点来发挥你的优势！",
-  "lore.item.aether.hammer_of_notch": "一把无比强大的圣锤，可以向生物发射沉重的射弹。据说天境的创世者——主神阿肯祖斯曾使用过这把锤子。",
+  "lore.item.aether.hammer_of_kingbdogz": "一把无比强大的圣锤，可以向生物发射沉重的射弹。据说天境的创世者——主神阿肯祖斯曾使用过这把锤子。",
   "lore.item.aether.healing_stone": "将圣石放入神能炉冶炼即可得到这种石头。它可以用作可靠的治疗来源，提供再生。令人惊讶的是，它的味道尝起来十分美味多汁。",
   "lore.item.aether.holy_sword": "一把古老的大剑，可以对亡灵造成大量额外伤害。穿越主世界的完美武器。",
   "lore.item.aether.holystone_axe": "天境的石质工具之一，它的开采速度比天根工具快，还可以随机掉落神能晶片。",
@@ -900,6 +898,6 @@
   "subtitles.item.armor.equip_valkyrie": "武神盔甲：碰撞",
   "subtitles.item.armor.equip_zanite": "紫晶护甲：咔哒",
   "subtitles.item.dart_shooter.shoot": "吹箭筒：射击",
-  "subtitles.item.hammer_of_notch.shoot": "锤头：发射",
+  "subtitles.item.hammer_of_kingbdogz.shoot": "锤头：发射",
   "subtitles.item.lightning_knife.shoot": "飞刀：投掷"
 }

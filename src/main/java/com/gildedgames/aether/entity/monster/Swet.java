@@ -2,7 +2,6 @@ package com.gildedgames.aether.entity.monster;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.MountableMob;
-import com.gildedgames.aether.entity.ai.goal.target.NearestTaggedTargetGoal;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.SwetAttackPacket;
@@ -58,6 +57,7 @@ public class Swet extends Slime implements MountableMob {
     public Swet(EntityType<? extends Swet> type, Level level) {
         super(type, level);
         this.moveControl = new Swet.MoveHelperController(this);
+        this.xpReward = 5;
     }
 
     @Override
@@ -67,15 +67,14 @@ public class Swet extends Slime implements MountableMob {
         this.goalSelector.addGoal(2, new RandomFacingGoal(this));
         this.goalSelector.addGoal(4, new HopGoal(this));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, (target) -> !this.isFriendlyTowardEntity(target) && !(target.getRootVehicle() instanceof Swet)));
-        this.targetSelector.addGoal(2, new NearestTaggedTargetGoal(this, AetherTags.Entities.SWET_TARGETS, true, (target) -> !this.isFriendlyTowardEntity(target) && !(target.getRootVehicle() instanceof Swet)));
     }
 
     @Nonnull
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 25.0)
-                .add(Attributes.MOVEMENT_SPEED, 0.5)
-                .add(Attributes.FOLLOW_RANGE, 25.0);
+                .add(Attributes.MAX_HEALTH, 12.0)
+                .add(Attributes.MOVEMENT_SPEED, 0.4)
+                .add(Attributes.FOLLOW_RANGE, 14.0);
     }
 
     @Override
@@ -264,6 +263,15 @@ public class Swet extends Slime implements MountableMob {
         }
     }
 
+    /**
+     * Copy of {@link Entity#remove(RemovalReason)}.
+     */
+    @Override
+    public void remove(Entity.RemovalReason pReason) {
+        this.setRemoved(pReason);
+        this.invalidateCaps();
+    }
+
     @Override
     public boolean isDeadOrDying() {
         return super.isDeadOrDying() || this.getDeadInWater();
@@ -333,6 +341,11 @@ public class Swet extends Slime implements MountableMob {
         return AetherSoundEvents.ENTITY_SWET_SQUISH.get();
     }
 
+    @Override
+    public double getPassengersRidingOffset() {
+        return 1.4;
+    }
+
     /**
      * The player can attack the swet to try to kill it before they finish the attack.
      */
@@ -378,6 +391,12 @@ public class Swet extends Slime implements MountableMob {
     public float getSteeringSpeed() {
         return 0.084F;
     }
+
+    @Override
+    public float getFlyingSpeed() {
+        return this.getSteeringSpeed() * 0.25F;
+    }
+
     @Override
     public double getMountJumpStrength() {
         return 1.2;

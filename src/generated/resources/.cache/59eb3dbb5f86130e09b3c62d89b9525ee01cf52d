@@ -1,4 +1,4 @@
-// 1.19.3	2023-01-25T16:31:22.6613679	Loot Tables
+// 1.19.3	2023-02-19T23:04:22.9861004	Loot Tables
 d025471306910ea35dcf85d28fc188182a1b3c8d data/aether/loot_tables/advancements/enter_aether.json
 96aec873b17d2a5aed2a22fe094efa32b8d54645 data/aether/loot_tables/blocks/aerogel.json
 9e100e6de96b47a3a1b9533e76ad9847d364b9c0 data/aether/loot_tables/blocks/aerogel_slab.json
@@ -79,7 +79,6 @@ ea77e044d2fc8470a2e8847283b764df2a100577 data/aether/loot_tables/blocks/mossy_ho
 e78c405edb419bb3cf3a1b5c33fa0ae3b4ad5eea data/aether/loot_tables/blocks/mossy_holystone_wall.json
 8617489ea89245e07f51cd7ea4699b7c0ba4510c data/aether/loot_tables/blocks/pillar.json
 642819c399ee0c6e7c74adc36bfdfefc8164511b data/aether/loot_tables/blocks/pillar_top.json
-b850eb8f1852249555e03a06416a4deb1b13a37a data/aether/loot_tables/blocks/pink_aercloud.json
 ffbf5b91053e4bf26053c8059fb8c82869b65569 data/aether/loot_tables/blocks/potted_berry_bush.json
 ecb5fc73c6a2ecfe4421c9e11d4002527c096e67 data/aether/loot_tables/blocks/potted_berry_bush_stem.json
 a2bcad40febb0f2bf330833aff57eef851ef4a2c data/aether/loot_tables/blocks/potted_golden_oak_sapling.json
@@ -129,7 +128,7 @@ b2e96bcc4793823ca06fd2cc099e06de50ed7638 data/aether/loot_tables/blocks/treasure
 025ba998abc1c5871345d309e55a23e3ffd5dbb9 data/aether/loot_tables/blocks/zanite_block.json
 9b732a4fc2bdcdd492d43070a1247062a5c481a3 data/aether/loot_tables/blocks/zanite_ore.json
 262c1a27542a28e7a4d002e88598e81b12435ae4 data/aether/loot_tables/chests/dungeon/bronze/bronze_dungeon.json
-ac6f992cb604ced446db85f17bf3fc2e26632ee4 data/aether/loot_tables/chests/dungeon/bronze/bronze_dungeon_reward.json
+99739f8953e557c5b5d49f4c0f55dc6e17cbd219 data/aether/loot_tables/chests/dungeon/bronze/bronze_dungeon_reward.json
 59bd609140dc17e52543744b5953a4fa57864806 data/aether/loot_tables/chests/dungeon/bronze/bronze_dungeon_reward_sub_1.json
 7a4c7d675aa8b48c57e38e982139a6ee0c261055 data/aether/loot_tables/chests/dungeon/bronze/bronze_dungeon_sub_1.json
 4f9bfcd25640de13fe5f388732fc629db8181150 data/aether/loot_tables/chests/dungeon/bronze/bronze_dungeon_sub_2.json

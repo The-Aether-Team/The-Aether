@@ -1,7 +1,6 @@
 package com.gildedgames.aether.entity.passive;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
-import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.capability.player.AetherPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -68,7 +67,7 @@ public class Aerwhale extends FlyingMob {
     }
 
     public static boolean checkAerwhaleSpawnRules(EntityType<? extends Aerwhale> aerwhale, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
-        return level.getFluidState(pos).is(Fluids.EMPTY) && level.getRawBrightness(pos, 0) > 8 && (reason == MobSpawnType.SPAWNER || level.getBlockState(pos.below()).is(AetherTags.Blocks.AERWHALE_SPAWNABLE_ON));
+        return random.nextInt(40) == 0 && level.getFluidState(pos).is(Fluids.EMPTY) && level.getRawBrightness(pos, 0) > 8 && checkMobSpawnRules(aerwhale, level, reason, pos, random);
     }
 
     @Override
@@ -222,6 +221,11 @@ public class Aerwhale extends FlyingMob {
     @Override
     protected float getSoundVolume() {
         return 2.0F;
+    }
+
+    @Override
+    public int getExperienceReward() {
+        return 1 + this.level.random.nextInt(3);
     }
 
     public static class SetTravelCourseGoal extends Goal {

@@ -30,7 +30,6 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addBlock(AetherBlocks.COLD_AERCLOUD, "Cold Aercloud");
         addBlock(AetherBlocks.BLUE_AERCLOUD, "Blue Aercloud");
         addBlock(AetherBlocks.GOLDEN_AERCLOUD, "Golden Aercloud");
-        addBlock(AetherBlocks.PINK_AERCLOUD, "Pink Aercloud");
 
         addBlock(AetherBlocks.ICESTONE, "Icestone");
         addBlock(AetherBlocks.AMBROSIUM_ORE, "Ambrosium Ore");
@@ -206,7 +205,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addItem(AetherItems.PIG_SLAYER, "Pig Slayer");
         addItem(AetherItems.CANDY_CANE_SWORD, "Candy Cane Sword");
 
-        addItem(AetherItems.HAMMER_OF_NOTCH, "Hammer of Notch");
+        addItem(AetherItems.HAMMER_OF_KINGBDOGZ, "Hammer of Kingbdogz");
 
         addItem(AetherItems.LIGHTNING_KNIFE, "Lightning Knife");
 
@@ -321,6 +320,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addDiscDesc(AetherItems.MUSIC_DISC_LEGACY, "Jon Lachney - Legacy");
         addItem(AetherItems.MUSIC_DISC_CHINCHILLA, "Sepia Music Disc");
         addDiscDesc(AetherItems.MUSIC_DISC_CHINCHILLA, "RENREN - chinchilla");
+        addItem(AetherItems.MUSIC_DISC_HIGH, "Super Music Disc");
+        addDiscDesc(AetherItems.MUSIC_DISC_HIGH, "RENREN - high");
 
         addItem(AetherItems.SKYROOT_BUCKET, "Skyroot Bucket");
         addItem(AetherItems.SKYROOT_WATER_BUCKET, "Skyroot Water Bucket");
@@ -473,18 +474,21 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addSubtitle("block", "aether_portal.ambient", "Aether Portal whooshes");
         addSubtitle("block", "aether_portal.trigger", "Aether Portal noise intensifies");
         addSubtitle("block", "chest_mimic.open", "Mimic awakens");
+        addSubtitle("block", "altar.crackle", "Altar crackles");
+        addSubtitle("block", "freezer.crackle", "Freezer crackles");
+        addSubtitle("block", "incubator.crackle", "Incubator crackles");
         addSubtitle("block", "dungeon_trap.trigger", "Dungeon Trap activated");
-        addSubtitle("block", "aether.water.evaporate", "Water evaporated");
+        addSubtitle("block", "water.evaporate", "Water evaporated");
 
         addSubtitle("item", "dart_shooter.shoot", "Dart Shooter fired");
         addSubtitle("item", "lightning_knife.shoot", "Lightning Knife flies");
-        addSubtitle("item", "hammer_of_notch.shoot", "Hammer fired");
+        addSubtitle("item", "hammer_of_kingbdogz.shoot", "Hammer fired");
 
-        addSubtitle("item", "armor.equip_zanite", "Zanite armor clanks");
-        addSubtitle("item", "armor.equip_gravitite", "Gravitite armor clangs");
-        addSubtitle("item", "armor.equip_valkyrie", "Valkyrie armor clinks");
-        addSubtitle("item", "armor.equip_neptune", "Neptune armor jingles");
-        addSubtitle("item", "armor.equip_phoenix", "Phoenix armor clinks");
+        addSubtitle("item", "armor.equip_zanite", "Zanite armor clangs");
+        addSubtitle("item", "armor.equip_gravitite", "Gravitite armor clinks");
+        addSubtitle("item", "armor.equip_valkyrie", "Valkyrie armor clanks");
+        addSubtitle("item", "armor.equip_neptune", "Neptune armor clinks");
+        addSubtitle("item", "armor.equip_phoenix", "Phoenix armor clanks");
         addSubtitle("item", "armor.equip_obsidian", "Obsidian armor clanks");
         addSubtitle("item", "armor.equip_sentry", "Sentry armor clanks");
 
@@ -521,6 +525,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addSubtitle("entity", "moa.death", "Moa dies");
         addSubtitle("entity", "moa.hurt", "Moa hurts");
         addSubtitle("entity", "moa.saddle", "Saddle equips");
+        addSubtitle("entity", "moa.step", "Footsteps");
         addSubtitle("entity", "moa.flap", "Moa flaps");
         addSubtitle("entity", "moa.egg", "Moa plops");
 
@@ -711,7 +716,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLoreBookText("item", "Item:");
 
 
-        addMessage("hammer_of_notch_cooldown", "Cooldown");
+        addMessage("hammer_of_kingbdogz_cooldown", "Cooldown");
 
         addMessage("life_shard_limit", "You can only use a total of %s Life Shards.");
         addMessage("bronze_treasure_chest_locked", "This Treasure Chest must be unlocked with a Bronze Key.");
@@ -888,7 +893,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.NEPTUNE_GLOVES, "Found in Silver Dungeons, these gloves are requires to complete the Neptune Armor set, which allows for underwater walking.");
         addLore(AetherItems.NEPTUNE_HELMET, "Found in Silver Dungeons, this armor allows for water walking. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
         addLore(AetherItems.NEPTUNE_LEGGINGS, "Found in Silver Dungeons, this armor allows for water walking. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
-        addLore(AetherItems.HAMMER_OF_NOTCH, "A mighty hammer which shoots heavy projectiles at mobs. It's said that Notch actually held this hammer.");
+        addLore(AetherItems.HAMMER_OF_KINGBDOGZ, "A mighty hammer which shoots heavy projectiles at mobs. It's said that Kingbdogz actually held this hammer.");
         addLore(AetherItems.OBSIDIAN_BOOTS, "A super powerful armor, more powerful than Diamond, this armor is only obtainable by standing in water while wearing Phoenix Armor, converting it to Obsidian.");
         addLore(AetherItems.OBSIDIAN_CHESTPLATE, "A super powerful armor, more powerful than Diamond, this armor is only obtainable by standing in water while wearing Phoenix Armor, converting it to Obsidian.");
         addLore(AetherItems.OBSIDIAN_GLOVES, "Needed to complete the Obsidian Armor set, you can convert Phoenix Gloves into Obsidian by standing in water while wearing them.");
@@ -904,7 +909,6 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.PIG_SLAYER, "Kills any Pig type mobs with nothing with a single blow. But why would you want to do that? Great for traversing the Nether.");
         addLore(AetherBlocks.PILLAR, "The main part of the Silver Dungeon's decorative pillars, they spawn all around the dungeon, and are excellent for building.");
         addLore(AetherBlocks.PILLAR_TOP, "The top of the Silver Dungeon's decorative pillars, they look excellent, and are great for building.");
-        addLore(AetherBlocks.PINK_AERCLOUD, "A very soft cloud that is pink. It has natural healing properties, healing anyone's wounds when stepped in.");
         addLore(AetherItems.POISON_DART, "The ammo for Poison Dart Shooters, these are made by infecting Golden Darts with poison!");
         addLore(AetherItems.POISON_DART_SHOOTER, "A Dart Shooter which shoots Poison Darts. Shooting this at something infects them with a deadly poison!");
         addLore(AetherBlocks.PRESENT, "A wonderful holiday gift, open it for a surprise! Be careful, as there's a chance you could get ssssssurprised!");
@@ -1067,7 +1071,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addCommonConfig("gameplay", "healing_gummy_swets", "Gummy Swets when eaten restore full health instead of full hunger");
         addCommonConfig("gameplay", "temporary_ice_accessory_conversion", "Ice Accessories will create temporary blocks instead of permanent blocks from conversions");
         addCommonConfig("gameplay", "maximum_life_shards", "Determines the limit of the amount of Life Shards a player can consume to increase their health");
-        addCommonConfig("gameplay", "hammer_of_notch_cooldown", "Determines the cooldown in ticks for the Hammer of Notch's ability");
+        addCommonConfig("gameplay", "hammer_of_kingbdogz_cooldown", "Determines the cooldown in ticks for the Hammer of Kingbdogz's ability");
         addCommonConfig("gameplay", "cloud_staff_cooldown", "Determines the cooldown in ticks for the Cloud Staff's ability");
         addCommonConfig("gameplay", "repeat_sun_spirit_dialogue", "Determines whether the Sun Spirit's dialogue when meeting him should play through every time you meet him");
 
@@ -1075,7 +1079,6 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addCommonConfig("loot", "spawn_valkyrie_cape", "Allows the Valkyrie Cape to spawn in the Silver Dungeon loot table");
 
         addCommonConfig("world_generation", "generate_tall_grass", "Determines whether the Aether should generate Tall Grass blocks on terrain or not");
-        addCommonConfig("world_generation", "generate_pink_aerclouds", "Determines whether Pink Aerclouds should generate in the skies of the Aether along with other Aerclouds");
         addCommonConfig("world_generation", "generate_holiday_tree_always", "Determines whether Holiday Trees should always be able to generate when exploring new chunks in the Aether, if true, this overrides 'Generate Holiday Trees seasonally'");
         addCommonConfig("world_generation", "generate_holiday_tree_seasonally", "Determines whether Holiday Trees should be able to generate during the time frame of December and January when exploring new chunks in the Aether, only works if 'Generate Holiday Trees always' is set to false");
 
