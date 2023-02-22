@@ -16,6 +16,7 @@ import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.MoaInteractPacket;
 import com.gildedgames.aether.api.AetherMoaTypes;
 import com.gildedgames.aether.util.EntityUtil;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -40,6 +41,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Optional;
@@ -425,6 +427,11 @@ public class Moa extends MountableAnimal implements WingedBird {
 	@Override
 	protected SoundEvent getSaddledSound() {
 		return AetherSoundEvents.ENTITY_MOA_SADDLE.get();
+	}
+
+	@Override
+	protected void playStepSound(@Nonnull BlockPos pos, @Nonnull BlockState state) {
+		this.playSound(AetherSoundEvents.ENTITY_MOA_STEP.get(), 0.15F, 1.0F);
 	}
 
 	@Override

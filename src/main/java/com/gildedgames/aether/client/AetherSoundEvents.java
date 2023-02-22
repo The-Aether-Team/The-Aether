@@ -75,6 +75,7 @@ public class AetherSoundEvents {
 	public static final RegistryObject<SoundEvent> ENTITY_MOA_DEATH = register("entity.moa.death");
 	public static final RegistryObject<SoundEvent> ENTITY_MOA_HURT = register("entity.moa.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_MOA_SADDLE = register("entity.moa.saddle");
+	public static final RegistryObject<SoundEvent> ENTITY_MOA_STEP = register("entity.moa.step");
 	public static final RegistryObject<SoundEvent> ENTITY_MOA_FLAP = register("entity.moa.flap");
 	public static final RegistryObject<SoundEvent> ENTITY_MOA_EGG = register("entity.moa.egg");
 
