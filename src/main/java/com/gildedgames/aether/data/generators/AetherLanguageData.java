@@ -826,9 +826,9 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.GOLDEN_FEATHER, "A fluffy feather found in Silver Dungeons. When worn, the wearer becomes lighter than air and can descend slowly.");
         addLore(AetherItems.GOLDEN_GLOVES, "Part of the Golden Armor set, it is needed to complete the Gold Armor set.");
         addLore(AetherBlocks.GOLDEN_OAK_LEAVES, "These golden Leaves generate with Golden Oak trees. They spawn golden particles in a radius of 5 blocks. They yield Golden Oak Saplings when decayed.");
-        addLore(AetherBlocks.GOLDEN_OAK_LOG, "Skyroot Log which contains Golden Amber inside. When broken with an Axe they drop Skyroot Logs, and if the Axe is Gravitite, they will drop Golden Amber.");
+        addLore(AetherBlocks.GOLDEN_OAK_LOG, "A Skyroot Log which contains Golden Amber inside. When broken with an Axe they drop Skyroot Logs, and if the Axe is Zanite or Gravitite, they will drop Golden Amber.");
         addLore(AetherBlocks.GOLDEN_OAK_SAPLING, "These large saplings when planted will grow into huge Golden Oak trees! You can use Bone Meal to speed up the process.");
-        addLore(AetherBlocks.GOLDEN_OAK_WOOD, "Skyroot Log which contains Golden Amber Inside. When broken with an Axe they drop Skyroot Logs, and if the Axe is Gravitite, they will drop Golden Amber. Crafted to have bark on all sides.");
+        addLore(AetherBlocks.GOLDEN_OAK_WOOD, "A Skyroot Log which contains Golden Amber Inside. When broken with an Axe they drop Skyroot Logs, and if the Axe is Zanite or Gravitite, they will drop Golden Amber. Crafted to have bark on all sides.");
         addLore(AetherItems.GOLDEN_PARACHUTE, "The best parachute in the Aether. It has 20 uses and is made with Golden Aerclouds.");
         addLore(AetherItems.GOLDEN_PENDANT, "An aesthetic accessory made of gold.");
         addLore(AetherItems.GOLDEN_RING, "An aesthetic accessory made of gold.");
