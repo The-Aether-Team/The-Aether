@@ -1,4 +1,4 @@
-// 1.19.3	2023-02-18T18:13:02.031012	Recipes
+// 1.19.3	2023-02-20T11:54:05.1659846	Recipes
 1d7abc4c8c4e7132f31bd563a8dd82a8f3285d0d data/aether/advancements/recipes/building_blocks/aerogel_slab.json
 8c9f4fe6b61d89eb72b141ff6dfb92764a5dc5a9 data/aether/advancements/recipes/building_blocks/aerogel_slab_from_aerogel_stonecutting.json
 6e53af7c3f7e89910ad337753c6d70a4cdcf0440 data/aether/advancements/recipes/building_blocks/aerogel_stairs.json
@@ -206,6 +206,7 @@ ac359d6189e7df44336a09304bda231b08cce538 data/aether/advancements/recipes/misc/e
 c696b8e974d780d02ce13afec154a2fec81c0672 data/aether/advancements/recipes/misc/enchanted_dart_shooter_enchanting.json
 d9a2f09868f6775196a54bf0a403cbb957a13740 data/aether/advancements/recipes/misc/flower_to_purple_dye.json
 c0637ec24bfe64e73341335255c5e900de3a6f43 data/aether/advancements/recipes/misc/flower_to_white_dye.json
+b9f7d7bfa77799dfda7ec69f7f627ace55516240 data/aether/advancements/recipes/misc/high_freezing.json
 e298f47ff2dca7b9805addb75782293c0fa9b6da data/aether/advancements/recipes/misc/ice_pendant_from_freezing.json
 23605bf85519cea3f7a4d31c89f2bbbc2bf0079e data/aether/advancements/recipes/misc/ice_ring_from_freezing.json
 235d1d3b9fa3808c3ed3e633cf10034921080d67 data/aether/advancements/recipes/misc/legacy_enchanting.json
@@ -409,6 +410,7 @@ b9dead23ee31207c99acd686d627f39ff67ed1f8 data/aether/recipes/healing_stone_encha
 b19aaa7cf10bb931c3f18bc786614cfa6de07fec data/aether/recipes/hellfire_stone_from_light_hellfire_stone_stonecutting.json
 939f8a20279e051e908aa8b548c469444ce6a859 data/aether/recipes/hellfire_wall.json
 79217f450110adbc3e61ea5d6f8a8abe30bcc909 data/aether/recipes/hellfire_wall_from_hellfire_stone_stonecutting.json
+ba17c3224ae6e50550020814e35502659354fd36 data/aether/recipes/high_freezing.json
 c16d0b3a7ab28d886d752b5bd3481e392939bc8e data/aether/recipes/holystone_axe.json
 426ce55576d4759f7cf1dc43e99c9a58adfac867 data/aether/recipes/holystone_axe_repairing.json
 d7ce0a0d876081714a87ea173ef3e84df2b8de1e data/aether/recipes/holystone_bricks.json

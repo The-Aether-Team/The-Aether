@@ -320,6 +320,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addDiscDesc(AetherItems.MUSIC_DISC_LEGACY, "Jon Lachney - Legacy");
         addItem(AetherItems.MUSIC_DISC_CHINCHILLA, "Sepia Music Disc");
         addDiscDesc(AetherItems.MUSIC_DISC_CHINCHILLA, "RENREN - chinchilla");
+        addItem(AetherItems.MUSIC_DISC_HIGH, "Super Music Disc");
+        addDiscDesc(AetherItems.MUSIC_DISC_HIGH, "RENREN - high");
 
         addItem(AetherItems.SKYROOT_BUCKET, "Skyroot Bucket");
         addItem(AetherItems.SKYROOT_WATER_BUCKET, "Skyroot Water Bucket");
@@ -472,8 +474,11 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addSubtitle("block", "aether_portal.ambient", "Aether Portal whooshes");
         addSubtitle("block", "aether_portal.trigger", "Aether Portal noise intensifies");
         addSubtitle("block", "chest_mimic.open", "Mimic awakens");
+        addSubtitle("block", "altar.crackle", "Altar crackles");
+        addSubtitle("block", "freezer.crackle", "Freezer crackles");
+        addSubtitle("block", "incubator.crackle", "Incubator crackles");
         addSubtitle("block", "dungeon_trap.trigger", "Dungeon Trap activated");
-        addSubtitle("block", "aether.water.evaporate", "Water evaporated");
+        addSubtitle("block", "water.evaporate", "Water evaporated");
 
         addSubtitle("item", "dart_shooter.shoot", "Dart Shooter fired");
         addSubtitle("item", "lightning_knife.shoot", "Lightning Knife flies");
