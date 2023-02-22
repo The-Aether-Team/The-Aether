@@ -189,17 +189,19 @@ public class Moa extends MountableAnimal implements WingedBird {
 
 	@Override
 	public void riderTick() {
-		super.riderTick();
-		if (this.getControllingPassenger() instanceof Player) {
-			if (this.getFlapCooldown() > 0) {
-				this.setFlapCooldown(this.getFlapCooldown() - 1);
-			} else if (this.getFlapCooldown() == 0) {
-				if (!this.isOnGround()) {
-					this.level.playSound(null, this, AetherSoundEvents.ENTITY_MOA_FLAP.get(), SoundSource.NEUTRAL, 0.15F, Mth.clamp(this.random.nextFloat(), 0.7F, 1.0F) + Mth.clamp(this.random.nextFloat(), 0.0F, 0.3F));
-					this.setFlapCooldown(15);
+		if (!this.isSitting()) {
+			super.riderTick();
+			if (this.getControllingPassenger() instanceof Player) {
+				if (this.getFlapCooldown() > 0) {
+					this.setFlapCooldown(this.getFlapCooldown() - 1);
+				} else if (this.getFlapCooldown() == 0) {
+					if (!this.isOnGround()) {
+						this.level.playSound(null, this, AetherSoundEvents.ENTITY_MOA_FLAP.get(), SoundSource.NEUTRAL, 0.15F, Mth.clamp(this.random.nextFloat(), 0.7F, 1.0F) + Mth.clamp(this.random.nextFloat(), 0.0F, 0.3F));
+						this.setFlapCooldown(15);
+					}
 				}
+				this.resetFallDistance();
 			}
-			this.resetFallDistance();
 		}
 	}
 
