@@ -866,14 +866,14 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.HOLYSTONE_SWORD, "One of Aether's stone tools, it can drop Ambrosium Shards at random while attacking.");
         addLore(AetherBlocks.HOLYSTONE_WALL, "Crafted from Holystone. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!");
         addLore(AetherItems.ICE_PENDANT, "A pendant which allows you to freeze water and lava when walked on.");
-        addLore(AetherItems.ICE_RING, "A ring which allows you to freeze water and lava when walked on."); //todo bookmark
+        addLore(AetherItems.ICE_RING, "A ring which allows you to freeze water and lava when walked on.");
         addLore(AetherBlocks.ICESTONE, "Icestone is a common ore that can be used as fuel for a Freezer. It can be used to freeze nearby liquids such as Lava and Water.");
         addLore(AetherBlocks.ICESTONE_SLAB, "Crafted from Icestone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building's roofing!");
         addLore(AetherBlocks.ICESTONE_STAIRS, "Crafted from Icestone. Stairs are useful for adding verticality to builds and are often used for decoration too!");
         addLore(AetherBlocks.ICESTONE_WALL, "Crafted from Icestone. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!");
-        addLore(AetherBlocks.INCUBATOR, "Used to incubate Moa's. You use Ambrosium Torches for the fuel. The process can take quite some time, but it is worth the wait once your Moa of choice hatches!");
+        addLore(AetherBlocks.INCUBATOR, "Used to incubate Moas. You use Ambrosium Torches for the fuel. The process can take quite some time, but it is worth the wait once your Moa of choice hatches!");
         addLore(AetherItems.INVISIBILITY_CLOAK, "A cloak that makes the wearer completely invisible! Since mobs cannot see you, they cannot attack you. Sneak up on your enemies with it!");
-        addLore(AetherItems.IRON_BUBBLE, "A common dungeon loot. It allows for the wearer to breathe underwater for a longer time than normal.");
+        addLore(AetherItems.IRON_BUBBLE, "A common dungeon loot item. It allows for the wearer to breathe underwater for a longer time than normal.");
         addLore(AetherItems.IRON_GLOVES, "Part of the Iron Armor set, it is needed to complete the Iron Armor set.");
         addLore(AetherItems.IRON_PENDANT, "An aesthetic accessory made of iron.");
         addLore(AetherItems.IRON_RING, "An aesthetic accessory made of iron.");
@@ -888,11 +888,11 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherBlocks.MOSSY_HOLYSTONE_STAIRS, "Crafted from Mossy Holystone. Stairs are useful for adding verticality to builds and are often used for decoration too!");
         addLore(AetherBlocks.MOSSY_HOLYSTONE_WALL, "Crafted from Mossy Holystone. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!");
         addLore(AetherItems.NATURE_STAFF, "A staff that can allow for commanding tamed Moas. It can allow them to sit on the ground.");
-        addLore(AetherItems.NEPTUNE_BOOTS, "Found in Silver Dungeons, this armor allows for water walking. The full set is a much better replacement for the Depth Strider enchantment.");
-        addLore(AetherItems.NEPTUNE_CHESTPLATE, "Found in Silver Dungeons, this armor allows for water walking. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
+        addLore(AetherItems.NEPTUNE_BOOTS, "Found in Silver Dungeons, this armor allows for faster swimming in water. The full set is a much better replacement for the Depth Strider enchantment.");
+        addLore(AetherItems.NEPTUNE_CHESTPLATE, "Found in Silver Dungeons, this armor allows for faster swimming in water. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
         addLore(AetherItems.NEPTUNE_GLOVES, "Found in Silver Dungeons, these gloves are requires to complete the Neptune Armor set, which allows for underwater walking.");
-        addLore(AetherItems.NEPTUNE_HELMET, "Found in Silver Dungeons, this armor allows for water walking. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
-        addLore(AetherItems.NEPTUNE_LEGGINGS, "Found in Silver Dungeons, this armor allows for water walking. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
+        addLore(AetherItems.NEPTUNE_HELMET, "Found in Silver Dungeons, this armor allows faster swimming in water. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
+        addLore(AetherItems.NEPTUNE_LEGGINGS, "Found in Silver Dungeons, this armor allows faster swimming in water. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
         addLore(AetherItems.HAMMER_OF_KINGBDOGZ, "A mighty hammer which shoots heavy projectiles at mobs. It's said that Kingbdogz actually held this hammer.");
         addLore(AetherItems.OBSIDIAN_BOOTS, "A super powerful armor, more powerful than Diamond, this armor is only obtainable by standing in water while wearing Phoenix Armor, converting it to Obsidian.");
         addLore(AetherItems.OBSIDIAN_CHESTPLATE, "A super powerful armor, more powerful than Diamond, this armor is only obtainable by standing in water while wearing Phoenix Armor, converting it to Obsidian.");
@@ -906,10 +906,10 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.PHOENIX_GLOVES, "Found in Gold Dungeons, these gloves are required to finish the Phoenix Armor set, and are needed to convert the full set into Obsidian too.");
         addLore(AetherItems.PHOENIX_HELMET, "Found in Gold Dungeons, when fully worn, this armor set allows for Fire Resistance, you can swim in Lava as well. Be careful when standing in water, as it will turn into Obsidian armor.");
         addLore(AetherItems.PHOENIX_LEGGINGS, "Found in Gold Dungeons, when fully worn, this armor set allows for Fire Resistance, you can swim in Lava as well. Be careful when standing in water, as it will turn into Obsidian armor.");
-        addLore(AetherItems.PIG_SLAYER, "Kills any Pig type mobs with nothing with a single blow. But why would you want to do that? Great for traversing the Nether.");
+        addLore(AetherItems.PIG_SLAYER, "Kills any Pig type mobs with nothing with a single blow, or stronger ones in a couple blows. But why would you want to do that? Great for traversing the Nether.");
         addLore(AetherBlocks.PILLAR, "The main part of the Silver Dungeon's decorative pillars, they spawn all around the dungeon, and are excellent for building.");
         addLore(AetherBlocks.PILLAR_TOP, "The top of the Silver Dungeon's decorative pillars, they look excellent, and are great for building.");
-        addLore(AetherItems.POISON_DART, "The ammo for Poison Dart Shooters, these are made by infecting Golden Darts with poison!");
+        addLore(AetherItems.POISON_DART, "The ammo for Poison Dart Shooters, these are made by coating Golden Darts with poison!");
         addLore(AetherItems.POISON_DART_SHOOTER, "A Dart Shooter which shoots Poison Darts. Shooting this at something infects them with a deadly poison!");
         addLore(AetherBlocks.PRESENT, "A wonderful holiday gift, open it for a surprise! Be careful, as there's a chance you could get ssssssurprised!");
         addLore(AetherBlocks.PURPLE_FLOWER, "These pretty violet flowers can be found in large numbers around the Aether. They can be crafted into purple dye when placed into a Crafting Table.");
@@ -924,7 +924,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.SILVER_DUNGEON_KEY, "A reflective key that is given to you by the Valkyrie Queen after defeating her. Use it to claim the treasure she left behind!");
         addLore(AetherItems.SKYROOT_AXE, "One of Aether's wooden tools, it can be used to double Skyroot Log drops. Simple but useful for beginners.");
         addLore(AetherItems.SKYROOT_AXOLOTL_BUCKET,"A Skyroot Bucket with a friendly Axolotl in. Axolotls can be incredibly helpful aquatic partners. So it's best to keep one on hand if you're exploring wet environments.");
-        addLore(AetherBlocks.SKYROOT_BED, "Crafted with cyan wool and skyroot planks. You can only sleep at night to skip night time, but during the day you can set your respawn point in the Aether. Cannot sleep while mobs are nearby.");
+        addLore(AetherBlocks.SKYROOT_BED, "Crafted with wool and skyroot planks. You can only sleep at night to skip night time, but during the day you can set your respawn point in the Aether. Cannot sleep while mobs are nearby.");
         addLore(AetherItems.SKYROOT_BOAT, "While the Aether does not have many large bodies of water, a boat can occasionally be a useful tool for crossing large distances over ice!");
         addLore(AetherItems.SKYROOT_CHEST_BOAT, "A Skyroot Boat with a handy chest in the back. Helpful for transporting more items over long stretches of water, which are famously difficult to find in the Aether.");
         addLore(AetherBlocks.SKYROOT_BOOKSHELF, "Crafted from Skyroot Planks and Books. Bookshelves can be used to enhance the enchanting capabilities of an enchanting table.");
@@ -983,13 +983,13 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.YELLOW_CAPE, "A bright Yellow Cape that is crafted using Yellow Wool.");
         addLore(AetherItems.ZANITE_AXE, "One of Aether's mid-tier tools, you can mine wood faster than stone, and it will get even faster as the tool is worn down.");
         addLore(AetherBlocks.ZANITE_BLOCK, "A block of compacted Zanite Gemstones. They can power beacons, and just have a sleek look to them.");
-        addLore(AetherItems.ZANITE_BOOTS, "Part of the Zanite Armor set, the protection it grants increases as the durability decreases.");
-        addLore(AetherItems.ZANITE_CHESTPLATE, "Part of the Zanite Armor set, the protection it grants increases as the durability decreases.");
+        addLore(AetherItems.ZANITE_BOOTS, "Part of the Zanite Armor set, equivalent in protection to iron.");
+        addLore(AetherItems.ZANITE_CHESTPLATE, "Part of the Zanite Armor set, equivalent in protection to iron.");
         addLore(AetherItems.ZANITE_GEMSTONE, "Aether's version of Iron. These shiny purple gems can be made into tools and armor, that increase in strength when used.");
         addLore(AetherItems.ZANITE_GLOVES, "Part of the Zanite Armor set, it is needed to complete the Zanite Armor set.");
         addLore(AetherItems.ZANITE_HOE, "One of Aether's mid-tier tools, it has more durability than the Holystone hoe, and it will get even faster at mining very oddly specific blocks as the tool is worn down.");
-        addLore(AetherItems.ZANITE_HELMET, "Part of the Zanite Armor set, the protection it grants increases as the durability decreases.");
-        addLore(AetherItems.ZANITE_LEGGINGS, "Part of the Zanite Armor set, the protection it grants increases as the durability decreases.");
+        addLore(AetherItems.ZANITE_HELMET, "Part of the Zanite Armor set, equivalent in protection to iron.");
+        addLore(AetherItems.ZANITE_LEGGINGS, "Part of the Zanite Armor set, equivalent in protection to iron.");
         addLore(AetherBlocks.ZANITE_ORE, "A slightly rare ore that drops Zanite Gemstones when broken with Stone tools.");
         addLore(AetherItems.ZANITE_PENDANT, "A pendant which allows you to mine faster. It doesn't last for long, so use it wisely!");
         addLore(AetherItems.ZANITE_PICKAXE, "One of Aether's mid-tier tools, it mines what Iron can, except as its durability decreases, it gets faster. Be careful though, as when it's repaired it will be as slow as before!");
@@ -1001,6 +1001,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.MUSIC_DISC_LEGACY, "A music disc that plays Legacy by Jon Lachney.");
         addLore(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "A music disc that plays Welcoming Skies by Voyed.");
         addLore(AetherItems.MUSIC_DISC_CHINCHILLA,"A music disc that plays chinchilla by RENREN.");
+        addLore(AetherItems.MUSIC_DISC_HIGH,"A music disc that plays high by RENREN.");
         addLoreUnique("item.aether.hammer_of_jeb", "A mysterious hammer that can shoot projectiles. At one point it vanished from existence. It's said this was actually Jeb's hammer at one point.");
 
 
