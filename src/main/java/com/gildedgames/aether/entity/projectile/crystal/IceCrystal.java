@@ -46,8 +46,8 @@ public class IceCrystal extends AbstractCrystal {
         this.setOwner(shooter);
         this.setPos(shooter.getX(), shooter.getY(), shooter.getZ());
         float rotation = this.random.nextFloat() * 360;
-        this.xPower = Mth.sin(rotation) * 0.15;
-        this.zPower = -Mth.cos(rotation) * 0.15;
+        this.xPower = Mth.sin(rotation) * 0.4;
+        this.zPower = -Mth.cos(rotation) * 0.4;
         this.setDeltaMovement(this.xPower, 0, this.zPower);
     }
 
@@ -101,8 +101,8 @@ public class IceCrystal extends AbstractCrystal {
             if (entity != null) {
                 if (!this.level.isClientSide) {
                     Vec3 vec3 = entity.getLookAngle();
-                    this.xPower = vec3.x * 2;
-                    this.zPower = vec3.z * 2;
+                    this.xPower = vec3.x * 3;
+                    this.zPower = vec3.z * 3;
                     this.setDeltaMovement(xPower, 0, zPower);
                     this.setOwner(entity);
                     this.attacked = true;
