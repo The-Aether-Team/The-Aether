@@ -6,7 +6,8 @@ import javax.annotation.Nonnull;
 import java.util.Set;
 
 /**
- * Class to override some gamerules in the Aether. Any gamerules in the blacklist will always return false in an Aether dimension.
+ * Wrapper for GameRules to override some gamerules in the Aether.
+ * Any gamerules in the blacklist will always return false in an Aether dimension.
  */
 public class WrappedGameRules extends GameRules {
     public final GameRules gameRules;

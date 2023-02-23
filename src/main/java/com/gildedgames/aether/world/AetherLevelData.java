@@ -8,15 +8,20 @@ import net.minecraft.world.level.storage.WorldData;
 
 import javax.annotation.Nonnull;
 
+/**
+ * A wrapper for ServerLevelData. This is used to detach the day cycle from the Overworld and to allow the weather to be
+ * set from the Aether. It gets applied to any dimension where the effects are equal to the Aether's dimension type ID.
+ * A gamerule wrapper is used to prevent the overworld's weather cycle from being affected by the Aether.
+ */
 public class AetherLevelData extends DerivedLevelData {
     private final ServerLevelData wrapped;
     private final WrappedGameRules gameRules;
 
     private long dayTime;
 
-    public AetherLevelData(WorldData worldData, ServerLevelData levelData, long dayTime) {
-        super(worldData, levelData);
-        this.wrapped = levelData;
+    public AetherLevelData(WorldData worldData, ServerLevelData overworldData, long dayTime) {
+        super(worldData, overworldData);
+        this.wrapped = overworldData;
         this.gameRules = new WrappedGameRules(worldData.getGameRules(), ImmutableSet.of(GameRules.RULE_WEATHER_CYCLE));
         this.dayTime = dayTime;
     }
