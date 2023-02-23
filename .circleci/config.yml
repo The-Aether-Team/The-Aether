@@ -176,7 +176,7 @@ commands:
       - gradle/with_cache:
           cache_key: 'v5'
           steps: 
-            - run: gradle build --parallel --parallel-threads=4 --build-cache
+            - run: gradle build --parallel --build-cache
       - store_artifacts:
           path: ~/project/build/libs
 
