@@ -17,6 +17,9 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
+/**
+ * A normal bronze dungeon room or hallway.
+ */
 public class BronzeDungeonRoom extends BronzeDungeonPiece {
     public BronzeDungeonRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
         super(AetherStructurePieceTypes.BRONZE_DUNGEON_ROOM.get(), manager, name, makeSettings().setRotation(rotation), pos);

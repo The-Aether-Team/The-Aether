@@ -16,11 +16,14 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * This processor is used to randomly place extra dirt near the top of the gold dungeon. It runs on any holystone block
+ * that is right below aether dirt.
+ */
 public class VerticalGradientProcessor extends StructureProcessor {
     public static final Codec<VerticalGradientProcessor> CODEC = Codec.unit(() -> VerticalGradientProcessor.INSTANCE);
 
     public static final VerticalGradientProcessor INSTANCE = new VerticalGradientProcessor();
-
 
     @Nullable
     @Override

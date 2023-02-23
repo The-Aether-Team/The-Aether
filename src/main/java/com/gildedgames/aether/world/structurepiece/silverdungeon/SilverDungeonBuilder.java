@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * This class is for randomly assembling the silver dungeon.
+ * This class randomly assembles the silver dungeon using a 3x3x3 grid.
  */
 public class SilverDungeonBuilder {
     public static final int CHEST_ROOM = 0b1;

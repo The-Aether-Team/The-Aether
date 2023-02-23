@@ -44,6 +44,7 @@ public class SilverDungeonStructure extends Structure {
 
         int height;
         if (random.nextInt(5) < 3) {
+            // The structure has a 40% chance of being forced above ground.
             height = minHeight + 18;
             if (height < maxHeight) {
                 height += random.nextInt(maxHeight - height);

@@ -24,6 +24,9 @@ import javax.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This piece exists to hold the positions of the aercloud blocks placed by the structure.
+ */
 public class LegacyCloudBed extends StructurePiece {
     private final Set<BlockPos> positions;
 
@@ -50,7 +53,7 @@ public class LegacyCloudBed extends StructurePiece {
         tag.put("Positions", positions);
     }
 
-    private final static BlockState COLD_CLOUD = AetherBlocks.COLD_AERCLOUD.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
+    private static final BlockState COLD_CLOUD = AetherBlocks.COLD_AERCLOUD.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true);
     @Override
     public void postProcess(@Nonnull WorldGenLevel level, @Nonnull StructureManager manager, @Nonnull ChunkGenerator generator, @Nonnull RandomSource random, @Nonnull BoundingBox bounds, @Nonnull ChunkPos chunkPos, @Nonnull BlockPos blockPos) {
         if (!this.positions.isEmpty()) {

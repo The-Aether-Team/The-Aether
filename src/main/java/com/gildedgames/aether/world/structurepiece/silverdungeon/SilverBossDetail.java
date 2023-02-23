@@ -8,6 +8,9 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
+/**
+ * This piece represents the furniture of the boss room, so no structure processors are applied.
+ */
 public class SilverBossDetail extends SilverDungeonPiece {
     public SilverBossDetail(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
         super(AetherStructurePieceTypes.SILVER_BOSS_DETAIL.get(), manager, name, new StructurePlaceSettings().setRotation(rotation), pos);

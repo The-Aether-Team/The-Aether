@@ -21,6 +21,9 @@ import javax.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This piece exists to hold the positions of the aercloud blocks placed by the structure.
+ */
 public class LargeAercloudPiece extends StructurePiece {
     private final Set<BlockPos> positions = new HashSet<>();
     private final BlockStateProvider blocks;

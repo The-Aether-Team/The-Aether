@@ -56,6 +56,7 @@ public class GoldDungeonStructure extends Structure {
         ChunkPos chunkpos = context.chunkPos();
         int x = chunkpos.getMiddleBlockX();
         int z = chunkpos.getMiddleBlockZ();
+        // We want the gold dungeon to sometimes blend in with the terrain, and sometimes be floating in the sky. However, we never want it to be fully buried.
         int terrainHeight = context.chunkGenerator().getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState()) - 20;
         int height = 40 + random.nextInt(60);
         height = Math.max(terrainHeight, height);
@@ -87,6 +88,7 @@ public class GoldDungeonStructure extends Structure {
                 bossPos,
                 rotation
         );
+        // We need the tunnel to always be exposed.
         int verticalOffset = this.tunnelFromBossRoom(templateManager, builder, bossRoom, context.chunkGenerator(), context.heightAccessor(), context.randomState());
         builder.addPiece(bossRoom);
         if (verticalOffset > 0) {

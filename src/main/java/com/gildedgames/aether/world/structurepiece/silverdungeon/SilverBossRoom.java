@@ -32,6 +32,9 @@ import net.minecraft.world.phys.AABB;
 
 import java.util.ArrayList;
 
+/**
+ * This is the arena for fighting the valkyrie queen.
+ */
 public class SilverBossRoom extends SilverDungeonPiece {
 
     public SilverBossRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
