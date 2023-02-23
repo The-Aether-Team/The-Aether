@@ -174,7 +174,7 @@ commands:
     steps:
       - checkout
       - gradle/with_cache:
-          cache_key: 'v2'
+          cache_key: 'v3'
           steps: 
             - run: gradle build --build-cache
       - store_artifacts:
