@@ -16,7 +16,7 @@ import java.util.Locale;
 public class AetherStructurePieceTypes {
     public static final DeferredRegister<StructurePieceType> STRUCTURE_PIECE_TYPES = DeferredRegister.create(Registries.STRUCTURE_PIECE, Aether.MODID);
 
-    public static RegistryObject<StructurePieceType> LARGE_AERCLOUD = register("ALC", LargeAercloudPiece::new);
+    public static RegistryObject<StructurePieceType> LARGE_AERCLOUD = register("ALC", LegacyCloudBed::new);
     public static final RegistryObject<StructurePieceType> BRONZE_BOSS_ROOM = register("BBossRoom", BronzeBossRoom::new);
     public static final RegistryObject<StructurePieceType> BRONZE_DUNGEON_ROOM = register("BDungeonRoom", BronzeDungeonRoom::new);
     public static final RegistryObject<StructurePieceType> BRONZE_TUNNEL = register("BTunnel", BronzeTunnel::new);
@@ -25,7 +25,6 @@ public class AetherStructurePieceTypes {
     public static final RegistryObject<StructurePieceType> SILVER_DUNGEON_ROOM = register("SDungeonRoom", SilverDungeonRoom::new);
     public static final RegistryObject<StructurePieceType> SILVER_BOSS_ROOM = register("SBossRoom", SilverBossRoom::new);
     public static final RegistryObject<StructurePieceType> SILVER_BOSS_DETAIL = register("SBossDetail", SilverBossDetail::new);
-    public static final RegistryObject<StructurePieceType> LEGACY_CLOUD_BED = register("LegacyCloudBed", LegacyCloudBed::new);
     public static final RegistryObject<StructurePieceType> GOLD_BOSS_ROOM = register("GBossRoom", GoldBossRoom::new);
     public static final RegistryObject<StructurePieceType> GOLD_ISLAND = register("GIsland", GoldIsland::new);
     public static final RegistryObject<StructurePieceType> GOLD_STUB = register("GStub", GoldStub::new);
