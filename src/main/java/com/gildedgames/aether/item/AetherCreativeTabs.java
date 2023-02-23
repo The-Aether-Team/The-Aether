@@ -277,7 +277,6 @@ public class AetherCreativeTabs {
                             output.accept(AetherItems.BLUE_MOA_EGG.get());
                             output.accept(AetherItems.WHITE_MOA_EGG.get());
                             output.accept(AetherItems.BLACK_MOA_EGG.get());
-                            output.accept(AetherItems.ORANGE_MOA_EGG.get());
                             output.accept(AetherItems.NATURE_STAFF.get());
                             output.accept(AetherItems.SKYROOT_BOAT.get());
                             output.accept(AetherItems.SKYROOT_CHEST_BOAT.get());
@@ -397,7 +396,6 @@ public class AetherCreativeTabs {
                             output.accept(AetherItems.BLUE_MOA_EGG.get());
                             output.accept(AetherItems.WHITE_MOA_EGG.get());
                             output.accept(AetherItems.BLACK_MOA_EGG.get());
-                            output.accept(AetherItems.ORANGE_MOA_EGG.get());
                             output.accept(AetherItems.AECHOR_PLANT_SPAWN_EGG.get());
                             output.accept(AetherItems.AERBUNNY_SPAWN_EGG.get());
                             output.accept(AetherItems.AERWHALE_SPAWN_EGG.get());

@@ -11,7 +11,7 @@ parameters:
 jobs:
   build:
     machine:
-      image: ubuntu-2204:2022.07.1
+      image: ubuntu-2204:2023.02.1
     resource_class: large
     environment:
       _JAVA_OPTIONS: -Xmx9600m
@@ -174,9 +174,9 @@ commands:
     steps:
       - checkout
       - gradle/with_cache:
-          cache_key: 'v2'
+          cache_key: 'v5'
           steps: 
-            - run: gradle build --build-cache
+            - run: gradle build --parallel --build-cache
       - store_artifacts:
           path: ~/project/build/libs
 

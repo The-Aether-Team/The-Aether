@@ -348,7 +348,6 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addItem(AetherItems.BLUE_MOA_EGG, "Blue Moa Egg");
         addItem(AetherItems.WHITE_MOA_EGG, "White Moa Egg");
         addItem(AetherItems.BLACK_MOA_EGG, "Black Moa Egg");
-        addItem(AetherItems.ORANGE_MOA_EGG, "Orange Moa Egg");
 
         addItem(AetherItems.LIFE_SHARD, "Life Shard");
 
@@ -899,7 +898,6 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.OBSIDIAN_GLOVES, "Needed to complete the Obsidian Armor set, you can convert Phoenix Gloves into Obsidian by standing in water while wearing them.");
         addLore(AetherItems.OBSIDIAN_HELMET, "A super powerful armor, more powerful than Diamond, this armor is only obtainable by standing in water while wearing Phoenix Armor, converting it to Obsidian.");
         addLore(AetherItems.OBSIDIAN_LEGGINGS, "A super powerful armor, more powerful than Diamond, this armor is only obtainable by standing in water while wearing Phoenix Armor, converting it to Obsidian.");
-        addLore(AetherItems.ORANGE_MOA_EGG, "An Egg laid by an Orange Moa. Hatching this provides an Orange Moa with 2 mid-air jumps, but extreme speed. This Moa is quite common.");
         addLore(AetherItems.PHOENIX_BOOTS, "Found in Gold Dungeons, when fully worn, this armor set allows for Fire Resistance, you can swim in Lava as well. Be careful when standing in water, as it will turn into Obsidian armor.");
         addLore(AetherItems.PHOENIX_BOW, "Found as a dungeon loot, this bow is very heated, and can shoot flaming arrows! It's warm to the touch.");
         addLore(AetherItems.PHOENIX_CHESTPLATE, "Found in Gold Dungeons, when fully worn, this armor set allows for Fire Resistance, you can swim in Lava as well. Be careful when standing in water, as it will turn into Obsidian armor.");

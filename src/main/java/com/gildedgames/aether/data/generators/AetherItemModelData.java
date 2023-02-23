@@ -183,7 +183,6 @@ public class AetherItemModelData extends AetherItemModelProvider {
         this.moaEggItem(AetherItems.BLUE_MOA_EGG.get(), "miscellaneous/");
         this.moaEggItem(AetherItems.WHITE_MOA_EGG.get(), "miscellaneous/");
         this.moaEggItem(AetherItems.BLACK_MOA_EGG.get(), "miscellaneous/");
-        this.moaEggItem(AetherItems.ORANGE_MOA_EGG.get(), "miscellaneous/");
 
         this.item(AetherItems.LIFE_SHARD.get(), "miscellaneous/");
 
