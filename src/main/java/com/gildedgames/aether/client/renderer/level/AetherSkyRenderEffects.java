@@ -16,6 +16,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Vector3f;
 
 public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: future cleanup.
 {
@@ -30,6 +31,13 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
 
     public AetherSkyRenderEffects() {
         super(9.5F, true, DimensionSpecialEffects.SkyType.NORMAL, false, false);
+    }
+
+    @Override
+    public void adjustLightmapColors(ClientLevel level, float partialTicks, float skyDarken, float skyLight, float blockLight, int pixelX, int pixelY, Vector3f colors) {
+        //colors.set(colors.x(), colors.x(), colors.x()); // light
+        //colors.set(colors.y(), colors.y(), colors.y()); // middle
+        //colors.set(colors.z(), colors.z(), colors.z()); // dark
     }
 
     @Override
