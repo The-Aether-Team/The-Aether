@@ -43,7 +43,7 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
 	@Nonnull
 	@Override
 	public ResourceLocation getTextureLocation(Moa moa) {
-		if (moa.hasCustomName() && moa.getName().getString().equals("Mos") && moa.getMoaType() == AetherMoaTypes.ORANGE.get()) {
+		if (moa.hasCustomName() && moa.getName().getString().equals("Mos")) {
 			return MOS_TEXTURE;
 		}
 		if ((moa.hasCustomName() && moa.getName().getString().equals("Raptor__") && moa.getMoaType() == AetherMoaTypes.BLUE.get())

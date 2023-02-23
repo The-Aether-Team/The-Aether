@@ -1,4 +1,4 @@
-// 1.19.3	2023-02-20T11:59:25.3893153	Item Models: aether
+// 1.19.3	2023-02-22T18:18:05.6572335	Item Models: aether
 88dbeab79e0017737773db746d2e719a21fdb198 assets/aether/models/item/aechor_petal.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/aechor_plant_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/aerbunny_spawn_egg.json
@@ -166,7 +166,6 @@ c0cd6b25f7ebdbc45dbc37d243172d0b369e44a7 assets/aether/models/item/netherite_glo
 08b53e487684f11520333fa3aa77bcacb8f2bf94 assets/aether/models/item/obsidian_gloves.json
 34d4c2afbe4264b9aced2a49ab6f3eaf1e843abf assets/aether/models/item/obsidian_helmet.json
 2b1dae06763aaa8f1a25c74fe0603ddcd7870361 assets/aether/models/item/obsidian_leggings.json
-844560cd220fc6dd90531a06ccb1ffbbd28fe829 assets/aether/models/item/orange_moa_egg.json
 ce36088001c845e491c83178e35be39fafffcfc6 assets/aether/models/item/phoenix_boots.json
 9bc75581546e3718bcab1b8517efee680d0539fa assets/aether/models/item/phoenix_bow.json
 d67f6f3d0b9ae617731a1d868768ca7d726dafad assets/aether/models/item/phoenix_bow_pulling_0.json
