@@ -38,6 +38,17 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
         //colors.set(colors.x(), colors.x(), colors.x()); // light
         //colors.set(colors.y(), colors.y(), colors.y()); // middle
         //colors.set(colors.z(), colors.z(), colors.z()); // dark
+
+        // Replicate forceBrightLightmap
+//        colors.lerp(new Vector3f(0.95F, 1.0F, 1.0F), 0.25F);
+
+        // Make the lightmap colorless
+        colors.set(colors.x + colors.y + colors.z, colors.x + colors.y + colors.z, colors.x + colors.y + colors.z);
+        colors.div(3);
+
+        // Try to brute force it
+//        colors.mul(0.75F, 1, 1);
+//        colors.set(Mth.clamp(colors.x, 0.0F, 1.0F), Mth.clamp(colors.y, 0.0F, 1.0F), Mth.clamp(colors.z, 0.0F, 1.0F));
     }
 
     @Override
