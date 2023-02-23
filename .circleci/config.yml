@@ -174,7 +174,7 @@ commands:
     steps:
       - checkout
       - gradle/with_cache:
-          cache_key: 'v4'
+          cache_key: 'v5'
           steps: 
             - run: gradle build --parallel --parallel-threads=4 --build-cache
       - store_artifacts:
