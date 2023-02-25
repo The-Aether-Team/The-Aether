@@ -1,12 +1,12 @@
 {
-  "parent": "aether:zanite",
+  "parent": "aether:enter_aether",
   "criteria": {
-    "craft_altar": {
+    "zanite": {
       "conditions": {
         "items": [
           {
             "items": [
-              "aether:altar"
+              "aether:zanite_gemstone"
             ]
           }
         ]
@@ -17,21 +17,21 @@
   "display": {
     "announce_to_chat": true,
     "description": {
-      "translate": "advancement.aether.craft_altar.desc"
+      "translate": "advancement.aether.zanite.desc"
     },
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "aether:altar"
+      "item": "aether:zanite_gemstone"
     },
     "show_toast": true,
     "title": {
-      "translate": "advancement.aether.craft_altar"
+      "translate": "advancement.aether.zanite"
     }
   },
   "requirements": [
     [
-      "craft_altar"
+      "zanite"
     ]
   ]
 }

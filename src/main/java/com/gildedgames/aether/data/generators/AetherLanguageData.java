@@ -445,29 +445,59 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addCreativeTab(AetherCreativeTabs.AETHER_SPAWN_EGGS, "Aether Spawn Eggs");
 
 
+        addAdvancement("the_aether", "The Aether");
         addAdvancement("enter_aether", "Hostile Paradise");
         addAdvancement("read_lore", "The More You Know!");
         addAdvancement("loreception", "Lore-Ception!");
         addAdvancement("blue_aercloud", "To Infinity and Beyond!");
-        addAdvancement("incubate_moa", "Now You're Family");
+        addAdvancement("obtain_egg", "Don't Count your Moas...");
+        addAdvancement("obtain_petal", "Baby Food");
+        addAdvancement("incubate_moa", "... Until they hatch!");
+        addAdvancement("black_moa", "Let's Fly!");
+        addAdvancement("zanite", "Exotic Hardware");
         addAdvancement("craft_altar", "Do You Believe in Magic?");
-        addAdvancement("gravitite_tools", "Pink is the New Blue");
+        addAdvancement("icestone", "Cold as Ice");
+        addAdvancement("ice_accessory", "Cool Jewelery!");
+        addAdvancement("enchanted_gravitite", "Pink is the New Blue");
+        addAdvancement("gravitite_armor", "Defying Gravity");
         addAdvancement("mount_phyg", "When Phygs Fly");
         addAdvancement("bronze_dungeon", "Like a Bossaru!");
+        addAdvancement("hammer_loot", "The Power of the Gods");
+        addAdvancement("zephyr_hammer", "Ultimate Ban Hammer");
+        addAdvancement("lance_loot", "Challenger to the Throne");
         addAdvancement("silver_dungeon", "Dethroned");
+        addAdvancement("valkyrie_loot", "Earning your wings");
+        addAdvancement("regen_stone", "Battle Hardened");
         addAdvancement("gold_dungeon", "Extinguished");
+        addAdvancement("phoenix_armor", "Fireproof");
+        addAdvancement("aether_sleep", "A well earned rest");
 
+        addAdvancementDesc("the_aether", "It's not dead!");
         addAdvancementDesc("enter_aether", "Enter the Aether");
         addAdvancementDesc("read_lore", "Read a Book of Lore");
         addAdvancementDesc("loreception", "Put a Book of Lore inside a Book of Lore");
         addAdvancementDesc("blue_aercloud", "Bounce on a Blue Aercloud");
+        addAdvancementDesc("obtain_egg", "Obtain a Moa Egg");
+        addAdvancementDesc("obtain_petal", "Harvest an Aechor Petal from an Aechor Plant");
         addAdvancementDesc("incubate_moa", "Incubate a Moa");
+        addAdvancementDesc("black_moa", "Ride a Black Moa");
+        addAdvancementDesc("zanite", "Have a zanite gemstone in your inventory");
         addAdvancementDesc("craft_altar", "Craft an Altar");
-        addAdvancementDesc("gravitite_tools", "Craft a Gravitite tool");
+        addAdvancementDesc("icestone", "Obtain Icestone");
+        addAdvancementDesc("ice_accessory", "Use a Freezer and Icestone to freeze an accessory");
+        addAdvancementDesc("enchanted_gravitite", "Use an Altar to obtain enchanted gravitite");
+        addAdvancementDesc("gravitite_armor", "Have a full set of gravitite armor in your inventory");
         addAdvancementDesc("mount_phyg", "Fly on a Phyg!");
         addAdvancementDesc("bronze_dungeon", "Defeat the bronze boss");
+        addAdvancementDesc("hammer_loot", "Obtain the Hammer of Kingbdogz from the bronze dungeon");
+        addAdvancementDesc("zephyr_hammer", "Kill a zephyr with the Hammer of Kingbdogz. Sweet Revenge!");
+        addAdvancementDesc("lance_loot", "Obtain the Valkyrie Lance from the bronze dungeon. Time to challenge the silver dungeon!");
         addAdvancementDesc("silver_dungeon", "Defeat the silver boss");
+        addAdvancementDesc("regen_stone", "Obtain a Regeneration Stone from the valkyrie dungeon. The final dungeon awaits...");
+        addAdvancementDesc("valkyrie_loot", "Obtain a piece of Valkyrie Equipment from the silver dungeon");
         addAdvancementDesc("gold_dungeon", "Defeat the gold boss");
+        addAdvancementDesc("phoenix_armor", "Obtain a piece of phoenix armor from the gold dungeon");
+        addAdvancementDesc("aether_sleep", "Finally sleep in the Aether");
 
 
         addSubtitle("block", "aether_portal.ambient", "Aether Portal whooshes");

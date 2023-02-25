@@ -1,5 +1,5 @@
 {
-  "parent": "aether:enter_aether",
+  "parent": "aether:enchanted_gravitite",
   "criteria": {
     "kill_slider": {
       "conditions": {

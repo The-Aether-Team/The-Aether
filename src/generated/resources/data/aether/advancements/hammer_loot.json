@@ -1,12 +1,12 @@
 {
-  "parent": "aether:zanite",
+  "parent": "aether:bronze_dungeon",
   "criteria": {
-    "craft_altar": {
+    "hammer_loot": {
       "conditions": {
         "items": [
           {
             "items": [
-              "aether:altar"
+              "aether:hammer_of_kingbdogz"
             ]
           }
         ]
@@ -17,21 +17,22 @@
   "display": {
     "announce_to_chat": true,
     "description": {
-      "translate": "advancement.aether.craft_altar.desc"
+      "translate": "advancement.aether.hammer_loot.desc"
     },
-    "frame": "task",
+    "frame": "goal",
     "hidden": false,
     "icon": {
-      "item": "aether:altar"
+      "item": "aether:hammer_of_kingbdogz",
+      "nbt": "{Damage:0}"
     },
     "show_toast": true,
     "title": {
-      "translate": "advancement.aether.craft_altar"
+      "translate": "advancement.aether.hammer_loot"
     }
   },
   "requirements": [
     [
-      "craft_altar"
+      "hammer_loot"
     ]
   ]
 }
