@@ -9,7 +9,6 @@ import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.BossMob;
 import com.gildedgames.aether.capability.AetherCapabilities;
 import com.gildedgames.aether.entity.ai.controller.BlankMoveControl;
-import com.gildedgames.aether.entity.monster.dungeon.AbstractValkyrie;
 import com.gildedgames.aether.entity.monster.dungeon.FireMinion;
 import com.gildedgames.aether.entity.projectile.crystal.AbstractCrystal;
 import com.gildedgames.aether.entity.projectile.crystal.FireCrystal;
@@ -89,6 +88,8 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
         this.xpReward = XP_REWARD_BOSS;
         this.noPhysics = true;
         this.velocity =  1 - this.getHealth() / 700;
+        this.origin = this.position();
+        this.setPersistenceRequired();
     }
 
     /**
@@ -112,7 +113,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     }
 
     public static AttributeSupplier.Builder createSunSpiritAttributes() {
-        return AbstractValkyrie.createAttributes()
+        return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 50.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.45);
     }
@@ -369,7 +370,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     public void onDungeonPlayerRemoved(@Nullable Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
             this.bossFight.removePlayer(serverPlayer);
-            if (!player.isAlive()) {
+            if (!serverPlayer.isAlive()) {
                 serverPlayer.sendSystemMessage(Component.translatable("gui.aether.sun_spirit.playerdeath").withStyle(ChatFormatting.RED));
             }
         }
@@ -409,9 +410,9 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
         super.addAdditionalSaveData(tag);
         this.addBossSaveData(tag);
         tag.putInt("ChatLine", this.chatLine);
-        tag.putDouble("OriginX", this.origin.x());
-        tag.putDouble("OriginY", this.origin.y());
-        tag.putDouble("OriginZ", this.origin.z());
+        tag.putDouble("OffsetX", this.origin.x() - this.getX());
+        tag.putDouble("OffsetY", this.origin.y() - this.getY());
+        tag.putDouble("OffsetZ", this.origin.z() - this.getZ());
     }
 
     @Override
@@ -421,11 +422,11 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
         if (tag.contains("ChatLine")) {
             this.chatLine = tag.getInt("ChatLine");
         }
-        if (tag.contains("OriginX")) {
-            double originX = tag.getDouble("OriginX");
-            double originY = tag.getDouble("OriginY");
-            double originZ = tag.getDouble("OriginZ");
-            this.origin = new Vec3(originX, originY, originZ);
+        if (tag.contains("OffsetX")) {
+            double offsetX = this.getX() + tag.getDouble("OffsetX");
+            double offsetY = this.getY() + tag.getDouble("OffsetY");
+            double offsetZ = this.getZ() + tag.getDouble("OffsetZ");
+            this.origin = new Vec3(offsetX, offsetY, offsetZ);
         } else {
             this.origin = this.position();
         }
@@ -455,8 +456,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
         this.goldDungeon = dungeon;
         if (dungeon != null) {
             this.origin = dungeon.originCoordinates();
-            this.xMax = Mth.floor(dungeon.roomBounds().getXsize() / 2 - 3);
-            this.zMax = Mth.floor(dungeon.roomBounds().getZsize() / 2 - 3);
+            this.xMax = this.zMax = Mth.floor(dungeon.roomBounds().getXsize() / 2 - 5);
         } else {
             this.origin = this.position();
             this.xMax = 9;

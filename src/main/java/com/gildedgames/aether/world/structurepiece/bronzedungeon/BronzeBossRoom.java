@@ -40,7 +40,7 @@ public class BronzeBossRoom extends BronzeDungeonPiece {
     }
 
     static StructurePlaceSettings makeSettings() {
-        return new StructurePlaceSettings().addProcessor(LOCKED_SENTRY_STONE).addProcessor(BossRoomProcessor.INSTANCE);
+        return new StructurePlaceSettings().addProcessor(LOCKED_SENTRY_STONE).addProcessor(BossRoomProcessor.INSTANCE).setFinalizeEntities(true);
     }
 
     @Override
