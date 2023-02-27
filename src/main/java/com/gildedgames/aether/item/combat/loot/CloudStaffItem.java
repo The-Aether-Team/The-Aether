@@ -74,7 +74,7 @@ public class CloudStaffItem extends Item {
     public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
         if (entity instanceof Player player) {
             AetherPlayer.get(player).ifPresent(aetherPlayer -> {
-                if (!aetherPlayer.getCloudMinions().isEmpty()) {
+                if (!aetherPlayer.getCloudMinions().isEmpty() && aetherPlayer.getCloudMinions().size() == 2) {
                     if (!aetherPlayer.getPlayer().getCooldowns().isOnCooldown(this) && aetherPlayer.isHitting()) {
                         CloudMinion cloudMinionRight = aetherPlayer.getCloudMinions().get(0);
                         if (cloudMinionRight != null) {
