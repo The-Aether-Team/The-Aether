@@ -1,12 +1,12 @@
 {
-  "parent": "aether:zanite",
+  "parent": "aether:craft_altar",
   "criteria": {
-    "craft_altar": {
+    "enchanted_gravitite": {
       "conditions": {
         "items": [
           {
             "items": [
-              "aether:altar"
+              "aether:enchanted_gravitite"
             ]
           }
         ]
@@ -17,21 +17,21 @@
   "display": {
     "announce_to_chat": true,
     "description": {
-      "translate": "advancement.aether.craft_altar.desc"
+      "translate": "advancement.aether.enchanted_gravitite.desc"
     },
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "aether:altar"
+      "item": "aether:enchanted_gravitite"
     },
     "show_toast": true,
     "title": {
-      "translate": "advancement.aether.craft_altar"
+      "translate": "advancement.aether.enchanted_gravitite"
     }
   },
   "requirements": [
     [
-      "craft_altar"
+      "enchanted_gravitite"
     ]
   ]
 }

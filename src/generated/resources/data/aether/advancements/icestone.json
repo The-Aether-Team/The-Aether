@@ -1,12 +1,12 @@
 {
-  "parent": "aether:zanite",
+  "parent": "aether:craft_altar",
   "criteria": {
-    "craft_altar": {
+    "icestone": {
       "conditions": {
         "items": [
           {
             "items": [
-              "aether:altar"
+              "aether:icestone"
             ]
           }
         ]
@@ -17,21 +17,21 @@
   "display": {
     "announce_to_chat": true,
     "description": {
-      "translate": "advancement.aether.craft_altar.desc"
+      "translate": "advancement.aether.icestone.desc"
     },
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "aether:altar"
+      "item": "aether:icestone"
     },
     "show_toast": true,
     "title": {
-      "translate": "advancement.aether.craft_altar"
+      "translate": "advancement.aether.icestone"
     }
   },
   "requirements": [
     [
-      "craft_altar"
+      "icestone"
     ]
   ]
 }

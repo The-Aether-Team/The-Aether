@@ -1,48 +1,60 @@
 {
-  "parent": "aether:craft_altar",
+  "parent": "aether:gold_dungeon",
   "criteria": {
-    "gravitite_axe": {
+    "phoenix_boots": {
       "conditions": {
         "items": [
           {
             "items": [
-              "aether:gravitite_axe"
+              "aether:phoenix_boots"
             ]
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "gravitite_pickaxe": {
+    "phoenix_chestplate": {
       "conditions": {
         "items": [
           {
             "items": [
-              "aether:gravitite_pickaxe"
+              "aether:phoenix_chestplate"
             ]
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "gravitite_shovel": {
+    "phoenix_gloves": {
       "conditions": {
         "items": [
           {
             "items": [
-              "aether:gravitite_shovel"
+              "aether:phoenix_gloves"
             ]
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "gravitite_sword": {
+    "phoenix_helmet": {
       "conditions": {
         "items": [
           {
             "items": [
-              "aether:gravitite_sword"
+              "aether:phoenix_helmet"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "phoenix_leggings": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:phoenix_leggings"
             ]
           }
         ]
@@ -53,25 +65,26 @@
   "display": {
     "announce_to_chat": true,
     "description": {
-      "translate": "advancement.aether.gravitite_tools.desc"
+      "translate": "advancement.aether.phoenix_armor.desc"
     },
     "frame": "goal",
     "hidden": false,
     "icon": {
-      "item": "aether:gravitite_pickaxe",
+      "item": "aether:phoenix_helmet",
       "nbt": "{Damage:0}"
     },
     "show_toast": true,
     "title": {
-      "translate": "advancement.aether.gravitite_tools"
+      "translate": "advancement.aether.phoenix_armor"
     }
   },
   "requirements": [
     [
-      "gravitite_pickaxe",
-      "gravitite_sword",
-      "gravitite_axe",
-      "gravitite_shovel"
+      "phoenix_helmet",
+      "phoenix_chestplate",
+      "phoenix_leggings",
+      "phoenix_boots",
+      "phoenix_gloves"
     ]
   ]
 }

@@ -1,12 +1,12 @@
 {
-  "parent": "aether:zanite",
+  "parent": "aether:obtain_egg",
   "criteria": {
-    "craft_altar": {
+    "aechor_petal": {
       "conditions": {
         "items": [
           {
             "items": [
-              "aether:altar"
+              "aether:aechor_petal"
             ]
           }
         ]
@@ -17,21 +17,21 @@
   "display": {
     "announce_to_chat": true,
     "description": {
-      "translate": "advancement.aether.craft_altar.desc"
+      "translate": "advancement.aether.obtain_petal.desc"
     },
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "aether:altar"
+      "item": "aether:aechor_petal"
     },
     "show_toast": true,
     "title": {
-      "translate": "advancement.aether.craft_altar"
+      "translate": "advancement.aether.obtain_petal"
     }
   },
   "requirements": [
     [
-      "craft_altar"
+      "aechor_petal"
     ]
   ]
 }
