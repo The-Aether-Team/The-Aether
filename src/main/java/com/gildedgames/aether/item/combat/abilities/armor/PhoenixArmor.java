@@ -1,11 +1,12 @@
 package com.gildedgames.aether.item.combat.abilities.armor;
 
-import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.capability.player.AetherPlayer;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.util.EquipmentUtil;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -79,9 +80,8 @@ public interface PhoenixArmor {
         return defaultBoost;
     }
 
-    //todo redo docs
     /**
-     * Slowly damages the wearer's Phoenix Armor if they're in water, rain, or a bubble column.<br><br>
+     * Slowly increments a timer to convert a player's Phoenix Armor if they're in water, rain, or a bubble column.<br><br>
      * This is done by looping through the armor {@link EquipmentSlot}s and also checking with {@link top.theillusivec4.curios.common.CuriosHelper#findFirstCurio(LivingEntity, Item)} for the gloves.<br><br>
      * The methods used for this are {@link PhoenixArmor#breakPhoenixArmor(LivingEntity, ItemStack, ItemStack, EquipmentSlot)} and {@link PhoenixArmor#breakPhoenixGloves(LivingEntity, SlotResult, ItemStack)}.
      * @param entity The {@link LivingEntity} wearing the armor.
@@ -90,18 +90,14 @@ public interface PhoenixArmor {
     static void damageArmor(LivingEntity entity) {
         if (entity instanceof Player player) {
             AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
-                if (entity.isInWaterRainOrBubble()) {
-                    if (entity.getLevel().getGameTime() % 10 == 0) {
+                if (EquipmentUtil.hasAnyPhoenixArmor(entity) && entity.isInWaterRainOrBubble()) {
+                    if (entity.getLevel().getGameTime() % 15 == 0) {
                         aetherPlayer.setObsidianConversionTime(aetherPlayer.getObsidianConversionTime() + 1);
+                        entity.getLevel().levelEvent(1501, entity.blockPosition(), 0);
                     }
                 } else {
                     aetherPlayer.setObsidianConversionTime(0);
                 }
-                Aether.LOGGER.info(String.valueOf(aetherPlayer.getObsidianConversionTime()));
-                if (aetherPlayer.getObsidianConversionTime() > 0) {
-                    //todo particle code.
-                }
-                //todo some way to reset the timer after all armor has been converted.
                 if (aetherPlayer.getObsidianConversionTime() >= aetherPlayer.getObsidianConversionTimerMax()) {
                     for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
                         if (equipmentSlot.getType() == EquipmentSlot.Type.ARMOR) {
@@ -139,6 +135,9 @@ public interface PhoenixArmor {
             outcomeStack.setTag(equippedStack.getTag());
         }
         entity.setItemSlot(slot, outcomeStack);
+        if (entity instanceof ServerPlayer serverPlayer) {
+            CriteriaTriggers.INVENTORY_CHANGED.trigger(serverPlayer, serverPlayer.getInventory(), outcomeStack);
+        }
     }
 
     /**
@@ -160,6 +159,9 @@ public interface PhoenixArmor {
                 stackHandler.setStackInSlot(slotResult.slotContext().index(), outcomeStack); // Changes stack in slot using stack handler.
             }
         });
+        if (entity instanceof ServerPlayer serverPlayer) {
+            CriteriaTriggers.INVENTORY_CHANGED.trigger(serverPlayer, serverPlayer.getInventory(), outcomeStack);
+        }
     }
 
     /**
