@@ -177,7 +177,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                             Component.translatable("advancement.aether.black_moa"),
                             Component.translatable("advancement.aether.black_moa.desc"),
                             null,
-                            FrameType.TASK, true, true, false)
+                            FrameType.GOAL, true, true, false)
                     .addCriterion("black_moa", StartRidingTrigger.TriggerInstance.playerStartsRiding(EntityPredicate.Builder.entity().vehicle(EntityPredicate.Builder.entity().of(AetherEntityTypes.MOA.get()).nbt(new NbtPredicate(moaTag)).build())))
                     .save(consumer, new ResourceLocation(Aether.MODID, "black_moa"), existingFileHelper);
 
@@ -207,7 +207,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                             Component.translatable("advancement.aether.gravitite_armor"),
                             Component.translatable("advancement.aether.gravitite_armor.desc"),
                             null,
-                            FrameType.CHALLENGE, true, true, false)
+                            FrameType.GOAL, true, true, false)
                     .addCriterion("gravitite_armor", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.GRAVITITE_HELMET.get(), AetherItems.GRAVITITE_CHESTPLATE.get(), AetherItems.GRAVITITE_LEGGINGS.get(), AetherItems.GRAVITITE_BOOTS.get(), AetherItems.GRAVITITE_GLOVES.get()))
                     .save(consumer, new ResourceLocation(Aether.MODID, "gravitite_armor"), existingFileHelper);
 
@@ -280,6 +280,16 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("valkyrie_gloves", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.VALKYRIE_GLOVES.get()))
                     .save(consumer, new ResourceLocation(Aether.MODID, "valkyrie_loot"), existingFileHelper);
 
+            Advancement valkyrieHoe = Advancement.Builder.advancement()
+                    .parent(valkyrieLoot)
+                    .display(AetherBlocks.AETHER_FARMLAND.get(),
+                            Component.translatable("advancement.aether.valkyrie_hoe"),
+                            Component.translatable("advancement.aether.valkyrie_hoe.desc"),
+                            null,
+                            FrameType.CHALLENGE, true, true, true)
+                    .addCriterion("valkyrie_hoe", ItemInteractWithBlockTrigger.TriggerInstance.itemUsedOnBlock(LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().of(AbilityHooks.ToolHooks.TILLABLES.keySet()).build()), ItemPredicate.Builder.item().of(AetherItems.VALKYRIE_HOE.get())))
+                    .save(consumer, new ResourceLocation(Aether.MODID, "valkyrie_hoe"), existingFileHelper);
+
             Advancement regenStone = Advancement.Builder.advancement()
                     .parent(silverDungeon)
                     .display(AetherItems.REGENERATION_STONE.get(),
@@ -306,7 +316,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                             Component.translatable("advancement.aether.phoenix_armor"),
                             Component.translatable("advancement.aether.phoenix_armor.desc"),
                             null,
-                            FrameType.TASK, true, true, false)
+                            FrameType.GOAL, true, true, false)
                     .requirements(RequirementsStrategy.OR)
                     .addCriterion("phoenix_helmet", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.PHOENIX_HELMET.get()))
                     .addCriterion("phoenix_chestplate", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.PHOENIX_CHESTPLATE.get()))
@@ -314,6 +324,20 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("phoenix_boots", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.PHOENIX_BOOTS.get()))
                     .addCriterion("phoenix_gloves", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.PHOENIX_GLOVES.get()))
                     .save(consumer, new ResourceLocation(Aether.MODID, "phoenix_armor"), existingFileHelper);
+
+            Advancement obsidianArmor = Advancement.Builder.advancement()
+                    .parent(phoenixArmor)
+                    .display(AetherItems.OBSIDIAN_CHESTPLATE.get(),
+                            Component.translatable("advancement.aether.obsidian_armor"),
+                            Component.translatable("advancement.aether.obsidian_armor.desc"),
+                            null,
+                            FrameType.CHALLENGE, true, true, true)
+                    .addCriterion("obsidian_helmet", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.OBSIDIAN_HELMET.get()))
+                    .addCriterion("obsidian_chestplate", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.OBSIDIAN_CHESTPLATE.get()))
+                    .addCriterion("obsidian_leggings", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.OBSIDIAN_LEGGINGS.get()))
+                    .addCriterion("obsidian_boots", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.OBSIDIAN_BOOTS.get()))
+                    .addCriterion("obsidian_gloves", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.OBSIDIAN_GLOVES.get()))
+                    .save(consumer, new ResourceLocation(Aether.MODID,"obsidian_armor"), existingFileHelper);
 
             Advancement aetherSleep = Advancement.Builder.advancement()
                     .parent(goldDungeon)

@@ -1,60 +1,60 @@
 {
-  "parent": "aether:gold_dungeon",
+  "parent": "aether:phoenix_armor",
   "criteria": {
-    "phoenix_boots": {
+    "obsidian_boots": {
       "conditions": {
         "items": [
           {
             "items": [
-              "aether:phoenix_boots"
+              "aether:obsidian_boots"
             ]
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "phoenix_chestplate": {
+    "obsidian_chestplate": {
       "conditions": {
         "items": [
           {
             "items": [
-              "aether:phoenix_chestplate"
+              "aether:obsidian_chestplate"
             ]
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "phoenix_gloves": {
+    "obsidian_gloves": {
       "conditions": {
         "items": [
           {
             "items": [
-              "aether:phoenix_gloves"
+              "aether:obsidian_gloves"
             ]
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "phoenix_helmet": {
+    "obsidian_helmet": {
       "conditions": {
         "items": [
           {
             "items": [
-              "aether:phoenix_helmet"
+              "aether:obsidian_helmet"
             ]
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "phoenix_leggings": {
+    "obsidian_leggings": {
       "conditions": {
         "items": [
           {
             "items": [
-              "aether:phoenix_leggings"
+              "aether:obsidian_leggings"
             ]
           }
         ]
@@ -65,26 +65,34 @@
   "display": {
     "announce_to_chat": true,
     "description": {
-      "translate": "advancement.aether.phoenix_armor.desc"
+      "translate": "advancement.aether.obsidian_armor.desc"
     },
-    "frame": "goal",
-    "hidden": false,
+    "frame": "challenge",
+    "hidden": true,
     "icon": {
-      "item": "aether:phoenix_helmet",
+      "item": "aether:obsidian_chestplate",
       "nbt": "{Damage:0}"
     },
     "show_toast": true,
     "title": {
-      "translate": "advancement.aether.phoenix_armor"
+      "translate": "advancement.aether.obsidian_armor"
     }
   },
   "requirements": [
     [
-      "phoenix_helmet",
-      "phoenix_chestplate",
-      "phoenix_leggings",
-      "phoenix_boots",
-      "phoenix_gloves"
+      "obsidian_helmet"
+    ],
+    [
+      "obsidian_chestplate"
+    ],
+    [
+      "obsidian_leggings"
+    ],
+    [
+      "obsidian_boots"
+    ],
+    [
+      "obsidian_gloves"
     ]
   ]
 }

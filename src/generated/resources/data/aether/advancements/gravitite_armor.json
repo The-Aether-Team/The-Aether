@@ -39,7 +39,7 @@
     "description": {
       "translate": "advancement.aether.gravitite_armor.desc"
     },
-    "frame": "challenge",
+    "frame": "goal",
     "hidden": false,
     "icon": {
       "item": "aether:gravitite_chestplate",

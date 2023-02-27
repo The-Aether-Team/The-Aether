@@ -467,9 +467,11 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addAdvancement("lance_loot", "Challenger to the Throne");
         addAdvancement("silver_dungeon", "Dethroned");
         addAdvancement("valkyrie_loot", "Earning your wings");
+        addAdvancement("valkyrie_hoe", "Plunderer's Remorse");
         addAdvancement("regen_stone", "Battle Hardened");
         addAdvancement("gold_dungeon", "Extinguished");
         addAdvancement("phoenix_armor", "Fireproof");
+        addAdvancement("obsidian_armor", "Ice Bucket Armor");
         addAdvancement("aether_sleep", "A well earned rest");
 
         addAdvancementDesc("the_aether", "It's not dead!");
@@ -495,8 +497,10 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addAdvancementDesc("silver_dungeon", "Defeat the silver boss");
         addAdvancementDesc("regen_stone", "Obtain a Regeneration Stone from the valkyrie dungeon. The final dungeon awaits...");
         addAdvancementDesc("valkyrie_loot", "Obtain a piece of Valkyrie Equipment from the silver dungeon");
+        addAdvancementDesc("valkyrie_hoe", "I defeated the silver dungeon and all I got was this stupid hoe");
         addAdvancementDesc("gold_dungeon", "Defeat the gold boss");
         addAdvancementDesc("phoenix_armor", "Obtain a piece of phoenix armor from the gold dungeon");
+        addAdvancementDesc("obsidian_armor", "Have a full set of obsidian armor in your inventory");
         addAdvancementDesc("aether_sleep", "Finally sleep in the Aether");
 
 

@@ -24,7 +24,7 @@
     "description": {
       "translate": "advancement.aether.black_moa.desc"
     },
-    "frame": "task",
+    "frame": "goal",
     "hidden": false,
     "icon": {
       "item": "minecraft:feather"
