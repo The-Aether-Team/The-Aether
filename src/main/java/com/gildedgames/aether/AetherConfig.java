@@ -144,6 +144,7 @@ public class AetherConfig {
     public static class Client {
         public final ConfigValue<Boolean> legacy_models;
         public final ConfigValue<Boolean> disable_aether_skybox;
+        public final ConfigValue<Boolean> colder_lightmap;
 
         public final ConfigValue<Boolean> enable_aether_menu;
         public final ConfigValue<Boolean> enable_aether_menu_button;
@@ -173,6 +174,10 @@ public class AetherConfig {
                     .comment("Disables the Aether's custom skybox in case you have a shader that is incompatible with custom skyboxes")
                     .translation("config.aether.client.rendering.disable_aether_skybox")
                     .define("Disables Aether custom skybox", false);
+            colder_lightmap = builder
+                    .comment("Removes warm-tinting of the lightmap in the Aether, giving the lighting a colder feel")
+                    .translation("config.aether.client.rendering.colder_lightmap")
+                    .define("Makes lightmap colder", false);
             builder.pop();
 
             builder.push("Gui");

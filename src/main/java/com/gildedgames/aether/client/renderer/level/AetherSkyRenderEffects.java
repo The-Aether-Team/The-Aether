@@ -1,5 +1,6 @@
 package com.gildedgames.aether.client.renderer.level;
 
+import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.mixin.mixins.client.accessor.LevelRendererAccessor;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -38,26 +39,28 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
      */
     @Override
     public void adjustLightmapColors(ClientLevel level, float partialTicks, float skyDarken, float skyLight, float blockLight, int pixelX, int pixelY, Vector3f colors) {
-        Vector3f vector3f = (new Vector3f(skyDarken, skyDarken, 1.0F)).lerp(new Vector3f(1.0F, 1.0F, 1.0F), 0.35F);
-        Vector3f vector3f1 = new Vector3f();
-        float f9 = LightTexture.getBrightness(level.dimensionType(), pixelX) * skyLight;
-        float f10 = f9 * (f9 * f9 * 0.6F + 0.4F);
-        vector3f1.set(f10, f10, f10);
-        boolean flag = level.effects().forceBrightLightmap();
-        if (flag) {
-            vector3f1.lerp(new Vector3f(0.99F, 1.12F, 1.0F), 0.25F);
-            clampColor(vector3f1);
-        } else {
-            Vector3f vector3f2 = (new Vector3f(vector3f)).mul(blockLight);
-            vector3f1.add(vector3f2);
-            vector3f1.lerp(new Vector3f(0.75F, 0.75F, 0.75F), 0.04F);
-            if (Minecraft.getInstance().gameRenderer.getDarkenWorldAmount(partialTicks) > 0.0F) {
-                float darken = Minecraft.getInstance().gameRenderer.getDarkenWorldAmount(partialTicks);
-                Vector3f vector3f3 = (new Vector3f(vector3f1)).mul(0.7F, 0.6F, 0.6F);
-                vector3f1.lerp(vector3f3, darken);
+        if (AetherConfig.CLIENT.colder_lightmap.get()) {
+            Vector3f vector3f = (new Vector3f(skyDarken, skyDarken, 1.0F)).lerp(new Vector3f(1.0F, 1.0F, 1.0F), 0.35F);
+            Vector3f vector3f1 = new Vector3f();
+            float f9 = LightTexture.getBrightness(level.dimensionType(), pixelX) * skyLight;
+            float f10 = f9 * (f9 * f9 * 0.6F + 0.4F);
+            vector3f1.set(f10, f10, f10);
+            boolean flag = level.effects().forceBrightLightmap();
+            if (flag) {
+                vector3f1.lerp(new Vector3f(0.99F, 1.12F, 1.0F), 0.25F);
+                clampColor(vector3f1);
+            } else {
+                Vector3f vector3f2 = (new Vector3f(vector3f)).mul(blockLight);
+                vector3f1.add(vector3f2);
+                vector3f1.lerp(new Vector3f(0.75F, 0.75F, 0.75F), 0.04F);
+                if (Minecraft.getInstance().gameRenderer.getDarkenWorldAmount(partialTicks) > 0.0F) {
+                    float darken = Minecraft.getInstance().gameRenderer.getDarkenWorldAmount(partialTicks);
+                    Vector3f vector3f3 = (new Vector3f(vector3f1)).mul(0.7F, 0.6F, 0.6F);
+                    vector3f1.lerp(vector3f3, darken);
+                }
             }
+            colors.set(vector3f1);
         }
-        colors.set(vector3f1);
     }
 
     @Override
