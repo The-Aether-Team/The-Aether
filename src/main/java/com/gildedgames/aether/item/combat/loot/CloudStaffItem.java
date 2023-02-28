@@ -74,19 +74,17 @@ public class CloudStaffItem extends Item {
     public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
         if (entity instanceof Player player) {
             AetherPlayer.get(player).ifPresent(aetherPlayer -> {
-                if (!aetherPlayer.getCloudMinions().isEmpty()) {
-                    if (!aetherPlayer.getPlayer().getCooldowns().isOnCooldown(this) && aetherPlayer.isHitting()) {
-                        CloudMinion cloudMinionRight = aetherPlayer.getCloudMinions().get(0);
-                        if (cloudMinionRight != null) {
-                            cloudMinionRight.setShouldShoot(true);
+                if (!aetherPlayer.getPlayer().getCooldowns().isOnCooldown(this) && aetherPlayer.isHitting()) {
+                    boolean hasMinions = false;
+                    for (int i = 0; i < aetherPlayer.getCloudMinions().size(); i++) {
+                        CloudMinion cloudMinion = aetherPlayer.getCloudMinions().get(i);
+                        if (cloudMinion != null) {
+                            cloudMinion.setShouldShoot(true);
+                            hasMinions = true;
                         }
-                        CloudMinion cloudMinionLeft = aetherPlayer.getCloudMinions().get(1);
-                        if (cloudMinionLeft != null) {
-                            cloudMinionLeft.setShouldShoot(true);
-                        }
-                        if (!aetherPlayer.getPlayer().getAbilities().instabuild) {
-                            aetherPlayer.getPlayer().getCooldowns().addCooldown(this, AetherConfig.COMMON.cloud_staff_cooldown.get());
-                        }
+                    }
+                    if (hasMinions && !aetherPlayer.getPlayer().getAbilities().instabuild) {
+                        aetherPlayer.getPlayer().getCooldowns().addCooldown(this, AetherConfig.COMMON.cloud_staff_cooldown.get());
                     }
                 }
             });
