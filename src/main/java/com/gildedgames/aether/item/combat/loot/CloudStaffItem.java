@@ -80,8 +80,8 @@ public class CloudStaffItem extends Item {
                         CloudMinion cloudMinion = aetherPlayer.getCloudMinions().get(i);
                         if (cloudMinion != null) {
                             cloudMinion.setShouldShoot(true);
+                            hasMinions = true;
                         }
-                        hasMinions = true;
                     }
                     if (hasMinions && !aetherPlayer.getPlayer().getAbilities().instabuild) {
                         aetherPlayer.getPlayer().getCooldowns().addCooldown(this, AetherConfig.COMMON.cloud_staff_cooldown.get());
