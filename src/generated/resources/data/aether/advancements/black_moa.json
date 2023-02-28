@@ -1,39 +1,42 @@
 {
-  "parent": "aether:enchanted_gravitite",
+  "parent": "aether:incubate_moa",
   "criteria": {
-    "kill_slider": {
+    "black_moa": {
       "conditions": {
-        "entity": [
+        "player": [
           {
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "type": "aether:slider"
+              "vehicle": {
+                "type": "aether:moa",
+                "nbt": "{MoaType:\"aether:black\"}"
+              }
             }
           }
         ]
       },
-      "trigger": "minecraft:player_killed_entity"
+      "trigger": "minecraft:started_riding"
     }
   },
   "display": {
     "announce_to_chat": true,
     "description": {
-      "translate": "advancement.aether.bronze_dungeon.desc"
+      "translate": "advancement.aether.black_moa.desc"
     },
     "frame": "goal",
     "hidden": false,
     "icon": {
-      "item": "aether:bronze_dungeon_key"
+      "item": "minecraft:feather"
     },
     "show_toast": true,
     "title": {
-      "translate": "advancement.aether.bronze_dungeon"
+      "translate": "advancement.aether.black_moa"
     }
   },
   "requirements": [
     [
-      "kill_slider"
+      "black_moa"
     ]
   ]
 }

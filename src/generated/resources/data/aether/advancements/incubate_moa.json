@@ -1,5 +1,5 @@
 {
-  "parent": "aether:enter_aether",
+  "parent": "aether:obtain_egg",
   "criteria": {
     "incubate_moa": {
       "conditions": {

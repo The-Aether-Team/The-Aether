@@ -1,12 +1,12 @@
 {
-  "parent": "aether:zanite",
+  "parent": "aether:silver_dungeon",
   "criteria": {
-    "craft_altar": {
+    "regen_stone": {
       "conditions": {
         "items": [
           {
             "items": [
-              "aether:altar"
+              "aether:regeneration_stone"
             ]
           }
         ]
@@ -17,21 +17,21 @@
   "display": {
     "announce_to_chat": true,
     "description": {
-      "translate": "advancement.aether.craft_altar.desc"
+      "translate": "advancement.aether.regen_stone.desc"
     },
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "aether:altar"
+      "item": "aether:regeneration_stone"
     },
     "show_toast": true,
     "title": {
-      "translate": "advancement.aether.craft_altar"
+      "translate": "advancement.aether.regen_stone"
     }
   },
   "requirements": [
     [
-      "craft_altar"
+      "regen_stone"
     ]
   ]
 }
