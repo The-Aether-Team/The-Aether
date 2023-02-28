@@ -275,6 +275,7 @@
   "config.aether.client.gui.enable_world_preview_button": "Adds a button to the top right of the main menu screen to toggle between the panorama and world preview",
   "config.aether.client.gui.menu_type_toggles_alignment": "Determines that menu elements will align left if the menu's world preview is active, if true, this overrides 'Align menu elements left'",
   "config.aether.client.rendering.disable_aether_skybox": "Disables the Aether's custom skybox in case you have a shader that is incompatible with custom skyboxes",
+  "config.aether.client.rendering.green_sunset": "Enables a green-tinted sunrise and sunset in the Aether, similar to the original mod",
   "config.aether.client.rendering.legacy_models": "Changes Zephyr and Aerwhale rendering to use their old models from the b1.7.3 version of the mod",
   "config.aether.common.gameplay.cloud_staff_cooldown": "Determines the cooldown in ticks for the Cloud Staff's ability",
   "config.aether.common.gameplay.edible_ambrosium": "Ambrosium Shards can be eaten to restore a half heart of health",
