@@ -144,6 +144,7 @@ public class AetherConfig {
     public static class Client {
         public final ConfigValue<Boolean> legacy_models;
         public final ConfigValue<Boolean> disable_aether_skybox;
+        public final ConfigValue<Boolean> green_sunset;
 
         public final ConfigValue<Boolean> enable_aether_menu;
         public final ConfigValue<Boolean> enable_aether_menu_button;
@@ -173,6 +174,10 @@ public class AetherConfig {
                     .comment("Disables the Aether's custom skybox in case you have a shader that is incompatible with custom skyboxes")
                     .translation("config.aether.client.rendering.disable_aether_skybox")
                     .define("Disables Aether custom skybox", false);
+            green_sunset = builder
+                    .comment("Enables a green-tinted sunrise and sunset in the Aether, similar to the original mod")
+                    .translation("config.aether.client.rendering.green_sunset")
+                    .define("Enables green sunrise/sunset", false);
             builder.pop();
 
             builder.push("Gui");
