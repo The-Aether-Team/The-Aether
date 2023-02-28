@@ -7,7 +7,6 @@ import com.gildedgames.aether.item.tools.abilities.ValkyrieTool;
 import com.google.common.collect.Multimap;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -27,7 +26,7 @@ public class ValkyrieLanceItem extends AetherSwordItem implements ValkyrieTool {
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return enchantment.category == EnchantmentCategory.WEAPON && enchantment != Enchantments.SWEEPING_EDGE;
+        return enchantment.category.canEnchant(stack.getItem()) && enchantment != Enchantments.SWEEPING_EDGE;
     }
 
     @Override
