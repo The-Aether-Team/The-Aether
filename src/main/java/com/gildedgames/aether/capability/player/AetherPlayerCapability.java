@@ -86,6 +86,9 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	private double neptuneSubmergeLength;
 	private double phoenixSubmergeLength;
 
+	private static final int OBSIDIAN_TIMER_MAX = 20;
+	private int obsidianConversionTime;
+
 	private float savedHealth = 0.0F;
 	private int lifeShards;
 	
@@ -760,6 +763,21 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	@Override
 	public double getPhoenixSubmergeLength() {
 		return this.phoenixSubmergeLength;
+	}
+
+	@Override
+	public int getObsidianConversionTimerMax() {
+		return OBSIDIAN_TIMER_MAX;
+	}
+
+	@Override
+	public void setObsidianConversionTime(int time) {
+		this.obsidianConversionTime = time;
+	}
+
+	@Override
+	public int getObsidianConversionTime() {
+		return this.obsidianConversionTime;
 	}
 
 	@Override
