@@ -33,22 +33,31 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
         super(9.5F, true, DimensionSpecialEffects.SkyType.NORMAL, false, false);
     }
 
+    /**
+     * Based on {@link LightTexture#updateLightTexture(float)}.
+     */
     @Override
     public void adjustLightmapColors(ClientLevel level, float partialTicks, float skyDarken, float skyLight, float blockLight, int pixelX, int pixelY, Vector3f colors) {
-        //colors.set(colors.x(), colors.x(), colors.x()); // light
-        //colors.set(colors.y(), colors.y(), colors.y()); // middle
-        //colors.set(colors.z(), colors.z(), colors.z()); // dark
-
-        // Replicate forceBrightLightmap
-//        colors.lerp(new Vector3f(0.95F, 1.0F, 1.0F), 0.25F);
-
-        // Make the lightmap colorless
-        colors.set(colors.x + colors.y + colors.z, colors.x + colors.y + colors.z, colors.x + colors.y + colors.z);
-        colors.div(3);
-
-        // Try to brute force it
-//        colors.mul(0.75F, 1, 1);
-//        colors.set(Mth.clamp(colors.x, 0.0F, 1.0F), Mth.clamp(colors.y, 0.0F, 1.0F), Mth.clamp(colors.z, 0.0F, 1.0F));
+        Vector3f vector3f = (new Vector3f(skyDarken, skyDarken, 1.0F)).lerp(new Vector3f(1.0F, 1.0F, 1.0F), 0.35F);
+        Vector3f vector3f1 = new Vector3f();
+        float f9 = LightTexture.getBrightness(level.dimensionType(), pixelX) * skyLight;
+        float f10 = f9 * (f9 * f9 * 0.6F + 0.4F);
+        vector3f1.set(f10, f10, f10);
+        boolean flag = level.effects().forceBrightLightmap();
+        if (flag) {
+            vector3f1.lerp(new Vector3f(0.99F, 1.12F, 1.0F), 0.25F);
+            clampColor(vector3f1);
+        } else {
+            Vector3f vector3f2 = (new Vector3f(vector3f)).mul(blockLight);
+            vector3f1.add(vector3f2);
+            vector3f1.lerp(new Vector3f(0.75F, 0.75F, 0.75F), 0.04F);
+            if (Minecraft.getInstance().gameRenderer.getDarkenWorldAmount(partialTicks) > 0.0F) {
+                float darken = Minecraft.getInstance().gameRenderer.getDarkenWorldAmount(partialTicks);
+                Vector3f vector3f3 = (new Vector3f(vector3f1)).mul(0.7F, 0.6F, 0.6F);
+                vector3f1.lerp(vector3f3, darken);
+            }
+        }
+        colors.set(vector3f1);
     }
 
     @Override
@@ -352,16 +361,10 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
         BufferUploader.drawWithShader(bufferbuilder.end());
     }
 
-    private BufferBuilder.RenderedBuffer drawSkyHemisphere(BufferBuilder pBuilder, float pY) {
-        float f = Math.signum(pY) * 512.0F;
-        RenderSystem.setShader(GameRenderer::getPositionShader);
-        pBuilder.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION);
-        pBuilder.vertex(0.0D, (double) pY, 0.0D).endVertex();
-
-        for (int i = -180; i <= 180; i += 45) {
-            pBuilder.vertex((double) (f * Mth.cos((float) i * ((float) Math.PI / 180F))), (double) pY, (double) (512.0F * Mth.sin((float) i * ((float) Math.PI / 180F)))).endVertex();
-        }
-
-        return pBuilder.end();
+    /**
+     * Copied from {@link LightTexture#clampColor(Vector3f)}.
+     */
+    private static void clampColor(Vector3f vec) {
+        vec.set(Mth.clamp(vec.x, 0.0F, 1.0F), Mth.clamp(vec.y, 0.0F, 1.0F), Mth.clamp(vec.z, 0.0F, 1.0F));
     }
 }
