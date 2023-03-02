@@ -119,7 +119,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     public static AttributeSupplier.Builder createSunSpiritAttributes() {
         return AbstractValkyrie.createAttributes()
                 .add(Attributes.MAX_HEALTH, 50.0)
-                .add(Attributes.MOVEMENT_SPEED, 0.45);
+                .add(Attributes.MOVEMENT_SPEED, 0.35);
     }
 
     @Override
@@ -151,8 +151,8 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
         List<Entity> entities = this.level.getEntities(this, this.getBoundingBox().expandTowards(0, -2, 0).contract(-0.8, 0, -0.8).contract(0.8, 0, 0.8));
         for (Entity target : entities) {
             if (target instanceof LivingEntity) {
-                target.hurt(new EntityDamageSource("aether.incineration", this), 10);
-                target.setSecondsOnFire(5);
+                target.hurt(new EntityDamageSource("aether.incineration", this), 12);
+                target.setSecondsOnFire(8);
             }
         }
     }
@@ -612,7 +612,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
 
         public SummonFireGoal(SunSpirit sunSpirit) {
             this.sunSpirit = sunSpirit;
-            this.shootInterval = 12 + sunSpirit.random.nextInt(18);
+            this.shootInterval = 25 + sunSpirit.random.nextInt(35);
         }
 
         @Override
@@ -630,7 +630,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
                 }
                 pos = pos.below();
             }
-            this.shootInterval = 12 + this.sunSpirit.random.nextInt(18);
+            this.shootInterval = 35 + this.sunSpirit.random.nextInt(35);
         }
 
         @Override

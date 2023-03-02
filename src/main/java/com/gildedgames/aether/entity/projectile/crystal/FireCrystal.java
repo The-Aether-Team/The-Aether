@@ -44,8 +44,8 @@ public class FireCrystal extends AbstractCrystal {
         this.setOwner(shooter);
         this.setPos(shooter.getX(), shooter.getY() + 1, shooter.getZ());
         float rotation = this.random.nextFloat() * 360;
-        this.xPower = Mth.sin(rotation) * 0.6;
-        this.zPower = -Mth.cos(rotation) * 0.6;
+        this.xPower = Mth.sin(rotation) * 0.5;
+        this.zPower = -Mth.cos(rotation) * 0.5;
         this.yPower = Mth.sin(this.random.nextFloat() * 360) * 0.45;
         double verticalOffset = 1 - Math.abs(this.yPower);
         this.xPower *= verticalOffset;
@@ -57,8 +57,8 @@ public class FireCrystal extends AbstractCrystal {
     protected void onHitEntity(EntityHitResult result) {
         Entity entity = result.getEntity();
         if (entity instanceof LivingEntity livingEntity) {
-            if (livingEntity.hurt(new IndirectEntityDamageSource("aether.fire_crystal", this, this.getOwner()).setProjectile(), 5.0F)) {
-                livingEntity.setSecondsOnFire(5);
+            if (livingEntity.hurt(new IndirectEntityDamageSource("aether.fire_crystal", this, this.getOwner()).setProjectile(), 12.0F)) {
+                livingEntity.setSecondsOnFire(6);
                 this.level.playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
                 this.spawnExplosionParticles();
                 this.discard();
@@ -95,9 +95,9 @@ public class FireCrystal extends AbstractCrystal {
                 if (!this.level.isClientSide) {
                     Vec3 vec3 = entity.getLookAngle();
                     this.setDeltaMovement(vec3);
-                    this.xPower = vec3.x;
-                    this.yPower = vec3.y;
-                    this.zPower = vec3.z;
+                    this.xPower = vec3.x * 0.4;
+                    this.yPower = vec3.y * 0.4;
+                    this.zPower = vec3.z * 0.4;
                 }
 
                 return true;
