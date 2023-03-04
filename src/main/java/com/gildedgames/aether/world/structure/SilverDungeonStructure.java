@@ -86,16 +86,8 @@ public class SilverDungeonStructure extends Structure {
         );
         builder.addPiece(bossRoom);
 
-        SilverBossDetail bossDetail = new SilverBossDetail(
-                manager, "boss_detail",
-                bossRoomPos.offset(direction.getStepX() + direction.getStepZ(), 2, direction.getStepZ() - direction.getStepX()),
-                rotation
-        );
-        builder.addPiece(bossDetail);
-
         int xOffset = direction.getStepX() * rear.getBoundingBox().getXSpan();
         int zOffset = direction.getStepZ() * rear.getBoundingBox().getZSpan();
-
         BlockPos offsetPos = elevatedPos.offset(xOffset, 0, zOffset);
 
         SilverTemplePiece exterior = new SilverTemplePiece(
@@ -185,7 +177,7 @@ public class SilverDungeonStructure extends Structure {
     }
 
     /**
-     * Set the dungeon bounds when using the place command
+     * Set the dungeon bounds when using the place command.
      */
     @Override
     public void afterPlace(WorldGenLevel level, StructureManager manager, ChunkGenerator generator, RandomSource random, BoundingBox chunkBox, ChunkPos chunkPos, PiecesContainer piecesContainer) {

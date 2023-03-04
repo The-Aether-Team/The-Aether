@@ -27,10 +27,14 @@ public abstract class SilverDungeonPiece extends AetherTemplateStructurePiece {
     ));
 
     public SilverDungeonPiece(StructurePieceType type, StructureTemplateManager manager, String name, StructurePlaceSettings settings, BlockPos pos) {
-        super(type, manager, new ResourceLocation(Aether.MODID, "silver_dungeon/" + name), settings, pos);
+        super(type, manager, makeLocation(name), settings, pos);
     }
 
     public SilverDungeonPiece(StructurePieceType type, CompoundTag tag, StructureTemplateManager manager, Function<ResourceLocation, StructurePlaceSettings> settingsFactory) {
         super(type, tag, manager, settingsFactory);
+    }
+
+    protected static ResourceLocation makeLocation(String name) {
+        return new ResourceLocation(Aether.MODID, "silver_dungeon/" + name);
     }
 }

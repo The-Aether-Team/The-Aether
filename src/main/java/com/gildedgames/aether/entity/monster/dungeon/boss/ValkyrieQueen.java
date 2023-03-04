@@ -4,6 +4,7 @@ import com.gildedgames.aether.api.DungeonTracker;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.client.gui.screen.ValkyrieQueenDialogueScreen;
 import com.gildedgames.aether.client.AetherSoundEvents;
+import com.gildedgames.aether.data.resources.registries.AetherStructures;
 import com.gildedgames.aether.entity.BossMob;
 import com.gildedgames.aether.entity.NpcDialogue;
 import com.gildedgames.aether.entity.ai.AetherBlockPathTypes;
@@ -20,6 +21,7 @@ import com.gildedgames.aether.api.BossNameGenerator;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -44,9 +46,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
@@ -83,12 +89,29 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     }
 
     /**
-     * Generates a name for the boss.
+     * Generates a name for the boss. In a naturally generating dungeon, save the dungeon bounds so the queen can
+     * transform the locked blocks after the fight.
      */
     @Override
-    public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor pLevel, @Nonnull DifficultyInstance pDifficulty, @Nonnull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
-        SpawnGroupData data = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
+    public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor level, @Nonnull DifficultyInstance difficulty, @Nonnull MobSpawnType reason, @Nullable SpawnGroupData spawnGroupData, @Nullable CompoundTag compoundTag) {
+        SpawnGroupData data = super.finalizeSpawn(level, difficulty, reason, spawnGroupData, compoundTag);
         this.setBossName(BossNameGenerator.generateValkyrieName());
+        if (compoundTag != null && compoundTag.contains("Dungeon")) {
+            // Set the bounds for the whole dungeon
+            StructureManager manager = level.getLevel().structureManager();
+            manager.registryAccess().registry(Registries.STRUCTURE).ifPresent(registry -> {
+                        Structure temple = registry.get(AetherStructures.SILVER_DUNGEON);
+                        if (temple != null) {
+                            StructureStart start = manager.getStructureAt(this.blockPosition(), temple);
+                            if (start != StructureStart.INVALID_START) {
+                                BoundingBox box = start.getBoundingBox();
+                                AABB dungeonBounds = new AABB(box.minX(), box.minY(), box.minZ(), box.maxX() + 1, box.maxY() + 1, box.maxZ() + 1);
+                                this.setDungeonBounds(dungeonBounds);
+                            }
+                        }
+                    }
+            );
+        }
         return data;
     }
 
