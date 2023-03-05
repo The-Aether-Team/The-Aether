@@ -27,7 +27,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -52,7 +51,10 @@ public class Sentry extends Slime {
 
 	@Nonnull
 	public static AttributeSupplier.Builder createMobAttributes() {
-		return Mob.createMobAttributes().add(Attributes.ATTACK_DAMAGE);
+		return Mob.createMobAttributes()
+				.add(Attributes.MAX_HEALTH, 10.0)
+				.add(Attributes.MOVEMENT_SPEED, 0.6)
+				.add(Attributes.ATTACK_DAMAGE);
 	}
 	
 	@Override
@@ -89,7 +91,7 @@ public class Sentry extends Slime {
 			super.jumpFromGround();
 		}
 	}
-	
+
 	@Override
 	public void push(@Nonnull Entity entity) {
 		super.push(entity);
@@ -106,8 +108,8 @@ public class Sentry extends Slime {
 	}
 
 	protected void explodeAt(LivingEntity livingEntity) {
-		if (this.isAwake() && this.hasLineOfSight(livingEntity) && livingEntity.hurt(DamageSource.mobAttack(this), 1.0F) && this.tickCount > 20 && this.isAlive()) {
-			livingEntity.push(0.5, 0.5, 0.5);
+		if (this.distanceToSqr(livingEntity) < 1.5D && this.isAwake() && this.hasLineOfSight(livingEntity) && livingEntity.hurt(DamageSource.mobAttack(this), 1.0F) && this.tickCount > 20 && this.isAlive()) {
+			livingEntity.push(0.3, 0.4, 0.3);
 			this.level.explode(this, this.getX(), this.getY(), this.getZ(), 1.0F, Level.ExplosionInteraction.MOB);
 			this.playSound(SoundEvents.GENERIC_EXPLODE, 1.0F, 0.2F * (this.random.nextFloat() - this.random.nextFloat()) + 1);
 			if (this.level instanceof ServerLevel level) {
@@ -137,9 +139,7 @@ public class Sentry extends Slime {
 	}
 
 	@Override
-	public boolean isTiny() {
-		return this.getSize() < 1;
-	}
+	public void setSize(int size, boolean resetHealth) {}
 
 	@Nonnull
 	@Override

@@ -37,7 +37,6 @@ public class CloudCrystal extends AbstractCrystal {
             if (livingEntity.hurt(new IndirectEntityDamageSource("aether.cloud_crystal", this, this.getOwner()).setProjectile(), 5.0F + bonus)) {
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 10));
                 this.level.playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
-                this.spawnExplosionParticles();
                 this.discard();
             }
         }
@@ -57,7 +56,6 @@ public class CloudCrystal extends AbstractCrystal {
     @Override
     protected void onHitBlock(@Nonnull BlockHitResult result) {
         super.onHitBlock(result);
-        this.spawnExplosionParticles();
         this.discard();
     }
 

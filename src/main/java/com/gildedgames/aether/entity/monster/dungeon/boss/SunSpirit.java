@@ -13,6 +13,7 @@ import com.gildedgames.aether.entity.monster.dungeon.FireMinion;
 import com.gildedgames.aether.entity.projectile.crystal.AbstractCrystal;
 import com.gildedgames.aether.entity.projectile.crystal.FireCrystal;
 import com.gildedgames.aether.entity.projectile.crystal.IceCrystal;
+import com.gildedgames.aether.mixin.mixins.common.accessor.LookAtPlayerGoalAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.BossInfoPacket;
 import com.gildedgames.aether.api.BossNameGenerator;
@@ -42,6 +43,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -106,7 +108,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     @Override
     public void registerGoals() {
         this.goalSelector.addGoal(0, new DoNothingGoal(this));
-        this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 40, 1));
+        this.goalSelector.addGoal(1, new SunSpiritLookGoal(this, Player.class, 40, 1));
         this.goalSelector.addGoal(2, new ShootFireballGoal(this));
         this.goalSelector.addGoal(3, new SummonFireGoal(this));
         this.goalSelector.addGoal(4, new FlyAroundGoal(this));
@@ -494,6 +496,23 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
             return Blocks.AIR.defaultBlockState();
         }
         return null;
+    }
+
+    public static class SunSpiritLookGoal extends LookAtPlayerGoal {
+        public SunSpiritLookGoal(Mob mob, Class<? extends LivingEntity> lookAtType, float lookDistance, float probability) {
+            this(mob, lookAtType, lookDistance, probability, false);
+        }
+
+        public SunSpiritLookGoal(Mob mob, Class<? extends LivingEntity> lookAtType, float lookDistance, float probability, boolean onlyHorizontal) {
+            super(mob, lookAtType, lookDistance, probability, onlyHorizontal);
+            TargetingConditions conditions;
+            if (lookAtType == Player.class) {
+                conditions = TargetingConditions.forNonCombat().ignoreInvisibilityTesting().range(lookDistance).selector((entity) -> EntitySelector.notRiding(mob).test(entity));
+            } else {
+                conditions = TargetingConditions.forNonCombat().ignoreInvisibilityTesting().range(lookDistance);
+            }
+            ((LookAtPlayerGoalAccessor) this).aether$setLookAtContext(conditions);
+        }
     }
 
     /**
