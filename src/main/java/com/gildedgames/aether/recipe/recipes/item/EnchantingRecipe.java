@@ -26,7 +26,7 @@ public class EnchantingRecipe extends AbstractAetherCookingRecipe {
 
 	public static class Serializer extends AetherCookingSerializer<EnchantingRecipe> {
 		public Serializer() {
-			super(EnchantingRecipe::new, 200);
+			super(EnchantingRecipe::new, 250);
 		}
 	}
 }

@@ -63,7 +63,7 @@ public class AltarRepairRecipe extends AbstractAetherCookingRecipe {
             String group = GsonHelper.getAsString(json, "group", "");
             AetherBookCategory aetherBookCategory = AetherBookCategory.CODEC.byName(GsonHelper.getAsString(json, "category", null), AetherBookCategory.UNKNOWN);
             Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "ingredient"));
-            int cookingTime = GsonHelper.getAsInt(json, "repairTime", 200);
+            int cookingTime = GsonHelper.getAsInt(json, "repairTime", 500);
             return new AltarRepairRecipe(id, group, aetherBookCategory, ingredient, cookingTime);
         }
 

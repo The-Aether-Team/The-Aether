@@ -118,7 +118,7 @@ public class IncubationRecipe implements Recipe<Container> {
             if (jsonObject.has("tag")) {
                 tag = CraftingHelper.getNBT(jsonObject.get("tag"));
             }
-            int incubationTime = GsonHelper.getAsInt(jsonObject, "incubationtime", 5700);
+            int incubationTime = GsonHelper.getAsInt(jsonObject, "incubationtime", 2500);
             return new IncubationRecipe(recipeLocation, group, ingredient, entityType, tag, incubationTime);
         }
 

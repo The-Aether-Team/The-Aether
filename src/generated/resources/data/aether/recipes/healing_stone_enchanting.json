@@ -1,7 +1,7 @@
 {
   "type": "aether:enchanting",
   "category": "enchanting_food",
-  "cookingtime": 750,
+  "cookingtime": 500,
   "experience": 0.35,
   "ingredient": {
     "item": "aether:holystone"

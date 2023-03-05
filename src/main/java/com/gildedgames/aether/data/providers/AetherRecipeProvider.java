@@ -356,7 +356,7 @@ public abstract class AetherRecipeProvider extends RecipeProvider {
         tag.putString("MoaType", moaType.get().toString());
         tag.putBoolean("Hungry", true);
         tag.putBoolean("PlayerGrown", true);
-        return IncubationBuilder.incubation(Ingredient.of(ingredient), entity, tag, 5700, AetherRecipeSerializers.INCUBATION.get())
+        return IncubationBuilder.incubation(Ingredient.of(ingredient), entity, tag, 1000, AetherRecipeSerializers.INCUBATION.get())
                 .unlockedBy(getHasName(ingredient), has(ingredient));
     }
 
