@@ -90,6 +90,7 @@
   "block.aether.white_flower": "ɹǝʍoꞁℲ ǝʇᴉɥM",
   "block.aether.zanite_block": "ʞɔoꞁᗺ ǝʇᴉuɐZ",
   "block.aether.zanite_ore": "ǝɹO ǝʇᴉuɐZ",
+  "death.attack.aether.cloud_crystal": "%1$s was chilled by %2$s's Cloud Crystal",
   "death.attack.crush": "%1$s was crushed by %2$s",
   "death.attack.incineration": "%1$s was incinerated by %2$s",
   "death.attack.inebriation.player": "%1$s was inebriated by %2$s",

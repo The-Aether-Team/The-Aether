@@ -628,6 +628,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addDeath("inebriation", "%1$s was inebriated");
         addDeath("inebriation.player", "%1$s was inebriated by %2$s");
         addDeath("crush", "%1$s was crushed by %2$s");
+        addDeath("cloud_crystal", "%1$s was chilled by %2$s's Cloud Crystal");
         addDeath("fire_crystal", "%1$s was incinerated by %2$s's Fire Crystal");
         addDeath("ice_crystal", "%1$s was chilled by %2$s's Ice Crystal");
         addDeath("thunder_crystal", "%1$s was zapped by %2$s's Thunder Crystal");
@@ -994,7 +995,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherBlocks.SUN_ALTAR, "An Altar containing the power to control the Sun itself! It is dropped by the Sun Spirit after you defeat him. Use it to control the time of day.");
         addLore(AetherItems.SWET_CAPE, "A common cape that is found in Bronze Dungeons. It allows for the wearer to ride Swets, as they become friendly when they see someone wearing it.");
         addLore(AetherItems.SWET_BALL, "A gooey orb that is dropped from Blue Swets. It can be used to fertilize soils. Another use is to put it alongside string to make a lead.");
-        addLore(AetherBlocks.TREASURE_CHEST, "A treasure chest, these are found after defeating a Bronze, Silver or Gold dungeon. Any of the keys can open these, and the specific dungeon's loot will pop out.");
+        addLore(AetherBlocks.TREASURE_CHEST, "A treasure chest, these are found after defeating a Bronze, Silver or Gold dungeon. They can be opened with the key from the Dungeon boss.");
         addLore(AetherItems.VALKYRIE_AXE, "A tool unique to the Silver Dungeon, This Axe has a very far reach, and very high attack power, you can use this to your advantage, but be warned, the attack cooldown is very high on this.");
         addLore(AetherItems.VALKYRIE_BOOTS, "An armor unique to the Silver Dungeon, when fully worn, you are granted temporary flight. Quite useful for getting to high places.");
         addLore(AetherItems.VALKYRIE_CAPE, "A rare cape that is found in Silver Dungeons. When worn, the wearer becomes lighter than air and can descend slowly.");
@@ -1057,7 +1058,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addProTip("ambrosium_shard_fuel", "Ambrosium Shards are great for fueling Altars and food.");
         addProTip("icestone_freezing_blocks", "Icestone freezes water into ice and lava into obsidian.");
         addProTip("mimic_chest", "Some dungeons in the Aether contain chests which are Mimics.");
-        addProTip("cold_parachute_crafting", "Cloud Parachutes can be crafted with four Cold Aercloud blocks.");
+        addProTip("cold_parachute_crafting", "Cold Parachutes can be crafted with four Cold Aercloud blocks.");
         addProTip("parachute_activation", "Parachutes auto-activate when falling off an island.");
         addProTip("golden_parachute_durability", "Golden Parachutes have twenty uses rather than one.");
         addProTip("aerogel_explosion_resistance", "Aerogel acts as an explosion-resistant, transparent block.");
