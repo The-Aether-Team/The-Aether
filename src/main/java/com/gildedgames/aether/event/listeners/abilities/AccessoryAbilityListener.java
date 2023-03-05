@@ -14,6 +14,7 @@ import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -26,6 +27,19 @@ public class AccessoryAbilityListener {
     public static void onLivingHurt(LivingHurtEvent event) {
         DamageSource damageSource = event.getSource();
         AbilityHooks.AccessoryHooks.damageGloves(damageSource);
+    }
+
+    /**
+     * @see AbilityHooks.AccessoryHooks#damageZaniteRing(LivingEntity)
+     * @see AbilityHooks.AccessoryHooks#damageZanitePendant(LivingEntity)
+     */
+    @SubscribeEvent
+    public static void onBlockBreak(BlockEvent.BreakEvent event) {
+        Player player = event.getPlayer();
+        if (!event.isCanceled()) {
+            AbilityHooks.AccessoryHooks.damageZaniteRing(player);
+            AbilityHooks.AccessoryHooks.damageZanitePendant(player);
+        }
     }
 
     /**

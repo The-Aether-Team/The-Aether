@@ -52,6 +52,8 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
+import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotResult;
 
 import java.util.List;
 import java.util.Map;
@@ -67,9 +69,37 @@ public class AbilityHooks {
          */
         public static void damageGloves(DamageSource source) {
             if (source.getDirectEntity() instanceof Player player) {
-                ItemStack glovesStack = EquipmentUtil.getGloves(player);
-                if (!glovesStack.isEmpty()) {
-                    glovesStack.hurtAndBreak(1, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+                SlotResult slotResult = EquipmentUtil.getGloves(player);
+                if (slotResult != null) {
+                    slotResult.stack().hurtAndBreak(1, player, wearer -> CuriosApi.getCuriosHelper().onBrokenCurio(slotResult.slotContext()));
+                }
+            }
+        }
+
+        /**
+         * Damages Zanite Rings when a block is broken.
+         * @see com.gildedgames.aether.event.listeners.abilities.AccessoryAbilityListener#onBlockBreak(BlockEvent.BreakEvent)
+         */
+        public static void damageZaniteRing(LivingEntity entity) {
+            List<SlotResult> slotResults = EquipmentUtil.getZaniteRings(entity);
+            for (SlotResult slotResult : slotResults) {
+                if (slotResult != null) {
+                    if (entity.getRandom().nextInt(3) == 0) {
+                        slotResult.stack().hurtAndBreak(1, entity, wearer -> CuriosApi.getCuriosHelper().onBrokenCurio(slotResult.slotContext()));
+                    }
+                }
+            }
+        }
+
+        /**
+         * Damages Zanite Pendant when a block is broken.
+         * @see com.gildedgames.aether.event.listeners.abilities.AccessoryAbilityListener#onBlockBreak(BlockEvent.BreakEvent)
+         */
+        public static void damageZanitePendant(LivingEntity entity) {
+            SlotResult slotResult = EquipmentUtil.getZanitePendant(entity);
+            if (slotResult != null) {
+                if (entity.getRandom().nextInt(3) == 0) {
+                    slotResult.stack().hurtAndBreak(1, entity, wearer -> CuriosApi.getCuriosHelper().onBrokenCurio(slotResult.slotContext()));
                 }
             }
         }
@@ -81,9 +111,11 @@ public class AbilityHooks {
          */
         public static float handleZaniteRingAbility(LivingEntity entity, float speed) {
             float newSpeed = speed;
-            List<ItemStack> itemStacks = EquipmentUtil.getZaniteRings(entity);
-            for (ItemStack itemStack : itemStacks) {
-                newSpeed = ZaniteAccessory.handleMiningSpeed(newSpeed, itemStack);
+            List<SlotResult> slotResults = EquipmentUtil.getZaniteRings(entity);
+            for (SlotResult slotResult : slotResults) {
+                if (slotResult != null) {
+                    newSpeed = ZaniteAccessory.handleMiningSpeed(newSpeed, slotResult.stack());
+                }
             }
             return newSpeed;
         }
@@ -94,9 +126,9 @@ public class AbilityHooks {
          * @see com.gildedgames.aether.event.listeners.abilities.AccessoryAbilityListener#onMiningSpeed(PlayerEvent.BreakSpeed)
          */
         public static float handleZanitePendantAbility(LivingEntity entity, float speed) {
-            ItemStack itemStack = EquipmentUtil.getZanitePendant(entity);
-            if (!itemStack.isEmpty()) {
-                speed = ZaniteAccessory.handleMiningSpeed(speed, itemStack);
+            SlotResult slotResult = EquipmentUtil.getZanitePendant(entity);
+            if (slotResult != null) {
+                speed = ZaniteAccessory.handleMiningSpeed(speed, slotResult.stack());
             }
             return speed;
         }
