@@ -27,7 +27,7 @@ public class FreezingRecipe extends AbstractAetherCookingRecipe {
 
 	public static class Serializer extends AetherCookingSerializer<FreezingRecipe> {
 		public Serializer() {
-			super(FreezingRecipe::new, 200);
+			super(FreezingRecipe::new, 800);
 		}
 	}
 }

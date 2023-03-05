@@ -1,7 +1,7 @@
 {
   "type": "aether:enchanting",
   "category": "enchanting_misc",
-  "cookingtime": 1000,
+  "cookingtime": 500,
   "experience": 0.35,
   "ingredient": {
     "item": "aether:skyroot_poison_bucket"

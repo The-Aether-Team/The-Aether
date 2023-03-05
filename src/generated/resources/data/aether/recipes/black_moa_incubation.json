@@ -1,7 +1,7 @@
 {
   "type": "aether:incubation",
   "entity": "aether:moa",
-  "incubationtime": 5700,
+  "incubationtime": 1000,
   "ingredient": {
     "item": "aether:black_moa_egg"
   },

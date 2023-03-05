@@ -1,7 +1,7 @@
 {
   "type": "aether:enchanting",
   "category": "enchanting_misc",
-  "cookingtime": 2500,
+  "cookingtime": 500,
   "experience": 1.0,
   "ingredient": {
     "item": "minecraft:music_disc_cat"

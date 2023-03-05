@@ -1,7 +1,7 @@
 {
   "type": "aether:freezing",
   "category": "freezable_misc",
-  "cookingtime": 2500,
+  "cookingtime": 800,
   "experience": 1.0,
   "ingredient": {
     "tag": "aether:freezable_pendants"
