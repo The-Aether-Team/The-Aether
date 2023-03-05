@@ -260,7 +260,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 			}
 			this.setAmountFed(this.getAmountFed() + 1);
 			if (this.getAmountFed() >= 3) {
-				this.setAge(0);
+				this.setBaby(false);
 			}
 			this.setHungry(false);
 			AetherPacketHandler.sendToAll(new MoaInteractPacket(playerEntity.getId(), hand == InteractionHand.MAIN_HAND)); // packet necessary to play animation because this code segment is server-side only, so no animations.
@@ -501,6 +501,13 @@ public class Moa extends MountableAnimal implements WingedBird {
 	public boolean canBreed() {
 		return false;
 	}
+
+    @Override
+    public void setAge(int age) {
+		if (age == -24000 || (age == 0 && this.getAmountFed() >= 3)) {
+            super.setAge(age);
+        }
+    }
 
 	@Override
 	public ItemStack getPickResult() {
