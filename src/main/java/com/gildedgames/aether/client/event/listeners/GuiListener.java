@@ -94,11 +94,8 @@ public class GuiListener {
 	}
 
 	@SubscribeEvent
-	public static void onKeyPress(InputEvent.Key event) {
-		Minecraft minecraft = Minecraft.getInstance();
-		if (minecraft.player != null) {
-			GuiHooks.closeContainerMenu(minecraft.player, event.getKey(), event.getAction());
-		}
+	public static void onScreenKeyPress(ScreenEvent.KeyPressed.Post event) {
+		GuiHooks.closeContainerMenu(event.getScreen(), event.getKeyCode());
 	}
 
 	@SubscribeEvent

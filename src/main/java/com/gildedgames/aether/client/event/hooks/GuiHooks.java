@@ -119,9 +119,9 @@ public class GuiHooks {
         }
     }
 
-    public static void closeContainerMenu(Player player, int key, int action) {
-        if (key == AetherKeys.OPEN_ACCESSORY_INVENTORY.getKey().getValue() && action == InputConstants.PRESS) {
-            player.closeContainer();
+    public static void closeContainerMenu(Screen screen, int key) {
+        if (screen instanceof AbstractContainerScreen && key == AetherKeys.OPEN_ACCESSORY_INVENTORY.getKey().getValue()) {
+            screen.onClose();
         }
     }
 
