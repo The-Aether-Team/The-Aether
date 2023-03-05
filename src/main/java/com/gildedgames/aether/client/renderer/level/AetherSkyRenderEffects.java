@@ -1,5 +1,6 @@
 package com.gildedgames.aether.client.renderer.level;
 
+import com.gildedgames.aether.AetherConfig;
 import com.gildedgames.aether.mixin.mixins.client.accessor.LevelRendererAccessor;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -16,12 +17,15 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Vector3f;
 
 public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: future cleanup.
 {
     private static final ResourceLocation CLOUDS_LOCATION = new ResourceLocation("textures/environment/clouds.png");
     private static final ResourceLocation MOON_LOCATION = new ResourceLocation("textures/environment/moon_phases.png");
     private static final ResourceLocation SUN_LOCATION = new ResourceLocation("textures/environment/sun.png");
+
+    private final float[] sunriseCol = new float[4];
 
     private int prevCloudX = Integer.MIN_VALUE;
     private int prevCloudY = Integer.MIN_VALUE;
@@ -30,6 +34,56 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
 
     public AetherSkyRenderEffects() {
         super(9.5F, true, DimensionSpecialEffects.SkyType.NORMAL, false, false);
+    }
+
+    /**
+     * Based on {@link LightTexture#updateLightTexture(float)}.
+     */
+    @Override
+    public void adjustLightmapColors(ClientLevel level, float partialTicks, float skyDarken, float skyLight, float blockLight, int pixelX, int pixelY, Vector3f colors) {
+        if (AetherConfig.CLIENT.colder_lightmap.get()) {
+            Vector3f vector3f = (new Vector3f(skyDarken, skyDarken, 1.0F)).lerp(new Vector3f(1.0F, 1.0F, 1.0F), 0.35F);
+            Vector3f vector3f1 = new Vector3f();
+            float f9 = LightTexture.getBrightness(level.dimensionType(), pixelX) * skyLight;
+            float f10 = f9 * (f9 * f9 * 0.6F + 0.4F);
+            vector3f1.set(f10, f10, f10);
+            boolean flag = level.effects().forceBrightLightmap();
+            if (flag) {
+                vector3f1.lerp(new Vector3f(0.99F, 1.12F, 1.0F), 0.25F);
+                clampColor(vector3f1);
+            } else {
+                Vector3f vector3f2 = (new Vector3f(vector3f)).mul(blockLight);
+                vector3f1.add(vector3f2);
+                vector3f1.lerp(new Vector3f(0.75F, 0.75F, 0.75F), 0.04F);
+                if (Minecraft.getInstance().gameRenderer.getDarkenWorldAmount(partialTicks) > 0.0F) {
+                    float darken = Minecraft.getInstance().gameRenderer.getDarkenWorldAmount(partialTicks);
+                    Vector3f vector3f3 = (new Vector3f(vector3f1)).mul(0.7F, 0.6F, 0.6F);
+                    vector3f1.lerp(vector3f3, darken);
+                }
+            }
+            colors.set(vector3f1);
+        }
+    }
+
+    @Override
+    public float[] getSunriseColor(float timeOfDay, float partialTicks) {
+        if (AetherConfig.CLIENT.green_sunset.get()) {
+            float f1 = Mth.cos(timeOfDay * ((float) Math.PI * 2F)) - 0.0F;
+            if (f1 >= -0.4F && f1 <= 0.4F) {
+                float f3 = (f1 - -0.0F) / 0.4F * 0.5F + 0.5F;
+                float f4 = 1.0F - (1.0F - Mth.sin(f3 * (float) Math.PI)) * 0.99F;
+                f4 *= f4;
+                this.sunriseCol[0] = f3 * 0.3F + 0.1F;
+                this.sunriseCol[1] = f3 * f3 * 0.7F + 0.2F;
+                this.sunriseCol[2] = f3 * f3 * 0.7F + 0.2F;
+                this.sunriseCol[3] = f4;
+                return this.sunriseCol;
+            } else {
+                return null;
+            }
+        } else {
+            return super.getSunriseColor(timeOfDay, partialTicks);
+        }
     }
 
     @Override
@@ -333,16 +387,10 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
         BufferUploader.drawWithShader(bufferbuilder.end());
     }
 
-    private BufferBuilder.RenderedBuffer drawSkyHemisphere(BufferBuilder pBuilder, float pY) {
-        float f = Math.signum(pY) * 512.0F;
-        RenderSystem.setShader(GameRenderer::getPositionShader);
-        pBuilder.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION);
-        pBuilder.vertex(0.0D, (double) pY, 0.0D).endVertex();
-
-        for (int i = -180; i <= 180; i += 45) {
-            pBuilder.vertex((double) (f * Mth.cos((float) i * ((float) Math.PI / 180F))), (double) pY, (double) (512.0F * Mth.sin((float) i * ((float) Math.PI / 180F)))).endVertex();
-        }
-
-        return pBuilder.end();
+    /**
+     * Copied from {@link LightTexture#clampColor(Vector3f)}.
+     */
+    private static void clampColor(Vector3f vec) {
+        vec.set(Mth.clamp(vec.x, 0.0F, 1.0F), Mth.clamp(vec.y, 0.0F, 1.0F), Mth.clamp(vec.z, 0.0F, 1.0F));
     }
 }

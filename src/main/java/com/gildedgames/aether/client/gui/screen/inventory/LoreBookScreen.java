@@ -29,6 +29,7 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
 
     private LorePageButton previousButton, nextButton;
     private int currentPageNumber;
+    private ItemStack lastStack;
 
     public LoreBookScreen(LoreBookMenu screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
@@ -91,13 +92,16 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
                     createText(matrixStack, this.pages.get(this.currentPageNumber), 136, 10);
                 }
             }
-        } else {
+        }
+        if (itemStack.isEmpty() || !itemStack.is(this.lastStack.getItem())) {
             this.pages.clear();
             this.currentPageNumber = 0;
         }
 
         this.previousButton.setIsActive(this.currentPageNumber > 0);
         this.nextButton.setIsActive(this.currentPageNumber < this.pages.size() - 1);
+
+        this.lastStack = itemStack;
     }
 
     private void createText(PoseStack matrixStack, List<FormattedCharSequence> reorderingProcessors, int x, int y) {

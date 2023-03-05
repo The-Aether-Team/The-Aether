@@ -1,0 +1,37 @@
+{
+  "parent": "aether:craft_altar",
+  "criteria": {
+    "icestone": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:icestone"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.aether.icestone.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aether:icestone"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.aether.icestone"
+    }
+  },
+  "requirements": [
+    [
+      "icestone"
+    ]
+  ]
+}

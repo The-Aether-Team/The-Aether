@@ -62,7 +62,7 @@ public class AercloudBlock extends HalfTransparentBlock {
 	 */
 	@Override
 	public boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
-		return true;
+		return false;
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class AercloudBlock extends HalfTransparentBlock {
 	@SuppressWarnings("deprecation")
 	@Override
 	public float getShadeBrightness(BlockState state, BlockGetter level, BlockPos pos) {
-		return 1.0F;
+		return 0.25F;
 	}
 
 	/**

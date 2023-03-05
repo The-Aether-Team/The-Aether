@@ -1,0 +1,45 @@
+{
+  "parent": "aether:hammer_loot",
+  "criteria": {
+    "zephyr_hammer": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "aether:zephyr"
+            }
+          }
+        ],
+        "killing_blow": {
+          "direct_entity": {
+            "type": "aether:hammer_projectile"
+          },
+          "is_projectile": true
+        }
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.aether.zephyr_hammer.desc"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "minecraft:snowball"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.aether.zephyr_hammer"
+    }
+  },
+  "requirements": [
+    [
+      "zephyr_hammer"
+    ]
+  ]
+}

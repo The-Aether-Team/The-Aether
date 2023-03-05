@@ -165,8 +165,11 @@ public class Moa extends MountableAnimal implements WingedBird {
 				this.heal(1.0F);
 			}
 			if (!this.isBaby() && this.getPassengers().isEmpty() && --this.eggTime <= 0) {
-				this.playSound(AetherSoundEvents.ENTITY_MOA_EGG.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-				this.spawnAtLocation(this.getMoaType().getEgg());
+				MoaType moaType = this.getMoaType();
+				if (moaType != null) {
+					this.playSound(AetherSoundEvents.ENTITY_MOA_EGG.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+					this.spawnAtLocation(this.getMoaType().getEgg());
+				}
 				this.eggTime = this.getEggTime();
 			}
 		}
@@ -402,7 +405,8 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	public int getMaxJumps() {
-		return this.getMoaType().getMaxJumps();
+		MoaType moaType = this.getMoaType();
+		return moaType != null ? moaType.getMaxJumps() : AetherMoaTypes.BLUE.get().getMaxJumps();
 	}
 
 	public int getEggTime() {
@@ -441,7 +445,8 @@ public class Moa extends MountableAnimal implements WingedBird {
 
 	@Override
 	public float getSpeed() {
-		return this.getMoaType().getSpeed();
+		MoaType moaType = this.getMoaType();
+		return moaType != null ? moaType.getSpeed() : AetherMoaTypes.BLUE.get().getSpeed();
 	}
 
 	@Override
@@ -461,7 +466,8 @@ public class Moa extends MountableAnimal implements WingedBird {
 
 	@Override
 	public float getSteeringSpeed() {
-		return this.getMoaType().getSpeed();
+        MoaType moaType = this.getMoaType();
+		return moaType != null ? moaType.getSpeed() : AetherMoaTypes.BLUE.get().getSpeed();
 	}
 
 	@Override

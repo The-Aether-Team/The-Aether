@@ -24,7 +24,6 @@ public class AetherStructurePieceTypes {
     public static final RegistryObject<StructurePieceType> SILVER_FLOOR_PIECE = register("SFloorPiece", SilverFloorPiece::new);
     public static final RegistryObject<StructurePieceType> SILVER_DUNGEON_ROOM = register("SDungeonRoom", SilverDungeonRoom::new);
     public static final RegistryObject<StructurePieceType> SILVER_BOSS_ROOM = register("SBossRoom", SilverBossRoom::new);
-    public static final RegistryObject<StructurePieceType> SILVER_BOSS_DETAIL = register("SBossDetail", SilverBossDetail::new);
     public static final RegistryObject<StructurePieceType> GOLD_BOSS_ROOM = register("GBossRoom", GoldBossRoom::new);
     public static final RegistryObject<StructurePieceType> GOLD_ISLAND = register("GIsland", GoldIsland::new);
     public static final RegistryObject<StructurePieceType> GOLD_STUB = register("GStub", GoldStub::new);

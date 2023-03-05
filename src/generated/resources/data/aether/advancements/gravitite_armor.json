@@ -1,0 +1,58 @@
+{
+  "parent": "aether:enchanted_gravitite",
+  "criteria": {
+    "gravitite_armor": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:gravitite_helmet"
+            ]
+          },
+          {
+            "items": [
+              "aether:gravitite_chestplate"
+            ]
+          },
+          {
+            "items": [
+              "aether:gravitite_leggings"
+            ]
+          },
+          {
+            "items": [
+              "aether:gravitite_boots"
+            ]
+          },
+          {
+            "items": [
+              "aether:gravitite_gloves"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.aether.gravitite_armor.desc"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "aether:gravitite_chestplate",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.aether.gravitite_armor"
+    }
+  },
+  "requirements": [
+    [
+      "gravitite_armor"
+    ]
+  ]
+}

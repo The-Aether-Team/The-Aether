@@ -107,6 +107,11 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 	void setPhoenixSubmergeLength(double length);
 	double getPhoenixSubmergeLength();
 
+	int getObsidianConversionTimerMax();
+
+	void setObsidianConversionTime(int time);
+	int getObsidianConversionTime();
+
 	void addToLifeShardCount(int amountToAdd);
 	void setLifeShardCount(int amount);
 	int getLifeShardCount();

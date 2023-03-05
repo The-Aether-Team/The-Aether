@@ -7,6 +7,7 @@ import com.gildedgames.aether.blockentity.TreasureChestBlockEntity;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.monster.dungeon.boss.slider.Slider;
 import com.gildedgames.aether.loot.AetherLoot;
+import com.gildedgames.aether.world.processor.BossRoomProcessor;
 import com.gildedgames.aether.world.structurepiece.AetherStructurePieceTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -39,33 +40,12 @@ public class BronzeBossRoom extends BronzeDungeonPiece {
     }
 
     static StructurePlaceSettings makeSettings() {
-        return new StructurePlaceSettings().addProcessor(LOCKED_SENTRY_STONE);
+        return new StructurePlaceSettings().addProcessor(LOCKED_SENTRY_STONE).addProcessor(BossRoomProcessor.INSTANCE).setFinalizeEntities(true);
     }
 
     @Override
     protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox box) {
-        if (name.equals("Slider")) {
-            Slider slider = new Slider(AetherEntityTypes.SLIDER.get(), level.getLevel());
-            slider.setPersistenceRequired();
-            double xPos = pos.getX();
-            double zPos = pos.getZ();
-            switch (this.placeSettings.getRotation()) {
-                case NONE -> {
-                    xPos += 1;
-                    zPos += 1;
-                }
-                case CLOCKWISE_90 -> zPos += 1;
-                case COUNTERCLOCKWISE_90 -> xPos += 1;
-            }
-            slider.setPos(xPos, pos.getY(), zPos);
-            slider.setDungeon(new DungeonTracker<>(slider,
-                    slider.position(),
-                    new AABB(this.boundingBox.minX(), this.boundingBox.minY(), this.boundingBox.minZ(), this.boundingBox.maxX() + 1, this.boundingBox.maxY() + 1, this.boundingBox.maxZ() + 1),
-                    new ArrayList<>()));
-            slider.finalizeSpawn(level, level.getCurrentDifficultyAt(pos), MobSpawnType.STRUCTURE, null, null);
-            level.getLevel().addFreshEntity(slider);
-            level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
-        } else if (name.equals("Treasure Chest")) {
+        if (name.equals("Treasure Chest")) {
             BlockPos chest = pos.below();
             RandomizableContainerBlockEntity.setLootTable(level, random, chest, AetherLoot.BRONZE_DUNGEON_REWARD);
             TreasureChestBlockEntity.setDungeonType(level, chest, new ResourceLocation(Aether.MODID, "bronze"));

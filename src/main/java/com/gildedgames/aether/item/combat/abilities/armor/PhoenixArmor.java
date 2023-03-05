@@ -3,8 +3,10 @@ package com.gildedgames.aether.item.combat.abilities.armor;
 import com.gildedgames.aether.capability.player.AetherPlayer;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.util.EquipmentUtil;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -79,78 +81,86 @@ public interface PhoenixArmor {
     }
 
     /**
-     * Slowly damages the wearer's Phoenix Armor if they're in water, rain, or a bubble column.<br><br>
+     * Slowly increments a timer to convert a player's Phoenix Armor if they're in water, rain, or a bubble column.<br><br>
      * This is done by looping through the armor {@link EquipmentSlot}s and also checking with {@link top.theillusivec4.curios.common.CuriosHelper#findFirstCurio(LivingEntity, Item)} for the gloves.<br><br>
      * The methods used for this are {@link PhoenixArmor#breakPhoenixArmor(LivingEntity, ItemStack, ItemStack, EquipmentSlot)} and {@link PhoenixArmor#breakPhoenixGloves(LivingEntity, SlotResult, ItemStack)}.
      * @param entity The {@link LivingEntity} wearing the armor.
      * @see com.gildedgames.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(LivingEvent.LivingTickEvent)
      */
     static void damageArmor(LivingEntity entity) {
-        if (entity.isInWaterRainOrBubble()) {
-            for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
-                if (equipmentSlot.getType() == EquipmentSlot.Type.ARMOR) {
-                    ItemStack equippedStack = entity.getItemBySlot(equipmentSlot);
-                    if (equippedStack.is(AetherItems.PHOENIX_HELMET.get())) {
-                        breakPhoenixArmor(entity, equippedStack, new ItemStack(AetherItems.OBSIDIAN_HELMET.get()), equipmentSlot);
-                    } else if (equippedStack.is(AetherItems.PHOENIX_CHESTPLATE.get())) {
-                        breakPhoenixArmor(entity, equippedStack, new ItemStack(AetherItems.OBSIDIAN_CHESTPLATE.get()), equipmentSlot);
-                    } else if (equippedStack.is(AetherItems.PHOENIX_LEGGINGS.get())) {
-                        breakPhoenixArmor(entity, equippedStack, new ItemStack(AetherItems.OBSIDIAN_LEGGINGS.get()), equipmentSlot);
-                    } else if (equippedStack.is(AetherItems.PHOENIX_BOOTS.get())) {
-                        breakPhoenixArmor(entity, equippedStack, new ItemStack(AetherItems.OBSIDIAN_BOOTS.get()), equipmentSlot);
+        if (entity instanceof Player player) {
+            AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
+                if (EquipmentUtil.hasAnyPhoenixArmor(entity) && entity.isInWaterRainOrBubble()) {
+                    if (entity.getLevel().getGameTime() % 15 == 0) {
+                        aetherPlayer.setObsidianConversionTime(aetherPlayer.getObsidianConversionTime() + 1);
+                        entity.getLevel().levelEvent(1501, entity.blockPosition(), 0);
+                    }
+                } else {
+                    aetherPlayer.setObsidianConversionTime(0);
+                }
+                if (aetherPlayer.getObsidianConversionTime() >= aetherPlayer.getObsidianConversionTimerMax()) {
+                    for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
+                        if (equipmentSlot.getType() == EquipmentSlot.Type.ARMOR) {
+                            ItemStack equippedStack = entity.getItemBySlot(equipmentSlot);
+                            if (equippedStack.is(AetherItems.PHOENIX_HELMET.get())) {
+                                breakPhoenixArmor(entity, equippedStack, new ItemStack(AetherItems.OBSIDIAN_HELMET.get()), equipmentSlot);
+                            } else if (equippedStack.is(AetherItems.PHOENIX_CHESTPLATE.get())) {
+                                breakPhoenixArmor(entity, equippedStack, new ItemStack(AetherItems.OBSIDIAN_CHESTPLATE.get()), equipmentSlot);
+                            } else if (equippedStack.is(AetherItems.PHOENIX_LEGGINGS.get())) {
+                                breakPhoenixArmor(entity, equippedStack, new ItemStack(AetherItems.OBSIDIAN_LEGGINGS.get()), equipmentSlot);
+                            } else if (equippedStack.is(AetherItems.PHOENIX_BOOTS.get())) {
+                                breakPhoenixArmor(entity, equippedStack, new ItemStack(AetherItems.OBSIDIAN_BOOTS.get()), equipmentSlot);
+                            }
+                        }
+                    }
+                    SlotResult slotResult = EquipmentUtil.getCurio(entity, AetherItems.PHOENIX_GLOVES.get());
+                    if (slotResult != null) {
+                        breakPhoenixGloves(entity, slotResult, new ItemStack(AetherItems.OBSIDIAN_GLOVES.get()));
                     }
                 }
-            }
-            SlotResult slotResult = EquipmentUtil.getCurio(entity, AetherItems.PHOENIX_GLOVES.get());
-            if (slotResult != null) {
-                breakPhoenixGloves(entity, slotResult, new ItemStack(AetherItems.OBSIDIAN_GLOVES.get()));
-            }
+            });
         }
     }
 
     /**
-     * Damages the armor stack every 10 server ticks. Once broken, the stack will be replaced and the enchantments and tags will be copied over.
+     * Replaces the armor stack and copies over its tags and enchantments.
      * @param entity The {@link LivingEntity} wearing the armor.
      * @param equippedStack The worn {@link ItemStack}.
      * @param outcomeStack The replacement {@link ItemStack}.
      * @param slot The {@link EquipmentSlot} of the armor item.
      */
     private static void breakPhoenixArmor(LivingEntity entity, ItemStack equippedStack, ItemStack outcomeStack, EquipmentSlot slot) {
-        if (entity.getLevel().getGameTime() % 10 == 0) {
-            equippedStack.hurtAndBreak(1, entity, (p) -> p.broadcastBreakEvent(slot));
-            if (entity.getItemBySlot(slot).isEmpty()) { // Slot is empty if item breaks.
-                EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(equippedStack), outcomeStack);
-                if (equippedStack.hasTag()) {
-                    outcomeStack.setTag(equippedStack.getTag());
-                }
-                entity.setItemSlot(slot, outcomeStack);
-            }
+        EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(equippedStack), outcomeStack);
+        if (equippedStack.hasTag()) {
+            outcomeStack.setTag(equippedStack.getTag());
+        }
+        entity.setItemSlot(slot, outcomeStack);
+        if (entity instanceof ServerPlayer serverPlayer) {
+            CriteriaTriggers.INVENTORY_CHANGED.trigger(serverPlayer, serverPlayer.getInventory(), outcomeStack);
         }
     }
 
     /**
-     * Damages the glove stack every 10 server ticks. Once broken, the stack will be replaced and the enchantments and tags will be copied over.
+     * Replaces the gloves stack and copies over its tags and enchantments.
      * @param entity The {@link LivingEntity} wearing the armor.
      * @param slotResult The {@link SlotResult} of the Curio item.
      * @param outcomeStack The replacement {@link ItemStack}.
      */
     private static void breakPhoenixGloves(LivingEntity entity, SlotResult slotResult, ItemStack outcomeStack) {
-        if (entity.getLevel().getGameTime() % 10 == 0) {
-            slotResult.stack().hurtAndBreak(1, entity, (p) -> p.broadcastBreakEvent(EquipmentSlot.MAINHAND));
-            if (EquipmentUtil.getCurioStack(entity, AetherItems.PHOENIX_GLOVES.get()).isEmpty()) { // Can't find Curio anymore if it broke.
-                EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(slotResult.stack()), outcomeStack);
-                if (slotResult.stack().hasTag()) {
-                    outcomeStack.setTag(slotResult.stack().getTag());
-                }
-                CuriosApi.getCuriosHelper().getCuriosHandler(entity).ifPresent(iCuriosItemHandler -> {
-                    Map<String, ICurioStacksHandler> curios = iCuriosItemHandler.getCurios(); // Map of Curio slot names -> slot stack handlers.
-                    ICurioStacksHandler inv = curios.get(slotResult.slotContext().identifier()); // Stack handler for the Curio slot, gotten using the identifier through slotResult.
-                    if (inv != null) {
-                        IDynamicStackHandler stackHandler = inv.getStacks();
-                        stackHandler.setStackInSlot(slotResult.slotContext().index(), outcomeStack); // Changes stack in slot using stack handler.
-                    }
-                });
+        EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(slotResult.stack()), outcomeStack);
+        if (slotResult.stack().hasTag()) {
+            outcomeStack.setTag(slotResult.stack().getTag());
+        }
+        CuriosApi.getCuriosHelper().getCuriosHandler(entity).ifPresent(iCuriosItemHandler -> {
+            Map<String, ICurioStacksHandler> curios = iCuriosItemHandler.getCurios(); // Map of Curio slot names -> slot stack handlers.
+            ICurioStacksHandler inv = curios.get(slotResult.slotContext().identifier()); // Stack handler for the Curio slot, gotten using the identifier through slotResult.
+            if (inv != null) {
+                IDynamicStackHandler stackHandler = inv.getStacks();
+                stackHandler.setStackInSlot(slotResult.slotContext().index(), outcomeStack); // Changes stack in slot using stack handler.
             }
+        });
+        if (entity instanceof ServerPlayer serverPlayer) {
+            CriteriaTriggers.INVENTORY_CHANGED.trigger(serverPlayer, serverPlayer.getInventory(), outcomeStack);
         }
     }
 

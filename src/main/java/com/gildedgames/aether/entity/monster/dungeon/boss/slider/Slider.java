@@ -1,5 +1,6 @@
 package com.gildedgames.aether.entity.monster.dungeon.boss.slider;
 
+import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.api.BossNameGenerator;
 import com.gildedgames.aether.api.DungeonTracker;

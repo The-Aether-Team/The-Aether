@@ -1,4 +1,5 @@
 {
+  "parent": "aether:the_aether",
   "criteria": {
     "enter_aether": {
       "conditions": {
@@ -9,7 +10,6 @@
   },
   "display": {
     "announce_to_chat": true,
-    "background": "aether:textures/block/dungeon/carved_stone.png",
     "description": {
       "translate": "advancement.aether.enter_aether.desc"
     },
