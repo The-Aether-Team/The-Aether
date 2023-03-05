@@ -23,8 +23,8 @@ import java.util.stream.Collectors;
  * Changed to track players within the dungeon instead of within a 16 block radius.
  */
 public class InDungeonPlayerSensor<T extends Mob & BossMob<T>> extends Sensor<T> {
-    private static final TargetingConditions TARGET_CONDITIONS_IGNORE_INVISIBILITY_TESTING = TargetingConditions.forNonCombat().range(16.0D).ignoreInvisibilityTesting();
-    private static final TargetingConditions ATTACK_TARGET_CONDITIONS_IGNORE_INVISIBILITY_TESTING = TargetingConditions.forCombat().range(16.0D).ignoreInvisibilityTesting();
+    private static final TargetingConditions TARGET_CONDITIONS_IGNORE_INVISIBILITY_TESTING = TargetingConditions.forNonCombat().range(16.0D).ignoreInvisibilityTesting().ignoreLineOfSight();
+    private static final TargetingConditions ATTACK_TARGET_CONDITIONS_IGNORE_INVISIBILITY_TESTING = TargetingConditions.forCombat().range(16.0D).ignoreInvisibilityTesting().ignoreLineOfSight();
 
     @Override
     protected void doTick(ServerLevel level, T entity) {
