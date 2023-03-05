@@ -23,6 +23,7 @@
     "common.accessor.LevelAccessor",
     "common.accessor.LevelStorageAccessAccessor",
     "common.accessor.LivingEntityAccessor",
+    "common.accessor.LookAtPlayerGoalAccessor",
     "common.accessor.LootContextParamSetsAccessor",
     "common.accessor.MinecraftServerAccessor",
     "common.accessor.PlayerAccessor",
