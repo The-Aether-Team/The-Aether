@@ -30,18 +30,9 @@ public class VerticalGradientProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo process(LevelReader reader, BlockPos templatePos, BlockPos pPos, StructureTemplate.StructureBlockInfo blockInfo, StructureTemplate.StructureBlockInfo relativeBlockInfo, StructurePlaceSettings settings, @Nullable StructureTemplate template) {
         if (reader instanceof WorldGenLevel level) {
             // If the processor is running outside of the center chunk, return immediately.
-            if (level instanceof WorldGenRegion region) {
-                int x = SectionPos.blockToSectionCoord(relativeBlockInfo.pos.getX());
-                int z = SectionPos.blockToSectionCoord(relativeBlockInfo.pos.getZ());
-                ChunkPos chunk = region.getCenter();
-
-                int xDistance = Math.abs(x - chunk.x);
-                int zDistance = Math.abs(z - chunk.z);
-                if (xDistance > 1 || zDistance > 1) {
-                    return relativeBlockInfo;
-                }
+            if (level instanceof WorldGenRegion region && isOutOfBounds(relativeBlockInfo.pos, region.getCenter())) {
+                return relativeBlockInfo;
             }
-
             if (relativeBlockInfo.state.is(AetherBlocks.AETHER_DIRT.get())) {
                 BlockPos below = relativeBlockInfo.pos.below();
                 if (level.getBlockState(below).is(AetherTags.Blocks.HOLYSTONE)) {
@@ -53,6 +44,14 @@ public class VerticalGradientProcessor extends StructureProcessor {
             }
         }
         return relativeBlockInfo;
+    }
+
+    private boolean isOutOfBounds(BlockPos relativePos, ChunkPos centerChunk) {
+        int x = SectionPos.blockToSectionCoord(relativePos.getX());
+        int z = SectionPos.blockToSectionCoord(relativePos.getZ());
+        int xDistance = Math.abs(x - centerChunk.x);
+        int zDistance = Math.abs(z - centerChunk.z);
+        return xDistance > 1 || zDistance > 1;
     }
 
     @Override
