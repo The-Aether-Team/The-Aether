@@ -216,6 +216,7 @@
   "curios.identifier.aether_ring": "Cincin",
   "curios.identifier.aether_shield": "Perisai",
   "curios.modifiers.aether_gloves": "Ketika digunakan:",
+  "death.attack.aether.cloud_crystal": "%1$s was chilled by %2$s's Cloud Crystal",
   "death.attack.ice_crystal": "%1$s was chilled by %2$s's Ice Crystal",
   "death.attack.inebriation": "%1$s was inebriated",
   "death.attack.inebriation.player": "%1$s was inebriated by %2$s",
