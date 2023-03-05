@@ -169,7 +169,6 @@ public class Aerbunny extends AetherAnimal {
             if (this.isPassenger()) {
                 this.navigation.recomputePath();
                 this.stopRiding();
-                AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setMountedAerbunny(null));
             } else {
                 if (this.startRiding(player)) {
                     AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setMountedAerbunny(this));
@@ -178,6 +177,14 @@ public class Aerbunny extends AetherAnimal {
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
+    }
+
+    @Override
+    public void stopRiding() {
+        if (this.getVehicle() instanceof Player player) {
+            AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setMountedAerbunny(null));
+        }
+        super.stopRiding();
     }
 
     @Override
