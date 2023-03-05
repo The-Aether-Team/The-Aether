@@ -7,6 +7,9 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 
@@ -33,6 +36,9 @@ public abstract class SilverDungeonPiece extends AetherTemplateStructurePiece {
     public SilverDungeonPiece(StructurePieceType type, CompoundTag tag, StructureTemplateManager manager, Function<ResourceLocation, StructurePlaceSettings> settingsFactory) {
         super(type, tag, manager, settingsFactory);
     }
+
+    @Override
+    protected void handleDataMarker(String pName, BlockPos pPos, ServerLevelAccessor pLevel, RandomSource pRandom, BoundingBox pBox) {}
 
     protected static ResourceLocation makeLocation(String name) {
         return new ResourceLocation(Aether.MODID, "silver_dungeon/" + name);
