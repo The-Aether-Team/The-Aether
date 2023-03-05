@@ -37,9 +37,6 @@ public abstract class SilverDungeonPiece extends AetherTemplateStructurePiece {
         super(type, tag, manager, settingsFactory);
     }
 
-    @Override
-    protected void handleDataMarker(String pName, BlockPos pPos, ServerLevelAccessor pLevel, RandomSource pRandom, BoundingBox pBox) {}
-
     protected static ResourceLocation makeLocation(String name) {
         return new ResourceLocation(Aether.MODID, "silver_dungeon/" + name);
     }
