@@ -69,7 +69,6 @@ public class AetherLevelData extends DerivedLevelData {
 
     /**
      * Gets the GameRules class Instance.
-     *
      */
     @Override
     @Nonnull
