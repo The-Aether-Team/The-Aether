@@ -86,6 +86,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
         this.bossFight.setVisible(false);
         this.xpReward = XP_REWARD_BOSS;
         this.setPathfindingMalus(AetherBlockPathTypes.BOSS_DOORWAY, -1.0F);
+        this.setPersistenceRequired();
     }
 
     /**
