@@ -16,6 +16,7 @@ import com.gildedgames.aether.mixin.mixins.client.accessor.RealmsPlayerScreenAcc
 import com.gildedgames.aether.mixin.mixins.client.accessor.TitleScreenAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.server.OpenAccessoriesPacket;
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -115,6 +116,12 @@ public class GuiHooks {
             } else {
                 defaultMenuAccessor.aether$setSplash(titleScreenAccessor.aether$getSplash());
             }
+        }
+    }
+
+    public static void closeContainerMenu(Player player, int key, int action) {
+        if (key == AetherKeys.OPEN_ACCESSORY_INVENTORY.getKey().getValue() && action == InputConstants.PRESS) {
+            player.closeContainer();
         }
     }
 
