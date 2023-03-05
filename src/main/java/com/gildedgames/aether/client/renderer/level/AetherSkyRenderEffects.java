@@ -73,9 +73,9 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
                 float f3 = (f1 + 0.0F) / 0.4F * 0.5F + 0.5F;
                 float f4 = 1.0F - (1.0F - Mth.sin(f3 * (float) Math.PI)) * 0.99F;
                 f4 *= f4;
-                this.sunriseCol[0] = f3 * 0.3F + 0.1F; //RED
-                this.sunriseCol[1] = f3 * f3 * 0.7F + 0.2F; //GREEN
-                this.sunriseCol[2] = f3 * f3 * 0.7F + 0.2F; //BLUE
+                this.sunriseCol[0] = f3 * 0.5F + 0.0F; //RED
+                this.sunriseCol[1] = f3 * f3 * 0.3F + 0.3F; //GREEN
+                this.sunriseCol[2] = f3 * f3 * 0.5F + 0.3F; //BLUE
                 this.sunriseCol[3] = f4;
                 return this.sunriseCol;
             } else {
@@ -87,9 +87,9 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
                 float f3 = (f1 + 0.0F) / 0.4F * 0.5F + 0.5F;
                 float f4 = 1.0F - (1.0F - Mth.sin(f3 * (float) Math.PI)) * 0.99F;
                 f4 *= f4;
-                this.sunriseCol[0] = f3 * 0.3F + 0.7F; //RED
-                this.sunriseCol[1] = f3 * f3 * 0.7F + 0.2F; //GREEN
-                this.sunriseCol[2] = f3 * f3 * 0.0F + 0.2F; //BLUE
+                this.sunriseCol[0] = f3 * 0.3F + 0.65F; //RED
+                this.sunriseCol[1] = f3 * f3 * 0.7F + 0.25F; //GREEN
+                this.sunriseCol[2] = f3 * f3 * 0.0F + 0.4F; //BLUE
                 this.sunriseCol[3] = f4;
                 return this.sunriseCol;
             } else {
