@@ -102,6 +102,12 @@
         "maxCount": 3,
         "minCount": 1,
         "weight": 8
+      },
+      {
+        "type": "aether:aechor_plant",
+        "maxCount": 4,
+        "minCount": 2,
+        "weight": 3
       }
     ],
     "misc": [],
@@ -117,12 +123,6 @@
         "maxCount": 1,
         "minCount": 1,
         "weight": 30
-      },
-      {
-        "type": "aether:aechor_plant",
-        "maxCount": 4,
-        "minCount": 2,
-        "weight": 3
       },
       {
         "type": "aether:blue_swet",
