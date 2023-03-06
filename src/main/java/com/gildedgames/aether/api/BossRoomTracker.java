@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Function;
 
-public record DungeonTracker<T extends Mob & BossMob<T>>(T boss, Vec3 originCoordinates, AABB roomBounds, List<UUID> dungeonPlayers) {
+public record BossRoomTracker<T extends Mob & BossMob<T>>(T boss, Vec3 originCoordinates, AABB roomBounds, List<UUID> dungeonPlayers) {
     public boolean isBossWithinRoom() {
         return this.roomBounds().contains(this.boss().position());
     }
@@ -97,7 +97,7 @@ public record DungeonTracker<T extends Mob & BossMob<T>>(T boss, Vec3 originCoor
         return tag;
     }
 
-    public static <T extends Mob & BossMob<T>> DungeonTracker<T> readAdditionalSaveData(@Nonnull CompoundTag tag, T boss) {
+    public static <T extends Mob & BossMob<T>> BossRoomTracker<T> readAdditionalSaveData(@Nonnull CompoundTag tag, T boss) {
         double originX = tag.getDouble("OriginX");
         double originY = tag.getDouble("OriginY");
         double originZ = tag.getDouble("OriginZ");
@@ -118,6 +118,6 @@ public record DungeonTracker<T extends Mob & BossMob<T>>(T boss, Vec3 originCoor
             dungeonPlayers.add(uuid);
         }
 
-        return new DungeonTracker<>(boss, originCoordinates, roomBounds, dungeonPlayers);
+        return new BossRoomTracker<>(boss, originCoordinates, roomBounds, dungeonPlayers);
     }
 }

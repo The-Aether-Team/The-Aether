@@ -1,6 +1,6 @@
 package com.gildedgames.aether.entity.monster.dungeon.boss;
 
-import com.gildedgames.aether.api.DungeonTracker;
+import com.gildedgames.aether.api.BossRoomTracker;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.client.gui.screen.ValkyrieQueenDialogueScreen;
 import com.gildedgames.aether.client.AetherSoundEvents;
@@ -76,7 +76,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
      */
     @Nullable
     private Player tradingPlayer;
-    private DungeonTracker<ValkyrieQueen> dungeon;
+    private BossRoomTracker<ValkyrieQueen> dungeon;
     private AABB dungeonBounds;
     private final ServerBossEvent bossFight;
 
@@ -370,12 +370,12 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     }
 
     @Override
-    public DungeonTracker<ValkyrieQueen> getDungeon() {
+    public BossRoomTracker<ValkyrieQueen> getDungeon() {
         return this.dungeon;
     }
 
     @Override
-    public void setDungeon(DungeonTracker<ValkyrieQueen> dungeon) {
+    public void setDungeon(BossRoomTracker<ValkyrieQueen> dungeon) {
         this.dungeon = dungeon;
         if (this.dungeonBounds == null) {
             this.dungeonBounds = dungeon.roomBounds();

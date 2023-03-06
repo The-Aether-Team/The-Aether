@@ -1,7 +1,7 @@
 package com.gildedgames.aether.entity.monster.dungeon.boss;
 
 import com.gildedgames.aether.AetherConfig;
-import com.gildedgames.aether.api.DungeonTracker;
+import com.gildedgames.aether.api.BossRoomTracker;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.capability.player.AetherPlayer;
 import com.gildedgames.aether.client.AetherSoundEvents;
@@ -69,7 +69,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     public static final EntityDataAccessor<Boolean> DATA_IS_FROZEN = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.COMPONENT);
 
-    private DungeonTracker<SunSpirit> goldDungeon;
+    private BossRoomTracker<SunSpirit> goldDungeon;
     private Vec3 origin;
     /** Boss health bar manager */
     private final ServerBossEvent bossFight;
@@ -449,12 +449,12 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     }
 
     @Override
-    public DungeonTracker<SunSpirit> getDungeon() {
+    public BossRoomTracker<SunSpirit> getDungeon() {
         return this.goldDungeon;
     }
 
     @Override
-    public void setDungeon(DungeonTracker<SunSpirit> dungeon) {
+    public void setDungeon(BossRoomTracker<SunSpirit> dungeon) {
         this.goldDungeon = dungeon;
         if (dungeon != null) {
             this.origin = dungeon.originCoordinates();
