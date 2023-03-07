@@ -35,7 +35,7 @@ public class FireMinion extends Monster {
         return Mob.createMobAttributes()
                 .add(Attributes.FOLLOW_RANGE, 40.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.25)
-                .add(Attributes.ATTACK_DAMAGE, 10.0)
+                .add(Attributes.ATTACK_DAMAGE, 15.0)
                 .add(Attributes.MAX_HEALTH, 40.0);
     }
 

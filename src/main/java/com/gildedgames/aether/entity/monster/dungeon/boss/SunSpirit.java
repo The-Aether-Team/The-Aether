@@ -117,7 +117,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
     public static AttributeSupplier.Builder createSunSpiritAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 50.0)
-                .add(Attributes.MOVEMENT_SPEED, 0.45);
+                .add(Attributes.MOVEMENT_SPEED, 0.35);
     }
 
     @Override
@@ -146,11 +146,11 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
      * Burns all entities directly under the sun spirit
      */
     public void burnEntities() {
-        List<Entity> entities = this.level.getEntities(this, this.getBoundingBox().expandTowards(0, -2, 0).contract(-0.8, 0, -0.8).contract(0.8, 0, 0.8));
+        List<Entity> entities = this.level.getEntities(this, this.getBoundingBox().expandTowards(0, -2, 0).contract(-0.75, 0, -0.75).contract(0.75, 0, 0.75));
         for (Entity target : entities) {
             if (target instanceof LivingEntity) {
-                target.hurt(new EntityDamageSource("aether.incineration", this), 10);
-                target.setSecondsOnFire(5);
+                target.hurt(new EntityDamageSource("aether.incineration", this), 20);
+                target.setSecondsOnFire(8);
             }
         }
     }
@@ -623,13 +623,13 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
             AbstractCrystal crystal;
             if (--this.crystalCount <= 0) {
                 crystal = new IceCrystal(this.sunSpirit.level, this.sunSpirit);
-                this.crystalCount = 3 + this.sunSpirit.random.nextInt(3);
+                this.crystalCount = 4 + this.sunSpirit.random.nextInt(4);
             } else {
                 crystal = new FireCrystal(this.sunSpirit.level, this.sunSpirit);
             }
             this.sunSpirit.playSound(this.sunSpirit.getShootSound(), 1.0F, this.sunSpirit.level.random.nextFloat() - this.sunSpirit.level.random.nextFloat() * 0.2F + 1.2F);
             this.sunSpirit.level.addFreshEntity(crystal);
-            this.shootInterval = (int) (28 + sunSpirit.getHealth() / 4);
+            this.shootInterval = (int) (15 + sunSpirit.getHealth() / 2);
         }
 
         @Override
@@ -647,7 +647,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
 
         public SummonFireGoal(SunSpirit sunSpirit) {
             this.sunSpirit = sunSpirit;
-            this.shootInterval = 12 + sunSpirit.random.nextInt(18);
+            this.shootInterval = 10 + sunSpirit.random.nextInt(40);
         }
 
         @Override
@@ -665,7 +665,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
                 }
                 pos = pos.below();
             }
-            this.shootInterval = 12 + this.sunSpirit.random.nextInt(18);
+            this.shootInterval = 10 + this.sunSpirit.random.nextInt(40);
         }
 
         @Override
