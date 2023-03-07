@@ -337,6 +337,24 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .unlockedBy(getHasName(AetherItems.SWET_BALL.get()), has(AetherItems.SWET_BALL.get()))
                 .save(consumer, name("swet_lead"));
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, Blocks.STICKY_PISTON, 1)
+                .group("minecraft:sticky_piston")
+                .define('B', AetherItems.SWET_BALL.get())
+                .define('P', Blocks.PISTON)
+                .pattern("B")
+                .pattern("P")
+                .unlockedBy(getHasName(AetherItems.SWET_BALL.get()), has(AetherItems.SWET_BALL.get()))
+                .save(consumer, name("swet_sticky_piston"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, Blocks.SLIME_BLOCK, 1)
+                .group("minecraft:slime_block")
+                .define('B', AetherItems.SWET_BALL.get())
+                .pattern("BBB")
+                .pattern("BBB")
+                .pattern("BBB")
+                .unlockedBy(getHasName(AetherItems.SWET_BALL.get()), has(AetherItems.SWET_BALL.get()))
+                .save(consumer, name("swet_slime_block"));
+
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.BARREL, 1)
                 .group("minecraft:barrel")
                 .define('P', AetherTags.Items.PLANKS_CRAFTING)

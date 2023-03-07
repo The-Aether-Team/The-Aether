@@ -1,4 +1,4 @@
-// 1.19.3	2023-03-05T21:18:21.733975	Recipes
+// 1.19.3	2023-03-07T15:15:01.3368006	Recipes
 1d7abc4c8c4e7132f31bd563a8dd82a8f3285d0d data/aether/advancements/recipes/building_blocks/aerogel_slab.json
 8c9f4fe6b61d89eb72b141ff6dfb92764a5dc5a9 data/aether/advancements/recipes/building_blocks/aerogel_slab_from_aerogel_stonecutting.json
 6e53af7c3f7e89910ad337753c6d70a4cdcf0440 data/aether/advancements/recipes/building_blocks/aerogel_stairs.json
@@ -225,6 +225,8 @@ c10d0f994270efb49bcd12d8e7489ed9f366fbc9 data/aether/advancements/recipes/redsto
 19c262e457a8c5fb7aad28397efdfcf26cf2b75a data/aether/advancements/recipes/redstone/skyroot_pressure_plate.json
 5421d863e54077883d50955ebf853e343c293d51 data/aether/advancements/recipes/redstone/skyroot_trapdoor.json
 304b6868d37851cffbe80fedab28877081cba12e data/aether/advancements/recipes/redstone/skyroot_tripwire_hook.json
+1d081987abf531b0fd697fb1cdc448b57bacb935 data/aether/advancements/recipes/redstone/swet_slime_block.json
+7a4ac0d114681ecbafbded10775b102bcb025079 data/aether/advancements/recipes/redstone/swet_sticky_piston.json
 94c996f9430545a6d34a50e2302aee3e29955822 data/aether/advancements/recipes/tools/aether_saddle.json
 4b8d4cf6f6715dea815665d368aca2ca43dabcc9 data/aether/advancements/recipes/tools/cold_parachute.json
 c9c99b46e5024f27a918d975ffe936fbf8b8090f data/aether/advancements/recipes/tools/diamond_axe_repairing.json
@@ -561,6 +563,8 @@ f85b4440cfc9da0098e1496560d3fc69da042e41 data/aether/recipes/swet_ball_grass_to_
 38427776a268076deb848b7648bf98ad2c1145d6 data/aether/recipes/swet_ball_netherrack_to_crimson_nylium.json
 b48f4dd76f79b4f9fa5e82f5dfeea1e533120939 data/aether/recipes/swet_ball_netherrack_to_warped_nylium.json
 69066d2d2ec74520d9344b8918fb5ac14d7deb09 data/aether/recipes/swet_lead.json
+f1c44d8a95548402a06f5d88be9fde3327ff058b data/aether/recipes/swet_slime_block.json
+f7687f445ac14dc8baa76aa448f7ff4f7dd6275b data/aether/recipes/swet_sticky_piston.json
 cad43ab0d72e6aa2e6dce9348a9c9c2be4ae66a7 data/aether/recipes/torch_block_ban.json
 bf48f2ef0c13fd1030d06fee9f3a85594aa8eb13 data/aether/recipes/torch_item_ban.json
 88d99b3c8b469f973c501d6d0b351c0577c34f6d data/aether/recipes/welcoming_skies_freezing.json
