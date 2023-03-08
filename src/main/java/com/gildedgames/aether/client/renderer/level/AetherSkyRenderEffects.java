@@ -70,19 +70,31 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
         if (AetherConfig.CLIENT.green_sunset.get()) {
             float f1 = Mth.cos(timeOfDay * ((float) Math.PI * 2F)) - 0.0F;
             if (f1 >= -0.4F && f1 <= 0.4F) {
-                float f3 = (f1 - -0.0F) / 0.4F * 0.5F + 0.5F;
+                float f3 = (f1 + 0.0F) / 0.4F * 0.5F + 0.5F;
                 float f4 = 1.0F - (1.0F - Mth.sin(f3 * (float) Math.PI)) * 0.99F;
                 f4 *= f4;
-                this.sunriseCol[0] = f3 * 0.3F + 0.1F;
-                this.sunriseCol[1] = f3 * f3 * 0.7F + 0.2F;
-                this.sunriseCol[2] = f3 * f3 * 0.7F + 0.2F;
+                this.sunriseCol[0] = f3 * 0.5F + 0.0F; //RED
+                this.sunriseCol[1] = f3 * f3 * 0.3F + 0.3F; //GREEN
+                this.sunriseCol[2] = f3 * f3 * 0.5F + 0.3F; //BLUE
                 this.sunriseCol[3] = f4;
                 return this.sunriseCol;
             } else {
                 return null;
             }
         } else {
-            return super.getSunriseColor(timeOfDay, partialTicks);
+            float f1 = Mth.cos(timeOfDay * ((float) Math.PI * 2F)) - 0.0F;
+            if (f1 >= -0.4F && f1 <= 0.4F) {
+                float f3 = (f1 + 0.0F) / 0.4F * 0.5F + 0.5F;
+                float f4 = 1.0F - (1.0F - Mth.sin(f3 * (float) Math.PI)) * 0.99F;
+                f4 *= f4;
+                this.sunriseCol[0] = f3 * 0.3F + 0.65F; //RED
+                this.sunriseCol[1] = f3 * f3 * 0.7F + 0.25F; //GREEN
+                this.sunriseCol[2] = f3 * f3 * 0.0F + 0.4F; //BLUE
+                this.sunriseCol[3] = f4;
+                return this.sunriseCol;
+            } else {
+                return null;
+            }
         }
     }
 
