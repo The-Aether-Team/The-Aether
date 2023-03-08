@@ -44,6 +44,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -65,7 +66,7 @@ import java.util.List;
  * Implementation for the sun spirit, the final boss of the Aether. When the sun spirit is defeated, eternal day will
  * end in the dimension.
  */
-public class SunSpirit extends Monster implements BossMob<SunSpirit> {
+public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enemy {
     public static final EntityDataAccessor<Boolean> DATA_IS_FROZEN = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.COMPONENT);
 
@@ -82,7 +83,7 @@ public class SunSpirit extends Monster implements BossMob<SunSpirit> {
 
     protected double velocity;
 
-    public SunSpirit(EntityType<? extends Monster> entityType, Level level) {
+    public SunSpirit(EntityType<? extends SunSpirit> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new BlankMoveControl(this);
         this.bossFight = new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
