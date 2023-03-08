@@ -75,7 +75,7 @@ public class AetherEntityTypes {
             () -> EntityType.Builder.of(EvilWhirlwind::new, MobCategory.MONSTER).fireImmune().sized(0.6F, 0.8F).clientTrackingRange(8).build("evil_whirlwind"));
 
     public static final RegistryObject<EntityType<AechorPlant>> AECHOR_PLANT = ENTITY_TYPES.register("aechor_plant",
-            () -> EntityType.Builder.of(AechorPlant::new, MobCategory.CREATURE).sized(1.0F, 1.0F).clientTrackingRange(8).build("aechor_plant"));
+            () -> EntityType.Builder.of(AechorPlant::new, MobCategory.MONSTER).sized(1.0F, 1.0F).clientTrackingRange(8).build("aechor_plant"));
 
     public static final RegistryObject<EntityType<Cockatrice>> COCKATRICE = ENTITY_TYPES.register("cockatrice",
             () -> EntityType.Builder.of(Cockatrice::new, MobCategory.MONSTER).sized(1.1F, 2.15F).clientTrackingRange(10).build("cockatrice"));
