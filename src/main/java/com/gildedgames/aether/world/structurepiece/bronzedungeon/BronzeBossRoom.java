@@ -2,10 +2,7 @@ package com.gildedgames.aether.world.structurepiece.bronzedungeon;
 
 
 import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.api.DungeonTracker;
 import com.gildedgames.aether.blockentity.TreasureChestBlockEntity;
-import com.gildedgames.aether.entity.AetherEntityTypes;
-import com.gildedgames.aether.entity.monster.dungeon.boss.slider.Slider;
 import com.gildedgames.aether.loot.AetherLoot;
 import com.gildedgames.aether.world.processor.BossRoomProcessor;
 import com.gildedgames.aether.world.structurepiece.AetherStructurePieceTypes;
@@ -13,7 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
@@ -22,9 +18,6 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
-import net.minecraft.world.phys.AABB;
-
-import java.util.ArrayList;
 
 /**
  * Starting piece for the bronze dungeon. Has the slider.

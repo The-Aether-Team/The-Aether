@@ -2,7 +2,7 @@ package com.gildedgames.aether.entity.monster.dungeon.boss.slider;
 
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.api.BossNameGenerator;
-import com.gildedgames.aether.api.DungeonTracker;
+import com.gildedgames.aether.api.BossRoomTracker;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.BossMob;
@@ -56,7 +56,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy, IEn
     public static final EntityDataAccessor<Float> DATA_HURT_ANGLE_X_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.FLOAT);
     public static final EntityDataAccessor<Float> DATA_HURT_ANGLE_Z_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.FLOAT);
 
-    private DungeonTracker<Slider> bronzeDungeon;
+    private BossRoomTracker<Slider> bronzeDungeon;
     private final ServerBossEvent bossFight;
 
     private int chatCooldown;
@@ -378,12 +378,12 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy, IEn
     }
 
     @Override
-    public DungeonTracker<Slider> getDungeon() {
+    public BossRoomTracker<Slider> getDungeon() {
         return this.bronzeDungeon;
     }
 
     @Override
-    public void setDungeon(DungeonTracker<Slider> dungeon) {
+    public void setDungeon(BossRoomTracker<Slider> dungeon) {
         this.bronzeDungeon = dungeon;
     }
 
