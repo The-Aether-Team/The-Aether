@@ -23,11 +23,6 @@ public class GoldIsland extends GoldDungeonPiece {
         super(AetherStructurePieceTypes.GOLD_ISLAND.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
     }
 
-    @Override
-    protected void addAdditionalSaveData(StructurePieceSerializationContext context, CompoundTag tag) {
-        super.addAdditionalSaveData(context, tag);
-    }
-
     private static StructurePlaceSettings makeSettings() {
         return new StructurePlaceSettings().addProcessor(VerticalGradientProcessor.INSTANCE).addProcessor(DoubleDropsProcessor.INSTANCE);
     }

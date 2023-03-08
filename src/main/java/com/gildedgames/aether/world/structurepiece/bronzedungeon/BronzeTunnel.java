@@ -3,7 +3,6 @@ package com.gildedgames.aether.world.structurepiece.bronzedungeon;
 
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.world.processor.DoubleDropsProcessor;
-import com.gildedgames.aether.world.processor.NoReplaceProcessor;
 import com.gildedgames.aether.world.structurepiece.AetherStructurePieceTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

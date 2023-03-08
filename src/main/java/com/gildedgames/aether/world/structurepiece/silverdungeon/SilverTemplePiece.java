@@ -27,9 +27,4 @@ public class SilverTemplePiece extends SilverDungeonPiece {
     private static StructurePlaceSettings makeSettings() {
         return new StructurePlaceSettings().addProcessor(LOCKED_ANGELIC_STONE).addProcessor(DoubleDropsProcessor.INSTANCE);
     }
-
-    @Override
-    protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox box) {
-
-    }
 }

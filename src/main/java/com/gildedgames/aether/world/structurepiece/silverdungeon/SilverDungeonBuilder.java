@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * This class is for randomly assembling the silver dungeon.
+ * This class randomly assembles the silver dungeon using a 3x3x3 grid.
  */
 public class SilverDungeonBuilder {
     public static final int CHEST_ROOM = 0b1;
@@ -47,18 +47,15 @@ public class SilverDungeonBuilder {
     private void populateGrid() {
         // Place the stairs
         int finalStairsX = this.random.nextInt(this.width);
-
         this.grid[finalStairsX][0][0] = FINAL_STAIRS;
         this.grid[finalStairsX][1][0] = STAIRS_MIDDLE;
         this.grid[finalStairsX][2][0] = STAIRS_TOP;
 
         int firstStairsX = this.random.nextInt(this.width);
-
         this.grid[firstStairsX][0][1] = STAIRS;
         this.grid[firstStairsX][1][1] = STAIRS_TOP;
 
         int secondStairsX = this.random.nextInt(this.width);
-
         this.grid[secondStairsX][1][2] = STAIRS;
         this.grid[secondStairsX][2][2] = STAIRS_TOP;
 
@@ -89,26 +86,15 @@ public class SilverDungeonBuilder {
         }
 
         int room = this.grid[x][y][z];
-
         if ((room & typesToAvoid) > 0) { // Make sure the stairs are not next to each other.
             return false;
         }
-
         if ((room & VISITED) == VISITED) {
             return random.nextInt(3) == 0;
         }
-
-        int blacklist = FINAL_STAIRS | STAIRS_MIDDLE;
-
-        if ((room & STAIRS_TOP) == STAIRS_TOP) {
-            blacklist |= STAIRS;
-        }
-
-        if ((room & STAIRS) == STAIRS) {
-            blacklist |= STAIRS_TOP;
-        }
-
         this.grid[x][y][z] |= VISITED;
+
+        int blacklist = this.setNeighborBlacklist(room);
 
         List<Direction> directions = new ArrayList<>(4);
         Collections.addAll(directions, Direction.NORTH, Direction.WEST, Direction.SOUTH, Direction.EAST);
@@ -140,6 +126,17 @@ public class SilverDungeonBuilder {
         }
 
         return true;
+    }
+
+    private int setNeighborBlacklist(int roomType) {
+        int blacklist = FINAL_STAIRS | STAIRS_MIDDLE;
+        if ((roomType & STAIRS_TOP) == STAIRS_TOP) {
+            blacklist |= STAIRS;
+        }
+        if ((roomType & STAIRS) == STAIRS) {
+            blacklist |= STAIRS_TOP;
+        }
+        return blacklist;
     }
 
     /**

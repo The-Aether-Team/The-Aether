@@ -1,6 +1,8 @@
 package com.gildedgames.aether.world.structure;
 
+import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.entity.monster.dungeon.boss.ValkyrieQueen;
+import com.gildedgames.aether.world.structurepiece.LegacyCloudBed;
 import com.gildedgames.aether.world.structurepiece.silverdungeon.*;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
@@ -13,6 +15,7 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
@@ -44,6 +47,7 @@ public class SilverDungeonStructure extends Structure {
 
         int height;
         if (random.nextInt(5) < 3) {
+            // The structure has a 40% chance of being forced above ground.
             height = minHeight + 18;
             if (height < maxHeight) {
                 height += random.nextInt(maxHeight - height);
@@ -142,7 +146,7 @@ public class SilverDungeonStructure extends Structure {
         Set<BlockPos> positions = new HashSet<>();
         for (int tries = 0; tries < 100; tries++) {
             int x = offset.getX() + random.nextInt(xBounds);
-            int y = 0;
+            int y = offset.getY();
             int z = offset.getZ() + random.nextInt(zBounds);
             int xTendency = random.nextInt(3) - 1;
             int zTendency = random.nextInt(3) - 1;
@@ -171,6 +175,7 @@ public class SilverDungeonStructure extends Structure {
         chunks.forEach(((chunkPos, blockPosSet) -> {
             blockPosSet.addAll(positions.stream().filter(pos -> (new ChunkPos(pos).equals(chunkPos))).toList());
             builder.addPiece(new LegacyCloudBed(blockPosSet,
+                    BlockStateProvider.simple(AetherBlocks.COLD_AERCLOUD.get().defaultBlockState()),
                     new BoundingBox(chunkPos.getMinBlockX(), origin.getY(), chunkPos.getMinBlockZ(), chunkPos.getMaxBlockX(), origin.getY(), chunkPos.getMaxBlockZ()),
                     direction));
         }));

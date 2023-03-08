@@ -12,6 +12,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 
 /**
  * The chunks of land surrounding the boss room to form an island.
+ * This is separate from GoldIsland to make vegetation placement more accurate in GoldDungeonStructure#afterPlace.
  */
 public class GoldStub extends GoldDungeonPiece {
 

@@ -1,6 +1,6 @@
 package com.gildedgames.aether.world.structure;
 
-import com.gildedgames.aether.world.structurepiece.LargeAercloudPiece;
+import com.gildedgames.aether.world.structurepiece.LegacyCloudBed;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
@@ -78,7 +78,7 @@ public class LargeAercloudStructure extends Structure {
         Direction orientation = Direction.Plane.HORIZONTAL.getRandomDirection(context.random());
         chunks.forEach((chunkPos, blockPosSet) -> {
             BoundingBox boundingBox = new BoundingBox(chunkPos.getMinBlockX(), Math.max(initialY - 16, 0), chunkPos.getMinBlockZ(), chunkPos.getMaxBlockX(), finalY + 16, chunkPos.getMaxBlockZ());
-            builder.addPiece(new LargeAercloudPiece(blockPosSet, blocks, boundingBox, orientation));
+            builder.addPiece(new LegacyCloudBed(blockPosSet, blocks, boundingBox, orientation));
         });
     }
 

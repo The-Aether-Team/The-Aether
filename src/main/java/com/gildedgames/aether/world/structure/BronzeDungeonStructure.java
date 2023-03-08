@@ -17,6 +17,7 @@ import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
+import org.apache.commons.lang3.mutable.MutableInt;
 
 import java.util.Optional;
 
@@ -41,19 +42,11 @@ public class BronzeDungeonStructure extends Structure {
         RandomState randomState = context.randomState();
         StructureTemplateManager templateManager = context.structureTemplateManager();
         int height = findStartingHeight(chunkGenerator, heightAccessor, chunkPos, randomState, templateManager);
+        // To make structure placement more reliable, we check the surounding 8 chunks for suitable locations.
         if (height <= heightAccessor.getMinBuildHeight()) {
-            for (int x = -1; x <= 1; x++) {
-                for (int z = -1; z <= 1; z++) {
-                    if (x != 0 && z != 0) {
-                        ChunkPos offset = new ChunkPos(chunkPos.x + x, chunkPos.z + z);
-                        height = findStartingHeight(chunkGenerator, heightAccessor, offset, randomState, templateManager);
-                        if (height > heightAccessor.getMinBuildHeight()) {
-                            chunkPos = offset;
-                            break;
-                        }
-                    }
-                }
-            }
+            MutableInt y = new MutableInt(height);
+            chunkPos = searchNearbyChunks(chunkPos, y, chunkGenerator, heightAccessor, randomState, templateManager);
+            height = y.getValue();
             if (height <= heightAccessor.getMinBuildHeight()) {
                 return Optional.empty();
             }
@@ -67,7 +60,31 @@ public class BronzeDungeonStructure extends Structure {
         graph.initializeDungeon(startPos, context.chunkPos(), builder);
     }
 
-    /** Try to find a place where the land is taller than the boss room. */
+    /**
+     * Check the surrounding chunks for bronze dungeon placement.
+     */
+    private static ChunkPos searchNearbyChunks(ChunkPos chunkPos, MutableInt height, ChunkGenerator chunkGenerator, LevelHeightAccessor heightAccessor, RandomState randomState, StructureTemplateManager templateManager) {
+        int y;
+        for (int x = -1; x <= 1; x++) {
+            for (int z = -1; z <= 1; z++) {
+                if (x != 0 || z != 0) {
+                    ChunkPos offset = new ChunkPos(chunkPos.x + x, chunkPos.z + z);
+                    y = findStartingHeight(chunkGenerator, heightAccessor, offset, randomState, templateManager);
+                    if (y > heightAccessor.getMinBuildHeight()) {
+                        chunkPos = offset;
+                        height.setValue(y);
+                        break;
+                    }
+                }
+            }
+        }
+        return chunkPos;
+    }
+
+    /**
+     * The bronze dungeon needs to generate as covered by land as possible.
+     * Try to find a place where the land is taller than the boss room.
+     * */
     private static int findStartingHeight(ChunkGenerator chunkGenerator, LevelHeightAccessor heightAccessor, ChunkPos chunkPos, RandomState random, StructureTemplateManager manager) {
         int minX = chunkPos.getMinBlockX() - 1;
         int minZ = chunkPos.getMinBlockZ() - 1;
@@ -79,15 +96,11 @@ public class BronzeDungeonStructure extends Structure {
                 chunkGenerator.getBaseColumn(maxX, minZ, heightAccessor, random),
                 chunkGenerator.getBaseColumn(maxX, maxZ, heightAccessor, random)
         };
-
         int roomHeight = checkRoomHeight(manager, new ResourceLocation(Aether.MODID, "bronze_dungeon/boss_room"));
-
         int height = heightAccessor.getMinBuildHeight();
         int maxHeight = heightAccessor.getMaxBuildHeight() - 24;
-
         int thickness = roomHeight + 2;
         int currentThickness = 0;
-
         for (int y = height + 32; y <= maxHeight; y++) {
             if (checkEachCornerAtY(columns, y)) {
                 ++currentThickness;
@@ -99,9 +112,7 @@ public class BronzeDungeonStructure extends Structure {
                 currentThickness = 0;
             }
         }
-
         int offset = (thickness + roomHeight) / 2;
-
         height -= offset;
         return height;
     }
