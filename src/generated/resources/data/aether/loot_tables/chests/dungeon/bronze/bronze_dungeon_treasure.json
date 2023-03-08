@@ -6,12 +6,15 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:music_disc_cat"
+          "name": "aether:valkyrie_lance"
         },
         {
           "type": "minecraft:item",
-          "name": "aether:ambrosium_torch",
-          "weight": 9
+          "name": "aether:hammer_of_kingbdogz"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:sentry_boots"
         }
       ],
       "rolls": {
