@@ -372,8 +372,11 @@ public class AbilityHooks {
          * @see com.gildedgames.aether.event.listeners.abilities.WeaponAbilityListener#onArrowHit(ProjectileImpactEvent)
          */
         public static void phoenixArrowHit(HitResult result, Projectile projectile) {
-            if (result.getType() == HitResult.Type.ENTITY && result instanceof EntityHitResult entityHitResult && projectile instanceof AbstractArrow abstractArrow) {
+            if (result instanceof EntityHitResult entityHitResult && projectile instanceof AbstractArrow abstractArrow) {
                 Entity impactedEntity = entityHitResult.getEntity();
+                if (impactedEntity.getType() == EntityType.ENDERMAN) {
+                    return;
+                }
                 PhoenixArrow.get(abstractArrow).ifPresent(phoenixArrow -> {
                     if (phoenixArrow.isPhoenixArrow() && phoenixArrow.getFireTime() > 0) {
                         impactedEntity.setSecondsOnFire(phoenixArrow.getFireTime());
