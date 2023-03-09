@@ -1,4 +1,4 @@
-// 1.19.3	2023-02-22T18:18:05.6612215	Tags for minecraft:item mod id aether
+// 1.19.3	2023-03-09T16:04:02.6192103	Tags for minecraft:item mod id aether
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/items/accepted_music_discs.json
 b1b83b96d9600b7878597cc26851b843bf99a3dd data/aether/tags/items/accessories.json
 6404c17e75ed612591fd253fd1cfd8c6a5ea4a8a data/aether/tags/items/aerbunny_temptation_items.json
@@ -36,7 +36,7 @@ bbd431b5ea0dbbac9aa71e30c71140e28ae93250 data/aether/tags/items/freezable_rings.
 c674b7a242891866e5ebc42cb684a2d8113fd673 data/aether/tags/items/moa_food_items.json
 d0f09b8dfc6381aa826e9b27dfc398b8b7c02625 data/aether/tags/items/moa_temptation_items.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/neptune_repairing.json
-0ccf61b5231088ebc40dcd9ac0e64406ad73ff2c data/aether/tags/items/no_skyroot_double_drops.json
+1eecfc37581b2c99fe3316dd778068abcba0fa2c data/aether/tags/items/no_skyroot_double_drops.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/obsidian_repairing.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/phoenix_repairing.json
 6404c17e75ed612591fd253fd1cfd8c6a5ea4a8a data/aether/tags/items/phyg_temptation_items.json

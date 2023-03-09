@@ -6,89 +6,108 @@
       "entries": [
         {
           "type": "minecraft:loot_table",
-          "name": "aether:chests/dungeon/silver/silver_dungeon_reward_sub_1"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aether:lightning_sword"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aether:valkyrie_axe"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aether:valkyrie_shovel"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aether:valkyrie_pickaxe"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aether:valkyrie_hoe"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aether:holy_sword"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aether:valkyrie_helmet"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aether:regeneration_stone"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aether:neptune_helmet"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aether:neptune_leggings"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aether:neptune_chestplate"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aether:neptune_boots"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aether:neptune_gloves"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aether:invisibility_cloak"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aether:valkyrie_boots"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aether:valkyrie_gloves"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aether:valkyrie_leggings"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aether:valkyrie_chestplate"
-        },
+          "name": "aether:chests/dungeon/bronze/silver_dungeon_treasure"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
         {
           "type": "minecraft:loot_table",
-          "name": "aether:chests/dungeon/silver/silver_dungeon_reward_sub_2"
+          "name": "aether:chests/dungeon/bronze/silver_dungeon_gummies"
         }
       ],
       "rolls": {
         "type": "minecraft:uniform",
-        "max": 6.0,
-        "min": 5.0
+        "max": 3.0,
+        "min": 1.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aether:lightning_sword",
+          "weight": 14
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:holy_sword",
+          "weight": 14
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:invisibility_cloak",
+          "weight": 14
+        },
+        {
+          "type": "minecraft:loot_table",
+          "name": "aether:chests/dungeon/bronze/silver_dungeon_gravitite",
+          "weight": 18
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:enchanted_dart_shooter",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:poison_dart_shooter",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:golden_sword",
+          "weight": 6
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_sword",
+          "weight": 6
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 8.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "aether:enchanted_berry",
+          "weight": 6
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:angelic_stone"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "name": "aether:chests/dungeon/bronze/silver_dungeon_valkyrie",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:loot_table",
+          "name": "aether:chests/dungeon/bronze/silver_dungeon_neptune",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:regeneration_stone",
+          "weight": 3
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 12.0,
+        "min": 6.0
       }
     }
   ]

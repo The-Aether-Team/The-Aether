@@ -12,6 +12,13 @@
               "config": "[Loot, Valkyrie Cape in loot]"
             }
           ],
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
           "name": "aether:valkyrie_cape"
         },
         {
@@ -22,14 +29,17 @@
               "config": "[Loot, Golden Feather in loot]"
             }
           ],
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
           "name": "aether:golden_feather"
         }
       ],
-      "rolls": {
-        "type": "minecraft:uniform",
-        "max": 1.0,
-        "min": 1.0
-      }
+      "rolls": 1.0
     }
   ]
 }

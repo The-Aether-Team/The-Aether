@@ -60,6 +60,11 @@ public class AetherItemTagData extends ItemTagsProvider {
         this.tag(AetherTags.Items.TREATED_AS_AETHER_ITEM);
         this.tag(AetherTags.Items.NO_SKYROOT_DOUBLE_DROPS).addTag(AetherTags.Items.DUNGEON_KEYS).add(
                 AetherItems.VICTORY_MEDAL.get(),
+                AetherItems.SKYROOT_PICKAXE.get(),
+                AetherItems.IRON_RING.get(),
+                AetherItems.GOLDEN_AMBER.get(),
+                AetherItems.ZANITE_GEMSTONE.get(),
+                AetherItems.HOLYSTONE_PICKAXE.get(),
                 Items.PLAYER_HEAD,
                 Items.SKELETON_SKULL,
                 Items.CREEPER_HEAD,

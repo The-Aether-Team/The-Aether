@@ -69,12 +69,34 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "aether:skyroot_planks",
-          "weight": 2
+          "name": "aether:pillar"
         },
         {
           "type": "minecraft:item",
-          "name": "aether:skyroot_pickaxe"
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "aether:pillar_top"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:angelic_stone"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:light_angelic_stone"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:holystone_sword"
         }
       ],
       "rolls": {

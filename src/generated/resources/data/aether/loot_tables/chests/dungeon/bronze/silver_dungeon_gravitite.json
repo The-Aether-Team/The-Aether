@@ -1,0 +1,55 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aether:gravitite_sword",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:gravitite_axe",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:gravitite_helmet",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:gravitite_chestplate",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:gravitite_leggings",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:gravitite_boots",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:gravitite_gloves",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:gravitite_pickaxe",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:enchanted_gravitite"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

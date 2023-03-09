@@ -6,27 +6,28 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "aether:valkyrie_lance",
-          "weight": 3
+          "name": "aether:neptune_helmet"
         },
         {
           "type": "minecraft:item",
-          "name": "aether:hammer_of_kingbdogz",
-          "weight": 3
+          "name": "aether:neptune_chestplate"
         },
         {
           "type": "minecraft:item",
-          "name": "aether:sentry_boots",
-          "weight": 3
+          "name": "aether:neptune_leggings"
         },
         {
           "type": "minecraft:item",
-          "name": "aether:enchanted_gravitite"
+          "name": "aether:neptune_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:neptune_gloves"
         }
       ],
       "rolls": {
         "type": "minecraft:uniform",
-        "max": 1.0,
+        "max": 2.0,
         "min": 1.0
       }
     }

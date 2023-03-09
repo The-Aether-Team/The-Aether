@@ -49,7 +49,7 @@ public class SilverDungeonRoom extends SilverDungeonPiece {
             int y = pos.getY() - 1;
             chestPos.set(this.boundingBox.minX() + random.nextInt(this.boundingBox.getXSpan()), y, this.boundingBox.minZ() + random.nextInt(this.boundingBox.getZSpan()));
             if (level.isEmptyBlock(chestPos)) {
-                if (random.nextBoolean()) {
+                if (random.nextInt(3) > 1) {
                     level.setBlock(chestPos, Blocks.CHEST.defaultBlockState(), 2);
                     if (level.getBlockEntity(chestPos) instanceof ChestBlockEntity chest) {
                         chest.setLootTable(AetherLoot.SILVER_DUNGEON, random.nextLong());

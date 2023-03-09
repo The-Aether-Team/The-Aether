@@ -6,19 +6,15 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "aether:music_disc_aether_tune",
-          "weight": 2
+          "name": "aether:music_disc_aether_tune"
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:music_disc_cat"
+          "name": "aether:music_disc_ascending_dawn",
+          "weight": 2
         }
       ],
-      "rolls": {
-        "type": "minecraft:uniform",
-        "max": 1.0,
-        "min": 1.0
-      }
+      "rolls": 1.0
     },
     {
       "bonus_rolls": 0.0,
@@ -62,6 +58,22 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "aether:golden_amber",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
                 "max": 3.0,
                 "min": 1.0
               },
@@ -88,7 +100,23 @@
         },
         {
           "type": "minecraft:item",
-          "name": "aether:skyroot_pickaxe"
+          "name": "aether:holystone_sword"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "aether:healing_stone",
+          "weight": 2
         }
       ],
       "rolls": {
