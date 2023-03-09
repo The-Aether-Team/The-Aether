@@ -50,11 +50,7 @@ public class AetherLoot {
 	public static final ResourceLocation SILVER_DUNGEON_GUMMIES = register("chests/dungeon/bronze/silver_dungeon_gummies");
 
 	public static final ResourceLocation GOLD_DUNGEON_REWARD = register("chests/dungeon/gold/gold_dungeon_reward");
-	public static final ResourceLocation GOLD_DUNGEON_REWARD_SUB_1 = register("chests/dungeon/gold/gold_dungeon_reward_sub_1");
-	public static final ResourceLocation GOLD_DUNGEON_REWARD_SUB_2 = register("chests/dungeon/gold/gold_dungeon_reward_sub_2");
-	public static final ResourceLocation GOLD_DUNGEON_REWARD_SUB_3 = register("chests/dungeon/gold/gold_dungeon_reward_sub_3");
-	public static final ResourceLocation GOLD_DUNGEON_REWARD_SUB_4 = register("chests/dungeon/gold/gold_dungeon_reward_sub_4");
-	public static final ResourceLocation GOLD_DUNGEON_REWARD_SUB_5 = register("chests/dungeon/gold/gold_dungeon_reward_sub_5");
+	public static final ResourceLocation GOLD_DUNGEON_TREASURE = register("chests/dungeon/gold/gold_dungeon_treasure");
 
 	public static final ResourceLocation ENTER_AETHER = register("advancements/enter_aether");
 
