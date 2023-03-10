@@ -45,7 +45,6 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -459,7 +458,7 @@ public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enem
         this.goldDungeon = dungeon;
         if (dungeon != null) {
             this.origin = dungeon.originCoordinates();
-            this.xMax = this.zMax = Mth.floor(dungeon.roomBounds().getXsize() / 2 - 5);
+            this.xMax = this.zMax = Mth.floor(dungeon.roomBounds().getXsize() / 2 - 2);
         } else {
             this.origin = this.position();
             this.xMax = 9;
