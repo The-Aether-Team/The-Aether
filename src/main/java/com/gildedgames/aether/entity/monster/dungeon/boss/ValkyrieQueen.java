@@ -550,6 +550,9 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
             this.readBossSaveData(tag);
         }
     }
+    
+    @Override
+    public void checkDespawn() {}
 
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
