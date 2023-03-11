@@ -42,19 +42,14 @@ public class ItemMixin {
      * @return Whether the player is too far to interact, as a {@link Boolean}.
      */
     private static BlockHitResult interactionTooFar(Level level, Player player, InteractionHand hand, ClipContext.Fluid fluidMode) {
-        ItemStack heldStack = player.getItemInHand(hand);
-        if (AbilityHooks.ToolHooks.hasValkyrieItemInOneHand(player) && !(heldStack.getItem() instanceof ValkyrieTool)) {
-            UUID uuidForOppositeHand = hand == InteractionHand.MAIN_HAND ? ValkyrieTool.REACH_DISTANCE_MODIFIER_OFFHAND_UUID : ValkyrieTool.REACH_DISTANCE_MODIFIER_MAINHAND_UUID; // We're checking the hand being used to interact, which won't contain a Valkyrie Tool, so we must get the UUID of the opposite hand, which will contain a tool.
+        if (hand == InteractionHand.OFF_HAND && AbilityHooks.ToolHooks.hasValkyrieItemInMainHandOnly(player)) {
             AttributeInstance reachDistance = player.getAttribute(ForgeMod.REACH_DISTANCE.get());
             if (reachDistance != null) {
-                AttributeModifier valkyrieModifier = reachDistance.getModifier(uuidForOppositeHand);
+                AttributeModifier valkyrieModifier = reachDistance.getModifier(ValkyrieTool.REACH_DISTANCE_MODIFIER_UUID);
                 if (valkyrieModifier != null) {
-                    reachDistance.removeModifier(valkyrieModifier);
-                    double reach = player.getAttributeValue(ForgeMod.REACH_DISTANCE.get());
+                    double reach = player.getAttributeValue(ForgeMod.REACH_DISTANCE.get()) - valkyrieModifier.getAmount();
                     double trueReach = reach == 0 ? 0 : reach + (player.isCreative() ? 0.5 : 0); // Copied from IForgePlayer#getReachDistance().
-                    BlockHitResult result = getPlayerPOVHitResultForReach(level, player, trueReach, fluidMode);
-                    reachDistance.addTransientModifier(valkyrieModifier);
-                    return result;
+                    return getPlayerPOVHitResultForReach(level, player, trueReach, fluidMode);
                 }
             }
         }

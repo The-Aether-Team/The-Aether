@@ -58,7 +58,6 @@ import top.theillusivec4.curios.api.SlotResult;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 
 public class AbilityHooks {
     public static class AccessoryHooks {
@@ -287,19 +286,14 @@ public class AbilityHooks {
          * @return Whether the player is too far to interact, as a {@link Boolean}.
          */
         public static boolean entityTooFar(Entity target, Player player, InteractionHand hand) {
-            ItemStack heldStack = player.getItemInHand(hand);
-            if (hasValkyrieItemInOneHand(player) && !(heldStack.getItem() instanceof ValkyrieTool)) {
-                UUID uuidForOppositeHand = hand == InteractionHand.MAIN_HAND ? ValkyrieTool.ATTACK_RANGE_MODIFIER_OFFHAND_UUID : ValkyrieTool.ATTACK_RANGE_MODIFIER_MAINHAND_UUID; // We're checking the hand being used to interact, which won't contain a Valkyrie Tool, so we must get the UUID of the opposite hand, which will contain a tool.
+            if (hasValkyrieItemInMainHandOnly(player)) {
                 AttributeInstance attackRange = player.getAttribute(ForgeMod.ATTACK_RANGE.get());
                 if (attackRange != null) {
-                    AttributeModifier valkyrieModifier = attackRange.getModifier(uuidForOppositeHand);
+                    AttributeModifier valkyrieModifier = attackRange.getModifier(ValkyrieTool.ATTACK_RANGE_MODIFIER_UUID);
                     if (valkyrieModifier != null) {
-                        attackRange.removeModifier(valkyrieModifier);
-                        double range = player.getAttributeValue(ForgeMod.ATTACK_RANGE.get());
+                        double range = player.getAttributeValue(ForgeMod.ATTACK_RANGE.get()) - valkyrieModifier.getAmount();
                         double trueReach = range == 0 ? 0 : range + (player.isCreative() ? 3 : 0); // Copied from IForgePlayer#getAttackRange().
-                        boolean tooFar = !player.isCloseEnough(target, trueReach);
-                        attackRange.addTransientModifier(valkyrieModifier);
-                        return tooFar;
+                        return !player.isCloseEnough(target, trueReach);
                     }
                 }
             }
@@ -313,19 +307,17 @@ public class AbilityHooks {
          * @return Whether the player is too far to interact, as a {@link Boolean}.
          */
         public static boolean blockTooFar(Player player, InteractionHand hand) {
-            ItemStack heldStack = player.getItemInHand(hand);
-            if (hasValkyrieItemInOneHand(player) && !(heldStack.getItem() instanceof ValkyrieTool)) {
-                UUID uuidForOppositeHand = hand == InteractionHand.MAIN_HAND ? ValkyrieTool.REACH_DISTANCE_MODIFIER_OFFHAND_UUID : ValkyrieTool.REACH_DISTANCE_MODIFIER_MAINHAND_UUID; // We're checking the hand being used to interact, which won't contain a Valkyrie Tool, so we must get the UUID of the opposite hand, which will contain a tool.
+            if (hand == InteractionHand.MAIN_HAND) {
+                return false;
+            }
+            if (hasValkyrieItemInMainHandOnly(player)) {
                 AttributeInstance reachDistance = player.getAttribute(ForgeMod.REACH_DISTANCE.get());
                 if (reachDistance != null) {
-                    AttributeModifier valkyrieModifier = reachDistance.getModifier(uuidForOppositeHand);
+                    AttributeModifier valkyrieModifier = reachDistance.getModifier(ValkyrieTool.REACH_DISTANCE_MODIFIER_UUID);
                     if (valkyrieModifier != null) {
-                        reachDistance.removeModifier(valkyrieModifier);
-                        double reach = player.getAttributeValue(ForgeMod.REACH_DISTANCE.get());
+                        double reach = player.getAttributeValue(ForgeMod.REACH_DISTANCE.get()) - valkyrieModifier.getAmount();
                         double trueReach = reach == 0 ? 0 : reach + (player.isCreative() ? 0.5 : 0); // Copied from IForgePlayer#getReachDistance().
-                        boolean tooFar = player.pick(trueReach, 0.0F, false).getType() != HitResult.Type.BLOCK;
-                        reachDistance.addTransientModifier(valkyrieModifier);
-                        return tooFar;
+                        return player.pick(trueReach, 0.0F, false).getType() != HitResult.Type.BLOCK;
                     }
                 }
             }
@@ -333,14 +325,14 @@ public class AbilityHooks {
         }
 
         /**
-         * Checks if the player is holding a {@link ValkyrieTool} in only one hand.
+         * Checks if the player is holding a {@link ValkyrieTool} in the main hand.
          * @param player The {@link Player} holding the Valkyrie Tool.
-         * @return A {@link Boolean} of whether the player is holding a Valkyrie Tool in one hand.
+         * @return A {@link Boolean} of whether the player is holding a Valkyrie Tool in the main hand.
          */
-        public static boolean hasValkyrieItemInOneHand(Player player) {
+        public static boolean hasValkyrieItemInMainHandOnly(Player player) {
             ItemStack mainHandStack = player.getMainHandItem();
             ItemStack offHandStack = player.getOffhandItem();
-            return (mainHandStack.getItem() instanceof ValkyrieTool && !(offHandStack.getItem() instanceof ValkyrieTool)) || (offHandStack.getItem() instanceof ValkyrieTool && !(mainHandStack.getItem() instanceof ValkyrieTool));
+            return mainHandStack.getItem() instanceof ValkyrieTool && !(offHandStack.getItem() instanceof ValkyrieTool);
         }
     }
 
