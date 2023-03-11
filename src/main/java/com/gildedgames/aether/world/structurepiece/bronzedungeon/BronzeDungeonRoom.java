@@ -37,7 +37,7 @@ public class BronzeDungeonRoom extends BronzeDungeonPiece {
     protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox box) {
         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
         if (name.equals("Chest")) {
-            if (random.nextBoolean()) {
+            if (random.nextInt(5) > 1) {
                 level.setBlock(pos, Blocks.CHEST.defaultBlockState(), 2);
                 if (level.getBlockEntity(pos) instanceof ChestBlockEntity chest) {
                     chest.setLootTable(AetherLoot.BRONZE_DUNGEON, random.nextLong());

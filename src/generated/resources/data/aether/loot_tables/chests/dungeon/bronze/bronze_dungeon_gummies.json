@@ -6,17 +6,19 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "aether:phoenix_boots"
+          "name": "aether:blue_gummy_swet",
+          "weight": 4
         },
         {
           "type": "minecraft:item",
-          "name": "aether:phoenix_gloves"
+          "name": "aether:golden_gummy_swet",
+          "weight": 3
         }
       ],
       "rolls": {
         "type": "minecraft:uniform",
-        "max": 1.0,
-        "min": 1.0
+        "max": 4.0,
+        "min": 2.0
       }
     }
   ]

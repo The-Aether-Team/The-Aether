@@ -6,15 +6,22 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "aether:gravitite_helmet"
+          "name": "aether:valkyrie_lance",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
-          "name": "aether:gravitite_leggings"
+          "name": "aether:hammer_of_kingbdogz",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
-          "name": "aether:gravitite_chestplate"
+          "name": "aether:sentry_boots",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:enchanted_gravitite"
         }
       ],
       "rolls": {

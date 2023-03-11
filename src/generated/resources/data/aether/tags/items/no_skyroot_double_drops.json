@@ -2,6 +2,11 @@
   "values": [
     "#aether:dungeon_keys",
     "aether:victory_medal",
+    "aether:skyroot_pickaxe",
+    "aether:iron_ring",
+    "aether:golden_amber",
+    "aether:zanite_gemstone",
+    "aether:holystone_pickaxe",
     "minecraft:player_head",
     "minecraft:skeleton_skull",
     "minecraft:creeper_head",
