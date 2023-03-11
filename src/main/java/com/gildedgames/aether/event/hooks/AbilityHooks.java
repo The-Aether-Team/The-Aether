@@ -286,7 +286,7 @@ public class AbilityHooks {
          * @return Whether the player is too far to interact, as a {@link Boolean}.
          */
         public static boolean entityTooFar(Entity target, Player player, InteractionHand hand) {
-            if (hasValkyrieItemInMainHandOnly(player)) {
+            if (hand == InteractionHand.OFF_HAND && hasValkyrieItemInMainHandOnly(player)) {
                 AttributeInstance attackRange = player.getAttribute(ForgeMod.ATTACK_RANGE.get());
                 if (attackRange != null) {
                     AttributeModifier valkyrieModifier = attackRange.getModifier(ValkyrieTool.ATTACK_RANGE_MODIFIER_UUID);
@@ -307,10 +307,7 @@ public class AbilityHooks {
          * @return Whether the player is too far to interact, as a {@link Boolean}.
          */
         public static boolean blockTooFar(Player player, InteractionHand hand) {
-            if (hand == InteractionHand.MAIN_HAND) {
-                return false;
-            }
-            if (hasValkyrieItemInMainHandOnly(player)) {
+            if (hand == InteractionHand.OFF_HAND && hasValkyrieItemInMainHandOnly(player)) {
                 AttributeInstance reachDistance = player.getAttribute(ForgeMod.REACH_DISTANCE.get());
                 if (reachDistance != null) {
                     AttributeModifier valkyrieModifier = reachDistance.getModifier(ValkyrieTool.REACH_DISTANCE_MODIFIER_UUID);
