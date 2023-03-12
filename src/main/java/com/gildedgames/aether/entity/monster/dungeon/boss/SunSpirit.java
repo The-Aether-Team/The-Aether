@@ -458,7 +458,7 @@ public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enem
         this.goldDungeon = dungeon;
         if (dungeon != null) {
             this.origin = dungeon.originCoordinates();
-            this.xMax = this.zMax = Mth.floor(dungeon.roomBounds().getXsize() / 2 - 2);
+            this.xMax = this.zMax = Mth.floor(dungeon.roomBounds().getXsize() / 2 - 5);
         } else {
             this.origin = this.position();
             this.xMax = 9;
