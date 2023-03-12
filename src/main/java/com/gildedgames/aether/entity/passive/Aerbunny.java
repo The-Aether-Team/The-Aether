@@ -2,7 +2,6 @@ package com.gildedgames.aether.entity.passive;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.entity.ai.goal.FallingRandomStrollGoal;
-import com.gildedgames.aether.entity.ai.navigator.FallPathNavigation;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.capability.player.AetherPlayer;
@@ -11,11 +10,14 @@ import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.ExplosionParticlePacket;
 import com.gildedgames.aether.network.packet.server.AerbunnyPuffPacket;
 import com.gildedgames.aether.util.EntityUtil;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -38,58 +40,54 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 
 public class Aerbunny extends AetherAnimal {
     public static final EntityDataAccessor<Integer> DATA_PUFFINESS_ID = SynchedEntityData.defineId(Aerbunny.class, EntityDataSerializers.INT);
+    public static final EntityDataAccessor<Boolean> DATA_FAST_FALLING = SynchedEntityData.defineId(Aerbunny.class, EntityDataSerializers.BOOLEAN);
+
     public int puffSubtract;
+    private boolean afraid;
     private Vec3 lastPos;
 
     public Aerbunny(EntityType<? extends Aerbunny> type, Level level) {
         super(type, level);
+        this.moveControl = new AerbunnyMoveControl(this);
     }
 
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new PanicGoal(this, 1.25));
+        this.goalSelector.addGoal(1, new RunLikeHellGoal(this, 1.3));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, Ingredient.of(AetherTags.Items.AERBUNNY_TEMPTATION_ITEMS), false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.2, Ingredient.of(AetherTags.Items.AERBUNNY_TEMPTATION_ITEMS), false));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
-        this.goalSelector.addGoal(5, new HopGoal(this));
-        this.goalSelector.addGoal(6, new FallingRandomStrollGoal(this, 2.0, 6));
-    }
-
-    @Nonnull
-    @Override
-    protected PathNavigation createNavigation(@Nonnull Level level) {
-        return new FallPathNavigation(this, level);
+        this.goalSelector.addGoal(5, new FallingRandomStrollGoal(this, 1.0, 80));
     }
 
     @Nonnull
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 5.0)
-                .add(Attributes.MOVEMENT_SPEED, 0.25);
+                .add(Attributes.MAX_HEALTH, 6.0)
+                .add(Attributes.MOVEMENT_SPEED, 0.28);
     }
 
+    @Override
     public void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_PUFFINESS_ID, 0);
+        this.entityData.define(DATA_FAST_FALLING, false);
     }
 
     @Override
     public void tick() {
+        this.flyingSpeed = this.getSpeed() * 0.21600002F;
         super.tick();
-        AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
-        if (gravity != null) {
-            double fallSpeed = Math.max(gravity.getValue() * -1.25, -0.1);
-            if (this.getDeltaMovement().y < fallSpeed) {
-                this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
-            }
+        if (!this.isFastFalling()) {
+            this.handleFallSpeed();
+        } else if (this.onGround) {
+            this.setFastFalling(false);
         }
         this.setPuffiness(this.getPuffiness() - this.puffSubtract);
         if (this.getPuffiness() > 0) {
@@ -98,6 +96,23 @@ public class Aerbunny extends AetherAnimal {
             this.puffSubtract = 0;
             this.setPuffiness(0);
         }
+        this.handlePlayerInput();
+        if (this.isOnGround() || !this.getFeetBlockState().isAir() || (this.getVehicle() != null && (this.getVehicle().isOnGround() || !this.getVehicle().getFeetBlockState().isAir()))) {
+            this.lastPos = null;
+        }
+    }
+
+    private void handleFallSpeed() {
+        AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
+        if (gravity != null) {
+            double fallSpeed = Math.max(gravity.getValue() * -1.25, -0.1);
+            if (this.getDeltaMovement().y < fallSpeed) {
+                this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
+            }
+        }
+    }
+
+    private void handlePlayerInput() {
         if (this.getVehicle() instanceof Player player) {
             if (player.isSpectator()) {
                 this.stopRiding();
@@ -135,9 +150,6 @@ public class Aerbunny extends AetherAnimal {
                 serverGamePacketListenerImplAccessor.aether$setAboveGroundTickCount(0);
             }
         }
-        if (this.isOnGround() || !this.getFeetBlockState().isAir() || (this.getVehicle() != null && (this.getVehicle().isOnGround() || !this.getVehicle().getFeetBlockState().isAir()))) {
-            this.lastPos = null;
-        }
     }
 
     @Override
@@ -151,12 +163,10 @@ public class Aerbunny extends AetherAnimal {
 
     @Nonnull
     @Override
-    public InteractionResult mobInteract(Player player, @Nonnull InteractionHand hand) {
+    public InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
         InteractionResult result = super.mobInteract(player, hand);
         if (!(this.getVehicle() instanceof Player vehicle) || vehicle.equals(player)) {
-            if (player.isShiftKeyDown()) {
-                return this.ridePlayer(player);
-            } else if (result == InteractionResult.PASS || result == InteractionResult.FAIL) {
+            if (player.isShiftKeyDown() || result == InteractionResult.PASS || result == InteractionResult.FAIL) {
                 return this.ridePlayer(player);
             }
         }
@@ -165,14 +175,14 @@ public class Aerbunny extends AetherAnimal {
 
     private InteractionResult ridePlayer(Player player) {
         if (!this.isBaby()) {
-            this.level.playSound(player, this, AetherSoundEvents.ENTITY_AERBUNNY_LIFT.get(), SoundSource.NEUTRAL, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
             if (this.isPassenger()) {
-                this.navigation.recomputePath();
                 this.stopRiding();
-            } else {
-                if (this.startRiding(player)) {
-                    AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setMountedAerbunny(this));
-                }
+                this.setFastFalling(true);
+                Vec3 playerMovement = player.getDeltaMovement();
+                this.setDeltaMovement(playerMovement.x * 5, playerMovement.y * 0.5 + 0.5, playerMovement.z * 5);
+            } else if (this.startRiding(player)) {
+                AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setMountedAerbunny(this));
+                this.level.playSound(player, this, AetherSoundEvents.ENTITY_AERBUNNY_LIFT.get(), SoundSource.NEUTRAL, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
             }
             return InteractionResult.SUCCESS;
         }
@@ -188,9 +198,23 @@ public class Aerbunny extends AetherAnimal {
     }
 
     @Override
-    protected void jumpFromGround() {
-        super.jumpFromGround();
-        this.puff();
+    public boolean hurt(DamageSource pSource, float pAmount) {
+        boolean flag = super.hurt(pSource, pAmount);
+        if (flag && pSource.getEntity() instanceof Player) {
+            this.setAfraid(true);
+        }
+        return flag;
+    }
+
+    /**
+     * Handle the small hops in the air
+     */
+    protected void midairJump() {
+        Vec3 motion = this.getDeltaMovement();
+        if (motion.y < 0) {
+            this.puff();
+        }
+        this.setDeltaMovement(new Vec3(motion.x, 0.25, motion.z));
     }
 
     public void puff() {
@@ -210,6 +234,22 @@ public class Aerbunny extends AetherAnimal {
 
     public void setPuffiness(int i) {
         this.entityData.set(DATA_PUFFINESS_ID, i);
+    }
+
+    public boolean isFastFalling() {
+        return this.entityData.get(DATA_FAST_FALLING);
+    }
+
+    public void setFastFalling(boolean flag) {
+        this.entityData.set(DATA_FAST_FALLING, flag);
+    }
+
+    public boolean isAfraid() {
+        return this.afraid;
+    }
+
+    public void setAfraid(boolean fear) {
+        this.afraid = fear;
     }
 
     @Override
@@ -238,6 +278,18 @@ public class Aerbunny extends AetherAnimal {
     }
 
     @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putBoolean("Afraid", this.afraid);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        this.afraid = tag.getBoolean("Afraid");
+    }
+
+    @Override
     public boolean isInvulnerableTo(@Nonnull DamageSource damageSource) {
         return (this.getVehicle() != null && this.getVehicle() == damageSource.getEntity()) || super.isInvulnerableTo(damageSource);
     }
@@ -258,24 +310,83 @@ public class Aerbunny extends AetherAnimal {
         return AetherEntityTypes.AERBUNNY.get().create(level);
     }
 
-    public static class HopGoal extends Goal {
+    public static class RunLikeHellGoal extends Goal {
         private final Aerbunny aerbunny;
+        private final double speedModifier;
 
-        public HopGoal(Aerbunny entity) {
-            this.aerbunny = entity;
-            setFlags(EnumSet.of(Flag.JUMP));
+        public RunLikeHellGoal(Aerbunny aerbunny, double speedModifier) {
+            this.aerbunny = aerbunny;
+            this.speedModifier = speedModifier;
+            this.setFlags(EnumSet.of(Flag.MOVE));
         }
 
         @Override
         public boolean canUse() {
-            return this.aerbunny.getDeltaMovement().z > 0.0 || this.aerbunny.getDeltaMovement().x > 0.0 || this.aerbunny.onGround;
+            return this.aerbunny.isAfraid();
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return !this.aerbunny.getNavigation().isDone() && this.aerbunny.random.nextInt(20) != 0;
+        }
+
+        @Override
+        public void start() {
+            LivingEntity attacker = this.aerbunny.level.getNearestPlayer(this.aerbunny, 12);
+            if (attacker == null) {
+                return;
+            }
+            Vec3 position = this.aerbunny.position();
+            double angle = Mth.atan2(position.x() - attacker.getX(), position.z() - attacker.getZ());
+            float angleOffset = this.aerbunny.random.nextFloat() * 2 - 1;
+            angle += angleOffset * 0.75;
+            double x = position.x() + Math.sin(angle) * 8;
+            double z = position.z() + Math.cos(angle) * 8;
+            boolean flag = this.aerbunny.navigation.moveTo(x, this.aerbunny.getY(), z, this.speedModifier);
+            if (!flag) {
+                this.aerbunny.getLookControl().setLookAt(attacker, 30, 30);
+            }
         }
 
         @Override
         public void tick() {
-            if (this.aerbunny.getDeltaMovement().x != 0.0 || this.aerbunny.getDeltaMovement().z != 0.0) {
-                this.aerbunny.jumpControl.jump();
+            if (this.aerbunny.getRandom().nextInt(4) == 0) {
+                ((ServerLevel)this.aerbunny.level).sendParticles(ParticleTypes.SPLASH, this.aerbunny.getRandomX(0.5), this.aerbunny.getRandomY(), this.aerbunny.getRandomZ(0.5), 2, 0, 0, 0, 0);
             }
+        }
+    }
+
+    public static class AerbunnyMoveControl extends MoveControl {
+        private final Aerbunny aerbunny;
+
+        public AerbunnyMoveControl(Aerbunny aerbunny) {
+            super(aerbunny);
+            this.aerbunny = aerbunny;
+        }
+
+        @Override
+        public void tick() {
+            super.tick();
+            if (this.aerbunny.zza != 0) {
+                if (this.aerbunny.onGround) {
+                    this.aerbunny.jumpControl.jump();
+                } else {
+                    int x = Mth.floor(this.aerbunny.getX());
+                    int y = Mth.floor(this.aerbunny.getBoundingBox().minY);
+                    int z = Mth.floor(this.aerbunny.getZ());
+                    if (this.checkForSurfaces(this.aerbunny.level, x, y, z)) {
+                        this.aerbunny.midairJump();
+                    }
+                }
+            }
+        }
+
+        private boolean checkForSurfaces(Level level, int x, int y, int z) {
+            BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(x, y, z);
+            if (level.getBlockState(pos.setY(y - 1)).isAir()) {
+                return false;
+            }
+            return level.getBlockState(pos.setY(y + 2)).isAir() && level.getBlockState(pos.setY(y + 1)).isAir();
         }
     }
 }
