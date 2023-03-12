@@ -11,6 +11,7 @@ import com.gildedgames.aether.network.packet.client.ExplosionParticlePacket;
 import com.gildedgames.aether.network.packet.server.AerbunnyPuffPacket;
 import com.gildedgames.aether.util.EntityUtil;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
@@ -45,7 +46,9 @@ import net.minecraftforge.common.ForgeMod;
 public class Aerbunny extends AetherAnimal {
     public static final EntityDataAccessor<Integer> DATA_PUFFINESS_ID = SynchedEntityData.defineId(Aerbunny.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Boolean> DATA_FAST_FALLING = SynchedEntityData.defineId(Aerbunny.class, EntityDataSerializers.BOOLEAN);
+
     public int puffSubtract;
+    private boolean afraid;
     private Vec3 lastPos;
 
     public Aerbunny(EntityType<? extends Aerbunny> type, Level level) {
@@ -194,6 +197,15 @@ public class Aerbunny extends AetherAnimal {
         super.stopRiding();
     }
 
+    @Override
+    public boolean hurt(DamageSource pSource, float pAmount) {
+        boolean flag = super.hurt(pSource, pAmount);
+        if (flag && pSource.getEntity() instanceof Player) {
+            this.setAfraid(true);
+        }
+        return flag;
+    }
+
     /**
      * Handle the small hops in the air
      */
@@ -232,6 +244,14 @@ public class Aerbunny extends AetherAnimal {
         this.entityData.set(DATA_FAST_FALLING, flag);
     }
 
+    public boolean isAfraid() {
+        return this.afraid;
+    }
+
+    public void setAfraid(boolean fear) {
+        this.afraid = fear;
+    }
+
     @Override
     public boolean isFood(ItemStack stack) {
         return stack.is(AetherTags.Items.AERBUNNY_TEMPTATION_ITEMS);
@@ -255,6 +275,18 @@ public class Aerbunny extends AetherAnimal {
     @Override
     public double getMyRidingOffset() {
         return this.getVehicle() != null && this.getVehicle().isCrouching() ? 0.4 : 0.575;
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putBoolean("Afraid", this.afraid);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        this.afraid = tag.getBoolean("Afraid");
     }
 
     @Override
@@ -290,7 +322,7 @@ public class Aerbunny extends AetherAnimal {
 
         @Override
         public boolean canUse() {
-            return this.aerbunny.getLastHurtByMob() != null;
+            return this.aerbunny.isAfraid();
         }
 
         @Override
@@ -300,7 +332,7 @@ public class Aerbunny extends AetherAnimal {
 
         @Override
         public void start() {
-            LivingEntity attacker = this.aerbunny.getLastHurtByMob();
+            LivingEntity attacker = this.aerbunny.level.getNearestPlayer(this.aerbunny, 12);
             if (attacker == null) {
                 return;
             }
@@ -310,19 +342,23 @@ public class Aerbunny extends AetherAnimal {
             angle += angleOffset * 0.75;
             double x = position.x() + Math.sin(angle) * 8;
             double z = position.z() + Math.cos(angle) * 8;
-            this.aerbunny.navigation.moveTo(x, this.aerbunny.getY(), z, this.speedModifier);
+            boolean flag = this.aerbunny.navigation.moveTo(x, this.aerbunny.getY(), z, this.speedModifier);
+            if (!flag) {
+                this.aerbunny.getLookControl().setLookAt(attacker, 30, 30);
+            }
         }
 
         @Override
         public void tick() {
-            Vec3 position = this.aerbunny.position();
-            Vec3 motion = this.aerbunny.getDeltaMovement();
-            this.aerbunny.level.addParticle(ParticleTypes.SPLASH, position.x, position.y, position.z, motion.x, motion.y, motion.z);
+            if (this.aerbunny.getRandom().nextInt(4) == 0) {
+                ((ServerLevel)this.aerbunny.level).sendParticles(ParticleTypes.SPLASH, this.aerbunny.getRandomX(0.5), this.aerbunny.getRandomY(), this.aerbunny.getRandomZ(0.5), 2, 0, 0, 0, 0);
+            }
         }
     }
 
     public static class AerbunnyMoveControl extends MoveControl {
         private final Aerbunny aerbunny;
+
         public AerbunnyMoveControl(Aerbunny aerbunny) {
             super(aerbunny);
             this.aerbunny = aerbunny;
