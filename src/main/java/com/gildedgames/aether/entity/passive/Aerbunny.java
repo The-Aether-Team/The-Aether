@@ -58,8 +58,7 @@ public class Aerbunny extends AetherAnimal {
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, Ingredient.of(AetherTags.Items.AERBUNNY_TEMPTATION_ITEMS), false));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
-        this.goalSelector.addGoal(5, new HopGoal(this));
-        this.goalSelector.addGoal(6, new FallingRandomStrollGoal(this, 2.0, 6));
+        this.goalSelector.addGoal(5, new FallingRandomStrollGoal(this, 1.0, 6));
     }
 
     /*@Nonnull
@@ -71,7 +70,7 @@ public class Aerbunny extends AetherAnimal {
     @Nonnull
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 5.0)
+                .add(Attributes.MAX_HEALTH, 6.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.25);
     }
 
@@ -276,27 +275,6 @@ public class Aerbunny extends AetherAnimal {
         return AetherEntityTypes.AERBUNNY.get().create(level);
     }
 
-    public static class HopGoal extends Goal {
-        private final Aerbunny aerbunny;
-
-        public HopGoal(Aerbunny entity) {
-            this.aerbunny = entity;
-            setFlags(EnumSet.of(Flag.JUMP));
-        }
-
-        @Override
-        public boolean canUse() {
-            return this.aerbunny.getDeltaMovement().z > 0.0 || this.aerbunny.getDeltaMovement().x > 0.0 || this.aerbunny.onGround;
-        }
-
-        @Override
-        public void tick() {
-            if (this.aerbunny.getDeltaMovement().x != 0.0 || this.aerbunny.getDeltaMovement().z != 0.0) {
-                this.aerbunny.jumpControl.jump();
-            }
-        }
-    }
-
     public static class RunLikeHellGoal extends Goal {
         private final Aerbunny aerbunny;
         private final double speedModifier;
@@ -314,26 +292,30 @@ public class Aerbunny extends AetherAnimal {
 
         @Override
         public boolean canContinueToUse() {
-            return super.canContinueToUse();
+            return !this.aerbunny.getNavigation().isDone() && this.aerbunny.random.nextInt(4) != 0;
+        }
+
+        @Override
+        public void start() {
+            LivingEntity attacker = this.aerbunny.getLastHurtByMob();
+            if (attacker == null) {
+                return;
+            }
+            Vec3 position = this.aerbunny.position();
+            double angle = Mth.atan2(position.x() - attacker.getX(), position.z() - attacker.getZ());
+            float angleOffset = this.aerbunny.random.nextFloat() * 2 - 1;
+            angle += angleOffset * 0.75;
+            double x = position.x() + Math.sin(angle) * 8;
+            double z = position.z() + Math.cos(angle) * 8;
+
+            this.aerbunny.navigation.moveTo(x, this.aerbunny.getY(), z, this.speedModifier);
         }
 
         @Override
         public void tick() {
-            LivingEntity attacker = this.aerbunny.getLastHurtByMob();
-            if (attacker == null || this.aerbunny.random.nextInt(4) != 0) {
-                return;
-            }
             Vec3 position = this.aerbunny.position();
-            double xDistance = position.x() - attacker.getX();
-            double zDistance = position.z() - attacker.getZ();
-            double angle = Mth.atan2(zDistance, xDistance);
-            float angleOffset = this.aerbunny.random.nextFloat() * 2 - 1;
-            angle += angleOffset * 0.75;
-            double x = position.x() + Math.sin(angle) * 8;
-            double z = position.z() - Math.cos(angle) * 8;
-
-            this.aerbunny.navigation.moveTo(x, this.aerbunny.getY(), z, this.speedModifier);
-            this.aerbunny.level.addParticle(ParticleTypes.SPLASH, position.x, position.y, position.z, 0, 0, 0);
+            Vec3 motion = this.aerbunny.getDeltaMovement();
+            this.aerbunny.level.addParticle(ParticleTypes.SPLASH, position.x, position.y, position.z, motion.x, motion.y, motion.z);
         }
     }
 }
