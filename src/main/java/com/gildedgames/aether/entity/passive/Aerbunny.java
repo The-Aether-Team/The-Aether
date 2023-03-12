@@ -5,7 +5,6 @@ import com.gildedgames.aether.entity.ai.goal.FallingRandomStrollGoal;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.capability.player.AetherPlayer;
-import com.gildedgames.aether.entity.ai.navigator.FallPathNavigation;
 import com.gildedgames.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.ExplosionParticlePacket;
@@ -18,7 +17,6 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -58,17 +56,11 @@ public class Aerbunny extends AetherAnimal {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new RunLikeHellGoal(this, 1.25));
+        this.goalSelector.addGoal(1, new RunLikeHellGoal(this, 1.3));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.2, Ingredient.of(AetherTags.Items.AERBUNNY_TEMPTATION_ITEMS), false));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
-        this.goalSelector.addGoal(5, new FallingRandomStrollGoal(this, 1.0, 120));
-    }
-
-    @Nonnull
-    @Override
-    protected PathNavigation createNavigation(@Nonnull Level level) {
-        return new FallPathNavigation(this, level);
+        this.goalSelector.addGoal(5, new FallingRandomStrollGoal(this, 1.0, 80));
     }
 
     @Nonnull
@@ -303,7 +295,7 @@ public class Aerbunny extends AetherAnimal {
 
         @Override
         public boolean canContinueToUse() {
-            return !this.aerbunny.getNavigation().isDone() && this.aerbunny.random.nextInt(4) != 0;
+            return !this.aerbunny.getNavigation().isDone() && this.aerbunny.random.nextInt(20) != 0;
         }
 
         @Override
