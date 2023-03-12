@@ -5,6 +5,7 @@ import com.gildedgames.aether.entity.ai.goal.FallingRandomStrollGoal;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.capability.player.AetherPlayer;
+import com.gildedgames.aether.entity.ai.navigator.FallPathNavigation;
 import com.gildedgames.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.ExplosionParticlePacket;
@@ -15,7 +16,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -49,6 +52,7 @@ public class Aerbunny extends AetherAnimal {
 
     public Aerbunny(EntityType<? extends Aerbunny> type, Level level) {
         super(type, level);
+        this.moveControl = new AerbunnyMoveControl(this);
     }
 
     @Override
@@ -56,16 +60,16 @@ public class Aerbunny extends AetherAnimal {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new RunLikeHellGoal(this, 1.25));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25, Ingredient.of(AetherTags.Items.AERBUNNY_TEMPTATION_ITEMS), false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.2, Ingredient.of(AetherTags.Items.AERBUNNY_TEMPTATION_ITEMS), false));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
-        this.goalSelector.addGoal(5, new FallingRandomStrollGoal(this, 1.0, 6));
+        this.goalSelector.addGoal(5, new FallingRandomStrollGoal(this, 1.0, 120));
     }
 
-    /*@Nonnull
+    @Nonnull
     @Override
     protected PathNavigation createNavigation(@Nonnull Level level) {
         return new FallPathNavigation(this, level);
-    }*/
+    }
 
     @Nonnull
     public static AttributeSupplier.Builder createMobAttributes() {
@@ -74,6 +78,7 @@ public class Aerbunny extends AetherAnimal {
                 .add(Attributes.MOVEMENT_SPEED, 0.25);
     }
 
+    @Override
     public void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_PUFFINESS_ID, 0);
@@ -82,6 +87,7 @@ public class Aerbunny extends AetherAnimal {
 
     @Override
     public void tick() {
+        this.flyingSpeed = this.getSpeed() * 0.21600002F;
         super.tick();
         if (!this.isFastFalling()) {
             this.handleFallSpeed();
@@ -162,7 +168,7 @@ public class Aerbunny extends AetherAnimal {
 
     @Nonnull
     @Override
-    public InteractionResult mobInteract(Player player, @Nonnull InteractionHand hand) {
+    public InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
         InteractionResult result = super.mobInteract(player, hand);
         if (!(this.getVehicle() instanceof Player vehicle) || vehicle.equals(player)) {
             if (player.isShiftKeyDown() || result == InteractionResult.PASS || result == InteractionResult.FAIL) {
@@ -196,10 +202,15 @@ public class Aerbunny extends AetherAnimal {
         super.stopRiding();
     }
 
-    @Override
-    protected void jumpFromGround() {
-        super.jumpFromGround();
-        this.puff();
+    /**
+     * Handle the small hops in the air
+     */
+    protected void midairJump() {
+        Vec3 motion = this.getDeltaMovement();
+        if (motion.y < 0) {
+            this.puff();
+        }
+        this.setDeltaMovement(new Vec3(motion.x, 0.25, motion.z));
     }
 
     public void puff() {
@@ -307,7 +318,6 @@ public class Aerbunny extends AetherAnimal {
             angle += angleOffset * 0.75;
             double x = position.x() + Math.sin(angle) * 8;
             double z = position.z() + Math.cos(angle) * 8;
-
             this.aerbunny.navigation.moveTo(x, this.aerbunny.getY(), z, this.speedModifier);
         }
 
@@ -316,6 +326,39 @@ public class Aerbunny extends AetherAnimal {
             Vec3 position = this.aerbunny.position();
             Vec3 motion = this.aerbunny.getDeltaMovement();
             this.aerbunny.level.addParticle(ParticleTypes.SPLASH, position.x, position.y, position.z, motion.x, motion.y, motion.z);
+        }
+    }
+
+    public static class AerbunnyMoveControl extends MoveControl {
+        private final Aerbunny aerbunny;
+        public AerbunnyMoveControl(Aerbunny aerbunny) {
+            super(aerbunny);
+            this.aerbunny = aerbunny;
+        }
+
+        @Override
+        public void tick() {
+            super.tick();
+            if (this.aerbunny.zza != 0) {
+                if (this.aerbunny.onGround) {
+                    this.aerbunny.jumpControl.jump();
+                } else {
+                    int x = Mth.floor(this.aerbunny.getX());
+                    int y = Mth.floor(this.aerbunny.getBoundingBox().minY);
+                    int z = Mth.floor(this.aerbunny.getZ());
+                    if (this.checkForSurfaces(this.aerbunny.level, x, y, z)) {
+                        this.aerbunny.midairJump();
+                    }
+                }
+            }
+        }
+
+        private boolean checkForSurfaces(Level level, int x, int y, int z) {
+            BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(x, y, z);
+            if (level.getBlockState(pos.setY(y - 1)).isAir()) {
+                return false;
+            }
+            return level.getBlockState(pos.setY(y + 2)).isAir() && level.getBlockState(pos.setY(y + 1)).isAir();
         }
     }
 }
