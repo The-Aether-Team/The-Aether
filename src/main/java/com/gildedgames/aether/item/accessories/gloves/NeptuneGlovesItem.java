@@ -1,6 +1,7 @@
-package com.gildedgames.aether.item.combat.loot;
+package com.gildedgames.aether.item.accessories.gloves;
 
 import com.gildedgames.aether.item.accessories.gloves.GlovesItem;
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -21,6 +22,6 @@ public class NeptuneGlovesItem extends GlovesItem {
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
         Multimap<Attribute, AttributeModifier> attributes = super.getAttributeModifiers(slotContext, uuid, stack);
         attributes.put(ForgeMod.SWIM_SPEED.get(), new AttributeModifier(uuid, "Swim speed", 0.2, AttributeModifier.Operation.ADDITION));
-        return super.getAttributeModifiers(slotContext, uuid, stack);
+        return attributes;
     }
 }
