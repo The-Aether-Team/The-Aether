@@ -10,7 +10,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -42,11 +41,11 @@ public interface PhoenixArmor {
                         float defaultBoost = boostWithDepthStrider(entity);
                         aetherPlayer.setPhoenixSubmergeLength(Math.min(aetherPlayer.getPhoenixSubmergeLength() + 0.1, 1.0));
                         defaultBoost *= aetherPlayer.getPhoenixSubmergeLength();
-                        entity.moveRelative(0.08F * defaultBoost, new Vec3(entity.xxa, entity.yya, entity.zza));
+                        entity.moveRelative(0.04F * defaultBoost, new Vec3(entity.xxa, entity.yya, entity.zza));
                     });
                 } else {
                     float defaultBoost = boostWithDepthStrider(entity);
-                    entity.moveRelative(0.08F * defaultBoost, new Vec3(entity.xxa, entity.yya, entity.zza));
+                    entity.moveRelative(0.04F * defaultBoost, new Vec3(entity.xxa, entity.yya, entity.zza));
                 }
             }
             if (entity.getLevel() instanceof ServerLevel level) {
