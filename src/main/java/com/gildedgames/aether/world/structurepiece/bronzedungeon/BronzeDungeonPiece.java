@@ -1,7 +1,7 @@
 package com.gildedgames.aether.world.structurepiece.bronzedungeon;
 
-
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.world.structurepiece.AetherTemplateStructurePiece;
 import com.google.common.collect.ImmutableList;
@@ -30,6 +30,7 @@ public abstract class BronzeDungeonPiece extends AetherTemplateStructurePiece {
             new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.CARVED_STONE.get(), 0.13F), AlwaysTrueTest.INSTANCE, ON_FLOOR, AetherBlocks.TRAPPED_CARVED_STONE.get().defaultBlockState()),
             new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.SENTRY_STONE.get(), 0.003F), AlwaysTrueTest.INSTANCE, ON_FLOOR, AetherBlocks.TRAPPED_SENTRY_STONE.get().defaultBlockState())
     ));
+    public static final StructureProcessor AVOID_DUNGEONS = new ProtectedBlockProcessor(AetherTags.Blocks.NON_BRONZE_DUNGEON_REPLACEABLE);
 
     public BronzeDungeonPiece(StructurePieceType type, StructureTemplateManager manager, String name, StructurePlaceSettings settings, BlockPos pos) {
         super(type, manager, makeLocation(name), settings, pos);
