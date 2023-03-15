@@ -137,14 +137,13 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS,
                 AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS,
                 AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS);
-        this.tag(AetherTags.Blocks.NON_TUNNEL_REPLACEABLE).add(
+        this.tag(AetherTags.Blocks.NON_BRONZE_DUNGEON_REPLACEABLE).add(
                 Blocks.AIR,
                 Blocks.CHEST,
                 AetherBlocks.CHEST_MIMIC.get(),
                 AetherBlocks.TREASURE_CHEST.get()
         ).addTags(
                 AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
-                AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS,
                 AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS,
                 AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS
         );

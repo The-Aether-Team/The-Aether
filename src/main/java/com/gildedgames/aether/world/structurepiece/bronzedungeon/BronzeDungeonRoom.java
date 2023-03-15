@@ -1,6 +1,5 @@
 package com.gildedgames.aether.world.structurepiece.bronzedungeon;
 
-
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.loot.AetherLoot;
 import com.gildedgames.aether.world.processor.DoubleDropsProcessor;
@@ -14,8 +13,7 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
+import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 
 /**
  * A normal bronze dungeon room or hallway.
@@ -30,7 +28,11 @@ public class BronzeDungeonRoom extends BronzeDungeonPiece {
     }
 
     static StructurePlaceSettings makeSettings() {
-        return new StructurePlaceSettings().addProcessor(BRONZE_DUNGEON_STONE).addProcessor(TRAPPED_CARVED_STONE).addProcessor(DoubleDropsProcessor.INSTANCE);
+        return new StructurePlaceSettings()
+                .addProcessor(BRONZE_DUNGEON_STONE)
+                .addProcessor(TRAPPED_CARVED_STONE)
+                .addProcessor(AVOID_DUNGEONS)
+                .addProcessor(DoubleDropsProcessor.INSTANCE);
     }
 
     @Override
