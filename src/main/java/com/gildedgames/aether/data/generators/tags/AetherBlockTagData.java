@@ -144,7 +144,6 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherBlocks.TREASURE_CHEST.get()
         ).addTags(
                 AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
-                AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS,
                 AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS,
                 AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS
         );
