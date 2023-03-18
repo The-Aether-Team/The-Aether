@@ -1,13 +1,17 @@
 ![Banner image](assets/banner.webp)
 # The Aether
 
-Gilded Games presents the original Aether mod! Up to date for modern Minecraft versions and fully compatible with multiplayer. The Aether is a dimension of floating islands high in the sky, where you can begin a new survival adventure packed with new ores, mythical creatures and perilous Dungeons! All you need to do is construct a Glowstone frame and add water to light the mystical portal, and once you step in you’ll be transported immediately to the luscious hostile paradise of the Aether! Gilded Games has ensured to maintain the Aether as close to its original state from 2011 as possible, while continuing to work on the sequel, Aether II.
+Gilded Games presents the original Aether mod! Up to date for modern Minecraft versions and fully compatible with multiplayer. The Aether is a dimension of floating islands high in the sky, where you can begin a new survival adventure packed with new ores, mythical creatures and perilous Dungeons! All you need to do is construct a Glowstone frame and add water to light the mystical portal, and once you step in you’ll be transported immediately to the luscious hostile paradise of the Aether! Gilded Games has ensured to maintain the Aether as close to its original state from 2011 as possible, while still making improvements for modern versions. The team also continues to work on the mod's sequel, Aether II.
 
 ## :heart: Support Gilded Games
 
-[![Patreon pledgers](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3DGildedGames%26type%3Dpatrons&style=flat-square)](https://patreon.com/GildedGames)
-[![Discord user count](https://img.shields.io/discord/118816101936267265.svg?logoColor=FFFFFF&logo=discord&color=7289DA&style=flat-square)](https://discord.gg/aethermod)
-[![Twitter followers](https://img.shields.io/badge/twitter-@DevAether-lightgrey?style=flat-square&logo=twitter&color=1DA1F2)](https://twitter.com/DevAether)
+[![Patreon](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3DGildedGames%26type%3Dpatrons&style=flat-square&logoColor=white)](https://patreon.com/GildedGames)
+[![Discord](https://img.shields.io/discord/118816101936267265.svg?label=discord&logoColor=FFFFFF&logo=discord&color=7289DA&style=flat-square)](https://discord.gg/aethermod)
+[![Twitter](https://img.shields.io/badge/twitter-@DevAether-lightgrey?style=flat-square&logo=twitter&color=1DA1F2&logoColor=white)](https://twitter.com/DevAether)
+[![Facebook](https://img.shields.io/badge/facebook-AetherMod-blue?logo=facebook&style=flat-square&color=1877F2&logoColor=white)](https://www.facebook.com/AetherMod)
+[![YouTube](https://img.shields.io/youtube/channel/subscribers/UCzynznDiVtxzx-gTM8y02ew?color=FF0000&label=youtube&logo=youtube&style=flat-square)](https://www.youtube.com/c/GildedGames)
+[![Twitch](https://img.shields.io/twitch/status/theaetherteam?logo=twitch&style=flat-square&logoColor=white)](https://www.twitch.tv/gildedgames)
+[![Reddit](https://img.shields.io/reddit/subreddit-subscribers/TheAether?color=FF4500&label=reddit&logo=reddit&style=flat-square&logoColor=white)](https://www.reddit.com/r/TheAether/)
 
 If you enjoy our work, [please consider making a pledge](https://patreon.com/GildedGames) today to help fund development. Every pledge goes directly into our development process and services, enabling us to continue making the Minecraft mods you know and love.
 
@@ -133,3 +137,9 @@ If you are interested in contributing translations to The Aether, check out our 
 
 ### :hammer: Contributions
 All of our code contribution credits can be found [here](https://github.com/Gilded-Games/The-Aether/blob/1.19/CREDITS.txt). If you contributed to the project and do not see your name, please contact us.
+
+### :file_folder: Dependencies
+The Aether would not be possible without the features provided by the APIs and libraries it implements. Thanks goes to:
+| Library | Information |
+| ------- | ----------- |
+| [![Curios](assets/dependencies/curios.webp)](https://www.curseforge.com/minecraft/mc-mods/curios) | Curios API was created by [C4](https://github.com/TheIllusiveC4).<br />The source can be found at https://github.com/TheIllusiveC4/Curios.<br />The dependency is licensed under [LGPL v3](https://www.gnu.org/licenses/lgpl-3.0). |
