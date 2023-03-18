@@ -1,6 +1,7 @@
 package com.gildedgames.aether.item.combat.loot;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.data.resources.AetherDamageTypes;
 import com.gildedgames.aether.item.combat.AetherItemTiers;
 import com.gildedgames.aether.item.AetherItems;
 
@@ -52,8 +53,7 @@ public class PigSlayerItem extends AetherSwordItem {
 						zombifiedPiglinAccessor.callAlertOthers();
 					}
 				}
-				// TODO: Set this to bypass armor
-				DamageSource damageSource = attacker instanceof Player player ? player.damageSources().playerAttack(player) : attacker.damageSources().mobAttack(attacker);//.bypassArmor();
+				DamageSource damageSource = AetherDamageTypes.entityDamageSource(attacker.level, AetherDamageTypes.ARMOR_PIERCING_ATTACK, attacker);
 				target.hurt(damageSource, 26); // This doesn't deal 26 hearts of damage, it deals 20.
 				if (target.getLevel() instanceof ServerLevel level) {
 					for (int i = 0; i < 20; i++) {

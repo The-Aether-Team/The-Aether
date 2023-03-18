@@ -142,7 +142,7 @@ public class AetherCustomizationsScreen extends Screen
         drawCenteredString(poseStack, this.font, this.title, this.width / 2, 15, 16777215);
         int x = (this.width / 2) - 175;
         int y = (this.height / 2) + 50;
-        InventoryScreen.renderEntityInInventory(poseStack, x + 33, y, 60, (float) (x + 33 - mouseX), (float) (y - 100 - mouseY), this.minecraft.player);
+//        InventoryScreen.renderEntityInInventory(poseStack, x + 33, y, 60, (float) (x + 33 - mouseX), (float) (y - 100 - mouseY), this.minecraft.player); FIXME: Quaternions
         super.render(poseStack, mouseX, mouseY, pPartialTick);
     }
 

@@ -18,7 +18,10 @@ public class AetherDamageTypeTagData extends DamageTypeTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        this.tag(DamageTypeTags.BYPASSES_ARMOR).add(AetherDamageTypes.INEBRIATION);
+        this.tag(DamageTypeTags.BYPASSES_ARMOR).add(
+                AetherDamageTypes.ARMOR_PIERCING_ATTACK,
+                AetherDamageTypes.INEBRIATION
+        );
         this.tag(DamageTypeTags.DAMAGES_HELMET).add(AetherDamageTypes.FLOATING_BLOCK);
         this.tag(DamageTypeTags.IS_FIRE).add(
                 AetherDamageTypes.INCINERATION,

@@ -1,10 +1,10 @@
 package com.gildedgames.aether.item.combat.loot;
 
+import com.gildedgames.aether.data.resources.AetherDamageTypes;
 import com.gildedgames.aether.item.combat.AetherItemTiers;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.item.combat.AetherSwordItem;
 import com.gildedgames.aether.util.EquipmentUtil;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.LivingEntity;
@@ -31,8 +31,7 @@ public class HolySwordItem extends AetherSwordItem {
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (EquipmentUtil.isFullStrength(attacker)) {
             if (target.getMobType() == MobType.UNDEAD || target.isInvertedHealAndHarm()) {
-                // TODO: Set this to bypass armor
-                DamageSource damageSource = (attacker instanceof Player player ? player.damageSources().playerAttack(player) : attacker.damageSources().mobAttack(attacker));//.bypassArmor();
+                DamageSource damageSource = AetherDamageTypes.entityDamageSource(attacker.level, AetherDamageTypes.ARMOR_PIERCING_ATTACK, attacker);
                 float damageAmount = 15.0F;
                 int smiteModifier = stack.getEnchantmentLevel(Enchantments.SMITE);
                 if (smiteModifier > 0) {
