@@ -129,7 +129,7 @@ The Aether is available in these languages thanks to the following contributors:
 | Russian*             | (ru_ru) | LeyxorCheysen, andreyalex1236, LunarP1, zombi1944, Foxgreat |
 | Swedish*             | (sv_se) | magicus                                                     |
 | Thai*                | (th_th) | ?                                                           |
-| Ukrainian*           | (uk_ua) | ?                                                           |
+| Ukrainian*           | (uk_ua) | Nerkin, un_roman                                            |
 
 _\* Indicates only partial language support._
 
