@@ -56,7 +56,7 @@ public class AetherTimeCapability implements AetherTime {
                 if (tempTime > 54000L) {
                     tempTime -= 72000L;
                 }
-                long target = Mth.clamp(18000L - tempTime, -10, 10);
+                long target = (long) Mth.clamp(18000L - tempTime, -10, 10);
                 dayTime += target;
             }
         } else {

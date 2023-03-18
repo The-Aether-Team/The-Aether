@@ -1,3 +1,4 @@
+/*
 package com.gildedgames.aether.integration.jei.categories;
 
 import com.gildedgames.aether.Aether;
@@ -79,3 +80,4 @@ public class FreezingRecipeCategory extends AbstractAetherCookingRecipeCategory 
         drawCookTime(recipe, stack, 45, background);
     }
 }
+*/

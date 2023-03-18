@@ -181,18 +181,19 @@ public class Aether {
         generator.addProvider(event.includeClient(), new AetherSoundData(packOutput, fileHelper));
 
         // Server Data
-        generator.addProvider(event.includeServer(), new AetherWorldGenData(packOutput, lookupProvider));
+        generator.addProvider(event.includeServer(), new AetherRegistrySets(packOutput, lookupProvider));
         generator.addProvider(event.includeServer(), new AetherRecipeData(packOutput));
         generator.addProvider(event.includeServer(), AetherLootTableData.create(packOutput));
         generator.addProvider(event.includeServer(), new AetherLootModifierData(packOutput));
         generator.addProvider(event.includeServer(), new AetherAdvancementData(packOutput, lookupProvider, fileHelper));
         AetherBlockTagData blockTags = new AetherBlockTagData(packOutput, lookupProvider, fileHelper);
         generator.addProvider(event.includeServer(), blockTags);
-        generator.addProvider(event.includeServer(), new AetherItemTagData(packOutput, lookupProvider, blockTags, fileHelper));
+        generator.addProvider(event.includeServer(), new AetherItemTagData(packOutput, lookupProvider, blockTags.contentsGetter(), fileHelper));
         generator.addProvider(event.includeServer(), new AetherEntityTagData(packOutput, lookupProvider, fileHelper));
         generator.addProvider(event.includeServer(), new AetherFluidTagData(packOutput, lookupProvider, fileHelper));
         generator.addProvider(event.includeServer(), new AetherBiomeTagData(packOutput, lookupProvider, fileHelper));
         generator.addProvider(event.includeServer(), new AetherStructureTagData(packOutput, lookupProvider, fileHelper));
+        generator.addProvider(event.includeServer(), new AetherDamageTypeTagData(packOutput, lookupProvider));
     }
 
     public void packSetup(AddPackFindersEvent event) {
@@ -235,7 +236,7 @@ public class Aether {
         Path baseResourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_base");
         PathPackResources basePack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + baseResourcePath, false, baseResourcePath);
         List<PathPackResources> mergedPacks = List.of(pack, basePack);
-        Pack.ResourcesSupplier resourcesSupplier = (string) -> new CombinedPackResources(name, new PackMetadataSection(Component.translatable(description), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion())), mergedPacks, sourcePath);
+        Pack.ResourcesSupplier resourcesSupplier = (string) -> new CombinedPackResources(name, new PackMetadataSection(Component.translatable(description), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES)), mergedPacks, sourcePath);
         Pack.Info info = Pack.readPackInfo(name, resourcesSupplier);
         if (info != null) {
             event.addRepositorySource((source) ->
@@ -261,7 +262,7 @@ public class Aether {
         if (event.getPackType() == PackType.CLIENT_RESOURCES && ModList.get().isLoaded("ctm")) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/ctm_fix");
             PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
-            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.ctm.description"), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion()));
+            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.ctm.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
             event.addRepositorySource((source) ->
                     source.accept(Pack.create(
                         "builtin/aether_ctm_fix",

@@ -82,7 +82,6 @@ public class Aerbunny extends AetherAnimal {
 
     @Override
     public void tick() {
-        this.flyingSpeed = this.getSpeed() * 0.21600002F;
         super.tick();
         if (!this.isFastFalling()) {
             this.handleFallSpeed();
@@ -100,6 +99,11 @@ public class Aerbunny extends AetherAnimal {
         if (this.isOnGround() || !this.getFeetBlockState().isAir() || (this.getVehicle() != null && (this.getVehicle().isOnGround() || !this.getVehicle().getFeetBlockState().isAir()))) {
             this.lastPos = null;
         }
+    }
+
+    @Override
+    protected float getFlyingSpeed() {
+        return this.getSpeed() * 0.21600002F;
     }
 
     private void handleFallSpeed() {
@@ -155,7 +159,7 @@ public class Aerbunny extends AetherAnimal {
     @Override
     public void baseTick() {
         super.baseTick();
-        if (this.isAlive() && this.isEyeInFluidType(ForgeMod.WATER_TYPE.get()) && !this.level.getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ())).is(Blocks.BUBBLE_COLUMN)
+        if (this.isAlive() && this.isEyeInFluidType(ForgeMod.WATER_TYPE.get()) && !this.level.getBlockState(BlockPos.containing(this.getX(), this.getEyeY(), this.getZ())).is(Blocks.BUBBLE_COLUMN)
                 && this.isPassenger() && this.getVehicle() != null && !this.getVehicle().canBeRiddenUnderFluidType(ForgeMod.WATER_TYPE.get(), this) && this.level.isClientSide) {
             this.stopRiding();
         }

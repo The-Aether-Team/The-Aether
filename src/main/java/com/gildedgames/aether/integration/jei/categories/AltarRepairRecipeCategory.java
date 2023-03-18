@@ -1,3 +1,4 @@
+/*
 package com.gildedgames.aether.integration.jei.categories;
 
 import com.gildedgames.aether.Aether;
@@ -82,3 +83,4 @@ public class AltarRepairRecipeCategory extends AbstractAetherCookingRecipeCatego
         drawCookTime(recipe, stack, 45, background);
     }
 }
+*/

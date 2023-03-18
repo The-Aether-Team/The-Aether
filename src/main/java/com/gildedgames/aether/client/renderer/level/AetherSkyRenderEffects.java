@@ -219,7 +219,6 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
     @Override
     public boolean renderSky(ClientLevel level, int ticks, float partialTick, PoseStack poseStack, Camera camera, Matrix4f projectionMatrix, boolean isFoggy, Runnable setupFog) {
         LevelRenderer levelRenderer = Minecraft.getInstance().levelRenderer;
-        RenderSystem.disableTexture();
         Vec3 vec3 = this.getSkyColor(level, camera.getPosition(), partialTick);
         float f = (float) vec3.x;
         float f1 = (float) vec3.y;
@@ -237,7 +236,6 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
         float[] sunRiseRGBA = level.effects().getSunriseColor(level.getTimeOfDay(partialTick), partialTick);
         if (sunRiseRGBA != null) {
             RenderSystem.setShader(GameRenderer::getPositionColorShader);
-            RenderSystem.disableTexture();
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             poseStack.pushPose();
             poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
@@ -262,13 +260,11 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
             poseStack.popPose();
         }
 
-        RenderSystem.enableTexture();
         RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         poseStack.pushPose();
 
         this.drawCelestialBodies(partialTick, poseStack, level, bufferbuilder);
 
-        RenderSystem.disableTexture();
         float f10 = level.getStarBrightness(partialTick);
         if (f10 > 0.0F) {
             RenderSystem.setShaderColor(f10, f10, f10, f10);
@@ -282,7 +278,6 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.disableBlend();
         poseStack.popPose();
-        RenderSystem.disableTexture();
         RenderSystem.setShaderColor(0.0F, 0.0F, 0.0F, 1.0F);
 
         if (level.effects().hasGround()) {
@@ -291,7 +286,6 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
             RenderSystem.setShaderColor(f, f1, f2, 1.0F);
         }
 
-        RenderSystem.enableTexture();
         RenderSystem.depthMask(true);
 
         return true;

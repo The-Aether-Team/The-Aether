@@ -1,16 +1,15 @@
 package com.gildedgames.aether.entity.projectile.crystal;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
+import com.gildedgames.aether.data.resources.AetherDamageTypes;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -57,7 +56,7 @@ public class FireCrystal extends AbstractCrystal {
     protected void onHitEntity(EntityHitResult result) {
         Entity entity = result.getEntity();
         if (entity instanceof LivingEntity livingEntity) {
-            if (livingEntity.hurt(new IndirectEntityDamageSource("aether.fire_crystal", this, this.getOwner()).setProjectile(), 20.0F)) {
+            if (livingEntity.hurt(AetherDamageTypes.indirectEntityDamageSource(this.level, AetherDamageTypes.FIRE_CRYSTAL, this, this.getOwner()), 20.0F)) {
                 livingEntity.setSecondsOnFire(6);
                 this.level.playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
                 this.discard();

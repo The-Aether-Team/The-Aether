@@ -224,7 +224,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 						this.travelWithInput(new Vec3(0, vector3d.y(), 0));
 						this.lerpSteps = 0;
 					} else {
-						this.calculateEntityAnimation(this, false);
+						this.calculateEntityAnimation(false);
 						this.setDeltaMovement(Vec3.ZERO);
 					}
 				} else {

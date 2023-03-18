@@ -10,6 +10,7 @@ import com.gildedgames.aether.network.packet.server.ClearItemPacket;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.Tooltip;
@@ -31,6 +32,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.PacketDistributor;
+import org.joml.Quaternionf;
 import top.theillusivec4.curios.Curios;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
 import top.theillusivec4.curios.client.gui.RenderButton;
@@ -234,8 +236,11 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
             RenderSystem.setShaderTexture(0, this.minecraft.player.isCreative() ? ACCESSORIES_INVENTORY_CREATIVE : ACCESSORIES_INVENTORY);
             int i = this.getGuiLeft();
             int j = this.getGuiTop();
-            this.blit(matrixStack, i, j, 0, 0, this.getXSize() + this.creativeXOffset(), this.getYSize());
-            InventoryScreen.renderEntityInInventory(i + 33, j + 75, 30, (float) (i + 31) - mouseX, (float) (j + 75 - 50) - mouseY, this.minecraft.player);
+            blit(matrixStack, i, j, 0, 0, this.getXSize() + this.creativeXOffset(), this.getYSize());
+            Quaternionf lookRotation = (new Quaternionf()).rotateZ((float)Math.PI);
+            Quaternionf overrideRotation = (new Quaternionf()).rotateX(mouseY * 20.0F * ((float)Math.PI / 180F));
+            lookRotation.mul(overrideRotation);
+            InventoryScreen.renderEntityInInventory(matrixStack, i + 33, j + 75, 30, lookRotation, overrideRotation, this.minecraft.player);
         }
     }
 

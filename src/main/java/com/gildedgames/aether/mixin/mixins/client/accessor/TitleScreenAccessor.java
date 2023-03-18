@@ -1,5 +1,6 @@
 package com.gildedgames.aether.mixin.mixins.client.accessor;
 
+import net.minecraft.client.gui.components.LogoRenderer;
 import net.minecraft.client.gui.screens.TitleScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -13,8 +14,8 @@ public interface TitleScreenAccessor {
     @Accessor("splash")
     void aether$setSplash(String splash);
 
-    @Accessor("minceraftEasterEgg")
-    boolean aether$getMinceraftEasterEgg();
+    @Accessor("logoRenderer")
+    LogoRenderer aether$getLogoRenderer();
 
     @Mutable
     @Accessor("fading")

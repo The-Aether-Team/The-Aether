@@ -1,3 +1,4 @@
+/*
 package com.gildedgames.aether.integration.jei.categories;
 
 import com.gildedgames.aether.Aether;
@@ -91,3 +92,4 @@ public class IncubationRecipeCategory implements IRecipeCategory<IncubationRecip
         }
     }
 }
+*/

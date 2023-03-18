@@ -7,10 +7,10 @@ import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemDisplayContext;
 import org.joml.Quaternionf;
 import net.minecraft.world.inventory.InventoryMenu;
 
@@ -29,7 +29,7 @@ public class LightningKnifeRenderer extends EntityRenderer<ThrownLightningKnife>
 		quaternion.mul(Axis.XP.rotationDegrees((-(lightningKnife.xRotO + (lightningKnife.getXRot() - lightningKnife.xRotO) * partialTicks)) - 90.0F));
 		quaternion.mul(Axis.ZP.rotationDegrees(-135.0F));
 		poseStack.mulPose(quaternion);
-		Minecraft.getInstance().getItemRenderer().renderStatic(lightningKnife.getItem(), ItemTransforms.TransformType.GUI, packedLight, OverlayTexture.NO_OVERLAY, poseStack, buffer, lightningKnife.getId());
+		Minecraft.getInstance().getItemRenderer().renderStatic(lightningKnife.getItem(), ItemDisplayContext.GUI, packedLight, OverlayTexture.NO_OVERLAY, poseStack, buffer, lightningKnife.level, lightningKnife.getId());
 		poseStack.popPose();
 		super.render(lightningKnife, entityYaw, partialTicks, poseStack, buffer, packedLight);
 	}

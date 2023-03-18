@@ -34,6 +34,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.*;
 import net.minecraft.world.damagesource.DamageSource;
@@ -177,7 +178,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
      */
     @Override
     public boolean hurt(@Nonnull DamageSource source, float amount) {
-        if (source == DamageSource.OUT_OF_WORLD) {
+        if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             return super.hurt(source, amount);
         }
 
