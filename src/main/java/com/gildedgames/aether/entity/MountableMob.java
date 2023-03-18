@@ -90,7 +90,7 @@ public interface MountableMob {
                     serverGamePacketListenerImplAccessor.aether$setAboveGroundTickCount(0);
                     serverGamePacketListenerImplAccessor.aether$setAboveGroundVehicleTickCount(0);
                 }
-                vehicle.calculateEntityAnimation(vehicle, false);
+                vehicle.calculateEntityAnimation(false);
             } else {
                 AttributeInstance stepHeight = vehicle.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
                 if (stepHeight != null) {

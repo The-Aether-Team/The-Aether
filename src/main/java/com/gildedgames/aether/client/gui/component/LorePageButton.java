@@ -29,7 +29,7 @@ public class LorePageButton extends Button
     }
 
     @Override
-    public void renderButton(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void renderWidget(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         Minecraft minecraft = Minecraft.getInstance();
         Font fontrenderer = minecraft.font;
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -37,13 +37,14 @@ public class LorePageButton extends Button
         RenderSystem.clearColor(1.0F, 1.0F, 1.0F, this.alpha);
         boolean flag = false;
         if (this.isActive) flag = this.isHovered;
-        int i = this.getYImage(flag);
+//        int i = this.getYImage(flag); FIXME
+        int i = this.getY();
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.enableDepthTest();
-        this.blit(matrixStack, this.getX(), this.getY(), 0, 46 + i * 20, this.width / 2, this.height);
-        this.blit(matrixStack, this.getX() + this.width / 2, this.getY(), 200 - this.width / 2, 46 + i * 20, this.width / 2, this.height);
-        this.renderBg(matrixStack, minecraft, mouseX, mouseY);
+        blit(matrixStack, this.getX(), this.getY(), 0, 46 + i * 20, this.width / 2, this.height);
+        blit(matrixStack, this.getX() + this.width / 2, this.getY(), 200 - this.width / 2, 46 + i * 20, this.width / 2, this.height);
+//        this.renderBg(matrixStack, minecraft, mouseX, mouseY);
         int j = getFGColor();
         drawCenteredString(matrixStack, fontrenderer, this.getMessage(), this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2, j | Mth.ceil(this.alpha * 255.0F) << 24);
     }

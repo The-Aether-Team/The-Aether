@@ -76,8 +76,8 @@ public class VanillaLeftTitleScreen extends TitleScreen {
             ((TitleScreenAccessor)this).aether$getLogoRenderer().renderLogo(poseStack, this.width, f1);
             int l = Mth.ceil(f1 * 255.0F) << 24;
             if ((l & -67108864) != 0) {
-                if (this.warningLabel != null) {
-                    this.warningLabel.render(poseStack, l);
+                if (((TitleScreenAccessor)this).getWarningLabel() != null) {
+                    ((TitleScreenAccessor)this).getWarningLabel().render(poseStack, l);
                 }
                 net.minecraftforge.client.ForgeHooksClient.renderMainMenu(this, poseStack, this.font, this.width, this.height, l);
                 if (titleScreenAccessor.aether$getSplash() != null) {

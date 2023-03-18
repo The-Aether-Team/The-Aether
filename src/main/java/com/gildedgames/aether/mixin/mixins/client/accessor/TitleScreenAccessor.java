@@ -23,4 +23,7 @@ public interface TitleScreenAccessor {
 
     @Accessor("fadeInStart")
     void aether$setFadeInStart(long fadeInStart);
+
+    @Accessor
+    TitleScreen.WarningLabel getWarningLabel();
 }
