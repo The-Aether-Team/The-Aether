@@ -37,16 +37,26 @@ public class LorePageButton extends Button
         RenderSystem.clearColor(1.0F, 1.0F, 1.0F, this.alpha);
         boolean flag = false;
         if (this.isActive) flag = this.isHovered;
-//        int i = this.getYImage(flag); FIXME
-        int i = this.getY();
+        int i = this.getTextureY();
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.enableDepthTest();
         blit(matrixStack, this.getX(), this.getY(), 0, 46 + i * 20, this.width / 2, this.height);
         blit(matrixStack, this.getX() + this.width / 2, this.getY(), 200 - this.width / 2, 46 + i * 20, this.width / 2, this.height);
-//        this.renderBg(matrixStack, minecraft, mouseX, mouseY);
         int j = getFGColor();
         drawCenteredString(matrixStack, fontrenderer, this.getMessage(), this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2, j | Mth.ceil(this.alpha * 255.0F) << 24);
+    }
+
+    // [VANILLA COPY] - AbstractButton.getTextureY()
+    private int getTextureY() {
+        int i = 1;
+        if (!this.active) {
+            i = 0;
+        } else if (this.isHoveredOrFocused()) {
+            i = 2;
+        }
+
+        return 46 + i * 20;
     }
 
     public void setIsActive(boolean active) {

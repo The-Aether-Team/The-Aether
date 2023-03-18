@@ -28,7 +28,7 @@ public class AetherDamageTypes {
     public static final ResourceKey<DamageType> THUNDER_CRYSTAL = getKey("thunder_crystal");
 
     public static void bootstrap(BootstapContext<DamageType> context) {
-        context.register(ARMOR_PIERCING_ATTACK, new DamageType("aether.armor_piercing_attack", 0.1F));
+        context.register(ARMOR_PIERCING_ATTACK, new DamageType("mob", 0.1F));
         context.register(CLOUD_CRYSTAL, new DamageType("aether.cloud_crystal", 0.1F));
         context.register(CRUSH, new DamageType("aether.crush", 0.1F));
         context.register(FIRE_CRYSTAL, new DamageType("aether.fire_crystal", 0.1F, DamageEffects.BURNING));

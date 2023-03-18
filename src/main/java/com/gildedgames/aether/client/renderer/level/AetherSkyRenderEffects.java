@@ -278,8 +278,6 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
         RenderSystem.disableBlend();
         poseStack.popPose();
 
-//        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-
         RenderSystem.depthMask(true);
 
         return true;
