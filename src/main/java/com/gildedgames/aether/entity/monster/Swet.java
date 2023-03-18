@@ -394,7 +394,7 @@ public class Swet extends Slime implements MountableMob {
 
     @Override
     public float getFlyingSpeed() {
-        return this.getSteeringSpeed() * 0.25F;
+        return this.getControllingPassenger() != null ? this.getSteeringSpeed() * 0.25F : 0.02F;
     }
 
     @Override

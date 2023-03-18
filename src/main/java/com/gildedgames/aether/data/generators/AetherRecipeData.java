@@ -267,7 +267,6 @@ public class AetherRecipeData extends AetherRecipeProvider {
         makeGlovesWithTag(AetherItems.GOLDEN_GLOVES, Tags.Items.INGOTS_GOLD, "gold").save(consumer);
         makeGlovesWithTag(AetherItems.DIAMOND_GLOVES, Tags.Items.GEMS_DIAMOND, "diamond").save(consumer);
         legacyNetheriteSmithing(consumer, AetherItems.DIAMOND_GLOVES.get(), RecipeCategory.COMBAT, AetherItems.NETHERITE_GLOVES.get());
-        netheriteSmithing(consumer, AetherItems.NETHERITE_GLOVES.get(), RecipeCategory.COMBAT, AetherItems.NETHERITE_GLOVES.get());
         makeGloves(AetherItems.ZANITE_GLOVES, AetherItems.ZANITE_GEMSTONE).save(consumer);
         makeGlovesWithBlock(AetherItems.GRAVITITE_GLOVES, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
 

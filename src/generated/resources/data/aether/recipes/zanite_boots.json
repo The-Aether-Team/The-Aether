@@ -12,5 +12,6 @@
   ],
   "result": {
     "item": "aether:zanite_boots"
-  }
+  },
+  "show_notification": true
 }

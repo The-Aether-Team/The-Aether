@@ -232,7 +232,6 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
         ((LevelRendererAccessor) levelRenderer).aether$getSkyBuffer().drawWithShader(poseStack.last().pose(), projectionMatrix, shaderinstance);
         VertexBuffer.unbind();
         RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
         float[] sunRiseRGBA = level.effects().getSunriseColor(level.getTimeOfDay(partialTick), partialTick);
         if (sunRiseRGBA != null) {
             RenderSystem.setShader(GameRenderer::getPositionColorShader);
@@ -278,13 +277,8 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.disableBlend();
         poseStack.popPose();
-        RenderSystem.setShaderColor(0.0F, 0.0F, 0.0F, 1.0F);
 
-        if (level.effects().hasGround()) {
-            RenderSystem.setShaderColor(f * 0.2F + 0.04F, f1 * 0.2F + 0.04F, f2 * 0.6F + 0.1F, 1.0F);
-        } else {
-            RenderSystem.setShaderColor(f, f1, f2, 1.0F);
-        }
+//        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
         RenderSystem.depthMask(true);
 

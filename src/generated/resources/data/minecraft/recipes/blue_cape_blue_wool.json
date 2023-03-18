@@ -14,5 +14,6 @@
   ],
   "result": {
     "item": "aether:blue_cape"
-  }
+  },
+  "show_notification": true
 }

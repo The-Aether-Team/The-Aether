@@ -193,7 +193,7 @@ public class Aether {
         generator.addProvider(event.includeServer(), new AetherFluidTagData(packOutput, lookupProvider, fileHelper));
         generator.addProvider(event.includeServer(), new AetherBiomeTagData(packOutput, lookupProvider, fileHelper));
         generator.addProvider(event.includeServer(), new AetherStructureTagData(packOutput, lookupProvider, fileHelper));
-        generator.addProvider(event.includeServer(), new AetherDamageTypeTagData(packOutput, lookupProvider));
+        generator.addProvider(event.includeServer(), new AetherDamageTypeTagData(packOutput, lookupProvider, fileHelper));
     }
 
     public void packSetup(AddPackFindersEvent event) {

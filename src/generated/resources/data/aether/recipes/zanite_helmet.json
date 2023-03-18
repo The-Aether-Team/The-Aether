@@ -12,5 +12,6 @@
   ],
   "result": {
     "item": "aether:zanite_helmet"
-  }
+  },
+  "show_notification": true
 }

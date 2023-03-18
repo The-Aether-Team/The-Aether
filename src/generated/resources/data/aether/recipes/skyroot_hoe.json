@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "aether:skyroot_hoe"
-  }
+  },
+  "show_notification": true
 }
