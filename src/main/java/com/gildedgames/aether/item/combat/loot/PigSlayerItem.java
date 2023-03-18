@@ -8,6 +8,7 @@ import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.item.combat.AetherSwordItem;
 import com.gildedgames.aether.mixin.mixins.common.accessor.ZombifiedPiglinAccessor;
 import com.gildedgames.aether.util.EquipmentUtil;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.ZombifiedPiglin;
@@ -51,7 +52,8 @@ public class PigSlayerItem extends AetherSwordItem {
 						zombifiedPiglinAccessor.callAlertOthers();
 					}
 				}
-				DamageSource damageSource = (attacker instanceof Player player ? DamageSource.playerAttack(player) : DamageSource.mobAttack(attacker)).bypassArmor();
+				// TODO: Set this to bypass armor
+				DamageSource damageSource = attacker instanceof Player player ? player.damageSources().playerAttack(player) : attacker.damageSources().mobAttack(attacker);//.bypassArmor();
 				target.hurt(damageSource, 26); // This doesn't deal 26 hearts of damage, it deals 20.
 				if (target.getLevel() instanceof ServerLevel level) {
 					for (int i = 0; i < 20; i++) {
@@ -77,7 +79,7 @@ public class PigSlayerItem extends AetherSwordItem {
 	public static void onPigSlayerHurt(LivingHurtEvent event) {
 		LivingEntity livingEntity = event.getEntity();
 		DamageSource damageSource = event.getSource();
-		if (canPerformAbility(livingEntity, damageSource) && !damageSource.isBypassArmor()) {
+		if (canPerformAbility(livingEntity, damageSource) && !damageSource.is(DamageTypeTags.BYPASSES_ARMOR)) {
 			event.setAmount(0);
 		}
 	}

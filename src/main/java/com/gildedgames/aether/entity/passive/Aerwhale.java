@@ -122,11 +122,9 @@ public class Aerwhale extends FlyingMob {
                     }
 
                     if (!this.level.isClientSide) {
-                        this.flyingSpeed = this.getSpeed() * 0.6F;
                         super.travel(positionIn);
                     }
 
-                    this.animationSpeedOld = this.animationSpeed;
                     double d0 = this.getX() - this.xo;
                     double d1 = this.getZ() - this.zo;
                     float f4 = 4.0F * Mth.sqrt((float) (d0*d0 + d1*d1));
@@ -134,9 +132,7 @@ public class Aerwhale extends FlyingMob {
                     if (f4 > 1.0F) {
                         f4 = 1.0F;
                     }
-
-                    this.animationSpeed += 0.4F * (f4 - this.animationSpeed);
-                    this.animationPosition += this.animationSpeed;
+                    this.walkAnimation.update(f4, 0.4F);
                 }
             } else {
                 AttributeInstance stepHeight = this.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
@@ -148,10 +144,14 @@ public class Aerwhale extends FlyingMob {
                         stepHeight.addTransientModifier(this.getDefaultStepHeightModifier());
                     }
                 }
-                this.flyingSpeed = 0.02F;
                 super.travel(positionIn);
             }
         }
+    }
+
+    @Override
+    protected float getFlyingSpeed() {
+        return this.isVehicle() ? this.getSpeed() * 0.6F : 0.02F;
     }
 
     @Override

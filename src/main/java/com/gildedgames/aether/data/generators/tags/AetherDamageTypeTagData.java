@@ -8,6 +8,9 @@ import net.minecraft.tags.DamageTypeTags;
 
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Damage type tags are used to change the behavior of damage and how it is calculated.
+ */
 public class AetherDamageTypeTagData extends DamageTypeTagsProvider {
     public AetherDamageTypeTagData(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries);

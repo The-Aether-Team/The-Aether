@@ -13,14 +13,17 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 
+/**
+ * Custom damage types are used for death messages and different damage calculations through tags.
+ */
 public class AetherDamageTypes {
     public static final ResourceKey<DamageType> CLOUD_CRYSTAL = getKey("cloud_crystal");
     public static final ResourceKey<DamageType> CRUSH = getKey("crush");
     public static final ResourceKey<DamageType> FIRE_CRYSTAL = getKey("fire_crystal");
     public static final ResourceKey<DamageType> FLOATING_BLOCK = getKey("floating_block");
     public static final ResourceKey<DamageType> ICE_CRYSTAL = getKey("ice_crystal");
-    public static final ResourceKey<DamageType> INEBRIATION = getKey("inebriation");
     public static final ResourceKey<DamageType> INCINERATION = getKey("incineration");
+    public static final ResourceKey<DamageType> INEBRIATION = getKey("inebriation");
     public static final ResourceKey<DamageType> THUNDER_CRYSTAL = getKey("thunder_crystal");
 
     public static void bootstrap(BootstapContext<DamageType> context) {
@@ -29,8 +32,8 @@ public class AetherDamageTypes {
         context.register(FIRE_CRYSTAL, new DamageType("aether.fire_crystal", 0.1F, DamageEffects.BURNING));
         context.register(FLOATING_BLOCK, new DamageType("aether.floating_block", 0.1F));
         context.register(ICE_CRYSTAL, new DamageType("aether.ice_crystal", 0.1F, DamageEffects.FREEZING));
-        context.register(INEBRIATION, new DamageType("aether.inebriation", 0.1F));
         context.register(INCINERATION, new DamageType("aether.incineration", 0.1F, DamageEffects.BURNING));
+        context.register(INEBRIATION, new DamageType("aether.inebriation", 0.1F));
         context.register(THUNDER_CRYSTAL, new DamageType("aether.thunder_crystal", 0.1F));
     }
 
