@@ -9,7 +9,7 @@ The Aether Team presents the original Aether mod! Up to date for modern Minecraf
 [![Discord](https://img.shields.io/discord/118816101936267265.svg?label=discord&logoColor=FFFFFF&logo=discord&color=7289DA&style=flat-square)](https://discord.gg/aethermod)
 [![Twitter](https://img.shields.io/badge/twitter-@DevAether-lightgrey?style=flat-square&logo=twitter&color=1DA1F2&logoColor=white)](https://twitter.com/DevAether)
 [![Facebook](https://img.shields.io/badge/facebook-AetherMod-blue?logo=facebook&style=flat-square&color=1877F2&logoColor=white)](https://www.facebook.com/AetherMod)
-[![YouTube](https://img.shields.io/youtube/channel/subscribers/UCzynznDiVtxzx-gTM8y02ew?color=FF0000&label=youtube&logo=youtube&style=flat-square)](https://www.youtube.com/c/GildedGames)
+[![YouTube](https://img.shields.io/badge/youtube-@GildedGames-blue?color=FF0000&label=youtube&logo=youtube&style=flat-square)](https://www.youtube.com/c/GildedGames)
 [![Twitch](https://img.shields.io/twitch/status/theaetherteam?logo=twitch&style=flat-square&logoColor=white)](https://www.twitch.tv/gildedgames)
 [![Reddit](https://img.shields.io/reddit/subreddit-subscribers/TheAether?color=FF4500&label=reddit&logo=reddit&style=flat-square&logoColor=white)](https://www.reddit.com/r/TheAether/)
 
