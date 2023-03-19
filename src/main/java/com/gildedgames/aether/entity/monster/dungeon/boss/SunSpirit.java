@@ -5,6 +5,7 @@ import com.gildedgames.aether.api.BossRoomTracker;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.capability.player.AetherPlayer;
 import com.gildedgames.aether.client.AetherSoundEvents;
+import com.gildedgames.aether.data.resources.AetherDamageTypes;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.entity.BossMob;
 import com.gildedgames.aether.capability.AetherCapabilities;
@@ -30,13 +31,13 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -149,7 +150,7 @@ public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enem
         List<Entity> entities = this.level.getEntities(this, this.getBoundingBox().expandTowards(0, -2, 0).contract(-0.75, 0, -0.75).contract(0.75, 0, 0.75));
         for (Entity target : entities) {
             if (target instanceof LivingEntity) {
-                target.hurt(new EntityDamageSource("aether.incineration", this), 20);
+                target.hurt(AetherDamageTypes.entityDamageSource(this.level, AetherDamageTypes.INCINERATION, this), 20);
                 target.setSecondsOnFire(8);
             }
         }
@@ -185,7 +186,7 @@ public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enem
 
     @Override
     public boolean isInvulnerableTo(DamageSource source) {
-        return this.isRemoved() || source != DamageSource.OUT_OF_WORLD && !source.getMsgId().equals("aether.ice_crystal");
+        return this.isRemoved() || !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) && !source.getMsgId().equals("aether.ice_crystal");
     }
 
     /**
@@ -278,8 +279,8 @@ public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enem
 
     private void evaporate() {
         AABB aabb = this.getBoundingBox();
-        BlockPos min = new BlockPos(aabb.minX - this.xMax, aabb.minY - 3, aabb.minZ - this.zMax);
-        BlockPos max = new BlockPos(Math.ceil(aabb.maxX - 1) + this.xMax, Math.ceil(aabb.maxY - 1) + 4, Math.ceil(aabb.maxZ - 1) + this.zMax);
+        BlockPos min = BlockPos.containing(aabb.minX - this.xMax, aabb.minY - 3, aabb.minZ - this.zMax);
+        BlockPos max = BlockPos.containing(Math.ceil(aabb.maxX - 1) + this.xMax, Math.ceil(aabb.maxY - 1) + 4, Math.ceil(aabb.maxZ - 1) + this.zMax);
         for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
             if (this.level.getBlockState(pos).getBlock() instanceof LiquidBlock) {
                 this.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
@@ -657,7 +658,7 @@ public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enem
 
         @Override
         public void start() {
-            BlockPos pos = new BlockPos(this.sunSpirit.getX(), this.sunSpirit.getY(), this.sunSpirit.getZ());
+            BlockPos pos = BlockPos.containing(this.sunSpirit.getX(), this.sunSpirit.getY(), this.sunSpirit.getZ());
             for (int i = 0; i <= 3; i++) {
                 if (this.sunSpirit.level.isEmptyBlock(pos) && !this.sunSpirit.level.isEmptyBlock(pos.below())) {
                     this.sunSpirit.level.setBlock(pos, Blocks.FIRE.defaultBlockState(), 1 | 2 | 8);

@@ -15,5 +15,6 @@
   "result": {
     "count": 4,
     "item": "aether:skyroot_stairs"
-  }
+  },
+  "show_notification": true
 }

@@ -17,5 +17,6 @@
   ],
   "result": {
     "item": "minecraft:note_block"
-  }
+  },
+  "show_notification": true
 }

@@ -13,5 +13,6 @@
   ],
   "result": {
     "item": "aether:red_cape"
-  }
+  },
+  "show_notification": true
 }

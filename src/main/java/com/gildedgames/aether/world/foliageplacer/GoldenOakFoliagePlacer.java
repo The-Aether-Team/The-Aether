@@ -3,16 +3,12 @@ package com.gildedgames.aether.world.foliageplacer;
 import com.gildedgames.aether.Aether;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.LevelSimulatedReader;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
-
-import java.util.function.BiConsumer;
 
 public class GoldenOakFoliagePlacer extends FoliagePlacer {
     public static final Codec<GoldenOakFoliagePlacer> CODEC = RecordCodecBuilder.create((instance) -> {
@@ -31,9 +27,9 @@ public class GoldenOakFoliagePlacer extends FoliagePlacer {
         return AetherFoliagePlacerTypes.GOLDEN_OAK_FOLIAGE_PLACER.get();
     }
 
-    protected void createFoliage(LevelSimulatedReader level, BiConsumer<BlockPos, BlockState> blockSetter, RandomSource random, TreeConfiguration config, int maxFreeTreeHeight, FoliageAttachment attachment, int foliageHeight, int foliageRadius, int offset) {
+    protected void createFoliage(LevelSimulatedReader level, FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, int maxFreeTreeHeight, FoliageAttachment attachment, int foliageHeight, int foliageRadius, int offset) {
         for(int i = offset; i >= offset - foliageHeight; --i) {
-            this.placeLeavesRow(level, blockSetter, random, config, attachment.pos(), 4, i, attachment.doubleTrunk());
+            this.placeLeavesRow(level, foliageSetter, random, config, attachment.pos(), 4, i, attachment.doubleTrunk());
         }
     }
 

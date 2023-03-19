@@ -98,8 +98,12 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     @Override
     public void travel(Vec3 motion) {
         this.lastMotionY = this.getDeltaMovement().y;
-        this.flyingSpeed = this.getSpeed() * 0.21600002F;
         super.travel(motion);
+    }
+
+    @Override
+    protected float getFlyingSpeed() {
+        return this.getSpeed() * 0.21600002F;
     }
 
     /**

@@ -1,3 +1,4 @@
+/*
 package com.gildedgames.aether.integration.jei;
 
 import com.gildedgames.aether.Aether;
@@ -73,3 +74,4 @@ public class AetherJEIPlugin implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(AetherItems.AMBROSIUM_SHARD.get().asItem()), AmbrosiumRecipeCategory.RECIPE_TYPE);
     }
 }
+*/

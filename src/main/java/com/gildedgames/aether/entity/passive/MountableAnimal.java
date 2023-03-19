@@ -54,6 +54,7 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
 
 	@Override
 	public void tick() {
+		this.tick(this);
 		this.riderTick();
 		super.tick();
 		if (this.isOnGround()) {
@@ -207,7 +208,7 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
 
 	@Override
 	public float getFlyingSpeed() {
-		return this.getSteeringSpeed() * 0.25F;
+		return this.getControllingPassenger() != null ? this.getSteeringSpeed() * 0.25F : 0.02F;
 	}
 
 	public boolean playerTriedToCrouch() {

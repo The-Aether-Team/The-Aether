@@ -54,7 +54,7 @@
       "aether:golden_aercloud"
     ]
   ],
-  "precipitation": "none",
+  "has_precipitation": false,
   "spawn_costs": {
     "aether:evil_whirlwind": {
       "charge": 0.7,

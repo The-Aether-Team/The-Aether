@@ -38,6 +38,31 @@ public interface MountableMob {
     }
 
     /**
+     * Call this from your entity's tick method.
+     */
+    default <T extends Mob & MountableMob> void tick(T vehicle) {
+        if (vehicle.isAlive()) {
+            Entity entity = vehicle.getControllingPassenger();
+            if (vehicle.isVehicle() && entity instanceof LivingEntity passenger) {
+                if (vehicle.getPlayerJumped() && !vehicle.isMountJumping() && vehicle.canJump()) {
+                    vehicle.onJump(vehicle);
+                    vehicle.setMountJumping(true);
+                    vehicle.setPlayerJumped(false);
+                }
+                if (vehicle.isOnGround()) {
+                    vehicle.setPlayerJumped(false);
+                    vehicle.setMountJumping(false);
+                }
+                if (passenger instanceof ServerPlayer serverPlayer) {
+                    ServerGamePacketListenerImplAccessor serverGamePacketListenerImplAccessor = (ServerGamePacketListenerImplAccessor) serverPlayer.connection;
+                    serverGamePacketListenerImplAccessor.aether$setAboveGroundTickCount(0);
+                    serverGamePacketListenerImplAccessor.aether$setAboveGroundVehicleTickCount(0);
+                }
+            }
+        }
+    }
+
+    /**
      * Call this from your entity's travel method.
      */
     default <T extends Mob & MountableMob> void travel(T vehicle, Vec3 motion) {
@@ -60,10 +85,7 @@ public interface MountableMob {
                     if (vehicle.hasEffect(MobEffects.JUMP)) {
                         vehicle.push(0.0, 0.1 * (vehicle.getEffect(MobEffects.JUMP).getAmplifier() + 1), 0.0);
                     }
-                    vehicle.setMountJumping(true);
                     vehicle.hasImpulse = true;
-                    vehicle.setPlayerJumped(false);
-                    vehicle.onJump(vehicle);
                 }
                 AttributeInstance stepHeight = vehicle.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
                 if (stepHeight != null) {
@@ -74,23 +96,13 @@ public interface MountableMob {
                         stepHeight.addTransientModifier(vehicle.getMountStepHeightModifier());
                     }
                 }
-                vehicle.flyingSpeed = vehicle.getFlyingSpeed();
                 if (vehicle.isControlledByLocalInstance()) {
                     vehicle.setSpeed(vehicle.getSteeringSpeed());
                     this.travelWithInput(new Vec3(f, motion.y, f1));
                 } else if (passenger instanceof Player)  {
                     vehicle.setDeltaMovement(Vec3.ZERO);
                 }
-                if (vehicle.isOnGround()) {
-                    vehicle.setPlayerJumped(false);
-                    vehicle.setMountJumping(false);
-                }
-                if (passenger instanceof ServerPlayer serverPlayer) {
-                    ServerGamePacketListenerImplAccessor serverGamePacketListenerImplAccessor = (ServerGamePacketListenerImplAccessor) serverPlayer.connection;
-                    serverGamePacketListenerImplAccessor.aether$setAboveGroundTickCount(0);
-                    serverGamePacketListenerImplAccessor.aether$setAboveGroundVehicleTickCount(0);
-                }
-                vehicle.calculateEntityAnimation(vehicle, false);
+                vehicle.calculateEntityAnimation(false);
             } else {
                 AttributeInstance stepHeight = vehicle.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
                 if (stepHeight != null) {
@@ -101,7 +113,6 @@ public interface MountableMob {
                         stepHeight.addTransientModifier(vehicle.getDefaultStepHeightModifier());
                     }
                 }
-                vehicle.flyingSpeed = 0.02F;
                 this.travelWithInput(motion);
             }
         }
@@ -125,8 +136,6 @@ public interface MountableMob {
     void setMountJumping(boolean isMountJumping);
 
     float getSteeringSpeed();
-
-    float getFlyingSpeed();
 
     double jumpFactor();
 

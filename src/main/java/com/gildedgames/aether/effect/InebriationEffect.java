@@ -1,10 +1,10 @@
 package com.gildedgames.aether.effect;
 
+import com.gildedgames.aether.data.resources.AetherDamageTypes;
 import com.gildedgames.aether.item.AetherItems;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
@@ -30,7 +30,7 @@ public class InebriationEffect extends MobEffect {
     @Override
     public void applyEffectTick(LivingEntity livingEntity, int amplifier) {
         if (this.effectDuration % 50 == 0) {
-            livingEntity.hurt(new DamageSource("aether.inebriation").bypassArmor(), 1.0F);
+            livingEntity.hurt(AetherDamageTypes.damageSource(livingEntity.level, AetherDamageTypes.INEBRIATION), 1.0F);
         }
         this.distractEntity(livingEntity);
     }

@@ -16,6 +16,10 @@ public abstract class AbstractAetherCookingRecipe extends AbstractCookingRecipe 
         this.category = category;
     }
 
+    public ItemStack getResult() {
+        return this.result;
+    }
+
     public AetherBookCategory aetherCategory() {
         return this.category;
     }

@@ -3,6 +3,7 @@ package com.gildedgames.aether.entity.block;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.Floatable;
 import com.gildedgames.aether.block.miscellaneous.FloatingBlock;
+import com.gildedgames.aether.data.resources.AetherDamageTypes;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.mixin.mixins.common.accessor.ConcretePowderBlockAccessor;
 import net.minecraft.CrashReportCategory;
@@ -25,7 +26,6 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
@@ -227,7 +227,7 @@ public class FloatingBlockEntity extends Entity {
                 damageSource = floatable.getFallDamageSource(this);
             } else {
                 predicate = EntitySelector.NO_SPECTATORS;
-                damageSource = new EntityDamageSource("aether.floatingBlock", this).damageHelmet();
+                damageSource = AetherDamageTypes.entityDamageSource(this.level, AetherDamageTypes.FLOATING_BLOCK, this);
             }
 
             float f = (float) Math.min(Mth.floor((float) this.floatDistance * this.fallDamagePerDistance), this.fallDamageMax);

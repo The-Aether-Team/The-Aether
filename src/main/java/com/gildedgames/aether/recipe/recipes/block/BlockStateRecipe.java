@@ -4,6 +4,7 @@ import com.gildedgames.aether.recipe.BlockPropertyPair;
 import com.gildedgames.aether.recipe.BlockStateIngredient;
 import net.minecraft.commands.CommandFunction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -28,7 +29,7 @@ public interface BlockStateRecipe extends Recipe<Container> {
     }
 
     @Override
-    default ItemStack assemble(Container container) {
+    default ItemStack assemble(Container container, RegistryAccess registryAccess) {
         return ItemStack.EMPTY;
     }
 
@@ -38,7 +39,7 @@ public interface BlockStateRecipe extends Recipe<Container> {
     }
 
     @Override
-    default ItemStack getResultItem() {
+    default ItemStack getResultItem(RegistryAccess registryAccess) {
         return ItemStack.EMPTY;
     }
 

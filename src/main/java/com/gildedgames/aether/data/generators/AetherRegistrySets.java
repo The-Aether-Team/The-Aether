@@ -1,6 +1,7 @@
 package com.gildedgames.aether.data.generators;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.data.resources.AetherDamageTypes;
 import com.gildedgames.aether.data.resources.registries.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
@@ -14,7 +15,7 @@ import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 
-public class AetherWorldGenData extends DatapackBuiltinEntriesProvider {
+public class AetherRegistrySets extends DatapackBuiltinEntriesProvider {
     public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
             .add(Registries.CONFIGURED_FEATURE, AetherConfiguredFeatures::bootstrap)
             .add(Registries.PLACED_FEATURE, AetherPlacedFeatures::bootstrap)
@@ -25,9 +26,10 @@ public class AetherWorldGenData extends DatapackBuiltinEntriesProvider {
             .add(Registries.DIMENSION_TYPE, AetherDimensions::bootstrapDimensionType)
             .add(Registries.LEVEL_STEM, AetherDimensions::bootstrapLevelStem)
             .add(Registries.STRUCTURE, AetherStructures::bootstrap)
-            .add(Registries.STRUCTURE_SET, AetherStructureSets::bootstrap);
+            .add(Registries.STRUCTURE_SET, AetherStructureSets::bootstrap)
+            .add(Registries.DAMAGE_TYPE, AetherDamageTypes::bootstrap);
 
-    public AetherWorldGenData(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+    public AetherRegistrySets(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, BUILDER, Collections.singleton(Aether.MODID));
     }
 

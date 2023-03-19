@@ -71,7 +71,7 @@ public class AetherCookingSerializer<T extends AbstractAetherCookingRecipe> impl
         buffer.writeUtf(recipe.getGroup());
         buffer.writeEnum(recipe.aetherCategory());
         recipe.getIngredients().get(0).toNetwork(buffer);
-        buffer.writeItem(recipe.getResultItem());
+        buffer.writeItem(recipe.getResult());
         buffer.writeFloat(recipe.getExperience());
         buffer.writeVarInt(recipe.getCookingTime());
     }

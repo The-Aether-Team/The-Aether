@@ -1,4 +1,4 @@
-// 1.19.3	2023-02-16T20:11:34.453206867	Tags for minecraft:entity_type mod id aether
+// 1.19.4	2023-03-18T15:59:38.7221603	Tags for minecraft:entity_type mod id aether
 b3a379df5d7bd0f9d26800bb985a7acba83143fe data/aether/tags/entity_types/deflectable_projectiles.json
 6ded3ea2e35a47445f95b3e2a263d918575d48cf data/aether/tags/entity_types/no_ambrosium_drops.json
 6ded3ea2e35a47445f95b3e2a263d918575d48cf data/aether/tags/entity_types/no_candy_cane_drops.json

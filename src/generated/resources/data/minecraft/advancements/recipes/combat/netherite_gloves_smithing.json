@@ -5,7 +5,9 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/netherite"
+            "items": [
+              "minecraft:netherite_ingot"
+            ]
           }
         ]
       },
@@ -13,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether:netherite_gloves_smithing"
+        "recipe": "minecraft:netherite_gloves_smithing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "aether:netherite_gloves_smithing"
+      "minecraft:netherite_gloves_smithing"
     ]
   }
 }

@@ -13,5 +13,6 @@
   ],
   "result": {
     "item": "aether:iron_ring"
-  }
+  },
+  "show_notification": true
 }

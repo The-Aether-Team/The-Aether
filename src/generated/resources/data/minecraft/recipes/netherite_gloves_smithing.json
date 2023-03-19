@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smithing",
   "addition": {
-    "tag": "forge:ingots/netherite"
+    "item": "minecraft:netherite_ingot"
   },
   "base": {
     "item": "aether:diamond_gloves"

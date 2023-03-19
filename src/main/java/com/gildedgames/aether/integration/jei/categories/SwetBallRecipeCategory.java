@@ -1,3 +1,4 @@
+/*
 package com.gildedgames.aether.integration.jei.categories;
 
 import com.gildedgames.aether.Aether;
@@ -76,3 +77,4 @@ public class SwetBallRecipeCategory implements IRecipeCategory<SwetBallRecipe> {
     public void draw(SwetBallRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
     }
 }
+*/

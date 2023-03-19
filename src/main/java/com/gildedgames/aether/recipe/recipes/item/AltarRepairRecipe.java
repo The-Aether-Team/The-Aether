@@ -5,6 +5,7 @@ import com.gildedgames.aether.recipe.AetherBookCategory;
 import com.gildedgames.aether.recipe.AetherRecipeSerializers;
 import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.google.gson.JsonObject;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
@@ -30,7 +31,7 @@ public class AltarRepairRecipe extends AbstractAetherCookingRecipe {
      * @return The original {@link ItemStack} ingredient, because repairing always outputs the same item as the input.
      */
     @Override
-    public ItemStack assemble(Container inventory) {
+    public ItemStack assemble(Container inventory, RegistryAccess registryAccess) {
         return this.ingredient.getItems()[0];
     }
 
@@ -38,7 +39,7 @@ public class AltarRepairRecipe extends AbstractAetherCookingRecipe {
      * @return The original {@link ItemStack} ingredient for Recipe Book display, because repairing always outputs the same item as the input.
      */
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess registryAccess) {
         return this.ingredient.getItems()[0];
     }
 

@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "aether:incubator"
-  }
+  },
+  "show_notification": true
 }
