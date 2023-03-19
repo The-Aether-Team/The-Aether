@@ -163,13 +163,13 @@ public class AetherBlocks {
 
     public static final RegistryObject<FenceBlock> SKYROOT_FENCE = register("skyroot_fence", () -> new FenceBlock(Block.Properties.copy(Blocks.OAK_FENCE)));
     public static final RegistryObject<FenceGateBlock> SKYROOT_FENCE_GATE = register("skyroot_fence_gate", () -> new FenceGateBlock(Block.Properties.copy(Blocks.OAK_FENCE_GATE), AetherWoodTypes.SKYROOT));
-    public static final RegistryObject<DoorBlock> SKYROOT_DOOR = register("skyroot_door", () -> new DoorBlock(Block.Properties.copy(Blocks.OAK_DOOR), AetherBlockSetTypes.SKYROOT));
-    public static final RegistryObject<TrapDoorBlock> SKYROOT_TRAPDOOR = register("skyroot_trapdoor", () -> new TrapDoorBlock(Block.Properties.copy(Blocks.OAK_TRAPDOOR), AetherBlockSetTypes.SKYROOT));
-    public static final RegistryObject<ButtonBlock> SKYROOT_BUTTON = register("skyroot_button", () -> new ButtonBlock(Block.Properties.copy(Blocks.OAK_BUTTON), AetherBlockSetTypes.SKYROOT, 30, true));
-    public static final RegistryObject<PressurePlateBlock> SKYROOT_PRESSURE_PLATE = register("skyroot_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, Block.Properties.copy(Blocks.OAK_PRESSURE_PLATE), AetherBlockSetTypes.SKYROOT));
+    public static final RegistryObject<DoorBlock> SKYROOT_DOOR = register("skyroot_door", () -> new DoorBlock(Block.Properties.copy(Blocks.OAK_DOOR), AetherWoodTypes.SKYROOT_BLOCK_SET));
+    public static final RegistryObject<TrapDoorBlock> SKYROOT_TRAPDOOR = register("skyroot_trapdoor", () -> new TrapDoorBlock(Block.Properties.copy(Blocks.OAK_TRAPDOOR), AetherWoodTypes.SKYROOT_BLOCK_SET));
+    public static final RegistryObject<ButtonBlock> SKYROOT_BUTTON = register("skyroot_button", () -> new ButtonBlock(Block.Properties.copy(Blocks.OAK_BUTTON), AetherWoodTypes.SKYROOT_BLOCK_SET, 30, true));
+    public static final RegistryObject<PressurePlateBlock> SKYROOT_PRESSURE_PLATE = register("skyroot_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, Block.Properties.copy(Blocks.OAK_PRESSURE_PLATE), AetherWoodTypes.SKYROOT_BLOCK_SET));
 
-    public static final RegistryObject<ButtonBlock> HOLYSTONE_BUTTON = register("holystone_button", () -> new ButtonBlock(Block.Properties.copy(Blocks.STONE_BUTTON), AetherBlockSetTypes.SKYROOT, 20, false));
-    public static final RegistryObject<PressurePlateBlock> HOLYSTONE_PRESSURE_PLATE = register("holystone_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, Block.Properties.of(Material.STONE, MaterialColor.WOOL).requiresCorrectToolForDrops().noCollission().strength(0.5F), AetherBlockSetTypes.SKYROOT));
+    public static final RegistryObject<ButtonBlock> HOLYSTONE_BUTTON = register("holystone_button", () -> new ButtonBlock(Block.Properties.copy(Blocks.STONE_BUTTON), AetherWoodTypes.SKYROOT_BLOCK_SET, 20, false));
+    public static final RegistryObject<PressurePlateBlock> HOLYSTONE_PRESSURE_PLATE = register("holystone_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, Block.Properties.of(Material.STONE, MaterialColor.WOOL).requiresCorrectToolForDrops().noCollission().strength(0.5F), AetherWoodTypes.SKYROOT_BLOCK_SET));
 
     public static final RegistryObject<WallBlock> CARVED_WALL = register("carved_wall", () -> new WallBlock(Block.Properties.copy(AetherBlocks.CARVED_STONE.get())));
     public static final RegistryObject<WallBlock> ANGELIC_WALL = register("angelic_wall", () -> new WallBlock(Block.Properties.copy(AetherBlocks.ANGELIC_STONE.get())));
