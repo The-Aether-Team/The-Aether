@@ -54,7 +54,7 @@ public class AetherMenuButton extends Button
 	// [VANILLA COPY] - AbstractButton.getTextureY()
 	private int getTextureY() {
 		int i = 1;
-		if (!this.active) {
+		if (!this.isActive()) {
 			i = 0;
 		} else if (this.isHoveredOrFocused()) {
 			i = 2;
