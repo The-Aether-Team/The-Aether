@@ -54,6 +54,7 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
 
 	@Override
 	public void tick() {
+		this.tick(this);
 		this.riderTick();
 		super.tick();
 		if (this.isOnGround()) {

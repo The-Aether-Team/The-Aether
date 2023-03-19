@@ -121,6 +121,7 @@ public class Swet extends Slime implements MountableMob {
             }
         }
 
+        this.tick(this);
         this.riderTick(this);
         super.tick();
 
