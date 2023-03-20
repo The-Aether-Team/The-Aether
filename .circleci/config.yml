@@ -167,7 +167,10 @@ jobs:
       GRADLE_OPTS: -Dorg.gradle.daemon=false
     steps:
       - setup
-      - run: gradle publish
+      - run: | 
+          gradle publish
+          gradle curseforge
+          gradle modrinth
 
 commands:
   setup:
