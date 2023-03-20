@@ -26,7 +26,7 @@ public class ParachuteRenderer extends EntityRenderer<Parachute> {
     public ParachuteRenderer(EntityRendererProvider.Context context, Supplier<? extends Block> parachuteBlock) {
         super(context);
         this.parachuteBlock = parachuteBlock;
-        this.shadowRadius = 0.0F;
+        this.shadowRadius = 0.5F;
     }
 
     @Override
