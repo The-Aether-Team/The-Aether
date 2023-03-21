@@ -213,7 +213,7 @@ curseforge {
         changelog = file("./docs/CHANGELOG.md")
         changelogType = "markdown"
         addGameVersion("${project.mc_version}")
-        mainArtifact(jar) {
+        mainArtifact(tasks.jar) {
             displayName = "The Aether ${version}"
             relations {
                 embeddedLibrary "curios"
