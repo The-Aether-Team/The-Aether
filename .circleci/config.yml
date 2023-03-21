@@ -201,6 +201,7 @@ workflows:
       - publish:
           context:
             - maven
+            - publishing
           filters:
             tags:
               only: 
