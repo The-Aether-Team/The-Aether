@@ -233,14 +233,13 @@ modrinth {
     versionType = "${project.version_type}"
     versionName = "The Aether ${version}"
     changelog = new File("./docs/CHANGELOG.md").text
-    uploadFile = jar
+    uploadFile = tasks.jar
     gameVersions = ["${project.mc_version}"]
     loaders = ["forge"]
     dependencies {
         embedded.version "curios", "${project.curios_version}"
         optional.project "starlight-forge"
     }
-    autoAddDependsOn = false
     debugMode = true
 }
 
