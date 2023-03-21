@@ -23,8 +23,8 @@ buildscript {
         classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7.+', changing: true
         classpath group: 'org.parchmentmc', name: 'librarian', version: '1.+', changing: true
         classpath group: 'io.github.0ffz', name: 'gpr-for-gradle', version: '1.+', changing: true
-        classpath group: 'com.matthewprenger.cursegradle', name: 'CurseGradle', version: '1.4.0', changing: true
-        classpath group: 'com.modrinth.minotaur', name: 'minotaur', version: '2.+', changing: true
+        classpath group: 'gradle.plugin.com.matthewprenger', name: 'CurseGradle', version: '1.4.+', changing: true
+        classpath group: 'com.modrinth.minotaur', name: 'Minotaur', version: '2.+', changing: true
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
@@ -206,17 +206,19 @@ publishing {
 }
 
 curseforge {
-    apiKey = System.getenv("CURSEFORGE_TOKEN")
     project {
+        apiKey = System.getenv("CURSEFORGE_TOKEN")
         id = "${project.curseforge_id}"
         releaseType = "${project.version_type}"
-        displayName = "The Aether ${version}"
-        changelog = file("/docs/CHANGELOG.md")
+        changelog = file("./docs/CHANGELOG.md")
         changelogType = "markdown"
-        addGameVersion = "${project.mc_version}"
-        relations {
-            embeddedLibrary "curios"
-            optionalDependency "starlight-forge"
+        addGameVersion("${project.mc_version}")
+        mainArtifact(jar) {
+            displayName = "The Aether ${version}"
+            relations {
+                embeddedLibrary "curios"
+                optionalDependency "starlight-forge"
+            }
         }
     }
     options {
@@ -230,12 +232,12 @@ modrinth {
     versionNumber = "${version}"
     versionType = "${project.version_type}"
     versionName = "The Aether ${version}"
-    changelog = new File("/docs/CHANGELOG.md").text
+    changelog = new File("./docs/CHANGELOG.md").text
     uploadFile = jar
     gameVersions = ["${project.mc_version}"]
     loaders = ["forge"]
     dependencies {
-        embedded.version "curios" "${project.curios_version}"
+        embedded.version "curios", "${project.curios_version}"
         optional.project "starlight-forge"
     }
     debugMode = true
