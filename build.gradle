@@ -240,6 +240,7 @@ modrinth {
         embedded.version "curios", "${project.curios_version}"
         optional.project "starlight-forge"
     }
+    featured = true
     debugMode = true
 }
 
