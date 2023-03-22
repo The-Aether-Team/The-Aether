@@ -30,7 +30,6 @@ jobs:
       - run:
           name: Publish artifact link to Discord
           command: |
-            echo ${CIRCLE_BRANCH}
             if [ ${CIRCLE_BRANCH} = 1.19 ]; then
               artifact_path=$(curl --request GET --url https://circleci.com/api/v2/project/gh/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM/artifacts -H "Accept: application/json" -u "REPLACE_BASIC_AUTH" | jq -r '.items[1].path')
               if [ -z "${WEBHOOK_URL}" ]; then
