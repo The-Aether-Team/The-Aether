@@ -30,33 +30,35 @@ jobs:
       - run:
           name: Publish artifact link to Discord
           command: |
-            artifact_path=$(curl --request GET --url https://circleci.com/api/v2/project/gh/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM/artifacts -H "Accept: application/json" -u "REPLACE_BASIC_AUTH" | jq -r '.items[1].path')
-            if [ -z "${WEBHOOK_URL}" ]; then
-              echo "NO DISCORD WEBHOOK SET"
-              echo "Please input your DISCORD_WEBHOOK value either in the settings for this project, or as a parameter for this orb."
-              exit 1
-            else
-              curl -X POST -H 'Content-type: application/json' \
-                --data \
-                  "{ \
-                    \"embeds\": [{ \
-                      \"title\": \"$CIRCLE_BRANCH\", \
-                      \"description\": \"The latest CircleCI job has completed, a direct download link for the build can be found here: https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/${artifact_path}\", \
-                      \"color\": \"301898\", \
-                      \"fields\": [ \
-                        { \
-                          \"name\": \"Project\", \
-                          \"value\": \"$CIRCLE_PROJECT_REPONAME\", \
-                          \"inline\": true \
-                        }, \
-                        { \
-                          \"name\": \"Job Number\", \
-                          \"value\": \"$CIRCLE_BUILD_NUM\", \
-                          \"inline\": true \
-                        } \
-                      ] \
-                    }] \
-                  }" ${WEBHOOK_URL}
+            if [ "${CIRCLE_BRANCH}" = 1.19 ]; then
+              artifact_path=$(curl --request GET --url https://circleci.com/api/v2/project/gh/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM/artifacts -H "Accept: application/json" -u "REPLACE_BASIC_AUTH" | jq -r '.items[1].path')
+              if [ -z "${WEBHOOK_URL}" ]; then
+                echo "NO DISCORD WEBHOOK SET"
+                echo "Please input your DISCORD_WEBHOOK value either in the settings for this project, or as a parameter for this orb."
+                exit 1
+              else
+                curl -X POST -H 'Content-type: application/json' \
+                  --data \
+                    "{ \
+                      \"embeds\": [{ \
+                        \"title\": \"$CIRCLE_BRANCH\", \
+                        \"description\": \"The latest CircleCI job has completed, a direct download link for the build can be found here: https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/${artifact_path}\", \
+                        \"color\": \"301898\", \
+                        \"fields\": [ \
+                          { \
+                            \"name\": \"Project\", \
+                            \"value\": \"$CIRCLE_PROJECT_REPONAME\", \
+                            \"inline\": true \
+                          }, \
+                          { \
+                            \"name\": \"Job Number\", \
+                            \"value\": \"$CIRCLE_BUILD_NUM\", \
+                            \"inline\": true \
+                          } \
+                        ] \
+                      }] \
+                    }" ${WEBHOOK_URL}
+              fi
             fi
 
   deploy:
