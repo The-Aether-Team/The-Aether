@@ -58,6 +58,7 @@ public class EntityHooks {
                     player.playSound(SoundEvents.COW_MILK, 1.0F, 1.0F);
                 }
                 ItemStack filledBucket = ItemUtils.createFilledResult(heldStack, player, AetherItems.SKYROOT_MILK_BUCKET.get().getDefaultInstance());
+                player.swing(hand);
                 player.setItemInHand(hand, filledBucket);
             }
         }
