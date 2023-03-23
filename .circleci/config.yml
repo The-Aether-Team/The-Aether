@@ -11,6 +11,7 @@ workflows:
       - path-filtering/filter:
           name: check-updated-files
           mapping: |
-            docs/.* allow-build false
+            ^((?!docs).)*$ allow-build true
             src/.* allow-deploy-and-discord-publish true
+          base-revision: "1.19"
           config-path: .circleci/continue_config.yml
