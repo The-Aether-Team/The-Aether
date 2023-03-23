@@ -9,7 +9,7 @@ parameters:
     default: aether
   allow-build:
     type: boolean
-    default: false
+    default: true
   allow-deploy-and-discord-publish:
     type: boolean
     default: false
