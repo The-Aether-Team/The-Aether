@@ -72,7 +72,7 @@ jobs:
       - unless:
          condition: <<pipeline.parameters.allow-build>>
          steps:
-           - run: echo <<pipeline.parameters.allow-build>>
+           - run: echo "Condition not met."
 
   deploy:
     machine:
@@ -178,7 +178,7 @@ jobs:
       - unless:
          condition: <<pipeline.parameters.allow-deploy-and-discord-publish>>
          steps:
-           - run: echo <<pipeline.parameters.allow-deploy-and-discord-publish>>
+           - run: echo "Condition not met."
 
   publish:
     machine:
