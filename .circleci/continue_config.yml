@@ -69,6 +69,10 @@ jobs:
                           }" ${WEBHOOK_URL}
                     fi
                   fi
+      - unless:
+         condition: <<pipeline.parameters.allow-build>>
+         steps:
+           - run: echo "task not run"
 
   deploy:
     machine:
@@ -171,6 +175,10 @@ jobs:
                 command: |
                   sudo killall openvpn || true
                 when: always
+      - unless:
+         condition: <<pipeline.parameters.allow-deploy-and-discord-publish>>
+         steps:
+           - run: echo "task not run"
 
   publish:
     machine:
