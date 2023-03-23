@@ -13,5 +13,5 @@ workflows:
           mapping: |
             docs/.* allow-build false
             src/.* allow-deploy-and-discord-publish true
-          base-revision: "1.19"
+          base-revision: ${CIRCLE_BRANCH}
           config-path: .circleci/continue_config.yml
