@@ -143,3 +143,4 @@ The Aether would not be possible without the features provided by the APIs and l
 | Library | Information |
 | ------- | ----------- |
 | [![Curios](assets/dependencies/curios.webp)](https://www.curseforge.com/minecraft/mc-mods/curios) | Curios API was created by [C4](https://github.com/TheIllusiveC4).<br />The source can be found at https://github.com/TheIllusiveC4/Curios.<br />The dependency is licensed under [LGPL v3](https://www.gnu.org/licenses/lgpl-3.0). |
+ 
