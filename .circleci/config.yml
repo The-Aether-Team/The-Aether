@@ -11,7 +11,7 @@ workflows:
       - path-filtering/filter:
           name: filter
           mapping: |
-            ^((?!docs).)*$ allow-build true
+            ^/(?!docs|.github)([a-z0-9]+)$  allow-build true
             src/.* allow-deploy-and-discord-publish true
           base-revision: << pipeline.git.branch >>
           config-path: .circleci/continue_config.yml
