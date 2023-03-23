@@ -1,0 +1,233 @@
+version: 2.1
+
+orbs:
+  gradle: circleci/gradle@3.0.0
+
+parameters:
+  artifact-name:
+    type: string
+    default: aether
+  allow-build:
+    type: boolean
+    default: false
+  allow-deploy-and-discord-publish:
+    type: boolean
+    default: false
+
+jobs:
+  build:
+    machine:
+      image: ubuntu-2204:2023.02.1
+    resource_class: large
+    environment:
+      _JAVA_OPTIONS: -Xmx9600m
+      GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.logging.level=info
+    steps:
+      - when:
+          condition: <<pipeline.parameters.allow-build>>
+          steps:
+            - setup
+            - run:
+                name: Remove sources before persist
+                command: |
+                  cd ~/project/build/libs
+                  rm *-sources.jar
+            - persist_to_workspace:
+                root: ~/project/build/libs
+                paths:
+                  - << pipeline.parameters.artifact-name >>-*.jar
+            - run:
+                name: Publish artifact link to Discord
+                command: |
+                  if [ ${CIRCLE_BRANCH} = 1.19 ] && << pipeline.parameters.allow-deploy-and-discord-publish >>; then
+                    artifact_path=$(curl --request GET --url https://circleci.com/api/v2/project/gh/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM/artifacts -H "Accept: application/json" -u "REPLACE_BASIC_AUTH" | jq -r '.items[1].path')
+                    if [ -z "${WEBHOOK_URL}" ]; then
+                      echo "NO DISCORD WEBHOOK SET"
+                      echo "Please input your DISCORD_WEBHOOK value either in the settings for this project, or as a parameter for this orb."
+                      exit 1
+                    else
+                      curl -X POST -H 'Content-type: application/json' \
+                        --data \
+                          "{ \
+                            \"embeds\": [{ \
+                              \"title\": \"$CIRCLE_BRANCH\", \
+                              \"description\": \"The latest CircleCI job has completed, a direct download link for the build can be found here: https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/${artifact_path}\", \
+                              \"color\": \"301898\", \
+                              \"fields\": [ \
+                                { \
+                                  \"name\": \"Project\", \
+                                  \"value\": \"$CIRCLE_PROJECT_REPONAME\", \
+                                  \"inline\": true \
+                                }, \
+                                { \
+                                  \"name\": \"Job Number\", \
+                                  \"value\": \"$CIRCLE_BUILD_NUM\", \
+                                  \"inline\": true \
+                                } \
+                              ] \
+                            }] \
+                          }" ${WEBHOOK_URL}
+                    fi
+                  fi
+      - unless:
+         condition: <<pipeline.parameters.allow-build>>
+         steps:
+           - run: echo "Condition not met."
+
+  deploy:
+    machine:
+        image: ubuntu-2004:202201-02
+    steps:
+      - when:
+          condition: <<pipeline.parameters.allow-deploy-and-discord-publish>>
+          steps:
+            - attach_workspace:
+                at: ~/project/build/libs
+            - store_artifacts:
+                path: ~/project/build/libs
+            - run:
+                name: Install OpenVPN
+                command: |
+                  sudo apt update && sudo apt install apt-transport-https net-tools
+                  sudo wget https://swupdate.openvpn.net/repos/openvpn-repo-pkg-key.pub
+                  sudo apt-key add openvpn-repo-pkg-key.pub
+                  sudo wget -O /etc/apt/sources.list.d/openvpn3.list https://swupdate.openvpn.net/community/openvpn3/repos/openvpn3-focal.list
+                  sudo apt update && sudo apt install openvpn3
+            - run:
+                name: VPN Setup
+                background: true
+                command: |
+                  mkdir -m700 -p .openvpn3/autoload
+                  CLIENT_PATH=~/project/.openvpn3/autoload/client
+                  echo $VPN_CLIENT_LOAD | base64 --decode > $CLIENT_PATH.autoload
+                  echo $VPN_CLIENT_CONFIG | base64 --decode > $CLIENT_PATH.ovpn
+                  ET_phone_home=$(ss -Hnto state established '( sport = :ssh )' | head -n1 | awk '{ split($4, a, ":"); print a[1] }')
+
+                  echo -e "\nroute $ET_phone_home 255.255.255.255 net_gateway" >> $CLIENT_PATH.ovpn
+                  echo "route 169.254.0.0 255.255.0.0 net_gateway" >> $CLIENT_PATH.ovpn
+
+                  sudo openvpn3-autoload --directory .openvpn3/autoload
+            - run:
+                name: Wait for VPN connection to be established
+                command: |
+                  while [ $(sudo openvpn3 sessions-list|grep -c "Client connected") == 0 ]; do
+                    echo "Attempting to connect..."
+                    sleep 1;
+                  done
+                  echo "VPN Connected"
+
+                  sudo openvpn3 sessions-list
+            - run:
+                name: Reinstall and start server
+                command: |
+                  UPDATE_RESPONSE=$(curl -X PUT -s -o /dev/null -w "%{http_code}" "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}/startup/variable" \
+                      -H "Accept: application/json" \
+                      -H "Content-Type: application/json" \
+                      -H "Authorization: Bearer ${USER_KEY}" \
+                      -d '{ "key": "ARTIFACT_BUILD_NUM", "value": "'"${CIRCLE_BUILD_NUM}"'" }')
+                  if [[ $UPDATE_RESPONSE == 200 ]]; then
+                    echo "Updated server environment variable 'ARTIFACT_BUILD_NUM' with ${CIRCLE_BUILD_NUM}"
+                  else
+                    echo "Error updating environment: ${UPDATE_RESPONSE}"
+                    exit 1
+                  fi
+                  REINSTALL_RESPONSE=$(curl -s -o /dev/null -I -X POST -w "%{http_code}" \
+                  "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}/settings/reinstall" \
+                  -H "Authorization: Bearer ${USER_KEY}")
+
+                  if (( $REINSTALL_RESPONSE >= 200 )); then
+                    echo "Server received reinstallation request."
+                    if (( $REINSTALL_RESPONSE == 204 )); then
+                      while [[ ! $(curl -s "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}" \
+                      -H "Authorization: Bearer ${USER_KEY}" | jq '.attributes | .is_installing') ]];
+                      do
+                        echo "Waiting for installation to begin..."
+                        sleep 2
+                      done
+                    fi
+                    echo "Server reinstallation has started."
+
+                    while [[ $(curl -s "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}" \
+                      -H "Authorization: Bearer ${USER_KEY}" | jq '.attributes | .is_installing') == true ]];
+                    do
+                      echo "Waiting for installation..."
+                      sleep 10
+                    done
+                    echo "Sending start signal to server."
+
+                    START_RESPONSE=$(curl -X POST -s -o /dev/null -w "%{http_code}" "${DEPLOY_LOCATION}/api/client/servers/${SERVER_ID}/power" \
+                      -H "Accept: application/json" \
+                      -H "Content-Type: application/json" \
+                      -H "Authorization: Bearer ${USER_KEY}" \
+                      -d '{ "signal": "start" }')
+                    if (( $START_RESPONSE == 204 )); then
+                      echo "Server received start signal."
+                    else
+                      echo "Server start unsucessful. Response: ${START_RESPONSE}"
+                      exit 1
+                    fi
+                  else
+                    echo "Received ${REINSTALL_RESPONSE}: Reinstall unsucessful."
+                    exit 1
+                  fi
+            - run:
+                name: Disconnect from OpenVPN
+                command: |
+                  sudo killall openvpn || true
+                when: always
+      - unless:
+         condition: <<pipeline.parameters.allow-deploy-and-discord-publish>>
+         steps:
+           - run: echo "Condition not met."
+
+  publish:
+    machine:
+      image: ubuntu-2204:2022.07.1
+    resource_class: large
+    environment:
+      _JAVA_OPTIONS: -Xmx3200m
+      GRADLE_OPTS: -Dorg.gradle.daemon=false
+    steps:
+      - setup
+      - run: |
+          gradle publish
+          gradle curseforge
+          gradle modrinth
+
+commands:
+  setup:
+    steps:
+      - checkout
+      - gradle/with_cache:
+          cache_key: 'v8'
+          steps:
+            - run: gradle build --parallel --build-cache
+      - store_artifacts:
+          path: ~/project/build/libs
+
+workflows:
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          context:
+            - vpn
+          filters:
+            branches:
+              only:
+                - "1.19"
+          requires:
+            - build
+  publish:
+    jobs:
+      - publish:
+          context:
+            - maven
+            - publishing
+          filters:
+            tags:
+              only:
+                - /.*/
+            branches:
+              ignore:
+                - /.*/
