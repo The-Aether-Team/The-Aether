@@ -6,10 +6,10 @@ orbs:
   path-filtering: circleci/path-filtering@0.1.1
 
 workflows:
-  always-run:
+  start:
     jobs:
       - path-filtering/filter:
-          name: check-updated-files
+          name: filter
           mapping: |
             docs/.* allow-build false
             src/.* allow-deploy-and-discord-publish true
