@@ -135,7 +135,7 @@ public class FloatingBlockEntity extends Entity {
                             boolean canBeReplaced = blockState.canBeReplaced(new DirectionalPlaceContext(this.level, blockPos1, Direction.UP, ItemStack.EMPTY, Direction.DOWN));
                             boolean isAboveFree = FloatingBlock.isFree(this.level.getBlockState(blockPos1.above())) && (!isConcrete || !canConvert);
                             boolean canBlockSurvive = this.blockState.canSurvive(this.level, blockPos1) && !isAboveFree;
-                            if (canBeReplaced && (canBlockSurvive || this.natural)) {
+                            if ((canBeReplaced && canBlockSurvive) || (this.natural && blockState.getBlock().defaultDestroyTime() >= 0)) {
                                 if (this.blockState.hasProperty(BlockStateProperties.WATERLOGGED) && this.level.getFluidState(blockPos1).is(Fluids.WATER)) {
                                     this.blockState = this.blockState.setValue(BlockStateProperties.WATERLOGGED, true);
                                 }
@@ -183,7 +183,7 @@ public class FloatingBlockEntity extends Entity {
                                 }
                             } else {
                                 this.discard();
-                                if ((!this.natural || !this.blockState.requiresCorrectToolForDrops() || !canBeReplaced) && this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+                                if ((!this.natural || !this.blockState.requiresCorrectToolForDrops() || blockState.getBlock().defaultDestroyTime() < 0) && this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                                     this.callOnBrokenAfterFall(block, blockPos1);
                                     this.dropBlock(this.blockState);
                                 }
