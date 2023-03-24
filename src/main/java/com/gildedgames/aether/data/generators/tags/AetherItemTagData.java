@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 import java.util.concurrent.CompletableFuture;
 
 public class AetherItemTagData extends ItemTagsProvider {
-    public AetherItemTagData(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, TagsProvider<Block> blockTags, @Nullable ExistingFileHelper helper) {
+    public AetherItemTagData(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, CompletableFuture<TagLookup<Block>> blockTags, @Nullable ExistingFileHelper helper) {
         super(output, registries, blockTags, Aether.MODID, helper);
     }
 

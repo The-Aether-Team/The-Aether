@@ -17,8 +17,8 @@ import java.util.List;
 public class AetherArmorItem extends ArmorItem {
     private final List<Component> dungeonTooltips = new ArrayList<>();
 
-    public AetherArmorItem(ArmorMaterial material, EquipmentSlot slot, Properties properties) {
-        super(material, slot, properties);
+    public AetherArmorItem(ArmorMaterial material, ArmorItem.Type type, Properties properties) {
+        super(material, type, properties);
     }
 
     /**

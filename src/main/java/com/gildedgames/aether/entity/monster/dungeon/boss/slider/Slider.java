@@ -25,6 +25,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
@@ -138,7 +139,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy, IEn
 
     @Override
     public boolean hurt(@Nonnull DamageSource source, float amount) {
-        if (source == DamageSource.OUT_OF_WORLD) {
+        if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             super.hurt(source, amount);
         } else if (source.getDirectEntity() instanceof LivingEntity attacker && this.level.getDifficulty() != Difficulty.PEACEFUL) {
             if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoomInterior(attacker)) {
@@ -225,8 +226,8 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy, IEn
 
     private void evaporate() {
         AABB entity = this.getBoundingBox();
-        BlockPos min = new BlockPos(entity.minX - 1, entity.minY - 1, entity.minZ - 1);
-        BlockPos max = new BlockPos(Math.ceil(entity.maxX - 1) + 1, Math.ceil(entity.maxY - 1) + 1, Math.ceil(entity.maxZ - 1) + 1);
+        BlockPos min = BlockPos.containing(entity.minX - 1, entity.minY - 1, entity.minZ - 1);
+        BlockPos max = BlockPos.containing(Math.ceil(entity.maxX - 1) + 1, Math.ceil(entity.maxY - 1) + 1, Math.ceil(entity.maxZ - 1) + 1);
         for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
             if (this.level.getBlockState(pos).getBlock() instanceof LiquidBlock) {
                 this.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());

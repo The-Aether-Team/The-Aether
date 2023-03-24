@@ -15,5 +15,6 @@
   ],
   "result": {
     "item": "aether:nature_staff"
-  }
+  },
+  "show_notification": true
 }

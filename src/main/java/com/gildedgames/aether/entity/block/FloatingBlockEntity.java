@@ -3,6 +3,7 @@ package com.gildedgames.aether.entity.block;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.Floatable;
 import com.gildedgames.aether.block.miscellaneous.FloatingBlock;
+import com.gildedgames.aether.data.resources.AetherDamageTypes;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.mixin.mixins.common.accessor.ConcretePowderBlockAccessor;
 import net.minecraft.CrashReportCategory;
@@ -25,7 +26,6 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
@@ -43,6 +43,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.ITeleporter;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -134,7 +135,7 @@ public class FloatingBlockEntity extends Entity {
                             boolean canBeReplaced = blockState.canBeReplaced(new DirectionalPlaceContext(this.level, blockPos1, Direction.UP, ItemStack.EMPTY, Direction.DOWN));
                             boolean isAboveFree = FloatingBlock.isFree(this.level.getBlockState(blockPos1.above())) && (!isConcrete || !canConvert);
                             boolean canBlockSurvive = this.blockState.canSurvive(this.level, blockPos1) && !isAboveFree;
-                            if ((canBeReplaced && canBlockSurvive) || this.natural) {
+                            if ((canBeReplaced && canBlockSurvive) || (this.natural && blockState.getBlock().defaultDestroyTime() >= 0)) {
                                 if (this.blockState.hasProperty(BlockStateProperties.WATERLOGGED) && this.level.getFluidState(blockPos1).is(Fluids.WATER)) {
                                     this.blockState = this.blockState.setValue(BlockStateProperties.WATERLOGGED, true);
                                 }
@@ -182,7 +183,7 @@ public class FloatingBlockEntity extends Entity {
                                 }
                             } else {
                                 this.discard();
-                                if ((!this.natural || !this.blockState.requiresCorrectToolForDrops()) && this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+                                if ((!this.natural || !this.blockState.requiresCorrectToolForDrops() || blockState.getBlock().defaultDestroyTime() < 0) && this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                                     this.callOnBrokenAfterFall(block, blockPos1);
                                     this.dropBlock(this.blockState);
                                 }
@@ -227,7 +228,7 @@ public class FloatingBlockEntity extends Entity {
                 damageSource = floatable.getFallDamageSource(this);
             } else {
                 predicate = EntitySelector.NO_SPECTATORS;
-                damageSource = new EntityDamageSource("aether.floatingBlock", this).damageHelmet();
+                damageSource = AetherDamageTypes.entityDamageSource(this.level, AetherDamageTypes.FLOATING_BLOCK, this);
             }
 
             float f = (float) Math.min(Mth.floor((float) this.floatDistance * this.fallDamagePerDistance), this.fallDamageMax);
@@ -267,6 +268,11 @@ public class FloatingBlockEntity extends Entity {
 
     public void setNatural(boolean natural) {
         this.natural = natural;
+    }
+
+    @Override
+    public Entity changeDimension(ServerLevel destination, ITeleporter teleporter) {
+        return null;
     }
 
     @Override

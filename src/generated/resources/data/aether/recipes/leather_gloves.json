@@ -11,5 +11,6 @@
   ],
   "result": {
     "item": "aether:leather_gloves"
-  }
+  },
+  "show_notification": true
 }

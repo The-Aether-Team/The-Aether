@@ -13,5 +13,6 @@
   ],
   "result": {
     "item": "aether:gravitite_chestplate"
-  }
+  },
+  "show_notification": true
 }

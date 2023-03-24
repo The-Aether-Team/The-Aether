@@ -1,10 +1,10 @@
 package com.gildedgames.aether.entity.monster.dungeon.boss.slider;
 
+import com.gildedgames.aether.data.resources.AetherDamageTypes;
 import com.gildedgames.aether.entity.ai.brain.memory.AetherMemoryModuleTypes;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Unit;
-import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.Brain;
@@ -38,7 +38,7 @@ public class Collide extends Behavior<Slider> {
         AABB collisionBounds = new AABB(slider.getBoundingBox().minX - 0.1, slider.getBoundingBox().minY - 0.1, slider.getBoundingBox().minZ - 0.1,
                 slider.getBoundingBox().maxX + 0.1, slider.getBoundingBox().maxY + 0.1, slider.getBoundingBox().maxZ + 0.1);
         for (Entity entity : level.getEntities(slider, collisionBounds)) {
-            if (entity instanceof LivingEntity livingEntity && entity.hurt(new EntityDamageSource("aether.crush", slider), 6)) {
+            if (entity instanceof LivingEntity livingEntity && entity.hurt(AetherDamageTypes.entityDamageSource(slider.level, AetherDamageTypes.CRUSH, slider), 6)) {
                 if (livingEntity instanceof Player player && player.getUseItem().is(Items.SHIELD) && player.isBlocking()) {
                     player.getCooldowns().addCooldown(Items.SHIELD, 100);
                     player.stopUsingItem();

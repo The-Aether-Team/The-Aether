@@ -1,6 +1,7 @@
 package com.gildedgames.aether.mixin.mixins.common.accessor;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
@@ -20,7 +21,7 @@ public interface AbstractFurnaceBlockEntityAccessor {
     RecipeManager.CachedCheck<Container, ? extends AbstractCookingRecipe> aether$getQuickCheck();
 
     @Invoker
-    boolean callCanBurn(@Nullable Recipe<?> recipe, NonNullList<ItemStack> stacks, int stackSize);
+    boolean callCanBurn(RegistryAccess registryAccess, @Nullable Recipe<?> recipe, NonNullList<ItemStack> stacks, int stackSize);
 
     @Accessor("litTime")
     int aether$getLitTime();

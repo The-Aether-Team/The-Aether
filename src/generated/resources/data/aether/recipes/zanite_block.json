@@ -13,5 +13,6 @@
   ],
   "result": {
     "item": "aether:zanite_block"
-  }
+  },
+  "show_notification": true
 }

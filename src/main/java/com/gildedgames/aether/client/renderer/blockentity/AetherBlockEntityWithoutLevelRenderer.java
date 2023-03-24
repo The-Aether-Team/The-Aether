@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
@@ -21,13 +22,13 @@ public class AetherBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLev
     }
 
     @Override
-    public void renderByItem(ItemStack stack, @Nonnull ItemTransforms.TransformType transformType, @Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, int packedOverlay) {
+    public void renderByItem(ItemStack stack, @Nonnull ItemDisplayContext context, @Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, int packedOverlay) {
         Item item = stack.getItem();
         if (item instanceof EntityBlockItem blockItem && blockItem.getBlockEntity().isPresent()) {
             BlockEntity blockEntity = blockItem.getBlockEntity().orElseThrow(() -> new UnsupportedOperationException("BlockEntity was expected, but not supplied."));
             Minecraft.getInstance().getBlockEntityRenderDispatcher().renderItem(blockEntity, poseStack, buffer, packedLight, packedOverlay);
         } else {
-            super.renderByItem(stack, transformType, poseStack, buffer, packedLight, packedOverlay);
+            super.renderByItem(stack, context, poseStack, buffer, packedLight, packedOverlay);
         }
     }
 }

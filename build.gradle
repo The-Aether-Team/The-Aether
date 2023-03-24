@@ -23,6 +23,8 @@ buildscript {
         classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7.+', changing: true
         classpath group: 'org.parchmentmc', name: 'librarian', version: '1.+', changing: true
         classpath group: 'io.github.0ffz', name: 'gpr-for-gradle', version: '1.+', changing: true
+        classpath group: 'gradle.plugin.com.matthewprenger', name: 'CurseGradle', version: '1.4.+', changing: true
+        classpath group: 'com.modrinth.minotaur', name: 'Minotaur', version: '2.+', changing: true
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
@@ -31,6 +33,8 @@ apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'io.github.0ffz.github-packages'
+apply plugin: 'com.matthewprenger.cursegradle'
+apply plugin: 'com.modrinth.minotaur'
 
 version = project.mc_version + '-' + project.aether_version
 group = 'com.gildedgames.aether' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -109,10 +113,10 @@ dependencies {
     compileOnly "top.theillusivec4.caelus:caelus-forge:${project.caelus_version}:api"
     compileOnly "top.theillusivec4.caelus:caelus-forge:${project.caelus_version}"
 
-    compileOnly "mezz.jei:jei-${project.mc_version}-common-api:${project.jei_version}"
-    compileOnly "mezz.jei:jei-${project.mc_version}-forge-api:${project.jei_version}"
+//    compileOnly "mezz.jei:jei-${project.mc_version}-common-api:${project.jei_version}"
+//    compileOnly "mezz.jei:jei-${project.mc_version}-forge-api:${project.jei_version}"
 
-    runtimeOnly fg.deobf("io.github.flemmli97:debugutils:${project.mc_version}-${project.debugutils_version}-forge")
+//    runtimeOnly fg.deobf("io.github.flemmli97:debugutils:${project.mc_version}-${project.debugutils_version}-forge")
 
 //    jarJar fg.deobf("com.gildedgames.nitrogen:nitrogen:${project.nitrogen_version}") {
 //        jarJar.ranged(it, "[${project.nitrogen_version},)")
@@ -139,7 +143,7 @@ repositories {
     maven { url = "https://maven.theillusivec4.top/" }
     maven { url = "https://www.cursemaven.com" }
     maven { url = "https://dvs1.progwml6.com/files/maven/" }
-    maven { url "https://gitlab.com/api/v4/projects/21830712/packages/maven" }
+    maven { url = "https://gitlab.com/api/v4/projects/21830712/packages/maven" }
 //    maven githubPackage.invoke("Gilded-Games/Nitrogen")
 }
 
@@ -199,6 +203,44 @@ publishing {
             }
         }
     }
+}
+
+curseforge {
+    project {
+        apiKey = System.getenv("CURSEFORGE_TOKEN")
+        id = "${project.curseforge_id}"
+        releaseType = "${project.version_type}"
+        changelog = file("./docs/CHANGELOG.md")
+        changelogType = "markdown"
+        addGameVersion("${project.mc_version}")
+        mainArtifact(tasks.jar) {
+            displayName = "The Aether ${version}"
+            relations {
+                embeddedLibrary "curios"
+                optionalDependency "starlight-forge"
+            }
+        }
+    }
+    options {
+        debug = true
+    }
+}
+
+modrinth {
+    token = System.getenv("MODRINTH_TOKEN")
+    projectId = "${project.modrinth_id}"
+    versionNumber = "${version}"
+    versionType = "${project.version_type}"
+    versionName = "The Aether ${version}"
+    changelog = new File("./docs/CHANGELOG.md").text
+    uploadFile = tasks.jar
+    gameVersions = ["${project.mc_version}"]
+    loaders = ["forge"]
+    dependencies {
+        embedded.version "curios", "${project.curios_version}"
+        optional.project "starlight-forge"
+    }
+    debugMode = true
 }
 
 mixin {

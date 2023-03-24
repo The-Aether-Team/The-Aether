@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "aether:zanite_sword"
-  }
+  },
+  "show_notification": true
 }

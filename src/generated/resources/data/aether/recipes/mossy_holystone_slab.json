@@ -12,5 +12,6 @@
   "result": {
     "count": 6,
     "item": "aether:mossy_holystone_slab"
-  }
+  },
+  "show_notification": true
 }

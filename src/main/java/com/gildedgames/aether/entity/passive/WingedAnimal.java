@@ -7,7 +7,6 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nonnull;
 
@@ -48,15 +47,11 @@ public abstract class WingedAnimal extends MountableAnimal {
     }
 
     @Override
-    public void travel(@Nonnull Vec3 vector3d) {
-        float f = this.flyingSpeed;
+    public float getFlyingSpeed() {
         if (this.isEffectiveAi() && !this.isOnGround() && this.getPassengers().isEmpty()) {
-            this.flyingSpeed = this.getSpeed() * (0.24F / ((float) Math.pow(0.91F, 3)));
-            super.travel(vector3d);
-            this.flyingSpeed = f;
+            return this.getSpeed() * (0.24F / ((float) Math.pow(0.91F, 3)));
         } else {
-            this.flyingSpeed = f;
-            super.travel(vector3d);
+            return super.getFlyingSpeed();
         }
     }
 

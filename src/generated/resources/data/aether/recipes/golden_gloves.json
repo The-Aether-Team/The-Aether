@@ -11,5 +11,6 @@
   ],
   "result": {
     "item": "aether:golden_gloves"
-  }
+  },
+  "show_notification": true
 }

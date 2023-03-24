@@ -1,4 +1,4 @@
-// 1.19.3	2023-02-27T16:02:12.7998144	Advancements
+// 1.19.4	2023-03-18T15:59:38.7311382	Advancements
 06e4eff332e36648b2a1bc237e738ec2a5584897 data/aether/advancements/aether_sleep.json
 63a80813c0c6f54bf16c23f6ac28c91836bdf5db data/aether/advancements/black_moa.json
 a6a7ec78b783342af08b1021cf32a7f5cf76d6a7 data/aether/advancements/blue_aercloud.json
@@ -26,4 +26,4 @@ c200f124e81f53495600efa43c07fdffd740975c data/aether/advancements/silver_dungeon
 6e1f957f18d019e0b21fbf2057b5bc4ff11cac8e data/aether/advancements/valkyrie_hoe.json
 7c32538627718fdee744b022659213e20ad1741d data/aether/advancements/valkyrie_loot.json
 981f66c9b16016d0020ce4eef4ba6d838b9c506a data/aether/advancements/zanite.json
-5348767dd309955cce177368905bd7d820b370e8 data/aether/advancements/zephyr_hammer.json
+29a2847695b8811724dd80aa2e97020ebd9d7229 data/aether/advancements/zephyr_hammer.json

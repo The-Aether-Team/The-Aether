@@ -11,5 +11,6 @@
   ],
   "result": {
     "item": "aether:gravitite_gloves"
-  }
+  },
+  "show_notification": true
 }

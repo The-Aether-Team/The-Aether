@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "aether:freezer"
-  }
+  },
+  "show_notification": true
 }

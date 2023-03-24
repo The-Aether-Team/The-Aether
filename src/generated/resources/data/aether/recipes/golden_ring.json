@@ -13,5 +13,6 @@
   ],
   "result": {
     "item": "aether:golden_ring"
-  }
+  },
+  "show_notification": true
 }

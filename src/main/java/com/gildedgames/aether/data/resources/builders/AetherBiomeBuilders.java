@@ -34,7 +34,7 @@ public class AetherBiomeBuilders {
 
     public static Biome makeDefaultBiome(BiomeGenerationSettings.Builder builder) {
         return fullDefinition(
-                Biome.Precipitation.NONE,
+                false,
                 0.8F,
                 0.0F,
                 new BiomeSpecialEffects.Builder()
@@ -91,9 +91,9 @@ public class AetherBiomeBuilders {
         );
     }
 
-    public static Biome fullDefinition(Biome.Precipitation precipitation, float temperature, float downfall, BiomeSpecialEffects effects, MobSpawnSettings spawnSettings, BiomeGenerationSettings generationSettings, Biome.TemperatureModifier temperatureModifier) {
+    public static Biome fullDefinition(boolean precipitation, float temperature, float downfall, BiomeSpecialEffects effects, MobSpawnSettings spawnSettings, BiomeGenerationSettings generationSettings, Biome.TemperatureModifier temperatureModifier) {
         return new Biome.BiomeBuilder()
-                .precipitation(precipitation)
+                .hasPrecipitation(precipitation)
                 .temperature(temperature)
                 .downfall(downfall)
                 .specialEffects(effects)
@@ -111,7 +111,7 @@ public class AetherBiomeBuilders {
         Climate.Parameter temps4 = Climate.Parameter.span(0.4F, 0.93F);
         Climate.Parameter temps5 = Climate.Parameter.span(0.93F, 0.94F);
         Climate.Parameter temps6 = Climate.Parameter.span(0.94F, 1.0F);
-        return new MultiNoiseBiomeSource(new Climate.ParameterList<>(List.of(
+        return MultiNoiseBiomeSource.createFromList(new Climate.ParameterList<>(List.of(
                 // Row 1
                 Pair.of(new Climate.ParameterPoint(temps1, fullRange, fullRange, fullRange, fullRange, fullRange, 0),
                         biomes.getOrThrow(AetherBiomes.SKYROOT_MEADOW)),

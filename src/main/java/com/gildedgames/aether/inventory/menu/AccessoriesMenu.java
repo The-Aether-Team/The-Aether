@@ -32,8 +32,10 @@ import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
 import top.theillusivec4.curios.common.inventory.CurioSlot;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Based on {@link top.theillusivec4.curios.common.inventory.container.CuriosContainer}
@@ -227,7 +229,7 @@ public class AccessoriesMenu extends InventoryMenu {
             if (recipe.isPresent()) {
                 CraftingRecipe craftingRecipe = recipe.get();
                 if (this.craftResult.setRecipeUsed(this.player.getLevel(), playerMP, craftingRecipe)) {
-                    itemStack = craftingRecipe.assemble(this.craftMatrix);
+                    itemStack = craftingRecipe.assemble(this.craftMatrix, this.player.getLevel().registryAccess());
                 }
             }
             this.craftResult.setItem(0, itemStack);
@@ -258,6 +260,7 @@ public class AccessoriesMenu extends InventoryMenu {
             ItemStack itemStack1 = slot.getItem();
             itemStack = itemStack1.copy();
             EquipmentSlot equipmentSlot = Mob.getEquipmentSlotForItem(itemStack);
+            Set<String> curioTags = CuriosApi.getCuriosHelper().getCurioTags(itemStack.getItem());
             if (index == 0) {
                 if (!this.moveItemStackTo(itemStack1, 9, 45, true)) {
                     return ItemStack.EMPTY;
@@ -276,9 +279,11 @@ public class AccessoriesMenu extends InventoryMenu {
                 if (!this.moveItemStackTo(itemStack1, i, i + 1, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (index < 46 && !CuriosApi.getCuriosHelper().getCurioTags(itemStack.getItem()).isEmpty()) {
-                if (!this.moveItemStackTo(itemStack1, 46, this.slots.size(), false)) {
-                    return ItemStack.EMPTY;
+            } else if (index < 46 && !curioTags.isEmpty() && !this.getEmptyCurioSlots(curioTags).isEmpty()) {
+                for (int i : this.getEmptyCurioSlots(curioTags)) {
+                    if (!this.moveItemStackTo(itemStack1, i, i + 1, false)) {
+                        return ItemStack.EMPTY;
+                    }
                 }
             } else if (equipmentSlot == EquipmentSlot.OFFHAND && !(this.slots.get(45)).hasItem()) {
                 if (!this.moveItemStackTo(itemStack1, 45, 46, false)) {
@@ -309,6 +314,22 @@ public class AccessoriesMenu extends InventoryMenu {
             }
         }
         return itemStack;
+    }
+
+    private Set<Integer> getEmptyCurioSlots(Set<String> identifiers) {
+        Set<Integer> slots = new HashSet<>();
+        for (String identifier : identifiers) {
+            switch(identifier) {
+                case "aether_pendant" -> slots.add(46);
+                case "aether_cape" -> slots.add(47);
+                case "aether_shield" -> slots.add(48);
+                case "aether_ring" -> slots.addAll(Set.of(49, 50));
+                case "aether_gloves" -> slots.add(51);
+                case "aether_accessory" -> slots.addAll(Set.of(52, 53));
+            }
+        }
+        slots.removeIf(index -> this.slots.get(index).hasItem());
+        return slots;
     }
 
     @Override

@@ -5,11 +5,8 @@ import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.advancement.IncubationTrigger;
 import com.gildedgames.aether.advancement.LoreTrigger;
 import com.gildedgames.aether.api.AetherMoaTypes;
-import com.gildedgames.aether.api.registers.MoaType;
 import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.block.construction.AetherFarmBlock;
 import com.gildedgames.aether.entity.AetherEntityTypes;
-import com.gildedgames.aether.entity.monster.Zephyr;
 import com.gildedgames.aether.event.hooks.AbilityHooks;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.loot.AetherLoot;
@@ -20,10 +17,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.HoneycombItem;
-import net.minecraft.world.level.Level;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.commands.CommandFunction;
 import net.minecraft.world.item.Items;
@@ -41,6 +35,8 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
     }
 
     public static class AetherAdvancements implements AdvancementGenerator {
+
+        @SuppressWarnings("unused")
         @Override
         public void generate(HolderLookup.Provider provider, Consumer<Advancement> consumer, ExistingFileHelper existingFileHelper) {
             Advancement theAether = Advancement.Builder.advancement()
@@ -238,7 +234,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                             Component.translatable("advancement.aether.zephyr_hammer.desc"),
                             null,
                             FrameType.CHALLENGE, true, true, true)
-                    .addCriterion("zephyr_hammer", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(AetherEntityTypes.ZEPHYR.get()), DamageSourcePredicate.Builder.damageType().isProjectile(true).direct(EntityPredicate.Builder.entity().of(AetherEntityTypes.HAMMER_PROJECTILE.get()))))
+                    .addCriterion("zephyr_hammer", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(AetherEntityTypes.ZEPHYR.get()), DamageSourcePredicate.Builder.damageType().tag(TagPredicate.is(DamageTypeTags.IS_PROJECTILE)).direct(EntityPredicate.Builder.entity().of(AetherEntityTypes.HAMMER_PROJECTILE.get()))))
                     .save(consumer, new ResourceLocation(Aether.MODID, "zephyr_hammer"), existingFileHelper);
 
             Advancement lanceLoot = Advancement.Builder.advancement()

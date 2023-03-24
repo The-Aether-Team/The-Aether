@@ -121,11 +121,11 @@ public class ValkyrieQueenDialogueScreen extends Screen {
      * Override to prevent rendering a dark gradient over the background.
      */
     @Override
-    public void renderBackground(@Nonnull PoseStack pPoseStack, int pVOffset) {
+    public void renderBackground(@Nonnull PoseStack poseStack) {
         if (this.minecraft.level != null) {
-            MinecraftForge.EVENT_BUS.post(new ScreenEvent.BackgroundRendered(this, pPoseStack));
+            MinecraftForge.EVENT_BUS.post(new ScreenEvent.BackgroundRendered(this, poseStack));
         } else {
-            this.renderDirtBackground(pVOffset);
+            this.renderDirtBackground(poseStack);
         }
     }
 

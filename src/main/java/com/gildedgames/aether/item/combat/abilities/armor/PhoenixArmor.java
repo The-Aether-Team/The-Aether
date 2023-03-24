@@ -7,10 +7,10 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -42,13 +42,11 @@ public interface PhoenixArmor {
                         float defaultBoost = boostWithDepthStrider(entity);
                         aetherPlayer.setPhoenixSubmergeLength(Math.min(aetherPlayer.getPhoenixSubmergeLength() + 0.1, 1.0));
                         defaultBoost *= aetherPlayer.getPhoenixSubmergeLength();
-                        Vec3 movement = entity.getDeltaMovement().multiply(defaultBoost, 0.25F, defaultBoost);
-                        entity.move(MoverType.SELF, movement);
+                        entity.moveRelative(0.04F * defaultBoost, new Vec3(entity.xxa, entity.yya, entity.zza));
                     });
                 } else {
                     float defaultBoost = boostWithDepthStrider(entity);
-                    Vec3 movement = entity.getDeltaMovement().multiply(defaultBoost, 0.25F, defaultBoost);
-                    entity.move(MoverType.SELF, movement);
+                    entity.moveRelative(0.04F * defaultBoost, new Vec3(entity.xxa, entity.yya, entity.zza));
                 }
             }
             if (entity.getLevel() instanceof ServerLevel level) {
@@ -72,7 +70,7 @@ public interface PhoenixArmor {
      * @return The modified boost as a {@link Float}.
      */
     private static float boostWithDepthStrider(LivingEntity entity) {
-        float defaultBoost = 10.5F;
+        float defaultBoost = 1.55F;
         float depthStriderModifier = Math.min(EnchantmentHelper.getDepthStrider(entity), 3.0F);
         if (depthStriderModifier > 0.0F) {
             defaultBoost += depthStriderModifier * 1.5F;
@@ -172,6 +170,6 @@ public interface PhoenixArmor {
      * @see com.gildedgames.aether.event.listeners.abilities.ArmorAbilityListener#onEntityAttack(LivingAttackEvent)
      */
     static boolean extinguishUser(LivingEntity entity, DamageSource source) {
-        return EquipmentUtil.hasFullPhoenixSet(entity) && source.isFire();
+        return EquipmentUtil.hasFullPhoenixSet(entity) && source.is(DamageTypeTags.IS_FIRE);
     }
 }
