@@ -185,9 +185,10 @@ tasks.jarJar.configure {
     archiveClassifier = ""
 }
 
-def refMapFile = project.file("${it.temporaryDir}/${it.name}-refmap.json")
 tasks.named(sourceSets.main.compileJavaTaskName) {
-    outputs.file(it.ext.refMapFile).withPropertyName("mixin refmap")
+    outputs.file("${it.temporaryDir}/${it.name}-refmap.json").withPropertyName("mixin refmap")
+    // File path based off of MixinGradle:
+    // https://github.com/SpongePowered/MixinGradle/blob/df801a4aff9ab132441df49d279d1d26f3261e05/src/main/groovy/org/spongepowered/asm/gradle/plugins/MixinExtension.groovy#L963
 }
 
 compileJava {
