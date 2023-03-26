@@ -185,6 +185,7 @@ tasks.jarJar.configure {
     archiveClassifier = ""
 }
 
+def refMapFile = project.file("${it.temporaryDir}/${it.name}-refmap.json")
 tasks.named(sourceSets.main.compileJavaTaskName) {
     outputs.file(it.ext.refMapFile).withPropertyName("mixin refmap")
 }
