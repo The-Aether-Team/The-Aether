@@ -187,8 +187,6 @@ tasks.jarJar.configure {
 
 tasks.named(sourceSets.main.compileJavaTaskName) {
     outputs.file("${it.temporaryDir}/${it.name}-refmap.json").withPropertyName("mixin refmap")
-    // File path based off of MixinGradle:
-    // https://github.com/SpongePowered/MixinGradle/blob/df801a4aff9ab132441df49d279d1d26f3261e05/src/main/groovy/org/spongepowered/asm/gradle/plugins/MixinExtension.groovy#L963
 }
 
 compileJava {
@@ -224,7 +222,7 @@ curseforge {
         changelogType = "markdown"
         addGameVersion("${project.mc_version}")
         mainArtifact(tasks.jar) {
-            displayName = "The Aether ${version}"
+            displayName = "The Aether - Forge ${version}"
             relations {
                 embeddedLibrary "curios"
                 optionalDependency "starlight-forge"
@@ -241,7 +239,7 @@ modrinth {
     projectId = "${project.modrinth_id}"
     versionNumber = "${version}"
     versionType = "${project.version_type}"
-    versionName = "The Aether ${version}"
+    versionName = "The Aether - Forge ${version}"
     changelog = new File("$rootDir/docs/CHANGELOG.md").text
     uploadFile = tasks.jar
     gameVersions = ["${project.mc_version}"]
