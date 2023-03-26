@@ -210,7 +210,7 @@ curseforge {
         apiKey = System.getenv("CURSEFORGE_TOKEN")
         id = "${project.curseforge_id}"
         releaseType = "${project.version_type}"
-        changelog = file("./docs/CHANGELOG.md")
+        changelog = file("$rootDir/docs/CHANGELOG.md")
         changelogType = "markdown"
         addGameVersion("${project.mc_version}")
         mainArtifact(tasks.jar) {
@@ -232,7 +232,7 @@ modrinth {
     versionNumber = "${version}"
     versionType = "${project.version_type}"
     versionName = "The Aether ${version}"
-    changelog = new File("./docs/CHANGELOG.md").text
+    changelog = new File("$rootDir/docs/CHANGELOG.md").text
     uploadFile = tasks.jar
     gameVersions = ["${project.mc_version}"]
     loaders = ["forge"]
