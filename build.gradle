@@ -106,12 +106,9 @@ dependencies {
 //    compileOnly "com.gildedgames.nitrogen:nitrogen:${project.nitrogen_version}"
 //    runtimeOnly fg.deobf("com.gildedgames.nitrogen:nitrogen:${project.nitrogen_version}")
 
-    compileOnly "top.theillusivec4.curios:curios-forge:${project.curios_version}:api"
-    compileOnly "top.theillusivec4.curios:curios-forge:${project.curios_version}"
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}")
+    implementation fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}")
 
-    compileOnly "top.theillusivec4.caelus:caelus-forge:${project.caelus_version}:api"
-    compileOnly "top.theillusivec4.caelus:caelus-forge:${project.caelus_version}"
+    compileOnly fg.deobf("top.theillusivec4.caelus:caelus-forge:${project.caelus_version}")
 
 //    compileOnly "mezz.jei:jei-${project.mc_version}-common-api:${project.jei_version}"
 //    compileOnly "mezz.jei:jei-${project.mc_version}-forge-api:${project.jei_version}"
