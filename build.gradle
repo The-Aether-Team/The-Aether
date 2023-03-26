@@ -185,6 +185,14 @@ tasks.jarJar.configure {
     archiveClassifier = ""
 }
 
+tasks.named(sourceSets.main.compileJavaTaskName) {
+    outputs.file(it.ext.refMapFile).withPropertyName("mixin refmap")
+}
+
+compileJava {
+    options.incremental = false
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
