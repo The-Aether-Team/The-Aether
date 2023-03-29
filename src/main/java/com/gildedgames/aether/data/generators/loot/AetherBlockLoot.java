@@ -175,15 +175,15 @@ public class AetherBlockLoot extends AetherBlockLootSubProvider {
         this.dropSelf(AetherBlocks.HOLYSTONE_BRICK_STAIRS.get());
         this.dropSelf(AetherBlocks.AEROGEL_STAIRS.get());
 
-        this.dropSelf(AetherBlocks.SKYROOT_SLAB.get());
-        this.dropSelf(AetherBlocks.CARVED_SLAB.get());
-        this.dropSelf(AetherBlocks.ANGELIC_SLAB.get());
-        this.dropSelf(AetherBlocks.HELLFIRE_SLAB.get());
-        this.dropSelf(AetherBlocks.HOLYSTONE_SLAB.get());
-        this.dropSelf(AetherBlocks.MOSSY_HOLYSTONE_SLAB.get());
-        this.dropSelf(AetherBlocks.ICESTONE_SLAB.get());
-        this.dropSelf(AetherBlocks.HOLYSTONE_BRICK_SLAB.get());
-        this.dropSelf(AetherBlocks.AEROGEL_SLAB.get());
+        this.add(AetherBlocks.SKYROOT_SLAB.get(), this::createSlabItemTable);
+        this.add(AetherBlocks.CARVED_SLAB.get(), this::createSlabItemTable);
+        this.add(AetherBlocks.ANGELIC_SLAB.get(), this::createSlabItemTable);
+        this.add(AetherBlocks.HELLFIRE_SLAB.get(), this::createSlabItemTable);
+        this.add(AetherBlocks.HOLYSTONE_SLAB.get(), this::createSlabItemTable);
+        this.add(AetherBlocks.MOSSY_HOLYSTONE_SLAB.get(), this::createSlabItemTable);
+        this.add(AetherBlocks.ICESTONE_SLAB.get(), this::createSlabItemTable);
+        this.add(AetherBlocks.HOLYSTONE_BRICK_SLAB.get(), this::createSlabItemTable);
+        this.add(AetherBlocks.AEROGEL_SLAB.get(), this::createSlabItemTable);
 
         this.add(AetherBlocks.SUN_ALTAR.get(), this::droppingNameableBlockEntityTable);
         this.add(AetherBlocks.SKYROOT_BOOKSHELF.get(),
