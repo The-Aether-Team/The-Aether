@@ -41,7 +41,7 @@ public class ParachuteRenderer extends EntityRenderer<Parachute> {
             }
         }
         poseStack.translate(-0.5, 0.0, -0.5);
-        Minecraft.getInstance().getBlockRenderer().renderSingleBlock(this.parachuteBlock.get().defaultBlockState(), poseStack, buffer, packedLight, OverlayTexture.NO_OVERLAY, ModelData.EMPTY, RenderType.translucent());
+        Minecraft.getInstance().getBlockRenderer().renderSingleBlock(this.parachuteBlock.get().defaultBlockState(), poseStack, buffer, packedLight, OverlayTexture.NO_OVERLAY);
         poseStack.popPose();
         super.render(parachute, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }
