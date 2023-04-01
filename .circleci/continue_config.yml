@@ -197,8 +197,6 @@ jobs:
 commands:
   setup:
     steps:
-      - run: |
-          lscpu
       - checkout
       - gradle/with_cache:
           cache_key: 'v8'
