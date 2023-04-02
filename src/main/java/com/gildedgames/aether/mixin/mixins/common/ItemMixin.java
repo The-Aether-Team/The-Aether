@@ -43,11 +43,11 @@ public class ItemMixin {
      */
     private static BlockHitResult interactionTooFar(Level level, Player player, InteractionHand hand, ClipContext.Fluid fluidMode) {
         if (hand == InteractionHand.OFF_HAND && AbilityHooks.ToolHooks.hasValkyrieItemInMainHandOnly(player)) {
-            AttributeInstance reachDistance = player.getAttribute(ForgeMod.REACH_DISTANCE.get());
+            AttributeInstance reachDistance = player.getAttribute(ForgeMod.BLOCK_REACH.get());
             if (reachDistance != null) {
                 AttributeModifier valkyrieModifier = reachDistance.getModifier(ValkyrieTool.REACH_DISTANCE_MODIFIER_UUID);
                 if (valkyrieModifier != null) {
-                    double reach = player.getAttributeValue(ForgeMod.REACH_DISTANCE.get()) - valkyrieModifier.getAmount();
+                    double reach = player.getAttributeValue(ForgeMod.BLOCK_REACH.get()) - valkyrieModifier.getAmount();
                     double trueReach = reach == 0 ? 0 : reach + (player.isCreative() ? 0.5 : 0); // Copied from IForgePlayer#getReachDistance().
                     return getPlayerPOVHitResultForReach(level, player, trueReach, fluidMode);
                 }
