@@ -138,7 +138,7 @@ public class SkyrootBucketItem extends BucketItem {
     /**
      * Copy of BucketItem#canBlockContainFluid(Level, BlockPos, BlockState).
      */
-    private boolean canBlockContainFluid(Level level, BlockPos pos, BlockState state) {
+    protected boolean canBlockContainFluid(Level level, BlockPos pos, BlockState state) {
         return state.getBlock() instanceof LiquidBlockContainer liquidBlockContainer && liquidBlockContainer.canPlaceLiquid(level, pos, state, this.getFluid());
     }
 }
