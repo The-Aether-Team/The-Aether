@@ -7,7 +7,6 @@ import com.gildedgames.aether.AetherTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.tags.ItemTags;
@@ -119,7 +118,7 @@ public class AetherItemTagData extends ItemTagsProvider {
         this.tag(AetherTags.Items.FREEZABLE_PENDANTS)
                 .add(AetherItems.IRON_PENDANT.get())
                 .add(AetherItems.GOLDEN_PENDANT.get());
-        this.tag(AetherTags.Items.SLIDER_DAMAGING_ITEMS).addTag(Tags.Items.TOOLS_PICKAXES);
+        this.tag(AetherTags.Items.SLIDER_DAMAGING_ITEMS).addTag(ItemTags.PICKAXES);
 
         this.tag(AetherTags.Items.PHYG_TEMPTATION_ITEMS).add(AetherItems.BLUE_BERRY.get());
         this.tag(AetherTags.Items.FLYING_COW_TEMPTATION_ITEMS).add(AetherItems.BLUE_BERRY.get());
@@ -231,7 +230,7 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherBlocks.AMBROSIUM_BLOCK.get().asItem(),
                 AetherBlocks.ZANITE_BLOCK.get().asItem());
         this.tag(Tags.Items.TOOLS).addTag(AetherTags.Items.TOOLS_HAMMERS);
-        this.tag(Tags.Items.TOOLS_SWORDS).add(
+        this.tag(ItemTags.SWORDS).add(
                 AetherItems.SKYROOT_SWORD.get(),
                 AetherItems.HOLYSTONE_SWORD.get(),
                 AetherItems.ZANITE_SWORD.get(),
@@ -242,25 +241,25 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherItems.VAMPIRE_BLADE.get(),
                 AetherItems.PIG_SLAYER.get(),
                 AetherItems.CANDY_CANE_SWORD.get()).addTag(AetherTags.Items.TOOLS_LANCES);
-        this.tag(Tags.Items.TOOLS_AXES).add(
+        this.tag(ItemTags.AXES).add(
                 AetherItems.SKYROOT_AXE.get(),
                 AetherItems.HOLYSTONE_AXE.get(),
                 AetherItems.ZANITE_AXE.get(),
                 AetherItems.GRAVITITE_AXE.get(),
                 AetherItems.VALKYRIE_AXE.get());
-        this.tag(Tags.Items.TOOLS_PICKAXES).add(
+        this.tag(ItemTags.PICKAXES).add(
                 AetherItems.SKYROOT_PICKAXE.get(),
                 AetherItems.HOLYSTONE_PICKAXE.get(),
                 AetherItems.ZANITE_PICKAXE.get(),
                 AetherItems.GRAVITITE_PICKAXE.get(),
                 AetherItems.VALKYRIE_PICKAXE.get());
-        this.tag(Tags.Items.TOOLS_SHOVELS).add(
+        this.tag(ItemTags.SHOVELS).add(
                 AetherItems.SKYROOT_SHOVEL.get(),
                 AetherItems.HOLYSTONE_SHOVEL.get(),
                 AetherItems.ZANITE_SHOVEL.get(),
                 AetherItems.GRAVITITE_SHOVEL.get(),
                 AetherItems.VALKYRIE_SHOVEL.get());
-        this.tag(Tags.Items.TOOLS_HOES).add(
+        this.tag(ItemTags.HOES).add(
                 AetherItems.SKYROOT_HOE.get(),
                 AetherItems.HOLYSTONE_HOE.get(),
                 AetherItems.ZANITE_HOE.get(),
