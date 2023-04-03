@@ -5,6 +5,21 @@ setup: true
 orbs:
   path-filtering: circleci/path-filtering@0.1.1
 
+jobs:
+  publish:
+    machine:
+      image: ubuntu-2204:2022.07.1
+    resource_class: large
+    environment:
+      _JAVA_OPTIONS: -Xmx3200m
+      GRADLE_OPTS: -Dorg.gradle.daemon=false
+    steps:
+      - setup
+      - run: |
+          gradle publish
+          gradle curseforge
+          gradle modrinth
+
 workflows:
   start:
     jobs:
@@ -15,3 +30,16 @@ workflows:
             src/.* allow-deploy-and-discord-publish true
           base-revision: << pipeline.git.branch >>
           config-path: .circleci/continue_config.yml
+  publish:
+    jobs:
+      - publish:
+          context:
+            - maven
+            - publishing
+          filters:
+            tags:
+              only:
+                - /.*/
+            branches:
+              ignore:
+                - /.*/

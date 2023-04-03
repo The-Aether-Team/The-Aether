@@ -180,20 +180,6 @@ jobs:
          steps:
            - run: echo "Condition not met."
 
-  publish:
-    machine:
-      image: ubuntu-2204:2022.07.1
-    resource_class: large
-    environment:
-      _JAVA_OPTIONS: -Xmx3200m
-      GRADLE_OPTS: -Dorg.gradle.daemon=false
-    steps:
-      - setup
-      - run: |
-          gradle publish
-          gradle curseforge
-          gradle modrinth
-
 commands:
   setup:
     steps:
@@ -218,16 +204,3 @@ workflows:
                 - "1.19"
           requires:
             - build
-  publish:
-    jobs:
-      - publish:
-          context:
-            - maven
-            - publishing
-          filters:
-            tags:
-              only:
-                - /.*/
-            branches:
-              ignore:
-                - /.*/
