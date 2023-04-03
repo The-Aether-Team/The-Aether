@@ -4,6 +4,7 @@ setup: true
 
 orbs:
   path-filtering: circleci/path-filtering@0.1.1
+  gradle: circleci/gradle@3.0.0
 
 jobs:
   publish:
