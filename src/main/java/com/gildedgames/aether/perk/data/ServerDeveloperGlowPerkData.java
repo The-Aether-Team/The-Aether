@@ -4,7 +4,7 @@ import com.gildedgames.aether.network.AetherPacket;
 import com.gildedgames.aether.network.packet.client.ClientDeveloperGlowPacket;
 import com.gildedgames.aether.perk.types.DeveloperGlow;
 import com.gildedgames.aether.util.PerkUtil;
-import com.gildedgames.nitrogen.api.users.User;
+import com.aetherteam.nitrogen.api.users.User;
 import net.minecraft.server.MinecraftServer;
 
 import java.util.Map;

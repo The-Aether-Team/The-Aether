@@ -4,8 +4,8 @@ import com.gildedgames.aether.client.gui.screen.perks.AetherCustomizationsScreen
 import com.gildedgames.aether.perk.data.ClientDeveloperGlowPerkData;
 import com.gildedgames.aether.perk.types.DeveloperGlow;
 import com.gildedgames.aether.util.PerkUtil;
-import com.gildedgames.nitrogen.api.users.User;
-import com.gildedgames.nitrogen.api.users.UserData;
+import com.aetherteam.nitrogen.api.users.User;
+import com.aetherteam.nitrogen.api.users.UserData;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;

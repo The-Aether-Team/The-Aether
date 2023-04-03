@@ -3,7 +3,7 @@ package com.gildedgames.aether.perk.data;
 import com.gildedgames.aether.network.AetherPacket;
 import com.gildedgames.aether.network.packet.client.ClientMoaSkinPacket;
 import com.gildedgames.aether.perk.types.MoaData;
-import com.gildedgames.nitrogen.api.users.User;
+import com.aetherteam.nitrogen.api.users.User;
 import net.minecraft.server.MinecraftServer;
 
 import java.util.Map;

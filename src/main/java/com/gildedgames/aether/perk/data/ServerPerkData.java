@@ -2,8 +2,8 @@ package com.gildedgames.aether.perk.data;
 
 import com.gildedgames.aether.network.AetherPacket;
 import com.gildedgames.aether.network.AetherPacketHandler;
-import com.gildedgames.nitrogen.api.users.User;
-import com.gildedgames.nitrogen.api.users.UserData;
+import com.aetherteam.nitrogen.api.users.User;
+import com.aetherteam.nitrogen.api.users.UserData;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;

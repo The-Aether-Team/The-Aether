@@ -2,9 +2,9 @@ package com.gildedgames.aether.util;
 
 import com.gildedgames.aether.perk.types.MoaPacks;
 import com.gildedgames.aether.perk.types.MoaSkins;
-import com.gildedgames.nitrogen.api.users.Patron;
-import com.gildedgames.nitrogen.api.users.Ranked;
-import com.gildedgames.nitrogen.api.users.User;
+import com.aetherteam.nitrogen.api.users.Patron;
+import com.aetherteam.nitrogen.api.users.Ranked;
+import com.aetherteam.nitrogen.api.users.User;
 import net.minecraft.network.chat.Component;
 import org.apache.commons.lang3.tuple.Triple;
 

@@ -5,8 +5,8 @@ import com.gildedgames.aether.network.packet.server.ServerDeveloperGlowPacket;
 import com.gildedgames.aether.perk.CustomizationsOptions;
 import com.gildedgames.aether.perk.types.DeveloperGlow;
 import com.gildedgames.aether.util.PerkUtil;
-import com.gildedgames.nitrogen.api.users.User;
-import com.gildedgames.nitrogen.api.users.UserData;
+import com.aetherteam.nitrogen.api.users.User;
+import com.aetherteam.nitrogen.api.users.UserData;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.HashMap;
