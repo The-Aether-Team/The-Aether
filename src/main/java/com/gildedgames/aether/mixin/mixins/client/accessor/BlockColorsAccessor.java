@@ -11,6 +11,6 @@ import java.util.Map;
 
 @Mixin(BlockColors.class)
 public interface BlockColorsAccessor {
-    @Accessor
-    Map<Holder.Reference<Block>, BlockColor> getBlockColors();
+    @Accessor("blockColors")
+    Map<Holder.Reference<Block>, BlockColor> aether$getBlockColors();
 }

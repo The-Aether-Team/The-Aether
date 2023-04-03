@@ -1,6 +1,6 @@
 package com.gildedgames.aether.entity;
 
-import com.gildedgames.aether.api.DungeonTracker;
+import com.gildedgames.aether.api.BossRoomTracker;
 import com.gildedgames.aether.block.dungeon.DoorwayBlock;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -16,6 +16,7 @@ import javax.annotation.Nullable;
  * This also handles dungeon tracking.
  */
 public interface BossMob<T extends Mob & BossMob<T>> {
+    @SuppressWarnings("unchecked")
     private T self() {
         return (T) this;
     }
@@ -26,8 +27,8 @@ public interface BossMob<T extends Mob & BossMob<T>> {
     boolean isBossFight();
     void setBossFight(boolean isFighting);
 
-    DungeonTracker<T> getDungeon();
-    void setDungeon(DungeonTracker<T> dungeon);
+    BossRoomTracker<T> getDungeon();
+    void setDungeon(BossRoomTracker<T> dungeon);
 
     int getDeathScore();
 
@@ -99,7 +100,7 @@ public interface BossMob<T extends Mob & BossMob<T>> {
             this.setBossFight(tag.getBoolean("BossFight"));
         }
         if (tag.contains("Dungeon") && tag.get("Dungeon") instanceof CompoundTag dungeonTag) {
-            this.setDungeon(DungeonTracker.readAdditionalSaveData(dungeonTag, self()));
+            this.setDungeon(BossRoomTracker.readAdditionalSaveData(dungeonTag, self()));
         }
     }
 }

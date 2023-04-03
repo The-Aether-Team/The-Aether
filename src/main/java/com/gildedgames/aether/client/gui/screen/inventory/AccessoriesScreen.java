@@ -151,7 +151,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
 
     public void updateRenderButtons() {
         ScreenAccessor screenAccessor = (ScreenAccessor) this;
-        screenAccessor.getNarratables().removeIf(widget -> widget instanceof RenderButton);
+        screenAccessor.aether$getNarratables().removeIf(widget -> widget instanceof RenderButton);
         this.children().removeIf(widget -> widget instanceof RenderButton);
         this.renderables.removeIf(widget -> widget instanceof RenderButton);
         for (Slot inventorySlot : this.menu.slots) {
@@ -235,8 +235,8 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
             RenderSystem.setShaderTexture(0, this.minecraft.player.isCreative() ? ACCESSORIES_INVENTORY_CREATIVE : ACCESSORIES_INVENTORY);
             int i = this.getGuiLeft();
             int j = this.getGuiTop();
-            this.blit(matrixStack, i, j, 0, 0, this.getXSize() + this.creativeXOffset(), this.getYSize());
-            InventoryScreen.renderEntityInInventory(i + 33, j + 75, 30, (float) (i + 31) - mouseX, (float) (j + 75 - 50) - mouseY, this.minecraft.player);
+            blit(matrixStack, i, j, 0, 0, this.getXSize() + this.creativeXOffset(), this.getYSize());
+            InventoryScreen.renderEntityInInventoryFollowsMouse(matrixStack, i + 33, j + 75, 30, (float) (i + 31) - mouseX, (float) (j + 75 - 50) - mouseY, this.minecraft.player);
         }
     }
 

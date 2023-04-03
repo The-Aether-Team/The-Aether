@@ -1,5 +1,5 @@
 {
-  "parent": "aether:enter_aether",
+  "parent": "aether:zanite",
   "criteria": {
     "craft_altar": {
       "conditions": {

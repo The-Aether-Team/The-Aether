@@ -10,5 +10,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface LevelStorageAccessAccessor {
     @Mutable
     @Accessor("lock")
-    void setLock(DirectoryLock lock);
+    void aether$setLock(DirectoryLock lock);
 }

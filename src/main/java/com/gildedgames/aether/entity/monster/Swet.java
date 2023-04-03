@@ -1,8 +1,7 @@
 package com.gildedgames.aether.entity.monster;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
-import com.gildedgames.aether.entity.ai.goal.target.NearestTaggedTargetGoal;
-import com.gildedgames.aether.entity.passive.MountableAnimal;
+import com.gildedgames.aether.entity.MountableMob;
 import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.client.SwetAttackPacket;
@@ -30,6 +29,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -40,7 +40,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 
-public class Swet extends MountableAnimal {
+public class Swet extends Slime implements MountableMob {
+    private static final EntityDataAccessor<Boolean> DATA_PLAYER_JUMPED_ID = SynchedEntityData.defineId(Swet.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_MOUNT_JUMPING_ID = SynchedEntityData.defineId(Swet.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_MID_JUMP_ID = SynchedEntityData.defineId(Swet.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_DEAD_IN_WATER_ID = SynchedEntityData.defineId(Swet.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Float> DATA_WATER_DAMAGE_SCALE_ID = SynchedEntityData.defineId(Swet.class, EntityDataSerializers.FLOAT);
@@ -55,6 +57,7 @@ public class Swet extends MountableAnimal {
     public Swet(EntityType<? extends Swet> type, Level level) {
         super(type, level);
         this.moveControl = new Swet.MoveHelperController(this);
+        this.xpReward = 5;
     }
 
     @Override
@@ -64,20 +67,21 @@ public class Swet extends MountableAnimal {
         this.goalSelector.addGoal(2, new RandomFacingGoal(this));
         this.goalSelector.addGoal(4, new HopGoal(this));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, (target) -> !this.isFriendlyTowardEntity(target) && !(target.getRootVehicle() instanceof Swet)));
-        this.targetSelector.addGoal(2, new NearestTaggedTargetGoal(this, AetherTags.Entities.SWET_TARGETS, true, (target) -> !this.isFriendlyTowardEntity(target) && !(target.getRootVehicle() instanceof Swet)));
     }
 
     @Nonnull
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 25.0)
-                .add(Attributes.MOVEMENT_SPEED, 0.5)
-                .add(Attributes.FOLLOW_RANGE, 25.0);
+                .add(Attributes.MAX_HEALTH, 12.0)
+                .add(Attributes.MOVEMENT_SPEED, 0.4)
+                .add(Attributes.FOLLOW_RANGE, 14.0);
     }
 
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
+        this.entityData.define(DATA_PLAYER_JUMPED_ID, false);
+        this.entityData.define(DATA_MOUNT_JUMPING_ID, false);
         this.entityData.define(DATA_MID_JUMP_ID, false);
         this.entityData.define(DATA_DEAD_IN_WATER_ID, false);
         this.entityData.define(DATA_WATER_DAMAGE_SCALE_ID, 0.0F);
@@ -117,6 +121,8 @@ public class Swet extends MountableAnimal {
             }
         }
 
+        this.tick(this);
+        this.riderTick(this);
         super.tick();
 
         if (!this.hasPrey()) {
@@ -126,9 +132,6 @@ public class Swet extends MountableAnimal {
             this.level.addParticle(ParticleTypes.SPLASH, d, d1 - 0.25, d2, 0.0, 0.0, 0.0);
         }
 
-        if (this.onGround && !this.wasOnGround) {
-            this.playSound(AetherSoundEvents.ENTITY_SWET_SQUISH.get(), this.getSoundVolume(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) / 0.8F);
-        }
         this.setMidJump(!this.onGround);
         if (this.level.isClientSide) {
             this.oSwetHeight = this.swetHeight;
@@ -159,6 +162,11 @@ public class Swet extends MountableAnimal {
         this.wasOnGround = this.onGround;
     }
 
+    @Override
+    protected boolean spawnCustomParticles() {
+        return true;
+    }
+
     @Nullable
     @Override
     public LivingEntity getControllingPassenger() {
@@ -169,8 +177,8 @@ public class Swet extends MountableAnimal {
     }
 
     @Override
-    public void travel(@Nonnull Vec3 vector3d) {
-        super.travel(vector3d);
+    public void travel(@Nonnull Vec3 motion) {
+        this.travel(this, motion);
         if (this.isAlive()) {
             LivingEntity entity = this.getControllingPassenger();
             if (this.isVehicle() && entity != null) {
@@ -180,6 +188,11 @@ public class Swet extends MountableAnimal {
                 this.resetFallDistance();
             }
         }
+    }
+
+    @Override
+    public void travelWithInput(Vec3 motion) {
+        super.travel(motion);
     }
 
     @Nonnull
@@ -207,7 +220,7 @@ public class Swet extends MountableAnimal {
 
         this.setPos(livingEntity.getX(), livingEntity.getY() + 0.01, livingEntity.getZ());
 
-        livingEntity.startRiding(this);
+        livingEntity.startRiding(this, true);
 
         this.setXRot(this.random.nextFloat() * 360.0F);
     }
@@ -249,6 +262,15 @@ public class Swet extends MountableAnimal {
         } else {
             super.tickDeath();
         }
+    }
+
+    /**
+     * Copy of {@link Entity#remove(RemovalReason)}.
+     */
+    @Override
+    public void remove(Entity.RemovalReason pReason) {
+        this.setRemoved(pReason);
+        this.invalidateCaps();
     }
 
     @Override
@@ -301,11 +323,6 @@ public class Swet extends MountableAnimal {
     }
 
     @Override
-    public boolean canJump() {
-        return this.isOnGround();
-    }
-
-    @Override
     public float getJumpPower() {
         return 0.5F;
     }
@@ -320,22 +337,22 @@ public class Swet extends MountableAnimal {
         return AetherSoundEvents.ENTITY_SWET_DEATH.get();
     }
 
+    @Override
+    protected SoundEvent getSquishSound() {
+        return AetherSoundEvents.ENTITY_SWET_SQUISH.get();
+    }
+
+    @Override
+    public double getPassengersRidingOffset() {
+        return 1.4;
+    }
+
     /**
      * The player can attack the swet to try to kill it before they finish the attack.
      */
     @Override
     public boolean canRiderInteract() {
         return true;
-    }
-
-    @Override
-    public float getSteeringSpeed() {
-        return 0.084F;
-    }
-
-    @Override
-    protected double getMountJumpStrength() {
-        return 1.2;
     }
 
     @Nonnull
@@ -346,12 +363,6 @@ public class Swet extends MountableAnimal {
         } else {
             return this.position();
         }
-    }
-
-    @Nullable
-    @Override
-    public AgeableMob getBreedOffspring(@Nonnull ServerLevel level, @Nonnull AgeableMob entity) {
-        return null;
     }
 
     @Override
@@ -378,6 +389,47 @@ public class Swet extends MountableAnimal {
     }
 
     @Override
+    public float getSteeringSpeed() {
+        return 0.084F;
+    }
+
+    @Override
+    public float getFlyingSpeed() {
+        return this.getControllingPassenger() != null ? this.getSteeringSpeed() * 0.25F : 0.02F;
+    }
+
+    @Override
+    public double getMountJumpStrength() {
+        return 1.2;
+    }
+
+    @Override
+    public double jumpFactor() {
+        return this.getBlockJumpFactor();
+    }
+
+
+    @Override
+    public boolean getPlayerJumped() {
+        return this.entityData.get(DATA_PLAYER_JUMPED_ID);
+    }
+
+    @Override
+    public void setPlayerJumped(boolean playerJumped) {
+        this.entityData.set(DATA_PLAYER_JUMPED_ID, playerJumped);
+    }
+
+    @Override
+    public boolean isMountJumping() {
+        return this.entityData.get(DATA_MOUNT_JUMPING_ID);
+    }
+
+    @Override
+    public void setMountJumping(boolean isMountJumping) {
+        this.entityData.set(DATA_MOUNT_JUMPING_ID, isMountJumping);
+    }
+
+    @Override
     public float getScale() {
         return super.getScale() - super.getScale() * this.getWaterDamageScale();
     }
@@ -385,7 +437,27 @@ public class Swet extends MountableAnimal {
     @Nonnull
     @Override
     public EntityDimensions getDimensions(@Nonnull Pose pose) {
-        return super.getDimensions(pose).scale(getScale());
+        return this.getType().getDimensions().scale(getScale());
+    }
+
+    @Override
+    public boolean canJump() {
+        return this.isOnGround() && this.isFriendly();
+    }
+
+    @Override
+    public int getSize() {
+        return this.isVehicle() ? 2 : 1;
+    }
+
+    @Override
+    public void setSize(int size, boolean resetHealth) {
+        // We don't use the size data, so we don't need this method to run from Slime.
+    }
+
+    @Override
+    protected boolean isDealsDamage() {
+        return false;
     }
 
     public static class ConsumeGoal extends Goal {
@@ -526,7 +598,7 @@ public class Swet extends MountableAnimal {
             MoveHelperController moveHelperController = (MoveHelperController) this.swet.getMoveControl();
             float rot = moveHelperController.yRot;
             Vec3 offset = new Vec3(-Math.sin(rot * ((float) Math.PI / 180)) * 2, 0.0, Math.cos(rot * ((float) Math.PI / 180)) * 2);
-            BlockPos pos = new BlockPos(this.swet.position().add(offset));
+            BlockPos pos = BlockPos.containing(this.swet.position().add(offset));
             if (this.swet.level.getHeight(Heightmap.Types.WORLD_SURFACE, pos.getX(), pos.getZ()) < pos.getY() - this.swet.getMaxFallDistance()) {
                 this.nextRandomizeTime = this.adjustedTickDelay(40 + this.swet.getRandom().nextInt(60));
                 this.chosenDegrees += 180;

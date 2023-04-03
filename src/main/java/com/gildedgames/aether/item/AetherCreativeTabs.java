@@ -36,7 +36,7 @@ public class AetherCreativeTabs {
                 List.of(CreativeModeTabs.SPAWN_EGGS),
                 builder -> builder.icon(() -> new ItemStack(AetherBlocks.HOLYSTONE_BRICKS.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".building_blocks"))
-                        .displayItems((features, output, hasPermissions) -> {
+                        .displayItems((features, output) -> {
                             output.accept(AetherBlocks.SKYROOT_LOG.get());
                             output.accept(AetherBlocks.SKYROOT_WOOD.get());
                             output.accept(AetherBlocks.STRIPPED_SKYROOT_LOG.get());
@@ -86,7 +86,7 @@ public class AetherCreativeTabs {
                 List.of(new ResourceLocation(Aether.MODID, "building_blocks")),
                 builder -> builder.icon(() -> new ItemStack(AetherBlocks.LIGHT_ANGELIC_STONE.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".dungeon_blocks"))
-                        .displayItems((features, output, hasPermissions) -> {
+                        .displayItems((features, output) -> {
                             output.accept(AetherBlocks.CARVED_STONE.get());
                             output.accept(AetherBlocks.LOCKED_CARVED_STONE.get());
                             output.accept(AetherBlocks.TRAPPED_CARVED_STONE.get());
@@ -137,7 +137,7 @@ public class AetherCreativeTabs {
                 List.of(new ResourceLocation(Aether.MODID, "dungeon_blocks")),
                 builder -> builder.icon(() -> new ItemStack(AetherBlocks.AETHER_GRASS_BLOCK.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".natural_blocks"))
-                        .displayItems((features, output, hasPermissions) -> {
+                        .displayItems((features, output) -> {
                             output.accept(AetherBlocks.AETHER_GRASS_BLOCK.get());
                             output.accept(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get());
                             output.accept(AetherBlocks.AETHER_DIRT_PATH.get());
@@ -167,7 +167,6 @@ public class AetherCreativeTabs {
                             output.accept(AetherBlocks.COLD_AERCLOUD.get());
                             output.accept(AetherBlocks.BLUE_AERCLOUD.get());
                             output.accept(AetherBlocks.GOLDEN_AERCLOUD.get());
-                            output.accept(AetherBlocks.PINK_AERCLOUD.get());
                             output.accept(AetherBlocks.PRESENT.get());
                         }));
         AETHER_FUNCTIONAL_BLOCKS = event.registerCreativeModeTab(
@@ -176,7 +175,7 @@ public class AetherCreativeTabs {
                 List.of(new ResourceLocation(Aether.MODID, "natural_blocks")),
                 builder -> builder.icon(() -> new ItemStack(AetherBlocks.SKYROOT_SIGN.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".functional_blocks"))
-                        .displayItems((features, output, hasPermissions) -> {
+                        .displayItems((features, output) -> {
                             output.accept(AetherBlocks.AMBROSIUM_TORCH.get());
                             output.accept(AetherBlocks.ALTAR.get());
                             output.accept(AetherBlocks.FREEZER.get());
@@ -195,7 +194,7 @@ public class AetherCreativeTabs {
                 List.of(new ResourceLocation(Aether.MODID, "functional_blocks")),
                 builder -> builder.icon(() -> new ItemStack(AetherBlocks.SKYROOT_FENCE_GATE.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".redstone_blocks"))
-                        .displayItems((features, output, hasPermissions) -> {
+                        .displayItems((features, output) -> {
                             output.accept(AetherBlocks.SKYROOT_BUTTON.get());
                             output.accept(AetherBlocks.HOLYSTONE_BUTTON.get());
                             output.accept(AetherBlocks.SKYROOT_PRESSURE_PLATE.get());
@@ -216,7 +215,7 @@ public class AetherCreativeTabs {
                 List.of(new ResourceLocation(Aether.MODID, "redstone_blocks")),
                 builder -> builder.icon(() -> new ItemStack(AetherItems.GRAVITITE_PICKAXE.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".equipment_and_utilities"))
-                        .displayItems((features, output, hasPermissions) -> {
+                        .displayItems((features, output) -> {
                             output.accept(AetherItems.SKYROOT_SWORD.get());
                             output.accept(AetherItems.SKYROOT_SHOVEL.get());
                             output.accept(AetherItems.SKYROOT_PICKAXE.get());
@@ -256,7 +255,7 @@ public class AetherCreativeTabs {
                             output.accept(AetherItems.FLAMING_SWORD.get());
                             output.accept(AetherItems.PHOENIX_BOW.get());
                             output.accept(AetherItems.PIG_SLAYER.get());
-                            output.accept(AetherItems.HAMMER_OF_NOTCH.get());
+                            output.accept(AetherItems.HAMMER_OF_KINGBDOGZ.get());
                             output.accept(AetherItems.CLOUD_STAFF.get());
                             output.accept(AetherItems.SKYROOT_BUCKET.get());
                             output.accept(AetherItems.SKYROOT_WATER_BUCKET.get());
@@ -278,7 +277,6 @@ public class AetherCreativeTabs {
                             output.accept(AetherItems.BLUE_MOA_EGG.get());
                             output.accept(AetherItems.WHITE_MOA_EGG.get());
                             output.accept(AetherItems.BLACK_MOA_EGG.get());
-                            output.accept(AetherItems.ORANGE_MOA_EGG.get());
                             output.accept(AetherItems.NATURE_STAFF.get());
                             output.accept(AetherItems.SKYROOT_BOAT.get());
                             output.accept(AetherItems.SKYROOT_CHEST_BOAT.get());
@@ -296,7 +294,7 @@ public class AetherCreativeTabs {
                 List.of(new ResourceLocation(Aether.MODID, "equipment_and_utilities")),
                 builder -> builder.icon(() -> new ItemStack(AetherItems.VALKYRIE_CHESTPLATE.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".armor_and_accessories"))
-                        .displayItems((features, output, hasPermissions) -> {
+                        .displayItems((features, output) -> {
                             output.accept(AetherItems.ZANITE_HELMET.get());
                             output.accept(AetherItems.ZANITE_CHESTPLATE.get());
                             output.accept(AetherItems.ZANITE_LEGGINGS.get());
@@ -355,7 +353,7 @@ public class AetherCreativeTabs {
                 List.of(new ResourceLocation(Aether.MODID, "combat")),
                 builder -> builder.icon(() -> new ItemStack(AetherItems.BLUE_GUMMY_SWET.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".food_and_drinks"))
-                        .displayItems((features, output, hasPermissions) -> {
+                        .displayItems((features, output) -> {
                             output.accept(AetherItems.BLUE_BERRY.get());
                             output.accept(AetherItems.ENCHANTED_BERRY.get());
                             output.accept(AetherItems.WHITE_APPLE.get());
@@ -378,7 +376,7 @@ public class AetherCreativeTabs {
                 List.of(new ResourceLocation(Aether.MODID, "food_and_drinks")),
                 builder -> builder.icon(() -> new ItemStack(AetherItems.AMBROSIUM_SHARD.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".ingredients"))
-                        .displayItems((features, output, hasPermissions) -> {
+                        .displayItems((features, output) -> {
                             output.accept(AetherItems.AMBROSIUM_SHARD.get());
                             output.accept(AetherItems.ZANITE_GEMSTONE.get());
                             output.accept(AetherBlocks.ENCHANTED_GRAVITITE.get());
@@ -394,11 +392,10 @@ public class AetherCreativeTabs {
                 List.of(new ResourceLocation(Aether.MODID, "ingredients")),
                 builder -> builder.icon(() -> new ItemStack(AetherItems.AERBUNNY_SPAWN_EGG.get()))
                         .title(Component.translatable("itemGroup." + Aether.MODID + ".spawn_eggs"))
-                        .displayItems((features, output, hasPermissions) -> {
+                        .displayItems((features, output) -> {
                             output.accept(AetherItems.BLUE_MOA_EGG.get());
                             output.accept(AetherItems.WHITE_MOA_EGG.get());
                             output.accept(AetherItems.BLACK_MOA_EGG.get());
-                            output.accept(AetherItems.ORANGE_MOA_EGG.get());
                             output.accept(AetherItems.AECHOR_PLANT_SPAWN_EGG.get());
                             output.accept(AetherItems.AERBUNNY_SPAWN_EGG.get());
                             output.accept(AetherItems.AERWHALE_SPAWN_EGG.get());

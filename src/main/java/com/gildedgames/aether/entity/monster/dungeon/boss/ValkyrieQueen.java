@@ -1,9 +1,10 @@
 package com.gildedgames.aether.entity.monster.dungeon.boss;
 
-import com.gildedgames.aether.api.DungeonTracker;
+import com.gildedgames.aether.api.BossRoomTracker;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.client.gui.screen.ValkyrieQueenDialogueScreen;
 import com.gildedgames.aether.client.AetherSoundEvents;
+import com.gildedgames.aether.data.resources.registries.AetherStructures;
 import com.gildedgames.aether.entity.BossMob;
 import com.gildedgames.aether.entity.NpcDialogue;
 import com.gildedgames.aether.entity.ai.AetherBlockPathTypes;
@@ -20,6 +21,7 @@ import com.gildedgames.aether.api.BossNameGenerator;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -32,6 +34,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.*;
 import net.minecraft.world.damagesource.DamageSource;
@@ -44,9 +47,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
@@ -70,7 +77,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
      */
     @Nullable
     private Player tradingPlayer;
-    private DungeonTracker<ValkyrieQueen> dungeon;
+    private BossRoomTracker<ValkyrieQueen> dungeon;
     private AABB dungeonBounds;
     private final ServerBossEvent bossFight;
 
@@ -80,15 +87,33 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
         this.bossFight.setVisible(false);
         this.xpReward = XP_REWARD_BOSS;
         this.setPathfindingMalus(AetherBlockPathTypes.BOSS_DOORWAY, -1.0F);
+        this.setPersistenceRequired();
     }
 
     /**
-     * Generates a name for the boss.
+     * Generates a name for the boss. In a naturally generating dungeon, save the dungeon bounds so the queen can
+     * transform the locked blocks after the fight.
      */
     @Override
-    public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor pLevel, @Nonnull DifficultyInstance pDifficulty, @Nonnull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
-        SpawnGroupData data = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
+    public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor level, @Nonnull DifficultyInstance difficulty, @Nonnull MobSpawnType reason, @Nullable SpawnGroupData spawnGroupData, @Nullable CompoundTag compoundTag) {
+        SpawnGroupData data = super.finalizeSpawn(level, difficulty, reason, spawnGroupData, compoundTag);
         this.setBossName(BossNameGenerator.generateValkyrieName());
+        if (compoundTag != null && compoundTag.contains("Dungeon")) {
+            // Set the bounds for the whole dungeon
+            StructureManager manager = level.getLevel().structureManager();
+            manager.registryAccess().registry(Registries.STRUCTURE).ifPresent(registry -> {
+                        Structure temple = registry.get(AetherStructures.SILVER_DUNGEON);
+                        if (temple != null) {
+                            StructureStart start = manager.getStructureAt(this.blockPosition(), temple);
+                            if (start != StructureStart.INVALID_START) {
+                                BoundingBox box = start.getBoundingBox();
+                                AABB dungeonBounds = new AABB(box.minX(), box.minY(), box.minZ(), box.maxX() + 1, box.maxY() + 1, box.maxZ() + 1);
+                                this.setDungeonBounds(dungeonBounds);
+                            }
+                        }
+                    }
+            );
+        }
         return data;
     }
 
@@ -153,7 +178,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
      */
     @Override
     public boolean hurt(@Nonnull DamageSource source, float amount) {
-        if (source == DamageSource.OUT_OF_WORLD) {
+        if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             return super.hurt(source, amount);
         }
 
@@ -237,9 +262,9 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
         double z = target.getZ() + targetVec.y * 7;
         if (this.dungeon != null) {
             AABB room = this.dungeon.roomBounds();
-            x = Mth.clamp(x, room.minX, room.maxX);
-            y = Mth.clamp(y, room.minY, room.maxY);
-            z = Mth.clamp(z, room.minZ, room.maxZ);
+            x = Mth.clamp(x, room.minX + 1, room.maxX - 1);
+            y = Mth.clamp(y, room.minY + 1, room.maxY - 1);
+            z = Mth.clamp(z, room.minZ + 1, room.maxZ - 1);
         }
         return this.teleport(x, y, z);
     }
@@ -346,12 +371,12 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     }
 
     @Override
-    public DungeonTracker<ValkyrieQueen> getDungeon() {
+    public BossRoomTracker<ValkyrieQueen> getDungeon() {
         return this.dungeon;
     }
 
     @Override
-    public void setDungeon(DungeonTracker<ValkyrieQueen> dungeon) {
+    public void setDungeon(BossRoomTracker<ValkyrieQueen> dungeon) {
         this.dungeon = dungeon;
         if (this.dungeonBounds == null) {
             this.dungeonBounds = dungeon.roomBounds();
@@ -526,6 +551,9 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
             this.readBossSaveData(tag);
         }
     }
+    
+    @Override
+    public void checkDespawn() {}
 
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {

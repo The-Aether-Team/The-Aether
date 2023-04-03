@@ -41,16 +41,15 @@ public class AetherBlockLoot extends AetherBlockLootSubProvider {
         this.dropSelfDouble(AetherBlocks.COLD_AERCLOUD.get());
         this.dropSelfDouble(AetherBlocks.BLUE_AERCLOUD.get());
         this.dropSelfDouble(AetherBlocks.GOLDEN_AERCLOUD.get());
-        this.dropSelfDouble(AetherBlocks.PINK_AERCLOUD.get());
 
         this.dropSelf(AetherBlocks.ICESTONE.get());
         this.dropDoubleWithFortune(AetherBlocks.AMBROSIUM_ORE.get(), AetherItems.AMBROSIUM_SHARD.get());
         this.dropWithFortune(AetherBlocks.ZANITE_ORE.get(), AetherItems.ZANITE_GEMSTONE.get());
         this.dropSelf(AetherBlocks.GRAVITITE_ORE.get());
         this.add(AetherBlocks.SKYROOT_LEAVES.get(),
-                (leaves) -> droppingWithChancesAndSkyrootSticks(leaves, AetherBlocks.SKYROOT_SAPLING.get(), BlockLootAccessor.getNormalLeavesSaplingChances()));
+                (leaves) -> droppingWithChancesAndSkyrootSticks(leaves, AetherBlocks.SKYROOT_SAPLING.get(), BlockLootAccessor.aether$getNormalLeavesSaplingChances()));
         this.add(AetherBlocks.GOLDEN_OAK_LEAVES.get(),
-                (leaves) -> droppingGoldenOakLeaves(leaves, AetherBlocks.GOLDEN_OAK_SAPLING.get(), BlockLootAccessor.getNormalLeavesSaplingChances()));
+                (leaves) -> droppingGoldenOakLeaves(leaves, AetherBlocks.GOLDEN_OAK_SAPLING.get(), BlockLootAccessor.aether$getNormalLeavesSaplingChances()));
         this.add(AetherBlocks.CRYSTAL_LEAVES.get(),
                 this::droppingWithSkyrootSticks);
         this.add(AetherBlocks.CRYSTAL_FRUIT_LEAVES.get(),
@@ -63,11 +62,11 @@ public class AetherBlockLoot extends AetherBlockLootSubProvider {
         this.dropSelfDouble(AetherBlocks.SKYROOT_LOG.get());
         this.add(AetherBlocks.GOLDEN_OAK_LOG.get(),
                 (log) -> droppingDoubleGoldenOak(log, AetherBlocks.SKYROOT_LOG.get(), AetherItems.GOLDEN_AMBER.get()));
-        this.dropSelfDouble(AetherBlocks.STRIPPED_SKYROOT_LOG.get());
+        this.dropSelf(AetherBlocks.STRIPPED_SKYROOT_LOG.get());
         this.dropSelfDouble(AetherBlocks.SKYROOT_WOOD.get());
         this.add(AetherBlocks.GOLDEN_OAK_WOOD.get(),
                 (wood) -> droppingDoubleGoldenOak(wood, AetherBlocks.SKYROOT_WOOD.get(), AetherItems.GOLDEN_AMBER.get()));
-        this.dropSelfDouble(AetherBlocks.STRIPPED_SKYROOT_WOOD.get());
+        this.dropSelf(AetherBlocks.STRIPPED_SKYROOT_WOOD.get());
 
         this.dropSelf(AetherBlocks.SKYROOT_PLANKS.get());
         this.dropSelf(AetherBlocks.HOLYSTONE_BRICKS.get());
@@ -176,15 +175,15 @@ public class AetherBlockLoot extends AetherBlockLootSubProvider {
         this.dropSelf(AetherBlocks.HOLYSTONE_BRICK_STAIRS.get());
         this.dropSelf(AetherBlocks.AEROGEL_STAIRS.get());
 
-        this.dropSelf(AetherBlocks.SKYROOT_SLAB.get());
-        this.dropSelf(AetherBlocks.CARVED_SLAB.get());
-        this.dropSelf(AetherBlocks.ANGELIC_SLAB.get());
-        this.dropSelf(AetherBlocks.HELLFIRE_SLAB.get());
-        this.dropSelf(AetherBlocks.HOLYSTONE_SLAB.get());
-        this.dropSelf(AetherBlocks.MOSSY_HOLYSTONE_SLAB.get());
-        this.dropSelf(AetherBlocks.ICESTONE_SLAB.get());
-        this.dropSelf(AetherBlocks.HOLYSTONE_BRICK_SLAB.get());
-        this.dropSelf(AetherBlocks.AEROGEL_SLAB.get());
+        this.add(AetherBlocks.SKYROOT_SLAB.get(), this::createSlabItemTable);
+        this.add(AetherBlocks.CARVED_SLAB.get(), this::createSlabItemTable);
+        this.add(AetherBlocks.ANGELIC_SLAB.get(), this::createSlabItemTable);
+        this.add(AetherBlocks.HELLFIRE_SLAB.get(), this::createSlabItemTable);
+        this.add(AetherBlocks.HOLYSTONE_SLAB.get(), this::createSlabItemTable);
+        this.add(AetherBlocks.MOSSY_HOLYSTONE_SLAB.get(), this::createSlabItemTable);
+        this.add(AetherBlocks.ICESTONE_SLAB.get(), this::createSlabItemTable);
+        this.add(AetherBlocks.HOLYSTONE_BRICK_SLAB.get(), this::createSlabItemTable);
+        this.add(AetherBlocks.AEROGEL_SLAB.get(), this::createSlabItemTable);
 
         this.add(AetherBlocks.SUN_ALTAR.get(), this::droppingNameableBlockEntityTable);
         this.add(AetherBlocks.SKYROOT_BOOKSHELF.get(),

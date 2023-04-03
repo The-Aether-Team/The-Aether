@@ -1,6 +1,7 @@
 package com.gildedgames.aether.block.natural;
 
 import com.gildedgames.aether.block.AetherBlockStateProperties;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.HalfTransparentBlock;
@@ -61,7 +62,7 @@ public class AercloudBlock extends HalfTransparentBlock {
 	 */
 	@Override
 	public boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
-		return true;
+		return false;
 	}
 
 	/**
@@ -71,7 +72,7 @@ public class AercloudBlock extends HalfTransparentBlock {
 	@SuppressWarnings("deprecation")
 	@Override
 	public float getShadeBrightness(BlockState state, BlockGetter level, BlockPos pos) {
-		return 1.0F;
+		return 0.25F;
 	}
 
 	/**
@@ -91,7 +92,7 @@ public class AercloudBlock extends HalfTransparentBlock {
 		if (context instanceof EntityCollisionContext entityCollisionContext) {
 			Entity entity = entityCollisionContext.getEntity();
 			if (entity != null) {
-				if (entity.fallDistance > 2.5F) {
+				if (entity.fallDistance > 2.5F && (!(entity instanceof LivingEntity livingEntity) || !livingEntity.isFallFlying())) {
 					return FALLING_COLLISION_SHAPE; // Alternate shape when falling fast enough.
 				}
 			}

@@ -2,33 +2,12 @@
   "feature": "aether:quicksoil_shelf",
   "placement": [
     {
-      "type": "minecraft:in_square"
+      "type": "minecraft:rarity_filter",
+      "chance": 5
     },
     {
       "type": "minecraft:heightmap",
       "heightmap": "WORLD_SURFACE_WG"
-    },
-    {
-      "type": "minecraft:block_predicate_filter",
-      "predicate": {
-        "type": "minecraft:matching_block_tag",
-        "tag": "aether:quicksoil_can_generate"
-      }
-    },
-    {
-      "type": "aether:elevation_adjustment",
-      "value": {
-        "type": "minecraft:uniform",
-        "value": {
-          "max_inclusive": -2,
-          "min_inclusive": -4
-        }
-      }
-    },
-    {
-      "type": "aether:elevation_filter",
-      "maximum": 70,
-      "minimum": 63
     },
     {
       "type": "minecraft:biome"

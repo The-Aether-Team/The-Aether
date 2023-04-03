@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aether:valkyrie_lance",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:hammer_of_kingbdogz",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:sentry_boots",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:enchanted_gravitite"
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 1.0,
+        "min": 1.0
+      }
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aether:phoenix_helmet",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:phoenix_chestplate",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:phoenix_leggings",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:phoenix_boots",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:phoenix_gloves",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:life_shard"
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 5.0,
+        "min": 2.0
+      }
+    }
+  ]
+}

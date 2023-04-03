@@ -1,6 +1,7 @@
 package com.gildedgames.aether.block.portal;
 
 import com.gildedgames.aether.Aether;
+import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.mixin.mixins.common.accessor.EntityAccessor;
 import com.gildedgames.aether.network.AetherPacketHandler;
@@ -69,12 +70,12 @@ public class AetherPortalForcer implements ITeleporter {
             double scale = DimensionType.getTeleportationScale(this.level.dimensionType(), destinationLevel.dimensionType());
             BlockPos scaledEntityPos = worldBorder.clampToBounds(entity.getX() * scale, entity.getY(), entity.getZ() * scale);
             return this.getExitPortal(entity, scaledEntityPos, worldBorder).map((rectangle) -> {
-                BlockState blockState = this.level.getBlockState(entityAccessor.getPortalEntrancePos());
+                BlockState blockState = this.level.getBlockState(entityAccessor.aether$getPortalEntrancePos());
                 Direction.Axis axis;
                 Vec3 vec3;
                 if (blockState.hasProperty(BlockStateProperties.HORIZONTAL_AXIS)) {
                     axis = blockState.getValue(BlockStateProperties.HORIZONTAL_AXIS);
-                    BlockUtil.FoundRectangle foundRectangle = BlockUtil.getLargestRectangleAround(entityAccessor.getPortalEntrancePos(), axis, 21, Direction.Axis.Y, 21, (blockPos) -> this.level.getBlockState(blockPos) == blockState);
+                    BlockUtil.FoundRectangle foundRectangle = BlockUtil.getLargestRectangleAround(entityAccessor.aether$getPortalEntrancePos(), axis, 21, Direction.Axis.Y, 21, (blockPos) -> this.level.getBlockState(blockPos) == blockState);
                     vec3 = entityAccessor.callGetRelativePortalPosition(axis, foundRectangle);
                 } else {
                     axis = Direction.Axis.X;
@@ -95,7 +96,7 @@ public class AetherPortalForcer implements ITeleporter {
             if (optional.isPresent()) {
                 return optional;
             } else {
-                Direction.Axis direction$axis = this.level.getBlockState(entityAccessor.getPortalEntrancePos()).getOptionalValue(AetherPortalBlock.AXIS).orElse(Direction.Axis.X);
+                Direction.Axis direction$axis = this.level.getBlockState(entityAccessor.aether$getPortalEntrancePos()).getOptionalValue(AetherPortalBlock.AXIS).orElse(Direction.Axis.X);
                 Optional<BlockUtil.FoundRectangle> portalOptional = this.createPortal(findFrom, direction$axis);
                 if (portalOptional.isEmpty()) {
                     Aether.LOGGER.error("Unable to create an Aether Portal, likely target out of worldborder");
@@ -229,7 +230,9 @@ public class AetherPortalForcer implements ITeleporter {
         for (int i = -1; i < 3; ++i) {
             for (int j = -1; j < 4; ++j) {
                 offsetPos.setWithOffset(originalPos, direction.getStepX() * i + clockWiseDirection.getStepX() * offsetScale, j, direction.getStepZ() * i + clockWiseDirection.getStepZ() * offsetScale);
-                if (j < 0 && !this.level.getBlockState(offsetPos).getMaterial().isSolid()) {
+                BlockState blockState = this.level.getBlockState(offsetPos);
+                if (j < 0 && (!blockState.getMaterial().isSolid()
+                        || blockState.is(AetherTags.Blocks.AETHER_PORTAL_BLACKLIST))) {
                     return false;
                 }
                 if (j >= 0 && !this.level.isEmptyBlock(offsetPos)) {

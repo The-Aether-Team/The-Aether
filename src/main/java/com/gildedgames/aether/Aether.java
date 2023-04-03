@@ -36,13 +36,14 @@ import com.gildedgames.aether.world.foliageplacer.AetherFoliagePlacerTypes;
 import com.gildedgames.aether.world.feature.AetherFeatures;
 import com.gildedgames.aether.world.placementmodifier.AetherPlacementModifiers;
 import com.gildedgames.aether.network.AetherPacketHandler;
-import com.gildedgames.aether.client.CombinedResourcePack;
+import com.gildedgames.aether.client.CombinedPackResources;
 import com.gildedgames.aether.api.SunAltarWhitelist;
 import com.gildedgames.aether.api.TriviaGenerator;
 import com.gildedgames.aether.world.processor.AetherStructureProcessors;
 import com.gildedgames.aether.world.structure.AetherStructureTypes;
 import com.gildedgames.aether.world.structurepiece.AetherStructurePieceTypes;
 import com.gildedgames.aether.world.treedecorator.AetherTreeDecoratorTypes;
+import com.gildedgames.aether.world.trunkplacer.AetherTrunkPlacerTypes;
 import com.google.common.reflect.Reflection;
 import com.mojang.logging.LogUtils;
 import net.minecraft.SharedConstants;
@@ -50,6 +51,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.metadata.PackMetadataGenerator;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
@@ -77,6 +79,7 @@ import top.theillusivec4.curios.api.SlotTypeMessage;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @Mod(Aether.MODID)
@@ -105,6 +108,7 @@ public class Aether {
                 AetherParticleTypes.PARTICLES,
                 AetherFeatures.FEATURES,
                 AetherFoliagePlacerTypes.FOLIAGE_PLACERS,
+                AetherTrunkPlacerTypes.TRUNK_PLACERS,
                 AetherTreeDecoratorTypes.TREE_DECORATORS,
                 AetherPoi.POI,
                 AetherStructureTypes.STRUCTURE_TYPES,
@@ -183,18 +187,25 @@ public class Aether {
         generator.addProvider(event.includeClient(), new AetherSoundData(packOutput, fileHelper));
 
         // Server Data
-        generator.addProvider(event.includeServer(), new AetherWorldGenData(packOutput, lookupProvider));
+        generator.addProvider(event.includeServer(), new AetherRegistrySets(packOutput, lookupProvider));
         generator.addProvider(event.includeServer(), new AetherRecipeData(packOutput));
         generator.addProvider(event.includeServer(), AetherLootTableData.create(packOutput));
         generator.addProvider(event.includeServer(), new AetherLootModifierData(packOutput));
         generator.addProvider(event.includeServer(), new AetherAdvancementData(packOutput, lookupProvider, fileHelper));
         AetherBlockTagData blockTags = new AetherBlockTagData(packOutput, lookupProvider, fileHelper);
         generator.addProvider(event.includeServer(), blockTags);
-        generator.addProvider(event.includeServer(), new AetherItemTagData(packOutput, lookupProvider, blockTags, fileHelper));
+        generator.addProvider(event.includeServer(), new AetherItemTagData(packOutput, lookupProvider, blockTags.contentsGetter(), fileHelper));
         generator.addProvider(event.includeServer(), new AetherEntityTagData(packOutput, lookupProvider, fileHelper));
         generator.addProvider(event.includeServer(), new AetherFluidTagData(packOutput, lookupProvider, fileHelper));
         generator.addProvider(event.includeServer(), new AetherBiomeTagData(packOutput, lookupProvider, fileHelper));
         generator.addProvider(event.includeServer(), new AetherStructureTagData(packOutput, lookupProvider, fileHelper));
+        generator.addProvider(event.includeServer(), new AetherDamageTypeTagData(packOutput, lookupProvider, fileHelper));
+
+        // pack.mcmeta
+        PackMetadataGenerator packMeta = new PackMetadataGenerator(packOutput);
+        Map<PackType, Integer> packTypes = Map.of(PackType.SERVER_DATA, SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
+        packMeta.add(PackMetadataSection.TYPE, new PackMetadataSection(Component.translatable("pack.aether.mod.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES), packTypes));
+        generator.addProvider(true, packMeta);
     }
 
     public void packSetup(AddPackFindersEvent event) {
@@ -237,7 +248,7 @@ public class Aether {
         Path baseResourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_base");
         PathPackResources basePack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + baseResourcePath, false, baseResourcePath);
         List<PathPackResources> mergedPacks = List.of(pack, basePack);
-        Pack.ResourcesSupplier resourcesSupplier = (string) -> new CombinedResourcePack(name, new PackMetadataSection(Component.translatable(description), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion())), mergedPacks, sourcePath);
+        Pack.ResourcesSupplier resourcesSupplier = (string) -> new CombinedPackResources(name, new PackMetadataSection(Component.translatable(description), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES)), mergedPacks, sourcePath);
         Pack.Info info = Pack.readPackInfo(name, resourcesSupplier);
         if (info != null) {
             event.addRepositorySource((source) ->
@@ -263,7 +274,7 @@ public class Aether {
         if (event.getPackType() == PackType.CLIENT_RESOURCES && ModList.get().isLoaded("ctm")) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/ctm_fix");
             PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
-            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.ctm.description"), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion()));
+            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.ctm.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
             event.addRepositorySource((source) ->
                     source.accept(Pack.create(
                         "builtin/aether_ctm_fix",
@@ -284,7 +295,7 @@ public class Aether {
         DispenserBlock.registerBehavior(AetherItems.POISON_DART.get(), new DispenseDartBehavior(AetherItems.POISON_DART));
         DispenserBlock.registerBehavior(AetherItems.ENCHANTED_DART.get(), new DispenseDartBehavior(AetherItems.ENCHANTED_DART));
         DispenserBlock.registerBehavior(AetherItems.LIGHTNING_KNIFE.get(), AetherDispenseBehaviors.DISPENSE_LIGHTNING_KNIFE_BEHAVIOR);
-        DispenserBlock.registerBehavior(AetherItems.HAMMER_OF_NOTCH.get(), AetherDispenseBehaviors.DISPENSE_NOTCH_HAMMER_BEHAVIOR);
+        DispenserBlock.registerBehavior(AetherItems.HAMMER_OF_KINGBDOGZ.get(), AetherDispenseBehaviors.DISPENSE_KINGBDOGZ_HAMMER_BEHAVIOR);
         DispenserBlock.registerBehavior(AetherItems.SKYROOT_WATER_BUCKET.get(), AetherDispenseBehaviors.SKYROOT_BUCKET_DISPENSE_BEHAVIOR);
 		DispenserBlock.registerBehavior(AetherItems.SKYROOT_BUCKET.get(), AetherDispenseBehaviors.SKYROOT_BUCKET_PICKUP_BEHAVIOR);
         DispenserBlock.registerBehavior(AetherItems.AMBROSIUM_SHARD.get(), new DispenseUsableItemBehavior<>(AetherRecipeTypes.AMBROSIUM_ENCHANTING.get()));
@@ -336,12 +347,12 @@ public class Aether {
     }
 
     private void registerFuels() {
-        AltarBlockEntity.addItemEnchantingTime(AetherItems.AMBROSIUM_SHARD.get(), 500);
-        AltarBlockEntity.addItemEnchantingTime(AetherBlocks.AMBROSIUM_BLOCK.get(), 5000);
-        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE.get(), 500);
-        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE_SLAB.get(), 250);
-        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE_STAIRS.get(), 500);
-        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE_WALL.get(), 500);
-        IncubatorBlockEntity.addItemIncubatingTime(AetherBlocks.AMBROSIUM_TORCH.get(), 1000);
+        AltarBlockEntity.addItemEnchantingTime(AetherItems.AMBROSIUM_SHARD.get(), 250);
+        AltarBlockEntity.addItemEnchantingTime(AetherBlocks.AMBROSIUM_BLOCK.get(), 2500);
+        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE.get(), 400);
+        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE_SLAB.get(), 200);
+        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE_STAIRS.get(), 400);
+        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE_WALL.get(), 400);
+        IncubatorBlockEntity.addItemIncubatingTime(AetherBlocks.AMBROSIUM_TORCH.get(), 500);
     }
 }

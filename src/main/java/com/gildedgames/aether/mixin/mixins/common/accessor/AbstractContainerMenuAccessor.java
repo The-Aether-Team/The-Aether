@@ -10,17 +10,17 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(AbstractContainerMenu.class)
 public interface AbstractContainerMenuAccessor {
-    @Accessor
-    NonNullList<ItemStack> getLastSlots();
+    @Accessor("lastSlots")
+    NonNullList<ItemStack> aether$getLastSlots();
 
-    @Accessor
-    NonNullList<ItemStack> getRemoteSlots();
-
-    @Mutable
-    @Accessor
-    void setContainerId(int containerId);
+    @Accessor("remoteSlots")
+    NonNullList<ItemStack> aether$getRemoteSlots();
 
     @Mutable
-    @Accessor
-    void setMenuType(MenuType<?> menuType);
+    @Accessor("containerId")
+    void aether$setContainerId(int containerId);
+
+    @Mutable
+    @Accessor("menuType")
+    void aether$setMenuType(MenuType<?> menuType);
 }

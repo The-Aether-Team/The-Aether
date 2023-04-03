@@ -3,9 +3,9 @@ package com.gildedgames.aether.block.utility;
 import com.gildedgames.aether.blockentity.IncubatorBlockEntity;
 
 import com.gildedgames.aether.blockentity.AetherBlockEntityTypes;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
@@ -132,7 +132,7 @@ public class IncubatorBlock extends BaseEntityBlock {
 			level.addParticle(ParticleTypes.SMOKE, f, f1, f2, 0.0D, 0.0D, 0.0D);
 			level.addParticle(ParticleTypes.FLAME, f, f1, f2, 0.0D, 0.0D, 0.0D);
 			if (random.nextDouble() < 0.1) {
-				level.playLocalSound(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1.0F, 1.0F, false);
+				level.playLocalSound(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, AetherSoundEvents.BLOCK_INCUBATOR_CRACKLE.get(), SoundSource.BLOCKS, 1.0F, 1.0F, false);
 			}
 		}
 	}

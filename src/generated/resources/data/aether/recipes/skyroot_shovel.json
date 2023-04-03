@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "aether:skyroot_shovel"
-  }
+  },
+  "show_notification": true
 }

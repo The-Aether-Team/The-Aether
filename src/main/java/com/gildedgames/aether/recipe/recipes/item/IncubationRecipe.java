@@ -6,6 +6,7 @@ import com.gildedgames.aether.recipe.AetherRecipeTypes;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -47,7 +48,7 @@ public class IncubationRecipe implements Recipe<Container> {
      * @return An empty {@link ItemStack}, as there is no item output.
      */
     @Override
-    public ItemStack assemble(Container menu) {
+    public ItemStack assemble(Container menu, RegistryAccess registryAccess) {
         return ItemStack.EMPTY;
     }
 
@@ -55,7 +56,7 @@ public class IncubationRecipe implements Recipe<Container> {
      * @return The original {@link ItemStack} ingredient for Recipe Book display.
      */
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess registryAccess) {
         return this.ingredient.getItems()[0];
     }
 
@@ -118,7 +119,7 @@ public class IncubationRecipe implements Recipe<Container> {
             if (jsonObject.has("tag")) {
                 tag = CraftingHelper.getNBT(jsonObject.get("tag"));
             }
-            int incubationTime = GsonHelper.getAsInt(jsonObject, "incubationtime", 5700);
+            int incubationTime = GsonHelper.getAsInt(jsonObject, "incubationtime", 2500);
             return new IncubationRecipe(recipeLocation, group, ingredient, entityType, tag, incubationTime);
         }
 

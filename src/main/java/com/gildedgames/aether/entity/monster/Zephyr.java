@@ -2,12 +2,8 @@ package com.gildedgames.aether.entity.monster;
 
 import com.gildedgames.aether.entity.projectile.ZephyrSnowball;
 import com.gildedgames.aether.client.AetherSoundEvents;
-import com.gildedgames.aether.AetherTags;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.FlyingMob;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
@@ -41,13 +37,14 @@ public class Zephyr extends FlyingMob implements Enemy {
 	public Zephyr(EntityType<? extends Zephyr> type, Level level) {
 		super(type, level);
 		this.moveControl = new Zephyr.MoveHelperController(this);
+		this.xpReward = 5;
 	}
 
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(5, new Zephyr.RandomFlyGoal(this));
 		this.goalSelector.addGoal(7, new Zephyr.LookAroundGoal(this));
-		this.goalSelector.addGoal(7, new Zephyr.SnowballAttackGoal(this));
+		this.goalSelector.addGoal(5, new Zephyr.SnowballAttackGoal(this));
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, false));
 	}
 
@@ -55,7 +52,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 	public static AttributeSupplier.Builder createMobAttributes() {
 		return FlyingMob.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 5.0)
-				.add(Attributes.FOLLOW_RANGE, 100.0);
+				.add(Attributes.FOLLOW_RANGE, 50.0);
 	}
 
 	@Override
@@ -65,7 +62,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 	}
 
 	public static boolean checkZephyrSpawnRules(EntityType<? extends Zephyr> zephyr, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
-		return level.getDifficulty() != Difficulty.PEACEFUL && random.nextInt(20) == 0 && (reason == MobSpawnType.SPAWNER || level.getBlockState(pos.below()).is(AetherTags.Blocks.ZEPHYR_SPAWNABLE_ON));
+		return level.getDifficulty() != Difficulty.PEACEFUL && Mob.checkMobSpawnRules(zephyr, level, reason, pos, random);
 	}
 
 	@Override
@@ -127,11 +124,6 @@ public class Zephyr extends FlyingMob implements Enemy {
 	}
 
 	@Override
-	public int getMaxSpawnClusterSize() {
-		return 1;
-	}
-
-	@Override
 	protected boolean shouldDespawnInPeaceful() {
 		return true;
 	}
@@ -176,7 +168,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 		@Override
 		public void tick() {
 			LivingEntity target = this.parentEntity.getTarget();
-			if (target.distanceToSqr(this.parentEntity) < 64 * 64 && this.parentEntity.hasLineOfSight(target)) {
+			if (target.distanceToSqr(this.parentEntity) < 40 * 40 && this.parentEntity.hasLineOfSight(target)) {
 				Level level = this.parentEntity.level;
 				++this.attackTimer;
 				if (this.attackTimer == 10) {

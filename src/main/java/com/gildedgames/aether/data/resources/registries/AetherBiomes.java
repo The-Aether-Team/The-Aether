@@ -12,10 +12,10 @@ import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class AetherBiomes {
+    public static final ResourceKey<Biome> SKYROOT_MEADOW = createKey("skyroot_meadow");
     public static final ResourceKey<Biome> SKYROOT_GROVE = createKey("skyroot_grove");
+    public static final ResourceKey<Biome> SKYROOT_WOODLAND = createKey("skyroot_woodland");
     public static final ResourceKey<Biome> SKYROOT_FOREST = createKey("skyroot_forest");
-    public static final ResourceKey<Biome> SKYROOT_THICKET = createKey("skyroot_thicket");
-    public static final ResourceKey<Biome> GOLDEN_FOREST = createKey("golden_forest");
 
     private static ResourceKey<Biome> createKey(String name) {
         return ResourceKey.create(Registries.BIOME, new ResourceLocation(Aether.MODID, name));
@@ -24,9 +24,9 @@ public class AetherBiomes {
     public static void bootstrap(BootstapContext<Biome> context) {
         HolderGetter<PlacedFeature> placedFeatures = context.lookup(Registries.PLACED_FEATURE);
         HolderGetter<ConfiguredWorldCarver<?>> vanillaConfiguredCarvers = context.lookup(Registries.CONFIGURED_CARVER);
+        context.register(SKYROOT_MEADOW, AetherBiomeBuilders.skyrootMeadowBiome(placedFeatures, vanillaConfiguredCarvers));
         context.register(SKYROOT_GROVE, AetherBiomeBuilders.skyrootGroveBiome(placedFeatures, vanillaConfiguredCarvers));
+        context.register(SKYROOT_WOODLAND, AetherBiomeBuilders.skyrootWoodlandBiome(placedFeatures, vanillaConfiguredCarvers));
         context.register(SKYROOT_FOREST, AetherBiomeBuilders.skyrootForestBiome(placedFeatures, vanillaConfiguredCarvers));
-        context.register(SKYROOT_THICKET, AetherBiomeBuilders.skyrootThicketBiome(placedFeatures, vanillaConfiguredCarvers));
-        context.register(GOLDEN_FOREST, AetherBiomeBuilders.goldenForestBiome(placedFeatures, vanillaConfiguredCarvers));
     }
 }

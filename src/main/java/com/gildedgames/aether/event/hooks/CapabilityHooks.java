@@ -76,6 +76,10 @@ public class CapabilityHooks {
             syncAetherTime(player);
         }
 
+        public static void respawn(Player player) {
+            syncAetherTime(player);
+        }
+
         private static void syncAetherTime(Player player) {
             if (player instanceof ServerPlayer serverPlayer) {
                 if (player.level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {

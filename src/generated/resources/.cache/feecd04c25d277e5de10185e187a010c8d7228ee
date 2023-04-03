@@ -1,4 +1,4 @@
-// 1.19.3	2022-12-10T10:18:32.5306796	Tags for minecraft:worldgen/biome mod id aether
+// 1.19.4	2023-03-18T15:59:38.7311382	Tags for minecraft:worldgen/biome mod id aether
 6425e7e0a57a451843094090fa1e31c9fbd4c5e0 data/aether/tags/worldgen/biome/aether_music.json
 b95f2e5677841946d287305b14c97c69f59b6db1 data/aether/tags/worldgen/biome/crimson_nylium_conversion.json
 70073d71d36e3d050e21bd0d44e3dc94f4ec4890 data/aether/tags/worldgen/biome/display_travel_text.json
@@ -7,7 +7,7 @@ b95f2e5677841946d287305b14c97c69f59b6db1 data/aether/tags/worldgen/biome/crimson
 6425e7e0a57a451843094090fa1e31c9fbd4c5e0 data/aether/tags/worldgen/biome/has_gold_dungeon.json
 6425e7e0a57a451843094090fa1e31c9fbd4c5e0 data/aether/tags/worldgen/biome/has_large_aercloud.json
 6425e7e0a57a451843094090fa1e31c9fbd4c5e0 data/aether/tags/worldgen/biome/has_silver_dungeon.json
-08d2b209b626d952ae626ead74ba07a60a713d6e data/aether/tags/worldgen/biome/is_aether.json
+eac2563fac02b414960c17890187c8575606ca3f data/aether/tags/worldgen/biome/is_aether.json
 e230510c9f5c1188c61cd1ad728a3d9a6bd3125f data/aether/tags/worldgen/biome/mycelium_conversion.json
 6425e7e0a57a451843094090fa1e31c9fbd4c5e0 data/aether/tags/worldgen/biome/no_wheat_seeds.json
 8a465b6126765ecd81cd3e4dcd95641b97642809 data/aether/tags/worldgen/biome/podzol_conversion.json

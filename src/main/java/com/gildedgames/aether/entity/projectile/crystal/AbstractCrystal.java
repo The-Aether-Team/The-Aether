@@ -40,7 +40,6 @@ public abstract class AbstractCrystal extends Projectile {
             ++this.ticksInAir;
         }
         if (this.ticksInAir > this.getLifeSpan()) {
-            this.spawnExplosionParticles();
             this.discard();
         }
         HitResult result = ProjectileUtil.getHitResult(this, this::canHitEntity);
@@ -64,6 +63,12 @@ public abstract class AbstractCrystal extends Projectile {
         }
         this.checkInsideBlocks();
         this.tickMovement();
+    }
+
+    @Override
+    public void remove(RemovalReason pReason) {
+        this.spawnExplosionParticles();
+        super.remove(pReason);
     }
 
     /**

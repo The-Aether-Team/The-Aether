@@ -147,7 +147,7 @@ public class WorldDisplayHelper {
             LevelStorageSource.LevelStorageAccess storageAccess = getStorageAccess();
             if (storageAccess != null) {
                 LevelStorageAccessAccessor levelStorageAccessAccessor = (LevelStorageAccessAccessor) storageAccess;
-                levelStorageAccessAccessor.setLock(DirectoryLock.create(storageAccess.getWorldDir()));
+                levelStorageAccessAccessor.aether$setLock(DirectoryLock.create(storageAccess.getWorldDir()));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -159,7 +159,7 @@ public class WorldDisplayHelper {
         IntegratedServer server = minecraft.getSingleplayerServer();
         if (server != null) {
             MinecraftServerAccessor minecraftServerAccessor = (MinecraftServerAccessor) server;
-            return minecraftServerAccessor.getStorageSource();
+            return minecraftServerAccessor.aether$getStorageSource();
         } else {
             return null;
         }

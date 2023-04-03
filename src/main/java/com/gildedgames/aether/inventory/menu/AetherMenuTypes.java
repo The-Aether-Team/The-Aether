@@ -2,6 +2,8 @@ package com.gildedgames.aether.inventory.menu;
 
 import com.gildedgames.aether.Aether;
 
+import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -10,9 +12,13 @@ import net.minecraftforge.registries.RegistryObject;
 public class AetherMenuTypes {
 	public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, Aether.MODID);
 
-	public static final RegistryObject<MenuType<AccessoriesMenu>> ACCESSORIES = MENU_TYPES.register("accessories", () -> new MenuType<>(AccessoriesMenu::new));
-	public static final RegistryObject<MenuType<LoreBookMenu>> BOOK_OF_LORE = MENU_TYPES.register("book_of_lore", () -> new MenuType<>(LoreBookMenu::new));
-	public static final RegistryObject<MenuType<AltarMenu>> ALTAR = MENU_TYPES.register("altar", () -> new MenuType<>(AltarMenu::new));
-	public static final RegistryObject<MenuType<FreezerMenu>> FREEZER = MENU_TYPES.register("freezer", () -> new MenuType<>(FreezerMenu::new));
-	public static final RegistryObject<MenuType<IncubatorMenu>> INCUBATOR = MENU_TYPES.register("incubator", () -> new MenuType<>(IncubatorMenu::new));
+	public static final RegistryObject<MenuType<AccessoriesMenu>> ACCESSORIES = register("accessories", AccessoriesMenu::new);
+	public static final RegistryObject<MenuType<LoreBookMenu>> BOOK_OF_LORE = register("book_of_lore",LoreBookMenu::new);
+	public static final RegistryObject<MenuType<AltarMenu>> ALTAR = register("altar", AltarMenu::new);
+	public static final RegistryObject<MenuType<FreezerMenu>> FREEZER = register("freezer", FreezerMenu::new);
+	public static final RegistryObject<MenuType<IncubatorMenu>> INCUBATOR = register("incubator", IncubatorMenu::new);
+
+	private static<T extends AbstractContainerMenu> RegistryObject<MenuType<T>> register(String name, MenuType.MenuSupplier<T> menu) {
+		return MENU_TYPES.register(name, () -> new MenuType<>(menu, FeatureFlags.VANILLA_SET));
+	}
 }

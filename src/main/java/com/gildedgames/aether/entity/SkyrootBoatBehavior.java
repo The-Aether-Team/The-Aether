@@ -4,22 +4,21 @@ import com.gildedgames.aether.block.AetherBlocks;
 import com.gildedgames.aether.item.AetherItems;
 import com.gildedgames.aether.mixin.mixins.common.accessor.BoatAccessor;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.level.GameRules;
 
 public interface SkyrootBoatBehavior {
     default void fall(Boat boat, double y, boolean onGround) {
         BoatAccessor boatAccessor = (BoatAccessor) boat;
-        boatAccessor.setLastYd(boat.getDeltaMovement().y);
+        boatAccessor.aether$setLastYd(boat.getDeltaMovement().y);
         if (!boat.isPassenger()) {
             if (onGround) {
                 if (boat.fallDistance > 3.0F) {
-                    if (boatAccessor.getStatus() != Boat.Status.ON_LAND) {
+                    if (boatAccessor.aether$getStatus() != Boat.Status.ON_LAND) {
                         boat.resetFallDistance();
                         return;
                     }
-                    boat.causeFallDamage(boat.fallDistance, 1.0F, DamageSource.FALL);
+                    boat.causeFallDamage(boat.fallDistance, 1.0F, boat.damageSources().fall());
                     if (!boat.level.isClientSide && !boat.isRemoved()) {
                         boat.kill();
                         if (boat.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {

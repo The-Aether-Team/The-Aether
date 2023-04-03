@@ -7,6 +7,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(BaseSpawner.class)
 public interface BaseSpawnerAccessor {
-    @Accessor
-    SpawnData getNextSpawnData();
+    @Accessor("nextSpawnData")
+    SpawnData aether$getNextSpawnData();
 }

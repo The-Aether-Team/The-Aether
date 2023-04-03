@@ -61,16 +61,16 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
 
                         if (livingEntity instanceof Player player && renderLayerParent.getModel() instanceof PlayerModel<?> playerModel) {
                             PlayerModelAccessor playerModelAccessor = (PlayerModelAccessor) playerModel;
-                            model = playerModelAccessor.getSlim() ? this.shieldModelSlim : this.shieldModel;
+                            model = playerModelAccessor.aether$getSlim() ? this.shieldModelSlim : this.shieldModel;
                             Optional<AetherPlayer> aetherPlayerOptional = AetherPlayer.get(player).resolve();
                             if (aetherPlayerOptional.isPresent()) {
                                 if (!aetherPlayerOptional.get().isMoving()) {
-                                    texture = playerModelAccessor.getSlim() ? shield.getShieldOfRepulsionSlimTexture() : shield.getShieldOfRepulsionTexture();
+                                    texture = playerModelAccessor.aether$getSlim() ? shield.getShieldOfRepulsionSlimTexture() : shield.getShieldOfRepulsionTexture();
                                 } else {
-                                    texture = playerModelAccessor.getSlim() ? shield.getShieldOfRepulsionSlimInactiveTexture() : shield.getShieldOfRepulsionInactiveTexture();
+                                    texture = playerModelAccessor.aether$getSlim() ? shield.getShieldOfRepulsionSlimInactiveTexture() : shield.getShieldOfRepulsionInactiveTexture();
                                 }
                             } else {
-                                texture = playerModelAccessor.getSlim() ? shield.getShieldOfRepulsionSlimInactiveTexture() : shield.getShieldOfRepulsionInactiveTexture();
+                                texture = playerModelAccessor.aether$getSlim() ? shield.getShieldOfRepulsionSlimInactiveTexture() : shield.getShieldOfRepulsionInactiveTexture();
                             }
                         } else {
                             model = this.shieldModel;
@@ -93,7 +93,9 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
 
     public void renderFirstPerson(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, AbstractClientPlayer player, HumanoidArm arm) {
         boolean isSlim = player.getModelName().equals("slim");
-        this.setupHand(isSlim ? this.dummyArmSlim : this.dummyArm, poseStack, buffer, combinedLight, player, arm);
+        if (!player.isInvisible()) {
+            this.setupHand(isSlim ? this.dummyArmSlim : this.dummyArm, poseStack, buffer, combinedLight, player, arm);
+        }
         this.setupShield(stack, isSlim ? this.shieldModelArmSlim : this.shieldModelArm, poseStack, buffer, combinedLight, player, arm, isSlim);
     }
 

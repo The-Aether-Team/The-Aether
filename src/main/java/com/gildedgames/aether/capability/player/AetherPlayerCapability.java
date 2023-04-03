@@ -80,10 +80,18 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	private float wingRotation;
 
+	private boolean wearingInvisibilityCloak;
+
 	private static final int FLIGHT_TIMER_MAX = 52;
 	private static final float FLIGHT_MODIFIER_MAX = 15.0F;
 	private int flightTimer;
 	private float flightModifier = 1.0F;
+
+	private double neptuneSubmergeLength;
+	private double phoenixSubmergeLength;
+
+	private static final int OBSIDIAN_TIMER_MAX = 20;
+	private int obsidianConversionTime;
 
 	private float savedHealth = 0.0F;
 	private int lifeShards;
@@ -164,6 +172,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		tag.putInt("ProjectileImpactedTimer_Syncing", this.getProjectileImpactedTimer());
 		tag.putInt("FlightTimer_Syncing", this.getFlightTimer());
 		tag.putFloat("FlightModifier_Syncing", this.getFlightModifier());
+		tag.putBoolean("WearingInvisibilityCloak_Syncing", this.isWearingInvisibilityCloak());
 		tag.putInt("LifeShardCount_Syncing", this.getLifeShardCount());
 		if (this.getLastRiddenMoa() != null) {
 			tag.putUUID("LastRiddenMoa_Syncing", this.getLastRiddenMoa());
@@ -208,6 +217,9 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		}
 		if (tag.contains("LastRiddenMoa_Syncing")) {
 			this.setLastRiddenMoa(tag.getUUID("LastRiddenMoa_Syncing"));
+		}
+		if (tag.contains("WearingInvisibilityCloak_Syncing")) {
+			this.setWearingInvisibilityCloak(tag.getBoolean("WearingInvisibilityCloak_Syncing"));
 		}
 	}
 
@@ -327,7 +339,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		Player player = this.getPlayer();
 		Inventory inventory = this.getPlayer().getInventory();
 		Level level = player.level;
-		if (!player.isCreative() && !player.isShiftKeyDown() && !player.isFallFlying()) {
+		if (!player.isCreative() && !player.isShiftKeyDown() && !player.isFallFlying() && !player.isPassenger()) {
 			if (player.getDeltaMovement().y() < -1.5D) {
 				if (inventory.contains(AetherTags.Items.DEPLOYABLE_PARACHUTES)) {
 					for (ItemStack stack : inventory.items) {
@@ -721,6 +733,16 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	}
 
 	@Override
+	public void setWearingInvisibilityCloak(boolean wearing) {
+		this.wearingInvisibilityCloak = wearing;
+	}
+
+	@Override
+	public boolean isWearingInvisibilityCloak() {
+		return this.wearingInvisibilityCloak;
+	}
+
+	@Override
 	public int getFlightTimerMax() {
 		return FLIGHT_TIMER_MAX;
 	}
@@ -760,6 +782,41 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	@Override
 	public float getSavedHealth() {
 		return this.savedHealth;
+	}
+
+	@Override
+	public void setNeptuneSubmergeLength(double length) {
+		this.neptuneSubmergeLength = length;
+	}
+
+	@Override
+	public double getNeptuneSubmergeLength() {
+		return this.neptuneSubmergeLength;
+	}
+
+	@Override
+	public void setPhoenixSubmergeLength(double length) {
+		this.phoenixSubmergeLength = length;
+	}
+
+	@Override
+	public double getPhoenixSubmergeLength() {
+		return this.phoenixSubmergeLength;
+	}
+
+	@Override
+	public int getObsidianConversionTimerMax() {
+		return OBSIDIAN_TIMER_MAX;
+	}
+
+	@Override
+	public void setObsidianConversionTime(int time) {
+		this.obsidianConversionTime = time;
+	}
+
+	@Override
+	public int getObsidianConversionTime() {
+		return this.obsidianConversionTime;
 	}
 
 	@Override

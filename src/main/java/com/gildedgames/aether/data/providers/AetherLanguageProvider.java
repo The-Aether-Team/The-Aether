@@ -44,7 +44,7 @@ public abstract class AetherLanguageProvider extends LanguageProvider {
     }
 
     public void addSubtitle(String category, String key, String name) {
-        this.add("subtitles." + category + "." + key, name);
+        this.add("subtitles.aether." + category + "." + key, name);
     }
 
     public void addDeath(String key, String name) {

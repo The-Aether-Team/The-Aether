@@ -24,7 +24,7 @@ public class ChangeSkinButton extends Button {
     }
 
     @Override
-    public void renderButton(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void renderWidget(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         Minecraft minecraft = Minecraft.getInstance();
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, MoaSkinsScreen.MOA_SKINS_GUI);
@@ -43,7 +43,7 @@ public class ChangeSkinButton extends Button {
         RenderSystem.defaultBlendFunc();
         RenderSystem.enableDepthTest();
         this.blit(matrixStack, this.getX(), this.getY(), u * 7, 184, 7, 7);
-        this.renderBg(matrixStack, minecraft, mouseX, mouseY);
+        //this.renderBg(matrixStack, minecraft, mouseX, mouseY);
     }
 
     public void setIsActive(boolean active) {

@@ -1,6 +1,7 @@
 package com.gildedgames.aether.mixin.mixins.common.accessor;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
@@ -16,32 +17,32 @@ import javax.annotation.Nullable;
 
 @Mixin(AbstractFurnaceBlockEntity.class)
 public interface AbstractFurnaceBlockEntityAccessor {
-    @Accessor
-    RecipeManager.CachedCheck<Container, ? extends AbstractCookingRecipe> getQuickCheck();
+    @Accessor("quickCheck")
+    RecipeManager.CachedCheck<Container, ? extends AbstractCookingRecipe> aether$getQuickCheck();
 
     @Invoker
-    boolean callCanBurn(@Nullable Recipe<?> recipe, NonNullList<ItemStack> stacks, int stackSize);
+    boolean callCanBurn(RegistryAccess registryAccess, @Nullable Recipe<?> recipe, NonNullList<ItemStack> stacks, int stackSize);
 
-    @Accessor
-    int getLitTime();
+    @Accessor("litTime")
+    int aether$getLitTime();
 
-    @Accessor
-    void setLitTime(int litTime);
+    @Accessor("litTime")
+    void aether$setLitTime(int litTime);
 
-    @Accessor
-    void setLitDuration(int litDuration);
+    @Accessor("litDuration")
+    void aether$setLitDuration(int litDuration);
 
-    @Accessor
-    int getCookingProgress();
+    @Accessor("cookingProgress")
+    int aether$getCookingProgress();
 
-    @Accessor
-    void setCookingProgress(int cookingProgress);
+    @Accessor("cookingProgress")
+    void aether$setCookingProgress(int cookingProgress);
 
-    @Accessor
-    int getCookingTotalTime();
+    @Accessor("cookingTotalTime")
+    int aether$getCookingTotalTime();
 
-    @Accessor
-    void setCookingTotalTime(int cookingTotalTime);
+    @Accessor("cookingTotalTime")
+    void aether$setCookingTotalTime(int cookingTotalTime);
 
     @Invoker
     boolean callIsLit();
@@ -51,11 +52,8 @@ public interface AbstractFurnaceBlockEntityAccessor {
         throw new AssertionError();
     }
 
-    @Accessor
-    NonNullList<ItemStack> getItems();
-
-    @Accessor
-    void setItems(NonNullList<ItemStack> items);
+    @Accessor("items")
+    NonNullList<ItemStack> aether$getItems();
 
     @Invoker
     int callGetBurnDuration(ItemStack pFuel);

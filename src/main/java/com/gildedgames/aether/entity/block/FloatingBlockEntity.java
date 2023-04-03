@@ -3,6 +3,7 @@ package com.gildedgames.aether.entity.block;
 import com.gildedgames.aether.Aether;
 import com.gildedgames.aether.block.Floatable;
 import com.gildedgames.aether.block.miscellaneous.FloatingBlock;
+import com.gildedgames.aether.data.resources.AetherDamageTypes;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import com.gildedgames.aether.mixin.mixins.common.accessor.ConcretePowderBlockAccessor;
 import net.minecraft.CrashReportCategory;
@@ -25,7 +26,6 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
@@ -43,6 +43,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.ITeleporter;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -60,6 +61,7 @@ public class FloatingBlockEntity extends Entity {
     private int floatDistance;
     @Nullable
     public CompoundTag blockData;
+    private boolean natural = true;
 
     public FloatingBlockEntity(EntityType<? extends FloatingBlockEntity> type, Level level) {
         super(type, level);
@@ -120,8 +122,8 @@ public class FloatingBlockEntity extends Entity {
 
                 if ((!this.verticalCollision || this.onGround) && !canConvert) {
                     if (!this.level.isClientSide && (this.time > 100 && (blockPos1.getY() <= this.level.getMinBuildHeight() || blockPos1.getY() > this.level.getMaxBuildHeight()) || this.time > 600)) {
-                        if (this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
-                            this.dropBlock();
+                        if ((!this.natural || !this.blockState.requiresCorrectToolForDrops()) && this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+                            this.dropBlock(this.blockState);
                         }
                         this.discard();
                     }
@@ -133,12 +135,16 @@ public class FloatingBlockEntity extends Entity {
                             boolean canBeReplaced = blockState.canBeReplaced(new DirectionalPlaceContext(this.level, blockPos1, Direction.UP, ItemStack.EMPTY, Direction.DOWN));
                             boolean isAboveFree = FloatingBlock.isFree(this.level.getBlockState(blockPos1.above())) && (!isConcrete || !canConvert);
                             boolean canBlockSurvive = this.blockState.canSurvive(this.level, blockPos1) && !isAboveFree;
-                            if (canBeReplaced && canBlockSurvive) {
+                            if ((canBeReplaced && canBlockSurvive) || (this.natural && blockState.getBlock().defaultDestroyTime() >= 0)) {
                                 if (this.blockState.hasProperty(BlockStateProperties.WATERLOGGED) && this.level.getFluidState(blockPos1).is(Fluids.WATER)) {
                                     this.blockState = this.blockState.setValue(BlockStateProperties.WATERLOGGED, true);
                                 }
-
+                                BlockState previousBlockState = this.level.getBlockState(blockPos1);
                                 if (this.level.setBlock(blockPos1, this.blockState, 1 | 2)) {
+                                    if (this.natural && !previousBlockState.isAir()) {
+                                        this.dropBlock(previousBlockState);
+                                    }
+
                                     ((ServerLevel) this.level).getChunkSource().chunkMap.broadcast(this, new ClientboundBlockUpdatePacket(blockPos1, this.level.getBlockState(blockPos1)));
                                     this.discard();
                                     if (block instanceof Floatable floatable) {
@@ -146,7 +152,7 @@ public class FloatingBlockEntity extends Entity {
                                     } else if (block instanceof ConcretePowderBlock concretePowderBlock) {
                                         if (ConcretePowderBlockAccessor.callShouldSolidify(this.level, blockPos1, blockState)) {
                                             ConcretePowderBlockAccessor concretePowderBlockAccessor = (ConcretePowderBlockAccessor) concretePowderBlock;
-                                            this.level.setBlock(blockPos1, concretePowderBlockAccessor.getConcrete(), 1 | 2);
+                                            this.level.setBlock(blockPos1, concretePowderBlockAccessor.aether$getConcrete(), 1 | 2);
                                         }
                                     } else if (block instanceof AnvilBlock) {
                                         if (!this.isSilent()) {
@@ -170,16 +176,16 @@ public class FloatingBlockEntity extends Entity {
                                             blockEntity.setChanged();
                                         }
                                     }
-                                } else if (this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+                                } else if ((!this.natural || !this.blockState.requiresCorrectToolForDrops()) && this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                                     this.discard();
                                     this.callOnBrokenAfterFall(block, blockPos1);
-                                    this.dropBlock();
+                                    this.dropBlock(this.blockState);
                                 }
                             } else {
                                 this.discard();
-                                if (this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+                                if ((!this.natural || !this.blockState.requiresCorrectToolForDrops() || blockState.getBlock().defaultDestroyTime() < 0) && this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                                     this.callOnBrokenAfterFall(block, blockPos1);
-                                    this.dropBlock();
+                                    this.dropBlock(this.blockState);
                                 }
                             }
                         } else {
@@ -199,9 +205,9 @@ public class FloatingBlockEntity extends Entity {
         this.fallDamageMax = fallDamageMax;
     }
 
-    private void dropBlock() {
+    private void dropBlock(BlockState state) {
         if (this.level instanceof ServerLevel) {
-            for (ItemStack stack : Block.getDrops(this.blockState, (ServerLevel) this.level, this.blockPosition(), null)) {
+            for (ItemStack stack : Block.getDrops(state, (ServerLevel) this.level, this.blockPosition(), null)) {
                 this.spawnAtLocation(stack);
             }
         }
@@ -222,7 +228,7 @@ public class FloatingBlockEntity extends Entity {
                 damageSource = floatable.getFallDamageSource(this);
             } else {
                 predicate = EntitySelector.NO_SPECTATORS;
-                damageSource = new EntityDamageSource("aether.floatingBlock", this).damageHelmet();
+                damageSource = AetherDamageTypes.entityDamageSource(this.level, AetherDamageTypes.FLOATING_BLOCK, this);
             }
 
             float f = (float) Math.min(Mth.floor((float) this.floatDistance * this.fallDamagePerDistance), this.fallDamageMax);
@@ -258,6 +264,15 @@ public class FloatingBlockEntity extends Entity {
 
     public BlockState getBlockState() {
         return this.blockState;
+    }
+
+    public void setNatural(boolean natural) {
+        this.natural = natural;
+    }
+
+    @Override
+    public Entity changeDimension(ServerLevel destination, ITeleporter teleporter) {
+        return null;
     }
 
     @Override
@@ -297,6 +312,7 @@ public class FloatingBlockEntity extends Entity {
         if (this.blockData != null) {
             tag.put("TileEntityData", this.blockData);
         }
+        tag.putBoolean("Natural", this.natural);
     }
 
     @Override
@@ -322,6 +338,9 @@ public class FloatingBlockEntity extends Entity {
         }
         if (this.blockState.isAir()) {
             this.blockState = Blocks.SAND.defaultBlockState();
+        }
+        if (tag.contains("Natural", 99)) {
+            this.natural = tag.getBoolean("Natural");
         }
     }
 

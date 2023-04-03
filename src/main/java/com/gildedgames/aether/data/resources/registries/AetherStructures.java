@@ -38,7 +38,13 @@ public class AetherStructures {
     }
 
     public static void bootstrap(BootstapContext<Structure> context) {
-        Map<MobCategory, StructureSpawnOverride> mobSpawns = Arrays.stream(MobCategory.values()).collect(Collectors.toMap((category) -> {
+        Map<MobCategory, StructureSpawnOverride> mobSpawnsBox = Arrays.stream(MobCategory.values()).collect(Collectors.toMap((category) -> {
+            return category;
+        }, (category) -> {
+            return new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedRandomList.create());
+        }));
+
+        Map<MobCategory, StructureSpawnOverride> mobSpawnsPiece = Arrays.stream(MobCategory.values()).collect(Collectors.toMap((category) -> {
             return category;
         }, (category) -> {
             return new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.PIECE, WeightedRandomList.create());
@@ -51,19 +57,20 @@ public class AetherStructures {
                 BlockStateProvider.simple(AetherBlocks.COLD_AERCLOUD.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true)), 3));
         context.register(BRONZE_DUNGEON, new BronzeDungeonStructure(AetherStructureBuilders.structure(
                 biomes.getOrThrow(AetherTags.Biomes.HAS_BRONZE_DUNGEON),
-                mobSpawns,
+                mobSpawnsPiece,
                 GenerationStep.Decoration.SURFACE_STRUCTURES,
-                TerrainAdjustment.BURY),
+                TerrainAdjustment.NONE),
                 8));
         context.register(SILVER_DUNGEON, new SilverDungeonStructure(AetherStructureBuilders.structure(
                 biomes.getOrThrow(AetherTags.Biomes.HAS_SILVER_DUNGEON),
-                mobSpawns,
+                mobSpawnsBox,
                 GenerationStep.Decoration.SURFACE_STRUCTURES,
                 TerrainAdjustment.NONE)));
         context.register(GOLD_DUNGEON, new GoldDungeonStructure(AetherStructureBuilders.structure(
                 biomes.getOrThrow(AetherTags.Biomes.HAS_GOLD_DUNGEON),
-                mobSpawns,
+                mobSpawnsBox,
                 GenerationStep.Decoration.SURFACE_STRUCTURES,
-                TerrainAdjustment.NONE)));
+                TerrainAdjustment.NONE),
+                8));
     }
 }

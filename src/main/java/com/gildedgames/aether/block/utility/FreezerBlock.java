@@ -3,6 +3,7 @@ package com.gildedgames.aether.block.utility;
 import com.gildedgames.aether.blockentity.AbstractAetherFurnaceBlockEntity;
 import com.gildedgames.aether.blockentity.FreezerBlockEntity;
 
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.client.particle.AetherParticleTypes;
 import com.gildedgames.aether.blockentity.AetherBlockEntityTypes;
 import net.minecraft.util.RandomSource;
@@ -14,7 +15,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
@@ -53,7 +53,7 @@ public class FreezerBlock extends AbstractFurnaceBlock {
 			for (int i = 0; i < 10; ++i) {
 				level.addParticle(AetherParticleTypes.FROZEN.get(), x, y, z, 0.0, 0.0, 0.0);
 			}
-			level.playLocalSound(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1.0F, 1.0F, false);
+			level.playLocalSound(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, AetherSoundEvents.BLOCK_FREEZER_CRACKLE.get(), SoundSource.BLOCKS, 1.0F, 1.0F, false);
 		}
 	}
 }

@@ -1,7 +1,7 @@
 {
   "type": "aether:freezing",
   "category": "freezable_blocks",
-  "cookingtime": 150,
+  "cookingtime": 500,
   "experience": 0.1,
   "ingredient": {
     "item": "aether:skyroot_leaves"

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "group": "minecraft:sticky_piston",
+  "key": {
+    "B": {
+      "item": "aether:swet_ball"
+    },
+    "P": {
+      "item": "minecraft:piston"
+    }
+  },
+  "pattern": [
+    "B",
+    "P"
+  ],
+  "result": {
+    "item": "minecraft:sticky_piston"
+  },
+  "show_notification": true
+}

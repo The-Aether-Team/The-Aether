@@ -2,15 +2,14 @@ package com.gildedgames.aether.entity.projectile.crystal;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.client.particle.AetherParticleTypes;
+import com.gildedgames.aether.data.resources.AetherDamageTypes;
 import com.gildedgames.aether.entity.AetherEntityTypes;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -46,8 +45,8 @@ public class IceCrystal extends AbstractCrystal {
         this.setOwner(shooter);
         this.setPos(shooter.getX(), shooter.getY(), shooter.getZ());
         float rotation = this.random.nextFloat() * 360;
-        this.xPower = Mth.sin(rotation) * 0.15;
-        this.zPower = -Mth.cos(rotation) * 0.15;
+        this.xPower = Mth.sin(rotation) * 0.20;
+        this.zPower = -Mth.cos(rotation) * 0.20;
         this.setDeltaMovement(this.xPower, 0, this.zPower);
     }
 
@@ -59,10 +58,9 @@ public class IceCrystal extends AbstractCrystal {
     public void doDamage(Entity entity) {
         if (this.getOwner() != entity) {
             if (entity instanceof LivingEntity livingEntity) {
-                if (livingEntity.hurt(new IndirectEntityDamageSource("aether.ice_crystal", this, this.getOwner()).setProjectile(), 5.0F)) {
+                if (livingEntity.hurt(AetherDamageTypes.indirectEntityDamageSource(this.level, AetherDamageTypes.ICE_CRYSTAL, this, this.getOwner()), 7.0F)) {
                     livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 10));
                     this.level.playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
-                    this.spawnExplosionParticles();
                     this.discard();
                 }
             }
@@ -77,7 +75,6 @@ public class IceCrystal extends AbstractCrystal {
     protected void onHitBlock(BlockHitResult result) {
         if (this.attacked) {
             this.level.playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
-            this.spawnExplosionParticles();
             this.discard();
             return;
         }
@@ -101,8 +98,8 @@ public class IceCrystal extends AbstractCrystal {
             if (entity != null) {
                 if (!this.level.isClientSide) {
                     Vec3 vec3 = entity.getLookAngle();
-                    this.xPower = vec3.x * 2;
-                    this.zPower = vec3.z * 2;
+                    this.xPower = vec3.x * 2.5;
+                    this.zPower = vec3.z * 2.5;
                     this.setDeltaMovement(xPower, 0, zPower);
                     this.setOwner(entity);
                     this.attacked = true;

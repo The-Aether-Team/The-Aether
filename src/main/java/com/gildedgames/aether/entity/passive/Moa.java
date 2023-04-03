@@ -19,6 +19,7 @@ import com.gildedgames.aether.api.AetherMoaTypes;
 import com.gildedgames.aether.perk.data.ServerMoaSkinPerkData;
 import com.gildedgames.aether.perk.types.MoaData;
 import com.gildedgames.aether.util.EntityUtil;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -43,6 +44,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Map;
@@ -128,8 +130,12 @@ public class Moa extends MountableAnimal implements WingedBird {
 			if (tag.contains("PlayerGrown")) {
 				this.setPlayerGrown(tag.getBoolean("PlayerGrown"));
 			}
-		} else {
-			this.setMoaType(AetherMoaTypes.random(this.random));
+		}
+		if (spawnData == null) {
+			spawnData = new AgeableMob.AgeableMobGroupData(false);
+		}
+		if (this.getMoaType() == null) {
+			this.setMoaType(AetherMoaTypes.getWeightedChance(this.random));
 		}
 		return super.finalizeSpawn(level, difficulty, reason, spawnData, tag);
 	}
@@ -167,8 +173,11 @@ public class Moa extends MountableAnimal implements WingedBird {
 				this.heal(1.0F);
 			}
 			if (!this.isBaby() && this.getPassengers().isEmpty() && --this.eggTime <= 0) {
-				this.playSound(AetherSoundEvents.ENTITY_MOA_EGG.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-				this.spawnAtLocation(this.getMoaType().getEgg());
+				MoaType moaType = this.getMoaType();
+				if (moaType != null) {
+					this.playSound(AetherSoundEvents.ENTITY_MOA_EGG.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+					this.spawnAtLocation(this.getMoaType().getEgg());
+				}
 				this.eggTime = this.getEggTime();
 			}
 		}
@@ -203,17 +212,19 @@ public class Moa extends MountableAnimal implements WingedBird {
 
 	@Override
 	public void riderTick() {
-		super.riderTick();
-		if (this.getControllingPassenger() instanceof Player) {
-			if (this.getFlapCooldown() > 0) {
-				this.setFlapCooldown(this.getFlapCooldown() - 1);
-			} else if (this.getFlapCooldown() == 0) {
-				if (!this.isOnGround()) {
-					this.level.playSound(null, this, AetherSoundEvents.ENTITY_MOA_FLAP.get(), SoundSource.NEUTRAL, 0.15F, Mth.clamp(this.random.nextFloat(), 0.7F, 1.0F) + Mth.clamp(this.random.nextFloat(), 0.0F, 0.3F));
-					this.setFlapCooldown(15);
+		if (!this.isSitting()) {
+			super.riderTick();
+			if (this.getControllingPassenger() instanceof Player) {
+				if (this.getFlapCooldown() > 0) {
+					this.setFlapCooldown(this.getFlapCooldown() - 1);
+				} else if (this.getFlapCooldown() == 0) {
+					if (!this.isOnGround()) {
+						this.level.playSound(null, this, AetherSoundEvents.ENTITY_MOA_FLAP.get(), SoundSource.NEUTRAL, 0.15F, Mth.clamp(this.random.nextFloat(), 0.7F, 1.0F) + Mth.clamp(this.random.nextFloat(), 0.0F, 0.3F));
+						this.setFlapCooldown(15);
+					}
 				}
+				this.resetFallDistance();
 			}
-			this.resetFallDistance();
 		}
 	}
 
@@ -247,7 +258,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 						this.travelWithInput(new Vec3(0, vector3d.y(), 0));
 						this.lerpSteps = 0;
 					} else {
-						this.calculateEntityAnimation(this, false);
+						this.calculateEntityAnimation(false);
 						this.setDeltaMovement(Vec3.ZERO);
 					}
 				} else {
@@ -258,8 +269,8 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	@Override
-	public void onJump() {
-		super.onJump();
+	public void onJump(Mob moa) {
+		super.onJump(moa);
 		this.setJumpCooldown(10);
 		if (!this.isOnGround()) {
 			this.setRemainingJumps(this.getRemainingJumps() - 1);
@@ -283,7 +294,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 			}
 			this.setAmountFed(this.getAmountFed() + 1);
 			if (this.getAmountFed() >= 3) {
-				this.setAge(0);
+				this.setBaby(false);
 			}
 			this.setHungry(false);
 			AetherPacketHandler.sendToAll(new MoaInteractPacket(playerEntity.getId(), hand == InteractionHand.MAIN_HAND)); // packet necessary to play animation because this code segment is server-side only, so no animations.
@@ -320,6 +331,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 		this.entityData.set(DATA_MOA_UUID_ID, Optional.ofNullable(uuid));
 	}
 
+	@Nullable
 	public MoaType getMoaType() {
 		return AetherMoaTypes.get(this.entityData.get(DATA_MOA_TYPE_ID));
 	}
@@ -443,7 +455,8 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	public int getMaxJumps() {
-		return this.getMoaType().getMaxJumps();
+		MoaType moaType = this.getMoaType();
+		return moaType != null ? moaType.getMaxJumps() : AetherMoaTypes.BLUE.get().getMaxJumps();
 	}
 
 	public int getEggTime() {
@@ -471,13 +484,19 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	@Override
+	protected void playStepSound(@Nonnull BlockPos pos, @Nonnull BlockState state) {
+		this.playSound(AetherSoundEvents.ENTITY_MOA_STEP.get(), 0.15F, 1.0F);
+	}
+
+	@Override
 	public boolean isFood(@Nonnull ItemStack stack) {
 		return false;
 	}
 
 	@Override
 	public float getSpeed() {
-		return this.getMoaType().getSpeed();
+		MoaType moaType = this.getMoaType();
+		return moaType != null ? moaType.getSpeed() : AetherMoaTypes.BLUE.get().getSpeed();
 	}
 
 	@Override
@@ -491,13 +510,19 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	@Override
-	protected double getMountJumpStrength() {
-		return this.isOnGround() ? 0.9 : 0.75;
+	public double getMountJumpStrength() {
+		return this.isOnGround() ? 0.95 : 0.90;
 	}
 
 	@Override
 	public float getSteeringSpeed() {
-		return this.getMoaType().getSpeed();
+        MoaType moaType = this.getMoaType();
+		return moaType != null ? moaType.getSpeed() : AetherMoaTypes.BLUE.get().getSpeed();
+	}
+
+	@Override
+	public float getFlyingSpeed() {
+		return this.getSteeringSpeed() * 0.45F;
 	}
 
 	@Override
@@ -526,6 +551,13 @@ public class Moa extends MountableAnimal implements WingedBird {
 		return false;
 	}
 
+    @Override
+    public void setAge(int age) {
+		if (age == -24000 || (age == 0 && this.getAmountFed() >= 3)) {
+            super.setAge(age);
+        }
+    }
+
 	@Override
 	public ItemStack getPickResult() {
 		MoaEggItem moaEggItem = MoaEggItem.byId(this.getMoaType());
@@ -541,8 +573,10 @@ public class Moa extends MountableAnimal implements WingedBird {
 		if (tag.contains("IsBaby")) {
 			this.setBaby(tag.getBoolean("IsBaby"));
 		}
-		if (tag.contains("MoaType")) {
+		if (tag.contains("MoaType") && AetherMoaTypes.get(tag.getString("MoaType")) != null) {
 			this.setMoaType(AetherMoaTypes.get(tag.getString("MoaType")));
+		} else {
+			this.setMoaType(AetherMoaTypes.getWeightedChance(this.random));
 		}
 		if (tag.hasUUID("Rider")) {
 			this.setRider(tag.getUUID("Rider"));

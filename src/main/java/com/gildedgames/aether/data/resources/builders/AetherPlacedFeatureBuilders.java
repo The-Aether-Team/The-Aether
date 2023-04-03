@@ -13,23 +13,13 @@ import net.minecraft.world.level.levelgen.placement.*;
 import java.util.List;
 
 public class AetherPlacedFeatureBuilders {
-    public static List<PlacementModifier> aercloudPlacement(int height, int chance) {
+    public static List<PlacementModifier> aercloudPlacement(int above, int range, int chance) {
         return List.of(
-                HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(height)),
-                InSquarePlacement.spread(),
+                HeightRangePlacement.uniform(VerticalAnchor.absolute(above), VerticalAnchor.absolute(above + range)),
                 RarityFilter.onAverageOnceEvery(chance),
+                InSquarePlacement.spread(),
                 BiomeFilter.biome(),
                 new DungeonBlacklistFilter());
-    }
-
-    public static List<PlacementModifier> pinkAercloudPlacement(int height, int chance) {
-        return List.of(
-                HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(height)),
-                InSquarePlacement.spread(),
-                RarityFilter.onAverageOnceEvery(chance),
-                BiomeFilter.biome(),
-                new DungeonBlacklistFilter(),
-                new ConfigFilter(AetherConfig.COMMON.generate_pink_aerclouds));
     }
 
     /**
@@ -45,8 +35,8 @@ public class AetherPlacedFeatureBuilders {
     private static ImmutableList.Builder<PlacementModifier> treePlacementBase(PlacementModifier count) {
         return ImmutableList.<PlacementModifier>builder()
                 .add(count)
-                .add(ImprovedLayerPlacementModifier.of(Heightmap.Types.OCEAN_FLOOR, UniformInt.of(0, 1), 4))
                 .add(SurfaceWaterDepthFilter.forMaxDepth(0))
+                .add(ImprovedLayerPlacementModifier.of(Heightmap.Types.OCEAN_FLOOR, UniformInt.of(0, 1), 4))
                 .add(BiomeFilter.biome())
                 .add(new DungeonBlacklistFilter());
     }

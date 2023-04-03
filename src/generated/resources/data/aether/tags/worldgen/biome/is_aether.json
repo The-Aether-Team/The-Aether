@@ -1,8 +1,8 @@
 {
   "values": [
-    "aether:golden_forest",
-    "aether:skyroot_forest",
+    "aether:skyroot_meadow",
     "aether:skyroot_grove",
-    "aether:skyroot_thicket"
+    "aether:skyroot_woodland",
+    "aether:skyroot_forest"
   ]
 }

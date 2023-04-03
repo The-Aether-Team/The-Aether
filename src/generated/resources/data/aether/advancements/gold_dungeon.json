@@ -1,5 +1,5 @@
 {
-  "parent": "aether:silver_dungeon",
+  "parent": "aether:regen_stone",
   "criteria": {
     "kill_sun_spirit": {
       "conditions": {

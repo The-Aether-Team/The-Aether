@@ -22,4 +22,10 @@ public class AetherTimeListener {
         Player player = event.getEntity();
         CapabilityHooks.AetherTimeHooks.changeDimension(player);
     }
+
+    @SubscribeEvent
+    public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
+        Player player = event.getEntity();
+        CapabilityHooks.AetherTimeHooks.respawn(player);
+    }
 }

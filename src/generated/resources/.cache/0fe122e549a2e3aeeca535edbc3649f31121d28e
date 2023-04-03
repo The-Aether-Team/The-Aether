@@ -1,13 +1,11 @@
-// 1.19.3	2022-12-09T19:53:20.0018387	Tags for minecraft:entity_type mod id aether
-331548dcbc0ed9c39c0925678c3c465d98ce752a data/aether/tags/entity_types/aechor_plant_targets.json
-b0ea008baac0b727410a488f5b81e907b5a65cd2 data/aether/tags/entity_types/aercloud_spawnable.json
+// 1.19.4	2023-03-18T15:59:38.7221603	Tags for minecraft:entity_type mod id aether
 b3a379df5d7bd0f9d26800bb985a7acba83143fe data/aether/tags/entity_types/deflectable_projectiles.json
 6ded3ea2e35a47445f95b3e2a263d918575d48cf data/aether/tags/entity_types/no_ambrosium_drops.json
 6ded3ea2e35a47445f95b3e2a263d918575d48cf data/aether/tags/entity_types/no_candy_cane_drops.json
 f7203aae71175bb0e7c7c2df595579e99489b9ab data/aether/tags/entity_types/no_skyroot_double_drops.json
 2bd7356d8661b5745b019dfe60733e365ba7de97 data/aether/tags/entity_types/pigs.json
-331548dcbc0ed9c39c0925678c3c465d98ce752a data/aether/tags/entity_types/swet_targets.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/entity_types/unlaunchable.json
+6bf172d40b964ab13008f5e9a62d996284dd577e data/aether/tags/entity_types/whirlwind_unaffected.json
 7a86e782b9d5015ed364e40f3ab230fd511275a1 data/forge/tags/entity_types/bosses.json
 fd1fd899644858c42074bc12567ce1434d593fb1 data/minecraft/tags/entity_types/freeze_hurts_extra_types.json
 3846caad0243d60bf29645697423ab2232dba40a data/minecraft/tags/entity_types/frog_food.json

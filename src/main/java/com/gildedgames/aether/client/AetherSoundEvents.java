@@ -14,7 +14,11 @@ public class AetherSoundEvents {
 	public static final RegistryObject<SoundEvent> BLOCK_AETHER_PORTAL_AMBIENT = register("block.aether_portal.ambient");
 	public static final RegistryObject<SoundEvent> BLOCK_AETHER_PORTAL_TRAVEL = register("block.aether_portal.travel");
 	public static final RegistryObject<SoundEvent> BLOCK_AETHER_PORTAL_TRIGGER = register("block.aether_portal.trigger");
-	public static final RegistryObject<SoundEvent> BLOCK_CHEST_MIMIC_OPEM = register("block.chest_mimic.open");
+	public static final RegistryObject<SoundEvent> BLOCK_CHEST_MIMIC_OPEN = register("block.chest_mimic.open");
+
+	public static final RegistryObject<SoundEvent> BLOCK_ALTAR_CRACKLE = register("block.altar.crackle");
+	public static final RegistryObject<SoundEvent> BLOCK_FREEZER_CRACKLE = register("block.freezer.crackle");
+	public static final RegistryObject<SoundEvent> BLOCK_INCUBATOR_CRACKLE = register("block.incubator.crackle");
 
 	public static final RegistryObject<SoundEvent> BLOCK_DUNGEON_TRAP_TRIGGER = register("block.dungeon_trap.trigger");
 
@@ -22,7 +26,7 @@ public class AetherSoundEvents {
 
 	public static final RegistryObject<SoundEvent> ITEM_DART_SHOOTER_SHOOT = register("item.dart_shooter.shoot");
 	public static final RegistryObject<SoundEvent> ITEM_LIGHTNING_KNIFE_SHOOT = register("item.lightning_knife.shoot");
-	public static final RegistryObject<SoundEvent> ITEM_HAMMER_OF_NOTCH_SHOOT = register("item.hammer_of_notch.shoot");
+	public static final RegistryObject<SoundEvent> ITEM_HAMMER_OF_KINGBDOGZ_SHOOT = register("item.hammer_of_kingbdogz.shoot");
 
 	public static final RegistryObject<SoundEvent> ITEM_ARMOR_EQUIP_ZANITE = register("item.armor.equip_zanite");
 	public static final RegistryObject<SoundEvent> ITEM_ARMOR_EQUIP_GRAVITITE = register("item.armor.equip_gravitite");
@@ -51,6 +55,7 @@ public class AetherSoundEvents {
 	public static final RegistryObject<SoundEvent> ITEM_MUSIC_DISC_WELCOMING_SKIES = register("item.music_disc.welcoming_skies");
 	public static final RegistryObject<SoundEvent> ITEM_MUSIC_DISC_LEGACY = register("item.music_disc.legacy");
 	public static final RegistryObject<SoundEvent> ITEM_MUSIC_DISC_CHINCHILLA = register("item.music_disc.chinchilla");
+	public static final RegistryObject<SoundEvent> ITEM_MUSIC_DISC_HIGH = register("item.music_disc.high");
 
 	public static final RegistryObject<SoundEvent> ENTITY_PHYG_AMBIENT = register("entity.phyg.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_PHYG_DEATH = register("entity.phyg.death");
@@ -75,6 +80,7 @@ public class AetherSoundEvents {
 	public static final RegistryObject<SoundEvent> ENTITY_MOA_DEATH = register("entity.moa.death");
 	public static final RegistryObject<SoundEvent> ENTITY_MOA_HURT = register("entity.moa.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_MOA_SADDLE = register("entity.moa.saddle");
+	public static final RegistryObject<SoundEvent> ENTITY_MOA_STEP = register("entity.moa.step");
 	public static final RegistryObject<SoundEvent> ENTITY_MOA_FLAP = register("entity.moa.flap");
 	public static final RegistryObject<SoundEvent> ENTITY_MOA_EGG = register("entity.moa.egg");
 

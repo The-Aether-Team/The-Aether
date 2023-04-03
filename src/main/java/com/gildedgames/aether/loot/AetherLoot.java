@@ -30,31 +30,27 @@ public class AetherLoot {
 	public static final ResourceLocation ENTITIES_SHEEPUFF_BLACK = register("entities/sheepuff/black");
 
 	public static final ResourceLocation BRONZE_DUNGEON = register("chests/dungeon/bronze/bronze_dungeon");
-	public static final ResourceLocation BRONZE_DUNGEON_SUB_1 = register("chests/dungeon/bronze/bronze_dungeon_sub_1");
-	public static final ResourceLocation BRONZE_DUNGEON_SUB_2 = register("chests/dungeon/bronze/bronze_dungeon_sub_2");
-	public static final ResourceLocation BRONZE_DUNGEON_SUB_3 = register("chests/dungeon/bronze/bronze_dungeon_sub_3");
-	public static final ResourceLocation BRONZE_DUNGEON_SUB_4 = register("chests/dungeon/bronze/bronze_dungeon_sub_4");
+	public static final ResourceLocation BRONZE_DUNGEON_LOOT = register("chests/dungeon/bronze/bronze_dungeon_loot");
+	public static final ResourceLocation BRONZE_DUNGEON_TRASH = register("chests/dungeon/bronze/bronze_dungeon_trash");
+	public static final ResourceLocation BRONZE_DUNGEON_DISC = register("chests/dungeon/bronze/bronze_dungeon_disc");
 	public static final ResourceLocation BRONZE_DUNGEON_REWARD = register("chests/dungeon/bronze/bronze_dungeon_reward");
-	public static final ResourceLocation BRONZE_DUNGEON_REWARD_SUB_1 = register("chests/dungeon/bronze/bronze_dungeon_reward_sub_1");
+	public static final ResourceLocation BRONZE_DUNGEON_TREASURE = register("chests/dungeon/bronze/bronze_dungeon_treasure");
+	public static final ResourceLocation BRONZE_DUNGEON_GUMMIES = register("chests/dungeon/bronze/bronze_dungeon_gummies");
 
 	public static final ResourceLocation SILVER_DUNGEON = register("chests/dungeon/silver/silver_dungeon");
-	public static final ResourceLocation SILVER_DUNGEON_SUB_1 = register("chests/dungeon/silver/silver_dungeon_sub_1");
-	public static final ResourceLocation SILVER_DUNGEON_SUB_2 = register("chests/dungeon/silver/silver_dungeon_sub_2");
-	public static final ResourceLocation SILVER_DUNGEON_SUB_3 = register("chests/dungeon/silver/silver_dungeon_sub_3");
-	public static final ResourceLocation SILVER_DUNGEON_SUB_4 = register("chests/dungeon/silver/silver_dungeon_sub_4");
-	public static final ResourceLocation SILVER_DUNGEON_SUB_5 = register("chests/dungeon/silver/silver_dungeon_sub_5");
-	public static final ResourceLocation SILVER_DUNGEON_SUB_6 = register("chests/dungeon/silver/silver_dungeon_sub_6");
-	public static final ResourceLocation SILVER_DUNGEON_SUB_7 = register("chests/dungeon/silver/silver_dungeon_sub_7");
+	public static final ResourceLocation SILVER_DUNGEON_LOOT = register("chests/dungeon/silver/silver_dungeon_loot");
+	public static final ResourceLocation SILVER_DUNGEON_TRASH = register("chests/dungeon/silver/silver_dungeon_trash");
+	public static final ResourceLocation SILVER_DUNGEON_DISC = register("chests/dungeon/silver/silver_dungeon_disc");
 	public static final ResourceLocation SILVER_DUNGEON_REWARD = register("chests/dungeon/silver/silver_dungeon_reward");
-	public static final ResourceLocation SILVER_DUNGEON_REWARD_SUB_1 = register("chests/dungeon/silver/silver_dungeon_reward_sub_1");
-	public static final ResourceLocation SILVER_DUNGEON_REWARD_SUB_2 = register("chests/dungeon/silver/silver_dungeon_reward_sub_2");
+	public static final ResourceLocation SILVER_DUNGEON_TREASURE = register("chests/dungeon/bronze/silver_dungeon_treasure");
+	public static final ResourceLocation SILVER_DUNGEON_VALKYRIE = register("chests/dungeon/bronze/silver_dungeon_valkyrie");
+	public static final ResourceLocation SILVER_DUNGEON_NEPTUNE = register("chests/dungeon/bronze/silver_dungeon_neptune");
+	public static final ResourceLocation SILVER_DUNGEON_GRAVITITE = register("chests/dungeon/bronze/silver_dungeon_gravitite");
+	public static final ResourceLocation SILVER_DUNGEON_CAPE_CONFIG = register("chests/dungeon/bronze/silver_dungeon_cape_config");
+	public static final ResourceLocation SILVER_DUNGEON_GUMMIES = register("chests/dungeon/bronze/silver_dungeon_gummies");
 
 	public static final ResourceLocation GOLD_DUNGEON_REWARD = register("chests/dungeon/gold/gold_dungeon_reward");
-	public static final ResourceLocation GOLD_DUNGEON_REWARD_SUB_1 = register("chests/dungeon/gold/gold_dungeon_reward_sub_1");
-	public static final ResourceLocation GOLD_DUNGEON_REWARD_SUB_2 = register("chests/dungeon/gold/gold_dungeon_reward_sub_2");
-	public static final ResourceLocation GOLD_DUNGEON_REWARD_SUB_3 = register("chests/dungeon/gold/gold_dungeon_reward_sub_3");
-	public static final ResourceLocation GOLD_DUNGEON_REWARD_SUB_4 = register("chests/dungeon/gold/gold_dungeon_reward_sub_4");
-	public static final ResourceLocation GOLD_DUNGEON_REWARD_SUB_5 = register("chests/dungeon/gold/gold_dungeon_reward_sub_5");
+	public static final ResourceLocation GOLD_DUNGEON_TREASURE = register("chests/dungeon/gold/gold_dungeon_treasure");
 
 	public static final ResourceLocation ENTER_AETHER = register("advancements/enter_aether");
 

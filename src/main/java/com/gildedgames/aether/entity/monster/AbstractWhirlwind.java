@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -124,7 +125,8 @@ public abstract class AbstractWhirlwind extends Mob {
         /*
           This code is used to move other entities around the whirlwind.
          */
-        List<Entity> entityList = this.level.getEntities(this, this.getBoundingBox().expandTowards(2.5, 2.5, 2.5));
+        List<Entity> entityList = this.level.getEntities(this, this.getBoundingBox().expandTowards(2.5, 2.5, 2.5))
+                .stream().filter((entity -> !entity.getType().is(AetherTags.Entities.WHIRLWIND_UNAFFECTED))).toList();
         this.isPullingEntity = !entityList.isEmpty();
         for (Entity entity : entityList) {
             double x = (float) entity.getX();
@@ -211,7 +213,7 @@ public abstract class AbstractWhirlwind extends Mob {
 
     @Override
     public int getMaxSpawnClusterSize() {
-        return 3;
+        return 1;
     }
 
     @Override
@@ -270,7 +272,7 @@ public abstract class AbstractWhirlwind extends Mob {
                 this.movementCurve = this.whirlwind.movementCurve;
             }
             if (!this.whirlwind.isEvil || this.whirlwind.getTarget() == null) {
-                BlockPos offset = new BlockPos(this.whirlwind.position().add(this.whirlwind.getDeltaMovement()));
+                BlockPos offset = BlockPos.containing(this.whirlwind.position().add(this.whirlwind.getDeltaMovement()));
                 if (this.whirlwind.level.getHeight(Heightmap.Types.WORLD_SURFACE, offset.getX(), offset.getZ()) < offset.getY() - this.whirlwind.getMaxFallDistance()) {
                     this.movementAngle += 180;
                 } else {

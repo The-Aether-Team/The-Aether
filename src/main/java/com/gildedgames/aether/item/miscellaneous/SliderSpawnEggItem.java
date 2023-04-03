@@ -61,7 +61,7 @@ public class SliderSpawnEggItem extends ForgeSpawnEggItem {
                 relativePos = blockPos.relative(direction);
             }
             Vec3 clickLoc = context.getClickLocation();
-            BlockPos roundedPos = new BlockPos(Math.round(clickLoc.x()), relativePos.getY(), Math.round(clickLoc.z()));
+            BlockPos roundedPos = new BlockPos((int) Math.round(clickLoc.x()), relativePos.getY(), (int) Math.round(clickLoc.z()));
 
             EntityType<?> entityType = this.getType(itemStack.getTag());
             if (entityType.spawn((ServerLevel)level, itemStack, context.getPlayer(), roundedPos, MobSpawnType.SPAWN_EGG, false, !Objects.equals(blockPos, relativePos) && direction == Direction.UP) != null) {

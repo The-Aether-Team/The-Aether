@@ -1,7 +1,6 @@
 package com.gildedgames.aether.entity.passive;
 
 import com.gildedgames.aether.client.AetherSoundEvents;
-import com.gildedgames.aether.AetherTags;
 import com.gildedgames.aether.capability.player.AetherPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -68,7 +67,7 @@ public class Aerwhale extends FlyingMob {
     }
 
     public static boolean checkAerwhaleSpawnRules(EntityType<? extends Aerwhale> aerwhale, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
-        return level.getFluidState(pos).is(Fluids.EMPTY) && level.getRawBrightness(pos, 0) > 8 && (reason == MobSpawnType.SPAWNER || level.getBlockState(pos.below()).is(AetherTags.Blocks.AERWHALE_SPAWNABLE_ON));
+        return random.nextInt(40) == 0 && level.getFluidState(pos).is(Fluids.EMPTY) && level.getRawBrightness(pos, 0) > 8 && checkMobSpawnRules(aerwhale, level, reason, pos, random);
     }
 
     @Override
@@ -123,11 +122,9 @@ public class Aerwhale extends FlyingMob {
                     }
 
                     if (!this.level.isClientSide) {
-                        this.flyingSpeed = this.getSpeed() * 0.6F;
                         super.travel(positionIn);
                     }
 
-                    this.animationSpeedOld = this.animationSpeed;
                     double d0 = this.getX() - this.xo;
                     double d1 = this.getZ() - this.zo;
                     float f4 = 4.0F * Mth.sqrt((float) (d0*d0 + d1*d1));
@@ -135,9 +132,7 @@ public class Aerwhale extends FlyingMob {
                     if (f4 > 1.0F) {
                         f4 = 1.0F;
                     }
-
-                    this.animationSpeed += 0.4F * (f4 - this.animationSpeed);
-                    this.animationPosition += this.animationSpeed;
+                    this.walkAnimation.update(f4, 0.4F);
                 }
             } else {
                 AttributeInstance stepHeight = this.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
@@ -149,10 +144,14 @@ public class Aerwhale extends FlyingMob {
                         stepHeight.addTransientModifier(this.getDefaultStepHeightModifier());
                     }
                 }
-                this.flyingSpeed = 0.02F;
                 super.travel(positionIn);
             }
         }
+    }
+
+    @Override
+    protected float getFlyingSpeed() {
+        return this.isVehicle() ? this.getSpeed() * 0.6F : 0.02F;
     }
 
     @Override
@@ -222,6 +221,11 @@ public class Aerwhale extends FlyingMob {
     @Override
     protected float getSoundVolume() {
         return 2.0F;
+    }
+
+    @Override
+    public int getExperienceReward() {
+        return 1 + this.level.random.nextInt(3);
     }
 
     public static class SetTravelCourseGoal extends Goal {

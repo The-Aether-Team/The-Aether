@@ -57,8 +57,8 @@ public class AetherPortalBlock extends Block {
 			if (entity.isOnPortalCooldown()) {
 				entity.setPortalCooldown();
 			} else {
-				if (!entity.getLevel().isClientSide() && !pos.equals(entityAccessor.getPortalEntrancePos())) {
-					entityAccessor.setPortalEntrancePos(pos.immutable());
+				if (!entity.getLevel().isClientSide() && !pos.equals(entityAccessor.aether$getPortalEntrancePos())) {
+					entityAccessor.aether$setPortalEntrancePos(pos.immutable());
 				}
 				LazyOptional<AetherPlayer> aetherPlayer = entity.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
 				if (!aetherPlayer.isPresent()) {

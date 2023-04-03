@@ -1,26 +1,30 @@
 ![Banner image](assets/banner.webp)
 # The Aether
 
-Gilded Games presents the original Aether mod! Up to date for modern Minecraft versions and fully compatible with multiplayer. The Aether is a dimension of floating islands high in the sky, where you can begin a new survival adventure packed with new ores, mythical creatures and perilous Dungeons! All you need to do is construct a Glowstone frame and add water to light the mystical portal, and once you step in you’ll be transported immediately to the luscious hostile paradise of the Aether! Gilded Games has ensured to maintain the Aether as close to its original state from 2011 as possible, while continuing to work on the sequel, Aether II.
+The Aether Team presents the original Aether mod! Up to date for modern Minecraft versions and fully compatible with multiplayer. The Aether is a dimension of floating islands high in the sky, where you can begin a new survival adventure packed with new ores, mythical creatures and perilous Dungeons! All you need to do is construct a Glowstone frame and add water to light the mystical portal, and once you step in you’ll be transported immediately to the luscious hostile paradise of the Aether! The Aether Team has ensured to maintain the Aether as close to its original state from 2011 as possible, while still making improvements for modern versions. The team also continues to work on the mod's sequel, Aether II.
 
-## :heart: Support Gilded Games
+## :heart: Support The Aether Team
 
-[![Patreon pledgers](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3DGildedGames%26type%3Dpatrons&style=flat-square)](https://patreon.com/GildedGames)
-[![Discord user count](https://img.shields.io/discord/118816101936267265.svg?logoColor=FFFFFF&logo=discord&color=7289DA&style=flat-square)](https://discord.gg/aethermod)
-[![Twitter followers](https://img.shields.io/twitter/follow/DevAether.svg?logo=twitter&label=twitter&style=flat-square)](https://twitter.com/DevAether)
+[![Patreon](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3DGildedGames%26type%3Dpatrons&style=flat-square&logoColor=white)](https://patreon.com/GildedGames)
+[![Discord](https://img.shields.io/discord/118816101936267265.svg?label=discord&logoColor=FFFFFF&logo=discord&color=7289DA&style=flat-square)](https://discord.gg/aethermod)
+[![Twitter](https://img.shields.io/badge/twitter-@DevAether-lightgrey?style=flat-square&logo=twitter&color=1DA1F2&logoColor=white)](https://twitter.com/DevAether)
+[![Facebook](https://img.shields.io/badge/facebook-AetherMod-blue?logo=facebook&style=flat-square&color=1877F2&logoColor=white)](https://www.facebook.com/AetherMod)
+[![YouTube](https://img.shields.io/badge/youtube-@DevAether-blue?color=FF0000&label=youtube&logo=youtube&style=flat-square)](https://www.youtube.com/@DevAether)
+[![Twitch](https://img.shields.io/twitch/status/theaetherteam?logo=twitch&style=flat-square&logoColor=white)](https://www.twitch.tv/theaetherteam)
+[![Reddit](https://img.shields.io/reddit/subreddit-subscribers/TheAether?color=FF4500&label=reddit&logo=reddit&style=flat-square&logoColor=white)](https://www.reddit.com/r/TheAether/)
 
 If you enjoy our work, [please consider making a pledge](https://patreon.com/GildedGames) today to help fund development. Every pledge goes directly into our development process and services, enabling us to continue making the Minecraft mods you know and love.
 
-You can also support the Aether project and Gilded Games by telling your friends, joining our Discord server, and sharing our progress and announcements on social media. Every bit helps!
+You can also support the Aether project and The Aether Team by telling your friends, joining our Discord server, and sharing our progress and announcements on social media. Every bit helps!
 
-If you're interested in sponsoring the Aether project or Gilded Games, please [contact Oz#1986 on the Aether Community Discord](https://discord.gg/aethermod).
+If you're interested in sponsoring the Aether project or The Aether Team, please [contact Oz#1986 on the Aether Community Discord](https://discord.gg/aethermod).
 
 ## :package: Download the latest releases
 [![Mod loader: Forge](https://img.shields.io/badge/mod%20loader-forge-CC974D?style=flat-square)](https://files.minecraftforge.net/net/minecraftforge/forge/)
 [![](http://cf.way2muchnoise.eu/aether.svg)]()
 [![](http://cf.way2muchnoise.eu/versions/aether_latest.svg)]()
-[![](https://modrinth-utils.vercel.app/api/badge/downloads?id=YhmgMVyu&logo=true&style=flat)]()
-[![](https://modrinth-utils.vercel.app/api/badge/versions?id=YhmgMVyu&logo=true&style=flat&last=true)]()
+[![](https://img.shields.io/modrinth/dt/YhmgMVyu?color=00AF5C&logo=modrinth)]()
+[![](https://img.shields.io/modrinth/game-versions/YhmgMVyu?color=00AF5C&label=latest&logo=modrinth&last=true)]()
 [![Gilded-Games](https://circleci.com/gh/Gilded-Games/The-Aether/tree/1.19.svg?style=shield)](https://app.circleci.com/pipelines/github/Gilded-Games/The-Aether?branch=1.19)
 ### Release builds
 The Aether has no stable release builds for the latest version of Minecraft just yet, but this port is in active development so keep an eye out for its eventual release.
@@ -98,7 +102,7 @@ Not sure what to help with? Take a look at our issue tracker for some ideas! [He
 
 If you're wanting to create a gameplay video/review, extension or addon, parody, or any other fan work of your own for The Aether, go for it! We love seeing the content our community creates, and we hope to make it as welcoming as possible for everyone. We ask however that you please don't advertise using our brand (our specific logo assets, team name, official social media posts).
 
-If you are thinking about using the Aether project's code or assets, please note our licensing. **All assets of The Aether are unlicensed and all rights are reserved to them by Gilded Games and their respective authors.** The source code of The Aether mod for Minecraft 1.7+ is under the LGPL v3.0 license. Any previous versions' source code is unlicensed and all rights are reserved to it by Gilded Games.
+If you are thinking about using the Aether project's code or assets, please note our licensing. **All assets of The Aether are unlicensed and all rights are reserved to them by The Aether Team and their respective authors.** The source code of The Aether mod for Minecraft 1.7+ is under the LGPL v3.0 license. Any previous versions' source code is unlicensed and all rights are reserved to it by The Aether Team.
 
 If you have a reason that you wish to use our brand or any unlicensed material, please [get in contact with Oz#1986 on the Aether Community Discord](https://discord.gg/aethermod) for details.
 
@@ -125,11 +129,17 @@ The Aether is available in these languages thanks to the following contributors:
 | Russian*             | (ru_ru) | LeyxorCheysen, andreyalex1236, LunarP1, zombi1944, Foxgreat |
 | Swedish*             | (sv_se) | magicus                                                     |
 | Thai*                | (th_th) | ?                                                           |
-| Ukrainian*           | (uk_ua) | ?                                                           |
+| Ukrainian*           | (uk_ua) | Nerkin, un_roman                                            |
 
 _\* Indicates only partial language support._
 
 If you are interested in contributing translations to The Aether, check out our [OneSky](http://aether.oneskyapp.com/collaboration) and our [Discord](https://discord.gg/aethermod)! If you have contributed translations in the past and your name is missing from the above list, please contact us.
 
 ### :hammer: Contributions
-All of our code contribution credits can be found [here](https://github.com/Gilded-Games/The-Aether/blob/1.19/CREDITS.txt). If you contributed to the project and do not see your name, please contact us.
+All of our code contribution credits can be found [here](https://github.com/Gilded-Games/The-Aether/blob/1.19/docs/CREDITS.txt). If you contributed to the project and do not see your name, please contact us.
+
+### :file_folder: Dependencies
+The Aether would not be possible without the features provided by the APIs and libraries it implements. Thanks goes to:
+| Library | Information |
+| ------- | ----------- |
+| [![Curios](assets/dependencies/curios.webp)](https://www.curseforge.com/minecraft/mc-mods/curios) | Curios API was created by [C4](https://github.com/TheIllusiveC4).<br />The source can be found at https://github.com/TheIllusiveC4/Curios.<br />The dependency is licensed under [LGPL v3](https://www.gnu.org/licenses/lgpl-3.0). |

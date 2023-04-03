@@ -12,7 +12,6 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.util.Mth;
@@ -97,9 +96,9 @@ public class HammerProjectile extends ThrowableProjectile {
     protected void onHitBlock(@Nonnull BlockHitResult result) {
         super.onHitBlock(result);
         if (!this.level.isClientSide) {
-            List<Entity> list = this.level.getEntities(this, this.getBoundingBox().inflate(3.0));
+            List<Entity> list = this.level.getEntities(this, this.getBoundingBox().inflate(5.0));
             for (Entity target : list) {
-                launchTarget(target);
+                this.launchTarget(target);
             }
         }
     }
@@ -108,7 +107,7 @@ public class HammerProjectile extends ThrowableProjectile {
         if (target != this.getOwner()) {
             if (this.getOwner() == null || target != this.getOwner().getVehicle()) {
                 if (target instanceof LivingEntity livingEntity) {
-                    livingEntity.hurt(DamageSource.thrown(this, this.getOwner()), 5);
+                    livingEntity.hurt(this.damageSources().thrown(this, this.getOwner()), 5);
                     livingEntity.push(this.getDeltaMovement().x, 0.6, this.getDeltaMovement().z);
                 }
             }

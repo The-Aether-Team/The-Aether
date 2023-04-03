@@ -1,0 +1,11 @@
+{
+  "values": [
+    "minecraft:air",
+    "minecraft:chest",
+    "aether:chest_mimic",
+    "aether:treasure_chest",
+    "#aether:locked_dungeon_blocks",
+    "#aether:boss_doorway_dungeon_blocks",
+    "#aether:treasure_doorway_dungeon_blocks"
+  ]
+}

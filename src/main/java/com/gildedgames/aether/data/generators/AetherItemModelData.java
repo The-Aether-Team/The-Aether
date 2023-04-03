@@ -53,7 +53,7 @@ public class AetherItemModelData extends AetherItemModelProvider {
         this.handheldItem(AetherItems.PIG_SLAYER.get(), "weapons/");
         this.nameableWeapon(AetherItems.CANDY_CANE_SWORD.get(), "weapons/", "green_candy_cane_sword");
 
-        this.nameableWeapon(AetherItems.HAMMER_OF_NOTCH.get(), "weapons/", "hammer_of_jeb");
+        this.nameableWeapon(AetherItems.HAMMER_OF_KINGBDOGZ.get(), "weapons/", "hammer_of_jeb");
 
         this.handheldItem(AetherItems.LIGHTNING_KNIFE.get(), "weapons/");
 
@@ -152,11 +152,11 @@ public class AetherItemModelData extends AetherItemModelProvider {
         this.item(AetherItems.AMBROSIUM_SHARD.get(), "materials/");
         this.item(AetherItems.ZANITE_GEMSTONE.get(), "materials/");
 
-        this.item(AetherItems.VICTORY_MEDAL.get(), "miscellaneous/");
+        this.rotatedItem(AetherItems.VICTORY_MEDAL.get(), "miscellaneous/");
 
-        this.keyItem(AetherItems.BRONZE_DUNGEON_KEY.get(), "miscellaneous/");
-        this.keyItem(AetherItems.SILVER_DUNGEON_KEY.get(), "miscellaneous/");
-        this.keyItem(AetherItems.GOLD_DUNGEON_KEY.get(), "miscellaneous/");
+        this.rotatedItem(AetherItems.BRONZE_DUNGEON_KEY.get(), "miscellaneous/");
+        this.rotatedItem(AetherItems.SILVER_DUNGEON_KEY.get(), "miscellaneous/");
+        this.rotatedItem(AetherItems.GOLD_DUNGEON_KEY.get(), "miscellaneous/");
 
         this.item(AetherItems.SKYROOT_BUCKET.get(), "miscellaneous/");
         this.item(AetherItems.SKYROOT_WATER_BUCKET.get(), "miscellaneous/");
@@ -183,7 +183,6 @@ public class AetherItemModelData extends AetherItemModelProvider {
         this.moaEggItem(AetherItems.BLUE_MOA_EGG.get(), "miscellaneous/");
         this.moaEggItem(AetherItems.WHITE_MOA_EGG.get(), "miscellaneous/");
         this.moaEggItem(AetherItems.BLACK_MOA_EGG.get(), "miscellaneous/");
-        this.moaEggItem(AetherItems.ORANGE_MOA_EGG.get(), "miscellaneous/");
 
         this.item(AetherItems.LIFE_SHARD.get(), "miscellaneous/");
 
@@ -192,6 +191,7 @@ public class AetherItemModelData extends AetherItemModelProvider {
         this.item(AetherItems.MUSIC_DISC_WELCOMING_SKIES.get(), "miscellaneous/");
         this.item(AetherItems.MUSIC_DISC_LEGACY.get(), "miscellaneous/");
         this.item(AetherItems.MUSIC_DISC_CHINCHILLA.get(), "miscellaneous/");
+        this.item(AetherItems.MUSIC_DISC_HIGH.get(), "miscellaneous/");
 
         this.item(AetherItems.BOOK_OF_LORE.get(), "miscellaneous/");
 
@@ -231,7 +231,6 @@ public class AetherItemModelData extends AetherItemModelProvider {
         this.itemBlock(AetherBlocks.COLD_AERCLOUD.get());
         this.itemBlock(AetherBlocks.BLUE_AERCLOUD.get());
         this.itemBlock(AetherBlocks.GOLDEN_AERCLOUD.get());
-        this.itemBlock(AetherBlocks.PINK_AERCLOUD.get());
 
         this.itemBlock(AetherBlocks.ICESTONE.get());
         this.itemBlock(AetherBlocks.AMBROSIUM_ORE.get());

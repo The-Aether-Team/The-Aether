@@ -2,6 +2,7 @@ package com.gildedgames.aether.recipe.recipes.ban;
 
 import com.gildedgames.aether.recipe.BlockStateIngredient;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -90,17 +91,18 @@ public abstract class AbstractPlacementBanRecipe<T, S extends Predicate<T>> impl
     }
 
     @Override
-    public ItemStack assemble(Container container) {
-        return ItemStack.EMPTY;
-    }
-
-    @Override
     public boolean canCraftInDimensions(int pWidth, int pHeight) {
         return false;
     }
 
+
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack assemble(Container container, RegistryAccess registryAccess) {
+        return ItemStack.EMPTY;
+    }
+
+    @Override
+    public ItemStack getResultItem(RegistryAccess registryAccess) {
         return ItemStack.EMPTY;
     }
 }

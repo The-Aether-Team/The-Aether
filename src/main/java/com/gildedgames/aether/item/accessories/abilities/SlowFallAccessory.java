@@ -22,7 +22,7 @@ public interface SlowFallAccessory {
         livingEntity.resetFallDistance();
         if (livingEntity instanceof ServerPlayer serverPlayer) { // Prevents the player from being kicked for flying.
             ServerGamePacketListenerImplAccessor serverGamePacketListenerImplAccessor = (ServerGamePacketListenerImplAccessor) serverPlayer.connection;
-            serverGamePacketListenerImplAccessor.setAboveGroundTickCount(0);
+            serverGamePacketListenerImplAccessor.aether$setAboveGroundTickCount(0);
         }
     }
 }

@@ -12,7 +12,6 @@ import top.theillusivec4.curios.api.SlotResult;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class EquipmentUtil {
     /**
@@ -35,17 +34,17 @@ public class EquipmentUtil {
         return baseValue * (2.0 * ((double) stack.getDamageValue()) / ((double) stack.getMaxDamage()) + 0.5);
     }
 
-    public static ItemStack getGloves(LivingEntity entity) {
+    public static SlotResult getGloves(LivingEntity entity) {
         Optional<SlotResult> slotResultOptional = CuriosApi.getCuriosHelper().findFirstCurio(entity, (stack) -> stack.getItem() instanceof GlovesItem);
-        return slotResultOptional.map(SlotResult::stack).orElse(ItemStack.EMPTY);
+        return slotResultOptional.orElse(null);
     }
 
-    public static List<ItemStack> getZaniteRings(LivingEntity entity) {
-        return getCurios(entity, AetherItems.ZANITE_RING.get()).stream().map((SlotResult::stack)).collect(Collectors.toList());
+    public static List<SlotResult> getZaniteRings(LivingEntity entity) {
+        return getCurios(entity, AetherItems.ZANITE_RING.get());
     }
 
-    public static ItemStack getZanitePendant(LivingEntity entity) {
-        return getCurioStack(entity, AetherItems.ZANITE_PENDANT.get());
+    public static SlotResult getZanitePendant(LivingEntity entity) {
+        return getCurio(entity, AetherItems.ZANITE_PENDANT.get());
     }
 
     public static boolean hasSwetCape(LivingEntity entity) {
@@ -58,15 +57,6 @@ public class EquipmentUtil {
 
     public static boolean hasCurio(LivingEntity entity, Item item) {
         return CuriosApi.getCuriosHelper().findFirstCurio(entity, item).isPresent();
-    }
-
-    public static ItemStack getCurioStack(LivingEntity entity, Item item) {
-        SlotResult slotResult = getCurio(entity, item);
-        if (slotResult != null) {
-            return slotResult.stack();
-        } else {
-            return ItemStack.EMPTY;
-        }
     }
 
     public static SlotResult getCurio(LivingEntity entity, Item item) {
@@ -97,11 +87,23 @@ public class EquipmentUtil {
         return hasArmorSet(entity, AetherItems.PHOENIX_HELMET.get(), AetherItems.PHOENIX_CHESTPLATE.get(), AetherItems.PHOENIX_LEGGINGS.get(), AetherItems.PHOENIX_BOOTS.get(), AetherItems.PHOENIX_GLOVES.get());
     }
 
+    public static boolean hasAnyPhoenixArmor(LivingEntity entity) {
+        return hasAnyArmor(entity, AetherItems.PHOENIX_HELMET.get(), AetherItems.PHOENIX_CHESTPLATE.get(), AetherItems.PHOENIX_LEGGINGS.get(), AetherItems.PHOENIX_BOOTS.get(), AetherItems.PHOENIX_GLOVES.get());
+    }
+
     private static boolean hasArmorSet(LivingEntity entity, Item helmet, Item chestplate, Item leggings, Item boots, Item gloves) {
         return entity.getItemBySlot(EquipmentSlot.HEAD).is(helmet)
                 && entity.getItemBySlot(EquipmentSlot.CHEST).is(chestplate)
                 && entity.getItemBySlot(EquipmentSlot.LEGS).is(leggings)
                 && entity.getItemBySlot(EquipmentSlot.FEET).is(boots)
                 && CuriosApi.getCuriosHelper().findFirstCurio(entity, gloves).isPresent();
+    }
+
+    private static boolean hasAnyArmor(LivingEntity entity, Item helmet, Item chestplate, Item leggings, Item boots, Item gloves) {
+        return entity.getItemBySlot(EquipmentSlot.HEAD).is(helmet)
+                || entity.getItemBySlot(EquipmentSlot.CHEST).is(chestplate)
+                || entity.getItemBySlot(EquipmentSlot.LEGS).is(leggings)
+                || entity.getItemBySlot(EquipmentSlot.FEET).is(boots)
+                || CuriosApi.getCuriosHelper().findFirstCurio(entity, gloves).isPresent();
     }
 }

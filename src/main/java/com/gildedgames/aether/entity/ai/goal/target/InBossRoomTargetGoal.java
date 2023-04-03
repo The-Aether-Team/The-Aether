@@ -1,6 +1,6 @@
 package com.gildedgames.aether.entity.ai.goal.target;
 
-import com.gildedgames.aether.api.DungeonTracker;
+import com.gildedgames.aether.api.BossRoomTracker;
 import com.gildedgames.aether.entity.BossMob;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
@@ -38,7 +38,7 @@ public class InBossRoomTargetGoal<T extends LivingEntity, J extends Mob & BossMo
     }
 
     protected void findTarget() {
-        DungeonTracker<J> dungeon = ((J) this.mob).getDungeon();
+        BossRoomTracker<J> dungeon = ((J) this.mob).getDungeon();
         if (dungeon != null && (this.targetType == Player.class || this.targetType == ServerPlayer.class) && !dungeon.dungeonPlayers().isEmpty()) {
             UUID uuid = dungeon.dungeonPlayers().get(this.mob.getRandom().nextInt(dungeon.dungeonPlayers().size()));
             Player player = this.mob.level.getPlayerByUUID(uuid);

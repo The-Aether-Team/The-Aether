@@ -14,7 +14,6 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.List;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -38,7 +37,8 @@ public class Parachute extends Entity {
     @Override
     public void tick() {
         super.tick();
-        if (this.getControllingPassenger() instanceof LivingEntity passenger) {
+        LivingEntity passenger = this.getControllingPassenger();
+        if (passenger != null) {
             this.resetFallDistance();
             this.moveParachute(passenger);
             this.spawnExplosionParticle();
@@ -78,8 +78,8 @@ public class Parachute extends Entity {
 
             if (passenger instanceof ServerPlayer serverPlayer) {
                 ServerGamePacketListenerImplAccessor serverGamePacketListenerImplAccessor = (ServerGamePacketListenerImplAccessor) serverPlayer.connection;
-                serverGamePacketListenerImplAccessor.setAboveGroundTickCount(0);
-                serverGamePacketListenerImplAccessor.setAboveGroundVehicleTickCount(0);
+                serverGamePacketListenerImplAccessor.aether$setAboveGroundTickCount(0);
+                serverGamePacketListenerImplAccessor.aether$setAboveGroundVehicleTickCount(0);
             }
         }
     }
@@ -126,9 +126,12 @@ public class Parachute extends Entity {
 
     @Override
     @Nullable
-    public Entity getControllingPassenger() {
-        List<Entity> list = this.getPassengers();
-        return list.isEmpty() ? null : list.get(0);
+    public LivingEntity getControllingPassenger() {
+        Entity entity = this.getFirstPassenger();
+        if (entity instanceof LivingEntity rider) {
+            return rider;
+        }
+        return null;
     }
 
 	@Override

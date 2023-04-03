@@ -1,0 +1,54 @@
+00-Steven
+- Implementation of mcfunction support for in-world block conversion recipes.
+
+3vorp
+- Contribution of the algae overlay texture for the Skyroot Boat programmer art texture.
+
+AerodDev:
+- Implementation of the CTM textures.
+- Fixes to the Aether Dirt Path texture.
+- Fixes to the silver Life Shard hearts texture.
+
+baguchan:
+- Improvements to entity AI to avoid entities falling out of the Aether.
+- Contributions to the Swet death animation.
+- Contributions to Skyroot Bed renderer.
+- Fixes to the Sheepuff renderer.
+- Fixes to the Dart layer renderers.
+
+CartoonishVillain:
+- Fixes to the Sentry.
+- Fixes to the Aechor Plant.
+
+CDAGaming:
+- Fixes to the Aether main menu.
+
+FlashFyreMods
+- Implementation of more beta-accurate terrain generation for the Aether dimension.
+
+GizmoTheMoonPig
+- Fixes to the Life Shard silver heart overlay rendering.
+
+InsomniaKitten
+- Providing the accessory inventory texture.
+
+Jonathing
+- Refactors to use Supplier instead of RegistryObject for parameters taking a MoaType.
+- Refactors to use wildcards for Suppliers for public API.
+- Refactors to use constructors instead of Google's helper methods for data structures.
+- Fixes to jarJar-built file not reobfuscating.
+
+Kelvin285
+- Implementation of the world preview feature for the Aether's main menu.
+
+saintselect
+- Integration for JEI.
+- Converting entity audio files from stereo to mono.
+- Fixes to the Gravitite Sword ability performing when it shouldn't.
+
+StonedCoal:
+- Implementation of the Aether's main menu.
+- Fixes to the Aerbunny.
+
+Zepalesque
+- Fixes to the Slider.

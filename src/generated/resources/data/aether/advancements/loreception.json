@@ -17,7 +17,7 @@
     "description": {
       "translate": "advancement.aether.loreception.desc"
     },
-    "frame": "task",
+    "frame": "goal",
     "hidden": true,
     "icon": {
       "item": "aether:book_of_lore"

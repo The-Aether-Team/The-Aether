@@ -28,7 +28,6 @@ public class AetherBlockStateData extends AetherBlockStateProvider {
         this.translucentBlock(AetherBlocks.COLD_AERCLOUD.get(), "natural/");
         this.translucentBlock(AetherBlocks.BLUE_AERCLOUD.get(), "natural/");
         this.translucentBlock(AetherBlocks.GOLDEN_AERCLOUD.get(), "natural/");
-        this.translucentBlock(AetherBlocks.PINK_AERCLOUD.get(), "natural/");
 
         this.block(AetherBlocks.ICESTONE.get(), "natural/");
         this.block(AetherBlocks.AMBROSIUM_ORE.get(), "natural/");

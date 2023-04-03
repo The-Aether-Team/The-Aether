@@ -30,7 +30,6 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addBlock(AetherBlocks.COLD_AERCLOUD, "Cold Aercloud");
         addBlock(AetherBlocks.BLUE_AERCLOUD, "Blue Aercloud");
         addBlock(AetherBlocks.GOLDEN_AERCLOUD, "Golden Aercloud");
-        addBlock(AetherBlocks.PINK_AERCLOUD, "Pink Aercloud");
 
         addBlock(AetherBlocks.ICESTONE, "Icestone");
         addBlock(AetherBlocks.AMBROSIUM_ORE, "Ambrosium Ore");
@@ -206,7 +205,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addItem(AetherItems.PIG_SLAYER, "Pig Slayer");
         addItem(AetherItems.CANDY_CANE_SWORD, "Candy Cane Sword");
 
-        addItem(AetherItems.HAMMER_OF_NOTCH, "Hammer of Notch");
+        addItem(AetherItems.HAMMER_OF_KINGBDOGZ, "Hammer of Kingbdogz");
 
         addItem(AetherItems.LIGHTNING_KNIFE, "Lightning Knife");
 
@@ -321,6 +320,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addDiscDesc(AetherItems.MUSIC_DISC_LEGACY, "Jon Lachney - Legacy");
         addItem(AetherItems.MUSIC_DISC_CHINCHILLA, "Sepia Music Disc");
         addDiscDesc(AetherItems.MUSIC_DISC_CHINCHILLA, "RENREN - chinchilla");
+        addItem(AetherItems.MUSIC_DISC_HIGH, "Super Music Disc");
+        addDiscDesc(AetherItems.MUSIC_DISC_HIGH, "RENREN - high");
 
         addItem(AetherItems.SKYROOT_BUCKET, "Skyroot Bucket");
         addItem(AetherItems.SKYROOT_WATER_BUCKET, "Skyroot Water Bucket");
@@ -347,7 +348,6 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addItem(AetherItems.BLUE_MOA_EGG, "Blue Moa Egg");
         addItem(AetherItems.WHITE_MOA_EGG, "White Moa Egg");
         addItem(AetherItems.BLACK_MOA_EGG, "Black Moa Egg");
-        addItem(AetherItems.ORANGE_MOA_EGG, "Orange Moa Egg");
 
         addItem(AetherItems.LIFE_SHARD, "Life Shard");
 
@@ -445,46 +445,83 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addCreativeTab(AetherCreativeTabs.AETHER_SPAWN_EGGS, "Aether Spawn Eggs");
 
 
+        addAdvancement("the_aether", "The Aether");
         addAdvancement("enter_aether", "Hostile Paradise");
         addAdvancement("read_lore", "The More You Know!");
         addAdvancement("loreception", "Lore-Ception!");
         addAdvancement("blue_aercloud", "To Infinity and Beyond!");
-        addAdvancement("incubate_moa", "Now You're Family");
+        addAdvancement("obtain_egg", "Don't Count your Moas...");
+        addAdvancement("obtain_petal", "Baby Food");
+        addAdvancement("incubate_moa", "... Until they hatch!");
+        addAdvancement("black_moa", "Let's Fly!");
+        addAdvancement("zanite", "Exotic Hardware");
         addAdvancement("craft_altar", "Do You Believe in Magic?");
-        addAdvancement("gravitite_tools", "Pink is the New Blue");
+        addAdvancement("icestone", "Cold as Ice");
+        addAdvancement("ice_accessory", "Cool Jewelery!");
+        addAdvancement("enchanted_gravitite", "Pink is the New Blue");
+        addAdvancement("gravitite_armor", "Defying Gravity");
         addAdvancement("mount_phyg", "When Phygs Fly");
         addAdvancement("bronze_dungeon", "Like a Bossaru!");
+        addAdvancement("hammer_loot", "The Power of the Gods");
+        addAdvancement("zephyr_hammer", "Ultimate Ban Hammer");
+        addAdvancement("lance_loot", "Challenger to the Throne");
         addAdvancement("silver_dungeon", "Dethroned");
+        addAdvancement("valkyrie_loot", "Earning your wings");
+        addAdvancement("valkyrie_hoe", "Plunderer's Remorse");
+        addAdvancement("regen_stone", "Battle Hardened");
         addAdvancement("gold_dungeon", "Extinguished");
+        addAdvancement("phoenix_armor", "Fireproof");
+        addAdvancement("obsidian_armor", "Ice Bucket Armor");
+        addAdvancement("aether_sleep", "A well earned rest");
 
+        addAdvancementDesc("the_aether", "It's not dead!");
         addAdvancementDesc("enter_aether", "Enter the Aether");
         addAdvancementDesc("read_lore", "Read a Book of Lore");
         addAdvancementDesc("loreception", "Put a Book of Lore inside a Book of Lore");
         addAdvancementDesc("blue_aercloud", "Bounce on a Blue Aercloud");
+        addAdvancementDesc("obtain_egg", "Obtain a Moa Egg");
+        addAdvancementDesc("obtain_petal", "Harvest an Aechor Petal from an Aechor Plant");
         addAdvancementDesc("incubate_moa", "Incubate a Moa");
+        addAdvancementDesc("black_moa", "Ride a Black Moa");
+        addAdvancementDesc("zanite", "Have a zanite gemstone in your inventory");
         addAdvancementDesc("craft_altar", "Craft an Altar");
-        addAdvancementDesc("gravitite_tools", "Craft a Gravitite tool");
+        addAdvancementDesc("icestone", "Obtain Icestone");
+        addAdvancementDesc("ice_accessory", "Use a Freezer and Icestone to freeze an accessory");
+        addAdvancementDesc("enchanted_gravitite", "Use an Altar to obtain enchanted gravitite");
+        addAdvancementDesc("gravitite_armor", "Have a full set of gravitite armor in your inventory");
         addAdvancementDesc("mount_phyg", "Fly on a Phyg!");
         addAdvancementDesc("bronze_dungeon", "Defeat the bronze boss");
+        addAdvancementDesc("hammer_loot", "Obtain the Hammer of Kingbdogz from the bronze dungeon");
+        addAdvancementDesc("zephyr_hammer", "Kill a zephyr with the Hammer of Kingbdogz. Sweet Revenge!");
+        addAdvancementDesc("lance_loot", "Obtain the Valkyrie Lance from the bronze dungeon. Time to challenge the silver dungeon!");
         addAdvancementDesc("silver_dungeon", "Defeat the silver boss");
+        addAdvancementDesc("regen_stone", "Obtain a Regeneration Stone from the valkyrie dungeon. The final dungeon awaits...");
+        addAdvancementDesc("valkyrie_loot", "Obtain a piece of Valkyrie Equipment from the silver dungeon");
+        addAdvancementDesc("valkyrie_hoe", "I defeated the silver dungeon and all I got was this stupid hoe");
         addAdvancementDesc("gold_dungeon", "Defeat the gold boss");
+        addAdvancementDesc("phoenix_armor", "Obtain a piece of phoenix armor from the gold dungeon");
+        addAdvancementDesc("obsidian_armor", "Have a full set of obsidian armor in your inventory");
+        addAdvancementDesc("aether_sleep", "Finally sleep in the Aether");
 
 
         addSubtitle("block", "aether_portal.ambient", "Aether Portal whooshes");
         addSubtitle("block", "aether_portal.trigger", "Aether Portal noise intensifies");
         addSubtitle("block", "chest_mimic.open", "Mimic awakens");
+        addSubtitle("block", "altar.crackle", "Altar crackles");
+        addSubtitle("block", "freezer.crackle", "Freezer crackles");
+        addSubtitle("block", "incubator.crackle", "Incubator crackles");
         addSubtitle("block", "dungeon_trap.trigger", "Dungeon Trap activated");
-        addSubtitle("block", "aether.water.evaporate", "Water evaporated");
+        addSubtitle("block", "water.evaporate", "Water evaporated");
 
         addSubtitle("item", "dart_shooter.shoot", "Dart Shooter fired");
         addSubtitle("item", "lightning_knife.shoot", "Lightning Knife flies");
-        addSubtitle("item", "hammer_of_notch.shoot", "Hammer fired");
+        addSubtitle("item", "hammer_of_kingbdogz.shoot", "Hammer fired");
 
-        addSubtitle("item", "armor.equip_zanite", "Zanite armor clanks");
-        addSubtitle("item", "armor.equip_gravitite", "Gravitite armor clangs");
-        addSubtitle("item", "armor.equip_valkyrie", "Valkyrie armor clinks");
-        addSubtitle("item", "armor.equip_neptune", "Neptune armor jingles");
-        addSubtitle("item", "armor.equip_phoenix", "Phoenix armor clinks");
+        addSubtitle("item", "armor.equip_zanite", "Zanite armor clangs");
+        addSubtitle("item", "armor.equip_gravitite", "Gravitite armor clinks");
+        addSubtitle("item", "armor.equip_valkyrie", "Valkyrie armor clanks");
+        addSubtitle("item", "armor.equip_neptune", "Neptune armor clinks");
+        addSubtitle("item", "armor.equip_phoenix", "Phoenix armor clanks");
         addSubtitle("item", "armor.equip_obsidian", "Obsidian armor clanks");
         addSubtitle("item", "armor.equip_sentry", "Sentry armor clanks");
 
@@ -521,6 +558,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addSubtitle("entity", "moa.death", "Moa dies");
         addSubtitle("entity", "moa.hurt", "Moa hurts");
         addSubtitle("entity", "moa.saddle", "Saddle equips");
+        addSubtitle("entity", "moa.step", "Footsteps");
         addSubtitle("entity", "moa.flap", "Moa flaps");
         addSubtitle("entity", "moa.egg", "Moa plops");
 
@@ -590,6 +628,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addDeath("inebriation", "%1$s was inebriated");
         addDeath("inebriation.player", "%1$s was inebriated by %2$s");
         addDeath("crush", "%1$s was crushed by %2$s");
+        addDeath("cloud_crystal", "%1$s was chilled by %2$s's Cloud Crystal");
         addDeath("fire_crystal", "%1$s was incinerated by %2$s's Fire Crystal");
         addDeath("ice_crystal", "%1$s was chilled by %2$s's Ice Crystal");
         addDeath("thunder_crystal", "%1$s was zapped by %2$s's Thunder Crystal");
@@ -623,6 +662,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addGuiText("jei.freezing", "Freezing");
         addGuiText("jei.incubating", "Incubating");
         addGuiText("jei.fuel", "Aether Fuel");
+        addGuiText("jei.swet_ball_convert", "Swet Ball Conversion");
+        addGuiText("jei.ambrosium_convert", "Ambrosium Conversion");
 
         addGuiText("boss.message.far", "You must be in the boss room to interact.");
 
@@ -750,7 +791,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLoreBookText("item", "Item:");
 
 
-        addGeneric("hammer_of_notch_cooldown", "Cooldown");
+        addGeneric("hammer_of_kingbdogz_cooldown", "Cooldown");
 
         addGeneric("life_shard_limit", "You can only use a total of %s Life Shards.");
         addGeneric("bronze_treasure_chest_locked", "This Treasure Chest must be unlocked with a Bronze Key.");
@@ -826,7 +867,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.BLUE_CAPE, "A Blue Cape that has a silky feeling to it. It's crafted using Blue Wool.");
         addLore(AetherItems.BLUE_GUMMY_SWET, "A sweet smelling gummy, it can be found in random chests in Bronze and Silver dungeons. It restores the player's hunger to full. Very useful for boss fights.");
         addLore(AetherItems.BLUE_MOA_EGG, "An Egg laid by a Blue Moa. Hatching this provides a Blue Moa with 3 mid-air jumps. The most common Moa.");
-        addLore(AetherItems.BOOK_OF_LORE, "A large book containing many lore entries written by the wise Lorist. It describes every object in detail.");
+        addLore(AetherItems.BOOK_OF_LORE, "A large book containing many lore entries. It describes every object in detail.");
         addLore(AetherItems.BRONZE_DUNGEON_KEY, "A dull key that is dropped from the Slider after being defeated. You can use it to claim the treasure you earned!");
         addLore(AetherItems.CANDY_CANE, "Found in presents under Holiday trees! They can be used to repair Candy Cane swords, and are a very tasty treat.");
         addLore(AetherItems.CANDY_CANE_SWORD, "A sword made from decorative candy. Randomly drops Candy Canes when used. These are dropped from presents that are under Holiday Trees.");
@@ -840,29 +881,29 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherBlocks.COLD_AERCLOUD, "A cold cloud found in the skies of the Aether. It can be used to make Parachutes, and break drops that would otherwise be very dangerous.");
         addLore(AetherItems.COLD_PARACHUTE, "A quickly made parachute. It's fluffy to the touch and is made from Cold Aerclouds. It has one use.");
         addLore(AetherBlocks.CRYSTAL_FRUIT_LEAVES, "Crystal Leaves that are home to White Apples.");
-        addLore(AetherBlocks.CRYSTAL_LEAVES, "Leaves that come from Crystal Trees, they generate on floating islands. Sometimes they have fruit on them, which can cure poison.");
+        addLore(AetherBlocks.CRYSTAL_LEAVES, "Leaves that come from Crystal Trees, they generate on floating islands. Sometimes they have fruit on them, which can cure Inebriation.");
         addLore(AetherBlocks.DECORATED_HOLIDAY_LEAVES, "Holiday Leaves that have been decorated with lovely little baubles for extra holiday cheer!");
         addLore(AetherItems.DIAMOND_GLOVES, "Part of the Diamond Armor set, it is needed to complete the Diamond Armor set.");
-        addLore(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK, "Aether Grass enchanted which allows for increasing harvest rates of Blue Berries.");
+        addLore(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK, "Aether Grass that has been enchanted to allow for increasing harvest rates of Blue Berries.");
         addLore(AetherItems.ENCHANTED_BERRY, "An excellent food source, it tastes quite good and restores a massive amount of hunger.");
         addLore(AetherItems.ENCHANTED_DART, "The ammo for Enchanted Dart Shooters. This is the strongest of the darts, made by enchanting Golden Darts.");
         addLore(AetherItems.ENCHANTED_DART_SHOOTER, "A Dart Shooter which shoots Enchanted Darts, the strongest one!");
         addLore(AetherBlocks.ENCHANTED_GRAVITITE, "After putting Gravitite Ore into an Altar and enchanting it, you get Enchanted Gravitite. This can be made into Gravitite Tools and Armor. When powered with a Redstone signal, Enchanted Gravitite Blocks will float into the air, similarly to Gravitite Ore.");
         addLore(AetherItems.FLAMING_SWORD, "An ancient sword which flames its foes to a burning crisp. It almost hurts to touch! Using this on animals can make them drop cooked meat!");
-        addLore(AetherBlocks.FREEZER, "You can freeze various items using this, such as Aerclouds, or Water Buckets. It's source of power is Icestone.");
+        addLore(AetherBlocks.FREEZER, "You can freeze various items using this, such as Aerclouds, or Water Buckets. Its source of power is Icestone.");
         addLore(AetherItems.GINGERBREAD_MAN, "Found in presents under Holiday trees, these are the most common of Christmas items. They are very abundant when dropped from presents.");
         addLore(AetherItems.GOLD_DUNGEON_KEY, "A key that has a shiny finish. It is dropped by the Sun Spirit after you defeat him. You can use it to claim the legendary treasure in the back room!");
         addLore(AetherBlocks.GOLDEN_AERCLOUD, "A golden cloud found in small quantities, higher in the air than normal. The properties are similar to Cold Aerclouds, but the Parachutes they produce have much more durability.");
-        addLore(AetherItems.GOLDEN_AMBER, "These round golden orbs can be obtained by mining Golden Oak Logs with a Gravitite Axe. Their main purpose is to craft Golden Darts, and Dart Shooters.");
+        addLore(AetherItems.GOLDEN_AMBER, "These round golden orbs can be obtained by mining Golden Oak Logs with a Zanite or Gravitite Axe. Their main purpose is to craft Golden Darts, and Dart Shooters.");
         addLore(AetherItems.GOLDEN_GUMMY_SWET, "A sour tasting gummy, it can be found in random chests in Bronze and Silver dungeons. It restores the player's hunger to full. Very useful for boss fights.");
         addLore(AetherItems.GOLDEN_DART, "The ammo for Golden Dart Shooters. Crafted with Skyroot Sticks and Golden Amber, enchanting these converts them to Enchanted Darts.");
-        addLore(AetherItems.GOLDEN_DART_SHOOTER, "A Dart Shooter which shoots Golden Darts, enchanting it on an Altar improves it's attack power!");
+        addLore(AetherItems.GOLDEN_DART_SHOOTER, "A Dart Shooter which shoots Golden Darts, enchanting it on an Altar improves its attack power!");
         addLore(AetherItems.GOLDEN_FEATHER, "A fluffy feather found in Silver Dungeons. When worn, the wearer becomes lighter than air and can descend slowly.");
         addLore(AetherItems.GOLDEN_GLOVES, "Part of the Golden Armor set, it is needed to complete the Gold Armor set.");
         addLore(AetherBlocks.GOLDEN_OAK_LEAVES, "These golden Leaves generate with Golden Oak trees. They spawn golden particles in a radius of 5 blocks. They yield Golden Oak Saplings when decayed.");
-        addLore(AetherBlocks.GOLDEN_OAK_LOG, "Skyroot Log which contains Golden Amber inside. When broken with an Axe they drop Skyroot Logs, and if the Axe is Gravitite, they will drop Golden Amber.");
+        addLore(AetherBlocks.GOLDEN_OAK_LOG, "A Skyroot Log which contains Golden Amber inside. When broken with an Axe they drop Skyroot Logs, and if the Axe is Zanite or Gravitite, they will drop Golden Amber.");
         addLore(AetherBlocks.GOLDEN_OAK_SAPLING, "These large saplings when planted will grow into huge Golden Oak trees! You can use Bone Meal to speed up the process.");
-        addLore(AetherBlocks.GOLDEN_OAK_WOOD, "Skyroot Log which contains Golden Amber Inside. When broken with an Axe they drop Skyroot Logs, and if the Axe is Gravitite, they will drop Golden Amber. Crafted to have bark on all sides.");
+        addLore(AetherBlocks.GOLDEN_OAK_WOOD, "A Skyroot Log which contains Golden Amber Inside. When broken with an Axe they drop Skyroot Logs, and if the Axe is Zanite or Gravitite, they will drop Golden Amber. Crafted to have bark on all sides.");
         addLore(AetherItems.GOLDEN_PARACHUTE, "The best parachute in the Aether. It has 20 uses and is made with Golden Aerclouds.");
         addLore(AetherItems.GOLDEN_PENDANT, "An aesthetic accessory made of gold.");
         addLore(AetherItems.GOLDEN_RING, "An aesthetic accessory made of gold.");
@@ -876,7 +917,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.GRAVITITE_PICKAXE, "Part of Aether's best tool tier, when mining with this powerful tool, you can right-click on any stone block and it will levitate into the air! You can mine any ore with this Pickaxe.");
         addLore(AetherItems.GRAVITITE_SHOVEL, "Part of Aether's best tool tier, this shovel has the special ability to make dirt blocks, or sand levitate! When combined with enchantments such as Efficiency, it will instantly break Aether Dirt!");
         addLore(AetherItems.GRAVITITE_SWORD, "Part of Aether's best tool tier, when attacking with this powerful weapon, anything you hit will be flung into the air, causing lots of damage! Use this to your advantage, as it works even while your sword is cooling down!");
-        addLore(AetherItems.GRAVITITE_HOE, "Part of Aether's best tool tier, this hoe not only can make weirdly specific blocks float, but it can also till dirt which totally justifies it's existence.");
+        addLore(AetherItems.GRAVITITE_HOE, "Part of Aether's best tool tier, this hoe not only can make weirdly specific blocks float, but it can also till dirt which totally justifies its existence.");
         addLore(AetherItems.HEALING_STONE, "Obtained from enchanting Holystone, it can be used as a reliable healing source, providing Regeneration. It has a surprisingly juicy flavor.");
         addLore(AetherBlocks.HELLFIRE_SLAB, "Crafted from Hellfire Stone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building's roofing!");
         addLore(AetherBlocks.HELLFIRE_STONE, "A warm, red stone that makes up 90%% of Gold Dungeon interior. It cannot be destroyed until the Sun Spirit is defeated.");
@@ -899,22 +940,22 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherBlocks.HOLYSTONE_STAIRS, "Crafted from Holystone. Stairs are useful for adding verticality to builds and are often used for decoration too!");
         addLore(AetherItems.HOLYSTONE_SWORD, "One of Aether's stone tools, it can drop Ambrosium Shards at random while attacking.");
         addLore(AetherBlocks.HOLYSTONE_WALL, "Crafted from Holystone. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!");
-        addLore(AetherItems.ICE_PENDANT, "A pendant which allows you to freeze water, and lava when walked on.");
-        addLore(AetherItems.ICE_RING, "A ring which allows you to freeze water, and lava when walked on.");
+        addLore(AetherItems.ICE_PENDANT, "A pendant which allows you to freeze water and lava when walked on.");
+        addLore(AetherItems.ICE_RING, "A ring which allows you to freeze water and lava when walked on.");
         addLore(AetherBlocks.ICESTONE, "Icestone is a common ore that can be used as fuel for a Freezer. It can be used to freeze nearby liquids such as Lava and Water.");
         addLore(AetherBlocks.ICESTONE_SLAB, "Crafted from Icestone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building's roofing!");
         addLore(AetherBlocks.ICESTONE_STAIRS, "Crafted from Icestone. Stairs are useful for adding verticality to builds and are often used for decoration too!");
         addLore(AetherBlocks.ICESTONE_WALL, "Crafted from Icestone. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!");
-        addLore(AetherBlocks.INCUBATOR, "Used to incubate Moa's. You use Ambrosium Torches for the fuel. The process can take quite some time, but it is worth the wait once your Moa of choice hatches!");
+        addLore(AetherBlocks.INCUBATOR, "Used to incubate Moas. You use Ambrosium Torches for the fuel. The process can take quite some time, but it is worth the wait once your Moa of choice hatches!");
         addLore(AetherItems.INVISIBILITY_CLOAK, "A cloak that makes the wearer completely invisible! Since mobs cannot see you, they cannot attack you. Sneak up on your enemies with it!");
-        addLore(AetherItems.IRON_BUBBLE, "A common dungeon loot. It allows for the wearer to breathe underwater for a longer time than normal.");
+        addLore(AetherItems.IRON_BUBBLE, "A common dungeon loot item. It allows for the wearer to breathe underwater for a longer time than normal.");
         addLore(AetherItems.IRON_GLOVES, "Part of the Iron Armor set, it is needed to complete the Iron Armor set.");
         addLore(AetherItems.IRON_PENDANT, "An aesthetic accessory made of iron.");
         addLore(AetherItems.IRON_RING, "An aesthetic accessory made of iron.");
         addLore(AetherItems.LEATHER_GLOVES, "Dyeable gloves to match your leather tunic! This is needed to complete the Leather armor set.");
         addLore(AetherItems.LIFE_SHARD, "A very rare item found in Gold Dungeons. Using this will give you an extra permanent heart! The feeling of using it is very strange, and hard to describe.");
         addLore(AetherBlocks.LIGHT_ANGELIC_STONE, "The Light version of Angelic Stone. It is less common than Angelic Stone, but it looks really nice as a decorative block.");
-        addLore(AetherBlocks.LIGHT_HELLFIRE_STONE, "The Light version of Hellfire Stone. It can be found in Gold Dungeons along with Hellfire stone, but like it's counterpart, it cannot be collected until the boss is defeated.");
+        addLore(AetherBlocks.LIGHT_HELLFIRE_STONE, "The Light version of Hellfire Stone. It can be found in Gold Dungeons along with Hellfire stone, but like its counterpart, it cannot be collected until the boss is defeated.");
         addLore(AetherItems.LIGHTNING_KNIFE, "Small knives that when thrown, summon lightning bolts where they land.");
         addLore(AetherItems.LIGHTNING_SWORD, "An ancient sword which summons lightning to its foes.");
         addLore(AetherBlocks.MOSSY_HOLYSTONE, "A more aged Holystone, it is found near dungeons, and has pale colored vines growing on it, very decorative.");
@@ -922,29 +963,27 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherBlocks.MOSSY_HOLYSTONE_STAIRS, "Crafted from Mossy Holystone. Stairs are useful for adding verticality to builds and are often used for decoration too!");
         addLore(AetherBlocks.MOSSY_HOLYSTONE_WALL, "Crafted from Mossy Holystone. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!");
         addLore(AetherItems.NATURE_STAFF, "A staff that can allow for commanding tamed Moas. It can allow them to sit on the ground.");
-        addLore(AetherItems.NEPTUNE_BOOTS, "Found in Silver Dungeons, this armor allows for water walking. The full set is a much better replacement for the Depth Strider enchantment.");
-        addLore(AetherItems.NEPTUNE_CHESTPLATE, "Found in Silver Dungeons, this armor allows for water walking. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
+        addLore(AetherItems.NEPTUNE_BOOTS, "Found in Silver Dungeons, this armor allows for faster swimming in water. The full set is a much better replacement for the Depth Strider enchantment.");
+        addLore(AetherItems.NEPTUNE_CHESTPLATE, "Found in Silver Dungeons, this armor allows for faster swimming in water. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
         addLore(AetherItems.NEPTUNE_GLOVES, "Found in Silver Dungeons, these gloves are requires to complete the Neptune Armor set, which allows for underwater walking.");
-        addLore(AetherItems.NEPTUNE_HELMET, "Found in Silver Dungeons, this armor allows for water walking. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
-        addLore(AetherItems.NEPTUNE_LEGGINGS, "Found in Silver Dungeons, this armor allows for water walking. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
-        addLore(AetherItems.HAMMER_OF_NOTCH, "A mighty hammer which shoots heavy projectiles at mobs. It's said that Notch actually held this hammer.");
+        addLore(AetherItems.NEPTUNE_HELMET, "Found in Silver Dungeons, this armor allows faster swimming in water. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
+        addLore(AetherItems.NEPTUNE_LEGGINGS, "Found in Silver Dungeons, this armor allows faster swimming in water. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
+        addLore(AetherItems.HAMMER_OF_KINGBDOGZ, "A mighty hammer which shoots heavy projectiles at mobs. It's said that Kingbdogz actually held this hammer.");
         addLore(AetherItems.OBSIDIAN_BOOTS, "A super powerful armor, more powerful than Diamond, this armor is only obtainable by standing in water while wearing Phoenix Armor, converting it to Obsidian.");
         addLore(AetherItems.OBSIDIAN_CHESTPLATE, "A super powerful armor, more powerful than Diamond, this armor is only obtainable by standing in water while wearing Phoenix Armor, converting it to Obsidian.");
         addLore(AetherItems.OBSIDIAN_GLOVES, "Needed to complete the Obsidian Armor set, you can convert Phoenix Gloves into Obsidian by standing in water while wearing them.");
         addLore(AetherItems.OBSIDIAN_HELMET, "A super powerful armor, more powerful than Diamond, this armor is only obtainable by standing in water while wearing Phoenix Armor, converting it to Obsidian.");
         addLore(AetherItems.OBSIDIAN_LEGGINGS, "A super powerful armor, more powerful than Diamond, this armor is only obtainable by standing in water while wearing Phoenix Armor, converting it to Obsidian.");
-        addLore(AetherItems.ORANGE_MOA_EGG, "An Egg laid by an Orange Moa. Hatching this provides an Orange Moa with 2 mid-air jumps, but extreme speed. This Moa is quite common.");
         addLore(AetherItems.PHOENIX_BOOTS, "Found in Gold Dungeons, when fully worn, this armor set allows for Fire Resistance, you can swim in Lava as well. Be careful when standing in water, as it will turn into Obsidian armor.");
         addLore(AetherItems.PHOENIX_BOW, "Found as a dungeon loot, this bow is very heated, and can shoot flaming arrows! It's warm to the touch.");
         addLore(AetherItems.PHOENIX_CHESTPLATE, "Found in Gold Dungeons, when fully worn, this armor set allows for Fire Resistance, you can swim in Lava as well. Be careful when standing in water, as it will turn into Obsidian armor.");
         addLore(AetherItems.PHOENIX_GLOVES, "Found in Gold Dungeons, these gloves are required to finish the Phoenix Armor set, and are needed to convert the full set into Obsidian too.");
         addLore(AetherItems.PHOENIX_HELMET, "Found in Gold Dungeons, when fully worn, this armor set allows for Fire Resistance, you can swim in Lava as well. Be careful when standing in water, as it will turn into Obsidian armor.");
         addLore(AetherItems.PHOENIX_LEGGINGS, "Found in Gold Dungeons, when fully worn, this armor set allows for Fire Resistance, you can swim in Lava as well. Be careful when standing in water, as it will turn into Obsidian armor.");
-        addLore(AetherItems.PIG_SLAYER, "Kills any Pig type mobs with nothing with a single blow. But why would you want to do that? Great for traversing the Nether.");
+        addLore(AetherItems.PIG_SLAYER, "Kills any Pig type mobs with nothing with a single blow, or stronger ones in a couple blows. But why would you want to do that? Great for traversing the Nether.");
         addLore(AetherBlocks.PILLAR, "The main part of the Silver Dungeon's decorative pillars, they spawn all around the dungeon, and are excellent for building.");
         addLore(AetherBlocks.PILLAR_TOP, "The top of the Silver Dungeon's decorative pillars, they look excellent, and are great for building.");
-        addLore(AetherBlocks.PINK_AERCLOUD, "A very soft cloud that is pink. It has natural healing properties, healing anyone's wounds when stepped in.");
-        addLore(AetherItems.POISON_DART, "The ammo for Poison Dart Shooters, these are made by infecting Golden Darts with poison!");
+        addLore(AetherItems.POISON_DART, "The ammo for Poison Dart Shooters, these are made by coating Golden Darts with poison!");
         addLore(AetherItems.POISON_DART_SHOOTER, "A Dart Shooter which shoots Poison Darts. Shooting this at something infects them with a deadly poison!");
         addLore(AetherBlocks.PRESENT, "A wonderful holiday gift, open it for a surprise! Be careful, as there's a chance you could get ssssssurprised!");
         addLore(AetherBlocks.PURPLE_FLOWER, "These pretty violet flowers can be found in large numbers around the Aether. They can be crafted into purple dye when placed into a Crafting Table.");
@@ -959,7 +998,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.SILVER_DUNGEON_KEY, "A reflective key that is given to you by the Valkyrie Queen after defeating her. Use it to claim the treasure she left behind!");
         addLore(AetherItems.SKYROOT_AXE, "One of Aether's wooden tools, it can be used to double Skyroot Log drops. Simple but useful for beginners.");
         addLore(AetherItems.SKYROOT_AXOLOTL_BUCKET,"A Skyroot Bucket with a friendly Axolotl in. Axolotls can be incredibly helpful aquatic partners. So it's best to keep one on hand if you're exploring wet environments.");
-        addLore(AetherBlocks.SKYROOT_BED, "Crafted with cyan wool and skyroot planks. You can only sleep at night to skip night time, but during the day you can set your respawn point in the Aether. Cannot sleep while mobs are nearby.");
+        addLore(AetherBlocks.SKYROOT_BED, "Crafted with wool and skyroot planks. You can only sleep at night to skip night time, but during the day you can set your respawn point in the Aether. Cannot sleep while mobs are nearby.");
         addLore(AetherItems.SKYROOT_BOAT, "While the Aether does not have many large bodies of water, a boat can occasionally be a useful tool for crossing large distances over ice!");
         addLore(AetherItems.SKYROOT_CHEST_BOAT, "A Skyroot Boat with a handy chest in the back. Helpful for transporting more items over long stretches of water, which are famously difficult to find in the Aether.");
         addLore(AetherBlocks.SKYROOT_BOOKSHELF, "Crafted from Skyroot Planks and Books. Bookshelves can be used to enhance the enchanting capabilities of an enchanting table.");
@@ -997,7 +1036,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherBlocks.SUN_ALTAR, "An Altar containing the power to control the Sun itself! It is dropped by the Sun Spirit after you defeat him. Use it to control the time of day.");
         addLore(AetherItems.SWET_CAPE, "A common cape that is found in Bronze Dungeons. It allows for the wearer to ride Swets, as they become friendly when they see someone wearing it.");
         addLore(AetherItems.SWET_BALL, "A gooey orb that is dropped from Blue Swets. It can be used to fertilize soils. Another use is to put it alongside string to make a lead.");
-        addLore(AetherBlocks.TREASURE_CHEST, "A treasure chest, these are found after defeating a Bronze, Silver or Gold dungeon. Any of the keys can open these, and the specific dungeon's loot will pop out.");
+        addLore(AetherBlocks.TREASURE_CHEST, "A treasure chest, these are found after defeating a Bronze, Silver or Gold dungeon. They can be opened with the key from the Dungeon boss.");
         addLore(AetherItems.VALKYRIE_AXE, "A tool unique to the Silver Dungeon, This Axe has a very far reach, and very high attack power, you can use this to your advantage, but be warned, the attack cooldown is very high on this.");
         addLore(AetherItems.VALKYRIE_BOOTS, "An armor unique to the Silver Dungeon, when fully worn, you are granted temporary flight. Quite useful for getting to high places.");
         addLore(AetherItems.VALKYRIE_CAPE, "A rare cape that is found in Silver Dungeons. When worn, the wearer becomes lighter than air and can descend slowly.");
@@ -1018,24 +1057,25 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.YELLOW_CAPE, "A bright Yellow Cape that is crafted using Yellow Wool.");
         addLore(AetherItems.ZANITE_AXE, "One of Aether's mid-tier tools, you can mine wood faster than stone, and it will get even faster as the tool is worn down.");
         addLore(AetherBlocks.ZANITE_BLOCK, "A block of compacted Zanite Gemstones. They can power beacons, and just have a sleek look to them.");
-        addLore(AetherItems.ZANITE_BOOTS, "Part of the Zanite Armor set, the protection it grants increases as the durability decreases.");
-        addLore(AetherItems.ZANITE_CHESTPLATE, "Part of the Zanite Armor set, the protection it grants increases as the durability decreases.");
+        addLore(AetherItems.ZANITE_BOOTS, "Part of the Zanite Armor set, equivalent in protection to iron.");
+        addLore(AetherItems.ZANITE_CHESTPLATE, "Part of the Zanite Armor set, equivalent in protection to iron.");
         addLore(AetherItems.ZANITE_GEMSTONE, "Aether's version of Iron. These shiny purple gems can be made into tools and armor, that increase in strength when used.");
         addLore(AetherItems.ZANITE_GLOVES, "Part of the Zanite Armor set, it is needed to complete the Zanite Armor set.");
         addLore(AetherItems.ZANITE_HOE, "One of Aether's mid-tier tools, it has more durability than the Holystone hoe, and it will get even faster at mining very oddly specific blocks as the tool is worn down.");
-        addLore(AetherItems.ZANITE_HELMET, "Part of the Zanite Armor set, the protection it grants increases as the durability decreases.");
-        addLore(AetherItems.ZANITE_LEGGINGS, "Part of the Zanite Armor set, the protection it grants increases as the durability decreases.");
+        addLore(AetherItems.ZANITE_HELMET, "Part of the Zanite Armor set, equivalent in protection to iron.");
+        addLore(AetherItems.ZANITE_LEGGINGS, "Part of the Zanite Armor set, equivalent in protection to iron.");
         addLore(AetherBlocks.ZANITE_ORE, "A slightly rare ore that drops Zanite Gemstones when broken with Stone tools.");
         addLore(AetherItems.ZANITE_PENDANT, "A pendant which allows you to mine faster. It doesn't last for long, so use it wisely!");
-        addLore(AetherItems.ZANITE_PICKAXE, "One of Aether's mid-tier tools, it mines what Iron can, except as it's durability decreases, it gets faster. Be careful though, as when it's repaired it will be as slow as before!");
+        addLore(AetherItems.ZANITE_PICKAXE, "One of Aether's mid-tier tools, it mines what Iron can, except as its durability decreases, it gets faster. Be careful though, as when it's repaired it will be as slow as before!");
         addLore(AetherItems.ZANITE_RING, "A ring which allows you to mine faster. It doesn't last for long, so use it wisely!");
         addLore(AetherItems.ZANITE_SHOVEL, "One of Aether's mid-tier tools, as you mine dirt and Quicksoil, the durability will decrease, and get faster. If you wait long enough it will start to break blocks instantly! Be careful repairing it, as it will be slower when there is more durability.");
-        addLore(AetherItems.ZANITE_SWORD, "One of Aether's mid-tier tools, the attack damage on this sword starts at wood level, and will get to Diamond level when it's durability is low.");
+        addLore(AetherItems.ZANITE_SWORD, "One of Aether's mid-tier tools, the attack damage on this sword starts at wood level, and will get to Diamond level when its durability is low.");
         addLore(AetherItems.MUSIC_DISC_AETHER_TUNE, "A music disc that plays Aether Tune by Noisestorm.");
         addLore(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "A music disc that plays Ascending Dawn by Emile van Krieken.");
         addLore(AetherItems.MUSIC_DISC_LEGACY, "A music disc that plays Legacy by Jon Lachney.");
         addLore(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "A music disc that plays Welcoming Skies by Voyed.");
         addLore(AetherItems.MUSIC_DISC_CHINCHILLA,"A music disc that plays chinchilla by RENREN.");
+        addLore(AetherItems.MUSIC_DISC_HIGH,"A music disc that plays high by RENREN.");
         addLoreUnique("item.aether.hammer_of_jeb", "A mysterious hammer that can shoot projectiles. At one point it vanished from existence. It's said this was actually Jeb's hammer at one point.");
 
 
@@ -1059,7 +1099,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addProTip("ambrosium_shard_fuel", "Ambrosium Shards are great for fueling Altars.");
         addProTip("icestone_freezing_blocks", "Icestone freezes water into ice and lava into obsidian.");
         addProTip("mimic_chest", "Some dungeons in the Aether contain chests which are Mimics.");
-        addProTip("cold_parachute_crafting", "Cloud Parachutes can be crafted with four Cold Aercloud blocks.");
+        addProTip("cold_parachute_crafting", "Cold Parachutes can be crafted with four Cold Aercloud blocks.");
         addProTip("parachute_activation", "Parachutes auto-activate when falling off an island.");
         addProTip("golden_parachute_durability", "Golden Parachutes have twenty uses rather than one.");
         addProTip("aerogel_explosion_resistance", "Aerogel acts as an explosion-resistant, transparent block.");
@@ -1101,12 +1141,12 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addCommonConfig("gameplay", "enable_bed_explosions", "Vanilla's beds will explode in the Aether");
         addCommonConfig("gameplay", "start_with_portal", "On world creation, the player is given an Aether Portal Frame item to automatically go to the Aether with");
         addCommonConfig("gameplay", "enable_startup_loot", "When the player enters the Aether, they are given a Book of Lore and Golden Parachutes as starting loot");
-        addCommonConfig("gameplay", "tools_debuff", "Tools that aren't from the Aether will mine all blocks slower than ones that are from the Aether");
+        addCommonConfig("gameplay", "tools_debuff", "Tools that aren't from the Aether will mine Aether blocks slower than tools that are from the Aether");
         addCommonConfig("gameplay", "edible_ambrosium", "Ambrosium Shards can be eaten to restore a half heart of health");
         addCommonConfig("gameplay", "healing_gummy_swets", "Gummy Swets when eaten restore full health instead of full hunger");
         addCommonConfig("gameplay", "temporary_ice_accessory_conversion", "Ice Accessories will create temporary blocks instead of permanent blocks from conversions");
         addCommonConfig("gameplay", "maximum_life_shards", "Determines the limit of the amount of Life Shards a player can consume to increase their health");
-        addCommonConfig("gameplay", "hammer_of_notch_cooldown", "Determines the cooldown in ticks for the Hammer of Notch's ability");
+        addCommonConfig("gameplay", "hammer_of_kingbdogz_cooldown", "Determines the cooldown in ticks for the Hammer of Kingbdogz's ability");
         addCommonConfig("gameplay", "cloud_staff_cooldown", "Determines the cooldown in ticks for the Cloud Staff's ability");
         addCommonConfig("gameplay", "repeat_sun_spirit_dialogue", "Determines whether the Sun Spirit's dialogue when meeting him should play through every time you meet him");
 
@@ -1114,7 +1154,6 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addCommonConfig("loot", "spawn_valkyrie_cape", "Allows the Valkyrie Cape to spawn in the Silver Dungeon loot table");
 
         addCommonConfig("world_generation", "generate_tall_grass", "Determines whether the Aether should generate Tall Grass blocks on terrain or not");
-        addCommonConfig("world_generation", "generate_pink_aerclouds", "Determines whether Pink Aerclouds should generate in the skies of the Aether along with other Aerclouds");
         addCommonConfig("world_generation", "generate_holiday_tree_always", "Determines whether Holiday Trees should always be able to generate when exploring new chunks in the Aether, if true, this overrides 'Generate Holiday Trees seasonally'");
         addCommonConfig("world_generation", "generate_holiday_tree_seasonally", "Determines whether Holiday Trees should be able to generate during the time frame of December and January when exploring new chunks in the Aether, only works if 'Generate Holiday Trees always' is set to false");
 
@@ -1129,6 +1168,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
 
         addClientConfig("rendering", "legacy_models", "Changes Zephyr and Aerwhale rendering to use their old models from the b1.7.3 version of the mod");
         addClientConfig("rendering", "disable_aether_skybox", "Disables the Aether's custom skybox in case you have a shader that is incompatible with custom skyboxes");
+        addClientConfig("rendering", "colder_lightmap", "Removes warm-tinting of the lightmap in the Aether, giving the lighting a colder feel");
+        addClientConfig("rendering", "green_sunset", "Enables a green-tinted sunrise and sunset in the Aether, similar to the original mod");
 
         addClientConfig("gui", "enable_aether_menu", "Changes the vanilla Minecraft menu into the Aether menu");
         addClientConfig("gui", "enable_aether_menu_button", "Adds a button to the top right of the main menu screen to toggle between the Aether and vanilla menu");

@@ -288,10 +288,6 @@ public abstract class AetherRecipeProvider extends RecipeProvider {
                 .unlockedBy(getHasName(material), has(material));
     }
 
-    protected static void netheriteSmithingRecipe(Consumer<FinishedRecipe> consumer, Item ingredient, RecipeCategory category, Item item) {
-        UpgradeRecipeBuilder.smithing(Ingredient.of(ingredient), Ingredient.of(Tags.Items.INGOTS_NETHERITE), category, item).unlocks("has_netherite_ingot", has(Tags.Items.INGOTS_NETHERITE)).save(consumer, name(getItemName(item) + "_smithing"));
-    }
-
     protected static SimpleCookingRecipeBuilder smeltingOreRecipe(ItemLike result, ItemLike ingredient, float experience) {
         return SimpleCookingRecipeBuilder.smelting(Ingredient.of(ingredient), RecipeCategory.MISC, result, experience, 200)
                 .unlockedBy(getHasName(ingredient), has(ingredient));
@@ -356,7 +352,7 @@ public abstract class AetherRecipeProvider extends RecipeProvider {
         tag.putString("MoaType", moaType.get().toString());
         tag.putBoolean("Hungry", true);
         tag.putBoolean("PlayerGrown", true);
-        return IncubationBuilder.incubation(Ingredient.of(ingredient), entity, tag, 5700, AetherRecipeSerializers.INCUBATION.get())
+        return IncubationBuilder.incubation(Ingredient.of(ingredient), entity, tag, 1000, AetherRecipeSerializers.INCUBATION.get())
                 .unlockedBy(getHasName(ingredient), has(ingredient));
     }
 

@@ -11,13 +11,7 @@ import com.gildedgames.aether.network.packet.client.SentryExplosionParticlePacke
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.SpawnGroupData;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -31,10 +25,8 @@ import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -59,7 +51,10 @@ public class Sentry extends Slime {
 
 	@Nonnull
 	public static AttributeSupplier.Builder createMobAttributes() {
-		return Mob.createMobAttributes().add(Attributes.ATTACK_DAMAGE);
+		return Mob.createMobAttributes()
+				.add(Attributes.MAX_HEALTH, 10.0)
+				.add(Attributes.MOVEMENT_SPEED, 0.6)
+				.add(Attributes.ATTACK_DAMAGE);
 	}
 	
 	@Override
@@ -96,7 +91,7 @@ public class Sentry extends Slime {
 			super.jumpFromGround();
 		}
 	}
-	
+
 	@Override
 	public void push(@Nonnull Entity entity) {
 		super.push(entity);
@@ -113,8 +108,8 @@ public class Sentry extends Slime {
 	}
 
 	protected void explodeAt(LivingEntity livingEntity) {
-		if (this.isAwake() && this.hasLineOfSight(livingEntity) && livingEntity.hurt(DamageSource.mobAttack(this), 1.0F) && this.tickCount > 20) {
-			livingEntity.push(0.5, 0.5, 0.5);
+		if (this.distanceToSqr(livingEntity) < 1.5D && this.isAwake() && this.hasLineOfSight(livingEntity) && livingEntity.hurt(this.damageSources().mobAttack(this), 1.0F) && this.tickCount > 20 && this.isAlive()) {
+			livingEntity.push(0.3, 0.4, 0.3);
 			this.level.explode(this, this.getX(), this.getY(), this.getZ(), 1.0F, Level.ExplosionInteraction.MOB);
 			this.playSound(SoundEvents.GENERIC_EXPLODE, 1.0F, 0.2F * (this.random.nextFloat() - this.random.nextFloat()) + 1);
 			if (this.level instanceof ServerLevel level) {
@@ -144,9 +139,7 @@ public class Sentry extends Slime {
 	}
 
 	@Override
-	public boolean isTiny() {
-		return this.getSize() < 1;
-	}
+	public void setSize(int size, boolean resetHealth) {}
 
 	@Nonnull
 	@Override
@@ -187,6 +180,12 @@ public class Sentry extends Slime {
 	@Override
 	protected SoundEvent getJumpSound() {
 		return AetherSoundEvents.ENTITY_SENTRY_JUMP.get();
+	}
+
+	@Nonnull
+	@Override
+	public EntityDimensions getDimensions(Pose pose) {
+		return super.getDimensions(pose).scale(2*0.879F);
 	}
 
 	@Override

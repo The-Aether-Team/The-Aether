@@ -91,6 +91,9 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 	void setWingRotation(float wingRotation);
 	float getWingRotation();
 
+	void setWearingInvisibilityCloak(boolean wearing);
+	boolean isWearingInvisibilityCloak();
+
 	int getFlightTimerMax();
 
 	float getFlightModifierMax();
@@ -103,6 +106,17 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 
 	void setSavedHealth(float health);
 	float getSavedHealth();
+
+	void setNeptuneSubmergeLength(double length);
+	double getNeptuneSubmergeLength();
+
+	void setPhoenixSubmergeLength(double length);
+	double getPhoenixSubmergeLength();
+
+	int getObsidianConversionTimerMax();
+
+	void setObsidianConversionTime(int time);
+	int getObsidianConversionTime();
 
 	void addToLifeShardCount(int amountToAdd);
 	void setLifeShardCount(int amount);

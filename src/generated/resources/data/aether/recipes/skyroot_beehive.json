@@ -17,5 +17,6 @@
   ],
   "result": {
     "item": "minecraft:beehive"
-  }
+  },
+  "show_notification": true
 }

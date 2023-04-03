@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aether:neptune_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:neptune_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:neptune_leggings"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:neptune_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:neptune_gloves"
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 2.0,
+        "min": 1.0
+      }
+    }
+  ]
+}

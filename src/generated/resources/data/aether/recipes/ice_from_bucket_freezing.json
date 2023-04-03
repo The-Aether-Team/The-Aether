@@ -1,7 +1,7 @@
 {
   "type": "aether:freezing",
   "category": "freezable_blocks",
-  "cookingtime": 500,
+  "cookingtime": 200,
   "experience": 0.1,
   "ingredient": {
     "tag": "aether:freezable_buckets"

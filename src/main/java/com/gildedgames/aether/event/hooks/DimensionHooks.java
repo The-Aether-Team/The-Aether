@@ -31,7 +31,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -119,7 +118,7 @@ public class DimensionHooks {
                         level.removeBlock(blockpos, false);
                     }
                     Vec3 vec3 = pos.getCenter();
-                    level.explode(null, DamageSource.badRespawnPointExplosion(vec3), null, (double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5, 5.0F, true, Level.ExplosionInteraction.BLOCK);
+                    level.explode(null, level.damageSources().badRespawnPointExplosion(vec3), null, (double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5, 5.0F, true, Level.ExplosionInteraction.BLOCK);
                 }
                 player.swing(InteractionHand.MAIN_HAND);
                 return true;
@@ -197,9 +196,9 @@ public class DimensionHooks {
         if (level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location()) && level instanceof ServerLevel serverLevel) {
             ServerLevelAccessor serverLevelAccessor = (ServerLevelAccessor) serverLevel;
             com.gildedgames.aether.mixin.mixins.common.accessor.LevelAccessor levelAccessor = (com.gildedgames.aether.mixin.mixins.common.accessor.LevelAccessor) level;
-            long i = levelAccessor.getLevelData().getGameTime() + 1L;
-            serverLevelAccessor.getServerLevelData().setGameTime(i);
-            if (serverLevelAccessor.getServerLevelData().getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
+            long i = levelAccessor.aether$getLevelData().getGameTime() + 1L;
+            serverLevelAccessor.aether$getServerLevelData().setGameTime(i);
+            if (serverLevelAccessor.aether$getServerLevelData().getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
                 AetherTime.get(level).ifPresent(cap -> serverLevel.setDayTime(cap.tickTime(level)));
             }
         }
@@ -286,8 +285,8 @@ public class DimensionHooks {
         if (player instanceof ServerPlayer serverPlayer) {
             if (teleportationTimer > 0) {
                 ServerGamePacketListenerImplAccessor serverGamePacketListenerImplAccessor = (ServerGamePacketListenerImplAccessor) serverPlayer.connection;
-                serverGamePacketListenerImplAccessor.setAboveGroundTickCount(0);
-                serverGamePacketListenerImplAccessor.setAboveGroundVehicleTickCount(0);
+                serverGamePacketListenerImplAccessor.aether$setAboveGroundTickCount(0);
+                serverGamePacketListenerImplAccessor.aether$setAboveGroundVehicleTickCount(0);
                 teleportationTimer--;
             }
             if (teleportationTimer < 0 || serverPlayer.verticalCollisionBelow) {

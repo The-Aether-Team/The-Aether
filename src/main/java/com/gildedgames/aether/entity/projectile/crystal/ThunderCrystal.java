@@ -3,13 +3,13 @@ package com.gildedgames.aether.entity.projectile.crystal;
 import com.gildedgames.aether.capability.lightning.LightningTracker;
 import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.client.particle.AetherParticleTypes;
+import com.gildedgames.aether.data.resources.AetherDamageTypes;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
@@ -48,7 +48,6 @@ public class ThunderCrystal extends AbstractCrystal {
     public void tickMovement() {
         if (!this.level.isClientSide) {
             if (this.target == null || !this.target.isAlive()) {
-                this.spawnExplosionParticles();
                 this.discard();
                 this.playSound(AetherSoundEvents.ENTITY_THUNDER_CRYSTAL_EXPLODE.get(), 1.0F, 1.0F);
                 return;
@@ -83,7 +82,7 @@ public class ThunderCrystal extends AbstractCrystal {
     @Override
     protected void onHitEntity(EntityHitResult pResult) {
         if (pResult.getEntity() instanceof LivingEntity target && target != this.getOwner()) {
-            target.hurt(new IndirectEntityDamageSource("aether.thunder_crystal", this, this.getOwner()).setProjectile(), 5.0F);
+            target.hurt(AetherDamageTypes.indirectEntityDamageSource(this.level, AetherDamageTypes.THUNDER_CRYSTAL, this, this.getOwner()), 5.0F);
             this.knockback(0.1, this.position().subtract(target.position()));
             target.knockback(0.25, this.getX() - target.getX(), this.getZ() - target.getZ());
         }
