@@ -36,7 +36,7 @@ apply plugin: 'io.github.0ffz.github-packages'
 apply plugin: 'com.matthewprenger.cursegradle'
 apply plugin: 'com.modrinth.minotaur'
 
-version = project.mc_version + '-' + project.aether_version
+version = project.mc_version + '-' + project.aether_version + '-forge'
 group = 'com.gildedgames.aether' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'aether'
 
@@ -219,7 +219,7 @@ curseforge {
         changelogType = "markdown"
         addGameVersion("${project.mc_version}")
         mainArtifact(tasks.jar) {
-            displayName = "The Aether - Forge ${version}"
+            displayName = "The Aether - Forge - ${version}"
             relations {
                 embeddedLibrary "curios"
                 optionalDependency "starlight-forge"
@@ -236,7 +236,7 @@ modrinth {
     projectId = "${project.modrinth_id}"
     versionNumber = "${version}"
     versionType = "${project.version_type}"
-    versionName = "The Aether - Forge ${version}"
+    versionName = "The Aether - Forge - ${version}"
     changelog = new File("$rootDir/docs/CHANGELOG.md").text
     uploadFile = tasks.jar
     gameVersions = ["${project.mc_version}"]
