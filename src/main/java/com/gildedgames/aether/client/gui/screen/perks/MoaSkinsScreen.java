@@ -44,7 +44,7 @@ import java.util.*;
 public class MoaSkinsScreen extends Screen {
     public static final ResourceLocation MOA_SKINS_GUI = new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/skins.png");
     private static final String PATREON_LINK = "https://www.patreon.com/GildedGames";
-    private static final String INFO_LINK = "https://github.com/Gilded-Games/.github/wiki/Donating-to-the-Mod";
+    private static final String CONNECT_LINK = "";
 
     private final Screen lastScreen;
     private final int imageWidth = 176;
@@ -104,22 +104,22 @@ public class MoaSkinsScreen extends Screen {
                     }
             ).pos((this.leftPos + this.imageWidth) - 20, this.topPos + 22).size(7, 7)));
 
-            this.addRenderableWidget(new PatreonButton(PatreonButton.ButtonType.LARGE, Button.builder(Component.translatable("gui.aether.moa_skins.button.donate"),
+            this.addRenderableWidget(new PatreonButton(Button.builder(Component.translatable("gui.aether.moa_skins.button.donate"),
                     (pressed) -> this.getMinecraft().setScreen(new ConfirmLinkScreen((callback) -> {
                         if (callback) {
                             Util.getPlatform().openUri(PATREON_LINK);
                         }
                         this.getMinecraft().setScreen(this);
                     }, PATREON_LINK, true))
-            ).pos(this.leftPos + (this.imageWidth / 2) - 27, this.topPos + this.imageHeight - 25).size(54, 18)));
-            this.addRenderableWidget(new PatreonButton(PatreonButton.ButtonType.SMALL, Button.builder(Component.translatable("gui.aether.moa_skins.button.info"),
+            ).pos(this.leftPos + (this.imageWidth / 2) - 66, this.topPos + this.imageHeight - 25).size(54, 18)));
+            this.addRenderableWidget(new PatreonButton(Button.builder(Component.translatable("gui.aether.moa_skins.button.connect"),
                     (pressed) -> this.getMinecraft().setScreen(new ConfirmLinkScreen((callback) -> {
                         if (callback) {
-                            Util.getPlatform().openUri(INFO_LINK);
+                            Util.getPlatform().openUri(CONNECT_LINK);
                         }
                         this.getMinecraft().setScreen(this);
-                    }, INFO_LINK, true))
-            ).pos(this.leftPos + (this.imageWidth / 2) + 63, this.topPos + this.imageHeight - 25).size(18, 18)));
+                    }, CONNECT_LINK, true))
+            ).pos(this.leftPos + (this.imageWidth / 2) + 12, this.topPos + this.imageHeight - 25).size(54, 18)));
         }
     }
 

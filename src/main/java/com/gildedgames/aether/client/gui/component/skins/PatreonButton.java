@@ -9,11 +9,8 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.GameRenderer;
 
 public class PatreonButton extends Button {
-    private final ButtonType buttonType;
-
-    public PatreonButton(ButtonType buttonType, Builder builder) {
+    public PatreonButton(Builder builder) {
         super(builder);
-        this.buttonType = buttonType;
     }
 
     @Override
@@ -24,22 +21,14 @@ public class PatreonButton extends Button {
         RenderSystem.clearColor(1.0F, 1.0F, 1.0F, this.alpha);
         int u = 0;
         int v = 215;
-        if (this.buttonType == ButtonType.SMALL) {
-            v = 233;
-        }
         if (this.isHovered) {
-            u = this.buttonType == ButtonType.SMALL ? 18 : 54;
+            u = 54;
         }
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.enableDepthTest();
-        this.blit(poseStack, this.getX(), this.getY(), u, v, this.getWidth(), this.getHeight());
+        blit(poseStack, this.getX(), this.getY(), u, v, this.getWidth(), this.getHeight());
         //this.renderBg(poseStack, minecraft, mouseX, mouseY);
         Gui.drawCenteredString(poseStack, minecraft.font, this.getMessage(), this.getX() + (this.getWidth() / 2), this.getY() + (this.getHeight() / 2) - 4, 16777215);
-    }
-
-    public enum ButtonType {
-        LARGE,
-        SMALL
     }
 }
