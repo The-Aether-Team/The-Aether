@@ -169,16 +169,6 @@ artifacts {
     archives sourcesJar
 }
 
-jar.finalizedBy('reobfJar')
-
-reobf.create('jarJar')
-
-def reobfFile = file("$buildDir/reobfJar/output.jar")
-def jar = artifacts.add('default', reobfFile) {
-    type 'jar'
-    builtBy 'reobfJar'
-}
-
 tasks.jarJar.configure {
     archiveClassifier = ""
 }
