@@ -1,4 +1,3 @@
-/*
 package com.gildedgames.aether.integration.jei.categories.fuel;
 
 import com.gildedgames.aether.Aether;
@@ -110,4 +109,3 @@ public class AetherFuelCategory implements IRecipeCategory<AetherFuelRecipe> {
                 .append(")");
     }
 }
-*/

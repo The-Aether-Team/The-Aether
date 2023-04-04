@@ -1,4 +1,3 @@
-/*
 package com.gildedgames.aether.integration.jei.categories;
 
 import com.gildedgames.aether.Aether;
@@ -72,7 +71,7 @@ public class AltarRepairRecipeCategory extends AbstractAetherCookingRecipeCatego
         damagedItem.setDamageValue(damagedItem.getMaxDamage() * 3 / 4);
 
         builder.addSlot(RecipeIngredientRole.INPUT, 1, 1).addIngredients(Ingredient.of(damagedItem));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 61, 19).addItemStack(recipe.getResultItem());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 61, 19).addItemStack(recipe.getResult());
     }
 
     @Override
@@ -83,4 +82,3 @@ public class AltarRepairRecipeCategory extends AbstractAetherCookingRecipeCatego
         drawCookTime(recipe, stack, 45, background);
     }
 }
-*/
