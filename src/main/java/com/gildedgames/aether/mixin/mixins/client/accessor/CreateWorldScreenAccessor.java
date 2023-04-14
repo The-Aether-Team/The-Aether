@@ -1,22 +1,22 @@
 package com.gildedgames.aether.mixin.mixins.client.accessor;
 
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
 import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-@Mixin(GuiComponent.class)
-public interface GuiComponentAccessor {
+@Mixin(CreateWorldScreen.class)
+public interface CreateWorldScreenAccessor {
     @Mutable
-    @Accessor("BACKGROUND_LOCATION")
-    static void aether$setBackgroundLocation(ResourceLocation location) {
+    @Accessor("HEADER_SEPERATOR")
+    static void setHeaderSeparator(ResourceLocation location) {
         throw new AssertionError();
     }
 
     @Mutable
-    @Accessor("LIGHT_DIRT_BACKGROUND")
-    static void aether$setLightDirtBackground(ResourceLocation location) {
+    @Accessor("FOOTER_SEPERATOR")
+    static void setFooterSeparator(ResourceLocation location) {
         throw new AssertionError();
     }
 }

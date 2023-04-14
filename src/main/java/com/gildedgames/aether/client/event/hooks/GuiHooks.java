@@ -11,9 +11,7 @@ import com.gildedgames.aether.client.gui.screen.menu.VanillaLeftTitleScreen;
 import com.gildedgames.aether.client.AetherKeys;
 import com.gildedgames.aether.event.hooks.DimensionHooks;
 import com.gildedgames.aether.AetherConfig;
-import com.gildedgames.aether.mixin.mixins.client.accessor.GuiComponentAccessor;
-import com.gildedgames.aether.mixin.mixins.client.accessor.RealmsPlayerScreenAccessor;
-import com.gildedgames.aether.mixin.mixins.client.accessor.TitleScreenAccessor;
+import com.gildedgames.aether.mixin.mixins.client.accessor.*;
 import com.gildedgames.aether.network.AetherPacketHandler;
 import com.gildedgames.aether.network.packet.server.OpenAccessoriesPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -28,6 +26,7 @@ import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
@@ -42,8 +41,20 @@ import java.util.Date;
 
 public class GuiHooks {
     public static final ResourceLocation BACKGROUND_LOCATION = new ResourceLocation(Aether.MODID, "textures/gui/options_background.png");
-    public static ResourceLocation OLD_LOCATION;
-    public static ResourceLocation OLD_REALMS_LOCATION;
+    public static ResourceLocation OLD_BACKGROUND_LOCATION;
+    public static ResourceLocation OLD_OPTIONS_BACKGROUND;
+
+    public static final ResourceLocation LIGHT_DIRT_BACKGROUND = new ResourceLocation(Aether.MODID, "textures/gui/light_dirt_background.png");
+    public static ResourceLocation OLD_LIGHT_DIRT_BACKGROUND;
+
+    public static final ResourceLocation HEADER_SEPERATOR = new ResourceLocation(Aether.MODID, "textures/gui/header_separator.png");
+    public static ResourceLocation OLD_HEADER_SEPERATOR;
+
+    public static final ResourceLocation FOOTER_SEPERATOR = new ResourceLocation(Aether.MODID, "textures/gui/footer_separator.png");
+    public static ResourceLocation OLD_FOOTER_SEPERATOR;
+
+    public static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation(Aether.MODID, "textures/gui/tab_button.png");
+    public static ResourceLocation OLD_TEXTURE_LOCATION;
 
     public static AetherTitleScreen aether_menu = null;
     public static TitleScreen default_menu = null;
@@ -57,14 +68,30 @@ public class GuiHooks {
 
     public static void drawSentryBackground(Screen screen) {
         if (screen instanceof TitleScreen) {
-            if (OLD_LOCATION == null) {
-                OLD_LOCATION = GuiComponent.BACKGROUND_LOCATION;
+            if (OLD_BACKGROUND_LOCATION == null) {
+                OLD_BACKGROUND_LOCATION = GuiComponent.BACKGROUND_LOCATION;
             }
-            if (OLD_REALMS_LOCATION == null) {
-                OLD_REALMS_LOCATION = RealmsPlayerScreenAccessor.aether$getOptionsBackground();
+            if (OLD_OPTIONS_BACKGROUND == null) {
+                OLD_OPTIONS_BACKGROUND = RealmsPlayerScreenAccessor.aether$getOptionsBackground();
             }
-            GuiComponentAccessor.aether$setBackgroundLocation(AetherConfig.CLIENT.enable_aether_menu.get() ? BACKGROUND_LOCATION : OLD_LOCATION);
-            RealmsPlayerScreenAccessor.aether$setOptionsBackground(AetherConfig.CLIENT.enable_aether_menu.get() ? BACKGROUND_LOCATION : OLD_REALMS_LOCATION);
+            if (OLD_LIGHT_DIRT_BACKGROUND == null) {
+                OLD_LIGHT_DIRT_BACKGROUND = GuiComponent.LIGHT_DIRT_BACKGROUND;
+            }
+            if (OLD_HEADER_SEPERATOR == null) {
+                OLD_HEADER_SEPERATOR = CreateWorldScreen.HEADER_SEPERATOR;
+            }
+            if (OLD_FOOTER_SEPERATOR == null) {
+                OLD_FOOTER_SEPERATOR = CreateWorldScreen.FOOTER_SEPERATOR;
+            }
+            if (OLD_TEXTURE_LOCATION == null) {
+                OLD_TEXTURE_LOCATION = TabButtonAccessor.getTextureLocation();
+            }
+            GuiComponentAccessor.aether$setBackgroundLocation(AetherConfig.CLIENT.enable_aether_menu.get() ? BACKGROUND_LOCATION : OLD_BACKGROUND_LOCATION);
+            RealmsPlayerScreenAccessor.aether$setOptionsBackground(AetherConfig.CLIENT.enable_aether_menu.get() ? BACKGROUND_LOCATION : OLD_OPTIONS_BACKGROUND);
+            GuiComponentAccessor.aether$setLightDirtBackground(AetherConfig.CLIENT.enable_aether_menu.get() ? LIGHT_DIRT_BACKGROUND : OLD_LIGHT_DIRT_BACKGROUND);
+            CreateWorldScreenAccessor.setHeaderSeparator(AetherConfig.CLIENT.enable_aether_menu.get() ? HEADER_SEPERATOR : OLD_HEADER_SEPERATOR);
+            CreateWorldScreenAccessor.setFooterSeparator(AetherConfig.CLIENT.enable_aether_menu.get() ? FOOTER_SEPERATOR : OLD_FOOTER_SEPERATOR);
+            TabButtonAccessor.setTextureLocation(AetherConfig.CLIENT.enable_aether_menu.get() ? TEXTURE_LOCATION : OLD_TEXTURE_LOCATION);
         }
     }
 
