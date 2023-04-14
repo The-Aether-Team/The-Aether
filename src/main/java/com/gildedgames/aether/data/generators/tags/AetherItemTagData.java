@@ -52,6 +52,7 @@ public class AetherItemTagData extends ItemTagsProvider {
                 Items.FLINT,
                 AetherItems.AMBROSIUM_SHARD.get());
         this.tag(AetherTags.Items.SKYROOT_STICKS).add(AetherItems.SKYROOT_STICK.get());
+        this.tag(AetherTags.Items.SWET_BALLS).add(AetherItems.SWET_BALL.get());
         this.tag(AetherTags.Items.GOLDEN_AMBER_HARVESTERS).add(
                 AetherItems.ZANITE_AXE.get(),
                 AetherItems.GRAVITITE_AXE.get(),

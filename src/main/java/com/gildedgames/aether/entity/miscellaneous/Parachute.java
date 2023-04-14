@@ -51,7 +51,7 @@ public class Parachute extends Entity {
         }
     }
 
-    private void moveParachute(LivingEntity passenger) {
+    public void moveParachute(LivingEntity passenger) {
         if (this.isVehicle()) {
             this.setYRot(passenger.getYRot());
             this.yRotO = this.getYRot();
