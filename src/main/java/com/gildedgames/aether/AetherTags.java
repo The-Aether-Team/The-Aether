@@ -148,6 +148,7 @@ public class AetherTags {
 		public static final TagKey<EntityType<?>> UNLAUNCHABLE = tag("unlaunchable");
 		public static final TagKey<EntityType<?>> NO_CANDY_CANE_DROPS = tag("no_candy_cane_drops");
 		public static final TagKey<EntityType<?>> DEFLECTABLE_PROJECTILES = tag("deflectable_projectiles");
+		public static final TagKey<EntityType<?>> IGNORE_INVISIBILITY = tag("ignore_invisibility");
 
 		private static TagKey<EntityType<?>> tag(String name) {
 			return TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Aether.MODID, name));

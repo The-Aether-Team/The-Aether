@@ -53,6 +53,9 @@ public class AetherEntityTagData extends EntityTypeTagsProvider {
                 AetherEntityTypes.ZEPHYR_SNOWBALL.get(),
                 AetherEntityTypes.LIGHTNING_KNIFE.get(),
                 AetherEntityTypes.HAMMER_PROJECTILE.get());
+        this.tag(AetherTags.Entities.IGNORE_INVISIBILITY).addTag(Tags.EntityTypes.BOSSES).add(
+                EntityType.GUARDIAN,
+                EntityType.ELDER_GUARDIAN);
 
         // Forge
         this.tag(Tags.EntityTypes.BOSSES).add(
