@@ -46,6 +46,7 @@
     "client.WorldListEntryMixin",
     "client.accessor.BlockColorsAccessor",
     "client.accessor.ButtonAccessor",
+    "client.accessor.CreateWorldScreenAccessor",
     "client.accessor.EntityRendererAccessor",
     "client.accessor.GuiAccessor",
     "client.accessor.GuiComponentAccessor",
@@ -57,6 +58,7 @@
     "client.accessor.QuadrupedModelAccessor",
     "client.accessor.RealmsPlayerScreenAccessor",
     "client.accessor.ScreenAccessor",
+    "client.accessor.TabButtonAccessor",
     "client.accessor.TitleScreenAccessor"
   ],
   "injectors": {
