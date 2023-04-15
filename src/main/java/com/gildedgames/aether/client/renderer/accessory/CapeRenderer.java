@@ -53,7 +53,7 @@ public class CapeRenderer implements ICurioRenderer {
                     double d0 = Mth.lerp(partialTicks, player.xCloakO, player.xCloak) - Mth.lerp(partialTicks, livingEntity.xo, livingEntity.getX());
                     double d1 = Mth.lerp(partialTicks, player.yCloakO, player.yCloak) - Mth.lerp(partialTicks, livingEntity.yo, livingEntity.getY());
                     double d2 = Mth.lerp(partialTicks, player.zCloakO, player.zCloak) - Mth.lerp(partialTicks, livingEntity.zo, livingEntity.getZ());
-                    float f = livingEntity.yBodyRotO + (livingEntity.yBodyRot - livingEntity.yBodyRotO);
+                    float f = Mth.rotLerp(partialTicks, player.yBodyRotO, player.yBodyRot);
                     double d3 = Mth.sin(f * ((float) Math.PI / 180F));
                     double d4 = -Mth.cos(f * ((float) Math.PI / 180F));
                     float f1 = (float) d1 * 10.0F;
