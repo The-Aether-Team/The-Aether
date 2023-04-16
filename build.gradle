@@ -8,9 +8,9 @@ plugins {
     id 'com.modrinth.minotaur' version '2.+'
 }
 
-version = project.mc_version + '-' + project.aether_version + '-forge'
+version = "${project.mc_version}-${project.mod_version}-forge"
 group = 'com.gildedgames.aether' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'aether'
+archivesBaseName = project.mod_id
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17) // Mojang ships Java 8 to end users, so your mod should target Java 8.
 
@@ -28,7 +28,7 @@ minecraft {
             //property 'forge.logging.console.level', 'debug'
 
             mods {
-                aether {
+                "${project.mod_id}" {
                     source sourceSets.main
                 }
             }
@@ -41,7 +41,7 @@ minecraft {
             //property 'forge.logging.console.level', 'debug'
 
             mods {
-                aether {
+                "${project.mod_id}" {
                     source sourceSets.main
                 }
             }
@@ -53,12 +53,12 @@ minecraft {
             //property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             //property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'aether', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing', file('src/generated/resources/')
+            args '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing', file('src/generated/resources/')
 
             environment 'target', 'fmluserdevdata'
 
             mods {
-                aether {
+                "${project.mod_id}" {
                     source sourceSets.main
                 }
             }
@@ -120,14 +120,13 @@ repositories {
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "The Aether",
+                "Specification-Title"     : project.mod_name,
                 "Specification-Vendor"    : "Gilded Games",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
-                "Implementation-Title"    : "The Aether",
-                "Implementation-Version"  : "${version}",
+                "Implementation-Title"    : project.mod_name,
+                "Implementation-Version"  : project.jar.archiveVersion,
                 "Implementation-Vendor"   : "Gilded Games",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs"            : "aether.mixins.json"
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
 }
@@ -182,7 +181,7 @@ curseforge {
         changelogType = "markdown"
         addGameVersion("${project.mc_version}")
         mainArtifact(tasks.jar) {
-            displayName = "The Aether - Forge - ${version}"
+            displayName = "${project.mod_name} - Forge - ${version}"
             relations {
                 embeddedLibrary "curios"
                 optionalDependency "starlight-forge"
@@ -199,7 +198,7 @@ modrinth {
     projectId = "${project.modrinth_id}"
     versionNumber = "${version}"
     versionType = "${project.version_type}"
-    versionName = "The Aether - Forge - ${version}"
+    versionName = "${project.mod_name} - Forge - ${version}"
     changelog = new File("$rootDir/docs/CHANGELOG.md").text
     uploadFile = tasks.jar
     gameVersions = ["${project.mc_version}"]
@@ -212,8 +211,8 @@ modrinth {
 }
 
 mixin {
-    config "aether.mixins.json"
-    add sourceSets.main, "aether.refmap.json"
+    config "${project.mod_id}.mixins.json"
+    add sourceSets.main, "${project.mod_id}.refmap.json"
 }
 
 build {
