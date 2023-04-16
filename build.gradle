@@ -1,40 +1,12 @@
-buildscript {
-    repositories {
-        maven {
-            name 'Forge'
-            url 'https://maven.minecraftforge.net'
-        }
-        maven {
-            name 'Sponge'
-            url 'https://repo.spongepowered.org/maven'
-        }
-        maven {
-            name 'Parchment'
-            url 'https://maven.parchmentmc.org'
-        }
-        maven {
-            name 'Gradle'
-            url "https://plugins.gradle.org/m2/"
-        }
-        mavenCentral()
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7.+', changing: true
-        classpath group: 'org.parchmentmc', name: 'librarian', version: '1.+', changing: true
-        classpath group: 'io.github.0ffz', name: 'gpr-for-gradle', version: '1.+', changing: true
-        classpath group: 'gradle.plugin.com.matthewprenger', name: 'CurseGradle', version: '1.4.+', changing: true
-        classpath group: 'com.modrinth.minotaur', name: 'Minotaur', version: '2.+', changing: true
-    }
+plugins {
+    id 'maven-publish'
+    id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'org.spongepowered.mixin' version '0.7.+'
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'io.github.0ffz.github-packages' version '1.+'
+    id 'com.matthewprenger.cursegradle' version '1.4.+'
+    id 'com.modrinth.minotaur' version '2.+'
 }
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'org.spongepowered.mixin'
-apply plugin: 'org.parchmentmc.librarian.forgegradle'
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
-apply plugin: 'io.github.0ffz.github-packages'
-apply plugin: 'com.matthewprenger.cursegradle'
-apply plugin: 'com.modrinth.minotaur'
 
 version = project.mc_version + '-' + project.aether_version + '-forge'
 group = 'com.gildedgames.aether' // http://maven.apache.org/guides/mini/guide-naming-conventions.html

@@ -1,0 +1,19 @@
+pluginManagement {
+    resolutionStrategy {
+        eachPlugin {
+            var plugin = requested.id.toString()
+
+            switch (plugin) {
+                case 'org.spongepowered.mixin':
+                    useModule "org.spongepowered:mixingradle:${requested.version}"
+                    break
+            }
+        }
+    }
+    repositories {
+        gradlePluginPortal()
+        maven { url = 'https://maven.minecraftforge.net/' }
+        maven { url = 'https://repo.spongepowered.org/maven' }
+        maven { url = 'https://maven.parchmentmc.org' }
+    }
+}
