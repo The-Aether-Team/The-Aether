@@ -6,18 +6,18 @@ plugins {
     id 'io.github.0ffz.github-packages' version '1.+'
     id 'com.matthewprenger.cursegradle' version '1.4.+'
     id 'com.modrinth.minotaur' version '2.+'
+    id 'me.jonathing.gradleworks' version '6.0.0-beta.7'
 }
 
-version = "${project.mc_version}-${project.mod_version}-forge"
+version = "${gradleworks.minecraft().version}-${project.mod_version}-forge"
 group = 'com.gildedgames.aether' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = project.mod_id
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17) // Mojang ships Java 8 to end users, so your mod should target Java 8.
 
 minecraft {
-    mappings channel: 'parchment', version: project.mappings
-
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    // handles forge, mappings, and access transformer
+    gradleworks.handleMinecraft()
 
     runs {
         client {
@@ -71,50 +71,17 @@ sourceSets.main.resources {
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${project.mc_version}-${project.forge_version}"
+    gradleworks.handleDependencies()
 
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-
-//    compileOnly "com.gildedgames.nitrogen:nitrogen:${project.nitrogen_version}"
-//    runtimeOnly fg.deobf("com.gildedgames.nitrogen:nitrogen:${project.nitrogen_version}")
-
-    implementation fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}")
-
-    compileOnly fg.deobf("top.theillusivec4.caelus:caelus-forge:${project.caelus_version}")
-
-    compileOnly "mezz.jei:jei-${project.mc_version}-common-api:${project.jei_version}"
-    compileOnly "mezz.jei:jei-${project.mc_version}-forge-api:${project.jei_version}"
-//    runtimeOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}"))
-
-//    runtimeOnly fg.deobf("io.github.flemmli97:debugutils:${project.mc_version}-${project.debugutils_version}-forge")
-
-//    jarJar fg.deobf("com.gildedgames.nitrogen:nitrogen:${project.nitrogen_version}") {
-//        jarJar.ranged(it, "[${project.nitrogen_version},)")
-//        jarJar.pin(it, "${project.nitrogen_version}")
-//    }
-
-    jarJar fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}") {
-        jarJar.ranged(it, "[${project.curios_version},)")
-        jarJar.pin(it, "${project.curios_version}")
-    }
-
-    // compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-${project.crafttweaker_version}")
-
-    //compileOnly fg.deobf("curse.maven:colytra-280200:${project.colytra_version}")
-    //compileOnly fg.deobf("curse.maven:curious-elytra-317716:${project.curiouselytra_version}")
-
-    //runtimeOnly fg.deobf("io.github.ultimateboomer:smoothboot-forge:${project.smoothboot_version}")
-
-    //compileOnly fileTree(dir: 'libs', include: '*.jar')
+    // special cases that gradleworks can't handle (like local libraries) down here
+//    compileOnly fileTree(dir: 'libs', include: '*.jar')
 }
 
 repositories {
-    maven { url = "https://maven.blamejared.com" }
-    maven { url = "https://maven.theillusivec4.top/" }
-    maven { url = "https://www.cursemaven.com" }
-    maven { url = "https://dvs1.progwml6.com/files/maven/" }
-    maven { url = "https://gitlab.com/api/v4/projects/21830712/packages/maven" }
-//    maven githubPackage.invoke("Gilded-Games/Nitrogen")
+    gradleworks.handleRepositories()
+
+    // special cases that gradleworks can't handle (like github packages) down here
+//    maven githubPackage.invoke("Gilded-Games/Nitrogen")Nitrogen
 }
 
 jar {
@@ -175,11 +142,11 @@ publishing {
 curseforge {
     project {
         apiKey = System.getenv("CURSEFORGE_TOKEN")
-        id = "${project.curseforge_id}"
-        releaseType = "${project.version_type}"
+        id = project.curseforge_id
+        releaseType = project.version_type
         changelog = file("$rootDir/docs/CHANGELOG.md")
         changelogType = "markdown"
-        addGameVersion("${project.mc_version}")
+        addGameVersion(gradleworks.minecraft().version)
         mainArtifact(tasks.jar) {
             displayName = "${project.mod_name} - Forge - ${version}"
             relations {
@@ -195,16 +162,16 @@ curseforge {
 
 modrinth {
     token = System.getenv("MODRINTH_TOKEN")
-    projectId = "${project.modrinth_id}"
-    versionNumber = "${version}"
-    versionType = "${project.version_type}"
-    versionName = "${project.mod_name} - Forge - ${version}"
+    projectId = project.modrinth_id
+    versionNumber = project.jar.archiveVersion
+    versionType = project.version_type
+    versionName = "${project.mod_name} - Forge - ${project.jar.archiveVersion}"
     changelog = new File("$rootDir/docs/CHANGELOG.md").text
     uploadFile = tasks.jar
-    gameVersions = ["${project.mc_version}"]
+    gameVersions = [gradleworks.minecraft().version]
     loaders = ["forge"]
     dependencies {
-        embedded.version "curios", "${project.curios_version}"
+        embedded.version "curios", gradleworks.getDependencyVersion('curios-forge')
         optional.project "starlight-forge"
     }
     debugMode = true

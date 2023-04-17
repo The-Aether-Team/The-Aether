@@ -1,0 +1,132 @@
+# for mod-related settings, see gradle.properties
+
+# minecraft version
+minecraft:
+  version: 1.19.4
+  mappings_channel: parchment
+  mappings_version: 1.19.3-2023.03.12-1.19.4
+
+# forge toolchain and version
+minecraftforge:
+  toolchain: forge # supports 'forge' and 'fmlonly'
+  version: 45.0.40
+
+# mixin version and toggle
+mixin:
+  enabled: True # "True" adds annotation processor to dependencies
+  version: 0.8.5
+
+dependencies:
+  ## Embedded dependencies ##
+
+  # Nitrogen
+  - enabled: False
+    type: implementation
+    deobf: True
+    location:
+      group: com.gildedgames.nitrogen
+      name: nitrogen
+      version: 1.19.2-0.0.1
+    jarJar:
+      enabled: True
+      ranged: "[1.19.2-0.0.1,)"
+      pin: 1.19.2-0.0.1
+
+  # Curios
+  - enabled: True
+    type: runtimeOnly
+    deobf: True
+    location:
+      group: top.theillusivec4.curios
+      name: curios-forge
+      version: 1.19.4-5.1.4.2
+    repoURL: https://maven.theillusivec4.top
+    jarJar:
+      enabled: True
+      ranged: "[1.19.4-5.1.4.2)"
+      pin: 1.19.4-5.1.4.2
+  - enabled: True
+    type: compileOnly
+    deobf: True
+    location:
+      group: top.theillusivec4.curios
+      name: curios-forge
+      version: 1.19.4-5.1.4.2
+      classifier: api
+    repoURL: https://maven.theillusivec4.top
+
+  ## Other dependencies (APIs and such) ##
+
+  # Caelus
+  - enabled: True
+    type: compileOnly
+    deobf: True
+    location:
+      group: top.theillusivec4.caelus
+      name: caelus-forge
+      version: 1.19.4-3.0.0.10
+    repoURL: https://maven.theillusivec4.top
+
+  # JEI
+  - enabled: True
+    type: compileOnly
+    deobf: True
+    location:
+      group: mezz.jei
+      name: jei-1.19.4-forge-api
+      version: 13.1.0.2
+    repoURL: https://maven.blamejared.com
+  - enabled: True
+    type: compileOnly
+    deobf: True
+    location:
+      group: mezz.jei
+      name: jei-1.19.4-common-api
+      version: 13.1.0.2
+    repoURL: https://maven.blamejared.com
+  - enabled: False
+    type: runtimeOnly
+    deobf: True
+    location:
+      group: mezz.jei
+      name: jei-1.19.4-forge
+      version: 13.1.0.2
+    repoURL: https://maven.blamejared.com
+
+  # DebugUtils
+  - enabled: False
+    type: runtimeOnly
+    deobf: True
+    location:
+      group: io.github.flemmli97
+      name: debugutils
+      version: 1.19.3-1.0.2-forge
+    repoURL: https://gitlab.com/api/v4/projects/21830712/packages/maven
+
+  # CraftTweaker
+  - enabled: False
+    type: runtimeOnly
+    deobf: True
+    location:
+      group: com.blamejared.crafttweaker
+      name: CraftTweaker-1.16.5
+      version: 7.1.0.338
+    repoURL: https://maven.blamejared.com
+
+  # Colytra
+  - enabled: False
+    type: compileOnly
+    deobf: True
+    location:
+      name: colytra
+      project: 280200
+      # https://www.curseforge.com/minecraft/mc-mods/colytra/files/3310142
+      file: 3310142
+  - enabled: False
+    type: compileOnly
+    deobf: True
+    location:
+      name: curious-elytra
+      project: 317716
+      # https://www.curseforge.com/minecraft/mc-mods/curious-elytra/files/3601975
+      file: 3601975
