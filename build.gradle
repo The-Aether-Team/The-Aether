@@ -81,7 +81,7 @@ repositories {
     gradleworks.handleRepositories()
 
     // special cases that gradleworks can't handle (like github packages) down here
-//    maven githubPackage.invoke("Gilded-Games/Nitrogen")Nitrogen
+//    maven githubPackage.invoke("Gilded-Games/Nitrogen")
 }
 
 jar {

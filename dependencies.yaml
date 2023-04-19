@@ -34,7 +34,7 @@ dependencies:
 
   # Curios
   - enabled: True
-    type: runtimeOnly
+    type: implementation
     deobf: True
     location:
       group: top.theillusivec4.curios
@@ -43,17 +43,8 @@ dependencies:
     repoURL: https://maven.theillusivec4.top
     jarJar:
       enabled: True
-      ranged: "[1.19.4-5.1.4.2)"
+      ranged: "[1.19.4-5.1.4.2,)"
       pin: 1.19.4-5.1.4.2
-  - enabled: True
-    type: compileOnly
-    deobf: True
-    location:
-      group: top.theillusivec4.curios
-      name: curios-forge
-      version: 1.19.4-5.1.4.2
-      classifier: api
-    repoURL: https://maven.theillusivec4.top
 
   ## Other dependencies (APIs and such) ##
 
