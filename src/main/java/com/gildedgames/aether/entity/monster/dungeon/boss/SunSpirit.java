@@ -256,7 +256,7 @@ public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enem
                         }
                         case 8 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line8").withStyle(ChatFormatting.RED));
                         case 9 -> {
-                            this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line9").withStyle(ChatFormatting.RED));
+                            this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line9").withStyle(ChatFormatting.GOLD));
                             this.setBossFight(true);
                             if (this.goldDungeon != null) {
                                 this.closeRoom();
