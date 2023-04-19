@@ -6,7 +6,7 @@ plugins {
     id 'io.github.0ffz.github-packages' version '1.+'
     id 'com.matthewprenger.cursegradle' version '1.4.+'
     id 'com.modrinth.minotaur' version '2.+'
-    id 'me.jonathing.gradleworks' version '6.0.0-beta.7'
+    id 'me.jonathing.gradleworks' version '6.0.0-beta.8'
 }
 
 version = "${gradleworks.minecraft().version}-${project.mod_version}-forge"

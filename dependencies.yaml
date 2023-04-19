@@ -100,8 +100,8 @@ dependencies:
     deobf: True
     location:
       group: com.blamejared.crafttweaker
-      name: CraftTweaker-1.16.5
-      version: 7.1.0.338
+      name: CraftTweaker-forge-1.19.2
+      version: 10.1.41
     repoURL: https://maven.blamejared.com
 
   # Colytra
@@ -111,13 +111,13 @@ dependencies:
     location:
       name: colytra
       project: 280200
-      # https://www.curseforge.com/minecraft/mc-mods/colytra/files/3310142
-      file: 3310142
+      # https://www.curseforge.com/minecraft/mc-mods/colytra/files/3930087
+      file: 3930087
   - enabled: False
     type: compileOnly
     deobf: True
     location:
       name: curious-elytra
       project: 317716
-      # https://www.curseforge.com/minecraft/mc-mods/curious-elytra/files/3601975
-      file: 3601975
+      # https://www.curseforge.com/minecraft/mc-mods/curious-elytra/files/4435060
+      file: 4435060
