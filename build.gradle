@@ -1,44 +1,16 @@
-buildscript {
-    repositories {
-        maven {
-            name 'Forge'
-            url 'https://maven.minecraftforge.net'
-        }
-        maven {
-            name 'Sponge'
-            url 'https://repo.spongepowered.org/maven'
-        }
-        maven {
-            name 'Parchment'
-            url 'https://maven.parchmentmc.org'
-        }
-        maven {
-            name 'Gradle'
-            url "https://plugins.gradle.org/m2/"
-        }
-        mavenCentral()
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7.+', changing: true
-        classpath group: 'org.parchmentmc', name: 'librarian', version: '1.+', changing: true
-        classpath group: 'io.github.0ffz', name: 'gpr-for-gradle', version: '1.+', changing: true
-        classpath group: 'gradle.plugin.com.matthewprenger', name: 'CurseGradle', version: '1.4.+', changing: true
-        classpath group: 'com.modrinth.minotaur', name: 'Minotaur', version: '2.+', changing: true
-    }
+plugins {
+    id 'maven-publish'
+    id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'org.spongepowered.mixin' version '0.7.+'
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'io.github.0ffz.github-packages' version '1.+'
+    id 'com.matthewprenger.cursegradle' version '1.4.+'
+    id 'com.modrinth.minotaur' version '2.+'
 }
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'org.spongepowered.mixin'
-apply plugin: 'org.parchmentmc.librarian.forgegradle'
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
-apply plugin: 'io.github.0ffz.github-packages'
-apply plugin: 'com.matthewprenger.cursegradle'
-apply plugin: 'com.modrinth.minotaur'
 
-version = project.mc_version + '-' + project.aether_version
+version = "${project.mc_version}-${project.mod_version}-forge"
 group = 'com.gildedgames.aether' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'aether'
+archivesBaseName = project.mod_id
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17) // Mojang ships Java 8 to end users, so your mod should target Java 8.
 
@@ -56,7 +28,7 @@ minecraft {
             //property 'forge.logging.console.level', 'debug'
 
             mods {
-                aether {
+                "${project.mod_id}" {
                     source sourceSets.main
                 }
             }
@@ -69,7 +41,7 @@ minecraft {
             //property 'forge.logging.console.level', 'debug'
 
             mods {
-                aether {
+                "${project.mod_id}" {
                     source sourceSets.main
                 }
             }
@@ -81,12 +53,12 @@ minecraft {
             //property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             //property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'aether', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing', file('src/generated/resources/')
+            args '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing', file('src/generated/resources/')
 
             environment 'target', 'fmluserdevdata'
 
             mods {
-                aether {
+                "${project.mod_id}" {
                     source sourceSets.main
                 }
             }
@@ -110,8 +82,9 @@ dependencies {
 
     compileOnly fg.deobf("top.theillusivec4.caelus:caelus-forge:${project.caelus_version}")
 
-//    compileOnly "mezz.jei:jei-${project.mc_version}-common-api:${project.jei_version}"
-//    compileOnly "mezz.jei:jei-${project.mc_version}-forge-api:${project.jei_version}"
+    compileOnly "mezz.jei:jei-${project.mc_version}-common-api:${project.jei_version}"
+    compileOnly "mezz.jei:jei-${project.mc_version}-forge-api:${project.jei_version}"
+//    runtimeOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}"))
 
 //    runtimeOnly fg.deobf("io.github.flemmli97:debugutils:${project.mc_version}-${project.debugutils_version}-forge")
 
@@ -147,14 +120,13 @@ repositories {
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "The Aether",
+                "Specification-Title"     : project.mod_name,
                 "Specification-Vendor"    : "Gilded Games",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
-                "Implementation-Title"    : "The Aether",
-                "Implementation-Version"  : "${version}",
+                "Implementation-Title"    : project.mod_name,
+                "Implementation-Version"  : project.jar.archiveVersion,
                 "Implementation-Vendor"   : "Gilded Games",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs"            : "aether.mixins.json"
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
 }
@@ -166,16 +138,6 @@ task sourcesJar(type: Jar) {
 
 artifacts {
     archives sourcesJar
-}
-
-jar.finalizedBy('reobfJar')
-
-reobf.create('jarJar')
-
-def reobfFile = file("$buildDir/reobfJar/output.jar")
-def jar = artifacts.add('default', reobfFile) {
-    type 'jar'
-    builtBy 'reobfJar'
 }
 
 tasks.jarJar.configure {
@@ -219,7 +181,7 @@ curseforge {
         changelogType = "markdown"
         addGameVersion("${project.mc_version}")
         mainArtifact(tasks.jar) {
-            displayName = "The Aether - Forge ${version}"
+            displayName = "${project.mod_name} - Forge - ${version}"
             relations {
                 embeddedLibrary "curios"
                 optionalDependency "starlight-forge"
@@ -236,7 +198,7 @@ modrinth {
     projectId = "${project.modrinth_id}"
     versionNumber = "${version}"
     versionType = "${project.version_type}"
-    versionName = "The Aether - Forge ${version}"
+    versionName = "${project.mod_name} - Forge - ${version}"
     changelog = new File("$rootDir/docs/CHANGELOG.md").text
     uploadFile = tasks.jar
     gameVersions = ["${project.mc_version}"]
@@ -249,8 +211,8 @@ modrinth {
 }
 
 mixin {
-    config "aether.mixins.json"
-    add sourceSets.main, "aether.refmap.json"
+    config "${project.mod_id}.mixins.json"
+    add sourceSets.main, "${project.mod_id}.refmap.json"
 }
 
 build {

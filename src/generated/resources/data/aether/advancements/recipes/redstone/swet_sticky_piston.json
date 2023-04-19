@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_swet_ball": {
+    "has_swet_balls": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "aether:swet_ball"
-            ]
+            "tag": "aether:swet_balls"
           }
         ]
       },
@@ -22,7 +20,7 @@
   },
   "requirements": [
     [
-      "has_swet_ball",
+      "has_swet_balls",
       "has_the_recipe"
     ]
   ],

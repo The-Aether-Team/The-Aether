@@ -1,4 +1,3 @@
-/*
 package com.gildedgames.aether.integration.jei.categories;
 
 import com.gildedgames.aether.Aether;
@@ -77,4 +76,3 @@ public class AmbrosiumRecipeCategory implements IRecipeCategory<AmbrosiumRecipe>
     public void draw(AmbrosiumRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
     }
 }
-*/

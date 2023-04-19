@@ -71,6 +71,7 @@ public class AetherTags {
 		public static final TagKey<Item> AETHER_PORTAL_ACTIVATION_ITEMS = tag("aether_portal_activation_items");
 		public static final TagKey<Item> BOOK_OF_LORE_MATERIALS = tag("book_of_lore_materials");
 		public static final TagKey<Item> SKYROOT_STICKS = tag("skyroot_stick");
+		public static final TagKey<Item> SWET_BALLS = tag("swet_balls");
 		public static final TagKey<Item> GOLDEN_AMBER_HARVESTERS = tag("golden_amber_harvesters");
 		public static final TagKey<Item> TREATED_AS_AETHER_ITEM = tag("treated_as_aether_item");
 		public static final TagKey<Item> NO_SKYROOT_DOUBLE_DROPS = tag("no_skyroot_double_drops");
@@ -141,6 +142,7 @@ public class AetherTags {
 	}
 
 	public static class Entities {
+		public static final TagKey<EntityType<?>> SWETS = tag("swets");
 		public static final TagKey<EntityType<?>> WHIRLWIND_UNAFFECTED = tag("whirlwind_unaffected");
 		public static final TagKey<EntityType<?>> PIGS = tag("pigs");
 		public static final TagKey<EntityType<?>> NO_SKYROOT_DOUBLE_DROPS = tag("no_skyroot_double_drops");
@@ -148,6 +150,7 @@ public class AetherTags {
 		public static final TagKey<EntityType<?>> UNLAUNCHABLE = tag("unlaunchable");
 		public static final TagKey<EntityType<?>> NO_CANDY_CANE_DROPS = tag("no_candy_cane_drops");
 		public static final TagKey<EntityType<?>> DEFLECTABLE_PROJECTILES = tag("deflectable_projectiles");
+		public static final TagKey<EntityType<?>> IGNORE_INVISIBILITY = tag("ignore_invisibility");
 
 		private static TagKey<EntityType<?>> tag(String name) {
 			return TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Aether.MODID, name));

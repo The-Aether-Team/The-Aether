@@ -13,4 +13,10 @@ public interface GuiComponentAccessor {
     static void aether$setBackgroundLocation(ResourceLocation location) {
         throw new AssertionError();
     }
+
+    @Mutable
+    @Accessor("LIGHT_DIRT_BACKGROUND")
+    static void aether$setLightDirtBackground(ResourceLocation location) {
+        throw new AssertionError();
+    }
 }

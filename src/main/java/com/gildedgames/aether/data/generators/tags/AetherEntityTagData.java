@@ -22,6 +22,10 @@ public class AetherEntityTagData extends EntityTypeTagsProvider {
     @Override
     public void addTags(HolderLookup.Provider provider) {
         // Aether
+        this.tag(AetherTags.Entities.SWETS).add(
+                AetherEntityTypes.BLUE_SWET.get(),
+                AetherEntityTypes.GOLDEN_SWET.get()
+        );
         this.tag(AetherTags.Entities.WHIRLWIND_UNAFFECTED).add(AetherEntityTypes.AECHOR_PLANT.get()).addTag(Tags.EntityTypes.BOSSES);
         this.tag(AetherTags.Entities.PIGS).add(
                 EntityType.PIG,
@@ -53,6 +57,9 @@ public class AetherEntityTagData extends EntityTypeTagsProvider {
                 AetherEntityTypes.ZEPHYR_SNOWBALL.get(),
                 AetherEntityTypes.LIGHTNING_KNIFE.get(),
                 AetherEntityTypes.HAMMER_PROJECTILE.get());
+        this.tag(AetherTags.Entities.IGNORE_INVISIBILITY).addTag(Tags.EntityTypes.BOSSES).add(
+                EntityType.GUARDIAN,
+                EntityType.ELDER_GUARDIAN);
 
         // Forge
         this.tag(Tags.EntityTypes.BOSSES).add(

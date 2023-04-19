@@ -200,11 +200,11 @@ public class AetherBlocks {
             () -> new AerogelStairsBlock(() -> AEROGEL.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.AEROGEL.get()).isViewBlocking(AetherBlocks::never)));
 
     public static final RegistryObject<SlabBlock> SKYROOT_SLAB = register("skyroot_slab",
-            () -> new SlabBlock(Block.Properties.copy(AetherBlocks.SKYROOT_PLANKS.get()).strength(0.5F)));
+            () -> new SlabBlock(Block.Properties.copy(AetherBlocks.SKYROOT_PLANKS.get()).strength(2.0F, 3.0F)));
     public static final RegistryObject<SlabBlock> CARVED_SLAB = register("carved_slab",
-            () -> new SlabBlock(Block.Properties.copy(AetherBlocks.CARVED_STONE.get()).strength(0.5F)));
+            () -> new SlabBlock(Block.Properties.copy(AetherBlocks.CARVED_STONE.get()).strength(0.5F, 6.0F)));
     public static final RegistryObject<SlabBlock> ANGELIC_SLAB = register("angelic_slab",
-            () -> new SlabBlock(Block.Properties.copy(AetherBlocks.ANGELIC_STONE.get()).strength(0.5F)));
+            () -> new SlabBlock(Block.Properties.copy(AetherBlocks.ANGELIC_STONE.get()).strength(0.5F, 6.0F)));
     public static final RegistryObject<SlabBlock> HELLFIRE_SLAB = register("hellfire_slab",
             () -> new SlabBlock(Block.Properties.copy(AetherBlocks.HELLFIRE_STONE.get()).strength(0.5F, 6.0F)));
     public static final RegistryObject<SlabBlock> HOLYSTONE_SLAB = register("holystone_slab",

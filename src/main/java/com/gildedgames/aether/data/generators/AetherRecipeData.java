@@ -329,30 +329,30 @@ public class AetherRecipeData extends AetherRecipeProvider {
         // The group IDs below match the IDs of the respective vanilla recipes
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, Items.LEAD, 2)
                 .group("minecraft:lead")
-                .define('B', AetherItems.SWET_BALL.get())
+                .define('B', AetherTags.Items.SWET_BALLS)
                 .define('S', Tags.Items.STRING)
                 .pattern("SS ")
                 .pattern("SB ")
                 .pattern("  S")
-                .unlockedBy(getHasName(AetherItems.SWET_BALL.get()), has(AetherItems.SWET_BALL.get()))
+                .unlockedBy("has_swet_balls", has(AetherTags.Items.SWET_BALLS))
                 .save(consumer, name("swet_lead"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, Blocks.STICKY_PISTON, 1)
                 .group("minecraft:sticky_piston")
-                .define('B', AetherItems.SWET_BALL.get())
+                .define('B', AetherTags.Items.SWET_BALLS)
                 .define('P', Blocks.PISTON)
                 .pattern("B")
                 .pattern("P")
-                .unlockedBy(getHasName(AetherItems.SWET_BALL.get()), has(AetherItems.SWET_BALL.get()))
+                .unlockedBy("has_swet_balls", has(AetherTags.Items.SWET_BALLS))
                 .save(consumer, name("swet_sticky_piston"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, Blocks.SLIME_BLOCK, 1)
                 .group("minecraft:slime_block")
-                .define('B', AetherItems.SWET_BALL.get())
+                .define('B', AetherTags.Items.SWET_BALLS)
                 .pattern("BBB")
                 .pattern("BBB")
                 .pattern("BBB")
-                .unlockedBy(getHasName(AetherItems.SWET_BALL.get()), has(AetherItems.SWET_BALL.get()))
+                .unlockedBy("has_swet_balls", has(AetherTags.Items.SWET_BALLS))
                 .save(consumer, name("swet_slime_block"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.BARREL, 1)

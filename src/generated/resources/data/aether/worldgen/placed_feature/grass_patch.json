@@ -16,7 +16,7 @@
           "min_inclusive": 0
         }
       },
-      "heightmap": "WORLD_SURFACE_WG",
+      "heightmap": "MOTION_BLOCKING",
       "verticalBounds": 4
     },
     {

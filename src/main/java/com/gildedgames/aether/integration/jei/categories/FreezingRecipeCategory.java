@@ -1,4 +1,3 @@
-/*
 package com.gildedgames.aether.integration.jei.categories;
 
 import com.gildedgames.aether.Aether;
@@ -69,7 +68,7 @@ public class FreezingRecipeCategory extends AbstractAetherCookingRecipeCategory 
         NonNullList<Ingredient> recipeIngredients = recipe.getIngredients();
 
         builder.addSlot(RecipeIngredientRole.INPUT, 1, 1).addIngredients(recipeIngredients.get(0));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 61, 19).addItemStack(recipe.getResultItem());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 61, 19).addItemStack(recipe.getResult());
     }
 
     @Override
@@ -80,4 +79,3 @@ public class FreezingRecipeCategory extends AbstractAetherCookingRecipeCategory 
         drawCookTime(recipe, stack, 45, background);
     }
 }
-*/
