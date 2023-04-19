@@ -314,10 +314,6 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addDiscDesc(AetherItems.MUSIC_DISC_AETHER_TUNE, "Noisestorm - Aether Tune");
         addItem(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "Valkyrie Music Disc");
         addDiscDesc(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "Emile van Krieken - Ascending Dawn");
-        addItem(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "Frosted Music Disc");
-        addDiscDesc(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "Voyed - Welcoming Skies");
-        addItem(AetherItems.MUSIC_DISC_LEGACY, "Duck Music Disc");
-        addDiscDesc(AetherItems.MUSIC_DISC_LEGACY, "Jon Lachney - Legacy");
         addItem(AetherItems.MUSIC_DISC_CHINCHILLA, "Sepia Music Disc");
         addDiscDesc(AetherItems.MUSIC_DISC_CHINCHILLA, "RENREN - chinchilla");
         addItem(AetherItems.MUSIC_DISC_HIGH, "Super Music Disc");
@@ -1033,8 +1029,6 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.ZANITE_SWORD, "One of Aether's mid-tier tools, the attack damage on this sword starts at wood level, and will get to Diamond level when its durability is low.");
         addLore(AetherItems.MUSIC_DISC_AETHER_TUNE, "A music disc that plays Aether Tune by Noisestorm.");
         addLore(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "A music disc that plays Ascending Dawn by Emile van Krieken.");
-        addLore(AetherItems.MUSIC_DISC_LEGACY, "A music disc that plays Legacy by Jon Lachney.");
-        addLore(AetherItems.MUSIC_DISC_WELCOMING_SKIES, "A music disc that plays Welcoming Skies by Voyed.");
         addLore(AetherItems.MUSIC_DISC_CHINCHILLA,"A music disc that plays chinchilla by RENREN.");
         addLore(AetherItems.MUSIC_DISC_HIGH,"A music disc that plays high by RENREN.");
         addLoreUnique("item.aether.hammer_of_jeb", "A mysterious hammer that can shoot projectiles. At one point it vanished from existence. It's said this was actually Jeb's hammer at one point.");

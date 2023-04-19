@@ -362,8 +362,8 @@ public class AetherItemTagData extends ItemTagsProvider {
         this.tag(ItemTags.MUSIC_DISCS).add(
                 AetherItems.MUSIC_DISC_AETHER_TUNE.get(),
                 AetherItems.MUSIC_DISC_ASCENDING_DAWN.get(),
-                AetherItems.MUSIC_DISC_WELCOMING_SKIES.get(),
-                AetherItems.MUSIC_DISC_LEGACY.get());
+                AetherItems.MUSIC_DISC_CHINCHILLA.get(),
+                AetherItems.MUSIC_DISC_HIGH.get());
         this.tag(ItemTags.BEACON_PAYMENT_ITEMS).add(
                 AetherItems.ZANITE_GEMSTONE.get(),
                 AetherBlocks.ENCHANTED_GRAVITITE.get().asItem());

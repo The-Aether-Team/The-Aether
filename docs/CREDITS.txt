@@ -50,6 +50,9 @@ saintselect
 - Converting entity audio files from stereo to mono.
 - Fixes to the Gravitite Sword ability performing when it shouldn't.
 
+sunsette
+- Compression of aether5, chinchilla, and high.
+
 StonedCoal:
 - Implementation of the Aether's main menu.
 - Fixes to the Aerbunny.
