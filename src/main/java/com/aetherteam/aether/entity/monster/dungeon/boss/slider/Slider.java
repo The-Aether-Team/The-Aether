@@ -49,6 +49,7 @@ import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Scanner;
 
 public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy, IEntityAdditionalSpawnData {
     public static final EntityDataAccessor<Boolean> DATA_AWAKE_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.BOOLEAN);
@@ -408,15 +409,15 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy, IEn
     }
 
     public int calculateMoveDelay() {
-        return this.isCritical() ? 4 : 8;
+        return this.isCritical() ? 1 + this.random.nextInt(10) : 2 + this.random.nextInt(14);
     }
 
     protected float getVelocityIncrease() {
-        return this.isCritical() ? 0.035F : 0.02F;
+        return this.isCritical() ? 0.045F - (this.getHealth()/10000) : 0.035F - (this.getHealth()/30000);
     }
 
     protected float getMaxVelocity() {
-        return 2.0F;
+        return 2.5F;
     }
 
     protected SoundEvent getAwakenSound() {
