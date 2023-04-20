@@ -20,12 +20,12 @@ You can also support the Aether project and The Aether Team by telling your frie
 If you're interested in sponsoring the Aether project or The Aether Team, please [contact Oz#1986 on the Aether Community Discord](https://discord.gg/aethermod).
 
 ## :package: Download the latest releases
-[![Mod loader: Forge](https://img.shields.io/badge/mod%20loader-forge-CC974D?style=flat-square)](https://files.minecraftforge.net/net/minecraftforge/forge/)
+[![](https://img.shields.io/badge/mod%20loader-forge-CC974D?style=flat-square)](https://files.minecraftforge.net/net/minecraftforge/forge/)
 [![](http://cf.way2muchnoise.eu/aether.svg)]()
 [![](http://cf.way2muchnoise.eu/versions/aether_latest.svg)]()
 [![](https://img.shields.io/modrinth/dt/YhmgMVyu?color=00AF5C&logo=modrinth)]()
 [![](https://img.shields.io/modrinth/game-versions/YhmgMVyu?color=00AF5C&label=latest&logo=modrinth&last=true)]()
-[![Gilded-Games](https://circleci.com/gh/Gilded-Games/The-Aether/tree/1.19.svg?style=shield)](https://app.circleci.com/pipelines/github/Gilded-Games/The-Aether?branch=1.19)
+[![](https://circleci.com/gh/Gilded-Games/The-Aether/tree/1.19.svg?style=shield)](https://app.circleci.com/pipelines/github/Gilded-Games/The-Aether?branch=1.19)
 ### Release builds
 The Aether has no stable release builds for the latest version of Minecraft just yet, but this port is in active development so keep an eye out for its eventual release.
 
@@ -80,8 +80,8 @@ Then load it through your dependencies, with `project.aether_version` specified 
 ```
 dependencies {
   ...
-  compileOnly "com.gildedgames.aether:aether:${project.aether_version}"
-  runtimeOnly fg.deobf("com.gildedgames.aether:aether:${project.aether_version}")
+  compileOnly "com.aetherteam.aether:aether:${project.aether_version}"
+  runtimeOnly fg.deobf("com.aetherteam.aether:aether:${project.aether_version}")
   ...
 }
 ```

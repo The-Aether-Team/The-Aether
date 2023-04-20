@@ -9,7 +9,7 @@ plugins {
 }
 
 version = "${project.mc_version}-${project.mod_version}-forge"
-group = 'com.gildedgames.aether' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = 'com.aetherteam.aether' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = project.mod_id
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17) // Mojang ships Java 8 to end users, so your mod should target Java 8.
@@ -75,8 +75,8 @@ dependencies {
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-//    compileOnly "com.gildedgames.nitrogen:nitrogen:${project.nitrogen_version}"
-//    runtimeOnly fg.deobf("com.gildedgames.nitrogen:nitrogen:${project.nitrogen_version}")
+//    compileOnly "com.aetherteam.nitrogen:nitrogen:${project.nitrogen_version}"
+//    runtimeOnly fg.deobf("com.aetherteam.nitrogen:nitrogen:${project.nitrogen_version}")
 
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}")
 
@@ -88,7 +88,7 @@ dependencies {
 
 //    runtimeOnly fg.deobf("io.github.flemmli97:debugutils:${project.mc_version}-${project.debugutils_version}-forge")
 
-//    jarJar fg.deobf("com.gildedgames.nitrogen:nitrogen:${project.nitrogen_version}") {
+//    jarJar fg.deobf("com.aetherteam.nitrogen:nitrogen:${project.nitrogen_version}") {
 //        jarJar.ranged(it, "[${project.nitrogen_version},)")
 //        jarJar.pin(it, "${project.nitrogen_version}")
 //    }
@@ -121,11 +121,11 @@ jar {
     manifest {
         attributes([
                 "Specification-Title"     : project.mod_name,
-                "Specification-Vendor"    : "Gilded Games",
+                "Specification-Vendor"    : "The Aether Team",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.mod_name,
                 "Implementation-Version"  : project.jar.archiveVersion,
-                "Implementation-Vendor"   : "Gilded Games",
+                "Implementation-Vendor"   : "The Aether Team",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
