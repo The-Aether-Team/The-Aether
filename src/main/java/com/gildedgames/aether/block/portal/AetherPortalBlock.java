@@ -2,6 +2,7 @@ package com.gildedgames.aether.block.portal;
 
 import com.gildedgames.aether.capability.AetherCapabilities;
 import com.gildedgames.aether.capability.player.AetherPlayer;
+import com.gildedgames.aether.client.AetherSoundEvents;
 import com.gildedgames.aether.client.particle.AetherParticleTypes;
 import com.gildedgames.aether.mixin.mixins.common.accessor.EntityAccessor;
 import com.gildedgames.aether.util.LevelUtil;
@@ -22,7 +23,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -100,7 +100,7 @@ public class AetherPortalBlock extends Block {
 	@Override
 	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
 		if (random.nextInt(100) == 0) {
-			level.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS, 0.5F, random.nextFloat() * 0.4F + 0.8F, false);
+			level.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, AetherSoundEvents.BLOCK_AETHER_PORTAL_AMBIENT.get(), SoundSource.BLOCKS, 0.5F, random.nextFloat() * 0.4F + 0.8F, false);
 		}
 		for (int i = 0; i < 4; ++i) {
 			double x = pos.getX() + random.nextDouble();
