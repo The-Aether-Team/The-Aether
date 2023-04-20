@@ -1,9 +1,9 @@
 {
   "required": true,
-  "package": "com.gildedgames.aether.mixin.mixins",
+  "package": "com.aetherteam.aether.mixin.mixins",
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_17",
-  "plugin": "com.gildedgames.aether.mixin.AetherMixinPlugin",
+  "plugin": "com.aetherteam.aether.mixin.AetherMixinPlugin",
   "refmap": "aether.refmap.json",
   "mixins": [
     "common.AbstractArrowMixin",
@@ -46,6 +46,7 @@
     "client.WorldListEntryMixin",
     "client.accessor.BlockColorsAccessor",
     "client.accessor.ButtonAccessor",
+    "client.accessor.CreateWorldScreenAccessor",
     "client.accessor.EntityRendererAccessor",
     "client.accessor.GuiAccessor",
     "client.accessor.GuiComponentAccessor",
@@ -57,6 +58,7 @@
     "client.accessor.QuadrupedModelAccessor",
     "client.accessor.RealmsPlayerScreenAccessor",
     "client.accessor.ScreenAccessor",
+    "client.accessor.TabButtonAccessor",
     "client.accessor.TitleScreenAccessor"
   ],
   "injectors": {

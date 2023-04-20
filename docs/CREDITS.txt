@@ -36,15 +36,22 @@ Jonathing
 - Refactors to use Supplier instead of RegistryObject for parameters taking a MoaType.
 - Refactors to use wildcards for Suppliers for public API.
 - Refactors to use constructors instead of Google's helper methods for data structures.
+- Refactors to buildscript.
 - Fixes to jarJar-built file not reobfuscating.
 
 Kelvin285
 - Implementation of the world preview feature for the Aether's main menu.
 
+kodadacod
+- Implementation of the Skyroot Chest Boat programmer art.
+
 saintselect
 - Integration for JEI.
 - Converting entity audio files from stereo to mono.
 - Fixes to the Gravitite Sword ability performing when it shouldn't.
+
+sunsette
+- Compression of aether5, chinchilla, and high.
 
 StonedCoal:
 - Implementation of the Aether's main menu.

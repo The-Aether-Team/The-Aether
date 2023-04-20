@@ -40,7 +40,7 @@ jobs:
                 name: Publish artifact link to Discord
                 command: |
                   if [ ${CIRCLE_BRANCH} = 1.19 ] && << pipeline.parameters.allow-deploy-and-discord-publish >>; then
-                    artifact_path=$(curl --request GET --url https://circleci.com/api/v2/project/gh/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM/artifacts -H "Accept: application/json" -u "REPLACE_BASIC_AUTH" | jq -r '.items[1].path')
+                    artifact_path=$(curl --request GET --url https://circleci.com/api/v2/project/gh/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM/artifacts -H "Accept: application/json" | jq -r '.items[1].path')
                     if [ -z "${WEBHOOK_URL}" ]; then
                       echo "NO DISCORD WEBHOOK SET"
                       echo "Please input your DISCORD_WEBHOOK value either in the settings for this project, or as a parameter for this orb."
@@ -180,20 +180,6 @@ jobs:
          steps:
            - run: echo "Condition not met."
 
-  publish:
-    machine:
-      image: ubuntu-2204:2022.07.1
-    resource_class: large
-    environment:
-      _JAVA_OPTIONS: -Xmx3200m
-      GRADLE_OPTS: -Dorg.gradle.daemon=false
-    steps:
-      - setup
-      - run: |
-          gradle publish
-          gradle curseforge
-          gradle modrinth
-
 commands:
   setup:
     steps:
@@ -201,7 +187,7 @@ commands:
       - gradle/with_cache:
           cache_key: 'v8'
           steps:
-            - run: gradle build --parallel --build-cache
+            - run: gradle build --parallel --build-cache --console=plain
       - store_artifacts:
           path: ~/project/build/libs
 
@@ -218,16 +204,3 @@ workflows:
                 - "1.19"
           requires:
             - build
-  publish:
-    jobs:
-      - publish:
-          context:
-            - maven
-            - publishing
-          filters:
-            tags:
-              only:
-                - /.*/
-            branches:
-              ignore:
-                - /.*/

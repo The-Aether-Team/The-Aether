@@ -52,7 +52,7 @@
       "upper_size": 1
     },
     "trunk_placer": {
-      "type": "minecraft:straight_trunk_placer",
+      "type": "aether:crystal_tree_trunk_placer",
       "base_height": 7,
       "height_rand_a": 0,
       "height_rand_b": 0
