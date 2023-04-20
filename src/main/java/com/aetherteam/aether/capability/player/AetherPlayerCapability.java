@@ -479,13 +479,15 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	}
 
 	private void handleLifeShardModifier() {
-		AttributeInstance health = this.getPlayer().getAttribute(Attributes.MAX_HEALTH);
-		AttributeModifier LIFE_SHARD_HEALTH = this.getLifeShardHealthAttributeModifier();
-		if (health != null) {
-			if (health.hasModifier(LIFE_SHARD_HEALTH)) {
-				health.removeModifier(LIFE_SHARD_HEALTH);
+		if (!this.getPlayer().getLevel().isClientSide()) {
+			AttributeInstance health = this.getPlayer().getAttribute(Attributes.MAX_HEALTH);
+			AttributeModifier LIFE_SHARD_HEALTH = this.getLifeShardHealthAttributeModifier();
+			if (health != null) {
+				if (health.hasModifier(LIFE_SHARD_HEALTH)) {
+					health.removeModifier(LIFE_SHARD_HEALTH);
+				}
+				health.addTransientModifier(LIFE_SHARD_HEALTH);
 			}
-			health.addTransientModifier(LIFE_SHARD_HEALTH);
 		}
 	}
 

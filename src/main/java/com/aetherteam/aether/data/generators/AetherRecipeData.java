@@ -329,30 +329,30 @@ public class AetherRecipeData extends AetherRecipeProvider {
         // The group IDs below match the IDs of the respective vanilla recipes
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, Items.LEAD, 2)
                 .group("minecraft:lead")
-                .define('B', AetherItems.SWET_BALL.get())
+                .define('B', AetherTags.Items.SWET_BALLS)
                 .define('S', Tags.Items.STRING)
                 .pattern("SS ")
                 .pattern("SB ")
                 .pattern("  S")
-                .unlockedBy(getHasName(AetherItems.SWET_BALL.get()), has(AetherItems.SWET_BALL.get()))
+                .unlockedBy("has_swet_balls", has(AetherTags.Items.SWET_BALLS))
                 .save(consumer, name("swet_lead"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, Blocks.STICKY_PISTON, 1)
                 .group("minecraft:sticky_piston")
-                .define('B', AetherItems.SWET_BALL.get())
+                .define('B', AetherTags.Items.SWET_BALLS)
                 .define('P', Blocks.PISTON)
                 .pattern("B")
                 .pattern("P")
-                .unlockedBy(getHasName(AetherItems.SWET_BALL.get()), has(AetherItems.SWET_BALL.get()))
+                .unlockedBy("has_swet_balls", has(AetherTags.Items.SWET_BALLS))
                 .save(consumer, name("swet_sticky_piston"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, Blocks.SLIME_BLOCK, 1)
                 .group("minecraft:slime_block")
-                .define('B', AetherItems.SWET_BALL.get())
+                .define('B', AetherTags.Items.SWET_BALLS)
                 .pattern("BBB")
                 .pattern("BBB")
                 .pattern("BBB")
-                .unlockedBy(getHasName(AetherItems.SWET_BALL.get()), has(AetherItems.SWET_BALL.get()))
+                .unlockedBy("has_swet_balls", has(AetherTags.Items.SWET_BALLS))
                 .save(consumer, name("swet_slime_block"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.BARREL, 1)
@@ -715,7 +715,6 @@ public class AetherRecipeData extends AetherRecipeProvider {
         enchantingRecipe(RecipeCategory.FOOD, AetherItems.ENCHANTED_BERRY.get(), AetherItems.BLUE_BERRY.get(), 0.35F, 250).save(consumer, name("enchanted_berry_enchanting"));
 
         enchantingRecipe(RecipeCategory.MISC, AetherItems.MUSIC_DISC_AETHER_TUNE.get(), AetherTags.Items.ACCEPTED_MUSIC_DISCS, 1.0F, 500, "disc").save(consumer, name("aether_tune_enchanting"));
-        hiddenEnchantingRecipe(RecipeCategory.MISC, AetherItems.MUSIC_DISC_LEGACY.get(), Items.MUSIC_DISC_CAT, 1.0F, 500).save(consumer, name("legacy_enchanting"));
         hiddenEnchantingRecipe(RecipeCategory.MISC, AetherItems.MUSIC_DISC_CHINCHILLA.get(), Items.MUSIC_DISC_STRAD, 1.0F, 500).save(consumer, name("chinchilla_enchanting"));
 
         enchantingRecipe(RecipeCategory.MISC, AetherItems.SKYROOT_REMEDY_BUCKET.get(), AetherItems.SKYROOT_POISON_BUCKET.get(), 0.35F, 500).save(consumer, name("remedy_bucket_enchanting"));
@@ -723,7 +722,6 @@ public class AetherRecipeData extends AetherRecipeProvider {
         freezingRecipe(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.BLUE_AERCLOUD.get(), AetherBlocks.COLD_AERCLOUD.get(), 0.1F, 400).save(consumer, name("blue_aercloud_freezing"));
         freezingRecipe(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.CRYSTAL_LEAVES.get(), AetherBlocks.SKYROOT_LEAVES.get(), 0.1F, 500).save(consumer, name("crystal_leaves_freezing"));
 
-        hiddenFreezingRecipe(RecipeCategory.MISC, AetherItems.MUSIC_DISC_WELCOMING_SKIES.get(), AetherItems.MUSIC_DISC_ASCENDING_DAWN.get(), 1.0F, 500).save(consumer, name("welcoming_skies_freezing"));
         hiddenFreezingRecipe(RecipeCategory.MISC, AetherItems.MUSIC_DISC_HIGH.get(), AetherItems.MUSIC_DISC_CHINCHILLA.get(), 1.0F, 500).save(consumer, name("high_freezing"));
 
         freezingRecipeWithUnlockTag(RecipeCategory.BUILDING_BLOCKS, Blocks.BLUE_ICE, Blocks.PACKED_ICE, AetherTags.Items.FREEZABLE_BUCKETS, 0.1F, 500, "water_bucket").save(consumer, name("blue_ice_freezing"));

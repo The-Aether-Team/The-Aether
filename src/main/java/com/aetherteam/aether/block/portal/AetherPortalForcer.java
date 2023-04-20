@@ -48,7 +48,6 @@ public class AetherPortalForcer implements ITeleporter {
     public boolean playTeleportSound(ServerPlayer player, ServerLevel sourceLevel, ServerLevel destinationLevel) {
         if (this.hasFrame) {
             AetherPacketHandler.sendToPlayer(new PortalTravelSoundPacket(), player);
-            return true;
         }
         return false;
     }

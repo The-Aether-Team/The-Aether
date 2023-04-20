@@ -828,22 +828,6 @@
       }
     ]
   },
-  "item.music_disc.legacy": {
-    "sounds": [
-      {
-        "name": "aether:item/records/legacy",
-        "stream": true
-      }
-    ]
-  },
-  "item.music_disc.welcoming_skies": {
-    "sounds": [
-      {
-        "name": "aether:item/records/welcoming_skies",
-        "stream": true
-      }
-    ]
-  },
   "music.aether": {
     "sounds": [
       {

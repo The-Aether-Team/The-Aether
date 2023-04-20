@@ -257,12 +257,6 @@ public class AetherSoundData extends SoundDefinitionsProvider {
         this.add(AetherSoundEvents.ITEM_MUSIC_DISC_ASCENDING_DAWN,
                 definition().with(sound("aether:item/records/ascending_dawn").stream())
         );
-        this.add(AetherSoundEvents.ITEM_MUSIC_DISC_WELCOMING_SKIES,
-                definition().with(sound("aether:item/records/welcoming_skies").stream())
-        );
-        this.add(AetherSoundEvents.ITEM_MUSIC_DISC_LEGACY,
-                definition().with(sound("aether:item/records/legacy").stream())
-        );
         this.add(AetherSoundEvents.ITEM_MUSIC_DISC_CHINCHILLA,
                 definition().with(sound("aether:item/records/chinchilla").stream())
         );

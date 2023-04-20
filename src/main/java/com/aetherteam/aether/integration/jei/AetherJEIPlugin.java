@@ -1,15 +1,14 @@
-/*
-package com.gildedgames.aether.integration.jei;
+package com.aetherteam.aether.integration.jei;
 
-import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.integration.jei.categories.*;
-import com.gildedgames.aether.integration.jei.categories.fuel.AetherFuelCategory;
-import com.gildedgames.aether.integration.jei.categories.fuel.AetherFuelRecipeMaker;
-import com.gildedgames.aether.item.AetherItems;
-import com.gildedgames.aether.recipe.AetherRecipeTypes;
-import com.gildedgames.aether.recipe.recipes.item.AltarRepairRecipe;
-import com.gildedgames.aether.recipe.recipes.item.EnchantingRecipe;
+import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.block.AetherBlocks;
+import com.aetherteam.aether.integration.jei.categories.*;
+import com.aetherteam.aether.integration.jei.categories.fuel.AetherFuelCategory;
+import com.aetherteam.aether.integration.jei.categories.fuel.AetherFuelRecipeMaker;
+import com.aetherteam.aether.item.AetherItems;
+import com.aetherteam.aether.recipe.AetherRecipeTypes;
+import com.aetherteam.aether.recipe.recipes.item.AltarRepairRecipe;
+import com.aetherteam.aether.recipe.recipes.item.EnchantingRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
@@ -74,4 +73,3 @@ public class AetherJEIPlugin implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(AetherItems.AMBROSIUM_SHARD.get().asItem()), AmbrosiumRecipeCategory.RECIPE_TYPE);
     }
 }
-*/

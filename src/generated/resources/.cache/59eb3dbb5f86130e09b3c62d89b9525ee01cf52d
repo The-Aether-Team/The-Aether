@@ -1,4 +1,4 @@
-// 1.19.4	2023-03-27T14:14:11.8388172	Loot Tables
+// 1.19.4	2023-04-12T14:45:24.2580211	Loot Tables
 d025471306910ea35dcf85d28fc188182a1b3c8d data/aether/loot_tables/advancements/enter_aether.json
 96aec873b17d2a5aed2a22fe094efa32b8d54645 data/aether/loot_tables/blocks/aerogel.json
 ffdecdc23fdf03314c666c6d8638f7f44bdbcc8b data/aether/loot_tables/blocks/aerogel_slab.json
@@ -36,7 +36,7 @@ a16f9cbfeadabb9e6c2e8ed7c91fd17600d9537a data/aether/loot_tables/blocks/cold_aer
 5e436110b46b3f9e94198f4e2a39f4ead7196a4d data/aether/loot_tables/blocks/crystal_fruit_leaves.json
 97d67d427b5b0089bb52f76d557e762f6280e1ac data/aether/loot_tables/blocks/crystal_leaves.json
 072755b2731b62d6db426eca56301da1ad208551 data/aether/loot_tables/blocks/decorated_holiday_leaves.json
-fb2a129617148d0f11e10635096d96c8364de598 data/aether/loot_tables/blocks/enchanted_aether_grass_block.json
+8d8073b64d679edfc5807f69dc6e605e89b97116 data/aether/loot_tables/blocks/enchanted_aether_grass_block.json
 e7dd3076149db8ad39ea29ea18fa92629c655240 data/aether/loot_tables/blocks/enchanted_gravitite.json
 2765f1b6c4c298a5bf1bbcdc4c673efb573ce627 data/aether/loot_tables/blocks/freezer.json
 33c7f5b77e576fc80c4694550e9d21d214402393 data/aether/loot_tables/blocks/golden_aercloud.json

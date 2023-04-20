@@ -30,7 +30,7 @@ public class AetherBlockLoot extends AetherBlockLootSubProvider {
         this.dropNone(AetherBlocks.AETHER_PORTAL.get());
 
         this.dropDoubleWithSilk(AetherBlocks.AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_DIRT.get());
-        this.dropDoubleWithSilk(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_DIRT.get());
+        this.add(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get(), (block) -> this.createSingleItemTableWithSilkTouch(block, AetherBlocks.AETHER_DIRT.get()));
         this.dropSelfDouble(AetherBlocks.AETHER_DIRT.get());
         this.dropSelfDouble(AetherBlocks.QUICKSOIL.get());
         this.dropSelfDouble(AetherBlocks.HOLYSTONE.get());

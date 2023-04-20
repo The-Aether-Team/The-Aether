@@ -1,11 +1,10 @@
-/*
-package com.gildedgames.aether.integration.jei.categories;
+package com.aetherteam.aether.integration.jei.categories;
 
-import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.item.AetherItems;
-import com.gildedgames.aether.recipe.BlockPropertyPair;
-import com.gildedgames.aether.recipe.BlockStateIngredient;
-import com.gildedgames.aether.recipe.recipes.block.AmbrosiumRecipe;
+import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.item.AetherItems;
+import com.aetherteam.aether.recipe.BlockPropertyPair;
+import com.aetherteam.aether.recipe.BlockStateIngredient;
+import com.aetherteam.aether.recipe.recipes.block.AmbrosiumRecipe;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -77,4 +76,3 @@ public class AmbrosiumRecipeCategory implements IRecipeCategory<AmbrosiumRecipe>
     public void draw(AmbrosiumRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
     }
 }
-*/

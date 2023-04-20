@@ -26,9 +26,10 @@ public class LoreBookItem extends Item {
      */
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        ItemStack heldStack = player.getItemInHand(hand);
         if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
             NetworkHooks.openScreen(serverPlayer, new SimpleMenuProvider((id, inventory, playerEntity) -> new LoreBookMenu(id, inventory), Component.translatable("menu.aether.book_of_lore")));
         }
-        return super.use(level, player, hand);
+        return InteractionResultHolder.sidedSuccess(heldStack, level.isClientSide());
     }
 }

@@ -52,6 +52,7 @@ public class AetherItemTagData extends ItemTagsProvider {
                 Items.FLINT,
                 AetherItems.AMBROSIUM_SHARD.get());
         this.tag(AetherTags.Items.SKYROOT_STICKS).add(AetherItems.SKYROOT_STICK.get());
+        this.tag(AetherTags.Items.SWET_BALLS).add(AetherItems.SWET_BALL.get());
         this.tag(AetherTags.Items.GOLDEN_AMBER_HARVESTERS).add(
                 AetherItems.ZANITE_AXE.get(),
                 AetherItems.GRAVITITE_AXE.get(),
@@ -361,8 +362,8 @@ public class AetherItemTagData extends ItemTagsProvider {
         this.tag(ItemTags.MUSIC_DISCS).add(
                 AetherItems.MUSIC_DISC_AETHER_TUNE.get(),
                 AetherItems.MUSIC_DISC_ASCENDING_DAWN.get(),
-                AetherItems.MUSIC_DISC_WELCOMING_SKIES.get(),
-                AetherItems.MUSIC_DISC_LEGACY.get());
+                AetherItems.MUSIC_DISC_CHINCHILLA.get(),
+                AetherItems.MUSIC_DISC_HIGH.get());
         this.tag(ItemTags.BEACON_PAYMENT_ITEMS).add(
                 AetherItems.ZANITE_GEMSTONE.get(),
                 AetherBlocks.ENCHANTED_GRAVITITE.get().asItem());

@@ -1,9 +1,8 @@
-/*
-package com.gildedgames.aether.integration.jei.categories;
+package com.aetherteam.aether.integration.jei.categories;
 
-import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.block.AetherBlocks;
-import com.gildedgames.aether.recipe.recipes.item.EnchantingRecipe;
+import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.block.AetherBlocks;
+import com.aetherteam.aether.recipe.recipes.item.EnchantingRecipe;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -69,7 +68,7 @@ public class EnchantingCookingRecipeCategory extends AbstractAetherCookingRecipe
         NonNullList<Ingredient> recipeIngredients = recipe.getIngredients();
 
         builder.addSlot(RecipeIngredientRole.INPUT, 1, 1).addIngredients(recipeIngredients.get(0));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 61, 19).addItemStack(recipe.getResultItem());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 61, 19).addItemStack(recipe.getResult());
     }
 
     @Override
@@ -80,4 +79,3 @@ public class EnchantingCookingRecipeCategory extends AbstractAetherCookingRecipe
         drawCookTime(recipe, stack, 45, background);
     }
 }
-*/

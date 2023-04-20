@@ -108,4 +108,12 @@ public class AetherFarmBlock extends FarmBlock {
         PlantType type = plantable.getPlantType(level, pos.relative(direction));
         return (plantable instanceof BushBlock bushBlock && ((BushBlockAccessor) bushBlock).callMayPlaceOn(state, level, pos)) || PlantType.CROP.equals(type) || PlantType.PLAINS.equals(type);
     }
+
+    /**
+     * Based on {@link net.minecraftforge.common.extensions.IForgeBlock#isFertile(BlockState, BlockGetter, BlockPos)}.
+     */
+    @Override
+    public boolean isFertile(BlockState state, BlockGetter level, BlockPos pos) {
+        return state.getValue(FarmBlock.MOISTURE) > 0;
+    }
 }

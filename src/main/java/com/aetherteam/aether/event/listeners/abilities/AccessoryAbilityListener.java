@@ -1,15 +1,16 @@
 package com.aetherteam.aether.event.listeners.abilities;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.event.hooks.AbilityHooks;
 import com.aetherteam.aether.item.accessories.abilities.ShieldOfRepulsionAccessory;
 import com.aetherteam.aether.util.EquipmentUtil;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -61,7 +62,8 @@ public class AccessoryAbilityListener {
     @SubscribeEvent
     public static void onTargetSet(LivingEvent.LivingVisibilityEvent event) {
         LivingEntity livingEntity = event.getEntity();
-        if (EquipmentUtil.hasInvisibilityCloak(livingEntity) && !livingEntity.getType().is(Tags.EntityTypes.BOSSES)) {
+        Entity lookingEntity = event.getLookingEntity();
+        if (EquipmentUtil.hasInvisibilityCloak(livingEntity) && lookingEntity != null && !lookingEntity.getType().is(AetherTags.Entities.IGNORE_INVISIBILITY)) {
             event.modifyVisibility(0.0);
         }
     }

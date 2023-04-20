@@ -1,8 +1,7 @@
-/*
-package com.gildedgames.aether.integration.jei.categories.fuel;
+package com.aetherteam.aether.integration.jei.categories.fuel;
 
-import com.gildedgames.aether.Aether;
-import com.gildedgames.aether.block.AetherBlocks;
+import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.block.AetherBlocks;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -110,4 +109,3 @@ public class AetherFuelCategory implements IRecipeCategory<AetherFuelRecipe> {
                 .append(")");
     }
 }
-*/
