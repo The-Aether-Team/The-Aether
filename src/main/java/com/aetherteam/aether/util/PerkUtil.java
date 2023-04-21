@@ -51,7 +51,7 @@ public class PerkUtil {
     }
 
     public static Predicate<User> isDeveloper() {
-        return (user) -> user.hasRank(Ranked.Rank.GILDED_GAMES) || user.hasRank(Ranked.Rank.MODDING_LEGACY);
+        return (user) -> user.hasRank(Ranked.Rank.THE_AETHER_TEAM) || user.hasRank(Ranked.Rank.MODDING_LEGACY);
     }
 
     public static Predicate<User> isContributor() {
