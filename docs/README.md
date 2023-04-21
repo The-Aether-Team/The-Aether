@@ -21,10 +21,10 @@ If you're interested in sponsoring the Aether project or The Aether Team, please
 
 ## :package: Download the latest releases
 [![](https://img.shields.io/badge/mod%20loader-forge-CC974D?style=flat-square)](https://files.minecraftforge.net/net/minecraftforge/forge/)
-[![](http://cf.way2muchnoise.eu/aether.svg)]()
-[![](http://cf.way2muchnoise.eu/versions/aether_latest.svg)]()
 [![](https://img.shields.io/modrinth/dt/YhmgMVyu?color=00AF5C&logo=modrinth)]()
 [![](https://img.shields.io/modrinth/game-versions/YhmgMVyu?color=00AF5C&label=latest&logo=modrinth&last=true)]()
+[![](http://cf.way2muchnoise.eu/aether.svg)]()
+[![](http://cf.way2muchnoise.eu/versions/aether_latest.svg)]()
 [![](https://circleci.com/gh/Gilded-Games/The-Aether/tree/1.19.svg?style=shield)](https://app.circleci.com/pipelines/github/Gilded-Games/The-Aether?branch=1.19)
 ### Release builds
 The Aether has no stable release builds for the latest version of Minecraft just yet, but this port is in active development so keep an eye out for its eventual release.
