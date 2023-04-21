@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 public class ArmorAbilityListener {
     /**
      * @see ValkyrieArmor#handleFlight(LivingEntity)
+     * @see NeptuneArmor#boostWaterSwimming(LivingEntity)
      * @see PhoenixArmor#boostLavaSwimming(LivingEntity)
      * @see PhoenixArmor#damageArmor(LivingEntity)
      */
@@ -23,6 +24,7 @@ public class ArmorAbilityListener {
         LivingEntity livingEntity = event.getEntity();
         if (!event.isCanceled()) {
             ValkyrieArmor.handleFlight(livingEntity);
+            NeptuneArmor.boostWaterSwimming(livingEntity);
             PhoenixArmor.boostLavaSwimming(livingEntity);
             PhoenixArmor.damageArmor(livingEntity);
         }
