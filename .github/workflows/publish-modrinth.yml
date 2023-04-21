@@ -15,9 +15,10 @@ jobs:
     - uses: gradle/gradle-build-action@v2
       with:
         gradle-version: 7.3
+    - name: Publish build
       env:
         MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
-    - run: |
+      run: |
         if [ "${{ github.event.sender.login }}" = "OscarPayn" ] || [ "${{ github.event.sender.login }}" = "bconlon1" ]; then
           gradle build
           gradle modrinth
