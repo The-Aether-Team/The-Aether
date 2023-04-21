@@ -99,6 +99,7 @@ public class Aerbunny extends AetherAnimal {
         if (this.isOnGround() || !this.getFeetBlockState().isAir() || (this.getVehicle() != null && (this.getVehicle().isOnGround() || !this.getVehicle().getFeetBlockState().isAir()))) {
             this.lastPos = null;
         }
+        this.checkDespawn();
     }
 
     @Override
@@ -186,6 +187,7 @@ public class Aerbunny extends AetherAnimal {
                 this.setDeltaMovement(playerMovement.x * 5, playerMovement.y * 0.5 + 0.5, playerMovement.z * 5);
             } else if (this.startRiding(player)) {
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setMountedAerbunny(this));
+                this.setPersistenceRequired(); // now that a player is using this aerbunny, don't despawn it.
                 this.level.playSound(player, this, AetherSoundEvents.ENTITY_AERBUNNY_LIFT.get(), SoundSource.NEUTRAL, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
             }
             return InteractionResult.SUCCESS;
