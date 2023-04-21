@@ -1,4 +1,4 @@
-name: Trigger build
+name: Publish to Modrinth
 
 on: 
   workflow_dispatch
