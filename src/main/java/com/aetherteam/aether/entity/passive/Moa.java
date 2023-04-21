@@ -250,7 +250,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 	public InteractionResult mobInteract(Player playerEntity, @Nonnull InteractionHand hand) {
 		ItemStack itemStack = playerEntity.getItemInHand(hand);
 		if (this.isPlayerGrown() && itemStack.is(AetherItems.NATURE_STAFF.get())) {
-			itemStack.hurtAndBreak(2, playerEntity, (p) -> p.broadcastBreakEvent(hand));
+			itemStack.hurtAndBreak(1, playerEntity, (p) -> p.broadcastBreakEvent(hand));
 			this.setSitting(!this.isSitting());
 			this.spawnExplosionParticle();
 			return InteractionResult.sidedSuccess(this.level.isClientSide);
