@@ -1,0 +1,16 @@
+name: Trigger build
+
+on: 
+  workflow_dispatch
+  
+jobs:
+  trigger-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GIT_TOKEN }}
+          fetch-depth: 0
+      - name: Trigger build
+        run: |
+          echo ${{ github.event.sender.login }}
