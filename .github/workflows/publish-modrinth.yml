@@ -9,4 +9,5 @@ jobs:
     steps:
       - name: Trigger build
         run: |
+          gradle modrinth
           echo ${{ github.event.sender.login }}
