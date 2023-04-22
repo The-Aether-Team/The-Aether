@@ -2,12 +2,14 @@ package com.aetherteam.aether.entity.monster.dungeon;
 
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.ai.goal.ContinuousMeleeAttackGoal;
+import com.aetherteam.aether.entity.ai.goal.FallingRandomStrollGoal;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
@@ -26,8 +28,10 @@ public class FireMinion extends Monster {
 
     @Override
     protected void registerGoals() {
+        this.goalSelector.addGoal(3, new FallingRandomStrollGoal(this, 1.0));
         this.goalSelector.addGoal(4, new ContinuousMeleeAttackGoal(this, 1.5, true));
         this.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(this, 1.0));
+        this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }
