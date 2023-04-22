@@ -11,6 +11,7 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -43,10 +44,14 @@ public interface PhoenixArmor {
                         aetherPlayer.setPhoenixSubmergeLength(Math.min(aetherPlayer.getPhoenixSubmergeLength() + 0.1, 1.0));
                         defaultBoost *= aetherPlayer.getPhoenixSubmergeLength();
                         entity.moveRelative(0.04F * defaultBoost, new Vec3(entity.xxa, entity.yya, entity.zza));
+                        Vec3 movement = entity.getDeltaMovement().multiply(1.0, defaultBoost * 2.5, 1.0);
+                        entity.move(MoverType.SELF, movement);
                     });
                 } else {
                     float defaultBoost = boostWithDepthStrider(entity);
                     entity.moveRelative(0.04F * defaultBoost, new Vec3(entity.xxa, entity.yya, entity.zza));
+                    Vec3 movement = entity.getDeltaMovement().multiply(1.0, defaultBoost * 2.5, 1.0);
+                    entity.move(MoverType.SELF, movement);
                 }
             }
             if (entity.getLevel() instanceof ServerLevel level) {
@@ -70,7 +75,7 @@ public interface PhoenixArmor {
      * @return The modified boost as a {@link Float}.
      */
     private static float boostWithDepthStrider(LivingEntity entity) {
-        float defaultBoost = 1.55F;
+        float defaultBoost = 1.5F;
         float depthStriderModifier = Math.min(EnchantmentHelper.getDepthStrider(entity), 3.0F);
         if (depthStriderModifier > 0.0F) {
             defaultBoost += depthStriderModifier * 1.5F;
