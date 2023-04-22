@@ -33,7 +33,7 @@
             }
           ],
           "name": "aether:ambrosium_shard",
-          "weight": 6
+          "weight": 4
         },
         {
           "type": "minecraft:item",
@@ -49,7 +49,7 @@
             }
           ],
           "name": "aether:ambrosium_torch",
-          "weight": 5
+          "weight": 4
         },
         {
           "type": "minecraft:item",
@@ -96,7 +96,8 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "aether:zanite_gemstone"
+          "name": "aether:zanite_gemstone",
+          "weight": 2
         },
         {
           "type": "minecraft:item",

@@ -11,8 +11,7 @@
         },
         {
           "type": "minecraft:loot_table",
-          "name": "aether:chests/dungeon/bronze/bronze_dungeon_disc",
-          "weight": 2
+          "name": "aether:chests/dungeon/bronze/bronze_dungeon_disc"
         },
         {
           "type": "minecraft:loot_table",
