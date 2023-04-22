@@ -24,14 +24,18 @@ public interface NeptuneArmor {
                         aetherPlayer.setNeptuneSubmergeLength(Math.min(aetherPlayer.getNeptuneSubmergeLength() + 0.1, 1.0));
                         defaultBoost *= aetherPlayer.getNeptuneSubmergeLength();
                         entity.moveRelative(0.04F * defaultBoost, new Vec3(entity.xxa, entity.yya, entity.zza));
-                        Vec3 movement = entity.getDeltaMovement().multiply(1.0, defaultBoost * 2.5, 1.0);
-                        entity.move(MoverType.SELF, movement);
+                        if (entity.getDeltaMovement().y() > 0 || entity.isCrouching()) {
+                            Vec3 movement = entity.getDeltaMovement().multiply(1.0, defaultBoost * 2, 1.0);
+                            entity.move(MoverType.SELF, movement);
+                        }
                     });
                 } else {
                     float defaultBoost = boostWithDepthStrider(entity);
                     entity.moveRelative(0.04F * defaultBoost, new Vec3(entity.xxa, entity.yya, entity.zza));
-                    Vec3 movement = entity.getDeltaMovement().multiply(1.0, defaultBoost * 2.5, 1.0);
-                    entity.move(MoverType.SELF, movement);
+                    if (entity.getDeltaMovement().y() > 0 || entity.isCrouching()) {
+                        Vec3 movement = entity.getDeltaMovement().multiply(1.0, defaultBoost * 2, 1.0);
+                        entity.move(MoverType.SELF, movement);
+                    }
                 }
             }
         }
@@ -43,15 +47,15 @@ public interface NeptuneArmor {
     }
 
     /**
-     * Adds an extra 1.05 to the boost for every Depth Strider level up to Depth Strider 3.
+     * Adds an extra 0.15 to the boost for every Depth Strider level up to Depth Strider 3.
      * @param entity The {@link LivingEntity} wearing the armor.
      * @return The modified boost as a {@link Float}.
      */
     private static float boostWithDepthStrider(LivingEntity entity) {
-        float defaultBoost = 0.5F;
+        float defaultBoost = 0.4F;
         float depthStriderModifier = Math.min(EnchantmentHelper.getDepthStrider(entity), 3.0F);
         if (depthStriderModifier > 0.0F) {
-            defaultBoost += depthStriderModifier * 0.5F;
+            defaultBoost += depthStriderModifier * 0.15F;
         }
         return defaultBoost;
     }
