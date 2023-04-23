@@ -32,6 +32,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Saddleable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -213,7 +214,7 @@ public class DimensionHooks {
                 for (Entity entity : serverLevel.getEntities(EntityTypeTest.forClass(Entity.class), Objects::nonNull)) {
                     if (level.getBiome(entity.blockPosition()).is(AetherTags.Biomes.FALL_TO_OVERWORLD)) {
                         if (entity.getY() <= serverLevel.getMinBuildHeight() && !entity.isPassenger()) {
-                            if ((entity instanceof Player player && !player.getAbilities().flying) || entity.isVehicle()) {
+                            if ((entity instanceof Player player && !player.getAbilities().flying) || entity.isVehicle() || (entity instanceof Saddleable) && ((Saddleable) entity).isSaddled()) {
                                 entityFell(entity);
                             }
                         }
