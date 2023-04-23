@@ -25,14 +25,14 @@ public interface NeptuneArmor {
                         defaultBoost *= aetherPlayer.getNeptuneSubmergeLength();
                         entity.moveRelative(0.04F * defaultBoost, new Vec3(entity.xxa, entity.yya, entity.zza));
                         if (entity.getDeltaMovement().y() > 0 || entity.isCrouching()) {
-                            entity.move(MoverType.SELF, entity.getDeltaMovement().multiply(1.0, defaultBoost * 2, 1.0));
+                            entity.move(MoverType.SELF, entity.getDeltaMovement().multiply(0.0, defaultBoost * 1.5, 0.0));
                         }
                     });
                 } else {
                     float defaultBoost = boostWithDepthStrider(entity);
                     entity.moveRelative(0.04F * defaultBoost, new Vec3(entity.xxa, entity.yya, entity.zza));
                     if (entity.getDeltaMovement().y() > 0 || entity.isCrouching()) {
-                        entity.move(MoverType.SELF, entity.getDeltaMovement().multiply(1.0, defaultBoost * 2, 1.0));
+                        entity.move(MoverType.SELF, entity.getDeltaMovement().multiply(0.0, defaultBoost * 1.5, 0.0));
                     }
                 }
             }
@@ -50,10 +50,10 @@ public interface NeptuneArmor {
      * @return The modified boost as a {@link Float}.
      */
     private static float boostWithDepthStrider(LivingEntity entity) {
-        float defaultBoost = 0.4F;
+        float defaultBoost = 0.3F;
         float depthStriderModifier = Math.min(EnchantmentHelper.getDepthStrider(entity), 3.0F);
         if (depthStriderModifier > 0.0F) {
-            defaultBoost += depthStriderModifier * 0.15F;
+            defaultBoost += depthStriderModifier * 0.4F;
         }
         return defaultBoost;
     }
