@@ -10,6 +10,7 @@
     "common.DimensionTypeMixin",
     "common.FeatureMixin",
     "common.ItemMixin",
+    "common.LivingEntityMixin",
     "common.accessor.AbstractContainerMenuAccessor",
     "common.accessor.AbstractFurnaceBlockEntityAccessor",
     "common.accessor.BaseSpawnerAccessor",
