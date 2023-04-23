@@ -181,7 +181,7 @@ curseforge {
         changelogType = "markdown"
         addGameVersion("${project.mc_version}")
         mainArtifact(tasks.jar) {
-            displayName = "${project.mod_name} - Forge - ${version}"
+            displayName = "${project.mod_name} - ${version}"
             relations {
                 embeddedLibrary "curios"
                 optionalDependency "starlight-forge"
@@ -198,7 +198,7 @@ modrinth {
     projectId = "${project.modrinth_id}"
     versionNumber = "${version}"
     versionType = "${project.version_type}"
-    versionName = "${project.mod_name} - Forge - ${version}"
+    versionName = "${project.mod_name} - ${version}"
     changelog = new File("$rootDir/docs/CHANGELOG.md").text
     uploadFile = tasks.jar
     gameVersions = ["${project.mc_version}"]
