@@ -188,9 +188,6 @@ curseforge {
             }
         }
     }
-    options {
-        debug = true
-    }
 }
 
 modrinth {
@@ -207,7 +204,6 @@ modrinth {
         embedded.version "curios", "${project.curios_version}"
         optional.project "starlight-forge"
     }
-    debugMode = true
 }
 
 mixin {
