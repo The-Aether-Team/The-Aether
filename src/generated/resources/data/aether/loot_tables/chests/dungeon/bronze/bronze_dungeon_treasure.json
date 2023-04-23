@@ -18,10 +18,6 @@
           "type": "minecraft:item",
           "name": "aether:sentry_boots",
           "weight": 3
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aether:enchanted_gravitite"
         }
       ],
       "rolls": {
