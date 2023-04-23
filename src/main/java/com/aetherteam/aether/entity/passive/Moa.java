@@ -1,20 +1,16 @@
 package com.aetherteam.aether.entity.passive;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import com.aetherteam.aether.AetherTags;
+import com.aetherteam.aether.api.AetherMoaTypes;
+import com.aetherteam.aether.api.registers.MoaType;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.WingedBird;
 import com.aetherteam.aether.entity.ai.goal.FallingRandomStrollGoal;
 import com.aetherteam.aether.entity.ai.navigator.FallPathNavigation;
-
-import com.aetherteam.aether.item.miscellaneous.MoaEggItem;
 import com.aetherteam.aether.item.AetherItems;
-import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.api.registers.MoaType;
+import com.aetherteam.aether.item.miscellaneous.MoaEggItem;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.client.MoaInteractPacket;
-import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.util.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -26,6 +22,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -44,8 +41,12 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.DoubleSupplier;
+import java.util.function.IntUnaryOperator;
 
 public class Moa extends MountableAnimal implements WingedBird {
 	private static final EntityDataAccessor<String> DATA_MOA_TYPE_ID = SynchedEntityData.defineId(Moa.class, EntityDataSerializers.STRING);
@@ -130,7 +131,22 @@ public class Moa extends MountableAnimal implements WingedBird {
 		if (this.getMoaType() == null) {
 			this.setMoaType(AetherMoaTypes.getWeightedChance(this.random));
 		}
+		this.randomizeAttributes(level.getRandom());
+
 		return super.finalizeSpawn(level, difficulty, reason, spawnData, tag);
+	}
+
+	protected void randomizeAttributes(RandomSource pRandom) {
+		this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(generateMaxHealth(pRandom::nextInt));
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(generateSpeed(pRandom::nextDouble));
+	}
+
+	protected static float generateMaxHealth(IntUnaryOperator intUnaryOperator) {
+		return 30.0F + (float) intUnaryOperator.applyAsInt(5) + (float) intUnaryOperator.applyAsInt(5);
+	}
+
+	protected static double generateSpeed(DoubleSupplier doubleSupplier) {
+		return 0.95F + ((double) doubleSupplier.getAsDouble() * 0.25D);
 	}
 
 	@Override
@@ -446,8 +462,9 @@ public class Moa extends MountableAnimal implements WingedBird {
 
 	@Override
 	public float getSpeed() {
+		double speed = this.getAttribute(Attributes.MOVEMENT_SPEED).getValue();
 		MoaType moaType = this.getMoaType();
-		return moaType != null ? moaType.getSpeed() : AetherMoaTypes.BLUE.get().getSpeed();
+		return (float) (moaType != null ? moaType.getSpeed() * speed : AetherMoaTypes.BLUE.get().getSpeed() * speed);
 	}
 
 	@Override
@@ -467,8 +484,9 @@ public class Moa extends MountableAnimal implements WingedBird {
 
 	@Override
 	public float getSteeringSpeed() {
-        MoaType moaType = this.getMoaType();
-		return moaType != null ? moaType.getSpeed() : AetherMoaTypes.BLUE.get().getSpeed();
+		double speed = this.getAttribute(Attributes.MOVEMENT_SPEED).getValue();
+		MoaType moaType = this.getMoaType();
+		return (float) (moaType != null ? moaType.getSpeed() * speed : AetherMoaTypes.BLUE.get().getSpeed() * speed);
 	}
 
 	@Override
