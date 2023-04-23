@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.WingedBird;
 import com.aetherteam.aether.entity.ai.goal.FallingRandomStrollGoal;
+import com.aetherteam.aether.entity.ai.goal.MoaFollowGoal;
 import com.aetherteam.aether.entity.ai.navigator.FallPathNavigation;
 
 import com.aetherteam.aether.item.miscellaneous.MoaEggItem;
@@ -56,6 +57,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 	private static final EntityDataAccessor<Integer> DATA_AMOUNT_FED_ID = SynchedEntityData.defineId(Moa.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Boolean> DATA_PLAYER_GROWN_ID = SynchedEntityData.defineId(Moa.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> DATA_SITTING_ID = SynchedEntityData.defineId(Moa.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Optional<UUID>> DATA_FOLLOWING_ID = SynchedEntityData.defineId(Moa.class, EntityDataSerializers.OPTIONAL_UUID);
 
 	public float wingRotation;
 	public float prevWingRotation;
@@ -76,7 +78,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 		super.registerGoals();
 		this.goalSelector.addGoal(0, new FloatGoal(this));
 		this.goalSelector.addGoal(1, new PanicGoal(this, 0.65));
-		this.goalSelector.addGoal(2, new TemptGoal(this, 1.0, Ingredient.of(AetherTags.Items.MOA_TEMPTATION_ITEMS), false));
+		this.goalSelector.addGoal(2, new MoaFollowGoal(this, 1.0));
 		this.goalSelector.addGoal(3, new FallingRandomStrollGoal(this, 0.35));
 		this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
 		this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
@@ -106,6 +108,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 		this.entityData.define(DATA_AMOUNT_FED_ID, 0);
 		this.entityData.define(DATA_PLAYER_GROWN_ID, false);
 		this.entityData.define(DATA_SITTING_ID, false);
+		this.entityData.define(DATA_FOLLOWING_ID, Optional.empty());
 	}
 
 	@Override
@@ -254,6 +257,13 @@ public class Moa extends MountableAnimal implements WingedBird {
 			this.setSitting(!this.isSitting());
 			this.spawnExplosionParticle();
 			return InteractionResult.sidedSuccess(this.level.isClientSide);
+		} else if (this.isPlayerGrown() && itemStack.isEmpty() && playerEntity.isShiftKeyDown()) {
+			if (this.getFollowing() == null) {
+				this.setFollowing(playerEntity.getUUID());
+			} else {
+				this.setFollowing(null);
+			}
+			return InteractionResult.sidedSuccess(this.level.isClientSide);
 		} else if (!this.level.isClientSide() && this.isPlayerGrown() && this.isBaby() && this.isHungry() && this.getAmountFed() < 3 && itemStack.is(AetherTags.Items.MOA_FOOD_ITEMS)) {
 			if (!playerEntity.getAbilities().instabuild) {
 				itemStack.shrink(1);
@@ -347,6 +357,14 @@ public class Moa extends MountableAnimal implements WingedBird {
 
 	public void setSitting(boolean isSitting) {
 		this.entityData.set(DATA_SITTING_ID, isSitting);
+	}
+
+	public UUID getFollowing() {
+		return this.entityData.get(DATA_FOLLOWING_ID).orElse(null);
+	}
+
+	public void setFollowing(UUID uuid) {
+		this.entityData.set(DATA_FOLLOWING_ID, Optional.ofNullable(uuid));
 	}
 
 	@Override
@@ -547,6 +565,9 @@ public class Moa extends MountableAnimal implements WingedBird {
 		if (tag.contains("Sitting")) {
 			this.setSitting(tag.getBoolean("Sitting"));
 		}
+		if (tag.contains("Following")) {
+			this.setFollowing(tag.getUUID("Following"));
+		}
 	}
 
 	@Override
@@ -565,5 +586,8 @@ public class Moa extends MountableAnimal implements WingedBird {
 		tag.putInt("AmountFed", this.getAmountFed());
 		tag.putBoolean("PlayerGrown", this.isPlayerGrown());
 		tag.putBoolean("Sitting", this.isSitting());
+		if (this.getFollowing() != null) {
+			tag.putUUID("Following", this.getFollowing());
+		}
 	}
 }
