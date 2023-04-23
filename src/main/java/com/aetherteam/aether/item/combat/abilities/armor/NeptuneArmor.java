@@ -11,7 +11,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 
 public interface NeptuneArmor {
     /**
-     * Boosts the entity's movement in water or bubble columns if wearing a full set of Neptune Armor. The default boost is a multiplier of 1.55, but is modified based on duration in water and whether the boots have Depth Strider.
+     * Boosts the entity's movement in water or bubble columns if wearing a full set of Neptune Armor. The default boost is modified based on duration in water and whether the boots have Depth Strider.
      * @param entity The {@link LivingEntity} wearing the armor.
      * @see com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(LivingEvent.LivingTickEvent)
      */
@@ -25,16 +25,14 @@ public interface NeptuneArmor {
                         defaultBoost *= aetherPlayer.getNeptuneSubmergeLength();
                         entity.moveRelative(0.04F * defaultBoost, new Vec3(entity.xxa, entity.yya, entity.zza));
                         if (entity.getDeltaMovement().y() > 0 || entity.isCrouching()) {
-                            Vec3 movement = entity.getDeltaMovement().multiply(1.0, defaultBoost * 2, 1.0);
-                            entity.move(MoverType.SELF, movement);
+                            entity.move(MoverType.SELF, entity.getDeltaMovement().multiply(1.0, defaultBoost * 2, 1.0));
                         }
                     });
                 } else {
                     float defaultBoost = boostWithDepthStrider(entity);
                     entity.moveRelative(0.04F * defaultBoost, new Vec3(entity.xxa, entity.yya, entity.zza));
                     if (entity.getDeltaMovement().y() > 0 || entity.isCrouching()) {
-                        Vec3 movement = entity.getDeltaMovement().multiply(1.0, defaultBoost * 2, 1.0);
-                        entity.move(MoverType.SELF, movement);
+                        entity.move(MoverType.SELF, entity.getDeltaMovement().multiply(1.0, defaultBoost * 2, 1.0));
                     }
                 }
             }
