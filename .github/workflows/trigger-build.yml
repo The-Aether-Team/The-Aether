@@ -30,14 +30,14 @@ jobs:
       - name: Trigger build
         env: 
           REMOTE_USER: ${{ inputs.remote_user }}
-          REMOTE_URL: ${{ format('https://Gilded-Games-Bot:{0}@github.com/{1}/{2}', secrets.GIT_TOKEN, inputs.remote_user, inputs.remote_name) }}
+          REMOTE_URL: ${{ format('https://Aether-Team-Bot:{0}@github.com/{1}/{2}', secrets.GIT_TOKEN, inputs.remote_user, inputs.remote_name) }}
           BRANCH: ${{ inputs.remote_branch }}
           REMOTE_BRANCH: ${{ format('{0}/{1}', inputs.remote_user, inputs.remote_branch) }}
           LOCAL_BRANCH: ${{ format('local/{0}/{1}', inputs.remote_user, inputs.remote_branch) }}
           MERGE_BRANCH: ${{ format('merge/{0}', inputs.remote_branch) }}
         run: |
             git config --local user.email "machine@gildedgames.com"
-            git config --local user.name "Gilded-Games-Bot"
+            git config --local user.name "Aether-Team-Bot"
             
             git checkout -b ${MERGE_BRANCH} ${{ github.action_ref }}
             
