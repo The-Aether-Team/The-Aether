@@ -96,7 +96,7 @@ public class Aerbunny extends AetherAnimal {
             this.setPuffiness(0);
         }
         this.handlePlayerInput();
-        if (this.isOnGround() || !this.getFeetBlockState().isAir() || (this.getVehicle() != null && (this.getVehicle().isOnGround() || !this.getVehicle().getFeetBlockState().isAir()))) {
+        if (this.isOnGround() || !this.getFeetBlockState().isAir() || (this.getVehicle() != null && (this.getVehicle().isOnGround() || !this.getVehicle().getFeetBlockState().isAir() || this.level.getBlockStates(this.getVehicle().getBoundingBox()).anyMatch((state) -> !state.isAir())))) {
             this.lastPos = null;
         }
     }
