@@ -50,7 +50,7 @@ public interface NeptuneArmor {
      * @return The modified boost as a {@link Float}.
      */
     private static float boostWithDepthStrider(LivingEntity entity) {
-        float defaultBoost = 0.3F;
+        float defaultBoost = 0.4F;
         float depthStriderModifier = Math.min(EnchantmentHelper.getDepthStrider(entity), 3.0F);
         if (depthStriderModifier > 0.0F) {
             defaultBoost += depthStriderModifier * 0.4F;
