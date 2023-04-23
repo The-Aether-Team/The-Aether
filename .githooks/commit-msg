@@ -15,6 +15,6 @@ fi
 
 # Uh-oh, this is not a conventional commit, show an example and link to the spec.
 echo -e "\e[31mThe commit message does not meet the Conventional Commit standard\e[0m"
-echo "Examples of valid messages can be found at: https://github.com/The-Aether-Team/The-Aether/blob/1.19/docs/references/COMMITS.md#examples"
+echo "Examples of valid messages can be found at: https://github.com/The-Aether-Team/The-Aether/blob/1.19.4-develop/docs/references/COMMITS.md#examples"
 echo "More details at: https://www.conventionalcommits.org/en/v1.0.0-beta.4/"
 exit 1
