@@ -10,6 +10,7 @@ AerodDev:
 - Fixes to the silver Life Shard hearts texture.
 
 baguchan:
+- Implementation of allowing saddled entities to fall out of the Aether.
 - Improvements to entity AI to avoid entities falling out of the Aether.
 - Contributions to the Swet death animation.
 - Contributions to Skyroot Bed renderer.
