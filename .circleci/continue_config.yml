@@ -33,7 +33,7 @@ jobs:
       - run:
           name: Publish artifact link to Discord
           command: |
-            if [ ${CIRCLE_BRANCH} = 1.19 ] && << pipeline.parameters.allow-deploy-and-discord-publish >>; then
+            if [ ${CIRCLE_BRANCH} = 1.19.4-develop ] && << pipeline.parameters.allow-deploy-and-discord-publish >>; then
               artifact_path=$(curl --request GET --url https://circleci.com/api/v2/project/gh/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM/artifacts -H "Accept: application/json" | jq -r '.items[1].path')
               if [ -z "${WEBHOOK_URL}" ]; then
                 echo "NO DISCORD WEBHOOK SET"
@@ -191,6 +191,6 @@ workflows:
           filters:
             branches:
               only:
-                - "1.19"
+                - "1.19.4-develop"
           requires:
             - build
