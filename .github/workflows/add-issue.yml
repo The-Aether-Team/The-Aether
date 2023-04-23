@@ -11,5 +11,5 @@ jobs:
     steps:
       - uses: actions/add-to-project@v0.3.0
         with:
-          project-url: https://github.com/orgs/Gilded-Games/projects/2
+          project-url: https://github.com/orgs/The-Aether-Team/projects/2
           github-token: ${{ secrets.PROJECT_ADD_TOKEN }}

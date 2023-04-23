@@ -6,7 +6,7 @@ on:
       remote_user:
         description: 'GitHub name of the fork organization'
         required: true
-        default: 'Gilded-Games'
+        default: 'The-Aether-Team'
         type: string
       remote_name:
         description: 'GitHub name of the fork repository'

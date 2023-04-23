@@ -114,7 +114,7 @@ repositories {
     maven { url = "https://www.cursemaven.com" }
     maven { url = "https://dvs1.progwml6.com/files/maven/" }
     maven { url = "https://gitlab.com/api/v4/projects/21830712/packages/maven" }
-//    maven githubPackage.invoke("Gilded-Games/Nitrogen")
+//    maven githubPackage.invoke("The-Aether-Team/Nitrogen")
 }
 
 jar {
@@ -163,7 +163,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = "https://maven.pkg.github.com/Gilded-Games/The-Aether"
+            url = "https://maven.pkg.github.com/The-Aether-Team/The-Aether"
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
