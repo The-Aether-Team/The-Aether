@@ -65,8 +65,8 @@ jobs:
             fi
 
   deploy:
-    machine:
-        image: ubuntu-2004:202201-02
+    machine: true
+    resource_class: the-aether-team/ants-deploy
     steps:
       - when:
           condition: <<pipeline.parameters.allow-deploy-and-discord-publish>>
@@ -75,38 +75,6 @@ jobs:
                 at: ~/project/build/libs
             - store_artifacts:
                 path: ~/project/build/libs
-            - run:
-                name: Install OpenVPN
-                command: |
-                  sudo apt update && sudo apt install apt-transport-https net-tools
-                  sudo wget https://swupdate.openvpn.net/repos/openvpn-repo-pkg-key.pub
-                  sudo apt-key add openvpn-repo-pkg-key.pub
-                  sudo wget -O /etc/apt/sources.list.d/openvpn3.list https://swupdate.openvpn.net/community/openvpn3/repos/openvpn3-focal.list
-                  sudo apt update && sudo apt install openvpn3
-            - run:
-                name: VPN Setup
-                background: true
-                command: |
-                  mkdir -m700 -p .openvpn3/autoload
-                  CLIENT_PATH=~/project/.openvpn3/autoload/client
-                  echo $VPN_CLIENT_LOAD | base64 --decode > $CLIENT_PATH.autoload
-                  echo $VPN_CLIENT_CONFIG | base64 --decode > $CLIENT_PATH.ovpn
-                  ET_phone_home=$(ss -Hnto state established '( sport = :ssh )' | head -n1 | awk '{ split($4, a, ":"); print a[1] }')
-
-                  echo -e "\nroute $ET_phone_home 255.255.255.255 net_gateway" >> $CLIENT_PATH.ovpn
-                  echo "route 169.254.0.0 255.255.0.0 net_gateway" >> $CLIENT_PATH.ovpn
-
-                  sudo openvpn3-autoload --directory .openvpn3/autoload
-            - run:
-                name: Wait for VPN connection to be established
-                command: |
-                  while [ $(sudo openvpn3 sessions-list|grep -c "Client connected") == 0 ]; do
-                    echo "Attempting to connect..."
-                    sleep 1;
-                  done
-                  echo "VPN Connected"
-
-                  sudo openvpn3 sessions-list
             - run:
                 name: Reinstall and start server
                 command: |
@@ -160,11 +128,6 @@ jobs:
                     echo "Received ${REINSTALL_RESPONSE}: Reinstall unsucessful."
                     exit 1
                   fi
-            - run:
-                name: Disconnect from OpenVPN
-                command: |
-                  sudo killall openvpn || true
-                when: always
       - unless:
          condition: <<pipeline.parameters.allow-deploy-and-discord-publish>>
          steps:
