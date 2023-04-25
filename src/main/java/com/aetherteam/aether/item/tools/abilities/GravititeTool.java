@@ -1,5 +1,6 @@
 package com.aetherteam.aether.item.tools.abilities;
 
+import com.aetherteam.aether.api.FloatingBlockHelper;
 import com.aetherteam.aether.block.miscellaneous.FloatingBlock;
 import com.aetherteam.aether.entity.block.FloatingBlockEntity;
 import com.aetherteam.aether.AetherTags;
@@ -33,13 +34,20 @@ public interface GravititeTool {
                 if ((stack.getDestroySpeed(state) == tieredItem.getTier().getSpeed() || stack.isCorrectToolForDrops(state)) && FloatingBlock.isFree(level.getBlockState(pos.above()))) {
                     if (level.getBlockEntity(pos) == null && state.getDestroySpeed(level, pos) >= 0.0F && !state.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF) && !state.is(AetherTags.Blocks.GRAVITITE_ABILITY_BLACKLIST)) {
                         if (!level.isClientSide()) {
-                            FloatingBlockEntity entity = new FloatingBlockEntity(level, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, state);
-                            entity.setNatural(false);
-                            if (state.is(BlockTags.ANVIL)) {
-                                entity.setHurtsEntities(2.0F, 40);
+                            if (!FloatingBlockHelper.isToolAdequate(level, pos, stack, state)) {
+                                return false;
                             }
-                            level.addFreshEntity(entity);
-                            level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+
+                            if (!FloatingBlockHelper.ANY.tryCreate(level, pos)) {
+                                return false;
+                            }
+//                            FloatingBlockEntity entity = new FloatingBlockEntity(level, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, state);
+//                            entity.setNatural(false);
+//                            if (state.is(BlockTags.ANVIL)) {
+//                                entity.setHurtsEntities(2.0F, 40);
+//                            }
+//                            level.addFreshEntity(entity);
+//                            level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
                             stack.hurtAndBreak(4, player, (p) -> p.broadcastBreakEvent(hand));
                         } else {
                             player.swing(hand);

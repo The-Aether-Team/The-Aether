@@ -39,8 +39,8 @@ public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity> {
 				poseStack.translate(-0.5, 0.0, -0.5);
 				BlockRenderDispatcher blockRenderDispatcher = Minecraft.getInstance().getBlockRenderer();
 				BakedModel model = blockRenderDispatcher.getBlockModel(blockState);
-				for (RenderType renderType : model.getRenderTypes(blockState, RandomSource.create(blockState.getSeed(floatingBlock.getStartPos())), ModelData.EMPTY)) {
-					blockRenderDispatcher.getModelRenderer().tesselateBlock(world, model, blockState, blockPos, poseStack, buffer.getBuffer(renderType), false, RandomSource.create(), blockState.getSeed(floatingBlock.getStartPos()), OverlayTexture.NO_OVERLAY, ModelData.EMPTY, renderType);
+				for (RenderType renderType : model.getRenderTypes(blockState, RandomSource.create(blockState.getSeed(floatingBlock.blockPosition())), ModelData.EMPTY)) {
+					blockRenderDispatcher.getModelRenderer().tesselateBlock(world, model, blockState, blockPos, poseStack, buffer.getBuffer(renderType), false, RandomSource.create(), blockState.getSeed(floatingBlock.blockPosition()), OverlayTexture.NO_OVERLAY, ModelData.EMPTY, renderType);
 				}
 				poseStack.popPose();
 				super.render(floatingBlock, entityYaw, partialTicks, poseStack, buffer, packedLightIn);

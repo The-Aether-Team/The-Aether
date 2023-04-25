@@ -44,6 +44,11 @@ public class AetherTags {
 		public static final TagKey<Block> VALKYRIE_TELEPORTABLE_ON = tag("valkyrie_teleportable_on");
 		public static final TagKey<Block> TREATED_AS_AETHER_BLOCK = tag("treated_as_aether_block");
 
+		public static final TagKey<Block> FAST_FLOATERS = tag("fast_floaters");
+		public static final TagKey<Block> NON_FLOATERS = tag("non_floaters");
+		public static final TagKey<Block> PUSH_FLOATERS = tag("push_floaters");
+		public static final TagKey<Block> HURTABLE_FLOATERS = tag("hurtable_floaters");
+
 		private static TagKey<Block> tag(String name) {
 			return TagKey.create(Registries.BLOCK, new ResourceLocation(Aether.MODID, name));
 		}

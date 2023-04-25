@@ -11,6 +11,8 @@
     "common.FeatureMixin",
     "common.ItemMixin",
     "common.LivingEntityMixin",
+    "common.ServerGamePacketListenerImplMixin",
+    "common.ServerWorldMixin",
     "common.accessor.AbstractContainerMenuAccessor",
     "common.accessor.AbstractFurnaceBlockEntityAccessor",
     "common.accessor.BaseSpawnerAccessor",
@@ -37,6 +39,8 @@
   ],
   "client": [
     "client.AdvancementToastMixin",
+    "client.ClientPlayerMixin",
+    "client.ClientWorldMixin",
     "client.ConnectScreenMixin",
     "client.CreateWorldScreenMixin",
     "client.ElytraLayerMixin",

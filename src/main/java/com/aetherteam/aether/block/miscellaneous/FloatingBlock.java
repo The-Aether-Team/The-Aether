@@ -1,5 +1,6 @@
 package com.aetherteam.aether.block.miscellaneous;
 
+import com.aetherteam.aether.api.FloatingBlockHelper;
 import com.aetherteam.aether.block.Floatable;
 import com.aetherteam.aether.entity.block.FloatingBlockEntity;
 import net.minecraft.core.Direction;
@@ -50,18 +51,24 @@ public class FloatingBlock extends Block implements Floatable {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
+	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+		checkFloatable(level, pos);
+	}
+
+	/**
+	 * Warning for "deprecation" is suppressed because the method is fine to override.
+	 */
+	@SuppressWarnings("deprecation")
+	@Override
 	public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-		super.tick(state, level, pos, random);
-		if (((this.powered && level.hasNeighborSignal(pos)) || (!this.powered && pos.getY() <= level.getMaxBuildHeight())) && isFree(level.getBlockState(pos.above()))) {
-			FloatingBlockEntity floatingBlockEntity = new FloatingBlockEntity(level, (double) pos.getX() + 0.5D, pos.getY(), (double) pos.getZ() + 0.5D, level.getBlockState(pos));
-			if (this.powered) {
-				floatingBlockEntity.setNatural(false);
+		checkFloatable(level, pos);
+	}
+
+	private void checkFloatable(Level worldIn, BlockPos pos) {
+		if (!this.powered || worldIn.hasNeighborSignal(pos)) {
+			if (!worldIn.isClientSide()) {
+				FloatingBlockHelper.ANY.tryCreate(worldIn, pos);
 			}
-			level.addFreshEntity(floatingBlockEntity);
-			level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-			this.floating(floatingBlockEntity);
-		} else {
-			level.scheduleTick(pos, this, this.getDelayAfterPlace());
 		}
 	}
 
