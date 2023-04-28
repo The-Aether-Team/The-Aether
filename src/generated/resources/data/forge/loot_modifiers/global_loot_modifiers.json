@@ -1,6 +1,7 @@
 {
   "entries": [
-    "aether:remove_seeds"
+    "aether:remove_seeds",
+    "aether:double_drops"
   ],
   "replace": false
 }
