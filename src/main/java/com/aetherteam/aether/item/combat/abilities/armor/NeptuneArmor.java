@@ -24,14 +24,14 @@ public interface NeptuneArmor {
                         aetherPlayer.setNeptuneSubmergeLength(Math.min(aetherPlayer.getNeptuneSubmergeLength() + 0.1, 1.0));
                         defaultBoost *= aetherPlayer.getNeptuneSubmergeLength();
                         entity.moveRelative(0.04F * defaultBoost, new Vec3(entity.xxa, entity.yya, entity.zza));
-                        if (entity.getDeltaMovement().y() > 0 || entity.isCrouching()) {
+                        if (entity.isSwimming() || entity.getDeltaMovement().y() > 0 || entity.isCrouching()) {
                             entity.move(MoverType.SELF, entity.getDeltaMovement().multiply(0.0, defaultBoost * 1.5, 0.0));
                         }
                     });
                 } else {
                     float defaultBoost = boostWithDepthStrider(entity);
                     entity.moveRelative(0.04F * defaultBoost, new Vec3(entity.xxa, entity.yya, entity.zza));
-                    if (entity.getDeltaMovement().y() > 0 || entity.isCrouching()) {
+                    if (entity.isSwimming() || entity.getDeltaMovement().y() > 0 || entity.isCrouching()) {
                         entity.move(MoverType.SELF, entity.getDeltaMovement().multiply(0.0, defaultBoost * 1.5, 0.0));
                     }
                 }
