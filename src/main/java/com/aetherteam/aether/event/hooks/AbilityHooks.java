@@ -18,6 +18,8 @@ import com.aetherteam.aether.capability.arrow.PhoenixArrow;
 import com.aetherteam.aether.capability.lightning.LightningTracker;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.loot.AetherLootContexts;
+import com.aetherteam.aether.network.AetherPacketHandler;
+import com.aetherteam.aether.network.packet.client.ToolDebuffPacket;
 import com.aetherteam.aether.util.EquipmentUtil;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
@@ -175,6 +177,8 @@ public class AbilityHooks {
                 .put(AetherBlocks.AETHER_DIRT_PATH.get(), AetherBlocks.AETHER_FARMLAND.get())
                 .build();
 
+        public static boolean debuffTools;
+
         /**
          * Handles modifying blocks when a {@link ToolAction} is performed on them.
          * @param accessor The {@link LevelAccessor} of the level.
@@ -237,8 +241,14 @@ public class AbilityHooks {
          * @return The debuffed mining speed, as a {@link Float}.
          * @see com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener#modifyBreakSpeed(PlayerEvent.BreakSpeed)
          */
-        public static float reduceToolEffectiveness(BlockState state, ItemStack stack, float speed) {
+        public static float reduceToolEffectiveness(Player player, BlockState state, ItemStack stack, float speed) {
             if (AetherConfig.COMMON.tools_debuff.get()) {
+                if (!player.getLevel().isClientSide()) {
+                    debuffTools = true;
+                    AetherPacketHandler.sendToNear(new ToolDebuffPacket(true), player.getX(), player.getY(), player.getZ(), 10, player.getLevel().dimension());
+                }
+            }
+            if (debuffTools) {
                 if ((state.getBlock().getDescriptionId().startsWith("block.aether.") || state.is(AetherTags.Blocks.TREATED_AS_AETHER_BLOCK)) && !state.is(AetherTags.Blocks.TREATED_AS_VANILLA_BLOCK)) {
                     if (!stack.isEmpty() && stack.isCorrectToolForDrops(state) && !stack.getItem().getDescriptionId().startsWith("item.aether.") && !stack.is(AetherTags.Items.TREATED_AS_AETHER_ITEM)) {
                         speed = (float) Math.pow(speed, -0.2);
