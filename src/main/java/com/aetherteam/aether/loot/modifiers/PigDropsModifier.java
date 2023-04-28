@@ -1,7 +1,7 @@
 package com.aetherteam.aether.loot.modifiers;
 
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.item.combat.abilities.weapon.SkyrootWeapon;
+import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.util.EquipmentUtil;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -15,15 +15,15 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 
-public class DoubleDropsModifier extends LootModifier {
-    public static final Codec<DoubleDropsModifier> CODEC = RecordCodecBuilder.create((instance) -> LootModifier.codecStart(instance).apply(instance, DoubleDropsModifier::new));
+public class PigDropsModifier extends LootModifier {
+    public static final Codec<PigDropsModifier> CODEC = RecordCodecBuilder.create((instance) -> LootModifier.codecStart(instance).apply(instance, PigDropsModifier::new));
 
-    public DoubleDropsModifier(LootItemCondition[] conditions) {
+    public PigDropsModifier(LootItemCondition[] conditions) {
         super(conditions);
     }
 
     /**
-     * Doubles mob drops if a mob is attacked with full strength with an item that implements {@link SkyrootWeapon} if the mob isn't tagged with {@link AetherTags.Entities#NO_SKYROOT_DOUBLE_DROPS} and the item isn't tagged with {@link AetherTags.Items#NO_SKYROOT_DOUBLE_DROPS}.
+     * Doubles pig drops with a 1/4 chance if a mob is attacked with full strength with a Pig Slayer and the mob is tagged with {@link AetherTags.Entities#PIGS} and the item is tagged with {@link AetherTags.Items#PIG_DROPS}.
      * @param lootStacks Result items from a loot table as an {@link ObjectArrayList} of {@link ItemStack}s.
      * @param context The {@link LootContext}.
      * @return A new {@link ObjectArrayList} of {@link ItemStack}s that a loot table will give.
@@ -33,20 +33,22 @@ public class DoubleDropsModifier extends LootModifier {
         Entity entity = context.getParamOrNull(LootContextParams.DIRECT_KILLER_ENTITY);
         Entity target = context.getParamOrNull(LootContextParams.THIS_ENTITY);
         ObjectArrayList<ItemStack> newStacks = new ObjectArrayList<>(lootStacks);
-        if (entity instanceof LivingEntity livingEntity && target != null) {
-            if (EquipmentUtil.isFullStrength(livingEntity) && livingEntity.getMainHandItem().getItem() instanceof SkyrootWeapon && !target.getType().is(AetherTags.Entities.NO_SKYROOT_DOUBLE_DROPS)) {
+        if (entity instanceof LivingEntity livingEntity && target instanceof LivingEntity livingTarget) {
+            if (EquipmentUtil.isFullStrength(livingEntity) && livingEntity.getMainHandItem().is(AetherItems.PIG_SLAYER.get()) && livingTarget.getType().is(AetherTags.Entities.PIGS) && livingTarget.getRandom().nextInt(4) == 0) {
                 for (ItemStack stack : lootStacks) {
-                    if (!stack.is(AetherTags.Items.NO_SKYROOT_DOUBLE_DROPS)) {
+                    if (stack.is(AetherTags.Items.PIG_DROPS)) {
                         newStacks.add(stack);
                     }
                 }
             }
         }
+
+
         return newStacks;
     }
 
     @Override
     public Codec<? extends IGlobalLootModifier> codec() {
-        return DoubleDropsModifier.CODEC;
+        return PigDropsModifier.CODEC;
     }
 }

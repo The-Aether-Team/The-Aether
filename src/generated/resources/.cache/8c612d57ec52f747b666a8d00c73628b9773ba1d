@@ -1,4 +1,5 @@
-// 1.19.4	2023-04-28T00:54:20.5242248	Global Loot Modifiers : aether
+// 1.19.4	2023-04-28T14:11:24.4578402	Global Loot Modifiers : aether
 09b253d9321c1d9f192a40b16483f85c39b96b75 data/aether/loot_modifiers/double_drops.json
+bef2c642d1e9edfcac4f9d3301e51bf6cab20e4c data/aether/loot_modifiers/pig_drops.json
 57f1a7642250141784a6ed47e848a4861fe5a54b data/aether/loot_modifiers/remove_seeds.json
-0940e270dfd38f53a804adf4468a8bd6114e006a data/forge/loot_modifiers/global_loot_modifiers.json
+b4ad9b72a0178ac1b8113924778f76dd51c6f95b data/forge/loot_modifiers/global_loot_modifiers.json
