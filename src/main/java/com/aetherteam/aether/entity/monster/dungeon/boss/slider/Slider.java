@@ -481,11 +481,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy, IEn
     }
 
     @Override
-    protected int calculateFallDamage(float distance, float damageMultiplier) {
-        return 0;
-    }
-
-    @Override
     public float getYRot() {
         return 0;
     }
