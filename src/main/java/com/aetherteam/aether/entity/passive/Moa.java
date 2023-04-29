@@ -154,7 +154,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 				this.setEntityOnGround(false);
 			}
 		}
-		if (this.isOnGround()) {
+		if (EntityUtil.betterGroundCheck(this)) {
 			this.setRemainingJumps(this.getMaxJumps());
 		}
 		if (this.getJumpCooldown() > 0) {
