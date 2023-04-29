@@ -206,12 +206,12 @@ public class AbilityHooks {
 
         /**
          * Handles ability for {@link com.aetherteam.aether.item.tools.abilities.HolystoneTool}.
-         * @see HolystoneTool#dropAmbrosium(Player, Level, BlockPos)
+         * @see HolystoneTool#dropAmbrosium(Player, Level, BlockPos, ItemStack, BlockState)
          * @see com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener#doHolystoneAbility(BlockEvent.BreakEvent)
          */
-        public static void handleHolystoneToolAbility(Player player, Level level, BlockPos pos, ItemStack stack) {
+        public static void handleHolystoneToolAbility(Player player, Level level, BlockPos pos, ItemStack stack, BlockState blockState) {
             if (stack.getItem() instanceof HolystoneTool holystoneTool) {
-                holystoneTool.dropAmbrosium(player, level, pos);
+                holystoneTool.dropAmbrosium(player, level, pos, stack, blockState);
             }
         }
 
