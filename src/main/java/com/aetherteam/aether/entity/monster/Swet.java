@@ -132,34 +132,37 @@ public class Swet extends Slime implements MountableMob {
             this.level.addParticle(ParticleTypes.SPLASH, d, d1 - 0.25, d2, 0.0, 0.0, 0.0);
         }
 
-        this.setMidJump(!this.onGround);
-        if (this.level.isClientSide) {
-            this.oSwetHeight = this.swetHeight;
-            this.oSwetWidth = this.swetWidth;
-            if (this.getMidJump()) {
-                this.jumpTimer++;
-            } else {
-                this.jumpTimer = 0;
-            }
-            if (this.onGround) {
-                this.swetHeight = this.swetHeight < 1.0F ? this.swetHeight + 0.25F : 1.0F;
-                this.swetWidth = this.swetWidth > 1.0F ? this.swetWidth - 0.25F : 1.0F;
-            } else {
-                this.swetHeight = 1.425F;
-                this.swetWidth = 0.875F;
 
-                if (this.getJumpTimer() > 3) {
-                    float scale = Math.min(this.getJumpTimer(), 10);
-                    this.swetHeight -= 0.05F * scale;
-                    this.swetWidth += 0.05F * scale;
+        if (!this.isNoAi()) {
+            this.setMidJump(!this.onGround);
+            if (this.level.isClientSide) {
+                this.oSwetHeight = this.swetHeight;
+                this.oSwetWidth = this.swetWidth;
+                if (this.getMidJump()) {
+                    this.jumpTimer++;
+                } else {
+                    this.jumpTimer = 0;
+                }
+                if (this.onGround) {
+                    this.swetHeight = this.swetHeight < 1.0F ? this.swetHeight + 0.25F : 1.0F;
+                    this.swetWidth = this.swetWidth > 1.0F ? this.swetWidth - 0.25F : 1.0F;
+                } else {
+                    this.swetHeight = 1.425F;
+                    this.swetWidth = 0.875F;
+
+                    if (this.getJumpTimer() > 3) {
+                        float scale = Math.min(this.getJumpTimer(), 10);
+                        this.swetHeight -= 0.05F * scale;
+                        this.swetWidth += 0.05F * scale;
+                    }
                 }
             }
+
+            this.wasOnGround = this.onGround;
         }
 
         if (this.isFriendly())
             this.resetFallDistance();
-
-        this.wasOnGround = this.onGround;
     }
 
     @Override
