@@ -29,6 +29,7 @@ public class AetherClient {
         Reflection.initialize(CustomizationsOptions.class);
         AetherRenderers.registerCuriosRenderers();
         event.enqueueWork(() -> {
+            AetherAtlases.registerTreasureChestAtlases();
             AetherAtlases.registerWoodTypeAtlases();
             registerGuiFactories();
             registerItemModelProperties();
