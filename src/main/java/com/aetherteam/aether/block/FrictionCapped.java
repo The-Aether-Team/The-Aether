@@ -14,6 +14,9 @@ public interface FrictionCapped {
     default float getCappedFriction(@Nullable Entity entity, float defaultFriction) {
         if (entity != null) {
             Vec3 motion = entity.getDeltaMovement();
+            if (entity.getX() == entity.xOld || entity.getZ() == entity.zOld) {
+                return 0.99F;
+            }
             if (Math.abs(motion.x()) > 1.0 || Math.abs(motion.z()) > 1.0) {
                 return 0.99F;
             }
