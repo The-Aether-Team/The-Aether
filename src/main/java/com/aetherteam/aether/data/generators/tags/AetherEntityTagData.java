@@ -100,7 +100,9 @@ public class AetherEntityTagData extends EntityTypeTagsProvider {
                 AetherEntityTypes.PHYG.get(),
                 AetherEntityTypes.FLYING_COW.get(),
                 AetherEntityTypes.MOA.get(),
-                AetherEntityTypes.AERBUNNY.get()
+                AetherEntityTypes.AERBUNNY.get(),
+                AetherEntityTypes.BLUE_SWET.get(),
+                AetherEntityTypes.GOLDEN_SWET.get()
         );
     }
 }
