@@ -2,6 +2,8 @@ package com.aetherteam.aether.entity;
 
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
+import com.aetherteam.aether.network.AetherPacketHandler;
+import com.aetherteam.aether.network.packet.server.StepHeightPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -95,6 +97,7 @@ public interface MountableMob {
                     if (!stepHeight.hasModifier(vehicle.getMountStepHeightModifier())) {
                         stepHeight.addTransientModifier(vehicle.getMountStepHeightModifier());
                     }
+                    AetherPacketHandler.sendToServer(new StepHeightPacket(vehicle.getId()));
                 }
                 if (vehicle.isControlledByLocalInstance()) {
                     vehicle.setSpeed(vehicle.getSteeringSpeed());
