@@ -81,5 +81,28 @@ public class AetherEntityTagData extends EntityTypeTagsProvider {
                 AetherEntityTypes.BLUE_SWET.get(),
                 AetherEntityTypes.GOLDEN_SWET.get(),
                 AetherEntityTypes.SENTRY.get());
+        this.tag(EntityTypeTags.FALL_DAMAGE_IMMUNE).add(
+                AetherEntityTypes.PHYG.get(),
+                AetherEntityTypes.FLYING_COW.get(),
+                AetherEntityTypes.MOA.get(),
+                AetherEntityTypes.AERWHALE.get(),
+                AetherEntityTypes.AERBUNNY.get(),
+                AetherEntityTypes.WHIRLWIND.get(),
+                AetherEntityTypes.EVIL_WHIRLWIND.get(),
+                AetherEntityTypes.COCKATRICE.get(),
+                AetherEntityTypes.ZEPHYR.get(),
+                AetherEntityTypes.SLIDER.get(),
+                AetherEntityTypes.VALKYRIE.get(),
+                AetherEntityTypes.VALKYRIE_QUEEN.get(),
+                AetherEntityTypes.SUN_SPIRIT.get()
+        );
+        this.tag(EntityTypeTags.DISMOUNTS_UNDERWATER).add(
+                AetherEntityTypes.PHYG.get(),
+                AetherEntityTypes.FLYING_COW.get(),
+                AetherEntityTypes.MOA.get(),
+                AetherEntityTypes.AERBUNNY.get(),
+                AetherEntityTypes.BLUE_SWET.get(),
+                AetherEntityTypes.GOLDEN_SWET.get()
+        );
     }
 }

@@ -1,4 +1,5 @@
 // 1.19.4	2023-04-28T21:26:59.4549459	Tags for minecraft:entity_type mod id aether
+1.19.4-develop
 b3a379df5d7bd0f9d26800bb985a7acba83143fe data/aether/tags/entity_types/deflectable_projectiles.json
 215c49d40f7275befd0abd1d7d7c0e72c8b2a912 data/aether/tags/entity_types/ignore_invisibility.json
 6ded3ea2e35a47445f95b3e2a263d918575d48cf data/aether/tags/entity_types/no_ambrosium_drops.json
@@ -9,6 +10,8 @@ f7203aae71175bb0e7c7c2df595579e99489b9ab data/aether/tags/entity_types/no_skyroo
 004f3159bc56e4fbb06d127966f8ce5afa733d45 data/aether/tags/entity_types/unlaunchable.json
 6bf172d40b964ab13008f5e9a62d996284dd577e data/aether/tags/entity_types/whirlwind_unaffected.json
 7a86e782b9d5015ed364e40f3ab230fd511275a1 data/forge/tags/entity_types/bosses.json
+b37b29ed79e685f487d1a9d6ad5dbc06cf68f9ba data/minecraft/tags/entity_types/dismounts_underwater.json
+17c8bdee256e302510be3c0a7813d3cabb18edea data/minecraft/tags/entity_types/fall_damage_immune.json
 fd1fd899644858c42074bc12567ce1434d593fb1 data/minecraft/tags/entity_types/freeze_hurts_extra_types.json
 3846caad0243d60bf29645697423ab2232dba40a data/minecraft/tags/entity_types/frog_food.json
 9841d227292494bea8b4d39f268f41ec4230c608 data/minecraft/tags/entity_types/impact_projectiles.json

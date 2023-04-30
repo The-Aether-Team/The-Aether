@@ -39,7 +39,6 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
@@ -492,11 +491,6 @@ public class Moa extends MountableAnimal implements WingedBird {
 	@Override
 	public float getFlyingSpeed() {
 		return this.getSteeringSpeed() * 0.45F;
-	}
-
-	@Override
-	protected int calculateFallDamage(float distance, float damageMultiplier) {
-		return 0;
 	}
 
 	@Override

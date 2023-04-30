@@ -211,11 +211,6 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
     }
 
     @Override
-    protected int calculateFallDamage(float distance, float damageMultiplier) {
-        return 0;
-    }
-
-    @Override
     public int getMaxFallDistance() {
         return this.isOnGround() ? super.getMaxFallDistance() : 14;
     }

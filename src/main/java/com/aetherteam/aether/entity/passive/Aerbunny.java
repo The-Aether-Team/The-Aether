@@ -159,8 +159,8 @@ public class Aerbunny extends AetherAnimal {
     @Override
     public void baseTick() {
         super.baseTick();
-        if (this.isAlive() && this.isEyeInFluidType(ForgeMod.WATER_TYPE.get()) && !this.level.getBlockState(BlockPos.containing(this.getX(), this.getEyeY(), this.getZ())).is(Blocks.BUBBLE_COLUMN)
-                && this.isPassenger() && this.getVehicle() != null && !this.getVehicle().canBeRiddenUnderFluidType(ForgeMod.WATER_TYPE.get(), this) && this.level.isClientSide) {
+        if (this.isAlive() && this.isPassenger() && this.getVehicle() != null && this.getVehicle().isEyeInFluidType(ForgeMod.WATER_TYPE.get())
+                && !this.level.getBlockState(BlockPos.containing(this.getVehicle().getX(), this.getVehicle().getEyeY(), this.getVehicle().getZ())).is(Blocks.BUBBLE_COLUMN)) {
             this.stopRiding();
         }
     }
@@ -301,11 +301,6 @@ public class Aerbunny extends AetherAnimal {
     @Override
     public boolean isInWall() {
         return !this.isPassenger() && super.isInWall();
-    }
-
-    @Override
-    protected int calculateFallDamage(float distance, float damageMultiplier) {
-        return 0;
     }
 
     @Nullable
