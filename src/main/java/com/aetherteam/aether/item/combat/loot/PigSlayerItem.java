@@ -11,19 +11,14 @@ import com.aetherteam.aether.mixin.mixins.common.accessor.ZombifiedPiglinAccesso
 import com.aetherteam.aether.util.EquipmentUtil;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import java.util.ArrayList;
-import java.util.Collection;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -85,19 +80,6 @@ public class PigSlayerItem extends AetherSwordItem {
 	}
 
 	/**
-	 * @see PigSlayerItem#handlePigSlayerAbility(LivingEntity, Collection)
-	 */
-	@SubscribeEvent
-	public static void doPigSlayerDrops(LivingDropsEvent event) {
-		LivingEntity livingEntity = event.getEntity();
-		DamageSource damageSource = event.getSource();
-		Collection<ItemEntity> drops = event.getDrops();
-		if (canPerformAbility(livingEntity, damageSource)) {
-			handlePigSlayerAbility(livingEntity, drops);
-		}
-	}
-
-	/**
 	 * Basic checks to perform the ability if the source is living, the target is a Pig-type entity, the item is a Pig Slayer, and if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.
 	 * @param target The killed {@link LivingEntity}.
 	 * @param source The attacking {@link DamageSource}.
@@ -111,26 +93,5 @@ public class PigSlayerItem extends AetherSwordItem {
 			}
 		}
 		return false;
-	}
-
-	/**
-	 * Determines what drops should be doubled when a target is killed, with a 1/4 chance. Any items tagged as {@link AetherTags.Items#PIG_DROPS} are doubled.<br><br>
-	 * The items that will be doubled are tracked in newDrops and added into drops which {@link PigSlayerItem#doPigSlayerDrops(LivingDropsEvent)} has access to.
-	 * @param target The killed {@link LivingEntity}.
-	 * @param drops The normal drops of the killed entity, as a {@link Collection Collection&lt;ItemEntity&gt;}.
-	 */
-	private static void handlePigSlayerAbility(LivingEntity target, Collection<ItemEntity> drops) {
-		if (target.getRandom().nextInt(4) == 0) {
-			ArrayList<ItemEntity> newDrops = new ArrayList<>(drops.size());
-			for (ItemEntity drop : drops) {
-				ItemStack droppedStack = drop.getItem();
-				if (droppedStack.is(AetherTags.Items.PIG_DROPS)) {
-					ItemEntity dropEntity = new ItemEntity(target.getLevel(), drop.getX(), drop.getY(), drop.getZ(), droppedStack.copy());
-					dropEntity.setDefaultPickUpDelay();
-					newDrops.add(dropEntity);
-				}
-			}
-			drops.addAll(newDrops);
-		}
 	}
 }
