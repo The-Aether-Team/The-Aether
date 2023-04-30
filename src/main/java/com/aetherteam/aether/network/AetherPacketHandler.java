@@ -60,6 +60,7 @@ public class AetherPacketHandler {
 		register(OpenAccessoriesPacket.class, OpenAccessoriesPacket::decode);
 		register(OpenInventoryPacket.class, OpenInventoryPacket::decode);
 		register(RankingsForcePacket.class, RankingsForcePacket::decode);
+		register(StepHeightPacket.class, StepHeightPacket::decode);
 		register(SunAltarUpdatePacket.class, SunAltarUpdatePacket::decode);
 
 		// BOTH

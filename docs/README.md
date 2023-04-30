@@ -21,10 +21,10 @@ If you're interested in sponsoring the Aether project or The Aether Team, please
 
 ## :package: Download the latest releases
 [![Modloader: Forge](https://img.shields.io/badge/mod%20loader-forge-CC974D?style=flat-square)](https://files.minecraftforge.net/net/minecraftforge/forge/)
-[![Modrinth Downloads](https://img.shields.io/modrinth/dt/YhmgMVyu?color=00AF5C&logo=modrinth)]()
-[![Modrinth Version](https://img.shields.io/modrinth/game-versions/YhmgMVyu?color=00AF5C&label=latest&logo=modrinth&last=true)]()
-[![CurseForge Downloads](http://cf.way2muchnoise.eu/255308.svg)]()
-[![CurseForge Version](http://cf.way2muchnoise.eu/versions/255308_latest.svg)]()
+[![Modrinth Downloads](https://img.shields.io/modrinth/dt/YhmgMVyu?color=00AF5C&logo=modrinth)](https://modrinth.com/mod/aether)
+[![Modrinth Version](https://img.shields.io/modrinth/game-versions/YhmgMVyu?color=00AF5C&label=latest&logo=modrinth&last=true)](https://modrinth.com/mod/aether)
+[![CurseForge Downloads](http://cf.way2muchnoise.eu/255308.svg)](https://www.curseforge.com/minecraft/mc-mods/aether)
+[![CurseForge Version](http://cf.way2muchnoise.eu/versions/255308_latest.svg)](https://www.curseforge.com/minecraft/mc-mods/aether)
 [![CircleCI](https://circleci.com/gh/The-Aether-Team/The-Aether/tree/1.19.4-develop.svg?style=shield)](https://app.circleci.com/pipelines/github/The-Aether-Team/The-Aether?branch=1.19.4-develop)
 ### Release builds
 The Aether has no stable release builds for the latest version of Minecraft just yet, but this port is in active development so keep an eye out for its eventual release.

@@ -11,15 +11,21 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 @EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Bus.MOD)
 public class AetherAtlases {
-	public static final Material TREASURE_CHEST_MATERIAL = getChestMaterial("treasure_chest");
-	public static final Material TREASURE_CHEST_LEFT_MATERIAL = getChestMaterial("treasure_chest_left");
-	public static final Material TREASURE_CHEST_RIGHT_MATERIAL = getChestMaterial("treasure_chest_right");
+	public static Material TREASURE_CHEST_MATERIAL;
+	public static Material TREASURE_CHEST_LEFT_MATERIAL;
+	public static Material TREASURE_CHEST_RIGHT_MATERIAL;
 
-	public static Material getChestMaterial(String chestName) {
-		return new Material(Sheets.CHEST_SHEET, new ResourceLocation(Aether.MODID, "entity/tiles/chest/" + chestName));
+	public static void registerTreasureChestAtlases() {
+		TREASURE_CHEST_MATERIAL = getChestMaterial("treasure_chest");
+		TREASURE_CHEST_LEFT_MATERIAL = getChestMaterial("treasure_chest_left");
+		TREASURE_CHEST_RIGHT_MATERIAL = getChestMaterial("treasure_chest_right");
 	}
 
 	public static void registerWoodTypeAtlases() {
 		Sheets.addWoodType(AetherWoodTypes.SKYROOT);
+	}
+
+	public static Material getChestMaterial(String chestName) {
+		return new Material(Sheets.CHEST_SHEET, new ResourceLocation(Aether.MODID, "entity/tiles/chest/" + chestName));
 	}
 }

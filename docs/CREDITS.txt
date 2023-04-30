@@ -28,7 +28,9 @@ FlashFyreMods
 - Implementation of more beta-accurate terrain generation for the Aether dimension.
 
 GizmoTheMoonPig
+- Implementation of Jade compatibility.
 - Fixes to the Life Shard silver heart overlay rendering.
+- Fixes to aether1 and aether2 music naming.
 
 InsomniaKitten
 - Providing the accessory inventory texture.

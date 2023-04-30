@@ -1,4 +1,4 @@
-// 1.19.4	2023-04-19T15:56:10.2783761	Recipes
+// 1.19.4	2023-04-27T23:05:51.5588793	Recipes
 1d7abc4c8c4e7132f31bd563a8dd82a8f3285d0d data/aether/advancements/recipes/building_blocks/aerogel_slab.json
 8c9f4fe6b61d89eb72b141ff6dfb92764a5dc5a9 data/aether/advancements/recipes/building_blocks/aerogel_slab_from_aerogel_stonecutting.json
 6e53af7c3f7e89910ad337753c6d70a4cdcf0440 data/aether/advancements/recipes/building_blocks/aerogel_stairs.json
@@ -190,6 +190,7 @@ e693a36762a7e3927337d704df16779efe40c01a data/aether/advancements/recipes/decora
 9a7bfec3ba9d9429eaea5c288d52a051ec2f1155 data/aether/advancements/recipes/decorations/skyroot_smithing_table.json
 46e18b152515d42df06329112900ecdb048aa25c data/aether/advancements/recipes/food/enchanted_berry_enchanting.json
 63271f144f306ce4f7c23aa5156877a353908e52 data/aether/advancements/recipes/food/healing_stone_enchanting.json
+3a41d8b51f7a091067e34e050577f1c4064fec23 data/aether/advancements/recipes/food/skyroot_milk_bucket_cake.json
 624ed16f932356690a3edd9091df37bba5d6ba6f data/aether/advancements/recipes/incubation/black_moa_incubation.json
 55960f7fe355b964c698a30480cd3fb5f3f97160 data/aether/advancements/recipes/incubation/blue_moa_incubation.json
 ab12feda7f67509ed4daef63612f890dd3ac45c8 data/aether/advancements/recipes/incubation/white_moa_incubation.json
@@ -526,6 +527,7 @@ c47097be9087fc1bea65e90c29fd32828cc1ad40 data/aether/recipes/skyroot_hoe.json
 c740eb0ad5b2f6d82f27a7e50eaf705da53c4a56 data/aether/recipes/skyroot_iron_vanilla_shield.json
 ad392d4f5cfeeb911dde8bc7e2cb932faa4b7b64 data/aether/recipes/skyroot_jukebox.json
 bb25a49fa50ac53414b8f3291d0fd0c675dbf667 data/aether/recipes/skyroot_loom.json
+db31c46323fbd7e2ee6148ab736c0aca909e4df6 data/aether/recipes/skyroot_milk_bucket_cake.json
 d3b315697a94a1680fcabeee23b5b5010ea1de5d data/aether/recipes/skyroot_note_block.json
 d23bc5c4b71d397bb2b171506d1a357d3e6ae49a data/aether/recipes/skyroot_pickaxe.json
 7470b83a235eb52c6626f07d567bd958ecb1b8ea data/aether/recipes/skyroot_pickaxe_repairing.json

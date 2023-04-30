@@ -104,7 +104,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     public void tick() {
         super.tick();
         if (!this.level.getBlockState(this.blockPosition().below()).is(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_ON)) {
-            this.setHealth(0.0F);
+            this.kill();
         }
 
         if (!this.level.isClientSide()) {

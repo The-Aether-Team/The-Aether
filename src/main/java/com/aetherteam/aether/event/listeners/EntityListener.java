@@ -6,6 +6,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
@@ -31,6 +32,12 @@ public class EntityListener {
         Entity mountEntity = event.getEntityBeingMounted();
         boolean isDismounting = event.isDismounting();
         event.setCanceled(EntityHooks.dismountPrevention(riderEntity, mountEntity, isDismounting));
+    }
+
+    @SubscribeEvent
+    public static void onRiderTick(TickEvent.PlayerTickEvent event) {
+        Player player = event.player;
+        EntityHooks.launchMount(player);
     }
 
     @SubscribeEvent

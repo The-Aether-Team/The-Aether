@@ -3,6 +3,7 @@ package com.aetherteam.aether.data.generators;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.data.providers.AetherLanguageProvider;
+import com.aetherteam.aether.data.resources.registries.AetherBiomes;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
@@ -419,6 +420,12 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addEffect(AetherEffects.INEBRIATION, "Inebriation");
 
 
+        addBiome(AetherBiomes.SKYROOT_MEADOW, "Skyroot Meadow");
+        addBiome(AetherBiomes.SKYROOT_GROVE, "Skyroot Grove");
+        addBiome(AetherBiomes.SKYROOT_WOODLAND, "Skyroot Woodland");
+        addBiome(AetherBiomes.SKYROOT_FOREST, "Skyroot Forest");
+
+
         addContainerType(AetherMenuTypes.BOOK_OF_LORE, "Book of Lore");
         addContainerType(AetherMenuTypes.ALTAR, "Altar");
         addContainerType(AetherMenuTypes.FREEZER, "Freezer");
@@ -584,6 +591,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addSubtitle("entity", "zephyr.ambient", "Zephyr blows");
         addSubtitle("entity", "zephyr.death", "Zephyr dies");
         addSubtitle("entity", "zephyr.hurt", "Zephyr hurts");
+
+        addSubtitle("entity", "item.pickup", "Item plops");
 
         addSubtitle("entity", "sentry.death", "Sentry dies");
         addSubtitle("entity", "sentry.hurt", "Sentry hurts");

@@ -535,6 +535,19 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .unlockedBy("has_string", has(Tags.Items.STRING))
                 .save(consumer, name("skyroot_tripwire_hook"));
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, Blocks.CAKE)
+                .group("minecraft:cake")
+                .define('A', AetherItems.SKYROOT_MILK_BUCKET.get())
+                .define('B', Items.SUGAR)
+                .define('C', Items.WHEAT)
+                .define('E', Items.EGG)
+                .pattern("AAA")
+                .pattern("BEB")
+                .pattern("CCC")
+                .unlockedBy("has_egg", has(Items.EGG))
+                .save(consumer, name("skyroot_milk_bucket_cake"));
+
+
         smeltingOreRecipe(AetherItems.AMBROSIUM_SHARD.get(), AetherBlocks.AMBROSIUM_ORE.get(), 0.1F).save(consumer, name("ambrosium_shard_from_smelting"));
         blastingOreRecipe(AetherItems.AMBROSIUM_SHARD.get(), AetherBlocks.AMBROSIUM_ORE.get(), 0.1F).save(consumer, name("ambrosium_shard_from_blasting"));
 
