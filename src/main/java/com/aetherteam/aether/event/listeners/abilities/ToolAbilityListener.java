@@ -57,7 +57,7 @@ public class ToolAbilityListener {
     
     /**
      * @see AbilityHooks.ToolHooks#handleZaniteToolAbility(ItemStack, float)
-     * @see AbilityHooks.ToolHooks#reduceToolEffectiveness(BlockState, ItemStack, float)
+     * @see AbilityHooks.ToolHooks#reduceToolEffectiveness(Player, BlockState, ItemStack, float)
      */
     @SubscribeEvent
     public static void modifyBreakSpeed(PlayerEvent.BreakSpeed event) {
@@ -66,7 +66,7 @@ public class ToolAbilityListener {
         ItemStack itemStack = player.getMainHandItem();
         if (!event.isCanceled()) {
             event.setNewSpeed(AbilityHooks.ToolHooks.handleZaniteToolAbility(itemStack, event.getNewSpeed()));
-            event.setNewSpeed(AbilityHooks.ToolHooks.reduceToolEffectiveness(blockState, itemStack, event.getNewSpeed()));
+            event.setNewSpeed(AbilityHooks.ToolHooks.reduceToolEffectiveness(player, blockState, itemStack, event.getNewSpeed()));
         }
     }
 
