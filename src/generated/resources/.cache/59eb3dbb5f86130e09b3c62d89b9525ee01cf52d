@@ -1,4 +1,4 @@
-// 1.19.4	2023-04-22T06:30:20.471537	Loot Tables
+// 1.19.4	2023-04-30T13:23:51.0626095	Loot Tables
 d025471306910ea35dcf85d28fc188182a1b3c8d data/aether/loot_tables/advancements/enter_aether.json
 96aec873b17d2a5aed2a22fe094efa32b8d54645 data/aether/loot_tables/blocks/aerogel.json
 ffdecdc23fdf03314c666c6d8638f7f44bdbcc8b data/aether/loot_tables/blocks/aerogel_slab.json
@@ -33,14 +33,14 @@ e0ee5881d425fc92516a6a5f4b358c1de179cbb8 data/aether/loot_tables/blocks/carved_s
 44e82a5fc56ea56bd38e9ae7ca4811146de45c3c data/aether/loot_tables/blocks/carved_wall.json
 1d4929d7d6176f60e5ea991a577527ed251ef375 data/aether/loot_tables/blocks/chest_mimic.json
 a16f9cbfeadabb9e6c2e8ed7c91fd17600d9537a data/aether/loot_tables/blocks/cold_aercloud.json
-5e436110b46b3f9e94198f4e2a39f4ead7196a4d data/aether/loot_tables/blocks/crystal_fruit_leaves.json
-97d67d427b5b0089bb52f76d557e762f6280e1ac data/aether/loot_tables/blocks/crystal_leaves.json
-072755b2731b62d6db426eca56301da1ad208551 data/aether/loot_tables/blocks/decorated_holiday_leaves.json
+2265fa78c208cc420febf9e0a8cbc2ddf5516eda data/aether/loot_tables/blocks/crystal_fruit_leaves.json
+14f59b93f281b7bb0d0f22d65aaeccbb101b4be4 data/aether/loot_tables/blocks/crystal_leaves.json
+30c138d83465af7b7ccea4f00c924d8fe8e8dc03 data/aether/loot_tables/blocks/decorated_holiday_leaves.json
 8d8073b64d679edfc5807f69dc6e605e89b97116 data/aether/loot_tables/blocks/enchanted_aether_grass_block.json
 e7dd3076149db8ad39ea29ea18fa92629c655240 data/aether/loot_tables/blocks/enchanted_gravitite.json
 2765f1b6c4c298a5bf1bbcdc4c673efb573ce627 data/aether/loot_tables/blocks/freezer.json
 33c7f5b77e576fc80c4694550e9d21d214402393 data/aether/loot_tables/blocks/golden_aercloud.json
-d7079c550235422c7b45ea0ab46803cf11491e57 data/aether/loot_tables/blocks/golden_oak_leaves.json
+d87b01010532f17df1a152f49a005ba2995183c8 data/aether/loot_tables/blocks/golden_oak_leaves.json
 fa88f4c82809908b9747554316bd220df4813fdd data/aether/loot_tables/blocks/golden_oak_log.json
 39dab6228c398004e6eb10c4be067779995e3125 data/aether/loot_tables/blocks/golden_oak_sapling.json
 e0676a159d4b5669c4541e3b8a53424dc3fceeec data/aether/loot_tables/blocks/golden_oak_wood.json
@@ -49,7 +49,7 @@ f967a96a7e233107857136bd52a7128da76089c5 data/aether/loot_tables/blocks/gravitit
 cbc3fb3a3766eef0e267efcae14f68f4beb991ec data/aether/loot_tables/blocks/hellfire_stairs.json
 19d34d39404a38737a5dfdceb452d03ce0a87447 data/aether/loot_tables/blocks/hellfire_stone.json
 71c2dca6991829c42cdb80e19d8eee48200ef1d9 data/aether/loot_tables/blocks/hellfire_wall.json
-4f280929cf5b6538cf20ef03b7b097883de796c2 data/aether/loot_tables/blocks/holiday_leaves.json
+2ec1f8602d4690cd04c9bc27fecf94dd90b18a26 data/aether/loot_tables/blocks/holiday_leaves.json
 79deca1b81a28a777fd5fdea98a797ab3ae2ff4a data/aether/loot_tables/blocks/holystone.json
 55dac0b82e3254167cd0e58330e673947f7baa44 data/aether/loot_tables/blocks/holystone_bricks.json
 e61bb0fb22a7797507fa466f1786671c133baa0d data/aether/loot_tables/blocks/holystone_brick_slab.json
@@ -97,7 +97,7 @@ c7fafa93cd699e71c8d4caf523bae0cee655bc4f data/aether/loot_tables/blocks/sentry_s
 e06120a24befb0418dedfab331ddd0590bdcb043 data/aether/loot_tables/blocks/skyroot_door.json
 f2a57194deebc011e7fec8dede1723e5259bd5d9 data/aether/loot_tables/blocks/skyroot_fence.json
 3c4afe89e1f9b68ac39b0cadebcf44a5481a544e data/aether/loot_tables/blocks/skyroot_fence_gate.json
-1b1ce1ce31074c5980defe18446d792dabcf448d data/aether/loot_tables/blocks/skyroot_leaves.json
+782fa6df8132318cbea3b6e324532de4c5bf4073 data/aether/loot_tables/blocks/skyroot_leaves.json
 666a65358ef31021f47a3b02486b2428aab07f90 data/aether/loot_tables/blocks/skyroot_log.json
 61295fa7caad280d5f3f383b98c1c74087542eda data/aether/loot_tables/blocks/skyroot_planks.json
 c0b5276ee094971fdc32079996ad59e271f4f824 data/aether/loot_tables/blocks/skyroot_pressure_plate.json

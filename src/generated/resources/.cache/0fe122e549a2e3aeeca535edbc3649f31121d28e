@@ -1,5 +1,4 @@
-// 1.19.4	2023-04-28T21:26:59.4549459	Tags for minecraft:entity_type mod id aether
-1.19.4-develop
+// 1.19.4	2023-04-30T13:23:51.067609	Tags for minecraft:entity_type mod id aether
 b3a379df5d7bd0f9d26800bb985a7acba83143fe data/aether/tags/entity_types/deflectable_projectiles.json
 215c49d40f7275befd0abd1d7d7c0e72c8b2a912 data/aether/tags/entity_types/ignore_invisibility.json
 6ded3ea2e35a47445f95b3e2a263d918575d48cf data/aether/tags/entity_types/no_ambrosium_drops.json
