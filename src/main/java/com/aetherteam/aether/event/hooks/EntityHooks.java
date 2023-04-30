@@ -1,6 +1,7 @@
 package com.aetherteam.aether.event.hooks;
 
 import com.aetherteam.aether.AetherTags;
+import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.ai.goal.BeeGrowBerryBushGoal;
 import com.aetherteam.aether.entity.ai.goal.FoxEatBerryBushGoal;
@@ -46,6 +47,17 @@ public class EntityHooks {
             return (mount instanceof MountableAnimal && !mount.isOnGround()) || (mount instanceof Swet swet && !swet.isFriendly());
         }
         return false;
+    }
+
+    public static void launchMount(Player player) {
+        Entity mount = player.getVehicle();
+        if (player.isPassenger() && mount != null) {
+            if (mount.getLevel().getBlockStates(mount.getBoundingBox()).anyMatch((state) -> state.is(AetherBlocks.BLUE_AERCLOUD.get()))) {
+                if (player.getLevel().isClientSide()) {
+                    mount.setDeltaMovement(mount.getDeltaMovement().x(), 2.0, mount.getDeltaMovement().z());
+                }
+            }
+        }
     }
 
     public static void skyrootBucketMilking(Entity target, Player player, InteractionHand hand) {
