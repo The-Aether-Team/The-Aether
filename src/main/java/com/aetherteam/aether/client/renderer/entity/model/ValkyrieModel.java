@@ -106,8 +106,8 @@ public class ValkyrieModel<T extends AbstractValkyrie> extends HumanoidModel<T> 
         partDefinition.addOrReplaceChild("left_front_skirt", CubeListBuilder.create().texOffs(0, 0).addBox(0.0F, 0.0F, -1.0F, 3.0F, 6.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 9.0F, -1.5F, -0.2F, 0.0F, 0.0F));
         partDefinition.addOrReplaceChild("right_back_skirt", CubeListBuilder.create().texOffs(0, 0).addBox(0.0F, 0.0F, 0.0F, 3.0F, 6.0F, 1.0F), PartPose.offsetAndRotation(-3.0F, 9.0F, 1.5F, 0.2F, 0.0F, 0.0F));
         partDefinition.addOrReplaceChild("left_back_skirt", CubeListBuilder.create().texOffs(0, 0).addBox(0.0F, 0.0F, 0.0F, 3.0F, 6.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 9.0F, 1.5F, 0.2F, 0.0F, 0.0F));
-        partDefinition.addOrReplaceChild("right_side_skirt", CubeListBuilder.create().texOffs(55, 19).addBox(-1.0F, 0.0F, 0.0F, 1.0F, 6.0F, 3.0F), PartPose.offsetAndRotation(-3.0F, 9.0F, -1.5F, 0.0F, 0.0F, 0.2F));
-        partDefinition.addOrReplaceChild("left_side_skirt", CubeListBuilder.create().texOffs(55, 19).addBox(0.0F, 0.0F, 0.0F, 1.0F, 6.0F, 3.0F), PartPose.offsetAndRotation(3.0F, 9.0F, -1.5F, 0.0F, 0.0F, -0.2F));
+        partDefinition.addOrReplaceChild("right_side_skirt", CubeListBuilder.create().texOffs(55, 19).addBox(-1.0F, 0.0F, 0.0F, 1.0F, 6.0F, 3.01F), PartPose.offsetAndRotation(-3.0F, 9.0F, -1.505F, 0.0F, 0.0F, 0.2F));
+        partDefinition.addOrReplaceChild("left_side_skirt", CubeListBuilder.create().texOffs(55, 19).addBox(0.0F, 0.0F, 0.0F, 1.0F, 6.0F, 3.01F), PartPose.offsetAndRotation(3.0F, 9.0F, -1.505F, 0.0F, 0.0F, -0.2F));
         PartDefinition swordHandle = rightArm.addOrReplaceChild("sword_handle", CubeListBuilder.create().texOffs(9, 16).addBox(-2.5F, 8.0F, 1.5F, 2.0F, 2.0F, 1.0F), PartPose.ZERO);
         swordHandle.addOrReplaceChild("sword_hilt", CubeListBuilder.create().texOffs(32, 10).addBox(-3.0F, 6.5F, -2.75F, 3.0F, 5.0F, 1.0F, new CubeDeformation(0.5F)), PartPose.ZERO);
         swordHandle.addOrReplaceChild("sword_blade_base", CubeListBuilder.create().texOffs(42, 18).addBox(-2.0F, 7.5F, -12.5F, 1.0F, 3.0F, 10.0F), PartPose.ZERO);

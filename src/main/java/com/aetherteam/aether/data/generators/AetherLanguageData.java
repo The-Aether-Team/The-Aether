@@ -592,6 +592,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addSubtitle("entity", "zephyr.death", "Zephyr dies");
         addSubtitle("entity", "zephyr.hurt", "Zephyr hurts");
 
+        addSubtitle("entity", "item.pickup", "Item plops");
+
         addSubtitle("entity", "sentry.death", "Sentry dies");
         addSubtitle("entity", "sentry.hurt", "Sentry hurts");
         addSubtitle("entity", "sentry.jump", "Sentry squishes");

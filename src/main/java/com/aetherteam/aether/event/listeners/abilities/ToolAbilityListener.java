@@ -41,7 +41,7 @@ public class ToolAbilityListener {
     }
 
     /**
-     * @see AbilityHooks.ToolHooks#handleHolystoneToolAbility(Player, Level, BlockPos, ItemStack) 
+     * @see AbilityHooks.ToolHooks#handleHolystoneToolAbility(Player, Level, BlockPos, ItemStack, BlockState)
      */
     @SubscribeEvent
     public static void doHolystoneAbility(BlockEvent.BreakEvent event) {
@@ -49,8 +49,9 @@ public class ToolAbilityListener {
         Level level = player.getLevel();
         BlockPos blockPos = event.getPos();
         ItemStack itemStack = player.getMainHandItem();
+        BlockState blockState = event.getState();
         if (!event.isCanceled()) {
-            AbilityHooks.ToolHooks.handleHolystoneToolAbility(player, level, blockPos, itemStack);
+            AbilityHooks.ToolHooks.handleHolystoneToolAbility(player, level, blockPos, itemStack, blockState);
         }
     }
     

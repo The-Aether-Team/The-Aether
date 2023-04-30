@@ -910,6 +910,7 @@
   "subtitles.aether.entity.flying_cow.saddle": "Saddle equips",
   "subtitles.aether.entity.flying_cow.step": "Footsteps",
   "subtitles.aether.entity.ice_crystal.explode": "Crystal explodes",
+  "subtitles.aether.entity.item.pickup": "Item plops",
   "subtitles.aether.entity.mimic.attack": "Mimic attacks",
   "subtitles.aether.entity.mimic.death": "Mimic dies",
   "subtitles.aether.entity.mimic.hurt": "Mimic hurts",
