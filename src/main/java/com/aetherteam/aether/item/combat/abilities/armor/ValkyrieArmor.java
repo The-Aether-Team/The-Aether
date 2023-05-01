@@ -20,7 +20,7 @@ public interface ValkyrieArmor {
             if (entity instanceof Player player && !player.getAbilities().flying) { // The player can't have creative flight enabled, otherwise it causes issues.
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                     Vec3 deltaMovement = player.getDeltaMovement();
-                    if (!player.getLevel().isClientSide()) { // Updates the flight modifier and timer values.
+                    if (player.getLevel().isClientSide()) { // Updates the flight modifier and timer values.
                         if (aetherPlayer.isJumping() && !player.isOnGround()) { // Checks if the player is off the ground and holding the jump key (space bar by default).
                             if (aetherPlayer.getFlightModifier() >= aetherPlayer.getFlightModifierMax()) { // Limits the flight modifier to a maximum value.
                                 aetherPlayer.setFlightModifier(aetherPlayer.getFlightModifierMax());
