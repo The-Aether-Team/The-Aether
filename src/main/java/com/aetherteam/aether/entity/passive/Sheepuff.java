@@ -223,7 +223,6 @@ public class Sheepuff extends AetherAnimal implements IForgeShearable {
         } else {
             if (this.amountEaten == 1) {
                 this.setSheared(false);
-                this.setColor(DyeColor.WHITE);
                 this.amountEaten = 0;
             }
         }
