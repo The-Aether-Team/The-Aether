@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.aetherteam.aether.client.AetherSoundEvents;
+import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.WingedBird;
 import com.aetherteam.aether.entity.ai.goal.FallingRandomStrollGoal;
 import com.aetherteam.aether.entity.ai.goal.MoaFollowGoal;
@@ -31,6 +32,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -459,6 +461,11 @@ public class Moa extends MountableAnimal implements WingedBird {
 	@Override
 	public boolean isFood(@Nonnull ItemStack stack) {
 		return false;
+	}
+
+	@Override
+	public boolean canBeAffected(MobEffectInstance effect) {
+		return (effect.getEffect() != AetherEffects.INEBRIATION.get() || !this.isPlayerGrown()) && super.canBeAffected(effect);
 	}
 
 	@Override
