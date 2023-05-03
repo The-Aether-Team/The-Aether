@@ -10,6 +10,8 @@ import com.aetherteam.aether.entity.ai.goal.FallingRandomStrollGoal;
 import com.aetherteam.aether.entity.ai.goal.MoaFollowGoal;
 import com.aetherteam.aether.entity.ai.navigator.FallPathNavigation;
 
+import com.aetherteam.aether.entity.monster.AechorPlant;
+import com.aetherteam.aether.entity.monster.Swet;
 import com.aetherteam.aether.item.miscellaneous.MoaEggItem;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.AetherTags;
@@ -38,6 +40,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -82,7 +85,10 @@ public class Moa extends MountableAnimal implements WingedBird {
 		this.goalSelector.addGoal(2, new MoaFollowGoal(this, 1.0));
 		this.goalSelector.addGoal(3, new FallingRandomStrollGoal(this, 0.35));
 		this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
+		this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0D, true));
 		this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Swet.class, false, (livingEntity) -> this.getFollowing() == null));
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, AechorPlant.class, false, (livingEntity) -> this.getFollowing() == null));
 	}
 
 	@Nonnull
@@ -95,7 +101,9 @@ public class Moa extends MountableAnimal implements WingedBird {
 	public static AttributeSupplier.Builder createMobAttributes() {
 		return Mob.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 35.0)
-				.add(Attributes.MOVEMENT_SPEED, 1.0);
+				.add(Attributes.MOVEMENT_SPEED, 1.0)
+				.add(Attributes.FOLLOW_RANGE, 16.0)
+				.add(Attributes.ATTACK_DAMAGE, 5.0);
 	}
 
 	@Override
@@ -290,6 +298,14 @@ public class Moa extends MountableAnimal implements WingedBird {
 	public void spawnExplosionParticle() {
 		for (int i = 0; i < 20; ++i) {
 			EntityUtil.spawnMovementExplosionParticles(this);
+		}
+	}
+
+	@Override
+	protected void removePassenger(Entity passenger) {
+		super.removePassenger(passenger);
+		if (passenger instanceof Player player && (this.getFollowing() == null || this.getFollowing().toString().equals(player.getUUID().toString()))) {
+			this.setFollowing(player.getUUID());
 		}
 	}
 
