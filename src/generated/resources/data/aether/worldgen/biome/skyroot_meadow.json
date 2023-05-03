@@ -56,17 +56,29 @@
   ],
   "has_precipitation": false,
   "spawn_costs": {
+    "aether:blue_swet": {
+      "charge": 0.35,
+      "energy_budget": 0.12
+    },
+    "aether:cockatrice": {
+      "charge": 0.6,
+      "energy_budget": 0.08
+    },
     "aether:evil_whirlwind": {
       "charge": 0.7,
       "energy_budget": 0.1
+    },
+    "aether:golden_swet": {
+      "charge": 0.35,
+      "energy_budget": 0.12
     },
     "aether:whirlwind": {
       "charge": 0.7,
       "energy_budget": 0.1
     },
     "aether:zephyr": {
-      "charge": 0.7,
-      "energy_budget": 0.06
+      "charge": 0.5,
+      "energy_budget": 0.08
     }
   },
   "spawners": {
@@ -108,9 +120,9 @@
     "monster": [
       {
         "type": "aether:cockatrice",
-        "maxCount": 4,
+        "maxCount": 2,
         "minCount": 1,
-        "weight": 15
+        "weight": 45
       },
       {
         "type": "aether:zephyr",
@@ -120,19 +132,19 @@
       },
       {
         "type": "aether:aechor_plant",
-        "maxCount": 4,
+        "maxCount": 6,
         "minCount": 2,
         "weight": 2
       },
       {
         "type": "aether:blue_swet",
-        "maxCount": 3,
+        "maxCount": 1,
         "minCount": 1,
         "weight": 1
       },
       {
         "type": "aether:golden_swet",
-        "maxCount": 3,
+        "maxCount": 1,
         "minCount": 1,
         "weight": 1
       },
@@ -152,7 +164,7 @@
         "type": "aether:aerwhale",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 8
+        "weight": 10
       }
     ],
     "underground_water_creature": [],
