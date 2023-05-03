@@ -82,6 +82,60 @@
     }
   },
   "spawners": {
+    "aether_aerwhale": [
+      {
+        "type": "aether:aerwhale",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 10
+      }
+    ],
+    "aether_sky_monster": [
+      {
+        "type": "aether:zephyr",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 30
+      }
+    ],
+    "aether_surface_monster": [
+      {
+        "type": "aether:cockatrice",
+        "maxCount": 2,
+        "minCount": 1,
+        "weight": 45
+      },
+      {
+        "type": "aether:aechor_plant",
+        "maxCount": 6,
+        "minCount": 2,
+        "weight": 2
+      },
+      {
+        "type": "aether:blue_swet",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 1
+      },
+      {
+        "type": "aether:golden_swet",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 1
+      },
+      {
+        "type": "aether:whirlwind",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 12
+      },
+      {
+        "type": "aether:evil_whirlwind",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 1
+      }
+    ],
     "ambient": [],
     "axolotls": [],
     "creature": [
@@ -117,56 +171,7 @@
       }
     ],
     "misc": [],
-    "monster": [
-      {
-        "type": "aether:cockatrice",
-        "maxCount": 2,
-        "minCount": 1,
-        "weight": 45
-      },
-      {
-        "type": "aether:zephyr",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 30
-      },
-      {
-        "type": "aether:aechor_plant",
-        "maxCount": 6,
-        "minCount": 2,
-        "weight": 2
-      },
-      {
-        "type": "aether:blue_swet",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 1
-      },
-      {
-        "type": "aether:golden_swet",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 1
-      },
-      {
-        "type": "aether:whirlwind",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 12
-      },
-      {
-        "type": "aether:evil_whirlwind",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 1
-      },
-      {
-        "type": "aether:aerwhale",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 10
-      }
-    ],
+    "monster": [],
     "underground_water_creature": [],
     "water_ambient": [],
     "water_creature": []

@@ -15,6 +15,7 @@ import com.aetherteam.aether.blockentity.AltarBlockEntity;
 import com.aetherteam.aether.blockentity.FreezerBlockEntity;
 import com.aetherteam.aether.data.generators.*;
 import com.aetherteam.aether.data.generators.tags.*;
+import com.aetherteam.aether.data.resources.AetherMobCategory;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.ai.AetherBlockPathTypes;
@@ -143,6 +144,7 @@ public class Aether {
         Reflection.initialize(AetherPlacementModifiers.class);
         Reflection.initialize(AetherRecipeBookTypes.class);
         Reflection.initialize(AetherBlockPathTypes.class);
+        Reflection.initialize(AetherMobCategory.class);
 
         AetherAdvancementTriggers.init();
 
@@ -175,6 +177,8 @@ public class Aether {
         ExistingFileHelper fileHelper = event.getExistingFileHelper();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
         PackOutput packOutput = generator.getPackOutput();
+
+        Reflection.initialize(AetherMobCategory.class);
 
         // Client Data
         generator.addProvider(event.includeClient(), new AetherBlockStateData(packOutput, fileHelper));
