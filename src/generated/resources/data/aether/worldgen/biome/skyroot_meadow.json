@@ -66,7 +66,7 @@
     },
     "aether:blue_swet": {
       "charge": 0.5,
-      "energy_budget": 0.09
+      "energy_budget": 0.1
     },
     "aether:cockatrice": {
       "charge": 0.6,
@@ -78,7 +78,7 @@
     },
     "aether:golden_swet": {
       "charge": 0.5,
-      "energy_budget": 0.09
+      "energy_budget": 0.1
     },
     "aether:whirlwind": {
       "charge": 0.4,
@@ -109,27 +109,27 @@
     "aether_surface_monster": [
       {
         "type": "aether:cockatrice",
-        "maxCount": 2,
+        "maxCount": 1,
         "minCount": 1,
         "weight": 35
       },
       {
         "type": "aether:aechor_plant",
-        "maxCount": 6,
-        "minCount": 2,
-        "weight": 8
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 7
       },
       {
         "type": "aether:blue_swet",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 5
+        "weight": 6
       },
       {
         "type": "aether:golden_swet",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 5
+        "weight": 6
       },
       {
         "type": "aether:whirlwind",
