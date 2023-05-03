@@ -56,29 +56,33 @@
   ],
   "has_precipitation": false,
   "spawn_costs": {
-    "aether:blue_swet": {
-      "charge": 0.35,
+    "aether:aerwhale": {
+      "charge": 1.0,
       "energy_budget": 0.12
     },
-    "aether:cockatrice": {
+    "aether:blue_swet": {
       "charge": 0.6,
-      "energy_budget": 0.08
+      "energy_budget": 0.09
+    },
+    "aether:cockatrice": {
+      "charge": 0.7,
+      "energy_budget": 0.12
     },
     "aether:evil_whirlwind": {
-      "charge": 0.7,
+      "charge": 0.5,
       "energy_budget": 0.1
     },
     "aether:golden_swet": {
-      "charge": 0.35,
-      "energy_budget": 0.12
+      "charge": 0.6,
+      "energy_budget": 0.09
     },
     "aether:whirlwind": {
-      "charge": 0.7,
+      "charge": 0.5,
       "energy_budget": 0.1
     },
     "aether:zephyr": {
-      "charge": 0.5,
-      "energy_budget": 0.08
+      "charge": 0.8,
+      "energy_budget": 0.1
     }
   },
   "spawners": {
@@ -87,7 +91,7 @@
         "type": "aether:aerwhale",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 10
+        "weight": 20
       }
     ],
     "aether_sky_monster": [
@@ -95,7 +99,7 @@
         "type": "aether:zephyr",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 30
+        "weight": 40
       }
     ],
     "aether_surface_monster": [
@@ -103,31 +107,31 @@
         "type": "aether:cockatrice",
         "maxCount": 2,
         "minCount": 1,
-        "weight": 45
+        "weight": 35
       },
       {
         "type": "aether:aechor_plant",
         "maxCount": 6,
         "minCount": 2,
-        "weight": 2
+        "weight": 4
       },
       {
         "type": "aether:blue_swet",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 1
+        "weight": 5
       },
       {
         "type": "aether:golden_swet",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 1
+        "weight": 5
       },
       {
         "type": "aether:whirlwind",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 12
+        "weight": 6
       },
       {
         "type": "aether:evil_whirlwind",
