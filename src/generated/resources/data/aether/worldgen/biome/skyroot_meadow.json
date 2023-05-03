@@ -56,32 +56,36 @@
   ],
   "has_precipitation": false,
   "spawn_costs": {
+    "aether:aechor_plant": {
+      "charge": 0.4,
+      "energy_budget": 0.11
+    },
     "aether:aerwhale": {
-      "charge": 1.0,
-      "energy_budget": 0.12
+      "charge": 0.7,
+      "energy_budget": 0.08
     },
     "aether:blue_swet": {
-      "charge": 0.6,
+      "charge": 0.5,
       "energy_budget": 0.09
     },
     "aether:cockatrice": {
-      "charge": 0.7,
+      "charge": 0.6,
       "energy_budget": 0.12
     },
     "aether:evil_whirlwind": {
-      "charge": 0.5,
+      "charge": 0.4,
       "energy_budget": 0.1
     },
     "aether:golden_swet": {
-      "charge": 0.6,
+      "charge": 0.5,
       "energy_budget": 0.09
     },
     "aether:whirlwind": {
-      "charge": 0.5,
+      "charge": 0.4,
       "energy_budget": 0.1
     },
     "aether:zephyr": {
-      "charge": 0.8,
+      "charge": 0.7,
       "energy_budget": 0.1
     }
   },
@@ -91,7 +95,7 @@
         "type": "aether:aerwhale",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 20
+        "weight": 10
       }
     ],
     "aether_sky_monster": [
@@ -113,7 +117,7 @@
         "type": "aether:aechor_plant",
         "maxCount": 6,
         "minCount": 2,
-        "weight": 4
+        "weight": 8
       },
       {
         "type": "aether:blue_swet",
@@ -131,7 +135,7 @@
         "type": "aether:whirlwind",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 6
+        "weight": 3
       },
       {
         "type": "aether:evil_whirlwind",
