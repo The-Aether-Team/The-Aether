@@ -31,6 +31,7 @@ import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraftforge.common.Tags;
 
 import java.util.Set;
 
@@ -80,7 +81,7 @@ public abstract class AetherBlockLootSubProvider extends BlockLootSubProvider {
     }
 
     public LootTable.Builder droppingWithChancesAndSkyrootSticks(Block block, Block sapling, float... chances) {
-        return createSilkTouchOrShearsDispatchTable(block, this.applyExplosionCondition(block, LootItem.lootTableItem(sapling)).when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, chances)))
+        return createForgeSilkTouchOrShearsDispatchTable(block, this.applyExplosionCondition(block, LootItem.lootTableItem(sapling)).when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, chances)))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).when(BlockLootAccessor.aether$hasShearsOrSilkTouch().invert())
                         .add(this.applyExplosionDecay(block,
                                 LootItem.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
@@ -103,14 +104,14 @@ public abstract class AetherBlockLootSubProvider extends BlockLootSubProvider {
     }
 
     public LootTable.Builder droppingWithSkyrootSticks(Block block) {
-        return createSilkTouchOrShearsDispatchTable(block, this.applyExplosionDecay(block,
+        return createForgeSilkTouchOrShearsDispatchTable(block, this.applyExplosionDecay(block,
                 LootItem.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
                 .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F)))
                 .apply(DoubleDrops.builder());
     }
 
     public LootTable.Builder droppingWithFruitAndSkyrootSticks(Block block, Item fruit) {
-        return createSilkTouchOrShearsDispatchTable(block, this.applyExplosionDecay(block, LootItem.lootTableItem(fruit)))
+        return createForgeSilkTouchOrShearsDispatchTable(block, this.applyExplosionDecay(block, LootItem.lootTableItem(fruit)))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).when(BlockLootAccessor.aether$hasShearsOrSilkTouch().invert())
                         .add(this.applyExplosionDecay(block,
                                 LootItem.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
@@ -183,5 +184,9 @@ public abstract class AetherBlockLootSubProvider extends BlockLootSubProvider {
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(5.0F, 6.0F)))))
                 .add(this.applyExplosionDecay(block, LootItem.lootTableItem(AetherItems.CANDY_CANE_SWORD.get()).setWeight(1)))
         );
+    }
+
+    protected static LootTable.Builder createForgeSilkTouchOrShearsDispatchTable(Block pBlock, LootPoolEntryContainer.Builder<?> pBuilder) {
+        return createSelfDropDispatchTable(pBlock, MatchTool.toolMatches(ItemPredicate.Builder.item().of(Tags.Items.SHEARS)).or(HAS_SILK_TOUCH), pBuilder);
     }
 }

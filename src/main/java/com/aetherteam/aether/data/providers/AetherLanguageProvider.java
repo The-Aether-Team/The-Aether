@@ -1,11 +1,13 @@
 package com.aetherteam.aether.data.providers;
 
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -18,6 +20,10 @@ public abstract class AetherLanguageProvider extends LanguageProvider {
 
     public void addDiscDesc(Supplier<? extends Item> key, String name) {
         this.add(key.get().getDescriptionId() + ".desc", name);
+    }
+
+    public void addBiome(ResourceKey<Biome> biome, String name) {
+        this.add("biome.aether." + biome.location().getPath(), name);
     }
 
     public void addContainerType(Supplier<? extends MenuType<?>> key, String name) {

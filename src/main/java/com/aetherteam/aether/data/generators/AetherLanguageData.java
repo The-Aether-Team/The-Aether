@@ -3,6 +3,7 @@ package com.aetherteam.aether.data.generators;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.data.providers.AetherLanguageProvider;
+import com.aetherteam.aether.data.resources.registries.AetherBiomes;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
@@ -419,6 +420,12 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addEffect(AetherEffects.INEBRIATION, "Inebriation");
 
 
+        addBiome(AetherBiomes.SKYROOT_MEADOW, "Skyroot Meadow");
+        addBiome(AetherBiomes.SKYROOT_GROVE, "Skyroot Grove");
+        addBiome(AetherBiomes.SKYROOT_WOODLAND, "Skyroot Woodland");
+        addBiome(AetherBiomes.SKYROOT_FOREST, "Skyroot Forest");
+
+
         addContainerType(AetherMenuTypes.BOOK_OF_LORE, "Book of Lore");
         addContainerType(AetherMenuTypes.ALTAR, "Altar");
         addContainerType(AetherMenuTypes.FREEZER, "Freezer");
@@ -584,6 +591,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addSubtitle("entity", "zephyr.ambient", "Zephyr blows");
         addSubtitle("entity", "zephyr.death", "Zephyr dies");
         addSubtitle("entity", "zephyr.hurt", "Zephyr hurts");
+
+        addSubtitle("entity", "item.pickup", "Item plops");
 
         addSubtitle("entity", "sentry.death", "Sentry dies");
         addSubtitle("entity", "sentry.hurt", "Sentry hurts");
@@ -1040,7 +1049,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.VALKYRIE_GLOVES, "An armor unique to the Silver Dungeon. The gloves are needed to complete the armor set, which grants temporary flight.");
         addLore(AetherItems.VALKYRIE_HELMET, "An armor unique to the Silver Dungeon, when fully worn, you are granted temporary flight. Quite useful for getting to high places.");
         addLore(AetherItems.VALKYRIE_HOE, "A tool unique to the Silver Dungeon, This hoe has incredibly far reach, allowing you to pointlessly till dirt from a safe distance.");
-        addLore(AetherItems.VALKYRIE_LANCE, "A tool unique to the Silver Dungeon, this long range weapon is very good for defeating Zephyrs, and Valkyrie Queens.");
+        addLore(AetherItems.VALKYRIE_LANCE, "A tool unique to the Bronze Dungeon, this long range weapon is very good for defeating Zephyrs, and Valkyrie Queens.");
         addLore(AetherItems.VALKYRIE_LEGGINGS, "An armor unique to the Silver Dungeon, when fully worn, you are granted temporary flight. Quite useful for getting to high places.");
         addLore(AetherItems.VALKYRIE_PICKAXE, "A tool unique to the Silver Dungeon, this pickaxe is very useful when it comes to mining blocks from under islands, as it has a very far reach, almost double the normal reach! It is also quite useful for fighting the Slider.");
         addLore(AetherItems.VALKYRIE_SHOVEL, "A tool unique to the Silver Dungeon, this shovel can help you reach Quicksoil from a safer distance, quite useful wouldn't you say?");

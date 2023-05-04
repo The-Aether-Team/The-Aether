@@ -18,7 +18,7 @@ public class PerkUtil {
         return (user) -> hasAllSkins().test(user) || hasLifetimeSkin(user, string);
     }
 
-    public static Predicate<User> hasLifetimeAngelMoaSkins(String string) {
+    public static Predicate<User> hasLifetimeAscentanMoaSkins(String string) {
         return (user) -> hasAllSkins().test(user) || hasBaseSkins().test(user) || hasLifetimeSkin(user, string);
     }
     
@@ -26,8 +26,8 @@ public class PerkUtil {
         return (user) -> hasAllSkins().test(user) || (user.isPledging() && user.getPatronTierLevel() >= Patron.Tier.VALKYRIE.getLevel()) || hasLifetimeSkin(user, string);
     }
 
-    public static Predicate<User> hasAngelMoaSkins(String string) {
-        return (user) -> hasAllSkins().test(user) || hasBaseSkins().test(user)  || (user.isPledging() && user.getPatronTierLevel() >= Patron.Tier.ANGEL.getLevel()) || hasLifetimeSkin(user, string);
+    public static Predicate<User> hasAscentanMoaSkins(String string) {
+        return (user) -> hasAllSkins().test(user) || hasBaseSkins().test(user)  || (user.isPledging() && user.getPatronTierLevel() >= Patron.Tier.ASCENTAN.getLevel()) || hasLifetimeSkin(user, string);
     }
 
     public static Predicate<User> hasBaseSkins() {

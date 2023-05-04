@@ -1,0 +1,25 @@
+name: Publish to CurseForge
+
+on: 
+  workflow_dispatch
+  
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-java@v3
+      with:
+        distribution: temurin
+        java-version: 17
+    - uses: gradle/gradle-build-action@v2
+      with:
+        gradle-version: 7.3
+    - name: Publish build
+      env:
+        CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+      run: |
+        if [ "${{ github.event.sender.login }}" = "OscarPayn" ] || [ "${{ github.event.sender.login }}" = "bconlon1" ]; then
+          gradle build
+          gradle curseforge
+        fi

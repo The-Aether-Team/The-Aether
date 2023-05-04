@@ -52,7 +52,7 @@ public class AetherConfig {
             tools_debuff = builder
                     .comment("Tools that aren't from the Aether will mine Aether blocks slower than tools that are from the Aether")
                     .translation("config.aether.common.gameplay.tools_debuff")
-                    .define("Debuff non-Aether tools", false);
+                    .define("Debuff non-Aether tools", true);
             edible_ambrosium = builder
                     .comment("Ambrosium Shards can be eaten to restore a half heart of health")
                     .translation("config.aether.common.gameplay.edible_ambrosium")

@@ -55,6 +55,7 @@ public class AetherPacketHandler {
 		register(SetVehiclePacket.class, SetVehiclePacket::decode);
 		register(SwetAttackPacket.class, SwetAttackPacket::decode);
 		register(SwetDeathParticlePacket.class, SwetDeathParticlePacket::decode);
+		register(ToolDebuffPacket.class, ToolDebuffPacket::decode);
 		register(ZephyrSnowballHitPacket.class, ZephyrSnowballHitPacket::decode);
 
 		// SERVER
@@ -73,6 +74,7 @@ public class AetherPacketHandler {
         register(ServerHaloPacket.Remove.class, ServerHaloPacket.Remove::decode);
 		register(ServerMoaSkinPacket.Apply.class, ServerMoaSkinPacket.Apply::decode);
 		register(ServerMoaSkinPacket.Remove.class, ServerMoaSkinPacket.Remove::decode);
+		register(StepHeightPacket.class, StepHeightPacket::decode);
 		register(SunAltarUpdatePacket.class, SunAltarUpdatePacket::decode);
 
 		// BOTH

@@ -141,14 +141,6 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         }
     }*/
 
-    /**
-     * Valkyries don't take fall damage.
-     */
-    @Override
-    public boolean causeFallDamage(float pFallDistance, float pMultiplier, @Nonnull DamageSource pSource) {
-        return false;
-    }
-
     @Override
     protected boolean canRide(@Nonnull Entity vehicle) {
         return false;

@@ -4,6 +4,7 @@ import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.item.AetherItems;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.TimeUtil;
@@ -123,7 +124,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
     public boolean doHurtTarget(@Nonnull Entity pEntity) {
         boolean result = super.doHurtTarget(pEntity);
         if (pEntity instanceof ServerPlayer player && player.getHealth() <= 0) {
-            this.chatItUp(player, Component.translatable("gui.aether.valkyrie.dialog.playerdeath." + (char) (random.nextInt(3) + '1')));
+            this.chatItUp(player, Component.translatable("gui.aether.valkyrie.dialog.playerdeath." + (char) (random.nextInt(3) + '1'), ComponentUtils.getDisplayName(player.getGameProfile())));
         }
         return result;
     }

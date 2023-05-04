@@ -47,28 +47,13 @@
         },
         {
           "type": "minecraft:item",
-          "name": "aether:gravitite_pickaxe",
+          "name": "aether:zanite_pickaxe",
           "weight": 2
         },
         {
           "type": "minecraft:item",
-          "name": "aether:gravitite_sword",
+          "name": "aether:zanite_sword",
           "weight": 2
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 2.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
-          "name": "aether:gravitite_ore"
         },
         {
           "type": "minecraft:item",

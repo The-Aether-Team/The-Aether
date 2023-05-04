@@ -49,6 +49,7 @@ import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Scanner;
 
 public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy, IEntityAdditionalSpawnData {
     public static final EntityDataAccessor<Boolean> DATA_AWAKE_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.BOOLEAN);
@@ -231,7 +232,7 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy, IEn
             if (this.level.getBlockState(pos).getBlock() instanceof LiquidBlock) {
                 this.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
                 this.evaporateEffects(pos);
-            } else if (!this.level.getFluidState(pos).isEmpty()) {
+            } else if (!this.level.getFluidState(pos).isEmpty() && this.level.getBlockState(pos).hasProperty(BlockStateProperties.WATERLOGGED)) {
                 this.level.setBlockAndUpdate(pos, this.level.getBlockState(pos).setValue(BlockStateProperties.WATERLOGGED, false));
                 this.evaporateEffects(pos);
             }
@@ -408,15 +409,15 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy, IEn
     }
 
     public int calculateMoveDelay() {
-        return this.isCritical() ? 4 : 8;
+        return this.isCritical() ? 1 + this.random.nextInt(10) : 2 + this.random.nextInt(14);
     }
 
     protected float getVelocityIncrease() {
-        return this.isCritical() ? 0.035F : 0.02F;
+        return this.isCritical() ? 0.045F - (this.getHealth()/10000) : 0.035F - (this.getHealth()/30000);
     }
 
     protected float getMaxVelocity() {
-        return 2.0F;
+        return 2.5F;
     }
 
     protected SoundEvent getAwakenSound() {
@@ -477,11 +478,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy, IEn
     @Override
     public boolean ignoreExplosion() {
         return true;
-    }
-
-    @Override
-    protected int calculateFallDamage(float distance, float damageMultiplier) {
-        return 0;
     }
 
     @Override

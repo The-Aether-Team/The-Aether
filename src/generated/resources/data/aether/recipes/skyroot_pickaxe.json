@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "#": {
-      "item": "aether:skyroot_planks"
+      "tag": "aether:skyroot_tool_crafting"
     },
     "/": {
       "tag": "aether:skyroot_stick"

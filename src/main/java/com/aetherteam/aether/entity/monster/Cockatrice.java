@@ -13,6 +13,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -34,7 +35,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.dimension.DimensionType;
 
 import javax.annotation.Nonnull;
 
@@ -83,7 +86,21 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
     }
 
     public static boolean checkCockatriceSpawnRules(EntityType<? extends Cockatrice> cockatrice, ServerLevelAccessor level, MobSpawnType spawnReason, BlockPos pos, RandomSource random) {
-        return !level.getBlockState(pos.below()).is(AetherTags.Blocks.COCKATRICE_SPAWNABLE_BLACKLIST) && Monster.checkMonsterSpawnRules(cockatrice, level, spawnReason, pos, random);
+        return !level.getBlockState(pos.below()).is(AetherTags.Blocks.COCKATRICE_SPAWNABLE_BLACKLIST) && level.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(level, pos, random) && Mob.checkMobSpawnRules(cockatrice, level, spawnReason, pos, random);
+    }
+
+    public static boolean isDarkEnoughToSpawn(ServerLevelAccessor level, BlockPos pos, RandomSource random) {
+        if (level.getBrightness(LightLayer.SKY, pos) > random.nextInt(32)) {
+            return false;
+        } else {
+            DimensionType dimensiontype = level.dimensionType();
+            int i = dimensiontype.monsterSpawnBlockLightLimit();
+            if (i < 15 && level.getBrightness(LightLayer.BLOCK, pos) > i) {
+                return false;
+            } else {
+                return level.getMaxLocalRawBrightness(pos) <= dimensiontype.monsterSpawnLightTest().sample(random);
+            }
+        }
     }
 
     @Override
@@ -208,11 +225,6 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
     @Override
     protected SoundEvent getDeathSound() {
         return AetherSoundEvents.ENTITY_COCKATRICE_DEATH.get();
-    }
-
-    @Override
-    protected int calculateFallDamage(float distance, float damageMultiplier) {
-        return 0;
     }
 
     @Override

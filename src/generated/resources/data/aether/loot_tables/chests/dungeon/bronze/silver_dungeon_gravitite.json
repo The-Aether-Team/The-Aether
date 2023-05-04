@@ -46,7 +46,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "aether:enchanted_gravitite"
+          "name": "aether:gravitite_ore"
         }
       ],
       "rolls": 1.0

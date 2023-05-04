@@ -27,7 +27,7 @@ import java.util.Map;
 
 public interface PhoenixArmor {
     /**
-     * Boosts the entity's movement in lava if wearing a full set of Phoenix Armor. The default boost is a multiplier of 10.5, but is modified based on duration in lava and whether the boots have Depth Strider.<br><br>
+     * Boosts the entity's movement in lava if wearing a full set of Phoenix Armor. The default boost is modified based on duration in lava and whether the boots have Depth Strider.<br><br>
      * Wearing Phoenix Armor also clears any fire from the wearer and spawns flame particles around them.
      * @param entity The {@link LivingEntity} wearing the armor.
      * @see com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(LivingEvent.LivingTickEvent)
@@ -39,13 +39,13 @@ public interface PhoenixArmor {
                 entity.resetFallDistance();
                 if (entity instanceof Player player) {
                     AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
-                        float defaultBoost = boostWithDepthStrider(entity);
+                        float defaultBoost = boostWithDepthStrider(entity, 1.75F, 1.0F);
                         aetherPlayer.setPhoenixSubmergeLength(Math.min(aetherPlayer.getPhoenixSubmergeLength() + 0.1, 1.0));
                         defaultBoost *= aetherPlayer.getPhoenixSubmergeLength();
                         entity.moveRelative(0.04F * defaultBoost, new Vec3(entity.xxa, entity.yya, entity.zza));
                     });
                 } else {
-                    float defaultBoost = boostWithDepthStrider(entity);
+                    float defaultBoost = boostWithDepthStrider(entity, 1.75F, 1.0F);
                     entity.moveRelative(0.04F * defaultBoost, new Vec3(entity.xxa, entity.yya, entity.zza));
                 }
             }
@@ -65,15 +65,46 @@ public interface PhoenixArmor {
     }
 
     /**
+     * Boosts the entity's vertical movement in lava if wearing a full set of Phoenix Armor. The default boost is modified based on duration in lava and whether the boots have Depth Strider.<br><br>
+     * @param entity The {@link LivingEntity} wearing the armor.
+     * @see com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(LivingEvent.LivingTickEvent)
+     */
+    static void boostVerticalLavaSwimming(LivingEntity entity) {
+        if (EquipmentUtil.hasFullPhoenixSet(entity)) {
+            entity.clearFire();
+            if (entity.isInLava()) {
+                entity.resetFallDistance();
+                if (entity instanceof Player player) {
+                    AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
+                        float defaultBoost = boostWithDepthStrider(entity, 1.5F, 0.05F);
+                        aetherPlayer.setPhoenixSubmergeLength(Math.min(aetherPlayer.getPhoenixSubmergeLength() + 0.1, 1.0));
+                        defaultBoost *= aetherPlayer.getPhoenixSubmergeLength();
+                        if (entity.getDeltaMovement().y() > 0 || entity.isCrouching()) {
+                            entity.setDeltaMovement(entity.getDeltaMovement().multiply(1.0, defaultBoost, 1.0));
+                        }
+                    });
+                } else {
+                    float defaultBoost = boostWithDepthStrider(entity, 1.5F, 0.05F);
+                    if (entity.getDeltaMovement().y() > 0 || entity.isCrouching()) {
+                        entity.setDeltaMovement(entity.getDeltaMovement().multiply(1.0, defaultBoost, 1.0));
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * Adds an extra 1.5 to the boost for every Depth Strider level up to Depth Strider 3.
      * @param entity The {@link LivingEntity} wearing the armor.
+     * @param start The starting value as a {@link Float}.
+     * @param increment The increment value as a {@link Float}.
      * @return The modified boost as a {@link Float}.
      */
-    private static float boostWithDepthStrider(LivingEntity entity) {
-        float defaultBoost = 1.55F;
+    private static float boostWithDepthStrider(LivingEntity entity, float start, float increment) {
+        float defaultBoost = start;
         float depthStriderModifier = Math.min(EnchantmentHelper.getDepthStrider(entity), 3.0F);
         if (depthStriderModifier > 0.0F) {
-            defaultBoost += depthStriderModifier * 1.5F;
+            defaultBoost += depthStriderModifier * increment;
         }
         return defaultBoost;
     }

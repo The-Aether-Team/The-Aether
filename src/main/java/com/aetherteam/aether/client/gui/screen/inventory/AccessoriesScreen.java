@@ -191,7 +191,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
             for (Renderable renderable : this.renderables) {
                 if (renderable instanceof RenderButton renderButton) {
                     renderButton.renderButtonOverlay(poseStack, mouseX, mouseY, partialTicks);
-                    if (renderButton.isHoveredOrFocused()) {
+                    if (renderButton.isHovered()) {
                         isButtonHovered = true;
                     }
                 }

@@ -31,6 +31,10 @@ public class TrappedBlock extends Block {
 		this.defaultStateSupplier = defaultStateSupplier;
 	}
 
+	public BlockState getFacadeBlock() {
+		return this.defaultStateSupplier.get();
+	}
+
 	/**
 	 * If a player steps on the block, it converts to the state given by {@link TrappedBlock#defaultStateSupplier} and spawns the entity given by {@link TrappedBlock#spawnableEntityTypeSupplier}.
 	 * @param level The {@link Level} the block is in.

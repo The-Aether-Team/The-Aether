@@ -129,14 +129,6 @@
         },
         {
           "type": "minecraft:item",
-          "name": "aether:gravitite_pickaxe"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aether:gravitite_sword"
-        },
-        {
-          "type": "minecraft:item",
           "name": "aether:sentry_stone"
         },
         {

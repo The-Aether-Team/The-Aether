@@ -1,5 +1,6 @@
 package com.aetherteam.aether.block.natural;
 
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.core.particles.ParticleTypes;
@@ -28,7 +29,7 @@ public class BlueAercloudBlock extends AercloudBlock {
 	 */
 	@Override
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-		if (!entity.isShiftKeyDown()) {
+		if (!entity.isShiftKeyDown() && (!entity.isVehicle() || !(entity.getControllingPassenger() instanceof Player))) {
 			entity.resetFallDistance();
 			entity.setDeltaMovement(entity.getDeltaMovement().x(), 2.0, entity.getDeltaMovement().z());
 			if (level.isClientSide()) {

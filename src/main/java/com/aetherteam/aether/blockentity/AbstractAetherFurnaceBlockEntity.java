@@ -199,12 +199,4 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
             return true;
         }
     }
-
-    @Override
-    public void awardUsedRecipesAndPopExperience(ServerPlayer player) { }
-
-    @Override
-    public List<Recipe<?>> getRecipesToAwardAndPopExperience(ServerLevel level, Vec3 experiencePos) {
-        return new ArrayList<>();
-    }
 }

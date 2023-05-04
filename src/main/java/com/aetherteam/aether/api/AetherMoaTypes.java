@@ -16,9 +16,9 @@ public class AetherMoaTypes {
     public static final DeferredRegister<MoaType> MOA_TYPES = DeferredRegister.create(MOA_TYPE_REGISTRY_KEY, Aether.MODID);
     public static final Supplier<IForgeRegistry<MoaType>> MOA_TYPE_REGISTRY = MOA_TYPES.makeRegistry(RegistryBuilder::new);
 
-    public static final RegistryObject<MoaType> BLUE = MOA_TYPES.register("blue", () -> new MoaType(new MoaType.Properties().egg(AetherItems.BLUE_MOA_EGG).maxJumps(3).speed(0.15F).spawnChance(100).texture("textures/entity/mobs/moa/blue_moa.png")));
-    public static final RegistryObject<MoaType> WHITE = MOA_TYPES.register("white", () -> new MoaType(new MoaType.Properties().egg(AetherItems.WHITE_MOA_EGG).maxJumps(4).speed(0.15F).spawnChance(50).texture("textures/entity/mobs/moa/white_moa.png")));
-    public static final RegistryObject<MoaType> BLACK = MOA_TYPES.register("black", () -> new MoaType(new MoaType.Properties().egg(AetherItems.BLACK_MOA_EGG).maxJumps(8).speed(0.15F).spawnChance(25).texture("textures/entity/mobs/moa/black_moa.png").saddleTexture("textures/entity/mobs/moa/black_moa_saddle.png")));
+    public static final RegistryObject<MoaType> BLUE = MOA_TYPES.register("blue", () -> new MoaType(new MoaType.Properties().egg(AetherItems.BLUE_MOA_EGG).maxJumps(3).speed(0.155F).spawnChance(100).texture("textures/entity/mobs/moa/blue_moa.png")));
+    public static final RegistryObject<MoaType> WHITE = MOA_TYPES.register("white", () -> new MoaType(new MoaType.Properties().egg(AetherItems.WHITE_MOA_EGG).maxJumps(4).speed(0.155F).spawnChance(50).texture("textures/entity/mobs/moa/white_moa.png")));
+    public static final RegistryObject<MoaType> BLACK = MOA_TYPES.register("black", () -> new MoaType(new MoaType.Properties().egg(AetherItems.BLACK_MOA_EGG).maxJumps(8).speed(0.155F).spawnChance(25).texture("textures/entity/mobs/moa/black_moa.png").saddleTexture("textures/entity/mobs/moa/black_moa_saddle.png")));
 
     public static MoaType get(String id) {
         return MOA_TYPE_REGISTRY.get().getValue(new ResourceLocation(id));

@@ -285,7 +285,7 @@ public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enem
             if (this.level.getBlockState(pos).getBlock() instanceof LiquidBlock) {
                 this.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
                 this.evaporateEffects(pos);
-            } else if (!this.level.getFluidState(pos).isEmpty()) {
+            } else if (!this.level.getFluidState(pos).isEmpty() && this.level.getBlockState(pos).hasProperty(BlockStateProperties.WATERLOGGED)) {
                 this.level.setBlockAndUpdate(pos, this.level.getBlockState(pos).setValue(BlockStateProperties.WATERLOGGED, false));
                 this.evaporateEffects(pos);
             }

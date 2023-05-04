@@ -101,6 +101,7 @@ dependencies {
 
     //compileOnly fg.deobf("curse.maven:colytra-280200:${project.colytra_version}")
     //compileOnly fg.deobf("curse.maven:curious-elytra-317716:${project.curiouselytra_version}")
+    compileOnly fg.deobf("curse.maven:jade-324717:${project.jade_version}")
 
     //runtimeOnly fg.deobf("io.github.ultimateboomer:smoothboot-forge:${project.smoothboot_version}")
 
@@ -113,7 +114,7 @@ repositories {
     maven { url = "https://www.cursemaven.com" }
     maven { url = "https://dvs1.progwml6.com/files/maven/" }
     maven { url = "https://gitlab.com/api/v4/projects/21830712/packages/maven" }
-    maven githubPackage.invoke("Gilded-Games/Nitrogen")
+    maven githubPackage.invoke("The-Aether-Team/Nitrogen")
 }
 
 jar {
@@ -162,7 +163,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = "https://maven.pkg.github.com/Gilded-Games/The-Aether"
+            url = "https://maven.pkg.github.com/The-Aether-Team/The-Aether"
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
@@ -180,15 +181,12 @@ curseforge {
         changelogType = "markdown"
         addGameVersion("${project.mc_version}")
         mainArtifact(tasks.jar) {
-            displayName = "${project.mod_name} - Forge - ${version}"
+            displayName = "${project.mod_name} - ${version}"
             relations {
                 embeddedLibrary "curios"
                 optionalDependency "starlight-forge"
             }
         }
-    }
-    options {
-        debug = true
     }
 }
 
@@ -197,7 +195,7 @@ modrinth {
     projectId = "${project.modrinth_id}"
     versionNumber = "${version}"
     versionType = "${project.version_type}"
-    versionName = "${project.mod_name} - Forge - ${version}"
+    versionName = "${project.mod_name} - ${version}"
     changelog = new File("$rootDir/docs/CHANGELOG.md").text
     uploadFile = tasks.jar
     gameVersions = ["${project.mc_version}"]
@@ -206,7 +204,6 @@ modrinth {
         embedded.version "curios", "${project.curios_version}"
         optional.project "starlight-forge"
     }
-    debugMode = true
 }
 
 mixin {

@@ -175,10 +175,10 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .save(consumer, name("flower_to_white_dye"));
 
 
-        makePickaxeWithBlock(AetherItems.SKYROOT_PICKAXE, AetherBlocks.SKYROOT_PLANKS).save(consumer);
-        makeAxeWithBlock(AetherItems.SKYROOT_AXE, AetherBlocks.SKYROOT_PLANKS).save(consumer);
-        makeShovelWithBlock(AetherItems.SKYROOT_SHOVEL, AetherBlocks.SKYROOT_PLANKS).save(consumer);
-        makeHoeWithBlock(AetherItems.SKYROOT_HOE, AetherBlocks.SKYROOT_PLANKS).save(consumer);
+        makePickaxeWithTag(AetherItems.SKYROOT_PICKAXE, AetherTags.Items.SKYROOT_TOOL_CRAFTING, "has_planks").save(consumer);
+        makeAxeWithTag(AetherItems.SKYROOT_AXE, AetherTags.Items.SKYROOT_TOOL_CRAFTING, "has_planks").save(consumer);
+        makeShovelWithTag(AetherItems.SKYROOT_SHOVEL, AetherTags.Items.SKYROOT_TOOL_CRAFTING, "has_planks").save(consumer);
+        makeHoeWithTag(AetherItems.SKYROOT_HOE, AetherTags.Items.SKYROOT_TOOL_CRAFTING, "has_planks").save(consumer);
 
         makePickaxeWithBlock(AetherItems.HOLYSTONE_PICKAXE, AetherBlocks.HOLYSTONE).save(consumer);
         makeAxeWithBlock(AetherItems.HOLYSTONE_AXE, AetherBlocks.HOLYSTONE).save(consumer);
@@ -195,7 +195,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
         makeShovelWithBlock(AetherItems.GRAVITITE_SHOVEL, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
         makeHoeWithBlock(AetherItems.GRAVITITE_HOE, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
 
-        makeSwordWithBlock(AetherItems.SKYROOT_SWORD, AetherBlocks.SKYROOT_PLANKS).save(consumer);
+        makeSwordWithTag(AetherItems.SKYROOT_SWORD, AetherTags.Items.SKYROOT_TOOL_CRAFTING, "has_planks").save(consumer);
         makeSwordWithBlock(AetherItems.HOLYSTONE_SWORD, AetherBlocks.HOLYSTONE).save(consumer);
         makeSword(AetherItems.ZANITE_SWORD, AetherItems.ZANITE_GEMSTONE).save(consumer);
         makeSwordWithBlock(AetherItems.GRAVITITE_SWORD, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
@@ -272,10 +272,10 @@ public class AetherRecipeData extends AetherRecipeProvider {
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AetherItems.SKYROOT_STICK.get(), 4)
                 .group("sticks")
-                .define('#', AetherBlocks.SKYROOT_PLANKS.get())
+                .define('#', AetherTags.Items.SKYROOT_STICK_CRAFTING)
                 .pattern("#")
                 .pattern("#")
-                .unlockedBy(getHasName(AetherBlocks.SKYROOT_PLANKS.get()), has(AetherBlocks.SKYROOT_PLANKS.get()))
+                .unlockedBy("has_planks", has(AetherTags.Items.SKYROOT_STICK_CRAFTING))
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AetherItems.SKYROOT_BUCKET.get(), 1)
@@ -362,8 +362,8 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("PHP")
                 .pattern("P P")
                 .pattern("PHP")
-                .unlockedBy(getHasName(AetherBlocks.SKYROOT_PLANKS.get()), has(AetherBlocks.SKYROOT_PLANKS.get()))
-                .unlockedBy(getHasName(AetherBlocks.SKYROOT_SLAB.get()), has(AetherBlocks.SKYROOT_SLAB.get()))
+                .unlockedBy("has_planks", has(AetherTags.Items.PLANKS_CRAFTING))
+                .unlockedBy("has_slabs", has(ItemTags.WOODEN_SLABS))
                 .save(consumer, name("skyroot_barrel"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.BEEHIVE, 1)
@@ -400,7 +400,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .define('P', AetherTags.Items.PLANKS_CRAFTING)
                 .pattern("PP")
                 .pattern("PP")
-                .unlockedBy(getHasName(AetherBlocks.SKYROOT_PLANKS.get()), has(AetherBlocks.SKYROOT_PLANKS.get()))
+                .unlockedBy("has_planks", has(AetherTags.Items.PLANKS_CRAFTING))
                 .save(consumer, name("skyroot_crafting_table"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.FLETCHING_TABLE, 1)
@@ -534,6 +534,19 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("P")
                 .unlockedBy("has_string", has(Tags.Items.STRING))
                 .save(consumer, name("skyroot_tripwire_hook"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, Blocks.CAKE)
+                .group("minecraft:cake")
+                .define('A', AetherItems.SKYROOT_MILK_BUCKET.get())
+                .define('B', Items.SUGAR)
+                .define('C', Items.WHEAT)
+                .define('E', Items.EGG)
+                .pattern("AAA")
+                .pattern("BEB")
+                .pattern("CCC")
+                .unlockedBy("has_egg", has(Items.EGG))
+                .save(consumer, name("skyroot_milk_bucket_cake"));
+
 
         smeltingOreRecipe(AetherItems.AMBROSIUM_SHARD.get(), AetherBlocks.AMBROSIUM_ORE.get(), 0.1F).save(consumer, name("ambrosium_shard_from_smelting"));
         blastingOreRecipe(AetherItems.AMBROSIUM_SHARD.get(), AetherBlocks.AMBROSIUM_ORE.get(), 0.1F).save(consumer, name("ambrosium_shard_from_blasting"));

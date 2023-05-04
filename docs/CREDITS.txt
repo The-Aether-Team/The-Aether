@@ -10,6 +10,7 @@ AerodDev:
 - Fixes to the silver Life Shard hearts texture.
 
 baguchan:
+- Implementation of allowing saddled entities to fall out of the Aether.
 - Improvements to entity AI to avoid entities falling out of the Aether.
 - Contributions to the Swet death animation.
 - Contributions to Skyroot Bed renderer.
@@ -27,7 +28,9 @@ FlashFyreMods
 - Implementation of more beta-accurate terrain generation for the Aether dimension.
 
 GizmoTheMoonPig
+- Implementation of Jade compatibility.
 - Fixes to the Life Shard silver heart overlay rendering.
+- Fixes to aether1 and aether2 music naming.
 
 InsomniaKitten
 - Providing the accessory inventory texture.
