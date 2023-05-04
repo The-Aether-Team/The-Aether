@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_skyroot_planks": {
+    "has_planks": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "aether:skyroot_planks"
-            ]
+            "tag": "aether:skyroot_stick_crafting"
           }
         ]
       },
@@ -22,7 +20,7 @@
   },
   "requirements": [
     [
-      "has_skyroot_planks",
+      "has_planks",
       "has_the_recipe"
     ]
   ],
