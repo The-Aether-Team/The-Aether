@@ -83,12 +83,12 @@ public class Moa extends MountableAnimal implements WingedBird {
 		this.goalSelector.addGoal(0, new FloatGoal(this));
 		this.goalSelector.addGoal(1, new PanicGoal(this, 0.65));
 		this.goalSelector.addGoal(2, new MoaFollowGoal(this, 1.0));
-		this.goalSelector.addGoal(3, new FallingRandomStrollGoal(this, 0.35));
-		this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
-		this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0D, true));
+		this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.0D, true));
+		this.goalSelector.addGoal(4, new FallingRandomStrollGoal(this, 0.35));
+		this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6.0F));
 		this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Swet.class, false, (livingEntity) -> this.getFollowing() == null));
-		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, AechorPlant.class, false, (livingEntity) -> this.getFollowing() == null));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Swet.class, false, (livingEntity) -> this.getFollowing() == null && this.isPlayerGrown()));
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, AechorPlant.class, false, (livingEntity) -> this.getFollowing() == null && this.isPlayerGrown()));
 	}
 
 	@Nonnull
@@ -156,7 +156,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 		super.tick();
 		AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
 		if (gravity != null) {
-			double max = this.isVehicle() ? -0.2 : -0.1;
+			double max = this.isVehicle() ? -0.5 : -0.1;
 			double fallSpeed = Math.max(gravity.getValue() * -1.25, max);
 			if (this.getDeltaMovement().y < fallSpeed && !this.playerTriedToCrouch()) {
 				this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
@@ -517,7 +517,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 		if (this.isVehicle()) {
 			return this.getSteeringSpeed() * 0.45F;
 		} else {
-			return this.getSteeringSpeed() * 0.05F;
+			return this.getSteeringSpeed() * 0.025F;
 		}
 	}
 
