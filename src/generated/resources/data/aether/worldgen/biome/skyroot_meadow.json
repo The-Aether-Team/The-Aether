@@ -86,7 +86,7 @@
     },
     "aether:zephyr": {
       "charge": 0.7,
-      "energy_budget": 0.1
+      "energy_budget": 0.15
     }
   },
   "spawners": {
@@ -95,7 +95,7 @@
         "type": "aether:aerwhale",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 25
+        "weight": 10
       }
     ],
     "aether_sky_monster": [
@@ -103,7 +103,7 @@
         "type": "aether:zephyr",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 40
+        "weight": 15
       }
     ],
     "aether_surface_monster": [
@@ -111,7 +111,7 @@
         "type": "aether:cockatrice",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 35
+        "weight": 8
       },
       {
         "type": "aether:aechor_plant",

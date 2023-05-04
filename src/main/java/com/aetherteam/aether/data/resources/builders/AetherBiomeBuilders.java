@@ -50,7 +50,7 @@ public class AetherBiomeBuilders {
                         .build(),
                 new MobSpawnSettings.Builder()
                         .addMobCharge(AetherEntityTypes.COCKATRICE.get(), 0.55, 0.13)
-                        .addMobCharge(AetherEntityTypes.ZEPHYR.get(), 0.7, 0.1)
+                        .addMobCharge(AetherEntityTypes.ZEPHYR.get(), 0.7, 0.15)
                         .addMobCharge(AetherEntityTypes.AECHOR_PLANT.get(), 0.4,0.11)
                         .addMobCharge(AetherEntityTypes.BLUE_SWET.get(), 0.5, 0.1)
                         .addMobCharge(AetherEntityTypes.GOLDEN_SWET.get(), 0.5, 0.1)
@@ -58,14 +58,14 @@ public class AetherBiomeBuilders {
                         .addMobCharge(AetherEntityTypes.EVIL_WHIRLWIND.get(), 0.4, 0.1)
                         .addMobCharge(AetherEntityTypes.AERWHALE.get(), 0.5, 0.11)
 
-                        .addSpawn(AetherMobCategory.AETHER_SURFACE_MONSTER, new MobSpawnSettings.SpawnerData(AetherEntityTypes.COCKATRICE.get(), 35, 1, 1))
-                        .addSpawn(AetherMobCategory.AETHER_SKY_MONSTER, new MobSpawnSettings.SpawnerData(AetherEntityTypes.ZEPHYR.get(), 40, 1, 1))
+                        .addSpawn(AetherMobCategory.AETHER_SURFACE_MONSTER, new MobSpawnSettings.SpawnerData(AetherEntityTypes.COCKATRICE.get(), 8, 1, 1))
+                        .addSpawn(AetherMobCategory.AETHER_SKY_MONSTER, new MobSpawnSettings.SpawnerData(AetherEntityTypes.ZEPHYR.get(), 15, 1, 1))
                         .addSpawn(AetherMobCategory.AETHER_SURFACE_MONSTER, new MobSpawnSettings.SpawnerData(AetherEntityTypes.AECHOR_PLANT.get(), 7, 1, 1))
                         .addSpawn(AetherMobCategory.AETHER_SURFACE_MONSTER, new MobSpawnSettings.SpawnerData(AetherEntityTypes.BLUE_SWET.get(), 6, 1, 1))
                         .addSpawn(AetherMobCategory.AETHER_SURFACE_MONSTER, new MobSpawnSettings.SpawnerData(AetherEntityTypes.GOLDEN_SWET.get(), 6, 1, 1))
                         .addSpawn(AetherMobCategory.AETHER_SURFACE_MONSTER, new MobSpawnSettings.SpawnerData(AetherEntityTypes.WHIRLWIND.get(), 3, 1, 1))
                         .addSpawn(AetherMobCategory.AETHER_SURFACE_MONSTER, new MobSpawnSettings.SpawnerData(AetherEntityTypes.EVIL_WHIRLWIND.get(), 1, 1, 1))
-                        .addSpawn(AetherMobCategory.AETHER_AERWHALE, new MobSpawnSettings.SpawnerData(AetherEntityTypes.AERWHALE.get(), 25, 1, 1))
+                        .addSpawn(AetherMobCategory.AETHER_AERWHALE, new MobSpawnSettings.SpawnerData(AetherEntityTypes.AERWHALE.get(), 10, 1, 1))
 
                         .creatureGenerationProbability(0.25F)
                         .addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(AetherEntityTypes.PHYG.get(), 10, 3, 4))
