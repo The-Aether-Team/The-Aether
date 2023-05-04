@@ -61,16 +61,16 @@
       "energy_budget": 0.11
     },
     "aether:aerwhale": {
-      "charge": 0.7,
-      "energy_budget": 0.08
+      "charge": 0.5,
+      "energy_budget": 0.11
     },
     "aether:blue_swet": {
       "charge": 0.5,
       "energy_budget": 0.1
     },
     "aether:cockatrice": {
-      "charge": 0.6,
-      "energy_budget": 0.12
+      "charge": 0.55,
+      "energy_budget": 0.13
     },
     "aether:evil_whirlwind": {
       "charge": 0.4,
@@ -95,7 +95,7 @@
         "type": "aether:aerwhale",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 10
+        "weight": 25
       }
     ],
     "aether_sky_monster": [

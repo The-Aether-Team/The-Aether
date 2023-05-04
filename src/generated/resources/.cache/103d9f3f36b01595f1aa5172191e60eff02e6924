@@ -1,4 +1,4 @@
-// 1.19.4	2023-05-04T00:24:12.8946476	Registries
+// 1.19.4	2023-05-04T16:23:32.6181234	Registries
 25d924fdac4392adb88fe3b6aa2c23420f6fb4f9 data/aether/damage_type/armor_piercing_attack.json
 03d6a63bae7e4458c11da22471bf0f8b5051023c data/aether/damage_type/cloud_crystal.json
 024fc58ce3f33e1542dfe59582a4da47cc178764 data/aether/damage_type/crush.json
@@ -10,10 +10,10 @@ cd680f6ec731971e2aefe28c7fb4c793a2923fa8 data/aether/damage_type/ice_crystal.jso
 5ccd8e14aae581e4975827ff44b4e37760211a39 data/aether/damage_type/thunder_crystal.json
 f5deced101d2299e370ac067f29b5b355f28e634 data/aether/dimension/the_aether.json
 5655d4cd818dbc73a0baa2590d80dd274f85927d data/aether/dimension_type/the_aether.json
-fdd5c1466c4519dbd76d9ecdc065e991cda890cf data/aether/worldgen/biome/skyroot_forest.json
-45cc7bd48b67c6ee5692ead89838569d41321e5c data/aether/worldgen/biome/skyroot_grove.json
-39eb01036b92ab95e0c15e1754f3ab324ad0f002 data/aether/worldgen/biome/skyroot_meadow.json
-62049651451172be80aeec2e3ebcead1ef313e7e data/aether/worldgen/biome/skyroot_woodland.json
+9aa5d9841ff097eaee7ce7ab496bb24c3ae5c672 data/aether/worldgen/biome/skyroot_forest.json
+37ace3afc814e0dc91a8c35497b986b8c171bc7f data/aether/worldgen/biome/skyroot_grove.json
+16a527c7e2e2b0d80762e31f7672d9cc6b262c41 data/aether/worldgen/biome/skyroot_meadow.json
+6a408570991c79676709f8cd03a76f34ecd52092 data/aether/worldgen/biome/skyroot_woodland.json
 18a65f6608e5a7aca8d2a54e9c2d73c87bc03dd6 data/aether/worldgen/configured_feature/aether_dirt_ore.json
 16a2ae74f54e0744b412dfca906201c5df3d3653 data/aether/worldgen/configured_feature/ambrosium_ore.json
 059b24c9ed07c7e6561ae96f3588b0c495852ef8 data/aether/worldgen/configured_feature/berry_bush_patch.json
