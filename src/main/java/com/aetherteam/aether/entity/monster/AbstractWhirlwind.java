@@ -222,6 +222,11 @@ public abstract class AbstractWhirlwind extends Mob {
     }
 
     @Override
+    protected boolean canRide(@Nonnull Entity vehicle) {
+        return false;
+    }
+
+    @Override
     public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putFloat("Movement Angle", this.movementAngle);
