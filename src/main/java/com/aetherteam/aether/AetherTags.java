@@ -67,6 +67,8 @@ public class AetherTags {
 
 		public static final TagKey<Item> CRAFTS_SKYROOT_PLANKS = tag("crafts_skyroot_planks");
 		public static final TagKey<Item> PLANKS_CRAFTING = tag("planks_crafting");
+		public static final TagKey<Item> SKYROOT_STICK_CRAFTING = tag("skyroot_stick_crafting");
+		public static final TagKey<Item> SKYROOT_TOOL_CRAFTING = tag("skyroot_tool_crafting");
 
 		public static final TagKey<Item> AETHER_PORTAL_ACTIVATION_ITEMS = tag("aether_portal_activation_items");
 		public static final TagKey<Item> BOOK_OF_LORE_MATERIALS = tag("book_of_lore_materials");

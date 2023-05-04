@@ -71,6 +71,16 @@ public abstract class AetherRecipeProvider extends RecipeProvider {
         return stairBuilder(stairs.get(), Ingredient.of(material.get())).unlockedBy(getHasName(material.get()), has(material.get()));
     }
 
+    protected static ShapedRecipeBuilder makePickaxeWithTag(Supplier<? extends Item> pickaxe, TagKey<Item> material, String has) {
+        return ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, pickaxe.get())
+                .define('#', material)
+                .define('/', AetherTags.Items.SKYROOT_STICKS)
+                .pattern("###")
+                .pattern(" / ")
+                .pattern(" / ")
+                .unlockedBy(has, has(material));
+    }
+
     protected static ShapedRecipeBuilder makePickaxeWithBlock(Supplier<? extends Item> pickaxe, Supplier<? extends Block> material) {
         return ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, pickaxe.get())
                 .define('#', material.get())
@@ -79,6 +89,16 @@ public abstract class AetherRecipeProvider extends RecipeProvider {
                 .pattern(" / ")
                 .pattern(" / ")
                 .unlockedBy(getHasName(material.get()), has(material.get()));
+    }
+
+    protected static ShapedRecipeBuilder makeAxeWithTag(Supplier<? extends Item> axe, TagKey<Item> material, String has) {
+        return ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, axe.get())
+                .define('#', material)
+                .define('/', AetherTags.Items.SKYROOT_STICKS)
+                .pattern("##")
+                .pattern("#/")
+                .pattern(" /")
+                .unlockedBy(has, has(material));
     }
 
     protected static ShapedRecipeBuilder makeAxeWithBlock(Supplier<? extends Item> axe, Supplier<? extends Block> material) {
@@ -91,6 +111,16 @@ public abstract class AetherRecipeProvider extends RecipeProvider {
                 .unlockedBy(getHasName(material.get()), has(material.get()));
     }
 
+    protected static ShapedRecipeBuilder makeShovelWithTag(Supplier<? extends Item> shovel, TagKey<Item> material, String has) {
+        return ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, shovel.get())
+                .define('#', material)
+                .define('/', AetherTags.Items.SKYROOT_STICKS)
+                .pattern("#")
+                .pattern("/")
+                .pattern("/")
+                .unlockedBy(has, has(material));
+    }
+
     protected static ShapedRecipeBuilder makeShovelWithBlock(Supplier<? extends Item> shovel, Supplier<? extends Block> material) {
         return ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, shovel.get())
                 .define('#', material.get())
@@ -101,6 +131,16 @@ public abstract class AetherRecipeProvider extends RecipeProvider {
                 .unlockedBy(getHasName(material.get()), has(material.get()));
     }
 
+    protected static ShapedRecipeBuilder makeHoeWithTag(Supplier<? extends Item> hoe, TagKey<Item> material, String has) {
+        return ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, hoe.get())
+                .define('#', material)
+                .define('/', AetherTags.Items.SKYROOT_STICKS)
+                .pattern("##")
+                .pattern(" /")
+                .pattern(" /")
+                .unlockedBy(has, has(material));
+    }
+
     protected static ShapedRecipeBuilder makeHoeWithBlock(Supplier<? extends Item> hoe, Supplier<? extends Block> material) {
         return ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, hoe.get())
                 .define('#', material.get())
@@ -109,6 +149,16 @@ public abstract class AetherRecipeProvider extends RecipeProvider {
                 .pattern(" /")
                 .pattern(" /")
                 .unlockedBy(getHasName(material.get()), has(material.get()));
+    }
+
+    protected static ShapedRecipeBuilder makeSwordWithTag(Supplier<? extends Item> sword, TagKey<Item> material, String has) {
+        return ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, sword.get())
+                .define('#', material)
+                .define('/', AetherTags.Items.SKYROOT_STICKS)
+                .pattern("#")
+                .pattern("#")
+                .pattern("/")
+                .unlockedBy(has, has(material));
     }
 
     protected static ShapedRecipeBuilder makeSwordWithBlock(Supplier<? extends Item> sword, Supplier<? extends Block> material) {
