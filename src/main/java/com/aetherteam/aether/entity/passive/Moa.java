@@ -156,7 +156,8 @@ public class Moa extends MountableAnimal implements WingedBird {
 		super.tick();
 		AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
 		if (gravity != null) {
-			double fallSpeed = Math.max(gravity.getValue() * -1.25, -0.1);
+			double max = this.isVehicle() ? -0.2 : -0.1;
+			double fallSpeed = Math.max(gravity.getValue() * -1.25, max);
 			if (this.getDeltaMovement().y < fallSpeed && !this.playerTriedToCrouch()) {
 				this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
 				this.hasImpulse = true;
@@ -513,7 +514,11 @@ public class Moa extends MountableAnimal implements WingedBird {
 
 	@Override
 	public float getFlyingSpeed() {
-		return this.getSteeringSpeed() * 0.45F;
+		if (this.isVehicle()) {
+			return this.getSteeringSpeed() * 0.45F;
+		} else {
+			return this.getSteeringSpeed() * 0.05F;
+		}
 	}
 
 	@Override
