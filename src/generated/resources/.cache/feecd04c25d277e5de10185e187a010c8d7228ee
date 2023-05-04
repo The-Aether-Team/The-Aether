@@ -1,4 +1,4 @@
-// 1.19.4	2023-03-18T15:59:38.7311382	Tags for minecraft:worldgen/biome mod id aether
+// 1.19.4	2023-05-03T18:57:25.7609469	Tags for minecraft:worldgen/biome mod id aether
 6425e7e0a57a451843094090fa1e31c9fbd4c5e0 data/aether/tags/worldgen/biome/aether_music.json
 b95f2e5677841946d287305b14c97c69f59b6db1 data/aether/tags/worldgen/biome/crimson_nylium_conversion.json
 70073d71d36e3d050e21bd0d44e3dc94f4ec4890 data/aether/tags/worldgen/biome/display_travel_text.json
@@ -13,3 +13,4 @@ e230510c9f5c1188c61cd1ad728a3d9a6bd3125f data/aether/tags/worldgen/biome/myceliu
 8a465b6126765ecd81cd3e4dcd95641b97642809 data/aether/tags/worldgen/biome/podzol_conversion.json
 6425e7e0a57a451843094090fa1e31c9fbd4c5e0 data/aether/tags/worldgen/biome/ultracold.json
 45a7fce7990fceb93e22529d0a7ef778bfac4a99 data/aether/tags/worldgen/biome/warped_nylium_conversion.json
+6425e7e0a57a451843094090fa1e31c9fbd4c5e0 data/minecraft/tags/worldgen/biome/spawns_cold_variant_frogs.json
