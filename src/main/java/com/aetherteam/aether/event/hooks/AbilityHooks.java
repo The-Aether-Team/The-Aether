@@ -81,11 +81,11 @@ public class AbilityHooks {
          * Damages Zanite Rings when a block is broken.
          * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onBlockBreak(BlockEvent.BreakEvent)
          */
-        public static void damageZaniteRing(LivingEntity entity) {
+        public static void damageZaniteRing(LivingEntity entity, LevelAccessor level, BlockState state, BlockPos pos) {
             List<SlotResult> slotResults = EquipmentUtil.getZaniteRings(entity);
             for (SlotResult slotResult : slotResults) {
                 if (slotResult != null) {
-                    if (entity.getRandom().nextInt(3) == 0) {
+                    if (state.getDestroySpeed(level, pos) > 0 && entity.getRandom().nextInt(3) == 0) {
                         slotResult.stack().hurtAndBreak(1, entity, wearer -> CuriosApi.getCuriosHelper().onBrokenCurio(slotResult.slotContext()));
                     }
                 }
@@ -96,10 +96,10 @@ public class AbilityHooks {
          * Damages Zanite Pendant when a block is broken.
          * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onBlockBreak(BlockEvent.BreakEvent)
          */
-        public static void damageZanitePendant(LivingEntity entity) {
+        public static void damageZanitePendant(LivingEntity entity, LevelAccessor level, BlockState state, BlockPos pos) {
             SlotResult slotResult = EquipmentUtil.getZanitePendant(entity);
             if (slotResult != null) {
-                if (entity.getRandom().nextInt(3) == 0) {
+                if (state.getDestroySpeed(level, pos) > 0 && entity.getRandom().nextInt(3) == 0) {
                     slotResult.stack().hurtAndBreak(1, entity, wearer -> CuriosApi.getCuriosHelper().onBrokenCurio(slotResult.slotContext()));
                 }
             }
