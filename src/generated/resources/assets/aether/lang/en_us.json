@@ -876,6 +876,8 @@
   "pack.aether.125.title": "Aether 1.2.5 Textures",
   "pack.aether.b173.description": "The original look of the Aether from b1.7.3",
   "pack.aether.b173.title": "Aether b1.7.3 Textures",
+  "pack.aether.colorblind.description": "Changes textures for color blindness accessibility",
+  "pack.aether.colorblind.title": "Aether Colorblind Textures",
   "pack.aether.ctm.description": "Fixes Quicksoil Glass Panes when using CTM",
   "pack.aether.ctm.title": "Aether CTM Fix",
   "pack.aether.mod.description": "Aether Resources",
