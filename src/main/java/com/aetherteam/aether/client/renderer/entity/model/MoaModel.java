@@ -35,8 +35,8 @@ public class MoaModel extends BipedBirdModel<Moa> {
 	public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		super.renderToBuffer(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
 		if (this.renderLegs) {
-			this.rightLeg.render(poseStack, consumer, packedLight, packedOverlay);
-			this.leftLeg.render(poseStack, consumer, packedLight, packedOverlay);
+			this.rightLeg.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+			this.leftLeg.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
 		}
 	}
 }
