@@ -1,25 +1,21 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_skyroot_planks": {
+    "has_planks": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "aether:skyroot_planks"
-            ]
+            "tag": "aether:planks_crafting"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_skyroot_slab": {
+    "has_slabs": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "aether:skyroot_slab"
-            ]
+            "tag": "minecraft:wooden_slabs"
           }
         ]
       },
@@ -34,8 +30,8 @@
   },
   "requirements": [
     [
-      "has_skyroot_planks",
-      "has_skyroot_slab",
+      "has_planks",
+      "has_slabs",
       "has_the_recipe"
     ]
   ],

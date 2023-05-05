@@ -4,11 +4,14 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.aetherteam.aether.client.AetherSoundEvents;
+import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.WingedBird;
 import com.aetherteam.aether.entity.ai.goal.FallingRandomStrollGoal;
 import com.aetherteam.aether.entity.ai.goal.MoaFollowGoal;
 import com.aetherteam.aether.entity.ai.navigator.FallPathNavigation;
 
+import com.aetherteam.aether.entity.monster.AechorPlant;
+import com.aetherteam.aether.entity.monster.Swet;
 import com.aetherteam.aether.item.miscellaneous.MoaEggItem;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.AetherTags;
@@ -31,11 +34,13 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -78,9 +83,12 @@ public class Moa extends MountableAnimal implements WingedBird {
 		this.goalSelector.addGoal(0, new FloatGoal(this));
 		this.goalSelector.addGoal(1, new PanicGoal(this, 0.65));
 		this.goalSelector.addGoal(2, new MoaFollowGoal(this, 1.0));
-		this.goalSelector.addGoal(3, new FallingRandomStrollGoal(this, 0.35));
-		this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
+		this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.0D, true));
+		this.goalSelector.addGoal(4, new FallingRandomStrollGoal(this, 0.35));
+		this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6.0F));
 		this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Swet.class, false, (livingEntity) -> this.getFollowing() == null && this.isPlayerGrown()));
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, AechorPlant.class, false, (livingEntity) -> this.getFollowing() == null && this.isPlayerGrown()));
 	}
 
 	@Nonnull
@@ -93,7 +101,9 @@ public class Moa extends MountableAnimal implements WingedBird {
 	public static AttributeSupplier.Builder createMobAttributes() {
 		return Mob.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 35.0)
-				.add(Attributes.MOVEMENT_SPEED, 1.0);
+				.add(Attributes.MOVEMENT_SPEED, 1.0)
+				.add(Attributes.FOLLOW_RANGE, 16.0)
+				.add(Attributes.ATTACK_DAMAGE, 5.0);
 	}
 
 	@Override
@@ -146,7 +156,8 @@ public class Moa extends MountableAnimal implements WingedBird {
 		super.tick();
 		AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
 		if (gravity != null) {
-			double fallSpeed = Math.max(gravity.getValue() * -1.25, -0.1);
+			double max = this.isVehicle() ? -0.5 : -0.1;
+			double fallSpeed = Math.max(gravity.getValue() * -1.25, max);
 			if (this.getDeltaMovement().y < fallSpeed && !this.playerTriedToCrouch()) {
 				this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
 				this.hasImpulse = true;
@@ -288,6 +299,14 @@ public class Moa extends MountableAnimal implements WingedBird {
 	public void spawnExplosionParticle() {
 		for (int i = 0; i < 20; ++i) {
 			EntityUtil.spawnMovementExplosionParticles(this);
+		}
+	}
+
+	@Override
+	protected void removePassenger(Entity passenger) {
+		super.removePassenger(passenger);
+		if (passenger instanceof Player player && (this.getFollowing() == null || this.getFollowing().toString().equals(player.getUUID().toString()))) {
+			this.setFollowing(player.getUUID());
 		}
 	}
 
@@ -462,6 +481,11 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	@Override
+	public boolean canBeAffected(MobEffectInstance effect) {
+		return (effect.getEffect() != AetherEffects.INEBRIATION.get() || !this.isPlayerGrown()) && super.canBeAffected(effect);
+	}
+
+	@Override
 	public float getSpeed() {
 		MoaType moaType = this.getMoaType();
 		return moaType != null ? moaType.getSpeed() : AetherMoaTypes.BLUE.get().getSpeed();
@@ -490,7 +514,11 @@ public class Moa extends MountableAnimal implements WingedBird {
 
 	@Override
 	public float getFlyingSpeed() {
-		return this.getSteeringSpeed() * 0.45F;
+		if (this.isVehicle()) {
+			return this.getSteeringSpeed() * 0.45F;
+		} else {
+			return this.getSteeringSpeed() * 0.025F;
+		}
 	}
 
 	@Override

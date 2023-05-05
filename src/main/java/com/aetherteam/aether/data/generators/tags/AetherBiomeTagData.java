@@ -44,5 +44,7 @@ public class AetherBiomeTagData extends BiomeTagsProvider {
         this.tag(AetherTags.Biomes.FALL_TO_OVERWORLD).addTag(AetherTags.Biomes.IS_AETHER);
         this.tag(AetherTags.Biomes.DISPLAY_TRAVEL_TEXT).addTag(AetherTags.Biomes.IS_AETHER).addTag(BiomeTags.IS_OVERWORLD).add(Biomes.THE_VOID);
         this.tag(AetherTags.Biomes.AETHER_MUSIC).addTag(AetherTags.Biomes.IS_AETHER);
+
+        this.tag(BiomeTags.SPAWNS_COLD_VARIANT_FROGS).addTag(AetherTags.Biomes.IS_AETHER);
     }
 }

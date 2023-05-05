@@ -212,6 +212,7 @@ public class Aether {
         this.setupReleasePack(event);
         this.setupBetaPack(event);
         this.setupCTMFixPack(event);
+        this.setupColorblindPack(event);
     }
 
     /**
@@ -287,6 +288,29 @@ public class Aether {
                             false,
                             PackSource.BUILT_IN)
                 ));
+        }
+    }
+
+    /**
+     * A built-in resource pack to change textures for color blindness accessibility.
+     */
+    private void setupColorblindPack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.CLIENT_RESOURCES) {
+            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/colorblind");
+            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
+            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.colorblind.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
+            event.addRepositorySource((source) ->
+                    source.accept(Pack.create(
+                            "builtin/aether_colorblind",
+                            Component.translatable("pack.aether.colorblind.title"),
+                            false,
+                            (string) -> pack,
+                            new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
+                            PackType.CLIENT_RESOURCES,
+                            Pack.Position.TOP,
+                            false,
+                            PackSource.BUILT_IN)
+                    ));
         }
     }
 
