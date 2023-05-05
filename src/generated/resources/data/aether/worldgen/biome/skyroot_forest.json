@@ -85,8 +85,8 @@
       "energy_budget": 0.1
     },
     "aether:zephyr": {
-      "charge": 0.7,
-      "energy_budget": 0.15
+      "charge": 0.6,
+      "energy_budget": 0.16
     }
   },
   "spawners": {

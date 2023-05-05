@@ -62,7 +62,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 	}
 
 	public static boolean checkZephyrSpawnRules(EntityType<? extends Zephyr> zephyr, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
-		return level.getDifficulty() != Difficulty.PEACEFUL && Mob.checkMobSpawnRules(zephyr, level, reason, pos, random) && (reason != MobSpawnType.NATURAL || random.nextInt(25) == 0);
+		return level.getDifficulty() != Difficulty.PEACEFUL && Mob.checkMobSpawnRules(zephyr, level, reason, pos, random) && (reason != MobSpawnType.NATURAL || random.nextInt(20) == 0);
 	}
 
 	@Override

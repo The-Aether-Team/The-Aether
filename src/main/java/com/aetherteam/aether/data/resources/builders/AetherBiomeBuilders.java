@@ -50,7 +50,7 @@ public class AetherBiomeBuilders {
                         .build(),
                 new MobSpawnSettings.Builder()
                         .addMobCharge(AetherEntityTypes.COCKATRICE.get(), 0.55, 0.13)
-                        .addMobCharge(AetherEntityTypes.ZEPHYR.get(), 0.7, 0.15)
+                        .addMobCharge(AetherEntityTypes.ZEPHYR.get(), 0.6, 0.16)
                         .addMobCharge(AetherEntityTypes.AECHOR_PLANT.get(), 0.4,0.11)
                         .addMobCharge(AetherEntityTypes.BLUE_SWET.get(), 0.5, 0.1)
                         .addMobCharge(AetherEntityTypes.GOLDEN_SWET.get(), 0.5, 0.1)
