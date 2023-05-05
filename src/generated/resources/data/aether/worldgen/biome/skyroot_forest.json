@@ -69,8 +69,8 @@
       "energy_budget": 0.1
     },
     "aether:cockatrice": {
-      "charge": 0.55,
-      "energy_budget": 0.13
+      "charge": 0.5,
+      "energy_budget": 0.15
     },
     "aether:evil_whirlwind": {
       "charge": 0.4,
@@ -103,7 +103,7 @@
         "type": "aether:zephyr",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 15
+        "weight": 20
       }
     ],
     "aether_surface_monster": [

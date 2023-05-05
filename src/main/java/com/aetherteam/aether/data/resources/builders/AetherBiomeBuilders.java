@@ -49,7 +49,7 @@ public class AetherBiomeBuilders {
                         .backgroundMusic(new Music(AetherSoundEvents.MUSIC_AETHER.getHolder().orElseThrow(), 12000, 24000, true))
                         .build(),
                 new MobSpawnSettings.Builder()
-                        .addMobCharge(AetherEntityTypes.COCKATRICE.get(), 0.55, 0.13)
+                        .addMobCharge(AetherEntityTypes.COCKATRICE.get(), 0.5, 0.15)
                         .addMobCharge(AetherEntityTypes.ZEPHYR.get(), 0.6, 0.16)
                         .addMobCharge(AetherEntityTypes.AECHOR_PLANT.get(), 0.4,0.11)
                         .addMobCharge(AetherEntityTypes.BLUE_SWET.get(), 0.5, 0.1)
@@ -59,7 +59,7 @@ public class AetherBiomeBuilders {
                         .addMobCharge(AetherEntityTypes.AERWHALE.get(), 0.5, 0.11)
 
                         .addSpawn(AetherMobCategory.AETHER_SURFACE_MONSTER, new MobSpawnSettings.SpawnerData(AetherEntityTypes.COCKATRICE.get(), 8, 1, 1))
-                        .addSpawn(AetherMobCategory.AETHER_SKY_MONSTER, new MobSpawnSettings.SpawnerData(AetherEntityTypes.ZEPHYR.get(), 15, 1, 1))
+                        .addSpawn(AetherMobCategory.AETHER_SKY_MONSTER, new MobSpawnSettings.SpawnerData(AetherEntityTypes.ZEPHYR.get(), 20, 1, 1))
                         .addSpawn(AetherMobCategory.AETHER_SURFACE_MONSTER, new MobSpawnSettings.SpawnerData(AetherEntityTypes.AECHOR_PLANT.get(), 7, 1, 1))
                         .addSpawn(AetherMobCategory.AETHER_SURFACE_MONSTER, new MobSpawnSettings.SpawnerData(AetherEntityTypes.BLUE_SWET.get(), 6, 1, 1))
                         .addSpawn(AetherMobCategory.AETHER_SURFACE_MONSTER, new MobSpawnSettings.SpawnerData(AetherEntityTypes.GOLDEN_SWET.get(), 6, 1, 1))
