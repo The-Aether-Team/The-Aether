@@ -98,6 +98,14 @@
         "weight": 10
       }
     ],
+    "aether_darkness_monster": [
+      {
+        "type": "aether:cockatrice",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 8
+      }
+    ],
     "aether_sky_monster": [
       {
         "type": "aether:zephyr",
@@ -107,12 +115,6 @@
       }
     ],
     "aether_surface_monster": [
-      {
-        "type": "aether:cockatrice",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 8
-      },
       {
         "type": "aether:aechor_plant",
         "maxCount": 1,
