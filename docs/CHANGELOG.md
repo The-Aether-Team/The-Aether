@@ -1,4 +1,4 @@
-# The Aether - Forge - 1.19.4-1.0.0-beta.1
+# The Aether - Forge - 1.19.4-1.0.0-beta.2
 Additions
 - Add internal resource pack for colorblind accessibility for Aercloud textures.
 - Add Jade compatibility for dungeon block tooltips.
