@@ -86,7 +86,7 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
     }
 
     public static boolean checkCockatriceSpawnRules(EntityType<? extends Cockatrice> cockatrice, ServerLevelAccessor level, MobSpawnType spawnReason, BlockPos pos, RandomSource random) {
-        return !level.getBlockState(pos.below()).is(AetherTags.Blocks.COCKATRICE_SPAWNABLE_BLACKLIST) && level.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(level, pos, random) && Mob.checkMobSpawnRules(cockatrice, level, spawnReason, pos, random);
+        return !level.getBlockState(pos.below()).is(AetherTags.Blocks.COCKATRICE_SPAWNABLE_BLACKLIST) && level.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(level, pos, random) && Mob.checkMobSpawnRules(cockatrice, level, spawnReason, pos, random) && (spawnReason != MobSpawnType.NATURAL || random.nextInt(3) == 0);
     }
 
     public static boolean isDarkEnoughToSpawn(ServerLevelAccessor level, BlockPos pos, RandomSource random) {

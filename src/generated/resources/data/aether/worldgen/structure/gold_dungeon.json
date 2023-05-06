@@ -2,6 +2,22 @@
   "type": "aether:gold_dungeon",
   "biomes": "#aether:has_gold_dungeon",
   "spawn_overrides": {
+    "aether_aerwhale": {
+      "bounding_box": "full",
+      "spawns": []
+    },
+    "aether_darkness_monster": {
+      "bounding_box": "full",
+      "spawns": []
+    },
+    "aether_sky_monster": {
+      "bounding_box": "full",
+      "spawns": []
+    },
+    "aether_surface_monster": {
+      "bounding_box": "full",
+      "spawns": []
+    },
     "ambient": {
       "bounding_box": "full",
       "spawns": []

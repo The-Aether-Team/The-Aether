@@ -64,7 +64,7 @@ public class Aerwhale extends FlyingMob {
     }
 
     public static boolean checkAerwhaleSpawnRules(EntityType<? extends Aerwhale> aerwhale, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
-        return random.nextInt(40) == 0 && level.getFluidState(pos).is(Fluids.EMPTY) && level.getRawBrightness(pos, 0) > 8 && checkMobSpawnRules(aerwhale, level, reason, pos, random) && level.canSeeSky(pos);
+        return level.getFluidState(pos).is(Fluids.EMPTY) && level.getRawBrightness(pos, 0) > 8 && checkMobSpawnRules(aerwhale, level, reason, pos, random) && (reason != MobSpawnType.NATURAL || random.nextInt(40) == 0) && level.canSeeSky(pos);
     }
 
     @Override
