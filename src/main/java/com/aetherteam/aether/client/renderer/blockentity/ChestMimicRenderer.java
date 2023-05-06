@@ -7,6 +7,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.renderer.Sheets;
@@ -18,6 +20,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.world.level.block.state.properties.ChestType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
+import net.minecraftforge.fml.ModList;
 
 import javax.annotation.Nonnull;
 import java.util.Calendar;
@@ -28,6 +31,7 @@ public class ChestMimicRenderer<T extends BlockEntity> implements BlockEntityRen
 	private final ModelPart bottom;
 	private final ModelPart lock;
 	private boolean xmasTextures = false;
+	public static final Material LOOTR_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, new ResourceLocation("lootr", "chest"));
 
 	public ChestMimicRenderer(BlockEntityRendererProvider.Context context) {
 		Calendar calendar = Calendar.getInstance();
@@ -63,6 +67,9 @@ public class ChestMimicRenderer<T extends BlockEntity> implements BlockEntityRen
 	}
 
 	protected Material getMaterial(T blockEntity) {
+		if (ModList.get().isLoaded("lootr")) {
+			return LOOTR_MATERIAL;
+		}
 		return Sheets.chooseMaterial(blockEntity, ChestType.SINGLE, this.xmasTextures);
 	}
 }
