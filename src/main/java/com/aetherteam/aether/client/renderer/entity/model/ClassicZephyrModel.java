@@ -33,6 +33,6 @@ public class ClassicZephyrModel extends EntityModel<Zephyr> {
 
     @Override
     public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        this.body.render(poseStack, consumer, packedLight, packedOverlay);
+        this.body.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 }
