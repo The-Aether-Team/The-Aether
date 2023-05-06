@@ -68,56 +68,54 @@ public interface MountableMob {
      * Call this from your entity's travel method.
      */
     default <T extends Mob & MountableMob> void travel(T vehicle, Vec3 motion) {
-        if (vehicle.isAlive()) {
-            Entity entity = vehicle.getControllingPassenger();
-            if (vehicle.isVehicle() && entity instanceof LivingEntity passenger) {
-                vehicle.setYRot(passenger.getYRot() % 360.0F);
-                vehicle.yRotO = vehicle.getYRot();
-                vehicle.setXRot(passenger.getXRot() * 0.5F % 360.0F);
-                vehicle.yBodyRot = vehicle.getYRot();
-                vehicle.yHeadRot = vehicle.yBodyRot;
-                float f = passenger.xxa * 0.5F;
-                float f1 = passenger.zza;
-                if (f1 <= 0.0F) {
-                    f1 *= 0.25F;
-                }
-                if (vehicle.getPlayerJumped() && !vehicle.isMountJumping() && vehicle.canJump()) {
-                    double jumpStrength = vehicle.getMountJumpStrength() * this.jumpFactor();
-                    vehicle.setDeltaMovement(vehicle.getDeltaMovement().x(), jumpStrength, vehicle.getDeltaMovement().z());
-                    if (vehicle.hasEffect(MobEffects.JUMP)) {
-                        vehicle.push(0.0, 0.1 * (vehicle.getEffect(MobEffects.JUMP).getAmplifier() + 1), 0.0);
-                    }
-                    vehicle.hasImpulse = true;
-                }
-                AttributeInstance stepHeight = vehicle.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
-                if (stepHeight != null) {
-                    if (stepHeight.hasModifier(vehicle.getDefaultStepHeightModifier())) {
-                        stepHeight.removeModifier(vehicle.getDefaultStepHeightModifier());
-                    }
-                    if (!stepHeight.hasModifier(vehicle.getMountStepHeightModifier())) {
-                        stepHeight.addTransientModifier(vehicle.getMountStepHeightModifier());
-                    }
-                    AetherPacketHandler.sendToServer(new StepHeightPacket(vehicle.getId()));
-                }
-                if (vehicle.isControlledByLocalInstance()) {
-                    vehicle.setSpeed(vehicle.getSteeringSpeed());
-                    this.travelWithInput(new Vec3(f, motion.y, f1));
-                } else if (passenger instanceof Player)  {
-                    vehicle.setDeltaMovement(Vec3.ZERO);
-                }
-                vehicle.calculateEntityAnimation(false);
-            } else {
-                AttributeInstance stepHeight = vehicle.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
-                if (stepHeight != null) {
-                    if (stepHeight.hasModifier(vehicle.getMountStepHeightModifier())) {
-                        stepHeight.removeModifier(vehicle.getMountStepHeightModifier());
-                    }
-                    if (!stepHeight.hasModifier(vehicle.getDefaultStepHeightModifier())) {
-                        stepHeight.addTransientModifier(vehicle.getDefaultStepHeightModifier());
-                    }
-                }
-                this.travelWithInput(motion);
+        Entity entity = vehicle.getControllingPassenger();
+        if (vehicle.isVehicle() && entity instanceof LivingEntity passenger) {
+            vehicle.setYRot(passenger.getYRot() % 360.0F);
+            vehicle.yRotO = vehicle.getYRot();
+            vehicle.setXRot(passenger.getXRot() * 0.5F % 360.0F);
+            vehicle.yBodyRot = vehicle.getYRot();
+            vehicle.yHeadRot = vehicle.yBodyRot;
+            float f = passenger.xxa * 0.5F;
+            float f1 = passenger.zza;
+            if (f1 <= 0.0F) {
+                f1 *= 0.25F;
             }
+            if (vehicle.getPlayerJumped() && !vehicle.isMountJumping() && vehicle.canJump()) {
+                double jumpStrength = vehicle.getMountJumpStrength() * this.jumpFactor();
+                vehicle.setDeltaMovement(vehicle.getDeltaMovement().x(), jumpStrength, vehicle.getDeltaMovement().z());
+                if (vehicle.hasEffect(MobEffects.JUMP)) {
+                    vehicle.push(0.0, 0.1 * (vehicle.getEffect(MobEffects.JUMP).getAmplifier() + 1), 0.0);
+                }
+                vehicle.hasImpulse = true;
+            }
+            AttributeInstance stepHeight = vehicle.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
+            if (stepHeight != null) {
+                if (stepHeight.hasModifier(vehicle.getDefaultStepHeightModifier())) {
+                    stepHeight.removeModifier(vehicle.getDefaultStepHeightModifier());
+                }
+                if (!stepHeight.hasModifier(vehicle.getMountStepHeightModifier())) {
+                    stepHeight.addTransientModifier(vehicle.getMountStepHeightModifier());
+                }
+                AetherPacketHandler.sendToServer(new StepHeightPacket(vehicle.getId()));
+            }
+            if (vehicle.isControlledByLocalInstance()) {
+                vehicle.setSpeed(vehicle.getSteeringSpeed());
+                this.travelWithInput(new Vec3(f, motion.y, f1));
+            } else if (passenger instanceof Player)  {
+                vehicle.setDeltaMovement(Vec3.ZERO);
+            }
+            vehicle.calculateEntityAnimation(false);
+        } else {
+            AttributeInstance stepHeight = vehicle.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
+            if (stepHeight != null) {
+                if (stepHeight.hasModifier(vehicle.getMountStepHeightModifier())) {
+                    stepHeight.removeModifier(vehicle.getMountStepHeightModifier());
+                }
+                if (!stepHeight.hasModifier(vehicle.getDefaultStepHeightModifier())) {
+                    stepHeight.addTransientModifier(vehicle.getDefaultStepHeightModifier());
+                }
+            }
+            this.travelWithInput(motion);
         }
     }
 
