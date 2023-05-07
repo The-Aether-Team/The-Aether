@@ -1,5 +1,7 @@
 # The Aether - Forge - 1.19.4-1.0.0-beta.2
+
 Additions
+
 - Add internal resource pack for colorblind accessibility for Aercloud textures.
 - Add Jade compatibility for dungeon block tooltips.
 - Add Lootr compatibility for Chest Mimics.
@@ -12,6 +14,7 @@ Additions
 - Update uk_ua translation.
 
 Changes
+
 - Make Moas follow players by default after dismounting.
 - Increase walking speed for Moas.
 - Increase Moas vertical falling speed and decrease their horizontal flight speed when not mounted.
@@ -22,6 +25,7 @@ Changes
 - Disallow Aechor Plants being able to be launched by Gravitite Swords.
 
 Fixes
+
 - Fix Aerwhales and Zephyrs spawning indoors.
 - Fix Cockatrices spawning during thunderstorms when they shouldn't.
 - Fix Holystone Tools dropping Ambrosium from blocks without hardness.
@@ -54,4 +58,5 @@ Fixes
 - Fix various Aether entities not receiving knockback on death.
 
 # The Aether - Forge - 1.19.4-1.0.0-beta.1
+
 The Aether has undergone a full code rewrite between 1.12.2 and 1.19.4. A full changelog of everything that has been fixed and improved will be ready for full release, but as of beta we do not have one yet. For more information about the changes, you can ask around our Discord at https://discord.gg/aethermod.
