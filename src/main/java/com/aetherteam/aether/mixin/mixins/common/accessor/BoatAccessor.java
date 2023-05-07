@@ -11,4 +11,10 @@ public interface BoatAccessor {
 
     @Accessor("status")
     Boat.Status aether$getStatus();
+
+    @Accessor("deltaRotation")
+    float aether$getDeltaRotation();
+
+    @Accessor("deltaRotation")
+    void aether$setDeltaRotation(float deltaRotation);
 }
