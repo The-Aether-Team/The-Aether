@@ -2,10 +2,6 @@
   "values": [
     "aether:golden_feather",
     "aether:regeneration_stone",
-    "aether:iron_bubble",
-    {
-      "id": "#curios:charm",
-      "required": false
-    }
+    "aether:iron_bubble"
   ]
 }

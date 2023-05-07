@@ -3,10 +3,6 @@
     "aether:iron_pendant",
     "aether:golden_pendant",
     "aether:zanite_pendant",
-    "aether:ice_pendant",
-    {
-      "id": "#curios:necklace",
-      "required": false
-    }
+    "aether:ice_pendant"
   ]
 }

@@ -7,10 +7,6 @@
     "aether:swet_cape",
     "aether:invisibility_cloak",
     "aether:agility_cape",
-    "aether:valkyrie_cape",
-    {
-      "id": "#curios:back",
-      "required": false
-    }
+    "aether:valkyrie_cape"
   ]
 }
