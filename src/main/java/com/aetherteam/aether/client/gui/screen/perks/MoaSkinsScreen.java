@@ -43,8 +43,7 @@ import java.util.*;
 
 public class MoaSkinsScreen extends Screen {
     public static final ResourceLocation MOA_SKINS_GUI = new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/skins.png");
-    private static final String PATREON_LINK = "https://www.patreon.com/GildedGames";
-    private static final String CONNECT_LINK = "";
+    private static final String PATREON_LINK = "https://www.patreon.com/TheAetherTeam";
 
     private final Screen lastScreen;
     private final int imageWidth = 176;
@@ -112,13 +111,14 @@ public class MoaSkinsScreen extends Screen {
                         this.getMinecraft().setScreen(this);
                     }, PATREON_LINK, true))
             ).pos(this.leftPos + (this.imageWidth / 2) - 66, this.topPos + this.imageHeight - 25).size(54, 18)));
+            String link = "http://gildedgames.com/verify?uuid=" + uuid;
             this.addRenderableWidget(new PatreonButton(Button.builder(Component.translatable("gui.aether.moa_skins.button.connect"),
                     (pressed) -> this.getMinecraft().setScreen(new ConfirmLinkScreen((callback) -> {
                         if (callback) {
-                            Util.getPlatform().openUri(CONNECT_LINK);
+                            Util.getPlatform().openUri(link);
                         }
                         this.getMinecraft().setScreen(this);
-                    }, CONNECT_LINK, true))
+                    }, link, true))
             ).pos(this.leftPos + (this.imageWidth / 2) + 12, this.topPos + this.imageHeight - 25).size(54, 18)));
         }
     }
