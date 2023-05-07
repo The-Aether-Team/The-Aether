@@ -40,6 +40,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 
@@ -170,7 +171,7 @@ public class Aerbunny extends AetherAnimal {
     public InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
         InteractionResult result = super.mobInteract(player, hand);
         if (!(this.getVehicle() instanceof Player vehicle) || vehicle.equals(player)) {
-            if (player.isShiftKeyDown() || result == InteractionResult.PASS || result == InteractionResult.FAIL) {
+            if ((player.isShiftKeyDown() || result == InteractionResult.PASS || result == InteractionResult.FAIL) && !super.isInWall()) {
                 return this.ridePlayer(player);
             }
         }
@@ -279,6 +280,14 @@ public class Aerbunny extends AetherAnimal {
     @Override
     public double getMyRidingOffset() {
         return this.getVehicle() != null && this.getVehicle().isCrouching() ? 0.4 : 0.575;
+    }
+
+    @Override
+    public boolean isPickable() {
+        if (this.getVehicle() instanceof Player player) {
+            return player.getBoundingBox().expandTowards(player.getViewVector(0.0F)).contains(this.getBoundingBox().getCenter().add(0, this.getBoundingBox().getSize() / 2, 0));
+        }
+        return true;
     }
 
     @Override
