@@ -11,10 +11,6 @@
     "aether:neptune_gloves",
     "aether:phoenix_gloves",
     "aether:obsidian_gloves",
-    "aether:valkyrie_gloves",
-    {
-      "id": "#curios:hands",
-      "required": false
-    }
+    "aether:valkyrie_gloves"
   ]
 }
