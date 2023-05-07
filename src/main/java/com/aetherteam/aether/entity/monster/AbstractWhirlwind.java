@@ -43,6 +43,7 @@ public abstract class AbstractWhirlwind extends Mob {
 
     public int lifeLeft;
     public int actionTimer;
+    public int stuckTick;
     public float movementAngle;
     public float movementCurve;
     protected boolean isPullingEntity = false;
@@ -109,6 +110,12 @@ public abstract class AbstractWhirlwind extends Mob {
     @Override
     public void aiStep() {
         if (!this.level.isClientSide) {
+            if (this.verticalCollision && !this.verticalCollisionBelow) {
+                this.stuckTick += 4;
+            } else if (this.stuckTick > 0) {
+                this.stuckTick--;
+            }
+
             if (this.getTarget() != null) {
                 this.actionTimer++;
             }
@@ -161,6 +168,9 @@ public abstract class AbstractWhirlwind extends Mob {
             if (!this.level.isEmptyBlock(this.blockPosition())) {
                 this.lifeLeft -= 50;
             }
+        }
+        if (this.stuckTick > 40) {
+            this.lifeLeft = 0;
         }
     }
 
