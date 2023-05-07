@@ -5,15 +5,16 @@ import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.event.hooks.AbilityHooks;
 import com.aetherteam.aether.item.accessories.abilities.ShieldOfRepulsionAccessory;
 import com.aetherteam.aether.util.EquipmentUtil;
-import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -22,24 +23,18 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = Aether.MODID)
 public class AccessoryAbilityListener {
     /**
-     * @see AbilityHooks.AccessoryHooks#damageGloves(DamageSource)
-     */
-    @SubscribeEvent
-    public static void onLivingHurt(LivingHurtEvent event) {
-        DamageSource damageSource = event.getSource();
-        AbilityHooks.AccessoryHooks.damageGloves(damageSource);
-    }
-
-    /**
-     * @see AbilityHooks.AccessoryHooks#damageZaniteRing(LivingEntity)
-     * @see AbilityHooks.AccessoryHooks#damageZanitePendant(LivingEntity)
+     * @see AbilityHooks.AccessoryHooks#damageZaniteRing(LivingEntity, LevelAccessor, BlockState, BlockPos)
+     * @see AbilityHooks.AccessoryHooks#damageZanitePendant(LivingEntity, LevelAccessor, BlockState, BlockPos)
      */
     @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
         Player player = event.getPlayer();
+        LevelAccessor level = event.getLevel();
+        BlockState state = event.getState();
+        BlockPos pos = event.getPos();
         if (!event.isCanceled()) {
-            AbilityHooks.AccessoryHooks.damageZaniteRing(player);
-            AbilityHooks.AccessoryHooks.damageZanitePendant(player);
+            AbilityHooks.AccessoryHooks.damageZaniteRing(player, level, state, pos);
+            AbilityHooks.AccessoryHooks.damageZanitePendant(player, level, state, pos);
         }
     }
 

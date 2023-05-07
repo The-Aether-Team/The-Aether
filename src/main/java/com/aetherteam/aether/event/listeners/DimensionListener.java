@@ -21,9 +21,11 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.SleepingTimeCheckEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.level.SleepFinishedTimeEvent;
 import net.minecraftforge.event.level.LevelEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
@@ -149,6 +151,18 @@ public class DimensionListener {
             serverLevelAccessor.aether$getServerLevelData().setRaining(false);
             serverLevelAccessor.aether$getServerLevelData().setThunderTime(0);
             serverLevelAccessor.aether$getServerLevelData().setThundering(false);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onTriedToSleep(SleepingTimeCheckEvent event) {
+        Player player = event.getEntity();
+        if (player.getLevel().dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
+            AetherTime.get(player.getLevel()).ifPresent((aetherTime) -> {
+                if (aetherTime.getEternalDay()) {
+                    event.setResult(Event.Result.DENY);
+                }
+            });
         }
     }
 }

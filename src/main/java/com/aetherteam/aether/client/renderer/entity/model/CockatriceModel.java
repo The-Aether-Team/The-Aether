@@ -22,7 +22,7 @@ public class CockatriceModel extends BipedBirdModel<Cockatrice> {
     @Override
     public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         super.renderToBuffer(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.rightLeg.render(poseStack, consumer, packedLight, packedOverlay);
-        this.leftLeg.render(poseStack, consumer, packedLight, packedOverlay);
+        this.rightLeg.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+        this.leftLeg.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 }

@@ -10,12 +10,14 @@ import com.aetherteam.aether.entity.monster.dungeon.Mimic;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.fml.ModList;
 
 import javax.annotation.Nonnull;
 
 public class MimicRenderer extends MobRenderer<Mimic, MimicModel> {
 	private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/mimic/normal.png");
 	private static final ResourceLocation XMAS_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/mimic/christmas.png");
+	private static final ResourceLocation LOOTR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/mimic/lootr.png");
 
 	private boolean isChristmas;
 	
@@ -30,6 +32,6 @@ public class MimicRenderer extends MobRenderer<Mimic, MimicModel> {
 	@Nonnull
 	@Override
 	public ResourceLocation getTextureLocation(@Nonnull Mimic mimic) {
-		return this.isChristmas ? XMAS_TEXTURE : TEXTURE;
+		return ModList.get().isLoaded("lootr") ? LOOTR_TEXTURE : this.isChristmas ? XMAS_TEXTURE : TEXTURE;
 	}
 }

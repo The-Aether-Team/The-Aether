@@ -16,6 +16,7 @@ baguchan:
 - Contributions to Skyroot Bed renderer.
 - Fixes to the Sheepuff renderer.
 - Fixes to the Dart layer renderers.
+- Fixes to Whirlwinds getting stuck vertically.
 
 CartoonishVillain:
 - Fixes to the Sentry.
@@ -29,6 +30,7 @@ FlashFyreMods
 
 GizmoTheMoonPig
 - Implementation of Jade compatibility.
+- Implementation of Lootr compatibility.
 - Fixes to the Life Shard silver heart overlay rendering.
 - Fixes to aether1 and aether2 music naming.
 

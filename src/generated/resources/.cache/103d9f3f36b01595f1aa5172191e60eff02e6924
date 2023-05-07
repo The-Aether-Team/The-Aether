@@ -1,4 +1,4 @@
-// 1.19.4	2023-04-16T20:30:31.2985093	Registries
+// 1.19.4	2023-05-05T11:37:49.862007	Registries
 25d924fdac4392adb88fe3b6aa2c23420f6fb4f9 data/aether/damage_type/armor_piercing_attack.json
 03d6a63bae7e4458c11da22471bf0f8b5051023c data/aether/damage_type/cloud_crystal.json
 024fc58ce3f33e1542dfe59582a4da47cc178764 data/aether/damage_type/crush.json
@@ -10,10 +10,10 @@ cd680f6ec731971e2aefe28c7fb4c793a2923fa8 data/aether/damage_type/ice_crystal.jso
 5ccd8e14aae581e4975827ff44b4e37760211a39 data/aether/damage_type/thunder_crystal.json
 f5deced101d2299e370ac067f29b5b355f28e634 data/aether/dimension/the_aether.json
 5655d4cd818dbc73a0baa2590d80dd274f85927d data/aether/dimension_type/the_aether.json
-2b944d6d6433e79b7e28b63f9648816e711541af data/aether/worldgen/biome/skyroot_forest.json
-3de346f0113960f8b2b7e2a2a82362e8e60407e6 data/aether/worldgen/biome/skyroot_grove.json
-65f598f39ce6591f740b3aff64006adc8ead7217 data/aether/worldgen/biome/skyroot_meadow.json
-1a9fc656ba58ceb4734bc4c703326e288c43e29c data/aether/worldgen/biome/skyroot_woodland.json
+b6e2f672b853dfc163c7c87b9dd8e7e8c4928be4 data/aether/worldgen/biome/skyroot_forest.json
+ff1761862295a39f091776fd5587d32506eb02c0 data/aether/worldgen/biome/skyroot_grove.json
+4e600ebe63e389652a73c5ee5a3e1c3e2c37abd5 data/aether/worldgen/biome/skyroot_meadow.json
+af01d15f6d753413001007b2510db7ee40779ed8 data/aether/worldgen/biome/skyroot_woodland.json
 18a65f6608e5a7aca8d2a54e9c2d73c87bc03dd6 data/aether/worldgen/configured_feature/aether_dirt_ore.json
 16a2ae74f54e0744b412dfca906201c5df3d3653 data/aether/worldgen/configured_feature/ambrosium_ore.json
 059b24c9ed07c7e6561ae96f3588b0c495852ef8 data/aether/worldgen/configured_feature/berry_bush_patch.json
@@ -62,10 +62,10 @@ e9682cb0ca5e9c56fecaa7056d4a2c97ce020929 data/aether/worldgen/placed_feature/sky
 9faf4f67796cf1beefbffca6684bbcd570bf6104 data/aether/worldgen/placed_feature/water_spring.json
 fe3ea4829de750180b45fa66467bf3ebe03f4699 data/aether/worldgen/placed_feature/white_flower_patch.json
 7ef232b5965cbd857c69c2c39f5981cad49cb48b data/aether/worldgen/placed_feature/zanite_ore.json
-323e9290ed3b38c0bfda155a43fda15db18046b6 data/aether/worldgen/structure/bronze_dungeon.json
-aa7e50925cb356798844f47c61a11acc8f6d3ead data/aether/worldgen/structure/gold_dungeon.json
+3ec69356209f69f4bd9c434c028d49842575f220 data/aether/worldgen/structure/bronze_dungeon.json
+e17df0aa42dc66987a2e6741a28c1f1f7253550d data/aether/worldgen/structure/gold_dungeon.json
 5d95d82aa273637160cb12c0d82e31d722ace6cd data/aether/worldgen/structure/large_aercloud.json
-051484619a25e72347d4afeb30e0660291ad40c9 data/aether/worldgen/structure/silver_dungeon.json
+06485b37266a82999fd42ac9dd3225ca3cc60d3a data/aether/worldgen/structure/silver_dungeon.json
 884e1581637a2a56536cc9e667d52281da0be7c3 data/aether/worldgen/structure_set/bronze_dungeon.json
 74c5f4f594d41486e3d8df1cbb87884d46154c50 data/aether/worldgen/structure_set/large_aercloud.json
 02ade18d13850f06e8bb36cbc23fd6375b36c894 data/aether/worldgen/structure_set/silver_and_gold_dungeons.json

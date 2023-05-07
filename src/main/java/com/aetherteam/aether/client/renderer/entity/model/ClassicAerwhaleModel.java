@@ -48,12 +48,12 @@ public class ClassicAerwhaleModel extends EntityModel<Aerwhale> {
 
 	@Override
 	public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		this.middleBody.render(poseStack, consumer, packedLight, packedOverlay);
-		this.head.render(poseStack, consumer, packedLight, packedOverlay);
-		this.backBody.render(poseStack, consumer, packedLight, packedOverlay);
-		this.backFinRight.render(poseStack, consumer, packedLight, packedOverlay);
-		this.backFinLeft.render(poseStack, consumer, packedLight, packedOverlay);
-		this.rightFin.render(poseStack, consumer, packedLight, packedOverlay);
-		this.leftFin.render(poseStack, consumer, packedLight, packedOverlay);
+		this.middleBody.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+		this.head.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+		this.backBody.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+		this.backFinRight.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+		this.backFinLeft.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+		this.rightFin.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+		this.leftFin.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 }

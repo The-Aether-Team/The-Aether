@@ -1196,10 +1196,12 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addPackTitle("125", "Aether 1.2.5 Textures");
         addPackTitle("b173", "Aether b1.7.3 Textures");
         addPackTitle("ctm", "Aether CTM Fix");
+        addPackTitle("colorblind", "Aether Colorblind Textures");
 
         addPackDescription("mod", "Aether Resources");
         addPackDescription("125", "The classic look of the Aether from 1.2.5");
         addPackDescription("b173", "The original look of the Aether from b1.7.3");
         addPackDescription("ctm", "Fixes Quicksoil Glass Panes when using CTM");
+        addPackDescription("colorblind", "Changes textures for color blindness accessibility");
     }
 }

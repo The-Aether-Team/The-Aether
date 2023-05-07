@@ -3,6 +3,22 @@
   "biomes": "#aether:has_bronze_dungeon",
   "maxrooms": 8,
   "spawn_overrides": {
+    "aether_aerwhale": {
+      "bounding_box": "piece",
+      "spawns": []
+    },
+    "aether_darkness_monster": {
+      "bounding_box": "piece",
+      "spawns": []
+    },
+    "aether_sky_monster": {
+      "bounding_box": "piece",
+      "spawns": []
+    },
+    "aether_surface_monster": {
+      "bounding_box": "piece",
+      "spawns": []
+    },
     "ambient": {
       "bounding_box": "piece",
       "spawns": []

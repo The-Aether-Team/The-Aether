@@ -54,6 +54,7 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 
@@ -65,15 +66,13 @@ public class AbilityHooks {
     public static class AccessoryHooks {
         /**
          * Damages an entity's Gloves when they hurt another entity.
-         * @param source The attacking {@link DamageSource}.
-         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onLivingHurt(LivingHurtEvent)
+         * @param player The attacking {@link Player}.
+         * @see com.aetherteam.aether.mixin.mixins.common.PlayerMixin#attack(Entity, CallbackInfo)
          */
-        public static void damageGloves(DamageSource source) {
-            if (source.getDirectEntity() instanceof Player player) {
-                SlotResult slotResult = EquipmentUtil.getGloves(player);
-                if (slotResult != null) {
-                    slotResult.stack().hurtAndBreak(1, player, wearer -> CuriosApi.getCuriosHelper().onBrokenCurio(slotResult.slotContext()));
-                }
+        public static void damageGloves(Player player) {
+            SlotResult slotResult = EquipmentUtil.getGloves(player);
+            if (slotResult != null) {
+                slotResult.stack().hurtAndBreak(1, player, wearer -> CuriosApi.getCuriosHelper().onBrokenCurio(slotResult.slotContext()));
             }
         }
 
@@ -81,11 +80,11 @@ public class AbilityHooks {
          * Damages Zanite Rings when a block is broken.
          * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onBlockBreak(BlockEvent.BreakEvent)
          */
-        public static void damageZaniteRing(LivingEntity entity) {
+        public static void damageZaniteRing(LivingEntity entity, LevelAccessor level, BlockState state, BlockPos pos) {
             List<SlotResult> slotResults = EquipmentUtil.getZaniteRings(entity);
             for (SlotResult slotResult : slotResults) {
                 if (slotResult != null) {
-                    if (entity.getRandom().nextInt(3) == 0) {
+                    if (state.getDestroySpeed(level, pos) > 0 && entity.getRandom().nextInt(3) == 0) {
                         slotResult.stack().hurtAndBreak(1, entity, wearer -> CuriosApi.getCuriosHelper().onBrokenCurio(slotResult.slotContext()));
                     }
                 }
@@ -96,10 +95,10 @@ public class AbilityHooks {
          * Damages Zanite Pendant when a block is broken.
          * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onBlockBreak(BlockEvent.BreakEvent)
          */
-        public static void damageZanitePendant(LivingEntity entity) {
+        public static void damageZanitePendant(LivingEntity entity, LevelAccessor level, BlockState state, BlockPos pos) {
             SlotResult slotResult = EquipmentUtil.getZanitePendant(entity);
             if (slotResult != null) {
-                if (entity.getRandom().nextInt(3) == 0) {
+                if (state.getDestroySpeed(level, pos) > 0 && entity.getRandom().nextInt(3) == 0) {
                     slotResult.stack().hurtAndBreak(1, entity, wearer -> CuriosApi.getCuriosHelper().onBrokenCurio(slotResult.slotContext()));
                 }
             }

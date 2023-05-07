@@ -27,7 +27,7 @@ If you're interested in sponsoring the Aether project or The Aether Team, please
 [![CurseForge Version](http://cf.way2muchnoise.eu/versions/255308_latest.svg)](https://www.curseforge.com/minecraft/mc-mods/aether)
 [![CircleCI](https://circleci.com/gh/The-Aether-Team/The-Aether/tree/1.19.4-develop.svg?style=shield)](https://app.circleci.com/pipelines/github/The-Aether-Team/The-Aether?branch=1.19.4-develop)
 ### Release builds
-The Aether has no stable release builds for the latest version of Minecraft just yet, but this port is in active development so keep an eye out for its eventual release.
+The Aether has relatively stable beta builds available for release for 1.19.4 on [Modrinth](https://modrinth.com/mod/aether) and [CurseForge](https://www.curseforge.com/minecraft/mc-mods/aether). A full 1.0.0 release will be coming soon.
 
 ### Bleeding edge builds
 If you’re feeling a bit more adventurous or wish to help test the in-development versions, we provide **bleeding edge builds** which are produced on [CircleCI](https://app.circleci.com/pipelines/github/The-Aether-Team/The-Aether). These builds are created for every new commit and contain the latest available code. We do not recommend users treat these builds as releases, as they are unfinished and may contain serious issues. If you wish to download these builds, check out [this guide](https://github.com/The-Aether-Team/The-Aether/wiki/CircleCI-Guide).
@@ -118,7 +118,7 @@ The Aether is available in these languages thanks to the following contributors:
 | Chinese Traditional* | (zh_tw) | y830705                                                     |
 | Dutch*               | (nl_nl) | Critical                                                    |
 | French*              | (fr_fr) | lololoustau, Beethov46, Aethyus                             |
-| German*              | (de_de) | ?                                                           |
+| German*              | (de_de) | HazeWorksOnFiveMServer                                      |
 | Indonesian*          | (id_id) | F640                                                        |
 | Italian*             | (it_it) | ?                                                           |
 | Japanese*            | (ja_jp) | baguchan                                                    |

@@ -279,10 +279,10 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AetherItems.SKYROOT_BUCKET.get(), 1)
-                .define('#', AetherBlocks.SKYROOT_PLANKS.get())
+                .define('#', AetherTags.Items.SKYROOT_TOOL_CRAFTING)
                 .pattern("# #")
                 .pattern(" # ")
-                .unlockedBy(getHasName(AetherBlocks.SKYROOT_PLANKS.get()), has(AetherBlocks.SKYROOT_PLANKS.get()))
+                .unlockedBy("has_planks", has(AetherTags.Items.SKYROOT_TOOL_CRAFTING))
                 .save(consumer);
 
         twoByTwoPacker(consumer, RecipeCategory.TOOLS, AetherItems.COLD_PARACHUTE.get(), AetherBlocks.COLD_AERCLOUD.get());

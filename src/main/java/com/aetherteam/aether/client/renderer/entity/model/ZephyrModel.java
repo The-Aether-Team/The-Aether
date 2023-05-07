@@ -90,15 +90,15 @@ public class ZephyrModel extends EntityModel<Zephyr> {
 
     @Override
     public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        this.rightFace.render(poseStack, consumer, packedLight, packedOverlay);
-        this.leftFace.render(poseStack, consumer, packedLight, packedOverlay);
-        this.mouth.render(poseStack, consumer, packedLight, packedOverlay);
-        this.body.render(poseStack, consumer, packedLight, packedOverlay);
-        this.bodyRightSideFront.render(poseStack, consumer, packedLight, packedOverlay);
-        this.bodyRightSideBack.render(poseStack, consumer, packedLight, packedOverlay);
-        this.bodyLeftSideFront.render(poseStack, consumer, packedLight, packedOverlay);
-        this.bodyLeftSideBack.render(poseStack, consumer, packedLight, packedOverlay);
-        this.cloudButt.render(poseStack, consumer, packedLight, packedOverlay);
-        this.tailBase.render(poseStack, consumer, packedLight, packedOverlay);
+        this.rightFace.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+        this.leftFace.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+        this.mouth.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+        this.body.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+        this.bodyRightSideFront.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+        this.bodyRightSideBack.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+        this.bodyLeftSideFront.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+        this.bodyLeftSideBack.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+        this.cloudButt.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
+        this.tailBase.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 }
