@@ -16,6 +16,7 @@ baguchan:
 - Contributions to Skyroot Bed renderer.
 - Fixes to the Sheepuff renderer.
 - Fixes to the Dart layer renderers.
+- Fixes to Whirlwinds getting stuck vertically.
 
 CartoonishVillain:
 - Fixes to the Sentry.
