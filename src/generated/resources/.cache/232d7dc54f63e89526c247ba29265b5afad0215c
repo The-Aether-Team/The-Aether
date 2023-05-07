@@ -109,8 +109,10 @@ b830e607f8f1f40961d24f70f71b34ede14bfb3e data/minecraft/tags/items/slabs.json
 336a5cf28e3a807615f25965e0a90c7bf33dd3ac data/minecraft/tags/items/stone_crafting_materials.json
 5d4a9617f9199aa91aa4d20684b2c262120a033d data/minecraft/tags/items/swords.json
 8a35a44c0a25f20d1ebd014a96d33cf7359a7555 data/minecraft/tags/items/walls.json
+408d0a90592bca40b0849df41dceac63c321fbd0 data/minecraft/tags/items/wooden_buttons.json
 f89b40a0ae36918c862701b814a6a66446f31ed4 data/minecraft/tags/items/wooden_doors.json
 bc9de2bdb11aba0025a16f480e48e231376296ee data/minecraft/tags/items/wooden_fences.json
+c9d7e15e22abfd131c85d3efec90b985f3b93551 data/minecraft/tags/items/wooden_pressure_plates.json
 0f83e5236c325143d4ee9b885d44885ce88bb430 data/minecraft/tags/items/wooden_slabs.json
 826c4289ebfd8981a11aef61bfdb241447b144c5 data/minecraft/tags/items/wooden_stairs.json
 b604ba5a1426262db57d647c30ccd5d0b2081887 data/minecraft/tags/items/wooden_trapdoors.json
