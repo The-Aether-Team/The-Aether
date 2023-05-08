@@ -114,7 +114,7 @@ public class MoaSkinsScreen extends Screen {
                     }, PATREON_LINK, true))
             ).pos(this.leftPos + (this.imageWidth / 2) - 66, this.topPos + this.imageHeight - 25).size(54, 18)));
 
-            String link = "http://aether-mod.net/api/verify/" + uuid;
+            String link = "https://www.aether-mod.net/api/verify/" + uuid;
             this.addRenderableWidget(new PatreonButton(Button.builder(Component.translatable("gui.aether.moa_skins.button.connect"),
                     (pressed) -> this.getMinecraft().setScreen(new ConfirmLinkScreen((callback) -> {
                         if (callback) {
