@@ -84,7 +84,9 @@ public class MoaSkinsScreen extends Screen {
             UUID uuid = this.getMinecraft().player.getUUID();
             Map<UUID, MoaData> userSkinsData = ClientMoaSkinPerkData.INSTANCE.getClientPerkData();
 
-            this.selectedSkin = userSkinsData.containsKey(uuid) ? userSkinsData.get(uuid).moaSkin() : this.moaSkins.get(0);
+            if (this.selectedSkin == null) {
+                this.selectedSkin = userSkinsData.containsKey(uuid) ? userSkinsData.get(uuid).moaSkin() : this.moaSkins.get(0);
+            }
 
             this.applyButton = this.addRenderableWidget(new ChangeSkinButton(ChangeSkinButton.ButtonType.APPLY, Button.builder(Component.translatable("gui.aether.moa_skins.button.apply"),
                     (pressed) -> AetherPlayer.get(this.getMinecraft().player).ifPresent((aetherPlayer) -> {
@@ -111,6 +113,7 @@ public class MoaSkinsScreen extends Screen {
                         this.getMinecraft().setScreen(this);
                     }, PATREON_LINK, true))
             ).pos(this.leftPos + (this.imageWidth / 2) - 66, this.topPos + this.imageHeight - 25).size(54, 18)));
+
             String link = "http://aether-mod.net/api/verify/" + uuid;
             this.addRenderableWidget(new PatreonButton(Button.builder(Component.translatable("gui.aether.moa_skins.button.connect"),
                     (pressed) -> this.getMinecraft().setScreen(new ConfirmLinkScreen((callback) -> {
@@ -196,17 +199,17 @@ public class MoaSkinsScreen extends Screen {
     }
 
     private void renderLifetimeIcon(PoseStack poseStack, boolean mouseOver) {
-            RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            RenderSystem.setShaderTexture(0, MOA_SKINS_GUI);
-            this.blit(poseStack, this.leftPos + 13, (this.topPos + (this.height / 2)) - 36, mouseOver ? 63 : 55, 184, 8, 7); // Lifetime Icon
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderTexture(0, MOA_SKINS_GUI);
+        blit(poseStack, this.leftPos + 13, (this.topPos + (this.imageHeight / 2)) - 9, mouseOver ? 63 : 55, 184, 8, 7); // Lifetime Icon
     }
 
     private void renderPledgingIcon(PoseStack poseStack, boolean mouseOver) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, MOA_SKINS_GUI);
-        this.blit(poseStack, this.leftPos + 13, (this.topPos + (this.height / 2)) - 36, mouseOver ? 49 : 42, 184, 7, 7);
+        blit(poseStack, this.leftPos + 13, (this.topPos + (this.imageHeight / 2)) - 9, mouseOver ? 49 : 42, 184, 7, 7);
     }
 
     private boolean isMouseOverIcon(int mouseX, int mouseY, int width) {
