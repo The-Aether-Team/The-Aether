@@ -4,7 +4,6 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.api.registers.MoaType;
 import com.aetherteam.aether.util.PerkUtil;
-import com.aetherteam.nitrogen.api.users.Patron;
 import com.aetherteam.nitrogen.api.users.User;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.network.FriendlyByteBuf;
@@ -25,104 +24,104 @@ public class MoaSkins {
             String name = (moaType.getId().getNamespace().equals(Aether.MODID) ? moaType.getId().getPath() : moaType.getId().toString().replace(":", ".")) + "_moa";
             register(name, new MoaSkin(name, new MoaSkin.Properties()
                     .displayName(Component.translatable("gui.aether.moa_skins.skin." + name))
-                    .userPredicate((user) -> PerkUtil.hasLifetimeAscentanMoaSkins(name).test(user))
+                    .userPredicate((user) -> PerkUtil.hasLifetimeAscentanMoaSkins().test(user))
                     .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/" + name + "_icon.png"))
                     .skinLocation(moaType.getMoaTexture())
                     .saddleLocation(moaType.getSaddleTexture())
-                    .info(new MoaSkin.Info(Patron.Tier.ASCENTAN, true))
+                    .info(new MoaSkin.Info(User.Tier.ASCENTAN, true))
             ));
         }
         register("orange_moa", new MoaSkin("orange_moa", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.orange_moa"))
-                .userPredicate((user) -> PerkUtil.hasLifetimeAscentanMoaSkins("orange_moa").test(user))
+                .userPredicate((user) -> PerkUtil.hasLifetimeAscentanMoaSkins().test(user))
                 .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/orange_moa_icon.png"))
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/orange_moa.png"))
                 .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png"))
-                .info(new MoaSkin.Info(Patron.Tier.ASCENTAN, true))
+                .info(new MoaSkin.Info(User.Tier.ASCENTAN, true))
         ));
         register("boko_yellow", new MoaSkin("boko_yellow", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.boko_yellow"))
-                .userPredicate((user) -> PerkUtil.hasLifetimeAscentanMoaSkins("boko_yellow").test(user))
+                .userPredicate((user) -> PerkUtil.hasLifetimeAscentanMoaSkins().test(user))
                 .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/boko_yellow_icon.png"))
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/boko_yellow/boko_yellow.png"))
                 .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/boko_yellow/boko_yellow_saddle.png"))
-                .info(new MoaSkin.Info(Patron.Tier.ASCENTAN, true))
+                .info(new MoaSkin.Info(User.Tier.ASCENTAN, true))
         ));
         register("crookjaw_purple", new MoaSkin("crookjaw_purple", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.crookjaw_purple"))
-                .userPredicate((user) -> PerkUtil.hasLifetimeAscentanMoaSkins("crookjaw_purple").test(user))
+                .userPredicate((user) -> PerkUtil.hasLifetimeAscentanMoaSkins().test(user))
                 .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/crookjaw_purple_icon.png"))
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/crookjaw_purple/crookjaw_purple.png"))
                 .emissiveLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/crookjaw_purple/crookjaw_purple_emissive.png"))
                 .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/crookjaw_purple/crookjaw_purple_saddle.png"))
-                .info(new MoaSkin.Info(Patron.Tier.ASCENTAN, true))
+                .info(new MoaSkin.Info(User.Tier.ASCENTAN, true))
         ));
         register("gharrix_red", new MoaSkin("gharrix_red", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.gharrix_red"))
-                .userPredicate((user) -> PerkUtil.hasLifetimeAscentanMoaSkins("gharrix_red").test(user))
+                .userPredicate((user) -> PerkUtil.hasLifetimeAscentanMoaSkins().test(user))
                 .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/gharrix_red_icon.png"))
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/gharrix_red/gharrix_red.png"))
                 .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/gharrix_red/gharrix_red_saddle.png"))
-                .info(new MoaSkin.Info(Patron.Tier.ASCENTAN, true))
+                .info(new MoaSkin.Info(User.Tier.ASCENTAN, true))
         ));
         register("halcian_pink", new MoaSkin("halcian_pink", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.halcian_pink"))
-                .userPredicate((user) -> PerkUtil.hasLifetimeAscentanMoaSkins("halcian_pink").test(user))
+                .userPredicate((user) -> PerkUtil.hasLifetimeAscentanMoaSkins().test(user))
                 .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/halcian_pink_icon.png"))
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/halcian_pink/halcian_pink.png"))
                 .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/halcian_pink/halcian_pink_saddle.png"))
-                .info(new MoaSkin.Info(Patron.Tier.ASCENTAN, true))
+                .info(new MoaSkin.Info(User.Tier.ASCENTAN, true))
         ));
         register("tivalier_green", new MoaSkin("tivalier_green", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.tivalier_green"))
-                .userPredicate((user) -> PerkUtil.hasLifetimeAscentanMoaSkins("tivalier_green").test(user))
+                .userPredicate((user) -> PerkUtil.hasLifetimeAscentanMoaSkins().test(user))
                 .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/tivalier_green_icon.png"))
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/tivalier_green/tivalier_green.png"))
                 .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/tivalier_green/tivalier_green_saddle.png"))
-                .info(new MoaSkin.Info(Patron.Tier.ASCENTAN, true))
+                .info(new MoaSkin.Info(User.Tier.ASCENTAN, true))
         ));
         register("arctic_moa", new MoaSkin("arctic_moa", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.arctic_moa"))
-                .userPredicate((user) -> PerkUtil.hasLifetimeValkyrieMoaSkins("arctic_moa").test(user))
+                .userPredicate((user) -> PerkUtil.hasLifetimeValkyrieMoaSkins().test(user))
                 .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/arctic_moa_icon.png"))
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/arctic_moa/arctic_moa.png"))
                 .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/arctic_moa/arctic_moa_saddle.png"))
-                .info(new MoaSkin.Info(Patron.Tier.VALKYRIE, true))
+                .info(new MoaSkin.Info(User.Tier.VALKYRIE, true))
         ));
         register("cockatrice_moa", new MoaSkin("cockatrice_moa", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.cockatrice_moa"))
-                .userPredicate((user) -> PerkUtil.hasLifetimeValkyrieMoaSkins("cockatrice_moa").test(user))
+                .userPredicate((user) -> PerkUtil.hasLifetimeValkyrieMoaSkins().test(user))
                 .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/cockatrice_moa_icon.png"))
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/cockatrice_moa/cockatrice_moa.png"))
                 .emissiveLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/cockatrice_moa/cockatrice_moa_emissive.png"))
                 .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/cockatrice_moa/cockatrice_moa_saddle.png"))
-                .info(new MoaSkin.Info(Patron.Tier.VALKYRIE, true))
+                .info(new MoaSkin.Info(User.Tier.VALKYRIE, true))
         ));
         register("phoenix_moa", new MoaSkin("phoenix_moa", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.phoenix_moa"))
-                .userPredicate((user) -> PerkUtil.hasLifetimeValkyrieMoaSkins("phoenix_moa").test(user))
+                .userPredicate((user) -> PerkUtil.hasLifetimeValkyrieMoaSkins().test(user))
                 .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/phoenix_moa_icon.png"))
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/phoenix_moa/phoenix_moa.png"))
                 .emissiveLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/phoenix_moa/phoenix_moa_emissive.png"))
                 .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/phoenix_moa/phoenix_moa_saddle.png"))
-                .info(new MoaSkin.Info(Patron.Tier.VALKYRIE, true))
+                .info(new MoaSkin.Info(User.Tier.VALKYRIE, true))
         ));
         register("sentry_moa", new MoaSkin("sentry_moa", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.sentry_moa"))
-                .userPredicate((user) -> PerkUtil.hasLifetimeValkyrieMoaSkins("sentry_moa").test(user))
+                .userPredicate((user) -> PerkUtil.hasLifetimeValkyrieMoaSkins().test(user))
                 .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/sentry_moa_icon.png"))
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/sentry_moa/sentry_moa.png"))
                 .emissiveLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/sentry_moa/sentry_moa_emissive.png"))
                 .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/sentry_moa/sentry_moa_saddle.png"))
-                .info(new MoaSkin.Info(Patron.Tier.VALKYRIE, true))
+                .info(new MoaSkin.Info(User.Tier.VALKYRIE, true))
         ));
         register("valkyrie_moa", new MoaSkin("valkyrie_moa", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.valkyrie_moa"))
-                .userPredicate((user) -> PerkUtil.hasLifetimeValkyrieMoaSkins("valkyrie_moa").test(user))
+                .userPredicate((user) -> PerkUtil.hasLifetimeValkyrieMoaSkins().test(user))
                 .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/valkyrie_moa_icon.png"))
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/valkyrie_moa/valkyrie_moa.png"))
                 .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/valkyrie_moa/valkyrie_moa_saddle.png"))
-                .info(new MoaSkin.Info(Patron.Tier.VALKYRIE, true))
+                .info(new MoaSkin.Info(User.Tier.VALKYRIE, true))
         ));
     }
 
@@ -248,6 +247,6 @@ public class MoaSkins {
             }
         }
 
-        public record Info(Patron.Tier tier, boolean lifetime) { }
+        public record Info(User.Tier tier, boolean lifetime) { }
     }
 }

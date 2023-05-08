@@ -1,37 +1,29 @@
 package com.aetherteam.aether.util;
 
-import com.aetherteam.aether.perk.types.MoaPacks;
-import com.aetherteam.aether.perk.types.MoaSkins;
-import com.aetherteam.nitrogen.api.users.Patron;
-import com.aetherteam.nitrogen.api.users.Ranked;
 import com.aetherteam.nitrogen.api.users.User;
-import net.minecraft.network.chat.Component;
 import org.apache.commons.lang3.tuple.Triple;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.function.Predicate;
 
 public class PerkUtil {
-    public static Predicate<User> hasLifetimeValkyrieMoaSkins(String string) {
-        return (user) -> hasAllSkins().test(user) || hasLifetimeSkin(user, string);
+    public static Predicate<User> hasLifetimeValkyrieMoaSkins() {
+        return (user) -> hasAllSkins().test(user) || user.getCurrentTierLevel() >= User.Tier.VALKYRIE.getLevel() || (user.getCurrentTier() == null && user.getHighestPastTierLevel() >= User.Tier.VALKYRIE.getLevel());
     }
 
-    public static Predicate<User> hasLifetimeAscentanMoaSkins(String string) {
-        return (user) -> hasAllSkins().test(user) || hasBaseSkins().test(user) || hasLifetimeSkin(user, string);
+    public static Predicate<User> hasLifetimeAscentanMoaSkins() {
+        return (user) -> hasAllSkins().test(user) || hasBaseSkins().test(user) || user.getCurrentTierLevel() >= User.Tier.ASCENTAN.getLevel() || (user.getCurrentTier() == null && user.getHighestPastTierLevel() >= User.Tier.ASCENTAN.getLevel());
     }
     
-    public static Predicate<User> hasValkyrieMoaSkins(String string) {
-        return (user) -> hasAllSkins().test(user) || (user.isPledging() && user.getPatronTierLevel() >= Patron.Tier.VALKYRIE.getLevel()) || hasLifetimeSkin(user, string);
+    public static Predicate<User> hasValkyrieMoaSkins() {
+        return (user) -> hasAllSkins().test(user) || user.getCurrentTierLevel() >= User.Tier.VALKYRIE.getLevel();
     }
 
-    public static Predicate<User> hasAscentanMoaSkins(String string) {
-        return (user) -> hasAllSkins().test(user) || hasBaseSkins().test(user)  || (user.isPledging() && user.getPatronTierLevel() >= Patron.Tier.ASCENTAN.getLevel()) || hasLifetimeSkin(user, string);
+    public static Predicate<User> hasAscentanMoaSkins() {
+        return (user) -> hasAllSkins().test(user) || hasBaseSkins().test(user)  || user.getCurrentTierLevel() >= User.Tier.ASCENTAN.getLevel();
     }
 
     public static Predicate<User> hasBaseSkins() {
-        return (user) -> isContributor().test(user) || user.hasRank(Ranked.Rank.TRANSLATOR) || user.hasRank(Ranked.Rank.CELEBRITY);
+        return (user) -> isContributor().test(user) || user.getHighestGroup() == User.Group.TRANSLATOR || user.getHighestGroup() == User.Group.CELEBRITY;
     }
 
     public static Predicate<User> hasAllSkins() {
@@ -47,41 +39,15 @@ public class PerkUtil {
     }
 
     public static Predicate<User> isDeveloperOrStaff() {
-        return (user) -> isDeveloper().test(user) || user.hasRank(Ranked.Rank.STAFF);
+        return (user) -> isDeveloper().test(user) || user.getHighestGroup() == User.Group.STAFF;
     }
 
     public static Predicate<User> isDeveloper() {
-        return (user) -> user.hasRank(Ranked.Rank.THE_AETHER_TEAM) || user.hasRank(Ranked.Rank.MODDING_LEGACY);
+        return (user) -> user.getHighestGroup() == User.Group.AETHER_TEAM || user.getHighestGroup() == User.Group.MODDING_LEGACY;
     }
 
     public static Predicate<User> isContributor() {
-        return (user) -> user.hasRank(Ranked.Rank.CONTRIBUTOR) || user.hasRank(Ranked.Rank.LEGACY_CONTRIBUTOR);
-    }
-
-    public static boolean hasLifetimeSkin(User user, String string) {
-        return !hasLifetimeSkinFromPacks(user, string).isEmpty() || hasLifetimeSkinSpecific(user, string);
-    }
-
-    public static List<Component> hasLifetimeSkinFromPacks(User user, String string) {
-        List<Component> packNames = new ArrayList<>();
-        List<MoaPacks.MoaPack> moaPacks = MoaPacks.getMoaPacks();
-        for (MoaPacks.MoaPack moaPack : moaPacks) {
-            if (user.getLifetimeSkins().contains(moaPack.id()) && moaPack.hasSkin(string)) {
-                packNames.add(moaPack.displayName());
-            }
-        }
-        return packNames;
-    }
-
-    public static boolean hasLifetimeSkinSpecific(User user, String string) {
-        Map<String, MoaSkins.MoaSkin> moaSkins = MoaSkins.getMoaSkins();
-        for (Map.Entry<String, MoaSkins.MoaSkin> moaSkinsEntry : moaSkins.entrySet()) {
-            MoaSkins.MoaSkin moaSkin = moaSkinsEntry.getValue();
-            if (user.getLifetimeSkins().contains(moaSkin.getId()) && moaSkin.getId().equals(string)) {
-                return true;
-            }
-        }
-        return false;
+        return (user) -> user.getHighestGroup() == User.Group.CONTRIBUTOR || user.getHighestGroup() == User.Group.LEGACY_CONTRIBUTOR;
     }
 
     public static Triple<Float, Float, Float> getPerkColor(String hex) {

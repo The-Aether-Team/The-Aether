@@ -157,17 +157,17 @@ public class MoaSkinsScreen extends Screen {
             this.applyButton.setIsActive(true);
             this.removeButton.setIsActive(true);
 
-            if (this.selectedSkin.getInfo().lifetime() || !user.isPatron() || !user.isPledging() || user.getPatronTierLevel() < this.selectedSkin.getInfo().tier().getLevel()) {
+            if (this.selectedSkin.getInfo().lifetime() || user.getCurrentTier() == null || user.getCurrentTierLevel() < this.selectedSkin.getInfo().tier().getLevel()) {
                 boolean mouseOver = this.isMouseOverIcon(mouseX, mouseY, 8);
                 this.renderLifetimeIcon(poseStack, mouseOver);
                 if (mouseOver) {
                     this.renderTooltip(Component.translatable("gui.aether.moa_skins.tooltip.title.access.lifetime"), Component.translatable("gui.aether.moa_skins.tooltip.lifetime"), poseStack, mouseX, mouseY);
                 }
-            } else if (user.isPatron()) {
+            } else if (user.getCurrentTier() != null) {
                 boolean mouseOver = this.isMouseOverIcon(mouseX, mouseY, 7);
                 this.renderPledgingIcon(poseStack, mouseOver);
                 if (mouseOver) {
-                    this.renderTooltip(Component.translatable("gui.aether.moa_skins.tooltip.title.access.pledging"), Component.translatable("gui.aether.moa_skins.tooltip.pledging", user.getPatreonTier().getDisplayName()), poseStack, mouseX, mouseY);
+                    this.renderTooltip(Component.translatable("gui.aether.moa_skins.tooltip.title.access.pledging"), Component.translatable("gui.aether.moa_skins.tooltip.pledging", user.getCurrentTier().getDisplayName()), poseStack, mouseX, mouseY);
                 }
             }
         } else {
@@ -245,7 +245,7 @@ public class MoaSkinsScreen extends Screen {
     }
 
     /**
-     * Based on {@link net.minecraft.client.gui.screens.inventory.InventoryScreen#renderEntityInInventoryRaw(int, int, int, float, float, LivingEntity)}.
+     * Based on {@link net.minecraft.client.gui.screens.inventory.InventoryScreen#renderEntityInInventory(PoseStack, int, int, int, Quaternionf, Quaternionf, LivingEntity)}.
      */
     public static void renderRotatingEntity(int posX, int posY, int scale, float angleXComponent, float angleYComponent, LivingEntity livingEntity) {
         PoseStack poseStack = RenderSystem.getModelViewStack();

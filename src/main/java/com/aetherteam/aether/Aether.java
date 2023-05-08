@@ -28,7 +28,6 @@ import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.loot.conditions.AetherLootConditions;
 import com.aetherteam.aether.loot.functions.AetherLootFunctions;
 import com.aetherteam.aether.loot.modifiers.AetherLootModifiers;
-import com.aetherteam.aether.perk.types.MoaPacks;
 import com.aetherteam.aether.perk.types.MoaSkins;
 import com.aetherteam.aether.recipe.AetherRecipeSerializers;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
@@ -150,7 +149,6 @@ public class Aether {
         AetherAdvancementTriggers.init();
 
         MoaSkins.registerMoaSkins();
-        MoaPacks.registerMoaPacks();
 
         this.registerFuels();
 
