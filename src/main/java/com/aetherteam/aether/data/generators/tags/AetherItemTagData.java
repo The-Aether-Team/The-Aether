@@ -223,41 +223,6 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherBlocks.AMBROSIUM_BLOCK.get().asItem(),
                 AetherBlocks.ZANITE_BLOCK.get().asItem());
         this.tag(Tags.Items.TOOLS).addTag(AetherTags.Items.TOOLS_HAMMERS);
-        this.tag(ItemTags.SWORDS).add(
-                AetherItems.SKYROOT_SWORD.get(),
-                AetherItems.HOLYSTONE_SWORD.get(),
-                AetherItems.ZANITE_SWORD.get(),
-                AetherItems.GRAVITITE_SWORD.get(),
-                AetherItems.FLAMING_SWORD.get(),
-                AetherItems.LIGHTNING_SWORD.get(),
-                AetherItems.HOLY_SWORD.get(),
-                AetherItems.VAMPIRE_BLADE.get(),
-                AetherItems.PIG_SLAYER.get(),
-                AetherItems.CANDY_CANE_SWORD.get()).addTag(AetherTags.Items.TOOLS_LANCES);
-        this.tag(ItemTags.AXES).add(
-                AetherItems.SKYROOT_AXE.get(),
-                AetherItems.HOLYSTONE_AXE.get(),
-                AetherItems.ZANITE_AXE.get(),
-                AetherItems.GRAVITITE_AXE.get(),
-                AetherItems.VALKYRIE_AXE.get());
-        this.tag(ItemTags.PICKAXES).add(
-                AetherItems.SKYROOT_PICKAXE.get(),
-                AetherItems.HOLYSTONE_PICKAXE.get(),
-                AetherItems.ZANITE_PICKAXE.get(),
-                AetherItems.GRAVITITE_PICKAXE.get(),
-                AetherItems.VALKYRIE_PICKAXE.get());
-        this.tag(ItemTags.SHOVELS).add(
-                AetherItems.SKYROOT_SHOVEL.get(),
-                AetherItems.HOLYSTONE_SHOVEL.get(),
-                AetherItems.ZANITE_SHOVEL.get(),
-                AetherItems.GRAVITITE_SHOVEL.get(),
-                AetherItems.VALKYRIE_SHOVEL.get());
-        this.tag(ItemTags.HOES).add(
-                AetherItems.SKYROOT_HOE.get(),
-                AetherItems.HOLYSTONE_HOE.get(),
-                AetherItems.ZANITE_HOE.get(),
-                AetherItems.GRAVITITE_HOE.get(),
-                AetherItems.VALKYRIE_HOE.get());
         this.tag(Tags.Items.TOOLS_BOWS).add(AetherItems.PHOENIX_BOW.get());
         this.tag(Tags.Items.ARMORS_HELMETS).add(
                 AetherItems.ZANITE_HELMET.get(),
@@ -363,5 +328,46 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherBlocks.ENCHANTED_GRAVITITE.get().asItem());
         this.tag(ItemTags.BOATS).add(AetherItems.SKYROOT_BOAT.get());
         this.tag(ItemTags.CHEST_BOATS).add(AetherItems.SKYROOT_CHEST_BOAT.get());
+        this.tag(ItemTags.CLUSTER_MAX_HARVESTABLES).add(
+                AetherItems.SKYROOT_PICKAXE.get(),
+                AetherItems.HOLYSTONE_PICKAXE.get(),
+                AetherItems.ZANITE_PICKAXE.get(),
+                AetherItems.GRAVITITE_PICKAXE.get(),
+                AetherItems.VALKYRIE_PICKAXE.get());
+        this.tag(ItemTags.SWORDS).add(
+                AetherItems.SKYROOT_SWORD.get(),
+                AetherItems.HOLYSTONE_SWORD.get(),
+                AetherItems.ZANITE_SWORD.get(),
+                AetherItems.GRAVITITE_SWORD.get(),
+                AetherItems.FLAMING_SWORD.get(),
+                AetherItems.LIGHTNING_SWORD.get(),
+                AetherItems.HOLY_SWORD.get(),
+                AetherItems.VAMPIRE_BLADE.get(),
+                AetherItems.PIG_SLAYER.get(),
+                AetherItems.CANDY_CANE_SWORD.get()).addTag(AetherTags.Items.TOOLS_LANCES);
+        this.tag(ItemTags.AXES).add(
+                AetherItems.SKYROOT_AXE.get(),
+                AetherItems.HOLYSTONE_AXE.get(),
+                AetherItems.ZANITE_AXE.get(),
+                AetherItems.GRAVITITE_AXE.get(),
+                AetherItems.VALKYRIE_AXE.get());
+        this.tag(ItemTags.PICKAXES).add(
+                AetherItems.SKYROOT_PICKAXE.get(),
+                AetherItems.HOLYSTONE_PICKAXE.get(),
+                AetherItems.ZANITE_PICKAXE.get(),
+                AetherItems.GRAVITITE_PICKAXE.get(),
+                AetherItems.VALKYRIE_PICKAXE.get());
+        this.tag(ItemTags.SHOVELS).add(
+                AetherItems.SKYROOT_SHOVEL.get(),
+                AetherItems.HOLYSTONE_SHOVEL.get(),
+                AetherItems.ZANITE_SHOVEL.get(),
+                AetherItems.GRAVITITE_SHOVEL.get(),
+                AetherItems.VALKYRIE_SHOVEL.get());
+        this.tag(ItemTags.HOES).add(
+                AetherItems.SKYROOT_HOE.get(),
+                AetherItems.HOLYSTONE_HOE.get(),
+                AetherItems.ZANITE_HOE.get(),
+                AetherItems.GRAVITITE_HOE.get(),
+                AetherItems.VALKYRIE_HOE.get());
     }
 }
