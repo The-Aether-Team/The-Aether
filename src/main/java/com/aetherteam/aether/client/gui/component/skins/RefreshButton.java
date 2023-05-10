@@ -8,8 +8,11 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.GameRenderer;
 
-public class PatreonButton extends Button {
-    public PatreonButton(Builder builder) {
+public class RefreshButton extends Button {
+    public static int reboundMax = 1200;
+    public static int reboundTimer = 0;
+
+    public RefreshButton(Button.Builder builder) {
         super(builder);
     }
 
@@ -19,10 +22,10 @@ public class PatreonButton extends Button {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, MoaSkinsScreen.MOA_SKINS_GUI);
         RenderSystem.clearColor(1.0F, 1.0F, 1.0F, this.alpha);
-        int u = 0;
+        int u = 108;
         int v = 215;
-        if (this.isHovered) {
-            u = 54;
+        if (this.isHovered || reboundTimer > 0) {
+            u = 126;
         }
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();

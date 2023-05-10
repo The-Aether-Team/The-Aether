@@ -5,6 +5,7 @@ import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.gui.component.skins.ChangeSkinButton;
 import com.aetherteam.aether.client.gui.component.skins.PatreonButton;
+import com.aetherteam.aether.client.gui.component.skins.RefreshButton;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.passive.Moa;
 import com.aetherteam.aether.network.AetherPacketHandler;
@@ -15,6 +16,9 @@ import com.aetherteam.aether.perk.types.MoaData;
 import com.aetherteam.aether.perk.types.MoaSkins;
 import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
+import com.aetherteam.nitrogen.network.NitrogenPacketHandler;
+import com.aetherteam.nitrogen.network.PacketDistributor;
+import com.aetherteam.nitrogen.network.packet.serverbound.TriggerUpdateInfoPacket;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -24,6 +28,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.ConfirmLinkScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -63,6 +68,8 @@ public class MoaSkinsScreen extends Screen {
     private float moaRotation = 0.0F;
     private Moa previewMoa;
 
+    private boolean connectionStatus = false;
+
     public MoaSkinsScreen(Screen lastScreen) {
         super(Component.translatable("gui.aether.moa_skins.title"));
         this.lastScreen = lastScreen;
@@ -70,6 +77,9 @@ public class MoaSkinsScreen extends Screen {
 
     @Override
     public void init() {
+        User user = UserData.Client.getClientUser();
+        this.connectionStatus = user != null;
+
         this.moaSkins = List.copyOf(MoaSkins.getMoaSkins().values());
 
         this.snapPoints = new ArrayList<>();
@@ -112,7 +122,7 @@ public class MoaSkinsScreen extends Screen {
                         }
                         this.getMinecraft().setScreen(this);
                     }, PATREON_LINK, true))
-            ).pos(this.leftPos + (this.imageWidth / 2) - 66, this.topPos + this.imageHeight - 25).size(54, 18)));
+            ).pos(this.leftPos + (this.imageWidth / 2) - 67, this.topPos + this.imageHeight - 25).size(54, 18)));
 
             String link = "https://www.aether-mod.net/verify?uuid=" + uuid;
             this.addRenderableWidget(new PatreonButton(Button.builder(Component.translatable("gui.aether.moa_skins.button.connect"),
@@ -122,17 +132,38 @@ public class MoaSkinsScreen extends Screen {
                         }
                         this.getMinecraft().setScreen(this);
                     }, link, true))
-            ).pos(this.leftPos + (this.imageWidth / 2) + 12, this.topPos + this.imageHeight - 25).size(54, 18)));
+            ).pos(this.leftPos + (this.imageWidth / 2) - 5, this.topPos + this.imageHeight - 25).size(54, 18)));
+
+            this.addRenderableWidget(new RefreshButton(Button.builder(Component.literal(""),
+                    (pressed) -> {
+                        if (RefreshButton.reboundTimer == 0) {
+                            PacketDistributor.sendToServer(NitrogenPacketHandler.INSTANCE, new TriggerUpdateInfoPacket(this.getMinecraft().player.getId()));
+                            RefreshButton.reboundTimer = RefreshButton.reboundMax;
+                        }
+                    }
+            ).pos(this.leftPos + (this.imageWidth / 2) + 49, this.topPos + this.imageHeight - 25).size(18, 18).tooltip(Tooltip.create(Component.translatable("gui.aether.moa_skins.button.refresh")))));
         }
     }
 
     @Override
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+        User user = UserData.Client.getClientUser();
         this.renderBackground(poseStack);
         this.renderWindow(poseStack);
         this.renderSlots(poseStack, mouseX, mouseY);
         this.renderInterface(poseStack, mouseX, mouseY, partialTick);
         super.render(poseStack, mouseX, mouseY, partialTick);
+        if (this.getMinecraft().player != null) {
+            if (user == null && this.connectionStatus) {
+                AetherPacketHandler.sendToServer(new ServerMoaSkinPacket.Remove(this.getMinecraft().player.getUUID()));
+                this.connectionStatus = false;
+            } else if (user != null && !this.connectionStatus) {
+                AetherPlayer.get(this.getMinecraft().player).ifPresent((aetherPlayer) -> {
+                    AetherPacketHandler.sendToServer(new ServerMoaSkinPacket.Apply(this.getMinecraft().player.getUUID(), new MoaData(aetherPlayer.getLastRiddenMoa(), MoaSkins.getMoaSkins().get(this.customizations.getMoaSkin()))));
+                });
+                this.connectionStatus = true;
+            }
+        }
     }
 
     private void renderWindow(PoseStack poseStack) {

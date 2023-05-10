@@ -746,6 +746,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addMoaSkinsText("button.remove", "Remove");
         addMoaSkinsText("button.donate", "Donate");
         addMoaSkinsText("button.connect", "Connect");
+        addMoaSkinsText("button.refresh", "Refresh");
 
         addMoaSkinsText("pack.natural_moa_skins", "Natural Moa Skins");
         addMoaSkinsText("pack.lifetime_angel_moa_skins", "Lifetime Angel Moa Skins");
