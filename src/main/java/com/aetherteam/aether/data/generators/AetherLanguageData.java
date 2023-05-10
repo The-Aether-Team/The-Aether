@@ -835,7 +835,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.BLUE_MOA_EGG, "An Egg laid by a Blue Moa. Hatching this provides a Blue Moa with 3 mid-air jumps. The most common Moa.");
         addLore(AetherItems.BOOK_OF_LORE, "A large book containing many lore entries. It describes every object in detail.");
         addLore(AetherItems.BRONZE_DUNGEON_KEY, "A dull key that is dropped from the Slider after being defeated. You can use it to claim the treasure you earned!");
-        addLore(AetherItems.CANDY_CANE, "Found in presents under Holiday trees! They can be used to repair Candy Cane swords, and are a very tasty treat.");
+        addLore(AetherItems.CANDY_CANE, "Dropped by mobs killed with a Candy Cane Sword! They can be used to repair this weapon, and they're a very tasty treat.");
         addLore(AetherItems.CANDY_CANE_SWORD, "A sword made from decorative candy. Randomly drops Candy Canes when used. These are dropped from presents that are under Holiday Trees.");
         addLore(AetherBlocks.CARVED_SLAB, "Crafted from Carved Stone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building's roofing!");
         addLore(AetherBlocks.CARVED_STAIRS, "Crafted from Sentry Stone. Stairs are useful for adding verticality to builds and are often used for decoration too!");
