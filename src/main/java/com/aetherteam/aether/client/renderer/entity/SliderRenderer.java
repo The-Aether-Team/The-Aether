@@ -7,6 +7,7 @@ import com.aetherteam.aether.client.renderer.entity.model.SliderModel;
 import com.aetherteam.aether.entity.monster.dungeon.boss.slider.Slider;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import net.minecraft.util.Mth;
 import org.joml.Vector3f;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -39,7 +40,7 @@ public class SliderRenderer extends MobRenderer<Slider, SliderModel> {
             poseStack.mulPose(Axis.of(new Vector3f(slider.getHurtAngleX(), 0.0F, -slider.getHurtAngleZ())).rotationDegrees(slider.getHurtAngle() * -15.0F));
         }
         if (slider.getHurtAngle() > 0.0) {
-            slider.setHurtAngle(slider.getHurtAngle() * 0.94F);
+            slider.setHurtAngle(Mth.lerp(partialTicks, slider.getHurtAngle(), slider.getHurtAngle() * 0.98F));
         }
         if (isEntityUpsideDown(slider)) {
             poseStack.translate(0.0D, slider.getBbHeight() + 0.1F, 0.0D);
