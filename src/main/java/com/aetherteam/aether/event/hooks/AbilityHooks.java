@@ -84,7 +84,7 @@ public class AbilityHooks {
             List<SlotResult> slotResults = EquipmentUtil.getZaniteRings(entity);
             for (SlotResult slotResult : slotResults) {
                 if (slotResult != null) {
-                    if (state.getDestroySpeed(level, pos) > 0 && entity.getRandom().nextInt(3) == 0) {
+                    if (state.getDestroySpeed(level, pos) > 0 && entity.getRandom().nextInt(6) == 0) {
                         slotResult.stack().hurtAndBreak(1, entity, wearer -> CuriosApi.getCuriosHelper().onBrokenCurio(slotResult.slotContext()));
                     }
                 }
@@ -98,7 +98,7 @@ public class AbilityHooks {
         public static void damageZanitePendant(LivingEntity entity, LevelAccessor level, BlockState state, BlockPos pos) {
             SlotResult slotResult = EquipmentUtil.getZanitePendant(entity);
             if (slotResult != null) {
-                if (state.getDestroySpeed(level, pos) > 0 && entity.getRandom().nextInt(3) == 0) {
+                if (state.getDestroySpeed(level, pos) > 0 && entity.getRandom().nextInt(6) == 0) {
                     slotResult.stack().hurtAndBreak(1, entity, wearer -> CuriosApi.getCuriosHelper().onBrokenCurio(slotResult.slotContext()));
                 }
             }
