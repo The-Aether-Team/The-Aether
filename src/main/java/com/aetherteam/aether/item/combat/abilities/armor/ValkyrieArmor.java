@@ -58,6 +58,6 @@ public interface ValkyrieArmor {
     }
 
     private static boolean cantFly(Player player) {
-        return player.isOnGround() || player.getFeetBlockState().getBlock() instanceof LiquidBlock;
+        return player.isOnGround() || player.isInFluidType();
     }
 }

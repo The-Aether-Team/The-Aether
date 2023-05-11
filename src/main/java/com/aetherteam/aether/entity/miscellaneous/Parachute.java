@@ -42,7 +42,7 @@ public class Parachute extends Entity {
             this.resetFallDistance();
             this.moveParachute(passenger);
             this.spawnExplosionParticle();
-            if (this.isOnGround() || this.isInWater() || this.isInLava()) {
+            if (this.isOnGround() || this.isInFluidType()) {
                 this.ejectPassengers();
                 this.die();
             }
