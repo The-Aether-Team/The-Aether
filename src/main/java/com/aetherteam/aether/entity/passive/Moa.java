@@ -47,6 +47,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Optional;
@@ -75,6 +76,13 @@ public class Moa extends MountableAnimal implements WingedBird {
 
 	public Moa(EntityType<? extends Moa> type, Level level) {
 		super(type, level);
+		this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
+		this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, -1.0F);
+		this.setPathfindingMalus(BlockPathTypes.DANGER_POWDER_SNOW, -1.0F);
+		this.setPathfindingMalus(BlockPathTypes.POWDER_SNOW, -1.0F);
+		this.setPathfindingMalus(BlockPathTypes.DANGER_OTHER, -1.0F);
+		this.setPathfindingMalus(BlockPathTypes.DAMAGE_OTHER, -1.0F);
+		this.setPathfindingMalus(BlockPathTypes.LAVA, -1.0F);
 	}
 
 	@Override
