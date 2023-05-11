@@ -53,11 +53,13 @@ public class ThunderCrystal extends AbstractCrystal {
                 return;
             }
             if (this.ticksInAir >= this.getLifeSpan()) {
-                LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(this.level);
-                if (lightningBolt != null) {
-                    LightningTracker.get(lightningBolt).ifPresent(lightningTracker -> lightningTracker.setOwner(this.getOwner()));
-                    lightningBolt.setPos(this.getX(), this.getY(), this.getZ());
-                    this.level.addFreshEntity(lightningBolt);
+                if (this.target != null && this.target.isAlive()) {
+                    LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(this.level);
+                    if (lightningBolt != null) {
+                        LightningTracker.get(lightningBolt).ifPresent(lightningTracker -> lightningTracker.setOwner(this.getOwner()));
+                        lightningBolt.setPos(this.getX(), this.getY(), this.getZ());
+                        this.level.addFreshEntity(lightningBolt);
+                    }
                 }
                 this.playSound(AetherSoundEvents.ENTITY_THUNDER_CRYSTAL_EXPLODE.get(), 1.0F, 1.0F);
             } else {
