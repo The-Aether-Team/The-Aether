@@ -18,6 +18,8 @@ public class IcePendantItem extends PendantItem implements FreezingAccessory {
 
     @Override
     public void curioTick(SlotContext slotContext, ItemStack stack) {
-        this.freezeTick(slotContext, stack);
+        if (!slotContext.entity().isInFluidType()) {
+            this.freezeTick(slotContext, stack);
+        }
     }
 }
