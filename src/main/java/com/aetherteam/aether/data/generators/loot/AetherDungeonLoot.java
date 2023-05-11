@@ -157,6 +157,7 @@ public class AetherDungeonLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(AetherItems.WHITE_MOA_EGG.get()).setWeight(4))
                         .add(LootItem.lootTableItem(AetherItems.ZANITE_PICKAXE.get()).setWeight(2))
                         .add(LootItem.lootTableItem(AetherItems.ZANITE_SWORD.get()).setWeight(2))
+                        .add(LootItem.lootTableItem(Items.NAME_TAG).setWeight(2))
                         .add(LootItem.lootTableItem(Items.SHIELD).setWeight(2))
                 )
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(2.0F, 6.0F))
@@ -203,6 +204,7 @@ public class AetherDungeonLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(AetherBlocks.ANGELIC_STONE.get()).setWeight(1))
                         .add(LootItem.lootTableItem(AetherBlocks.LIGHT_ANGELIC_STONE.get()).setWeight(1))
                         .add(LootItem.lootTableItem(AetherItems.HOLYSTONE_SWORD.get()).setWeight(1))
+                        .add(LootItem.lootTableItem(Items.NAME_TAG).setWeight(1))
                 )
         );
         builder.accept(AetherLoot.SILVER_DUNGEON_DISC, LootTable.lootTable()
@@ -218,6 +220,7 @@ public class AetherDungeonLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(AetherItems.ZANITE_GEMSTONE.get()).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
                         .add(LootItem.lootTableItem(AetherItems.HOLYSTONE_SWORD.get()).setWeight(1))
                         .add(LootItem.lootTableItem(AetherItems.HEALING_STONE.get()).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
+                        .add(LootItem.lootTableItem(Items.NAME_TAG).setWeight(1))
                 )
         );
         builder.accept(AetherLoot.SILVER_DUNGEON_REWARD, LootTable.lootTable()

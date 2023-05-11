@@ -57,6 +57,11 @@
         },
         {
           "type": "minecraft:item",
+          "name": "minecraft:name_tag",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
           "name": "minecraft:shield",
           "weight": 2
         }
