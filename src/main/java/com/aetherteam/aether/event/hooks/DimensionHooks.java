@@ -213,7 +213,7 @@ public class DimensionHooks {
         if (level instanceof ServerLevel serverLevel) {
             if (!AetherConfig.COMMON.disable_falling_to_overworld.get()) {
                 for (Entity entity : serverLevel.getEntities(EntityTypeTest.forClass(Entity.class), Objects::nonNull)) {
-                    if (level.getBiome(entity.blockPosition()).is(AetherTags.Biomes.FALL_TO_OVERWORLD)) {
+                    if (level.getBiome(entity.blockPosition()).is(AetherTags.Biomes.FALL_TO_OVERWORLD) && level.dimension() == LevelUtil.destinationDimension()) {
                         if (entity.getY() <= serverLevel.getMinBuildHeight() && !entity.isPassenger()) {
                             if ((entity instanceof Player player && !player.getAbilities().flying) || entity.isVehicle() || (entity instanceof Saddleable) && ((Saddleable) entity).isSaddled() || entity instanceof ItemEntity itemEntity) {
                                 entityFell(entity);
@@ -234,7 +234,7 @@ public class DimensionHooks {
         MinecraftServer minecraftserver = serverLevel.getServer();
         if (minecraftserver != null) {
             ServerLevel destination = minecraftserver.getLevel(LevelUtil.returnDimension());
-            if (destination != null) {
+            if (destination != null && LevelUtil.returnDimension() != LevelUtil.destinationDimension()) {
                 List<Entity> passengers = entity.getPassengers();
                 entity.level.getProfiler().push("aether_fall");
                 entity.setPortalCooldown();
