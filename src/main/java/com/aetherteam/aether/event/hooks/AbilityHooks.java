@@ -132,6 +132,14 @@ public class AbilityHooks {
             }
             return speed;
         }
+
+        /**
+         * Prevents magma block damage when wearing ice accessories.
+         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onEntityHurt(net.minecraftforge.event.entity.living.LivingAttackEvent)
+         */
+        public static boolean preventMagmaDamage(LivingEntity entity, DamageSource source) {
+            return source == entity.getLevel().damageSources().hotFloor() && EquipmentUtil.hasFreezingAccessory(entity);
+        }
     }
 
     public static class ArmorHooks {

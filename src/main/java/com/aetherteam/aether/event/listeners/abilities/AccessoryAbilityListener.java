@@ -6,6 +6,7 @@ import com.aetherteam.aether.event.hooks.AbilityHooks;
 import com.aetherteam.aether.item.accessories.abilities.ShieldOfRepulsionAccessory;
 import com.aetherteam.aether.util.EquipmentUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -14,7 +15,10 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -71,5 +75,17 @@ public class AccessoryAbilityListener {
         HitResult hitResult = event.getRayTraceResult();
         Projectile projectile = event.getProjectile();
         ShieldOfRepulsionAccessory.deflectProjectile(event, hitResult, projectile); // Has to take event due to the event being canceled within a lambda and also mid-behavior.
+    }
+
+    /**
+     * @see AbilityHooks.AccessoryHooks#preventMagmaDamage(LivingEntity, DamageSource)
+     */
+    @SubscribeEvent
+    public static void onEntityHurt(LivingAttackEvent event) {
+        LivingEntity livingEntity = event.getEntity();
+        DamageSource damageSource = event.getSource();
+        if (AbilityHooks.AccessoryHooks.preventMagmaDamage(livingEntity, damageSource)) {
+            event.setCanceled(true);
+        }
     }
 }
