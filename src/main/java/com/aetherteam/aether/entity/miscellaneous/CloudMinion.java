@@ -5,6 +5,7 @@ import com.aetherteam.aether.entity.projectile.crystal.CloudCrystal;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.util.EntityUtil;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -157,6 +158,11 @@ public class CloudMinion extends FlyingMob {
 
     @Override
     protected void pushEntities() { }
+
+    @Override
+    protected boolean canRide(Entity vehicle) {
+        return false;
+    }
 
     @Override
     public boolean hurt(@Nonnull DamageSource source, float damage) {
