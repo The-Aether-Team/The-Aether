@@ -407,7 +407,9 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addEntityType(AetherEntityTypes.TNT_PRESENT, "TNT Present");
 
         addEntityType(AetherEntityTypes.ZEPHYR_SNOWBALL, "Zephyr Snowball");
+        addEntityType(AetherEntityTypes.FIRE_CRYSTAL, "Fire Crystal");
         addEntityType(AetherEntityTypes.CLOUD_CRYSTAL, "Cloud Crystal");
+        addEntityType(AetherEntityTypes.ICE_CRYSTAL, "Ice Crystal");
         addEntityType(AetherEntityTypes.THUNDER_CRYSTAL, "Thunder Crystal");
         addEntityType(AetherEntityTypes.GOLDEN_DART, "Golden Dart");
         addEntityType(AetherEntityTypes.POISON_DART, "Poison Dart");
