@@ -37,6 +37,7 @@ import top.theillusivec4.curios.client.gui.RenderButton;
 import top.theillusivec4.curios.common.inventory.CosmeticCurioSlot;
 import top.theillusivec4.curios.common.inventory.CurioSlot;
 import top.theillusivec4.curios.common.network.NetworkHandler;
+import top.theillusivec4.curios.common.network.client.CPacketDestroy;
 import top.theillusivec4.curios.common.network.client.CPacketToggleRender;
 
 import javax.annotation.Nonnull;
@@ -313,27 +314,22 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
         this.recipeBookComponent.slotClicked(slot);
         if (this.minecraft != null && this.minecraft.player != null && this.minecraft.gameMode != null) {
             boolean flag = type == ClickType.QUICK_MOVE;
-            type = slotId == -999 && type == ClickType.PICKUP ? ClickType.THROW : type;
             if (slot != null || type == ClickType.QUICK_CRAFT) {
                 if (slot == null || slot.mayPickup(this.minecraft.player)) {
                     if (slot == this.destroyItemSlot && this.destroyItemSlot != null && flag) {
                         for (int j = 0; j < this.minecraft.player.inventoryMenu.getItems().size(); ++j) {
                             this.minecraft.gameMode.handleCreativeModeItemAdd(ItemStack.EMPTY, j);
+                            NetworkHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(), new CPacketDestroy());
                         }
                     } else {
                         if (slot == this.destroyItemSlot && this.destroyItemSlot != null) {
                             this.menu.setCarried(ItemStack.EMPTY);
                             AetherPacketHandler.sendToServer(new ClearItemPacket(this.minecraft.player.getId()));
-                        } else {
-                            super.slotClicked(slot, slotId, mouseButton, type);
                         }
                     }
-                } else {
-                    super.slotClicked(slot, slotId, mouseButton, type);
                 }
-            } else {
-                super.slotClicked(slot, slotId, mouseButton, type);
             }
+            super.slotClicked(slot, slotId, mouseButton, type);
         }
     }
 
