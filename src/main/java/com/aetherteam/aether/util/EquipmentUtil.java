@@ -47,6 +47,10 @@ public class EquipmentUtil {
         return getCurio(entity, AetherItems.ZANITE_PENDANT.get());
     }
 
+    public static boolean hasFreezingAccessory(LivingEntity entity) {
+        return hasCurio(entity, AetherItems.ICE_PENDANT.get()) || hasCurio(entity, AetherItems.ICE_RING.get());
+    }
+
     public static boolean hasSwetCape(LivingEntity entity) {
         return hasCurio(entity, AetherItems.SWET_CAPE.get());
     }

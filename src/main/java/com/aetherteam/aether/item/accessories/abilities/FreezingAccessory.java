@@ -48,25 +48,19 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
             FluidState fluidState = level.getFluidState(pos);
             for (Recipe<?> recipe : level.getRecipeManager().getAllRecipesFor(AetherRecipeTypes.ACCESSORY_FREEZABLE.get())) {
                 if (recipe instanceof AccessoryFreezableRecipe freezableRecipe) {
-                    if (!fluidState.isEmpty() && fluidState.createLegacyBlock() != oldBlockState && oldBlockState.hasProperty(BlockStateProperties.WATERLOGGED)) { // Removes water from waterlogged blocks.
-                        if (freezableRecipe.matches(level, pos, fluidState.createLegacyBlock())) {
-                            level.setBlock(pos, oldBlockState.setValue(BlockStateProperties.WATERLOGGED, false), flag);
+                    if (fluidState.isEmpty() || oldBlockState.is(fluidState.createLegacyBlock().getBlock())) { // Default freezing behavior.
+                        if (freezableRecipe.matches(level, pos, oldBlockState)) {
+                            BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
+                            CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
+                            return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, function, source, flag);
                         }
-                    } else {
-                        if (fluidState.isEmpty() || oldBlockState.is(fluidState.createLegacyBlock().getBlock())) { // Default freezing behavior.
-                            if (freezableRecipe.matches(level, pos, oldBlockState)) {
-                                BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                                CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
-                                return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, function, source, flag);
-                            }
-                        } else { // Breaks a block before freezing if it has a FluidState attached by default (this is different from waterlogging for blocks like Kelp and Seagrass).
-                            oldBlockState = fluidState.createLegacyBlock();
-                            if (freezableRecipe.matches(level, pos, oldBlockState)) {
-                                level.destroyBlock(pos, true);
-                                BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                                CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
-                                return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, function, source, flag);
-                            }
+                    } else if (!oldBlockState.hasProperty(BlockStateProperties.WATERLOGGED)) { // Breaks a block before freezing if it has a FluidState attached by default (this is different from waterlogging for blocks like Kelp and Seagrass).
+                        oldBlockState = fluidState.createLegacyBlock();
+                        if (freezableRecipe.matches(level, pos, oldBlockState)) {
+                            level.destroyBlock(pos, true);
+                            BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
+                            CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
+                            return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, function, source, flag);
                         }
                     }
                 }
