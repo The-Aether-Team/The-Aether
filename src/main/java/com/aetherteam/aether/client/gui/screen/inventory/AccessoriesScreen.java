@@ -1,6 +1,7 @@
 package com.aetherteam.aether.client.gui.screen.inventory;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.client.gui.screen.perks.AetherCustomizationsScreen;
 import com.aetherteam.aether.client.AetherKeys;
 import com.aetherteam.aether.inventory.menu.AccessoriesMenu;
@@ -76,16 +77,16 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
         int x = 0;
         int y = 0;
         if (screen instanceof InventoryScreen || screen instanceof CuriosScreen) {
-            x = 27;
-            y = 68;
+            x = AetherConfig.CLIENT.button_inventory_x.get();
+            y = AetherConfig.CLIENT.button_inventory_y.get();
         }
         if (screen instanceof CreativeModeInventoryScreen) {
-            x = 74;
-            y = 40;
+            x = AetherConfig.CLIENT.button_creative_x.get();
+            y = AetherConfig.CLIENT.button_creative_y.get();
         }
         if (screen instanceof AccessoriesScreen) {
-            x = 9;
-            y = 68;
+            x = AetherConfig.CLIENT.button_accessories_x.get();
+            y = AetherConfig.CLIENT.button_accessories_y.get();
         }
         return new Tuple<>(x, y);
     }

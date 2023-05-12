@@ -1,5 +1,6 @@
 package com.aetherteam.aether.client.event.listeners;
 
+import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.client.event.hooks.GuiHooks;
 import com.aetherteam.aether.client.gui.component.AccessoryButton;
 import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
@@ -70,15 +71,17 @@ public class GuiListener {
 			}
 			GuiHooks.setMenuAlignment();
 		} else {
-			Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(screen);
-			AccessoryButton inventoryAccessoryButton = GuiHooks.setupAccessoryButtonWithinInventories(screen, offsets);
-			if (inventoryAccessoryButton != null) {
-				event.addListener(inventoryAccessoryButton);
-			}
+			if (!AetherConfig.CLIENT.disable_accessory_button.get()) {
+				Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(screen);
+				AccessoryButton inventoryAccessoryButton = GuiHooks.setupAccessoryButtonWithinInventories(screen, offsets);
+				if (inventoryAccessoryButton != null) {
+					event.addListener(inventoryAccessoryButton);
+				}
 
-			AccessoryButton accessoryMenuAccessoryButton = GuiHooks.setupAccessoryButtonWithinAccessoryMenu(screen, offsets);
-			if (accessoryMenuAccessoryButton != null) {
-				event.addListener(accessoryMenuAccessoryButton);
+				AccessoryButton accessoryMenuAccessoryButton = GuiHooks.setupAccessoryButtonWithinAccessoryMenu(screen, offsets);
+				if (accessoryMenuAccessoryButton != null) {
+					event.addListener(accessoryMenuAccessoryButton);
+				}
 			}
 		}
 	}
