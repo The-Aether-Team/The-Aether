@@ -594,7 +594,7 @@ public class Swet extends Slime implements MountableMob {
         }
 
         public boolean canUse() {
-            return this.swet.getTarget() == null && (this.swet.onGround || this.swet.isInWater() || this.swet.isInLava() || this.swet.hasEffect(MobEffects.LEVITATION)) && this.swet.getMoveControl() instanceof MoveHelperController;
+            return this.swet.getTarget() == null && (this.swet.onGround || this.swet.isInFluidType() || this.swet.hasEffect(MobEffects.LEVITATION)) && this.swet.getMoveControl() instanceof MoveHelperController;
         }
 
         public void tick() {
