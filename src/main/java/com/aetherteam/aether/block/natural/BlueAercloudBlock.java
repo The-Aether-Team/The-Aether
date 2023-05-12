@@ -44,6 +44,7 @@ public class BlueAercloudBlock extends AercloudBlock {
 					level.addParticle(ParticleTypes.SPLASH, xOffset, yOffset, zOffset, 0.0, 0.0, 0.0);
 				}
 			}
+			entity.setOnGround(true);
 		} else {
 			super.entityInside(state, level, pos, entity);
 		}

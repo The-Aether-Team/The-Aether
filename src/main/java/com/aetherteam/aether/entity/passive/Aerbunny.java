@@ -97,7 +97,7 @@ public class Aerbunny extends AetherAnimal {
             this.setPuffiness(0);
         }
         this.handlePlayerInput();
-        if (EntityUtil.betterGroundCheck(this)) {
+        if (this.getVehicle() != null && (this.getVehicle().isOnGround() || this.getVehicle().isInFluidType())) {
             this.lastPos = null;
         }
     }
