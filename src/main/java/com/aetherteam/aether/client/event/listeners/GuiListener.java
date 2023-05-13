@@ -1,5 +1,6 @@
 package com.aetherteam.aether.client.event.listeners;
 
+import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.client.event.hooks.GuiHooks;
 import com.aetherteam.aether.client.gui.component.AccessoryButton;
 import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
@@ -14,6 +15,7 @@ import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
+import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.TickEvent;
@@ -69,15 +71,17 @@ public class GuiListener {
 			}
 			GuiHooks.setMenuAlignment();
 		} else {
-			Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(screen);
-			AccessoryButton inventoryAccessoryButton = GuiHooks.setupAccessoryButtonWithinInventories(screen, offsets);
-			if (inventoryAccessoryButton != null) {
-				event.addListener(inventoryAccessoryButton);
-			}
+			if (!AetherConfig.CLIENT.disable_accessory_button.get()) {
+				Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(screen);
+				AccessoryButton inventoryAccessoryButton = GuiHooks.setupAccessoryButtonWithinInventories(screen, offsets);
+				if (inventoryAccessoryButton != null) {
+					event.addListener(inventoryAccessoryButton);
+				}
 
-			AccessoryButton accessoryMenuAccessoryButton = GuiHooks.setupAccessoryButtonWithinAccessoryMenu(screen, offsets);
-			if (accessoryMenuAccessoryButton != null) {
-				event.addListener(accessoryMenuAccessoryButton);
+				AccessoryButton accessoryMenuAccessoryButton = GuiHooks.setupAccessoryButtonWithinAccessoryMenu(screen, offsets);
+				if (accessoryMenuAccessoryButton != null) {
+					event.addListener(accessoryMenuAccessoryButton);
+				}
 			}
 		}
 	}
@@ -97,9 +101,14 @@ public class GuiListener {
 	public static void onClientTick(TickEvent.ClientTickEvent event) {
 		Minecraft minecraft = Minecraft.getInstance();
 		if (event.phase == TickEvent.Phase.END) {
-			GuiHooks.openAccessoryMenu();
 			GuiHooks.tickMenuWhenPaused(minecraft);
 		}
+	}
+
+	@SubscribeEvent
+	public static void onKeyPress(InputEvent.Key event) {
+		GuiHooks.openAccessoryMenu();
+		GuiHooks.closeContainerMenu(event.getKey(), event.getAction());
 	}
 
 	/**
