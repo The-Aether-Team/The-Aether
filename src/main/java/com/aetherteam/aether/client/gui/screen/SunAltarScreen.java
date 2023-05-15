@@ -24,7 +24,7 @@ public class SunAltarScreen extends Screen {
     @Override
     public void init() {
         super.init();
-        double value = this.minecraft.level.getDayTime() / 72000D;
+        double value = (this.minecraft.level.getDayTime() % 72000L) / 72000D;
         this.addRenderableWidget(new SunAltarSlider(this.minecraft.level, this.width / 2 - 75, this.height / 2, 150, 20, Component.translatable("gui." + Aether.MODID + ".sun_altar.time"), value));
     }
 
