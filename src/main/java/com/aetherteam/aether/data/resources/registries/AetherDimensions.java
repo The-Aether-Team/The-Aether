@@ -28,6 +28,8 @@ public class AetherDimensions {
 	public static final ResourceKey<Level> AETHER_LEVEL = ResourceKey.create(Registries.DIMENSION, AETHER_LEVEL_ID);
 	// LevelStem - The dimension during lifecycle start and datagen.
 	public static final ResourceKey<LevelStem> AETHER_LEVEL_STEM = ResourceKey.create(Registries.LEVEL_STEM, AETHER_LEVEL_ID);
+	// Time in ticks of how long a day/night cycle lasts.
+	public static final int AETHER_TICKS_PER_DAY = (24000) * 3; // too scared to call Level.TICKS_PER_DAY because of static init problems, but just know this is Level.TICKS_PER_DAY * 3
 
 	public static void bootstrapDimensionType(BootstapContext<DimensionType> context) {
 		context.register(AETHER_DIMENSION_TYPE, new DimensionType(

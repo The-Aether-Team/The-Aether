@@ -1,6 +1,7 @@
 package com.aetherteam.aether.capability.time;
 
 import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.client.EternalDayPacket;
 import net.minecraft.nbt.CompoundTag;
@@ -52,9 +53,9 @@ public class AetherTimeCapability implements AetherTime {
         long dayTime = level.getDayTime();
         if (this.getEternalDay() && !AetherConfig.COMMON.disable_eternal_day.get()) {
             if (dayTime != 18000L) {
-                long tempTime = dayTime % 72000L;
+                long tempTime = dayTime % (long) AetherDimensions.AETHER_TICKS_PER_DAY;
                 if (tempTime > 54000L) {
-                    tempTime -= 72000L;
+                    tempTime -= AetherDimensions.AETHER_TICKS_PER_DAY;
                 }
                 long target = (long) Mth.clamp(18000L - tempTime, -10, 10);
                 dayTime += target;
