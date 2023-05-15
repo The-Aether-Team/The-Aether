@@ -42,7 +42,7 @@ public class GoldenOakFoliagePlacer extends FoliagePlacer {
      * The coordinates are passed in as absolute value, and should be within [0, {@code range}].
      */
     protected boolean shouldSkipLocation(RandomSource random, int localX, int localY, int localZ, int range, boolean large) {
-        Aether.LOGGER.debug("Local Y:" + (localY));
+        //Aether.LOGGER.debug("Local Y:" + (localY));
         return localX*localX + (localY+2)*(localY+2) + localZ*localZ > 12 + random.nextInt(5);
     }
 }
