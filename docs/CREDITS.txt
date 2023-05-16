@@ -42,6 +42,9 @@ Jonathing
 - Refactors to use wildcards for Suppliers for public API.
 - Refactors to use constructors instead of Google's helper methods for data structures.
 - Refactors to buildscript.
+- Refactors to remove unnecessary logging.
+- Fixes to the Sun Altar GUI slider moving out of the interface.
+- Fixes to a null error with block entities.
 - Fixes to jarJar-built file not reobfuscating.
 
 Kelvin285
