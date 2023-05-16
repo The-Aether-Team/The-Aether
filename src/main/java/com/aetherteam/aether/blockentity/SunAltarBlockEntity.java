@@ -70,6 +70,8 @@ public class SunAltarBlockEntity extends BlockEntity implements Nameable {
     @Override
     public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet) {
         CompoundTag compound = packet.getTag();
-        this.handleUpdateTag(compound);
+        if (compound != null) {
+            this.handleUpdateTag(compound);
+        }
     }
 }
