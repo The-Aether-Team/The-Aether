@@ -1,6 +1,7 @@
 package com.aetherteam.aether.entity;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.data.resources.AetherMobCategory;
 import com.aetherteam.aether.entity.miscellaneous.Parachute;
 import com.aetherteam.aether.entity.miscellaneous.SkyrootBoat;
 import com.aetherteam.aether.entity.miscellaneous.SkyrootChestBoat;
@@ -56,32 +57,32 @@ public class AetherEntityTypes {
             () -> EntityType.Builder.of(Moa::new, MobCategory.CREATURE).sized(1.1F, 2.15F).clientTrackingRange(10).build("moa"));
 
     public static final RegistryObject<EntityType<Aerwhale>> AERWHALE = ENTITY_TYPES.register("aerwhale",
-            () -> EntityType.Builder.of(Aerwhale::new, MobCategory.MONSTER).fireImmune().sized(3.0F, 3.0F).clientTrackingRange(10).build("aerwhale"));
+            () -> EntityType.Builder.of(Aerwhale::new, AetherMobCategory.AETHER_AERWHALE).fireImmune().sized(3.0F, 3.0F).clientTrackingRange(10).build("aerwhale"));
 
     public static final RegistryObject<EntityType<Aerbunny>> AERBUNNY = ENTITY_TYPES.register("aerbunny",
             () -> EntityType.Builder.of(Aerbunny::new, MobCategory.CREATURE).sized(0.6F, 0.5F).clientTrackingRange(10).build("aerbunny"));
 
     // Hostile Mobs
     public static final RegistryObject<EntityType<Swet>> BLUE_SWET = ENTITY_TYPES.register("blue_swet",
-            () -> EntityType.Builder.of(Swet::new, MobCategory.MONSTER).sized(0.9F, 0.95F).clientTrackingRange(10).build("blue_swet"));
+            () -> EntityType.Builder.of(Swet::new, AetherMobCategory.AETHER_SURFACE_MONSTER).sized(0.9F, 0.95F).clientTrackingRange(10).build("blue_swet"));
 
     public static final RegistryObject<EntityType<Swet>> GOLDEN_SWET = ENTITY_TYPES.register("golden_swet",
-            () -> EntityType.Builder.of(Swet::new, MobCategory.MONSTER).sized(0.9F, 0.95F).clientTrackingRange(10).build("golden_swet"));
+            () -> EntityType.Builder.of(Swet::new, AetherMobCategory.AETHER_SURFACE_MONSTER).sized(0.9F, 0.95F).clientTrackingRange(10).build("golden_swet"));
 
     public static final RegistryObject<EntityType<PassiveWhirlwind>> WHIRLWIND = ENTITY_TYPES.register("whirlwind",
-            () -> EntityType.Builder.of(PassiveWhirlwind::new, MobCategory.MONSTER).fireImmune().sized(0.6F, 0.8F).clientTrackingRange(8).build("whirlwind"));
+            () -> EntityType.Builder.of(PassiveWhirlwind::new, AetherMobCategory.AETHER_SURFACE_MONSTER).fireImmune().sized(0.6F, 0.8F).clientTrackingRange(8).build("whirlwind"));
 
     public static final RegistryObject<EntityType<EvilWhirlwind>> EVIL_WHIRLWIND = ENTITY_TYPES.register("evil_whirlwind",
-            () -> EntityType.Builder.of(EvilWhirlwind::new, MobCategory.MONSTER).fireImmune().sized(0.6F, 0.8F).clientTrackingRange(8).build("evil_whirlwind"));
+            () -> EntityType.Builder.of(EvilWhirlwind::new, AetherMobCategory.AETHER_SURFACE_MONSTER).fireImmune().sized(0.6F, 0.8F).clientTrackingRange(8).build("evil_whirlwind"));
 
     public static final RegistryObject<EntityType<AechorPlant>> AECHOR_PLANT = ENTITY_TYPES.register("aechor_plant",
-            () -> EntityType.Builder.of(AechorPlant::new, MobCategory.MONSTER).sized(1.0F, 1.0F).clientTrackingRange(8).build("aechor_plant"));
+            () -> EntityType.Builder.of(AechorPlant::new, AetherMobCategory.AETHER_SURFACE_MONSTER).sized(1.0F, 1.0F).clientTrackingRange(8).build("aechor_plant"));
 
     public static final RegistryObject<EntityType<Cockatrice>> COCKATRICE = ENTITY_TYPES.register("cockatrice",
-            () -> EntityType.Builder.of(Cockatrice::new, MobCategory.MONSTER).sized(1.1F, 2.15F).clientTrackingRange(10).build("cockatrice"));
+            () -> EntityType.Builder.of(Cockatrice::new, AetherMobCategory.AETHER_DARKNESS_MONSTER).sized(1.1F, 2.15F).clientTrackingRange(10).build("cockatrice"));
 
     public static final RegistryObject<EntityType<Zephyr>> ZEPHYR = ENTITY_TYPES.register("zephyr",
-            () -> EntityType.Builder.of(Zephyr::new, MobCategory.MONSTER).sized(4.5F, 3.5F).clientTrackingRange(10).build("zephyr"));
+            () -> EntityType.Builder.of(Zephyr::new, AetherMobCategory.AETHER_SKY_MONSTER).sized(4.5F, 3.5F).clientTrackingRange(10).build("zephyr"));
 
     // Dungeon
     public static final RegistryObject<EntityType<Mimic>> MIMIC = ENTITY_TYPES.register("mimic",
