@@ -25,6 +25,9 @@ CartoonishVillain:
 CDAGaming:
 - Fixes to the Aether main menu.
 
+darksonic300
+- Implementation of the is_cold damage type tag.
+
 FlashFyreMods
 - Implementation of more beta-accurate terrain generation for the Aether dimension.
 
