@@ -2,6 +2,7 @@ package com.aetherteam.aether.client.gui.screen;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.gui.component.SunAltarSlider;
+import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.Screen;
@@ -24,7 +25,7 @@ public class SunAltarScreen extends Screen {
     @Override
     public void init() {
         super.init();
-        double value = this.minecraft.level.getDayTime() / 72000D;
+        double value = (this.minecraft.level.getDayTime() % (long) AetherDimensions.AETHER_TICKS_PER_DAY) / (double) AetherDimensions.AETHER_TICKS_PER_DAY;
         this.addRenderableWidget(new SunAltarSlider(this.minecraft.level, this.width / 2 - 75, this.height / 2, 150, 20, Component.translatable("gui." + Aether.MODID + ".sun_altar.time"), value));
     }
 
