@@ -1,6 +1,7 @@
 package com.aetherteam.aether;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.entity.EntityType;
@@ -188,6 +189,14 @@ public class AetherTags {
 
 		private static TagKey<Structure> tag(String name) {
 			return TagKey.create(Registries.STRUCTURE, new ResourceLocation(Aether.MODID, name));
+		}
+	}
+
+	public static class DamageTypes {
+		public static final TagKey<DamageType> IS_COLD = tag("is_cold");
+
+		private static TagKey<DamageType> tag(String name) {
+			return TagKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(Aether.MODID, name));
 		}
 	}
 }
