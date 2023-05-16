@@ -144,7 +144,7 @@ public class DimensionListener {
         ServerLevel level = (ServerLevel) event.getLevel();
         if (level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
             long time = event.getNewTime() + 48000L;
-            event.setTimeAddition(time - time % 72000L);
+            event.setTimeAddition(time - time % (long) AetherDimensions.AETHER_TICKS_PER_DAY);
 
             ServerLevelAccessor serverLevelAccessor = (ServerLevelAccessor) level;
             serverLevelAccessor.aether$getServerLevelData().setRainTime(0);
