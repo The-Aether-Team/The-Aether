@@ -11,6 +11,6 @@ public interface ZaniteAccessory {
      * @return The buffed {@link Float} value.
      */
     static float handleMiningSpeed(float speed, ItemStack stack) {
-        return speed * (1.0F + (((float) stack.getDamageValue()) / (((float) stack.getMaxDamage()) * 3.0F)));
+        return speed * (1.4F + (((float) stack.getDamageValue()) / (((float) stack.getMaxDamage()) * 3.0F)));
     }
 }
