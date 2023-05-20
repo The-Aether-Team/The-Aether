@@ -88,7 +88,7 @@ public abstract class AbstractPlacementBanRecipeCategory<T, S extends Predicate<
 
     protected void populateAdditionalInformation(R recipe, List<Component> tooltip) {
         if (recipe.getBiomeKey() != null || recipe.getBiomeTag() != null) {
-            tooltip.add(Component.translatable("gui.aether.jei.biome.tooltip").withStyle(ChatFormatting.GRAY));
+            tooltip.add(Component.translatable("gui.aether.jei.biome.ban.tooltip").withStyle(ChatFormatting.GRAY));
             if (recipe.getBiomeKey() != null) {
                 tooltip.add(Component.translatable("gui.aether.jei.biome.tooltip.biome").withStyle(ChatFormatting.DARK_GRAY));
                 tooltip.add(Component.literal(recipe.getBiomeKey().location().toString()).withStyle(ChatFormatting.DARK_GRAY));
