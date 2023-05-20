@@ -1,8 +1,11 @@
 package com.aetherteam.aether.item.accessories.cape;
 
+import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.item.accessories.AccessoryItem;
 import com.aetherteam.aether.mixin.mixins.common.accessor.LivingEntityAccessor;
+import com.aetherteam.aether.network.AetherPacketHandler;
+import com.aetherteam.aether.network.packet.client.InvisibilityParticlePacket;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -33,6 +36,9 @@ public class InvisibilityCloakItem extends AccessoryItem {
         }
         if (!livingEntity.isInvisible()) {
             livingEntity.setInvisible(true);
+        }
+        if (!livingEntity.getLevel().isClientSide() && AetherConfig.COMMON.balance_invisibility_cloak.get()) {
+            AetherPacketHandler.sendToNear(new InvisibilityParticlePacket(livingEntity.getId()), livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), 64.0, livingEntity.getLevel().dimension());
         }
     }
 

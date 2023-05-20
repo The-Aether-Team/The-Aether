@@ -307,6 +307,7 @@
   "config.aether.common.modpack.disable_falling_to_overworld": "Prevents the player from falling back to the Overworld when they fall out of the Aether",
   "config.aether.common.modpack.portal_destination_dimension_ID": "Sets the ID of the dimension that the Aether Portal will send the player to",
   "config.aether.common.modpack.portal_return_dimension_ID": "Sets the ID of the dimension that the Aether Portal will return the player to",
+  "config.aether.common.multiplayer.balance_invisibility_cloak": "Causes players wearing Invisibility Cloaks to emit faint particles while invisible",
   "config.aether.common.multiplayer.sun_altar_whitelist": "Makes it so that only whitelisted users or anyone with permission level 4 can use the Sun Altar on a server",
   "config.aether.common.world_generation.generate_holiday_tree_always": "Determines whether Holiday Trees should always be able to generate when exploring new chunks in the Aether, if true, this overrides 'Generate Holiday Trees seasonally'",
   "config.aether.common.world_generation.generate_holiday_tree_seasonally": "Determines whether Holiday Trees should be able to generate during the time frame of December and January when exploring new chunks in the Aether, only works if 'Generate Holiday Trees always' is set to false",

@@ -28,6 +28,7 @@ public class AetherConfig {
         public final ConfigValue<Boolean> generate_holiday_tree_seasonally;
 
         public final ConfigValue<Boolean> sun_altar_whitelist;
+        public final ConfigValue<Boolean> balance_invisibility_cloak;
 
         public final ConfigValue<Boolean> disable_aether_portal;
         public final ConfigValue<Boolean> disable_falling_to_overworld;
@@ -114,6 +115,10 @@ public class AetherConfig {
                     .comment("Makes it so that only whitelisted users or anyone with permission level 4 can use the Sun Altar on a server")
                     .translation("config.aether.common.multiplayer.sun_altar_whitelist")
                     .define("Only whitelisted users access Sun Altars", false);
+            balance_invisibility_cloak = builder
+                    .comment("Causes players wearing Invisibility Cloaks to emit faint particles while invisible")
+                    .translation("config.aether.common.multiplayer.balance_invisibility_cloak")
+                    .define("Invisibility Cloak emits particles", false);
             builder.pop();
 
             builder.push("Modpack");
