@@ -4,6 +4,9 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.capability.arrow.PhoenixArrow;
 import com.aetherteam.aether.capability.arrow.PhoenixArrowCapability;
 import com.aetherteam.aether.capability.arrow.PhoenixArrowProvider;
+import com.aetherteam.aether.capability.item.DroppedItem;
+import com.aetherteam.aether.capability.item.DroppedItemCapability;
+import com.aetherteam.aether.capability.item.DroppedItemProvider;
 import com.aetherteam.aether.capability.lightning.LightningTracker;
 import com.aetherteam.aether.capability.lightning.LightningTrackerCapability;
 import com.aetherteam.aether.capability.lightning.LightningTrackerProvider;
@@ -21,6 +24,7 @@ import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.resources.ResourceLocation;
@@ -41,6 +45,7 @@ public class AetherCapabilities {
 	public static final Capability<AetherTime> AETHER_TIME_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
 	public static final Capability<PhoenixArrow> PHOENIX_ARROW_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
 	public static final Capability<LightningTracker> LIGHTNING_TRACKER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
+	public static final Capability<DroppedItem> DROPPED_ITEM_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
 
 	@SubscribeEvent
 	public static void register(RegisterCapabilitiesEvent event) {
@@ -49,6 +54,7 @@ public class AetherCapabilities {
 		event.register(AetherTime.class);
 		event.register(PhoenixArrow.class);
 		event.register(LightningTracker.class);
+		event.register(DroppedItem.class);
 	}
 	
 	@EventBusSubscriber(modid = Aether.MODID)
@@ -66,6 +72,9 @@ public class AetherCapabilities {
 			}
 			if (event.getObject() instanceof LightningBolt lightningBolt) {
 				event.addCapability(new ResourceLocation(Aether.MODID, "lightning_tracker"), new LightningTrackerProvider(new LightningTrackerCapability(lightningBolt)));
+			}
+			if (event.getObject() instanceof ItemEntity itemEntity) {
+				event.addCapability(new ResourceLocation(Aether.MODID, "dropped_item"), new DroppedItemProvider(new DroppedItemCapability(itemEntity)));
 			}
 		}
 
