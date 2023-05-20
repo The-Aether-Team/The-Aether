@@ -93,6 +93,9 @@ public class AercloudBlock extends HalfTransparentBlock {
 	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+		if (!this.getDefaultCollisionShape(state, level, pos, context).isEmpty() && level.getBlockState(pos.above()).getBlock() instanceof AercloudBlock) {
+			return Shapes.block();
+		}
 		if (context instanceof EntityCollisionContext entityCollisionContext) {
 			Entity entity = entityCollisionContext.getEntity();
 			if (entity != null) {
