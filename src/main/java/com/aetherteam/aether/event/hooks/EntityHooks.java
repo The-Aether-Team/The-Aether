@@ -102,9 +102,9 @@ public class EntityHooks {
         return interactionResult;
     }
 
-    public static boolean preventSliderHooked(Entity projectileEntity, HitResult rayTraceResult) {
+    public static boolean preventEntityHooked(Entity projectileEntity, HitResult rayTraceResult) {
         if (rayTraceResult instanceof EntityHitResult entityHitResult) {
-            return entityHitResult.getEntity() instanceof Slider && projectileEntity instanceof FishingHook;
+            return entityHitResult.getEntity().getType().is(AetherTags.Entities.UNHOOKABLE) && projectileEntity instanceof FishingHook;
         }
         return false;
     }
