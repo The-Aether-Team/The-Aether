@@ -822,7 +822,12 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addCuriosIdentifier("aether_gloves", "Gloves");
         addCuriosIdentifier("aether_accessory", "Accessory");
 
+        addCuriosModifier("aether_pendant", "When around neck:");
+        addCuriosModifier("aether_cape", "When on back:");
+        addCuriosModifier("aether_ring", "When worn as ring:");
+        addCuriosModifier("aether_shield", "When worn as shield:");
         addCuriosModifier("aether_gloves", "When on hands:");
+        addCuriosModifier("aether_accessory", "When worn as accessory:");
 
 
         addLore(AetherItems.AECHOR_PETAL, "The petal of an Aechor Plant, they have a sweet aroma to them. These are a Moa's favorite food, and can be used to feed baby Moas.");

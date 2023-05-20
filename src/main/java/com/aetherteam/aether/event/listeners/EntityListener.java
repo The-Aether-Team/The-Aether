@@ -55,7 +55,7 @@ public class EntityListener {
     public static void onProjectileHitEntity(ProjectileImpactEvent event) {
         Entity projectileEntity = event.getEntity();
         HitResult rayTraceResult = event.getRayTraceResult();
-        event.setCanceled(EntityHooks.preventSliderHooked(projectileEntity, rayTraceResult));
+        event.setCanceled(EntityHooks.preventEntityHooked(projectileEntity, rayTraceResult));
     }
 
     @SubscribeEvent
