@@ -1,0 +1,16 @@
+{
+  "type": "aether:placement_conversion",
+  "biome": "#aether:ultracold",
+  "ingredient": {
+    "block": "minecraft:brown_candle",
+    "properties": {
+      "lit": "true"
+    }
+  },
+  "result": {
+    "block": "minecraft:brown_candle",
+    "properties": {
+      "lit": "false"
+    }
+  }
+}
