@@ -668,9 +668,25 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addGuiText("jei.altar.repairing", "Repairing");
         addGuiText("jei.freezing", "Freezing");
         addGuiText("jei.incubating", "Incubating");
+
         addGuiText("jei.fuel", "Aether Fuel");
-        addGuiText("jei.swet_ball_convert", "Swet Ball Conversion");
-        addGuiText("jei.ambrosium_convert", "Ambrosium Conversion");
+
+        addGuiText("jei.biome.tooltip", "Requires Biomes:");
+        addGuiText("jei.biome.tooltip.biome", "Biome");
+        addGuiText("jei.biome.tooltip.tag", "Biome Tag");
+        addGuiText("jei.biome.tooltip.biomes", "Biomes in Tag");
+        addGuiText("jei.properties.tooltip", "With Properties:");
+        addGuiText("jei.bypass", "Except On:");
+        addGuiText("jei.biome.ban.tooltip", "Blocked in Biomes:");
+
+        addGuiText("jei.ambrosium_enchanting", "Ambrosium Enchanting");
+        addGuiText("jei.swet_ball_conversion", "Swet Ball Conversion");
+        addGuiText("jei.icestone_freezable", "Icestone Freezable");
+        addGuiText("jei.accessory_freezable", "Accessory Freezable");
+        addGuiText("jei.placement_conversion", "Placement Conversion");
+        addGuiText("jei.item_placement_ban", "Item Use Prevention");
+        addGuiText("jei.block_placement_ban", "Block Place Prevention");
+
 
         addGuiText("boss.message.far", "You must be in the boss room to interact.");
 
@@ -806,7 +822,12 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addCuriosIdentifier("aether_gloves", "Gloves");
         addCuriosIdentifier("aether_accessory", "Accessory");
 
+        addCuriosModifier("aether_pendant", "When around neck:");
+        addCuriosModifier("aether_cape", "When on back:");
+        addCuriosModifier("aether_ring", "When worn as ring:");
+        addCuriosModifier("aether_shield", "When worn as shield:");
         addCuriosModifier("aether_gloves", "When on hands:");
+        addCuriosModifier("aether_accessory", "When worn as accessory:");
 
 
         addLore(AetherItems.AECHOR_PETAL, "The petal of an Aechor Plant, they have a sweet aroma to them. These are a Moa's favorite food, and can be used to feed baby Moas.");

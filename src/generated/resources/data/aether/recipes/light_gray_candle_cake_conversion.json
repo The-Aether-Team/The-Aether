@@ -1,0 +1,16 @@
+{
+  "type": "aether:placement_conversion",
+  "biome": "#aether:ultracold",
+  "ingredient": {
+    "block": "minecraft:light_gray_candle_cake",
+    "properties": {
+      "lit": "true"
+    }
+  },
+  "result": {
+    "block": "minecraft:light_gray_candle_cake",
+    "properties": {
+      "lit": "false"
+    }
+  }
+}
