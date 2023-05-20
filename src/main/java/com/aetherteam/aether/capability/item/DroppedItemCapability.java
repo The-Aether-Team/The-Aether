@@ -1,21 +1,21 @@
-package com.aetherteam.aether.capability.lightning;
+package com.aetherteam.aether.capability.item;
 
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
 
-public class LightningTrackerCapability implements LightningTracker {
-    private final LightningBolt lightningBolt;
+public class DroppedItemCapability implements DroppedItem {
+    private final ItemEntity itemEntity;
 
     private Entity owner;
 
-    public LightningTrackerCapability(LightningBolt lightningBolt) {
-        this.lightningBolt = lightningBolt;
+    public DroppedItemCapability(ItemEntity itemEntity) {
+        this.itemEntity = itemEntity;
     }
 
     @Override
-    public LightningBolt getLightningBolt() {
-        return this.lightningBolt;
+    public ItemEntity getItemEntity() {
+        return this.itemEntity;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class LightningTrackerCapability implements LightningTracker {
     @Override
     public void deserializeNBT(CompoundTag tag) {
         if (tag.contains("Owner")) {
-            this.setOwner(this.getLightningBolt().level.getEntity(tag.getInt("Owner")));
+            this.setOwner(this.getItemEntity().level.getEntity(tag.getInt("Owner")));
         }
     }
 
@@ -43,4 +43,5 @@ public class LightningTrackerCapability implements LightningTracker {
     public Entity getOwner() {
         return this.owner;
     }
+
 }
