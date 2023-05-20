@@ -2,6 +2,7 @@ package com.aetherteam.aether.block.natural;
 
 import com.aetherteam.aether.block.AetherBlockStateProperties;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.HalfTransparentBlock;
@@ -44,7 +45,9 @@ public class AercloudBlock extends HalfTransparentBlock {
 		if (entity.getDeltaMovement().y < 0.0) {
 			entity.setDeltaMovement(entity.getDeltaMovement().multiply(1.0, 0.005, 1.0));
 		}
-		entity.setOnGround(true);
+		if (!(entity instanceof Player player) || !player.getAbilities().flying) {
+			entity.setOnGround(true);
+		}
 	}
 
 	/**
