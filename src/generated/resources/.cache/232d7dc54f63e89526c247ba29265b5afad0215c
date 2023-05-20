@@ -1,4 +1,4 @@
-// 1.19.4	2023-05-07T21:20:39.7823292	Tags for minecraft:item mod id aether
+// 1.19.4	2023-05-20T13:55:56.5459097	Tags for minecraft:item mod id aether
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/items/accepted_music_discs.json
 b1b83b96d9600b7878597cc26851b843bf99a3dd data/aether/tags/items/accessories.json
 6404c17e75ed612591fd253fd1cfd8c6a5ea4a8a data/aether/tags/items/aerbunny_temptation_items.json
@@ -32,6 +32,7 @@ bbd431b5ea0dbbac9aa71e30c71140e28ae93250 data/aether/tags/items/freezable_rings.
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/ice_repairing.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/lightning_repairing.json
 022a06d2a296e488a68e47fe0cebd62c586c55ea data/aether/tags/items/locked_dungeon_blocks.json
+e2e6479ac7ca7ff3e79537b28c8c37e86256099f data/aether/tags/items/milk_bucket_crafting.json
 5bc5026d5ae0b6a2701a3c35394c70da2bc572de data/aether/tags/items/moa_eggs.json
 c674b7a242891866e5ebc42cb684a2d8113fd673 data/aether/tags/items/moa_food_items.json
 d0f09b8dfc6381aa826e9b27dfc398b8b7c02625 data/aether/tags/items/moa_temptation_items.json
@@ -61,6 +62,7 @@ c26f64255e81ace6a67fcf973a34043471ebff1d data/aether/tags/items/treasure_doorway
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/treated_as_aether_item.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/valkyrie_repairing.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/vampire_repairing.json
+2f6eb76f8d5c842eba05c54205f51bf1c2b6bc71 data/aether/tags/items/water_bucket_crafting.json
 794ba2e4990dd4fa1823ea008d8b78437527dacd data/aether/tags/items/zanite_repairing.json
 89af558945f41e6e1e5e29c9da8dc0324f4c9cc2 data/curios/tags/items/aether_accessory.json
 99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/curios/tags/items/aether_cape.json
