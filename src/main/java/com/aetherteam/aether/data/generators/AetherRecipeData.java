@@ -726,6 +726,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
         enchantingRecipe(RecipeCategory.FOOD, AetherItems.HEALING_STONE.get(), AetherBlocks.HOLYSTONE.get(), 0.35F, 500).save(consumer, name("healing_stone_enchanting"));
         enchantingRecipe(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ENCHANTED_GRAVITITE.get(), AetherBlocks.GRAVITITE_ORE.get(), 1.0F, 750).save(consumer, name("enchanted_gravitite_enchanting"));
         enchantingRecipe(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.QUICKSOIL_GLASS.get(), AetherBlocks.QUICKSOIL.get(), 0.1F, 250).save(consumer, name("quicksoil_glass_enchanting"));
+        enchantingRecipe(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.GOLDEN_AERCLOUD.get(), AetherBlocks.COLD_AERCLOUD.get(), 0.1F, 1000).save(consumer, name("golden_aercloud_enchanting"));
 
         enchantingRecipe(RecipeCategory.FOOD, AetherItems.ENCHANTED_BERRY.get(), AetherItems.BLUE_BERRY.get(), 0.35F, 250).save(consumer, name("enchanted_berry_enchanting"));
 

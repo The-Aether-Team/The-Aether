@@ -12,7 +12,7 @@ jobs:
       with:
         distribution: temurin
         java-version: 17
-    - uses: gradle/gradle-build-action@v2
+    - uses: gradle/gradle-build-action@v2.4.2
       with:
         gradle-version: 7.3
     - name: Publish build

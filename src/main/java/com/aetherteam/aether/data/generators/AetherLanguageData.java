@@ -1162,6 +1162,13 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addClientConfig("gui", "align_aether_menu_elements_left", "Aligns the elements of the Aether menu to the left, only works if 'Align menu left with world preview' is set to false");
         addClientConfig("gui", "enable_trivia", "Adds random trivia and tips to the bottom of loading screens");
         addClientConfig("gui", "enable_silver_hearts", "Makes the extra hearts given by life shards display as silver colored");
+        addClientConfig("gui", "disable_accessory_button", "Disables the Aether's accessories button from appearing in GUIs");
+        addClientConfig("gui", "button_inventory_x", "The x-coordinate of the accessories button in the inventory and curios menus");
+        addClientConfig("gui", "button_inventory_y", "The y-coordinate of the accessories button in the inventory and curios menus");
+        addClientConfig("gui", "button_creative_x", "The x-coordinate of the accessories button in the creative menu");
+        addClientConfig("gui", "button_creative_y", "The y-coordinate of the accessories button in the creative menu");
+        addClientConfig("gui", "button_accessories_x", "The x-coordinate of the accessories button in the accessories menu");
+        addClientConfig("gui", "button_accessories_y", "The y-coordinate of the accessories button in the accessories menu");
 
         addClientConfig("audio", "music_backup_min_delay", "Sets the minimum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");
         addClientConfig("audio", "music_backup_max_delay", "Sets the maximum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");

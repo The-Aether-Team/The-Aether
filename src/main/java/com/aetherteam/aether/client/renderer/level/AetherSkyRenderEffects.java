@@ -1,6 +1,7 @@
 package com.aetherteam.aether.client.renderer.level;
 
 import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.mixin.mixins.client.accessor.LevelRendererAccessor;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -331,7 +332,7 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
      */
     private void drawCelestialBodies(float pPartialTick, PoseStack pPoseStack, ClientLevel world, BufferBuilder bufferbuilder) {
         // This code determines the current angle of the sun and moon and determines whether they should be visible or not.
-        long dayTime = world.getDayTime() % 72000L;
+        long dayTime = world.getDayTime() % (long) AetherDimensions.AETHER_TICKS_PER_DAY;
         float sunOpacity;
         float moonOpacity;
         if (dayTime > 71400L) {

@@ -14,6 +14,7 @@ import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.mixin.mixins.client.accessor.*;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.server.OpenAccessoriesPacket;
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -32,7 +33,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.BossEvent;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
 
@@ -141,17 +141,6 @@ public class GuiHooks {
                 titleScreenAccessor.aether$setSplash(defaultMenuAccessor.aether$getSplash());
             } else {
                 defaultMenuAccessor.aether$setSplash(titleScreenAccessor.aether$getSplash());
-            }
-        }
-    }
-
-    public static void openAccessoryMenu() {
-        Minecraft minecraft = Minecraft.getInstance();
-        Player entity = minecraft.player;
-        if (entity != null) {
-            if (AetherKeys.OPEN_ACCESSORY_INVENTORY.consumeClick() && minecraft.isWindowActive()) {
-                AetherPacketHandler.sendToServer(new OpenAccessoriesPacket(ItemStack.EMPTY));
-                shouldAddButton = false;
             }
         }
     }
@@ -329,6 +318,25 @@ public class GuiHooks {
                         minecraft.forceSetScreen(defaultMenu);
                     }
                 }
+            }
+        }
+    }
+
+    public static void closeContainerMenu(int key, int action) {
+        Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.screen instanceof AbstractContainerScreen abstractContainerScreen && !abstractContainerScreen.passEvents) {
+            if (AetherKeys.OPEN_ACCESSORY_INVENTORY.getKey().getValue() == key && (action == InputConstants.PRESS || action == InputConstants.REPEAT)) {
+                abstractContainerScreen.onClose();
+            }
+        }
+    }
+
+    public static void openAccessoryMenu() {
+        Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.player != null && minecraft.getOverlay() == null && (minecraft.screen == null || minecraft.screen.passEvents)) {
+            if (AetherKeys.OPEN_ACCESSORY_INVENTORY.consumeClick()) {
+                AetherPacketHandler.sendToServer(new OpenAccessoriesPacket(ItemStack.EMPTY));
+                shouldAddButton = false;
             }
         }
     }
