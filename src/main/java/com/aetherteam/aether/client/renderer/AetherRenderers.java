@@ -1,7 +1,6 @@
 package com.aetherteam.aether.client.renderer;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.client.renderer.accessory.CapeRenderer;
 import com.aetherteam.aether.client.renderer.accessory.GlovesRenderer;
 import com.aetherteam.aether.client.renderer.accessory.PendantRenderer;
 import com.aetherteam.aether.client.renderer.accessory.ShieldOfRepulsionRenderer;
@@ -188,14 +187,6 @@ public class AetherRenderers {
         CuriosRendererRegistry.register(AetherItems.PHOENIX_GLOVES.get(), GlovesRenderer::new);
         CuriosRendererRegistry.register(AetherItems.OBSIDIAN_GLOVES.get(), GlovesRenderer::new);
         CuriosRendererRegistry.register(AetherItems.VALKYRIE_GLOVES.get(), GlovesRenderer::new);
-
-        CuriosRendererRegistry.register(AetherItems.RED_CAPE.get(), CapeRenderer::new);
-        CuriosRendererRegistry.register(AetherItems.BLUE_CAPE.get(), CapeRenderer::new);
-        CuriosRendererRegistry.register(AetherItems.YELLOW_CAPE.get(), CapeRenderer::new);
-        CuriosRendererRegistry.register(AetherItems.WHITE_CAPE.get(), CapeRenderer::new);
-        CuriosRendererRegistry.register(AetherItems.SWET_CAPE.get(), CapeRenderer::new);
-        CuriosRendererRegistry.register(AetherItems.AGILITY_CAPE.get(), CapeRenderer::new);
-        CuriosRendererRegistry.register(AetherItems.VALKYRIE_CAPE.get(), CapeRenderer::new);
 
         CuriosRendererRegistry.register(AetherItems.SHIELD_OF_REPULSION.get(), ShieldOfRepulsionRenderer::new);
     }
