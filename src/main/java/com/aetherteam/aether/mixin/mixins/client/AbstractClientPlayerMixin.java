@@ -7,6 +7,7 @@ import com.aetherteam.aether.util.EquipmentUtil;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -14,6 +15,9 @@ import top.theillusivec4.curios.api.SlotResult;
 
 @Mixin(AbstractClientPlayer.class)
 public class AbstractClientPlayerMixin {
+    @Unique
+    private static final ResourceLocation SWUFF_CAPE_LOCATION = new ResourceLocation(Aether.MODID, "textures/models/accessory/capes/swuff_accessory.png");
+
     @Inject(at = @At("HEAD"), method = "isCapeLoaded", cancellable = true)
     private void isCapeLoaded(CallbackInfoReturnable<Boolean> cir) {
         AbstractClientPlayer player = (AbstractClientPlayer) (Object) this;
@@ -28,7 +32,7 @@ public class AbstractClientPlayerMixin {
         SlotResult result = EquipmentUtil.getCape(player);
         if (AetherMixinHooks.isCapeVisible(player) && result != null && result.stack().getItem() instanceof CapeItem capeItem) {
             if (result.stack().getHoverName().getString().equalsIgnoreCase("swuff_'s cape")) {
-                cir.setReturnValue(new ResourceLocation(Aether.MODID, "textures/models/accessory/capes/swuff_accessory.png"));
+                cir.setReturnValue(SWUFF_CAPE_LOCATION);
             } else {
                 cir.setReturnValue(capeItem.getCapeTexture());
             }
