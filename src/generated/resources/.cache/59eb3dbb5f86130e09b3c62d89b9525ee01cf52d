@@ -1,4 +1,4 @@
-// 1.19.4	2023-05-11T23:01:36.767183	Loot Tables
+// 1.19.4	2023-05-20T18:17:26.7753741	Loot Tables
 d025471306910ea35dcf85d28fc188182a1b3c8d data/aether/loot_tables/advancements/enter_aether.json
 96aec873b17d2a5aed2a22fe094efa32b8d54645 data/aether/loot_tables/blocks/aerogel.json
 ffdecdc23fdf03314c666c6d8638f7f44bdbcc8b data/aether/loot_tables/blocks/aerogel_slab.json
@@ -140,12 +140,12 @@ f3e111a054362e2c739860793f35094b6f909806 data/aether/loot_tables/chests/dungeon/
 823a34216821e227fda0192e98eeb00e4e34b72d data/aether/loot_tables/chests/dungeon/bronze/silver_dungeon_neptune.json
 4c414c18350de597a7dd57e663b5ff5c0a00d3e5 data/aether/loot_tables/chests/dungeon/bronze/silver_dungeon_treasure.json
 b970379a413dd63d031285f3d7d148cda5084398 data/aether/loot_tables/chests/dungeon/bronze/silver_dungeon_valkyrie.json
-ee7a6a59fb458dd651a520c092e103cbfdd25813 data/aether/loot_tables/chests/dungeon/gold/gold_dungeon_reward.json
+fe74c493e64c6895a815c12813dd4c91d71259c7 data/aether/loot_tables/chests/dungeon/gold/gold_dungeon_reward.json
 4beb246866f187046efdcc951b29f47f4b104556 data/aether/loot_tables/chests/dungeon/gold/gold_dungeon_treasure.json
 38b1089b326531bc04800c4d9aabc03350f100cd data/aether/loot_tables/chests/dungeon/silver/silver_dungeon.json
 c1dabc90d155741838b84fb983a11d2d7e0974fd data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_disc.json
 f6b71f3cc3d0413017eb3f72d397df28207cb526 data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_loot.json
-cc0281497ba68f23da4fd2a81592d83fa8f87b7d data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_reward.json
+404dc217669f3d4a4dbe3696f843c7f429d41841 data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_reward.json
 509fcc4c3ed95d67346dad14ed6bfecc9c13386a data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_trash.json
 df0825811c297a2490f3108da95334235f829324 data/aether/loot_tables/entities/aechor_plant.json
 8d9ec859066d8908362d317ef37e9d2bdbfc9cce data/aether/loot_tables/entities/aerbunny.json
