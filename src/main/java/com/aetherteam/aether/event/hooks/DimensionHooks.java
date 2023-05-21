@@ -106,8 +106,8 @@ public class DimensionHooks {
         return false;
     }
 
-    public static boolean checkInteractionBanned(Player player, Level level, BlockPos pos, Direction face, ItemStack stack, BlockState state) {
-        if (isItemPlacementBanned(level, pos, face, stack)) {
+    public static boolean checkInteractionBanned(Player player, Level level, BlockPos pos, Direction face, ItemStack stack, BlockState state, boolean spawnParticles) {
+        if (isItemPlacementBanned(level, pos, face, stack, spawnParticles)) {
             return true;
         }
         if (level.getBiome(pos).is(AetherTags.Biomes.ULTRACOLD) && AetherConfig.COMMON.enable_bed_explosions.get()) {
@@ -131,10 +131,10 @@ public class DimensionHooks {
         return false;
     }
 
-    private static boolean isItemPlacementBanned(Level level, BlockPos pos, Direction face, ItemStack stack) {
+    public static boolean isItemPlacementBanned(Level level, BlockPos pos, Direction face, ItemStack stack, boolean spawnParticles) {
         for (Recipe<?> recipe : level.getRecipeManager().getAllRecipesFor(AetherRecipeTypes.ITEM_PLACEMENT_BAN.get())) {
             if (recipe instanceof ItemBanRecipe banRecipe) {
-                if (banRecipe.banItem(level, pos, face, stack)) {
+                if (banRecipe.banItem(level, pos, face, stack, spawnParticles)) {
                     return true;
                 }
             }
