@@ -128,7 +128,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 		return true;
 	}
 
-	static class SnowballAttackGoal extends Goal {
+	protected static class SnowballAttackGoal extends Goal {
 		private final Zephyr parentEntity;
 		public int attackTimer;
 
@@ -191,7 +191,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 		}
 	}
 
-	static class RandomFlyGoal extends Goal {
+	protected static class RandomFlyGoal extends Goal {
 		private final Zephyr parentEntity;
 
 		public RandomFlyGoal(Zephyr entity) {
@@ -238,7 +238,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 		}
 	}
 
-	static class MoveHelperController extends MoveControl {
+	protected static class MoveHelperController extends MoveControl {
 		private final Zephyr parentEntity;
 		private int courseChangeCooldown;
 
@@ -279,7 +279,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 		}
 	}
 
-	static class LookAroundGoal extends Goal {
+	protected static class LookAroundGoal extends Goal {
 		private final Zephyr parentEntity;
 
 		public LookAroundGoal(Zephyr zephyr) {
