@@ -70,6 +70,8 @@ public class AetherTags {
 		public static final TagKey<Item> PLANKS_CRAFTING = tag("planks_crafting");
 		public static final TagKey<Item> SKYROOT_STICK_CRAFTING = tag("skyroot_stick_crafting");
 		public static final TagKey<Item> SKYROOT_TOOL_CRAFTING = tag("skyroot_tool_crafting");
+		public static final TagKey<Item> MILK_BUCKET_CRAFTING = tag("milk_bucket_crafting");
+		public static final TagKey<Item> WATER_BUCKET_CRAFTING = tag("water_bucket_crafting");
 
 		public static final TagKey<Item> AETHER_PORTAL_ACTIVATION_ITEMS = tag("aether_portal_activation_items");
 		public static final TagKey<Item> BOOK_OF_LORE_MATERIALS = tag("book_of_lore_materials");
@@ -147,6 +149,7 @@ public class AetherTags {
 		public static final TagKey<EntityType<?>> NO_CANDY_CANE_DROPS = tag("no_candy_cane_drops");
 		public static final TagKey<EntityType<?>> DEFLECTABLE_PROJECTILES = tag("deflectable_projectiles");
 		public static final TagKey<EntityType<?>> IGNORE_INVISIBILITY = tag("ignore_invisibility");
+		public static final TagKey<EntityType<?>> UNHOOKABLE = tag("unhookable");
 
 		private static TagKey<EntityType<?>> tag(String name) {
 			return TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Aether.MODID, name));

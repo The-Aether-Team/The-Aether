@@ -43,6 +43,7 @@ public class AetherPlacedFeatures {
     public static final ResourceKey<PlacedFeature> ORE_AMBROSIUM_PLACEMENT = createKey("ambrosium_ore");
     public static final ResourceKey<PlacedFeature> ORE_ZANITE_PLACEMENT = createKey("zanite_ore");
     public static final ResourceKey<PlacedFeature> ORE_GRAVITITE_PLACEMENT = createKey("gravitite_ore");
+    public static final ResourceKey<PlacedFeature> ORE_GRAVITITE_LOWER_PLACEMENT = createKey("lower_gravitite_ore");
 
     private static ResourceKey<PlacedFeature> createKey(String name) {
         return ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(Aether.MODID, name));
@@ -122,7 +123,9 @@ public class AetherPlacedFeatures {
         register(context, ORE_ZANITE_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.ORE_ZANITE_CONFIGURATION),
                 AetherPlacedFeatureBuilders.commonOrePlacement(14, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.aboveBottom(75))));
         register(context, ORE_GRAVITITE_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.ORE_GRAVITITE_CONFIGURATION),
-                AetherPlacedFeatureBuilders.commonOrePlacement(9, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.aboveBottom(50))));
+                AetherPlacedFeatureBuilders.commonOrePlacement(8, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.aboveBottom(50))));
+        register(context, ORE_GRAVITITE_LOWER_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.ORE_GRAVITITE_LOWER_CONFIGURATION),
+                AetherPlacedFeatureBuilders.commonOrePlacement(3, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.aboveBottom(30))));
     }
 
     private static void register(BootstapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, Holder<ConfiguredFeature<?, ?>> configuration, List<PlacementModifier> modifiers) {

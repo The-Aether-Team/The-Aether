@@ -37,10 +37,10 @@
     "common.accessor.ZombifiedPiglinAccessor"
   ],
   "client": [
+    "client.AbstractClientPlayerMixin",
     "client.AdvancementToastMixin",
     "client.ConnectScreenMixin",
     "client.CreateWorldScreenMixin",
-    "client.ElytraLayerMixin",
     "client.LocalPlayerMixin",
     "client.PanoramaRendererMixin",
     "client.TippableArrowRendererMixin",

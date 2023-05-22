@@ -48,6 +48,12 @@ public class AetherItemTagData extends ItemTagsProvider {
         this.tag(AetherTags.Items.PLANKS_CRAFTING).add(AetherBlocks.SKYROOT_PLANKS.get().asItem());
         this.tag(AetherTags.Items.SKYROOT_STICK_CRAFTING).add(AetherBlocks.SKYROOT_PLANKS.get().asItem());
         this.tag(AetherTags.Items.SKYROOT_TOOL_CRAFTING).add(AetherBlocks.SKYROOT_PLANKS.get().asItem());
+        this.tag(AetherTags.Items.MILK_BUCKET_CRAFTING).add(
+                AetherItems.SKYROOT_MILK_BUCKET.get(),
+                Items.MILK_BUCKET);
+        this.tag(AetherTags.Items.WATER_BUCKET_CRAFTING).add(
+                AetherItems.SKYROOT_WATER_BUCKET.get(),
+                Items.WATER_BUCKET);
 
         this.tag(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS);
         this.tag(AetherTags.Items.BOOK_OF_LORE_MATERIALS).addTag(Tags.Items.DUSTS_GLOWSTONE).add(

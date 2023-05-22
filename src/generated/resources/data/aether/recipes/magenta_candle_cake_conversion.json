@@ -1,0 +1,16 @@
+{
+  "type": "aether:placement_conversion",
+  "biome": "#aether:ultracold",
+  "ingredient": {
+    "block": "minecraft:magenta_candle_cake",
+    "properties": {
+      "lit": "true"
+    }
+  },
+  "result": {
+    "block": "minecraft:magenta_candle_cake",
+    "properties": {
+      "lit": "false"
+    }
+  }
+}

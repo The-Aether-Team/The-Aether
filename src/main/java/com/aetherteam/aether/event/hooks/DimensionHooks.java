@@ -5,6 +5,7 @@ import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.FreezingBlock;
 import com.aetherteam.aether.block.portal.AetherPortalForcer;
 import com.aetherteam.aether.block.portal.AetherPortalShape;
+import com.aetherteam.aether.capability.item.DroppedItem;
 import com.aetherteam.aether.event.AetherGameEvents;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerLevelAccessor;
@@ -50,6 +51,7 @@ import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -104,8 +106,8 @@ public class DimensionHooks {
         return false;
     }
 
-    public static boolean checkInteractionBanned(Player player, Level level, BlockPos pos, Direction face, ItemStack stack, BlockState state) {
-        if (isItemPlacementBanned(level, pos, face, stack)) {
+    public static boolean checkInteractionBanned(Player player, Level level, BlockPos pos, Direction face, ItemStack stack, BlockState state, boolean spawnParticles) {
+        if (isItemPlacementBanned(level, pos, face, stack, spawnParticles)) {
             return true;
         }
         if (level.getBiome(pos).is(AetherTags.Biomes.ULTRACOLD) && AetherConfig.COMMON.enable_bed_explosions.get()) {
@@ -129,10 +131,10 @@ public class DimensionHooks {
         return false;
     }
 
-    private static boolean isItemPlacementBanned(Level level, BlockPos pos, Direction face, ItemStack stack) {
+    public static boolean isItemPlacementBanned(Level level, BlockPos pos, Direction face, ItemStack stack, boolean spawnParticles) {
         for (Recipe<?> recipe : level.getRecipeManager().getAllRecipesFor(AetherRecipeTypes.ITEM_PLACEMENT_BAN.get())) {
             if (recipe instanceof ItemBanRecipe banRecipe) {
-                if (banRecipe.banItem(level, pos, face, stack)) {
+                if (banRecipe.banItem(level, pos, face, stack, spawnParticles)) {
                     return true;
                 }
             }
@@ -215,8 +217,15 @@ public class DimensionHooks {
                 for (Entity entity : serverLevel.getEntities(EntityTypeTest.forClass(Entity.class), Objects::nonNull)) {
                     if (level.getBiome(entity.blockPosition()).is(AetherTags.Biomes.FALL_TO_OVERWORLD) && level.dimension() == LevelUtil.destinationDimension()) {
                         if (entity.getY() <= serverLevel.getMinBuildHeight() && !entity.isPassenger()) {
-                            if ((entity instanceof Player player && !player.getAbilities().flying) || entity.isVehicle() || (entity instanceof Saddleable) && ((Saddleable) entity).isSaddled() || entity instanceof ItemEntity itemEntity) {
+                            if ((entity instanceof Player player && !player.getAbilities().flying) || entity.isVehicle() || (entity instanceof Saddleable) && ((Saddleable) entity).isSaddled()) {
                                 entityFell(entity);
+                            } else if (entity instanceof ItemEntity itemEntity) {
+                                LazyOptional<DroppedItem> droppedItem = DroppedItem.get(itemEntity);
+                                if (droppedItem.isPresent() && droppedItem.resolve().isPresent()) {
+                                    if (itemEntity.getOwner() instanceof Player || droppedItem.resolve().get().getOwner() instanceof Player) {
+                                        entityFell(entity);
+                                    }
+                                }
                             }
                         }
                     }
