@@ -15,7 +15,6 @@ public class AetherMixinConfig {
 
     private static final ImmutableList<Entry> configEntries = ImmutableList.of(
             new Entry(MIXIN_PACKAGE_ROOT + "client.AdvancementToastMixin", true),
-            new Entry(MIXIN_PACKAGE_ROOT + "client.ElytraLayerMixin", true),
             new Entry(MIXIN_PACKAGE_ROOT + "client.MinecraftMixin", true),
             new Entry(MIXIN_PACKAGE_ROOT + "client.SplashManagerMixin", true),
             new Entry(MIXIN_PACKAGE_ROOT + "client.TippableArrowRendererMixin", true)

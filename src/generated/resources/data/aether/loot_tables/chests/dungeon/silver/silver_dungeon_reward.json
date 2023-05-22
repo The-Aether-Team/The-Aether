@@ -66,7 +66,7 @@
         {
           "type": "minecraft:loot_table",
           "name": "aether:chests/dungeon/bronze/silver_dungeon_gravitite",
-          "weight": 6
+          "weight": 3
         },
         {
           "type": "minecraft:item",

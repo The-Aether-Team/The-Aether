@@ -43,12 +43,15 @@ public class ItemBanRecipe extends AbstractPlacementBanRecipe<ItemStack, Ingredi
      * @param pos The {@link BlockPos} the recipe is performed at.
      * @param direction The {@link Direction} face that is interacted with.
      * @param stack The {@link ItemStack} being used that is being checked.
+     * @param spawnParticles A {@Boolean} for whether to spawn particles.
      * @return Whether the given {@link ItemStack} is banned from placement.
      */
-    public boolean banItem(Level level, BlockPos pos, Direction direction, ItemStack stack) {
+    public boolean banItem(Level level, BlockPos pos, Direction direction, ItemStack stack, boolean spawnParticles) {
         if (this.matches(level, pos, stack)) {
             if (AetherEventDispatch.isItemPlacementBanned(level, pos, stack)) {
-                AetherEventDispatch.onPlacementSpawnParticles(level, pos, direction, stack, null);
+                if (spawnParticles) {
+                    AetherEventDispatch.onPlacementSpawnParticles(level, pos, direction, stack, null);
+                }
                 return true;
             }
         }
