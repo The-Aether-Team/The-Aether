@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.1,
+  "group": "gold_nugget_from_blasting",
+  "ingredient": [
+    {
+      "item": "aether:golden_gloves"
+    },
+    {
+      "item": "aether:golden_pendant"
+    }
+  ],
+  "result": "minecraft:gold_nugget"
+}

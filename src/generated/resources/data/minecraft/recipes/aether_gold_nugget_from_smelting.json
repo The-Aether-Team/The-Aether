@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.1,
+  "group": "gold_nugget_from_smelting",
+  "ingredient": [
+    {
+      "item": "aether:golden_gloves"
+    },
+    {
+      "item": "aether:golden_pendant"
+    }
+  ],
+  "result": "minecraft:gold_nugget"
+}
