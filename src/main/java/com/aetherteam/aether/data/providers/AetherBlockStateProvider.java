@@ -3,6 +3,7 @@ package com.aetherteam.aether.data.providers;
 import com.aetherteam.aether.block.construction.AetherFarmBlock;
 import com.aetherteam.aether.block.AetherBlockStateProperties;
 import com.aetherteam.aether.block.dungeon.DoorwayBlock;
+import com.aetherteam.aether.block.miscellaneous.AetherFrostedIceBlock;
 import com.aetherteam.aether.block.miscellaneous.UnstableObsidianBlock;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.*;
@@ -425,6 +426,13 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
                     .rotationY((((int) dir.toYRot()) + 180) % 360)
                     .build();
         }, BedBlock.OCCUPIED);
+    }
+
+    public void frostedIce(Block block, Block base) {
+        getVariantBuilder(block).forAllStates(state -> {
+            int age = state.getValue(AetherFrostedIceBlock.AGE);
+            return ConfiguredModel.builder().modelFile(this.models().cubeAll(this.name(block) + "_" + age, this.mcLoc("block/" + this.name(base) + "_" + age)).renderType(new ResourceLocation("translucent"))).build();
+        });
     }
 
     public void unstableObsidian(Block block) {

@@ -7,9 +7,6 @@ import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.recipe.AetherRecipeSerializers;
-import com.aetherteam.aether.recipe.BlockStateIngredient;
-import com.aetherteam.aether.recipe.builder.BiomeParameterRecipeBuilder;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
@@ -765,7 +762,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
         icestoneFreezable(Blocks.ICE, Blocks.WATER).save(consumer, name("icestone_freeze_water"));
         icestoneFreezable(Blocks.OBSIDIAN, Blocks.LAVA).save(consumer, name("icestone_freeze_lava"));
 
-        conditionalAccessoryFreezing(accessoryFreezable(Blocks.FROSTED_ICE, Blocks.WATER), accessoryFreezable(Blocks.ICE, Blocks.WATER)).build(consumer, name("accessory_freeze_water"));
+        conditionalAccessoryFreezing(accessoryFreezable(AetherBlocks.FROSTED_ICE.get(), Blocks.WATER), accessoryFreezable(Blocks.ICE, Blocks.WATER)).build(consumer, name("accessory_freeze_water"));
         conditionalAccessoryFreezing(accessoryFreezable(AetherBlocks.UNSTABLE_OBSIDIAN.get(), Blocks.LAVA), accessoryFreezable(Blocks.OBSIDIAN, Blocks.LAVA)).build(consumer, name("accessory_freeze_lava"));
 
         convertPlacement(AetherBlocks.AEROGEL.get(), Blocks.LAVA, AetherTags.Biomes.ULTRACOLD).save(consumer, name("aerogel_conversion"));
