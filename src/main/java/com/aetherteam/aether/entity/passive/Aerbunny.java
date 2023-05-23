@@ -97,7 +97,7 @@ public class Aerbunny extends AetherAnimal {
             this.setPuffiness(0);
         }
         this.handlePlayerInput();
-        if (EntityUtil.betterGroundCheck(this)) {
+        if (this.getVehicle() != null && (this.getVehicle().isOnGround() || this.getVehicle().isInFluidType())) {
             this.lastPos = null;
         }
     }
@@ -129,7 +129,7 @@ public class Aerbunny extends AetherAnimal {
             if (!player.isOnGround() && !player.isFallFlying()) {
                 AttributeInstance playerGravity = player.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
                 if (playerGravity != null) {
-                    if (!player.getAbilities().flying && !player.isInWater() && !player.isInLava() && playerGravity.getValue() > 0.02) {
+                    if (!player.getAbilities().flying && !player.isInFluidType() && playerGravity.getValue() > 0.02) {
                         player.setDeltaMovement(player.getDeltaMovement().add(0.0, 0.05, 0.0));
                     }
                 }

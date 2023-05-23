@@ -11,10 +11,13 @@
       "recipe": {
         "type": "aether:accessory_freezable",
         "ingredient": {
-          "block": "minecraft:water"
+          "block": "minecraft:water",
+          "properties": {
+            "level": "0"
+          }
         },
         "result": {
-          "block": "minecraft:frosted_ice"
+          "block": "aether:frosted_ice"
         }
       }
     },
@@ -31,7 +34,10 @@
       "recipe": {
         "type": "aether:accessory_freezable",
         "ingredient": {
-          "block": "minecraft:water"
+          "block": "minecraft:water",
+          "properties": {
+            "level": "0"
+          }
         },
         "result": {
           "block": "minecraft:ice"

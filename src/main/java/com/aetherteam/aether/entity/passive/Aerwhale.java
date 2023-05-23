@@ -198,6 +198,11 @@ public class Aerwhale extends FlyingMob {
         return 1 + this.level.random.nextInt(3);
     }
 
+    @Override
+    public AABB getBoundingBoxForCulling() {
+        return this.getBoundingBox().inflate(3.0);
+    }
+
     public static class SetTravelCourseGoal extends Goal {
         private final Mob mob;
         public SetTravelCourseGoal(Mob mob) {

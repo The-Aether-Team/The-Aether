@@ -20,6 +20,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.common.Tags;
 
@@ -423,7 +424,7 @@ public abstract class AetherRecipeProvider extends RecipeProvider {
     }
 
     protected static BlockStateRecipeBuilder accessoryFreezable(Block result, Block ingredient) {
-        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipeSerializers.ACCESSORY_FREEZABLE.get());
+        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(pair(ingredient, Map.of(BlockStateProperties.LEVEL, 0))), result, AetherRecipeSerializers.ACCESSORY_FREEZABLE.get());
     }
 
     protected static BlockStateRecipeBuilder convertPlacement(Block result, Block ingredient, TagKey<Biome> biome) {

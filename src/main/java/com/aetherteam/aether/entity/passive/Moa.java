@@ -50,6 +50,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Map;
@@ -80,6 +81,13 @@ public class Moa extends MountableAnimal implements WingedBird {
 
 	public Moa(EntityType<? extends Moa> type, Level level) {
 		super(type, level);
+		this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, -1.0F);
+		this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, -1.0F);
+		this.setPathfindingMalus(BlockPathTypes.DANGER_POWDER_SNOW, -1.0F);
+		this.setPathfindingMalus(BlockPathTypes.POWDER_SNOW, -1.0F);
+		this.setPathfindingMalus(BlockPathTypes.DANGER_OTHER, -1.0F);
+		this.setPathfindingMalus(BlockPathTypes.DAMAGE_OTHER, -1.0F);
+		this.setPathfindingMalus(BlockPathTypes.LAVA, -1.0F);
 	}
 
 	@Override
@@ -92,8 +100,8 @@ public class Moa extends MountableAnimal implements WingedBird {
 		this.goalSelector.addGoal(4, new FallingRandomStrollGoal(this, 0.35));
 		this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6.0F));
 		this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Swet.class, false, (livingEntity) -> this.getFollowing() == null && this.isPlayerGrown() && livingEntity instanceof Swet swet && !swet.isFriendly()));
-		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, AechorPlant.class, false, (livingEntity) -> this.getFollowing() == null && this.isPlayerGrown()));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Swet.class, false, (livingEntity) -> this.getFollowing() == null && this.isPlayerGrown() && !this.isBaby() && livingEntity instanceof Swet swet && !swet.isFriendly()));
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, AechorPlant.class, false, (livingEntity) -> this.getFollowing() == null && this.isPlayerGrown() && !this.isBaby()));
 	}
 
 	@Nonnull
@@ -171,7 +179,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 				this.setEntityOnGround(false);
 			}
 		}
-		if (EntityUtil.betterGroundCheck(this)) {
+		if (this.isOnGround()) {
 			this.setRemainingJumps(this.getMaxJumps());
 		}
 		if (this.getJumpCooldown() > 0) {

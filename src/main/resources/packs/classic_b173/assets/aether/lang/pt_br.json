@@ -1,0 +1,9 @@
+{
+  "advancement.aether.altar.desc": "Craft an Enchanter",
+  "block.aether.altar": "Encantadora",
+  "container.aether.altar": "Enchanter",
+  "lore.aether.blue_berry": "Colhido de Arbustos de mirtilo, esta é a fonte de comida mais comum no Aether. Possui uma restauração de fome muito fraca. Você pode encantá-lo em uma encantadora para melhorar a restauração de fome.",
+  "lore.aether.enchanted_gravitite": "Após colocar Minério de Gravitita em uma Encantadora e encantando ele, você conseguira Gravitita Encantada. Isso pode ser transformado em Ferramentas e Armadora de Gravitita. Quando energizados com um sinal de Redstone, Blocos de Gravitita Encantada flutuaram, similar a Minério de Gravitita.",
+  "lore.aether.golden_dart_shooter": "Uma Zarabatana que atira Dardos Dourados, encantando-a em uma encantadora aprimora seu poder de ataque!",
+  "subtitles.aether.block.altar.crackle": "Enchanter crackles"
+}

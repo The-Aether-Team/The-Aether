@@ -65,9 +65,13 @@ public class DimensionListener {
         Level level = event.getLevel();
         BlockPos blockPos = event.getPos();
         Direction direction = event.getFace();
-        ItemStack itemStack = event.getItemStack();
+        InteractionHand interactionHand = event.getHand();
+        ItemStack itemStack = player.getItemInHand(interactionHand);
+        if (itemStack.isEmpty()) {
+            itemStack = player.getItemInHand(interactionHand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+        }
         BlockState blockState = level.getBlockState(blockPos);
-        event.setCanceled(DimensionHooks.checkInteractionBanned(player, level, blockPos, direction, itemStack, blockState));
+        event.setCanceled(DimensionHooks.checkInteractionBanned(player, level, blockPos, direction, itemStack, blockState, !player.getItemInHand(interactionHand).isEmpty()));
     }
 
     @SubscribeEvent
@@ -144,7 +148,7 @@ public class DimensionListener {
         ServerLevel level = (ServerLevel) event.getLevel();
         if (level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
             long time = event.getNewTime() + 48000L;
-            event.setTimeAddition(time - time % 72000L);
+            event.setTimeAddition(time - time % (long) AetherDimensions.AETHER_TICKS_PER_DAY);
 
             ServerLevelAccessor serverLevelAccessor = (ServerLevelAccessor) level;
             serverLevelAccessor.aether$getServerLevelData().setRainTime(0);

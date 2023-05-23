@@ -21,14 +21,16 @@ public class LightningTrackerCapability implements LightningTracker {
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();
-        tag.putInt("Owner", this.getOwner().getId());
+        if (this.getOwner() != null) {
+            tag.putInt("Owner", this.getOwner().getId());
+        }
         return tag;
     }
 
     @Override
     public void deserializeNBT(CompoundTag tag) {
         if (tag.contains("Owner")) {
-            this.setOwner(this.getOwner().level.getEntity(tag.getInt("Owner")));
+            this.setOwner(this.getLightningBolt().level.getEntity(tag.getInt("Owner")));
         }
     }
 

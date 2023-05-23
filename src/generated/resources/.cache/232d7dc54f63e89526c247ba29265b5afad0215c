@@ -32,6 +32,7 @@ bbd431b5ea0dbbac9aa71e30c71140e28ae93250 data/aether/tags/items/freezable_rings.
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/ice_repairing.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/lightning_repairing.json
 022a06d2a296e488a68e47fe0cebd62c586c55ea data/aether/tags/items/locked_dungeon_blocks.json
+e2e6479ac7ca7ff3e79537b28c8c37e86256099f data/aether/tags/items/milk_bucket_crafting.json
 5bc5026d5ae0b6a2701a3c35394c70da2bc572de data/aether/tags/items/moa_eggs.json
 c674b7a242891866e5ebc42cb684a2d8113fd673 data/aether/tags/items/moa_food_items.json
 d0f09b8dfc6381aa826e9b27dfc398b8b7c02625 data/aether/tags/items/moa_temptation_items.json
@@ -61,6 +62,7 @@ c26f64255e81ace6a67fcf973a34043471ebff1d data/aether/tags/items/treasure_doorway
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/treated_as_aether_item.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/valkyrie_repairing.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/vampire_repairing.json
+2f6eb76f8d5c842eba05c54205f51bf1c2b6bc71 data/aether/tags/items/water_bucket_crafting.json
 794ba2e4990dd4fa1823ea008d8b78437527dacd data/aether/tags/items/zanite_repairing.json
 89af558945f41e6e1e5e29c9da8dc0324f4c9cc2 data/curios/tags/items/aether_accessory.json
 99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/curios/tags/items/aether_cape.json
@@ -92,6 +94,7 @@ addb62cbd712e3f83c6bbadcbfdf309dc0ee3cc3 data/forge/tags/items/tools.json
 a838c2bd53ede04f2a9ee61012c93d721871dce4 data/minecraft/tags/items/beds.json
 0c1961b1c5f09cab301732e8774014cd3619a762 data/minecraft/tags/items/boats.json
 041c4417a18df60eb724a8acde8db524fa8bfba5 data/minecraft/tags/items/chest_boats.json
+33397c0e49ca28fad45a2f4fc1a5ceb3a01edfbd data/minecraft/tags/items/cluster_max_harvestables.json
 252219f81f3abde4bdebe512332bb483fefab9da data/minecraft/tags/items/fox_food.json
 475cdcff955b16a53107d126242e25d0e2e6babb data/minecraft/tags/items/hoes.json
 c158a789ed632738e5986dfbd21ff2bba9511d9b data/minecraft/tags/items/leaves.json

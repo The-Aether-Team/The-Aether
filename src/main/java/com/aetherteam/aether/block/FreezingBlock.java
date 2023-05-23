@@ -46,38 +46,26 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
             BlockState oldBlockState = level.getBlockState(pos);
             Block oldBlock = oldBlockState.getBlock();
             FluidState fluidState = level.getFluidState(pos);
-            if (!fluidState.isEmpty() && oldBlockState == source && oldBlockState.hasProperty(BlockStateProperties.WATERLOGGED)) { // Removes water from waterlogged blocks.
-                BlockState fluidBlockState = fluidState.createLegacyBlock();
-                Block fluidBlock = fluidBlockState.getBlock();
-                BlockPropertyPair pair = matchesCache(fluidBlock, fluidBlockState);
+            if (fluidState.isEmpty() || oldBlockState.is(fluidState.createLegacyBlock().getBlock())) { // Default freezing behavior.
+                BlockPropertyPair pair = matchesCache(oldBlock, oldBlockState);
                 if (pair != null) {
-                    IcestoneFreezableRecipe freezableRecipe = cachedBlocks.get(fluidBlock, pair);
+                    IcestoneFreezableRecipe freezableRecipe = cachedBlocks.get(oldBlock, pair);
                     if (freezableRecipe != null) {
-                        level.setBlock(pos, source.setValue(BlockStateProperties.WATERLOGGED, false), flag);
+                        BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
+                        CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
+                        return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, function, source, flag);
                     }
                 }
-            } else {
-                if (fluidState.isEmpty() || oldBlockState.is(fluidState.createLegacyBlock().getBlock())) { // Default freezing behavior.
-                    BlockPropertyPair pair = matchesCache(oldBlock, oldBlockState);
-                    if (pair != null) {
-                        IcestoneFreezableRecipe freezableRecipe = cachedBlocks.get(oldBlock, pair);
-                        if (freezableRecipe != null) {
-                            BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                            CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
-                            return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, function, source, flag);
-                        }
-                    }
-                } else { // Breaks a block before freezing if it has a FluidState attached by default (this is different from waterlogging for blocks like Kelp and Seagrass).
-                    oldBlockState = fluidState.createLegacyBlock();
-                    BlockPropertyPair pair = matchesCache(oldBlock, oldBlockState);
-                    if (pair != null) {
-                        IcestoneFreezableRecipe freezableRecipe = cachedBlocks.get(oldBlock, pair);
-                        if (freezableRecipe != null) {
-                            level.destroyBlock(pos, true);
-                            BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                            CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
-                            return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, function, source, flag);
-                        }
+            } else if (!oldBlockState.hasProperty(BlockStateProperties.WATERLOGGED)) { // Breaks a block before freezing if it has a FluidState attached by default (this is different from waterlogging for blocks like Kelp and Seagrass).
+                oldBlockState = fluidState.createLegacyBlock();
+                BlockPropertyPair pair = matchesCache(oldBlock, oldBlockState);
+                if (pair != null) {
+                    IcestoneFreezableRecipe freezableRecipe = cachedBlocks.get(oldBlock, pair);
+                    if (freezableRecipe != null) {
+                        level.destroyBlock(pos, true);
+                        BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
+                        CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
+                        return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, function, source, flag);
                     }
                 }
             }

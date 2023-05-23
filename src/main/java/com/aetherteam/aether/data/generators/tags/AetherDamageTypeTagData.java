@@ -1,6 +1,7 @@
 package com.aetherteam.aether.data.generators.tags;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.data.resources.AetherDamageTypes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -36,6 +37,9 @@ public class AetherDamageTypeTagData extends TagsProvider<DamageType> {
                 AetherDamageTypes.FIRE_CRYSTAL,
                 AetherDamageTypes.ICE_CRYSTAL,
                 AetherDamageTypes.THUNDER_CRYSTAL
+        );
+        this.tag(AetherTags.DamageTypes.IS_COLD).add(
+                AetherDamageTypes.ICE_CRYSTAL
         );
     }
 }

@@ -1,6 +1,7 @@
 package com.aetherteam.aether;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.entity.EntityType;
@@ -69,6 +70,8 @@ public class AetherTags {
 		public static final TagKey<Item> PLANKS_CRAFTING = tag("planks_crafting");
 		public static final TagKey<Item> SKYROOT_STICK_CRAFTING = tag("skyroot_stick_crafting");
 		public static final TagKey<Item> SKYROOT_TOOL_CRAFTING = tag("skyroot_tool_crafting");
+		public static final TagKey<Item> MILK_BUCKET_CRAFTING = tag("milk_bucket_crafting");
+		public static final TagKey<Item> WATER_BUCKET_CRAFTING = tag("water_bucket_crafting");
 
 		public static final TagKey<Item> AETHER_PORTAL_ACTIVATION_ITEMS = tag("aether_portal_activation_items");
 		public static final TagKey<Item> BOOK_OF_LORE_MATERIALS = tag("book_of_lore_materials");
@@ -146,6 +149,9 @@ public class AetherTags {
 		public static final TagKey<EntityType<?>> NO_CANDY_CANE_DROPS = tag("no_candy_cane_drops");
 		public static final TagKey<EntityType<?>> DEFLECTABLE_PROJECTILES = tag("deflectable_projectiles");
 		public static final TagKey<EntityType<?>> IGNORE_INVISIBILITY = tag("ignore_invisibility");
+		public static final TagKey<EntityType<?>> UNHOOKABLE = tag("unhookable");
+		public static final TagKey<EntityType<?>> TREATED_AS_AETHER_ENTITY = tag("treated_as_aether_entity");
+		public static final TagKey<EntityType<?>> TREATED_AS_VANILLA_ENTITY = tag("treated_as_vanilla_entity");
 
 		private static TagKey<EntityType<?>> tag(String name) {
 			return TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Aether.MODID, name));
@@ -188,6 +194,14 @@ public class AetherTags {
 
 		private static TagKey<Structure> tag(String name) {
 			return TagKey.create(Registries.STRUCTURE, new ResourceLocation(Aether.MODID, name));
+		}
+	}
+
+	public static class DamageTypes {
+		public static final TagKey<DamageType> IS_COLD = tag("is_cold");
+
+		private static TagKey<DamageType> tag(String name) {
+			return TagKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(Aether.MODID, name));
 		}
 	}
 }

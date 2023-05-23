@@ -1,0 +1,9 @@
+{
+  "advancement.aether.altar.desc": "Craft an Enchanter",
+  "block.aether.altar": "Kerėtojas",
+  "container.aether.altar": "Enchanter",
+  "lore.aether.blue_berry": "Gaunamas iš uogų krūmų, tai yra labiausiai paplitęs maisto šaltinis Eiferyje. Nelabai geras maistas, nes nelabai pasotina. Jūs galite jį užkerėti kerėtoje, kad pasiverstu į daug sotesnį maistą.",
+  "lore.aether.enchanted_gravitite": "Įdėjus gravitito rūdą į kerėtoją jus gaunate užkerėtą gravititą. Šį galima paversti į gravititinius įrankius ir šarvus. Kai maitinamas redstono signalu, užkerėto gravitito blokai skris į orą, panašiai kaip gravitito rūda.",
+  "lore.aether.golden_dart_shooter": "Strėlių šaudyklė, kuri šauna auksines strėles. Užkerėkite ją jei norite padidinti žalą, kurią ji daro.",
+  "subtitles.aether.block.altar.crackle": "Enchanter crackles"
+}

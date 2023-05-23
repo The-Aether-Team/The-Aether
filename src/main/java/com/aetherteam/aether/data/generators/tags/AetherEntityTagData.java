@@ -60,6 +60,14 @@ public class AetherEntityTagData extends EntityTypeTagsProvider {
         this.tag(AetherTags.Entities.IGNORE_INVISIBILITY).addTag(Tags.EntityTypes.BOSSES).add(
                 EntityType.GUARDIAN,
                 EntityType.ELDER_GUARDIAN);
+        this.tag(AetherTags.Entities.UNHOOKABLE).add(
+                AetherEntityTypes.AECHOR_PLANT.get(),
+                AetherEntityTypes.WHIRLWIND.get(),
+                AetherEntityTypes.EVIL_WHIRLWIND.get(),
+                AetherEntityTypes.SLIDER.get(),
+                AetherEntityTypes.SUN_SPIRIT.get());
+        this.tag(AetherTags.Entities.TREATED_AS_AETHER_ENTITY);
+        this.tag(AetherTags.Entities.TREATED_AS_VANILLA_ENTITY);
 
         // Forge
         this.tag(Tags.EntityTypes.BOSSES).add(

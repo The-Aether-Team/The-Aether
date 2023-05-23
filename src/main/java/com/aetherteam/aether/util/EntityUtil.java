@@ -6,13 +6,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 
 public class EntityUtil {
-    public static boolean betterGroundCheck(Entity entity) {
-        return entity.isOnGround()
-                || !entity.getFeetBlockState().isAir()
-                || (entity.getVehicle() != null && (entity.getVehicle().isOnGround() || !entity.getVehicle().getFeetBlockState().isAir() || entity.level.getBlockStates(entity.getVehicle().getBoundingBox()).anyMatch((state) -> !state.isAir())));
-
-    }
-
     public static void copyRotations(Entity entity, Entity source) {
         entity.setYRot(source.getYRot() % 360.0F);
         entity.setXRot(source.getXRot() % 360.0F);

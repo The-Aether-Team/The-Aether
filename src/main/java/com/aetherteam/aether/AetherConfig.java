@@ -87,7 +87,7 @@ public class AetherConfig {
             spawn_golden_feather = builder
                     .comment("Allows the Golden Feather to spawn in the Silver Dungeon loot table")
                     .translation("config.aether.common.loot.spawn_golden_feather")
-                    .define("Golden Feather in loot", false);
+                    .define("Golden Feather in loot", true);
             spawn_valkyrie_cape = builder
                     .comment("Allows the Valkyrie Cape to spawn in the Silver Dungeon loot table")
                     .translation("config.aether.common.loot.spawn_valkyrie_cape")
@@ -157,6 +157,13 @@ public class AetherConfig {
         public final ConfigValue<Boolean> align_aether_menu_elements_left;
         public final ConfigValue<Boolean> enable_trivia;
         public final ConfigValue<Boolean> enable_silver_hearts;
+        public final ConfigValue<Boolean> disable_accessory_button;
+        public final ConfigValue<Integer> button_inventory_x;
+        public final ConfigValue<Integer> button_inventory_y;
+        public final ConfigValue<Integer> button_creative_x;
+        public final ConfigValue<Integer> button_creative_y;
+        public final ConfigValue<Integer> button_accessories_x;
+        public final ConfigValue<Integer> button_accessories_y;
 
         public final ConfigValue<Integer> music_backup_min_delay;
         public final ConfigValue<Integer> music_backup_max_delay;
@@ -226,6 +233,34 @@ public class AetherConfig {
                     .comment("Makes the extra hearts given by life shards display as silver colored")
                     .translation("config.aether.client.gui.enable_silver_hearts")
                     .define("Enables silver life shard hearts", true);
+            disable_accessory_button = builder
+                    .comment("Disables the Aether's accessories button from appearing in GUIs")
+                    .translation("config.aether.client.gui.disable_accessory_button")
+                    .define("Disables the accessories button", false);
+            button_inventory_x = builder
+                    .comment("The x-coordinate of the accessories button in the inventory and curios menus")
+                    .translation("config.aether.client.gui.button_inventory_x")
+                    .define("Button x-coordinate in inventory menus", 27);
+            button_inventory_y = builder
+                    .comment("The y-coordinate of the accessories button in the inventory and curios menus")
+                    .translation("config.aether.client.gui.button_inventory_y")
+                    .define("Button y-coordinate in inventory menus", 68);
+            button_creative_x = builder
+                    .comment("The x-coordinate of the accessories button in the creative menu")
+                    .translation("config.aether.client.gui.button_creative_x")
+                    .define("Button x-coordinate in creative menu", 74);
+            button_creative_y = builder
+                    .comment("The y-coordinate of the accessories button in the creative menu")
+                    .translation("config.aether.client.gui.button_creative_y")
+                    .define("Button y-coordinate in creative menu", 40);
+            button_accessories_x = builder
+                    .comment("The x-coordinate of the accessories button in the accessories menu")
+                    .translation("config.aether.client.gui.button_accessories_x")
+                    .define("Button x-accessories in accessories menu", 9);
+            button_accessories_y = builder
+                    .comment("The y-coordinate of the accessories button in the accessories menu")
+                    .translation("config.aether.client.gui.button_accessories_y")
+                    .define("Button y-accessories in accessories menu", 68);
             builder.pop();
 
             builder.push("Audio");

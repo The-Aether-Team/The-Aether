@@ -96,7 +96,9 @@ public interface MountableMob {
                 if (!stepHeight.hasModifier(vehicle.getMountStepHeightModifier())) {
                     stepHeight.addTransientModifier(vehicle.getMountStepHeightModifier());
                 }
-                AetherPacketHandler.sendToServer(new StepHeightPacket(vehicle.getId()));
+                if (vehicle.getLevel().isClientSide()) {
+                    AetherPacketHandler.sendToServer(new StepHeightPacket(vehicle.getId()));
+                }
             }
             if (vehicle.isControlledByLocalInstance()) {
                 vehicle.setSpeed(vehicle.getSteeringSpeed());

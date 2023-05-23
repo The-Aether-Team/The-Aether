@@ -164,6 +164,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addBlock(AetherBlocks.SKYROOT_BOOKSHELF, "Skyroot Bookshelf");
         addBlock(AetherBlocks.SKYROOT_BED, "Skyroot Bed");
 
+        addBlock(AetherBlocks.FROSTED_ICE, "Frosted Ice");
         addBlock(AetherBlocks.UNSTABLE_OBSIDIAN, "Unstable Obsidian");
 
 
@@ -407,7 +408,9 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addEntityType(AetherEntityTypes.TNT_PRESENT, "TNT Present");
 
         addEntityType(AetherEntityTypes.ZEPHYR_SNOWBALL, "Zephyr Snowball");
+        addEntityType(AetherEntityTypes.FIRE_CRYSTAL, "Fire Crystal");
         addEntityType(AetherEntityTypes.CLOUD_CRYSTAL, "Cloud Crystal");
+        addEntityType(AetherEntityTypes.ICE_CRYSTAL, "Ice Crystal");
         addEntityType(AetherEntityTypes.THUNDER_CRYSTAL, "Thunder Crystal");
         addEntityType(AetherEntityTypes.GOLDEN_DART, "Golden Dart");
         addEntityType(AetherEntityTypes.POISON_DART, "Poison Dart");
@@ -666,9 +669,25 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addGuiText("jei.altar.repairing", "Repairing");
         addGuiText("jei.freezing", "Freezing");
         addGuiText("jei.incubating", "Incubating");
+
         addGuiText("jei.fuel", "Aether Fuel");
-        addGuiText("jei.swet_ball_convert", "Swet Ball Conversion");
-        addGuiText("jei.ambrosium_convert", "Ambrosium Conversion");
+
+        addGuiText("jei.biome.tooltip", "Requires Biomes:");
+        addGuiText("jei.biome.tooltip.biome", "Biome");
+        addGuiText("jei.biome.tooltip.tag", "Biome Tag");
+        addGuiText("jei.biome.tooltip.biomes", "Biomes in Tag");
+        addGuiText("jei.properties.tooltip", "With Properties:");
+        addGuiText("jei.bypass", "Except On:");
+        addGuiText("jei.biome.ban.tooltip", "Blocked in Biomes:");
+
+        addGuiText("jei.ambrosium_enchanting", "Ambrosium Enchanting");
+        addGuiText("jei.swet_ball_conversion", "Swet Ball Conversion");
+        addGuiText("jei.icestone_freezable", "Icestone Freezable");
+        addGuiText("jei.accessory_freezable", "Accessory Freezable");
+        addGuiText("jei.placement_conversion", "Placement Conversion");
+        addGuiText("jei.item_placement_ban", "Item Use Prevention");
+        addGuiText("jei.block_placement_ban", "Block Place Prevention");
+
 
         addGuiText("boss.message.far", "You must be in the boss room to interact.");
 
@@ -844,7 +863,12 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addCuriosIdentifier("aether_gloves", "Gloves");
         addCuriosIdentifier("aether_accessory", "Accessory");
 
+        addCuriosModifier("aether_pendant", "When around neck:");
+        addCuriosModifier("aether_cape", "When on back:");
+        addCuriosModifier("aether_ring", "When worn as ring:");
+        addCuriosModifier("aether_shield", "When worn as shield:");
         addCuriosModifier("aether_gloves", "When on hands:");
+        addCuriosModifier("aether_accessory", "When worn as accessory:");
 
 
         addLore(AetherItems.AECHOR_PETAL, "The petal of an Aechor Plant, they have a sweet aroma to them. These are a Moa's favorite food, and can be used to feed baby Moas.");
@@ -875,7 +899,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.BLUE_MOA_EGG, "An Egg laid by a Blue Moa. Hatching this provides a Blue Moa with 3 mid-air jumps. The most common Moa.");
         addLore(AetherItems.BOOK_OF_LORE, "A large book containing many lore entries. It describes every object in detail.");
         addLore(AetherItems.BRONZE_DUNGEON_KEY, "A dull key that is dropped from the Slider after being defeated. You can use it to claim the treasure you earned!");
-        addLore(AetherItems.CANDY_CANE, "Found in presents under Holiday trees! They can be used to repair Candy Cane swords, and are a very tasty treat.");
+        addLore(AetherItems.CANDY_CANE, "Dropped by mobs killed with a Candy Cane Sword! They can be used to repair this weapon, and they're a very tasty treat.");
         addLore(AetherItems.CANDY_CANE_SWORD, "A sword made from decorative candy. Randomly drops Candy Canes when used. These are dropped from presents that are under Holiday Trees.");
         addLore(AetherBlocks.CARVED_SLAB, "Crafted from Carved Stone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building's roofing!");
         addLore(AetherBlocks.CARVED_STAIRS, "Crafted from Sentry Stone. Stairs are useful for adding verticality to builds and are often used for decoration too!");
@@ -1185,6 +1209,13 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addClientConfig("gui", "align_aether_menu_elements_left", "Aligns the elements of the Aether menu to the left, only works if 'Align menu left with world preview' is set to false");
         addClientConfig("gui", "enable_trivia", "Adds random trivia and tips to the bottom of loading screens");
         addClientConfig("gui", "enable_silver_hearts", "Makes the extra hearts given by life shards display as silver colored");
+        addClientConfig("gui", "disable_accessory_button", "Disables the Aether's accessories button from appearing in GUIs");
+        addClientConfig("gui", "button_inventory_x", "The x-coordinate of the accessories button in the inventory and curios menus");
+        addClientConfig("gui", "button_inventory_y", "The y-coordinate of the accessories button in the inventory and curios menus");
+        addClientConfig("gui", "button_creative_x", "The x-coordinate of the accessories button in the creative menu");
+        addClientConfig("gui", "button_creative_y", "The y-coordinate of the accessories button in the creative menu");
+        addClientConfig("gui", "button_accessories_x", "The x-coordinate of the accessories button in the accessories menu");
+        addClientConfig("gui", "button_accessories_y", "The y-coordinate of the accessories button in the accessories menu");
 
         addClientConfig("audio", "music_backup_min_delay", "Sets the minimum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");
         addClientConfig("audio", "music_backup_max_delay", "Sets the maximum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");
