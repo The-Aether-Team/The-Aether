@@ -1,9 +1,9 @@
 {
   "advancement.aether.altar.desc": "Craft an Enchanter",
-  "block.aether.altar": "Enchanter",
+  "block.aether.altar": "Алтарь",
   "container.aether.altar": "Enchanter",
-  "lore.aether.blue_berry": "Harvested from Berry Bushes, this is the most common food source in the Aether. It has very weak hunger restoration. You can enchant these in an Enchanter for much better hunger restoration.",
-  "lore.aether.enchanted_gravitite": "After putting Gravitite Ore into an Enchanter and enchanting it, you get Enchanted Gravitite. This can be made into Gravitite Tools and Armor. When powered with a Redstone signal, Enchanted Gravitite Blocks will float into the air, similarly to Gravitite Ore.",
-  "lore.aether.golden_dart_shooter": "A Dart Shooter which shoots Golden Darts, enchanting it on an Enchanter improves it's attack power!",
+  "lore.aether.blue_berry": "Собранные с Ягодных Кустов, они - самый распространенный источник пищи в Эфире. Имеет очень слабое насыщение. Вы можете зачаровать их на Алтаре для лучшего насыщения.",
+  "lore.aether.enchanted_gravitite": "Поместив Гравититовую руду на Алтарь и зачаровав её, вы получите Зачарованный Гравитит. Из него можно сделать Гравититовые инструменты и доспехи. При питании от сигнала Редстоуна Зачарованные Гравититовые блоки будут парить в воздухе, как Гравититовая руда.",
+  "lore.aether.golden_dart_shooter": "Духовая трубка, стреляющая Золотыми Дротиками, при улучшении на Алтаре получает дополнительную силу!",
   "subtitles.aether.block.altar.crackle": "Enchanter crackles"
 }

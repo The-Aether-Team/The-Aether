@@ -1,9 +1,9 @@
 {
   "advancement.aether.altar.desc": "Craft an Enchanter",
-  "block.aether.altar": "Enchanter",
+  "block.aether.altar": "魔法师",
   "container.aether.altar": "Enchanter",
-  "lore.aether.blue_berry": "Harvested from Berry Bushes, this is the most common food source in the Aether. It has very weak hunger restoration. You can enchant these in an Enchanter for much better hunger restoration.",
-  "lore.aether.enchanted_gravitite": "After putting Gravitite Ore into an Enchanter and enchanting it, you get Enchanted Gravitite. This can be made into Gravitite Tools and Armor. When powered with a Redstone signal, Enchanted Gravitite Blocks will float into the air, similarly to Gravitite Ore.",
-  "lore.aether.golden_dart_shooter": "A Dart Shooter which shoots Golden Darts, enchanting it on an Enchanter improves it's attack power!",
+  "lore.aether.blue_berry": "从浆果灌木丛中收获，这是以太中最常见的食物来源。它的饥饿恢复能力非常弱。您可以在附魔师中附魔这些，以更好地恢复饥饿感。",
+  "lore.aether.enchanted_gravitite": "将引力石矿石放入附魔器并附魔后，您将获得附魔引力石。这可以制成引力石工具和盔甲。当由红石信号供电时，附魔引有引力石块会漂浮在空中，类似于重力石矿石。",
+  "lore.aether.golden_dart_shooter": "射出金色飞镖的飞镖射手，附魔到附魔师身上可以提高攻击力！",
   "subtitles.aether.block.altar.crackle": "Enchanter crackles"
 }
