@@ -3,6 +3,7 @@ package com.aetherteam.aether.block;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.block.construction.*;
 import com.aetherteam.aether.block.dungeon.*;
+import com.aetherteam.aether.block.miscellaneous.AetherFrostedIceBlock;
 import com.aetherteam.aether.block.miscellaneous.UnstableObsidianBlock;
 import com.aetherteam.aether.blockentity.ChestMimicBlockEntity;
 import com.aetherteam.aether.blockentity.SkyrootBedBlockEntity;
@@ -226,6 +227,7 @@ public class AetherBlocks {
 
     public static final RegistryObject<BedBlock> SKYROOT_BED = register("skyroot_bed", () -> new SkyrootBedBlock(Block.Properties.copy(Blocks.CYAN_BED)));
 
+    public static final RegistryObject<Block> FROSTED_ICE = BLOCKS.register("frosted_ice", () -> new AetherFrostedIceBlock(BlockBehaviour.Properties.of(Material.ICE).friction(0.98F).randomTicks().strength(0.5F).sound(SoundType.GLASS).noOcclusion().isValidSpawn((state, level, pos, entityType) -> entityType == EntityType.POLAR_BEAR)));
     public static final RegistryObject<Block> UNSTABLE_OBSIDIAN = BLOCKS.register("unstable_obsidian", () -> new UnstableObsidianBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).randomTicks().requiresCorrectToolForDrops().strength(50.0F, 1200.0F)));
 
     public static void registerPots() {

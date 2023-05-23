@@ -25,6 +25,7 @@ public class AetherBlockTagData extends BlockTagsProvider {
         // Aether
         this.tag(AetherTags.Blocks.TREATED_AS_VANILLA_BLOCK).add(
                 AetherBlocks.CHEST_MIMIC.get(),
+                AetherBlocks.FROSTED_ICE.get(),
                 AetherBlocks.UNSTABLE_OBSIDIAN.get());
         this.tag(AetherTags.Blocks.AETHER_PORTAL_BLOCKS).add(Blocks.GLOWSTONE);
         this.tag(AetherTags.Blocks.AETHER_PORTAL_BLACKLIST).add(AetherBlocks.BLUE_AERCLOUD.get()).addTags(
