@@ -108,7 +108,7 @@ If you have a reason that you wish to use our brand or any unlicensed material, 
 
 ## :star2: Special mentions
 ### :speech_balloon: Translations
-[![Crowdin translations](https://img.shields.io/badge/crowdin-aether--mod-blue?color=55BC5C&label=crowdin&logo=crowdin&style=flat-square)](https://translate.aether.devaether.com/)
+[![Crowdin translations](https://img.shields.io/badge/crowdin-aether-blue?color=55BC5C&label=crowdin&logo=crowdin&style=flat-square)](https://translate.aether.devaether.com/)
 
 The Aether is available in these languages thanks to the following contributors:
 
