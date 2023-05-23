@@ -1,9 +1,1 @@
-{
-  "advancement.aether.altar.desc": "Craft an Enchanter",
-  "block.aether.altar": "Verzauberer",
-  "container.aether.altar": "Enchanter",
-  "lore.aether.blue_berry": "Werden von Beerenbüschen geerntet und sind die häufigste Nahrungsquelle im Äther. Die Wiederherstellung des Hungers ist sehr schwach. Du kannst diese in einem Verzauberer für eine viel bessere Hunger Wiederherstellung verzaubern.",
-  "lore.aether.enchanted_gravitite": "Wenn man Gravititeerz in einen Verzauberer gibt und es verzaubert, erhält man verzaubertes Gravitite. Dieses kann zu Gravititewerkzeugen und -rüstungen verarbeitet werden. Wenn sie mit einem Redstone-Signal betrieben werden, schweben verzauberte Gravititeblöcke in der Luft, ähnlich wie Gravititeerz.",
-  "lore.aether.golden_dart_shooter": "Eine Dartpfeilpistole, der goldene Darts verschießt. Wenn du ihn mit einem Verzauberer verzauberst, verbessert sich seine Angriffskraft!",
-  "subtitles.aether.block.altar.crackle": "Enchanter crackles"
-}
+{}
