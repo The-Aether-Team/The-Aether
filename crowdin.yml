@@ -1,3 +1,7 @@
+pull_request_title: 'refactor: Update translations'
+pull_request_labels:
+  - status/pending-review
+commit_message: '[ci skip]'
 files:
   - source: /src/generated/resources/assets/aether/lang/en_us.json
     translation: /src/main/resources/assets/aether/lang/%locale_with_underscore%.json
