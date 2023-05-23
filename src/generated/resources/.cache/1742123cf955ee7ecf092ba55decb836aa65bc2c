@@ -1,4 +1,4 @@
-// 1.19.4	2023-03-18T15:59:38.7251531	Block States: aether
+// 1.19.4	2023-05-22T14:14:01.6383259	Block States: aether
 79cb0c0ea34a92e86b03080a209cb60f268cb31e assets/aether/blockstates/aerogel.json
 28f7eea22b621bda459b2328c2252cdebe0bcdb9 assets/aether/blockstates/aerogel_slab.json
 0866f96b2339b894ff4c8a01aebb3d87103eb0fb assets/aether/blockstates/aether_dirt.json
@@ -36,6 +36,7 @@ c4c90740ae4f93b579cc4290734d35f3d953a4f1 assets/aether/blockstates/crystal_fruit
 315fd6b4da044daf5a9af472a83cf7057d1a06b9 assets/aether/blockstates/enchanted_aether_grass_block.json
 3d2b3d4067291d1782d57b0f9a57ce84fc8aa389 assets/aether/blockstates/enchanted_gravitite.json
 0b286df3e4081b77ee030b57bab5932eacad8851 assets/aether/blockstates/freezer.json
+e03aba74adc35d06c08c42fa3d11f184308a3fd7 assets/aether/blockstates/frosted_ice.json
 4b2e0c4860e7bac1d0992fe74712322ffe38f28f assets/aether/blockstates/golden_aercloud.json
 6b653704b5fd752a9d1aa581ac57f15dc4f86173 assets/aether/blockstates/golden_oak_leaves.json
 8882230d39921ceeeb6ea088757ec01898a682a4 assets/aether/blockstates/golden_oak_log.json
@@ -176,6 +177,10 @@ e2b9267e726a993fdba4c57a391474833c8aff7e assets/aether/models/block/crystal_leav
 070d518ce0981dc62cc44e3fd9f2342eebfde6b9 assets/aether/models/block/enchanted_aether_grass_block.json
 7f8cd11555594fec5947ec88a00fc770137046c8 assets/aether/models/block/enchanted_gravitite.json
 0e6d212f01ed042643d818d56c2df82c7dc42b13 assets/aether/models/block/freezer.json
+0f6896a0653a551df2c4b5d8bc9a7c6a4ae29915 assets/aether/models/block/frosted_ice_0.json
+d1288ec1504807b14f72a5e21d2f189eb86a4f00 assets/aether/models/block/frosted_ice_1.json
+c66fd7d21578ea4fbf909db367d79c07c350b342 assets/aether/models/block/frosted_ice_2.json
+ace58f92785f40479571659c4757bb66df7aa9ee assets/aether/models/block/frosted_ice_3.json
 09a3f0e2a0a6ddbc3f6a1b6a6323d7244f06469d assets/aether/models/block/golden_aercloud.json
 4bd9c1b9bb7f9f78afb0778d3dce398349df8fba assets/aether/models/block/golden_oak_leaves.json
 80b8780dd999e814af92f35dcddb32b59cc2806b assets/aether/models/block/golden_oak_log.json

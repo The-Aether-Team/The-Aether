@@ -7,9 +7,6 @@ import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.recipe.AetherRecipeSerializers;
-import com.aetherteam.aether.recipe.BlockStateIngredient;
-import com.aetherteam.aether.recipe.builder.BiomeParameterRecipeBuilder;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
@@ -537,6 +534,16 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .unlockedBy("has_string", has(Tags.Items.STRING))
                 .save(consumer, name("skyroot_tripwire_hook"));
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.STONECUTTER)
+                .group("minecraft:stonecutter")
+                .define('I', Items.IRON_INGOT)
+                .define('#', AetherBlocks.HOLYSTONE.get())
+                .pattern(" I ")
+                .pattern("###")
+                .unlockedBy("has_holystone", has(AetherBlocks.HOLYSTONE.get()))
+                .save(consumer, name("holystone_stonecutter"));
+
+
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, Blocks.CAKE)
                 .group("minecraft:cake")
                 .define('A', AetherItems.SKYROOT_MILK_BUCKET.get())
@@ -555,6 +562,13 @@ public class AetherRecipeData extends AetherRecipeProvider {
 
         smeltingOreRecipe(AetherItems.ZANITE_GEMSTONE.get(), AetherBlocks.ZANITE_ORE.get(), 0.7F).save(consumer, name("zanite_gemstone_from_smelting"));
         blastingOreRecipe(AetherItems.ZANITE_GEMSTONE.get(), AetherBlocks.ZANITE_ORE.get(), 0.7F).save(consumer, name("zanite_gemstone_from_blasting"));
+
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(AetherItems.GOLDEN_GLOVES.get(), AetherItems.GOLDEN_PENDANT.get(), AetherItems.GOLDEN_RING.get()), RecipeCategory.MISC, Items.GOLD_NUGGET, 0.1F, 100).unlockedBy("has_golden_gloves", has(AetherItems.GOLDEN_GLOVES.get())).unlockedBy("has_golden_pendant", has(AetherItems.GOLDEN_PENDANT.get())).unlockedBy("has_golden_ring", has(AetherItems.GOLDEN_RING.get())).group(getSmeltingRecipeName(Items.GOLD_NUGGET)).save(consumer, "aether_" + getSmeltingRecipeName(Items.GOLD_NUGGET));
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(AetherItems.IRON_GLOVES.get(), AetherItems.IRON_PENDANT.get(), AetherItems.IRON_RING.get(), AetherItems.CHAINMAIL_GLOVES.get()), RecipeCategory.MISC, Items.IRON_NUGGET, 0.1F, 100).unlockedBy("has_iron_gloves", has(AetherItems.IRON_GLOVES.get())).unlockedBy("has_iron_pendant", has(AetherItems.IRON_PENDANT.get())).unlockedBy("has_iron_ring", has(AetherItems.IRON_RING.get())).unlockedBy("has_chainmail_gloves", has(AetherItems.CHAINMAIL_GLOVES.get())).group(getSmeltingRecipeName(Items.IRON_NUGGET)).save(consumer, "aether_" + getSmeltingRecipeName(Items.IRON_NUGGET));
+
+        SimpleCookingRecipeBuilder.blasting(Ingredient.of(AetherItems.GOLDEN_GLOVES.get(), AetherItems.GOLDEN_PENDANT.get(), AetherItems.GOLDEN_RING.get()), RecipeCategory.MISC, Items.GOLD_NUGGET, 0.1F, 100).unlockedBy("has_golden_gloves", has(AetherItems.GOLDEN_GLOVES.get())).unlockedBy("has_golden_pendant", has(AetherItems.GOLDEN_PENDANT.get())).unlockedBy("has_golden_ring", has(AetherItems.GOLDEN_RING.get())).group(getBlastingRecipeName(Items.GOLD_NUGGET)).save(consumer, "aether_" + getBlastingRecipeName(Items.GOLD_NUGGET));
+        SimpleCookingRecipeBuilder.blasting(Ingredient.of(AetherItems.IRON_GLOVES.get(), AetherItems.IRON_PENDANT.get(), AetherItems.IRON_RING.get(), AetherItems.CHAINMAIL_GLOVES.get()), RecipeCategory.MISC, Items.IRON_NUGGET, 0.1F, 100).unlockedBy("has_iron_gloves", has(AetherItems.IRON_GLOVES.get())).unlockedBy("has_iron_pendant", has(AetherItems.IRON_PENDANT.get())).unlockedBy("has_iron_ring", has(AetherItems.IRON_RING.get())).unlockedBy("has_chainmail_gloves", has(AetherItems.CHAINMAIL_GLOVES.get())).group(getBlastingRecipeName(Items.IRON_NUGGET)).save(consumer, "aether_" + getBlastingRecipeName(Items.IRON_NUGGET));
+
 
         stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.CARVED_WALL.get(), AetherBlocks.CARVED_STONE.get());
         stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.CARVED_STAIRS.get(), AetherBlocks.CARVED_STONE.get());
@@ -596,6 +610,10 @@ public class AetherRecipeData extends AetherRecipeProvider {
         stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.HOLYSTONE_BRICK_WALL.get(), AetherBlocks.HOLYSTONE_BRICKS.get());
         stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_BRICK_STAIRS.get(), AetherBlocks.HOLYSTONE_BRICKS.get());
         stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_BRICK_SLAB.get(), AetherBlocks.HOLYSTONE_BRICKS.get(), 2);
+
+        stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.ICESTONE_WALL.get(), AetherBlocks.ICESTONE.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ICESTONE_STAIRS.get(), AetherBlocks.ICESTONE.get());
+        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ICESTONE_SLAB.get(), AetherBlocks.ICESTONE.get(), 2);
 
         stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.AEROGEL_WALL.get(), AetherBlocks.AEROGEL.get());
         stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.AEROGEL_STAIRS.get(), AetherBlocks.AEROGEL.get());
@@ -765,7 +783,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
         icestoneFreezable(Blocks.ICE, Blocks.WATER).save(consumer, name("icestone_freeze_water"));
         icestoneFreezable(Blocks.OBSIDIAN, Blocks.LAVA).save(consumer, name("icestone_freeze_lava"));
 
-        conditionalAccessoryFreezing(accessoryFreezable(Blocks.FROSTED_ICE, Blocks.WATER), accessoryFreezable(Blocks.ICE, Blocks.WATER)).build(consumer, name("accessory_freeze_water"));
+        conditionalAccessoryFreezing(accessoryFreezable(AetherBlocks.FROSTED_ICE.get(), Blocks.WATER), accessoryFreezable(Blocks.ICE, Blocks.WATER)).build(consumer, name("accessory_freeze_water"));
         conditionalAccessoryFreezing(accessoryFreezable(AetherBlocks.UNSTABLE_OBSIDIAN.get(), Blocks.LAVA), accessoryFreezable(Blocks.OBSIDIAN, Blocks.LAVA)).build(consumer, name("accessory_freeze_lava"));
 
         convertPlacement(AetherBlocks.AEROGEL.get(), Blocks.LAVA, AetherTags.Biomes.ULTRACOLD).save(consumer, name("aerogel_conversion"));

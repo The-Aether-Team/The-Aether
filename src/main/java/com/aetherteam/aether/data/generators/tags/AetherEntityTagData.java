@@ -66,6 +66,8 @@ public class AetherEntityTagData extends EntityTypeTagsProvider {
                 AetherEntityTypes.EVIL_WHIRLWIND.get(),
                 AetherEntityTypes.SLIDER.get(),
                 AetherEntityTypes.SUN_SPIRIT.get());
+        this.tag(AetherTags.Entities.TREATED_AS_AETHER_ENTITY);
+        this.tag(AetherTags.Entities.TREATED_AS_VANILLA_ENTITY);
 
         // Forge
         this.tag(Tags.EntityTypes.BOSSES).add(

@@ -20,7 +20,7 @@ public interface FreezingBehavior<T> {
     /**
      * Send this change to the client and prevent any block updates from neighboring blocks.
      */
-    int FLAG_VOLUME = 2 | 16;
+    int FLAG_VOLUME = 1 | 2 | 16;
 
     /**
      * Loops over the area of the positive quarter of a circle, then freezes blocks within that quarter along with the 3 quarters using {@link FreezingBehavior#quarters(Level, BlockPos, int, int, int, Object, int)}.<br><br>

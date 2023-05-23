@@ -164,6 +164,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addBlock(AetherBlocks.SKYROOT_BOOKSHELF, "Skyroot Bookshelf");
         addBlock(AetherBlocks.SKYROOT_BED, "Skyroot Bed");
 
+        addBlock(AetherBlocks.FROSTED_ICE, "Frosted Ice");
         addBlock(AetherBlocks.UNSTABLE_OBSIDIAN, "Unstable Obsidian");
 
 

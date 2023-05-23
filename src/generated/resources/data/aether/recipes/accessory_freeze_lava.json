@@ -11,7 +11,10 @@
       "recipe": {
         "type": "aether:accessory_freezable",
         "ingredient": {
-          "block": "minecraft:lava"
+          "block": "minecraft:lava",
+          "properties": {
+            "level": "0"
+          }
         },
         "result": {
           "block": "aether:unstable_obsidian"
@@ -31,7 +34,10 @@
       "recipe": {
         "type": "aether:accessory_freezable",
         "ingredient": {
-          "block": "minecraft:lava"
+          "block": "minecraft:lava",
+          "properties": {
+            "level": "0"
+          }
         },
         "result": {
           "block": "minecraft:obsidian"
