@@ -5,6 +5,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
@@ -20,6 +21,7 @@ public class AercloudFeature extends Feature<AercloudConfiguration> {
         boolean direction = rand.nextBoolean();
         BlockPos position = context.origin().offset(-rand.nextInt(8), 0, (direction ? 8 : 0) - rand.nextInt(8));
         AercloudConfiguration config = context.config();
+        BlockState blockState = config.block().getState(rand, position);
 
         for (int amount = 0; amount < config.bounds(); ++amount) {
             int xOffset = rand.nextInt(2);
@@ -39,7 +41,7 @@ public class AercloudFeature extends Feature<AercloudConfiguration> {
 
                         if (reader.isEmptyBlock(newPosition)) {
                             if (Math.abs(x - position.getX()) + Math.abs(y - position.getY()) + Math.abs(z - position.getZ()) < 4 + rand.nextInt(2)) {
-                                this.setBlock(reader, newPosition, config.block().getState(rand, position));
+                                this.setBlock(reader, newPosition, blockState);
                             }
                         }
                     }
