@@ -112,24 +112,37 @@ If you have a reason that you wish to use our brand or any unlicensed material, 
 
 The Aether is available in these languages thanks to the following contributors:
 
-| Language             | Locale  | Translators                                                 |
-|----------------------|---------|-------------------------------------------------------------|
-| Chinese Simplified*  | (zh_cn) | ETStareak, Parallel011, Haku98                              |
-| Chinese Traditional* | (zh_tw) | y830705                                                     |
-| Dutch*               | (nl_nl) | Critical                                                    |
-| French*              | (fr_fr) | lololoustau, Beethov46, Aethyus                             |
-| German*              | (de_de) | HazeWorksOnFiveMServer, Catchears                           |
-| Indonesian*          | (id_id) | F640                                                        |
-| Italian*             | (it_it) | ?                                                           |
-| Japanese*            | (ja_jp) | baguchan                                                    |
-| Korean*              | (ko_kr) | minejango2                                                  |
-| Mexican Spanish*     | (es_mx) | Aer-ink                                                     |
-| Polish*              | (pl_pl) | DarkKnightComes                                             |
-| Romanian*            | (ro_ro) | ?                                                           |
-| Russian*             | (ru_ru) | LeyxorCheysen, andreyalex1236, LunarP1, zombi1944, Foxgreat |
-| Swedish*             | (sv_se) | magicus                                                     |
-| Thai*                | (th_th) | ?                                                           |
-| Ukrainian*           | (uk_ua) | Nerkin, un_roman                                            |
+| Language                     | Locale  | Translators                                                                                                |
+|------------------------------|---------|------------------------------------------------------------------------------------------------------------|
+| Arabic                       | (ar_sa) | Leopotion                                                                                                  |
+| Austrian German*             | (de_at) | Builderdog                                                                                                 |
+| Brazilian Portuguese*        | (pt_br) | Wanadi, Metal_knight, ZippetTV, CavaleiroDev, Jay_See, cacovil08, arthurdepaulafreitas, leparkorsz         |
+| Chinese Simplified*          | (zh_cn) | ETStareak, Parallel011, Haku98, minecraftXYZ                                                               |
+| Chinese Traditional*         | (zh_tw) | y830705                                                                                                    |
+| Czech*                       | (cs_cz) | Aerod, pomi108, bruno.sulc602                                                                              |
+| Dutch*                       | (nl_nl) | Critical, Morgan Hofmann, WarpedCarrot                                                                     |
+| European French*             | (fr_fr) | lololoustau, Beethov46, Aethyus, HidaSharker, ninjdai                                                      |
+| German*                      | (de_de) | HazeWorksOnFiveMServer, Catchears, A1403, DarkBread, KaiLeon8789, alleseinfacher, magiczocker, TotallyABot |
+| Greek*                       | (el_gr) | Manthos3gr                                                                                                 |
+| Hungarian*                   | (hu_hu) | HedSut                                                                                                     |
+| Indonesian*                  | (id_id) | F640                                                                                                       |
+| Italian*                     | (it_it) | fabiross096                                                                                                |
+| Japanese*                    | (ja_jp) | baguchan, falogonia, yukinosuke.tokyo                                                                      |
+| Kazakh*                      | (kk_kz) | snowcore                                                                                                   |
+| Korean*                      | (ko_kr) | minejango2, alligggg44, DataCenter1216, hyuzes, Cinam                                                      |
+| Lithuanian*                  | (lt_lt) | WaryRGMCA                                                                                                  |
+| Malay*                       | (ms_my) | thedoodlerhoodler2244                                                                                      |
+| Mexican Spanish*             | (es_mx) | Aer-ink, Kidi, Looxond                                                                                     |
+| Polish*                      | (pl_pl) | DarkKnightComes, Cinex20, damianek1984, mati.makosie, Pufferfish                                           |
+| Romanian*                    | (ro_ro) | lucatatar321, gigelciobanu205                                                                              |
+| Russian*                     | (ru_ru) | LeyxorCheysen, andreyalex1236, LunarP1, zombi1944, Foxgreat, lonespeaker, davekart0n, paskanius            |
+| Slovak*                      | (sk_sk) | GaucovyAero                                                                                                |
+| Swedish*                     | (sv_se) | magicus, 2lay                                                                                              |
+| Thai*                        | (th_th) | txwfyxa                                                                                                    |
+| Turkish*                     | (tr_tr) | Dragunovi, egeyesss                                                                                        |
+| Ukrainian*                   | (uk_ua) | Nerkin, un_roman                                                                                           |
+| Upside Down British English* | (en_ud) | magiczocker                                                                                                |
+| Welsh*                       | (cy_gb) | Plague von Karma                                                                                           |
 
 _\* Indicates only partial language support._
 
