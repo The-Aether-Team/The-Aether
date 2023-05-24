@@ -1,5 +1,6 @@
 package com.aetherteam.aether.event.listeners;
 
+import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.event.events.PlacementBanEvent;
 import com.aetherteam.aether.event.events.PlacementConvertEvent;
 import com.aetherteam.aether.event.hooks.DimensionHooks;
@@ -163,7 +164,7 @@ public class DimensionListener {
         Player player = event.getEntity();
         if (player.getLevel().dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
             AetherTime.get(player.getLevel()).ifPresent((aetherTime) -> {
-                if (aetherTime.getEternalDay()) {
+                if (aetherTime.getEternalDay() && !AetherConfig.COMMON.disable_eternal_day.get()) {
                     event.setResult(Event.Result.DENY);
                 }
             });
