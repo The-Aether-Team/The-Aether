@@ -862,7 +862,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.CANDY_CANE, "Dropped by mobs killed with a Candy Cane Sword! They can be used to repair this weapon, and they're a very tasty treat.");
         addLore(AetherItems.CANDY_CANE_SWORD, "A sword made from decorative candy. Randomly drops Candy Canes when used. These are dropped from presents that are under Holiday Trees.");
         addLore(AetherBlocks.CARVED_SLAB, "Crafted from Carved Stone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building's roofing!");
-        addLore(AetherBlocks.CARVED_STAIRS, "Crafted from Sentry Stone. Stairs are useful for adding verticality to builds and are often used for decoration too!");
+        addLore(AetherBlocks.CARVED_STAIRS, "Crafted from Carved Stone. Stairs are useful for adding verticality to builds and are often used for decoration too!");
         addLore(AetherBlocks.CARVED_STONE, "The Stone found in Bronze Dungeons. This stone has a gray color to it, and can be mined as a decorative block.");
         addLore(AetherBlocks.CARVED_WALL, "Crafted from Carved Stone. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!");
         addLore(AetherItems.CHAINMAIL_GLOVES, "A very rare part of chain armor, it is needed to complete the Chain Armor set.");
