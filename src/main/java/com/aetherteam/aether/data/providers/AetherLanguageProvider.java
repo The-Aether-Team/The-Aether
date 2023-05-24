@@ -14,8 +14,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.function.Supplier;
 
 public abstract class AetherLanguageProvider extends LanguageProvider {
+    private final String id;
+
     public AetherLanguageProvider(PackOutput output, String id) {
         super(output, id, "en_us");
+        this.id = id;
     }
 
     public void addDiscDesc(Supplier<? extends Item> key, String name) {
@@ -23,7 +26,7 @@ public abstract class AetherLanguageProvider extends LanguageProvider {
     }
 
     public void addBiome(ResourceKey<Biome> biome, String name) {
-        this.add("biome.aether." + biome.location().getPath(), name);
+        this.add("biome." + this.id + "." + biome.location().getPath(), name);
     }
 
     public void addContainerType(Supplier<? extends MenuType<?>> key, String name) {
@@ -34,7 +37,7 @@ public abstract class AetherLanguageProvider extends LanguageProvider {
     }
 
     public void addContainerType(String key, String name) {
-        this.add("menu.aether." + key, name);
+        this.add("menu." + this.id + "." + key, name);
     }
 
     public void addCreativeTab(CreativeModeTab tab, String name) {
@@ -42,19 +45,19 @@ public abstract class AetherLanguageProvider extends LanguageProvider {
     }
 
     public void addAdvancement(String key, String name) {
-        this.add("advancement.aether." + key, name);
+        this.add("advancement." + this.id + "." + key, name);
     }
 
     public void addAdvancementDesc(String key, String name) {
-        this.add("advancement.aether." + key + ".desc", name);
+        this.add("advancement." + this.id + "." + key + ".desc", name);
     }
 
     public void addSubtitle(String category, String key, String name) {
-        this.add("subtitles.aether." + category + "." + key, name);
+        this.add("subtitles." + this.id + "." + category + "." + key, name);
     }
 
     public void addDeath(String key, String name) {
-        this.add("death.attack.aether." + key, name);
+        this.add("death.attack." + this.id + "." + key, name);
     }
 
     public void addMenuText(String key, String name) {
@@ -62,7 +65,7 @@ public abstract class AetherLanguageProvider extends LanguageProvider {
     }
 
     public void addGuiText(String key, String name) {
-        this.add("gui.aether." + key, name);
+        this.add("gui." + this.id + "." + key, name);
     }
 
     public void addCustomizationText(String key, String name) {
@@ -74,15 +77,15 @@ public abstract class AetherLanguageProvider extends LanguageProvider {
     }
 
     public void addMessage(String key, String name) {
-        this.add("aether." + key, name);
+        this.add(this.id + "." + key, name);
     }
 
     public void addCommand(String key, String name) {
-        this.add("commands.aether." + key, name);
+        this.add("commands." + this.id + "." + key, name);
     }
 
     public void addKeyInfo(String key, String name) {
-        this.add("key.aether." + key, name);
+        this.add("key." + this.id + "." + key, name);
     }
 
     public void addCuriosIdentifier(String key, String name) {
@@ -102,22 +105,22 @@ public abstract class AetherLanguageProvider extends LanguageProvider {
     }
 
     public void addProTip(String key, String name) {
-        this.add("aether.pro_tips.line.aether." + key, name);
+        this.add("aether.pro_tips.line." + this.id + "." + key, name);
     }
 
     public void addCommonConfig(String prefix, String key, String name) {
-        this.add("config.aether.common." + prefix + "." + key, name);
+        this.add("config." + this.id + ".common." + prefix + "." + key, name);
     }
 
     public void addClientConfig(String prefix, String key, String name) {
-        this.add("config.aether.client." + prefix + "." + key, name);
+        this.add("config." + this.id + ".client." + prefix + "." + key, name);
     }
 
     public void addPackTitle(String packName, String description) {
-        this.add("pack.aether." + packName + ".title", description);
+        this.add("pack." + this.id + "." + packName + ".title", description);
     }
 
     public void addPackDescription(String packName, String description) {
-        this.add("pack.aether." + packName + ".description", description);
+        this.add("pack." + this.id + "." + packName + ".description", description);
     }
 }
