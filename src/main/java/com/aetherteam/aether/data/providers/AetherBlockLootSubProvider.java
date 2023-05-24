@@ -152,7 +152,8 @@ public abstract class AetherBlockLootSubProvider extends BlockLootSubProvider {
                                 .when(LocationCheck.checkLocation(
                                         LocationPredicate.Builder.location().setBlock(
                                                 BlockPredicate.Builder.block().of(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get()).build()),
-                                        new BlockPos(0, -1, 0))))))
+                                        new BlockPos(0, -1, 0)))))
+                        .apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE)))
                 .when(BlockLootAccessor.aether$hasSilkTouch().invert())
                 .apply(DoubleDrops.builder())
         ).withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
