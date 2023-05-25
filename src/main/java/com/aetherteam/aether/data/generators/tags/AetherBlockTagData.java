@@ -161,8 +161,8 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherTags.Blocks.INFINIBURN,
                 AetherTags.Blocks.HELLFIRE_BLOCKS);
         this.tag(AetherTags.Blocks.VALKYRIE_TELEPORTABLE_ON).add(
-                AetherBlocks.ANGELIC_STONE.get(),
-                AetherBlocks.LIGHT_ANGELIC_STONE.get());
+                AetherBlocks.LOCKED_ANGELIC_STONE.get(),
+                AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get());
         this.tag(AetherTags.Blocks.TREATED_AS_AETHER_BLOCK);
 
         // Vanilla
