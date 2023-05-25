@@ -271,6 +271,18 @@ public class DimensionHooks {
         return null;
     }
 
+    public static void checkEternalDayConfig(Level level) {
+        if (!level.isClientSide()) {
+            AetherTime.get(level).ifPresent(aetherTime -> {
+                boolean eternalDay = aetherTime.getEternalDay();
+                if (AetherConfig.COMMON.disable_eternal_day.get() && eternalDay) {
+                    aetherTime.setEternalDay(false);
+                    aetherTime.updateEternalDay();
+                }
+            });
+        }
+    }
+
     public static void dimensionTravel(Entity entity, ResourceKey<Level> dimension) {
         // The level passed into shouldReturnPlayerToOverworld() is the dimension the player is leaving
         //  Meaning: We display the Descending GUI text to the player if they're about to leave a dimension that returns them to the OW
