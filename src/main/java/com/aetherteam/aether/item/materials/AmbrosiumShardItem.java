@@ -40,7 +40,7 @@ public class AmbrosiumShardItem extends Item implements ItemUseConversion<Ambros
 	 */
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-		if (AetherConfig.COMMON.edible_ambrosium.get()) {
+		if (AetherConfig.SERVER.edible_ambrosium.get()) {
 			ItemStack itemStack = player.getItemInHand(hand);
 			if (player.getHealth() < player.getMaxHealth() || player.isCreative()) {
 				player.startUsingItem(hand);
@@ -54,7 +54,7 @@ public class AmbrosiumShardItem extends Item implements ItemUseConversion<Ambros
 	}
 
 	/**
-	 * Heals half of a heart when finished using if the Ambrosium Shard is edible according to {@link AetherConfig.Common#edible_ambrosium}.
+	 * Heals half of a heart when finished using if the Ambrosium Shard is edible according to {@link AetherConfig.Server#edible_ambrosium}.
 	 * Then it consumes the item using {@link ConsumableItem#consume(Item, ItemStack, LivingEntity)}.
 	 * @param stack The {@link ItemStack} in use.
 	 * @param level The {@link Level} of the user.
@@ -63,7 +63,7 @@ public class AmbrosiumShardItem extends Item implements ItemUseConversion<Ambros
 	 */
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity user) {
-		if (AetherConfig.COMMON.edible_ambrosium.get()) {
+		if (AetherConfig.SERVER.edible_ambrosium.get()) {
 			user.heal(1);
 			this.consume(this, stack, user);
 		}
@@ -71,19 +71,19 @@ public class AmbrosiumShardItem extends Item implements ItemUseConversion<Ambros
 	}
 
 	/**
-	 * @return The {@link UseAnim#EAT} animation if the Ambrosium Shard is edible according to {@link AetherConfig.Common#edible_ambrosium}, otherwise {@link UseAnim#NONE}.
+	 * @return The {@link UseAnim#EAT} animation if the Ambrosium Shard is edible according to {@link AetherConfig.Server#edible_ambrosium}, otherwise {@link UseAnim#NONE}.
 	 */
 	@Override
 	public UseAnim getUseAnimation(ItemStack stack) {
-		return AetherConfig.COMMON.edible_ambrosium.get() ? UseAnim.EAT : UseAnim.NONE;
+		return AetherConfig.SERVER.edible_ambrosium.get() ? UseAnim.EAT : UseAnim.NONE;
 	}
 
 	/**
-	 * @return A use duration of 16 as an {@link Integer} if the Ambrosium Shard is edible according to {@link AetherConfig.Common#edible_ambrosium}, otherwise 0.
+	 * @return A use duration of 16 as an {@link Integer} if the Ambrosium Shard is edible according to {@link AetherConfig.Server#edible_ambrosium}, otherwise 0.
 	 */
 	@Override
 	public int getUseDuration(ItemStack stack) {
-		return AetherConfig.COMMON.edible_ambrosium.get() ? 16 : 0;
+		return AetherConfig.SERVER.edible_ambrosium.get() ? 16 : 0;
 	}
 
 	@Override

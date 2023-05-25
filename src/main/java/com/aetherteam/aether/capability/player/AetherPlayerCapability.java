@@ -802,7 +802,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	@Override
 	public int getLifeShardLimit() {
-		return AetherConfig.COMMON.maximum_life_shards.get();
+		return AetherConfig.SERVER.maximum_life_shards.get();
 	}
 
 	@Override

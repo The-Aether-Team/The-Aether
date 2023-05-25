@@ -50,12 +50,12 @@ public class SunAltarBlock extends BaseEntityBlock {
 	@Override
 	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		if (!level.isClientSide()) {
-			if (AetherConfig.COMMON.sun_altar_whitelist.get() && !player.hasPermissions(4) && !SunAltarWhitelist.INSTANCE.isWhiteListed(player.getGameProfile())) { // Prevents non-operator or non-whitelisted players from using the Sun Altar on servers
+			if (AetherConfig.SERVER.sun_altar_whitelist.get() && !player.hasPermissions(4) && !SunAltarWhitelist.INSTANCE.isWhiteListed(player.getGameProfile())) { // Prevents non-operator or non-whitelisted players from using the Sun Altar on servers
 				player.displayClientMessage(Component.translatable(Aether.MODID + ".sun_altar.no_permission"), true); // Player doesn't have permission to use the Sun Altar.
 			} else {
 				Optional<AetherTime> aetherTimeOptional = level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).resolve();
 				if (aetherTimeOptional.isPresent()) { // Checks if the level has the capability used for Aether time, which determines if the Sun Altar has control over the time of a dimension.
-					if (!aetherTimeOptional.get().getEternalDay() || AetherConfig.COMMON.disable_eternal_day.get()) { // Checks if the time is locked into eternal day or not.
+					if (!aetherTimeOptional.get().getEternalDay() || AetherConfig.SERVER.disable_eternal_day.get()) { // Checks if the time is locked into eternal day or not.
 						this.openScreen(level, pos, player);
 					} else {
 						player.displayClientMessage(Component.translatable(Aether.MODID + ".sun_altar.in_control"), true); // Sun Spirit is still in control of the realm.

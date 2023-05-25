@@ -7,10 +7,8 @@ import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class AetherConfig {
-    public static class Common {
+    public static class Server {
         public final ConfigValue<Boolean> enable_bed_explosions;
-        public final ConfigValue<Boolean> start_with_portal;
-        public final ConfigValue<Boolean> enable_startup_loot;
         public final ConfigValue<Boolean> edible_ambrosium;
         public final ConfigValue<Boolean> tools_debuff;
         public final ConfigValue<Boolean> healing_gummy_swets;
@@ -18,7 +16,6 @@ public class AetherConfig {
         public final ConfigValue<Integer> hammer_of_kingbdogz_cooldown;
         public final ConfigValue<Integer> cloud_staff_cooldown;
         public final ConfigValue<Integer> maximum_life_shards;
-        public final ConfigValue<Boolean> repeat_sun_spirit_dialogue;
 
         public final ConfigValue<Boolean> spawn_golden_feather;
         public final ConfigValue<Boolean> spawn_valkyrie_cape;
@@ -35,20 +32,12 @@ public class AetherConfig {
         public final ConfigValue<String> portal_destination_dimension_ID;
         public final ConfigValue<String> portal_return_dimension_ID;
 
-        public Common(ForgeConfigSpec.Builder builder) {
+        public Server(ForgeConfigSpec.Builder builder) {
             builder.push("Gameplay");
             enable_bed_explosions = builder
                     .comment("Vanilla's beds will explode in the Aether")
                     .translation("config.aether.common.gameplay.enable_bed_explosions")
                     .define("Beds explode", false);
-            start_with_portal = builder
-                    .comment("On world creation, the player is given an Aether Portal Frame item to automatically go to the Aether with")
-                    .translation("config.aether.common.gameplay.start_with_portal")
-                    .define("Gives player Aether Portal Frame item", false);
-            enable_startup_loot = builder
-                    .comment("When the player enters the Aether, they are given a Book of Lore and Golden Parachutes as starting loot")
-                    .translation("config.aether.common.gameplay.enable_startup_loot")
-                    .define("Gives starting loot on entry", true);
             tools_debuff = builder
                     .comment("Tools that aren't from the Aether will mine Aether blocks slower than tools that are from the Aether")
                     .translation("config.aether.common.gameplay.tools_debuff")
@@ -77,10 +66,6 @@ public class AetherConfig {
                     .comment("Determines the cooldown in ticks for the Cloud Staff's ability")
                     .translation("config.aether.common.gameplay.cloud_staff_cooldown")
                     .define("Cooldown for the Cloud Staff", 40);
-            repeat_sun_spirit_dialogue = builder
-                    .comment("Determines whether the Sun Spirit's dialogue when meeting him should play through every time you meet him")
-                    .translation("config.aether.common.gameplay.repeat_sun_spirit_dialogue")
-                    .define("Repeat Sun Spirit's battle dialogue", true);
             builder.pop();
 
             builder.push("Loot");
@@ -137,6 +122,29 @@ public class AetherConfig {
                     .comment("Sets the ID of the dimension that the Aether Portal will return the player to")
                     .translation("config.aether.common.modpack.portal_return_dimension_ID")
                     .define("Sets portal return dimension", Level.OVERWORLD.location().toString());
+            builder.pop();
+        }
+    }
+
+    public static class Common {
+        public final ConfigValue<Boolean> start_with_portal;
+        public final ConfigValue<Boolean> enable_startup_loot;
+        public final ConfigValue<Boolean> repeat_sun_spirit_dialogue;
+
+        public Common(ForgeConfigSpec.Builder builder) {
+            builder.push("Gameplay");
+            start_with_portal = builder
+                    .comment("On world creation, the player is given an Aether Portal Frame item to automatically go to the Aether with")
+                    .translation("config.aether.common.gameplay.start_with_portal")
+                    .define("Gives player Aether Portal Frame item", false);
+            enable_startup_loot = builder
+                    .comment("When the player enters the Aether, they are given a Book of Lore and Golden Parachutes as starting loot")
+                    .translation("config.aether.common.gameplay.enable_startup_loot")
+                    .define("Gives starting loot on entry", true);
+            repeat_sun_spirit_dialogue = builder
+                    .comment("Determines whether the Sun Spirit's dialogue when meeting him should play through every time you meet him")
+                    .translation("config.aether.common.gameplay.repeat_sun_spirit_dialogue")
+                    .define("Repeat Sun Spirit's battle dialogue", true);
             builder.pop();
         }
     }
@@ -292,6 +300,9 @@ public class AetherConfig {
         }
     }
 
+    public static final ForgeConfigSpec SERVER_SPEC;
+    public static final Server SERVER;
+
     public static final ForgeConfigSpec COMMON_SPEC;
     public static final Common COMMON;
 
@@ -299,6 +310,10 @@ public class AetherConfig {
     public static final Client CLIENT;
 
     static {
+        final Pair<Server, ForgeConfigSpec> serverSpecPair = new ForgeConfigSpec.Builder().configure(Server::new);
+        SERVER_SPEC = serverSpecPair.getRight();
+        SERVER = serverSpecPair.getLeft();
+
         final Pair<Common, ForgeConfigSpec> commonSpecPair = new ForgeConfigSpec.Builder().configure(Common::new);
         COMMON_SPEC = commonSpecPair.getRight();
         COMMON = commonSpecPair.getLeft();

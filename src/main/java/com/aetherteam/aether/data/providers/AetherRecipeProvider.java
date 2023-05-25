@@ -1,13 +1,11 @@
 package com.aetherteam.aether.data.providers;
 
-import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.api.registers.MoaType;
 import com.aetherteam.aether.recipe.BlockPropertyPair;
 import com.aetherteam.aether.recipe.BlockStateIngredient;
 import com.aetherteam.aether.recipe.builder.*;
 import com.aetherteam.aether.recipe.AetherRecipeSerializers;
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.recipe.conditions.ConfigCondition;
 import net.minecraft.data.recipes.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -27,9 +25,6 @@ import net.minecraftforge.common.Tags;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-
-import net.minecraftforge.common.crafting.ConditionalRecipe;
-import net.minecraftforge.common.crafting.conditions.NotCondition;
 
 public abstract class AetherRecipeProvider extends RecipeProvider {
     private static String ID;
@@ -449,11 +444,6 @@ public abstract class AetherRecipeProvider extends RecipeProvider {
 
     protected static PlacementBanBuilder banBlockPlacementWithBypass(Block ingredient, TagKey<Block> bypass, TagKey<Biome> biome) {
         return BlockBanBuilder.recipe(BlockStateIngredient.of(ingredient), BlockStateIngredient.of(bypass), biome, AetherRecipeSerializers.BLOCK_PLACEMENT_BAN.get());
-    }
-
-    protected static ConditionalRecipe.Builder conditionalAccessoryFreezing(RecipeBuilder temporary, RecipeBuilder permanent) {
-        ConfigCondition configCondition = new ConfigCondition(AetherConfig.COMMON.temporary_ice_accessory_conversion);
-        return ConditionalRecipe.builder().addCondition(configCondition).addRecipe(ConditionalFinishedRecipe.create(temporary)).addCondition(new NotCondition(configCondition)).addRecipe(ConditionalFinishedRecipe.create(permanent));
     }
 
     protected static BlockPropertyPair pair(Block resultBlock, Map<Property<?>, Comparable<?>> resultProperties) {

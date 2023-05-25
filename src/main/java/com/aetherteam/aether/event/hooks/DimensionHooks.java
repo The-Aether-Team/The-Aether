@@ -67,7 +67,7 @@ public class DimensionHooks {
         if (direction != null) {
             BlockPos relativePos = pos.relative(direction);
             if (stack.is(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS)) {
-                if ((level.dimension() == LevelUtil.returnDimension() || level.dimension() == LevelUtil.destinationDimension()) && !AetherConfig.COMMON.disable_aether_portal.get()) {
+                if ((level.dimension() == LevelUtil.returnDimension() || level.dimension() == LevelUtil.destinationDimension()) && !AetherConfig.SERVER.disable_aether_portal.get()) {
                     Optional<AetherPortalShape> optional = AetherPortalShape.findEmptyAetherPortalShape(level, relativePos, Direction.Axis.X);
                     if (optional.isPresent()) {
                         optional.get().createPortalBlocks();
@@ -94,7 +94,7 @@ public class DimensionHooks {
     public static boolean detectWaterInFrame(LevelAccessor levelAccessor, BlockPos pos, BlockState blockState, FluidState fluidState) {
         if (levelAccessor instanceof Level level) {
             if (fluidState.is(Fluids.WATER) && fluidState.createLegacyBlock().getBlock() == blockState.getBlock()) {
-                if ((level.dimension() == LevelUtil.returnDimension() || level.dimension() == LevelUtil.destinationDimension()) && !AetherConfig.COMMON.disable_aether_portal.get()) {
+                if ((level.dimension() == LevelUtil.returnDimension() || level.dimension() == LevelUtil.destinationDimension()) && !AetherConfig.SERVER.disable_aether_portal.get()) {
                     Optional<AetherPortalShape> optional = AetherPortalShape.findEmptyAetherPortalShape(level, pos, Direction.Axis.X);
                     if (optional.isPresent()) {
                         optional.get().createPortalBlocks();
@@ -110,7 +110,7 @@ public class DimensionHooks {
         if (isItemPlacementBanned(level, pos, face, stack, spawnParticles)) {
             return true;
         }
-        if (level.getBiome(pos).is(AetherTags.Biomes.ULTRACOLD) && AetherConfig.COMMON.enable_bed_explosions.get()) {
+        if (level.getBiome(pos).is(AetherTags.Biomes.ULTRACOLD) && AetherConfig.SERVER.enable_bed_explosions.get()) {
             if (state.is(BlockTags.BEDS) && state.getBlock() != AetherBlocks.SKYROOT_BED.get()) {
                 if (!level.isClientSide()) {
                     if (state.getValue(BedBlock.PART) != BedPart.HEAD) {
@@ -213,7 +213,7 @@ public class DimensionHooks {
      */
     public static void fallFromAether(Level level) {
         if (level instanceof ServerLevel serverLevel) {
-            if (!AetherConfig.COMMON.disable_falling_to_overworld.get()) {
+            if (!AetherConfig.SERVER.disable_falling_to_overworld.get()) {
                 for (Entity entity : serverLevel.getEntities(EntityTypeTest.forClass(Entity.class), Objects::nonNull)) {
                     if (level.getBiome(entity.blockPosition()).is(AetherTags.Biomes.FALL_TO_OVERWORLD) && level.dimension() == LevelUtil.destinationDimension()) {
                         if (entity.getY() <= serverLevel.getMinBuildHeight() && !entity.isPassenger()) {

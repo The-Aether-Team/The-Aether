@@ -82,12 +82,12 @@ public class GummySwetItem extends Item implements ConsumableItem {
 	}
 
 	/**
-	 * @return A {@link Boolean} based on if the Gummy Swet heals or fills hunger. When the {@link AetherConfig.Common#healing_gummy_swets} config is false, this is true.
+	 * @return A {@link Boolean} based on if the Gummy Swet heals or fills hunger. When the {@link AetherConfig.Server#healing_gummy_swets} config is false, this is true.
 	 * This is based on the difference of Gummy Swets being used to heal in b1.7.3 and being used for hunger in 1.2.5.
 	 */
 	@Override
 	public boolean isEdible() {
-		return !AetherConfig.COMMON.healing_gummy_swets.get();
+		return !AetherConfig.SERVER.healing_gummy_swets.get();
 	}
 
 	/**
