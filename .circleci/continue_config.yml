@@ -28,8 +28,7 @@ jobs:
           name: Remove sources before persist
           command: |
             cd ~/project/build/libs
-            shopt -s extglob
-            rm !(<< pipeline.parameters.artifact-name >>)
+            find . ! -name << pipeline.parameters.artifact-name >> -type f -exec rm -f {} +
       - persist_to_workspace:
           root: ~/project/build/libs
           paths:
