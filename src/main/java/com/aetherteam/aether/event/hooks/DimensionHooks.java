@@ -275,7 +275,7 @@ public class DimensionHooks {
         if (!level.isClientSide()) {
             AetherTime.get(level).ifPresent(aetherTime -> {
                 boolean eternalDay = aetherTime.getEternalDay();
-                if (AetherConfig.COMMON.disable_eternal_day.get() && eternalDay) {
+                if (AetherConfig.SERVER.disable_eternal_day.get() && eternalDay) {
                     aetherTime.setEternalDay(false);
                     aetherTime.updateEternalDay();
                 }
