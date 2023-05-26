@@ -6,10 +6,7 @@ orbs:
 parameters:
   artifact-name:
     type: string
-    default: aether
-  artifact-latest-version:
-    type: string
-    default: 1.19.4-1.0.0-beta.3-forge
+    default: aether-1.19.4-1.0.0-beta.3-forge.jar
   deploy-branch:
     type: string
     default: feat/bconlon/patreon-gui
@@ -31,12 +28,11 @@ jobs:
           name: Remove sources before persist
           command: |
             cd ~/project/build/libs
-            rm *-sources.jar
-            rm !(<< pipeline.parameters.artifact-latest-version >>)
+            rm !(<< pipeline.parameters.artifact-name >>)
       - persist_to_workspace:
           root: ~/project/build/libs
           paths:
-            - << pipeline.parameters.artifact-name >>-*.jar
+            - << pipeline.parameters.artifact-name >>-
       - run:
           name: Publish artifact link to Discord
           command: |
