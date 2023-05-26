@@ -12,7 +12,6 @@ public class AetherConfig {
         public final ConfigValue<Boolean> edible_ambrosium;
         public final ConfigValue<Boolean> tools_debuff;
         public final ConfigValue<Boolean> healing_gummy_swets;
-        public final ConfigValue<Boolean> temporary_ice_accessory_conversion;
         public final ConfigValue<Integer> hammer_of_kingbdogz_cooldown;
         public final ConfigValue<Integer> cloud_staff_cooldown;
         public final ConfigValue<Integer> maximum_life_shards;
@@ -54,10 +53,6 @@ public class AetherConfig {
                     .comment("Determines the limit of the amount of Life Shards a player can consume to increase their health")
                     .translation("config.aether.common.gameplay.maximum_life_shards")
                     .define("Maximum consumable Life Shards", 10);
-            temporary_ice_accessory_conversion = builder
-                    .comment("Ice Accessories will create temporary blocks instead of permanent blocks from conversions")
-                    .translation("config.aether.common.gameplay.temporary_ice_accessory_conversion")
-                    .define("Temporary blocks from Ice Accessories", false);
             hammer_of_kingbdogz_cooldown = builder
                     .comment("Determines the cooldown in ticks for the Hammer of Kingbdogz's ability")
                     .translation("config.aether.common.gameplay.hammer_of_kingbdogz_cooldown")
