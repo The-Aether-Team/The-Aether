@@ -105,10 +105,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	public CompoundTag serializeNBT() {
 		CompoundTag tag = new CompoundTag();
 		tag.putBoolean("CanGetPortal", this.canGetPortal());
-		tag.putInt("RemedyMaximum", this.getRemedyMaximum());
-		tag.putInt("RemedyTimer", this.getRemedyTimer());
-		tag.putInt("ProjectileImpactedMaximum", this.getProjectileImpactedMaximum());
-		tag.putInt("ProjectileImpactedTimer", this.getProjectileImpactedTimer());
 		tag.putFloat("SavedHealth", this.getSavedHealth());
 		tag.putInt("LifeShardCount", this.getLifeShardCount());
 		tag.putBoolean("HasSeenSunSpirit", this.hasSeenSunSpiritDialogue());
@@ -122,18 +118,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	public void deserializeNBT(CompoundTag tag) {
 		if (tag.contains("CanGetPortal")) {
 			this.setCanGetPortal(tag.getBoolean("CanGetPortal"));
-		}
-		if (tag.contains("RemedyMaximum")) {
-			this.setRemedyMaximum(tag.getInt("RemedyMaximum"));
-		}
-		if (tag.contains("RemedyTimer")) {
-			this.setRemedyTimer(tag.getInt("RemedyTimer"));
-		}
-		if (tag.contains("ProjectileImpactedMaximum")) {
-			this.setProjectileImpactedMaximum(tag.getInt("ProjectileImpactedMaximum"));
-		}
-		if (tag.contains("ProjectileImpactedTimer")) {
-			this.setProjectileImpactedTimer(tag.getInt("ProjectileImpactedTimer"));
 		}
 		if (tag.contains("SavedHealth")) {
 			this.setSavedHealth(tag.getFloat("SavedHealth"));
@@ -156,10 +140,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		tag.putInt("GoldenDartCount_Syncing", this.getGoldenDartCount());
 		tag.putInt("PoisonDartCount_Syncing", this.getPoisonDartCount());
 		tag.putInt("EnchantedDartCount_Syncing", this.getEnchantedDartCount());
-		tag.putInt("RemedyMaximum_Syncing", this.getRemedyMaximum());
-		tag.putInt("RemedyTimer_Syncing", this.getRemedyTimer());
-		tag.putInt("ProjectileImpactedMaximum_Syncing", this.getProjectileImpactedMaximum());
-		tag.putInt("ProjectileImpactedTimer_Syncing", this.getProjectileImpactedTimer());
 		tag.putInt("FlightTimer_Syncing", this.getFlightTimer());
 		tag.putFloat("FlightModifier_Syncing", this.getFlightModifier());
 		tag.putBoolean("WearingInvisibilityCloak_Syncing", this.isWearingInvisibilityCloak());
@@ -180,18 +160,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		}
 		if (tag.contains("EnchantedDartCount_Syncing")) {
 			this.setEnchantedDartCount(tag.getInt("EnchantedDartCount_Syncing"));
-		}
-		if (tag.contains("RemedyMaximum_Syncing")) {
-			this.setRemedyMaximum(tag.getInt("RemedyMaximum_Syncing"));
-		}
-		if (tag.contains("RemedyTimer_Syncing")) {
-			this.setRemedyTimer(tag.getInt("RemedyTimer_Syncing"));
-		}
-		if (tag.contains("ProjectileImpactedMaximum_Syncing")) {
-			this.setProjectileImpactedMaximum(tag.getInt("ProjectileImpactedMaximum_Syncing"));
-		}
-		if (tag.contains("ProjectileImpactedTimer_Syncing")) {
-			this.setProjectileImpactedTimer(tag.getInt("ProjectileImpactedTimer_Syncing"));
 		}
 		if (tag.contains("FlightTimer_Syncing")) {
 			this.setFlightTimer(tag.getInt("FlightTimer_Syncing"));
@@ -370,7 +338,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	}
 
 	private void tickDownRemedy() {
-		if (!this.getPlayer().level.isClientSide()) {
+		if (this.getPlayer().level.isClientSide()) {
 			if (this.getRemedyTimer() > 0) {
 				this.setRemedyTimer(this.getRemedyTimer() - 1);
 			} else {
@@ -381,7 +349,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	}
 
 	private void tickDownProjectileImpact() {
-		if (!this.getPlayer().level.isClientSide()) {
+		if (this.getPlayer().level.isClientSide()) {
 			if (this.getProjectileImpactedTimer() > 0) {
 				this.setProjectileImpactedTimer(this.getProjectileImpactedTimer() - 1);
 			} else {
@@ -601,7 +569,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	@Override
 	public void setRemedyMaximum(int remedyMaximum) {
-		this.markDirty(true);
 		this.remedyMaximum = remedyMaximum;
 	}
 
@@ -612,7 +579,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	@Override
 	public void setRemedyTimer(int timer) {
-		this.markDirty(true);
 		this.remedyTimer = timer;
 	}
 
@@ -623,7 +589,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	@Override
 	public void setProjectileImpactedMaximum(int projectileImpactedMaximum) {
-		this.markDirty(true);
 		this.impactedMaximum = projectileImpactedMaximum;
 	}
 
@@ -634,7 +599,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	@Override
 	public void setProjectileImpactedTimer(int projectileImpactedTimer) {
-		this.markDirty(true);
 		this.impactedTimer = projectileImpactedTimer;
 	}
 
