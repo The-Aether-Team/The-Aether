@@ -51,7 +51,7 @@ public class AetherTimeCapability implements AetherTime {
     @Override
     public long tickTime(Level level) {
         long dayTime = level.getDayTime();
-        if (this.getEternalDay() && !AetherConfig.COMMON.disable_eternal_day.get()) {
+        if (this.getEternalDay()) {
             if (dayTime != 18000L) {
                 long tempTime = dayTime % (long) AetherDimensions.AETHER_TICKS_PER_DAY;
                 if (tempTime > 54000L) {
