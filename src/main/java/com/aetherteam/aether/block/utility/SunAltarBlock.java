@@ -55,7 +55,7 @@ public class SunAltarBlock extends BaseEntityBlock {
 			} else {
 				Optional<AetherTime> aetherTimeOptional = level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).resolve();
 				if (aetherTimeOptional.isPresent()) { // Checks if the level has the capability used for Aether time, which determines if the Sun Altar has control over the time of a dimension.
-					if (!aetherTimeOptional.get().getEternalDay() || AetherConfig.SERVER.disable_eternal_day.get()) { // Checks if the time is locked into eternal day or not.
+					if (!aetherTimeOptional.get().getEternalDay()) { // Checks if the time is locked into eternal day or not.
 						this.openScreen(level, pos, player);
 					} else {
 						player.displayClientMessage(Component.translatable(Aether.MODID + ".sun_altar.in_control"), true); // Sun Spirit is still in control of the realm.

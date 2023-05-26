@@ -132,6 +132,9 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
         }
     }
 
+    @Override
+    protected void jumpFromGround() { }
+
     @Nonnull
     @Override
     protected InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {

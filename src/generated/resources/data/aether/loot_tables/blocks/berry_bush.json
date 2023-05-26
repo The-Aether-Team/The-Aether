@@ -74,6 +74,14 @@
             },
             {
               "function": "minecraft:explosion_decay"
+            },
+            {
+              "enchantment": "minecraft:fortune",
+              "formula": "minecraft:uniform_bonus_count",
+              "function": "minecraft:apply_bonus",
+              "parameters": {
+                "bonusMultiplier": 1
+              }
             }
           ],
           "name": "aether:blue_berry"

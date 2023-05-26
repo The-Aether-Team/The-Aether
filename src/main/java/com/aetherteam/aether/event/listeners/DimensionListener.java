@@ -106,6 +106,7 @@ public class DimensionListener {
         if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.END) {
             DimensionHooks.tickTime(level);
             DimensionHooks.fallFromAether(level);
+            DimensionHooks.checkEternalDayConfig(level);
         }
     }
 
