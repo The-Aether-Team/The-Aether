@@ -29,6 +29,10 @@ jobs:
           command: |
             cd ~/project/build/libs
             find . ! -name << pipeline.parameters.artifact-name >> -type f -exec rm -f {} +
+            for entry in "/*
+            do
+              echo "$entry"
+            done
       - persist_to_workspace:
           root: ~/project/build/libs
           paths:
