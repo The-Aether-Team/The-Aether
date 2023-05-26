@@ -25,7 +25,7 @@ jobs:
     steps:
       - setup
       - run:
-          name: Remove sources before persist
+          name: Remove unnecssary jars before persist
           command: |
             cd ~/project/build/libs
             find . ! -name << pipeline.parameters.artifact-name >> -type f -exec rm -f {} +
@@ -76,6 +76,11 @@ jobs:
           steps:
             - attach_workspace:
                 at: ~/project/build/libs
+            - run:
+                name: Remove unnecssary jars before deploy
+                command: |
+                  cd ~/project/build/libs
+                  find . ! -name << pipeline.parameters.artifact-name >> -type f -exec rm -f {} +
             - store_artifacts:
                 path: ~/project/build/libs
             - run:
