@@ -382,3 +382,4 @@ public class Aether {
         IncubatorBlockEntity.addItemIncubatingTime(AetherBlocks.AMBROSIUM_TORCH.get(), 500);
     }
 }
+
