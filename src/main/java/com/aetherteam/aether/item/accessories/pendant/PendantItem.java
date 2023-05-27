@@ -20,6 +20,12 @@ public class PendantItem extends AccessoryItem {
         this.equipSound = pendantSound;
     }
 
+    public PendantItem(ResourceLocation pendantLocation, Supplier<? extends SoundEvent> pendantSound, Properties properties) {
+        super(properties);
+        this.setRenderTexture(pendantLocation.getNamespace(), pendantLocation.getPath());
+        this.equipSound = pendantSound;
+    }
+
     @Override
     public ICurio.SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
         return new ICurio.SoundInfo(this.equipSound.get(), 1.0f, 1.0f);
