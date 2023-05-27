@@ -24,10 +24,12 @@ public class InvisibilityCloakItem extends AccessoryItem {
     @Override
     public void curioTick(SlotContext slotContext, ItemStack stack) {
         LivingEntity livingEntity = slotContext.entity();
-        if (livingEntity instanceof Player player) {
+        if (!livingEntity.getLevel().isClientSide() && livingEntity instanceof Player player) {
             AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
-                if (!aetherPlayer.isWearingInvisibilityCloak()) {
+                if (!aetherPlayer.isWearingInvisibilityCloak() && !aetherPlayer.attackedWithInvisibility()) {
                     aetherPlayer.setWearingInvisibilityCloak(true);
+                } else if (aetherPlayer.isWearingInvisibilityCloak() && aetherPlayer.attackedWithInvisibility()) {
+                    aetherPlayer.setWearingInvisibilityCloak(false);
                 }
             });
         }
@@ -39,7 +41,7 @@ public class InvisibilityCloakItem extends AccessoryItem {
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
         LivingEntity livingEntity = slotContext.entity();
-        if (livingEntity instanceof Player player) {
+        if (!livingEntity.getLevel().isClientSide() && livingEntity instanceof Player player) {
             AetherPlayer.get(player).ifPresent((aetherPlayer) -> aetherPlayer.setWearingInvisibilityCloak(false));
         }
         livingEntity.setInvisible(false);

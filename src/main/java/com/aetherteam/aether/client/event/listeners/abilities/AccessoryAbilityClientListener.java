@@ -22,6 +22,7 @@ public class AccessoryAbilityClientListener {
         if (!event.isCanceled()) {
             AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
                 if (aetherPlayer.isWearingInvisibilityCloak()) {
+                    Aether.LOGGER.info("true");
                     event.setCanceled(true);
                 }
             });
