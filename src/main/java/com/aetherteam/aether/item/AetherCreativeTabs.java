@@ -357,7 +357,7 @@ public class AetherCreativeTabs {
                             output.accept(AetherItems.BLUE_BERRY.get());
                             output.accept(AetherItems.ENCHANTED_BERRY.get());
                             output.accept(AetherItems.WHITE_APPLE.get());
-                            if (AetherConfig.COMMON.edible_ambrosium.get()) {
+                            if (AetherConfig.SERVER.edible_ambrosium.get()) {
                                 output.accept(AetherItems.AMBROSIUM_SHARD.get());
                             }
                             output.accept(AetherItems.HEALING_STONE.get());

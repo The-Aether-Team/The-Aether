@@ -84,7 +84,7 @@ public class CloudStaffItem extends Item {
                         }
                     }
                     if (hasMinions && !aetherPlayer.getPlayer().getAbilities().instabuild) {
-                        aetherPlayer.getPlayer().getCooldowns().addCooldown(this, AetherConfig.COMMON.cloud_staff_cooldown.get());
+                        aetherPlayer.getPlayer().getCooldowns().addCooldown(this, AetherConfig.SERVER.cloud_staff_cooldown.get());
                     }
                 }
             });

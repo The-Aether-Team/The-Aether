@@ -251,7 +251,7 @@ public class AbilityHooks {
          * @see com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener#modifyBreakSpeed(PlayerEvent.BreakSpeed)
          */
         public static float reduceToolEffectiveness(Player player, BlockState state, ItemStack stack, float speed) {
-            if (AetherConfig.COMMON.tools_debuff.get()) {
+            if (AetherConfig.SERVER.tools_debuff.get()) {
                 if (!player.getLevel().isClientSide()) {
                     debuffTools = true;
                     AetherPacketHandler.sendToNear(new ToolDebuffPacket(true), player.getX(), player.getY(), player.getZ(), 10, player.getLevel().dimension());
@@ -414,7 +414,7 @@ public class AbilityHooks {
         }
 
         public static float reduceWeaponEffectiveness(LivingEntity target, Entity source, float damage) {
-            if (AetherConfig.COMMON.tools_debuff.get() && !target.getLevel().isClientSide()) {
+            if (AetherConfig.SERVER.tools_debuff.get() && !target.getLevel().isClientSide()) {
                 if (source instanceof LivingEntity livingEntity) {
                     ItemStack stack = livingEntity.getMainHandItem();
                     if ((target.getType().getDescriptionId().startsWith("entity.aether") || target.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY)) && !target.getType().is(AetherTags.Entities.TREATED_AS_VANILLA_ENTITY)) {
