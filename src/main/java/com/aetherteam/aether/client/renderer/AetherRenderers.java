@@ -156,10 +156,7 @@ public class AetherRenderers {
         event.registerLayerDefinition(AetherModelLayers.PENDANT, PendantModel::createLayer);
         event.registerLayerDefinition(AetherModelLayers.GLOVES, () -> GlovesModel.createLayer(new CubeDeformation(0.6F), false));
         event.registerLayerDefinition(AetherModelLayers.GLOVES_SLIM, () -> GlovesModel.createLayer(new CubeDeformation(0.6F), true));
-        event.registerLayerDefinition(AetherModelLayers.GLOVES_ARM, () -> GlovesModel.createLayer(CubeDeformation.NONE, false));
-        event.registerLayerDefinition(AetherModelLayers.GLOVES_ARM_SLIM, () -> GlovesModel.createLayer(CubeDeformation.NONE, true));
-        event.registerLayerDefinition(AetherModelLayers.GLOVES_SLEEVE, () -> GlovesModel.createLayer(new CubeDeformation(0.25F), false));
-        event.registerLayerDefinition(AetherModelLayers.GLOVES_SLEEVE_SLIM, () -> GlovesModel.createLayer(new CubeDeformation(0.25F), true));
+        event.registerLayerDefinition(AetherModelLayers.GLOVES_FIRST_PERSON, () -> GlovesModel.createLayer(new CubeDeformation(0.25F), false));
         event.registerLayerDefinition(AetherModelLayers.CAPE, CapeModel::createLayer);
         event.registerLayerDefinition(AetherModelLayers.SHIELD_OF_REPULSION, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(1.1F), false), 64, 64));
         event.registerLayerDefinition(AetherModelLayers.SHIELD_OF_REPULSION_SLIM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(1.1F), true), 64, 64));

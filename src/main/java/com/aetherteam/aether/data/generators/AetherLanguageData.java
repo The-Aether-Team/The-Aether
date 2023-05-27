@@ -757,8 +757,6 @@ public class AetherLanguageData extends AetherLanguageProvider {
 
 
         addCustomizationText("title", "Customization");
-        addCustomizationText("gloves.arm", "Glove Layer: Arm");
-        addCustomizationText("gloves.sleeve", "Glove Layer: Sleeve");
         addCustomizationText("halo.on", "Player Halo: ON");
         addCustomizationText("halo.off", "Player Halo: OFF");
         addCustomizationText("halo.color", "Halo Color");
