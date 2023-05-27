@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import com.aetherteam.aether.event.events.*;
 
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
@@ -17,8 +18,8 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraftforge.common.MinecraftForge;
 
 public class AetherEventDispatch {
-	public static EggLayEvent onLayEgg(Entity entity, Item item) {
-		EggLayEvent event = new EggLayEvent(entity, item);
+	public static EggLayEvent onLayEgg(Entity entity, SoundEvent sound, float volume, float pitch, Item item) {
+		EggLayEvent event = new EggLayEvent(entity, sound, volume, pitch, item);
 		MinecraftForge.EVENT_BUS.post(event);
 		return event;
 	}
