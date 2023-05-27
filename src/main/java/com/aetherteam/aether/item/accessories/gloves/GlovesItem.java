@@ -32,6 +32,13 @@ public class GlovesItem extends AccessoryItem {
         this.equipSound = glovesSound;
     }
 
+    public GlovesItem(double punchDamage, ResourceLocation glovesName, Supplier<? extends SoundEvent> glovesSound, Properties properties) {
+        super(properties);
+        this.damage = punchDamage;
+        this.setRenderTexture(glovesName.getNamespace(), glovesName.getPath());
+        this.equipSound = glovesSound;
+    }
+
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
         Multimap<Attribute, AttributeModifier> attributes = HashMultimap.create();
