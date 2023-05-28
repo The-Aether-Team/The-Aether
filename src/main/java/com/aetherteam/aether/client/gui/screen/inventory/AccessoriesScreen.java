@@ -2,6 +2,7 @@ package com.aetherteam.aether.client.gui.screen.inventory;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.api.AetherPlayerRankings;
 import com.aetherteam.aether.client.gui.screen.perks.AetherCustomizationsScreen;
 import com.aetherteam.aether.client.AetherKeys;
 import com.aetherteam.aether.inventory.menu.AccessoriesMenu;
@@ -130,23 +131,25 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
             skinsButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.skins_button")));
             this.addRenderableWidget(skinsButton);
 
-            ImageButton customizationButton = new ImageButton(this.leftPos - 22, this.topPos + 24, 20, 20, 0, 0, 20, CUSTOMIZATION_BUTTON, 20, 40,
-                    (pressed) -> this.minecraft.setScreen(new AetherCustomizationsScreen(this)),
-                    Component.translatable("gui.aether.accessories.customization_button")) {
-                @Override
-                public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-                    super.render(poseStack, mouseX, mouseY, partialTick);
-                    if (!AccessoriesScreen.this.recipeBookComponent.isVisible()) {
-                        this.setX(AccessoriesScreen.this.leftPos - 22);
-                        this.setY(AccessoriesScreen.this.topPos + 24);
-                    } else {
-                        this.setX(AccessoriesScreen.this.leftPos + 24);
-                        this.setY(AccessoriesScreen.this.topPos - 22);
+            if (AetherPlayerRankings.hasDevGlow(this.minecraft.player.getUUID()) || AetherPlayerRankings.hasHalo(this.minecraft.player.getUUID())) {
+                ImageButton customizationButton = new ImageButton(this.leftPos - 22, this.topPos + 24, 20, 20, 0, 0, 20, CUSTOMIZATION_BUTTON, 20, 40,
+                        (pressed) -> this.minecraft.setScreen(new AetherCustomizationsScreen(this)),
+                        Component.translatable("gui.aether.accessories.customization_button")) {
+                    @Override
+                    public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+                        super.render(poseStack, mouseX, mouseY, partialTick);
+                        if (!AccessoriesScreen.this.recipeBookComponent.isVisible()) {
+                            this.setX(AccessoriesScreen.this.leftPos - 22);
+                            this.setY(AccessoriesScreen.this.topPos + 24);
+                        } else {
+                            this.setX(AccessoriesScreen.this.leftPos + 24);
+                            this.setY(AccessoriesScreen.this.topPos - 22);
+                        }
                     }
-                }
-            };
-            customizationButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.customization_button")));
-            this.addRenderableWidget(customizationButton);
+                };
+                customizationButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.customization_button")));
+                this.addRenderableWidget(customizationButton);
+            }
         }
     }
 

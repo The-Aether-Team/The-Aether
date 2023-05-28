@@ -99,6 +99,7 @@ public class AetherSoundEvents {
 	public static final RegistryObject<SoundEvent> ENTITY_WHIRLWIND_DROP = register("entity.whirlwind.drop");
 
 	public static final RegistryObject<SoundEvent> ENTITY_AECHOR_PLANT_SHOOT = register("entity.aechor_plant.shoot");
+	public static final RegistryObject<SoundEvent> ENTITY_AECHOR_PLANT_HURT = register("entity.aechor_plant.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_AECHOR_PLANT_DEATH = register("entity.aechor_plant.death");
 
 	public static final RegistryObject<SoundEvent> ENTITY_COCKATRICE_SHOOT = register("entity.cockatrice.shoot");

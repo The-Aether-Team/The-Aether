@@ -18,9 +18,6 @@ public interface AetherRankings extends INBTSynchable<CompoundTag> {
 
     void onUpdate();
 
-    void setAreSleeveGloves(boolean areHatGloves);
-    boolean areSleeveGloves();
-
     void setIsHaloEnabled(boolean renderHalo);
     boolean isHaloEnabled();
 
