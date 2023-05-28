@@ -22,7 +22,6 @@ import java.util.function.Supplier;
 public class GlovesItem extends AccessoryItem {
     protected final double damage;
     protected ResourceLocation GLOVES_TEXTURE;
-    protected ResourceLocation GLOVES_SLIM_TEXTURE;
     protected final Supplier<? extends SoundEvent> equipSound;
 
     public GlovesItem(double punchDamage, String glovesName, Supplier<? extends SoundEvent> glovesSound, Properties properties) {
@@ -53,15 +52,10 @@ public class GlovesItem extends AccessoryItem {
 
     public void setRenderTexture(String modId, String registryName) {
         this.GLOVES_TEXTURE = new ResourceLocation(modId, "textures/models/accessory/gloves/" + registryName + "_accessory.png");
-        this.GLOVES_SLIM_TEXTURE = new ResourceLocation(modId, "textures/models/accessory/gloves/" + registryName + "_slim_accessory.png");
     }
 
     public ResourceLocation getGlovesTexture() {
         return this.GLOVES_TEXTURE;
-    }
-
-    public ResourceLocation getGlovesSlimTexture() {
-        return this.GLOVES_SLIM_TEXTURE;
     }
 
     @OnlyIn(Dist.CLIENT)

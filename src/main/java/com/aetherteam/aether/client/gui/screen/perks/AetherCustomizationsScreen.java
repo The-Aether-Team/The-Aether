@@ -48,12 +48,6 @@ public class AetherCustomizationsScreen extends Screen
             int xPos = this.width / 2 - 65;
             int yPos = this.height / 2 - 10 - (int) (buttonCount * 12.5);
             int i = 0;
-            this.addRenderableWidget(Button.builder(Component.translatable(this.customizations.areSleeveGloves() ? "gui.aether.customization.gloves.sleeve" : "gui.aether.customization.gloves.arm"),
-                    (pressed) -> {
-                        this.customizations.setAreSleeveGloves(!this.customizations.areSleeveGloves());
-                        this.updateValues();
-                        pressed.setMessage(Component.translatable(this.customizations.areSleeveGloves() ? "gui.aether.customization.gloves.sleeve" : "gui.aether.customization.gloves.arm"));
-                    }).pos(xPos, yPos + (25 * i)).build());
             if (AetherPlayerRankings.hasHalo(playerUUID)) {
                 i++;
                 this.addRenderableWidget(Button.builder(Component.translatable(this.customizations.isHaloEnabled() ? "gui.aether.customization.halo.on" : "gui.aether.customization.halo.off"),
