@@ -160,6 +160,12 @@ public class AbilityHooks {
         public static boolean preventMagmaDamage(LivingEntity entity, DamageSource source) {
             return source == entity.getLevel().damageSources().hotFloor() && EquipmentUtil.hasFreezingAccessory(entity);
         }
+
+        public static void setShoot(Entity entity) {
+            if (entity instanceof Projectile projectile && projectile.getOwner() instanceof Player player) {
+                AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setAttackedWithInvisibility(true));
+            }
+        }
     }
 
     public static class ArmorHooks {
