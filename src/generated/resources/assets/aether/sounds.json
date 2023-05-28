@@ -78,6 +78,14 @@
     ],
     "subtitle": "subtitles.aether.entity.aechor_plant.death"
   },
+  "entity.aechor_plant.hurt": {
+    "sounds": [
+      "damage/hit1",
+      "damage/hit2",
+      "damage/hit3"
+    ],
+    "subtitle": "subtitles.aether.entity.aechor_plant.hurt"
+  },
   "entity.aechor_plant.shoot": {
     "sounds": [
       "random/bow"
