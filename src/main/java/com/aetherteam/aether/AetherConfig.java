@@ -23,6 +23,8 @@ public class AetherConfig {
         public final ConfigValue<Boolean> generate_holiday_tree_always;
         public final ConfigValue<Boolean> generate_holiday_tree_seasonally;
 
+        public final ConfigValue<Boolean> balance_invisibility_cloak;
+        public final ConfigValue<Integer> invisibility_visibility_time;
         public final ConfigValue<Boolean> sun_altar_whitelist;
 
         public final ConfigValue<Boolean> disable_aether_portal;
@@ -35,87 +37,95 @@ public class AetherConfig {
             builder.push("Gameplay");
             enable_bed_explosions = builder
                     .comment("Vanilla's beds will explode in the Aether")
-                    .translation("config.aether.common.gameplay.enable_bed_explosions")
+                    .translation("config.aether.server.gameplay.enable_bed_explosions")
                     .define("Beds explode", false);
             tools_debuff = builder
                     .comment("Tools that aren't from the Aether will mine Aether blocks slower than tools that are from the Aether")
-                    .translation("config.aether.common.gameplay.tools_debuff")
+                    .translation("config.aether.server.gameplay.tools_debuff")
                     .define("Debuff non-Aether tools", true);
             edible_ambrosium = builder
                     .comment("Ambrosium Shards can be eaten to restore a half heart of health")
-                    .translation("config.aether.common.gameplay.edible_ambrosium")
+                    .translation("config.aether.server.gameplay.edible_ambrosium")
                     .define("Ambrosium Shards are edible", true);
             healing_gummy_swets = builder
                     .comment("Gummy Swets when eaten restore full health instead of full hunger")
-                    .translation("config.aether.common.gameplay.healing_gummy_swets")
+                    .translation("config.aether.server.gameplay.healing_gummy_swets")
                     .define("Gummy Swets restore health", false);
             maximum_life_shards = builder
                     .comment("Determines the limit of the amount of Life Shards a player can consume to increase their health")
-                    .translation("config.aether.common.gameplay.maximum_life_shards")
+                    .translation("config.aether.server.gameplay.maximum_life_shards")
                     .define("Maximum consumable Life Shards", 10);
             hammer_of_kingbdogz_cooldown = builder
                     .comment("Determines the cooldown in ticks for the Hammer of Kingbdogz's ability")
-                    .translation("config.aether.common.gameplay.hammer_of_kingbdogz_cooldown")
+                    .translation("config.aether.server.gameplay.hammer_of_kingbdogz_cooldown")
                     .define("Cooldown for the Hammer of Kingbdogz", 75);
             cloud_staff_cooldown = builder
                     .comment("Determines the cooldown in ticks for the Cloud Staff's ability")
-                    .translation("config.aether.common.gameplay.cloud_staff_cooldown")
+                    .translation("config.aether.server.gameplay.cloud_staff_cooldown")
                     .define("Cooldown for the Cloud Staff", 40);
             builder.pop();
 
             builder.push("Loot");
             spawn_golden_feather = builder
                     .comment("Allows the Golden Feather to spawn in the Silver Dungeon loot table")
-                    .translation("config.aether.common.loot.spawn_golden_feather")
+                    .translation("config.aether.server.loot.spawn_golden_feather")
                     .define("Golden Feather in loot", true);
             spawn_valkyrie_cape = builder
                     .comment("Allows the Valkyrie Cape to spawn in the Silver Dungeon loot table")
-                    .translation("config.aether.common.loot.spawn_valkyrie_cape")
+                    .translation("config.aether.server.loot.spawn_valkyrie_cape")
                     .define("Valkyrie Cape in loot", true);
             builder.pop();
 
             builder.push("World Generation");
             generate_tall_grass = builder
                     .comment("Determines whether the Aether should generate Tall Grass blocks on terrain or not")
-                    .translation("config.aether.common.world_generation.generate_tall_grass")
+                    .translation("config.aether.server.world_generation.generate_tall_grass")
                     .define("Generate Tall Grass in the Aether", true);
             generate_holiday_tree_always = builder
                     .comment("Determines whether Holiday Trees should always be able to generate when exploring new chunks in the Aether, if true, this overrides 'Generate Holiday Trees seasonally'")
-                    .translation("config.aether.common.world_generation.generate_holiday_tree_always")
+                    .translation("config.aether.server.world_generation.generate_holiday_tree_always")
                     .define("Generate Holiday Trees always", false);
             generate_holiday_tree_seasonally = builder
                     .comment("Determines whether Holiday Trees should be able to generate during the time frame of December and January when exploring new chunks in the Aether, only works if 'Generate Holiday Trees always' is set to false")
-                    .translation("config.aether.common.world_generation.generate_holiday_tree_seasonally")
+                    .translation("config.aether.server.world_generation.generate_holiday_tree_seasonally")
                     .define("Generate Holiday Trees seasonally", true);
             builder.pop();
 
             builder.push("Multiplayer");
+            balance_invisibility_cloak = builder
+                    .comment("Makes the Invisibility Cloak more balanced in PVP by disabling equipment invisibility temporarily after attacks")
+                    .translation("config.aether.server.multiplayer.balance_invisibility_cloak")
+                    .define("Balance Invisibility Cloak for PVP", false);
+            invisibility_visibility_time = builder
+                    .comment("Sets the time in ticks that it takes for the player to become fully invisible again after attacking when wearing an Invisibility Cloak; only works with 'Balance Invisibility Cloak for PVP'")
+                    .translation("config.aether.server.multiplayer.invisibility_visibility_time")
+                    .define("Invisibility Cloak visibility timer", 50);
             sun_altar_whitelist = builder
                     .comment("Makes it so that only whitelisted users or anyone with permission level 4 can use the Sun Altar on a server")
-                    .translation("config.aether.common.multiplayer.sun_altar_whitelist")
+                    .translation("config.aether.server.multiplayer.sun_altar_whitelist")
                     .define("Only whitelisted users access Sun Altars", false);
             builder.pop();
 
             builder.push("Modpack");
             disable_aether_portal = builder
                     .comment("Prevents the Aether Portal from being created normally in the mod")
-                    .translation("config.aether.common.modpack.disable_aether_portal")
+                    .translation("config.aether.server.modpack.disable_aether_portal")
                     .define("Disables Aether Portal creation", false);
             disable_falling_to_overworld = builder
                     .comment("Prevents the player from falling back to the Overworld when they fall out of the Aether")
-                    .translation("config.aether.common.modpack.disable_falling_to_overworld")
+                    .translation("config.aether.server.modpack.disable_falling_to_overworld")
                     .define("Disables falling into the Overworld", false);
             disable_eternal_day = builder
                     .comment("Removes eternal day so that the Aether has a normal daylight cycle even before defeating the Sun Spirit")
-                    .translation("config.aether.common.modpack.disable_eternal_day")
+                    .translation("config.aether.server.modpack.disable_eternal_day")
                     .define("Disables eternal day", false);
             portal_destination_dimension_ID = builder
                     .comment("Sets the ID of the dimension that the Aether Portal will send the player to")
-                    .translation("config.aether.common.modpack.portal_destination_dimension_ID")
+                    .translation("config.aether.server.modpack.portal_destination_dimension_ID")
                     .define("Sets portal destination dimension", AetherDimensions.AETHER_LEVEL.location().toString());
             portal_return_dimension_ID = builder
                     .comment("Sets the ID of the dimension that the Aether Portal will return the player to")
-                    .translation("config.aether.common.modpack.portal_return_dimension_ID")
+                    .translation("config.aether.server.modpack.portal_return_dimension_ID")
                     .define("Sets portal return dimension", Level.OVERWORLD.location().toString());
             builder.pop();
         }

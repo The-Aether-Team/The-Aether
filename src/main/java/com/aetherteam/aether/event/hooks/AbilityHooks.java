@@ -135,12 +135,36 @@ public class AbilityHooks {
             return speed;
         }
 
+        public static boolean preventTargeting(LivingEntity target, Entity lookingEntity) {
+            return EquipmentUtil.hasInvisibilityCloak(target)
+                    && lookingEntity != null
+                    && !lookingEntity.getType().is(AetherTags.Entities.IGNORE_INVISIBILITY)
+                    && (!(target instanceof Player player) || !AetherPlayer.get(player).isPresent() || AetherPlayer.get(player).resolve().isEmpty() || !AetherPlayer.get(player).resolve().get().attackedWithInvisibility());
+        }
+
+        public static boolean recentlyAttackedWithInvisibility(LivingEntity target) {
+            return EquipmentUtil.hasInvisibilityCloak(target)
+                    && target instanceof Player player && AetherPlayer.get(player).isPresent() && AetherPlayer.get(player).resolve().isPresent() && AetherPlayer.get(player).resolve().get().attackedWithInvisibility();
+        }
+
+        public static void setAttack(DamageSource source) {
+            if (source.getDirectEntity() instanceof Player player) {
+                AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setAttackedWithInvisibility(true));
+            }
+        }
+
         /**
          * Prevents magma block damage when wearing ice accessories.
          * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onEntityHurt(net.minecraftforge.event.entity.living.LivingAttackEvent)
          */
         public static boolean preventMagmaDamage(LivingEntity entity, DamageSource source) {
             return source == entity.getLevel().damageSources().hotFloor() && EquipmentUtil.hasFreezingAccessory(entity);
+        }
+
+        public static void setShoot(Entity entity) {
+            if (entity instanceof Projectile projectile && projectile.getOwner() instanceof Player player) {
+                AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setAttackedWithInvisibility(true));
+            }
         }
     }
 
