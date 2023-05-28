@@ -299,7 +299,6 @@
   "config.aether.common.gameplay.maximum_life_shards": "Визначає ліміт кількості уламків життя, які гравець може використати для збільшення свого здоров’я",
   "config.aether.common.gameplay.repeat_sun_spirit_dialogue": "Визначає, чи мусить щоразу відтворюватися діалог Духа сонця при зустрічі з ним",
   "config.aether.common.gameplay.start_with_portal": "Під час створення світу гравцеві видається рамка порталу в Етер, з якою він автоматично телепортується в Етер",
-  "config.aether.common.gameplay.temporary_ice_accessory_conversion": "Льодяні аксесуари будуть створювати тимчасові блоки замість постійних блоків",
   "config.aether.common.gameplay.tools_debuff": "Інструменти не з Етеру будуть довше добувати блоки з Етеру",
   "config.aether.common.loot.spawn_golden_feather": "Дозволяє з'являтись золотій пір'їні у скринях срібного підземелля",
   "config.aether.common.loot.spawn_valkyrie_cape": "Дозволяє з'являтись плащу Валькірії у скринях срібного підземелля",
