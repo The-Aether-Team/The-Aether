@@ -582,6 +582,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addSubtitle("entity", "swet.squish", "Swet squishes");
 
         addSubtitle("entity", "aechor_plant.shoot", "Aechor Plant shoots");
+        addSubtitle("entity", "aechor_plant.hurt", "Aechor Plant hurts");
         addSubtitle("entity", "aechor_plant.death", "Aechor Plant dies");
 
         addSubtitle("entity", "cockatrice.shoot", "Cockatrice shoots");

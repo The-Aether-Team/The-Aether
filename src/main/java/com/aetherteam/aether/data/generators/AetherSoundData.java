@@ -475,6 +475,13 @@ public class AetherSoundData extends SoundDefinitionsProvider {
                 definition().with(sound("minecraft:random/bow"))
                 .subtitle("subtitles.aether.entity.aechor_plant.shoot")
         );
+        this.add(AetherSoundEvents.ENTITY_AECHOR_PLANT_HURT,
+                definition().with(
+                        sound("minecraft:damage/hit1"),
+                        sound("minecraft:damage/hit2"),
+                        sound("minecraft:damage/hit3")
+                ).subtitle("subtitles.aether.entity.aechor_plant.hurt")
+        );
         this.add(AetherSoundEvents.ENTITY_AECHOR_PLANT_DEATH,
                 definition().with(sound("minecraft:damage/fallbig"))
                         .subtitle("subtitles.aether.entity.aechor_plant.death")
