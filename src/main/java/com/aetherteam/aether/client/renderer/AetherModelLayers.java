@@ -57,10 +57,7 @@ public class AetherModelLayers {
     public static final ModelLayerLocation PENDANT = register("pendant");
     public static final ModelLayerLocation GLOVES = register("gloves");
     public static final ModelLayerLocation GLOVES_SLIM = register("gloves_slim");
-    public static final ModelLayerLocation GLOVES_ARM = register("gloves_arm");
-    public static final ModelLayerLocation GLOVES_ARM_SLIM = register("gloves_arm_slim");
-    public static final ModelLayerLocation GLOVES_SLEEVE = register("gloves_sleeve");
-    public static final ModelLayerLocation GLOVES_SLEEVE_SLIM = register("gloves_sleeve_slim");
+    public static final ModelLayerLocation GLOVES_FIRST_PERSON = register("gloves_first_person");
     public static final ModelLayerLocation CAPE = register("cape");
     public static final ModelLayerLocation SHIELD_OF_REPULSION = register("shield_of_repulsion");
     public static final ModelLayerLocation SHIELD_OF_REPULSION_SLIM = register("shield_of_repulsion_slim");
