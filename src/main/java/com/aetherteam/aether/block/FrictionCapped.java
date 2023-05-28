@@ -16,7 +16,7 @@ public interface FrictionCapped {
     default float getCappedFriction(@Nullable Entity entity, float defaultFriction) {
         if (entity != null) {
             Vec3 motion = entity.getDeltaMovement();
-            if (entity.getVehicle() instanceof Boat boat) {
+            if (entity instanceof Boat boat) {
                 float deltaRotation = ((BoatAccessor) boat).aether$getDeltaRotation();
                 if (deltaRotation > 25.0F) {
                     ((BoatAccessor) boat).aether$setDeltaRotation(25.0F);
