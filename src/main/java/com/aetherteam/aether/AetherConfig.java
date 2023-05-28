@@ -24,6 +24,7 @@ public class AetherConfig {
         public final ConfigValue<Boolean> generate_holiday_tree_seasonally;
 
         public final ConfigValue<Boolean> balance_invisibility_cloak;
+        public final ConfigValue<Integer> invisibility_visibility_time;
         public final ConfigValue<Boolean> sun_altar_whitelist;
 
         public final ConfigValue<Boolean> disable_aether_portal;
@@ -95,6 +96,10 @@ public class AetherConfig {
                     .comment("Makes the Invisibility Cloak more balanced in PVP by disabling equipment invisibility temporarily after attacks")
                     .translation("config.aether.server.multiplayer.balance_invisibility_cloak")
                     .define("Balance Invisibility Cloak for PVP", false);
+            invisibility_visibility_time = builder
+                    .comment("Sets the time in ticks that it takes for the player to become fully invisible again after attacking when wearing an Invisibility Cloak; only works with 'Balance Invisibility Cloak for PVP'")
+                    .translation("config.aether.server.multiplayer.invisibility_visibility_time")
+                    .define("Invisibility Cloak visibility timer", 50);
             sun_altar_whitelist = builder
                     .comment("Makes it so that only whitelisted users or anyone with permission level 4 can use the Sun Altar on a server")
                     .translation("config.aether.server.multiplayer.sun_altar_whitelist")

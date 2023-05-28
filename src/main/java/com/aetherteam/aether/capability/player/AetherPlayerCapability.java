@@ -374,7 +374,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 					this.setAttackedWithInvisibility(false);
 				}
 			} else {
-				this.invisibilityAttackCooldown = 25;
+				this.invisibilityAttackCooldown = AetherConfig.SERVER.invisibility_visibility_time.get();
 			}
 		}
 	}

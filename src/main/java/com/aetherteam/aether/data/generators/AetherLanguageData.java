@@ -1142,6 +1142,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addServerConfig("world_generation", "generate_holiday_tree_seasonally", "Determines whether Holiday Trees should be able to generate during the time frame of December and January when exploring new chunks in the Aether, only works if 'Generate Holiday Trees always' is set to false");
 
         addServerConfig("multiplayer", "balance_invisibility_cloak", "Makes the Invisibility Cloak more balanced in PVP by disabling equipment invisibility temporarily after attacks");
+        addServerConfig("multiplayer", "invisibility_visibility_time", "Sets the time in ticks that it takes for the player to become fully invisible again after attacking when wearing an Invisibility Cloak; only works with 'Balance Invisibility Cloak for PVP'");
         addServerConfig("multiplayer", "sun_altar_whitelist", "Makes it so that only whitelisted users or anyone with permission level 4 can use the Sun Altar on a server");
 
         addServerConfig("modpack", "disable_aether_portal", "Prevents the Aether Portal from being created normally in the mod");
