@@ -1,3 +1,55 @@
+# The Aether - Forge - 1.19.4-1.0.0-beta.4
+
+Additions
+
+- Add JEI recipe support for displaying in-world recipes (e.g. freezing liquids with Icestone).
+- Add equipment debuffs for non-Aether weapons and armor.
+- Add stonecutting recipes for Icestone.
+- Add smelting and blasting recipes for iron and gold accessories into nuggets.
+- Add config option to make the Invisibility Cloak temporarily render the player's equipment after they attack, to make the accessory more balanced in PVP.
+- Add config option for the duration of the Invisibility Cloak's temporary equipment rendering.
+- Add sound event for Aechor Plants being hurt to make the sound customizable with resource packs.
+- Add `EggLayEvent` for addon developers to modify Moa egg laying behavior.
+- Add constructors for accessory classes that take `ResourceLocations`s instead of `String`s, allowing addon developers to use their own mod IDs for accessory textures.
+
+Changes
+
+- Change Gravitite to generate more exposed at lower y-levels and generate higher up but with less exposure.
+- Allow only items dropped deliberately or from death to fall out of the Aether.
+- Change attacking with the Invisibility Cloak to cause more mobs in the surrounding area to notice you.
+- Update colorblind Aercloud textures.
+- Increase the mining speed buff of Zanite Accessories.
+- Include the Golden Feather in Silver Dungeon loot by default.
+- Reduce the vertical speeds for Neptune Armor with Depth Strider to be less extreme.
+- Prevent baby Moas from targetting mobs.
+- Prevent the player from using blocks with inventories (e.g. Crafting Tables or Chests) when holding an item or block that can't be placed in the Aether.
+- Prevent Ice Accessories from freezing liquid source blocks.
+- Reduce music file size.
+- Switch to having most of the Aether's config options be configurable per-world.
+- Remove the slim and non-sleeve variants of Glove models to simplify their implementation.
+- Remove config option for Ice Acessories being able to temporarily freeze liquids; this will return in the future as an official datapack.
+- Remove translations temporarily. We are in the process of translation review after switching to a new translation service; translations will return by release.
+
+Fixes
+
+- Fix Blue Aerclouds interrupting Elytra flight.
+- Fix Fortune not working on Berry Bushes.
+- Fix Quicksoil still rarely causing crashes from spinning in boats.
+- Fix rare multiplayer desync between client and server when dismounting mobs.
+- Fix Sheepuffs not being able to be sheared with dispensers.
+- Fix bosses and other unintentional mobs being able to be hooked with fishing rods.
+- Fix Aechor Plants being able to jump.
+- Fix Valkyries only teleporting on regular dungeon blocks isntead of locked dungeon blocks.
+- Fix Skyroot Buckets not using a tag for their crafting material.
+- Fix Aerwhales becoming invisible at the edge of the player's screen.
+- Fix flight exploits with accessories, Aerbunnies, and Slow Falling Potions.
+- Fix a missing slab on Silver Dungeon staircases.
+- Fix Carved Stairs lore entry referring to Sentry Stone instead of Carved Stone.
+- Fix Aercloud generation code randomizing blockstates in datapacks.
+- Fix addons not being able to use non-Aether mod IDs with the Aether's language data generator.
+- Fix incompatibilites with Cape rendering and other mods that modify capes.
+- Fix some accessory modifier tooltips being unlocalized with addons.
+
 # The Aether - Forge - 1.19.4-1.0.0-beta.3
 
 Additions
