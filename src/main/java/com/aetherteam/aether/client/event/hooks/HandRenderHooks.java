@@ -96,6 +96,7 @@ public class HandRenderHooks {
      * Based on {@link ItemInHandRenderer#renderPlayerArm(PoseStack, MultiBufferSource, int, float, float, HumanoidArm)}.
      */
     private static void renderPlayerArm(ICurioRenderer renderer, ItemStack glovesStack, AbstractClientPlayer player, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, float swingProgress, float equippedProgress, HumanoidArm arm, HandRenderType handRenderType) {
+        boolean isSlim = player.getModelName().equals("slim");
         boolean flag = arm != HumanoidArm.LEFT;
         float f = flag ? 1.0F : -1.0F;
         float f1 = Mth.sqrt(swingProgress);
@@ -112,7 +113,11 @@ public class HandRenderHooks {
         poseStack.mulPose(Axis.ZP.rotationDegrees(f * 120.0F));
         poseStack.mulPose(Axis.XP.rotationDegrees(200.0F));
         poseStack.mulPose(Axis.YP.rotationDegrees(f * -135.0F));
-        poseStack.translate(f * 5.6F, 0.0F, 0.0F);
+        float offset = 5.6F;
+        if (isSlim) {
+            offset = 5.65F;
+        }
+        poseStack.translate(f * offset, 0.0F, 0.0F);
         switch (handRenderType) {
             case GLOVES -> ((GlovesRenderer) renderer).renderFirstPerson(glovesStack, poseStack, buffer, combinedLight, player, arm);
             case SHIELD_OF_REPULSION -> ((ShieldOfRepulsionRenderer) renderer).renderFirstPerson(glovesStack, poseStack, buffer, combinedLight, player, arm);

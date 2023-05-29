@@ -32,7 +32,7 @@ public class HammerOfKingbdogzItem extends AetherSwordItem {
         ItemStack heldStack = player.getItemInHand(hand);
         if (!level.isClientSide()) {
             if (!player.getAbilities().instabuild) {
-                player.getCooldowns().addCooldown(this, AetherConfig.COMMON.hammer_of_kingbdogz_cooldown.get());
+                player.getCooldowns().addCooldown(this, AetherConfig.SERVER.hammer_of_kingbdogz_cooldown.get());
                 heldStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
             }
             HammerProjectile hammerProjectile = new HammerProjectile(player, level);

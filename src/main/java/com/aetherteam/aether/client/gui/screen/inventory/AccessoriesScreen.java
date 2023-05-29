@@ -9,6 +9,9 @@ import com.aetherteam.aether.inventory.menu.AccessoriesMenu;
 import com.aetherteam.aether.mixin.mixins.client.accessor.ScreenAccessor;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.server.ClearItemPacket;
+import com.aetherteam.aether.util.PerkUtil;
+import com.aetherteam.nitrogen.api.users.User;
+import com.aetherteam.nitrogen.api.users.UserData;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
@@ -131,23 +134,26 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
             skinsButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.skins_button")));
             this.addRenderableWidget(skinsButton);
 
-            ImageButton customizationButton = new ImageButton(this.leftPos - 22, this.topPos + 24, 20, 20, 0, 0, 20, CUSTOMIZATION_BUTTON, 20, 40,
-                    (pressed) -> this.getMinecraft().setScreen(new AetherCustomizationsScreen(this)),
-                    Component.translatable("gui.aether.accessories.customization_button")) {
-                @Override
-                public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-                    super.render(poseStack, mouseX, mouseY, partialTick);
-                    if (!AccessoriesScreen.this.recipeBookComponent.isVisible()) {
-                        this.setX(AccessoriesScreen.this.leftPos - 22);
-                        this.setY(AccessoriesScreen.this.topPos + 24);
-                    } else {
-                        this.setX(AccessoriesScreen.this.leftPos + 24);
-                        this.setY(AccessoriesScreen.this.topPos - 22);
+            User user = UserData.Client.getClientUser();
+            if (user != null && (PerkUtil.hasDeveloperGlow().test(user) || PerkUtil.hasHalo().test(user))) {
+                ImageButton customizationButton = new ImageButton(this.leftPos - 22, this.topPos + 24, 20, 20, 0, 0, 20, CUSTOMIZATION_BUTTON, 20, 40,
+                        (pressed) -> this.getMinecraft().setScreen(new AetherCustomizationsScreen(this)),
+                        Component.translatable("gui.aether.accessories.customization_button")) {
+                    @Override
+                    public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+                        super.render(poseStack, mouseX, mouseY, partialTick);
+                        if (!AccessoriesScreen.this.recipeBookComponent.isVisible()) {
+                            this.setX(AccessoriesScreen.this.leftPos - 22);
+                            this.setY(AccessoriesScreen.this.topPos + 24);
+                        } else {
+                            this.setX(AccessoriesScreen.this.leftPos + 24);
+                            this.setY(AccessoriesScreen.this.topPos - 22);
+                        }
                     }
-                }
-            };
-            customizationButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.customization_button")));
-            this.addRenderableWidget(customizationButton);
+                };
+                customizationButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.customization_button")));
+                this.addRenderableWidget(customizationButton);
+            }
         }
     }
 

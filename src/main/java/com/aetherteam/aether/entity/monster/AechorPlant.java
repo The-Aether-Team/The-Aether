@@ -242,6 +242,11 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     }
 
     @Override
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
+        return AetherSoundEvents.ENTITY_AECHOR_PLANT_HURT.get();
+    }
+
+    @Override
     protected SoundEvent getDeathSound() {
         return AetherSoundEvents.ENTITY_AECHOR_PLANT_DEATH.get();
     }

@@ -19,7 +19,6 @@ public class CustomizationsOptions {
         if (CUSTOMIZATIONS_FILE.exists()) {
             this.load();
         } else {
-            this.customizations.put("sleeveGloves", false);
             this.customizations.put("haloEnabled", true);
             this.customizations.put("haloColor", "");
             this.customizations.put("developerGlowEnabled", false);
@@ -61,19 +60,6 @@ public class CustomizationsOptions {
         } catch (IOException exception) {
             Aether.LOGGER.warn("Failed to save Aether perk customizations: ", exception);
         }
-    }
-
-    public boolean areSleeveGloves() {
-        Object value = this.get("sleeveGloves");
-        if (value instanceof Boolean bool) {
-            return bool;
-        } else {
-            return false;
-        }
-    }
-
-    public void setAreSleeveGloves(boolean value) {
-        this.set("sleeveGloves", value);
     }
 
     public boolean isHaloEnabled() {

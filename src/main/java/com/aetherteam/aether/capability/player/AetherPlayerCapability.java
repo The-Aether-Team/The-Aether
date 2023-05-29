@@ -80,6 +80,8 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	private float wingRotation;
 
+	private int invisibilityAttackCooldown;
+	private boolean attackedWithInvisibility;
 	private boolean wearingInvisibilityCloak;
 
 	private static final int FLIGHT_TIMER_MAX = 52;
@@ -152,6 +154,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		tag.putInt("EnchantedDartCount_Syncing", this.getEnchantedDartCount());
 		tag.putInt("FlightTimer_Syncing", this.getFlightTimer());
 		tag.putFloat("FlightModifier_Syncing", this.getFlightModifier());
+		tag.putBoolean("AttackedWithInvisibility_Syncing", this.attackedWithInvisibility());
 		tag.putBoolean("WearingInvisibilityCloak_Syncing", this.isWearingInvisibilityCloak());
 		tag.putInt("LifeShardCount_Syncing", this.getLifeShardCount());
 		if (this.getLastRiddenMoa() != null) {
@@ -180,14 +183,17 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		if (tag.contains("FlightModifier_Syncing")) {
 			this.setFlightModifier(tag.getFloat("FlightModifier_Syncing"));
 		}
+		if (tag.contains("AttackedWithInvisibility_Syncing")) {
+			this.setAttackedWithInvisibility(tag.getBoolean("AttackedWithInvisibility_Syncing"));
+		}
+		if (tag.contains("WearingInvisibilityCloak_Syncing")) {
+			this.setWearingInvisibilityCloak(tag.getBoolean("WearingInvisibilityCloak_Syncing"));
+		}
 		if (tag.contains("LifeShardCount_Syncing")) {
 			this.setLifeShardCount(tag.getInt("LifeShardCount_Syncing"));
 		}
 		if (tag.contains("LastRiddenMoa_Syncing")) {
 			this.setLastRiddenMoa(tag.getUUID("LastRiddenMoa_Syncing"));
-		}
-		if (tag.contains("WearingInvisibilityCloak_Syncing")) {
-			this.setWearingInvisibilityCloak(tag.getBoolean("WearingInvisibilityCloak_Syncing"));
 		}
 	}
 
@@ -232,6 +238,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		this.handleRemoveDarts();
 		this.tickDownRemedy();
 		this.tickDownProjectileImpact();
+		this.handleAttackCooldown();
 		this.handleVampireHealing();
 		this.checkToRemoveAerbunny();
 		this.checkToRemoveCloudMinions();
@@ -384,6 +391,19 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 			} else {
 				this.setProjectileImpactedMaximum(0);
 				this.setProjectileImpactedTimer(0);
+			}
+		}
+	}
+
+	private void handleAttackCooldown() {
+		if (!this.getPlayer().getLevel().isClientSide()) {
+			if (this.attackedWithInvisibility()) {
+				--this.invisibilityAttackCooldown;
+				if (this.invisibilityAttackCooldown <= 0) {
+					this.setAttackedWithInvisibility(false);
+				}
+			} else {
+				this.invisibilityAttackCooldown = AetherConfig.SERVER.invisibility_visibility_time.get();
 			}
 		}
 	}
@@ -699,7 +719,19 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	}
 
 	@Override
+	public void setAttackedWithInvisibility(boolean attacked) {
+		this.markDirty(true);
+		this.attackedWithInvisibility = attacked;
+	}
+
+	@Override
+	public boolean attackedWithInvisibility() {
+		return this.attackedWithInvisibility;
+	}
+
+	@Override
 	public void setWearingInvisibilityCloak(boolean wearing) {
+		this.markDirty(true);
 		this.wearingInvisibilityCloak = wearing;
 	}
 
@@ -805,7 +837,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	@Override
 	public int getLifeShardLimit() {
-		return AetherConfig.COMMON.maximum_life_shards.get();
+		return AetherConfig.SERVER.maximum_life_shards.get();
 	}
 
 	@Override

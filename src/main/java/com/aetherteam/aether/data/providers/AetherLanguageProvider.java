@@ -112,6 +112,10 @@ public abstract class AetherLanguageProvider extends LanguageProvider {
         this.add("aether.pro_tips.line." + this.id + "." + key, name);
     }
 
+    public void addServerConfig(String prefix, String key, String name) {
+        this.add("config." + this.id + ".server." + prefix + "." + key, name);
+    }
+
     public void addCommonConfig(String prefix, String key, String name) {
         this.add("config." + this.id + ".common." + prefix + "." + key, name);
     }

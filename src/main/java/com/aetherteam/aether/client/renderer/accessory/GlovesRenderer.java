@@ -4,7 +4,6 @@ import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.aetherteam.aether.client.renderer.accessory.model.GlovesModel;
 import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
 import com.aetherteam.aether.mixin.mixins.client.accessor.PlayerModelAccessor;
-import com.aetherteam.aether.perk.CustomizationsOptions;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
@@ -27,34 +26,25 @@ import top.theillusivec4.curios.api.client.ICurioRenderer;
 public class GlovesRenderer implements ICurioRenderer {
     private final GlovesModel glovesModel;
     private final GlovesModel glovesModelSlim;
-    private final GlovesModel glovesArmModel;
-    private final GlovesModel glovesArmModelSlim;
-    private final GlovesModel glovesSleeveModel;
-    private final GlovesModel glovesSleeveModelSlim;
+    private final GlovesModel glovesFirstPerson;
 
     public GlovesRenderer() {
         this.glovesModel = new GlovesModel(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.GLOVES));
         this.glovesModelSlim = new GlovesModel(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.GLOVES_SLIM));
-        this.glovesArmModel = new GlovesModel(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.GLOVES_ARM));
-        this.glovesArmModelSlim = new GlovesModel(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.GLOVES_ARM_SLIM));
-        this.glovesSleeveModel = new GlovesModel(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.GLOVES_SLEEVE));
-        this.glovesSleeveModelSlim = new GlovesModel(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.GLOVES_SLEEVE_SLIM));
+        this.glovesFirstPerson = new GlovesModel(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.GLOVES_FIRST_PERSON));
     }
 
     @Override
     public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack poseStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource buffer, int light, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         GlovesItem glovesItem = (GlovesItem) stack.getItem();
-        GlovesModel model;
-        ResourceLocation texture;
+        GlovesModel model = this.glovesModel;
+        ResourceLocation texture = glovesItem.getGlovesTexture();
 
-        if (!(renderLayerParent.getModel() instanceof PlayerModel<?> playerModel)) {
-            model = this.glovesModel;
-            texture = glovesItem.getGlovesTexture();
-        } else {
+        if (renderLayerParent.getModel() instanceof PlayerModel<?> playerModel) {
             PlayerModelAccessor playerModelAccessor = (PlayerModelAccessor) playerModel;
             model = playerModelAccessor.aether$getSlim() ? this.glovesModelSlim : this.glovesModel;
-            texture = playerModelAccessor.aether$getSlim() ? glovesItem.getGlovesSlimTexture() : glovesItem.getGlovesTexture();
         }
+
         ICurioRenderer.followBodyRotations(slotContext.entity(), model);
 
         float red = glovesItem.getColors(stack).getLeft();
@@ -66,16 +56,7 @@ public class GlovesRenderer implements ICurioRenderer {
     }
 
     public void renderFirstPerson(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, AbstractClientPlayer player, HumanoidArm arm) {
-        GlovesModel model;
-
-        boolean isSlim = player.getModelName().equals("slim");
-        boolean isSleeve = CustomizationsOptions.INSTANCE.areSleeveGloves();
-
-        if (!isSlim) {
-            model = !isSleeve ? this.glovesArmModel : this.glovesSleeveModel;
-        } else {
-            model = !isSleeve ? this.glovesArmModelSlim : this.glovesSleeveModelSlim;
-        }
+        GlovesModel model = this.glovesFirstPerson;
 
         model.setAllVisible(false);
         model.attackTime = 0.0F;
@@ -84,7 +65,7 @@ public class GlovesRenderer implements ICurioRenderer {
         model.setupAnim(player, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
 
         GlovesItem glovesItem = (GlovesItem) stack.getItem();
-        VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.armorCutoutNoCull(!isSlim ? glovesItem.getGlovesTexture() : glovesItem.getGlovesSlimTexture()), false, stack.isEnchanted());
+        VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.armorCutoutNoCull(glovesItem.getGlovesTexture()), false, stack.isEnchanted());
 
         float red = glovesItem.getColors(stack).getLeft();
         float green = glovesItem.getColors(stack).getMiddle();

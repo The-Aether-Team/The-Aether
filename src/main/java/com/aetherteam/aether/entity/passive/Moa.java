@@ -13,6 +13,8 @@ import com.aetherteam.aether.entity.ai.navigator.FallPathNavigation;
 
 import com.aetherteam.aether.entity.monster.AechorPlant;
 import com.aetherteam.aether.entity.monster.Swet;
+import com.aetherteam.aether.event.dispatch.AetherEventDispatch;
+import com.aetherteam.aether.event.events.EggLayEvent;
 import com.aetherteam.aether.item.miscellaneous.MoaEggItem;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.AetherTags;
@@ -196,8 +198,15 @@ public class Moa extends MountableAnimal implements WingedBird {
 			if (!this.isBaby() && this.getPassengers().isEmpty() && --this.eggTime <= 0) {
 				MoaType moaType = this.getMoaType();
 				if (moaType != null) {
-					this.playSound(AetherSoundEvents.ENTITY_MOA_EGG.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-					this.spawnAtLocation(this.getMoaType().getEgg());
+					EggLayEvent eggLayEvent = AetherEventDispatch.onLayEgg(this, AetherSoundEvents.ENTITY_MOA_EGG.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F, this.getMoaType().getEgg());
+					if (!eggLayEvent.isCanceled()) {
+						if (eggLayEvent.getSound() != null) {
+							this.playSound(eggLayEvent.getSound(), eggLayEvent.getVolume(), eggLayEvent.getPitch());
+						}
+						if (eggLayEvent.getItem() != null) {
+							this.spawnAtLocation(eggLayEvent.getItem());
+						}
+					}
 				}
 				this.eggTime = this.getEggTime();
 			}

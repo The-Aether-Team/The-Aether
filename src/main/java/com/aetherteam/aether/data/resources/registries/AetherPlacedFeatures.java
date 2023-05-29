@@ -80,13 +80,13 @@ public class AetherPlacedFeatures {
                 NoiseThresholdCountPlacement.of(-0.8D, 5, 10),
                 ImprovedLayerPlacementModifier.of(Heightmap.Types.MOTION_BLOCKING, UniformInt.of(0, 1), 4),
                 BiomeFilter.biome(),
-                new ConfigFilter(AetherConfig.COMMON.generate_tall_grass));
+                new ConfigFilter(AetherConfig.SERVER.generate_tall_grass));
         register(context, TALL_GRASS_PATCH_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.TALL_GRASS_PATCH_CONFIGURATION),
                 NoiseThresholdCountPlacement.of(-0.8D, 0, 7),
                 RarityFilter.onAverageOnceEvery(32),
                 ImprovedLayerPlacementModifier.of(Heightmap.Types.MOTION_BLOCKING, UniformInt.of(0, 1), 4),
                 BiomeFilter.biome(),
-                new ConfigFilter(AetherConfig.COMMON.generate_tall_grass));
+                new ConfigFilter(AetherConfig.SERVER.generate_tall_grass));
         register(context, WHITE_FLOWER_PATCH_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.WHITE_FLOWER_PATCH_CONFIGURATION),
                 RarityFilter.onAverageOnceEvery(8),
                 ImprovedLayerPlacementModifier.of(Heightmap.Types.MOTION_BLOCKING, UniformInt.of(0, 1), 4),
