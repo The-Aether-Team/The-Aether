@@ -557,6 +557,41 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .save(consumer, name("skyroot_milk_bucket_cake"));
 
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, Blocks.CAKE)
+                .group("minecraft:cake")
+                .define('A', Items.MILK_BUCKET)
+                .define('B', Items.SUGAR)
+                .define('C', Items.WHEAT)
+                .define('E', AetherTags.Items.MOA_EGGS)
+                .pattern("AAA")
+                .pattern("BEB")
+                .pattern("CCC")
+                .unlockedBy("has_moa_egg", has(AetherTags.Items.MOA_EGGS))
+                .save(consumer, name("moa_egg_cake"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, Blocks.CAKE)
+                .group("minecraft:cake")
+                .define('A', AetherItems.SKYROOT_MILK_BUCKET.get())
+                .define('B', Items.SUGAR)
+                .define('C', Items.WHEAT)
+                .define('E', AetherTags.Items.MOA_EGGS)
+                .pattern("AAA")
+                .pattern("BEB")
+                .pattern("CCC")
+                .unlockedBy("has_moa_egg", has(AetherTags.Items.MOA_EGGS))
+                .save(consumer, name("skyroot_milk_bucket_moa_egg_cake"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.PUMPKIN_PIE)
+                .group("minecraft:pumpkin_pie")
+                .requires(Blocks.PUMPKIN)
+                .requires(Items.SUGAR)
+                .requires(AetherTags.Items.MOA_EGGS)
+                .unlockedBy("has_carved_pumpkin", has(Blocks.CARVED_PUMPKIN))
+                .unlockedBy("has_pumpkin", has(Blocks.PUMPKIN))
+                .save(consumer, name("moa_egg_pumpkin_pie"));
+
+
+
         smeltingOreRecipe(AetherItems.AMBROSIUM_SHARD.get(), AetherBlocks.AMBROSIUM_ORE.get(), 0.1F).save(consumer, name("ambrosium_shard_from_smelting"));
         blastingOreRecipe(AetherItems.AMBROSIUM_SHARD.get(), AetherBlocks.AMBROSIUM_ORE.get(), 0.1F).save(consumer, name("ambrosium_shard_from_blasting"));
 
