@@ -11,6 +11,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -44,13 +45,7 @@ public class AvoidObstacles extends Behavior<Slider> {
         Direction direction = SliderAi.calculateDirection(targetPos.x - slider.getX(), targetPos.y - slider.getY(), targetPos.z - slider.getZ());
         AABB collisionBox = SliderAi.calculateAdjacentBox(slider.getBoundingBox(), direction);
 
-        boolean isTouchingWall = false;
-        for (BlockPos pos : BlockPos.betweenClosed(Mth.floor(collisionBox.minX), Mth.floor(collisionBox.minY), Mth.floor(collisionBox.minZ), Mth.ceil(collisionBox.maxX - 1), Mth.ceil(collisionBox.maxY - 1), Mth.ceil(collisionBox.maxZ - 1))) {
-            if (slider.level.getBlockState(pos).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
-                isTouchingWall = true;
-                break;
-            }
-        }
+        boolean isTouchingWall = this.isTouchingWall(slider.level, collisionBox);
 
         if (isTouchingWall) {
             BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
@@ -70,5 +65,14 @@ public class AvoidObstacles extends Behavior<Slider> {
             brain.setMemory(AetherMemoryModuleTypes.TARGET_POSITION.get(), new Vec3(currentPos.x, y, currentPos.z));
             brain.setMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get(), Direction.UP);
         }
+    }
+
+    private boolean isTouchingWall(Level level, AABB collisionBox) {
+        for (BlockPos pos : BlockPos.betweenClosed(Mth.floor(collisionBox.minX), Mth.floor(collisionBox.minY), Mth.floor(collisionBox.minZ), Mth.ceil(collisionBox.maxX - 1), Mth.ceil(collisionBox.maxY - 1), Mth.ceil(collisionBox.maxZ - 1))) {
+            if (level.getBlockState(pos).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
