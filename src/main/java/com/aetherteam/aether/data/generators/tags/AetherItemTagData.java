@@ -257,6 +257,15 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherItems.VALKYRIE_BOOTS.get(),
                 AetherItems.SENTRY_BOOTS.get());
 
+        this.tag(AetherTags.Items.RANDOMIUM_BLACKLIST).addTags(
+                AetherTags.Items.LOCKED_DUNGEON_BLOCKS,
+                AetherTags.Items.TRAPPED_DUNGEON_BLOCKS,
+                AetherTags.Items.BOSS_DOORWAY_DUNGEON_BLOCKS,
+                AetherTags.Items.TREASURE_DOORWAY_DUNGEON_BLOCKS).add(
+                AetherBlocks.CHEST_MIMIC.get().asItem(),
+                AetherBlocks.TREASURE_CHEST.get().asItem()
+        );
+
         // Vanilla
         this.tag(ItemTags.STONE_CRAFTING_MATERIALS).add(AetherBlocks.HOLYSTONE.get().asItem());
         this.tag(ItemTags.STONE_BRICKS).add(AetherBlocks.HOLYSTONE_BRICKS.get().asItem()).addTag(AetherTags.Items.DUNGEON_BLOCKS);

@@ -130,12 +130,18 @@ public class AetherTags {
 
 		public static final TagKey<Item> ACCESSORIES = tag("accessories");
 
+		public static final TagKey<Item> RANDOMIUM_BLACKLIST = moddedTag("randomium", "blacklist");
+
 		private static TagKey<Item> tag(String name) {
 			return TagKey.create(Registries.ITEM, new ResourceLocation(Aether.MODID, name));
 		}
 
 		private static TagKey<Item> curio(String name) {
 			return TagKey.create(Registries.ITEM, new ResourceLocation(CuriosApi.MODID, name));
+		}
+
+		private static TagKey<Item> moddedTag(String modid, String name) {
+			return TagKey.create(Registries.ITEM, new ResourceLocation(modid, name));
 		}
 	}
 
