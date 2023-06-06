@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:smithing_transform",
+  "type": "minecraft:smithing",
   "addition": {
     "item": "minecraft:netherite_ingot"
   },
@@ -8,8 +8,5 @@
   },
   "result": {
     "item": "aether:netherite_gloves"
-  },
-  "template": {
-    "item": "minecraft:netherite_upgrade_smithing_template"
   }
 }
