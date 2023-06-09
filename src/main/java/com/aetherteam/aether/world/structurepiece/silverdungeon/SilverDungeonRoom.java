@@ -2,7 +2,6 @@ package com.aetherteam.aether.world.structurepiece.silverdungeon;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.block.AetherBlocks;
-import com.aetherteam.aether.block.dungeon.ChestMimicBlock;
 import com.aetherteam.aether.loot.AetherLoot;
 import com.aetherteam.aether.world.processor.DoubleDropsProcessor;
 import com.aetherteam.aether.world.structurepiece.AetherStructurePieceTypes;
@@ -13,9 +12,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.ChestBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
@@ -45,22 +44,19 @@ public class SilverDungeonRoom extends SilverDungeonPiece {
 
     @Override
     protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox box) {
-        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
         if (name.equals("Chest")) {
+            level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
             BlockPos.MutableBlockPos chestPos = pos.mutable();
-            int y = pos.getY() - 1;
-            chestPos.set(this.boundingBox.minX() + random.nextInt(this.boundingBox.getXSpan()), y, this.boundingBox.minZ() + random.nextInt(this.boundingBox.getZSpan()));
-            if (level.isEmptyBlock(chestPos)) {
-                Direction facing = Direction.from2DDataValue(random.nextInt(4));
-                if (random.nextInt(5) > 1) {
-                    level.setBlock(chestPos, Blocks.CHEST.defaultBlockState().setValue(ChestBlock.FACING, facing), 2);
-                    if (level.getBlockEntity(chestPos) instanceof ChestBlockEntity chest) {
-                        chest.setLootTable(AetherLoot.SILVER_DUNGEON, random.nextLong());
-                    }
-                } else {
-                    level.setBlock(chestPos, AetherBlocks.CHEST_MIMIC.get().defaultBlockState().setValue(ChestMimicBlock.FACING, facing), 1 | 2);
-                }
-            }
+            chestPos.set(this.boundingBox.minX() + random.nextInt(this.boundingBox.getXSpan()), pos.getY(), this.boundingBox.minZ() + random.nextInt(this.boundingBox.getZSpan()));
+            // If the random position is outside of the chunk, bring it back to the starting spot.
+            this.placeChestOrMimic(level, box, random, box.isInside(chestPos) ? chestPos : pos);
         }
+    }
+
+    private void placeChestOrMimic(ServerLevelAccessor level, BoundingBox generatingChunk, RandomSource random, BlockPos pos) {
+        BlockState state = (random.nextInt(5) > 1 ? Blocks.CHEST : AetherBlocks.CHEST_MIMIC.get()).defaultBlockState();
+        Direction facing = Direction.from2DDataValue(random.nextInt(4));
+        state.setValue(HorizontalDirectionalBlock.FACING, facing);
+        this.createChest(level, generatingChunk, random, pos, AetherLoot.SILVER_DUNGEON, state);
     }
 }
