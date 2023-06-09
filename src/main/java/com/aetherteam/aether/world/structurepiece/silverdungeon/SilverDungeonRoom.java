@@ -2,6 +2,7 @@ package com.aetherteam.aether.world.structurepiece.silverdungeon;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.block.AetherBlocks;
+import com.aetherteam.aether.block.dungeon.ChestMimicBlock;
 import com.aetherteam.aether.loot.AetherLoot;
 import com.aetherteam.aether.world.processor.DoubleDropsProcessor;
 import com.aetherteam.aether.world.structurepiece.AetherStructurePieceTypes;
@@ -12,6 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
@@ -49,13 +51,14 @@ public class SilverDungeonRoom extends SilverDungeonPiece {
             int y = pos.getY() - 1;
             chestPos.set(this.boundingBox.minX() + random.nextInt(this.boundingBox.getXSpan()), y, this.boundingBox.minZ() + random.nextInt(this.boundingBox.getZSpan()));
             if (level.isEmptyBlock(chestPos)) {
+                Direction facing = Direction.from2DDataValue(random.nextInt(4));
                 if (random.nextInt(5) > 1) {
-                    level.setBlock(chestPos, Blocks.CHEST.defaultBlockState(), 2);
+                    level.setBlock(chestPos, Blocks.CHEST.defaultBlockState().setValue(ChestBlock.FACING, facing), 2);
                     if (level.getBlockEntity(chestPos) instanceof ChestBlockEntity chest) {
                         chest.setLootTable(AetherLoot.SILVER_DUNGEON, random.nextLong());
                     }
                 } else {
-                    level.setBlock(chestPos, AetherBlocks.CHEST_MIMIC.get().defaultBlockState(), 1 | 2);
+                    level.setBlock(chestPos, AetherBlocks.CHEST_MIMIC.get().defaultBlockState().setValue(ChestMimicBlock.FACING, facing), 1 | 2);
                 }
             }
         }
