@@ -522,6 +522,12 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy, IEn
         return false;
     }
 
+    // The slider should not be making footstep sounds.
+    @Override
+    protected Entity.MovementEmission getMovementEmission() {
+        return Entity.MovementEmission.EVENTS;
+    }
+
     @Override
     public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
