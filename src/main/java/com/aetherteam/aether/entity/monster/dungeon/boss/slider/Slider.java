@@ -6,7 +6,7 @@ import com.aetherteam.aether.api.BossRoomTracker;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.BossMob;
-import com.aetherteam.aether.entity.ai.controller.BlankMoveControl;
+import com.aetherteam.aether.entity.ai.navigator.AxisAlignedPathNavigation;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.client.BossInfoPacket;
 import com.mojang.serialization.Dynamic;
@@ -35,6 +35,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -68,8 +69,13 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy, IEn
         this.bossFight.setVisible(false);
         this.xpReward = XP_REWARD_BOSS;
         this.setRot(0, 0);
-        this.moveControl = new BlankMoveControl(this);
+        this.moveControl = new SliderMoveControl(this);
         this.setPersistenceRequired();
+    }
+
+    @Override
+    protected PathNavigation createNavigation(Level level) {
+        return new AxisAlignedPathNavigation(this, level);
     }
 
     @Override
@@ -122,6 +128,9 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy, IEn
         if (this.getChatCooldown() > 0) {
             this.chatCooldown--;
         }
+        /*if (this.tickCount % 20 == 0 && this.lastHurtByPlayer != null) {
+            this.navigation.moveTo(this.lastHurtByPlayer, 1);
+        }*/
     }
 
     @SuppressWarnings("unchecked")
@@ -409,11 +418,11 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy, IEn
         return this.isCritical() ? 1 + this.random.nextInt(10) : 2 + this.random.nextInt(14);
     }
 
-    protected float getVelocityIncrease() {
+    public float getVelocityIncrease() {
         return this.isCritical() ? 0.045F - (this.getHealth()/10000) : 0.035F - (this.getHealth()/30000);
     }
 
-    protected float getMaxVelocity() {
+    public float getMaxVelocity() {
         return 2.5F;
     }
 

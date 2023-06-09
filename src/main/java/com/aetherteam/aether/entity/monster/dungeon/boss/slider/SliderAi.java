@@ -10,6 +10,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.ai.behavior.MoveToTargetSink;
+import net.minecraft.world.entity.ai.behavior.SetWalkTargetFromAttackTargetIfTargetOutOfReach;
 import net.minecraft.world.entity.ai.behavior.StartAttacking;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.Sensor;
@@ -32,20 +34,25 @@ public class SliderAi {
             MemoryModuleType.NEAREST_VISIBLE_PLAYER,
             MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER,
             MemoryModuleType.ATTACK_TARGET,
-            MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE, // For the StartAttacking behavior
             AetherMemoryModuleTypes.AGGRO_TRACKER.get(),
             AetherMemoryModuleTypes.HAS_ATTACKED.get(),
             AetherMemoryModuleTypes.MOVE_DELAY.get(),
-            AetherMemoryModuleTypes.MOVE_DIRECTION.get(),
-            AetherMemoryModuleTypes.TARGET_POSITION.get()
+            MemoryModuleType.PATH,
+            MemoryModuleType.WALK_TARGET,
+            MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE,
+            MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE, // For the StartAttacking behavior
+            MemoryModuleType.LOOK_TARGET, // For SetWalkTargetFromAttackTargetIfTargetOutOfReach
+            MemoryModuleType.NEAREST_VISIBLE_LIVING_ENTITIES // For SetWalkTargetFromAttackTargetIfTargetOutOfReach
     );
     private static final ImmutableList<Activity> ACTIVITY_PRIORITY = ImmutableList.of(Activity.FIGHT, Activity.IDLE);
 
     public static Brain<Slider> makeBrain(Dynamic<?> dynamic) {
         Brain<Slider> brain = Brain.provider(MEMORY_TYPES, SENSOR_TYPES).makeBrain(dynamic);
-        initFightActivity(brain);
         // Initialize the aggro tracker
         brain.setMemory(AetherMemoryModuleTypes.AGGRO_TRACKER.get(), new Object2DoubleOpenHashMap<>());
+        initFightActivity(brain);
+        brain.setDefaultActivity(Activity.IDLE);
+        brain.useDefaultActivity();
         return brain;
     }
 
@@ -54,10 +61,11 @@ public class SliderAi {
                 StartAttacking.create(SliderAi::findNearestValidAttackTarget),
                 new Collide(),
                 new Crush(),
-                new BackOffAfterAttack(),
-                new SetPathUpOrDown(),
-                new AvoidObstacles(),
-                new Move()
+//                new BackOffAfterAttack(),
+//                new SetPathUpOrDown(),
+//                new AvoidObstacles(),
+                SetWalkTargetFromAttackTargetIfTargetOutOfReach.create(1),
+                new MoveToTargetSink()
         ));
     }
 

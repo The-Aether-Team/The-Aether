@@ -9,6 +9,7 @@ import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
+import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Optional;
@@ -20,7 +21,7 @@ public class Move extends Behavior<Slider> {
     private float velocity;
 
     public Move() {
-        super(ImmutableMap.of(AetherMemoryModuleTypes.MOVE_DELAY.get(), MemoryStatus.VALUE_ABSENT, AetherMemoryModuleTypes.MOVE_DIRECTION.get(), MemoryStatus.REGISTERED, AetherMemoryModuleTypes.TARGET_POSITION.get(), MemoryStatus.REGISTERED, MemoryModuleType.ATTACK_TARGET, MemoryStatus.REGISTERED));
+        super(ImmutableMap.of(AetherMemoryModuleTypes.MOVE_DELAY.get(), MemoryStatus.VALUE_ABSENT, AetherMemoryModuleTypes.MOVE_DIRECTION.get(), MemoryStatus.REGISTERED, MemoryModuleType.PATH, MemoryStatus.REGISTERED));
     }
 
     @Override

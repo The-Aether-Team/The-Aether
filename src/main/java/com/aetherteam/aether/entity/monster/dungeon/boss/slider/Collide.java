@@ -9,6 +9,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.Behavior;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.AABB;
@@ -47,8 +48,7 @@ public class Collide extends Behavior<Slider> {
                 entity.setDeltaMovement(entity.getDeltaMovement().multiply(4.0, 1.0, 4.0).add(0.0, 0.25, 0.0));
 
                 brain.setMemoryWithExpiry(AetherMemoryModuleTypes.HAS_ATTACKED.get(), Unit.INSTANCE, 20);
-                brain.setMemoryWithExpiry(AetherMemoryModuleTypes.MOVE_DELAY.get(), Unit.INSTANCE, slider.calculateMoveDelay());
-                brain.eraseMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get());
+                brain.eraseMemory(MemoryModuleType.WALK_TARGET);
 
                 // Stop the slider movement
                 slider.playSound(slider.getCollideSound(), 2.5F, 1.0F / (slider.getRandom().nextFloat() * 0.2F + 0.9F));
