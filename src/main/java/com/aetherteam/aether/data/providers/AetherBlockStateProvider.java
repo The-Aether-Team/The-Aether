@@ -3,6 +3,7 @@ package com.aetherteam.aether.data.providers;
 import com.aetherteam.aether.block.construction.AetherFarmBlock;
 import com.aetherteam.aether.block.AetherBlockStateProperties;
 import com.aetherteam.aether.block.dungeon.DoorwayBlock;
+import com.aetherteam.aether.block.dungeon.PillarBlock;
 import com.aetherteam.aether.block.miscellaneous.AetherFrostedIceBlock;
 import com.aetherteam.aether.block.miscellaneous.UnstableObsidianBlock;
 import net.minecraft.data.PackOutput;
@@ -315,8 +316,18 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
         this.axisBlock(block, this.extend(this.texture(this.name(block), "dungeon/"), "_side"), this.extend(this.texture(this.name(block), "dungeon/"), "_top"));
     }
 
-    public void pillarTop(RotatedPillarBlock block) {
-        this.axisBlock(block, this.texture("pillar_carved", "dungeon/"), this.texture(this.name(block), "dungeon/"));
+    public void pillarTop(PillarBlock block) {
+        ResourceLocation side = this.texture("pillar_carved", "dungeon/");
+        ResourceLocation end = this.texture(this.name(block), "dungeon/");
+        ModelFile vertical = this.models().cubeColumn(this.name(block), side, end);
+        ModelFile horizontal = this.models().cubeColumnHorizontal(this.name(block) + "_horizontal", side, end);
+        this.getVariantBuilder(block)
+                .partialState().with(PillarBlock.FACING, Direction.DOWN).modelForState().modelFile(vertical).rotationX(180).addModel()
+                .partialState().with(PillarBlock.FACING, Direction.EAST).modelForState().modelFile(horizontal).rotationX(90).rotationY(90).addModel()
+                .partialState().with(PillarBlock.FACING, Direction.NORTH).modelForState().modelFile(horizontal).rotationX(90).addModel()
+                .partialState().with(PillarBlock.FACING, Direction.SOUTH).modelForState().modelFile(horizontal).rotationX(90).rotationY(180).addModel()
+                .partialState().with(PillarBlock.FACING, Direction.UP).modelForState().modelFile(vertical).addModel()
+                .partialState().with(PillarBlock.FACING, Direction.WEST).modelForState().modelFile(horizontal).rotationX(90).rotationY(270).addModel();
     }
 
     public void present(Block block) {

@@ -157,8 +157,8 @@ public class AetherBlocks {
 
     public static final RegistryObject<RotatedPillarBlock> PILLAR = register("pillar",
             () -> new RotatedPillarBlock(Block.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(0.5F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
-    public static final RegistryObject<RotatedPillarBlock> PILLAR_TOP = register("pillar_top",
-            () -> new RotatedPillarBlock(Block.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(0.5F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
+    public static final RegistryObject<PillarBlock> PILLAR_TOP = register("pillar_top",
+            () -> new PillarBlock(Block.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(0.5F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<Block> PRESENT = register("present",
             () -> new Block(Block.Properties.of(Material.GRASS, MaterialColor.COLOR_GREEN).strength(0.1F).sound(SoundType.WOOL)));

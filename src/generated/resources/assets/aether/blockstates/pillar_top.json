@@ -1,16 +1,30 @@
 {
   "variants": {
-    "axis=x": {
+    "facing=down": {
+      "model": "aether:block/pillar_top",
+      "x": 180
+    },
+    "facing=east": {
       "model": "aether:block/pillar_top_horizontal",
       "x": 90,
       "y": 90
     },
-    "axis=y": {
-      "model": "aether:block/pillar_top"
-    },
-    "axis=z": {
+    "facing=north": {
       "model": "aether:block/pillar_top_horizontal",
       "x": 90
+    },
+    "facing=south": {
+      "model": "aether:block/pillar_top_horizontal",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "aether:block/pillar_top"
+    },
+    "facing=west": {
+      "model": "aether:block/pillar_top_horizontal",
+      "x": 90,
+      "y": 270
     }
   }
 }
