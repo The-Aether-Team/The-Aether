@@ -1,4 +1,4 @@
-package com.aetherteam.aether.block.dungeon;
+package com.aetherteam.aether.block.miscellaneous;
 
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -9,8 +9,8 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 
-public class PillarBlock extends DirectionalBlock {
-    public PillarBlock(Properties properties) {
+public class FacingPillarBlock extends DirectionalBlock {
+    public FacingPillarBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.UP));
     }
