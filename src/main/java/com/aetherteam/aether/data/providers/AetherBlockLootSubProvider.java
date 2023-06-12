@@ -184,6 +184,10 @@ public abstract class AetherBlockLootSubProvider extends BlockLootSubProvider {
                 .add(this.applyExplosionDecay(block, LootItem.lootTableItem(AetherItems.GINGERBREAD_MAN.get()).setWeight(8)
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(5.0F, 6.0F)))))
                 .add(this.applyExplosionDecay(block, LootItem.lootTableItem(AetherItems.CANDY_CANE_SWORD.get()).setWeight(1)))
+                .when(BlockLootAccessor.aether$hasSilkTouch().invert())
+        ).withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                .add(LootItem.lootTableItem(block))
+                .when(BlockLootAccessor.aether$hasSilkTouch())
         );
     }
 
