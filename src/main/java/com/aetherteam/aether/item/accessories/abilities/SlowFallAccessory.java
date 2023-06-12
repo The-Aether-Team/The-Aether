@@ -19,7 +19,7 @@ public interface SlowFallAccessory {
                 livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().multiply(1.0, 0.6, 1.0));
             }
         }
-        livingEntity.resetFallDistance();
+        livingEntity.checkSlowFallDistance();
         if (livingEntity instanceof ServerPlayer serverPlayer) { // Prevents the player from being kicked for flying.
             ServerGamePacketListenerImplAccessor serverGamePacketListenerImplAccessor = (ServerGamePacketListenerImplAccessor) serverPlayer.connection;
             serverGamePacketListenerImplAccessor.aether$setAboveGroundTickCount(0);
