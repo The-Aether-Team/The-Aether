@@ -284,7 +284,7 @@ public class AbilityHooks {
             if (debuffTools) {
                 if ((state.getBlock().getDescriptionId().startsWith("block.aether.") || state.is(AetherTags.Blocks.TREATED_AS_AETHER_BLOCK)) && !state.is(AetherTags.Blocks.TREATED_AS_VANILLA_BLOCK)) {
                     if (!stack.isEmpty() && stack.isCorrectToolForDrops(state) && !stack.getItem().getDescriptionId().startsWith("item.aether.") && !stack.is(AetherTags.Items.TREATED_AS_AETHER_ITEM)) {
-                        speed = (float) Math.pow(speed, -0.2);
+                        speed = (float) Math.pow(speed, speed > 1.0 ? -0.2 : 1.2);
                     }
                 }
             }
