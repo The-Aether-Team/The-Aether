@@ -171,6 +171,7 @@ public class AetherConfig {
         public final ConfigValue<Boolean> enable_trivia;
         public final ConfigValue<Boolean> enable_silver_hearts;
         public final ConfigValue<Boolean> disable_accessory_button;
+        public final ConfigValue<Boolean> disable_accessory_button_if_slots_modified;
         public final ConfigValue<Integer> button_inventory_x;
         public final ConfigValue<Integer> button_inventory_y;
         public final ConfigValue<Integer> button_creative_x;
@@ -250,6 +251,10 @@ public class AetherConfig {
                     .comment("Disables the Aether's accessories button from appearing in GUIs")
                     .translation("config.aether.client.gui.disable_accessory_button")
                     .define("Disables the accessories button", false);
+            disable_accessory_button_if_slots_modified = builder
+                    .comment("Disables the Aether's accessories button from appearing in GUIs if any slots have been removed")
+                    .translation("config.aether.client.gui.disable_accessory_button_if_slots_modified")
+                    .define("Disables the accessories button if slots were removed", true);
             button_inventory_x = builder
                     .comment("The x-coordinate of the accessories button in the inventory and curios menus")
                     .translation("config.aether.client.gui.button_inventory_x")
