@@ -29,21 +29,21 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.BossEvent;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.util.LazyOptional;
-import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.tags.ITagManager;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Optional;
 
 public class GuiHooks {
     public static final ResourceLocation BACKGROUND_LOCATION = new ResourceLocation(Aether.MODID, "textures/gui/options_background.png");
@@ -254,26 +254,13 @@ public class GuiHooks {
         return null;
     }
 
-    public static boolean areSlotsPresent() {
+    public static boolean areItemsPresent() {
         boolean flag = true;
-        Player player = Minecraft.getInstance().player;
-        if (player != null) {
-            LazyOptional<ICuriosItemHandler> lazyOptional = CuriosApi.getCuriosHelper().getCuriosHandler(player);
-            if (lazyOptional.isPresent()) {
-                Optional<ICuriosItemHandler> optional = lazyOptional.resolve();
-                if (optional.isPresent()) {
-                    ICuriosItemHandler handler = optional.get();
-                    for (String string : AccessoriesMenu.AETHER_IDENTIFIERS) {
-                        int slots = handler.getCurios().get(string).getSlots();
-                        if (string.equals("aether_accessory") || string.equals("aether_ring")) {
-                            flag = slots == 2;
-                        } else {
-                            flag = slots == 1;
-                        }
-                        if (!flag) {
-                            break;
-                        }
-                    }
+        for (String string : AccessoriesMenu.AETHER_IDENTIFIERS) {
+            ITagManager<Item> itemTags = ForgeRegistries.ITEMS.tags();
+            if (itemTags != null) {
+                if (itemTags.getTag(TagKey.create(Registries.ITEM, new ResourceLocation("curios", string))).isEmpty()) {
+                    flag = false;
                 }
             }
         }

@@ -1152,6 +1152,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addServerConfig("modpack", "portal_return_dimension_ID", "Sets the ID of the dimension that the Aether Portal will return the player to");
 
 
+        addCommonConfig("gameplay", "use_curios_menu", "Use the default Curios menu instead of the Aether's Accessories Menu. WARNING: Do not enable this without emptying your equipped accessories");
         addCommonConfig("gameplay", "start_with_portal", "On world creation, the player is given an Aether Portal Frame item to automatically go to the Aether with");
         addCommonConfig("gameplay", "enable_startup_loot", "When the player enters the Aether, they are given a Book of Lore and Golden Parachutes as starting loot");
         addCommonConfig("gameplay", "repeat_sun_spirit_dialogue", "Determines whether the Sun Spirit's dialogue when meeting him should play through every time you meet him");
@@ -1173,7 +1174,6 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addClientConfig("gui", "enable_trivia", "Adds random trivia and tips to the bottom of loading screens");
         addClientConfig("gui", "enable_silver_hearts", "Makes the extra hearts given by life shards display as silver colored");
         addClientConfig("gui", "disable_accessory_button", "Disables the Aether's accessories button from appearing in GUIs");
-        addClientConfig("gui", "disable_accessory_button_if_slots_modified", "Disables the Aether's accessories button from appearing in GUIs if any slots have been removed");
         addClientConfig("gui", "button_inventory_x", "The x-coordinate of the accessories button in the inventory and curios menus");
         addClientConfig("gui", "button_inventory_y", "The y-coordinate of the accessories button in the inventory and curios menus");
         addClientConfig("gui", "button_creative_x", "The x-coordinate of the accessories button in the creative menu");
@@ -1193,11 +1193,13 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addPackTitle("b173", "Aether b1.7.3 Textures");
         addPackTitle("ctm", "Aether CTM Fix");
         addPackTitle("colorblind", "Aether Colorblind Textures");
+        addPackTitle("curios", "Aether Curios Override");
 
         addPackDescription("mod", "Aether Resources");
         addPackDescription("125", "The classic look of the Aether from 1.2.5");
         addPackDescription("b173", "The original look of the Aether from b1.7.3");
         addPackDescription("ctm", "Fixes Quicksoil Glass Panes when using CTM");
         addPackDescription("colorblind", "Changes textures for color blindness accessibility");
+        addPackDescription("curios", "Replace Accessories Menu with Curios' menu");
     }
 }
