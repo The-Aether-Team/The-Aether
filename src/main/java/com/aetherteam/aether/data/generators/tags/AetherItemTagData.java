@@ -209,10 +209,7 @@ public class AetherItemTagData extends ItemTagsProvider {
         this.tag(Tags.Items.FENCES_WOODEN).add(AetherBlocks.SKYROOT_FENCE.get().asItem());
         this.tag(Tags.Items.FENCE_GATES).add(AetherBlocks.SKYROOT_FENCE_GATE.get().asItem());
         this.tag(Tags.Items.FENCES).add(AetherBlocks.SKYROOT_FENCE.get().asItem());
-        this.tag(Tags.Items.EGGS).add(
-                AetherItems.BLUE_MOA_EGG.get(),
-                AetherItems.WHITE_MOA_EGG.get(),
-                AetherItems.BLACK_MOA_EGG.get());
+        this.tag(Tags.Items.EGGS).addTag(AetherTags.Items.MOA_EGGS);
         this.tag(Tags.Items.GEMS).add(AetherItems.ZANITE_GEMSTONE.get());
         this.tag(Tags.Items.GLASS_COLORLESS).add(AetherBlocks.QUICKSOIL_GLASS.get().asItem());
         this.tag(Tags.Items.GLASS_PANES_COLORLESS).add(AetherBlocks.QUICKSOIL_GLASS_PANE.get().asItem());
@@ -259,6 +256,15 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherItems.OBSIDIAN_BOOTS.get(),
                 AetherItems.VALKYRIE_BOOTS.get(),
                 AetherItems.SENTRY_BOOTS.get());
+
+        this.tag(AetherTags.Items.RANDOMIUM_BLACKLIST).addTags(
+                AetherTags.Items.LOCKED_DUNGEON_BLOCKS,
+                AetherTags.Items.TRAPPED_DUNGEON_BLOCKS,
+                AetherTags.Items.BOSS_DOORWAY_DUNGEON_BLOCKS,
+                AetherTags.Items.TREASURE_DOORWAY_DUNGEON_BLOCKS).add(
+                AetherBlocks.CHEST_MIMIC.get().asItem(),
+                AetherBlocks.TREASURE_CHEST.get().asItem()
+        );
 
         // Vanilla
         this.tag(ItemTags.STONE_CRAFTING_MATERIALS).add(AetherBlocks.HOLYSTONE.get().asItem());

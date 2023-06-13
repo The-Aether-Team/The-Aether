@@ -69,7 +69,7 @@ public class AetherConfig {
             spawn_golden_feather = builder
                     .comment("Allows the Golden Feather to spawn in the Silver Dungeon loot table")
                     .translation("config.aether.server.loot.spawn_golden_feather")
-                    .define("Golden Feather in loot", true);
+                    .define("Golden Feather in loot", false);
             spawn_valkyrie_cape = builder
                     .comment("Allows the Valkyrie Cape to spawn in the Silver Dungeon loot table")
                     .translation("config.aether.server.loot.spawn_valkyrie_cape")

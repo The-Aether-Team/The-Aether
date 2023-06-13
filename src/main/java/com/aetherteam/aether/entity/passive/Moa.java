@@ -163,6 +163,14 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	@Override
+	public void onSyncedDataUpdated(@Nonnull EntityDataAccessor<?> dataAccessor) {
+		if (DATA_SITTING_ID.equals(dataAccessor)) {
+			this.refreshDimensions();
+		}
+		super.onSyncedDataUpdated(dataAccessor);
+	}
+
+	@Override
 	public void aiStep() {
 		super.aiStep();
 		this.animateWings();
@@ -253,7 +261,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 						this.setFlapCooldown(15);
 					}
 				}
-				this.resetFallDistance();
+				this.checkSlowFallDistance();
 			}
 		}
 	}
@@ -595,6 +603,24 @@ public class Moa extends MountableAnimal implements WingedBird {
 	@Override
 	public double getPassengersRidingOffset() {
 		return this.isSitting() ? 0.25 : 1.25;
+	}
+
+	@Override
+	public float getScale() {
+		return 1.0F;
+	}
+
+	@Nonnull
+	@Override
+	public EntityDimensions getDimensions(@Nonnull Pose pose) {
+		EntityDimensions dimensions = super.getDimensions(pose);
+		if (this.isSitting()) {
+			dimensions = dimensions.scale(1.0F, 0.5F);
+		}
+		if (this.isBaby()) {
+			dimensions = dimensions.scale(1.0F, 0.5F);
+		}
+		return dimensions;
 	}
 
 	@Nullable

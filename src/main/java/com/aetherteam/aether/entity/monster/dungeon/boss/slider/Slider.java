@@ -49,7 +49,6 @@ import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Scanner;
 
 public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy, IEntityAdditionalSpawnData {
     public static final EntityDataAccessor<Boolean> DATA_AWAKE_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.BOOLEAN);
@@ -166,8 +165,6 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy, IEn
                             }
                         }
                         this.setHurtAngle(0.7F - (this.getHealth() / 875.0F));
-
-                        attacker.getMainHandItem().hurtAndBreak(1, attacker, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 
                         SliderAi.wasHurtBy(this, attacker, amount);
 
@@ -523,6 +520,12 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy, IEn
     @Override
     public boolean isFullyFrozen() {
         return false;
+    }
+
+    // The slider should not be making footstep sounds.
+    @Override
+    protected Entity.MovementEmission getMovementEmission() {
+        return Entity.MovementEmission.EVENTS;
     }
 
     @Override

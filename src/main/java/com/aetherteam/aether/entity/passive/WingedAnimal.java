@@ -42,7 +42,7 @@ public abstract class WingedAnimal extends MountableAnimal {
     public void riderTick() {
         super.riderTick();
         if (this.getControllingPassenger() instanceof Player) {
-            this.resetFallDistance();
+            this.checkSlowFallDistance();
         }
     }
 
