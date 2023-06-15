@@ -121,6 +121,13 @@ public class AetherTags {
 		public static final TagKey<Item> TOOLS_LANCES = tag("tools/lances");
 		public static final TagKey<Item> TOOLS_HAMMERS = tag("tools/hammers");
 
+		public static final TagKey<Item> ACCESSORIES_RINGS = tag("accessories_rings");
+		public static final TagKey<Item> ACCESSORIES_PENDANTS = tag("accessories_pendants");
+		public static final TagKey<Item> ACCESSORIES_GLOVES = tag("accessories_gloves");
+		public static final TagKey<Item> ACCESSORIES_CAPES = tag("accessories_capes");
+		public static final TagKey<Item> ACCESSORIES_MISCELLANEOUS = tag("accessories_miscellaneous");
+		public static final TagKey<Item> ACCESSORIES_SHIELDS = tag("accessories_shields");
+
 		public static final TagKey<Item> AETHER_RING = curio("aether_ring");
 		public static final TagKey<Item> AETHER_PENDANT = curio("aether_pendant");
 		public static final TagKey<Item> AETHER_GLOVES = curio("aether_gloves");

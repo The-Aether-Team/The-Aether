@@ -132,12 +132,18 @@ public class AetherConfig {
     }
 
     public static class Common {
+        public final ConfigValue<Boolean> use_curios_menu;
         public final ConfigValue<Boolean> start_with_portal;
         public final ConfigValue<Boolean> enable_startup_loot;
         public final ConfigValue<Boolean> repeat_sun_spirit_dialogue;
 
         public Common(ForgeConfigSpec.Builder builder) {
             builder.push("Gameplay");
+            use_curios_menu = builder
+                    .worldRestart()
+                    .comment("Use the default Curios menu instead of the Aether's Accessories Menu. WARNING: Do not enable this without emptying your equipped accessories")
+                    .translation("config.aether.common.gameplay.use_curios_menu")
+                    .define("Use default Curios' menu", false);
             start_with_portal = builder
                     .comment("On world creation, the player is given an Aether Portal Frame item to automatically go to the Aether with")
                     .translation("config.aether.common.gameplay.start_with_portal")
