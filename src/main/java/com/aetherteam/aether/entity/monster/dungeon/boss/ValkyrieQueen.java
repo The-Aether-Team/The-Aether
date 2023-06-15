@@ -172,10 +172,10 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
                         BlockPos lowerPosition = this.blockPosition().offset(this.getMotionDirection().getNormal());
                         BlockState upperState = this.level.getBlockState(upperPosition);
                         BlockState lowerState = this.level.getBlockState(lowerPosition);
-                        if (!upperState.isAir() && !upperState.is(AetherTags.Blocks.VALKYRIE_QUEEN_UNBREAKABLE) && !upperState.getCollisionShape(this.level, upperPosition).isEmpty()) {
+                        if (!upperState.isAir() && !upperState.is(AetherTags.Blocks.VALKYRIE_QUEEN_UNBREAKABLE) && !upperState.getCollisionShape(this.level, upperPosition).isEmpty() && this.getDungeon().roomBounds().contains(upperPosition.getCenter())) {
                             this.getLevel().destroyBlock(upperPosition, true, this);
                             this.swing(InteractionHand.MAIN_HAND);
-                        } else if (!lowerState.isAir() && !lowerState.is(AetherTags.Blocks.VALKYRIE_QUEEN_UNBREAKABLE) && !lowerState.getCollisionShape(this.level, lowerPosition).isEmpty()) {
+                        } else if (!lowerState.isAir() && !lowerState.is(AetherTags.Blocks.VALKYRIE_QUEEN_UNBREAKABLE) && !lowerState.getCollisionShape(this.level, lowerPosition).isEmpty() && this.getDungeon().roomBounds().contains(lowerPosition.getCenter())) {
                             this.getLevel().destroyBlock(lowerPosition, true, this);
                             this.swing(InteractionHand.MAIN_HAND);
                         }
