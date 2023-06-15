@@ -624,6 +624,11 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     public void checkDespawn() {}
 
     @Override
+    protected boolean isAffectedByFluids() {
+        return !this.isInFluidType();
+    }
+
+    @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
