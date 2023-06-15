@@ -1,36 +1,48 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_golden_gloves": {
+    "has_chainmail_gloves": {
       "conditions": {
         "items": [
           {
             "items": [
-              "aether:golden_gloves"
+              "aether:chainmail_gloves"
             ]
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_golden_pendant": {
+    "has_iron_gloves": {
       "conditions": {
         "items": [
           {
             "items": [
-              "aether:golden_pendant"
+              "aether:iron_gloves"
             ]
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_golden_ring": {
+    "has_iron_pendant": {
       "conditions": {
         "items": [
           {
             "items": [
-              "aether:golden_ring"
+              "aether:iron_pendant"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_iron_ring": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aether:iron_ring"
             ]
           }
         ]
@@ -39,22 +51,23 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:aether_gold_nugget_from_smelting"
+        "recipe": "aether:aether_iron_nugget_from_smelting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_golden_gloves",
-      "has_golden_pendant",
-      "has_golden_ring",
+      "has_iron_gloves",
+      "has_iron_pendant",
+      "has_iron_ring",
+      "has_chainmail_gloves",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:aether_gold_nugget_from_smelting"
+      "aether:aether_iron_nugget_from_smelting"
     ]
   }
 }
