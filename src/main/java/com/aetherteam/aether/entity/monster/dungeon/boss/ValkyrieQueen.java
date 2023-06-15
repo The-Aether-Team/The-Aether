@@ -22,6 +22,7 @@ import com.aetherteam.aether.api.BossNameGenerator;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -62,6 +63,8 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec2;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
@@ -166,16 +169,22 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
         LivingEntity target = this.getTarget();
         if (!this.level.isClientSide()) {
             if (target != null) {
-                if (this.horizontalCollision) {
-                    if (ForgeEventFactory.getMobGriefingEvent(this.getLevel(), this)) {
-                        BlockPos upperPosition = BlockPos.containing(this.getEyePosition()).offset(this.getMotionDirection().getNormal());
-                        BlockPos lowerPosition = this.blockPosition().offset(this.getMotionDirection().getNormal());
+                if (ForgeEventFactory.getMobGriefingEvent(this.getLevel(), this)) {
+                    for (int i = 0; i < 2; i++) {
+                        Vec3i vector;
+                        if (i == 0 && this.horizontalCollision) {
+                            vector = this.getMotionDirection().getNormal();
+                        } else {
+                            vector = Vec3i.ZERO;
+                        }
+                        BlockPos upperPosition = BlockPos.containing(this.getEyePosition()).offset(vector);
+                        BlockPos lowerPosition = this.blockPosition().offset(vector);
                         BlockState upperState = this.level.getBlockState(upperPosition);
                         BlockState lowerState = this.level.getBlockState(lowerPosition);
-                        if (!upperState.isAir() && !upperState.is(AetherTags.Blocks.VALKYRIE_QUEEN_UNBREAKABLE) && !upperState.getCollisionShape(this.level, upperPosition).isEmpty() && this.getDungeon().roomBounds().contains(upperPosition.getCenter())) {
+                        if (!upperState.isAir() && !upperState.is(AetherTags.Blocks.VALKYRIE_QUEEN_UNBREAKABLE) && upperState.getShape(this.level, upperPosition).equals(Shapes.block()) && this.getDungeon().roomBounds().contains(upperPosition.getCenter())) {
                             this.getLevel().destroyBlock(upperPosition, true, this);
                             this.swing(InteractionHand.MAIN_HAND);
-                        } else if (!lowerState.isAir() && !lowerState.is(AetherTags.Blocks.VALKYRIE_QUEEN_UNBREAKABLE) && !lowerState.getCollisionShape(this.level, lowerPosition).isEmpty() && this.getDungeon().roomBounds().contains(lowerPosition.getCenter())) {
+                        } else if (!lowerState.isAir() && !lowerState.is(AetherTags.Blocks.VALKYRIE_QUEEN_UNBREAKABLE) && lowerState.getShape(this.level, lowerPosition).equals(Shapes.block()) && this.getDungeon().roomBounds().contains(lowerPosition.getCenter())) {
                             this.getLevel().destroyBlock(lowerPosition, true, this);
                             this.swing(InteractionHand.MAIN_HAND);
                         }
@@ -625,7 +634,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
 
     @Override
     protected boolean isAffectedByFluids() {
-        return !this.isInFluidType();
+        return this.jumping;
     }
 
     @Override
