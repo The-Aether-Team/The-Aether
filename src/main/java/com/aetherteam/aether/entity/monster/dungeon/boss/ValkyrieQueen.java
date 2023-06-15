@@ -1,5 +1,6 @@
 package com.aetherteam.aether.entity.monster.dungeon.boss;
 
+import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.api.BossRoomTracker;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.client.gui.screen.ValkyrieQueenDialogueScreen;
@@ -21,6 +22,7 @@ import com.aetherteam.aether.api.BossNameGenerator;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -32,8 +34,10 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.*;
@@ -50,7 +54,9 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
@@ -59,6 +65,7 @@ import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
@@ -146,6 +153,67 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
         super.customServerAiStep();
         this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
         this.trackDungeon();
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        this.breakBlocks();
+        this.evaporate();
+    }
+
+    private void breakBlocks() {
+        LivingEntity target = this.getTarget();
+        if (!this.level.isClientSide()) {
+            if (target != null) {
+                if (this.horizontalCollision) {
+                    if (ForgeEventFactory.getMobGriefingEvent(this.getLevel(), this)) {
+                        BlockPos upperPosition = BlockPos.containing(this.getEyePosition()).offset(this.getMotionDirection().getNormal());
+                        BlockPos lowerPosition = this.blockPosition().offset(this.getMotionDirection().getNormal());
+                        BlockState upperState = this.level.getBlockState(upperPosition);
+                        BlockState lowerState = this.level.getBlockState(lowerPosition);
+                        if (!upperState.isAir() && !upperState.is(AetherTags.Blocks.VALKYRIE_QUEEN_UNBREAKABLE) && !upperState.getCollisionShape(this.level, upperPosition).isEmpty()) {
+                            this.getLevel().destroyBlock(upperPosition, true, this);
+                            this.swing(InteractionHand.MAIN_HAND);
+                        } else if (!lowerState.isAir() && !lowerState.is(AetherTags.Blocks.VALKYRIE_QUEEN_UNBREAKABLE) && !lowerState.getCollisionShape(this.level, lowerPosition).isEmpty()) {
+                            this.getLevel().destroyBlock(lowerPosition, true, this);
+                            this.swing(InteractionHand.MAIN_HAND);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void evaporate() {
+        if (ForgeEventFactory.getMobGriefingEvent(this.getLevel(), this)) {
+            AABB entity = this.getBoundingBox();
+            BlockPos min = BlockPos.containing(entity.minX - 1, entity.minY - 1, entity.minZ - 1);
+            BlockPos max = BlockPos.containing(Math.ceil(entity.maxX - 1) + 1, Math.ceil(entity.maxY - 1) + 1, Math.ceil(entity.maxZ - 1) + 1);
+            for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
+                if (this.level.getBlockState(pos).getBlock() instanceof LiquidBlock && !this.level.getBlockState(pos).is(AetherTags.Blocks.VALKYRIE_QUEEN_UNBREAKABLE)) {
+                    this.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+                    this.evaporateEffects(pos);
+                } else if (!this.level.getFluidState(pos).isEmpty() && this.level.getBlockState(pos).hasProperty(BlockStateProperties.WATERLOGGED) && !this.level.getFluidState(pos).createLegacyBlock().is(AetherTags.Blocks.VALKYRIE_QUEEN_UNBREAKABLE)) {
+                    this.level.setBlockAndUpdate(pos, this.level.getBlockState(pos).setValue(BlockStateProperties.WATERLOGGED, false));
+                    this.evaporateEffects(pos);
+                }
+            }
+        }
+    }
+
+    private void evaporateEffects(BlockPos pos) {
+        this.blockDestroySmoke(pos);
+        this.level.playSound(null, pos, AetherSoundEvents.WATER_EVAPORATE.get(), SoundSource.BLOCKS, 0.5F, 2.6F + (this.level.random.nextFloat() - this.level.random.nextFloat()) * 0.8F);
+    }
+
+    protected void blockDestroySmoke(BlockPos pos) {
+        double a = pos.getX() + 0.5D + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375D;
+        double b = pos.getY() + 0.5D + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375D;
+        double c = pos.getZ() + 0.5D + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375D;
+        if (this.level instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(ParticleTypes.POOF, a, b, c, 1, 0.0, 0.0, 0.0, 0.0);
+        }
     }
 
     /**
