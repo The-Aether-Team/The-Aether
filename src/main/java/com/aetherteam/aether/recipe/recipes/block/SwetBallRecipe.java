@@ -13,6 +13,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
@@ -29,8 +30,8 @@ public class SwetBallRecipe extends AbstractBiomeParameterRecipe implements Matc
     }
 
     @Override
-    public boolean matches(Player player, Level level, BlockPos pos, ItemStack stack, BlockState oldState, BlockState newState) {
-        return MatchEventRecipe.super.matches(player, level, pos, stack, oldState, newState) && this.matches(level, pos, oldState);
+    public boolean matches(Player player, Level level, BlockPos pos, ItemStack stack, BlockState oldState, BlockState newState, RecipeType recipeType) {
+        return MatchEventRecipe.super.matches(player, level, pos, stack, oldState, newState, recipeType) && this.matches(level, pos, oldState);
     }
 
     @Override

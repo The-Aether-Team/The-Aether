@@ -8,6 +8,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
@@ -60,8 +61,8 @@ public class AetherEventDispatch {
 		return event;
 	}
 
-	public static ItemUseConvertEvent onItemUseConvert(Player player, LevelAccessor world, BlockPos pos, ItemStack stack, BlockState oldState, BlockState newState) {
-		ItemUseConvertEvent event = new ItemUseConvertEvent(player, world, pos, stack, oldState, newState);
+	public static ItemUseConvertEvent onItemUseConvert(Player player, LevelAccessor world, BlockPos pos, ItemStack stack, BlockState oldState, BlockState newState, RecipeType recipeType) {
+		ItemUseConvertEvent event = new ItemUseConvertEvent(player, world, pos, stack, oldState, newState, recipeType);
 		MinecraftForge.EVENT_BUS.post(event);
 		return event;
 	}

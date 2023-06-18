@@ -10,7 +10,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -20,8 +22,8 @@ public class AmbrosiumRecipe extends AbstractBlockStateRecipe implements MatchEv
     }
 
     @Override
-    public boolean matches(Player player, Level level, BlockPos pos, ItemStack stack, BlockState oldState, BlockState newState) {
-        return MatchEventRecipe.super.matches(player, level, pos, stack, oldState, newState) && this.matches(level, pos, oldState);
+    public boolean matches(Player player, Level level, BlockPos pos, ItemStack stack, BlockState oldState, BlockState newState, RecipeType recipeType) {
+        return MatchEventRecipe.super.matches(player, level, pos, stack, oldState, newState, recipeType) && this.matches(level, pos, oldState);
     }
 
     @Override
