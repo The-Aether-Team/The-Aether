@@ -45,6 +45,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
@@ -222,16 +223,18 @@ public class Slider extends PathfinderMob implements BossMob<Slider>, Enemy, IEn
     }
 
     private void evaporate() {
-        AABB entity = this.getBoundingBox();
-        BlockPos min = BlockPos.containing(entity.minX - 1, entity.minY - 1, entity.minZ - 1);
-        BlockPos max = BlockPos.containing(Math.ceil(entity.maxX - 1) + 1, Math.ceil(entity.maxY - 1) + 1, Math.ceil(entity.maxZ - 1) + 1);
-        for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
-            if (this.level.getBlockState(pos).getBlock() instanceof LiquidBlock) {
-                this.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-                this.evaporateEffects(pos);
-            } else if (!this.level.getFluidState(pos).isEmpty() && this.level.getBlockState(pos).hasProperty(BlockStateProperties.WATERLOGGED)) {
-                this.level.setBlockAndUpdate(pos, this.level.getBlockState(pos).setValue(BlockStateProperties.WATERLOGGED, false));
-                this.evaporateEffects(pos);
+        if (ForgeEventFactory.getMobGriefingEvent(this.getLevel(), this)) {
+            AABB entity = this.getBoundingBox();
+            BlockPos min = BlockPos.containing(entity.minX - 1, entity.minY - 1, entity.minZ - 1);
+            BlockPos max = BlockPos.containing(Math.ceil(entity.maxX - 1) + 1, Math.ceil(entity.maxY - 1) + 1, Math.ceil(entity.maxZ - 1) + 1);
+            for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
+                if (this.level.getBlockState(pos).getBlock() instanceof LiquidBlock) {
+                    this.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+                    this.evaporateEffects(pos);
+                } else if (!this.level.getFluidState(pos).isEmpty() && this.level.getBlockState(pos).hasProperty(BlockStateProperties.WATERLOGGED)) {
+                    this.level.setBlockAndUpdate(pos, this.level.getBlockState(pos).setValue(BlockStateProperties.WATERLOGGED, false));
+                    this.evaporateEffects(pos);
+                }
             }
         }
     }

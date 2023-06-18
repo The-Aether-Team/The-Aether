@@ -988,7 +988,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.SILVER_DUNGEON_KEY, "A reflective key that is given to you by the Valkyrie Queen after defeating her. Use it to claim the treasure she left behind!");
         addLore(AetherItems.SKYROOT_AXE, "One of Aether's wooden tools, it can be used to double Skyroot Log drops. Simple but useful for beginners.");
         addLore(AetherItems.SKYROOT_AXOLOTL_BUCKET,"A Skyroot Bucket with a friendly Axolotl in. Axolotls can be incredibly helpful aquatic partners. So it's best to keep one on hand if you're exploring wet environments.");
-        addLore(AetherBlocks.SKYROOT_BED, "Crafted with wool and skyroot planks. You can only sleep at night to skip night time, but during the day you can set your respawn point in the Aether. Cannot sleep while mobs are nearby.");
+        addLore(AetherBlocks.SKYROOT_BED, "Crafted with wool and Skyroot Planks. You can only sleep at night to skip night time, but during the day you can set your respawn point in the Aether. Cannot sleep while mobs are nearby.");
         addLore(AetherItems.SKYROOT_BOAT, "While the Aether does not have many large bodies of water, a boat can occasionally be a useful tool for crossing large distances over ice!");
         addLore(AetherItems.SKYROOT_CHEST_BOAT, "A Skyroot Boat with a handy chest in the back. Helpful for transporting more items over long stretches of water, which are famously difficult to find in the Aether.");
         addLore(AetherBlocks.SKYROOT_BOOKSHELF, "Crafted from Skyroot Planks and Books. Bookshelves can be used to enhance the enchanting capabilities of an enchanting table.");
@@ -996,8 +996,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherBlocks.SKYROOT_BUTTON, "Crafted from Skyroot Planks, a button used to activate mechanisms and redstone.");
         addLore(AetherItems.SKYROOT_COD_BUCKET, "A bucket with a Cod in it! Make sure to keep the water topped up or your new friend won't survive the journey home.");
         addLore(AetherBlocks.SKYROOT_DOOR, "Crafted from Skyroot Planks, an ornate door helpful for keeping an enclosed and safe space without worry of monsters wandering in.");
-        addLore(AetherBlocks.SKYROOT_FENCE, "Crafted from Skyroot planks and Sticks. Great for keeping your livestock safe from wandering predators!");
-        addLore(AetherBlocks.SKYROOT_FENCE_GATE, "Crafted from Sticks and Skyroot planks. Gives a homely entrance and exit to your precious enclosures.");
+        addLore(AetherBlocks.SKYROOT_FENCE, "Crafted from Skyroot Planks and Sticks. Great for keeping your livestock safe from wandering predators!");
+        addLore(AetherBlocks.SKYROOT_FENCE_GATE, "Crafted from Sticks and Skyroot Planks. Gives a homely entrance and exit to your precious enclosures.");
         addLore(AetherItems.SKYROOT_HOE, "One of Aether's wooden tools, used to till dirt to allow for planting of crops. Famously underappreciated.");
         addLore(AetherBlocks.SKYROOT_LEAVES, "These leaves generate with Skyroot Trees. They can drop Skyroot Saplings when decaying.");
         addLore(AetherBlocks.SKYROOT_LOG, "These spawn with Skyroot Trees. They can be double dropped with Skyroot Axes. When put in a Crafting Table they will provide 4 Skyroot Planks.");
