@@ -7,6 +7,7 @@ import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.WingedBird;
+import com.aetherteam.aether.entity.ai.goal.ContinuousMeleeAttackGoal;
 import com.aetherteam.aether.entity.ai.goal.FallingRandomStrollGoal;
 import com.aetherteam.aether.entity.ai.goal.MoaFollowGoal;
 import com.aetherteam.aether.entity.ai.navigator.FallPathNavigation;
@@ -98,7 +99,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 		this.goalSelector.addGoal(0, new FloatGoal(this));
 		this.goalSelector.addGoal(1, new PanicGoal(this, 0.65));
 		this.goalSelector.addGoal(2, new MoaFollowGoal(this, 1.0));
-		this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.0D, true));
+		this.goalSelector.addGoal(3, new ContinuousMeleeAttackGoal(this, 1.0D, true));
 		this.goalSelector.addGoal(4, new FallingRandomStrollGoal(this, 0.35));
 		this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6.0F));
 		this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));

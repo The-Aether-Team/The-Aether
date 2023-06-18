@@ -1,6 +1,12 @@
-// 1.19.4	2023-06-13T10:33:15.3687087	Tags for minecraft:item mod id aether
+// 1.19.4	2023-06-17T19:39:37.2536779	Tags for minecraft:item mod id aether
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/items/accepted_music_discs.json
 b1b83b96d9600b7878597cc26851b843bf99a3dd data/aether/tags/items/accessories.json
+99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/aether/tags/items/accessories_capes.json
+cd6129430937fd4b57b84a64be78f993ba915b85 data/aether/tags/items/accessories_gloves.json
+89af558945f41e6e1e5e29c9da8dc0324f4c9cc2 data/aether/tags/items/accessories_miscellaneous.json
+dfabf018a03431c6925f20338e5f5b105beacae6 data/aether/tags/items/accessories_pendants.json
+cd70d1f5f10c0f6f5aaa22bcd218352b3a14cb69 data/aether/tags/items/accessories_rings.json
+3f9727bd2367c552a68056fe20cf61a448d0e81e data/aether/tags/items/accessories_shields.json
 6404c17e75ed612591fd253fd1cfd8c6a5ea4a8a data/aether/tags/items/aerbunny_temptation_items.json
 7f0ca5740d7eeb3d83a96088ad6c30a672b55609 data/aether/tags/items/aerclouds.json
 16a15f0767946dfa61ee9dfb544a3aeb3439340c data/aether/tags/items/aerogel.json
@@ -64,12 +70,12 @@ c26f64255e81ace6a67fcf973a34043471ebff1d data/aether/tags/items/treasure_doorway
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/vampire_repairing.json
 2f6eb76f8d5c842eba05c54205f51bf1c2b6bc71 data/aether/tags/items/water_bucket_crafting.json
 794ba2e4990dd4fa1823ea008d8b78437527dacd data/aether/tags/items/zanite_repairing.json
-89af558945f41e6e1e5e29c9da8dc0324f4c9cc2 data/curios/tags/items/aether_accessory.json
-99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/curios/tags/items/aether_cape.json
-cd6129430937fd4b57b84a64be78f993ba915b85 data/curios/tags/items/aether_gloves.json
-dfabf018a03431c6925f20338e5f5b105beacae6 data/curios/tags/items/aether_pendant.json
-cd70d1f5f10c0f6f5aaa22bcd218352b3a14cb69 data/curios/tags/items/aether_ring.json
-3f9727bd2367c552a68056fe20cf61a448d0e81e data/curios/tags/items/aether_shield.json
+0db5ad5dcd34509efb2d7bcb8b612947727d6fbc data/curios/tags/items/aether_accessory.json
+93ad87648d07fda4efb86414187086bbccc27e14 data/curios/tags/items/aether_cape.json
+1ed7d2412ac2c38c577215b58c5975e40f01e443 data/curios/tags/items/aether_gloves.json
+43c426e2686cce3547c1498d762e5d364e0426a4 data/curios/tags/items/aether_pendant.json
+56459cde5d0f12fac519ea02e5d5f620c5412d01 data/curios/tags/items/aether_ring.json
+006ea519cedf91e955c8e6e7748ce9a9bc01e62a data/curios/tags/items/aether_shield.json
 7cc99b499993ff43d1bec64e0297def0c92f4c2d data/forge/tags/items/armors/boots.json
 ae55992a015bc68477c240af9e2959c48fba8803 data/forge/tags/items/armors/chestplates.json
 07eee825ec47b39c00f2fa8525836431d139cee1 data/forge/tags/items/armors/helmets.json

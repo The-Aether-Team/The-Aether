@@ -34,6 +34,7 @@ public class AetherTags {
 		public static final TagKey<Block> ANGELIC_BLOCKS = tag("angelic_blocks");
 		public static final TagKey<Block> HELLFIRE_BLOCKS = tag("hellfire_blocks");
 		public static final TagKey<Block> SLIDER_UNBREAKABLE = tag("slider_unbreakable");
+		public static final TagKey<Block> VALKYRIE_QUEEN_UNBREAKABLE = tag("valkyrie_queen_unbreakable");
 		public static final TagKey<Block> NON_BRONZE_DUNGEON_REPLACEABLE = tag("non_tunnel_replaceable");
 		public static final TagKey<Block> GRAVITITE_ABILITY_BLACKLIST = tag("gravitite_ability_blacklist");
 		public static final TagKey<Block> AETHER_ANIMALS_SPAWNABLE_ON = tag("aether_animals_spawnable_on");
@@ -120,6 +121,13 @@ public class AetherTags {
 
 		public static final TagKey<Item> TOOLS_LANCES = tag("tools/lances");
 		public static final TagKey<Item> TOOLS_HAMMERS = tag("tools/hammers");
+
+		public static final TagKey<Item> ACCESSORIES_RINGS = tag("accessories_rings");
+		public static final TagKey<Item> ACCESSORIES_PENDANTS = tag("accessories_pendants");
+		public static final TagKey<Item> ACCESSORIES_GLOVES = tag("accessories_gloves");
+		public static final TagKey<Item> ACCESSORIES_CAPES = tag("accessories_capes");
+		public static final TagKey<Item> ACCESSORIES_MISCELLANEOUS = tag("accessories_miscellaneous");
+		public static final TagKey<Item> ACCESSORIES_SHIELDS = tag("accessories_shields");
 
 		public static final TagKey<Item> AETHER_RING = curio("aether_ring");
 		public static final TagKey<Item> AETHER_PENDANT = curio("aether_pendant");

@@ -12,6 +12,7 @@ import com.aetherteam.aether.client.gui.screen.menu.VanillaLeftTitleScreen;
 import com.aetherteam.aether.client.AetherKeys;
 import com.aetherteam.aether.event.hooks.DimensionHooks;
 import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.inventory.menu.AccessoriesMenu;
 import com.aetherteam.aether.mixin.mixins.client.accessor.*;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.server.OpenAccessoriesPacket;
@@ -29,12 +30,17 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.BossEvent;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.tags.ITagManager;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
 
 import java.util.Calendar;
@@ -247,6 +253,19 @@ public class GuiHooks {
             }
         }
         return null;
+    }
+
+    public static boolean areItemsPresent() {
+        boolean flag = true;
+        for (String string : AccessoriesMenu.AETHER_IDENTIFIERS) {
+            ITagManager<Item> itemTags = ForgeRegistries.ITEMS.tags();
+            if (itemTags != null) {
+                if (itemTags.getTag(TagKey.create(Registries.ITEM, new ResourceLocation("curios", string))).isEmpty()) {
+                    flag = false;
+                }
+            }
+        }
+        return flag;
     }
 
     public static void setMenuAlignment() {
