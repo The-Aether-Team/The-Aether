@@ -31,7 +31,7 @@ public class SwetBallRecipe extends AbstractBiomeParameterRecipe implements Matc
 
     @Override
     public boolean matches(Player player, Level level, BlockPos pos, ItemStack stack, BlockState oldState, BlockState newState, RecipeType recipeType) {
-        return MatchEventRecipe.super.matches(player, level, pos, stack, oldState, newState, recipeType) && this.matches(level, pos, oldState);
+        return this.matches(level, pos, oldState) && MatchEventRecipe.super.matches(player, level, pos, stack, oldState, newState, recipeType);
     }
 
     @Override
