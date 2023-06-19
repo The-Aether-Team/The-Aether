@@ -31,13 +31,15 @@ public interface ItemUseConversion<R extends MatchEventRecipe & BlockStateRecipe
         for (R recipe : level.getRecipeManager().getAllRecipesFor(recipeType)) { // Gets the list of recipes existing for a RecipeType.
             if (recipe != null) {
                 BlockState newState = recipe.getResultState(oldBlockState); // Gets the result BlockState and gives it the properties of the old BlockState
-                if (!level.isClientSide() && recipe.convert(player, level, pos, heldItem, oldBlockState, newState, recipeType, recipe.getFunction())) { // Converts the block according to the recipe on the server side.
-                    if (player != null && !player.getAbilities().instabuild) { // Consumes the item being used for conversion if possible.
-                        heldItem.shrink(1);
+                if (recipe.matches(player, level, pos, heldItem, oldBlockState, newState, recipeType)) { // Checks if the recipe is actually for the oldState and if it hasn't been cancelled with an event.
+                    if (!level.isClientSide() && recipe.convert(level, pos, newState, recipe.getFunction())) { // Converts the block according to the recipe on the server side.
+                        if (player != null && !player.getAbilities().instabuild) { // Consumes the item being used for conversion if possible.
+                            heldItem.shrink(1);
+                        }
+                        return InteractionResult.CONSUME;
+                    } else if (level.isClientSide()) {
+                        return InteractionResult.SUCCESS;
                     }
-                    return InteractionResult.CONSUME;
-                } else if (level.isClientSide()) {
-                    return InteractionResult.SUCCESS;
                 }
             }
         }
@@ -61,7 +63,7 @@ public interface ItemUseConversion<R extends MatchEventRecipe & BlockStateRecipe
                 if (recipe != null) {
                     BlockState newState = recipe.getResultState(oldBlockState);
                     if (recipe.matches(null, level, pos, null, oldBlockState, newState, recipeType)) {
-                        if (recipe.convert(null, level, pos, null, oldBlockState, newState, recipeType, recipe.getFunction())) {
+                        if (recipe.convert(level, pos, newState, recipe.getFunction())) {
                             stack.shrink(1);
                             return true;
                         }
