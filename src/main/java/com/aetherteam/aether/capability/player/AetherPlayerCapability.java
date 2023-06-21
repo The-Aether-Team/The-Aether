@@ -1,6 +1,5 @@
 package com.aetherteam.aether.capability.player;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
 import com.aetherteam.aether.entity.miscellaneous.Parachute;
@@ -224,8 +223,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		this.checkToRemoveCloudMinions();
 		this.handleSavedHealth();
 		this.handleLifeShardModifier();
-
-		Aether.LOGGER.info(String.valueOf(this.wearingInvisibilityCloak));
 	}
 
 	private void handleGivePortal() {
