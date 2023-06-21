@@ -136,15 +136,24 @@ public class AbilityHooks {
         }
 
         public static boolean preventTargeting(LivingEntity target, Entity lookingEntity) {
-            return EquipmentUtil.hasInvisibilityCloak(target)
-                    && lookingEntity != null
-                    && !lookingEntity.getType().is(AetherTags.Entities.IGNORE_INVISIBILITY)
-                    && (!(target instanceof Player player) || !AetherPlayer.get(player).isPresent() || AetherPlayer.get(player).resolve().isEmpty() || !AetherPlayer.get(player).resolve().get().attackedWithInvisibility());
+            if (target instanceof Player player && AetherPlayer.get(player).isPresent() && AetherPlayer.get(player).resolve().isPresent()) {
+                return lookingEntity != null
+                        && !lookingEntity.getType().is(AetherTags.Entities.IGNORE_INVISIBILITY)
+                        && AetherPlayer.get(player).resolve().get().isInvisibilityEnabled()
+                        && !AetherPlayer.get(player).resolve().get().attackedWithInvisibility();
+            } else {
+                return lookingEntity != null
+                        && !lookingEntity.getType().is(AetherTags.Entities.IGNORE_INVISIBILITY)
+                        && EquipmentUtil.hasInvisibilityCloak(target);
+            }
         }
 
         public static boolean recentlyAttackedWithInvisibility(LivingEntity target) {
-            return EquipmentUtil.hasInvisibilityCloak(target)
-                    && target instanceof Player player && AetherPlayer.get(player).isPresent() && AetherPlayer.get(player).resolve().isPresent() && AetherPlayer.get(player).resolve().get().attackedWithInvisibility();
+            if (target instanceof Player player && AetherPlayer.get(player).isPresent() && AetherPlayer.get(player).resolve().isPresent()) {
+                return AetherPlayer.get(player).resolve().get().isInvisibilityEnabled() && AetherPlayer.get(player).resolve().get().attackedWithInvisibility();
+            } else {
+                return false;
+            }
         }
 
         public static void setAttack(DamageSource source) {

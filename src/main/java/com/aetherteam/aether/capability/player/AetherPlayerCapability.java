@@ -81,6 +81,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	private int invisibilityAttackCooldown;
 	private boolean attackedWithInvisibility;
+	private boolean invisibilityEnabled;
 	private boolean wearingInvisibilityCloak;
 
 	private static final int FLIGHT_TIMER_MAX = 52;
@@ -148,6 +149,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		tag.putInt("FlightTimer_Syncing", this.getFlightTimer());
 		tag.putFloat("FlightModifier_Syncing", this.getFlightModifier());
 		tag.putBoolean("AttackedWithInvisibility_Syncing", this.attackedWithInvisibility());
+		tag.putBoolean("InvisibilityEnabled_Syncing", this.isInvisibilityEnabled());
 		tag.putBoolean("WearingInvisibilityCloak_Syncing", this.isWearingInvisibilityCloak());
 		tag.putInt("LifeShardCount_Syncing", this.getLifeShardCount());
 		return tag;
@@ -178,6 +180,9 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		}
 		if (tag.contains("AttackedWithInvisibility_Syncing")) {
 			this.setAttackedWithInvisibility(tag.getBoolean("AttackedWithInvisibility_Syncing"));
+		}
+		if (tag.contains("InvisibilityEnabled_Syncing")) {
+			this.setInvisibilityEnabled(tag.getBoolean("InvisibilityEnabled_Syncing"));
 		}
 		if (tag.contains("WearingInvisibilityCloak_Syncing")) {
 			this.setWearingInvisibilityCloak(tag.getBoolean("WearingInvisibilityCloak_Syncing"));
@@ -715,6 +720,17 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	@Override
 	public boolean attackedWithInvisibility() {
 		return this.attackedWithInvisibility;
+	}
+
+	@Override
+	public void setInvisibilityEnabled(boolean enabled) {
+		this.markDirty(true);
+		this.invisibilityEnabled = enabled;
+	}
+
+	@Override
+	public boolean isInvisibilityEnabled() {
+		return this.invisibilityEnabled;
 	}
 
 	@Override

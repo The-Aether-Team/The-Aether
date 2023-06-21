@@ -90,6 +90,9 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 	void setAttackedWithInvisibility(boolean attacked);
 	boolean attackedWithInvisibility();
 
+	void setInvisibilityEnabled(boolean enabled);
+	boolean isInvisibilityEnabled();
+
 	void setWearingInvisibilityCloak(boolean wearing);
 	boolean isWearingInvisibilityCloak();
 
