@@ -16,9 +16,11 @@ import com.aetherteam.aether.capability.CapabilitySyncing;
 import com.aetherteam.aether.network.AetherPacket;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.AetherPlayerSyncPacket;
+import com.aetherteam.aether.util.EquipmentUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -74,6 +76,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	private final List<CloudMinion> cloudMinions = new ArrayList<>(2);
 
+	private float wingRotationO;
 	private float wingRotation;
 
 	private int invisibilityAttackCooldown;
@@ -212,6 +215,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		this.handleRemoveDarts();
 		this.tickDownRemedy();
 		this.tickDownProjectileImpact();
+		this.handleWingRotation();
 		this.handleAttackCooldown();
 		this.handleVampireHealing();
 		this.checkToRemoveAerbunny();
@@ -363,6 +367,19 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 				this.setProjectileImpactedMaximum(0);
 				this.setProjectileImpactedTimer(0);
 			}
+		}
+	}
+
+	private void handleWingRotation() {
+		this.setWingRotationO(this.getWingRotation());
+		if (EquipmentUtil.hasFullValkyrieSet(this.getPlayer())) {
+			if (!this.getPlayer().isOnGround() && !this.getPlayer().isInFluidType() && (this.getPlayer().getVehicle() != null && !this.getPlayer().getVehicle().isOnGround())) {
+				this.setWingRotation(Mth.wrapDegrees(this.getWingRotation() + ((0.75F * 5.0F))));
+			} else {
+				this.setWingRotation(Mth.wrapDegrees(this.getWingRotation() + ((0.15F * 5.0F))));
+			}
+		} else {
+			this.setWingRotation(0.0F);
 		}
 	}
 
@@ -667,6 +684,16 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	@Override
 	public List<CloudMinion> getCloudMinions() {
 		return this.cloudMinions;
+	}
+
+	@Override
+	public void setWingRotationO(float wingRotationO) {
+		this.wingRotationO = wingRotationO;
+	}
+
+	@Override
+	public float getWingRotationO() {
+		return this.wingRotationO;
 	}
 
 	@Override
