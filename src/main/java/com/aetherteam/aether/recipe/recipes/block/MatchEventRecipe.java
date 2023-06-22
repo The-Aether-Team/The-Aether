@@ -24,13 +24,10 @@ public interface MatchEventRecipe {
      * @param function The {@link CommandFunction.CacheableFunction} to run when the recipe is performed.
      * @return Whether the new {@link BlockState} was set.
      */
-    default boolean convert(Player player, Level level, BlockPos pos, ItemStack stack, BlockState oldState, BlockState newState, RecipeType recipeType, CommandFunction.CacheableFunction function) {
-        if (this.matches(player, level, pos, stack, oldState, newState, recipeType)) {
-            level.setBlockAndUpdate(pos, newState);
-            BlockStateRecipeUtil.executeFunction(level, pos, function);
-            return true;
-        }
-        return false;
+    default boolean convert(Level level, BlockPos pos, BlockState newState, CommandFunction.CacheableFunction function) {
+        level.setBlockAndUpdate(pos, newState);
+        BlockStateRecipeUtil.executeFunction(level, pos, function);
+        return true;
     }
 
     /**

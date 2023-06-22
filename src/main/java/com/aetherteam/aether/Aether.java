@@ -156,6 +156,7 @@ public class Aether {
         event.enqueueWork(() -> {
             AetherBlocks.registerPots();
             AetherBlocks.registerFlammability();
+            AetherBlocks.registerFluidInteractions();
 
             AetherItems.setupBucketReplacements();
 

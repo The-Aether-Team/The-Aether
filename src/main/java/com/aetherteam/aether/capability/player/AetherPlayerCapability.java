@@ -18,9 +18,11 @@ import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.AetherPlayerSyncPacket;
 import com.aetherteam.aether.perk.CustomizationsOptions;
 import com.aetherteam.aether.perk.data.*;
+import com.aetherteam.aether.util.EquipmentUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -78,10 +80,12 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	private final List<CloudMinion> cloudMinions = new ArrayList<>(2);
 
+	private float wingRotationO;
 	private float wingRotation;
 
 	private int invisibilityAttackCooldown;
 	private boolean attackedWithInvisibility;
+	private boolean invisibilityEnabled;
 	private boolean wearingInvisibilityCloak;
 
 	private static final int FLIGHT_TIMER_MAX = 52;
@@ -155,6 +159,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		tag.putInt("FlightTimer_Syncing", this.getFlightTimer());
 		tag.putFloat("FlightModifier_Syncing", this.getFlightModifier());
 		tag.putBoolean("AttackedWithInvisibility_Syncing", this.attackedWithInvisibility());
+		tag.putBoolean("InvisibilityEnabled_Syncing", this.isInvisibilityEnabled());
 		tag.putBoolean("WearingInvisibilityCloak_Syncing", this.isWearingInvisibilityCloak());
 		tag.putInt("LifeShardCount_Syncing", this.getLifeShardCount());
 		if (this.getLastRiddenMoa() != null) {
@@ -185,6 +190,9 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		}
 		if (tag.contains("AttackedWithInvisibility_Syncing")) {
 			this.setAttackedWithInvisibility(tag.getBoolean("AttackedWithInvisibility_Syncing"));
+		}
+		if (tag.contains("InvisibilityEnabled_Syncing")) {
+			this.setInvisibilityEnabled(tag.getBoolean("InvisibilityEnabled_Syncing"));
 		}
 		if (tag.contains("WearingInvisibilityCloak_Syncing")) {
 			this.setWearingInvisibilityCloak(tag.getBoolean("WearingInvisibilityCloak_Syncing"));
@@ -238,6 +246,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		this.handleRemoveDarts();
 		this.tickDownRemedy();
 		this.tickDownProjectileImpact();
+		this.handleWingRotation();
 		this.handleAttackCooldown();
 		this.handleVampireHealing();
 		this.checkToRemoveAerbunny();
@@ -392,6 +401,19 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 				this.setProjectileImpactedMaximum(0);
 				this.setProjectileImpactedTimer(0);
 			}
+		}
+	}
+
+	private void handleWingRotation() {
+		this.setWingRotationO(this.getWingRotation());
+		if (EquipmentUtil.hasFullValkyrieSet(this.getPlayer())) {
+			if (!this.getPlayer().isOnGround() && !this.getPlayer().isInFluidType() && (this.getPlayer().getVehicle() != null && !this.getPlayer().getVehicle().isOnGround())) {
+				this.setWingRotation(Mth.wrapDegrees(this.getWingRotation() + ((0.75F * 5.0F))));
+			} else {
+				this.setWingRotation(Mth.wrapDegrees(this.getWingRotation() + ((0.15F * 5.0F))));
+			}
+		} else {
+			this.setWingRotation(0.0F);
 		}
 	}
 
@@ -709,6 +731,16 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	}
 
 	@Override
+	public void setWingRotationO(float wingRotationO) {
+		this.wingRotationO = wingRotationO;
+	}
+
+	@Override
+	public float getWingRotationO() {
+		return this.wingRotationO;
+	}
+
+	@Override
 	public void setWingRotation(float wingRotation) {
 		this.wingRotation = wingRotation;
 	}
@@ -727,6 +759,17 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	@Override
 	public boolean attackedWithInvisibility() {
 		return this.attackedWithInvisibility;
+	}
+
+	@Override
+	public void setInvisibilityEnabled(boolean enabled) {
+		this.markDirty(true);
+		this.invisibilityEnabled = enabled;
+	}
+
+	@Override
+	public boolean isInvisibilityEnabled() {
+		return this.invisibilityEnabled;
 	}
 
 	@Override
