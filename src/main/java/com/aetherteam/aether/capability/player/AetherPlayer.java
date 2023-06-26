@@ -82,9 +82,7 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 	void setCloudMinions(CloudMinion cloudMinionRight, CloudMinion cloudMinionLeft);
 	List<CloudMinion> getCloudMinions();
 
-	void setWingRotationO(int wingRotationO);
 	int getWingRotationO();
-	void setWingRotation(int wingRotation);
 	int getWingRotation();
 
 	void setAttackedWithInvisibility(boolean attacked);

@@ -376,11 +376,11 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	private void handleWingRotation() {
 		if (this.getPlayer().level.isClientSide()) {
-			this.setWingRotationO(this.getWingRotation());
+			this.wingRotationO = this.getWingRotation();
 			if (EquipmentUtil.hasFullValkyrieSet(this.getPlayer())) {
-				this.setWingRotation(this.getPlayer().tickCount);
+				this.wingRotation = this.getPlayer().tickCount;
 			} else {
-				this.setWingRotation(0);
+				this.wingRotation = 0;
 			}
 		}
 	}
@@ -689,18 +689,8 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	}
 
 	@Override
-	public void setWingRotationO(int wingRotationO) {
-		this.wingRotationO = wingRotationO;
-	}
-
-	@Override
 	public int getWingRotationO() {
 		return this.wingRotationO;
-	}
-
-	@Override
-	public void setWingRotation(int wingRotation) {
-		this.wingRotation = wingRotation;
 	}
 
 	@Override
