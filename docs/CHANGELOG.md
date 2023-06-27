@@ -9,6 +9,7 @@ Additions
 - Add Randomium support with blacklist tag.
 - Add recipes for Moa Eggs to work as eggs in crafting.
 - Add missing lore entry for Skyroot Wood.
+- Add new tags for accessories: `#accessories_capes`, `#accessories_gloves`, `#accessories_miscellaneous`, `#accessories_pendants`, `#accessories_rings`, `#accessories_shields`. Addon developers should use these instead of Curios' tags.
 - Add `RecipeType` field to `ItemUseConversionEvent`.
 - Update uk_ua translation.
 - Update ms_my translation.
