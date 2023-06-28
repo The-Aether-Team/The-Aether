@@ -4,6 +4,8 @@ import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.AetherKeys;
 import com.aetherteam.aether.item.accessories.AccessoryItem;
 import com.aetherteam.aether.mixin.mixins.common.accessor.LivingEntityAccessor;
+import com.aetherteam.aether.network.AetherPacketHandler;
+import com.aetherteam.aether.network.packet.server.InvisibilityTogglePacket;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -25,11 +27,15 @@ public class InvisibilityCloakItem extends AccessoryItem {
     @Override
     public void curioTick(SlotContext slotContext, ItemStack stack) {
         LivingEntity livingEntity = slotContext.entity();
-        if (!livingEntity.getLevel().isClientSide() && livingEntity instanceof Player player) {
+        if (livingEntity.getLevel().isClientSide() && livingEntity instanceof Player player) {
             AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
                 if (AetherKeys.INVISIBILITY_TOGGLE.consumeClick()) {
-                    aetherPlayer.setInvisibilityEnabled(!aetherPlayer.isInvisibilityEnabled());
+                    AetherPacketHandler.sendToServer(new InvisibilityTogglePacket(player.getId()));
                 }
+            });
+        }
+        if (!livingEntity.getLevel().isClientSide() && livingEntity instanceof Player player) {
+            AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
                 if (aetherPlayer.isInvisibilityEnabled()) {
                     if (!aetherPlayer.isWearingInvisibilityCloak() && !aetherPlayer.attackedWithInvisibility()) {
                         aetherPlayer.setWearingInvisibilityCloak(true);

@@ -81,7 +81,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	private int invisibilityAttackCooldown;
 	private boolean attackedWithInvisibility;
-	private boolean invisibilityEnabled;
+	private boolean invisibilityEnabled = true;
 	private boolean wearingInvisibilityCloak;
 
 	private static final int FLIGHT_TIMER_MAX = 52;
