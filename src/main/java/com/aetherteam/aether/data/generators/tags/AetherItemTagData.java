@@ -203,12 +203,12 @@ public class AetherItemTagData extends ItemTagsProvider {
         this.tag(AetherTags.Items.AETHER_SHIELD).addTag(AetherTags.Items.ACCESSORIES_SHIELDS);
 
         this.tag(AetherTags.Items.ACCESSORIES).addTags(
-                AetherTags.Items.AETHER_RING,
-                AetherTags.Items.AETHER_PENDANT,
-                AetherTags.Items.AETHER_GLOVES,
-                AetherTags.Items.AETHER_CAPE,
+                AetherTags.Items.ACCESSORIES_RINGS,
+                AetherTags.Items.ACCESSORIES_PENDANTS,
+                AetherTags.Items.ACCESSORIES_GLOVES,
+                AetherTags.Items.ACCESSORIES_CAPES,
                 AetherTags.Items.AETHER_ACCESSORY,
-                AetherTags.Items.AETHER_SHIELD);
+                AetherTags.Items.ACCESSORIES_SHIELDS);
 
         // Forge
         this.tag(Tags.Items.BOOKSHELVES).add(AetherBlocks.SKYROOT_BOOKSHELF.get().asItem());

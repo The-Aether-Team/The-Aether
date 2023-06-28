@@ -22,7 +22,6 @@ import com.aetherteam.aether.util.EquipmentUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -80,12 +79,12 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	private final List<CloudMinion> cloudMinions = new ArrayList<>(2);
 
-	private float wingRotationO;
-	private float wingRotation;
+	private int wingRotationO;
+	private int wingRotation;
 
 	private int invisibilityAttackCooldown;
 	private boolean attackedWithInvisibility;
-	private boolean invisibilityEnabled;
+	private boolean invisibilityEnabled = true;
 	private boolean wearingInvisibilityCloak;
 
 	private static final int FLIGHT_TIMER_MAX = 52;
@@ -405,15 +404,13 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	}
 
 	private void handleWingRotation() {
-		this.setWingRotationO(this.getWingRotation());
-		if (EquipmentUtil.hasFullValkyrieSet(this.getPlayer())) {
-			if (!this.getPlayer().isOnGround() && !this.getPlayer().isInFluidType() && (this.getPlayer().getVehicle() != null && !this.getPlayer().getVehicle().isOnGround())) {
-				this.setWingRotation(Mth.wrapDegrees(this.getWingRotation() + ((0.75F * 5.0F))));
+		if (this.getPlayer().level.isClientSide()) {
+			this.wingRotationO = this.getWingRotation();
+			if (EquipmentUtil.hasFullValkyrieSet(this.getPlayer())) {
+				this.wingRotation = this.getPlayer().tickCount;
 			} else {
-				this.setWingRotation(Mth.wrapDegrees(this.getWingRotation() + ((0.15F * 5.0F))));
+				this.wingRotation = 0;
 			}
-		} else {
-			this.setWingRotation(0.0F);
 		}
 	}
 
@@ -731,22 +728,12 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	}
 
 	@Override
-	public void setWingRotationO(float wingRotationO) {
-		this.wingRotationO = wingRotationO;
-	}
-
-	@Override
-	public float getWingRotationO() {
+	public int getWingRotationO() {
 		return this.wingRotationO;
 	}
 
 	@Override
-	public void setWingRotation(float wingRotation) {
-		this.wingRotation = wingRotation;
-	}
-
-	@Override
-	public float getWingRotation() {
+	public int getWingRotation() {
 		return this.wingRotation;
 	}
 

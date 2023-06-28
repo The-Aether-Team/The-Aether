@@ -41,6 +41,12 @@ public class PlayerWingsLayer<T extends Player, M extends PlayerModel<T>> extend
     }
 
     public void setupWingRotation(@Nonnull T entity, float sinage) {
+        if (!entity.isOnGround() && !entity.isInFluidType() && (entity.getVehicle() != null && !entity.getVehicle().isOnGround())) {
+            sinage *= 1.5F;
+        } else {
+            sinage *= 0.3F;
+        }
+
         this.wings.rightWing.yRot = 0.4F;
         this.wings.rightWing.zRot = 0.125F;
         this.wings.leftWing.yRot = -0.4F;

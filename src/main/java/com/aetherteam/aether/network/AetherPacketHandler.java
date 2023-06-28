@@ -62,6 +62,7 @@ public class AetherPacketHandler {
 		register(AerbunnyPuffPacket.class, AerbunnyPuffPacket::decode);
 		register(ClearItemPacket.class, ClearItemPacket::decode);
 		register(HittingPacket.class, HittingPacket::decode);
+		register(InvisibilityTogglePacket.class, InvisibilityTogglePacket::decode);
 		register(JumpPacket.class, JumpPacket::decode);
 		register(LoreExistsPacket.class, LoreExistsPacket::decode);
 		register(MovementPacket.class, MovementPacket::decode);
