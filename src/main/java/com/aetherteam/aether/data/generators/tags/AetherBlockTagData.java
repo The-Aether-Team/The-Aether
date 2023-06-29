@@ -25,6 +25,7 @@ public class AetherBlockTagData extends BlockTagsProvider {
         // Aether
         this.tag(AetherTags.Blocks.TREATED_AS_VANILLA_BLOCK).add(
                 AetherBlocks.CHEST_MIMIC.get(),
+                AetherBlocks.FROSTED_ICE.get(),
                 AetherBlocks.UNSTABLE_OBSIDIAN.get());
         this.tag(AetherTags.Blocks.AETHER_PORTAL_BLOCKS).add(Blocks.GLOWSTONE);
         this.tag(AetherTags.Blocks.AETHER_PORTAL_BLACKLIST).add(AetherBlocks.BLUE_AERCLOUD.get()).addTags(
@@ -132,7 +133,40 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherBlocks.HELLFIRE_STAIRS.get(),
                 AetherBlocks.HELLFIRE_SLAB.get(),
                 AetherBlocks.HELLFIRE_WALL.get());
-        this.tag(AetherTags.Blocks.SLIDER_UNBREAKABLE).addTags(
+        this.tag(AetherTags.Blocks.SLIDER_UNBREAKABLE).add(
+                Blocks.BARRIER,
+                Blocks.BEDROCK,
+                Blocks.END_PORTAL,
+                Blocks.END_PORTAL_FRAME,
+                Blocks.END_GATEWAY,
+                Blocks.COMMAND_BLOCK,
+                Blocks.REPEATING_COMMAND_BLOCK,
+                Blocks.CHAIN_COMMAND_BLOCK,
+                Blocks.STRUCTURE_BLOCK,
+                Blocks.JIGSAW,
+                Blocks.MOVING_PISTON,
+                Blocks.LIGHT,
+                Blocks.REINFORCED_DEEPSLATE
+        ).addTags(
+                AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
+                AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS,
+                AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS,
+                AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS);
+        this.tag(AetherTags.Blocks.VALKYRIE_QUEEN_UNBREAKABLE).add(
+                Blocks.WATER,
+                Blocks.BEDROCK,
+                Blocks.END_PORTAL,
+                Blocks.END_PORTAL_FRAME,
+                Blocks.END_GATEWAY,
+                Blocks.COMMAND_BLOCK,
+                Blocks.REPEATING_COMMAND_BLOCK,
+                Blocks.CHAIN_COMMAND_BLOCK,
+                Blocks.STRUCTURE_BLOCK,
+                Blocks.JIGSAW,
+                Blocks.MOVING_PISTON,
+                Blocks.LIGHT,
+                Blocks.REINFORCED_DEEPSLATE
+        ).addTags(
                 AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
                 AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS,
                 AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS,
@@ -145,8 +179,7 @@ public class AetherBlockTagData extends BlockTagsProvider {
         ).addTags(
                 AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
                 AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS,
-                AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS
-        );
+                AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS);
         this.tag(AetherTags.Blocks.GRAVITITE_ABILITY_BLACKLIST).addTags(
                 BlockTags.BUTTONS,
                 BlockTags.PRESSURE_PLATES,
@@ -160,8 +193,8 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherTags.Blocks.INFINIBURN,
                 AetherTags.Blocks.HELLFIRE_BLOCKS);
         this.tag(AetherTags.Blocks.VALKYRIE_TELEPORTABLE_ON).add(
-                AetherBlocks.ANGELIC_STONE.get(),
-                AetherBlocks.LIGHT_ANGELIC_STONE.get());
+                AetherBlocks.LOCKED_ANGELIC_STONE.get(),
+                AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get());
         this.tag(AetherTags.Blocks.TREATED_AS_AETHER_BLOCK);
 
         // Vanilla
@@ -248,10 +281,14 @@ public class AetherBlockTagData extends BlockTagsProvider {
         this.tag(BlockTags.DRAGON_IMMUNE).addTags(
                 AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
                 AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS,
+                AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS,
+                AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS,
                 AetherTags.Blocks.AEROGEL);
         this.tag(BlockTags.WITHER_IMMUNE).addTags(
                 AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
-                AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS);
+                AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS,
+                AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS,
+                AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS);
         this.tag(BlockTags.BEE_GROWABLES).add(AetherBlocks.BERRY_BUSH_STEM.get());
         this.tag(BlockTags.PORTALS).add(AetherBlocks.AETHER_PORTAL.get());
         this.tag(BlockTags.BEACON_BASE_BLOCKS).add(

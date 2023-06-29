@@ -11,7 +11,6 @@ import org.apache.commons.lang3.tuple.Triple;
 public class AetherRankingsCapability extends CapabilitySyncing implements AetherRankings {
     private final Player player;
 
-    private boolean sleeveGloves = false;
     private boolean haloEnabled = true;
     private String haloColor = null;
     private boolean developerGlowEnabled = false;
@@ -29,7 +28,6 @@ public class AetherRankingsCapability extends CapabilitySyncing implements Aethe
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();
-        tag.putBoolean("HatGloves", this.areSleeveGloves());
         tag.putBoolean("RenderHalo", this.isHaloEnabled());
         if (this.getHaloHex() != null) {
             tag.putString("HaloColor", this.getHaloHex());
@@ -43,9 +41,6 @@ public class AetherRankingsCapability extends CapabilitySyncing implements Aethe
 
     @Override
     public void deserializeNBT(CompoundTag tag) {
-        if (tag.contains("HatGloves")) {
-            this.setAreSleeveGloves(tag.getBoolean("HatGloves"));
-        }
         if (tag.contains("RenderHalo")) {
             this.setIsHaloEnabled(tag.getBoolean("RenderHalo"));
         }
@@ -63,7 +58,6 @@ public class AetherRankingsCapability extends CapabilitySyncing implements Aethe
     @Override
     public CompoundTag serializeSynchableNBT() {
         CompoundTag tag = new CompoundTag();
-        tag.putBoolean("HatGloves_Syncing", this.areSleeveGloves());
         tag.putBoolean("RenderHalo_Syncing", this.isHaloEnabled());
         if (this.getHaloHex() != null) {
             tag.putString("HaloColor_Syncing", this.getHaloHex());
@@ -77,9 +71,6 @@ public class AetherRankingsCapability extends CapabilitySyncing implements Aethe
 
     @Override
     public void deserializeSynchableNBT(CompoundTag tag) {
-        if (tag.contains("HatGloves_Syncing")) {
-            this.setAreSleeveGloves(tag.getBoolean("HatGloves_Syncing"));
-        }
         if (tag.contains("RenderHalo_Syncing")) {
             this.setIsHaloEnabled(tag.getBoolean("RenderHalo_Syncing"));
         }
@@ -96,7 +87,6 @@ public class AetherRankingsCapability extends CapabilitySyncing implements Aethe
 
     @Override
     public void copyFrom(AetherRankings other) {
-        this.setAreSleeveGloves(other.areSleeveGloves());
         this.setIsHaloEnabled(other.isHaloEnabled());
         this.setHaloColor(other.getHaloHex());
         this.setIsDeveloperGlowEnabled(other.isDeveloperGlowEnabled());
@@ -109,18 +99,6 @@ public class AetherRankingsCapability extends CapabilitySyncing implements Aethe
         if (this.getPlayer().level.isClientSide()) {
             CustomizationsOptions.INSTANCE.sync();
         }
-    }
-
-    @Override
-    public void setAreSleeveGloves(boolean areHatGloves) {
-        this.markDirty(true);
-        this.sleeveGloves = areHatGloves;
-        this.updateSyncableNBTFromClient(this.getPlayer().level);
-    }
-
-    @Override
-    public boolean areSleeveGloves() {
-        return this.sleeveGloves;
     }
 
     @Override

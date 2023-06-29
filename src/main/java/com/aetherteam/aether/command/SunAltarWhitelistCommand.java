@@ -101,22 +101,22 @@ public class SunAltarWhitelistCommand {
     }
 
     private static int enableWhitelist(CommandSourceStack source) throws CommandSyntaxException {
-        if (AetherConfig.COMMON.sun_altar_whitelist.get()) {
+        if (AetherConfig.SERVER.sun_altar_whitelist.get()) {
             throw ERROR_ALREADY_ENABLED.create();
         } else {
-            AetherConfig.COMMON.sun_altar_whitelist.set(true);
-            AetherConfig.COMMON.sun_altar_whitelist.save();
+            AetherConfig.SERVER.sun_altar_whitelist.set(true);
+            AetherConfig.SERVER.sun_altar_whitelist.save();
             source.sendSuccess(Component.translatable("commands.aether.sun_altar_whitelist.enabled"), true);
             return 1;
         }
     }
 
     private static int disableWhitelist(CommandSourceStack source) throws CommandSyntaxException {
-        if (!AetherConfig.COMMON.sun_altar_whitelist.get()) {
+        if (!AetherConfig.SERVER.sun_altar_whitelist.get()) {
             throw ERROR_ALREADY_DISABLED.create();
         } else {
-            AetherConfig.COMMON.sun_altar_whitelist.set(false);
-            AetherConfig.COMMON.sun_altar_whitelist.save();
+            AetherConfig.SERVER.sun_altar_whitelist.set(false);
+            AetherConfig.SERVER.sun_altar_whitelist.save();
             source.sendSuccess(Component.translatable("commands.aether.sun_altar_whitelist.disabled"), true);
             return 1;
         }

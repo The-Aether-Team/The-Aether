@@ -3,6 +3,8 @@ package com.aetherteam.aether.block;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.block.construction.*;
 import com.aetherteam.aether.block.dungeon.*;
+import com.aetherteam.aether.block.miscellaneous.AetherFrostedIceBlock;
+import com.aetherteam.aether.block.miscellaneous.FacingPillarBlock;
 import com.aetherteam.aether.block.miscellaneous.UnstableObsidianBlock;
 import com.aetherteam.aether.blockentity.ChestMimicBlockEntity;
 import com.aetherteam.aether.blockentity.SkyrootBedBlockEntity;
@@ -36,6 +38,8 @@ import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.fluids.FluidInteractionRegistry;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -156,8 +160,8 @@ public class AetherBlocks {
 
     public static final RegistryObject<RotatedPillarBlock> PILLAR = register("pillar",
             () -> new RotatedPillarBlock(Block.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(0.5F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
-    public static final RegistryObject<RotatedPillarBlock> PILLAR_TOP = register("pillar_top",
-            () -> new RotatedPillarBlock(Block.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(0.5F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
+    public static final RegistryObject<FacingPillarBlock> PILLAR_TOP = register("pillar_top",
+            () -> new FacingPillarBlock(Block.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(0.5F).sound(SoundType.METAL).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<Block> PRESENT = register("present",
             () -> new Block(Block.Properties.of(Material.GRASS, MaterialColor.COLOR_GREEN).strength(0.1F).sound(SoundType.WOOL)));
@@ -226,6 +230,7 @@ public class AetherBlocks {
 
     public static final RegistryObject<BedBlock> SKYROOT_BED = register("skyroot_bed", () -> new SkyrootBedBlock(Block.Properties.copy(Blocks.CYAN_BED)));
 
+    public static final RegistryObject<Block> FROSTED_ICE = BLOCKS.register("frosted_ice", () -> new AetherFrostedIceBlock(BlockBehaviour.Properties.of(Material.ICE).friction(0.98F).randomTicks().strength(0.5F).sound(SoundType.GLASS).noOcclusion().isValidSpawn((state, level, pos, entityType) -> entityType == EntityType.POLAR_BEAR)));
     public static final RegistryObject<Block> UNSTABLE_OBSIDIAN = BLOCKS.register("unstable_obsidian", () -> new UnstableObsidianBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).randomTicks().requiresCorrectToolForDrops().strength(50.0F, 1200.0F)));
 
     public static void registerPots() {
@@ -262,6 +267,13 @@ public class AetherBlocks {
         fireBlockAccessor.callSetFlammable(AetherBlocks.SKYROOT_STAIRS.get(), 5, 20);
         fireBlockAccessor.callSetFlammable(AetherBlocks.SKYROOT_SLAB.get(), 5, 20);
         fireBlockAccessor.callSetFlammable(AetherBlocks.SKYROOT_BOOKSHELF.get(), 30, 20);
+    }
+
+    public static void registerFluidInteractions() {
+        FluidInteractionRegistry.addInteraction(ForgeMod.WATER_TYPE.get(), new FluidInteractionRegistry.InteractionInformation(
+                (level, currentPos, relativePos, currentState) -> level.getBlockState(currentPos.below()).is(AetherBlocks.QUICKSOIL.get()) && level.getBlockState(relativePos).is(Blocks.MAGMA_BLOCK),
+                AetherBlocks.HOLYSTONE.get().defaultBlockState()
+        ));
     }
 
     public static void registerWoodTypes() {

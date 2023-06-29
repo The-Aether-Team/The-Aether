@@ -10,8 +10,8 @@ import net.minecraftforge.common.util.LazyOptional;
 public interface LightningTracker extends INBTSerializable<CompoundTag> {
     LightningBolt getLightningBolt();
 
-    static LazyOptional<LightningTracker> get(LightningBolt arrow) {
-        return arrow.getCapability(AetherCapabilities.LIGHTNING_TRACKER_CAPABILITY);
+    static LazyOptional<LightningTracker> get(LightningBolt lightningBolt) {
+        return lightningBolt.getCapability(AetherCapabilities.LIGHTNING_TRACKER_CAPABILITY);
     }
 
     void setOwner(Entity owner);

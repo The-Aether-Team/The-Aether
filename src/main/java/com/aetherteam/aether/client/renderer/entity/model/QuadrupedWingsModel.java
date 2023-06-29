@@ -3,6 +3,7 @@ package com.aetherteam.aether.client.renderer.entity.model;
 import com.aetherteam.aether.entity.passive.WingedAnimal;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -39,20 +40,21 @@ public class QuadrupedWingsModel<T extends WingedAnimal> extends EntityModel<T> 
 
     @Override
     public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        float aimingForFold;
-        if (entity.isEntityOnGround()) {
-            aimingForFold = 0.1F;
-        } else {
-            aimingForFold = 1.0F;
+        if (!Minecraft.getInstance().isPaused()) {
+            float aimingForFold;
+            if (entity.isEntityOnGround()) {
+                aimingForFold = 0.1F;
+            } else {
+                aimingForFold = 1.0F;
+            }
+            entity.wingAngle = entity.wingFold * Mth.sin(ageInTicks / 31.83098862F);
+            entity.wingFold += (aimingForFold - entity.wingFold) / 75.0F;
+            float wingBend = -((float) Math.acos(entity.wingFold));
+            this.leftWingInner.zRot = -(entity.wingAngle + wingBend + (float) (Math.PI / 2.0F));
+            this.leftWingOuter.zRot = -(entity.wingAngle - wingBend + (float) (Math.PI / 2.0F)) - this.leftWingInner.zRot;
+            this.rightWingInner.zRot = -this.leftWingInner.zRot;
+            this.rightWingOuter.zRot = -this.leftWingOuter.zRot;
         }
-        entity.wingAngle = entity.wingFold * Mth.sin(ageInTicks / 31.83098862F);
-        entity.wingFold += (aimingForFold - entity.wingFold) / 75.0F;
-        float wingBend = -((float) Math.acos(entity.wingFold));
-
-        this.leftWingInner.zRot = -(entity.wingAngle + wingBend + (float) (Math.PI / 2.0F));
-        this.leftWingOuter.zRot = -(entity.wingAngle - wingBend + (float) (Math.PI / 2.0F)) - this.leftWingInner.zRot;
-        this.rightWingInner.zRot = -this.leftWingInner.zRot;
-        this.rightWingOuter.zRot = -this.leftWingOuter.zRot;
     }
 
     @Override

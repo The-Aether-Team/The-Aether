@@ -6,7 +6,10 @@ orbs:
 parameters:
   artifact-name:
     type: string
-    default: aether
+    default: aether-1.19.4-1.0.0-beta.4-forge.jar
+  deploy-branch:
+    type: string
+    default: feat/bconlon/patreon-gui
   allow-deploy-and-discord-publish:
     type: boolean
     default: false
@@ -22,18 +25,18 @@ jobs:
     steps:
       - setup
       - run:
-          name: Remove sources before persist
+          name: Remove unnecssary jars before persist
           command: |
             cd ~/project/build/libs
-            rm *-sources.jar
+            find . ! -name << pipeline.parameters.artifact-name >> -type f -exec rm -f {} +
       - persist_to_workspace:
           root: ~/project/build/libs
           paths:
-            - << pipeline.parameters.artifact-name >>-*.jar
+            - << pipeline.parameters.artifact-name >>
       - run:
           name: Publish artifact link to Discord
           command: |
-            if [ ${CIRCLE_BRANCH} = 1.19.4-develop ] && << pipeline.parameters.allow-deploy-and-discord-publish >>; then
+            if [ ${CIRCLE_BRANCH} = << pipeline.parameters.deploy-branch >> ] && << pipeline.parameters.allow-deploy-and-discord-publish >>; then
               artifact_path=$(curl --request GET --url https://circleci.com/api/v2/project/gh/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM/artifacts -H "Accept: application/json" | jq -r '.items[1].path')
               if [ -z "${WEBHOOK_URL}" ]; then
                 echo "NO DISCORD WEBHOOK SET"
@@ -73,6 +76,11 @@ jobs:
           steps:
             - attach_workspace:
                 at: ~/project/build/libs
+            - run:
+                name: Remove unnecssary jars before deploy
+                command: |
+                  cd ~/project/build/libs
+                  find . ! -name << pipeline.parameters.artifact-name >> -type f -exec rm -f {} +
             - store_artifacts:
                 path: ~/project/build/libs
             - run:
@@ -154,6 +162,6 @@ workflows:
           filters:
             branches:
               only:
-                - "1.19.4-develop"
+                - << pipeline.parameters.deploy-branch >>
           requires:
             - build

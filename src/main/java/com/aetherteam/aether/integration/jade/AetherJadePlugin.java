@@ -41,16 +41,18 @@ public class AetherJadePlugin implements IWailaPlugin {
 				return client.blockAccessor().from(target).blockState(this.getLockedDungeonBlock(ForgeRegistries.BLOCKS.getKey(door).getPath()).defaultBlockState()).build();
 			//mimics show up as normal chests. There's not a single way to tell the difference between these and normal chests from the tooltip.
 			} else if (target.getBlock() == AetherBlocks.CHEST_MIMIC.get()) {
-				return client.blockAccessor().from(target).serverData(this.createFakeChestData()).blockState(Blocks.CHEST.defaultBlockState()).build();
+				return client.blockAccessor().from(target).serverData(this.createFakeChestData(target)).blockState(Blocks.CHEST.defaultBlockState()).build();
 			}
 		}
 		return accessor;
 	}
 
 	//adds the "inventory not generated" text to the mimic's tooltip
-	private CompoundTag createFakeChestData() {
+	private CompoundTag createFakeChestData(BlockAccessor target) {
 		CompoundTag tag = new CompoundTag();
-		tag.putBoolean("Loot", true);
+		if (!target.getServerData().isEmpty()) {
+			tag.putBoolean("Loot", true);
+		}
 		return tag;
 	}
 

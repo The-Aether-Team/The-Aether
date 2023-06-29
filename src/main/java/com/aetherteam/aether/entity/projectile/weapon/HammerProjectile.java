@@ -5,7 +5,6 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -16,7 +15,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -59,13 +57,11 @@ public class HammerProjectile extends ThrowableProjectile {
         }
     }
 
-    public void shoot(Player player, float rotationPitch, float rotationYaw, float v, float velocity, float inaccuracy) {
+    public void shoot(float rotationPitch, float rotationYaw, float v, float velocity, float inaccuracy) {
         float x = -Mth.sin(rotationYaw * ((float) Math.PI / 180.0F)) * Mth.cos(rotationPitch * ((float) Math.PI / 180.0F));
         float y = -Mth.sin((rotationPitch + v) * ((float) Math.PI / 180.0F));
         float z = Mth.cos(rotationYaw * ((float) Math.PI / 180.0F)) * Mth.cos(rotationPitch * ((float) Math.PI / 180.0F));
-        this.shoot(x, y, z, velocity, inaccuracy);
-        Vec3 playerMotion = player.getDeltaMovement();
-        this.setDeltaMovement(this.getDeltaMovement().add(playerMotion.x, player.isOnGround() ? 0.0 : playerMotion.y, playerMotion.z));
+        super.shoot(x, y, z, velocity, inaccuracy);
     }
 
     @Override
@@ -73,14 +69,6 @@ public class HammerProjectile extends ThrowableProjectile {
         super.onHit(result);
         if (!this.level.isClientSide) {
             this.discard();
-        } else {
-            for(int j = 0; j < 8; j++) {
-                this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
-                this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
-                this.level.addParticle(ParticleTypes.SMOKE, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
-                this.level.addParticle(ParticleTypes.LARGE_SMOKE, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
-                this.level.addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
-            }
         }
     }
 
@@ -89,6 +77,8 @@ public class HammerProjectile extends ThrowableProjectile {
         if (!this.level.isClientSide) {
             Entity target = result.getEntity();
             launchTarget(target);
+        } else  {
+            this.spawnParticles();
         }
     }
 
@@ -100,6 +90,18 @@ public class HammerProjectile extends ThrowableProjectile {
             for (Entity target : list) {
                 this.launchTarget(target);
             }
+        } else  {
+            this.spawnParticles();
+        }
+    }
+
+    private void spawnParticles() {
+        for (int j = 0; j < 8; j++) {
+            this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
+            this.level.addParticle(ParticleTypes.EXPLOSION, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
+            this.level.addParticle(ParticleTypes.SMOKE, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
+            this.level.addParticle(ParticleTypes.LARGE_SMOKE, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
+            this.level.addParticle(ParticleTypes.FLAME, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
         }
     }
 

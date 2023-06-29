@@ -28,6 +28,10 @@ public class ConfigSerializationUtil {
      */
     public static ForgeConfigSpec.ConfigValue<Boolean> deserialize(String string) {
         List<String> path = Arrays.asList(string.replace("[", "").replace("]", "").split(", "));
-        return AetherConfig.COMMON_SPEC.getValues().get(path);
+        ForgeConfigSpec.ConfigValue<Boolean> config = AetherConfig.SERVER_SPEC.getValues().get(path);
+        if (config == null) {
+            config = AetherConfig.COMMON_SPEC.getValues().get(path);
+        }
+        return config;
     }
 }

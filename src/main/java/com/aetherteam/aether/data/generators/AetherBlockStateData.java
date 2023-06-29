@@ -165,6 +165,7 @@ public class AetherBlockStateData extends AetherBlockStateProvider {
         this.bookshelf(AetherBlocks.SKYROOT_BOOKSHELF.get(), AetherBlocks.SKYROOT_PLANKS.get());
         this.bed(AetherBlocks.SKYROOT_BED.get(), AetherBlocks.SKYROOT_PLANKS.get());
 
+        this.frostedIce(AetherBlocks.FROSTED_ICE.get(), Blocks.FROSTED_ICE);
         this.unstableObsidian(AetherBlocks.UNSTABLE_OBSIDIAN.get());
     }
 }

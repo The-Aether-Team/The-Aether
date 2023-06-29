@@ -37,7 +37,7 @@ public interface ShieldOfRepulsionAccessory {
                         if (impactedLiving instanceof Player player) {
                             AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                                 if (!aetherPlayer.isMoving()) {
-                                    if (!player.getLevel().isClientSide()) { // Values used by the Shield of Repulsion screen overlay vignette.
+                                    if (player.getLevel().isClientSide()) { // Values used by the Shield of Repulsion screen overlay vignette.
                                         aetherPlayer.setProjectileImpactedMaximum(150);
                                         aetherPlayer.setProjectileImpactedTimer(150);
                                     }
@@ -64,12 +64,14 @@ public interface ShieldOfRepulsionAccessory {
      */
     private static void handleDeflection(ProjectileImpactEvent event, Projectile projectile, LivingEntity impactedLiving, SlotResult slotResult) {
         event.setCanceled(true);
-        projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-0.25D));
-        if (projectile instanceof AbstractHurtingProjectile damagingProjectileEntity) {
-            damagingProjectileEntity.xPower *= -0.25D;
-            damagingProjectileEntity.yPower *= -0.25D;
-            damagingProjectileEntity.zPower *= -0.25D;
+        if (!impactedLiving.equals(projectile.getOwner())) {
+            projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-0.25D));
+            if (projectile instanceof AbstractHurtingProjectile damagingProjectileEntity) {
+                damagingProjectileEntity.xPower *= -0.25D;
+                damagingProjectileEntity.yPower *= -0.25D;
+                damagingProjectileEntity.zPower *= -0.25D;
+            }
+            slotResult.stack().hurtAndBreak(1, impactedLiving, (entity) -> CuriosApi.getCuriosHelper().onBrokenCurio(slotResult.slotContext()));
         }
-        slotResult.stack().hurtAndBreak(1, impactedLiving, (entity) -> CuriosApi.getCuriosHelper().onBrokenCurio(slotResult.slotContext()));
     }
 }

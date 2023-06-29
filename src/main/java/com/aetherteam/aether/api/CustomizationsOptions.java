@@ -22,7 +22,6 @@ public class CustomizationsOptions {
         if (CUSTOMIZATIONS_FILE.exists()) {
             this.load();
         } else {
-            this.customizations.put("sleeveGloves", false);
             this.customizations.put("haloEnabled", true);
             this.customizations.put("haloColor", null);
             this.customizations.put("developerGlowEnabled", false);
@@ -69,26 +68,12 @@ public class CustomizationsOptions {
         LocalPlayer player = Minecraft.getInstance().player;
         if (player != null) {
             AetherRankings.get(player).ifPresent(aetherRankings -> {
-                aetherRankings.setAreSleeveGloves(this.areSleeveGloves());
                 aetherRankings.setIsHaloEnabled(this.isHaloEnabled());
                 aetherRankings.setHaloColor(this.getHaloHex());
                 aetherRankings.setIsDeveloperGlowEnabled(this.isDeveloperGlowEnabled());
                 aetherRankings.setDeveloperGlowColor(this.getDeveloperGlowHex());
             });
         }
-    }
-
-    public boolean areSleeveGloves() {
-        Object value = this.get("sleeveGloves");
-        if (value instanceof Boolean bool) {
-            return bool;
-        } else {
-            return false;
-        }
-    }
-
-    public void setAreSleeveGloves(boolean value) {
-        this.set("sleeveGloves", value);
     }
 
     public boolean isHaloEnabled() {

@@ -2,13 +2,12 @@ package com.aetherteam.aether.event.hooks;
 
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlocks;
+import com.aetherteam.aether.capability.item.DroppedItem;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.ai.goal.BeeGrowBerryBushGoal;
 import com.aetherteam.aether.entity.ai.goal.FoxEatBerryBushGoal;
-import com.aetherteam.aether.entity.monster.Swet;
 import com.aetherteam.aether.entity.monster.dungeon.boss.slider.Slider;
 import com.aetherteam.aether.entity.passive.FlyingCow;
-import com.aetherteam.aether.entity.passive.MountableAnimal;
 import com.aetherteam.aether.item.miscellaneous.bucket.SkyrootBucketItem;
 import com.aetherteam.aether.item.AetherItems;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -29,6 +28,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 
+import java.util.Collection;
 import java.util.Optional;
 
 public class EntityHooks {
@@ -40,13 +40,6 @@ public class EntityHooks {
             Fox fox = (Fox) entity;
             fox.goalSelector.addGoal(10, new FoxEatBerryBushGoal(fox, 1.2F, 12, 1));
         }
-    }
-
-    public static boolean dismountPrevention(Entity rider, Entity mount, boolean dismounting) {
-        if (dismounting && rider.isShiftKeyDown()) {
-            return (mount instanceof MountableAnimal && !mount.isOnGround() && !mount.isInFluidType() && !mount.isPassenger()) || (mount instanceof Swet swet && !swet.isFriendly());
-        }
-        return false;
     }
 
     public static void launchMount(Player player) {
@@ -102,9 +95,9 @@ public class EntityHooks {
         return interactionResult;
     }
 
-    public static boolean preventSliderHooked(Entity projectileEntity, HitResult rayTraceResult) {
+    public static boolean preventEntityHooked(Entity projectileEntity, HitResult rayTraceResult) {
         if (rayTraceResult instanceof EntityHitResult entityHitResult) {
-            return entityHitResult.getEntity() instanceof Slider && projectileEntity instanceof FishingHook;
+            return entityHitResult.getEntity().getType().is(AetherTags.Entities.UNHOOKABLE) && projectileEntity instanceof FishingHook;
         }
         return false;
     }
@@ -118,6 +111,12 @@ public class EntityHooks {
             return itemEntity.getItem().is(AetherTags.Items.DUNGEON_KEYS);
         } else {
             return false;
+        }
+    }
+
+    public static void trackDrops(LivingEntity entity, Collection<ItemEntity> itemDrops) {
+        if (entity instanceof Player player) {
+            itemDrops.forEach(itemEntity -> DroppedItem.get(itemEntity).ifPresent(droppedItem -> droppedItem.setOwner(player)));
         }
     }
 }

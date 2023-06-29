@@ -152,7 +152,8 @@ public abstract class AetherBlockLootSubProvider extends BlockLootSubProvider {
                                 .when(LocationCheck.checkLocation(
                                         LocationPredicate.Builder.location().setBlock(
                                                 BlockPredicate.Builder.block().of(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get()).build()),
-                                        new BlockPos(0, -1, 0))))))
+                                        new BlockPos(0, -1, 0)))))
+                        .apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE)))
                 .when(BlockLootAccessor.aether$hasSilkTouch().invert())
                 .apply(DoubleDrops.builder())
         ).withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
@@ -183,6 +184,10 @@ public abstract class AetherBlockLootSubProvider extends BlockLootSubProvider {
                 .add(this.applyExplosionDecay(block, LootItem.lootTableItem(AetherItems.GINGERBREAD_MAN.get()).setWeight(8)
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(5.0F, 6.0F)))))
                 .add(this.applyExplosionDecay(block, LootItem.lootTableItem(AetherItems.CANDY_CANE_SWORD.get()).setWeight(1)))
+                .when(BlockLootAccessor.aether$hasSilkTouch().invert())
+        ).withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                .add(LootItem.lootTableItem(block))
+                .when(BlockLootAccessor.aether$hasSilkTouch())
         );
     }
 

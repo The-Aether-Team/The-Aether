@@ -71,7 +71,7 @@ public class GuiListener {
 			}
 			GuiHooks.setMenuAlignment();
 		} else {
-			if (!AetherConfig.CLIENT.disable_accessory_button.get()) {
+			if (!AetherConfig.CLIENT.disable_accessory_button.get() && GuiHooks.areItemsPresent()) {
 				Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(screen);
 				AccessoryButton inventoryAccessoryButton = GuiHooks.setupAccessoryButtonWithinInventories(screen, offsets);
 				if (inventoryAccessoryButton != null) {

@@ -191,6 +191,7 @@ public class AetherBlockLoot extends AetherBlockLootSubProvider {
         this.add(AetherBlocks.SKYROOT_BED.get(),
                 (bed) -> createSinglePropConditionTable(bed, BedBlock.PART, BedPart.HEAD));
 
+        this.dropNone(AetherBlocks.FROSTED_ICE.get());
         this.dropNone(AetherBlocks.UNSTABLE_OBSIDIAN.get());
     }
 

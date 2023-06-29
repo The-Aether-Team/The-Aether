@@ -32,11 +32,11 @@ public class HammerOfKingbdogzItem extends AetherSwordItem {
         ItemStack heldStack = player.getItemInHand(hand);
         if (!level.isClientSide()) {
             if (!player.getAbilities().instabuild) {
-                player.getCooldowns().addCooldown(this, AetherConfig.COMMON.hammer_of_kingbdogz_cooldown.get());
+                player.getCooldowns().addCooldown(this, AetherConfig.SERVER.hammer_of_kingbdogz_cooldown.get());
                 heldStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
             }
             HammerProjectile hammerProjectile = new HammerProjectile(player, level);
-            hammerProjectile.shoot(player, player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1.0F);
+            hammerProjectile.shoot(player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1.0F);
             if (heldStack.getHoverName().getString().equalsIgnoreCase("hammer of jeb")) {
                 hammerProjectile.setIsJeb(true); // Handles Hammer of Jeb texture for the projectile.
             }

@@ -29,10 +29,12 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -133,12 +135,45 @@ public class AbilityHooks {
             return speed;
         }
 
+        public static boolean preventTargeting(LivingEntity target, Entity lookingEntity) {
+            if (target instanceof Player player && AetherPlayer.get(player).isPresent() && AetherPlayer.get(player).resolve().isPresent()) {
+                return lookingEntity != null
+                        && !lookingEntity.getType().is(AetherTags.Entities.IGNORE_INVISIBILITY)
+                        && AetherPlayer.get(player).resolve().get().isInvisibilityEnabled()
+                        && !AetherPlayer.get(player).resolve().get().attackedWithInvisibility();
+            } else {
+                return lookingEntity != null
+                        && !lookingEntity.getType().is(AetherTags.Entities.IGNORE_INVISIBILITY)
+                        && EquipmentUtil.hasInvisibilityCloak(target);
+            }
+        }
+
+        public static boolean recentlyAttackedWithInvisibility(LivingEntity target) {
+            if (target instanceof Player player && AetherPlayer.get(player).isPresent() && AetherPlayer.get(player).resolve().isPresent()) {
+                return AetherPlayer.get(player).resolve().get().isInvisibilityEnabled() && AetherPlayer.get(player).resolve().get().attackedWithInvisibility();
+            } else {
+                return false;
+            }
+        }
+
+        public static void setAttack(DamageSource source) {
+            if (source.getDirectEntity() instanceof Player player) {
+                AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setAttackedWithInvisibility(true));
+            }
+        }
+
         /**
          * Prevents magma block damage when wearing ice accessories.
          * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onEntityHurt(net.minecraftforge.event.entity.living.LivingAttackEvent)
          */
         public static boolean preventMagmaDamage(LivingEntity entity, DamageSource source) {
             return source == entity.getLevel().damageSources().hotFloor() && EquipmentUtil.hasFreezingAccessory(entity);
+        }
+
+        public static void setShoot(Entity entity) {
+            if (entity instanceof Projectile projectile && projectile.getOwner() instanceof Player player) {
+                AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setAttackedWithInvisibility(true));
+            }
         }
     }
 
@@ -249,7 +284,7 @@ public class AbilityHooks {
          * @see com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener#modifyBreakSpeed(PlayerEvent.BreakSpeed)
          */
         public static float reduceToolEffectiveness(Player player, BlockState state, ItemStack stack, float speed) {
-            if (AetherConfig.COMMON.tools_debuff.get()) {
+            if (AetherConfig.SERVER.tools_debuff.get()) {
                 if (!player.getLevel().isClientSide()) {
                     debuffTools = true;
                     AetherPacketHandler.sendToNear(new ToolDebuffPacket(true), player.getX(), player.getY(), player.getZ(), 10, player.getLevel().dimension());
@@ -258,7 +293,7 @@ public class AbilityHooks {
             if (debuffTools) {
                 if ((state.getBlock().getDescriptionId().startsWith("block.aether.") || state.is(AetherTags.Blocks.TREATED_AS_AETHER_BLOCK)) && !state.is(AetherTags.Blocks.TREATED_AS_VANILLA_BLOCK)) {
                     if (!stack.isEmpty() && stack.isCorrectToolForDrops(state) && !stack.getItem().getDescriptionId().startsWith("item.aether.") && !stack.is(AetherTags.Items.TREATED_AS_AETHER_ITEM)) {
-                        speed = (float) Math.pow(speed, -0.2);
+                        speed = (float) Math.pow(speed, speed > 1.0 ? -0.2 : 1.2);
                     }
                 }
             }
@@ -409,6 +444,46 @@ public class AbilityHooks {
                 }
             }
             return false;
+        }
+
+        public static float reduceWeaponEffectiveness(LivingEntity target, Entity source, float damage) {
+            if (AetherConfig.SERVER.tools_debuff.get() && !target.getLevel().isClientSide()) {
+                if (source instanceof LivingEntity livingEntity) {
+                    ItemStack stack = livingEntity.getMainHandItem();
+                    if ((target.getType().getDescriptionId().startsWith("entity.aether") || target.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY)) && !target.getType().is(AetherTags.Entities.TREATED_AS_VANILLA_ENTITY)) {
+                        if (!stack.isEmpty() && !stack.getAttributeModifiers(EquipmentSlot.MAINHAND).isEmpty() && !stack.getAttributeModifiers(EquipmentSlot.MAINHAND).get(Attributes.ATTACK_DAMAGE).isEmpty()) {
+                            double value = stack.getAttributeModifiers(EquipmentSlot.MAINHAND).get(Attributes.ATTACK_DAMAGE).stream().mapToDouble(AttributeModifier::getAmount).sum();
+                            if (value > livingEntity.getAttributeBaseValue(Attributes.ATTACK_DAMAGE) && !stack.getItem().getDescriptionId().startsWith("item.aether.") && !stack.is(AetherTags.Items.TREATED_AS_AETHER_ITEM)) {
+                                damage = (float) Math.pow(damage, 0.5);
+                            }
+                        }
+                    }
+                } else if (source instanceof Projectile) {
+                    if ((target.getType().getDescriptionId().startsWith("entity.aether") || target.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY)) && !target.getType().is(AetherTags.Entities.TREATED_AS_VANILLA_ENTITY)) {
+                        if ((!source.getType().getDescriptionId().startsWith("entity.aether") && !source.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY))
+                                && (!(source instanceof AbstractArrow abstractArrow) || !PhoenixArrow.get(abstractArrow).isPresent() || PhoenixArrow.get(abstractArrow).resolve().isEmpty() || !PhoenixArrow.get(abstractArrow).resolve().get().isPhoenixArrow())) {
+                            damage = (float) Math.pow(damage, 0.5);
+                        }
+                    }
+                }
+            }
+            return damage;
+        }
+
+        public static float reduceArmorEffectiveness(LivingEntity target, Entity source, float damage) {
+            if (source != null) {
+                if ((source.getType().getDescriptionId().startsWith("entity.aether") || source.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY) && !source.getType().is(AetherTags.Entities.TREATED_AS_VANILLA_ENTITY))) {
+                    for (ItemStack stack : target.getArmorSlots()) {
+                        if (stack.getItem() instanceof ArmorItem armorItem && !stack.getItem().getDescriptionId().startsWith("item.aether.") && !stack.is(AetherTags.Items.TREATED_AS_AETHER_ITEM)) {
+                            if (!stack.getAttributeModifiers(armorItem.getEquipmentSlot()).isEmpty() && !stack.getAttributeModifiers(armorItem.getEquipmentSlot()).get(Attributes.ARMOR).isEmpty()) {
+                                double value = stack.getAttributeModifiers(armorItem.getEquipmentSlot()).get(Attributes.ARMOR).stream().mapToDouble((attributeModifier) -> attributeModifier.getAmount() / 15).sum();
+                                damage += value;
+                            }
+                        }
+                    }
+                }
+            }
+            return damage;
         }
     }
 }

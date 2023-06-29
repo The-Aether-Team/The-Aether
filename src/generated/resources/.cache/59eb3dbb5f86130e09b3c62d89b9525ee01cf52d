@@ -1,4 +1,4 @@
-// 1.19.4	2023-05-11T23:01:36.767183	Loot Tables
+// 1.19.4	2023-06-11T17:58:15.3669666	Loot Tables
 d025471306910ea35dcf85d28fc188182a1b3c8d data/aether/loot_tables/advancements/enter_aether.json
 96aec873b17d2a5aed2a22fe094efa32b8d54645 data/aether/loot_tables/blocks/aerogel.json
 ffdecdc23fdf03314c666c6d8638f7f44bdbcc8b data/aether/loot_tables/blocks/aerogel_slab.json
@@ -18,7 +18,7 @@ a17e74dbf32e992b871e0798eb498292c270f06b data/aether/loot_tables/blocks/ambrosiu
 d6ab159d767f8b5591a29da3f1e6e674ca96de2b data/aether/loot_tables/blocks/angelic_stairs.json
 c6fa40b8f4c6090d949b5006deed5809600ede91 data/aether/loot_tables/blocks/angelic_stone.json
 725033b18efe98990e89b5adf80a871549e88297 data/aether/loot_tables/blocks/angelic_wall.json
-17fc2f17553b754d9dada4451bb3779583b9e063 data/aether/loot_tables/blocks/berry_bush.json
+7af6acadfcbc889af042c045ac4c69b95d7447de data/aether/loot_tables/blocks/berry_bush.json
 43fed59caef30ed669337807c1808a0d4c33395e data/aether/loot_tables/blocks/berry_bush_stem.json
 3c5c73ce4c3d84594ec85f3f9d45a15f77b8eda3 data/aether/loot_tables/blocks/blue_aercloud.json
 1d4929d7d6176f60e5ea991a577527ed251ef375 data/aether/loot_tables/blocks/boss_doorway_angelic_stone.json
@@ -39,6 +39,7 @@ a16f9cbfeadabb9e6c2e8ed7c91fd17600d9537a data/aether/loot_tables/blocks/cold_aer
 8d8073b64d679edfc5807f69dc6e605e89b97116 data/aether/loot_tables/blocks/enchanted_aether_grass_block.json
 e7dd3076149db8ad39ea29ea18fa92629c655240 data/aether/loot_tables/blocks/enchanted_gravitite.json
 2765f1b6c4c298a5bf1bbcdc4c673efb573ce627 data/aether/loot_tables/blocks/freezer.json
+1d4929d7d6176f60e5ea991a577527ed251ef375 data/aether/loot_tables/blocks/frosted_ice.json
 33c7f5b77e576fc80c4694550e9d21d214402393 data/aether/loot_tables/blocks/golden_aercloud.json
 d87b01010532f17df1a152f49a005ba2995183c8 data/aether/loot_tables/blocks/golden_oak_leaves.json
 fa88f4c82809908b9747554316bd220df4813fdd data/aether/loot_tables/blocks/golden_oak_log.json
@@ -85,7 +86,7 @@ a2bcad40febb0f2bf330833aff57eef851ef4a2c data/aether/loot_tables/blocks/potted_g
 f279f89c89220390ddd48f5011b07dc8a93bb27b data/aether/loot_tables/blocks/potted_purple_flower.json
 689f99c1e0ad9b833cf85e53e3219d132df0076c data/aether/loot_tables/blocks/potted_skyroot_sapling.json
 1f8e7240f2dbbb387f0ccc30bdb818d74293c87d data/aether/loot_tables/blocks/potted_white_flower.json
-2b43ae9518a3fb5026027c50cbb8b7b90b82d190 data/aether/loot_tables/blocks/present.json
+a7b21600ca663580859323c8fd42ca4050f7e532 data/aether/loot_tables/blocks/present.json
 54c57453d6e970c1e1e3841721dc4bbcded64eac data/aether/loot_tables/blocks/purple_flower.json
 15bf8e1577c8369ea675c88c86de4606b6d644ea data/aether/loot_tables/blocks/quicksoil.json
 42e3b7aed6c6593242957e91a34d51348b01a617 data/aether/loot_tables/blocks/quicksoil_glass.json
@@ -140,12 +141,12 @@ f3e111a054362e2c739860793f35094b6f909806 data/aether/loot_tables/chests/dungeon/
 823a34216821e227fda0192e98eeb00e4e34b72d data/aether/loot_tables/chests/dungeon/bronze/silver_dungeon_neptune.json
 4c414c18350de597a7dd57e663b5ff5c0a00d3e5 data/aether/loot_tables/chests/dungeon/bronze/silver_dungeon_treasure.json
 b970379a413dd63d031285f3d7d148cda5084398 data/aether/loot_tables/chests/dungeon/bronze/silver_dungeon_valkyrie.json
-ee7a6a59fb458dd651a520c092e103cbfdd25813 data/aether/loot_tables/chests/dungeon/gold/gold_dungeon_reward.json
+fe74c493e64c6895a815c12813dd4c91d71259c7 data/aether/loot_tables/chests/dungeon/gold/gold_dungeon_reward.json
 4beb246866f187046efdcc951b29f47f4b104556 data/aether/loot_tables/chests/dungeon/gold/gold_dungeon_treasure.json
 38b1089b326531bc04800c4d9aabc03350f100cd data/aether/loot_tables/chests/dungeon/silver/silver_dungeon.json
 c1dabc90d155741838b84fb983a11d2d7e0974fd data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_disc.json
 f6b71f3cc3d0413017eb3f72d397df28207cb526 data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_loot.json
-cc0281497ba68f23da4fd2a81592d83fa8f87b7d data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_reward.json
+404dc217669f3d4a4dbe3696f843c7f429d41841 data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_reward.json
 509fcc4c3ed95d67346dad14ed6bfecc9c13386a data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_trash.json
 df0825811c297a2490f3108da95334235f829324 data/aether/loot_tables/entities/aechor_plant.json
 8d9ec859066d8908362d317ef37e9d2bdbfc9cce data/aether/loot_tables/entities/aerbunny.json

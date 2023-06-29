@@ -6,12 +6,15 @@ import javax.annotation.Nullable;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.WingedBird;
+import com.aetherteam.aether.entity.ai.goal.ContinuousMeleeAttackGoal;
 import com.aetherteam.aether.entity.ai.goal.FallingRandomStrollGoal;
 import com.aetherteam.aether.entity.ai.goal.MoaFollowGoal;
 import com.aetherteam.aether.entity.ai.navigator.FallPathNavigation;
 
 import com.aetherteam.aether.entity.monster.AechorPlant;
 import com.aetherteam.aether.entity.monster.Swet;
+import com.aetherteam.aether.event.dispatch.AetherEventDispatch;
+import com.aetherteam.aether.event.events.EggLayEvent;
 import com.aetherteam.aether.item.miscellaneous.MoaEggItem;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.AetherTags;
@@ -91,12 +94,12 @@ public class Moa extends MountableAnimal implements WingedBird {
 		this.goalSelector.addGoal(0, new FloatGoal(this));
 		this.goalSelector.addGoal(1, new PanicGoal(this, 0.65));
 		this.goalSelector.addGoal(2, new MoaFollowGoal(this, 1.0));
-		this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.0D, true));
+		this.goalSelector.addGoal(3, new ContinuousMeleeAttackGoal(this, 1.0D, true));
 		this.goalSelector.addGoal(4, new FallingRandomStrollGoal(this, 0.35));
 		this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6.0F));
 		this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Swet.class, false, (livingEntity) -> this.getFollowing() == null && this.isPlayerGrown() && livingEntity instanceof Swet swet && !swet.isFriendly()));
-		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, AechorPlant.class, false, (livingEntity) -> this.getFollowing() == null && this.isPlayerGrown()));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Swet.class, false, (livingEntity) -> this.getFollowing() == null && this.isPlayerGrown() && !this.isBaby() && livingEntity instanceof Swet swet && !swet.isFriendly()));
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, AechorPlant.class, false, (livingEntity) -> this.getFollowing() == null && this.isPlayerGrown() && !this.isBaby()));
 	}
 
 	@Nonnull
@@ -154,6 +157,14 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	@Override
+	public void onSyncedDataUpdated(@Nonnull EntityDataAccessor<?> dataAccessor) {
+		if (DATA_SITTING_ID.equals(dataAccessor)) {
+			this.refreshDimensions();
+		}
+		super.onSyncedDataUpdated(dataAccessor);
+	}
+
+	@Override
 	public void aiStep() {
 		super.aiStep();
 		this.animateWings();
@@ -189,8 +200,15 @@ public class Moa extends MountableAnimal implements WingedBird {
 			if (!this.isBaby() && this.getPassengers().isEmpty() && --this.eggTime <= 0) {
 				MoaType moaType = this.getMoaType();
 				if (moaType != null) {
-					this.playSound(AetherSoundEvents.ENTITY_MOA_EGG.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-					this.spawnAtLocation(this.getMoaType().getEgg());
+					EggLayEvent eggLayEvent = AetherEventDispatch.onLayEgg(this, AetherSoundEvents.ENTITY_MOA_EGG.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F, this.getMoaType().getEgg());
+					if (!eggLayEvent.isCanceled()) {
+						if (eggLayEvent.getSound() != null) {
+							this.playSound(eggLayEvent.getSound(), eggLayEvent.getVolume(), eggLayEvent.getPitch());
+						}
+						if (eggLayEvent.getItem() != null) {
+							this.spawnAtLocation(eggLayEvent.getItem());
+						}
+					}
 				}
 				this.eggTime = this.getEggTime();
 			}
@@ -227,7 +245,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 						this.setFlapCooldown(15);
 					}
 				}
-				this.resetFallDistance();
+				this.checkSlowFallDistance();
 			}
 		}
 	}
@@ -537,6 +555,24 @@ public class Moa extends MountableAnimal implements WingedBird {
 	@Override
 	public double getPassengersRidingOffset() {
 		return this.isSitting() ? 0.25 : 1.25;
+	}
+
+	@Override
+	public float getScale() {
+		return 1.0F;
+	}
+
+	@Nonnull
+	@Override
+	public EntityDimensions getDimensions(@Nonnull Pose pose) {
+		EntityDimensions dimensions = super.getDimensions(pose);
+		if (this.isSitting()) {
+			dimensions = dimensions.scale(1.0F, 0.5F);
+		}
+		if (this.isBaby()) {
+			dimensions = dimensions.scale(1.0F, 0.5F);
+		}
+		return dimensions;
 	}
 
 	@Nullable

@@ -16,6 +16,7 @@ import com.aetherteam.aether.capability.CapabilitySyncing;
 import com.aetherteam.aether.network.AetherPacket;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.AetherPlayerSyncPacket;
+import com.aetherteam.aether.util.EquipmentUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -74,8 +75,12 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	private final List<CloudMinion> cloudMinions = new ArrayList<>(2);
 
-	private float wingRotation;
+	private int wingRotationO;
+	private int wingRotation;
 
+	private int invisibilityAttackCooldown;
+	private boolean attackedWithInvisibility;
+	private boolean invisibilityEnabled = true;
 	private boolean wearingInvisibilityCloak;
 
 	private static final int FLIGHT_TIMER_MAX = 52;
@@ -105,10 +110,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	public CompoundTag serializeNBT() {
 		CompoundTag tag = new CompoundTag();
 		tag.putBoolean("CanGetPortal", this.canGetPortal());
-		tag.putInt("RemedyMaximum", this.getRemedyMaximum());
-		tag.putInt("RemedyTimer", this.getRemedyTimer());
-		tag.putInt("ProjectileImpactedMaximum", this.getProjectileImpactedMaximum());
-		tag.putInt("ProjectileImpactedTimer", this.getProjectileImpactedTimer());
 		tag.putFloat("SavedHealth", this.getSavedHealth());
 		tag.putInt("LifeShardCount", this.getLifeShardCount());
 		tag.putBoolean("HasSeenSunSpirit", this.hasSeenSunSpiritDialogue());
@@ -122,18 +123,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	public void deserializeNBT(CompoundTag tag) {
 		if (tag.contains("CanGetPortal")) {
 			this.setCanGetPortal(tag.getBoolean("CanGetPortal"));
-		}
-		if (tag.contains("RemedyMaximum")) {
-			this.setRemedyMaximum(tag.getInt("RemedyMaximum"));
-		}
-		if (tag.contains("RemedyTimer")) {
-			this.setRemedyTimer(tag.getInt("RemedyTimer"));
-		}
-		if (tag.contains("ProjectileImpactedMaximum")) {
-			this.setProjectileImpactedMaximum(tag.getInt("ProjectileImpactedMaximum"));
-		}
-		if (tag.contains("ProjectileImpactedTimer")) {
-			this.setProjectileImpactedTimer(tag.getInt("ProjectileImpactedTimer"));
 		}
 		if (tag.contains("SavedHealth")) {
 			this.setSavedHealth(tag.getFloat("SavedHealth"));
@@ -156,12 +145,10 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		tag.putInt("GoldenDartCount_Syncing", this.getGoldenDartCount());
 		tag.putInt("PoisonDartCount_Syncing", this.getPoisonDartCount());
 		tag.putInt("EnchantedDartCount_Syncing", this.getEnchantedDartCount());
-		tag.putInt("RemedyMaximum_Syncing", this.getRemedyMaximum());
-		tag.putInt("RemedyTimer_Syncing", this.getRemedyTimer());
-		tag.putInt("ProjectileImpactedMaximum_Syncing", this.getProjectileImpactedMaximum());
-		tag.putInt("ProjectileImpactedTimer_Syncing", this.getProjectileImpactedTimer());
 		tag.putInt("FlightTimer_Syncing", this.getFlightTimer());
 		tag.putFloat("FlightModifier_Syncing", this.getFlightModifier());
+		tag.putBoolean("AttackedWithInvisibility_Syncing", this.attackedWithInvisibility());
+		tag.putBoolean("InvisibilityEnabled_Syncing", this.isInvisibilityEnabled());
 		tag.putBoolean("WearingInvisibilityCloak_Syncing", this.isWearingInvisibilityCloak());
 		tag.putInt("LifeShardCount_Syncing", this.getLifeShardCount());
 		return tag;
@@ -181,18 +168,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		if (tag.contains("EnchantedDartCount_Syncing")) {
 			this.setEnchantedDartCount(tag.getInt("EnchantedDartCount_Syncing"));
 		}
-		if (tag.contains("RemedyMaximum_Syncing")) {
-			this.setRemedyMaximum(tag.getInt("RemedyMaximum_Syncing"));
-		}
-		if (tag.contains("RemedyTimer_Syncing")) {
-			this.setRemedyTimer(tag.getInt("RemedyTimer_Syncing"));
-		}
-		if (tag.contains("ProjectileImpactedMaximum_Syncing")) {
-			this.setProjectileImpactedMaximum(tag.getInt("ProjectileImpactedMaximum_Syncing"));
-		}
-		if (tag.contains("ProjectileImpactedTimer_Syncing")) {
-			this.setProjectileImpactedTimer(tag.getInt("ProjectileImpactedTimer_Syncing"));
-		}
 		if (tag.contains("FlightTimer_Syncing")) {
 			this.setFlightTimer(tag.getInt("FlightTimer_Syncing"));
 		}
@@ -201,6 +176,12 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		}
 		if (tag.contains("LifeShardCount_Syncing")) {
 			this.setLifeShardCount(tag.getInt("LifeShardCount_Syncing"));
+		}
+		if (tag.contains("AttackedWithInvisibility_Syncing")) {
+			this.setAttackedWithInvisibility(tag.getBoolean("AttackedWithInvisibility_Syncing"));
+		}
+		if (tag.contains("InvisibilityEnabled_Syncing")) {
+			this.setInvisibilityEnabled(tag.getBoolean("InvisibilityEnabled_Syncing"));
 		}
 		if (tag.contains("WearingInvisibilityCloak_Syncing")) {
 			this.setWearingInvisibilityCloak(tag.getBoolean("WearingInvisibilityCloak_Syncing"));
@@ -238,6 +219,8 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		this.handleRemoveDarts();
 		this.tickDownRemedy();
 		this.tickDownProjectileImpact();
+		this.handleWingRotation();
+		this.handleAttackCooldown();
 		this.handleVampireHealing();
 		this.checkToRemoveAerbunny();
 		this.checkToRemoveCloudMinions();
@@ -370,7 +353,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	}
 
 	private void tickDownRemedy() {
-		if (!this.getPlayer().level.isClientSide()) {
+		if (this.getPlayer().level.isClientSide()) {
 			if (this.getRemedyTimer() > 0) {
 				this.setRemedyTimer(this.getRemedyTimer() - 1);
 			} else {
@@ -381,12 +364,36 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	}
 
 	private void tickDownProjectileImpact() {
-		if (!this.getPlayer().level.isClientSide()) {
+		if (this.getPlayer().level.isClientSide()) {
 			if (this.getProjectileImpactedTimer() > 0) {
 				this.setProjectileImpactedTimer(this.getProjectileImpactedTimer() - 1);
 			} else {
 				this.setProjectileImpactedMaximum(0);
 				this.setProjectileImpactedTimer(0);
+			}
+		}
+	}
+
+	private void handleWingRotation() {
+		if (this.getPlayer().level.isClientSide()) {
+			this.wingRotationO = this.getWingRotation();
+			if (EquipmentUtil.hasFullValkyrieSet(this.getPlayer())) {
+				this.wingRotation = this.getPlayer().tickCount;
+			} else {
+				this.wingRotation = 0;
+			}
+		}
+	}
+
+	private void handleAttackCooldown() {
+		if (!this.getPlayer().getLevel().isClientSide()) {
+			if (this.attackedWithInvisibility()) {
+				--this.invisibilityAttackCooldown;
+				if (this.invisibilityAttackCooldown <= 0) {
+					this.setAttackedWithInvisibility(false);
+				}
+			} else {
+				this.invisibilityAttackCooldown = AetherConfig.SERVER.invisibility_visibility_time.get();
 			}
 		}
 	}
@@ -601,7 +608,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	@Override
 	public void setRemedyMaximum(int remedyMaximum) {
-		this.markDirty(true);
 		this.remedyMaximum = remedyMaximum;
 	}
 
@@ -612,7 +618,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	@Override
 	public void setRemedyTimer(int timer) {
-		this.markDirty(true);
 		this.remedyTimer = timer;
 	}
 
@@ -623,7 +628,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	@Override
 	public void setProjectileImpactedMaximum(int projectileImpactedMaximum) {
-		this.markDirty(true);
 		this.impactedMaximum = projectileImpactedMaximum;
 	}
 
@@ -634,7 +638,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	@Override
 	public void setProjectileImpactedTimer(int projectileImpactedTimer) {
-		this.markDirty(true);
 		this.impactedTimer = projectileImpactedTimer;
 	}
 
@@ -686,17 +689,40 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	}
 
 	@Override
-	public void setWingRotation(float wingRotation) {
-		this.wingRotation = wingRotation;
+	public int getWingRotationO() {
+		return this.wingRotationO;
 	}
 
 	@Override
-	public float getWingRotation() {
+	public int getWingRotation() {
 		return this.wingRotation;
 	}
 
 	@Override
+	public void setAttackedWithInvisibility(boolean attacked) {
+		this.markDirty(true);
+		this.attackedWithInvisibility = attacked;
+	}
+
+	@Override
+	public boolean attackedWithInvisibility() {
+		return this.attackedWithInvisibility;
+	}
+
+	@Override
+	public void setInvisibilityEnabled(boolean enabled) {
+		this.markDirty(true);
+		this.invisibilityEnabled = enabled;
+	}
+
+	@Override
+	public boolean isInvisibilityEnabled() {
+		return this.invisibilityEnabled;
+	}
+
+	@Override
 	public void setWearingInvisibilityCloak(boolean wearing) {
+		this.markDirty(true);
 		this.wearingInvisibilityCloak = wearing;
 	}
 
@@ -802,7 +828,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	@Override
 	public int getLifeShardLimit() {
-		return AetherConfig.COMMON.maximum_life_shards.get();
+		return AetherConfig.SERVER.maximum_life_shards.get();
 	}
 
 	@Override

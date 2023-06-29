@@ -341,8 +341,12 @@ public class AetherCreativeTabs {
                             output.accept(AetherItems.AGILITY_CAPE.get());
                             output.accept(AetherItems.SWET_CAPE.get());
                             output.accept(AetherItems.INVISIBILITY_CLOAK.get());
-                            output.accept(AetherItems.VALKYRIE_CAPE.get());
-                            output.accept(AetherItems.GOLDEN_FEATHER.get());
+                            if (AetherConfig.SERVER.spawn_valkyrie_cape.get()) {
+                                output.accept(AetherItems.VALKYRIE_CAPE.get());
+                            }
+                            if (AetherConfig.SERVER.spawn_golden_feather.get()) {
+                                output.accept(AetherItems.GOLDEN_FEATHER.get());
+                            }
                             output.accept(AetherItems.REGENERATION_STONE.get());
                             output.accept(AetherItems.IRON_BUBBLE.get());
                             output.accept(AetherItems.SHIELD_OF_REPULSION.get());
@@ -357,7 +361,7 @@ public class AetherCreativeTabs {
                             output.accept(AetherItems.BLUE_BERRY.get());
                             output.accept(AetherItems.ENCHANTED_BERRY.get());
                             output.accept(AetherItems.WHITE_APPLE.get());
-                            if (AetherConfig.COMMON.edible_ambrosium.get()) {
+                            if (AetherConfig.SERVER.edible_ambrosium.get()) {
                                 output.accept(AetherItems.AMBROSIUM_SHARD.get());
                             }
                             output.accept(AetherItems.HEALING_STONE.get());

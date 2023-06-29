@@ -2,6 +2,7 @@ package com.aetherteam.aether.block.natural;
 
 import com.aetherteam.aether.block.AetherBlockStateProperties;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.HalfTransparentBlock;
@@ -44,7 +45,9 @@ public class AercloudBlock extends HalfTransparentBlock {
 		if (entity.getDeltaMovement().y < 0.0) {
 			entity.setDeltaMovement(entity.getDeltaMovement().multiply(1.0, 0.005, 1.0));
 		}
-		entity.setOnGround(true);
+		if (entity instanceof LivingEntity livingEntity && (!(livingEntity instanceof Player player) || !player.getAbilities().flying)) {
+			entity.setOnGround(true);
+		}
 	}
 
 	/**
@@ -90,6 +93,9 @@ public class AercloudBlock extends HalfTransparentBlock {
 	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+		if (!this.getDefaultCollisionShape(state, level, pos, context).isEmpty() && level.getBlockState(pos.above()).getBlock() instanceof AercloudBlock) {
+			return Shapes.block();
+		}
 		if (context instanceof EntityCollisionContext entityCollisionContext) {
 			Entity entity = entityCollisionContext.getEntity();
 			if (entity != null) {

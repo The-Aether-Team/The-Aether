@@ -34,7 +34,7 @@ public class GummySwetItem extends Item implements ConsumableItem {
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		ItemStack heldStack = player.getItemInHand(hand);
-		if (this.isEdible()) { // If AetherConfig.COMMON.healing_gummy_swets.get() is false.
+		if (this.isEdible()) { // If AetherConfig.SERVER.healing_gummy_swets.get() is false.
 			FoodProperties foodProperties = this.getFoodProperties(heldStack, player);
 			if (foodProperties != null && player.canEat(foodProperties.canAlwaysEat())) {
 				player.startUsingItem(hand);
@@ -42,7 +42,7 @@ public class GummySwetItem extends Item implements ConsumableItem {
 			} else {
 				return InteractionResultHolder.fail(heldStack);
 			}
-		} else { // If AetherConfig.COMMON.healing_gummy_swets.get() is true.
+		} else { // If AetherConfig.SERVER.healing_gummy_swets.get() is true.
 			if (player.getHealth() < player.getMaxHealth() && !player.isCreative()) {
 				player.startUsingItem(hand);
 				return InteractionResultHolder.consume(heldStack);
@@ -62,9 +62,9 @@ public class GummySwetItem extends Item implements ConsumableItem {
 	 */
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity user) {
-		if (this.isEdible()) { // If AetherConfig.COMMON.healing_gummy_swets.get() is false.
+		if (this.isEdible()) { // If AetherConfig.SERVER.healing_gummy_swets.get() is false.
 			return user.eat(level, stack); // Automatically handles the criteria trigger and stat awarding code.
-		} else { // If AetherConfig.COMMON.healing_gummy_swets.get() is true.
+		} else { // If AetherConfig.SERVER.healing_gummy_swets.get() is true.
 			user.heal(user.getMaxHealth());
 			this.consume(this, stack, user);
 			return stack;
@@ -82,12 +82,12 @@ public class GummySwetItem extends Item implements ConsumableItem {
 	}
 
 	/**
-	 * @return A {@link Boolean} based on if the Gummy Swet heals or fills hunger. When the {@link AetherConfig.Common#healing_gummy_swets} config is false, this is true.
+	 * @return A {@link Boolean} based on if the Gummy Swet heals or fills hunger. When the {@link AetherConfig.Server#healing_gummy_swets} config is false, this is true.
 	 * This is based on the difference of Gummy Swets being used to heal in b1.7.3 and being used for hunger in 1.2.5.
 	 */
 	@Override
 	public boolean isEdible() {
-		return !AetherConfig.COMMON.healing_gummy_swets.get();
+		return !AetherConfig.SERVER.healing_gummy_swets.get();
 	}
 
 	/**

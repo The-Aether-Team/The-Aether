@@ -1,5 +1,6 @@
 package com.aetherteam.aether.block.natural;
 
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.Entity;
@@ -44,7 +45,9 @@ public class BlueAercloudBlock extends AercloudBlock {
 					level.addParticle(ParticleTypes.SPLASH, xOffset, yOffset, zOffset, 0.0, 0.0, 0.0);
 				}
 			}
-			entity.setOnGround(true);
+			if (entity instanceof LivingEntity livingEntity && (!livingEntity.isFallFlying() && (!(entity instanceof Player player) || !player.getAbilities().flying))) {
+				entity.setOnGround(true);
+			}
 		} else {
 			super.entityInside(state, level, pos, entity);
 		}

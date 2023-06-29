@@ -3,6 +3,24 @@
   "pools": [
     {
       "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "enchantments": [
+                {
+                  "enchantment": "minecraft:silk_touch",
+                  "levels": {
+                    "min": 1
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",
@@ -51,6 +69,31 @@
             }
           ],
           "name": "aether:candy_cane_sword"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:match_tool",
+          "predicate": {
+            "enchantments": [
+              {
+                "enchantment": "minecraft:silk_touch",
+                "levels": {
+                  "min": 1
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aether:present"
         }
       ],
       "rolls": 1.0

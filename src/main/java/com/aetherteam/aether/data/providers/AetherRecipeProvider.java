@@ -1,13 +1,11 @@
 package com.aetherteam.aether.data.providers;
 
-import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.api.registers.MoaType;
 import com.aetherteam.aether.recipe.BlockPropertyPair;
 import com.aetherteam.aether.recipe.BlockStateIngredient;
 import com.aetherteam.aether.recipe.builder.*;
 import com.aetherteam.aether.recipe.AetherRecipeSerializers;
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.recipe.conditions.ConfigCondition;
 import net.minecraft.data.recipes.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -20,15 +18,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.common.Tags;
 
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-
-import net.minecraftforge.common.crafting.ConditionalRecipe;
-import net.minecraftforge.common.crafting.conditions.NotCondition;
 
 public abstract class AetherRecipeProvider extends RecipeProvider {
     private static String ID;
@@ -423,7 +419,7 @@ public abstract class AetherRecipeProvider extends RecipeProvider {
     }
 
     protected static BlockStateRecipeBuilder accessoryFreezable(Block result, Block ingredient) {
-        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipeSerializers.ACCESSORY_FREEZABLE.get());
+        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(pair(ingredient, Map.of(BlockStateProperties.LEVEL, 0))), result, AetherRecipeSerializers.ACCESSORY_FREEZABLE.get());
     }
 
     protected static BlockStateRecipeBuilder convertPlacement(Block result, Block ingredient, TagKey<Biome> biome) {
@@ -448,11 +444,6 @@ public abstract class AetherRecipeProvider extends RecipeProvider {
 
     protected static PlacementBanBuilder banBlockPlacementWithBypass(Block ingredient, TagKey<Block> bypass, TagKey<Biome> biome) {
         return BlockBanBuilder.recipe(BlockStateIngredient.of(ingredient), BlockStateIngredient.of(bypass), biome, AetherRecipeSerializers.BLOCK_PLACEMENT_BAN.get());
-    }
-
-    protected static ConditionalRecipe.Builder conditionalAccessoryFreezing(RecipeBuilder temporary, RecipeBuilder permanent) {
-        ConfigCondition configCondition = new ConfigCondition(AetherConfig.COMMON.temporary_ice_accessory_conversion);
-        return ConditionalRecipe.builder().addCondition(configCondition).addRecipe(ConditionalFinishedRecipe.create(temporary)).addCondition(new NotCondition(configCondition)).addRecipe(ConditionalFinishedRecipe.create(permanent));
     }
 
     protected static BlockPropertyPair pair(Block resultBlock, Map<Property<?>, Comparable<?>> resultProperties) {

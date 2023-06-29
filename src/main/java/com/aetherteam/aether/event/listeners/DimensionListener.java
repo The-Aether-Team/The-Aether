@@ -65,9 +65,13 @@ public class DimensionListener {
         Level level = event.getLevel();
         BlockPos blockPos = event.getPos();
         Direction direction = event.getFace();
-        ItemStack itemStack = event.getItemStack();
+        InteractionHand interactionHand = event.getHand();
+        ItemStack itemStack = player.getItemInHand(interactionHand);
+        if (itemStack.isEmpty()) {
+            itemStack = player.getItemInHand(interactionHand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+        }
         BlockState blockState = level.getBlockState(blockPos);
-        event.setCanceled(DimensionHooks.checkInteractionBanned(player, level, blockPos, direction, itemStack, blockState));
+        event.setCanceled(DimensionHooks.checkInteractionBanned(player, level, blockPos, direction, itemStack, blockState, !player.getItemInHand(interactionHand).isEmpty()));
     }
 
     @SubscribeEvent
@@ -102,6 +106,7 @@ public class DimensionListener {
         if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.END) {
             DimensionHooks.tickTime(level);
             DimensionHooks.fallFromAether(level);
+            DimensionHooks.checkEternalDayConfig(level);
         }
     }
 

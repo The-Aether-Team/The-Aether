@@ -17,6 +17,7 @@ import com.aetherteam.aether.AetherTags;
 
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
@@ -60,7 +61,7 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.level.ItemLike;
 
-public class Sheepuff extends AetherAnimal implements IForgeShearable {
+public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable {
     private static final EntityDataAccessor<Byte> DATA_WOOL_COLOR_ID = SynchedEntityData.defineId(Sheepuff.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> DATA_PUFFED_ID = SynchedEntityData.defineId(Sheepuff.class, EntityDataSerializers.BOOLEAN);
 
@@ -190,7 +191,7 @@ public class Sheepuff extends AetherAnimal implements IForgeShearable {
     public void tick() {
         super.tick();
         if (this.getPuffed()) {
-            this.resetFallDistance();
+            this.checkSlowFallDistance();
             AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
             if (gravity != null) {
                 double fallSpeed = Math.max(gravity.getValue() * -0.625, -0.05);
@@ -265,7 +266,7 @@ public class Sheepuff extends AetherAnimal implements IForgeShearable {
     @Override
     public List<ItemStack> onSheared(@Nullable Player player, @Nonnull ItemStack item, Level level, BlockPos pos, int fortune) {
         level.playSound(null, this, AetherSoundEvents.ENTITY_SHEEPUFF_SHEAR.get(), player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             this.amountEaten = 0;
             this.setSheared(true);
             this.setPuffed(false);
@@ -280,7 +281,28 @@ public class Sheepuff extends AetherAnimal implements IForgeShearable {
     }
 
     @Override
+    public void shear(SoundSource source) {
+        this.level.playSound(null, this, AetherSoundEvents.ENTITY_SHEEPUFF_SHEAR.get(), source, 1.0F, 1.0F);
+        this.amountEaten = 0;
+        this.setSheared(true);
+        this.setPuffed(false);
+        int i = 1 + this.random.nextInt(3);
+
+        for (int j = 0; j < i; ++j) {
+            ItemEntity itementity = this.spawnAtLocation(ITEM_BY_DYE.get(this.getColor()), 1);
+            if (itementity != null) {
+                itementity.setDeltaMovement(itementity.getDeltaMovement().add((this.random.nextFloat() - this.random.nextFloat()) * 0.1F, this.random.nextFloat() * 0.05F, (this.random.nextFloat() - this.random.nextFloat()) * 0.1F));
+            }
+        }
+    }
+
+    @Override
     public boolean isShearable(@Nonnull ItemStack item, Level world, BlockPos pos) {
+        return this.readyForShearing();
+    }
+
+    @Override
+    public boolean readyForShearing() {
         return this.isAlive() && !this.isSheared() && !this.isBaby();
     }
 

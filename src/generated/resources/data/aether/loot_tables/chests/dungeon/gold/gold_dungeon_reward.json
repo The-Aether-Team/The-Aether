@@ -41,42 +41,41 @@
         {
           "type": "minecraft:item",
           "name": "aether:gravitite_helmet",
-          "weight": 6
+          "weight": 5
         },
         {
           "type": "minecraft:item",
           "name": "aether:gravitite_chestplate",
-          "weight": 6
+          "weight": 5
         },
         {
           "type": "minecraft:item",
           "name": "aether:gravitite_leggings",
-          "weight": 6
+          "weight": 5
         },
         {
           "type": "minecraft:item",
           "name": "aether:gravitite_boots",
-          "weight": 6
+          "weight": 5
         },
         {
           "type": "minecraft:item",
           "name": "aether:gravitite_gloves",
-          "weight": 6
+          "weight": 5
         },
         {
           "type": "minecraft:item",
           "name": "aether:gravitite_sword",
-          "weight": 6
+          "weight": 5
         },
         {
           "type": "minecraft:item",
           "name": "aether:gravitite_axe",
-          "weight": 6
+          "weight": 5
         },
         {
           "type": "minecraft:item",
-          "name": "aether:enchanted_gravitite",
-          "weight": 2
+          "name": "aether:enchanted_gravitite"
         },
         {
           "type": "minecraft:item",

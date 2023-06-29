@@ -1,6 +1,7 @@
 package com.aetherteam.aether.util;
 
 import com.aetherteam.aether.item.AetherItems;
+import com.aetherteam.aether.item.accessories.cape.CapeItem;
 import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -57,6 +58,14 @@ public class EquipmentUtil {
 
     public static boolean hasInvisibilityCloak(LivingEntity entity) {
         return hasCurio(entity, AetherItems.INVISIBILITY_CLOAK.get());
+    }
+
+    public static boolean hasCape(LivingEntity entity) {
+        return CuriosApi.getCuriosHelper().findFirstCurio(entity, stack -> stack.getItem() instanceof CapeItem).isPresent();
+    }
+
+    public static SlotResult getCape(LivingEntity entity) {
+        return CuriosApi.getCuriosHelper().findFirstCurio(entity, stack -> stack.getItem() instanceof CapeItem).orElse(null);
     }
 
     public static boolean hasCurio(LivingEntity entity, Item item) {

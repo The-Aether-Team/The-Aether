@@ -164,6 +164,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addBlock(AetherBlocks.SKYROOT_BOOKSHELF, "Skyroot Bookshelf");
         addBlock(AetherBlocks.SKYROOT_BED, "Skyroot Bed");
 
+        addBlock(AetherBlocks.FROSTED_ICE, "Frosted Ice");
         addBlock(AetherBlocks.UNSTABLE_OBSIDIAN, "Unstable Obsidian");
 
 
@@ -581,6 +582,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addSubtitle("entity", "swet.squish", "Swet squishes");
 
         addSubtitle("entity", "aechor_plant.shoot", "Aechor Plant shoots");
+        addSubtitle("entity", "aechor_plant.hurt", "Aechor Plant hurts");
         addSubtitle("entity", "aechor_plant.death", "Aechor Plant dies");
 
         addSubtitle("entity", "cockatrice.shoot", "Cockatrice shoots");
@@ -668,9 +670,25 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addGuiText("jei.altar.repairing", "Repairing");
         addGuiText("jei.freezing", "Freezing");
         addGuiText("jei.incubating", "Incubating");
+
         addGuiText("jei.fuel", "Aether Fuel");
-        addGuiText("jei.swet_ball_convert", "Swet Ball Conversion");
-        addGuiText("jei.ambrosium_convert", "Ambrosium Conversion");
+
+        addGuiText("jei.biome.tooltip", "Requires Biomes:");
+        addGuiText("jei.biome.tooltip.biome", "Biome");
+        addGuiText("jei.biome.tooltip.tag", "Biome Tag");
+        addGuiText("jei.biome.tooltip.biomes", "Biomes in Tag");
+        addGuiText("jei.properties.tooltip", "With Properties:");
+        addGuiText("jei.bypass", "Except On:");
+        addGuiText("jei.biome.ban.tooltip", "Blocked in Biomes:");
+
+        addGuiText("jei.ambrosium_enchanting", "Ambrosium Enchanting");
+        addGuiText("jei.swet_ball_conversion", "Swet Ball Conversion");
+        addGuiText("jei.icestone_freezable", "Icestone Freezable");
+        addGuiText("jei.accessory_freezable", "Accessory Freezable");
+        addGuiText("jei.placement_conversion", "Placement Conversion");
+        addGuiText("jei.item_placement_ban", "Item Use Prevention");
+        addGuiText("jei.block_placement_ban", "Block Place Prevention");
+
 
         addGuiText("boss.message.far", "You must be in the boss room to interact.");
 
@@ -740,8 +758,6 @@ public class AetherLanguageData extends AetherLanguageProvider {
 
 
         addCustomizationText("title", "Customization");
-        addCustomizationText("gloves.arm", "Glove Layer: Arm");
-        addCustomizationText("gloves.sleeve", "Glove Layer: Sleeve");
         addCustomizationText("halo.on", "Player Halo: ON");
         addCustomizationText("halo.off", "Player Halo: OFF");
         addCustomizationText("halo.color", "Halo Color");
@@ -797,6 +813,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addKeyInfo("category", "Aether");
         addKeyInfo("open_accessories.desc", "Open/Close Accessories Inventory");
         addKeyInfo("gravitite_jump_ability.desc", "Activate Gravitite Jump");
+        addKeyInfo("invisibility_toggle.desc", "Toggle Invisibility");
 
 
         addCuriosIdentifier("aether_pendant", "Pendant");
@@ -806,7 +823,12 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addCuriosIdentifier("aether_gloves", "Gloves");
         addCuriosIdentifier("aether_accessory", "Accessory");
 
+        addCuriosModifier("aether_pendant", "When around neck:");
+        addCuriosModifier("aether_cape", "When on back:");
+        addCuriosModifier("aether_ring", "When worn as ring:");
+        addCuriosModifier("aether_shield", "When worn as shield:");
         addCuriosModifier("aether_gloves", "When on hands:");
+        addCuriosModifier("aether_accessory", "When worn as accessory:");
 
 
         addLore(AetherItems.AECHOR_PETAL, "The petal of an Aechor Plant, they have a sweet aroma to them. These are a Moa's favorite food, and can be used to feed baby Moas.");
@@ -840,7 +862,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.CANDY_CANE, "Dropped by mobs killed with a Candy Cane Sword! They can be used to repair this weapon, and they're a very tasty treat.");
         addLore(AetherItems.CANDY_CANE_SWORD, "A sword made from decorative candy. Randomly drops Candy Canes when used. These are dropped from presents that are under Holiday Trees.");
         addLore(AetherBlocks.CARVED_SLAB, "Crafted from Carved Stone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building's roofing!");
-        addLore(AetherBlocks.CARVED_STAIRS, "Crafted from Sentry Stone. Stairs are useful for adding verticality to builds and are often used for decoration too!");
+        addLore(AetherBlocks.CARVED_STAIRS, "Crafted from Carved Stone. Stairs are useful for adding verticality to builds and are often used for decoration too!");
         addLore(AetherBlocks.CARVED_STONE, "The Stone found in Bronze Dungeons. This stone has a gray color to it, and can be mined as a decorative block.");
         addLore(AetherBlocks.CARVED_WALL, "Crafted from Carved Stone. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!");
         addLore(AetherItems.CHAINMAIL_GLOVES, "A very rare part of chain armor, it is needed to complete the Chain Armor set.");
@@ -966,7 +988,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.SILVER_DUNGEON_KEY, "A reflective key that is given to you by the Valkyrie Queen after defeating her. Use it to claim the treasure she left behind!");
         addLore(AetherItems.SKYROOT_AXE, "One of Aether's wooden tools, it can be used to double Skyroot Log drops. Simple but useful for beginners.");
         addLore(AetherItems.SKYROOT_AXOLOTL_BUCKET,"A Skyroot Bucket with a friendly Axolotl in. Axolotls can be incredibly helpful aquatic partners. So it's best to keep one on hand if you're exploring wet environments.");
-        addLore(AetherBlocks.SKYROOT_BED, "Crafted with wool and skyroot planks. You can only sleep at night to skip night time, but during the day you can set your respawn point in the Aether. Cannot sleep while mobs are nearby.");
+        addLore(AetherBlocks.SKYROOT_BED, "Crafted with wool and Skyroot Planks. You can only sleep at night to skip night time, but during the day you can set your respawn point in the Aether. Cannot sleep while mobs are nearby.");
         addLore(AetherItems.SKYROOT_BOAT, "While the Aether does not have many large bodies of water, a boat can occasionally be a useful tool for crossing large distances over ice!");
         addLore(AetherItems.SKYROOT_CHEST_BOAT, "A Skyroot Boat with a handy chest in the back. Helpful for transporting more items over long stretches of water, which are famously difficult to find in the Aether.");
         addLore(AetherBlocks.SKYROOT_BOOKSHELF, "Crafted from Skyroot Planks and Books. Bookshelves can be used to enhance the enchanting capabilities of an enchanting table.");
@@ -974,11 +996,12 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherBlocks.SKYROOT_BUTTON, "Crafted from Skyroot Planks, a button used to activate mechanisms and redstone.");
         addLore(AetherItems.SKYROOT_COD_BUCKET, "A bucket with a Cod in it! Make sure to keep the water topped up or your new friend won't survive the journey home.");
         addLore(AetherBlocks.SKYROOT_DOOR, "Crafted from Skyroot Planks, an ornate door helpful for keeping an enclosed and safe space without worry of monsters wandering in.");
-        addLore(AetherBlocks.SKYROOT_FENCE, "Crafted from Skyroot planks and Sticks. Great for keeping your livestock safe from wandering predators!");
-        addLore(AetherBlocks.SKYROOT_FENCE_GATE, "Crafted from Sticks and Skyroot planks. Gives a homely entrance and exit to your precious enclosures.");
+        addLore(AetherBlocks.SKYROOT_FENCE, "Crafted from Skyroot Planks and Sticks. Great for keeping your livestock safe from wandering predators!");
+        addLore(AetherBlocks.SKYROOT_FENCE_GATE, "Crafted from Sticks and Skyroot Planks. Gives a homely entrance and exit to your precious enclosures.");
         addLore(AetherItems.SKYROOT_HOE, "One of Aether's wooden tools, used to till dirt to allow for planting of crops. Famously underappreciated.");
         addLore(AetherBlocks.SKYROOT_LEAVES, "These leaves generate with Skyroot Trees. They can drop Skyroot Saplings when decaying.");
-        addLore(AetherBlocks.SKYROOT_LOG, "These spawn with Skyroot Trees. They can be double dropped with Skyroot Axes. When put in a crafting table they will provide 4 Skyroot Planks.");
+        addLore(AetherBlocks.SKYROOT_LOG, "These spawn with Skyroot Trees. They can be double dropped with Skyroot Axes. When put in a Crafting Table they will provide 4 Skyroot Planks.");
+        addLore(AetherBlocks.SKYROOT_WOOD, "Skyroot Logs crafted to be smooth on all sides. When put in a Crafting Table they will provide 4 Skyroot Planks.");
         addLore(AetherItems.SKYROOT_MILK_BUCKET, "A bucket full of fresh Milk, drink it to heal potion effects.");
         addLore(AetherItems.SKYROOT_PICKAXE, "One of Aether's wooden tools, when mining Holystone or Ambrosium ore, it will double the drops. This is even better when combined with an enchantment such as Fortune when mining Ambrosium Shards!");
         addLore(AetherBlocks.SKYROOT_PLANKS, "Skyroot Planks can be made into various tools, blocks and items. They are crafted from Skyroot Logs, and make a great building material.");
@@ -999,8 +1022,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherBlocks.SKYROOT_TRAPDOOR, "Crafted from Skyroot Planks. A Trapdoor useful for covering entryways one block wide. Often used to add extra protection to staircases.");
         addLore(AetherItems.SKYROOT_TROPICAL_FISH_BUCKET,"A Skyroot Bucket containing a Tropical Fish. A Helpful way to transport and catalogue the numerous varieties of Tropical Fish.");
         addLore(AetherItems.SKYROOT_WATER_BUCKET, "A Skyroot Bucket that is filled to the brim with Water.");
-        addLore(AetherBlocks.STRIPPED_SKYROOT_LOG, "A Skyroot Log that has had its bark stripped away with an Axe. When put in a crafting table they will provide 4 Skyroot Planks.");
-        addLore(AetherBlocks.STRIPPED_SKYROOT_WOOD, "A Skyroot Log that has had its bark stripped away with an Axe. When put in a crafting table they will provide 4 Skyroot Planks. Crafted to be smooth on all sides.");
+        addLore(AetherBlocks.STRIPPED_SKYROOT_LOG, "A Skyroot Log that has had its bark stripped away with an Axe. When put in a Crafting Table they will provide 4 Skyroot Planks.");
+        addLore(AetherBlocks.STRIPPED_SKYROOT_WOOD, "Stripped Skyroot Logs crafted to be smooth on all sides. When put in a Crafting Table they will provide 4 Skyroot Planks.");
         addLore(AetherBlocks.SUN_ALTAR, "An Altar containing the power to control the Sun itself! It is dropped by the Sun Spirit after you defeat him. Use it to control the time of day.");
         addLore(AetherItems.SWET_CAPE, "A common cape that is found in Bronze Dungeons. It allows for the wearer to ride Swets, as they become friendly when they see someone wearing it.");
         addLore(AetherItems.SWET_BALL, "A gooey orb that is dropped from Blue Swets. It can be used to fertilize soils. Another use is to put it alongside string to make a lead.");
@@ -1104,32 +1127,36 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addProTip("golden_apples", "The leaves of Golden Oak trees occasionally drop Golden Apples.");
 
 
-        addCommonConfig("gameplay", "enable_bed_explosions", "Vanilla's beds will explode in the Aether");
+        addServerConfig("gameplay", "enable_bed_explosions", "Vanilla's beds will explode in the Aether");
+        addServerConfig("gameplay", "tools_debuff", "Tools that aren't from the Aether will mine Aether blocks slower than tools that are from the Aether");
+        addServerConfig("gameplay", "edible_ambrosium", "Ambrosium Shards can be eaten to restore a half heart of health");
+        addServerConfig("gameplay", "healing_gummy_swets", "Gummy Swets when eaten restore full health instead of full hunger");
+        addServerConfig("gameplay", "maximum_life_shards", "Determines the limit of the amount of Life Shards a player can consume to increase their health");
+        addServerConfig("gameplay", "hammer_of_kingbdogz_cooldown", "Determines the cooldown in ticks for the Hammer of Kingbdogz's ability");
+        addServerConfig("gameplay", "cloud_staff_cooldown", "Determines the cooldown in ticks for the Cloud Staff's ability");
+
+        addServerConfig("loot", "spawn_golden_feather", "Allows the Golden Feather to spawn in the Silver Dungeon loot table");
+        addServerConfig("loot", "spawn_valkyrie_cape", "Allows the Valkyrie Cape to spawn in the Silver Dungeon loot table");
+
+        addServerConfig("world_generation", "generate_tall_grass", "Determines whether the Aether should generate Tall Grass blocks on terrain or not");
+        addServerConfig("world_generation", "generate_holiday_tree_always", "Determines whether Holiday Trees should always be able to generate when exploring new chunks in the Aether, if true, this overrides 'Generate Holiday Trees seasonally'");
+        addServerConfig("world_generation", "generate_holiday_tree_seasonally", "Determines whether Holiday Trees should be able to generate during the time frame of December and January when exploring new chunks in the Aether, only works if 'Generate Holiday Trees always' is set to false");
+
+        addServerConfig("multiplayer", "balance_invisibility_cloak", "Makes the Invisibility Cloak more balanced in PVP by disabling equipment invisibility temporarily after attacks");
+        addServerConfig("multiplayer", "invisibility_visibility_time", "Sets the time in ticks that it takes for the player to become fully invisible again after attacking when wearing an Invisibility Cloak; only works with 'Balance Invisibility Cloak for PVP'");
+        addServerConfig("multiplayer", "sun_altar_whitelist", "Makes it so that only whitelisted users or anyone with permission level 4 can use the Sun Altar on a server");
+
+        addServerConfig("modpack", "disable_aether_portal", "Prevents the Aether Portal from being created normally in the mod");
+        addServerConfig("modpack", "disable_falling_to_overworld", "Prevents the player from falling back to the Overworld when they fall out of the Aether");
+        addServerConfig("modpack", "disable_eternal_day", "Removes eternal day so that the Aether has a normal daylight cycle even before defeating the Sun Spirit");
+        addServerConfig("modpack", "portal_destination_dimension_ID", "Sets the ID of the dimension that the Aether Portal will send the player to");
+        addServerConfig("modpack", "portal_return_dimension_ID", "Sets the ID of the dimension that the Aether Portal will return the player to");
+
+
+        addCommonConfig("gameplay", "use_curios_menu", "Use the default Curios menu instead of the Aether's Accessories Menu. WARNING: Do not enable this without emptying your equipped accessories");
         addCommonConfig("gameplay", "start_with_portal", "On world creation, the player is given an Aether Portal Frame item to automatically go to the Aether with");
         addCommonConfig("gameplay", "enable_startup_loot", "When the player enters the Aether, they are given a Book of Lore and Golden Parachutes as starting loot");
-        addCommonConfig("gameplay", "tools_debuff", "Tools that aren't from the Aether will mine Aether blocks slower than tools that are from the Aether");
-        addCommonConfig("gameplay", "edible_ambrosium", "Ambrosium Shards can be eaten to restore a half heart of health");
-        addCommonConfig("gameplay", "healing_gummy_swets", "Gummy Swets when eaten restore full health instead of full hunger");
-        addCommonConfig("gameplay", "temporary_ice_accessory_conversion", "Ice Accessories will create temporary blocks instead of permanent blocks from conversions");
-        addCommonConfig("gameplay", "maximum_life_shards", "Determines the limit of the amount of Life Shards a player can consume to increase their health");
-        addCommonConfig("gameplay", "hammer_of_kingbdogz_cooldown", "Determines the cooldown in ticks for the Hammer of Kingbdogz's ability");
-        addCommonConfig("gameplay", "cloud_staff_cooldown", "Determines the cooldown in ticks for the Cloud Staff's ability");
         addCommonConfig("gameplay", "repeat_sun_spirit_dialogue", "Determines whether the Sun Spirit's dialogue when meeting him should play through every time you meet him");
-
-        addCommonConfig("loot", "spawn_golden_feather", "Allows the Golden Feather to spawn in the Silver Dungeon loot table");
-        addCommonConfig("loot", "spawn_valkyrie_cape", "Allows the Valkyrie Cape to spawn in the Silver Dungeon loot table");
-
-        addCommonConfig("world_generation", "generate_tall_grass", "Determines whether the Aether should generate Tall Grass blocks on terrain or not");
-        addCommonConfig("world_generation", "generate_holiday_tree_always", "Determines whether Holiday Trees should always be able to generate when exploring new chunks in the Aether, if true, this overrides 'Generate Holiday Trees seasonally'");
-        addCommonConfig("world_generation", "generate_holiday_tree_seasonally", "Determines whether Holiday Trees should be able to generate during the time frame of December and January when exploring new chunks in the Aether, only works if 'Generate Holiday Trees always' is set to false");
-
-        addCommonConfig("multiplayer", "sun_altar_whitelist", "Makes it so that only whitelisted users or anyone with permission level 4 can use the Sun Altar on a server");
-
-        addCommonConfig("modpack", "disable_aether_portal", "Prevents the Aether Portal from being created normally in the mod");
-        addCommonConfig("modpack", "disable_falling_to_overworld", "Prevents the player from falling back to the Overworld when they fall out of the Aether");
-        addCommonConfig("modpack", "disable_eternal_day", "Removes eternal day so that the Aether has a normal daylight cycle even before defeating the Sun Spirit");
-        addCommonConfig("modpack", "portal_destination_dimension_ID", "Sets the ID of the dimension that the Aether Portal will send the player to");
-        addCommonConfig("modpack", "portal_return_dimension_ID", "Sets the ID of the dimension that the Aether Portal will return the player to");
 
 
         addClientConfig("rendering", "legacy_models", "Changes Zephyr and Aerwhale rendering to use their old models from the b1.7.3 version of the mod");
@@ -1167,11 +1194,13 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addPackTitle("b173", "Aether b1.7.3 Textures");
         addPackTitle("ctm", "Aether CTM Fix");
         addPackTitle("colorblind", "Aether Colorblind Textures");
+        addPackTitle("curios", "Aether Curios Override");
 
         addPackDescription("mod", "Aether Resources");
         addPackDescription("125", "The classic look of the Aether from 1.2.5");
         addPackDescription("b173", "The original look of the Aether from b1.7.3");
         addPackDescription("ctm", "Fixes Quicksoil Glass Panes when using CTM");
         addPackDescription("colorblind", "Changes textures for color blindness accessibility");
+        addPackDescription("curios", "Replace Accessories Menu with Curios' menu");
     }
 }

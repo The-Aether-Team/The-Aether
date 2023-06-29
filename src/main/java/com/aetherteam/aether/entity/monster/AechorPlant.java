@@ -132,6 +132,9 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
         }
     }
 
+    @Override
+    protected void jumpFromGround() { }
+
     @Nonnull
     @Override
     protected InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
@@ -236,6 +239,11 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
 
     public void setTargetingEntity(boolean targetingEntity) {
         this.entityData.set(DATA_TARGETING_ENTITY_ID, targetingEntity);
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
+        return AetherSoundEvents.ENTITY_AECHOR_PLANT_HURT.get();
     }
 
     @Override
