@@ -59,10 +59,10 @@ public class AccessoryAbilityListener {
     public static void onTargetSet(LivingEvent.LivingVisibilityEvent event) {
         LivingEntity livingEntity = event.getEntity();
         Entity lookingEntity = event.getLookingEntity();
-        if (AbilityHooks.AccessoryHooks.preventTargeting(livingEntity, lookingEntity) && !AbilityHooks.AccessoryHooks.recentlyAttackedWithInvisibility(livingEntity)) {
+        if (AbilityHooks.AccessoryHooks.preventTargeting(livingEntity, lookingEntity) && !AbilityHooks.AccessoryHooks.recentlyAttackedWithInvisibility(livingEntity, lookingEntity)) {
             event.modifyVisibility(0.0);
         }
-        if (AbilityHooks.AccessoryHooks.recentlyAttackedWithInvisibility(livingEntity)) {
+        if (AbilityHooks.AccessoryHooks.recentlyAttackedWithInvisibility(livingEntity, lookingEntity)) {
             event.modifyVisibility(50);
         }
     }
