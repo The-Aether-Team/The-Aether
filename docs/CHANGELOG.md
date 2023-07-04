@@ -1,3 +1,10 @@
+# The Aether - Forge - 1.19.4-1.0.0-beta.5.1
+
+Fixes
+
+- Fix mobs not targeting players.
+
+
 # The Aether - Forge - 1.19.4-1.0.0-beta.5
 
 Additions
