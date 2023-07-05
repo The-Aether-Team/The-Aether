@@ -263,6 +263,12 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 				Aether.LOGGER.info("b: " + ServerMoaSkinPerkData.INSTANCE.getServerPerkData(this.getPlayer().getServer()).get(this.getPlayer().getUUID()).moaUUID());
 			}
 		}
+		if (ClientMoaSkinPerkData.INSTANCE.getClientPerkData() != null) {
+			if (ClientMoaSkinPerkData.INSTANCE.getClientPerkData().get(this.getPlayer().getUUID()) != null) {
+				Aether.LOGGER.info("a: " + this.getLastRiddenMoa());
+				Aether.LOGGER.info("b: " + ClientMoaSkinPerkData.INSTANCE.getClientPerkData().get(this.getPlayer().getUUID()).moaUUID());
+			}
+		}
 	}
 
 	private void handleGivePortal() {
