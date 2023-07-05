@@ -1,6 +1,5 @@
 package com.aetherteam.aether.network.packet.client;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.network.AetherPacket;
 import com.aetherteam.aether.perk.data.ClientMoaSkinPerkData;
 import com.aetherteam.aether.perk.types.MoaData;
@@ -28,7 +27,6 @@ public abstract class ClientMoaSkinPacket {
         @Override
         public void execute(Player playerEntity) {
             if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null && this.playerUUID() != null && this.moaSkinData() != null) {
-                Aether.LOGGER.info("5");
                 ClientMoaSkinPerkData.INSTANCE.applyPerk(this.playerUUID(), this.moaSkinData());
             }
         }

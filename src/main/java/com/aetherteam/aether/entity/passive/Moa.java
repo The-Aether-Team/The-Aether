@@ -3,7 +3,6 @@ package com.aetherteam.aether.entity.passive;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.effect.AetherEffects;
@@ -275,11 +274,9 @@ public class Moa extends MountableAnimal implements WingedBird {
 				this.setLastRider(player.getUUID());
 			}
 			if (!player.getLevel().isClientSide()) {
-				Aether.LOGGER.info("1");
 				AetherPlayer.get(player).ifPresent((aetherPlayer) -> aetherPlayer.setLastRiddenMoa(this.getMoaUUID()));
 				Map<UUID, MoaData> userSkinsData = ServerMoaSkinPerkData.INSTANCE.getServerPerkData(player.getServer());
 				if (userSkinsData.containsKey(this.getLastRider())) {
-					Aether.LOGGER.info("2");
 					ServerMoaSkinPerkData.INSTANCE.applyPerkWithVerification(player.getServer(), this.getLastRider(), new MoaData(this.getMoaUUID(), userSkinsData.get(this.getLastRider()).moaSkin()));
 				}
 			}

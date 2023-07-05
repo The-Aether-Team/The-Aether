@@ -1,6 +1,5 @@
 package com.aetherteam.aether.perk.data;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.server.ServerMoaSkinPacket;
@@ -39,16 +38,11 @@ public class ClientMoaSkinPerkData extends ClientPerkData<MoaData> {
                             || (userSkinsData.get(uuid).moaSkin() == null && moaData.moaSkin() != null)
                             || (userSkinsData.get(uuid).moaUUID() != null && moaData.moaUUID() != null && !userSkinsData.get(uuid).moaUUID().equals(moaData.moaUUID()))
                             || (userSkinsData.get(uuid).moaSkin() != null && moaData.moaSkin() != null && !userSkinsData.get(uuid).moaSkin().equals(moaData.moaSkin()))) {
-                        Aether.LOGGER.info("d");
                         if (moaSkin.getUserPredicate().test(user)) {
-                            Aether.LOGGER.info("e");
-                            Aether.LOGGER.info(String.valueOf(lastRiddenMoa.toString()));
-                            Aether.LOGGER.info(String.valueOf(moaSkin.getId()));
                             AetherPacketHandler.sendToServer(new ServerMoaSkinPacket.Apply(player.getUUID(), new MoaData(lastRiddenMoa, moaSkin)));
                         }
                     }
                 } else if ((moaSkinName == null || moaSkinName.isEmpty()) && userSkinsData.containsKey(uuid) && userSkinsData.get(uuid) != null && (userSkinsData.get(uuid).moaUUID() != null || userSkinsData.get(uuid).moaSkin() != null)) {
-                    Aether.LOGGER.info("f");
                     AetherPacketHandler.sendToServer(new ServerMoaSkinPacket.Remove(player.getUUID()));
                 }
             });
