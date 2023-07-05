@@ -37,7 +37,7 @@ public class AetherNoiseBuilders {
         );
     }
 
-    private static SurfaceRules.RuleSource aetherSurfaceRules() {
+    public static SurfaceRules.RuleSource aetherSurfaceRules() {
         SurfaceRules.RuleSource surface = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.waterBlockCheck(-1, 0), GRASS_BLOCK), DIRT);
         return SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, surface), SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, DIRT));
     }
