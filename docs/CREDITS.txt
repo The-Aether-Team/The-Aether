@@ -27,6 +27,7 @@ CDAGaming:
 
 darksonic300
 - Implementation of the is_cold damage type tag.
+- Changing aetherSurfaceRules() method to be public.
 
 FlashFyreMods
 - Implementation of more beta-accurate terrain generation for the Aether dimension.
