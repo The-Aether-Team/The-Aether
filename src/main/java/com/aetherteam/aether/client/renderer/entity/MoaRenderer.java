@@ -69,9 +69,15 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
 		UUID lastRiderUUID = moa.getLastRider();
 		UUID moaUUID = moa.getMoaUUID();
 		Map<UUID, MoaData> userSkinsData = ClientMoaSkinPerkData.INSTANCE.getClientPerkData();
+
+		if (moa.tickCount % 1000 == 0) {
+			Aether.LOGGER.info("a1: " + lastRiderUUID + " " + moaUUID + " " + userSkinsData.get(lastRiderUUID) + " " + userSkinsData);
+		}
+
 		if (Minecraft.getInstance().screen instanceof MoaSkinsScreen moaSkinsScreen && moaSkinsScreen.getSelectedSkin() != null && moaSkinsScreen.getPreviewMoa() != null && moaSkinsScreen.getPreviewMoa().getMoaUUID().equals(moaUUID)) {
 			return moaSkinsScreen.getSelectedSkin().getSkinLocation();
 		} else if (userSkinsData.containsKey(lastRiderUUID) && userSkinsData.get(lastRiderUUID).moaUUID() != null && userSkinsData.get(lastRiderUUID).moaUUID().equals(moaUUID)) {
+			Aether.LOGGER.info("a2: " + lastRiderUUID + " " + moaUUID + " " + userSkinsData.get(lastRiderUUID) + " " + userSkinsData);
 			return userSkinsData.get(lastRiderUUID).moaSkin().getSkinLocation();
 		}
 		return null;
