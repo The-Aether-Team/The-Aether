@@ -270,6 +270,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 	@Override
 	protected void addPassenger(Entity passenger) {
 		if (passenger instanceof Player player) {
+			this.generateMoaUUID();
 			if (this.getLastRider() == null || this.getLastRider() != player.getUUID()) {
 				this.setLastRider(player.getUUID());
 			}
