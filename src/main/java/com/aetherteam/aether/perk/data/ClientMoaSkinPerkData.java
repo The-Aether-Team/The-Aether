@@ -22,18 +22,15 @@ public class ClientMoaSkinPerkData extends ClientPerkData<MoaData> {
     @Override
     public void syncFromClient(Player player) {
         if (this.canSync(player)) {
-            Aether.LOGGER.info("a");
             User user = UserData.Client.getClientUser();
             UUID uuid = player.getUUID();
             AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
-                Aether.LOGGER.info("b");
                 UUID lastRiddenMoa = aetherPlayer.getLastRiddenMoa();
                 CustomizationsOptions.INSTANCE.load();
                 String moaSkinName = CustomizationsOptions.INSTANCE.getMoaSkin();
                 Map<String, MoaSkins.MoaSkin> moaSkins = MoaSkins.getMoaSkins();
                 Map<UUID, MoaData> userSkinsData = this.getClientPerkData();
                 if (moaSkinName != null && !moaSkinName.isEmpty() && moaSkins.containsKey(moaSkinName)) {
-                    Aether.LOGGER.info("c");
                     MoaSkins.MoaSkin moaSkin = MoaSkins.getMoaSkins().get(moaSkinName);
                     MoaData moaData = new MoaData(lastRiddenMoa, moaSkin);
                     if (!userSkinsData.containsKey(uuid)
