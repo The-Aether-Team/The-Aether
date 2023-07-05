@@ -721,6 +721,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	@Override
 	public void setLastRiddenMoa(UUID lastRiddenMoa) {
+		this.markDirty(true);
 		this.lastRiddenMoa = lastRiddenMoa;
 	}
 
