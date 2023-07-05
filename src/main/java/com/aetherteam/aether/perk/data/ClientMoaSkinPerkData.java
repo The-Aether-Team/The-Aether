@@ -42,6 +42,8 @@ public class ClientMoaSkinPerkData extends ClientPerkData<MoaData> {
                         Aether.LOGGER.info("d");
                         if (moaSkin.getUserPredicate().test(user)) {
                             Aether.LOGGER.info("e");
+                            Aether.LOGGER.info(String.valueOf(lastRiddenMoa.toString()));
+                            Aether.LOGGER.info(String.valueOf(moaSkin.getId()));
                             AetherPacketHandler.sendToServer(new ServerMoaSkinPacket.Apply(player.getUUID(), new MoaData(lastRiddenMoa, moaSkin)));
                         }
                     }
