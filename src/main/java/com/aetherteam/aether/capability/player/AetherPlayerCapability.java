@@ -1,6 +1,5 @@
 package com.aetherteam.aether.capability.player;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
 import com.aetherteam.aether.entity.miscellaneous.Parachute;
@@ -256,19 +255,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		ClientMoaSkinPerkData.INSTANCE.syncFromClient(this.getPlayer());
 		ClientHaloPerkData.INSTANCE.syncFromClient(this.getPlayer());
 		ClientDeveloperGlowPerkData.INSTANCE.syncFromClient(this.getPlayer());
-
-		if (this.getPlayer().getServer() != null && ServerMoaSkinPerkData.INSTANCE.getServerPerkData(this.getPlayer().getServer()) != null) {
-			if (ServerMoaSkinPerkData.INSTANCE.getServerPerkData(this.getPlayer().getServer()).get(this.getPlayer().getUUID()) != null) {
-				Aether.LOGGER.info("a: " + this.getLastRiddenMoa());
-				Aether.LOGGER.info("b: " + ServerMoaSkinPerkData.INSTANCE.getServerPerkData(this.getPlayer().getServer()).get(this.getPlayer().getUUID()).moaUUID());
-			}
-		}
-		if (ClientMoaSkinPerkData.INSTANCE.getClientPerkData() != null) {
-			if (ClientMoaSkinPerkData.INSTANCE.getClientPerkData().get(this.getPlayer().getUUID()) != null) {
-				Aether.LOGGER.info("a: " + this.getLastRiddenMoa());
-				Aether.LOGGER.info("b: " + ClientMoaSkinPerkData.INSTANCE.getClientPerkData().get(this.getPlayer().getUUID()).moaUUID());
-			}
-		}
 	}
 
 	private void handleGivePortal() {
