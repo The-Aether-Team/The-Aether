@@ -1,15 +1,12 @@
 package com.aetherteam.aether.client.renderer.player.layer;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.aetherteam.aether.client.renderer.entity.model.ValkyrieWingsModel;
 import com.aetherteam.aether.capability.player.AetherPlayer;
-import com.aetherteam.aether.util.EntityUtil;
 import com.aetherteam.aether.util.EquipmentUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -36,29 +33,20 @@ public class PlayerWingsLayer<T extends Player, M extends PlayerModel<T>> extend
     public void render(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, @Nonnull T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (EquipmentUtil.hasFullValkyrieSet(entity)) {
             AetherPlayer.get(entity).ifPresent((aetherPlayer) -> {
-                if (!Minecraft.getInstance().isPaused()) {
-                    this.handleWingRotation(aetherPlayer, partialTicks);
-                }
-                this.setupWingRotation(entity, aetherPlayer.getWingRotation() * (float) (Math.PI / 180.0F));
+                this.setupWingRotation(entity, Mth.lerp(partialTicks, aetherPlayer.getWingRotationO(), aetherPlayer.getWingRotation()));
                 VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutoutNoCull(VALKYRIE_TEXTURE));
                 this.wings.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
             });
         }
     }
 
-    private void handleWingRotation(AetherPlayer aetherPlayer, float partialTicks) {
-        if (EquipmentUtil.hasFullValkyrieSet(aetherPlayer.getPlayer())) {
-            if (!aetherPlayer.getPlayer().isOnGround() && !aetherPlayer.getPlayer().isInFluidType() && (aetherPlayer.getPlayer().getVehicle() != null && !aetherPlayer.getPlayer().getVehicle().isOnGround())) {
-                aetherPlayer.setWingRotation(Mth.wrapDegrees((Mth.lerp(partialTicks, aetherPlayer.getWingRotation(), aetherPlayer.getWingRotation() + ((0.75F / 4.0F) * (float) (180.0F / Math.PI))))));
-            } else {
-                aetherPlayer.setWingRotation(Mth.wrapDegrees((Mth.lerp(partialTicks, aetherPlayer.getWingRotation(), aetherPlayer.getWingRotation() + ((0.15F / 4.0F) * (float) (180.0F / Math.PI))))));
-            }
-        } else {
-            aetherPlayer.setWingRotation(0.0F);
-        }
-    }
-
     public void setupWingRotation(@Nonnull T entity, float sinage) {
+        if (!entity.isOnGround() && !entity.isInFluidType() && (entity.getVehicle() != null && !entity.getVehicle().isOnGround())) {
+            sinage *= 1.5F;
+        } else {
+            sinage *= 0.3F;
+        }
+
         this.wings.rightWing.yRot = 0.4F;
         this.wings.rightWing.zRot = 0.125F;
         this.wings.leftWing.yRot = -0.4F;

@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_light_blue_wool": {
+    "has_cyan_wool": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:light_blue_wool"
+              "minecraft:cyan_wool"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:blue_cape_light_blue_wool"
+        "recipe": "aether:blue_cape_cyan_wool"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_light_blue_wool",
+      "has_cyan_wool",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:blue_cape_light_blue_wool"
+      "aether:blue_cape_cyan_wool"
     ]
   }
 }

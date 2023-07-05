@@ -39,7 +39,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:aether_gold_nugget_from_blasting"
+        "recipe": "aether:aether_gold_nugget_from_smelting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -54,7 +54,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:aether_gold_nugget_from_blasting"
+      "aether:aether_gold_nugget_from_smelting"
     ]
   }
 }

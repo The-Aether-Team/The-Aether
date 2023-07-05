@@ -39,7 +39,7 @@ public class Parachute extends Entity {
         super.tick();
         LivingEntity passenger = this.getControllingPassenger();
         if (passenger != null) {
-            this.resetFallDistance();
+            this.checkSlowFallDistance();
             this.moveParachute(passenger);
             this.spawnExplosionParticle();
             if (this.isOnGround() || this.isInFluidType()) {

@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:netherite_gloves_smithing"
+        "recipe": "aether:old_netherite_gloves_smithing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:netherite_gloves_smithing"
+      "aether:old_netherite_gloves_smithing"
     ]
   }
 }

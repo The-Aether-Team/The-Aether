@@ -16,6 +16,7 @@ import com.aetherteam.aether.capability.CapabilitySyncing;
 import com.aetherteam.aether.network.AetherPacket;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.AetherPlayerSyncPacket;
+import com.aetherteam.aether.util.EquipmentUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -74,10 +75,12 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	private final List<CloudMinion> cloudMinions = new ArrayList<>(2);
 
-	private float wingRotation;
+	private int wingRotationO;
+	private int wingRotation;
 
 	private int invisibilityAttackCooldown;
 	private boolean attackedWithInvisibility;
+	private boolean invisibilityEnabled = true;
 	private boolean wearingInvisibilityCloak;
 
 	private static final int FLIGHT_TIMER_MAX = 52;
@@ -145,6 +148,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		tag.putInt("FlightTimer_Syncing", this.getFlightTimer());
 		tag.putFloat("FlightModifier_Syncing", this.getFlightModifier());
 		tag.putBoolean("AttackedWithInvisibility_Syncing", this.attackedWithInvisibility());
+		tag.putBoolean("InvisibilityEnabled_Syncing", this.isInvisibilityEnabled());
 		tag.putBoolean("WearingInvisibilityCloak_Syncing", this.isWearingInvisibilityCloak());
 		tag.putInt("LifeShardCount_Syncing", this.getLifeShardCount());
 		return tag;
@@ -175,6 +179,9 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		}
 		if (tag.contains("AttackedWithInvisibility_Syncing")) {
 			this.setAttackedWithInvisibility(tag.getBoolean("AttackedWithInvisibility_Syncing"));
+		}
+		if (tag.contains("InvisibilityEnabled_Syncing")) {
+			this.setInvisibilityEnabled(tag.getBoolean("InvisibilityEnabled_Syncing"));
 		}
 		if (tag.contains("WearingInvisibilityCloak_Syncing")) {
 			this.setWearingInvisibilityCloak(tag.getBoolean("WearingInvisibilityCloak_Syncing"));
@@ -212,6 +219,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		this.handleRemoveDarts();
 		this.tickDownRemedy();
 		this.tickDownProjectileImpact();
+		this.handleWingRotation();
 		this.handleAttackCooldown();
 		this.handleVampireHealing();
 		this.checkToRemoveAerbunny();
@@ -362,6 +370,17 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 			} else {
 				this.setProjectileImpactedMaximum(0);
 				this.setProjectileImpactedTimer(0);
+			}
+		}
+	}
+
+	private void handleWingRotation() {
+		if (this.getPlayer().level.isClientSide()) {
+			this.wingRotationO = this.getWingRotation();
+			if (EquipmentUtil.hasFullValkyrieSet(this.getPlayer())) {
+				this.wingRotation = this.getPlayer().tickCount;
+			} else {
+				this.wingRotation = 0;
 			}
 		}
 	}
@@ -670,12 +689,12 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	}
 
 	@Override
-	public void setWingRotation(float wingRotation) {
-		this.wingRotation = wingRotation;
+	public int getWingRotationO() {
+		return this.wingRotationO;
 	}
 
 	@Override
-	public float getWingRotation() {
+	public int getWingRotation() {
 		return this.wingRotation;
 	}
 
@@ -688,6 +707,17 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	@Override
 	public boolean attackedWithInvisibility() {
 		return this.attackedWithInvisibility;
+	}
+
+	@Override
+	public void setInvisibilityEnabled(boolean enabled) {
+		this.markDirty(true);
+		this.invisibilityEnabled = enabled;
+	}
+
+	@Override
+	public boolean isInvisibilityEnabled() {
+		return this.invisibilityEnabled;
 	}
 
 	@Override

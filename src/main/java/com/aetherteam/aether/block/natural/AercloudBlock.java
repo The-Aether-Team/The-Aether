@@ -45,7 +45,7 @@ public class AercloudBlock extends HalfTransparentBlock {
 		if (entity.getDeltaMovement().y < 0.0) {
 			entity.setDeltaMovement(entity.getDeltaMovement().multiply(1.0, 0.005, 1.0));
 		}
-		if (!(entity instanceof Player player) || !player.getAbilities().flying) {
+		if (entity instanceof LivingEntity livingEntity && (!(livingEntity instanceof Player player) || !player.getAbilities().flying)) {
 			entity.setOnGround(true);
 		}
 	}

@@ -136,15 +136,27 @@ public class AbilityHooks {
         }
 
         public static boolean preventTargeting(LivingEntity target, Entity lookingEntity) {
-            return EquipmentUtil.hasInvisibilityCloak(target)
-                    && lookingEntity != null
-                    && !lookingEntity.getType().is(AetherTags.Entities.IGNORE_INVISIBILITY)
-                    && (!(target instanceof Player player) || !AetherPlayer.get(player).isPresent() || AetherPlayer.get(player).resolve().isEmpty() || !AetherPlayer.get(player).resolve().get().attackedWithInvisibility());
+            if (target instanceof Player player && AetherPlayer.get(player).isPresent() && AetherPlayer.get(player).resolve().isPresent()) {
+                return lookingEntity != null
+                        && !lookingEntity.getType().is(AetherTags.Entities.IGNORE_INVISIBILITY)
+                        && AetherPlayer.get(player).resolve().get().isWearingInvisibilityCloak()
+                        && AetherPlayer.get(player).resolve().get().isInvisibilityEnabled()
+                        && !AetherPlayer.get(player).resolve().get().attackedWithInvisibility();
+            } else {
+                return lookingEntity != null
+                        && !lookingEntity.getType().is(AetherTags.Entities.IGNORE_INVISIBILITY)
+                        && EquipmentUtil.hasInvisibilityCloak(target);
+            }
         }
 
-        public static boolean recentlyAttackedWithInvisibility(LivingEntity target) {
-            return EquipmentUtil.hasInvisibilityCloak(target)
-                    && target instanceof Player player && AetherPlayer.get(player).isPresent() && AetherPlayer.get(player).resolve().isPresent() && AetherPlayer.get(player).resolve().get().attackedWithInvisibility();
+        public static boolean recentlyAttackedWithInvisibility(LivingEntity target, Entity lookingEntity) {
+            if (target instanceof Player player && AetherPlayer.get(player).isPresent() && AetherPlayer.get(player).resolve().isPresent()) {
+                return !lookingEntity.getType().is(AetherTags.Entities.IGNORE_INVISIBILITY)
+                        && AetherPlayer.get(player).resolve().get().isInvisibilityEnabled()
+                        && AetherPlayer.get(player).resolve().get().attackedWithInvisibility();
+            } else {
+                return false;
+            }
         }
 
         public static void setAttack(DamageSource source) {
@@ -284,7 +296,7 @@ public class AbilityHooks {
             if (debuffTools) {
                 if ((state.getBlock().getDescriptionId().startsWith("block.aether.") || state.is(AetherTags.Blocks.TREATED_AS_AETHER_BLOCK)) && !state.is(AetherTags.Blocks.TREATED_AS_VANILLA_BLOCK)) {
                     if (!stack.isEmpty() && stack.isCorrectToolForDrops(state) && !stack.getItem().getDescriptionId().startsWith("item.aether.") && !stack.is(AetherTags.Items.TREATED_AS_AETHER_ITEM)) {
-                        speed = (float) Math.pow(speed, -0.2);
+                        speed = (float) Math.pow(speed, speed > 1.0 ? -0.2 : 1.2);
                     }
                 }
             }

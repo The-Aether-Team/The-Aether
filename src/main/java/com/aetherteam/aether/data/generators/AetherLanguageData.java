@@ -813,6 +813,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addKeyInfo("category", "Aether");
         addKeyInfo("open_accessories.desc", "Open/Close Accessories Inventory");
         addKeyInfo("gravitite_jump_ability.desc", "Activate Gravitite Jump");
+        addKeyInfo("invisibility_toggle.desc", "Toggle Invisibility");
 
 
         addCuriosIdentifier("aether_pendant", "Pendant");
@@ -987,7 +988,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherItems.SILVER_DUNGEON_KEY, "A reflective key that is given to you by the Valkyrie Queen after defeating her. Use it to claim the treasure she left behind!");
         addLore(AetherItems.SKYROOT_AXE, "One of Aether's wooden tools, it can be used to double Skyroot Log drops. Simple but useful for beginners.");
         addLore(AetherItems.SKYROOT_AXOLOTL_BUCKET,"A Skyroot Bucket with a friendly Axolotl in. Axolotls can be incredibly helpful aquatic partners. So it's best to keep one on hand if you're exploring wet environments.");
-        addLore(AetherBlocks.SKYROOT_BED, "Crafted with wool and skyroot planks. You can only sleep at night to skip night time, but during the day you can set your respawn point in the Aether. Cannot sleep while mobs are nearby.");
+        addLore(AetherBlocks.SKYROOT_BED, "Crafted with wool and Skyroot Planks. You can only sleep at night to skip night time, but during the day you can set your respawn point in the Aether. Cannot sleep while mobs are nearby.");
         addLore(AetherItems.SKYROOT_BOAT, "While the Aether does not have many large bodies of water, a boat can occasionally be a useful tool for crossing large distances over ice!");
         addLore(AetherItems.SKYROOT_CHEST_BOAT, "A Skyroot Boat with a handy chest in the back. Helpful for transporting more items over long stretches of water, which are famously difficult to find in the Aether.");
         addLore(AetherBlocks.SKYROOT_BOOKSHELF, "Crafted from Skyroot Planks and Books. Bookshelves can be used to enhance the enchanting capabilities of an enchanting table.");
@@ -995,11 +996,12 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherBlocks.SKYROOT_BUTTON, "Crafted from Skyroot Planks, a button used to activate mechanisms and redstone.");
         addLore(AetherItems.SKYROOT_COD_BUCKET, "A bucket with a Cod in it! Make sure to keep the water topped up or your new friend won't survive the journey home.");
         addLore(AetherBlocks.SKYROOT_DOOR, "Crafted from Skyroot Planks, an ornate door helpful for keeping an enclosed and safe space without worry of monsters wandering in.");
-        addLore(AetherBlocks.SKYROOT_FENCE, "Crafted from Skyroot planks and Sticks. Great for keeping your livestock safe from wandering predators!");
-        addLore(AetherBlocks.SKYROOT_FENCE_GATE, "Crafted from Sticks and Skyroot planks. Gives a homely entrance and exit to your precious enclosures.");
+        addLore(AetherBlocks.SKYROOT_FENCE, "Crafted from Skyroot Planks and Sticks. Great for keeping your livestock safe from wandering predators!");
+        addLore(AetherBlocks.SKYROOT_FENCE_GATE, "Crafted from Sticks and Skyroot Planks. Gives a homely entrance and exit to your precious enclosures.");
         addLore(AetherItems.SKYROOT_HOE, "One of Aether's wooden tools, used to till dirt to allow for planting of crops. Famously underappreciated.");
         addLore(AetherBlocks.SKYROOT_LEAVES, "These leaves generate with Skyroot Trees. They can drop Skyroot Saplings when decaying.");
-        addLore(AetherBlocks.SKYROOT_LOG, "These spawn with Skyroot Trees. They can be double dropped with Skyroot Axes. When put in a crafting table they will provide 4 Skyroot Planks.");
+        addLore(AetherBlocks.SKYROOT_LOG, "These spawn with Skyroot Trees. They can be double dropped with Skyroot Axes. When put in a Crafting Table they will provide 4 Skyroot Planks.");
+        addLore(AetherBlocks.SKYROOT_WOOD, "Skyroot Logs crafted to be smooth on all sides. When put in a Crafting Table they will provide 4 Skyroot Planks.");
         addLore(AetherItems.SKYROOT_MILK_BUCKET, "A bucket full of fresh Milk, drink it to heal potion effects.");
         addLore(AetherItems.SKYROOT_PICKAXE, "One of Aether's wooden tools, when mining Holystone or Ambrosium ore, it will double the drops. This is even better when combined with an enchantment such as Fortune when mining Ambrosium Shards!");
         addLore(AetherBlocks.SKYROOT_PLANKS, "Skyroot Planks can be made into various tools, blocks and items. They are crafted from Skyroot Logs, and make a great building material.");
@@ -1020,8 +1022,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addLore(AetherBlocks.SKYROOT_TRAPDOOR, "Crafted from Skyroot Planks. A Trapdoor useful for covering entryways one block wide. Often used to add extra protection to staircases.");
         addLore(AetherItems.SKYROOT_TROPICAL_FISH_BUCKET,"A Skyroot Bucket containing a Tropical Fish. A Helpful way to transport and catalogue the numerous varieties of Tropical Fish.");
         addLore(AetherItems.SKYROOT_WATER_BUCKET, "A Skyroot Bucket that is filled to the brim with Water.");
-        addLore(AetherBlocks.STRIPPED_SKYROOT_LOG, "A Skyroot Log that has had its bark stripped away with an Axe. When put in a crafting table they will provide 4 Skyroot Planks.");
-        addLore(AetherBlocks.STRIPPED_SKYROOT_WOOD, "A Skyroot Log that has had its bark stripped away with an Axe. When put in a crafting table they will provide 4 Skyroot Planks. Crafted to be smooth on all sides.");
+        addLore(AetherBlocks.STRIPPED_SKYROOT_LOG, "A Skyroot Log that has had its bark stripped away with an Axe. When put in a Crafting Table they will provide 4 Skyroot Planks.");
+        addLore(AetherBlocks.STRIPPED_SKYROOT_WOOD, "Stripped Skyroot Logs crafted to be smooth on all sides. When put in a Crafting Table they will provide 4 Skyroot Planks.");
         addLore(AetherBlocks.SUN_ALTAR, "An Altar containing the power to control the Sun itself! It is dropped by the Sun Spirit after you defeat him. Use it to control the time of day.");
         addLore(AetherItems.SWET_CAPE, "A common cape that is found in Bronze Dungeons. It allows for the wearer to ride Swets, as they become friendly when they see someone wearing it.");
         addLore(AetherItems.SWET_BALL, "A gooey orb that is dropped from Blue Swets. It can be used to fertilize soils. Another use is to put it alongside string to make a lead.");
@@ -1151,6 +1153,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addServerConfig("modpack", "portal_return_dimension_ID", "Sets the ID of the dimension that the Aether Portal will return the player to");
 
 
+        addCommonConfig("gameplay", "use_curios_menu", "Use the default Curios menu instead of the Aether's Accessories Menu. WARNING: Do not enable this without emptying your equipped accessories");
         addCommonConfig("gameplay", "start_with_portal", "On world creation, the player is given an Aether Portal Frame item to automatically go to the Aether with");
         addCommonConfig("gameplay", "enable_startup_loot", "When the player enters the Aether, they are given a Book of Lore and Golden Parachutes as starting loot");
         addCommonConfig("gameplay", "repeat_sun_spirit_dialogue", "Determines whether the Sun Spirit's dialogue when meeting him should play through every time you meet him");
@@ -1191,11 +1194,13 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addPackTitle("b173", "Aether b1.7.3 Textures");
         addPackTitle("ctm", "Aether CTM Fix");
         addPackTitle("colorblind", "Aether Colorblind Textures");
+        addPackTitle("curios", "Aether Curios Override");
 
         addPackDescription("mod", "Aether Resources");
         addPackDescription("125", "The classic look of the Aether from 1.2.5");
         addPackDescription("b173", "The original look of the Aether from b1.7.3");
         addPackDescription("ctm", "Fixes Quicksoil Glass Panes when using CTM");
         addPackDescription("colorblind", "Changes textures for color blindness accessibility");
+        addPackDescription("curios", "Replace Accessories Menu with Curios' menu");
     }
 }

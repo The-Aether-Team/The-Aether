@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:blue_cape_blue_wool"
+        "recipe": "aether:blue_cape_blue_wool"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:blue_cape_blue_wool"
+      "aether:blue_cape_blue_wool"
     ]
   }
 }

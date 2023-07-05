@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_cyan_wool": {
+    "has_netherite_ingot": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:cyan_wool"
+              "minecraft:netherite_ingot"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:blue_cape_cyan_wool"
+        "recipe": "aether:netherite_gloves_smithing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_cyan_wool",
+      "has_netherite_ingot",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:blue_cape_cyan_wool"
+      "aether:netherite_gloves_smithing"
     ]
   }
 }

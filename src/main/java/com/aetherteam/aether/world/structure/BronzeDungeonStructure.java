@@ -71,9 +71,8 @@ public class BronzeDungeonStructure extends Structure {
                     ChunkPos offset = new ChunkPos(chunkPos.x + x, chunkPos.z + z);
                     y = findStartingHeight(chunkGenerator, heightAccessor, offset, randomState, templateManager);
                     if (y > heightAccessor.getMinBuildHeight()) {
-                        chunkPos = offset;
                         height.setValue(y);
-                        break;
+                        return offset;
                     }
                 }
             }

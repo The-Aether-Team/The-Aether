@@ -26,6 +26,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
     }
 
     @Override
+    @SuppressWarnings("removal")
     protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.MOSSY_HOLYSTONE.get())
                 .group("mossy_holystone")
@@ -255,9 +256,9 @@ public class AetherRecipeData extends AetherRecipeProvider {
         makePendant(AetherItems.ZANITE_PENDANT, AetherItems.ZANITE_GEMSTONE.get()).save(consumer);
 
         makeCape(AetherItems.RED_CAPE, Blocks.RED_WOOL.asItem()).save(consumer);
-        makeCape(AetherItems.BLUE_CAPE, Blocks.BLUE_WOOL.asItem()).group("blue_cape").save(consumer, "blue_cape_blue_wool");
-        makeCape(AetherItems.BLUE_CAPE, Blocks.LIGHT_BLUE_WOOL.asItem()).group("blue_cape").save(consumer, "blue_cape_light_blue_wool");
-        makeCape(AetherItems.BLUE_CAPE, Blocks.CYAN_WOOL.asItem()).group("blue_cape").save(consumer, "blue_cape_cyan_wool");
+        makeCape(AetherItems.BLUE_CAPE, Blocks.BLUE_WOOL.asItem()).group("blue_cape").save(consumer, name("blue_cape_blue_wool"));
+        makeCape(AetherItems.BLUE_CAPE, Blocks.LIGHT_BLUE_WOOL.asItem()).group("blue_cape").save(consumer, name("blue_cape_light_blue_wool"));
+        makeCape(AetherItems.BLUE_CAPE, Blocks.CYAN_WOOL.asItem()).group("blue_cape").save(consumer, name("blue_cape_cyan_wool"));
         makeCape(AetherItems.YELLOW_CAPE, Blocks.YELLOW_WOOL.asItem()).save(consumer);
         makeCape(AetherItems.WHITE_CAPE, Blocks.WHITE_WOOL.asItem()).save(consumer);
 
@@ -265,7 +266,8 @@ public class AetherRecipeData extends AetherRecipeProvider {
         makeGlovesWithTag(AetherItems.IRON_GLOVES, Tags.Items.INGOTS_IRON, "iron").save(consumer);
         makeGlovesWithTag(AetherItems.GOLDEN_GLOVES, Tags.Items.INGOTS_GOLD, "gold").save(consumer);
         makeGlovesWithTag(AetherItems.DIAMOND_GLOVES, Tags.Items.GEMS_DIAMOND, "diamond").save(consumer);
-        legacyNetheriteSmithing(consumer, AetherItems.DIAMOND_GLOVES.get(), RecipeCategory.COMBAT, AetherItems.NETHERITE_GLOVES.get());
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(AetherItems.DIAMOND_GLOVES.get()), Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.COMBAT, AetherItems.NETHERITE_GLOVES.get()).unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT)).save(consumer, name("old_" + getItemName(AetherItems.NETHERITE_GLOVES.get()) + "_smithing"));
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE), Ingredient.of(AetherItems.DIAMOND_GLOVES.get()), Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.COMBAT, AetherItems.NETHERITE_GLOVES.get()).unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT)).save(consumer, name(getItemName(AetherItems.NETHERITE_GLOVES.get()) + "_smithing"));
         makeGloves(AetherItems.ZANITE_GLOVES, AetherItems.ZANITE_GEMSTONE).save(consumer);
         makeGlovesWithBlock(AetherItems.GRAVITITE_GLOVES, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
 
@@ -598,11 +600,11 @@ public class AetherRecipeData extends AetherRecipeProvider {
         smeltingOreRecipe(AetherItems.ZANITE_GEMSTONE.get(), AetherBlocks.ZANITE_ORE.get(), 0.7F).save(consumer, name("zanite_gemstone_from_smelting"));
         blastingOreRecipe(AetherItems.ZANITE_GEMSTONE.get(), AetherBlocks.ZANITE_ORE.get(), 0.7F).save(consumer, name("zanite_gemstone_from_blasting"));
 
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(AetherItems.GOLDEN_GLOVES.get(), AetherItems.GOLDEN_PENDANT.get(), AetherItems.GOLDEN_RING.get()), RecipeCategory.MISC, Items.GOLD_NUGGET, 0.1F, 100).unlockedBy("has_golden_gloves", has(AetherItems.GOLDEN_GLOVES.get())).unlockedBy("has_golden_pendant", has(AetherItems.GOLDEN_PENDANT.get())).unlockedBy("has_golden_ring", has(AetherItems.GOLDEN_RING.get())).group(getSmeltingRecipeName(Items.GOLD_NUGGET)).save(consumer, "aether_" + getSmeltingRecipeName(Items.GOLD_NUGGET));
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(AetherItems.IRON_GLOVES.get(), AetherItems.IRON_PENDANT.get(), AetherItems.IRON_RING.get(), AetherItems.CHAINMAIL_GLOVES.get()), RecipeCategory.MISC, Items.IRON_NUGGET, 0.1F, 100).unlockedBy("has_iron_gloves", has(AetherItems.IRON_GLOVES.get())).unlockedBy("has_iron_pendant", has(AetherItems.IRON_PENDANT.get())).unlockedBy("has_iron_ring", has(AetherItems.IRON_RING.get())).unlockedBy("has_chainmail_gloves", has(AetherItems.CHAINMAIL_GLOVES.get())).group(getSmeltingRecipeName(Items.IRON_NUGGET)).save(consumer, "aether_" + getSmeltingRecipeName(Items.IRON_NUGGET));
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(AetherItems.GOLDEN_GLOVES.get(), AetherItems.GOLDEN_PENDANT.get(), AetherItems.GOLDEN_RING.get()), RecipeCategory.MISC, Items.GOLD_NUGGET, 0.1F, 100).unlockedBy("has_golden_gloves", has(AetherItems.GOLDEN_GLOVES.get())).unlockedBy("has_golden_pendant", has(AetherItems.GOLDEN_PENDANT.get())).unlockedBy("has_golden_ring", has(AetherItems.GOLDEN_RING.get())).group(getSmeltingRecipeName(Items.GOLD_NUGGET)).save(consumer, name("aether_" + getSmeltingRecipeName(Items.GOLD_NUGGET)));
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(AetherItems.IRON_GLOVES.get(), AetherItems.IRON_PENDANT.get(), AetherItems.IRON_RING.get(), AetherItems.CHAINMAIL_GLOVES.get()), RecipeCategory.MISC, Items.IRON_NUGGET, 0.1F, 100).unlockedBy("has_iron_gloves", has(AetherItems.IRON_GLOVES.get())).unlockedBy("has_iron_pendant", has(AetherItems.IRON_PENDANT.get())).unlockedBy("has_iron_ring", has(AetherItems.IRON_RING.get())).unlockedBy("has_chainmail_gloves", has(AetherItems.CHAINMAIL_GLOVES.get())).group(getSmeltingRecipeName(Items.IRON_NUGGET)).save(consumer, name("aether_" + getSmeltingRecipeName(Items.IRON_NUGGET)));
 
-        SimpleCookingRecipeBuilder.blasting(Ingredient.of(AetherItems.GOLDEN_GLOVES.get(), AetherItems.GOLDEN_PENDANT.get(), AetherItems.GOLDEN_RING.get()), RecipeCategory.MISC, Items.GOLD_NUGGET, 0.1F, 100).unlockedBy("has_golden_gloves", has(AetherItems.GOLDEN_GLOVES.get())).unlockedBy("has_golden_pendant", has(AetherItems.GOLDEN_PENDANT.get())).unlockedBy("has_golden_ring", has(AetherItems.GOLDEN_RING.get())).group(getBlastingRecipeName(Items.GOLD_NUGGET)).save(consumer, "aether_" + getBlastingRecipeName(Items.GOLD_NUGGET));
-        SimpleCookingRecipeBuilder.blasting(Ingredient.of(AetherItems.IRON_GLOVES.get(), AetherItems.IRON_PENDANT.get(), AetherItems.IRON_RING.get(), AetherItems.CHAINMAIL_GLOVES.get()), RecipeCategory.MISC, Items.IRON_NUGGET, 0.1F, 100).unlockedBy("has_iron_gloves", has(AetherItems.IRON_GLOVES.get())).unlockedBy("has_iron_pendant", has(AetherItems.IRON_PENDANT.get())).unlockedBy("has_iron_ring", has(AetherItems.IRON_RING.get())).unlockedBy("has_chainmail_gloves", has(AetherItems.CHAINMAIL_GLOVES.get())).group(getBlastingRecipeName(Items.IRON_NUGGET)).save(consumer, "aether_" + getBlastingRecipeName(Items.IRON_NUGGET));
+        SimpleCookingRecipeBuilder.blasting(Ingredient.of(AetherItems.GOLDEN_GLOVES.get(), AetherItems.GOLDEN_PENDANT.get(), AetherItems.GOLDEN_RING.get()), RecipeCategory.MISC, Items.GOLD_NUGGET, 0.1F, 100).unlockedBy("has_golden_gloves", has(AetherItems.GOLDEN_GLOVES.get())).unlockedBy("has_golden_pendant", has(AetherItems.GOLDEN_PENDANT.get())).unlockedBy("has_golden_ring", has(AetherItems.GOLDEN_RING.get())).group(getBlastingRecipeName(Items.GOLD_NUGGET)).save(consumer, name("aether_" + getBlastingRecipeName(Items.GOLD_NUGGET)));
+        SimpleCookingRecipeBuilder.blasting(Ingredient.of(AetherItems.IRON_GLOVES.get(), AetherItems.IRON_PENDANT.get(), AetherItems.IRON_RING.get(), AetherItems.CHAINMAIL_GLOVES.get()), RecipeCategory.MISC, Items.IRON_NUGGET, 0.1F, 100).unlockedBy("has_iron_gloves", has(AetherItems.IRON_GLOVES.get())).unlockedBy("has_iron_pendant", has(AetherItems.IRON_PENDANT.get())).unlockedBy("has_iron_ring", has(AetherItems.IRON_RING.get())).unlockedBy("has_chainmail_gloves", has(AetherItems.CHAINMAIL_GLOVES.get())).group(getBlastingRecipeName(Items.IRON_NUGGET)).save(consumer, name("aether_" + getBlastingRecipeName(Items.IRON_NUGGET)));
 
 
         stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.CARVED_WALL.get(), AetherBlocks.CARVED_STONE.get());

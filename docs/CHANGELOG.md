@@ -1,3 +1,67 @@
+# The Aether - Forge - 1.19.4-1.0.0-beta.5.1
+
+Fixes
+
+- Fix mobs not targeting players.
+
+# The Aether - Forge - 1.19.4-1.0.0-beta.5
+
+Additions
+
+- Add config option for disabling the Aether's accessories menu and using Curios' menu instead.
+- Add block breaking behavior to the Valkyrie Queen.
+- Add renewability method for Holystone.
+- Add keybind `V` to toggle the Invisibility Cloak's ability.
+- Add Randomium support with blacklist tag.
+- Add recipes for Moa Eggs to work as eggs in crafting.
+- Add missing lore entry for Skyroot Wood.
+- Add new tags for accessories: `#accessories_capes`, `#accessories_gloves`, `#accessories_miscellaneous`, `#accessories_pendants`, `#accessories_rings`, `#accessories_shields`. Addon developers should use these instead of Curios' tags.
+- Add `RecipeType` field to `ItemUseConversionEvent`.
+- Update uk_ua translation.
+- Update ms_my translation.
+- Update ja_jp translation.
+- Update pl_pl translation.
+- Update zh_cn translation.
+- Update tok translation.
+- Update en_ud translation.
+- Update lol_us translation.
+
+Changes
+
+- Change the Pillar Top model to be multi-directional.
+- Allow Presents to be dropped with silk touch.
+- Decrease default Moa hitbox size.
+- Decrease Moa hitbox when sitting and when a baby.
+- Decrease Cockatrice hitbox size.
+- Improve Moa entity targetting.
+- Disallow projectiles shot by the player from being bounced by their Shield of Repulsion.
+- Remove the Golden Feather from Silver Dungeon loot by default.
+- Update texture colors for Golden Gummy Swet and Golden Parachute.
+- Move some recipes out of the `minecraft` data directory into the `aether` data directory.
+
+Fixes
+
+- Fix Bronze Dungeon boss rooms being able to overlap.
+- Fix Bronze Dungeons being able to spawn far out of terrain.
+- Fix pickaxes losing more durability to the Slider than they should.
+- Fix the Slider playing walking sounds.
+- Fix Silver Dungeon chests breaking on generation.
+- Fix bone meal not growing Purple Flowers on Aether Grass Blocks.
+- Fix some entities like TNT not being launched by Blue Aerclouds.
+- Fix critical hits not working with slow falling entities and accessories.
+- Fix Valkyrie Armor allowing clipping through blocks.
+- Fix Valkyrie Armor wing animation speed.
+- Fix the tool debuff in the Aether not working while underwater.
+- Fix issues with falling out of the Aether while flying.
+- Fix Flying Cow health being greater than it should be.
+- Fix Hammer of Kingbdogz projectiles following player motion when they shouldn't.
+- Fix Hammer of Kingbdogz projectile impact particles not always spawning.
+- Fix incorrect lore entry for Stripped Skyroot Wood.
+- Fix capitalization in various lore entries.
+- Fix Netherite Gloves not being craftable with the 1.20 experimental data pack.
+- Fix some animations playing when the game is paused.
+- Fix `ItemUseConversionEvent` being called more than it should.
+
 # The Aether - Forge - 1.19.4-1.0.0-beta.4
 
 Additions

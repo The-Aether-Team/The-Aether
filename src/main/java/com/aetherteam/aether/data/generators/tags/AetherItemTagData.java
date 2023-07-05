@@ -157,17 +157,17 @@ public class AetherItemTagData extends ItemTagsProvider {
         this.tag(AetherTags.Items.TOOLS_LANCES).add(AetherItems.VALKYRIE_LANCE.get());
         this.tag(AetherTags.Items.TOOLS_HAMMERS).add(AetherItems.HAMMER_OF_KINGBDOGZ.get());
 
-        this.tag(AetherTags.Items.AETHER_RING).add(
+        this.tag(AetherTags.Items.ACCESSORIES_RINGS).add(
                 AetherItems.IRON_RING.get(),
                 AetherItems.GOLDEN_RING.get(),
                 AetherItems.ZANITE_RING.get(),
                 AetherItems.ICE_RING.get());
-        this.tag(AetherTags.Items.AETHER_PENDANT).add(
+        this.tag(AetherTags.Items.ACCESSORIES_PENDANTS).add(
                 AetherItems.IRON_PENDANT.get(),
                 AetherItems.GOLDEN_PENDANT.get(),
                 AetherItems.ZANITE_PENDANT.get(),
                 AetherItems.ICE_PENDANT.get());
-        this.tag(AetherTags.Items.AETHER_GLOVES).add(
+        this.tag(AetherTags.Items.ACCESSORIES_GLOVES).add(
                 AetherItems.LEATHER_GLOVES.get(),
                 AetherItems.CHAINMAIL_GLOVES.get(),
                 AetherItems.IRON_GLOVES.get(),
@@ -180,7 +180,7 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherItems.PHOENIX_GLOVES.get(),
                 AetherItems.OBSIDIAN_GLOVES.get(),
                 AetherItems.VALKYRIE_GLOVES.get());
-        this.tag(AetherTags.Items.AETHER_CAPE).add(
+        this.tag(AetherTags.Items.ACCESSORIES_CAPES).add(
                 AetherItems.RED_CAPE.get(),
                 AetherItems.BLUE_CAPE.get(),
                 AetherItems.YELLOW_CAPE.get(),
@@ -189,19 +189,26 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherItems.INVISIBILITY_CLOAK.get(),
                 AetherItems.AGILITY_CAPE.get(),
                 AetherItems.VALKYRIE_CAPE.get());
-        this.tag(AetherTags.Items.AETHER_ACCESSORY).add(
+        this.tag(AetherTags.Items.ACCESSORIES_MISCELLANEOUS).add(
                 AetherItems.GOLDEN_FEATHER.get(),
                 AetherItems.REGENERATION_STONE.get(),
                 AetherItems.IRON_BUBBLE.get());
-        this.tag(AetherTags.Items.AETHER_SHIELD).add(AetherItems.SHIELD_OF_REPULSION.get());
+        this.tag(AetherTags.Items.ACCESSORIES_SHIELDS).add(AetherItems.SHIELD_OF_REPULSION.get());
+
+        this.tag(AetherTags.Items.AETHER_RING).addTag(AetherTags.Items.ACCESSORIES_RINGS);
+        this.tag(AetherTags.Items.AETHER_PENDANT).addTag(AetherTags.Items.ACCESSORIES_PENDANTS);
+        this.tag(AetherTags.Items.AETHER_GLOVES).addTag(AetherTags.Items.ACCESSORIES_GLOVES);
+        this.tag(AetherTags.Items.AETHER_CAPE).addTag(AetherTags.Items.ACCESSORIES_CAPES);
+        this.tag(AetherTags.Items.AETHER_ACCESSORY).addTag(AetherTags.Items.ACCESSORIES_MISCELLANEOUS);
+        this.tag(AetherTags.Items.AETHER_SHIELD).addTag(AetherTags.Items.ACCESSORIES_SHIELDS);
 
         this.tag(AetherTags.Items.ACCESSORIES).addTags(
-                AetherTags.Items.AETHER_RING,
-                AetherTags.Items.AETHER_PENDANT,
-                AetherTags.Items.AETHER_GLOVES,
-                AetherTags.Items.AETHER_CAPE,
+                AetherTags.Items.ACCESSORIES_RINGS,
+                AetherTags.Items.ACCESSORIES_PENDANTS,
+                AetherTags.Items.ACCESSORIES_GLOVES,
+                AetherTags.Items.ACCESSORIES_CAPES,
                 AetherTags.Items.AETHER_ACCESSORY,
-                AetherTags.Items.AETHER_SHIELD);
+                AetherTags.Items.ACCESSORIES_SHIELDS);
 
         // Forge
         this.tag(Tags.Items.BOOKSHELVES).add(AetherBlocks.SKYROOT_BOOKSHELF.get().asItem());
@@ -256,6 +263,15 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherItems.OBSIDIAN_BOOTS.get(),
                 AetherItems.VALKYRIE_BOOTS.get(),
                 AetherItems.SENTRY_BOOTS.get());
+
+        this.tag(AetherTags.Items.RANDOMIUM_BLACKLIST).addTags(
+                AetherTags.Items.LOCKED_DUNGEON_BLOCKS,
+                AetherTags.Items.TRAPPED_DUNGEON_BLOCKS,
+                AetherTags.Items.BOSS_DOORWAY_DUNGEON_BLOCKS,
+                AetherTags.Items.TREASURE_DOORWAY_DUNGEON_BLOCKS).add(
+                AetherBlocks.CHEST_MIMIC.get().asItem(),
+                AetherBlocks.TREASURE_CHEST.get().asItem()
+        );
 
         // Vanilla
         this.tag(ItemTags.STONE_CRAFTING_MATERIALS).add(AetherBlocks.HOLYSTONE.get().asItem());
