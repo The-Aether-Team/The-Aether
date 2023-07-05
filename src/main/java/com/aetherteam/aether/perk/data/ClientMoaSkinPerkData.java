@@ -1,5 +1,6 @@
 package com.aetherteam.aether.perk.data;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.server.ServerMoaSkinPacket;
@@ -32,6 +33,7 @@ public class ClientMoaSkinPerkData extends ClientPerkData<MoaData> {
                 if (moaSkinName != null && !moaSkinName.isEmpty() && moaSkins.containsKey(moaSkinName)) {
                     MoaSkins.MoaSkin moaSkin = MoaSkins.getMoaSkins().get(moaSkinName);
                     MoaData moaData = new MoaData(lastRiddenMoa, moaSkin);
+                    Aether.LOGGER.info(userSkinsData.get(uuid) + " - " + moaData);
                     if (!userSkinsData.containsKey(uuid)
                             || userSkinsData.get(uuid) == null
                             || (userSkinsData.get(uuid).moaUUID() == null && moaData.moaUUID() != null)
