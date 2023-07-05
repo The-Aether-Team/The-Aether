@@ -1,5 +1,6 @@
 package com.aetherteam.aether.network.packet.server;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.network.AetherPacket;
 import com.aetherteam.aether.perk.data.ServerMoaSkinPerkData;
 import com.aetherteam.aether.perk.types.MoaData;
@@ -25,6 +26,7 @@ public abstract class ServerMoaSkinPacket {
         @Override
         public void execute(Player playerEntity) {
             if (playerEntity != null && playerEntity.getServer() != null && this.playerUUID() != null && this.moaSkinData() != null) {
+                Aether.LOGGER.info("g");
                 ServerMoaSkinPerkData.INSTANCE.applyPerkWithVerification(playerEntity.getServer(), this.playerUUID(), this.moaSkinData());
             }
         }
@@ -44,6 +46,7 @@ public abstract class ServerMoaSkinPacket {
         @Override
         public void execute(Player playerEntity) {
             if (playerEntity != null && playerEntity.getServer() != null && this.playerUUID() != null) {
+                Aether.LOGGER.info("h");
                 ServerMoaSkinPerkData.INSTANCE.removePerk(playerEntity.getServer(), this.playerUUID());
             }
         }

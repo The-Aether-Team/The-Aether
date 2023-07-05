@@ -1,5 +1,6 @@
 package com.aetherteam.aether.perk.data;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.network.AetherPacket;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.nitrogen.api.users.User;
@@ -24,8 +25,10 @@ public abstract class ServerPerkData<T> {
     public void applyPerkWithVerification(MinecraftServer server, UUID uuid, T perk) {
         Map<UUID, User> storedUsers = UserData.Server.getStoredUsers();
         if (storedUsers.containsKey(uuid)) {
+            Aether.LOGGER.info("3");
             User user = storedUsers.get(uuid);
             if (user != null && this.getVerificationPredicate(perk).test(user)) {
+                Aether.LOGGER.info("4");
                 AetherPacketHandler.sendToAll(this.getApplyPacket(uuid, perk));
                 this.modifySavedData(server, uuid, perk);
             }

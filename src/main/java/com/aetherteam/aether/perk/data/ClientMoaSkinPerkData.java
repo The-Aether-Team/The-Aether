@@ -1,5 +1,6 @@
 package com.aetherteam.aether.perk.data;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.server.ServerMoaSkinPacket;
@@ -21,15 +22,18 @@ public class ClientMoaSkinPerkData extends ClientPerkData<MoaData> {
     @Override
     public void syncFromClient(Player player) {
         if (this.canSync(player)) {
+            Aether.LOGGER.info("a");
             User user = UserData.Client.getClientUser();
             UUID uuid = player.getUUID();
             AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
+                Aether.LOGGER.info("b");
                 UUID lastRiddenMoa = aetherPlayer.getLastRiddenMoa();
                 CustomizationsOptions.INSTANCE.load();
                 String moaSkinName = CustomizationsOptions.INSTANCE.getMoaSkin();
                 Map<String, MoaSkins.MoaSkin> moaSkins = MoaSkins.getMoaSkins();
                 Map<UUID, MoaData> userSkinsData = this.getClientPerkData();
                 if (moaSkinName != null && !moaSkinName.isEmpty() && moaSkins.containsKey(moaSkinName)) {
+                    Aether.LOGGER.info("c");
                     MoaSkins.MoaSkin moaSkin = MoaSkins.getMoaSkins().get(moaSkinName);
                     MoaData moaData = new MoaData(lastRiddenMoa, moaSkin);
                     if (!userSkinsData.containsKey(uuid)
@@ -38,11 +42,14 @@ public class ClientMoaSkinPerkData extends ClientPerkData<MoaData> {
                             || (userSkinsData.get(uuid).moaSkin() == null && moaData.moaSkin() != null)
                             || (userSkinsData.get(uuid).moaUUID() != null && moaData.moaUUID() != null && !userSkinsData.get(uuid).moaUUID().equals(moaData.moaUUID()))
                             || (userSkinsData.get(uuid).moaSkin() != null && moaData.moaSkin() != null && !userSkinsData.get(uuid).moaSkin().equals(moaData.moaSkin()))) {
+                        Aether.LOGGER.info("d");
                         if (moaSkin.getUserPredicate().test(user)) {
+                            Aether.LOGGER.info("e");
                             AetherPacketHandler.sendToServer(new ServerMoaSkinPacket.Apply(player.getUUID(), new MoaData(lastRiddenMoa, moaSkin)));
                         }
                     }
                 } else if ((moaSkinName == null || moaSkinName.isEmpty()) && userSkinsData.containsKey(uuid) && userSkinsData.get(uuid) != null && (userSkinsData.get(uuid).moaUUID() != null || userSkinsData.get(uuid).moaSkin() != null)) {
+                    Aether.LOGGER.info("f");
                     AetherPacketHandler.sendToServer(new ServerMoaSkinPacket.Remove(player.getUUID()));
                 }
             });
