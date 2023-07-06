@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class Aerwhale extends FlyingMob {
+    public static final EntityDataAccessor<Float> DATA_X_ROT_O_ID = SynchedEntityData.defineId(Aerwhale.class, EntityDataSerializers.FLOAT);
     public static final EntityDataAccessor<Float> DATA_X_ROT_ID = SynchedEntityData.defineId(Aerwhale.class, EntityDataSerializers.FLOAT);
     public static final EntityDataAccessor<Float> DATA_Y_ROT_ID = SynchedEntityData.defineId(Aerwhale.class, EntityDataSerializers.FLOAT);
 
@@ -59,6 +60,7 @@ public class Aerwhale extends FlyingMob {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
+        this.entityData.define(DATA_X_ROT_O_ID, this.getXRot());
         this.entityData.define(DATA_X_ROT_ID, this.getXRot());
         this.entityData.define(DATA_Y_ROT_ID, this.getYRot());
     }
@@ -134,6 +136,7 @@ public class Aerwhale extends FlyingMob {
 
     @Override
     public void tick() {
+        this.setXRotOData(this.getXRotData());
         super.tick();
         this.clearFire();
     }
@@ -155,6 +158,14 @@ public class Aerwhale extends FlyingMob {
     @Override
     public int getMaxSpawnClusterSize() {
         return 1;
+    }
+
+    public void setXRotOData(float rot) {
+        this.entityData.set(DATA_X_ROT_O_ID, Mth.wrapDegrees(rot));
+    }
+
+    public float getXRotOData() {
+        return this.entityData.get(DATA_X_ROT_O_ID);
     }
 
     public void setXRotData(float rot) {
