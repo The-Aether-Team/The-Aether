@@ -68,6 +68,10 @@ public abstract class AetherLanguageProvider extends LanguageProvider {
         this.add("gui." + this.id + "." + key, name);
     }
 
+    public void addMoaSkinsText(String key, String name) {
+        this.addGuiText("moa_skins." + key, name);
+    }
+
     public void addCustomizationText(String key, String name) {
         this.addGuiText("customization." + key, name);
     }
@@ -76,7 +80,7 @@ public abstract class AetherLanguageProvider extends LanguageProvider {
         this.addGuiText("book_of_lore." + key, name);
     }
 
-    public void addMessage(String key, String name) {
+    public void addGeneric(String key, String name) {
         this.add(this.id + "." + key, name);
     }
 

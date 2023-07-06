@@ -8,8 +8,7 @@ import net.minecraft.world.item.Item;
 
 import java.util.function.Supplier;
 
-public class MoaType
-{
+public class MoaType {
     private final Supplier<? extends Item> egg;
     private final int maxJumps;
     private final float speed;
@@ -62,8 +61,7 @@ public class MoaType
         return this.getId().toString();
     }
 
-    public static class Properties
-    {
+    public static class Properties {
         private Supplier<? extends Item> egg = AetherItems.BLUE_MOA_EGG;
         private int maxJumps = 3;
         private float speed = 0.1F;

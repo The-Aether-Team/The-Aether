@@ -1,7 +1,7 @@
 package com.aetherteam.aether.client;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.api.CustomizationsOptions;
+import com.aetherteam.aether.perk.CustomizationsOptions;
 import com.aetherteam.aether.client.gui.screen.SunAltarScreen;
 import com.aetherteam.aether.client.gui.screen.inventory.*;
 import com.aetherteam.aether.client.renderer.AetherRenderers;

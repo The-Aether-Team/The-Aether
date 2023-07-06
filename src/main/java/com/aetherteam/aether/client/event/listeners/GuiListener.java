@@ -3,6 +3,7 @@ package com.aetherteam.aether.client.event.listeners;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.client.event.hooks.GuiHooks;
 import com.aetherteam.aether.client.gui.component.AccessoryButton;
+import com.aetherteam.aether.client.gui.component.skins.RefreshButton;
 import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.aetherteam.aether.client.gui.screen.menu.AetherTitleScreen;
 
@@ -102,6 +103,7 @@ public class GuiListener {
 		Minecraft minecraft = Minecraft.getInstance();
 		if (event.phase == TickEvent.Phase.END) {
 			GuiHooks.tickMenuWhenPaused(minecraft);
+			GuiHooks.handleRefreshRebound();
 		}
 	}
 

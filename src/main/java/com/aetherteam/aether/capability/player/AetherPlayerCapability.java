@@ -16,6 +16,8 @@ import com.aetherteam.aether.capability.CapabilitySyncing;
 import com.aetherteam.aether.network.AetherPacket;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.AetherPlayerSyncPacket;
+import com.aetherteam.aether.perk.CustomizationsOptions;
+import com.aetherteam.aether.perk.data.*;
 import com.aetherteam.aether.util.EquipmentUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -73,6 +75,8 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	private Aerbunny mountedAerbunny;
 	private CompoundTag mountedAerbunnyTag;
 
+	private UUID lastRiddenMoa;
+
 	private final List<CloudMinion> cloudMinions = new ArrayList<>(2);
 
 	private int wingRotationO;
@@ -116,6 +120,9 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		if (this.getMountedAerbunnyTag() != null) {
 			tag.put("MountedAerbunnyTag", this.getMountedAerbunnyTag());
 		}
+		if (this.getLastRiddenMoa() != null) {
+			tag.putUUID("LastRiddenMoa", this.getLastRiddenMoa());
+		}
 		return tag;
 	}
 
@@ -136,6 +143,9 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		if (tag.contains("MountedAerbunnyTag")) {
 			this.setMountedAerbunnyTag(tag.getCompound("MountedAerbunnyTag"));
 		}
+		if (tag.contains("LastRiddenMoa")) {
+			this.setLastRiddenMoa(tag.getUUID("LastRiddenMoa"));
+		}
 	}
 
 	@Override
@@ -151,6 +161,9 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		tag.putBoolean("InvisibilityEnabled_Syncing", this.isInvisibilityEnabled());
 		tag.putBoolean("WearingInvisibilityCloak_Syncing", this.isWearingInvisibilityCloak());
 		tag.putInt("LifeShardCount_Syncing", this.getLifeShardCount());
+		if (this.getLastRiddenMoa() != null) {
+			tag.putUUID("LastRiddenMoa_Syncing", this.getLastRiddenMoa());
+		}
 		return tag;
 	}
 
@@ -174,9 +187,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		if (tag.contains("FlightModifier_Syncing")) {
 			this.setFlightModifier(tag.getFloat("FlightModifier_Syncing"));
 		}
-		if (tag.contains("LifeShardCount_Syncing")) {
-			this.setLifeShardCount(tag.getInt("LifeShardCount_Syncing"));
-		}
 		if (tag.contains("AttackedWithInvisibility_Syncing")) {
 			this.setAttackedWithInvisibility(tag.getBoolean("AttackedWithInvisibility_Syncing"));
 		}
@@ -185,6 +195,12 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		}
 		if (tag.contains("WearingInvisibilityCloak_Syncing")) {
 			this.setWearingInvisibilityCloak(tag.getBoolean("WearingInvisibilityCloak_Syncing"));
+		}
+		if (tag.contains("LifeShardCount_Syncing")) {
+			this.setLifeShardCount(tag.getInt("LifeShardCount_Syncing"));
+		}
+		if (tag.contains("LastRiddenMoa_Syncing")) {
+			this.setLastRiddenMoa(tag.getUUID("LastRiddenMoa_Syncing"));
 		}
 	}
 
@@ -197,6 +213,16 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	public void onLogin() {
 		this.handleGivePortal();
 		this.remountAerbunny();
+		ServerMoaSkinPerkData.INSTANCE.syncFromServer(this.getPlayer());
+		ServerHaloPerkData.INSTANCE.syncFromServer(this.getPlayer());
+		ServerDeveloperGlowPerkData.INSTANCE.syncFromServer(this.getPlayer());
+	}
+
+	@Override
+	public void onJoinLevel() {
+		if (this.getPlayer().getLevel().isClientSide()) {
+			CustomizationsOptions.INSTANCE.load();
+		}
 	}
 
 	@Override
@@ -226,6 +252,9 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		this.checkToRemoveCloudMinions();
 		this.handleSavedHealth();
 		this.handleLifeShardModifier();
+		ClientMoaSkinPerkData.INSTANCE.syncFromClient(this.getPlayer());
+		ClientHaloPerkData.INSTANCE.syncFromClient(this.getPlayer());
+		ClientDeveloperGlowPerkData.INSTANCE.syncFromClient(this.getPlayer());
 	}
 
 	private void handleGivePortal() {
@@ -674,6 +703,17 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	@Override
 	public CompoundTag getMountedAerbunnyTag() {
 		return this.mountedAerbunnyTag;
+	}
+
+	@Override
+	public void setLastRiddenMoa(UUID lastRiddenMoa) {
+		this.markDirty(true);
+		this.lastRiddenMoa = lastRiddenMoa;
+	}
+
+	@Override
+	public UUID getLastRiddenMoa() {
+		return this.lastRiddenMoa;
 	}
 
 	@Override

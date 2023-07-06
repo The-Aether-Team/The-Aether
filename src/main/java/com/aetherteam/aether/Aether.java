@@ -28,6 +28,7 @@ import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.loot.conditions.AetherLootConditions;
 import com.aetherteam.aether.loot.functions.AetherLootFunctions;
 import com.aetherteam.aether.loot.modifiers.AetherLootModifiers;
+import com.aetherteam.aether.perk.types.MoaSkins;
 import com.aetherteam.aether.recipe.AetherRecipeSerializers;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.world.AetherPoi;
@@ -82,7 +83,6 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @Mod(Aether.MODID)
-@Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Aether {
     public static final String MODID = "aether";
     public static final Logger LOGGER = LogUtils.getLogger();
@@ -148,6 +148,8 @@ public class Aether {
         Reflection.initialize(AetherMobCategory.class);
 
         AetherAdvancementTriggers.init();
+
+        MoaSkins.registerMoaSkins();
 
         this.registerFuels();
 

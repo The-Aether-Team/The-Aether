@@ -1,19 +1,25 @@
 package com.aetherteam.aether.client.renderer.entity;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
 import com.aetherteam.aether.api.registers.MoaType;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
+import com.aetherteam.aether.client.renderer.entity.layers.MoaEmissiveLayer;
 import com.aetherteam.aether.client.renderer.entity.layers.MoaSaddleLayer;
 import com.aetherteam.aether.client.renderer.entity.model.MoaModel;
 import com.aetherteam.aether.entity.passive.Moa;
 import com.aetherteam.aether.api.AetherMoaTypes;
+import com.aetherteam.aether.perk.data.ClientMoaSkinPerkData;
+import com.aetherteam.aether.perk.types.MoaData;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
+import java.util.Map;
 import java.util.UUID;
 
 public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
@@ -23,6 +29,7 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
 
 	public MoaRenderer(EntityRendererProvider.Context context) {
 		super(context, new MoaModel(context.bakeLayer(AetherModelLayers.MOA)), 0.7F);
+		this.addLayer(new MoaEmissiveLayer<>(this));
 		this.addLayer(new MoaSaddleLayer(this, new MoaModel(context.bakeLayer(AetherModelLayers.MOA_SADDLE))));
 	}
 
@@ -43,6 +50,10 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
 	@Nonnull
 	@Override
 	public ResourceLocation getTextureLocation(Moa moa) {
+		ResourceLocation moaSkin = this.getMoaSkinLocation(moa);
+		if (moaSkin != null) {
+			return moaSkin;
+		}
 		if (moa.hasCustomName() && moa.getName().getString().equals("Mos")) {
 			return MOS_TEXTURE;
 		}
@@ -52,5 +63,17 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
 		}
 		MoaType moaType = moa.getMoaType();
 		return moaType == null ? DEFAULT_TEXTURE : moaType.getMoaTexture();
+	}
+
+	private ResourceLocation getMoaSkinLocation(Moa moa) {
+		UUID lastRiderUUID = moa.getLastRider();
+		UUID moaUUID = moa.getMoaUUID();
+		Map<UUID, MoaData> userSkinsData = ClientMoaSkinPerkData.INSTANCE.getClientPerkData();
+		if (Minecraft.getInstance().screen instanceof MoaSkinsScreen moaSkinsScreen && moaSkinsScreen.getSelectedSkin() != null && moaSkinsScreen.getPreviewMoa() != null && moaSkinsScreen.getPreviewMoa().getMoaUUID().equals(moaUUID)) {
+			return moaSkinsScreen.getSelectedSkin().getSkinLocation();
+		} else if (userSkinsData.containsKey(lastRiderUUID) && userSkinsData.get(lastRiderUUID).moaUUID() != null && userSkinsData.get(lastRiderUUID).moaUUID().equals(moaUUID)) {
+			return userSkinsData.get(lastRiderUUID).moaSkin().getSkinLocation();
+		}
+		return null;
 	}
 }

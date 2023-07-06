@@ -5,6 +5,7 @@ import com.aetherteam.aether.api.WorldDisplayHelper;
 import com.aetherteam.aether.client.AetherMusicManager;
 import com.aetherteam.aether.client.gui.component.AccessoryButton;
 import com.aetherteam.aether.client.gui.component.DynamicMenuButton;
+import com.aetherteam.aether.client.gui.component.skins.RefreshButton;
 import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.aetherteam.aether.client.gui.screen.menu.AetherTitleScreen;
 import com.aetherteam.aether.client.gui.screen.menu.VanillaLeftTitleScreen;
@@ -371,6 +372,15 @@ public class GuiHooks {
                 minecraft.level.animateTick(minecraft.player.getBlockX(), minecraft.player.getBlockY(), minecraft.player.getBlockZ());
                 Minecraft.getInstance().particleEngine.tick();
             }
+        }
+    }
+
+    public static void handleRefreshRebound() {
+        if (RefreshButton.reboundTimer > 0) {
+            RefreshButton.reboundTimer--;
+        }
+        if (RefreshButton.reboundTimer < 0) {
+            RefreshButton.reboundTimer = 0;
         }
     }
 

@@ -2,13 +2,16 @@ package com.aetherteam.aether.client.gui.screen.inventory;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
-import com.aetherteam.aether.api.AetherPlayerRankings;
 import com.aetherteam.aether.client.gui.screen.perks.AetherCustomizationsScreen;
 import com.aetherteam.aether.client.AetherKeys;
+import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
 import com.aetherteam.aether.inventory.menu.AccessoriesMenu;
 import com.aetherteam.aether.mixin.mixins.client.accessor.ScreenAccessor;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.server.ClearItemPacket;
+import com.aetherteam.aether.util.PerkUtil;
+import com.aetherteam.nitrogen.api.users.User;
+import com.aetherteam.nitrogen.api.users.UserData;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
@@ -114,7 +117,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
             this.updateRenderButtons();
 
             ImageButton skinsButton = new ImageButton(this.leftPos - 22, this.topPos + 2, 20, 20, 0, 0, 20, SKINS_BUTTON, 20, 40,
-                    (pressed) -> Aether.LOGGER.info("WIP"), //todo,
+                    (pressed) -> this.getMinecraft().setScreen(new MoaSkinsScreen(this)),
                     Component.translatable("gui.aether.accessories.skins_button")) {
                 @Override
                 public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
@@ -131,9 +134,10 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
             skinsButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.skins_button")));
             this.addRenderableWidget(skinsButton);
 
-            if (AetherPlayerRankings.hasDevGlow(this.minecraft.player.getUUID()) || AetherPlayerRankings.hasHalo(this.minecraft.player.getUUID())) {
+            User user = UserData.Client.getClientUser();
+            if (user != null && (PerkUtil.hasDeveloperGlow().test(user) || PerkUtil.hasHalo().test(user))) {
                 ImageButton customizationButton = new ImageButton(this.leftPos - 22, this.topPos + 24, 20, 20, 0, 0, 20, CUSTOMIZATION_BUTTON, 20, 40,
-                        (pressed) -> this.minecraft.setScreen(new AetherCustomizationsScreen(this)),
+                        (pressed) -> this.getMinecraft().setScreen(new AetherCustomizationsScreen(this)),
                         Component.translatable("gui.aether.accessories.customization_button")) {
                     @Override
                     public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
