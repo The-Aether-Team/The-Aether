@@ -155,6 +155,14 @@ public class Aerwhale extends FlyingMob {
         return super.mobInteract(player, hand);
     }
 
+    protected boolean shouldStayCloseToLeashHolder() {
+        return true;
+    }
+
+    protected double followLeashSpeed() {
+        return 1.0D;
+    }
+
     @Override
     public int getMaxSpawnClusterSize() {
         return 1;
@@ -312,6 +320,26 @@ public class Aerwhale extends FlyingMob {
 
             Vec3 motion = new Vec3(x, y, z);
             this.mob.setDeltaMovement(motion);
+
+            Entity entity = this.mob.getLeashHolder();
+            if (entity != null && entity.level == this.mob.level) {
+                this.mob.restrictTo(entity.blockPosition(), 5);
+                float f = this.mob.distanceTo(entity);
+                if (f > 10.0F) {
+                    this.mob.dropLeash(true, true);
+                    this.mob.goalSelector.disableControlFlag(Goal.Flag.MOVE);
+                } else if (f > 6.0F) {
+                    double d0 = (entity.getX() - this.mob.getX()) / (double)f;
+                    double d1 = (entity.getY() - this.mob.getY()) / (double)f;
+                    double d2 = (entity.getZ() - this.mob.getZ()) / (double)f;
+                    this.mob.setDeltaMovement(this.mob.getDeltaMovement().add(Math.copySign(d0 * d0 * 0.4D, d0), Math.copySign(d1 * d1 * 0.4D, d1), Math.copySign(d2 * d2 * 0.4D, d2)));
+                    this.mob.checkSlowFallDistance();
+                } else if (this.mob.shouldStayCloseToLeashHolder()) {
+                    this.mob.goalSelector.enableControlFlag(Goal.Flag.MOVE);
+                    Vec3 vec3 = (new Vec3(entity.getX() - this.mob.getX(), entity.getY() - this.mob.getY(), entity.getZ() - this.mob.getZ())).normalize().scale(Math.max(f - 2.0F, 0.0F));
+                    this.mob.getNavigation().moveTo(this.mob.getX() + vec3.x, this.mob.getY() + vec3.y, this.mob.getZ() + vec3.z, this.mob.followLeashSpeed());
+                }
+            }
         }
 
         /**
