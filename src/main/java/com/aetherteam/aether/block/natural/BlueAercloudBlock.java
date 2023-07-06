@@ -47,6 +47,8 @@ public class BlueAercloudBlock extends AercloudBlock {
 			}
 			if (entity instanceof LivingEntity livingEntity && (!livingEntity.isFallFlying() && (!(entity instanceof Player player) || !player.getAbilities().flying))) {
 				entity.setOnGround(true);
+			} else {
+				entity.setOnGround(false);
 			}
 		} else {
 			super.entityInside(state, level, pos, entity);
