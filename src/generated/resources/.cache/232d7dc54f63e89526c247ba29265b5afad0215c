@@ -1,6 +1,6 @@
-// 1.19.4	2023-06-17T19:39:37.2536779	Tags for minecraft:item mod id aether
+// 1.19.4	2023-07-06T21:40:53.0434947	Tags for minecraft:item mod id aether
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/items/accepted_music_discs.json
-b1b83b96d9600b7878597cc26851b843bf99a3dd data/aether/tags/items/accessories.json
+b1ab124000a7da5fa5e186c46b51223391f132d9 data/aether/tags/items/accessories.json
 99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/aether/tags/items/accessories_capes.json
 cd6129430937fd4b57b84a64be78f993ba915b85 data/aether/tags/items/accessories_gloves.json
 89af558945f41e6e1e5e29c9da8dc0324f4c9cc2 data/aether/tags/items/accessories_miscellaneous.json

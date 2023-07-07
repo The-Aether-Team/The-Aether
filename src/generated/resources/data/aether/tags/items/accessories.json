@@ -1,10 +1,10 @@
 {
   "values": [
-    "#curios:aether_ring",
-    "#curios:aether_pendant",
-    "#curios:aether_gloves",
-    "#curios:aether_cape",
+    "#aether:accessories_rings",
+    "#aether:accessories_pendants",
+    "#aether:accessories_gloves",
+    "#aether:accessories_capes",
     "#curios:aether_accessory",
-    "#curios:aether_shield"
+    "#aether:accessories_shields"
   ]
 }
