@@ -19,6 +19,7 @@
     "common.accessor.BlockLootAccessor",
     "common.accessor.BoatAccessor",
     "common.accessor.BushBlockAccessor",
+    "common.accessor.ChunkAccessAccessor",
     "common.accessor.ConcretePowderBlockAccessor",
     "common.accessor.EntityAccessor",
     "common.accessor.FireBlockAccessor",

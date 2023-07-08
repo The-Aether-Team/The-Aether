@@ -2,6 +2,7 @@ package com.aetherteam.aether.world.structurepiece.golddungeon;
 
 
 import com.aetherteam.aether.world.processor.DoubleDropsProcessor;
+import com.aetherteam.aether.world.processor.SurfaceRuleProcessor;
 import com.aetherteam.aether.world.processor.VerticalGradientProcessor;
 import com.aetherteam.aether.world.structurepiece.AetherStructurePieceTypes;
 import net.minecraft.core.BlockPos;
@@ -25,6 +26,6 @@ public class GoldStub extends GoldDungeonPiece {
     }
 
     private static StructurePlaceSettings makeSettings() {
-        return new StructurePlaceSettings().addProcessor(VerticalGradientProcessor.INSTANCE).addProcessor(DoubleDropsProcessor.INSTANCE);
+        return new StructurePlaceSettings().addProcessor(SurfaceRuleProcessor.INSTANCE).addProcessor(VerticalGradientProcessor.INSTANCE).addProcessor(DoubleDropsProcessor.INSTANCE);
     }
 }
