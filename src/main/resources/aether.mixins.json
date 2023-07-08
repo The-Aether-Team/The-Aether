@@ -39,6 +39,7 @@
   "client": [
     "client.AbstractClientPlayerMixin",
     "client.AdvancementToastMixin",
+    "client.BossHealthOverlayMixin",
     "client.ConnectScreenMixin",
     "client.CreateWorldScreenMixin",
     "client.LocalPlayerMixin",
