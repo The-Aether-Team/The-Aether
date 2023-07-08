@@ -122,7 +122,8 @@ public class GuiListener {
 		if (BOSS_EVENTS.contains(bossEvent.getId())) {
 			GuiHooks.drawBossHealthBar(event.getPoseStack(), event.getX(), event.getY(), bossEvent);
 			event.setIncrement(event.getIncrement() + 13);
-			event.setCanceled(true);
+			// This event is cancelled in BossHealthOverlayMixin. see it for more info.
+			//event.setCanceled(true);
 		}
 	}
 
