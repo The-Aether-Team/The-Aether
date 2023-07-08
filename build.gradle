@@ -147,6 +147,10 @@ tasks.jarJar.configure {
     archiveClassifier = ""
 }
 
+// ensure jars are reobf'ed before confirming artifact files
+jar.finalizedBy('reobfJar')
+tasks.jarJar.finalizedBy('reobfJarJar')
+
 tasks.named(sourceSets.main.compileJavaTaskName) {
     outputs.file("${it.temporaryDir}/${it.name}-refmap.json").withPropertyName("mixin refmap")
 }
