@@ -164,7 +164,6 @@ publishing {
         mavenJava(MavenPublication) {
             artifactId project.archivesBaseName
             artifact project.tasks.jarJar
-            artifact jar
             artifact sourcesJar
         }
     }
