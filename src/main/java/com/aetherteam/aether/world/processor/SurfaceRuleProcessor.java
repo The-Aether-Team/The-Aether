@@ -36,7 +36,6 @@ public class SurfaceRuleProcessor extends StructureProcessor {
             if (level instanceof WorldGenRegion region && isOutOfBounds(relativeBlockInfo.pos, region.getCenter())) {
                 return relativeBlockInfo;
             }
-
             if (level.getChunkSource() instanceof ServerChunkCache serverChunkCache) {
                 if (serverChunkCache.getGenerator() instanceof NoiseBasedChunkGenerator noiseBasedChunkGenerator) {
                     NoiseGeneratorSettings settingsHolder = noiseBasedChunkGenerator.generatorSettings().get();
@@ -48,7 +47,7 @@ public class SurfaceRuleProcessor extends StructureProcessor {
                         Optional<BlockState> state = carvingcontext.topMaterial(reader.getBiomeManager()::getBiome, chunkAccess, relativeBlockInfo.pos, false);
                         if (state.isPresent()) {
                             if (relativeBlockInfo.state.is(AetherTags.Blocks.AETHER_DIRT) && !relativeBlockInfo.state.is(AetherBlocks.AETHER_DIRT.get()) && state.get().is(AetherTags.Blocks.AETHER_DIRT)) {
-                                level.setBlock(relativeBlockInfo.pos, state.get(), 2);
+                                return new StructureTemplate.StructureBlockInfo(relativeBlockInfo.pos, state.get(), null);
                             }
                         }
                     }
