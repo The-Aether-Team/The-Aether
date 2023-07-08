@@ -139,6 +139,10 @@ artifacts {
     archives sourcesJar
 }
 
+tasks.jar.configure {
+    archiveClassifier = "no-embeds"
+}
+
 tasks.jarJar.configure {
     archiveClassifier = ""
 }
@@ -155,6 +159,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             artifactId project.archivesBaseName
+            artifact project.tasks.jarJar
             artifact jar
             artifact sourcesJar
         }
