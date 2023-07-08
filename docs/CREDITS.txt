@@ -18,6 +18,9 @@ baguchan:
 - Fixes to the Dart layer renderers.
 - Fixes to Whirlwinds getting stuck vertically.
 
+carl-vbn:
+- Fixes to a rare Moa crash.
+
 CartoonishVillain:
 - Fixes to the Sentry.
 - Fixes to the Aechor Plant.
