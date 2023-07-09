@@ -1,6 +1,7 @@
 package com.aetherteam.aether.capability.player;
 
 import com.aetherteam.aether.client.AetherSoundEvents;
+import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
 import com.aetherteam.aether.entity.miscellaneous.Parachute;
 import com.aetherteam.aether.entity.passive.Aerbunny;
@@ -19,9 +20,15 @@ import com.aetherteam.aether.network.packet.AetherPlayerSyncPacket;
 import com.aetherteam.aether.perk.CustomizationsOptions;
 import com.aetherteam.aether.perk.data.*;
 import com.aetherteam.aether.util.EquipmentUtil;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.network.chat.ClickEvent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -36,9 +43,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class AetherPlayerCapability extends CapabilitySyncing implements AetherPlayer {
 	private final Player player;
@@ -100,6 +105,9 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	private float savedHealth = 0.0F;
 	private int lifeShards;
+
+	private boolean canShowPatreonMessage = true;
+	private int loginsUntilPatreonMessage = -1;
 	
 	public AetherPlayerCapability(Player player) {
 		this.player = player;
@@ -123,6 +131,8 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		if (this.getLastRiddenMoa() != null) {
 			tag.putUUID("LastRiddenMoa", this.getLastRiddenMoa());
 		}
+		tag.putBoolean("CanShowPatreonMessage", this.canShowPatreonMessage);
+		tag.putInt("LoginsUntilPatreonMessage", this.loginsUntilPatreonMessage);
 		return tag;
 	}
 
@@ -145,6 +155,12 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		}
 		if (tag.contains("LastRiddenMoa")) {
 			this.setLastRiddenMoa(tag.getUUID("LastRiddenMoa"));
+		}
+		if (tag.contains("CanShowPatreonMessage")) {
+			this.canShowPatreonMessage = tag.getBoolean("CanShowPatreonMessage");
+		}
+		if (tag.contains("LoginsUntilPatreonMessage")) {
+			this.loginsUntilPatreonMessage = tag.getInt("LoginsUntilPatreonMessage");
 		}
 	}
 
@@ -213,6 +229,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	public void onLogin() {
 		this.handleGivePortal();
 		this.remountAerbunny();
+		this.handlePatreonMessage();
 		ServerMoaSkinPerkData.INSTANCE.syncFromServer(this.getPlayer());
 		ServerHaloPerkData.INSTANCE.syncFromServer(this.getPlayer());
 		ServerDeveloperGlowPerkData.INSTANCE.syncFromServer(this.getPlayer());
@@ -496,6 +513,44 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 				health.addTransientModifier(LIFE_SHARD_HEALTH);
 			}
 		}
+	}
+
+	private void handlePatreonMessage() {
+		if (this.getPlayer() instanceof ServerPlayer serverPlayer) {
+			if (AetherConfig.COMMON.show_patreon_message.get() && this.canShowPatreonMessage) {
+				if (this.loginsUntilPatreonMessage < 0) {
+					if (serverPlayer.getLevel().dimension() == AetherDimensions.AETHER_LEVEL && serverPlayer.getStats().getValue(Stats.ENTITY_KILLED.get(AetherEntityTypes.SLIDER.get())) > 0) {
+						this.loginsUntilPatreonMessage = serverPlayer.getRandom().nextInt(2);
+					}
+				}
+				if (this.loginsUntilPatreonMessage == 0) {
+					this.sendPatreonMessage(serverPlayer);
+					this.canShowPatreonMessage = false;
+					AetherConfig.COMMON.show_patreon_message.set(false);
+					AetherConfig.COMMON.show_patreon_message.save();
+				} else if (this.loginsUntilPatreonMessage > 0) {
+					--this.loginsUntilPatreonMessage;
+				}
+			} else if (!AetherConfig.COMMON.show_patreon_message.get()) {
+				this.canShowPatreonMessage = false;
+			}
+		}
+	}
+
+	private void sendPatreonMessage(ServerPlayer serverPlayer) {
+		Component component = Component.translatable("gui.aether.patreon.message");
+		List<String> unlinkedBodyArray = Arrays.stream(component.getString().split("(?=(%s1))|(?<=(%s1))|(?=(%s2))|(?<=(%s2))")).toList();
+		List<MutableComponent> bodyArray = unlinkedBodyArray.stream().map((string) -> {
+			if (string.equals("%s1")) {
+				return Component.literal("The Aether").withStyle(Style.EMPTY.withColor(ChatFormatting.AQUA).withItalic(true));
+			} else if (string.equals("%s2")) {
+				return Component.literal("Patreon").withStyle(Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.patreon.com/TheAetherTeam")).withColor(ChatFormatting.GOLD).withUnderlined(true));
+			}
+			return Component.literal(string);
+		}).toList();
+		MutableComponent message = Component.literal("");
+		bodyArray.forEach(message::append);
+		serverPlayer.sendSystemMessage(message);
 	}
 
 	@Override

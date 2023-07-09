@@ -136,6 +136,7 @@ public class AetherConfig {
         public final ConfigValue<Boolean> start_with_portal;
         public final ConfigValue<Boolean> enable_startup_loot;
         public final ConfigValue<Boolean> repeat_sun_spirit_dialogue;
+        public final ConfigValue<Boolean> show_patreon_message;
 
         public Common(ForgeConfigSpec.Builder builder) {
             builder.push("Gameplay");
@@ -156,6 +157,10 @@ public class AetherConfig {
                     .comment("Determines whether the Sun Spirit's dialogue when meeting him should play through every time you meet him")
                     .translation("config.aether.common.gameplay.repeat_sun_spirit_dialogue")
                     .define("Repeat Sun Spirit's battle dialogue", true);
+            show_patreon_message = builder
+                    .comment("Determines if a message that links The Aether mod's Patreon should show")
+                    .translation("config.aether.common.gameplay.show_patreon_message")
+                    .define("Show Patreon message", true);
             builder.pop();
         }
     }
