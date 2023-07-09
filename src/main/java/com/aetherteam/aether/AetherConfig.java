@@ -27,6 +27,7 @@ public class AetherConfig {
         public final ConfigValue<Integer> invisibility_visibility_time;
         public final ConfigValue<Boolean> sun_altar_whitelist;
 
+        public final ConfigValue<Boolean> spawn_in_aether;
         public final ConfigValue<Boolean> disable_aether_portal;
         public final ConfigValue<Boolean> disable_falling_to_overworld;
         public final ConfigValue<Boolean> disable_eternal_day;
@@ -107,6 +108,10 @@ public class AetherConfig {
             builder.pop();
 
             builder.push("Modpack");
+            spawn_in_aether = builder
+                    .comment("Spawns the player in the Aether dimension; this is best enabled alongside other modpack configuration to avoid issues")
+                    .translation("config.aether.server.modpack.spawn_in_aether")
+                    .define("Spawns the player in the Aether", false);
             disable_aether_portal = builder
                     .comment("Prevents the Aether Portal from being created normally in the mod")
                     .translation("config.aether.server.modpack.disable_aether_portal")

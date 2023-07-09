@@ -28,6 +28,9 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 
 	void onUpdate();
 
+	void setCanSpawnInAether(boolean canSpawnInAether);
+	boolean canSpawnInAether();
+
 	void givePortalItem();
 	void setCanGetPortal(boolean canGetPortal);
 	boolean canGetPortal();

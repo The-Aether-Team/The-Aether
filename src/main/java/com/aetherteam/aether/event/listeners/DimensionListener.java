@@ -20,6 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.SleepingTimeCheckEvent;
 import net.minecraftforge.event.level.BlockEvent;
@@ -35,6 +36,12 @@ import net.minecraft.core.Direction;
 
 @Mod.EventBusSubscriber
 public class DimensionListener {
+    @SubscribeEvent
+    public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
+        Player player = event.getEntity();
+        DimensionHooks.startInAether(player);
+    }
+
     @SubscribeEvent
     public static void onInteractWithPortalFrame(PlayerInteractEvent.RightClickBlock event) {
         Player player = event.getEntity();

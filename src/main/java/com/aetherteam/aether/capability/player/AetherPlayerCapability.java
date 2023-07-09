@@ -46,6 +46,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	private static final UUID LIFE_SHARD_HEALTH_ID = UUID.fromString("E11710C8-4247-4CB6-B3B5-729CB34CFC1A");
 
 	private boolean canGetPortal = true;
+	private boolean canSpawnInAether = true;
 
 	public boolean isInAetherPortal = false;
 	public int aetherPortalTimer = 0;
@@ -255,6 +256,16 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		ClientMoaSkinPerkData.INSTANCE.syncFromClient(this.getPlayer());
 		ClientHaloPerkData.INSTANCE.syncFromClient(this.getPlayer());
 		ClientDeveloperGlowPerkData.INSTANCE.syncFromClient(this.getPlayer());
+	}
+
+	@Override
+	public void setCanSpawnInAether(boolean canSpawnInAether) {
+		this.canSpawnInAether = canSpawnInAether;
+	}
+
+	@Override
+	public boolean canSpawnInAether() {
+		return this.canSpawnInAether;
 	}
 
 	private void handleGivePortal() {
