@@ -115,6 +115,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	public CompoundTag serializeNBT() {
 		CompoundTag tag = new CompoundTag();
 		tag.putBoolean("CanGetPortal", this.canGetPortal());
+		tag.putBoolean("CanSpawnInAether", this.canSpawnInAether());
 		tag.putFloat("SavedHealth", this.getSavedHealth());
 		tag.putInt("LifeShardCount", this.getLifeShardCount());
 		tag.putBoolean("HasSeenSunSpirit", this.hasSeenSunSpiritDialogue());
@@ -131,6 +132,9 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	public void deserializeNBT(CompoundTag tag) {
 		if (tag.contains("CanGetPortal")) {
 			this.setCanGetPortal(tag.getBoolean("CanGetPortal"));
+		}
+		if (tag.contains("CanSpawnInAether")) {
+			this.setCanSpawnInAether(tag.getBoolean("CanSpawnInAether"));
 		}
 		if (tag.contains("SavedHealth")) {
 			this.setSavedHealth(tag.getFloat("SavedHealth"));
