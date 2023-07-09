@@ -384,14 +384,14 @@ public class Aether {
     /**
      * Copied from {@link PackSource#create(UnaryOperator, boolean)}.
      */
-    static PackSource create(final UnaryOperator<Component> pDecorator, final boolean pShouldAddAutomatically) {
+    static PackSource create(final UnaryOperator<Component> decorator, final boolean shouldAddAutomatically) {
         return new PackSource() {
-            public Component decorate(Component p_251609_) {
-                return pDecorator.apply(p_251609_);
+            public Component decorate(Component component) {
+                return decorator.apply(component);
             }
 
             public boolean shouldAddAutomatically() {
-                return pShouldAddAutomatically;
+                return shouldAddAutomatically;
             }
         };
     }
@@ -399,8 +399,8 @@ public class Aether {
     /**
      * Copied from {@link PackSource#decorateWithSource(String)}.
      */
-    private static UnaryOperator<Component> decorateWithSource(String pTranslationKey) {
-        Component component = Component.translatable(pTranslationKey);
+    private static UnaryOperator<Component> decorateWithSource(String translationKey) {
+        Component component = Component.translatable(translationKey);
         return (name) -> Component.translatable("pack.nameAndSource", name, component).withStyle(ChatFormatting.GRAY);
     }
 
