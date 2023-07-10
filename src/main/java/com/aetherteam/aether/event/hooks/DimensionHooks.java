@@ -6,6 +6,7 @@ import com.aetherteam.aether.block.FreezingBlock;
 import com.aetherteam.aether.block.portal.AetherPortalForcer;
 import com.aetherteam.aether.block.portal.AetherPortalShape;
 import com.aetherteam.aether.capability.item.DroppedItem;
+import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.event.AetherGameEvents;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerLevelAccessor;
@@ -62,6 +63,27 @@ public class DimensionHooks {
     public static boolean playerLeavingAether;
     public static boolean displayAetherTravel;
     public static int teleportationTimer;
+
+    public static void startInAether(Player player) {
+        AetherPlayer.get(player).ifPresent(aetherPlayer -> {
+            if (AetherConfig.SERVER.spawn_in_aether.get()) {
+                if (aetherPlayer.canSpawnInAether()) {
+                    if (aetherPlayer.getPlayer() instanceof ServerPlayer serverPlayer) {
+                        MinecraftServer server = serverPlayer.getLevel().getServer();
+                        ServerLevel aetherLevel = server.getLevel(AetherDimensions.AETHER_LEVEL);
+                        if (aetherLevel != null && serverPlayer.getLevel().dimension() != AetherDimensions.AETHER_LEVEL) {
+                            if (aetherPlayer.getPlayer().changeDimension(aetherLevel, new AetherPortalForcer(aetherLevel, false, true)) != null) {
+                                serverPlayer.setRespawnPosition(AetherDimensions.AETHER_LEVEL, serverPlayer.blockPosition(), serverPlayer.getYRot(), true, false);
+                                aetherPlayer.setCanSpawnInAether(false);
+                            }
+                        }
+                    }
+                }
+            } else {
+                aetherPlayer.setCanSpawnInAether(false);
+            }
+        });
+    }
 
     public static boolean createPortal(Player player, Level level, BlockPos pos, Direction direction, ItemStack stack, InteractionHand hand) {
         if (direction != null) {
@@ -286,21 +308,27 @@ public class DimensionHooks {
     public static void dimensionTravel(Entity entity, ResourceKey<Level> dimension) {
         // The level passed into shouldReturnPlayerToOverworld() is the dimension the player is leaving
         //  Meaning: We display the Descending GUI text to the player if they're about to leave a dimension that returns them to the OW
-        if (entity.level.getBiome(entity.blockPosition()).is(AetherTags.Biomes.DISPLAY_TRAVEL_TEXT)) {
-            if (entity.level.dimension() == LevelUtil.destinationDimension() && dimension == LevelUtil.returnDimension()) {
-                displayAetherTravel = true;
-                playerLeavingAether = true;
-                AetherPacketHandler.sendToAll(new AetherTravelPacket(true));
-                AetherPacketHandler.sendToAll(new LeavingAetherPacket(true));
-            } else if (entity.level.dimension() == LevelUtil.returnDimension() && dimension == LevelUtil.destinationDimension()) {
-                displayAetherTravel = true;
-                playerLeavingAether = false;
-                AetherPacketHandler.sendToAll(new AetherTravelPacket(true));
-                AetherPacketHandler.sendToAll(new LeavingAetherPacket(false));
-            } else {
-                displayAetherTravel = false;
-                AetherPacketHandler.sendToAll(new AetherTravelPacket(false));
-            }
+        if (entity instanceof Player player) {
+            AetherPlayer.get(player).ifPresent(aetherPlayer -> {
+                if (!AetherConfig.SERVER.spawn_in_aether.get() || !aetherPlayer.canSpawnInAether()) {
+                    if (entity.level.getBiome(entity.blockPosition()).is(AetherTags.Biomes.DISPLAY_TRAVEL_TEXT)) {
+                        if (entity.level.dimension() == LevelUtil.destinationDimension() && dimension == LevelUtil.returnDimension()) {
+                            displayAetherTravel = true;
+                            playerLeavingAether = true;
+                            AetherPacketHandler.sendToAll(new AetherTravelPacket(true));
+                            AetherPacketHandler.sendToAll(new LeavingAetherPacket(true));
+                        } else if (entity.level.dimension() == LevelUtil.returnDimension() && dimension == LevelUtil.destinationDimension()) {
+                            displayAetherTravel = true;
+                            playerLeavingAether = false;
+                            AetherPacketHandler.sendToAll(new AetherTravelPacket(true));
+                            AetherPacketHandler.sendToAll(new LeavingAetherPacket(false));
+                        } else {
+                            displayAetherTravel = false;
+                            AetherPacketHandler.sendToAll(new AetherTravelPacket(false));
+                        }
+                    }
+                }
+            });
         }
     }
 
