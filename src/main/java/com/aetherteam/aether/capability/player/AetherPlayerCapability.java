@@ -519,7 +519,10 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		if (this.getPlayer() instanceof ServerPlayer serverPlayer) {
 			if (AetherConfig.COMMON.show_patreon_message.get() && this.canShowPatreonMessage) {
 				if (this.loginsUntilPatreonMessage < 0) {
-					if (serverPlayer.getLevel().dimension() == AetherDimensions.AETHER_LEVEL && serverPlayer.getStats().getValue(Stats.ENTITY_KILLED.get(AetherEntityTypes.SLIDER.get())) > 0) {
+					if (serverPlayer.getLevel().dimension() == AetherDimensions.AETHER_LEVEL
+							&& (serverPlayer.getStats().getValue(Stats.ENTITY_KILLED.get(AetherEntityTypes.SLIDER.get())) > 0
+							|| serverPlayer.getStats().getValue(Stats.ENTITY_KILLED.get(AetherEntityTypes.VALKYRIE_QUEEN.get())) > 0
+							|| serverPlayer.getStats().getValue(Stats.ENTITY_KILLED.get(AetherEntityTypes.SUN_SPIRIT.get())) > 0)) {
 						this.loginsUntilPatreonMessage = serverPlayer.getRandom().nextInt(2);
 					}
 				}
