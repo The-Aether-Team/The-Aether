@@ -1223,6 +1223,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addClientConfig("gui", "button_creative_y", "The y-coordinate of the accessories button in the creative menu");
         addClientConfig("gui", "button_accessories_x", "The x-coordinate of the accessories button in the accessories menu");
         addClientConfig("gui", "button_accessories_y", "The y-coordinate of the accessories button in the accessories menu");
+        addClientConfig("gui", "layout_perks_x", "The x-coordinate of the perks button layout when in the pause menu");
+        addClientConfig("gui", "layout_perks_y", "The y-coordinate of the perks button layout when in the pause menu");
 
         addClientConfig("audio", "music_backup_min_delay", "Sets the minimum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");
         addClientConfig("audio", "music_backup_max_delay", "Sets the maximum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");

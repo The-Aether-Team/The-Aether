@@ -3,7 +3,6 @@ package com.aetherteam.aether.client.event.listeners;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.client.event.hooks.GuiHooks;
 import com.aetherteam.aether.client.gui.component.AccessoryButton;
-import com.aetherteam.aether.client.gui.component.skins.RefreshButton;
 import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.aetherteam.aether.client.gui.screen.menu.AetherTitleScreen;
 
@@ -12,6 +11,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.LerpingBossEvent;
+import net.minecraft.client.gui.layouts.GridLayout;
+import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.api.distmarker.Dist;
@@ -82,6 +83,11 @@ public class GuiListener {
 				AccessoryButton accessoryMenuAccessoryButton = GuiHooks.setupAccessoryButtonWithinAccessoryMenu(screen, offsets);
 				if (accessoryMenuAccessoryButton != null) {
 					event.addListener(accessoryMenuAccessoryButton);
+				}
+			} else {
+				if (screen instanceof PauseScreen) {
+					GridLayout layout = GuiHooks.setupPerksButtons(screen);
+					layout.visitWidgets(event::addListener);
 				}
 			}
 		}
