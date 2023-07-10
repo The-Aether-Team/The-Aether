@@ -557,12 +557,14 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	private void sendPatreonMessage(ServerPlayer serverPlayer) {
 		Component component = Component.translatable("gui.aether.patreon.message");
-		List<String> unlinkedBodyArray = Arrays.stream(component.getString().split("(?=(%s1))|(?<=(%s1))|(?=(%s2))|(?<=(%s2))")).toList();
+		List<String> unlinkedBodyArray = Arrays.stream(component.getString().split("(?=(%s1))|(?<=(%s1))|(?=(%s2))|(?<=(%s2))|(?=(%s3))|(?<=(%s3))")).toList();
 		List<MutableComponent> bodyArray = unlinkedBodyArray.stream().map((string) -> {
 			if (string.equals("%s1")) {
 				return Component.literal("The Aether").withStyle(Style.EMPTY.withColor(ChatFormatting.AQUA).withItalic(true));
 			} else if (string.equals("%s2")) {
-				return Component.literal("Patreon").withStyle(Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.patreon.com/TheAetherTeam")).withColor(ChatFormatting.GOLD).withUnderlined(true));
+				return Component.literal("Discord").withStyle(Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/aethermod")).withColor(5793266).withUnderlined(true));
+			} else if (string.equals("%s3")) {
+				return Component.literal("Patreon").withStyle(Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.patreon.com/TheAetherTeam")).withColor(16728653).withUnderlined(true));
 			}
 			return Component.literal(string);
 		}).toList();
