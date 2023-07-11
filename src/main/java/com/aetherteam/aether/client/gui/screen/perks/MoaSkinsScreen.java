@@ -245,7 +245,7 @@ public class MoaSkinsScreen extends Screen {
 
     private boolean isMouseOverIcon(int mouseX, int mouseY, int width) {
         int leftPos = this.leftPos + 13;
-        int topPos = (this.topPos + (this.height / 2)) - 36;
+        int topPos = (this.topPos + (this.imageHeight / 2)) - 9;
         double mouseXDiff = mouseX - leftPos;
         double mouseYDiff = mouseY - topPos;
         return mouseYDiff <= 7 && mouseYDiff >= 0 && mouseXDiff <= width && mouseXDiff >= 0;
