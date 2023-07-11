@@ -456,6 +456,7 @@
   "gui.aether.moa_skins.tooltip.title.access.lifetime": "Lifetime Access",
   "gui.aether.moa_skins.tooltip.title.access.pledging": "Pledge Access",
   "gui.aether.patreon.message": "Enjoying %s1? Check out our %s2 and %s3!",
+  "gui.aether.patreon.note": "This message will only display once.",
   "gui.aether.player.dialog.challenge": "I wish to fight you!",
   "gui.aether.player.dialog.deny_fight": "On second thought, I'd rather not.",
   "gui.aether.player.dialog.have_medals": "I'm ready, I have the medals right here!",

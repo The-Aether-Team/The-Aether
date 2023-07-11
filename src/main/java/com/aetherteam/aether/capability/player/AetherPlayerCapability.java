@@ -1,5 +1,6 @@
 package com.aetherteam.aether.capability.player;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
@@ -20,14 +21,11 @@ import com.aetherteam.aether.network.packet.AetherPlayerSyncPacket;
 import com.aetherteam.aether.perk.CustomizationsOptions;
 import com.aetherteam.aether.perk.data.*;
 import com.aetherteam.aether.util.EquipmentUtil;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.network.chat.ClickEvent;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -107,6 +105,9 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	private float savedHealth = 0.0F;
 	private int lifeShards;
 
+	private static final ResourceLocation LOGOMARKS = new ResourceLocation(Aether.MODID, "logomarks");
+	private static final Style DISCORD = Style.EMPTY.withColor(5793266).withUnderlined(true).withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/aethermod")).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("https://discord.gg/aethermod")));
+	private static final Style PATREON = Style.EMPTY.withColor(16728653).withUnderlined(true).withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.patreon.com/TheAetherTeam")).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("https://www.patreon.com/TheAetherTeam")));
 	private boolean canShowPatreonMessage = true;
 	private int loginsUntilPatreonMessage = -1;
 	
@@ -558,19 +559,18 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	private void sendPatreonMessage(ServerPlayer serverPlayer) {
 		Component component = Component.translatable("gui.aether.patreon.message");
 		List<String> unlinkedBodyArray = Arrays.stream(component.getString().split("(?=(%s1))|(?<=(%s1))|(?=(%s2))|(?<=(%s2))|(?=(%s3))|(?<=(%s3))")).toList();
-		List<MutableComponent> bodyArray = unlinkedBodyArray.stream().map((string) -> {
-			if (string.equals("%s1")) {
-				return Component.literal("The Aether").withStyle(Style.EMPTY.withColor(ChatFormatting.AQUA).withItalic(true));
-			} else if (string.equals("%s2")) {
-				return Component.literal("Discord").withStyle(Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/aethermod")).withColor(5793266).withUnderlined(true));
-			} else if (string.equals("%s3")) {
-				return Component.literal("Patreon").withStyle(Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.patreon.com/TheAetherTeam")).withColor(16728653).withUnderlined(true));
-			}
-			return Component.literal(string);
+		List<MutableComponent> bodyArray = unlinkedBodyArray.stream().map((string) ->
+				switch (string) {
+					case "%s1" -> Component.literal("The Aether").setStyle(Style.EMPTY.withColor(8445183).withItalic(true));
+					case "%s2" -> Component.literal("").append(Component.literal("! ").setStyle(DISCORD.withFont(LOGOMARKS))).append(Component.literal("Discord").setStyle(DISCORD));
+					case "%s3" -> Component.literal("").append(Component.literal(", ").setStyle(PATREON.withFont(LOGOMARKS))).append(Component.literal("Patreon").setStyle(PATREON));
+					default -> Component.literal(string);
 		}).toList();
 		MutableComponent message = Component.literal("");
 		bodyArray.forEach(message::append);
 		serverPlayer.sendSystemMessage(message);
+		Component note = Component.translatable("gui.aether.patreon.note").setStyle(Style.EMPTY.withColor(7631988).withItalic(true));
+		serverPlayer.sendSystemMessage(note);
 	}
 
 	@Override

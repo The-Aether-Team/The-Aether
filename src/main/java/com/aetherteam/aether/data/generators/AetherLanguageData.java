@@ -757,6 +757,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addGuiText("sun_spirit.line10", "Did your previous death not satisfy your curiosity, human?");
 
         addGuiText("patreon.message", "Enjoying %s1? Check out our %s2 and %s3!");
+        addGuiText("patreon.note", "This message will only display once.");
 
         addMoaSkinsText("title", "Moa Skins");
 
