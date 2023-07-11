@@ -80,6 +80,7 @@ jobs:
                 name: Remove unnecssary jars before deploy
                 command: |
                   cd ~/project/build/libs
+                  echo *
                   find . ! -name << pipeline.parameters.artifact-name >> -type f -exec rm -f {} +
             - store_artifacts:
                 path: ~/project/build/libs
