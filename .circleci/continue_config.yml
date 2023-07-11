@@ -30,6 +30,7 @@ jobs:
             cd ~/project/build/libs
             echo *
             find . ! -name << pipeline.parameters.artifact-name >> -type f -exec rm -f {} +
+            echo *
       - persist_to_workspace:
           root: ~/project/build/libs
           paths:
@@ -83,6 +84,7 @@ jobs:
                   cd ~/project/build/libs
                   echo *
                   find . ! -name << pipeline.parameters.artifact-name >> -type f -exec rm -f {} +
+                  echo *
             - store_artifacts:
                 path: ~/project/build/libs
             - run:
