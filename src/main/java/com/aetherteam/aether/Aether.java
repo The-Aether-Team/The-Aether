@@ -333,7 +333,7 @@ public class Aether {
     }
 
     /**
-     * A built-in resource pack to change textures for color blindness accessibility
+     * A built-in resource pack to change textures for color blindness accessibility.
      */
     private void setupColorblindPack(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.CLIENT_RESOURCES) {
