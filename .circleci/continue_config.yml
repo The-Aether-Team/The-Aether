@@ -37,7 +37,7 @@ jobs:
           name: Publish artifact link to Discord
           command: |
             if [ ${CIRCLE_BRANCH} = << pipeline.parameters.deploy-branch >> ] && << pipeline.parameters.allow-deploy-and-discord-publish >>; then
-              artifact_path=$(curl --request GET --url https://circleci.com/api/v2/project/gh/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM/artifacts -H "Accept: application/json" | jq -r '.items[1].path')
+              artifact_path=$(curl --request GET --url https://circleci.com/api/v2/project/gh/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM/artifacts -H "Accept: application/json" | jq -r '.items[2].path')
               if [ -z "${WEBHOOK_URL}" ]; then
                 echo "NO DISCORD WEBHOOK SET"
                 echo "Please input your DISCORD_WEBHOOK value either in the settings for this project, or as a parameter for this orb."
