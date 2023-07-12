@@ -756,6 +756,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addGuiText("sun_spirit.line9", "As you wish, your death will be slow and agonizing.");
         addGuiText("sun_spirit.line10", "Did your previous death not satisfy your curiosity, human?");
 
+        addGuiText("patreon.message", "Enjoying %s1? Check out our %s2 and %s3!");
+        addGuiText("patreon.note", "This message will only display once.");
 
         addMoaSkinsText("title", "Moa Skins");
 
@@ -1200,6 +1202,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addCommonConfig("gameplay", "start_with_portal", "On world creation, the player is given an Aether Portal Frame item to automatically go to the Aether with");
         addCommonConfig("gameplay", "enable_startup_loot", "When the player enters the Aether, they are given a Book of Lore and Golden Parachutes as starting loot");
         addCommonConfig("gameplay", "repeat_sun_spirit_dialogue", "Determines whether the Sun Spirit's dialogue when meeting him should play through every time you meet him");
+        addCommonConfig("gameplay", "show_patreon_message", "Determines if a message that links The Aether mod's Patreon should show");
 
 
         addClientConfig("rendering", "legacy_models", "Changes Zephyr and Aerwhale rendering to use their old models from the b1.7.3 version of the mod");
@@ -1224,6 +1227,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addClientConfig("gui", "button_creative_y", "The y-coordinate of the accessories button in the creative menu");
         addClientConfig("gui", "button_accessories_x", "The x-coordinate of the accessories button in the accessories menu");
         addClientConfig("gui", "button_accessories_y", "The y-coordinate of the accessories button in the accessories menu");
+        addClientConfig("gui", "layout_perks_x", "The x-coordinate of the perks button layout when in the pause menu");
+        addClientConfig("gui", "layout_perks_y", "The y-coordinate of the perks button layout when in the pause menu");
 
         addClientConfig("audio", "music_backup_min_delay", "Sets the minimum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");
         addClientConfig("audio", "music_backup_max_delay", "Sets the maximum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");

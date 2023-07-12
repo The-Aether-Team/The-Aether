@@ -1,6 +1,8 @@
 package com.aetherteam.aether.capability.player;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.AetherSoundEvents;
+import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
 import com.aetherteam.aether.entity.miscellaneous.Parachute;
 import com.aetherteam.aether.entity.passive.Aerbunny;
@@ -22,6 +24,9 @@ import com.aetherteam.aether.util.EquipmentUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.network.chat.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -36,9 +41,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class AetherPlayerCapability extends CapabilitySyncing implements AetherPlayer {
 	private final Player player;
@@ -101,6 +104,12 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	private float savedHealth = 0.0F;
 	private int lifeShards;
+
+	private static final ResourceLocation LOGOMARKS = new ResourceLocation(Aether.MODID, "logomarks");
+	private static final Style DISCORD = Style.EMPTY.withColor(5793266).withUnderlined(true).withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/aethermod")).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("https://discord.gg/aethermod")));
+	private static final Style PATREON = Style.EMPTY.withColor(16728653).withUnderlined(true).withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.patreon.com/TheAetherTeam")).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("https://www.patreon.com/TheAetherTeam")));
+	private boolean canShowPatreonMessage = true;
+	private int loginsUntilPatreonMessage = -1;
 	
 	public AetherPlayerCapability(Player player) {
 		this.player = player;
@@ -125,6 +134,8 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		if (this.getLastRiddenMoa() != null) {
 			tag.putUUID("LastRiddenMoa", this.getLastRiddenMoa());
 		}
+		tag.putBoolean("CanShowPatreonMessage", this.canShowPatreonMessage);
+		tag.putInt("LoginsUntilPatreonMessage", this.loginsUntilPatreonMessage);
 		return tag;
 	}
 
@@ -150,6 +161,12 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		}
 		if (tag.contains("LastRiddenMoa")) {
 			this.setLastRiddenMoa(tag.getUUID("LastRiddenMoa"));
+		}
+		if (tag.contains("CanShowPatreonMessage")) {
+			this.canShowPatreonMessage = tag.getBoolean("CanShowPatreonMessage");
+		}
+		if (tag.contains("LoginsUntilPatreonMessage")) {
+			this.loginsUntilPatreonMessage = tag.getInt("LoginsUntilPatreonMessage");
 		}
 	}
 
@@ -218,6 +235,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	public void onLogin() {
 		this.handleGivePortal();
 		this.remountAerbunny();
+		this.handlePatreonMessage();
 		ServerMoaSkinPerkData.INSTANCE.syncFromServer(this.getPlayer());
 		ServerHaloPerkData.INSTANCE.syncFromServer(this.getPlayer());
 		ServerDeveloperGlowPerkData.INSTANCE.syncFromServer(this.getPlayer());
@@ -511,6 +529,48 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 				health.addTransientModifier(LIFE_SHARD_HEALTH);
 			}
 		}
+	}
+
+	private void handlePatreonMessage() {
+		if (this.getPlayer() instanceof ServerPlayer serverPlayer) {
+			if (AetherConfig.COMMON.show_patreon_message.get() && this.canShowPatreonMessage) {
+				if (this.loginsUntilPatreonMessage < 0) {
+					if (serverPlayer.getLevel().dimension() == AetherDimensions.AETHER_LEVEL
+							&& (serverPlayer.getStats().getValue(Stats.ENTITY_KILLED.get(AetherEntityTypes.SLIDER.get())) > 0
+							|| serverPlayer.getStats().getValue(Stats.ENTITY_KILLED.get(AetherEntityTypes.VALKYRIE_QUEEN.get())) > 0
+							|| serverPlayer.getStats().getValue(Stats.ENTITY_KILLED.get(AetherEntityTypes.SUN_SPIRIT.get())) > 0)) {
+						this.loginsUntilPatreonMessage = serverPlayer.getRandom().nextInt(2);
+					}
+				}
+				if (this.loginsUntilPatreonMessage == 0) {
+					this.sendPatreonMessage(serverPlayer);
+					this.canShowPatreonMessage = false;
+					AetherConfig.COMMON.show_patreon_message.set(false);
+					AetherConfig.COMMON.show_patreon_message.save();
+				} else if (this.loginsUntilPatreonMessage > 0) {
+					--this.loginsUntilPatreonMessage;
+				}
+			} else if (!AetherConfig.COMMON.show_patreon_message.get()) {
+				this.canShowPatreonMessage = false;
+			}
+		}
+	}
+
+	private void sendPatreonMessage(ServerPlayer serverPlayer) {
+		Component component = Component.translatable("gui.aether.patreon.message");
+		List<String> unlinkedBodyArray = Arrays.stream(component.getString().split("(?=(%s1))|(?<=(%s1))|(?=(%s2))|(?<=(%s2))|(?=(%s3))|(?<=(%s3))")).toList();
+		List<MutableComponent> bodyArray = unlinkedBodyArray.stream().map((string) ->
+				switch (string) {
+					case "%s1" -> Component.literal("The Aether").setStyle(Style.EMPTY.withColor(8445183).withItalic(true));
+					case "%s2" -> Component.literal("").append(Component.literal("! ").setStyle(DISCORD.withFont(LOGOMARKS))).append(Component.literal("Discord").setStyle(DISCORD));
+					case "%s3" -> Component.literal("").append(Component.literal(", ").setStyle(PATREON.withFont(LOGOMARKS))).append(Component.literal("Patreon").setStyle(PATREON));
+					default -> Component.literal(string);
+		}).toList();
+		MutableComponent message = Component.literal("");
+		bodyArray.forEach(message::append);
+		serverPlayer.sendSystemMessage(message);
+		Component note = Component.translatable("gui.aether.patreon.note").setStyle(Style.EMPTY.withColor(7631988).withItalic(true));
+		serverPlayer.sendSystemMessage(note);
 	}
 
 	@Override

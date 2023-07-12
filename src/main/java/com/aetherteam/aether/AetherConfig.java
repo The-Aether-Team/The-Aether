@@ -141,6 +141,7 @@ public class AetherConfig {
         public final ConfigValue<Boolean> start_with_portal;
         public final ConfigValue<Boolean> enable_startup_loot;
         public final ConfigValue<Boolean> repeat_sun_spirit_dialogue;
+        public final ConfigValue<Boolean> show_patreon_message;
 
         public Common(ForgeConfigSpec.Builder builder) {
             builder.push("Gameplay");
@@ -161,6 +162,10 @@ public class AetherConfig {
                     .comment("Determines whether the Sun Spirit's dialogue when meeting him should play through every time you meet him")
                     .translation("config.aether.common.gameplay.repeat_sun_spirit_dialogue")
                     .define("Repeat Sun Spirit's battle dialogue", true);
+            show_patreon_message = builder
+                    .comment("Determines if a message that links The Aether mod's Patreon should show")
+                    .translation("config.aether.common.gameplay.show_patreon_message")
+                    .define("Show Patreon message", true);
             builder.pop();
         }
     }
@@ -188,6 +193,8 @@ public class AetherConfig {
         public final ConfigValue<Integer> button_creative_y;
         public final ConfigValue<Integer> button_accessories_x;
         public final ConfigValue<Integer> button_accessories_y;
+        public final ConfigValue<Integer> layout_perks_x;
+        public final ConfigValue<Integer> layout_perks_y;
 
         public final ConfigValue<Integer> music_backup_min_delay;
         public final ConfigValue<Integer> music_backup_max_delay;
@@ -280,11 +287,19 @@ public class AetherConfig {
             button_accessories_x = builder
                     .comment("The x-coordinate of the accessories button in the accessories menu")
                     .translation("config.aether.client.gui.button_accessories_x")
-                    .define("Button x-accessories in accessories menu", 9);
+                    .define("Button x-coordinate in accessories menu", 9);
             button_accessories_y = builder
                     .comment("The y-coordinate of the accessories button in the accessories menu")
                     .translation("config.aether.client.gui.button_accessories_y")
-                    .define("Button y-accessories in accessories menu", 68);
+                    .define("Button y-coordinate in accessories menu", 68);
+            layout_perks_x = builder
+                    .comment("The x-coordinate of the perks button layout when in the pause menu")
+                    .translation("config.aether.client.gui.layout_perks_x")
+                    .define("Layout x-coordinate in pause menu", -116);
+            layout_perks_y = builder
+                    .comment("The y-coordinate of the perks button layout when in the pause menu")
+                    .translation("config.aether.client.gui.layout_perks_y")
+                    .define("Layout y-coordinate in pause menu", 0);
             builder.pop();
 
             builder.push("Audio");
