@@ -219,7 +219,7 @@ public class AetherBlocks {
     public static final RegistryObject<SlabBlock> ICESTONE_SLAB = register("icestone_slab",
             () -> new IcestoneSlabBlock(Block.Properties.copy(AetherBlocks.ICESTONE.get()).strength(0.5F, 6.0F)));
     public static final RegistryObject<SlabBlock> HOLYSTONE_BRICK_SLAB = register("holystone_brick_slab",
-            () -> new SlabBlock(Block.Properties.copy(AetherBlocks.HOLYSTONE_BRICKS.get()).strength(0.5F, 6.0F)));
+            () -> new SlabBlock(Block.Properties.copy(AetherBlocks.HOLYSTONE_BRICKS.get()).strength(2.0F, 6.0F)));
     public static final RegistryObject<SlabBlock> AEROGEL_SLAB = register("aerogel_slab",
             () -> new AerogelSlabBlock(Block.Properties.copy(AetherBlocks.AEROGEL.get()).strength(1.0F, 2000.0F).isViewBlocking(AetherBlocks::never)));
 
