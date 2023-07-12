@@ -55,6 +55,7 @@ Jonathing
 - Fixes to the Sun Altar GUI slider moving out of the interface.
 - Fixes to a null error with block entities.
 - Fixes to jarJar-built file not reobfuscating.
+- Fixes to Jade compatibility with boss bars.
 
 Kelvin285
 - Implementation of the world preview feature for the Aether's main menu.
