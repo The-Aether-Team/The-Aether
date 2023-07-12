@@ -10,12 +10,17 @@ import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.aetherteam.aether.client.gui.screen.menu.AetherTitleScreen;
 import com.aetherteam.aether.client.gui.screen.menu.VanillaLeftTitleScreen;
 import com.aetherteam.aether.client.AetherKeys;
+import com.aetherteam.aether.client.gui.screen.perks.AetherCustomizationsScreen;
+import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
 import com.aetherteam.aether.event.hooks.DimensionHooks;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.inventory.menu.AccessoriesMenu;
 import com.aetherteam.aether.mixin.mixins.client.accessor.*;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.server.OpenAccessoriesPacket;
+import com.aetherteam.aether.util.PerkUtil;
+import com.aetherteam.nitrogen.api.users.User;
+import com.aetherteam.nitrogen.api.users.UserData;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -23,8 +28,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.LerpingBossEvent;
 import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.gui.layouts.FrameLayout;
+import net.minecraft.client.gui.layouts.GridLayout;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
@@ -268,6 +276,37 @@ public class GuiHooks {
         return flag;
     }
 
+    public static GridLayout setupPerksButtons(Screen screen) {
+        int x = AetherConfig.CLIENT.layout_perks_x.get();
+        int y = AetherConfig.CLIENT.layout_perks_y.get();
+
+        GridLayout gridLayout = new GridLayout();
+        gridLayout.defaultCellSetting().padding(4, 4, 4, 0);
+        GridLayout.RowHelper rowHelper = gridLayout.createRowHelper(1);
+
+        ImageButton skinsButton = new ImageButton(0, 0, 20, 20, 0, 0, 20, AccessoriesScreen.SKINS_BUTTON, 20, 40,
+                (pressed) -> Minecraft.getInstance().setScreen(new MoaSkinsScreen(screen)),
+                Component.translatable("gui.aether.accessories.skins_button"));
+        skinsButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.skins_button")));
+        rowHelper.addChild(skinsButton, gridLayout.newCellSettings().paddingTop(58));
+
+        User user = UserData.Client.getClientUser();
+        if (user != null && (PerkUtil.hasDeveloperGlow().test(user) || PerkUtil.hasHalo().test(user))) {
+            ImageButton customizationButton = new ImageButton(0, 0, 20, 20, 0, 0, 20, AccessoriesScreen.CUSTOMIZATION_BUTTON, 20, 40,
+                    (pressed) -> Minecraft.getInstance().setScreen(new AetherCustomizationsScreen(screen)),
+                    Component.translatable("gui.aether.accessories.customization_button"));
+            customizationButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.customization_button")));
+            rowHelper.addChild(customizationButton);
+        } else {
+            y -= 6;
+        }
+
+        gridLayout.arrangeElements();
+        FrameLayout.alignInRectangle(gridLayout, x, y, screen.width, screen.height, 0.5F, 0.25F);
+
+        return gridLayout;
+    }
+
     public static void setMenuAlignment() {
         alignMenuLeft = displayAlignedLeftVanillaMenu();
     }
@@ -345,7 +384,7 @@ public class GuiHooks {
     public static void closeContainerMenu(int key, int action) {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.screen instanceof AbstractContainerScreen abstractContainerScreen && !abstractContainerScreen.passEvents) {
-            if (AetherKeys.OPEN_ACCESSORY_INVENTORY.getKey().getValue() == key && (action == InputConstants.PRESS || action == InputConstants.REPEAT)) {
+            if (!AetherConfig.CLIENT.disable_accessory_button.get() && AetherKeys.OPEN_ACCESSORY_INVENTORY.getKey().getValue() == key && (action == InputConstants.PRESS || action == InputConstants.REPEAT)) {
                 abstractContainerScreen.onClose();
             }
         }
@@ -354,7 +393,7 @@ public class GuiHooks {
     public static void openAccessoryMenu() {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player != null && minecraft.getOverlay() == null && (minecraft.screen == null || minecraft.screen.passEvents)) {
-            if (AetherKeys.OPEN_ACCESSORY_INVENTORY.consumeClick()) {
+            if (!AetherConfig.CLIENT.disable_accessory_button.get() && AetherKeys.OPEN_ACCESSORY_INVENTORY.consumeClick()) {
                 AetherPacketHandler.sendToServer(new OpenAccessoriesPacket(ItemStack.EMPTY));
                 shouldAddButton = false;
             }

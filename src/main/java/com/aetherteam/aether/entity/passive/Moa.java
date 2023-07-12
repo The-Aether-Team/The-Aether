@@ -57,6 +57,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -696,7 +697,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 			tag.putUUID("MoaUUID", this.getMoaUUID());
 		}
 		tag.putBoolean("IsBaby", this.isBaby());
-		tag.putString("MoaType", this.getMoaType().toString());
+		tag.putString("MoaType", Objects.requireNonNullElse(this.getMoaType(), AetherMoaTypes.BLUE).toString());
 		if (this.getRider() != null) {
 			tag.putUUID("Rider", this.getRider());
 		}

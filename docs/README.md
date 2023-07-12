@@ -83,8 +83,7 @@ Then load it through your dependencies, with `project.aether_version` specified 
 ```
 dependencies {
   ...
-  compileOnly "com.aetherteam.aether:aether:${project.aether_version}"
-  runtimeOnly fg.deobf("com.aetherteam.aether:aether:${project.aether_version}")
+  implementation fg.deobf("com.aetherteam.aether:aether:${project.aether_version}")
   ...
 }
 ```

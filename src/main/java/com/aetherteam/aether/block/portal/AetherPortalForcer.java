@@ -19,6 +19,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.village.poi.PoiManager;
 import net.minecraft.world.entity.ai.village.poi.PoiRecord;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -38,10 +39,18 @@ import java.util.function.Function;
 public class AetherPortalForcer implements ITeleporter {
     private final ServerLevel level;
     private final boolean hasFrame; // Whether to generate a portal frame or not.
+    private final boolean isStartup;
 
     public AetherPortalForcer(ServerLevel level, boolean hasFrame) {
         this.level = level;
         this.hasFrame = hasFrame;
+        this.isStartup = false;
+    }
+
+    public AetherPortalForcer(ServerLevel level, boolean hasFrame, boolean isStartup) {
+        this.level = level;
+        this.hasFrame = hasFrame;
+        this.isStartup = isStartup;
     }
 
     @Override
@@ -62,6 +71,8 @@ public class AetherPortalForcer implements ITeleporter {
         boolean isAether = destinationLevel.dimension() == LevelUtil.destinationDimension();
         if (entity.getLevel().dimension() != LevelUtil.destinationDimension() && !isAether) {
             return null;
+        } else if (this.isStartup) {
+            return new PortalInfo(this.checkPositionsForInitialSpawn(destinationLevel, entity.blockPosition()).getCenter(), Vec3.ZERO, entity.getYRot(), entity.getXRot());
         } else if (!this.hasFrame) { // For falling out of the Aether.
             return new PortalInfo(new Vec3(entity.getX(), destinationLevel.getMaxBuildHeight(), entity.getZ()), Vec3.ZERO, entity.getYRot(), entity.getXRot());
         } else {
@@ -84,7 +95,6 @@ public class AetherPortalForcer implements ITeleporter {
             }).orElse(null);
         }
     }
-
     /**
      * Based on {@link Entity#getExitPortal(ServerLevel, BlockPos, boolean, WorldBorder)} and {@link ServerPlayer#getExitPortal(ServerLevel, BlockPos, boolean, WorldBorder)}.
      */
@@ -241,4 +251,40 @@ public class AetherPortalForcer implements ITeleporter {
         }
         return true;
     }
+
+    private BlockPos checkPositionsForInitialSpawn(Level level, BlockPos origin) {
+        if (!this.isSafe(level, origin)) {
+            for (int i = 0; i <= 750; i += 5) {
+                for (Direction facing : Direction.Plane.HORIZONTAL) {
+                    BlockPos offsetPosition = origin.offset(facing.getNormal().multiply(i));
+                    if (this.isSafeAround(level, offsetPosition)) {
+                        return offsetPosition;
+                    }
+                    BlockPos heightmapPosition = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, offsetPosition);
+                    if (this.isSafeAround(level, heightmapPosition)) {
+                        return heightmapPosition;
+                    }
+                }
+            }
+        }
+        return origin;
+    }
+
+    public boolean isSafeAround(Level level, BlockPos pos) {
+        BlockPos belowPos = pos.below();
+        if (!this.isSafe(level, belowPos)) {
+            return false;
+        }
+        for (Direction facing : Direction.Plane.HORIZONTAL) {
+            if (!this.isSafe(level, belowPos.relative(facing, 2))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isSafe(Level level, BlockPos pos) {
+        return level.getWorldBorder().isWithinBounds(pos) && level.getBlockState(pos).is(AetherTags.Blocks.AETHER_DIRT) && level.getBlockState(pos.above()).isAir() && level.getBlockState(pos.above(2)).isAir();
+    }
+
 }
