@@ -1243,6 +1243,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addPackTitle("ctm", "Aether CTM Fix");
         addPackTitle("colorblind", "Aether Colorblind Textures");
         addPackTitle("curios", "Aether Curios Override");
+        addPackTitle("freezing", "Aether Temporary Freezing");
 
         addPackDescription("mod", "Aether Resources");
         addPackDescription("125", "The classic look of the Aether from 1.2.5");
@@ -1250,5 +1251,6 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addPackDescription("ctm", "Fixes Quicksoil Glass Panes when using CTM");
         addPackDescription("colorblind", "Changes textures for color blindness accessibility");
         addPackDescription("curios", "Replace Accessories Menu with Curios' menu");
+        addPackDescription("freezing", "Ice Accessories create temporary blocks");
     }
 }

@@ -46,6 +46,7 @@ import com.aetherteam.aether.world.treedecorator.AetherTreeDecoratorTypes;
 import com.aetherteam.aether.world.trunkplacer.AetherTrunkPlacerTypes;
 import com.google.common.reflect.Reflection;
 import com.mojang.logging.LogUtils;
+import net.minecraft.ChatFormatting;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.cauldron.CauldronInteraction;
@@ -81,6 +82,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.UnaryOperator;
 
 @Mod(Aether.MODID)
 public class Aether {
@@ -230,6 +232,7 @@ public class Aether {
 
         // Data Packs
         this.setupCuriosTagsPack(event);
+        this.setupTemporaryFreezingPack(event);
     }
 
     /**
@@ -309,6 +312,29 @@ public class Aether {
     }
 
     /**
+     * A built-in resource pack to change textures for color blindness accessibility.
+     */
+    private void setupColorblindPack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.CLIENT_RESOURCES) {
+            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/colorblind");
+            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
+            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.colorblind.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
+            event.addRepositorySource((source) ->
+                    source.accept(Pack.create(
+                            "builtin/aether_colorblind",
+                            Component.translatable("pack.aether.colorblind.title"),
+                            false,
+                            (string) -> pack,
+                            new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
+                            PackType.CLIENT_RESOURCES,
+                            Pack.Position.TOP,
+                            false,
+                            PackSource.BUILT_IN)
+                    ));
+        }
+    }
+
+    /**
      * A built-in data pack to empty the Aether's curio slot tags and use the default curio slot tags instead.<br><br>
      * The pack is loaded and automatically applied if the {@link AetherConfig.Common#use_curios_menu} config is enabled.
      */
@@ -333,26 +359,49 @@ public class Aether {
     }
 
     /**
-     * A built-in resource pack to change textures for color blindness accessibility.
+     * A built-in data pack to make ice accessories create temporary blocks instead of permanent blocks when freezing liquids.
      */
-    private void setupColorblindPack(AddPackFindersEvent event) {
-        if (event.getPackType() == PackType.CLIENT_RESOURCES) {
-            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/colorblind");
+    private void setupTemporaryFreezingPack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.SERVER_DATA) {
+            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/temporary_freezing");
             PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
-            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.colorblind.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
+            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.freezing.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
             event.addRepositorySource((source) ->
                     source.accept(Pack.create(
-                            "builtin/aether_colorblind",
-                            Component.translatable("pack.aether.colorblind.title"),
+                            "builtin/aether_temporary_freezing",
+                            Component.translatable("pack.aether.freezing.title"),
                             false,
                             (string) -> pack,
                             new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
-                            PackType.CLIENT_RESOURCES,
+                            PackType.SERVER_DATA,
                             Pack.Position.TOP,
                             false,
-                            PackSource.BUILT_IN)
+                            create(decorateWithSource("pack.source.builtin"), false))
                     ));
         }
+    }
+
+    /**
+     * Copied from {@link PackSource#create(UnaryOperator, boolean)}.
+     */
+    static PackSource create(final UnaryOperator<Component> decorator, final boolean shouldAddAutomatically) {
+        return new PackSource() {
+            public Component decorate(Component component) {
+                return decorator.apply(component);
+            }
+
+            public boolean shouldAddAutomatically() {
+                return shouldAddAutomatically;
+            }
+        };
+    }
+
+    /**
+     * Copied from {@link PackSource#decorateWithSource(String)}.
+     */
+    private static UnaryOperator<Component> decorateWithSource(String translationKey) {
+        Component component = Component.translatable(translationKey);
+        return (name) -> Component.translatable("pack.nameAndSource", name, component).withStyle(ChatFormatting.GRAY);
     }
 
     private void registerDispenserBehaviors() {

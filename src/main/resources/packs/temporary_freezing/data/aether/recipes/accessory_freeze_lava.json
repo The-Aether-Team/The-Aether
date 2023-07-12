@@ -1,0 +1,12 @@
+{
+  "type": "aether:accessory_freezable",
+  "ingredient": {
+    "block": "minecraft:lava",
+    "properties": {
+      "level": "0"
+    }
+  },
+  "result": {
+    "block": "aether:unstable_obsidian"
+  }
+}

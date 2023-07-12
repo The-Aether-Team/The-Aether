@@ -951,6 +951,8 @@
   "pack.aether.ctm.title": "Aether CTM Fix",
   "pack.aether.curios.description": "Replace Accessories Menu with Curios' menu",
   "pack.aether.curios.title": "Aether Curios Override",
+  "pack.aether.freezing.description": "Ice Accessories create temporary blocks",
+  "pack.aether.freezing.title": "Aether Temporary Freezing",
   "pack.aether.mod.description": "Aether Resources",
   "subtitles.aether.block.aether_portal.ambient": "Aether Portal whooshes",
   "subtitles.aether.block.aether_portal.trigger": "Aether Portal noise intensifies",
