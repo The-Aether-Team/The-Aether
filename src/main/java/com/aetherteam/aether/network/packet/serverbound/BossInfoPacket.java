@@ -1,4 +1,4 @@
-package com.aetherteam.aether.network.packet.clientbound;
+package com.aetherteam.aether.network.packet.serverbound;
 
 import com.aetherteam.aether.client.event.listeners.GuiListener;
 import com.aetherteam.nitrogen.network.BasePacket;

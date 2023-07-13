@@ -16,7 +16,7 @@ import com.aetherteam.aether.network.packet.serverbound.NpcPlayerInteractPacket;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.clientbound.BossInfoPacket;
+import com.aetherteam.aether.network.packet.serverbound.BossInfoPacket;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;

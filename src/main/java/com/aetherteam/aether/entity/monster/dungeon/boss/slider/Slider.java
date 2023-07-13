@@ -8,7 +8,7 @@ import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.BossMob;
 import com.aetherteam.aether.entity.ai.controller.BlankMoveControl;
 import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.clientbound.BossInfoPacket;
+import com.aetherteam.aether.network.packet.serverbound.BossInfoPacket;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import com.mojang.serialization.Dynamic;
 import net.minecraft.core.BlockPos;

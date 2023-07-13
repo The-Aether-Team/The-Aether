@@ -26,8 +26,6 @@ public class AetherPacketHandler {
 	public static synchronized void register() {
 		// CLIENTBOUND
 		register(AetherTravelPacket.class, AetherTravelPacket::decode);
-		register(BossInfoPacket.Display.class, BossInfoPacket.Display::decode);
-		register(BossInfoPacket.Remove.class, BossInfoPacket.Remove::decode);
 		register(CloudMinionPacket.class, CloudMinionPacket::decode);
 		register(ClientDeveloperGlowPacket.Apply.class, ClientDeveloperGlowPacket.Apply::decode);
 		register(ClientDeveloperGlowPacket.Remove.class, ClientDeveloperGlowPacket.Remove::decode);
@@ -52,6 +50,8 @@ public class AetherPacketHandler {
 
 		// SERVERBOUND
 		register(AerbunnyPuffPacket.class, AerbunnyPuffPacket::decode);
+		register(BossInfoPacket.Display.class, BossInfoPacket.Display::decode);
+		register(BossInfoPacket.Remove.class, BossInfoPacket.Remove::decode);
 		register(ClearItemPacket.class, ClearItemPacket::decode);
 		register(LoreExistsPacket.class, LoreExistsPacket::decode);
 		register(NpcPlayerInteractPacket.class, NpcPlayerInteractPacket::decode);
