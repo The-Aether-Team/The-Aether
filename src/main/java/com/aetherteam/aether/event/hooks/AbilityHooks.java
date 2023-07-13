@@ -1,5 +1,6 @@
 package com.aetherteam.aether.event.hooks;
 
+import com.aetherteam.aether.capability.INBTSynchable;
 import com.aetherteam.aether.capability.lightning.LightningTrackerCapability;
 import com.aetherteam.aether.data.generators.loot.AetherStrippingLoot;
 import com.aetherteam.aether.entity.projectile.PoisonNeedle;
@@ -400,11 +401,11 @@ public class AbilityHooks {
             if (entity instanceof Player player && !player.getLevel().isClientSide()) {
                 Entity sourceEntity = source.getDirectEntity();
                 if (sourceEntity instanceof GoldenDart) {
-                    AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setGoldenDartCount(aetherPlayer.getGoldenDartCount() + 1));
+                    AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setGoldenDartCount", aetherPlayer.getGoldenDartCount() + 1));
                 } else if (sourceEntity instanceof PoisonDart || sourceEntity instanceof PoisonNeedle) {
-                    AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setPoisonDartCount(aetherPlayer.getPoisonDartCount() + 1));
+                    AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setPoisonDartCount", aetherPlayer.getPoisonDartCount() + 1));
                 } else if (sourceEntity instanceof EnchantedDart) {
-                    AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setEnchantedDartCount(aetherPlayer.getEnchantedDartCount() + 1));
+                    AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setEnchantedDartCount", aetherPlayer.getEnchantedDartCount() + 1));
                 }
             }
         }

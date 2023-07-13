@@ -1,12 +1,14 @@
 package com.aetherteam.aether.capability.player;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.capability.INBTSynchable;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
 import com.aetherteam.aether.entity.miscellaneous.Parachute;
 import com.aetherteam.aether.entity.passive.Aerbunny;
 import com.aetherteam.aether.item.miscellaneous.ParachuteItem;
+import com.aetherteam.aether.network.packet.AetherPlayerSyncPacket;
 import com.aetherteam.aether.network.packet.clientbound.CloudMinionPacket;
 import com.aetherteam.aether.network.packet.clientbound.RemountAerbunnyPacket;
 import com.aetherteam.aether.entity.AetherEntityTypes;
@@ -14,10 +16,7 @@ import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.AetherConfig;
 
-import com.aetherteam.aether.capability.CapabilitySyncing;
-import com.aetherteam.aether.network.AetherPacket;
 import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.AetherPlayerSyncPacket;
 import com.aetherteam.aether.perk.CustomizationsOptions;
 import com.aetherteam.aether.perk.data.*;
 import com.aetherteam.aether.item.EquipmentUtil;
@@ -40,10 +39,13 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
-public class AetherPlayerCapability extends CapabilitySyncing implements AetherPlayer {
+public class AetherPlayerCapability implements AetherPlayer {
 	private final Player player;
 
 	private static final UUID LIFE_SHARD_HEALTH_ID = UUID.fromString("E11710C8-4247-4CB6-B3B5-729CB34CFC1A");
@@ -110,6 +112,21 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	private static final Style PATREON = Style.EMPTY.withColor(16728653).withUnderlined(true).withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.patreon.com/TheAetherTeam")).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("https://www.patreon.com/TheAetherTeam")));
 	private boolean canShowPatreonMessage = true;
 	private int loginsUntilPatreonMessage = -1;
+
+	private final Map<String, Triple<Type, Consumer<Object>, Supplier<Object>>> synchableFunctions = Map.ofEntries(
+			Map.entry("setHitting", Triple.of(Type.BOOLEAN, (object) -> this.setHitting((boolean) object), this::isHitting)),
+			Map.entry("setMoving", Triple.of(Type.BOOLEAN, (object) -> this.setMoving((boolean) object), this::isMoving)),
+			Map.entry("setJumping", Triple.of(Type.BOOLEAN, (object) -> this.setJumping((boolean) object), this::isJumping)),
+			Map.entry("setGravititeJumpActive", Triple.of(Type.BOOLEAN, (object) -> this.setGravititeJumpActive((boolean) object), this::isGravititeJumpActive)),
+			Map.entry("setGoldenDartCount", Triple.of(Type.INT, (object) -> this.setGoldenDartCount((int) object), this::getGoldenDartCount)),
+			Map.entry("setPoisonDartCount", Triple.of(Type.INT, (object) -> this.setPoisonDartCount((int) object), this::getPoisonDartCount)),
+			Map.entry("setEnchantedDartCount", Triple.of(Type.INT, (object) -> this.setEnchantedDartCount((int) object), this::getEnchantedDartCount)),
+			Map.entry("setAttackedWithInvisibility", Triple.of(Type.BOOLEAN, (object) -> this.setAttackedWithInvisibility((boolean) object), this::attackedWithInvisibility)),
+			Map.entry("setInvisibilityEnabled", Triple.of(Type.BOOLEAN, (object) -> this.setInvisibilityEnabled((boolean) object), this::isInvisibilityEnabled)),
+			Map.entry("setWearingInvisibilityCloak", Triple.of(Type.BOOLEAN, (object) -> this.setWearingInvisibilityCloak((boolean) object), this::isWearingInvisibilityCloak)),
+			Map.entry("setLifeShardCount", Triple.of(Type.INT, (object) -> this.setLifeShardCount((int) object), this::getLifeShardCount)),
+			Map.entry("setLastRiddenMoa", Triple.of(Type.UUID, (object) -> this.setLastRiddenMoa((UUID) object), this::getLastRiddenMoa))
+	);
 	
 	public AetherPlayerCapability(Player player) {
 		this.player = player;
@@ -171,58 +188,24 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	}
 
 	@Override
-	public CompoundTag serializeSynchableNBT() {
-		CompoundTag tag = new CompoundTag();
-		tag.putBoolean("GravititeJump_Syncing", this.isGravititeJumpActive());
-		tag.putInt("GoldenDartCount_Syncing", this.getGoldenDartCount());
-		tag.putInt("PoisonDartCount_Syncing", this.getPoisonDartCount());
-		tag.putInt("EnchantedDartCount_Syncing", this.getEnchantedDartCount());
-		tag.putInt("FlightTimer_Syncing", this.getFlightTimer());
-		tag.putFloat("FlightModifier_Syncing", this.getFlightModifier());
-		tag.putBoolean("AttackedWithInvisibility_Syncing", this.attackedWithInvisibility());
-		tag.putBoolean("InvisibilityEnabled_Syncing", this.isInvisibilityEnabled());
-		tag.putBoolean("WearingInvisibilityCloak_Syncing", this.isWearingInvisibilityCloak());
-		tag.putInt("LifeShardCount_Syncing", this.getLifeShardCount());
-		if (this.getLastRiddenMoa() != null) {
-			tag.putUUID("LastRiddenMoa_Syncing", this.getLastRiddenMoa());
-		}
-		return tag;
+	public Map<String, Triple<Type, Consumer<Object>, Supplier<Object>>> getSynchableFunctions() {
+		return this.synchableFunctions;
 	}
 
 	@Override
-	public void deserializeSynchableNBT(CompoundTag tag) {
-		if (tag.contains("GravititeJump_Syncing")) {
-			this.setGravititeJumpActive(tag.getBoolean("GravititeJump_Syncing"));
+	public void setSynched(Direction direction, String key, Object value) {
+		if (direction == Direction.SERVER) {
+			AetherPacketHandler.sendToServer(new AetherPlayerSyncPacket(this.getPlayer().getId(), key, this.getSynchableFunctions().get(key).getLeft(), value));
+		} else {
+			AetherPacketHandler.sendToAll(new AetherPlayerSyncPacket(this.getPlayer().getId(), key, this.getSynchableFunctions().get(key).getLeft(), value));
 		}
-		if (tag.contains("GoldenDartCount_Syncing")) {
-			this.setGoldenDartCount(tag.getInt("GoldenDartCount_Syncing"));
-		}
-		if (tag.contains("PoisonDartCount_Syncing")) {
-			this.setPoisonDartCount(tag.getInt("PoisonDartCount_Syncing"));
-		}
-		if (tag.contains("EnchantedDartCount_Syncing")) {
-			this.setEnchantedDartCount(tag.getInt("EnchantedDartCount_Syncing"));
-		}
-		if (tag.contains("FlightTimer_Syncing")) {
-			this.setFlightTimer(tag.getInt("FlightTimer_Syncing"));
-		}
-		if (tag.contains("FlightModifier_Syncing")) {
-			this.setFlightModifier(tag.getFloat("FlightModifier_Syncing"));
-		}
-		if (tag.contains("AttackedWithInvisibility_Syncing")) {
-			this.setAttackedWithInvisibility(tag.getBoolean("AttackedWithInvisibility_Syncing"));
-		}
-		if (tag.contains("InvisibilityEnabled_Syncing")) {
-			this.setInvisibilityEnabled(tag.getBoolean("InvisibilityEnabled_Syncing"));
-		}
-		if (tag.contains("WearingInvisibilityCloak_Syncing")) {
-			this.setWearingInvisibilityCloak(tag.getBoolean("WearingInvisibilityCloak_Syncing"));
-		}
-		if (tag.contains("LifeShardCount_Syncing")) {
-			this.setLifeShardCount(tag.getInt("LifeShardCount_Syncing"));
-		}
-		if (tag.contains("LastRiddenMoa_Syncing")) {
-			this.setLastRiddenMoa(tag.getUUID("LastRiddenMoa_Syncing"));
+		this.getSynchableFunctions().get(key).getMiddle().accept(value);
+	}
+
+	@Override
+	public void forceSync(Direction direction) {
+		for (Map.Entry<String, Triple<Type, Consumer<Object>, Supplier<Object>>> entry : this.synchableFunctions.entrySet()) {
+			this.setSynched(direction, entry.getKey(), entry.getValue().getRight().get());
 		}
 	}
 
@@ -236,6 +219,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		this.handleGivePortal();
 		this.remountAerbunny();
 		this.handlePatreonMessage();
+		this.forceSync(INBTSynchable.Direction.CLIENT);
 		ServerMoaSkinPerkData.INSTANCE.syncFromServer(this.getPlayer());
 		ServerHaloPerkData.INSTANCE.syncFromServer(this.getPlayer());
 		ServerDeveloperGlowPerkData.INSTANCE.syncFromServer(this.getPlayer());
@@ -258,11 +242,11 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		}
 		this.setCanGetPortal(other.canGetPortal());
 		this.setLifeShardCount(other.getLifeShardCount());
+		this.forceSync(INBTSynchable.Direction.CLIENT);
 	}
 
 	@Override
 	public void onUpdate() {
-		this.updateSyncableNBTFromServer(this.getPlayer().getLevel());
 		this.handleAetherPortal();
 		this.activateParachute();
 		this.handleRemoveDarts();
@@ -380,7 +364,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	}
 
 	private void handleRemoveDarts() {
-		if (!this.getPlayer().level.isClientSide()) {
+		if (!this.getPlayer().getLevel().isClientSide()) {
 			if (this.getGoldenDartCount() > 0) {
 				if (this.removeGoldenDartTime <= 0) {
 					this.removeGoldenDartTime = 20 * (30 - this.getGoldenDartCount());
@@ -388,7 +372,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 				--this.removeGoldenDartTime;
 				if (this.removeGoldenDartTime <= 0) {
-					this.setGoldenDartCount(this.getGoldenDartCount() - 1);
+					this.setSynched(INBTSynchable.Direction.CLIENT, "setGoldenDartCount", this.getGoldenDartCount() - 1);
 				}
 			}
 			if (this.getPoisonDartCount() > 0) {
@@ -398,7 +382,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 				--this.removePoisonDartTime;
 				if (this.removePoisonDartTime <= 0) {
-					this.setPoisonDartCount(this.getPoisonDartCount() - 1);
+					this.setSynched(INBTSynchable.Direction.CLIENT, "setPoisonDartCount", this.getPoisonDartCount() - 1);
 				}
 			}
 			if (this.getEnchantedDartCount() > 0) {
@@ -408,7 +392,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 				--this.removeEnchantedDartTime;
 				if (this.removeEnchantedDartTime <= 0) {
-					this.setEnchantedDartCount(this.getEnchantedDartCount() - 1);
+					this.setSynched(INBTSynchable.Direction.CLIENT, "setEnchantedDartCount", this.getEnchantedDartCount() - 1);
 				}
 			}
 		}
@@ -452,7 +436,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 			if (this.attackedWithInvisibility()) {
 				--this.invisibilityAttackCooldown;
 				if (this.invisibilityAttackCooldown <= 0) {
-					this.setAttackedWithInvisibility(false);
+					this.setSynched(INBTSynchable.Direction.CLIENT, "setAttackedWithInvisibility", false);
 				}
 			} else {
 				this.invisibilityAttackCooldown = AetherConfig.SERVER.invisibility_visibility_time.get();
@@ -658,7 +642,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	@Override
 	public void setGravititeJumpActive(boolean isGravititeJumpActive) {
-		this.markDirty(true);
 		this.isGravititeJumpActive = isGravititeJumpActive;
 	}
 
@@ -679,7 +662,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	@Override
 	public void setGoldenDartCount(int count) {
-		this.markDirty(true);
 		this.goldenDartCount = count;
 	}
 
@@ -690,7 +672,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	@Override
 	public void setPoisonDartCount(int count) {
-		this.markDirty(true);
 		this.poisonDartCount = count;
 	}
 
@@ -701,7 +682,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	@Override
 	public void setEnchantedDartCount(int count) {
-		this.markDirty(true);
 		this.enchantedDartCount = count;
 	}
 
@@ -782,7 +762,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	@Override
 	public void setLastRiddenMoa(UUID lastRiddenMoa) {
-		this.markDirty(true);
 		this.lastRiddenMoa = lastRiddenMoa;
 	}
 
@@ -815,7 +794,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	@Override
 	public void setAttackedWithInvisibility(boolean attacked) {
-		this.markDirty(true);
 		this.attackedWithInvisibility = attacked;
 	}
 
@@ -826,7 +804,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	@Override
 	public void setInvisibilityEnabled(boolean enabled) {
-		this.markDirty(true);
 		this.invisibilityEnabled = enabled;
 	}
 
@@ -837,7 +814,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	@Override
 	public void setWearingInvisibilityCloak(boolean wearing) {
-		this.markDirty(true);
 		this.wearingInvisibilityCloak = wearing;
 	}
 
@@ -858,7 +834,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	@Override
 	public void setFlightTimer(int timer) {
-		this.markDirty(true);
 		this.flightTimer = timer;
 	}
 
@@ -869,7 +844,6 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 
 	@Override
 	public void setFlightModifier(float modifier) {
-		this.markDirty(true);
 		this.flightModifier = modifier;
 	}
 
@@ -924,15 +898,7 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 	}
 
 	@Override
-	public void addToLifeShardCount(int amountToAdd) {
-		int newAmount = this.getLifeShardCount() + amountToAdd;
-		this.markDirty(true);
-		this.lifeShards = newAmount;
-	}
-
-	@Override
 	public void setLifeShardCount(int amount) {
-		this.markDirty(true);
 		this.lifeShards = amount;
 	}
 
@@ -955,10 +921,5 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		if (this.getPlayer() instanceof ServerPlayer serverPlayer && !this.getPlayer().level.isClientSide) {
 			AetherPacketHandler.sendToPlayer(new CloudMinionPacket(this.getPlayer().getId(), cloudMinionRight.getId(), cloudMinionLeft.getId()), serverPlayer);
 		}
-	}
-
-	@Override
-	public AetherPacket getSyncPacket(CompoundTag tag) {
-		return new AetherPlayerSyncPacket(this.getPlayer().getId(), tag);
 	}
 }

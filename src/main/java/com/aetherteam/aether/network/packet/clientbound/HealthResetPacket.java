@@ -1,5 +1,6 @@
 package com.aetherteam.aether.network.packet.clientbound;
 
+import com.aetherteam.aether.capability.INBTSynchable;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.network.AetherPacket;
 import net.minecraft.client.Minecraft;
@@ -25,7 +26,7 @@ public record HealthResetPacket(int entityID, int value) implements AetherPacket
     public void execute(Player playerEntity) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null && Minecraft.getInstance().player.level.getEntity(this.entityID) instanceof Player player) {
             AetherPlayer.get(player).ifPresent(aetherPlayer -> {
-                aetherPlayer.setLifeShardCount(this.value);
+                aetherPlayer.setSynched(INBTSynchable.Direction.SERVER, "setLifeShardCount", this.value);
                 AttributeInstance attribute = player.getAttribute(Attributes.MAX_HEALTH);
                 if (attribute != null) {
                     attribute.removeModifier(aetherPlayer.getLifeShardHealthAttributeModifier());

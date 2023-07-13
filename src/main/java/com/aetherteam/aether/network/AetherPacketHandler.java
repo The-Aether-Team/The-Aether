@@ -26,7 +26,7 @@ public class AetherPacketHandler {
 	private static int index;
 	
 	public static synchronized void register() {
-		// CLIENT
+		// CLIENTBOUND
 		register(AetherTravelPacket.class, AetherTravelPacket::decode);
 		register(BossInfoPacket.Display.class, BossInfoPacket.Display::decode);
 		register(BossInfoPacket.Remove.class, BossInfoPacket.Remove::decode);
@@ -57,14 +57,10 @@ public class AetherPacketHandler {
 		register(ToolDebuffPacket.class, ToolDebuffPacket::decode);
 		register(ZephyrSnowballHitPacket.class, ZephyrSnowballHitPacket::decode);
 
-		// SERVER
+		// SERVERBOUND
 		register(AerbunnyPuffPacket.class, AerbunnyPuffPacket::decode);
 		register(ClearItemPacket.class, ClearItemPacket::decode);
-		register(HittingPacket.class, HittingPacket::decode);
-		register(InvisibilityTogglePacket.class, InvisibilityTogglePacket::decode);
-		register(JumpPacket.class, JumpPacket::decode);
 		register(LoreExistsPacket.class, LoreExistsPacket::decode);
-		register(MovementPacket.class, MovementPacket::decode);
 		register(NpcPlayerInteractPacket.class, NpcPlayerInteractPacket::decode);
 		register(OpenAccessoriesPacket.class, OpenAccessoriesPacket::decode);
 		register(OpenInventoryPacket.class, OpenInventoryPacket::decode);

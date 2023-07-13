@@ -1,5 +1,6 @@
 package com.aetherteam.aether.event.hooks;
 
+import com.aetherteam.aether.capability.INBTSynchable;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.capability.player.AetherPlayerCapability;
@@ -56,11 +57,10 @@ public class CapabilityHooks {
         }
 
         public static void changeDimension(Player player) {
-            if (!player.level.isClientSide()) {
+            if (!player.getLevel().isClientSide()) {
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                     if (aetherPlayer instanceof AetherPlayerCapability capability) {
-                        capability.markForced(true);
-                        capability.updateSyncableNBTFromServer(player.level);
+                        capability.forceSync(INBTSynchable.Direction.CLIENT);
                     }
                 });
             }

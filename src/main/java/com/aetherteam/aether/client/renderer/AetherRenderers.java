@@ -1,6 +1,7 @@
 package com.aetherteam.aether.client.renderer;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.renderer.accessory.GlovesRenderer;
 import com.aetherteam.aether.client.renderer.accessory.PendantRenderer;
 import com.aetherteam.aether.client.renderer.accessory.ShieldOfRepulsionRenderer;
@@ -18,6 +19,9 @@ import com.aetherteam.aether.client.renderer.blockentity.TreasureChestRenderer;
 import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.entity.AetherEntityTypes;
+import com.aetherteam.aether.entity.projectile.dart.EnchantedDart;
+import com.aetherteam.aether.entity.projectile.dart.GoldenDart;
+import com.aetherteam.aether.entity.projectile.dart.PoisonDart;
 import com.aetherteam.aether.item.AetherItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.*;
@@ -196,9 +200,9 @@ public class AetherRenderers {
             PlayerRenderer playerRenderer = event.getSkin(type);
             if (playerRenderer != null) {
                 playerRenderer.addLayer(new DeveloperGlowLayer<>(playerRenderer));
-                playerRenderer.addLayer(new EnchantedDartLayer<>(renderDispatcher, playerRenderer));
-                playerRenderer.addLayer(new GoldenDartLayer<>(renderDispatcher, playerRenderer));
-                playerRenderer.addLayer(new PoisonDartLayer<>(renderDispatcher, playerRenderer));
+                playerRenderer.addLayer(new DartLayer<>(renderDispatcher, playerRenderer, (entity) -> new GoldenDart(AetherEntityTypes.GOLDEN_DART.get(), entity.getLevel()), AetherPlayer::getGoldenDartCount, 1.0F));
+                playerRenderer.addLayer(new DartLayer<>(renderDispatcher, playerRenderer, (entity) -> new PoisonDart(AetherEntityTypes.POISON_DART.get(), entity.getLevel()), AetherPlayer::getPoisonDartCount, 2.0F));
+                playerRenderer.addLayer(new DartLayer<>(renderDispatcher, playerRenderer, (entity) -> new EnchantedDart(AetherEntityTypes.ENCHANTED_DART.get(), entity.getLevel()), AetherPlayer::getEnchantedDartCount, 3.0F));
                 playerRenderer.addLayer(new PlayerHaloLayer<>(playerRenderer, Minecraft.getInstance().getEntityModels()));
                 playerRenderer.addLayer(new PlayerWingsLayer<>(playerRenderer, Minecraft.getInstance().getEntityModels()));
             }

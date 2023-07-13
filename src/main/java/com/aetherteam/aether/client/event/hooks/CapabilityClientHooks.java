@@ -1,11 +1,8 @@
 package com.aetherteam.aether.client.event.hooks;
 
+import com.aetherteam.aether.capability.INBTSynchable;
 import com.aetherteam.aether.client.AetherKeys;
 import com.aetherteam.aether.capability.player.AetherPlayer;
-import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.serverbound.HittingPacket;
-import com.aetherteam.aether.network.packet.serverbound.JumpPacket;
-import com.aetherteam.aether.network.packet.serverbound.MovementPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.Input;
 import net.minecraft.world.entity.player.Player;
@@ -16,13 +13,11 @@ public class CapabilityClientHooks {
             AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
                 boolean isJumping = input.jumping;
                 if (isJumping != aetherPlayer.isJumping()) {
-                    AetherPacketHandler.sendToServer(new JumpPacket(player.getId(), isJumping));
-                    aetherPlayer.setJumping(isJumping);
+                    aetherPlayer.setSynched(INBTSynchable.Direction.SERVER, "setJumping", isJumping);
                 }
                 boolean isMoving = isJumping || input.up || input.down || input.left || input.right || player.isFallFlying();
                 if (isMoving != aetherPlayer.isMoving()) {
-                    AetherPacketHandler.sendToServer(new MovementPacket(player.getId(), isMoving));
-                    aetherPlayer.setMoving(isMoving);
+                    aetherPlayer.setSynched(INBTSynchable.Direction.SERVER, "setMoving", isMoving);
                 }
             });
         }
@@ -44,8 +39,7 @@ public class CapabilityClientHooks {
                     boolean isAttack = input == Minecraft.getInstance().options.keyAttack.getKey().getValue();
                     boolean isPressing = Minecraft.getInstance().options.keyAttack.isDown();
                     boolean isHitting = isAttack && isPressing;
-                    AetherPacketHandler.sendToServer(new HittingPacket(player.getId(), isHitting));
-                    aetherPlayer.setHitting(isHitting);
+                    aetherPlayer.setSynched(INBTSynchable.Direction.SERVER, "setHitting", isHitting);
                 });
             }
         }
@@ -55,7 +49,7 @@ public class CapabilityClientHooks {
             if (player != null) {
                 AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
                     if (input == AetherKeys.GRAVITITE_JUMP_ABILITY.getKey().getValue()) {
-                        aetherPlayer.setGravititeJumpActive(AetherKeys.GRAVITITE_JUMP_ABILITY.isDown());
+                        aetherPlayer.setSynched(INBTSynchable.Direction.SERVER, "setGravititeJumpActive", AetherKeys.GRAVITITE_JUMP_ABILITY.isDown());
                     }
                 });
             }

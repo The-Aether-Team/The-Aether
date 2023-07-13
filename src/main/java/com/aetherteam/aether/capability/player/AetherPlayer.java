@@ -127,7 +127,6 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 	void setObsidianConversionTime(int time);
 	int getObsidianConversionTime();
 
-	void addToLifeShardCount(int amountToAdd);
 	void setLifeShardCount(int amount);
 	int getLifeShardCount();
 	int getLifeShardLimit();

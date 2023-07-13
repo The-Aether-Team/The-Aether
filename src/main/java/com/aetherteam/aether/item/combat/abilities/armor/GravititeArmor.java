@@ -21,7 +21,7 @@ public interface GravititeArmor {
         if (EquipmentUtil.hasFullGravititeSet(entity)) {
             if (entity instanceof Player player) {
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> {
-                    if (aetherPlayer.isGravititeJumpActive()) {
+                    if (aetherPlayer.getPlayer().isOnGround() && aetherPlayer.isGravititeJumpActive()) {
                         player.push(0.0, 1.0, 0.0);
                         if (player instanceof ServerPlayer serverPlayer) {
                             serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(serverPlayer));

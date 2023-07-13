@@ -1,5 +1,6 @@
 package com.aetherteam.aether.command;
 
+import com.aetherteam.aether.capability.INBTSynchable;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.clientbound.HealthResetPacket;
@@ -51,7 +52,7 @@ public class PlayerCapabilityCommand {
             ServerPlayer player = playerList.getPlayer(gameProfile.getId());
             if (player != null) {
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> {
-                    aetherPlayer.setLifeShardCount(value);
+                    aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setLifeShardCount", value);
                     AttributeInstance attribute = player.getAttribute(Attributes.MAX_HEALTH);
                     if (attribute != null) {
                         attribute.removeModifier(aetherPlayer.getLifeShardHealthAttributeModifier());
