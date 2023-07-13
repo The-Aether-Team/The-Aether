@@ -1,6 +1,6 @@
 package com.aetherteam.aether.block;
 
-import com.aetherteam.aether.event.events.FreezeEvent;
+import com.aetherteam.aether.event.FreezeEvent;
 import com.aetherteam.aether.util.BlockStateRecipeUtil;
 import net.minecraft.commands.CommandFunction;
 import net.minecraft.util.Mth;

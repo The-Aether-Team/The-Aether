@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import com.aetherteam.aether.client.AetherSoundEvents;
 
-import com.aetherteam.aether.event.dispatch.AetherEventDispatch;
+import com.aetherteam.aether.event.AetherEventDispatch;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.block.Block;

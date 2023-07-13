@@ -1,7 +1,7 @@
 package com.aetherteam.aether.block;
 
-import com.aetherteam.aether.event.events.FreezeEvent;
-import com.aetherteam.aether.event.dispatch.AetherEventDispatch;
+import com.aetherteam.aether.event.FreezeEvent;
+import com.aetherteam.aether.event.AetherEventDispatch;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.BlockPropertyPair;
 import com.aetherteam.aether.recipe.recipes.block.IcestoneFreezableRecipe;

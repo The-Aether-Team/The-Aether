@@ -1,8 +1,8 @@
 package com.aetherteam.aether.item.accessories.abilities;
 
 import com.aetherteam.aether.block.FreezingBehavior;
-import com.aetherteam.aether.event.events.FreezeEvent;
-import com.aetherteam.aether.event.dispatch.AetherEventDispatch;
+import com.aetherteam.aether.event.FreezeEvent;
+import com.aetherteam.aether.event.AetherEventDispatch;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.recipes.block.AccessoryFreezableRecipe;
 import net.minecraft.commands.CommandFunction;

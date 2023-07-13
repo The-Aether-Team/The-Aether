@@ -1,4 +1,4 @@
-package com.aetherteam.aether.event;
+package com.aetherteam.aether;
 
 import com.aetherteam.aether.Aether;
 import net.minecraft.core.registries.Registries;

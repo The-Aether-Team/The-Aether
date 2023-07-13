@@ -1,6 +1,6 @@
 package com.aetherteam.aether.recipe.recipes.ban;
 
-import com.aetherteam.aether.event.dispatch.AetherEventDispatch;
+import com.aetherteam.aether.event.AetherEventDispatch;
 import com.aetherteam.aether.recipe.AetherRecipeSerializers;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.BlockStateIngredient;
