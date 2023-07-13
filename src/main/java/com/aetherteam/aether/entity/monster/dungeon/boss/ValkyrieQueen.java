@@ -17,7 +17,6 @@ import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.clientbound.BossInfoPacket;
-import com.aetherteam.aether.network.packet.clientbound.OpenNpcDialoguePacket;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -236,7 +235,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
                     this.lookAt(player, 180F, 180F);
                     if (player instanceof ServerPlayer serverPlayer) {
                         if (!this.isTrading()) {
-                            PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new OpenNpcDialoguePacket(this.getId()), serverPlayer);
+                            this.level.broadcastEntityEvent(this, (byte) 71);
                             this.setTradingPlayer(serverPlayer);
                         }
                     }
@@ -578,6 +577,15 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     @Override
     public void setTradingPlayer(@Nullable Player player) {
         this.tradingPlayer = player;
+    }
+
+    @Override
+    public void handleEntityEvent(byte id) {
+        if (id == 71) {
+            this.openDialogueScreen();
+        } else {
+            super.handleEntityEvent(id);
+        }
     }
 
     @Override

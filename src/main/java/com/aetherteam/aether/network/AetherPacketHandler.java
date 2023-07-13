@@ -43,7 +43,6 @@ public class AetherPacketHandler {
 		register(HealthResetPacket.class, HealthResetPacket::decode);
 		register(LeavingAetherPacket.class, LeavingAetherPacket::decode);
 		register(MoaInteractPacket.class, MoaInteractPacket::decode);
-		register(OpenNpcDialoguePacket.class, OpenNpcDialoguePacket::decode);
 		register(OpenSunAltarPacket.class, OpenSunAltarPacket::decode);
 		register(PortalTravelSoundPacket.class, PortalTravelSoundPacket::decode);
 		register(RemountAerbunnyPacket.class, RemountAerbunnyPacket::decode);
