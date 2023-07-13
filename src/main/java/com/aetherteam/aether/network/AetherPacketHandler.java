@@ -48,7 +48,6 @@ public class AetherPacketHandler {
 		register(PortalTravelSoundPacket.class, PortalTravelSoundPacket::decode);
 		register(RemountAerbunnyPacket.class, RemountAerbunnyPacket::decode);
 		register(SetVehiclePacket.class, SetVehiclePacket::decode);
-		register(SwetAttackPacket.class, SwetAttackPacket::decode);
 		register(ToolDebuffPacket.class, ToolDebuffPacket::decode);
 		register(ZephyrSnowballHitPacket.class, ZephyrSnowballHitPacket::decode);
 

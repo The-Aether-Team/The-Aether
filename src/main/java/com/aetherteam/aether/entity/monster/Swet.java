@@ -3,10 +3,7 @@ package com.aetherteam.aether.entity.monster;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.MountableMob;
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.clientbound.SwetAttackPacket;
 import com.aetherteam.aether.item.EquipmentUtil;
-import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -384,6 +381,8 @@ public class Swet extends Slime implements MountableMob {
                 double f4 = Mth.cos((float) f) * f1;
                 this.getLevel().addParticle(ParticleTypes.SPLASH, this.getX() + f3, this.getY() + f2, this.getZ() + f4, f3 * 1.5 + this.getDeltaMovement().x, 4.0, f4 * 1.5 + this.getDeltaMovement().z);
             }
+        } else if (id == 71) {
+            this.absMoveTo(this.getX(), this.getY(), this.getZ());
         } else {
             super.handleEntityEvent(id);
         }
@@ -502,7 +501,7 @@ public class Swet extends Slime implements MountableMob {
             if (this.jumps <= 3) {
                 if (this.swet.onGround) {
                     // This is to make sure the swet actually touches the ground on the client.
-                    PacketRelay.sendToNear(AetherPacketHandler.INSTANCE, new SwetAttackPacket(this.swet.getId(), this.swet.getX(), this.swet.getY(), this.swet.getZ()), this.swet.getX(), this.swet.getY(), this.swet.getZ(), 50.0, this.swet.getLevel().dimension());
+                    this.swet.getLevel().broadcastEntityEvent(this.swet, (byte) 71);
 
                     this.swet.playSound(AetherSoundEvents.ENTITY_SWET_JUMP.get(), 1.0F, ((this.swet.getRandom().nextFloat() - this.swet.getRandom().nextFloat()) * 0.2F + 1.0F) * 0.8F);
 
