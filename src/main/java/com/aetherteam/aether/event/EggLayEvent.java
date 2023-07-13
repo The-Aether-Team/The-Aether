@@ -1,4 +1,4 @@
-package com.aetherteam.aether.event.events;
+package com.aetherteam.aether.event;
 
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;

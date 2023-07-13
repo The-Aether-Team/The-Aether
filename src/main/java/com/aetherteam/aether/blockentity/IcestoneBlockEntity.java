@@ -1,7 +1,7 @@
 package com.aetherteam.aether.blockentity;
 
 import com.aetherteam.aether.block.FreezingBlock;
-import com.aetherteam.aether.event.AetherGameEvents;
+import com.aetherteam.aether.AetherGameEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.entity.BlockEntity;

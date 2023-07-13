@@ -1,4 +1,4 @@
-package com.aetherteam.aether.event.events;
+package com.aetherteam.aether.event;
 
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.ItemStack;

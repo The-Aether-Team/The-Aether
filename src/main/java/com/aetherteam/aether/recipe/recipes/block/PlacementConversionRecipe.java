@@ -1,7 +1,7 @@
 package com.aetherteam.aether.recipe.recipes.block;
 
-import com.aetherteam.aether.event.dispatch.AetherEventDispatch;
-import com.aetherteam.aether.event.events.PlacementConvertEvent;
+import com.aetherteam.aether.event.AetherEventDispatch;
+import com.aetherteam.aether.event.PlacementConvertEvent;
 import com.aetherteam.aether.recipe.AetherRecipeSerializers;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.BlockPropertyPair;

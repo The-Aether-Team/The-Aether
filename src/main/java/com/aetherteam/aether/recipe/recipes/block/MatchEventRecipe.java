@@ -1,7 +1,7 @@
 package com.aetherteam.aether.recipe.recipes.block;
 
-import com.aetherteam.aether.event.dispatch.AetherEventDispatch;
-import com.aetherteam.aether.event.events.ItemUseConvertEvent;
+import com.aetherteam.aether.event.AetherEventDispatch;
+import com.aetherteam.aether.event.ItemUseConvertEvent;
 import com.aetherteam.aether.recipe.BlockStateRecipeUtil;
 import net.minecraft.commands.CommandFunction;
 import net.minecraft.core.BlockPos;
