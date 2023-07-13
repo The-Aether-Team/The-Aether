@@ -1,6 +1,6 @@
 package com.aetherteam.aether.recipe.recipes.ban;
 
-import com.aetherteam.aether.recipe.BlockStateIngredient;
+import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;

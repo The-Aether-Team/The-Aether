@@ -1,8 +1,8 @@
 package com.aetherteam.aether.integration.jei;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.recipe.BlockPropertyPair;
-import com.aetherteam.aether.recipe.BlockStateRecipeUtil;
+import com.aetherteam.nitrogen.recipe.BlockPropertyPair;
+import com.aetherteam.nitrogen.recipe.BlockStateRecipeUtil;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;

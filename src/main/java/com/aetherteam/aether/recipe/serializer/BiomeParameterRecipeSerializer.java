@@ -1,9 +1,10 @@
 package com.aetherteam.aether.recipe.serializer;
 
-import com.aetherteam.aether.recipe.BlockPropertyPair;
-import com.aetherteam.aether.recipe.BlockStateIngredient;
 import com.aetherteam.aether.recipe.recipes.block.AbstractBiomeParameterRecipe;
-import com.aetherteam.aether.recipe.BlockStateRecipeUtil;
+import com.aetherteam.nitrogen.recipe.BlockPropertyPair;
+import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
+import com.aetherteam.nitrogen.recipe.BlockStateRecipeUtil;
+import com.aetherteam.nitrogen.recipe.serializer.BlockStateRecipeSerializer;
 import com.google.gson.JsonObject;
 import net.minecraft.commands.CommandFunction;
 import net.minecraft.network.FriendlyByteBuf;

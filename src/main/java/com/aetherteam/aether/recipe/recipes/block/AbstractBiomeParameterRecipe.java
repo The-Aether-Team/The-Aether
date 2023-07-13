@@ -1,7 +1,8 @@
 package com.aetherteam.aether.recipe.recipes.block;
 
-import com.aetherteam.aether.recipe.BlockPropertyPair;
-import com.aetherteam.aether.recipe.BlockStateIngredient;
+import com.aetherteam.nitrogen.recipe.BlockPropertyPair;
+import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
+import com.aetherteam.nitrogen.recipe.recipes.AbstractBlockStateRecipe;
 import net.minecraft.commands.CommandFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
@@ -14,7 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 
-public abstract class AbstractBiomeParameterRecipe extends AbstractBlockStateRecipe  {
+public abstract class AbstractBiomeParameterRecipe extends AbstractBlockStateRecipe {
     private final ResourceKey<Biome> biomeKey;
     private final TagKey<Biome> biomeTag;
 

@@ -1,7 +1,7 @@
 package com.aetherteam.aether.block;
 
 import com.aetherteam.aether.event.FreezeEvent;
-import com.aetherteam.aether.recipe.BlockStateRecipeUtil;
+import com.aetherteam.nitrogen.recipe.BlockStateRecipeUtil;
 import net.minecraft.commands.CommandFunction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.LevelAccessor;

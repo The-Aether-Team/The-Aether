@@ -3,9 +3,9 @@ package com.aetherteam.aether.recipe.recipes.ban;
 import com.aetherteam.aether.event.AetherEventDispatch;
 import com.aetherteam.aether.recipe.AetherRecipeSerializers;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
-import com.aetherteam.aether.recipe.BlockStateIngredient;
 import com.aetherteam.aether.recipe.serializer.PlacementBanRecipeSerializer;
-import com.aetherteam.aether.recipe.BlockStateRecipeUtil;
+import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
+import com.aetherteam.nitrogen.recipe.BlockStateRecipeUtil;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
@@ -43,7 +43,7 @@ public class ItemBanRecipe extends AbstractPlacementBanRecipe<ItemStack, Ingredi
      * @param pos The {@link BlockPos} the recipe is performed at.
      * @param direction The {@link Direction} face that is interacted with.
      * @param stack The {@link ItemStack} being used that is being checked.
-     * @param spawnParticles A {@Boolean} for whether to spawn particles.
+     * @param spawnParticles A {@link Boolean} for whether to spawn particles.
      * @return Whether the given {@link ItemStack} is banned from placement.
      */
     public boolean banItem(Level level, BlockPos pos, Direction direction, ItemStack stack, boolean spawnParticles) {

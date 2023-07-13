@@ -2,7 +2,7 @@ package com.aetherteam.aether.recipe.recipes.block;
 
 import com.aetherteam.aether.event.AetherEventDispatch;
 import com.aetherteam.aether.event.ItemUseConvertEvent;
-import com.aetherteam.aether.recipe.BlockStateRecipeUtil;
+import com.aetherteam.nitrogen.recipe.BlockStateRecipeUtil;
 import net.minecraft.commands.CommandFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
@@ -15,11 +15,8 @@ import net.minecraft.world.level.block.state.BlockState;
 public interface MatchEventRecipe {
     /**
      * Replaces an old {@link BlockState} with a new one. Also executes a mcfunction if the recipe has one.
-     * @param player The {@link Player} performing the recipe.
      * @param level The {@link Level} the recipe is performed in.
      * @param pos The {@link BlockPos} the recipe is performed at.
-     * @param stack The {@link ItemStack} being used to perform the recipe.
-     * @param oldState The original {@link BlockState} being interacted with.
      * @param newState The resulting {@link BlockState} from the recipe.
      * @param function The {@link CommandFunction.CacheableFunction} to run when the recipe is performed.
      * @return Whether the new {@link BlockState} was set.

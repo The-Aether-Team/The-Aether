@@ -1,11 +1,12 @@
 package com.aetherteam.aether.data.providers;
 
 import com.aetherteam.aether.api.registers.MoaType;
-import com.aetherteam.aether.recipe.BlockPropertyPair;
-import com.aetherteam.aether.recipe.BlockStateIngredient;
 import com.aetherteam.aether.recipe.builder.*;
 import com.aetherteam.aether.recipe.AetherRecipeSerializers;
 import com.aetherteam.aether.AetherTags;
+import com.aetherteam.nitrogen.recipe.BlockPropertyPair;
+import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
+import com.aetherteam.nitrogen.recipe.builder.BlockStateRecipeBuilder;
 import net.minecraft.data.recipes.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -448,11 +449,5 @@ public abstract class AetherRecipeProvider extends RecipeProvider {
 
     protected static BlockPropertyPair pair(Block resultBlock, Map<Property<?>, Comparable<?>> resultProperties) {
         return BlockPropertyPair.of(resultBlock, resultProperties);
-    }
-
-    protected interface ConditionalFinishedRecipe extends Consumer<Consumer<FinishedRecipe>> {
-        static ConditionalFinishedRecipe create(RecipeBuilder recipe) {
-            return recipe::save;
-        }
     }
 }

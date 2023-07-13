@@ -1,8 +1,8 @@
 package com.aetherteam.aether.block.dispenser;
 
 import com.aetherteam.aether.item.materials.behavior.ItemUseConversion;
-import com.aetherteam.aether.recipe.recipes.block.BlockStateRecipe;
 import com.aetherteam.aether.recipe.recipes.block.MatchEventRecipe;
+import com.aetherteam.nitrogen.recipe.recipes.BlockStateRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
 import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
