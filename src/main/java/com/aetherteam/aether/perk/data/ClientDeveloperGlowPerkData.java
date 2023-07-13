@@ -1,7 +1,7 @@
 package com.aetherteam.aether.perk.data;
 
 import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.server.ServerDeveloperGlowPacket;
+import com.aetherteam.aether.network.packet.serverbound.ServerDeveloperGlowPacket;
 import com.aetherteam.aether.perk.CustomizationsOptions;
 import com.aetherteam.aether.perk.types.DeveloperGlow;
 import com.aetherteam.aether.perk.PerkUtil;

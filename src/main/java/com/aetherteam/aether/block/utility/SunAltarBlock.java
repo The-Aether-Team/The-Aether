@@ -7,7 +7,7 @@ import com.aetherteam.aether.capability.AetherCapabilities;
 import com.aetherteam.aether.capability.time.AetherTime;
 import com.aetherteam.aether.api.SunAltarWhitelist;
 import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.client.OpenSunAltarPacket;
+import com.aetherteam.aether.network.packet.clientbound.OpenSunAltarPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;

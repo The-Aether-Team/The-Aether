@@ -5,7 +5,7 @@ import com.aetherteam.aether.entity.AetherEntityTypes;
 
 import com.aetherteam.aether.mixin.mixins.common.accessor.PlayerAccessor;
 import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.client.ZephyrSnowballHitPacket;
+import com.aetherteam.aether.network.packet.clientbound.ZephyrSnowballHitPacket;
 import com.aetherteam.aether.item.EquipmentUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;

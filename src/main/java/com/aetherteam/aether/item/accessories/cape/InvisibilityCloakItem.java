@@ -5,7 +5,7 @@ import com.aetherteam.aether.client.AetherKeys;
 import com.aetherteam.aether.item.accessories.AccessoryItem;
 import com.aetherteam.aether.mixin.mixins.common.accessor.LivingEntityAccessor;
 import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.server.InvisibilityTogglePacket;
+import com.aetherteam.aether.network.packet.serverbound.InvisibilityTogglePacket;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;

@@ -7,7 +7,7 @@ import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.block.AetherBlocks;
 
 import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.client.SentryExplosionParticlePacket;
+import com.aetherteam.aether.network.packet.clientbound.SentryExplosionParticlePacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;

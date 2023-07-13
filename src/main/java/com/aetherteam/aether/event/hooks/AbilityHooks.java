@@ -19,7 +19,7 @@ import com.aetherteam.aether.capability.lightning.LightningTracker;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.loot.AetherLootContexts;
 import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.client.ToolDebuffPacket;
+import com.aetherteam.aether.network.packet.clientbound.ToolDebuffPacket;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;

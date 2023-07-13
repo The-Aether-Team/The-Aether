@@ -5,7 +5,7 @@ import com.aetherteam.aether.client.gui.component.PlayerDialogueButton;
 import com.aetherteam.aether.entity.monster.dungeon.boss.ValkyrieQueen;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.server.NpcPlayerInteractPacket;
+import com.aetherteam.aether.network.packet.serverbound.NpcPlayerInteractPacket;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;

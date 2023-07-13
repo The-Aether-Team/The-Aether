@@ -2,7 +2,7 @@ package com.aetherteam.aether.entity.miscellaneous;
 
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
 import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.client.ExplosionParticlePacket;
+import com.aetherteam.aether.network.packet.clientbound.ExplosionParticlePacket;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;

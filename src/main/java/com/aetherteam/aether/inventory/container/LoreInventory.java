@@ -3,7 +3,7 @@ package com.aetherteam.aether.inventory.container;
 import com.aetherteam.aether.advancement.LoreTrigger;
 import com.aetherteam.aether.inventory.menu.LoreBookMenu;
 import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.server.LoreExistsPacket;
+import com.aetherteam.aether.network.packet.serverbound.LoreExistsPacket;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;

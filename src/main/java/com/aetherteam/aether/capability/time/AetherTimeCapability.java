@@ -1,9 +1,8 @@
 package com.aetherteam.aether.capability.time;
 
-import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.client.EternalDayPacket;
+import com.aetherteam.aether.network.packet.clientbound.EternalDayPacket;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;

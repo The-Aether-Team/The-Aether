@@ -3,7 +3,7 @@ package com.aetherteam.aether.client.gui.component;
 import com.aetherteam.aether.capability.AetherCapabilities;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.server.SunAltarUpdatePacket;
+import com.aetherteam.aether.network.packet.serverbound.SunAltarUpdatePacket;
 import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;

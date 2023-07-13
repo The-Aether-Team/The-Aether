@@ -21,7 +21,7 @@ import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.api.registers.MoaType;
 import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.client.MoaInteractPacket;
+import com.aetherteam.aether.network.packet.clientbound.MoaInteractPacket;
 import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.perk.data.ServerMoaSkinPerkData;
 import com.aetherteam.aether.perk.types.MoaData;

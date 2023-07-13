@@ -2,7 +2,7 @@ package com.aetherteam.aether.command;
 
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.client.HealthResetPacket;
+import com.aetherteam.aether.network.packet.clientbound.HealthResetPacket;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;

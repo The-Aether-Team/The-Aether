@@ -6,7 +6,7 @@ import com.aetherteam.aether.entity.ai.goal.target.MostDamageTargetGoal;
 import com.aetherteam.aether.event.dispatch.AetherEventDispatch;
 import com.aetherteam.aether.event.events.ValkyrieTeleportEvent;
 import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.client.ExplosionParticlePacket;
+import com.aetherteam.aether.network.packet.clientbound.ExplosionParticlePacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;

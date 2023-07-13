@@ -3,8 +3,8 @@ package com.aetherteam.aether.network;
 import com.aetherteam.aether.Aether;
 
 import com.aetherteam.aether.network.packet.AetherPlayerSyncPacket;
-import com.aetherteam.aether.network.packet.client.*;
-import com.aetherteam.aether.network.packet.server.*;
+import com.aetherteam.aether.network.packet.clientbound.*;
+import com.aetherteam.aether.network.packet.serverbound.*;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;

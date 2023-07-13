@@ -2,8 +2,8 @@ package com.aetherteam.aether.client.gui.component;
 
 import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.server.OpenAccessoriesPacket;
-import com.aetherteam.aether.network.packet.server.OpenInventoryPacket;
+import com.aetherteam.aether.network.packet.serverbound.OpenAccessoriesPacket;
+import com.aetherteam.aether.network.packet.serverbound.OpenInventoryPacket;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;

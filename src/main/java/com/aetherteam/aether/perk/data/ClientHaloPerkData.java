@@ -1,7 +1,7 @@
 package com.aetherteam.aether.perk.data;
 
 import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.server.ServerHaloPacket;
+import com.aetherteam.aether.network.packet.serverbound.ServerHaloPacket;
 import com.aetherteam.aether.perk.CustomizationsOptions;
 import com.aetherteam.aether.perk.types.Halo;
 import com.aetherteam.aether.perk.PerkUtil;

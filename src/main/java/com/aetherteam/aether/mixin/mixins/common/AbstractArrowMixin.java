@@ -2,7 +2,7 @@ package com.aetherteam.aether.mixin.mixins.common;
 
 import com.aetherteam.aether.capability.arrow.PhoenixArrow;
 import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.client.PhoenixArrowPacket;
+import com.aetherteam.aether.network.packet.clientbound.PhoenixArrowPacket;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;

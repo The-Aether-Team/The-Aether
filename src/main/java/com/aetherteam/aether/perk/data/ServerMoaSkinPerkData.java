@@ -1,7 +1,7 @@
 package com.aetherteam.aether.perk.data;
 
 import com.aetherteam.aether.network.AetherPacket;
-import com.aetherteam.aether.network.packet.client.ClientMoaSkinPacket;
+import com.aetherteam.aether.network.packet.clientbound.ClientMoaSkinPacket;
 import com.aetherteam.aether.perk.types.MoaData;
 import com.aetherteam.nitrogen.api.users.User;
 import net.minecraft.server.MinecraftServer;
