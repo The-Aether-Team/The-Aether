@@ -1,7 +1,7 @@
 package com.aetherteam.aether.entity.monster.dungeon.boss.slider;
 
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.api.BossNameGenerator;
+import com.aetherteam.aether.entity.monster.dungeon.boss.BossNameGenerator;
 import com.aetherteam.aether.api.BossRoomTracker;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.client.AetherSoundEvents;
