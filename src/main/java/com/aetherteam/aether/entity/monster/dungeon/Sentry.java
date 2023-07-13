@@ -6,8 +6,6 @@ import javax.annotation.Nullable;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.block.AetherBlocks;
 
-import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.clientbound.SentryExplosionParticlePacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -113,7 +111,7 @@ public class Sentry extends Slime {
 			this.level.explode(this, this.getX(), this.getY(), this.getZ(), 1.0F, Level.ExplosionInteraction.MOB);
 			this.playSound(SoundEvents.GENERIC_EXPLODE, 1.0F, 0.2F * (this.random.nextFloat() - this.random.nextFloat()) + 1);
 			if (this.level instanceof ServerLevel level) {
-				AetherPacketHandler.sendToNear(new SentryExplosionParticlePacket(this.getId()), this.getX(), this.getY(), this.getZ(), 10.0, level.dimension());
+				level.broadcastEntityEvent(this, (byte) 70);
 				level.sendParticles(ParticleTypes.EXPLOSION_EMITTER, this.getX(), this.getY(), this.getZ(), 1, 0.0, 0.0, 0.0, 0.5);
 			}
 			this.doEnchantDamageEffects(this, livingEntity);
@@ -191,6 +189,21 @@ public class Sentry extends Slime {
 	@Override
 	protected boolean shouldDespawnInPeaceful() {
 		return true;
+	}
+
+	@Override
+	public void handleEntityEvent(byte id) {
+		if (id == 70) {
+			for (int i = 0; i < 40; i++) {
+				double x = this.getX() + (this.getRandom().nextFloat() * 0.25);
+				double y = this.getY() + 0.5;
+				double z = this.getZ() + (this.getRandom().nextFloat() * 0.25);
+				float f1 = this.getRandom().nextFloat() * 360.0F;
+				this.getLevel().addParticle(ParticleTypes.POOF, x, y, z, -Math.sin((Math.PI / 180.0F) * f1) * 0.75, 0.125, Math.cos((Math.PI / 180.0F) * f1) * 0.75);
+			}
+		} else {
+			super.handleEntityEvent(id);
+		}
 	}
 
 	public static class AttackGoal extends SlimeAttackGoal {

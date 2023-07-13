@@ -51,7 +51,6 @@ public class AetherPacketHandler {
 		register(PhoenixArrowPacket.class, PhoenixArrowPacket::decode);
 		register(PortalTravelSoundPacket.class, PortalTravelSoundPacket::decode);
 		register(RemountAerbunnyPacket.class, RemountAerbunnyPacket::decode);
-		register(SentryExplosionParticlePacket.class, SentryExplosionParticlePacket::decode);
 		register(SetVehiclePacket.class, SetVehiclePacket::decode);
 		register(SwetAttackPacket.class, SwetAttackPacket::decode);
 		register(SwetDeathParticlePacket.class, SwetDeathParticlePacket::decode);
