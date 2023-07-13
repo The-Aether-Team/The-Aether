@@ -49,7 +49,6 @@ public class AetherPacketHandler {
 		register(RemountAerbunnyPacket.class, RemountAerbunnyPacket::decode);
 		register(SetVehiclePacket.class, SetVehiclePacket::decode);
 		register(SwetAttackPacket.class, SwetAttackPacket::decode);
-		register(SwetDeathParticlePacket.class, SwetDeathParticlePacket::decode);
 		register(ToolDebuffPacket.class, ToolDebuffPacket::decode);
 		register(ZephyrSnowballHitPacket.class, ZephyrSnowballHitPacket::decode);
 

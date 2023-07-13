@@ -5,7 +5,6 @@ import com.aetherteam.aether.entity.MountableMob;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.clientbound.SwetAttackPacket;
-import com.aetherteam.aether.network.packet.clientbound.SwetDeathParticlePacket;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.core.BlockPos;
@@ -251,7 +250,7 @@ public class Swet extends Slime implements MountableMob {
 
     public void dissolveSwet() {
         if (this.level instanceof ServerLevel level) {
-            PacketRelay.sendToNear(AetherPacketHandler.INSTANCE, new SwetDeathParticlePacket(this.getId()), this.getX(), this.getY(), this.getZ(), 10.0, level.dimension());
+            level.broadcastEntityEvent(this, (byte) 70);
         }
     }
 
@@ -372,6 +371,22 @@ public class Swet extends Slime implements MountableMob {
     @Override
     protected boolean shouldDespawnInPeaceful() {
         return true;
+    }
+
+    @Override
+    public void handleEntityEvent(byte id) {
+        if (id == 70) {
+            for (int i = 0; i < 10; i++) {
+                double f = this.getRandom().nextFloat() * Math.PI * 2.0F;
+                double f1 = this.getRandom().nextFloat() * this.swetWidth + 0.25F;
+                double f2 = (this.getRandom().nextFloat() * this.swetHeight) - (this.getRandom().nextGaussian() * 0.02 * 10.0);
+                double f3 = Mth.sin((float) f) * f1;
+                double f4 = Mth.cos((float) f) * f1;
+                this.getLevel().addParticle(ParticleTypes.SPLASH, this.getX() + f3, this.getY() + f2, this.getZ() + f4, f3 * 1.5 + this.getDeltaMovement().x, 4.0, f4 * 1.5 + this.getDeltaMovement().z);
+            }
+        } else {
+            super.handleEntityEvent(id);
+        }
     }
 
     @Override
