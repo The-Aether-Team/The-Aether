@@ -23,13 +23,13 @@ import java.util.stream.Collectors;
  * Changed to track players within the dungeon instead of within a 16 block radius.
  */
 public class InDungeonPlayerSensor<T extends Mob & BossMob<T>> extends Sensor<T> {
-    private static final TargetingConditions TARGET_CONDITIONS_IGNORE_INVISIBILITY_TESTING = TargetingConditions.forNonCombat().range(16.0D).ignoreInvisibilityTesting().ignoreLineOfSight();
-    private static final TargetingConditions ATTACK_TARGET_CONDITIONS_IGNORE_INVISIBILITY_TESTING = TargetingConditions.forCombat().range(16.0D).ignoreInvisibilityTesting().ignoreLineOfSight();
+    private static final TargetingConditions TARGET_CONDITIONS_IGNORE_INVISIBILITY_TESTING = TargetingConditions.forNonCombat().range(16.0).ignoreInvisibilityTesting().ignoreLineOfSight();
+    private static final TargetingConditions ATTACK_TARGET_CONDITIONS_IGNORE_INVISIBILITY_TESTING = TargetingConditions.forCombat().range(16.0).ignoreInvisibilityTesting().ignoreLineOfSight();
 
     @Override
     protected void doTick(ServerLevel level, T entity) {
         List<Player> targets = level.players().stream().filter(EntitySelector.NO_SPECTATORS).filter((target) -> {
-            return entity.getDungeon() != null ? entity.getDungeon().isPlayerTracked(target) : entity.closerThan(target, 16.0D);
+            return entity.getDungeon() != null ? entity.getDungeon().isPlayerTracked(target) : entity.closerThan(target, 16.0);
         }).sorted(Comparator.comparingDouble(entity::distanceToSqr)).collect(Collectors.toList());
         Brain<?> brain = entity.getBrain();
         brain.setMemory(MemoryModuleType.NEAREST_PLAYERS, targets);

@@ -38,7 +38,7 @@ public class AetherDimensions {
 				false,
 				false,
 				true,
-				1.0D,
+				1.0,
 				true,
 				false,
 				0,

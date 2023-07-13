@@ -44,11 +44,11 @@ public abstract class WhirlyParticle<T extends AbstractWhirlwind> extends Textur
             double minY = this.getBoundingBox().minY - this.y;
             double d2 = Math.atan2(this.whirlwind.getX() - this.x, this.whirlwind.getZ() - this.z) / 0.01745329424738884;
             d2 += 160.0;
-            this.xd = -Math.cos(0.01745329424738884D * d2) * (d1 * 2.5 - minY) * 0.10000000149011612;
-            this.zd = Math.sin(0.01745329424738884D * d2) * (d1 * 2.5 - minY) * 0.10000000149011612;
+            this.xd = -Math.cos(0.01745329424738884 * d2) * (d1 * 2.5 - minY) * 0.10000000149011612;
+            this.zd = Math.sin(0.01745329424738884 * d2) * (d1 * 2.5 - minY) * 0.10000000149011612;
             this.yd = 0.11500000208616257;
         }
-        this.yd += 0.004D;
+        this.yd += 0.004;
         this.move(this.xd, this.yd, this.zd);
     }
 

@@ -209,7 +209,7 @@ public class DimensionHooks {
             double y = pos.getY() + 1.0;
             double z = pos.getZ() + 0.5;
             for (int i = 0; i < 10; i++) {
-                serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE, x, y, z, 1, 0.0D,0.0D, 0.0D, 0.0F);
+                serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE, x, y, z, 1, 0.0,0.0, 0.0, 0.0F);
             }
             serverLevel.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.PLAYERS, 1.0F, 1.0F);
         }

@@ -19,11 +19,11 @@ public class AetherDensityFunctions {
 	
 	public static void bootstrap(BootstapContext<DensityFunction> context) {
         context.register(BASE_3D_NOISE_AETHER, BlendedNoise.createUnseeded(
-        		0.25D, // xz scale
-        		0.25D, // y scale
-        		80D, // xz factor
-        		160D, // y factor
-        		8.0D)); // smear scale multiplier, capped at 8
+        		0.25, // xz scale
+        		0.25, // y scale
+        		80.0, // xz factor
+        		160.0, // y factor
+        		8.0)); // smear scale multiplier, capped at 8
     }
 							
 }

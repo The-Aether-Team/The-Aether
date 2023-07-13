@@ -60,7 +60,7 @@ public class TntPresent extends Entity {
         if (i <= 0) {
             this.discard();
             if (!this.level.isClientSide) {
-                this.level.explode(this, null, null, this.getX(), this.getY(0.0625D), this.getZ(), 1.0F, false, Level.ExplosionInteraction.TNT);
+                this.level.explode(this, null, null, this.getX(), this.getY(0.0625), this.getZ(), 1.0F, false, Level.ExplosionInteraction.TNT);
             }
         } else {
             this.updateInWaterStateAndDoFluidPushing();

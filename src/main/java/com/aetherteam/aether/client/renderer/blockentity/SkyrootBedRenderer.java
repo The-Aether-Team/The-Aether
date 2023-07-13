@@ -49,11 +49,11 @@ public class SkyrootBedRenderer implements BlockEntityRenderer<SkyrootBedBlockEn
 
     private void renderPiece(PoseStack poseStack, MultiBufferSource buffer, ModelPart model, Direction direction, int packedLight, int packedOverlay, boolean foot) {
         poseStack.pushPose();
-        poseStack.translate(0.0D, 0.5625D, foot ? -1.0D : 0.0D);
+        poseStack.translate(0.0, 0.5625, foot ? -1.0 : 0.0);
         poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
-        poseStack.translate(0.5D, 0.5D, 0.5D);
+        poseStack.translate(0.5, 0.5, 0.5);
         poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F + direction.toYRot()));
-        poseStack.translate(-0.5D, -0.5D, -0.5D);
+        poseStack.translate(-0.5, -0.5, -0.5);
         VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entitySolid(new ResourceLocation(Aether.MODID, "textures/entity/tiles/bed/skyroot_bed.png")));
         model.render(poseStack, vertexconsumer, packedLight, packedOverlay);
         poseStack.popPose();

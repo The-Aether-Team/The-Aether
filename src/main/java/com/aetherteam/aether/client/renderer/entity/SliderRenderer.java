@@ -45,7 +45,7 @@ public class SliderRenderer extends MobRenderer<Slider, SliderModel> {
                 slider.setHurtAngle(Mth.lerp(partialTicks, slider.getHurtAngle(), slider.getHurtAngle() * 0.98F));
             }
             if (isEntityUpsideDown(slider)) {
-                poseStack.translate(0.0D, slider.getBbHeight() + 0.1F, 0.0D);
+                poseStack.translate(0.0, slider.getBbHeight() + 0.1F, 0.0);
                 poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
             }
         }

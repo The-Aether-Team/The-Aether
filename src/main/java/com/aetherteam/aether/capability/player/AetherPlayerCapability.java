@@ -356,13 +356,13 @@ public class AetherPlayerCapability extends CapabilitySyncing implements AetherP
 		Inventory inventory = this.getPlayer().getInventory();
 		Level level = player.level;
 		if (!player.isCreative() && !player.isShiftKeyDown() && !player.isFallFlying() && !player.isPassenger()) {
-			if (player.getDeltaMovement().y() < -1.5D) {
+			if (player.getDeltaMovement().y() < -1.5) {
 				if (inventory.contains(AetherTags.Items.DEPLOYABLE_PARACHUTES)) {
 					for (ItemStack stack : inventory.items) {
 						if (stack.getItem() instanceof ParachuteItem parachuteItem) {
 							Parachute parachute = parachuteItem.getParachuteEntity().get().create(level);
 							if (parachute != null) {
-								parachute.setPos(player.getX(), player.getY() - 1.0D, player.getZ());
+								parachute.setPos(player.getX(), player.getY() - 1.0, player.getZ());
 								parachute.setDeltaMovement(player.getDeltaMovement());
 								if (!level.isClientSide) {
 									level.addFreshEntity(parachute);

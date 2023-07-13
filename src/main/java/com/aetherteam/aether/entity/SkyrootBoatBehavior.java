@@ -33,7 +33,7 @@ public interface SkyrootBoatBehavior {
                     }
                 }
                 boat.resetFallDistance();
-            } else if (!boat.level.getFluidState(boat.blockPosition().below()).is(FluidTags.WATER) && y < 0.0D) {
+            } else if (!boat.level.getFluidState(boat.blockPosition().below()).is(FluidTags.WATER) && y < 0.0) {
                 boat.fallDistance -= (float) y;
             }
         }

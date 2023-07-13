@@ -216,9 +216,9 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
     }
 
     protected void blockDestroySmoke(BlockPos pos) {
-        double a = pos.getX() + 0.5D + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375D;
-        double b = pos.getY() + 0.5D + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375D;
-        double c = pos.getZ() + 0.5D + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375D;
+        double a = pos.getX() + 0.5 + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375;
+        double b = pos.getY() + 0.5 + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375;
+        double c = pos.getZ() + 0.5 + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375;
         if (this.level instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(ParticleTypes.POOF, a, b, c, 1, 0.0, 0.0, 0.0, 0.0);
         }

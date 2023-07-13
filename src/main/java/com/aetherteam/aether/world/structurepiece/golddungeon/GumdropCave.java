@@ -61,8 +61,8 @@ public class GumdropCave extends StructurePiece {
             double y = lowerY + (upperY - lowerY) * radius;
             double z = lowerZ + (upperZ - lowerZ) * radius;
 
-            double magnitude = random.nextDouble() * 30 / 16.0D;
-            double width = (Math.sin(radius * Mth.PI) + 1.0F) * magnitude + 1.0D;
+            double magnitude = random.nextDouble() * 30 / 16.0;
+            double width = (Math.sin(radius * Mth.PI) + 1.0F) * magnitude + 1.0;
             width /= 2;
 
             int minX = Mth.floor(x - width);
@@ -74,14 +74,14 @@ public class GumdropCave extends StructurePiece {
             int maxZ = Mth.floor(z + width);
 
             for(int xOffset = minX; xOffset <= maxX; ++xOffset) {
-                double xDistance = Mth.square((xOffset + 0.5D - x) / (width));
-                if(xDistance < 1.0D) {
+                double xDistance = Mth.square((xOffset + 0.5 - x) / (width));
+                if(xDistance < 1.0) {
                     for(int yOffset = minY; yOffset <= maxY; ++yOffset) {
-                        double yDistance = Mth.square((yOffset + 0.5D - y) / (width));
-                        if(xDistance + yDistance < 1.0D) {
+                        double yDistance = Mth.square((yOffset + 0.5 - y) / (width));
+                        if(xDistance + yDistance < 1.0) {
                             for(int zOffset = minZ; zOffset <= maxZ; ++zOffset) {
-                                double zDistance = Mth.square((zOffset + 0.5D - z) / (width));
-                                if(xDistance + yDistance + zDistance < 1.0D) {
+                                double zDistance = Mth.square((zOffset + 0.5 - z) / (width));
+                                if(xDistance + yDistance + zDistance < 1.0) {
                                     BlockState state = level.getBlockState(mutable.set(xOffset, yOffset, zOffset));
                                     if (state.is(AetherTags.Blocks.AETHER_DIRT) || state.is(AetherTags.Blocks.HOLYSTONE)) {
                                         level.setBlock(mutable, Blocks.AIR.defaultBlockState(), 2);

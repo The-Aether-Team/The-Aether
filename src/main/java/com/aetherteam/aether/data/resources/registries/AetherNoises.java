@@ -19,8 +19,8 @@ public class AetherNoises {
     }
 	
 	public static void bootstrap(BootstapContext<NoiseParameters> ctx) {
-		register(ctx, TEMPERATURE, -8, 1.5D, 0.0D, 1.0D, 0.0D, 0.0D, 0.0D);
-		register(ctx, VEGETATION, -7, 1.0D, 1.0D, 0.0D, 0.0D, 0.0D, 0.0D);
+		register(ctx, TEMPERATURE, -8, 1.5, 0.0, 1.0, 0.0, 0.0, 0.0);
+		register(ctx, VEGETATION, -7, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0);
     }
 	
 	public static void register(BootstapContext<NoiseParameters> ctx, ResourceKey<NormalNoise.NoiseParameters> key, int firstOctave, double firstAmplitude, double... amplitudes) {

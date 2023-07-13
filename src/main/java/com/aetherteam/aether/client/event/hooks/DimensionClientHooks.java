@@ -46,12 +46,12 @@ public class DimensionClientHooks {
                 ClientLevel.ClientLevelData worldInfo = clientLevel.getLevelData();
                 double d0 = (camera.getPosition().y - (double) clientLevel.getMinBuildHeight()) * worldInfo.getClearColorScale();
                 FogType fluidState = camera.getFluidInCamera();
-                if (d0 < 1.0D && fluidState != FogType.LAVA) {
-                    if (d0 < 0.0D) {
-                        d0 = 0.0D;
+                if (d0 < 1.0 && fluidState != FogType.LAVA) {
+                    if (d0 < 0.0) {
+                        d0 = 0.0;
                     }
                     d0 = d0 * d0;
-                    if (d0 != 0.0D) {
+                    if (d0 != 0.0) {
                         return Triple.of((float) ((double) red / d0), (float) ((double) green / d0), (float) ((double) blue / d0));
                     }
                 }

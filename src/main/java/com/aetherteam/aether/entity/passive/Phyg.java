@@ -101,6 +101,6 @@ public class Phyg extends WingedAnimal {
     @Nonnull
     @OnlyIn(Dist.CLIENT)
     public Vec3 getLeashOffset() {
-        return new Vec3(0.0D, 0.6F * this.getEyeHeight(), this.getBbWidth() * 0.4F);
+        return new Vec3(0.0, 0.6F * this.getEyeHeight(), this.getBbWidth() * 0.4F);
     }
 }

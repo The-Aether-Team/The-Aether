@@ -28,7 +28,7 @@ public record SwetDeathParticlePacket(int entityID) implements AetherPacket {
                 double f2 = (swet.getRandom().nextFloat() * swet.swetHeight) - (swet.getRandom().nextGaussian() * 0.02 * 10.0);
                 double f3 = Mth.sin((float) f) * f1;
                 double f4 = Mth.cos((float) f) * f1;
-                swet.getLevel().addParticle(ParticleTypes.SPLASH, swet.getX() + f3, swet.getY() + f2, swet.getZ() + f4, f3 * 1.5D + swet.getDeltaMovement().x, 4D, f4 * 1.5D + swet.getDeltaMovement().z);
+                swet.getLevel().addParticle(ParticleTypes.SPLASH, swet.getX() + f3, swet.getY() + f2, swet.getZ() + f4, f3 * 1.5 + swet.getDeltaMovement().x, 4.0, f4 * 1.5 + swet.getDeltaMovement().z);
             }
         }
     }

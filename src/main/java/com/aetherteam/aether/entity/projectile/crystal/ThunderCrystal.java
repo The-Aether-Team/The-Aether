@@ -96,7 +96,7 @@ public class ThunderCrystal extends AbstractCrystal {
     @Override
     public boolean hurt(@Nonnull DamageSource source, float pAmount) {
         if (!this.level.isClientSide && source.getSourcePosition() != null) {
-            ((ServerLevel) this.level).sendParticles(ParticleTypes.CRIT, this.getX(), this.getY(), this.getZ(), 15, 0.2D, 0.2D, 0.2D, 0.0D);
+            ((ServerLevel) this.level).sendParticles(ParticleTypes.CRIT, this.getX(), this.getY(), this.getZ(), 15, 0.2, 0.2, 0.2, 0.0);
             this.knockback(0.15 + pAmount / 8, this.position().subtract(source.getSourcePosition()));
         }
         this.ticksInAir += pAmount * 10;
@@ -107,7 +107,7 @@ public class ThunderCrystal extends AbstractCrystal {
         this.hasImpulse = true;
         Vec3 vec3 = this.getDeltaMovement();
         Vec3 vec31 = target.normalize().scale(strength);
-        this.setDeltaMovement(vec3.x / 2.0D + vec31.x, vec3.y / 2 + vec31.y, vec3.z / 2.0D + vec31.z);
+        this.setDeltaMovement(vec3.x / 2.0 + vec31.x, vec3.y / 2 + vec31.y, vec3.z / 2.0 + vec31.z);
     }
 
     /**

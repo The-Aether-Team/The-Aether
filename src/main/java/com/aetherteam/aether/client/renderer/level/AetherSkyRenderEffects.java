@@ -120,19 +120,19 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
             RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
             RenderSystem.depthMask(true);
             double d1 = ((float)ticks + partialTick) * 0.03F;
-            double d2 = (camX + d1) / 12.0D;
+            double d2 = (camX + d1) / 12.0;
             double d3 = f - (float)camY + 0.33F;
-            double d4 = camZ / 12.0D + (double)0.33F;
-            d2 -= Mth.floor(d2 / 2048.0D) * 2048;
-            d4 -= Mth.floor(d4 / 2048.0D) * 2048;
+            double d4 = camZ / 12.0 + (double)0.33F;
+            d2 -= Mth.floor(d2 / 2048.0) * 2048;
+            d4 -= Mth.floor(d4 / 2048.0) * 2048;
             float f3 = (float)(d2 - (double)Mth.floor(d2));
-            float f4 = (float)(d3 / 4.0D - (double)Mth.floor(d3 / 4.0D)) * 4.0F;
+            float f4 = (float)(d3 / 4.0 - (double)Mth.floor(d3 / 4.0)) * 4.0F;
             float f5 = (float)(d4 - (double)Mth.floor(d4));
             Vec3 vec3 = this.getCloudColor(level, partialTick);
             int i = (int)Math.floor(d2);
-            int j = (int)Math.floor(d3 / 4.0D);
+            int j = (int)Math.floor(d3 / 4.0);
             int k = (int)Math.floor(d4);
-            if (i != this.prevCloudX || j != this.prevCloudY || k != this.prevCloudZ || Minecraft.getInstance().options.getCloudsType() != ((LevelRendererAccessor) levelRenderer).aether$getPrevCloudsType() || this.prevCloudColor.distanceToSqr(vec3) > 2.0E-4D) {
+            if (i != this.prevCloudX || j != this.prevCloudY || k != this.prevCloudZ || Minecraft.getInstance().options.getCloudsType() != ((LevelRendererAccessor) levelRenderer).aether$getPrevCloudsType() || this.prevCloudColor.distanceToSqr(vec3) > 2.0E-4) {
                 this.prevCloudX = i;
                 this.prevCloudY = j;
                 this.prevCloudZ = k;
@@ -286,7 +286,7 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
 
     public Vec3 getSkyColor(ClientLevel world, Vec3 pPos, float pPartialTick) {
         float f = world.getTimeOfDay(pPartialTick);
-        Vec3 vec3 = pPos.subtract(2.0D, 2.0D, 2.0D).scale(0.25D);
+        Vec3 vec3 = pPos.subtract(2.0, 2.0, 2.0).scale(0.25);
         BiomeManager biomemanager = world.getBiomeManager();
         Vec3 vec31 = CubicSampler.gaussianSampleVec3(vec3, (p_194161_, p_194162_, p_194163_) -> Vec3.fromRGB24(biomemanager.getNoiseBiomeAtQuart(p_194161_, p_194162_, p_194163_).value().getSkyColor()));
         float f1 = Mth.cos(f * ((float)Math.PI * 2F)) * 2.0F + 0.5F;

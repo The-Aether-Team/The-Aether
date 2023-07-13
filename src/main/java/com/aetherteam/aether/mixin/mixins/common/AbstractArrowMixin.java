@@ -46,10 +46,10 @@ public class AbstractArrowMixin
     private void spawnParticles(AbstractArrow arrow) {
         if (arrow.level instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(ParticleTypes.FLAME,
-                    arrow.getX() + (serverLevel.getRandom().nextGaussian() / 5.0D),
-                    arrow.getY() + (serverLevel.getRandom().nextGaussian() / 3.0D),
-                    arrow.getZ() + (serverLevel.getRandom().nextGaussian() / 5.0D),
-                    1, 0.0D, 0.0D, 0.0D, 0.0F);
+                    arrow.getX() + (serverLevel.getRandom().nextGaussian() / 5.0),
+                    arrow.getY() + (serverLevel.getRandom().nextGaussian() / 3.0),
+                    arrow.getZ() + (serverLevel.getRandom().nextGaussian() / 5.0),
+                    1, 0.0, 0.0, 0.0, 0.0F);
         }
     }
 }

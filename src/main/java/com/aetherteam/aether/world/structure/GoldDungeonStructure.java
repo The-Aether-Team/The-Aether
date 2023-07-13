@@ -107,7 +107,7 @@ public class GoldDungeonStructure extends Structure {
             float distance = ((random.nextFloat() * 0.125F) + 0.7F) * 24.0F;
 
             int xOffset = Mth.floor(Math.cos(angle) * distance);
-            int yOffset = -Mth.floor(24.0D * random.nextFloat() * 0.3D);
+            int yOffset = -Mth.floor(24.0 * random.nextFloat() * 0.3);
             int zOffset = Mth.floor(-Math.sin(angle) * distance);
 
             BlockPos stubPos = center.offset(xOffset, yOffset, zOffset);

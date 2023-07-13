@@ -100,7 +100,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 		this.goalSelector.addGoal(0, new FloatGoal(this));
 		this.goalSelector.addGoal(1, new PanicGoal(this, 0.65));
 		this.goalSelector.addGoal(2, new MoaFollowGoal(this, 1.0));
-		this.goalSelector.addGoal(3, new ContinuousMeleeAttackGoal(this, 1.0D, true));
+		this.goalSelector.addGoal(3, new ContinuousMeleeAttackGoal(this, 1.0, true));
 		this.goalSelector.addGoal(4, new FallingRandomStrollGoal(this, 0.35));
 		this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6.0F));
 		this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));

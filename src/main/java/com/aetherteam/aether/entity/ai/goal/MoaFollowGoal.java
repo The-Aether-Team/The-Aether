@@ -9,7 +9,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import javax.annotation.Nullable;
 
 public class MoaFollowGoal extends TemptGoal {
-    private static final TargetingConditions TEMP_TARGETING = TargetingConditions.forNonCombat().range(10.0D).ignoreLineOfSight();
+    private static final TargetingConditions TEMP_TARGETING = TargetingConditions.forNonCombat().range(10.0).ignoreLineOfSight();
     private final TargetingConditions targetingConditions;
     protected final Moa moa;
     private final double speedModifier;
@@ -57,7 +57,7 @@ public class MoaFollowGoal extends TemptGoal {
     @Override
     public void tick() {
         this.moa.getLookControl().setLookAt(this.player, (float) (this.moa.getMaxHeadYRot() + 20), (float) this.moa.getMaxHeadXRot());
-        if (this.moa.distanceToSqr(this.player) < 6.25D) {
+        if (this.moa.distanceToSqr(this.player) < 6.25) {
             this.moa.getNavigation().stop();
         } else {
             this.moa.getNavigation().moveTo(this.player, this.speedModifier);

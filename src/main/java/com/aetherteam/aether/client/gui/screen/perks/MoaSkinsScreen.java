@@ -305,7 +305,7 @@ public class MoaSkinsScreen extends Screen {
         entityRenderDispatcher.overrideCameraOrientation(quaternionf1);
         entityRenderDispatcher.setRenderShadow(false);
         MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
-        RenderSystem.runAsFancy(() -> entityRenderDispatcher.render(livingEntity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, poseStack1, bufferSource, 15728880));
+        RenderSystem.runAsFancy(() -> entityRenderDispatcher.render(livingEntity, 0.0, 0.0, 0.0, 0.0F, 1.0F, poseStack1, bufferSource, 15728880));
         bufferSource.endBatch();
         entityRenderDispatcher.setRenderShadow(true);
         livingEntity.yBodyRot = f2;

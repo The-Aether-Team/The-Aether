@@ -127,10 +127,10 @@ public class IncubatorBlock extends BaseEntityBlock {
 	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
 		if (state.getValue(LIT)) {
 			double f = pos.getX() + 0.5;
-			double f1 = pos.getY() + 1.0 + (random.nextFloat() * 15.0D) / 16.0;
+			double f1 = pos.getY() + 1.0 + (random.nextFloat() * 15.0) / 16.0;
 			double f2 = pos.getZ() + 0.5;
-			level.addParticle(ParticleTypes.SMOKE, f, f1, f2, 0.0D, 0.0D, 0.0D);
-			level.addParticle(ParticleTypes.FLAME, f, f1, f2, 0.0D, 0.0D, 0.0D);
+			level.addParticle(ParticleTypes.SMOKE, f, f1, f2, 0.0, 0.0, 0.0);
+			level.addParticle(ParticleTypes.FLAME, f, f1, f2, 0.0, 0.0, 0.0);
 			if (random.nextDouble() < 0.1) {
 				level.playLocalSound(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, AetherSoundEvents.BLOCK_INCUBATOR_CRACKLE.get(), SoundSource.BLOCKS, 1.0F, 1.0F, false);
 			}

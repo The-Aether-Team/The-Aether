@@ -160,7 +160,7 @@ public class Aerwhale extends FlyingMob {
     }
 
     protected double followLeashSpeed() {
-        return 1.0D;
+        return 1.0;
     }
 
     @Override
@@ -332,7 +332,7 @@ public class Aerwhale extends FlyingMob {
                     double d0 = (entity.getX() - this.mob.getX()) / (double)f;
                     double d1 = (entity.getY() - this.mob.getY()) / (double)f;
                     double d2 = (entity.getZ() - this.mob.getZ()) / (double)f;
-                    this.mob.setDeltaMovement(this.mob.getDeltaMovement().add(Math.copySign(d0 * d0 * 0.4D, d0), Math.copySign(d1 * d1 * 0.4D, d1), Math.copySign(d2 * d2 * 0.4D, d2)));
+                    this.mob.setDeltaMovement(this.mob.getDeltaMovement().add(Math.copySign(d0 * d0 * 0.4, d0), Math.copySign(d1 * d1 * 0.4, d1), Math.copySign(d2 * d2 * 0.4, d2)));
                     this.mob.checkSlowFallDistance();
                 } else if (this.mob.shouldStayCloseToLeashHolder()) {
                     this.mob.goalSelector.enableControlFlag(Goal.Flag.MOVE);

@@ -34,21 +34,21 @@ public class AetherLakeFeature extends Feature<AetherLakeConfiguration> {
             int i = random.nextInt(4) + 4;
 
             for (int j = 0; j < i; ++j) {
-                double d0 = random.nextDouble() * 6.0D + 3.0D;
-                double d1 = random.nextDouble() * 4.0D + 2.0D;
-                double d2 = random.nextDouble() * 6.0D + 3.0D;
-                double d3 = random.nextDouble() * (16.0D - d0 - 2.0D) + 1.0D + d0 / 2.0D;
-                double d4 = random.nextDouble() * (8.0D - d1 - 4.0D) + 2.0D + d1 / 2.0D;
-                double d5 = random.nextDouble() * (16.0D - d2 - 2.0D) + 1.0D + d2 / 2.0D;
+                double d0 = random.nextDouble() * 6.0 + 3.0;
+                double d1 = random.nextDouble() * 4.0 + 2.0;
+                double d2 = random.nextDouble() * 6.0 + 3.0;
+                double d3 = random.nextDouble() * (16.0 - d0 - 2.0) + 1.0 + d0 / 2.0;
+                double d4 = random.nextDouble() * (8.0 - d1 - 4.0) + 2.0 + d1 / 2.0;
+                double d5 = random.nextDouble() * (16.0 - d2 - 2.0) + 1.0 + d2 / 2.0;
 
                 for(int l = 1; l < 15; ++l) {
                     for(int i1 = 1; i1 < 15; ++i1) {
                         for(int j1 = 1; j1 < 7; ++j1) {
-                            double d6 = ((double)l - d3) / (d0 / 2.0D);
-                            double d7 = ((double)j1 - d4) / (d1 / 2.0D);
-                            double d8 = ((double)i1 - d5) / (d2 / 2.0D);
+                            double d6 = ((double)l - d3) / (d0 / 2.0);
+                            double d7 = ((double)j1 - d4) / (d1 / 2.0);
+                            double d8 = ((double)i1 - d5) / (d2 / 2.0);
                             double d9 = d6 * d6 + d7 * d7 + d8 * d8;
-                            if (d9 < 1.0D) {
+                            if (d9 < 1.0) {
                                 aboolean[(l * 16 + i1) * 8 + j1] = true;
                             }
                         }

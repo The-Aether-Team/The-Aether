@@ -486,18 +486,18 @@ public class Swet extends Slime implements MountableMob {
             if (this.jumps <= 3) {
                 if (this.swet.onGround) {
                     // This is to make sure the swet actually touches the ground on the client.
-                    AetherPacketHandler.sendToNear(new SwetAttackPacket(this.swet.getId(), this.swet.getX(), this.swet.getY(), this.swet.getZ()), this.swet.getX(), this.swet.getY(), this.swet.getZ(), 50.0D, this.swet.getLevel().dimension());
+                    AetherPacketHandler.sendToNear(new SwetAttackPacket(this.swet.getId(), this.swet.getX(), this.swet.getY(), this.swet.getZ()), this.swet.getX(), this.swet.getY(), this.swet.getZ(), 50.0, this.swet.getLevel().dimension());
 
                     this.swet.playSound(AetherSoundEvents.ENTITY_SWET_JUMP.get(), 1.0F, ((this.swet.getRandom().nextFloat() - this.swet.getRandom().nextFloat()) * 0.2F + 1.0F) * 0.8F);
 
                     this.chosenDegrees = (float) this.swet.getRandom().nextInt(360);
 
                     if (this.jumps == 0) {
-                        this.swet.setDeltaMovement(this.swet.getDeltaMovement().add(0, 0.64999999403953552D, 0));
+                        this.swet.setDeltaMovement(this.swet.getDeltaMovement().add(0, 0.64999999403953552, 0));
                     } else if (this.jumps == 1) {
-                        this.swet.setDeltaMovement(this.swet.getDeltaMovement().add(0, 0.74999998807907104D, 0));
+                        this.swet.setDeltaMovement(this.swet.getDeltaMovement().add(0, 0.74999998807907104, 0));
                     } else if (this.jumps == 2) {
-                        this.swet.setDeltaMovement(this.swet.getDeltaMovement().add(0, 1.55D, 0));
+                        this.swet.setDeltaMovement(this.swet.getDeltaMovement().add(0, 1.55, 0));
                     } else {
                         this.swet.getPassengers().get(0).stopRiding();
                         this.swet.dissolveSwetNormally();

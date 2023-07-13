@@ -37,7 +37,7 @@ public class ParachuteItem extends Item {
         if (!player.isOnGround() && !player.isInFluidType() && !player.isShiftKeyDown()) { // Player has to be on ground and can't be in liquid, and also can't be holding shift.
             Entity entity = this.getParachuteEntity().get().create(level);
             if (entity instanceof Parachute parachute) {
-                parachute.setPos(player.getX(), player.getY() - 1.0D, player.getZ()); // Spawn Parachute below player.
+                parachute.setPos(player.getX(), player.getY() - 1.0, player.getZ()); // Spawn Parachute below player.
                 parachute.setDeltaMovement(player.getDeltaMovement());
                 if (player.isPassenger()) {
                     if (player.getVehicle() instanceof Parachute) { // Using a Parachute while already having one will switch to the new one.

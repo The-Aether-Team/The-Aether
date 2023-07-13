@@ -297,9 +297,9 @@ public class AetherOverlays {
     private static void renderHearts(PoseStack poseStack, Player player, ForgeGui gui, int left, int top, int regen, float displayOverallHealth, float displayLifeShardHealth, int maxDefaultHealth, int lifeShardHealth, int rowHeight, int absorption, boolean highlight) {
         GuiAccessor guiAccessor = (GuiAccessor) gui;
         Gui.HeartType heartType = HeartTypeAccessor.callForPlayer(player);
-        int overallHearts = Mth.ceil((double) displayOverallHealth / 2.0D);
-        int lifeShardHearts = Mth.ceil((double) displayLifeShardHealth / 2.0D);
-        int maxDefaultHearts = Mth.ceil((double) maxDefaultHealth / 2.0D);
+        int overallHearts = Mth.ceil((double) displayOverallHealth / 2.0);
+        int lifeShardHearts = Mth.ceil((double) displayLifeShardHealth / 2.0);
+        int maxDefaultHearts = Mth.ceil((double) maxDefaultHealth / 2.0);
         boolean tooManyHearts = overallHearts > 50;
         boolean tooLittleHearts = maxDefaultHearts < 10;
         for (int currentHeart = lifeShardHearts - 1; currentHeart >= 0; --currentHeart) {

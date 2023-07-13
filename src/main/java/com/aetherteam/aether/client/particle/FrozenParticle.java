@@ -20,20 +20,20 @@ public class FrozenParticle extends TextureSheetParticle
 
     public FrozenParticle(ClientLevel worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeed, double ySpeed, double zSpeed, float scale, SpriteSet sprite) {
         super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeed, ySpeed, zSpeed);
-        this.xd *= 0.10000000149011612D;
-        this.yd *= 0.10000000149011612D;
-        this.zd *= 0.10000000149011612D;
+        this.xd *= 0.10000000149011612;
+        this.yd *= 0.10000000149011612;
+        this.zd *= 0.10000000149011612;
         this.xd += xSpeed;
         this.yd += ySpeed;
         this.zd += zSpeed;
-        float f = 1.0F - (float)(Math.random() * 0.30000001192092896D);
+        float f = 1.0F - (float)(Math.random() * 0.30000001192092896);
         this.rCol = f;
         this.gCol = f;
         this.bCol = f;
         this.quadSize *= 0.75F;
         this.quadSize *= scale;
         this.snowDigParticleScale = this.quadSize;
-        this.lifetime = (int) (8.0D / (Math.random() * 0.8D + 0.2D));
+        this.lifetime = (int) (8.0 / (Math.random() * 0.8 + 0.2));
         this.lifetime = (int) ((float) this.lifetime * scale);
         this.animatedSprite = sprite;
     }
@@ -59,16 +59,16 @@ public class FrozenParticle extends TextureSheetParticle
 
         this.setSpriteFromAge(animatedSprite);
 
-        this.yd -= 0.03D;
+        this.yd -= 0.03;
         this.move(this.xd, this.yd, this.zd);
-        this.xd *= 0.9900000095367432D;
-        this.yd *= 0.9900000095367432D;
-        this.zd *= 0.9900000095367432D;
+        this.xd *= 0.9900000095367432;
+        this.yd *= 0.9900000095367432;
+        this.zd *= 0.9900000095367432;
 
         if (this.onGround)
         {
-            this.xd *= 0.699999988079071D;
-            this.zd *= 0.699999988079071D;
+            this.xd *= 0.699999988079071;
+            this.zd *= 0.699999988079071;
         }
     }
 

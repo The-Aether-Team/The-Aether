@@ -65,11 +65,11 @@ public interface ShieldOfRepulsionAccessory {
     private static void handleDeflection(ProjectileImpactEvent event, Projectile projectile, LivingEntity impactedLiving, SlotResult slotResult) {
         event.setCanceled(true);
         if (!impactedLiving.equals(projectile.getOwner())) {
-            projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-0.25D));
+            projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-0.25));
             if (projectile instanceof AbstractHurtingProjectile damagingProjectileEntity) {
-                damagingProjectileEntity.xPower *= -0.25D;
-                damagingProjectileEntity.yPower *= -0.25D;
-                damagingProjectileEntity.zPower *= -0.25D;
+                damagingProjectileEntity.xPower *= -0.25;
+                damagingProjectileEntity.yPower *= -0.25;
+                damagingProjectileEntity.zPower *= -0.25;
             }
             slotResult.stack().hurtAndBreak(1, impactedLiving, (entity) -> CuriosApi.getCuriosHelper().onBrokenCurio(slotResult.slotContext()));
         }

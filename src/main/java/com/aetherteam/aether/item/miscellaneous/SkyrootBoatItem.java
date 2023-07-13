@@ -45,7 +45,7 @@ public class SkyrootBoatItem extends Item {
             return InteractionResultHolder.pass(heldStack);
         } else {
             Vec3 viewVector = player.getViewVector(1.0F);
-            List<Entity> list = level.getEntities(player, player.getBoundingBox().expandTowards(viewVector.scale(5.0D)).inflate(1.0D), ENTITY_PREDICATE);
+            List<Entity> list = level.getEntities(player, player.getBoundingBox().expandTowards(viewVector.scale(5.0)).inflate(1.0), ENTITY_PREDICATE);
             if (!list.isEmpty()) {
                 Vec3 eyePosition = player.getEyePosition();
                 for(Entity entity : list) {

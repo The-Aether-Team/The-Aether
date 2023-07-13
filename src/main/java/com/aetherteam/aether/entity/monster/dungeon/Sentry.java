@@ -108,7 +108,7 @@ public class Sentry extends Slime {
 	}
 
 	protected void explodeAt(LivingEntity livingEntity) {
-		if (this.distanceToSqr(livingEntity) < 1.5D && this.isAwake() && this.hasLineOfSight(livingEntity) && livingEntity.hurt(this.damageSources().mobAttack(this), 1.0F) && this.tickCount > 20 && this.isAlive()) {
+		if (this.distanceToSqr(livingEntity) < 1.5 && this.isAwake() && this.hasLineOfSight(livingEntity) && livingEntity.hurt(this.damageSources().mobAttack(this), 1.0F) && this.tickCount > 20 && this.isAlive()) {
 			livingEntity.push(0.3, 0.4, 0.3);
 			this.level.explode(this, this.getX(), this.getY(), this.getZ(), 1.0F, Level.ExplosionInteraction.MOB);
 			this.playSound(SoundEvents.GENERIC_EXPLODE, 1.0F, 0.2F * (this.random.nextFloat() - this.random.nextFloat()) + 1);

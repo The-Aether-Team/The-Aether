@@ -23,9 +23,9 @@ public class DimensionTypeMixin {
     @Inject(at = @At("HEAD"), method = "timeOfDay", cancellable = true)
     private void timeOfDay(long dayTime, CallbackInfoReturnable<Float> cir) {
         if (this.effectsLocation.equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
-            double d0 = Mth.frac(dayTime / (double) AetherDimensions.AETHER_TICKS_PER_DAY - 0.25D);
-            double d1 = 0.5D - Math.cos(d0 * Math.PI) / 2.0D;
-            cir.setReturnValue((float)(d0 * 2.0D + d1) / 3.0F);
+            double d0 = Mth.frac(dayTime / (double) AetherDimensions.AETHER_TICKS_PER_DAY - 0.25);
+            double d1 = 0.5 - Math.cos(d0 * Math.PI) / 2.0;
+            cir.setReturnValue((float)(d0 * 2.0 + d1) / 3.0F);
         }
     }
 

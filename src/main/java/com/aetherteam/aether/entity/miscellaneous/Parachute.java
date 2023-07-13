@@ -64,7 +64,7 @@ public class Parachute extends Entity {
             }
             Vec3 travelVec = new Vec3(f, passenger.yya, f1);
             AttributeInstance gravity = passenger.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
-            double d0 = gravity != null ? gravity.getValue() : 0.08D;
+            double d0 = gravity != null ? gravity.getValue() : 0.08;
 
             Vec3 movement = this.calculateMovement(travelVec);
             double d2 = movement.y;

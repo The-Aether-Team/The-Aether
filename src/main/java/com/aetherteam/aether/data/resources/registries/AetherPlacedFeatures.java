@@ -77,12 +77,12 @@ public class AetherPlacedFeatures {
                 new HolidayFilter(),
                 PlacementUtils.filteredByBlockSurvival(AetherBlocks.SKYROOT_SAPLING.get()));
         register(context, GRASS_PATCH_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.GRASS_PATCH_CONFIGURATION),
-                NoiseThresholdCountPlacement.of(-0.8D, 5, 10),
+                NoiseThresholdCountPlacement.of(-0.8, 5, 10),
                 ImprovedLayerPlacementModifier.of(Heightmap.Types.MOTION_BLOCKING, UniformInt.of(0, 1), 4),
                 BiomeFilter.biome(),
                 new ConfigFilter(AetherConfig.SERVER.generate_tall_grass));
         register(context, TALL_GRASS_PATCH_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.TALL_GRASS_PATCH_CONFIGURATION),
-                NoiseThresholdCountPlacement.of(-0.8D, 0, 7),
+                NoiseThresholdCountPlacement.of(-0.8, 0, 7),
                 RarityFilter.onAverageOnceEvery(32),
                 ImprovedLayerPlacementModifier.of(Heightmap.Types.MOTION_BLOCKING, UniformInt.of(0, 1), 4),
                 BiomeFilter.biome(),

@@ -50,9 +50,9 @@ public class ChestMimicRenderer<T extends BlockEntity> implements BlockEntityRen
 		if (blockState.getBlock() instanceof ChestMimicBlock) {
 			poseStack.pushPose();
 			float f = blockState.getValue(ChestBlock.FACING).toYRot();
-			poseStack.translate(0.5D, 0.5D, 0.5D);
+			poseStack.translate(0.5, 0.5, 0.5);
 			poseStack.mulPose(Axis.YP.rotationDegrees(-f));
-			poseStack.translate(-0.5D, -0.5D, -0.5D);
+			poseStack.translate(-0.5, -0.5, -0.5);
 			Material material = this.getMaterial(blockEntity);
 			VertexConsumer vertexconsumer = material.buffer(buffer, RenderType::entityCutout);
 			this.render(poseStack, vertexconsumer, this.lid, this.lock, this.bottom, packedLight, packedOverlay);
