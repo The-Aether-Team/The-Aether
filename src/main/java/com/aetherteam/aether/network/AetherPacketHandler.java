@@ -39,7 +39,6 @@ public class AetherPacketHandler {
 		register(ClientMoaSkinPacket.Remove.class, ClientMoaSkinPacket.Remove::decode);
 		register(ClientMoaSkinPacket.Sync.class, ClientMoaSkinPacket.Sync::decode);
 		register(EternalDayPacket.class, EternalDayPacket::decode);
-		register(ExplosionParticlePacket.class, ExplosionParticlePacket::decode);
 		register(HealthResetPacket.class, HealthResetPacket::decode);
 		register(LeavingAetherPacket.class, LeavingAetherPacket::decode);
 		register(MoaInteractPacket.class, MoaInteractPacket::decode);

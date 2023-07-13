@@ -7,7 +7,6 @@ import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
 import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.clientbound.ExplosionParticlePacket;
 import com.aetherteam.aether.network.packet.serverbound.AerbunnyPuffPacket;
 import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.nitrogen.network.PacketRelay;
@@ -142,6 +141,7 @@ public class Aerbunny extends AetherAnimal {
                             if (!player.isOnGround() && aetherPlayer.isJumping() && player.getDeltaMovement().y <= 0.0 && this.position().y() < this.lastPos.y() - 1.1) {
                                 player.setDeltaMovement(player.getDeltaMovement().x, 0.125, player.getDeltaMovement().z);
                                 PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new AerbunnyPuffPacket(this.getId()));
+                                this.spawnExplosionParticle();
                                 this.lastPos = null;
                             }
                         }
@@ -225,12 +225,13 @@ public class Aerbunny extends AetherAnimal {
     public void puff() {
         if (this.level instanceof ServerLevel) {
             this.setPuffiness(11);
-            this.spawnExplosionParticle();
         }
     }
 
     private void spawnExplosionParticle() {
-        PacketRelay.sendToNear(AetherPacketHandler.INSTANCE, new ExplosionParticlePacket(this.getId(), 5), this.getX(), this.getY(), this.getZ(), 10.0, level.dimension());
+        for (int i = 0; i < 5; i++) {
+            EntityUtil.spawnMovementExplosionParticles(this);
+        }
     }
 
     public int getPuffiness() {

@@ -1,9 +1,7 @@
 package com.aetherteam.aether.entity.miscellaneous;
 
+import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
-import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.clientbound.ExplosionParticlePacket;
-import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -94,7 +92,7 @@ public class Parachute extends Entity {
 
     public void spawnExplosionParticle() {
         if (!this.level.isClientSide) {
-            PacketRelay.sendToNear(AetherPacketHandler.INSTANCE, new ExplosionParticlePacket(this.getId(), 1), this.getX(), this.getY(), this.getZ(), 10.0, level.dimension());
+            this.level.broadcastEntityEvent(this, (byte) 70);
         }
     }
 
@@ -148,6 +146,15 @@ public class Parachute extends Entity {
     @Override
     public boolean displayFireAnimation() {
         return false;
+    }
+
+    @Override
+    public void handleEntityEvent(byte id) {
+        if (id == 70) {
+            EntityUtil.spawnMovementExplosionParticles(this);
+        } else {
+            super.handleEntityEvent(id);
+        }
     }
 
     @Override

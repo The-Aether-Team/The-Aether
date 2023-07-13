@@ -1,13 +1,11 @@
 package com.aetherteam.aether.entity.monster.dungeon;
 
 import com.aetherteam.aether.AetherTags;
+import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.NotGrounded;
 import com.aetherteam.aether.entity.ai.goal.target.MostDamageTargetGoal;
 import com.aetherteam.aether.event.AetherEventDispatch;
 import com.aetherteam.aether.event.ValkyrieTeleportEvent;
-import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.clientbound.ExplosionParticlePacket;
-import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -163,7 +161,9 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
      * Spawns explosion particles.
      */
     public void spawnExplosionParticles() {
-        PacketRelay.sendToNear(AetherPacketHandler.INSTANCE, new ExplosionParticlePacket(this.getId(), 5), this.getX(), this.getY(), this.getZ(), 10.0, level.dimension());
+        if (!this.level.isClientSide) {
+            this.level.broadcastEntityEvent(this, (byte) 70);
+        }
     }
 
     /**
@@ -218,6 +218,17 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     @Override
     protected boolean shouldDespawnInPeaceful() {
         return false;
+    }
+
+    @Override
+    public void handleEntityEvent(byte id) {
+        if (id == 70) {
+            for (int i = 0; i < 5; i++) {
+                EntityUtil.spawnMovementExplosionParticles(this);
+            }
+        } else {
+            super.handleEntityEvent(id);
+        }
     }
 
     /**
