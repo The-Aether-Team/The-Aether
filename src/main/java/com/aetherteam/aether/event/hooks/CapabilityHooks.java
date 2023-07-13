@@ -1,6 +1,6 @@
 package com.aetherteam.aether.event.hooks;
 
-import com.aetherteam.aether.capability.INBTSynchable;
+import com.aetherteam.nitrogen.capability.INBTSynchable;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.capability.player.AetherPlayerCapability;

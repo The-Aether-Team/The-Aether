@@ -22,6 +22,7 @@ import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.clientbound.AetherTravelPacket;
 import com.aetherteam.aether.network.packet.clientbound.LeavingAetherPacket;
 import com.aetherteam.aether.network.packet.clientbound.SetVehiclePacket;
+import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -279,7 +280,7 @@ public class DimensionHooks {
                         if (nextPassenger != null) {
                             nextPassenger.startRiding(target);
                             if (target instanceof ServerPlayer serverPlayer) { // Fixes a desync between the server and client
-                                AetherPacketHandler.sendToPlayer(new SetVehiclePacket(nextPassenger.getId(), target.getId()), serverPlayer);
+                                PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new SetVehiclePacket(nextPassenger.getId(), target.getId()), serverPlayer);
                             }
                         }
                     }
@@ -315,16 +316,16 @@ public class DimensionHooks {
                         if (entity.level.dimension() == LevelUtil.destinationDimension() && dimension == LevelUtil.returnDimension()) {
                             displayAetherTravel = true;
                             playerLeavingAether = true;
-                            AetherPacketHandler.sendToAll(new AetherTravelPacket(true));
-                            AetherPacketHandler.sendToAll(new LeavingAetherPacket(true));
+                            PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new AetherTravelPacket(true));
+                            PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new LeavingAetherPacket(true));
                         } else if (entity.level.dimension() == LevelUtil.returnDimension() && dimension == LevelUtil.destinationDimension()) {
                             displayAetherTravel = true;
                             playerLeavingAether = false;
-                            AetherPacketHandler.sendToAll(new AetherTravelPacket(true));
-                            AetherPacketHandler.sendToAll(new LeavingAetherPacket(false));
+                            PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new AetherTravelPacket(true));
+                            PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new LeavingAetherPacket(false));
                         } else {
                             displayAetherTravel = false;
-                            AetherPacketHandler.sendToAll(new AetherTravelPacket(false));
+                            PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new AetherTravelPacket(false));
                         }
                     }
                 }

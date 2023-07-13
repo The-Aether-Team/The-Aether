@@ -1,12 +1,12 @@
 package com.aetherteam.aether.network.packet.clientbound;
 
-import com.aetherteam.aether.network.AetherPacket;
+import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
 
-public record SetVehiclePacket(int passengerID, int vehicleID) implements AetherPacket {
+public record SetVehiclePacket(int passengerID, int vehicleID) implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.passengerID);

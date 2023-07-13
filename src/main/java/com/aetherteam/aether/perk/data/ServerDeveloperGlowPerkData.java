@@ -1,10 +1,10 @@
 package com.aetherteam.aether.perk.data;
 
-import com.aetherteam.aether.network.AetherPacket;
 import com.aetherteam.aether.network.packet.clientbound.ClientDeveloperGlowPacket;
 import com.aetherteam.aether.perk.types.DeveloperGlow;
 import com.aetherteam.aether.perk.PerkUtil;
 import com.aetherteam.nitrogen.api.users.User;
+import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.server.MinecraftServer;
 
 import java.util.Map;
@@ -30,17 +30,17 @@ public class ServerDeveloperGlowPerkData extends ServerPerkData<DeveloperGlow> {
     }
 
     @Override
-    protected AetherPacket getApplyPacket(UUID uuid, DeveloperGlow perk) {
+    protected BasePacket getApplyPacket(UUID uuid, DeveloperGlow perk) {
         return new ClientDeveloperGlowPacket.Apply(uuid, perk);
     }
 
     @Override
-    protected AetherPacket getRemovePacket(UUID uuid) {
+    protected BasePacket getRemovePacket(UUID uuid) {
         return new ClientDeveloperGlowPacket.Remove(uuid);
     }
 
     @Override
-    protected AetherPacket getSyncPacket(Map<UUID, DeveloperGlow> serverPerkData) {
+    protected BasePacket getSyncPacket(Map<UUID, DeveloperGlow> serverPerkData) {
         return new ClientDeveloperGlowPacket.Sync(serverPerkData);
     }
 

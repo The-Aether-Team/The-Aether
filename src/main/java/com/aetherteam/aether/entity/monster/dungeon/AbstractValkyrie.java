@@ -7,6 +7,7 @@ import com.aetherteam.aether.event.AetherEventDispatch;
 import com.aetherteam.aether.event.ValkyrieTeleportEvent;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.clientbound.ExplosionParticlePacket;
+import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -162,7 +163,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
      * Spawns explosion particles.
      */
     public void spawnExplosionParticles() {
-        AetherPacketHandler.sendToNear(new ExplosionParticlePacket(this.getId(), 5), this.getX(), this.getY(), this.getZ(), 10.0, level.dimension());
+        PacketRelay.sendToNear(AetherPacketHandler.INSTANCE, new ExplosionParticlePacket(this.getId(), 5), this.getX(), this.getY(), this.getZ(), 10.0, level.dimension());
     }
 
     /**

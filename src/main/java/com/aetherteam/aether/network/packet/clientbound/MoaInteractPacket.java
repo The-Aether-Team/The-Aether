@@ -1,13 +1,13 @@
 package com.aetherteam.aether.network.packet.clientbound;
 
-import com.aetherteam.aether.network.AetherPacket;
+import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
-public record MoaInteractPacket(int playerID, boolean mainHand) implements AetherPacket {
+public record MoaInteractPacket(int playerID, boolean mainHand) implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.playerID);

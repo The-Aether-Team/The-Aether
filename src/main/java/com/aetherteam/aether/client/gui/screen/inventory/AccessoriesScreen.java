@@ -12,6 +12,7 @@ import com.aetherteam.aether.network.packet.serverbound.ClearItemPacket;
 import com.aetherteam.aether.perk.PerkUtil;
 import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
+import com.aetherteam.nitrogen.network.PacketRelay;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
@@ -332,7 +333,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
                     } else {
                         if (slot == this.destroyItemSlot && this.destroyItemSlot != null) {
                             this.menu.setCarried(ItemStack.EMPTY);
-                            AetherPacketHandler.sendToServer(new ClearItemPacket(this.minecraft.player.getId()));
+                            PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ClearItemPacket(this.minecraft.player.getId()));
                         }
                     }
                 }

@@ -3,6 +3,7 @@ package com.aetherteam.aether.capability.time;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.clientbound.EternalDayPacket;
+import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -70,7 +71,7 @@ public class AetherTimeCapability implements AetherTime {
      */
     @Override
     public void updateEternalDay() {
-        AetherPacketHandler.sendToDimension(new EternalDayPacket(this.isEternalDay), this.level.dimension());
+        PacketRelay.sendToDimension(AetherPacketHandler.INSTANCE, new EternalDayPacket(this.isEternalDay), this.level.dimension());
     }
 
     /**
@@ -78,7 +79,7 @@ public class AetherTimeCapability implements AetherTime {
      */
     @Override
     public void updateEternalDay(ServerPlayer player) {
-        AetherPacketHandler.sendToPlayer(new EternalDayPacket(this.isEternalDay), player);
+        PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new EternalDayPacket(this.isEternalDay), player);
     }
 
     @Override

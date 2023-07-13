@@ -1,7 +1,7 @@
 package com.aetherteam.aether.network.packet.clientbound;
 
 import com.aetherteam.aether.entity.NpcDialogue;
-import com.aetherteam.aether.network.AetherPacket;
+import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
@@ -9,7 +9,7 @@ import net.minecraft.world.entity.player.Player;
 /**
  * Packet sent to the client to initiate an NPC dialogue.
  */
-public record OpenNpcDialoguePacket(int entityID) implements AetherPacket {
+public record OpenNpcDialoguePacket(int entityID) implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.entityID);

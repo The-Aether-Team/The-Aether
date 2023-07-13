@@ -1,12 +1,12 @@
 package com.aetherteam.aether.network.packet.clientbound;
 
 import com.aetherteam.aether.capability.AetherCapabilities;
-import com.aetherteam.aether.network.AetherPacket;
+import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 
-public record EternalDayPacket(boolean isEternalDay) implements AetherPacket {
+public record EternalDayPacket(boolean isEternalDay) implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeBoolean(this.isEternalDay);

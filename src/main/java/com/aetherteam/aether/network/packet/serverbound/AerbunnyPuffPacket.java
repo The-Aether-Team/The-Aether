@@ -1,11 +1,11 @@
 package com.aetherteam.aether.network.packet.serverbound;
 
 import com.aetherteam.aether.entity.passive.Aerbunny;
-import com.aetherteam.aether.network.AetherPacket;
+import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 
-public record AerbunnyPuffPacket(int entityID) implements AetherPacket {
+public record AerbunnyPuffPacket(int entityID) implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.entityID);

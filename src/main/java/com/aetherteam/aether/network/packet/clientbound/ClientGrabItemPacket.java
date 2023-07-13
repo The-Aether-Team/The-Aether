@@ -1,12 +1,12 @@
 package com.aetherteam.aether.network.packet.clientbound;
 
-import com.aetherteam.aether.network.AetherPacket;
+import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
 
-public record ClientGrabItemPacket(ItemStack stack) implements AetherPacket {
+public record ClientGrabItemPacket(ItemStack stack) implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeItem(this.stack);

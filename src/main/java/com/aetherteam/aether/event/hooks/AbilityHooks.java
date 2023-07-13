@@ -1,6 +1,6 @@
 package com.aetherteam.aether.event.hooks;
 
-import com.aetherteam.aether.capability.INBTSynchable;
+import com.aetherteam.nitrogen.capability.INBTSynchable;
 import com.aetherteam.aether.capability.lightning.LightningTrackerCapability;
 import com.aetherteam.aether.data.generators.loot.AetherStrippingLoot;
 import com.aetherteam.aether.entity.projectile.PoisonNeedle;
@@ -22,6 +22,7 @@ import com.aetherteam.aether.loot.AetherLootContexts;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.clientbound.ToolDebuffPacket;
 import com.aetherteam.aether.item.EquipmentUtil;
+import com.aetherteam.nitrogen.network.PacketRelay;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -291,7 +292,7 @@ public class AbilityHooks {
             if (AetherConfig.SERVER.tools_debuff.get()) {
                 if (!player.getLevel().isClientSide()) {
                     debuffTools = true;
-                    AetherPacketHandler.sendToNear(new ToolDebuffPacket(true), player.getX(), player.getY(), player.getZ(), 10, player.getLevel().dimension());
+                    PacketRelay.sendToNear(AetherPacketHandler.INSTANCE, new ToolDebuffPacket(true), player.getX(), player.getY(), player.getZ(), 10, player.getLevel().dimension());
                 }
             }
             if (debuffTools) {

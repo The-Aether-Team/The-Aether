@@ -11,6 +11,7 @@ import com.aetherteam.aether.perk.types.Halo;
 import com.aetherteam.aether.perk.PerkUtil;
 import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
+import com.aetherteam.nitrogen.network.PacketRelay;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
@@ -108,9 +109,9 @@ public class AetherCustomizationsScreen extends Screen {
                                     this.haloEnabled = this.customizations.isHaloEnabled();
                                 }
                                 if (this.haloEnabled) {
-                                    AetherPacketHandler.sendToServer(new ServerHaloPacket.Apply(this.getMinecraft().player.getUUID(), new Halo(this.haloColor)));
+                                    PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerHaloPacket.Apply(this.getMinecraft().player.getUUID(), new Halo(this.haloColor)));
                                 } else {
-                                    AetherPacketHandler.sendToServer(new ServerHaloPacket.Remove(this.getMinecraft().player.getUUID()));
+                                    PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerHaloPacket.Remove(this.getMinecraft().player.getUUID()));
                                 }
                                 this.customizations.save();
                                 this.customizations.load();
@@ -159,9 +160,9 @@ public class AetherCustomizationsScreen extends Screen {
                                     this.developerGlowEnabled = this.customizations.isDeveloperGlowEnabled();
                                 }
                                 if (this.developerGlowEnabled) {
-                                    AetherPacketHandler.sendToServer(new ServerDeveloperGlowPacket.Apply(this.getMinecraft().player.getUUID(), new DeveloperGlow(this.developerGlowColor)));
+                                    PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerDeveloperGlowPacket.Apply(this.getMinecraft().player.getUUID(), new DeveloperGlow(this.developerGlowColor)));
                                 } else {
-                                    AetherPacketHandler.sendToServer(new ServerDeveloperGlowPacket.Remove(this.getMinecraft().player.getUUID()));
+                                    PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerDeveloperGlowPacket.Remove(this.getMinecraft().player.getUUID()));
                                 }
                                 this.customizations.save();
                                 this.customizations.load();

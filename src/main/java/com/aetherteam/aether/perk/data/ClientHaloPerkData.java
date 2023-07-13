@@ -7,6 +7,7 @@ import com.aetherteam.aether.perk.types.Halo;
 import com.aetherteam.aether.perk.PerkUtil;
 import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
+import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.HashMap;
@@ -29,11 +30,11 @@ public class ClientHaloPerkData extends ClientPerkData<Halo> {
             if (haloEnabled) {
                 if (!userHaloData.containsKey(uuid) || userHaloData.get(uuid) == null || (haloColor != null && !userHaloData.get(uuid).hexColor().equals(haloColor))) {
                     if (PerkUtil.hasHalo().test(user)) {
-                        AetherPacketHandler.sendToServer(new ServerHaloPacket.Apply(player.getUUID(), new Halo(haloColor)));
+                        PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerHaloPacket.Apply(player.getUUID(), new Halo(haloColor)));
                     }
                 }
             } else {
-                AetherPacketHandler.sendToServer(new ServerHaloPacket.Remove(player.getUUID()));
+                PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerHaloPacket.Remove(player.getUUID()));
             }
         }
     }

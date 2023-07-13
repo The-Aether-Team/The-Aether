@@ -1,6 +1,6 @@
 package com.aetherteam.aether.client.event.hooks;
 
-import com.aetherteam.aether.capability.INBTSynchable;
+import com.aetherteam.nitrogen.capability.INBTSynchable;
 import com.aetherteam.aether.client.AetherKeys;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import net.minecraft.client.Minecraft;

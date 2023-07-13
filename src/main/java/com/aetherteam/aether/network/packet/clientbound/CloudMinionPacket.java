@@ -2,13 +2,13 @@ package com.aetherteam.aether.network.packet.clientbound;
 
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
-import com.aetherteam.aether.network.AetherPacket;
+import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
 
-public record CloudMinionPacket(int entityID, int rightCloudMinionID, int leftCloudMinionID) implements AetherPacket {
+public record CloudMinionPacket(int entityID, int rightCloudMinionID, int leftCloudMinionID) implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.entityID);

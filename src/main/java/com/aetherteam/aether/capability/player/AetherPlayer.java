@@ -3,7 +3,7 @@ package com.aetherteam.aether.capability.player;
 import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
 import com.aetherteam.aether.entity.passive.Aerbunny;
 import com.aetherteam.aether.capability.AetherCapabilities;
-import com.aetherteam.aether.capability.INBTSynchable;
+import com.aetherteam.nitrogen.capability.INBTSynchable;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.CompoundTag;

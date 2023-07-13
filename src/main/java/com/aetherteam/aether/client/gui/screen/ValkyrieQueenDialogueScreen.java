@@ -6,6 +6,7 @@ import com.aetherteam.aether.entity.monster.dungeon.boss.ValkyrieQueen;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.NpcPlayerInteractPacket;
+import com.aetherteam.nitrogen.network.PacketRelay;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -71,7 +72,7 @@ public class ValkyrieQueenDialogueScreen extends Screen {
      *                      3 - Nevermind
      */
     private void finishChat(byte interactionID) {
-        AetherPacketHandler.sendToServer(new NpcPlayerInteractPacket(this.queen.getId(), interactionID));
+        PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new NpcPlayerInteractPacket(this.queen.getId(), interactionID));
         super.onClose();
     }
 

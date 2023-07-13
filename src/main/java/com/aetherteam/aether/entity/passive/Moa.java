@@ -3,7 +3,7 @@ package com.aetherteam.aether.entity.passive;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.aetherteam.aether.capability.INBTSynchable;
+import com.aetherteam.nitrogen.capability.INBTSynchable;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.AetherKeys;
 import com.aetherteam.aether.client.AetherSoundEvents;
@@ -28,6 +28,7 @@ import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.perk.data.ServerMoaSkinPerkData;
 import com.aetherteam.aether.perk.types.MoaData;
 import com.aetherteam.aether.entity.EntityUtil;
+import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -347,7 +348,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 				this.setBaby(false);
 			}
 			this.setHungry(false);
-			AetherPacketHandler.sendToAll(new MoaInteractPacket(playerEntity.getId(), hand == InteractionHand.MAIN_HAND)); // packet necessary to play animation because this code segment is server-side only, so no animations.
+			PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new MoaInteractPacket(playerEntity.getId(), hand == InteractionHand.MAIN_HAND)); // packet necessary to play animation because this code segment is server-side only, so no animations.
 			return InteractionResult.CONSUME;
 		} else if (this.isPlayerGrown() && !this.isBaby() && this.getHealth() < this.getMaxHealth() && itemStack.is(AetherTags.Items.MOA_FOOD_ITEMS)) {
 			if (!playerEntity.getAbilities().instabuild) {

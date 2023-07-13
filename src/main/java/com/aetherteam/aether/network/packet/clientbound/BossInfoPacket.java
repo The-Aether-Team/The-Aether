@@ -1,7 +1,7 @@
 package com.aetherteam.aether.network.packet.clientbound;
 
 import com.aetherteam.aether.client.event.listeners.GuiListener;
-import com.aetherteam.aether.network.AetherPacket;
+import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 
@@ -10,7 +10,7 @@ import java.util.UUID;
 /**
  * Packets to help sync the server's Aether boss bars with the client's.
  */
-public abstract class BossInfoPacket implements AetherPacket {
+public abstract class BossInfoPacket implements BasePacket {
     protected final UUID bossEvent;
 
     public BossInfoPacket(UUID bossEvent) {

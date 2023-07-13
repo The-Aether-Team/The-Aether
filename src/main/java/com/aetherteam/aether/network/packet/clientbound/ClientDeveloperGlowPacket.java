@@ -1,8 +1,8 @@
 package com.aetherteam.aether.network.packet.clientbound;
 
-import com.aetherteam.aether.network.AetherPacket;
 import com.aetherteam.aether.perk.data.ClientDeveloperGlowPerkData;
 import com.aetherteam.aether.perk.types.DeveloperGlow;
+import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class ClientDeveloperGlowPacket {
-    public record Apply(UUID playerUUID, DeveloperGlow developerGlow) implements AetherPacket {
+    public record Apply(UUID playerUUID, DeveloperGlow developerGlow) implements BasePacket {
         @Override
         public void encode(FriendlyByteBuf buf) {
             buf.writeUUID(this.playerUUID());
@@ -32,7 +32,7 @@ public class ClientDeveloperGlowPacket {
         }
     }
 
-    public record Remove(UUID playerUUID) implements AetherPacket {
+    public record Remove(UUID playerUUID) implements BasePacket {
         @Override
         public void encode(FriendlyByteBuf buf) {
             buf.writeUUID(this.playerUUID());
@@ -51,7 +51,7 @@ public class ClientDeveloperGlowPacket {
         }
     }
 
-    public record Sync(Map<UUID, DeveloperGlow> developerGlows) implements AetherPacket {
+    public record Sync(Map<UUID, DeveloperGlow> developerGlows) implements BasePacket {
         @Override
         public void encode(FriendlyByteBuf buf) {
             buf.writeMap(this.developerGlows(), FriendlyByteBuf::writeUUID, DeveloperGlow::write);

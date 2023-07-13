@@ -1,10 +1,10 @@
 package com.aetherteam.aether.perk.data;
 
-import com.aetherteam.aether.network.AetherPacket;
 import com.aetherteam.aether.network.packet.clientbound.ClientHaloPacket;
 import com.aetherteam.aether.perk.types.Halo;
 import com.aetherteam.aether.perk.PerkUtil;
 import com.aetherteam.nitrogen.api.users.User;
+import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.server.MinecraftServer;
 
 import java.util.Map;
@@ -30,17 +30,17 @@ public class ServerHaloPerkData extends ServerPerkData<Halo> {
     }
 
     @Override
-    protected AetherPacket getApplyPacket(UUID uuid, Halo perk) {
+    protected BasePacket getApplyPacket(UUID uuid, Halo perk) {
         return new ClientHaloPacket.Apply(uuid, perk);
     }
 
     @Override
-    protected AetherPacket getRemovePacket(UUID uuid) {
+    protected BasePacket getRemovePacket(UUID uuid) {
         return new ClientHaloPacket.Remove(uuid);
     }
 
     @Override
-    protected AetherPacket getSyncPacket(Map<UUID, Halo> serverPerkData) {
+    protected BasePacket getSyncPacket(Map<UUID, Halo> serverPerkData) {
         return new ClientHaloPacket.Sync(serverPerkData);
     }
 

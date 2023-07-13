@@ -3,6 +3,7 @@ package com.aetherteam.aether.mixin.mixins.common;
 import com.aetherteam.aether.capability.arrow.PhoenixArrow;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.clientbound.PhoenixArrowPacket;
+import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -26,7 +27,7 @@ public class AbstractArrowMixin
         PhoenixArrow.get(arrow).ifPresent(phoenixArrow -> {
             if (phoenixArrow.isPhoenixArrow()) {
                 if (!arrow.level.isClientSide) {
-                    AetherPacketHandler.sendToAll(new PhoenixArrowPacket(arrow.getId(), true));
+                    PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new PhoenixArrowPacket(arrow.getId(), true));
                     if (this.inGround) {
                         if (this.inGroundTime % 5 == 0) {
                             for (int i = 0; i < 1; i++) {

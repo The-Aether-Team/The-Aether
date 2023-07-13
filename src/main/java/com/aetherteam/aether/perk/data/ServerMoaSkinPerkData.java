@@ -1,9 +1,9 @@
 package com.aetherteam.aether.perk.data;
 
-import com.aetherteam.aether.network.AetherPacket;
 import com.aetherteam.aether.network.packet.clientbound.ClientMoaSkinPacket;
 import com.aetherteam.aether.perk.types.MoaData;
 import com.aetherteam.nitrogen.api.users.User;
+import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.server.MinecraftServer;
 
 import java.util.Map;
@@ -29,17 +29,17 @@ public class ServerMoaSkinPerkData extends ServerPerkData<MoaData> {
     }
 
     @Override
-    protected AetherPacket getApplyPacket(UUID uuid, MoaData perk) {
+    protected BasePacket getApplyPacket(UUID uuid, MoaData perk) {
         return new ClientMoaSkinPacket.Apply(uuid, perk);
     }
 
     @Override
-    protected AetherPacket getRemovePacket(UUID uuid) {
+    protected BasePacket getRemovePacket(UUID uuid) {
         return new ClientMoaSkinPacket.Remove(uuid);
     }
 
     @Override
-    protected AetherPacket getSyncPacket(Map<UUID, MoaData> serverPerkData) {
+    protected BasePacket getSyncPacket(Map<UUID, MoaData> serverPerkData) {
         return new ClientMoaSkinPacket.Sync(serverPerkData);
     }
 

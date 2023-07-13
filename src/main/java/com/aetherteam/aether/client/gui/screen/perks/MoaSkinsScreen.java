@@ -17,7 +17,7 @@ import com.aetherteam.aether.perk.types.MoaSkins;
 import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
 import com.aetherteam.nitrogen.network.NitrogenPacketHandler;
-import com.aetherteam.nitrogen.network.PacketDistributor;
+import com.aetherteam.nitrogen.network.PacketRelay;
 import com.aetherteam.nitrogen.network.packet.serverbound.TriggerUpdateInfoPacket;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -100,7 +100,7 @@ public class MoaSkinsScreen extends Screen {
 
             this.applyButton = this.addRenderableWidget(new ChangeSkinButton(ChangeSkinButton.ButtonType.APPLY, Button.builder(Component.translatable("gui.aether.moa_skins.button.apply"),
                     (pressed) -> AetherPlayer.get(this.getMinecraft().player).ifPresent((aetherPlayer) -> {
-                        AetherPacketHandler.sendToServer(new ServerMoaSkinPacket.Apply(this.getMinecraft().player.getUUID(), new MoaData(aetherPlayer.getLastRiddenMoa(), this.selectedSkin)));
+                        PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Apply(this.getMinecraft().player.getUUID(), new MoaData(aetherPlayer.getLastRiddenMoa(), this.selectedSkin)));
                         this.customizations.setMoaSkin(this.selectedSkin.getId());
                         this.customizations.save();
                         this.customizations.load();
@@ -108,7 +108,7 @@ public class MoaSkinsScreen extends Screen {
             ).pos((this.leftPos + this.imageWidth) - 20, this.topPos + 13).size(7, 7)));
             this.removeButton = this.addRenderableWidget(new ChangeSkinButton(ChangeSkinButton.ButtonType.REMOVE, Button.builder(Component.translatable("gui.aether.moa_skins.button.remove"),
                     (pressed) -> {
-                        AetherPacketHandler.sendToServer(new ServerMoaSkinPacket.Remove(this.getMinecraft().player.getUUID()));
+                        PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Remove(this.getMinecraft().player.getUUID()));
                         this.customizations.setMoaSkin("");
                         this.customizations.save();
                         this.customizations.load();
@@ -137,7 +137,7 @@ public class MoaSkinsScreen extends Screen {
             this.addRenderableWidget(new RefreshButton(Button.builder(Component.literal(""),
                     (pressed) -> {
                         if (RefreshButton.reboundTimer == 0) {
-                            PacketDistributor.sendToServer(NitrogenPacketHandler.INSTANCE, new TriggerUpdateInfoPacket(this.getMinecraft().player.getId()));
+                            PacketRelay.sendToServer(NitrogenPacketHandler.INSTANCE, new TriggerUpdateInfoPacket(this.getMinecraft().player.getId()));
                             RefreshButton.reboundTimer = RefreshButton.reboundMax;
                         }
                     }
@@ -155,11 +155,11 @@ public class MoaSkinsScreen extends Screen {
         super.render(poseStack, mouseX, mouseY, partialTick);
         if (this.getMinecraft().player != null) {
             if (user == null && this.connectionStatus) {
-                AetherPacketHandler.sendToServer(new ServerMoaSkinPacket.Remove(this.getMinecraft().player.getUUID()));
+                PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Remove(this.getMinecraft().player.getUUID()));
                 this.connectionStatus = false;
             } else if (user != null && !this.connectionStatus) {
                 AetherPlayer.get(this.getMinecraft().player).ifPresent((aetherPlayer) -> {
-                    AetherPacketHandler.sendToServer(new ServerMoaSkinPacket.Apply(this.getMinecraft().player.getUUID(), new MoaData(aetherPlayer.getLastRiddenMoa(), MoaSkins.getMoaSkins().get(this.customizations.getMoaSkin()))));
+                    PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Apply(this.getMinecraft().player.getUUID(), new MoaData(aetherPlayer.getLastRiddenMoa(), MoaSkins.getMoaSkins().get(this.customizations.getMoaSkin()))));
                 });
                 this.connectionStatus = true;
             }

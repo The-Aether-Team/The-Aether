@@ -1,7 +1,7 @@
 package com.aetherteam.aether.capability.player;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.capability.INBTSynchable;
+import com.aetherteam.nitrogen.capability.INBTSynchable;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
@@ -20,6 +20,7 @@ import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.perk.CustomizationsOptions;
 import com.aetherteam.aether.perk.data.*;
 import com.aetherteam.aether.item.EquipmentUtil;
+import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -195,9 +196,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 	@Override
 	public void setSynched(Direction direction, String key, Object value) {
 		if (direction == Direction.SERVER) {
-			AetherPacketHandler.sendToServer(new AetherPlayerSyncPacket(this.getPlayer().getId(), key, this.getSynchableFunctions().get(key).getLeft(), value));
+			PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new AetherPlayerSyncPacket(this.getPlayer().getId(), key, this.getSynchableFunctions().get(key).getLeft(), value));
 		} else {
-			AetherPacketHandler.sendToAll(new AetherPlayerSyncPacket(this.getPlayer().getId(), key, this.getSynchableFunctions().get(key).getLeft(), value));
+			PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new AetherPlayerSyncPacket(this.getPlayer().getId(), key, this.getSynchableFunctions().get(key).getLeft(), value));
 		}
 		this.getSynchableFunctions().get(key).getMiddle().accept(value);
 	}
@@ -477,7 +478,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 				aerbunny.startRiding(this.getPlayer());
 				this.setMountedAerbunny(aerbunny);
 				if (this.getPlayer() instanceof ServerPlayer serverPlayer) {
-					AetherPacketHandler.sendToPlayer(new RemountAerbunnyPacket(this.getPlayer().getId(), aerbunny.getId()), serverPlayer);
+					PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new RemountAerbunnyPacket(this.getPlayer().getId(), aerbunny.getId()), serverPlayer);
 				}
 			}
 			this.setMountedAerbunnyTag(null);
@@ -919,7 +920,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 
 	private void sendCloudMinionPacket(CloudMinion cloudMinionRight, CloudMinion cloudMinionLeft) {
 		if (this.getPlayer() instanceof ServerPlayer serverPlayer && !this.getPlayer().level.isClientSide) {
-			AetherPacketHandler.sendToPlayer(new CloudMinionPacket(this.getPlayer().getId(), cloudMinionRight.getId(), cloudMinionLeft.getId()), serverPlayer);
+			PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new CloudMinionPacket(this.getPlayer().getId(), cloudMinionRight.getId(), cloudMinionLeft.getId()), serverPlayer);
 		}
 	}
 }

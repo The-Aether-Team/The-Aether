@@ -1,9 +1,10 @@
 package com.aetherteam.aether.perk.data;
 
-import com.aetherteam.aether.network.AetherPacket;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
+import com.aetherteam.nitrogen.network.BasePacket;
+import com.aetherteam.nitrogen.network.PacketRelay;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
@@ -17,7 +18,7 @@ import java.util.function.Predicate;
 public abstract class ServerPerkData<T> {
     public void syncFromServer(Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
-            AetherPacketHandler.sendToPlayer(this.getSyncPacket(this.getServerPerkData(serverPlayer.getServer())), serverPlayer);
+            PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, this.getSyncPacket(this.getServerPerkData(serverPlayer.getServer())), serverPlayer);
         }
     }
 
@@ -26,14 +27,14 @@ public abstract class ServerPerkData<T> {
         if (storedUsers.containsKey(uuid)) {
             User user = storedUsers.get(uuid);
             if (user != null && this.getVerificationPredicate(perk).test(user)) {
-                AetherPacketHandler.sendToAll(this.getApplyPacket(uuid, perk));
+                PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, this.getApplyPacket(uuid, perk));
                 this.modifySavedData(server, uuid, perk);
             }
         }
     }
 
     public void removePerk(MinecraftServer server, UUID uuid) {
-        AetherPacketHandler.sendToAll(this.getRemovePacket(uuid));
+        PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, this.getRemovePacket(uuid));
         this.removeSavedData(server, uuid);
     }
 
@@ -61,11 +62,11 @@ public abstract class ServerPerkData<T> {
 
     protected abstract void removeSavedData(MinecraftServer server, UUID uuid);
 
-    protected abstract AetherPacket getApplyPacket(UUID uuid, T perk);
+    protected abstract BasePacket getApplyPacket(UUID uuid, T perk);
 
-    protected abstract AetherPacket getRemovePacket(UUID uuid);
+    protected abstract BasePacket getRemovePacket(UUID uuid);
 
-    protected abstract AetherPacket getSyncPacket(Map<UUID, T> serverPerkData);
+    protected abstract BasePacket getSyncPacket(Map<UUID, T> serverPerkData);
 
     protected abstract Predicate<User> getVerificationPredicate(T perk);
 }

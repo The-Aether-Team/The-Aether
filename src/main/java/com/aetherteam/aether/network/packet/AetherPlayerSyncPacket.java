@@ -1,7 +1,8 @@
 package com.aetherteam.aether.network.packet;
 
-import com.aetherteam.aether.capability.INBTSynchable;
+import com.aetherteam.nitrogen.capability.INBTSynchable;
 import com.aetherteam.aether.capability.player.AetherPlayer;
+import com.aetherteam.nitrogen.network.packet.SyncPacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.util.LazyOptional;
@@ -21,7 +22,7 @@ public class AetherPlayerSyncPacket extends SyncPacket<AetherPlayer> {
     }
 
     @Override
-    LazyOptional<AetherPlayer> getCapability(Player player) {
+    protected LazyOptional<AetherPlayer> getCapability(Player player) {
         return AetherPlayer.get(player);
     }
 }

@@ -1,9 +1,10 @@
 package com.aetherteam.aether.command;
 
-import com.aetherteam.aether.capability.INBTSynchable;
+import com.aetherteam.nitrogen.capability.INBTSynchable;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.clientbound.HealthResetPacket;
+import com.aetherteam.nitrogen.network.PacketRelay;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -58,7 +59,7 @@ public class PlayerCapabilityCommand {
                         attribute.removeModifier(aetherPlayer.getLifeShardHealthAttributeModifier());
                     }
                     player.setHealth(player.getMaxHealth());
-                    AetherPacketHandler.sendToNear(new HealthResetPacket(player.getId(), value), player.getX(), player.getY(), player.getZ(), 5.0, level.dimension()); // Sync to client.
+                    PacketRelay.sendToNear(AetherPacketHandler.INSTANCE, new HealthResetPacket(player.getId(), value), player.getX(), player.getY(), player.getZ(), 5.0, level.dimension()); // Sync to client.
                     source.sendSuccess(Component.translatable("commands.aether.capability.player.life_shards.set", player.getDisplayName(), value), true);
                 });
             }

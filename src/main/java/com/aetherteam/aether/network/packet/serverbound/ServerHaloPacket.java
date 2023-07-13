@@ -1,15 +1,15 @@
 package com.aetherteam.aether.network.packet.serverbound;
 
-import com.aetherteam.aether.network.AetherPacket;
 import com.aetherteam.aether.perk.data.ServerHaloPerkData;
 import com.aetherteam.aether.perk.types.Halo;
+import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.UUID;
 
 public class ServerHaloPacket {
-    public record Apply(UUID playerUUID, Halo halo) implements AetherPacket {
+    public record Apply(UUID playerUUID, Halo halo) implements BasePacket {
         @Override
         public void encode(FriendlyByteBuf buf) {
             buf.writeUUID(this.playerUUID());
@@ -30,7 +30,7 @@ public class ServerHaloPacket {
         }
     }
 
-    public record Remove(UUID playerUUID) implements AetherPacket {
+    public record Remove(UUID playerUUID) implements BasePacket {
         @Override
         public void encode(FriendlyByteBuf buf) {
             buf.writeUUID(this.playerUUID());

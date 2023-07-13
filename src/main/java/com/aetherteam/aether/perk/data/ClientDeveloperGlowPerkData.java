@@ -7,6 +7,7 @@ import com.aetherteam.aether.perk.types.DeveloperGlow;
 import com.aetherteam.aether.perk.PerkUtil;
 import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
+import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.HashMap;
@@ -29,11 +30,11 @@ public class ClientDeveloperGlowPerkData extends ClientPerkData<DeveloperGlow> {
             if (developerGlowEnabled) {
                 if (!userDeveloperGlowData.containsKey(uuid) || userDeveloperGlowData.get(uuid) == null || (developerGlowColor != null && !userDeveloperGlowData.get(uuid).hexColor().equals(developerGlowColor))) {
                     if (PerkUtil.hasDeveloperGlow().test(user)) {
-                        AetherPacketHandler.sendToServer(new ServerDeveloperGlowPacket.Apply(player.getUUID(), new DeveloperGlow(developerGlowColor)));
+                        PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerDeveloperGlowPacket.Apply(player.getUUID(), new DeveloperGlow(developerGlowColor)));
                     }
                 }
             } else {
-                AetherPacketHandler.sendToServer(new ServerDeveloperGlowPacket.Remove(player.getUUID()));
+                PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerDeveloperGlowPacket.Remove(player.getUUID()));
             }
         }
     }

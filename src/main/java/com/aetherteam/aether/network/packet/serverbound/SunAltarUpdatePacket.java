@@ -2,15 +2,15 @@ package com.aetherteam.aether.network.packet.serverbound;
 
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
-import com.aetherteam.aether.network.AetherPacket;
 import com.aetherteam.aether.api.SunAltarWhitelist;
+import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.game.ClientboundSetTimePacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameRules;
 
-public record SunAltarUpdatePacket(long dayTime) implements AetherPacket {
+public record SunAltarUpdatePacket(long dayTime) implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeLong(this.dayTime);

@@ -1,13 +1,13 @@
 package com.aetherteam.aether.network.packet.serverbound;
 
 import com.aetherteam.aether.entity.passive.MountableAnimal;
-import com.aetherteam.aether.network.AetherPacket;
+import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.ForgeMod;
 
-public record StepHeightPacket(int entityID) implements AetherPacket {
+public record StepHeightPacket(int entityID) implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.entityID());

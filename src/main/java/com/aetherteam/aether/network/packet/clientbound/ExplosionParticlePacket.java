@@ -1,13 +1,13 @@
 package com.aetherteam.aether.network.packet.clientbound;
 
 import com.aetherteam.aether.entity.EntityUtil;
-import com.aetherteam.aether.network.AetherPacket;
+import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
-public record ExplosionParticlePacket(int entityID, int amount) implements AetherPacket {
+public record ExplosionParticlePacket(int entityID, int amount) implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeInt(this.entityID);

@@ -1,9 +1,10 @@
 package com.aetherteam.aether.network.packet.serverbound;
 
 import com.aetherteam.aether.inventory.menu.AccessoriesMenu;
-import com.aetherteam.aether.network.AetherPacket;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.clientbound.ClientGrabItemPacket;
+import com.aetherteam.nitrogen.network.BasePacket;
+import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
@@ -12,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkHooks;
 
-public record OpenAccessoriesPacket(ItemStack carryStack) implements AetherPacket {
+public record OpenAccessoriesPacket(ItemStack carryStack) implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeItem(this.carryStack);
@@ -31,7 +32,7 @@ public record OpenAccessoriesPacket(ItemStack carryStack) implements AetherPacke
             NetworkHooks.openScreen(serverPlayer, new SimpleMenuProvider((id, inventory, playerEntity) -> new AccessoriesMenu(id, inventory), Component.translatable("container.crafting")));
             if (!itemStack.isEmpty()) {
                 serverPlayer.containerMenu.setCarried(itemStack);
-                AetherPacketHandler.sendToPlayer(new ClientGrabItemPacket(itemStack), serverPlayer);
+                PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new ClientGrabItemPacket(itemStack), serverPlayer);
             }
         }
     }

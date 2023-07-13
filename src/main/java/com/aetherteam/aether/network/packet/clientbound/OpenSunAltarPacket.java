@@ -1,13 +1,13 @@
 package com.aetherteam.aether.network.packet.clientbound;
 
 import com.aetherteam.aether.client.AetherClient;
-import com.aetherteam.aether.network.AetherPacket;
+import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 
-public record OpenSunAltarPacket(Component name) implements AetherPacket {
+public record OpenSunAltarPacket(Component name) implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeComponent(this.name);

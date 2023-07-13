@@ -1,6 +1,6 @@
 package com.aetherteam.aether.item.miscellaneous;
 
-import com.aetherteam.aether.capability.INBTSynchable;
+import com.aetherteam.nitrogen.capability.INBTSynchable;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.item.AetherItems;
 import net.minecraft.network.chat.Component;
