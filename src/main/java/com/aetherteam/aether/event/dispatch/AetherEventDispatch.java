@@ -1,6 +1,8 @@
-package com.aetherteam.aether.event;
+package com.aetherteam.aether.event.dispatch;
 
 import javax.annotation.Nullable;
+
+import com.aetherteam.aether.event.events.*;
 
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;

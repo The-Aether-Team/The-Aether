@@ -1,7 +1,7 @@
 package com.aetherteam.aether.event.listeners;
 
-import com.aetherteam.aether.event.PlacementBanEvent;
-import com.aetherteam.aether.event.PlacementConvertEvent;
+import com.aetherteam.aether.event.events.PlacementBanEvent;
+import com.aetherteam.aether.event.events.PlacementConvertEvent;
 import com.aetherteam.aether.event.hooks.DimensionHooks;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerLevelAccessor;

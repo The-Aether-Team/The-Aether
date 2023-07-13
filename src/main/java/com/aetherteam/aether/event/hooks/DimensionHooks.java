@@ -7,7 +7,7 @@ import com.aetherteam.aether.block.portal.AetherPortalForcer;
 import com.aetherteam.aether.block.portal.AetherPortalShape;
 import com.aetherteam.aether.capability.item.DroppedItem;
 import com.aetherteam.aether.capability.player.AetherPlayer;
-import com.aetherteam.aether.AetherGameEvents;
+import com.aetherteam.aether.event.AetherGameEvents;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerLevelAccessor;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;

@@ -1,4 +1,4 @@
-package com.aetherteam.aether.event;
+package com.aetherteam.aether.event.events;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.event.entity.EntityTeleportEvent;

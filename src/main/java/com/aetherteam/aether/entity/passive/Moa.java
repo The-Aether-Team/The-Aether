@@ -14,8 +14,8 @@ import com.aetherteam.aether.entity.ai.navigator.FallPathNavigation;
 
 import com.aetherteam.aether.entity.monster.AechorPlant;
 import com.aetherteam.aether.entity.monster.Swet;
-import com.aetherteam.aether.event.AetherEventDispatch;
-import com.aetherteam.aether.event.EggLayEvent;
+import com.aetherteam.aether.event.dispatch.AetherEventDispatch;
+import com.aetherteam.aether.event.events.EggLayEvent;
 import com.aetherteam.aether.item.miscellaneous.MoaEggItem;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.AetherTags;

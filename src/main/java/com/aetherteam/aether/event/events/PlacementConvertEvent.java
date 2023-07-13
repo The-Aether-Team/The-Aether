@@ -1,4 +1,4 @@
-package com.aetherteam.aether.event;
+package com.aetherteam.aether.event.events;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelAccessor;

@@ -1,4 +1,4 @@
-package com.aetherteam.aether.event;
+package com.aetherteam.aether.event.events;
 
 import javax.annotation.Nonnull;
 
