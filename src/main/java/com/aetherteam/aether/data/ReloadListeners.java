@@ -1,4 +1,4 @@
-package com.aetherteam.aether.api;
+package com.aetherteam.aether.data;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.block.FreezingBlock;
