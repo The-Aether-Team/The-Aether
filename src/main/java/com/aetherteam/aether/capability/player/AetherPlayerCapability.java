@@ -20,6 +20,7 @@ import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.perk.CustomizationsOptions;
 import com.aetherteam.aether.perk.data.*;
 import com.aetherteam.aether.item.EquipmentUtil;
+import com.aetherteam.nitrogen.network.BasePacket;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -40,6 +41,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.network.simple.SimpleChannel;
 import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.*;
@@ -191,23 +193,6 @@ public class AetherPlayerCapability implements AetherPlayer {
 	@Override
 	public Map<String, Triple<Type, Consumer<Object>, Supplier<Object>>> getSynchableFunctions() {
 		return this.synchableFunctions;
-	}
-
-	@Override
-	public void setSynched(Direction direction, String key, Object value) {
-		if (direction == Direction.SERVER) {
-			PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new AetherPlayerSyncPacket(this.getPlayer().getId(), key, this.getSynchableFunctions().get(key).getLeft(), value));
-		} else {
-			PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new AetherPlayerSyncPacket(this.getPlayer().getId(), key, this.getSynchableFunctions().get(key).getLeft(), value));
-		}
-		this.getSynchableFunctions().get(key).getMiddle().accept(value);
-	}
-
-	@Override
-	public void forceSync(Direction direction) {
-		for (Map.Entry<String, Triple<Type, Consumer<Object>, Supplier<Object>>> entry : this.synchableFunctions.entrySet()) {
-			this.setSynched(direction, entry.getKey(), entry.getValue().getRight().get());
-		}
 	}
 
 	@Override
@@ -922,5 +907,15 @@ public class AetherPlayerCapability implements AetherPlayer {
 		if (this.getPlayer() instanceof ServerPlayer serverPlayer && !this.getPlayer().level.isClientSide) {
 			PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new CloudMinionPacket(this.getPlayer().getId(), cloudMinionRight.getId(), cloudMinionLeft.getId()), serverPlayer);
 		}
+	}
+
+	@Override
+	public BasePacket getSyncPacket(String key, Type type, Object value) {
+		return new AetherPlayerSyncPacket(this.getPlayer().getId(), key, type, value);
+	}
+
+	@Override
+	public SimpleChannel getPacketChannel() {
+		return AetherPacketHandler.INSTANCE;
 	}
 }

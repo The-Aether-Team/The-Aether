@@ -3,6 +3,7 @@ package com.aetherteam.aether.network;
 import com.aetherteam.aether.Aether;
 
 import com.aetherteam.aether.network.packet.AetherPlayerSyncPacket;
+import com.aetherteam.aether.network.packet.PhoenixArrowSyncPacket;
 import com.aetherteam.aether.network.packet.clientbound.*;
 import com.aetherteam.aether.network.packet.serverbound.*;
 import com.aetherteam.nitrogen.network.BasePacket;
@@ -44,7 +45,6 @@ public class AetherPacketHandler {
 		register(MoaInteractPacket.class, MoaInteractPacket::decode);
 		register(OpenNpcDialoguePacket.class, OpenNpcDialoguePacket::decode);
 		register(OpenSunAltarPacket.class, OpenSunAltarPacket::decode);
-		register(PhoenixArrowPacket.class, PhoenixArrowPacket::decode);
 		register(PortalTravelSoundPacket.class, PortalTravelSoundPacket::decode);
 		register(RemountAerbunnyPacket.class, RemountAerbunnyPacket::decode);
 		register(SetVehiclePacket.class, SetVehiclePacket::decode);
@@ -69,6 +69,7 @@ public class AetherPacketHandler {
 
 		// BOTH
 		register(AetherPlayerSyncPacket.class, AetherPlayerSyncPacket::decode);
+		register(PhoenixArrowSyncPacket.class, PhoenixArrowSyncPacket::decode);
 	}
 
 	private static <MSG extends BasePacket> void register(final Class<MSG> packet, Function<FriendlyByteBuf, MSG> decoder) {

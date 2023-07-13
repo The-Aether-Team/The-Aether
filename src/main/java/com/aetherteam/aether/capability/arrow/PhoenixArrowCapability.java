@@ -1,13 +1,27 @@
 package com.aetherteam.aether.capability.arrow;
 
+import com.aetherteam.aether.network.AetherPacketHandler;
+import com.aetherteam.aether.network.packet.PhoenixArrowSyncPacket;
+import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraftforge.network.simple.SimpleChannel;
+import org.apache.commons.lang3.tuple.Triple;
+
+import java.util.Map;
+import java.util.UUID;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class PhoenixArrowCapability implements PhoenixArrow {
     private final AbstractArrow arrow;
 
     private boolean isPhoenixArrow;
     private int fireTime;
+
+    private final Map<String, Triple<Type, Consumer<Object>, Supplier<Object>>> synchableFunctions = Map.ofEntries(
+            Map.entry("setPhoenixArrow", Triple.of(Type.BOOLEAN, (object) -> this.setPhoenixArrow((boolean) object), this::isPhoenixArrow))
+    );
 
     public PhoenixArrowCapability(AbstractArrow arrow) {
         this.arrow = arrow;
@@ -37,6 +51,11 @@ public class PhoenixArrowCapability implements PhoenixArrow {
     }
 
     @Override
+    public Map<String, Triple<Type, Consumer<Object>, Supplier<Object>>> getSynchableFunctions() {
+        return this.synchableFunctions;
+    }
+
+    @Override
     public void setPhoenixArrow(boolean isPhoenixArrow) {
         this.isPhoenixArrow = isPhoenixArrow;
     }
@@ -54,5 +73,15 @@ public class PhoenixArrowCapability implements PhoenixArrow {
     @Override
     public int getFireTime() {
         return this.fireTime;
+    }
+
+    @Override
+    public BasePacket getSyncPacket(String key, Type type, Object value) {
+        return new PhoenixArrowSyncPacket(this.getArrow().getId(), key, type, value);
+    }
+
+    @Override
+    public SimpleChannel getPacketChannel() {
+        return AetherPacketHandler.INSTANCE;
     }
 }
