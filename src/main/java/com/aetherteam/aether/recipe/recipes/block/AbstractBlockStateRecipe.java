@@ -2,7 +2,7 @@ package com.aetherteam.aether.recipe.recipes.block;
 
 import com.aetherteam.aether.recipe.BlockPropertyPair;
 import com.aetherteam.aether.recipe.BlockStateIngredient;
-import com.aetherteam.aether.util.BlockStateRecipeUtil;
+import com.aetherteam.aether.recipe.BlockStateRecipeUtil;
 import net.minecraft.commands.CommandFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;

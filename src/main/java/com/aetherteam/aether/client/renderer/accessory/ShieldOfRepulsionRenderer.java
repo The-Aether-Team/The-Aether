@@ -5,7 +5,7 @@ import com.aetherteam.aether.item.accessories.miscellaneous.ShieldOfRepulsionIte
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.mixin.mixins.client.accessor.PlayerModelAccessor;
-import com.aetherteam.aether.util.ConstantsUtil;
+import com.aetherteam.aether.ConstantsUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;

@@ -3,7 +3,7 @@ package com.aetherteam.aether.world.structure;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.data.resources.registries.AetherConfiguredFeatures;
-import com.aetherteam.aether.util.BlockLogicUtil;
+import com.aetherteam.aether.world.BlockLogicUtil;
 import com.aetherteam.aether.world.structurepiece.golddungeon.*;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

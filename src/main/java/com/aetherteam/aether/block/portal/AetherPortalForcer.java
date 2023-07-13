@@ -6,7 +6,7 @@ import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.mixin.mixins.common.accessor.EntityAccessor;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.client.PortalTravelSoundPacket;
-import com.aetherteam.aether.util.LevelUtil;
+import com.aetherteam.aether.world.LevelUtil;
 import com.aetherteam.aether.world.AetherPoi;
 import net.minecraft.BlockUtil;
 import net.minecraft.core.BlockPos;

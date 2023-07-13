@@ -1,6 +1,6 @@
 package com.aetherteam.aether.network.packet.client;
 
-import com.aetherteam.aether.util.EntityUtil;
+import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.network.AetherPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;

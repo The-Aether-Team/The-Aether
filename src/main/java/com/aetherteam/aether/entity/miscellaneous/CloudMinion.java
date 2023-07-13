@@ -3,7 +3,7 @@ package com.aetherteam.aether.entity.miscellaneous;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.projectile.crystal.CloudCrystal;
 import com.aetherteam.aether.entity.AetherEntityTypes;
-import com.aetherteam.aether.util.EntityUtil;
+import com.aetherteam.aether.entity.EntityUtil;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;

@@ -2,7 +2,7 @@ package com.aetherteam.aether.item.combat.abilities.weapon;
 
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.item.AetherItems;
-import com.aetherteam.aether.util.EquipmentUtil;
+import com.aetherteam.aether.item.EquipmentUtil;
 import net.minecraft.world.entity.LivingEntity;
 
 public interface HolystoneWeapon {

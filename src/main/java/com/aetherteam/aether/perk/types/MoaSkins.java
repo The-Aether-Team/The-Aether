@@ -3,7 +3,7 @@ package com.aetherteam.aether.perk.types;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.api.registers.MoaType;
-import com.aetherteam.aether.util.PerkUtil;
+import com.aetherteam.aether.perk.PerkUtil;
 import com.aetherteam.nitrogen.api.users.User;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.network.FriendlyByteBuf;

@@ -1,7 +1,7 @@
 package com.aetherteam.aether.world.feature;
 
 import com.aetherteam.aether.world.configuration.ShelfConfiguration;
-import com.aetherteam.aether.util.BlockPlacementUtil;
+import com.aetherteam.aether.world.BlockPlacementUtil;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;

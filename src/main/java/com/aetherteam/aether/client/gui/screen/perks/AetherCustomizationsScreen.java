@@ -8,7 +8,7 @@ import com.aetherteam.aether.network.packet.server.ServerHaloPacket;
 import com.aetherteam.aether.perk.CustomizationsOptions;
 import com.aetherteam.aether.perk.types.DeveloperGlow;
 import com.aetherteam.aether.perk.types.Halo;
-import com.aetherteam.aether.util.PerkUtil;
+import com.aetherteam.aether.perk.PerkUtil;
 import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
 import com.mojang.blaze3d.vertex.PoseStack;

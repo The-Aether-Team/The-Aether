@@ -1,6 +1,5 @@
 package com.aetherteam.aether.recipe;
 
-import com.aetherteam.aether.util.BlockStateRecipeUtil;
 import com.google.gson.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;

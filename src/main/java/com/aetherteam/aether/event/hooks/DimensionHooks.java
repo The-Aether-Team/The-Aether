@@ -14,7 +14,7 @@ import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.recipes.ban.BlockBanRecipe;
 import com.aetherteam.aether.recipe.recipes.ban.ItemBanRecipe;
 import com.aetherteam.aether.recipe.recipes.block.PlacementConversionRecipe;
-import com.aetherteam.aether.util.LevelUtil;
+import com.aetherteam.aether.world.LevelUtil;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.capability.time.AetherTime;

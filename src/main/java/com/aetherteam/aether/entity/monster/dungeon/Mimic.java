@@ -3,7 +3,7 @@ package com.aetherteam.aether.entity.monster.dungeon;
 import com.aetherteam.aether.client.AetherSoundEvents;
 
 import com.aetherteam.aether.entity.ai.goal.ContinuousMeleeAttackGoal;
-import com.aetherteam.aether.util.EntityUtil;
+import com.aetherteam.aether.entity.EntityUtil;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.block.Blocks;

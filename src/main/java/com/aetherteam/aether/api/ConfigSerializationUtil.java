@@ -1,4 +1,4 @@
-package com.aetherteam.aether.util;
+package com.aetherteam.aether.api;
 
 import com.aetherteam.aether.AetherConfig;
 import com.google.gson.JsonSyntaxException;

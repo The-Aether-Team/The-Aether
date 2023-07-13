@@ -6,7 +6,7 @@ import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.client.SwetAttackPacket;
 import com.aetherteam.aether.network.packet.client.SwetDeathParticlePacket;
-import com.aetherteam.aether.util.EquipmentUtil;
+import com.aetherteam.aether.item.EquipmentUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;

@@ -6,8 +6,7 @@ import com.aetherteam.aether.integration.jei.categories.AbstractAetherRecipeCate
 import com.aetherteam.aether.recipe.BlockPropertyPair;
 import com.aetherteam.aether.recipe.BlockStateIngredient;
 import com.aetherteam.aether.recipe.recipes.ban.AbstractPlacementBanRecipe;
-import com.aetherteam.aether.recipe.recipes.ban.ItemBanRecipe;
-import com.aetherteam.aether.util.BlockStateRecipeUtil;
+import com.aetherteam.aether.recipe.BlockStateRecipeUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -28,7 +27,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;

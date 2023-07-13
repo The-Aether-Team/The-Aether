@@ -4,7 +4,7 @@ import com.aetherteam.aether.recipe.BlockPropertyPair;
 import com.aetherteam.aether.recipe.BlockStateIngredient;
 import com.aetherteam.aether.recipe.recipes.block.AbstractBlockStateRecipe;
 import com.aetherteam.aether.recipe.serializer.BlockStateRecipeSerializer;
-import com.aetherteam.aether.util.BlockStateRecipeUtil;
+import com.aetherteam.aether.recipe.BlockStateRecipeUtil;
 import com.google.gson.JsonObject;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceKey;

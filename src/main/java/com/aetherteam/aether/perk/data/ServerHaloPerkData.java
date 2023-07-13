@@ -3,7 +3,7 @@ package com.aetherteam.aether.perk.data;
 import com.aetherteam.aether.network.AetherPacket;
 import com.aetherteam.aether.network.packet.client.ClientHaloPacket;
 import com.aetherteam.aether.perk.types.Halo;
-import com.aetherteam.aether.util.PerkUtil;
+import com.aetherteam.aether.perk.PerkUtil;
 import com.aetherteam.nitrogen.api.users.User;
 import net.minecraft.server.MinecraftServer;
 

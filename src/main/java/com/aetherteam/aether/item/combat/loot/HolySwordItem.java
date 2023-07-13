@@ -4,7 +4,7 @@ import com.aetherteam.aether.data.resources.AetherDamageTypes;
 import com.aetherteam.aether.item.combat.AetherItemTiers;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.combat.AetherSwordItem;
-import com.aetherteam.aether.util.EquipmentUtil;
+import com.aetherteam.aether.item.EquipmentUtil;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.LivingEntity;

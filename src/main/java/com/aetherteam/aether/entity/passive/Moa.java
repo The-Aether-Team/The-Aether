@@ -25,7 +25,7 @@ import com.aetherteam.aether.network.packet.client.MoaInteractPacket;
 import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.perk.data.ServerMoaSkinPerkData;
 import com.aetherteam.aether.perk.types.MoaData;
-import com.aetherteam.aether.util.EntityUtil;
+import com.aetherteam.aether.entity.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;

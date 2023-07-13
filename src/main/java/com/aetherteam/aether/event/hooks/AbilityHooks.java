@@ -20,7 +20,7 @@ import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.loot.AetherLootContexts;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.client.ToolDebuffPacket;
-import com.aetherteam.aether.util.EquipmentUtil;
+import com.aetherteam.aether.item.EquipmentUtil;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

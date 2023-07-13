@@ -8,7 +8,7 @@ import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.item.combat.AetherSwordItem;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ZombifiedPiglinAccessor;
-import com.aetherteam.aether.util.EquipmentUtil;
+import com.aetherteam.aether.item.EquipmentUtil;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.ZombifiedPiglin;

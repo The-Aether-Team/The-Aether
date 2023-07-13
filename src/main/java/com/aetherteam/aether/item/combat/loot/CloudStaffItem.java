@@ -5,7 +5,7 @@ import com.aetherteam.aether.capability.player.AetherPlayerCapability;
 import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.capability.player.AetherPlayer;
-import com.aetherteam.aether.util.EntityUtil;
+import com.aetherteam.aether.entity.EntityUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.TooltipFlag;

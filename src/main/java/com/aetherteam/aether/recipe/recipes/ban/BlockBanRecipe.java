@@ -5,7 +5,7 @@ import com.aetherteam.aether.recipe.AetherRecipeSerializers;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.BlockStateIngredient;
 import com.aetherteam.aether.recipe.serializer.PlacementBanRecipeSerializer;
-import com.aetherteam.aether.util.BlockStateRecipeUtil;
+import com.aetherteam.aether.recipe.BlockStateRecipeUtil;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;

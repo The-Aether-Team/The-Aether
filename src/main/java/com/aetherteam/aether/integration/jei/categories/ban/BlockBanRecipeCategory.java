@@ -6,7 +6,7 @@ import com.aetherteam.aether.integration.jei.FluidStateRenderer;
 import com.aetherteam.aether.recipe.BlockPropertyPair;
 import com.aetherteam.aether.recipe.BlockStateIngredient;
 import com.aetherteam.aether.recipe.recipes.ban.BlockBanRecipe;
-import com.aetherteam.aether.util.BlockStateRecipeUtil;
+import com.aetherteam.aether.recipe.BlockStateRecipeUtil;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.helpers.IGuiHelper;

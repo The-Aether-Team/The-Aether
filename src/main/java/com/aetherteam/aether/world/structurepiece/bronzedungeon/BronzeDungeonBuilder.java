@@ -1,7 +1,7 @@
 package com.aetherteam.aether.world.structurepiece.bronzedungeon;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.util.BlockLogicUtil;
+import com.aetherteam.aether.world.BlockLogicUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;

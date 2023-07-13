@@ -1,4 +1,4 @@
-package com.aetherteam.aether.util;
+package com.aetherteam.aether;
 
 public class ConstantsUtil {
     /**

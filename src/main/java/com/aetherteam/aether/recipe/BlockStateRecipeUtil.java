@@ -1,6 +1,5 @@
-package com.aetherteam.aether.util;
+package com.aetherteam.aether.recipe;
 
-import com.aetherteam.aether.recipe.BlockPropertyPair;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.commands.CommandFunction;
@@ -31,6 +30,12 @@ import java.util.Map;
 import java.util.Optional;
 
 public class BlockStateRecipeUtil {
+    /**
+     * Executes an mcfunction.
+     * @param level The {@link Level} to execute in.
+     * @param pos The {@link BlockPos} to execute at.
+     * @param function The {@link net.minecraft.commands.CommandFunction.CacheableFunction} to execute.
+     */
     public static void executeFunction(Level level, BlockPos pos, CommandFunction.CacheableFunction function) {
         if (level instanceof ServerLevel serverLevel && function != null) {
             MinecraftServer minecraftServer = serverLevel.getServer();
@@ -44,7 +49,11 @@ public class BlockStateRecipeUtil {
     }
 
     // Buffer write methods.
-
+    /**
+     * Writes a {@link BlockPropertyPair} to the networking buffer.
+     * @param buffer The networking {@link FriendlyByteBuf}.
+     * @param pair The {@link BlockPropertyPair}.
+     */
     public static void writePair(FriendlyByteBuf buffer, BlockPropertyPair pair) {
         ResourceLocation blockLocation = ForgeRegistries.BLOCKS.getKey(pair.block());
         if ((pair.block().defaultBlockState().isAir() && pair.properties().isEmpty()) || blockLocation == null) {
@@ -61,6 +70,11 @@ public class BlockStateRecipeUtil {
         }
     }
 
+    /**
+     * Writes a {@link Biome} {@link ResourceKey} to the networking buffer.
+     * @param buffer The networking {@link FriendlyByteBuf}.
+     * @param biomeKey The {@link Biome} {@link ResourceKey}.
+     */
     public static void writeBiomeKey(FriendlyByteBuf buffer, ResourceKey<Biome> biomeKey) {
         if (biomeKey == null) {
             buffer.writeBoolean(false);
@@ -70,6 +84,11 @@ public class BlockStateRecipeUtil {
         }
     }
 
+    /**
+     * Writes a {@link Biome} {@link TagKey} to the networking buffer.
+     * @param buffer The networking {@link FriendlyByteBuf}.
+     * @param biomeTag The {@link Biome} {@link TagKey}.
+     */
     public static void writeBiomeTag(FriendlyByteBuf buffer, TagKey<Biome> biomeTag) {
         if (biomeTag == null) {
             buffer.writeBoolean(false);
@@ -80,9 +99,11 @@ public class BlockStateRecipeUtil {
     }
 
     // Buffer read methods.
-
     /**
+     * Reads a {@link BlockPropertyPair} from the networking buffer.<br><br>
      * Warning for "unchecked" is suppressed because casting within this method works fine.
+     * @param buffer The networking {@link FriendlyByteBuf}.
+     * @return The {@link BlockPropertyPair}.
      */
     @SuppressWarnings("unchecked")
     public static BlockPropertyPair readPair(FriendlyByteBuf buffer) {
@@ -113,6 +134,11 @@ public class BlockStateRecipeUtil {
         }
     }
 
+    /**
+     * Reads a {@link Biome} {@link ResourceKey} from the networking buffer.
+     * @param buffer The networking {@link FriendlyByteBuf}.
+     * @return The {@link Biome} {@link ResourceKey}.
+     */
     public static ResourceKey<Biome> readBiomeKey(FriendlyByteBuf buffer) {
         if (!buffer.readBoolean()) {
             return null;
@@ -122,6 +148,11 @@ public class BlockStateRecipeUtil {
         }
     }
 
+    /**
+     * Reads a {@link Biome} {@link TagKey} from the networking buffer.
+     * @param buffer The networking {@link FriendlyByteBuf}.
+     * @return The {@link Biome} {@link TagKey}.
+     */
     public static TagKey<Biome> readBiomeTag(FriendlyByteBuf buffer) {
         if (!buffer.readBoolean()) {
             return null;
@@ -131,6 +162,11 @@ public class BlockStateRecipeUtil {
         }
     }
 
+    /**
+     * Reads a {@link net.minecraft.commands.CommandFunction.CacheableFunction} from the networking buffer.
+     * @param buffer The networking {@link FriendlyByteBuf}.
+     * @return The {@link net.minecraft.commands.CommandFunction.CacheableFunction}.
+     */
     public static CommandFunction.CacheableFunction readFunction(FriendlyByteBuf buffer) {
         String functionString = buffer.readUtf();
         ResourceLocation functionLocation = functionString.isEmpty() ? null : new ResourceLocation(functionString);
@@ -138,7 +174,11 @@ public class BlockStateRecipeUtil {
     }
 
     // JSON write methods.
-
+    /**
+     * Adds a {@link Biome} {@link ResourceKey} to a {@link JsonObject}.
+     * @param json The {@link JsonObject}.
+     * @param biomeKey The {@link Biome} {@link ResourceKey}.
+     */
     public static void biomeKeyToJson(JsonObject json, ResourceKey<Biome> biomeKey) {
         if (biomeKey != null) {
             ResourceLocation biomeLocation = biomeKey.location();
@@ -146,6 +186,11 @@ public class BlockStateRecipeUtil {
         }
     }
 
+    /**
+     * Adds a {@link Biome} {@link TagKey} to a {@link JsonObject}.
+     * @param json The {@link JsonObject}.
+     * @param biomeTag The {@link Biome} {@link TagKey}.
+     */
     public static void biomeTagToJson(JsonObject json, TagKey<Biome> biomeTag) {
         if (biomeTag != null) {
             ResourceLocation tagLocation = biomeTag.location();
@@ -154,7 +199,11 @@ public class BlockStateRecipeUtil {
     }
 
     // JSON read methods.
-
+    /**
+     * Reads a {@link BlockPropertyPair} from a {@link JsonObject}.
+     * @param json The {@link JsonObject}.
+     * @return The {@link BlockPropertyPair}.
+     */
     public static BlockPropertyPair pairFromJson(JsonObject json) {
         Block block;
         Map<Property<?>, Comparable<?>> properties = Map.of();
@@ -173,6 +222,11 @@ public class BlockStateRecipeUtil {
         return BlockPropertyPair.of(block, properties);
     }
 
+    /**
+     * Reads a {@link Block} from a {@link JsonObject}.
+     * @param json The {@link JsonObject}.
+     * @return The {@link Block}.
+     */
     public static Block blockFromJson(JsonObject json) {
         String blockName = GsonHelper.getAsString(json, "block");
         ResourceLocation blockLocation = new ResourceLocation(blockName);
@@ -188,7 +242,11 @@ public class BlockStateRecipeUtil {
     }
 
     /**
+     * Reads a {@link Map} of {@link Property Properties} and {@link Comparable}s (representing block properties) from a {@link JsonObject}.<br><br>
      * Warning for "unchecked" is suppressed because casting within this method works fine.
+     * @param json The {@link JsonObject}.
+     * @param block The {@link Block} that the properties are paired with.
+     * @return Block properties, as a {@link Map} of {@link Property Properties} and {@link Comparable}s.
      */
     @SuppressWarnings("unchecked")
     public static Map<Property<?>, Comparable<?>> propertiesFromJson(JsonObject json, Block block) {
@@ -206,6 +264,11 @@ public class BlockStateRecipeUtil {
         return properties;
     }
 
+    /**
+     * Reads a {@link Biome} {@link ResourceKey} or {@link TagKey} from a {@link JsonObject}.
+     * @param json The {@link JsonObject}.
+     * @return A {@link Pair} containing either a {@link Biome} {@link ResourceKey} or {@link TagKey} and a null value.
+     */
     public static Pair<ResourceKey<Biome>, TagKey<Biome>> biomeRecipeDataFromJson(JsonObject json) {
         ResourceKey<Biome> biomeKey = null;
         TagKey<Biome> biomeTag = null;
@@ -220,12 +283,22 @@ public class BlockStateRecipeUtil {
         return Pair.of(biomeKey, biomeTag);
     }
 
+    /**
+     * Reads a {@link Biome} {@link ResourceKey} from a {@link JsonObject}.
+     * @param json The {@link JsonObject}.
+     * @return The {@link Biome} {@link ResourceKey}.
+     */
     public static ResourceKey<Biome> biomeKeyFromJson(JsonObject json) {
         String biomeName = GsonHelper.getAsString(json, "biome");
         String[] nameWithId = biomeName.split(":");
         return ResourceKey.create(Registries.BIOME, (nameWithId.length > 1) ? new ResourceLocation(nameWithId[0], nameWithId[1]) : new ResourceLocation(biomeName));
     }
 
+    /**
+     * Reads a {@link Biome} {@link TagKey} from a {@link JsonObject}.
+     * @param json The {@link JsonObject}.
+     * @return The {@link Biome} {@link TagKey}.
+     */
     public static TagKey<Biome> biomeTagFromJson(JsonObject json) {
         String biomeName = GsonHelper.getAsString(json, "biome").replace("#", "");
         String[] nameWithId = biomeName.split(":");
@@ -233,9 +306,12 @@ public class BlockStateRecipeUtil {
     }
 
     // Extra methods.
-
     /**
+     * Sets a property to a {@link BlockState} from a property map entry.<br><br>
      * Warning for "unchecked" is suppressed because casting within this method works fine.
+     * @param properties The property map entry, as a {@link Map.Entry} of a {@link Property} and {@link Comparable}.
+     * @param state The {@link BlockState}.
+     * @return The {@link BlockState} with the applied property.
      */
     @SuppressWarnings("unchecked")
     public static <T extends Comparable<T>, V extends T> BlockState setHelper(Map.Entry<Property<?>, Comparable<?>> properties, BlockState state) {
@@ -243,10 +319,14 @@ public class BlockStateRecipeUtil {
     }
 
     /**
+     * Gets the name of a block property.<br><br>
      * Warning for "unchecked" is suppressed because casting within this method works fine.
+     * @param property The block {@link Property}.
+     * @param value The property value, as a {@link Comparable}.
+     * @return The name as a {@link String}.
      */
     @SuppressWarnings("unchecked")
-    public static <T extends Comparable<T>> String getName(Property<T> pProperty, Comparable<?> pValue) {
-        return pProperty.getName((T) pValue);
+    public static <T extends Comparable<T>> String getName(Property<T> property, Comparable<?> value) {
+        return property.getName((T) value);
     }
 }

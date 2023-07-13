@@ -5,7 +5,7 @@ import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.particle.AetherParticleTypes;
 import com.aetherteam.aether.mixin.mixins.common.accessor.EntityAccessor;
-import com.aetherteam.aether.util.LevelUtil;
+import com.aetherteam.aether.world.LevelUtil;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;

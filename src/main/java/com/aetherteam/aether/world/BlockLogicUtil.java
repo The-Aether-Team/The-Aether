@@ -1,4 +1,4 @@
-package com.aetherteam.aether.util;
+package com.aetherteam.aether.world;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

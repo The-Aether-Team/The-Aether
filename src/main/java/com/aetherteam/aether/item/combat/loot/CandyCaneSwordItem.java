@@ -3,7 +3,7 @@ package com.aetherteam.aether.item.combat.loot;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.combat.AetherItemTiers;
-import com.aetherteam.aether.util.EquipmentUtil;
+import com.aetherteam.aether.item.EquipmentUtil;
 import net.minecraft.world.entity.LivingEntity;
 
 import net.minecraft.world.item.Item;

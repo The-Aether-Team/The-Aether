@@ -1,6 +1,6 @@
 package com.aetherteam.aether.loot.conditions;
 
-import com.aetherteam.aether.util.ConfigSerializationUtil;
+import com.aetherteam.aether.api.ConfigSerializationUtil;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
