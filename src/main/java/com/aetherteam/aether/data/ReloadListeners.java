@@ -31,6 +31,9 @@ public class ReloadListeners {
             super(GSON_INSTANCE, "recipes");
         }
 
+        /**
+         * Resets the block cache for {@link FreezingBlock} recipes.
+         */
         @Override
         protected void apply(@Nonnull Map<ResourceLocation, JsonElement> object, @Nonnull ResourceManager resourceManager, @Nonnull ProfilerFiller profiler) {
             FreezingBlock.cachedBlocks.clear();
