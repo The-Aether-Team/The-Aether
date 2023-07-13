@@ -7,7 +7,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import java.util.Arrays;
 import java.util.List;
 
-public class ConfigSerializationUtil {
+public final class ConfigSerializationUtil {
     /**
      * Create a serializable string out of a config value's path.
      * @param config The {@link net.minecraftforge.common.ForgeConfigSpec.ConfigValue}<{@link Boolean}> to serialize from.

@@ -4,7 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 
-public class BlockLogicUtil {
+public final class BlockLogicUtil {
     /**
      * Find the entry point for a tunnel piece to a room with an odd-numbered width
      * @param box - The room to tunnel from

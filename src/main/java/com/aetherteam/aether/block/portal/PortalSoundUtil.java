@@ -6,7 +6,7 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 
-public class PortalSoundUtil {
+public final class PortalSoundUtil {
     /**
      * Based on {@link net.minecraft.client.renderer.LevelRenderer#levelEvent(int, BlockPos, int)}, event 1032.
      */

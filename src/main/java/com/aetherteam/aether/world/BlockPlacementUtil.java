@@ -6,7 +6,7 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 
-public class BlockPlacementUtil {
+public final class BlockPlacementUtil {
     /**
      * Places a disc for generation purposes.
      * @param level The {@link WorldGenLevel} for generation.

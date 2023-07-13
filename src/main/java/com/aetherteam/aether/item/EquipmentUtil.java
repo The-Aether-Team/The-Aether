@@ -13,7 +13,7 @@ import top.theillusivec4.curios.api.SlotResult;
 import java.util.List;
 import java.util.Optional;
 
-public class EquipmentUtil {
+public final class EquipmentUtil {
     /**
      * An attack is full strength if either it's a player that attacked with full attack strength, or if the entity is not a player.
      * @param attacker The attacking {@link LivingEntity}.

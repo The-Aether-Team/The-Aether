@@ -6,7 +6,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 
-public class LevelUtil {
+public final class LevelUtil {
     /**
      * Used to determine a destination dimension for Aether-related teleportation. By default, this is "aether:the_aether".
      * @return A {@link ResourceKey ResourceKey&lt;Level&gt;} retrieved from {@link AetherConfig.Server#portal_destination_dimension_ID}.

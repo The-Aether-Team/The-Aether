@@ -1,6 +1,6 @@
 package com.aetherteam.aether;
 
-public class ConstantsUtil {
+public final class ConstantsUtil {
     /**
      * Y-vector of an entity's delta movement when on the ground.
      */

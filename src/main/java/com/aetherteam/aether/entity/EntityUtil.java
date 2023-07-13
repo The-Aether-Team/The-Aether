@@ -5,7 +5,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 
-public class EntityUtil {
+public final class EntityUtil {
     /**
      * Copies rotation values from one entity to another.
      * @param entity The {@link Entity} to copy rotations to.

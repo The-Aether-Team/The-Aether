@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class BlockStateRecipeUtil {
+public final class BlockStateRecipeUtil {
     /**
      * Executes an mcfunction.
      * @param level The {@link Level} to execute in.

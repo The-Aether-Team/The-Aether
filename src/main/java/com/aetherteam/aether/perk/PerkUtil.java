@@ -5,7 +5,7 @@ import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.function.Predicate;
 
-public class PerkUtil {
+public final class PerkUtil {
     /**
      * @return A {@link Predicate} to check if a {@link User} has access to Valkyrie-tier Moa skins for a lifetime period.
      */
