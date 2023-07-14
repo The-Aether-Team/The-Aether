@@ -7,6 +7,7 @@ plugins {
     id 'org.spongepowered.mixin' version '[0.7,0.8)'
     id 'org.parchmentmc.librarian.forgegradle' version '[1,2)'
     id 'org.moddingx.modgradle.mapping' version '[4,5)'
+    id 'org.moddingx.modgradle.sourcejar' version '[4,5)' apply false
     id 'io.github.0ffz.github-packages' version '[1,2)'
     id 'com.matthewprenger.cursegradle' version '[1.4,1.5)'
     id 'com.modrinth.minotaur' version '[2,3)'
@@ -22,8 +23,10 @@ base {
 // Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
+apply plugin: 'org.moddingx.modgradle.sourcejar'
+
 minecraft {
-    mappings channel: 'parchment', version: project.mappings
+    mappings channel: 'sugarcane', version: project.mappings
 
     // When true, this property will have all Eclipse/IntelliJ IDEA run configurations run the "prepareX" task for the given run configuration before launching the game.
     // In most cases, it is not necessary to enable.
