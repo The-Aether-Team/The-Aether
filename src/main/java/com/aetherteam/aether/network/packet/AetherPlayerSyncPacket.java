@@ -3,7 +3,6 @@ package com.aetherteam.aether.network.packet;
 import com.aetherteam.nitrogen.capability.INBTSynchable;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.nitrogen.network.packet.SyncEntityPacket;
-import com.aetherteam.nitrogen.network.packet.SyncPacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
