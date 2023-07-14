@@ -7,13 +7,6 @@ pluginManagement {
             if (plugin.startsWith('org.moddingx.modgradle.')) {
                 useModule "org.moddingx:ModGradle:${requested.version}"
             }
-
-            // everything else
-            switch (plugin) {
-                case 'org.spongepowered.mixin':
-                    useModule "org.spongepowered:mixingradle:${requested.version}"
-                    break
-            }
         }
     }
     repositories {
@@ -23,4 +16,8 @@ pluginManagement {
         maven { url = 'https://maven.parchmentmc.org' }
         maven { url = 'https://maven.moddingx.org' }
     }
+}
+
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
 }
