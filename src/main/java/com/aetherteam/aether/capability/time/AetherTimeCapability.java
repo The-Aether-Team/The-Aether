@@ -2,12 +2,18 @@ package com.aetherteam.aether.capability.time;
 
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.clientbound.EternalDayPacket;
-import com.aetherteam.nitrogen.network.PacketRelay;
+import com.aetherteam.aether.network.packet.AetherTimeSyncPacket;
+import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.network.simple.SimpleChannel;
+import org.apache.commons.lang3.tuple.Triple;
+
+import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * Capability class to store data for the Aether's custom day/night cycle.
@@ -18,6 +24,10 @@ public class AetherTimeCapability implements AetherTime {
     private long dayTime = 18000L;
     private boolean isEternalDay = true;
 
+    private final Map<String, Triple<Type, Consumer<Object>, Supplier<Object>>> synchableFunctions = Map.ofEntries(
+            Map.entry("setEternalDay", Triple.of(Type.BOOLEAN, (object) -> this.setEternalDay((boolean) object), this::getEternalDay))
+    );
+
     public AetherTimeCapability(Level level) {
         this.level = level;
     }
@@ -25,6 +35,11 @@ public class AetherTimeCapability implements AetherTime {
     @Override
     public Level getLevel() {
         return this.level;
+    }
+
+    @Override
+    public Map<String, Triple<Type, Consumer<Object>, Supplier<Object>>> getSynchableFunctions() {
+        return this.synchableFunctions;
     }
 
     @Override
@@ -71,7 +86,7 @@ public class AetherTimeCapability implements AetherTime {
      */
     @Override
     public void updateEternalDay() {
-        PacketRelay.sendToDimension(AetherPacketHandler.INSTANCE, new EternalDayPacket(this.isEternalDay), this.level.dimension());
+        this.setSynched(Direction.DIMENSION, "setEternalDay", this.isEternalDay, this.level.dimension());
     }
 
     /**
@@ -79,7 +94,7 @@ public class AetherTimeCapability implements AetherTime {
      */
     @Override
     public void updateEternalDay(ServerPlayer player) {
-        PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new EternalDayPacket(this.isEternalDay), player);
+        this.setSynched(Direction.PLAYER, "setEternalDay", this.isEternalDay, player);
     }
 
     @Override
@@ -100,5 +115,15 @@ public class AetherTimeCapability implements AetherTime {
     @Override
     public boolean getEternalDay() {
         return this.isEternalDay;
+    }
+
+    @Override
+    public BasePacket getSyncPacket(String key, Type type, Object value) {
+        return new AetherTimeSyncPacket(key, type, value);
+    }
+
+    @Override
+    public SimpleChannel getPacketChannel() {
+        return AetherPacketHandler.INSTANCE;
     }
 }

@@ -2,14 +2,14 @@ package com.aetherteam.aether.network.packet;
 
 import com.aetherteam.aether.capability.arrow.PhoenixArrow;
 import com.aetherteam.nitrogen.capability.INBTSynchable;
-import com.aetherteam.nitrogen.network.packet.SyncPacket;
+import com.aetherteam.nitrogen.network.packet.SyncEntityPacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraftforge.common.util.LazyOptional;
 import oshi.util.tuples.Quartet;
 
-public class PhoenixArrowSyncPacket extends SyncPacket<PhoenixArrow> {
+public class PhoenixArrowSyncPacket extends SyncEntityPacket<PhoenixArrow> {
     public PhoenixArrowSyncPacket(Quartet<Integer, String, INBTSynchable.Type, Object> values) {
         super(values);
     }
@@ -19,7 +19,7 @@ public class PhoenixArrowSyncPacket extends SyncPacket<PhoenixArrow> {
     }
 
     public static PhoenixArrowSyncPacket decode(FriendlyByteBuf buf) {
-        return new PhoenixArrowSyncPacket(SyncPacket.decoded(buf));
+        return new PhoenixArrowSyncPacket(SyncEntityPacket.decodeEntityValues(buf));
     }
 
     @Override

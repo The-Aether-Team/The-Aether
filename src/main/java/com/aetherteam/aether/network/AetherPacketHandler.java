@@ -3,6 +3,7 @@ package com.aetherteam.aether.network;
 import com.aetherteam.aether.Aether;
 
 import com.aetherteam.aether.network.packet.AetherPlayerSyncPacket;
+import com.aetherteam.aether.network.packet.AetherTimeSyncPacket;
 import com.aetherteam.aether.network.packet.PhoenixArrowSyncPacket;
 import com.aetherteam.aether.network.packet.clientbound.*;
 import com.aetherteam.aether.network.packet.serverbound.*;
@@ -37,7 +38,6 @@ public class AetherPacketHandler {
 		register(ClientMoaSkinPacket.Apply.class, ClientMoaSkinPacket.Apply::decode);
 		register(ClientMoaSkinPacket.Remove.class, ClientMoaSkinPacket.Remove::decode);
 		register(ClientMoaSkinPacket.Sync.class, ClientMoaSkinPacket.Sync::decode);
-		register(EternalDayPacket.class, EternalDayPacket::decode);
 		register(HealthResetPacket.class, HealthResetPacket::decode);
 		register(LeavingAetherPacket.class, LeavingAetherPacket::decode);
 		register(MoaInteractPacket.class, MoaInteractPacket::decode);
@@ -68,6 +68,7 @@ public class AetherPacketHandler {
 
 		// BOTH
 		register(AetherPlayerSyncPacket.class, AetherPlayerSyncPacket::decode);
+		register(AetherTimeSyncPacket.class, AetherTimeSyncPacket::decode);
 		register(PhoenixArrowSyncPacket.class, PhoenixArrowSyncPacket::decode);
 	}
 
