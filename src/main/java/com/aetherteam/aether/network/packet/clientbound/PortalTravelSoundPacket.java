@@ -6,6 +6,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
 
+/**
+ * Plays the Aether Portal sound on the client from {@link com.aetherteam.aether.block.portal.AetherPortalForcer}.
+ */
 public record PortalTravelSoundPacket() implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) { }

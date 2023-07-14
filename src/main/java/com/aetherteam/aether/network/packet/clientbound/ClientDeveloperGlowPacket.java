@@ -11,6 +11,9 @@ import java.util.Map;
 import java.util.UUID;
 
 public class ClientDeveloperGlowPacket {
+    /**
+     * Applies the Developer Glow perk to a player on the client.
+     */
     public record Apply(UUID playerUUID, DeveloperGlow developerGlow) implements BasePacket {
         @Override
         public void encode(FriendlyByteBuf buf) {
@@ -32,6 +35,9 @@ public class ClientDeveloperGlowPacket {
         }
     }
 
+    /**
+     * Removes the Developer Glow perk from a player on the client.
+     */
     public record Remove(UUID playerUUID) implements BasePacket {
         @Override
         public void encode(FriendlyByteBuf buf) {
@@ -51,6 +57,9 @@ public class ClientDeveloperGlowPacket {
         }
     }
 
+    /**
+     * Syncs Developer Glow perk data for all players to the client.
+     */
     public record Sync(Map<UUID, DeveloperGlow> developerGlows) implements BasePacket {
         @Override
         public void encode(FriendlyByteBuf buf) {

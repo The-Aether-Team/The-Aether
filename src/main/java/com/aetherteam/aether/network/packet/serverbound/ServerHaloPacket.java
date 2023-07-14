@@ -9,6 +9,9 @@ import net.minecraft.world.entity.player.Player;
 import java.util.UUID;
 
 public class ServerHaloPacket {
+    /**
+     * Applies the Halo perk to a player on the server.
+     */
     public record Apply(UUID playerUUID, Halo halo) implements BasePacket {
         @Override
         public void encode(FriendlyByteBuf buf) {
@@ -30,6 +33,9 @@ public class ServerHaloPacket {
         }
     }
 
+    /**
+     * Removes the Halo perk from a player on the server.
+     */
     public record Remove(UUID playerUUID) implements BasePacket {
         @Override
         public void encode(FriendlyByteBuf buf) {

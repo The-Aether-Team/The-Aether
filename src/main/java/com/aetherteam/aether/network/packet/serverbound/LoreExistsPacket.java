@@ -7,6 +7,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
 
+/**
+ * Communicates whether a language entry for lore exists from the client to the server.
+ */
 public record LoreExistsPacket(int playerID, ItemStack itemStack, boolean exists) implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) {

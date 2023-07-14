@@ -10,6 +10,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.util.LazyOptional;
 import oshi.util.tuples.Quartet;
 
+/**
+ * Sync packet for values in the {@link com.aetherteam.aether.capability.player.AetherPlayerCapability} class.
+ */
 public class AetherPlayerSyncPacket extends SyncEntityPacket<AetherPlayer> {
     public AetherPlayerSyncPacket(Quartet<Integer, String, INBTSynchable.Type, Object> values) {
         super(values);

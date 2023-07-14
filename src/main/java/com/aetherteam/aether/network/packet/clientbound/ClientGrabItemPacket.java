@@ -6,10 +6,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
 
+/**
+ * Based on {@link top.theillusivec4.curios.common.network.server.SPacketGrabbedItem}.
+ */
 public record ClientGrabItemPacket(ItemStack stack) implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
-        buf.writeItem(this.stack);
+        buf.writeItem(this.stack());
     }
 
     public static ClientGrabItemPacket decode(FriendlyByteBuf buf) {
@@ -20,7 +23,7 @@ public record ClientGrabItemPacket(ItemStack stack) implements BasePacket {
     @Override
     public void execute(Player playerEntity) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
-            Minecraft.getInstance().player.containerMenu.setCarried(this.stack);
+            Minecraft.getInstance().player.containerMenu.setCarried(this.stack());
         }
     }
 }

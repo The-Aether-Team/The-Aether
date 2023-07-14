@@ -8,6 +8,9 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.LazyOptional;
 import org.apache.commons.lang3.tuple.Triple;
 
+/**
+ * Sync packet for values in the {@link com.aetherteam.aether.capability.time.AetherTimeCapability} class.
+ */
 public class AetherTimeSyncPacket extends SyncLevelPacket<AetherTime> {
     public AetherTimeSyncPacket(Triple<String, INBTSynchable.Type, Object> values) {
         super(values);

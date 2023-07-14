@@ -7,6 +7,9 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.ForgeMod;
 
+/**
+ * Called by mounts to sync their step height modifier to the server. This fixes a movement bug where step height occasionally would not work otherwise.
+ */
 public record StepHeightPacket(int entityID) implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
@@ -20,7 +23,7 @@ public record StepHeightPacket(int entityID) implements BasePacket {
 
     @Override
     public void execute(Player playerEntity) {
-        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level.getEntity(this.entityID()) instanceof MountableAnimal mountableAnimal) {
+        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.getLevel().getEntity(this.entityID()) instanceof MountableAnimal mountableAnimal) {
             AttributeInstance stepHeight = mountableAnimal.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
             if (stepHeight != null) {
                 if (stepHeight.hasModifier(mountableAnimal.getDefaultStepHeightModifier())) {

@@ -9,6 +9,9 @@ import net.minecraft.world.entity.player.Player;
 import java.util.UUID;
 
 public class ServerDeveloperGlowPacket {
+    /**
+     * Applies the Developer Glow perk to a player on the server.
+     */
     public record Apply(UUID playerUUID, DeveloperGlow developerGlow) implements BasePacket {
         @Override
         public void encode(FriendlyByteBuf buf) {
@@ -30,6 +33,9 @@ public class ServerDeveloperGlowPacket {
         }
     }
 
+    /**
+     * Removes the Developer Glow perk from a player on the server.
+     */
     public record Remove(UUID playerUUID) implements BasePacket {
         @Override
         public void encode(FriendlyByteBuf buf) {

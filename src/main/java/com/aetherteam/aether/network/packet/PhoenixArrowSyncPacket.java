@@ -9,6 +9,9 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraftforge.common.util.LazyOptional;
 import oshi.util.tuples.Quartet;
 
+/**
+ * Sync packet for values in the {@link com.aetherteam.aether.capability.arrow.PhoenixArrowCapability} class.
+ */
 public class PhoenixArrowSyncPacket extends SyncEntityPacket<PhoenixArrow> {
     public PhoenixArrowSyncPacket(Quartet<Integer, String, INBTSynchable.Type, Object> values) {
         super(values);

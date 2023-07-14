@@ -11,6 +11,9 @@ import java.util.Map;
 import java.util.UUID;
 
 public abstract class ClientMoaSkinPacket {
+    /**
+     * Applies a Moa Skin for a player on the client.
+     */
     public record Apply(UUID playerUUID, MoaData moaSkinData) implements BasePacket {
         @Override
         public void encode(FriendlyByteBuf buf) {
@@ -32,6 +35,9 @@ public abstract class ClientMoaSkinPacket {
         }
     }
 
+    /**
+     * Removes a Moa Skin for a player on the client.
+     */
     public record Remove(UUID playerUUID) implements BasePacket {
         @Override
         public void encode(FriendlyByteBuf buf) {
@@ -51,6 +57,9 @@ public abstract class ClientMoaSkinPacket {
         }
     }
 
+    /**
+     * Syncs Moa Skin data for all players to the client.
+     */
     public record Sync(Map<UUID, MoaData> moaSkinsData) implements BasePacket {
         @Override
         public void encode(FriendlyByteBuf buf) {

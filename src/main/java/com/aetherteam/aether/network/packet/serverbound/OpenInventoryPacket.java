@@ -9,10 +9,13 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
 
+/**
+ * Based on {@link top.theillusivec4.curios.common.network.client.CPacketOpenVanilla}.
+ */
 public record OpenInventoryPacket(ItemStack carryStack) implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
-        buf.writeItem(this.carryStack);
+        buf.writeItem(this.carryStack());
     }
 
     public static OpenInventoryPacket decode(FriendlyByteBuf buf) {
@@ -23,7 +26,7 @@ public record OpenInventoryPacket(ItemStack carryStack) implements BasePacket {
     @Override
     public void execute(Player playerEntity) {
         if (playerEntity != null && playerEntity.getServer() != null && playerEntity instanceof ServerPlayer serverPlayer) {
-            ItemStack itemStack = serverPlayer.isCreative() ? this.carryStack : serverPlayer.containerMenu.getCarried();
+            ItemStack itemStack = serverPlayer.isCreative() ? this.carryStack() : serverPlayer.containerMenu.getCarried();
             serverPlayer.containerMenu.setCarried(ItemStack.EMPTY);
             serverPlayer.doCloseContainer();
             if (!itemStack.isEmpty()) {

@@ -5,10 +5,13 @@ import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 
+/**
+ * Sets the {@link Aerbunny#DATA_PUFFINESS_ID} value to 11. This is needed in a packet for precise animation syncing.
+ */
 public record AerbunnyPuffPacket(int entityID) implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
-        buf.writeInt(this.entityID);
+        buf.writeInt(this.entityID());
     }
 
     public static AerbunnyPuffPacket decode(FriendlyByteBuf buf) {
@@ -18,7 +21,7 @@ public record AerbunnyPuffPacket(int entityID) implements BasePacket {
 
     @Override
     public void execute(Player playerEntity) {
-        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level.getEntity(this.entityID) instanceof Aerbunny aerbunny) {
+        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.getLevel().getEntity(this.entityID()) instanceof Aerbunny aerbunny) {
             aerbunny.puff();
         }
     }

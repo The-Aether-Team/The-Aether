@@ -6,10 +6,13 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
+/**
+ * Clears the item currently held by the player's mouse in a container GUI.
+ */
 public record ClearItemPacket(int playerID) implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
-        buf.writeInt(this.playerID);
+        buf.writeInt(this.playerID());
     }
 
     public static ClearItemPacket decode(FriendlyByteBuf buf) {
@@ -19,7 +22,7 @@ public record ClearItemPacket(int playerID) implements BasePacket {
 
     @Override
     public void execute(Player playerEntity) {
-        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level.getEntity(this.playerID) instanceof ServerPlayer serverPlayer) {
+        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.getLevel().getEntity(this.playerID()) instanceof ServerPlayer serverPlayer) {
             serverPlayer.containerMenu.setCarried(ItemStack.EMPTY);
         }
     }

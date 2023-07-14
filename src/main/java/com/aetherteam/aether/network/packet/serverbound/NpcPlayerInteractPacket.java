@@ -11,8 +11,8 @@ import net.minecraft.world.entity.player.Player;
 public record NpcPlayerInteractPacket(int entityID, byte interactionID) implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
-        buf.writeInt(this.entityID);
-        buf.writeByte(this.interactionID);
+        buf.writeInt(this.entityID());
+        buf.writeByte(this.interactionID());
     }
 
     public static NpcPlayerInteractPacket decode(FriendlyByteBuf buf) {
@@ -20,8 +20,8 @@ public record NpcPlayerInteractPacket(int entityID, byte interactionID) implemen
     }
 
     public void execute(Player playerEntity) {
-        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level.getEntity(this.entityID) instanceof NpcDialogue npc) {
-            npc.handleNpcInteraction(playerEntity, this.interactionID);
+        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.getLevel().getEntity(this.entityID()) instanceof NpcDialogue npc) {
+            npc.handleNpcInteraction(playerEntity, this.interactionID());
         }
     }
 }

@@ -11,6 +11,9 @@ import java.util.Map;
 import java.util.UUID;
 
 public class ClientHaloPacket {
+    /**
+     * Applies the Halo perk to a player on the client.
+     */
     public record Apply(UUID playerUUID, Halo halo) implements BasePacket {
         @Override
         public void encode(FriendlyByteBuf buf) {
@@ -32,6 +35,9 @@ public class ClientHaloPacket {
         }
     }
 
+    /**
+     * Removes the Halo perk from a player on the client.
+     */
     public record Remove(UUID playerUUID) implements BasePacket {
         @Override
         public void encode(FriendlyByteBuf buf) {
@@ -51,6 +57,9 @@ public class ClientHaloPacket {
         }
     }
 
+    /**
+     * Syncs Halo perk data for all players to the client.
+     */
     public record Sync(Map<UUID, Halo> halos) implements BasePacket {
         @Override
         public void encode(FriendlyByteBuf buf) {

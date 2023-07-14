@@ -9,6 +9,9 @@ import net.minecraft.world.entity.player.Player;
 import java.util.UUID;
 
 public abstract class ServerMoaSkinPacket {
+    /**
+     * Applies a Moa Skin for a player on the server.
+     */
     public record Apply(UUID playerUUID, MoaData moaSkinData) implements BasePacket {
         @Override
         public void encode(FriendlyByteBuf buf) {
@@ -30,6 +33,9 @@ public abstract class ServerMoaSkinPacket {
         }
     }
 
+    /**
+     * Removes a Moa Skin for a player on the server.
+     */
     public record Remove(UUID playerUUID) implements BasePacket {
         @Override
         public void encode(FriendlyByteBuf buf) {
