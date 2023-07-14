@@ -17,14 +17,13 @@ import com.aetherteam.aether.capability.time.AetherTime;
 import com.aetherteam.aether.capability.time.AetherTimeCapability;
 import com.aetherteam.aether.capability.time.AetherTimeProvider;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
-
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;

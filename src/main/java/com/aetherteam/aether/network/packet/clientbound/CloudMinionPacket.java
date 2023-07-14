@@ -4,8 +4,8 @@ import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
 import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 /**

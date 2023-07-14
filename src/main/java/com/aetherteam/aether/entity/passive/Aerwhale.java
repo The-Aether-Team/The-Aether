@@ -1,7 +1,7 @@
 package com.aetherteam.aether.entity.passive;
 
-import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.capability.player.AetherPlayer;
+import com.aetherteam.aether.client.AetherSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;

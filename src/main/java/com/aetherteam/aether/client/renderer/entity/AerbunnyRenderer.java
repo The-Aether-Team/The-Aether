@@ -5,7 +5,6 @@ import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.aetherteam.aether.client.renderer.entity.model.AerbunnyModel;
 import com.aetherteam.aether.entity.passive.Aerbunny;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;

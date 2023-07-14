@@ -2,10 +2,10 @@ package com.aetherteam.aether.network.packet.serverbound;
 
 import com.aetherteam.aether.inventory.menu.LoreBookMenu;
 import com.aetherteam.nitrogen.network.BasePacket;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Communicates whether a language entry for lore exists from the client to the server.

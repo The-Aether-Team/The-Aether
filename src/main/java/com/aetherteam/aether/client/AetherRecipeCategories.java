@@ -2,8 +2,8 @@ package com.aetherteam.aether.client;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.block.AetherBlocks;
-import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.inventory.AetherRecipeBookTypes;
+import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.recipe.AetherBookCategory;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.recipes.item.AbstractAetherCookingRecipe;

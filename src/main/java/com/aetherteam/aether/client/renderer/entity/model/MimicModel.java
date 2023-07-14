@@ -1,7 +1,6 @@
 package com.aetherteam.aether.client.renderer.entity.model;
 
 import com.aetherteam.aether.entity.monster.dungeon.Mimic;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;

@@ -4,14 +4,13 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.aetherteam.aether.client.renderer.entity.layers.PhygHaloLayer;
 import com.aetherteam.aether.client.renderer.entity.layers.QuadrupedWingsLayer;
-import com.aetherteam.aether.client.renderer.entity.model.QuadrupedWingsModel;
 import com.aetherteam.aether.client.renderer.entity.model.HaloModel;
+import com.aetherteam.aether.client.renderer.entity.model.QuadrupedWingsModel;
 import com.aetherteam.aether.entity.passive.Phyg;
-
+import net.minecraft.client.model.PigModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.SaddleLayer;
-import net.minecraft.client.model.PigModel;
 import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;

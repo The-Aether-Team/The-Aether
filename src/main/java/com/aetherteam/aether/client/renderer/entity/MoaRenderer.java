@@ -1,18 +1,17 @@
 package com.aetherteam.aether.client.renderer.entity;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
+import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.api.registers.MoaType;
+import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.aetherteam.aether.client.renderer.entity.layers.MoaEmissiveLayer;
 import com.aetherteam.aether.client.renderer.entity.layers.MoaSaddleLayer;
 import com.aetherteam.aether.client.renderer.entity.model.MoaModel;
 import com.aetherteam.aether.entity.passive.Moa;
-import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.perk.data.ClientMoaSkinPerkData;
 import com.aetherteam.aether.perk.types.MoaData;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;

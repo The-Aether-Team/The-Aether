@@ -1,6 +1,8 @@
 package com.aetherteam.aether.client.renderer;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.block.AetherBlocks;
+import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.renderer.accessory.GlovesRenderer;
 import com.aetherteam.aether.client.renderer.accessory.PendantRenderer;
@@ -8,16 +10,16 @@ import com.aetherteam.aether.client.renderer.accessory.ShieldOfRepulsionRenderer
 import com.aetherteam.aether.client.renderer.accessory.model.CapeModel;
 import com.aetherteam.aether.client.renderer.accessory.model.GlovesModel;
 import com.aetherteam.aether.client.renderer.accessory.model.PendantModel;
-import com.aetherteam.aether.client.renderer.entity.*;
-import com.aetherteam.aether.client.renderer.entity.model.*;
-import com.aetherteam.aether.client.renderer.player.layer.*;
-import com.aetherteam.aether.client.renderer.entity.model.HaloModel;
 import com.aetherteam.aether.client.renderer.blockentity.AetherBlockEntityWithoutLevelRenderer;
 import com.aetherteam.aether.client.renderer.blockentity.ChestMimicRenderer;
 import com.aetherteam.aether.client.renderer.blockentity.SkyrootBedRenderer;
 import com.aetherteam.aether.client.renderer.blockentity.TreasureChestRenderer;
-import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
-import com.aetherteam.aether.block.AetherBlocks;
+import com.aetherteam.aether.client.renderer.entity.*;
+import com.aetherteam.aether.client.renderer.entity.model.*;
+import com.aetherteam.aether.client.renderer.player.layer.DartLayer;
+import com.aetherteam.aether.client.renderer.player.layer.DeveloperGlowLayer;
+import com.aetherteam.aether.client.renderer.player.layer.PlayerHaloLayer;
+import com.aetherteam.aether.client.renderer.player.layer.PlayerWingsLayer;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.projectile.dart.EnchantedDart;
 import com.aetherteam.aether.entity.projectile.dart.GoldenDart;

@@ -1,9 +1,9 @@
 package com.aetherteam.aether.item.accessories.abilities;
 
-import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.ConstantsUtil;
+import com.aetherteam.aether.capability.player.AetherPlayer;
+import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.EquipmentUtil;
 import net.minecraft.client.player.Input;
 import net.minecraft.world.entity.LivingEntity;

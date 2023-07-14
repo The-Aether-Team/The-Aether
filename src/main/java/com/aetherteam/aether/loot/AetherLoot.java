@@ -1,12 +1,11 @@
 package com.aetherteam.aether.loot;
 
+import com.aetherteam.aether.Aether;
+import net.minecraft.resources.ResourceLocation;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-
-import com.aetherteam.aether.Aether;
-
-import net.minecraft.resources.ResourceLocation;
 
 public class AetherLoot {
 	private static final Set<ResourceLocation> LOOT_TABLES = new HashSet<>();

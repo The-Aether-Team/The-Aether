@@ -1,9 +1,8 @@
 package com.aetherteam.aether.client.renderer.entity;
 
-import com.aetherteam.aether.entity.block.TntPresent;
 import com.aetherteam.aether.block.AetherBlocks;
+import com.aetherteam.aether.entity.block.TntPresent;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;

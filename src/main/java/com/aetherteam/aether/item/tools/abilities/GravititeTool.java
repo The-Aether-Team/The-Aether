@@ -1,8 +1,8 @@
 package com.aetherteam.aether.item.tools.abilities;
 
+import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.miscellaneous.FloatingBlock;
 import com.aetherteam.aether.entity.block.FloatingBlockEntity;
-import com.aetherteam.aether.AetherTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;

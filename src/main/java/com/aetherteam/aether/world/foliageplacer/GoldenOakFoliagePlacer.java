@@ -1,6 +1,5 @@
 package com.aetherteam.aether.world.foliageplacer;
 
-import com.aetherteam.aether.Aether;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.RandomSource;

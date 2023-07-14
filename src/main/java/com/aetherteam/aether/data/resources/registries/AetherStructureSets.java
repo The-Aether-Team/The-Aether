@@ -1,10 +1,6 @@
 package com.aetherteam.aether.data.resources.registries;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.aetherteam.aether.Aether;
-
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.Vec3i;
@@ -17,6 +13,9 @@ import net.minecraft.world.level.levelgen.structure.StructureSet;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
 import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement;
+
+import java.util.List;
+import java.util.Optional;
 
 public class AetherStructureSets {
     public static final ResourceKey<StructureSet> LARGE_AERCLOUD = createKey("large_aercloud");

@@ -2,9 +2,9 @@ package com.aetherteam.aether.network.packet.clientbound;
 
 import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.network.FriendlyByteBuf;
 
 /**
  * Sets a passenger to ride a vehicle. Called from {@link com.aetherteam.aether.event.hooks.DimensionHooks#entityFell}.

@@ -1,9 +1,9 @@
 package com.aetherteam.aether.client.renderer.player.layer;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.aetherteam.aether.client.renderer.entity.model.ValkyrieWingsModel;
-import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

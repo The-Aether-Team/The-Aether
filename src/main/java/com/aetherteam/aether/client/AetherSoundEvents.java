@@ -1,7 +1,6 @@
 package com.aetherteam.aether.client;
 
 import com.aetherteam.aether.Aether;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.registries.DeferredRegister;

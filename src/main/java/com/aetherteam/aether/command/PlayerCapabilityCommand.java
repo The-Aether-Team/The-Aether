@@ -1,9 +1,9 @@
 package com.aetherteam.aether.command;
 
-import com.aetherteam.nitrogen.capability.INBTSynchable;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.clientbound.HealthResetPacket;
+import com.aetherteam.nitrogen.capability.INBTSynchable;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;

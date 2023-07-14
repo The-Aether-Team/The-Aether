@@ -1,13 +1,16 @@
 package com.aetherteam.aether.api;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.api.registers.MoaType;
+import com.aetherteam.aether.item.AetherItems;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
-import net.minecraftforge.registries.*;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.RegistryBuilder;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 

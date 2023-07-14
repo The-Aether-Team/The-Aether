@@ -6,7 +6,6 @@ import com.aetherteam.aether.client.renderer.entity.layers.CockatriceMarkingsLay
 import com.aetherteam.aether.client.renderer.entity.model.CockatriceModel;
 import com.aetherteam.aether.entity.monster.Cockatrice;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;

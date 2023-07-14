@@ -2,7 +2,6 @@ package com.aetherteam.aether.client.renderer.entity.model;
 
 import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
 import com.google.common.collect.ImmutableList;
-
 import net.minecraft.client.model.ListModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;

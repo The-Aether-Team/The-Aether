@@ -1,8 +1,8 @@
 package com.aetherteam.aether.loot.modifiers;
 
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.item.combat.abilities.weapon.SkyrootWeapon;
 import com.aetherteam.aether.item.EquipmentUtil;
+import com.aetherteam.aether.item.combat.abilities.weapon.SkyrootWeapon;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;

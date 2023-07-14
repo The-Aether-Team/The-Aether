@@ -2,9 +2,8 @@ package com.aetherteam.aether.capability.arrow;
 
 import com.aetherteam.aether.capability.AetherCapabilities;
 import com.aetherteam.nitrogen.capability.INBTSynchable;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraftforge.common.util.LazyOptional;
 
 public interface PhoenixArrow extends INBTSynchable<CompoundTag> {

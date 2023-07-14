@@ -1,16 +1,15 @@
 package com.aetherteam.aether.entity.passive;
 
-import com.aetherteam.aether.block.AetherBlocks;
-
 import com.aetherteam.aether.AetherTags;
+import com.aetherteam.aether.block.AetherBlocks;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.Level;
 
 public abstract class AetherAnimal extends Animal {
 	protected AetherAnimal(EntityType<? extends Animal> type, Level level) {

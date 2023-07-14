@@ -1,7 +1,7 @@
 package com.aetherteam.aether.client;
 
-import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.api.WorldDisplayHelper;
 import com.aetherteam.aether.client.gui.screen.menu.AetherTitleScreen;
 import net.minecraft.client.Minecraft;

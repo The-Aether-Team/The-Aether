@@ -2,8 +2,8 @@ package com.aetherteam.aether.client.event.listeners.capability;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.event.hooks.CapabilityClientHooks;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.client.player.Input;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.MovementInputUpdateEvent;

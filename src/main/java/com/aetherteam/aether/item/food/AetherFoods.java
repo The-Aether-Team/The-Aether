@@ -1,8 +1,8 @@
 package com.aetherteam.aether.item.food;
 
-import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.food.FoodProperties;
 
 public class AetherFoods {
     public static final FoodProperties BLUE_BERRY = new FoodProperties.Builder().fast().nutrition(2).saturationMod(0.3F).build();

@@ -1,7 +1,6 @@
 package com.aetherteam.aether.data.resources.registries;
 
 import com.aetherteam.aether.Aether;
-
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;

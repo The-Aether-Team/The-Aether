@@ -1,8 +1,8 @@
 package com.aetherteam.aether.data.generators;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.data.providers.AetherItemModelProvider;
 import com.aetherteam.aether.block.AetherBlocks;
+import com.aetherteam.aether.data.providers.AetherItemModelProvider;
 import com.aetherteam.aether.item.AetherItems;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;

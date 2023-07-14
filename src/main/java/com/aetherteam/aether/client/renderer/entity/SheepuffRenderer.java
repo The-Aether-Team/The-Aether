@@ -6,7 +6,6 @@ import com.aetherteam.aether.client.renderer.entity.layers.SheepuffWoolLayer;
 import com.aetherteam.aether.client.renderer.entity.model.SheepuffModel;
 import com.aetherteam.aether.client.renderer.entity.model.SheepuffWoolModel;
 import com.aetherteam.aether.entity.passive.Sheepuff;
-
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;

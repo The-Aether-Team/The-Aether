@@ -1,9 +1,9 @@
 package com.aetherteam.aether.client.renderer.player.layer;
 
 import com.aetherteam.aether.client.gui.screen.perks.AetherCustomizationsScreen;
+import com.aetherteam.aether.perk.PerkUtil;
 import com.aetherteam.aether.perk.data.ClientDeveloperGlowPerkData;
 import com.aetherteam.aether.perk.types.DeveloperGlow;
-import com.aetherteam.aether.perk.PerkUtil;
 import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
 import com.mojang.blaze3d.vertex.PoseStack;

@@ -2,11 +2,11 @@ package com.aetherteam.aether.client.renderer.blockentity;
 
 import com.aetherteam.aether.client.AetherAtlases;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.renderer.blockentity.ChestRenderer;
-import net.minecraft.world.level.block.state.properties.ChestType;
-import net.minecraft.world.level.block.entity.LidBlockEntity;
+import net.minecraft.client.resources.model.Material;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.LidBlockEntity;
+import net.minecraft.world.level.block.state.properties.ChestType;
 
 import javax.annotation.Nonnull;
 

@@ -1,10 +1,10 @@
 package com.aetherteam.aether.client.event.hooks;
 
+import com.aetherteam.aether.capability.time.AetherTime;
 import com.aetherteam.aether.client.renderer.level.AetherSkyRenderEffects;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
-import com.aetherteam.aether.capability.time.AetherTime;
-import com.aetherteam.aether.mixin.mixins.common.accessor.LevelAccessor;
 import com.aetherteam.aether.item.EquipmentUtil;
+import com.aetherteam.aether.mixin.mixins.common.accessor.LevelAccessor;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;

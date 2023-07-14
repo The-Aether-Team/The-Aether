@@ -4,11 +4,10 @@ import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.miscellaneous.ConsumableItem;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.Level;
-
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MilkBucketItem;
+import net.minecraft.world.level.Level;
 
 public class SkyrootMilkBucketItem extends MilkBucketItem implements ConsumableItem {
     public SkyrootMilkBucketItem(Properties properties) {

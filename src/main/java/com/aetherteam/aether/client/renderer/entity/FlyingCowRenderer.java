@@ -5,11 +5,10 @@ import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.aetherteam.aether.client.renderer.entity.layers.QuadrupedWingsLayer;
 import com.aetherteam.aether.client.renderer.entity.model.QuadrupedWingsModel;
 import com.aetherteam.aether.entity.passive.FlyingCow;
-
+import net.minecraft.client.model.CowModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.SaddleLayer;
-import net.minecraft.client.model.CowModel;
 import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;

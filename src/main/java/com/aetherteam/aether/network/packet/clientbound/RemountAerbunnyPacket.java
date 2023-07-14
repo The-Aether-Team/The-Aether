@@ -5,8 +5,8 @@ import com.aetherteam.aether.capability.player.AetherPlayerCapability;
 import com.aetherteam.aether.entity.passive.Aerbunny;
 import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 /**

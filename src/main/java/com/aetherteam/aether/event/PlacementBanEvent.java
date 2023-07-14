@@ -1,16 +1,15 @@
 package com.aetherteam.aether.event;
 
-import javax.annotation.Nullable;
-
 import com.google.common.base.Preconditions;
-
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
+
+import javax.annotation.Nullable;
 
 public class PlacementBanEvent extends Event {
 	public static class CheckItem extends PlacementBanEvent {

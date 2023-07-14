@@ -1,7 +1,6 @@
 package com.aetherteam.aether.blockentity;
 
 import com.aetherteam.aether.Aether;
-
 import com.aetherteam.aether.block.AetherBlocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;

@@ -1,15 +1,15 @@
 package com.aetherteam.aether.event;
 
-import javax.annotation.Nonnull;
-
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.Cancelable;
+
+import javax.annotation.Nonnull;
 
 @Cancelable
 public class ItemUseConvertEvent extends PlayerEvent {

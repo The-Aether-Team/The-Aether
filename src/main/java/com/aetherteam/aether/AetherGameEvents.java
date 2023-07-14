@@ -1,6 +1,5 @@
 package com.aetherteam.aether;
 
-import com.aetherteam.aether.Aether;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.registries.DeferredRegister;

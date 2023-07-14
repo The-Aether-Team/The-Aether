@@ -1,8 +1,8 @@
 package com.aetherteam.aether.entity.monster;
 
+import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.MountableMob;
-import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.item.EquipmentUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;

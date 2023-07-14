@@ -1,8 +1,8 @@
 package com.aetherteam.aether.item.accessories.ring;
 
 import com.aetherteam.aether.item.accessories.AccessoryItem;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 

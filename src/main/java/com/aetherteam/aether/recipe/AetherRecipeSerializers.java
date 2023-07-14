@@ -1,10 +1,13 @@
 package com.aetherteam.aether.recipe;
 
 import com.aetherteam.aether.Aether;
-
-import com.aetherteam.aether.recipe.recipes.ban.*;
+import com.aetherteam.aether.recipe.recipes.ban.BlockBanRecipe;
+import com.aetherteam.aether.recipe.recipes.ban.ItemBanRecipe;
 import com.aetherteam.aether.recipe.recipes.block.*;
-import com.aetherteam.aether.recipe.recipes.item.*;
+import com.aetherteam.aether.recipe.recipes.item.AltarRepairRecipe;
+import com.aetherteam.aether.recipe.recipes.item.EnchantingRecipe;
+import com.aetherteam.aether.recipe.recipes.item.FreezingRecipe;
+import com.aetherteam.aether.recipe.recipes.item.IncubationRecipe;
 import com.aetherteam.aether.recipe.serializer.AetherCookingSerializer;
 import com.aetherteam.aether.recipe.serializer.BiomeParameterRecipeSerializer;
 import com.aetherteam.aether.recipe.serializer.PlacementBanRecipeSerializer;
@@ -12,11 +15,10 @@ import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import com.aetherteam.nitrogen.recipe.serializer.BlockStateRecipeSerializer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.registries.RegistryObject;
 
 public class AetherRecipeSerializers {

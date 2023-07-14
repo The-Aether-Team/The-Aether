@@ -2,10 +2,9 @@ package com.aetherteam.aether.item.combat.loot;
 
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.item.AetherItems;
-import com.aetherteam.aether.item.combat.AetherItemTiers;
 import com.aetherteam.aether.item.EquipmentUtil;
+import com.aetherteam.aether.item.combat.AetherItemTiers;
 import net.minecraft.world.entity.LivingEntity;
-
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;

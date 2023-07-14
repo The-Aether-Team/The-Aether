@@ -1,26 +1,26 @@
 package com.aetherteam.aether.client.renderer.blockentity;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.client.renderer.AetherModelLayers;
-import com.aetherteam.aether.blockentity.SkyrootBedBlockEntity;
 import com.aetherteam.aether.block.utility.SkyrootBedBlock;
 import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
+import com.aetherteam.aether.blockentity.SkyrootBedBlockEntity;
+import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.ChestBlock;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.blockentity.BrightnessCombiner;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.world.level.block.state.properties.BedPart;
-import net.minecraft.world.level.block.DoubleBlockCombiner;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.blockentity.BrightnessCombiner;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.ChestBlock;
+import net.minecraft.world.level.block.DoubleBlockCombiner;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BedPart;
 
 import javax.annotation.Nonnull;
 

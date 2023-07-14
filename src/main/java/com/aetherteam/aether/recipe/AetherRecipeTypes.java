@@ -1,9 +1,12 @@
 package com.aetherteam.aether.recipe;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.recipe.recipes.ban.*;
+import com.aetherteam.aether.recipe.recipes.ban.BlockBanRecipe;
+import com.aetherteam.aether.recipe.recipes.ban.ItemBanRecipe;
 import com.aetherteam.aether.recipe.recipes.block.*;
-import com.aetherteam.aether.recipe.recipes.item.*;
+import com.aetherteam.aether.recipe.recipes.item.EnchantingRecipe;
+import com.aetherteam.aether.recipe.recipes.item.FreezingRecipe;
+import com.aetherteam.aether.recipe.recipes.item.IncubationRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.registries.DeferredRegister;

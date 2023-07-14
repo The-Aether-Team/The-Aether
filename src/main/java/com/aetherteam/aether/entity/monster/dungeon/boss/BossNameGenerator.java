@@ -1,8 +1,8 @@
 package com.aetherteam.aether.entity.monster.dungeon.boss;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.RandomSource;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.util.RandomSource;
 
 public final class BossNameGenerator {
     public static RandomSource random = RandomSource.create();

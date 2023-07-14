@@ -1,7 +1,9 @@
 package com.aetherteam.aether.client.event.hooks;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.api.WorldDisplayHelper;
+import com.aetherteam.aether.client.AetherKeys;
 import com.aetherteam.aether.client.AetherMusicManager;
 import com.aetherteam.aether.client.gui.component.AccessoryButton;
 import com.aetherteam.aether.client.gui.component.DynamicMenuButton;
@@ -9,11 +11,9 @@ import com.aetherteam.aether.client.gui.component.skins.RefreshButton;
 import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.aetherteam.aether.client.gui.screen.menu.AetherTitleScreen;
 import com.aetherteam.aether.client.gui.screen.menu.VanillaLeftTitleScreen;
-import com.aetherteam.aether.client.AetherKeys;
 import com.aetherteam.aether.client.gui.screen.perks.AetherCustomizationsScreen;
 import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
 import com.aetherteam.aether.event.hooks.DimensionHooks;
-import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.inventory.menu.AccessoriesMenu;
 import com.aetherteam.aether.mixin.mixins.client.accessor.*;
 import com.aetherteam.aether.network.AetherPacketHandler;

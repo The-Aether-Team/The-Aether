@@ -1,9 +1,9 @@
 package com.aetherteam.aether.mixin.mixins.client;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.item.accessories.cape.CapeItem;
 import com.aetherteam.aether.mixin.AetherMixinHooks;
-import com.aetherteam.aether.item.EquipmentUtil;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;

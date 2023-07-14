@@ -1,11 +1,11 @@
 package com.aetherteam.aether.client.renderer.accessory;
 
-import com.aetherteam.aether.client.renderer.AetherModelLayers;
-import com.aetherteam.aether.item.accessories.miscellaneous.ShieldOfRepulsionItem;
-import com.aetherteam.aether.item.AetherItems;
-import com.aetherteam.aether.capability.player.AetherPlayer;
-import com.aetherteam.aether.mixin.mixins.client.accessor.PlayerModelAccessor;
 import com.aetherteam.aether.ConstantsUtil;
+import com.aetherteam.aether.capability.player.AetherPlayer;
+import com.aetherteam.aether.client.renderer.AetherModelLayers;
+import com.aetherteam.aether.item.AetherItems;
+import com.aetherteam.aether.item.accessories.miscellaneous.ShieldOfRepulsionItem;
+import com.aetherteam.aether.mixin.mixins.client.accessor.PlayerModelAccessor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;

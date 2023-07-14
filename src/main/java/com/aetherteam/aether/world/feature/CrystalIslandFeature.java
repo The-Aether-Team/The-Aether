@@ -1,7 +1,7 @@
 package com.aetherteam.aether.world.feature;
 
-import com.aetherteam.aether.data.resources.registries.AetherConfiguredFeatures;
 import com.aetherteam.aether.data.resources.AetherFeatureStates;
+import com.aetherteam.aether.data.resources.registries.AetherConfiguredFeatures;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;

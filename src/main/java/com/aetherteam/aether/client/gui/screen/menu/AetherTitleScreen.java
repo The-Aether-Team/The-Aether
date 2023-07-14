@@ -1,30 +1,29 @@
 package com.aetherteam.aether.client.gui.screen.menu;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.gui.component.AetherMenuButton;
 import com.aetherteam.aether.client.gui.component.DynamicMenuButton;
-import com.aetherteam.aether.client.AetherSoundEvents;
-import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.mixin.mixins.client.accessor.TitleScreenAccessor;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import net.minecraft.Util;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.sounds.Music;
 import net.minecraft.client.gui.screens.TitleScreen;
-import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.renderer.PanoramaRenderer;
 import net.minecraft.client.renderer.CubeMap;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.Util;
-import net.minecraft.util.Mth;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.PanoramaRenderer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.Music;
+import net.minecraft.util.Mth;
 import net.minecraftforge.internal.BrandingControl;
 
 import javax.annotation.Nonnull;

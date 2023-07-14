@@ -2,17 +2,16 @@ package com.aetherteam.aether.block.miscellaneous;
 
 import com.aetherteam.aether.block.Floatable;
 import com.aetherteam.aether.entity.block.FloatingBlockEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
-
 import net.minecraft.world.level.material.Material;
 
 /**

@@ -1,15 +1,14 @@
 package com.aetherteam.aether.client;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.perk.CustomizationsOptions;
 import com.aetherteam.aether.client.gui.screen.SunAltarScreen;
 import com.aetherteam.aether.client.gui.screen.inventory.*;
 import com.aetherteam.aether.client.renderer.AetherRenderers;
 import com.aetherteam.aether.entity.AetherEntityTypes;
-import com.aetherteam.aether.inventory.menu.LoreBookMenu;
 import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
-
+import com.aetherteam.aether.inventory.menu.LoreBookMenu;
 import com.aetherteam.aether.item.AetherItems;
+import com.aetherteam.aether.perk.CustomizationsOptions;
 import com.google.common.reflect.Reflection;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;

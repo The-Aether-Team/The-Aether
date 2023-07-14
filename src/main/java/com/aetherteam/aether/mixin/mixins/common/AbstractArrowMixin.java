@@ -2,9 +2,9 @@ package com.aetherteam.aether.mixin.mixins.common;
 
 import com.aetherteam.aether.capability.arrow.PhoenixArrow;
 import com.aetherteam.nitrogen.capability.INBTSynchable;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;

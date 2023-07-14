@@ -1,7 +1,6 @@
 package com.aetherteam.aether.network;
 
 import com.aetherteam.aether.Aether;
-
 import com.aetherteam.aether.network.packet.AetherPlayerSyncPacket;
 import com.aetherteam.aether.network.packet.AetherTimeSyncPacket;
 import com.aetherteam.aether.network.packet.PhoenixArrowSyncPacket;

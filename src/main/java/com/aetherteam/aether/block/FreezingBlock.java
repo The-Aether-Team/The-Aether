@@ -1,13 +1,14 @@
 package com.aetherteam.aether.block;
 
-import com.aetherteam.aether.event.FreezeEvent;
 import com.aetherteam.aether.event.AetherEventDispatch;
+import com.aetherteam.aether.event.FreezeEvent;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.recipes.block.IcestoneFreezableRecipe;
 import com.aetherteam.nitrogen.recipe.BlockPropertyPair;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import net.minecraft.commands.CommandFunction;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -15,11 +16,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Map;
 
 public interface FreezingBlock extends FreezingBehavior<BlockState> {
     /**

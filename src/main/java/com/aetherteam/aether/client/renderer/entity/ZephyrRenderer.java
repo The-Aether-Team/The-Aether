@@ -3,10 +3,10 @@ package com.aetherteam.aether.client.renderer.entity;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.aetherteam.aether.client.renderer.entity.layers.ZephyrTransparencyLayer;
-import com.aetherteam.aether.client.renderer.entity.model.*;
+import com.aetherteam.aether.client.renderer.entity.model.ClassicZephyrModel;
+import com.aetherteam.aether.client.renderer.entity.model.ZephyrModel;
 import com.aetherteam.aether.entity.monster.Zephyr;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;

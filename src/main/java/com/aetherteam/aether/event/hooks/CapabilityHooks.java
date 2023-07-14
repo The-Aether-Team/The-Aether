@@ -1,10 +1,10 @@
 package com.aetherteam.aether.event.hooks;
 
-import com.aetherteam.nitrogen.capability.INBTSynchable;
-import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.capability.player.AetherPlayerCapability;
 import com.aetherteam.aether.capability.time.AetherTime;
+import com.aetherteam.aether.data.resources.registries.AetherDimensions;
+import com.aetherteam.nitrogen.capability.INBTSynchable;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;

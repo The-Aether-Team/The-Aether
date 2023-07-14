@@ -1,7 +1,6 @@
 package com.aetherteam.aether.client.renderer.entity.model;
 
 import com.aetherteam.aether.entity.passive.Sheepuff;
-
 import net.minecraft.client.model.QuadrupedModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;

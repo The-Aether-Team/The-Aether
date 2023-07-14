@@ -1,14 +1,14 @@
 package com.aetherteam.aether.item.food;
 
-import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.capability.player.AetherPlayer;
+import com.aetherteam.aether.item.AetherItems;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.stats.Stats;
 import net.minecraft.world.level.Level;
 
 public class WhiteAppleItem extends Item {

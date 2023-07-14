@@ -1,7 +1,7 @@
 package com.aetherteam.aether.api;
 
-import com.aetherteam.aether.client.event.hooks.GuiHooks;
 import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.client.event.hooks.GuiHooks;
 import com.aetherteam.aether.mixin.mixins.common.accessor.LevelStorageAccessAccessor;
 import com.aetherteam.aether.mixin.mixins.common.accessor.MinecraftServerAccessor;
 import net.minecraft.client.CameraType;

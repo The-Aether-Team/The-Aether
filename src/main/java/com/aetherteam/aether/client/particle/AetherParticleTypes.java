@@ -1,10 +1,9 @@
 package com.aetherteam.aether.client.particle;
 
 import com.aetherteam.aether.Aether;
-
 import net.minecraft.client.particle.SnowflakeParticle;
-import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;

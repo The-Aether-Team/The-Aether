@@ -2,8 +2,8 @@ package com.aetherteam.aether.block.portal;
 
 import com.aetherteam.aether.client.AetherSoundEvents;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
 
 public final class PortalSoundUtil {

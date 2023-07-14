@@ -1,8 +1,8 @@
 package com.aetherteam.aether.capability.lightning;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LightningBolt;
-import net.minecraft.nbt.CompoundTag;
 
 public class LightningTrackerCapability implements LightningTracker {
     private final LightningBolt lightningBolt;

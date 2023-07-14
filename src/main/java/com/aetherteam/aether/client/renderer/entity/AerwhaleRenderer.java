@@ -6,7 +6,6 @@ import com.aetherteam.aether.client.renderer.entity.model.AerwhaleModel;
 import com.aetherteam.aether.client.renderer.entity.model.ClassicAerwhaleModel;
 import com.aetherteam.aether.entity.passive.Aerwhale;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import com.mojang.math.Axis;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

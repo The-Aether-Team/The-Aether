@@ -1,18 +1,16 @@
 package com.aetherteam.aether.client.renderer.entity;
 
-import java.util.Calendar;
-
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.aetherteam.aether.client.renderer.entity.model.MimicModel;
 import com.aetherteam.aether.entity.monster.dungeon.Mimic;
-
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.ModList;
 
 import javax.annotation.Nonnull;
+import java.util.Calendar;
 
 public class MimicRenderer extends MobRenderer<Mimic, MimicModel> {
 	private static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/mimic/normal.png");

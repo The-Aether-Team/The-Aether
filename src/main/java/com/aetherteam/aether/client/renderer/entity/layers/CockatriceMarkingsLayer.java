@@ -3,7 +3,6 @@ package com.aetherteam.aether.client.renderer.entity.layers;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.renderer.entity.model.BipedBirdModel;
 import com.aetherteam.aether.entity.monster.Cockatrice;
-
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.EyesLayer;
