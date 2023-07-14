@@ -1,68 +1,96 @@
+import net.minecraftforge.gradle.userdev.tasks.JarJar
+
 plugins {
+    id 'eclipse'
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '5.1.+'
-    id 'org.spongepowered.mixin' version '0.7.+'
-    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
-    id 'org.moddingx.modgradle.sourcejar' version '3.+'
-    id 'io.github.0ffz.github-packages' version '1.+'
-    id 'com.matthewprenger.cursegradle' version '1.4.+'
-    id 'com.modrinth.minotaur' version '2.+'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'org.spongepowered.mixin' version '[0.7,0.8)'
+    id 'org.parchmentmc.librarian.forgegradle' version '[1,2)'
+    id 'org.moddingx.modgradle.mapping' version '[4,5)'
+    id 'io.github.0ffz.github-packages' version '[1,2)'
+    id 'com.matthewprenger.cursegradle' version '[1.4,1.5)'
+    id 'com.modrinth.minotaur' version '[2,3)'
 }
 
-version = "${project.mc_version}-${project.mod_version}-forge"
+version = "${mc_version}-${mod_version}-forge"
 group = 'com.aetherteam.aether' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = project.mod_id
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17) // Mojang ships Java 8 to end users, so your mod should target Java 8.
+base {
+    archivesName = mod_id
+}
+
+// Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
     mappings channel: 'parchment', version: project.mappings
 
+    // When true, this property will have all Eclipse/IntelliJ IDEA run configurations run the "prepareX" task for the given run configuration before launching the game.
+    // In most cases, it is not necessary to enable.
+    //enableEclipsePrepareRuns = true
+    //enableIdeaPrepareRuns = true
+
+    // This property allows configuring Gradle's ProcessResources task(s) to run on IDE output locations before launching the game.
+    // It is REQUIRED to be set to true for this template to function.
+    // See https://docs.gradle.org/current/dsl/org.gradle.language.jvm.tasks.ProcessResources.html
+    copyIdeResources = true
+
+    // When true, this property will add the folder name of all declared run configurations to generated IDE run configurations.
+    // The folder name can be set on a run configuration using the "folderName" property.
+    // By default, the folder name of a run configuration is the name of the Gradle project containing it.
+    //generateRunFolders = true
+
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
-        client {
+        // applies to all the run configs below
+        configureEach {
             workingDirectory project.file('run')
 
-            //Only uncomment this if you actually need the debug logging! If you enable this the log will be full of incredibly useless information spam
-            //property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            //property 'forge.logging.console.level', 'debug'
+            // Applies a JVM property which can be referenced in your code to check if you are running in IDE/Gradle.
+            property "${mod_id}.iside", 'true'
+
+            // Recommended logging data for a userdev environment
+            // The markers can be added/remove as needed separated by commas.
+            // "SCAN": For mods scan.
+            // "REGISTRIES": For firing of registry events.
+            // "REGISTRYDUMP": For getting the contents of all registries.
+            //property 'forge.logging.markers', 'REGISTRIES'
+
+            // Recommended logging level for the console
+            // You can set various levels here.
+            // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
+            property 'forge.logging.console.level', 'info' // info is the default for production
 
             mods {
-                "${project.mod_id}" {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
+        }
+
+        client {
+            // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
+            property 'forge.enabledGameTestNamespaces', mod_id
         }
 
         server {
-            workingDirectory project.file('run')
+            property 'forge.enabledGameTestNamespaces', mod_id
 
-            //property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            //property 'forge.logging.console.level', 'debug'
+            args '--nogui'
+        }
 
-            mods {
-                "${project.mod_id}" {
-                    source sourceSets.main
-                }
-            }
+        // This run config launches GameTestServer and runs all registered gametests, then exits.
+        // By default, the server will crash when no gametests are provided.
+        // The gametest system is also enabled by default for other run configs under the /test command.
+        gameTestServer {
+            property 'forge.enabledGameTestNamespaces', mod_id
         }
 
         data {
-            workingDirectory project.file('run')
-
-            //property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            //property 'forge.logging.console.level', 'debug'
-
-            args '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing', file('src/generated/resources/')
+            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing', file('src/generated/resources/')
 
             environment 'target', 'fmluserdevdata'
-
-            mods {
-                "${project.mod_id}" {
-                    source sourceSets.main
-                }
-            }
         }
     }
 }
@@ -117,7 +145,7 @@ repositories {
     maven githubPackage.invoke("The-Aether-Team/Nitrogen")
 }
 
-jar {
+tasks.named('jar', Jar).configure {
     manifest {
         attributes([
                 "Specification-Title"     : project.mod_name,
@@ -129,18 +157,17 @@ jar {
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
+
+    // This is the preferred method to reobfuscate your jar file
+    finalizedBy 'reobfJar'
+
+    archiveClassifier = 'no-embeds'
 }
 
-tasks.jar.configure {
-    archiveClassifier = "no-embeds"
+tasks.named('jarJar', JarJar).configure {
+    archiveClassifier = ''
 }
 
-tasks.jarJar.configure {
-    archiveClassifier = ""
-}
-
-// ensure jars are reobf'ed before confirming artifact files
-jar.finalizedBy('reobfJar')
 tasks.jarJar.finalizedBy('reobfJarJar')
 
 tasks.named(sourceSets.main.compileJavaTaskName) {
