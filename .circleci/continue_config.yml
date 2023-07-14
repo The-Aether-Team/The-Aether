@@ -148,7 +148,7 @@ commands:
       - gradle/with_cache:
           cache_key: 'v9'
           steps:
-            - run: gradle build --parallel --build-cache --console=plain
+            - run: gradlew build --parallel --build-cache --console=plain
       - store_artifacts:
           path: ~/project/build/libs
 
