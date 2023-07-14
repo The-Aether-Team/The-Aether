@@ -148,6 +148,9 @@ commands:
       - gradle/with_cache:
           cache_key: 'v9'
           steps:
+            - run:
+                name: chmod permissions
+                command: chmod +x ./gradlew
             - run: gradle build --parallel --console=plain
       - store_artifacts:
           path: ~/project/build/libs
