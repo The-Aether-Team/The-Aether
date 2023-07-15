@@ -24,13 +24,10 @@ public class VanillaLeftTitleScreen extends TitleScreen {
     private final PanoramaRenderer panorama = new PanoramaRenderer(CUBE_MAP);
     private static final ResourceLocation PANORAMA_OVERLAY = new ResourceLocation("textures/gui/title/background/panorama_overlay.png");
 
-    public boolean fading;
-    public long fadeInStart;
-
     private TitleScreenModUpdateIndicator modUpdateNotification;
 
     public VanillaLeftTitleScreen() {
-        this.fading = true;
+        ((TitleScreenAccessor) this).aether$setFading(true);
     }
 
     @Override
@@ -61,18 +58,18 @@ public class VanillaLeftTitleScreen extends TitleScreen {
     public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
         TitleScreenAccessor titleScreenAccessor = (TitleScreenAccessor) this;
         if (this.minecraft != null) {
-            if (this.fadeInStart == 0L && this.fading) {
-                this.fadeInStart = Util.getMillis();
+            if (titleScreenAccessor.aether$getFadeInStart() == 0L && titleScreenAccessor.aether$isFading()) {
+                titleScreenAccessor.aether$setFadeInStart(Util.getMillis());
             }
 
-            float f = this.fading ? (float)(Util.getMillis() - this.fadeInStart) / 1000.0F : 1.0F;
+            float f = titleScreenAccessor.aether$isFading() ? (float)(Util.getMillis() - titleScreenAccessor.aether$getFadeInStart()) / 1000.0F : 1.0F;
             this.panorama.render(partialTicks, Mth.clamp(f, 0.0F, 1.0F));
             RenderSystem.setShaderTexture(0, PANORAMA_OVERLAY);
             RenderSystem.enableBlend();
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.fading ? (float)Mth.ceil(Mth.clamp(f, 0.0F, 1.0F)) : 1.0F);
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, titleScreenAccessor.aether$isFading() ? (float)Mth.ceil(Mth.clamp(f, 0.0F, 1.0F)) : 1.0F);
             blit(poseStack, 0, 0, this.width, this.height, 0.0F, 0.0F, 16, 128, 16, 128);
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            float f1 = this.fading ? Mth.clamp(f - 1.0F, 0.0F, 1.0F) : 1.0F;
+            float f1 = titleScreenAccessor.aether$isFading() ? Mth.clamp(f - 1.0F, 0.0F, 1.0F) : 1.0F;
             ((TitleScreenAccessor)this).aether$getLogoRenderer().renderLogo(poseStack, this.width, f1);
             int l = Mth.ceil(f1 * 255.0F) << 24;
             if ((l & -67108864) != 0) {

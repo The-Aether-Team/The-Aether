@@ -131,4 +131,8 @@ public abstract class AetherLanguageProvider extends LanguageProvider {
     public void addPackDescription(String packName, String description) {
         this.add("pack." + this.id + "." + packName + ".description", description);
     }
+
+    public void addMenuTitle(String key, String name) {
+        this.add("aether.menu_title." + key, name);
+    }
 }

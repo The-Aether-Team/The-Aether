@@ -17,9 +17,15 @@ public interface TitleScreenAccessor {
     @Accessor("logoRenderer")
     LogoRenderer aether$getLogoRenderer();
 
+    @Accessor("fading")
+    boolean aether$isFading();
+
     @Mutable
     @Accessor("fading")
     void aether$setFading(boolean fading);
+
+    @Accessor("fadeInStart")
+    long aether$getFadeInStart();
 
     @Accessor("fadeInStart")
     void aether$setFadeInStart(long fadeInStart);

@@ -4,6 +4,7 @@ import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.api.WorldDisplayHelper;
 import com.aetherteam.aether.client.gui.screen.menu.AetherTitleScreen;
+import com.aetherteam.nitrogen.Nitrogen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.WinScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -92,6 +93,7 @@ public class AetherMusicManager {
 
     public static Music getSituationalMusic() {
         if (!(minecraft.screen instanceof WinScreen)) {
+            Music activeMusic = Nitrogen.MENU_HELPER.getActiveMusic();
             if (isAetherWorldPreviewEnabled()) {
                 return AetherTitleScreen.MENU;
             } else if (isVanillaWorldPreviewEnabled()) {
@@ -101,8 +103,8 @@ public class AetherMusicManager {
                 if (isCreative(holder, minecraft.player)) {
                     return (holder.value().getBackgroundMusic().orElse(Musics.GAME));
                 }
-            } else if (isAetherMenuEnabled()) {
-                return AetherTitleScreen.MENU;
+            } else if (activeMusic != Musics.MENU) {
+                return activeMusic;
             }
         }
         return null;

@@ -4,6 +4,7 @@ import com.aetherteam.aether.advancement.AetherAdvancementTriggers;
 import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.api.SunAltarWhitelist;
 import com.aetherteam.aether.api.TriviaGenerator;
+import com.aetherteam.aether.api.AetherMenus;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.block.AetherCauldronInteractions;
 import com.aetherteam.aether.block.dispenser.AetherDispenseBehaviors;
@@ -126,6 +127,7 @@ public class Aether {
                 AetherSoundEvents.SOUNDS,
                 AetherGameEvents.GAME_EVENTS,
                 AetherMoaTypes.MOA_TYPES,
+                AetherMenus.MENUS,
                 AetherSensorTypes.SENSOR_TYPES,
                 AetherMemoryModuleTypes.MEMORY_TYPES
         };

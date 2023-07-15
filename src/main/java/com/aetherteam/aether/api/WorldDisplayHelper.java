@@ -4,6 +4,7 @@ import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.client.event.hooks.GuiHooks;
 import com.aetherteam.aether.mixin.mixins.common.accessor.LevelStorageAccessAccessor;
 import com.aetherteam.aether.mixin.mixins.common.accessor.MinecraftServerAccessor;
+import com.aetherteam.nitrogen.Nitrogen;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
@@ -32,7 +33,10 @@ public class WorldDisplayHelper {
             enableWorldPreview();
         } else {
             if (disableWorldPreview(new GenericDirtMessageScreen(Component.literal("")))) {
-                Minecraft.getInstance().forceSetScreen(GuiHooks.getMenu());
+                Screen screen = GuiHooks.setupCustomMenu(Minecraft.getInstance().screen, Nitrogen.MENU_HELPER, false);
+                if (screen != null) {
+                    Minecraft.getInstance().forceSetScreen(screen);
+                }
             }
         }
     }

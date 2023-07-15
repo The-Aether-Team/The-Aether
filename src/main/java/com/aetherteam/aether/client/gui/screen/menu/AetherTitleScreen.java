@@ -24,6 +24,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.Music;
 import net.minecraft.util.Mth;
+import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.internal.BrandingControl;
 
 import javax.annotation.Nonnull;
@@ -36,13 +37,16 @@ public class AetherTitleScreen extends TitleScreen {
 	private static final ResourceLocation AETHER_LOGO = new ResourceLocation(Aether.MODID, "textures/gui/title/aether.png");
 
 	private AetherTitleScreenModUpdateIndicator modUpdateNotification;
-	public boolean fading;
-	public long fadeInStart;
 
 	private boolean alignedLeft;
 
 	public AetherTitleScreen() {
-		this.fading = true;
+		((TitleScreenAccessor) this).aether$setFading(true);
+	}
+
+	public AetherTitleScreen(boolean alignedLeft) {
+		this();
+		this.alignedLeft = alignedLeft;
 	}
 
 	@Override
@@ -80,30 +84,21 @@ public class AetherTitleScreen extends TitleScreen {
 			this.setupButtons();
 		}
 		if (this.minecraft != null) {
-			if (this.fadeInStart == 0L && this.fading) {
-				this.fadeInStart = Util.getMillis();
+			if (titleScreenAccessor.aether$getFadeInStart() == 0L && titleScreenAccessor.aether$isFading()) {
+				titleScreenAccessor.aether$setFadeInStart(Util.getMillis());
 			}
-			float f = this.fading ? (float) (Util.getMillis() - this.fadeInStart) / 1000.0F : 1.0F;
+			float f = titleScreenAccessor.aether$isFading() ? (float) (Util.getMillis() - titleScreenAccessor.aether$getFadeInStart()) / 1000.0F : 1.0F;
 			this.panorama.render(partialTicks, Mth.clamp(f, 0.0F, 1.0F));
-			RenderSystem.setShader(GameRenderer::getPositionTexShader);
 			RenderSystem.setShaderTexture(0, PANORAMA_OVERLAY);
 			RenderSystem.enableBlend();
-			RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.fading ? (float)Mth.ceil(Mth.clamp(f, 0.0F, 1.0F)) : 1.0F);
+			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, titleScreenAccessor.aether$isFading() ? (float)Mth.ceil(Mth.clamp(f, 0.0F, 1.0F)) : 1.0F);
 			blit(poseStack, 0, 0, this.width, this.height, 0.0F, 0.0F, 16, 128, 16, 128);
-			float f1 = this.fading ? Mth.clamp(f - 1.0F, 0.0F, 1.0F) : 1.0F;
+			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+			float f1 = titleScreenAccessor.aether$isFading() ? Mth.clamp(f - 1.0F, 0.0F, 1.0F) : 1.0F;
+			this.setupLogo(poseStack,  f1);
 			int l = Mth.ceil(f1 * 255.0F) << 24;
 			if ((l & -67108864) != 0) {
-				RenderSystem.setShader(GameRenderer::getPositionTexShader);
-				RenderSystem.setShaderTexture(0, AETHER_LOGO);
-				RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, f1);
-				int logoX = this.alignElementsLeft() ? 10 : this.width / 2 - 102;
-				int logoY = this.alignElementsLeft() ? 15 : 30;
-				this.blit(poseStack, logoX, logoY, 0, 0, 155, 44);
-				this.blit(poseStack, logoX + 155, logoY, 0, 45, 155, 44);
-
-				net.minecraftforge.client.ForgeHooksClient.renderMainMenu(this, poseStack, this.font, this.width, this.height, l);
-
+				ForgeHooksClient.renderMainMenu(this, poseStack, this.font, this.width, this.height, l);
 				if (titleScreenAccessor.aether$getSplash() != null) {
 					float splashX = this.alignElementsLeft() ? 200.0F : (float) this.width / 2 + 90;
 					float splashY = this.alignElementsLeft() ? 50.0F : 70.0F;
@@ -183,6 +178,16 @@ public class AetherTitleScreen extends TitleScreen {
 		}
 	}
 
+	private void setupLogo(PoseStack poseStack, float transparency) {
+		RenderSystem.setShaderTexture(0, AETHER_LOGO);
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, transparency);
+		int logoX = this.alignElementsLeft() ? 10 : this.width / 2 - 102;
+		int logoY = this.alignElementsLeft() ? 15 : 30;
+		this.blit(poseStack, logoX, logoY, 0, 0, 155, 44);
+		this.blit(poseStack, logoX + 155, logoY, 0, 45, 155, 44);
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+	}
+
 	@SuppressWarnings("unchecked")
 	@Nonnull
 	@Override
@@ -205,7 +210,7 @@ public class AetherTitleScreen extends TitleScreen {
 				|| buttonText.equals(Component.translatable("menu.quit"));
 	}
 
-	public boolean alignElementsLeft() {
+	public boolean alignElementsLeft() { //todo remove, split into two new menus
 		return (AetherConfig.CLIENT.menu_type_toggles_alignment.get() && AetherConfig.CLIENT.enable_world_preview.get()) || AetherConfig.CLIENT.align_aether_menu_elements_left.get();
 	}
 }

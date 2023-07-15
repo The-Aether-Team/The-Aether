@@ -4,8 +4,7 @@ import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.client.event.hooks.GuiHooks;
 import com.aetherteam.aether.client.gui.component.AccessoryButton;
 import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
-import com.aetherteam.aether.client.gui.screen.menu.AetherTitleScreen;
-import com.aetherteam.aether.client.gui.screen.menu.VanillaLeftTitleScreen;
+import com.aetherteam.nitrogen.Nitrogen;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
@@ -36,24 +35,18 @@ public class GuiListener {
 	@SubscribeEvent
 	public static void onGuiOpen(ScreenEvent.Opening event) {
 		Screen screen = event.getScreen();
-		GuiHooks.drawSentryBackground(screen);
+		Screen titleScreen = GuiHooks.setupCustomMenu(screen, Nitrogen.MENU_HELPER, !GuiHooks.getFirstTimeLoad());
+		if (titleScreen != null) {
+			event.setNewScreen(titleScreen);
+		}
 		GuiHooks.setupWorldPreview(screen);
-		VanillaLeftTitleScreen vanillaLeftTitleScreen = GuiHooks.openLeftDefaultMenu(screen);
-		if (vanillaLeftTitleScreen != null) {
-			event.setNewScreen(vanillaLeftTitleScreen);
-		}
-		AetherTitleScreen aetherMainMenuScreen = GuiHooks.openAetherMenu(screen);
-		if (aetherMainMenuScreen != null) {
-			event.setNewScreen(aetherMainMenuScreen);
-		}
-		GuiHooks.setupSplash(screen);
 	}
 
 	@SubscribeEvent
 	public static void onGuiInitialize(ScreenEvent.Init.Post event) {
 		Screen screen = event.getScreen();
 		if (screen instanceof TitleScreen titleScreen) {
-			GuiHooks.setSplashText(titleScreen);
+			GuiHooks.setCustomSplashText(titleScreen);
 
 			Button toggleWorldButton = GuiHooks.setupToggleWorldButton(screen);
 			if (toggleWorldButton != null) {
@@ -69,7 +62,6 @@ public class GuiListener {
 			if (quickLoadButton != null) {
 				event.addListener(quickLoadButton);
 			}
-			GuiHooks.setMenuAlignment();
 		} else {
 			if (!AetherConfig.CLIENT.disable_accessory_button.get() && GuiHooks.areItemsPresent()) {
 				Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(screen);
@@ -95,10 +87,8 @@ public class GuiListener {
 	public static void onGuiDraw(ScreenEvent.Render event) {
 		Screen screen = event.getScreen();
 		PoseStack poseStack = event.getPoseStack();
-		Minecraft minecraft = Minecraft.getInstance();
 		GuiHooks.drawTrivia(screen, poseStack);
 		GuiHooks.drawAetherTravelMessage(screen, poseStack);
-		GuiHooks.changeMenuAlignment(screen, minecraft);
 	}
 
 

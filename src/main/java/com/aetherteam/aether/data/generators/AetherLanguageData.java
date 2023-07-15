@@ -1252,5 +1252,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addPackDescription("colorblind", "Changes textures for color blindness accessibility");
         addPackDescription("curios", "Replace Accessories Menu with Curios' menu");
         addPackDescription("freezing", "Ice Accessories create temporary blocks");
+
+        this.addMenuTitle("the_aether", "The Aether");
     }
 }
