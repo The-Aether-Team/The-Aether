@@ -67,6 +67,10 @@ public class GuiHooks {
         return firstTimeLoad;
     }
 
+    //todo
+    //  would it be possible to completely phase out some configs and have it so theres one main config option that takes a string for what menu should be currently loaded?
+    //  then all buttons swap that config instead of toggling a bunch.
+    //  there should also be a way to override the menu button displays with nitrogen's menu selection display
     public static Screen setupCustomMenu(Screen screen, MenuHelper menuHelper, boolean shouldFade) {
         if (screen instanceof TitleScreen titleScreen) {
             //todo

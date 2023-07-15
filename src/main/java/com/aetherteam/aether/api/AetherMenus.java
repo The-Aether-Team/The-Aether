@@ -25,7 +25,9 @@ public class AetherMenus {
     private static final ResourceLocation THE_AETHER_ICON = new ResourceLocation(Aether.MODID, "textures/gui/title/menu_icon_aether");
 
     // Names
+    private static final Component MINECRAFT_LEFT_NAME = Component.translatable("aether.menu_title.minecraft_left");
     private static final Component THE_AETHER_NAME = Component.translatable("aether.menu_title.the_aether");
+    private static final Component THE_AETHER_LEFT_NAME = Component.translatable("aether.menu_title.the_aether_left");
 
     // Backgrounds
     private static final ResourceLocation THE_AETHER_REGULAR_BACKGROUND = new ResourceLocation(Aether.MODID, "textures/gui/title/options_background.png");
@@ -67,9 +69,9 @@ public class AetherMenus {
     };
 
     // Menus
-    public static final RegistryObject<Menu> MINECRAFT_LEFT = MENUS.register("minecraft_left", () -> new Menu(Menus.MINECRAFT_ICON, Menus.MINECRAFT_NAME, new VanillaLeftTitleScreen(), MINECRAFT_LEFT_CONDITION, new Menu.Properties().apply(MINECRAFT_LEFT_APPLY)));
+    public static final RegistryObject<Menu> MINECRAFT_LEFT = MENUS.register("minecraft_left", () -> new Menu(Menus.MINECRAFT_ICON, MINECRAFT_LEFT_NAME, new VanillaLeftTitleScreen(), MINECRAFT_LEFT_CONDITION, new Menu.Properties().apply(MINECRAFT_LEFT_APPLY)));
     public static final RegistryObject<Menu> THE_AETHER = MENUS.register("the_aether", () -> new Menu(THE_AETHER_ICON, THE_AETHER_NAME, new AetherTitleScreen(), THE_AETHER_CONDITION, new Menu.Properties().apply(THE_AETHER_APPLY).music(AetherTitleScreen.MENU).background(THE_AETHER_BACKGROUND)));
-    public static final RegistryObject<Menu> THE_AETHER_LEFT = MENUS.register("the_aether_left", () -> new Menu(THE_AETHER_ICON, THE_AETHER_NAME, new AetherTitleScreen(true), THE_AETHER_LEFT_CONDITION, new Menu.Properties().apply(THE_AETHER_LEFT_APPLY).music(AetherTitleScreen.MENU).background(THE_AETHER_BACKGROUND)));
+    public static final RegistryObject<Menu> THE_AETHER_LEFT = MENUS.register("the_aether_left", () -> new Menu(THE_AETHER_ICON, THE_AETHER_LEFT_NAME, new AetherTitleScreen(true), THE_AETHER_LEFT_CONDITION, new Menu.Properties().apply(THE_AETHER_LEFT_APPLY).music(AetherTitleScreen.MENU).background(THE_AETHER_BACKGROUND)));
 
     // Methods
     public static Menu get(String id) {

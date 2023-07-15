@@ -1253,6 +1253,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addPackDescription("curios", "Replace Accessories Menu with Curios' menu");
         addPackDescription("freezing", "Ice Accessories create temporary blocks");
 
+        this.addMenuTitle("minecraft_left", "Minecraft (Left)");
         this.addMenuTitle("the_aether", "The Aether");
+        this.addMenuTitle("the_aether_left", "The Aether (Left)");
     }
 }
