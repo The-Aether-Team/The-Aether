@@ -6,7 +6,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,12 +16,6 @@ public class MenuListener {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onGuiOpenHighest(ScreenEvent.Opening event) {
         MenuHooks.prepareCustomMenus(NitrogenClient.MENU_HELPER);
-    }
-
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void onGuiOpenLowest(ScreenEvent.Opening event) {
-        Screen newScreen = event.getNewScreen();
-        MenuHooks.setupWorldPreview(newScreen);
     }
 
     @SubscribeEvent
@@ -45,13 +38,6 @@ public class MenuListener {
             if (quickLoadButton != null) {
                 event.addListener(quickLoadButton);
             }
-        }
-    }
-
-    @SubscribeEvent
-    public static void onRenderOverlay(RenderGuiOverlayEvent.Pre event) {
-        if (MenuHooks.hideOverlays()) {
-            event.setCanceled(true);
         }
     }
 }

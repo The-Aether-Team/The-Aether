@@ -1,17 +1,11 @@
 package com.aetherteam.aether.client.event.hooks;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.api.WorldDisplayHelper;
-import com.aetherteam.nitrogen.client.NitrogenClient;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.PauseScreen;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -35,47 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class LevelClientHooks {
-    public static void renderMenuWithWorld(RenderLevelStageEvent.Stage stage, Minecraft minecraft) {
-        if (stage == RenderLevelStageEvent.Stage.AFTER_WEATHER) {
-            if (AetherConfig.CLIENT.enable_world_preview.get()) {
-                if (WorldDisplayHelper.loadedSummary != null) {
-                    if (minecraft.screen == null || minecraft.screen instanceof PauseScreen) {
-                        setupMenu(minecraft);
-                    }
-                }
-            } else {
-                WorldDisplayHelper.loadedLevel = null;
-                WorldDisplayHelper.loadedSummary = null;
-            }
-        }
-    }
-
-    public static void setupMenu(Minecraft minecraft) {
-        WorldDisplayHelper.setupLevelForDisplay();
-        if (Minecraft.getInstance().screen instanceof TitleScreen titleScreen) {
-            NitrogenClient.MENU_HELPER.setShouldFade(false);
-            Screen screen = NitrogenClient.MENU_HELPER.applyMenu(NitrogenClient.MENU_HELPER.getActiveMenu(), titleScreen);
-            if (screen != null) {
-                Minecraft.getInstance().forceSetScreen(screen);
-            }
-        }
-    }
-
-    private static Float prevRotation = null;
-
-    public static Float angleCamera(float prevYaw) {
-        if (AetherConfig.CLIENT.enable_world_preview.get() && WorldDisplayHelper.loadedLevel != null && WorldDisplayHelper.loadedSummary != null && Minecraft.getInstance().player != null) {
-            if (prevRotation == null) {
-                prevRotation = prevYaw;
-            }
-            float newYaw = prevRotation + 0.01F;
-            prevRotation = newYaw;
-            return newYaw;
-        }
-        prevRotation = null;
-        return null;
-    }
-
     private static final TextureAtlasSprite LOCK = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation(Aether.MODID, "block/dungeon/lock"));
     private static final TextureAtlasSprite EXCLAMATION = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation(Aether.MODID, "block/dungeon/exclamation"));
     private static final TextureAtlasSprite DOOR = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation(Aether.MODID, "block/dungeon/door"));

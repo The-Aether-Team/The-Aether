@@ -8,7 +8,6 @@ import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.server.IntegratedServer;
 import net.minecraft.network.chat.Component;
@@ -33,12 +32,10 @@ public class WorldDisplayHelper {
             enableWorldPreview();
         } else {
             if (disableWorldPreview(new GenericDirtMessageScreen(Component.literal("")))) {
-                if (Minecraft.getInstance().screen instanceof TitleScreen titleScreen) {
-                    NitrogenClient.MENU_HELPER.setShouldFade(false);
-                    Screen screen = NitrogenClient.MENU_HELPER.applyMenu(NitrogenClient.MENU_HELPER.getActiveMenu(), titleScreen);
-                    if (screen != null) {
-                        Minecraft.getInstance().forceSetScreen(screen);
-                    }
+                NitrogenClient.MENU_HELPER.setShouldFade(false);
+                Screen screen = NitrogenClient.MENU_HELPER.applyMenu(NitrogenClient.MENU_HELPER.getActiveMenu());
+                if (screen != null) {
+                    Minecraft.getInstance().forceSetScreen(screen);
                 }
             }
         }

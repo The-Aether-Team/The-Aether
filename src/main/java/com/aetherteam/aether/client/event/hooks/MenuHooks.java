@@ -34,13 +34,6 @@ public class MenuHooks {
         NitrogenClient.MENU_HELPER.setCustomSplash(screen, condition, "Happy anniversary to the Aether!");
     }
 
-    //todo TEST WORLD PREVIEW WITH THE NEW MENU SYSTEM, ensure no conditional checks got messed up or any screen loading.
-    public static void setupWorldPreview(Screen screen) {
-        if (screen instanceof TitleScreen && AetherConfig.CLIENT.enable_world_preview.get()) {
-            WorldDisplayHelper.enableWorldPreview();
-        }
-    }
-
     //todo
     //  there should also be a way to override the menu button displays with nitrogen's menu selection display
     public static Button setupToggleWorldButton(Screen screen) {
@@ -59,7 +52,7 @@ public class MenuHooks {
     }
 
     public static Button setupMenuSwitchButton(Screen screen) {
-        if (screen instanceof TitleScreen titleScreen) {
+        if (screen instanceof TitleScreen) {
             DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24, 4, 20, 20, Component.translatable("gui.aether.menu.button.theme"),
                     (pressed) -> {
                         String menu = toggleBetweenMenus();
@@ -68,7 +61,7 @@ public class MenuHooks {
                             NitrogenConfig.CLIENT.active_menu.save();
                         }
                         NitrogenClient.MENU_HELPER.setShouldFade(true);
-                        Minecraft.getInstance().setScreen(NitrogenClient.MENU_HELPER.applyMenu(NitrogenClient.MENU_HELPER.getActiveMenu(), titleScreen));
+                        Minecraft.getInstance().setScreen(NitrogenClient.MENU_HELPER.applyMenu(NitrogenClient.MENU_HELPER.getActiveMenu()));
                         Minecraft.getInstance().getMusicManager().stopPlaying();
                         AetherMusicManager.stopPlaying();
                     });
@@ -106,7 +99,5 @@ public class MenuHooks {
         }
     }
 
-    public static boolean hideOverlays() {
-        return AetherConfig.CLIENT.enable_world_preview.get() && WorldDisplayHelper.loadedLevel != null && WorldDisplayHelper.loadedSummary != null;
-    }
+
 }
