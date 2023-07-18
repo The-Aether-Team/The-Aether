@@ -19,7 +19,7 @@ public class WorldPreviewListener {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onGuiOpenLowest(ScreenEvent.Opening event) {
         Screen newScreen = event.getNewScreen();
-        WorldPreviewHooks.setupWorldPreview(newScreen);
+        WorldPreviewHooks.setupWorldPreview(newScreen); //todo test auto-alignment config
     }
 
     @SubscribeEvent
