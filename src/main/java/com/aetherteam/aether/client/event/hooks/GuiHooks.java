@@ -3,11 +3,9 @@ package com.aetherteam.aether.client.event.hooks;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.api.WorldDisplayHelper;
-import com.aetherteam.aether.api.AetherMenus;
 import com.aetherteam.aether.client.AetherKeys;
 import com.aetherteam.aether.client.AetherMusicManager;
 import com.aetherteam.aether.client.gui.component.AccessoryButton;
-import com.aetherteam.aether.client.gui.component.DynamicMenuButton;
 import com.aetherteam.aether.client.gui.component.skins.RefreshButton;
 import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.aetherteam.aether.client.gui.screen.perks.AetherCustomizationsScreen;
@@ -17,9 +15,6 @@ import com.aetherteam.aether.inventory.menu.AccessoriesMenu;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.OpenAccessoriesPacket;
 import com.aetherteam.aether.perk.PerkUtil;
-import com.aetherteam.nitrogen.Nitrogen;
-import com.aetherteam.nitrogen.api.menu.MenuHelper;
-import com.aetherteam.nitrogen.api.menu.Menus;
 import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
 import com.aetherteam.nitrogen.network.PacketRelay;
@@ -29,7 +24,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.LerpingBossEvent;
 import net.minecraft.client.gui.components.Tooltip;
@@ -52,108 +46,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.tags.ITagManager;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
 
-import java.util.Calendar;
-import java.util.function.Predicate;
-
 public class GuiHooks {
     private static final ResourceLocation AETHER_BARS_LOCATION = new ResourceLocation(Aether.MODID, "textures/gui/boss_bar.png");
     private static boolean shouldAddButton = true;
     private static boolean generateTrivia = true;
     private static Screen lastScreen = null;
-
-    private static boolean firstTimeLoad = false;
-
-    public static boolean getFirstTimeLoad() {
-        return firstTimeLoad;
-    }
-
-    //todo
-    //  would it be possible to completely phase out some configs and have it so theres one main config option that takes a string for what menu should be currently loaded?
-    //  then all buttons swap that config instead of toggling a bunch.
-    //  there should also be a way to override the menu button displays with nitrogen's menu selection display
-    public static Screen setupCustomMenu(Screen screen, MenuHelper menuHelper, boolean shouldFade) {
-        if (screen instanceof TitleScreen titleScreen) {
-            //todo
-            //  setting the minecraft menu specifically like this isn't very mod-compat friendly, because it has the chance to override another mod's custom menu.
-            //  nitrogen needs some way to cache the default menu based on a lookup to see if it doesn't match any registered menu screen
-            //      i.e., track a fallback screen if its not registered with nitrogen menus.
-            //      might even be able to include it as a special entry in the UI as well.
-            //  the goal should be for aether to either: swap back to the minecraft menu, or swap back to another mod's menu if there's normally one overriding the minecraft menu.
-            TitleScreen menu = menuHelper.applyMenu(Menus.MINECRAFT.get(), titleScreen, shouldFade);
-            menu = menuHelper.applyMenu(AetherMenus.MINECRAFT_LEFT.get(), menu, shouldFade);
-            menu = menuHelper.applyMenu(AetherMenus.THE_AETHER.get(), menu, shouldFade);
-            menu = menuHelper.applyMenu(AetherMenus.THE_AETHER_LEFT.get(), menu, shouldFade);
-            if (!firstTimeLoad) {
-                firstTimeLoad = true;
-            }
-            return menu;
-        }
-        return screen;
-    }
-
-    /**
-     * If the current date is July 22nd, displays the Aether's anniversary splash text.
-     */
-    public static void setCustomSplashText(TitleScreen screen) {
-        Predicate<Calendar> condition = (calendar) -> calendar.get(Calendar.MONTH) + 1 == 7 && calendar.get(Calendar.DATE) == 22;
-        Nitrogen.MENU_HELPER.setCustomSplash(screen, condition, "Happy anniversary to the Aether!");
-    }
-
-    //todo TEST WORLD PREVIEW WITH THE NEW MENU SYSTEM, ensure no conditional checks got messed up or any screen loading.
-    public static void setupWorldPreview(Screen screen) {
-        if (screen instanceof TitleScreen && AetherConfig.CLIENT.enable_world_preview.get()) {
-            WorldDisplayHelper.enableWorldPreview();
-        }
-    }
-
-    public static Button setupToggleWorldButton(Screen screen) {
-        if (screen instanceof TitleScreen) {
-            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24, 4, 20, 20, Component.translatable("gui.aether.menu.button.world_preview"),
-                    (pressed) -> {
-                        AetherConfig.CLIENT.enable_world_preview.set(!AetherConfig.CLIENT.enable_world_preview.get());
-                        AetherConfig.CLIENT.enable_world_preview.save();
-                        WorldDisplayHelper.toggleWorldPreview(AetherConfig.CLIENT.enable_world_preview.get());
-                    });
-            dynamicMenuButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.menu.preview")));
-            dynamicMenuButton.setDisplayConfigs(AetherConfig.CLIENT.enable_world_preview_button);
-            return dynamicMenuButton;
-        }
-        return null;
-    }
-
-    public static Button setupMenuSwitchButton(Screen screen) {
-        if (screen instanceof TitleScreen) {
-            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24, 4, 20, 20, Component.translatable("gui.aether.menu.button.theme"),
-                    (pressed) -> {
-                        AetherConfig.CLIENT.enable_aether_menu.set(!AetherConfig.CLIENT.enable_aether_menu.get());
-                        AetherConfig.CLIENT.enable_aether_menu.save();
-                        Minecraft.getInstance().setScreen(setupCustomMenu(Minecraft.getInstance().screen, Nitrogen.MENU_HELPER, true));
-                        Minecraft.getInstance().getMusicManager().stopPlaying();
-                        AetherMusicManager.stopPlaying();
-                    });
-            dynamicMenuButton.setTooltip(Tooltip.create(Component.translatable(AetherConfig.CLIENT.enable_aether_menu.get() ? "gui.aether.menu.minecraft" : "gui.aether.menu.aether")));
-            dynamicMenuButton.setOffsetConfigs(AetherConfig.CLIENT.enable_world_preview_button);
-            dynamicMenuButton.setDisplayConfigs(AetherConfig.CLIENT.enable_aether_menu_button);
-            return dynamicMenuButton;
-        }
-        return null;
-    }
-
-    public static Button setupQuickLoadButton(Screen screen) {
-        if (screen instanceof TitleScreen) {
-            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24, 4, 20, 20, Component.translatable("gui.aether.menu.button.quick_load"),
-                    (pressed) -> {
-                        WorldDisplayHelper.quickLoad();
-                        Minecraft.getInstance().getMusicManager().stopPlaying();
-                        AetherMusicManager.stopPlaying(); //todo doesn't quite work. might need to stop it through the sound manager
-                    });
-            dynamicMenuButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.menu.load")));
-            dynamicMenuButton.setOffsetConfigs(AetherConfig.CLIENT.enable_world_preview_button, AetherConfig.CLIENT.enable_aether_menu_button);
-            dynamicMenuButton.setDisplayConfigs(AetherConfig.CLIENT.enable_world_preview, AetherConfig.CLIENT.enable_quick_load_button);
-            return dynamicMenuButton;
-        }
-        return null;
-    }
 
     public static AccessoryButton setupAccessoryButtonWithinInventories(Screen screen, Tuple<Integer, Integer> offsets) {
         if (screen instanceof InventoryScreen || screen instanceof CuriosScreen || screen instanceof CreativeModeInventoryScreen) {
@@ -340,9 +237,5 @@ public class GuiHooks {
         if (health > 0) {
             GuiComponent.blit(pPoseStack, pX, pY, -90, 0, 0, health, 16, 256, 256);
         }
-    }
-
-    public static boolean hideOverlays() {
-        return AetherConfig.CLIENT.enable_world_preview.get() && WorldDisplayHelper.loadedLevel != null && WorldDisplayHelper.loadedSummary != null;
     }
 }

@@ -4,20 +4,16 @@ import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.client.event.hooks.GuiHooks;
 import com.aetherteam.aether.client.gui.component.AccessoryButton;
 import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
-import com.aetherteam.nitrogen.Nitrogen;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.LerpingBossEvent;
 import net.minecraft.client.gui.layouts.GridLayout;
 import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -33,52 +29,23 @@ public class GuiListener {
 	public static final Set<UUID> BOSS_EVENTS = new HashSet<>();
 
 	@SubscribeEvent
-	public static void onGuiOpen(ScreenEvent.Opening event) {
-		Screen screen = event.getScreen();
-		Screen titleScreen = GuiHooks.setupCustomMenu(screen, Nitrogen.MENU_HELPER, !GuiHooks.getFirstTimeLoad());
-		if (titleScreen != null) {
-			event.setNewScreen(titleScreen);
-		}
-		GuiHooks.setupWorldPreview(screen);
-	}
-
-	@SubscribeEvent
 	public static void onGuiInitialize(ScreenEvent.Init.Post event) {
 		Screen screen = event.getScreen();
-		if (screen instanceof TitleScreen titleScreen) {
-			GuiHooks.setCustomSplashText(titleScreen);
-
-			Button toggleWorldButton = GuiHooks.setupToggleWorldButton(screen);
-			if (toggleWorldButton != null) {
-				event.addListener(toggleWorldButton);
+		if (!AetherConfig.CLIENT.disable_accessory_button.get() && GuiHooks.areItemsPresent()) {
+			Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(screen);
+			AccessoryButton inventoryAccessoryButton = GuiHooks.setupAccessoryButtonWithinInventories(screen, offsets);
+			if (inventoryAccessoryButton != null) {
+				event.addListener(inventoryAccessoryButton);
 			}
 
-			Button menuSwitchButton = GuiHooks.setupMenuSwitchButton(screen);
-			if (menuSwitchButton != null) {
-				event.addListener(menuSwitchButton);
-			}
-
-			Button quickLoadButton = GuiHooks.setupQuickLoadButton(screen);
-			if (quickLoadButton != null) {
-				event.addListener(quickLoadButton);
+			AccessoryButton accessoryMenuAccessoryButton = GuiHooks.setupAccessoryButtonWithinAccessoryMenu(screen, offsets);
+			if (accessoryMenuAccessoryButton != null) {
+				event.addListener(accessoryMenuAccessoryButton);
 			}
 		} else {
-			if (!AetherConfig.CLIENT.disable_accessory_button.get() && GuiHooks.areItemsPresent()) {
-				Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(screen);
-				AccessoryButton inventoryAccessoryButton = GuiHooks.setupAccessoryButtonWithinInventories(screen, offsets);
-				if (inventoryAccessoryButton != null) {
-					event.addListener(inventoryAccessoryButton);
-				}
-
-				AccessoryButton accessoryMenuAccessoryButton = GuiHooks.setupAccessoryButtonWithinAccessoryMenu(screen, offsets);
-				if (accessoryMenuAccessoryButton != null) {
-					event.addListener(accessoryMenuAccessoryButton);
-				}
-			} else {
-				if (screen instanceof PauseScreen) {
-					GridLayout layout = GuiHooks.setupPerksButtons(screen);
-					layout.visitWidgets(event::addListener);
-				}
+			if (screen instanceof PauseScreen) {
+				GridLayout layout = GuiHooks.setupPerksButtons(screen);
+				layout.visitWidgets(event::addListener);
 			}
 		}
 	}
@@ -90,7 +57,6 @@ public class GuiListener {
 		GuiHooks.drawTrivia(screen, poseStack);
 		GuiHooks.drawAetherTravelMessage(screen, poseStack);
 	}
-
 
 	@SubscribeEvent
 	public static void onClientTick(TickEvent.ClientTickEvent event) {
@@ -118,13 +84,6 @@ public class GuiListener {
 			event.setIncrement(event.getIncrement() + 13);
 			// This event is cancelled in BossHealthOverlayMixin. see it for more info.
 			//event.setCanceled(true);
-		}
-	}
-
-	@SubscribeEvent
-	public static void onRenderOverlay(RenderGuiOverlayEvent.Pre event) {
-		if (GuiHooks.hideOverlays()) {
-			event.setCanceled(true);
 		}
 	}
 }

@@ -4,13 +4,14 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.api.WorldDisplayHelper;
-import com.aetherteam.nitrogen.Nitrogen;
+import com.aetherteam.nitrogen.client.NitrogenClient;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -51,9 +52,12 @@ public class LevelClientHooks {
 
     public static void setupMenu(Minecraft minecraft) {
         WorldDisplayHelper.setupLevelForDisplay();
-        Screen screen = GuiHooks.setupCustomMenu(minecraft.screen, Nitrogen.MENU_HELPER, false);
-        if (screen != null) {
-            Minecraft.getInstance().forceSetScreen(screen);
+        if (Minecraft.getInstance().screen instanceof TitleScreen titleScreen) {
+            NitrogenClient.MENU_HELPER.setShouldFade(false);
+            Screen screen = NitrogenClient.MENU_HELPER.applyMenu(NitrogenClient.MENU_HELPER.getActiveMenu(), titleScreen);
+            if (screen != null) {
+                Minecraft.getInstance().forceSetScreen(screen);
+            }
         }
     }
 

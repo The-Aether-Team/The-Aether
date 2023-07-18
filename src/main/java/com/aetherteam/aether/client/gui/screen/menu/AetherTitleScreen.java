@@ -1,12 +1,10 @@
 package com.aetherteam.aether.client.gui.screen.menu;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.gui.component.AetherMenuButton;
 import com.aetherteam.aether.client.gui.component.DynamicMenuButton;
 import com.aetherteam.aether.mixin.mixins.client.accessor.TitleScreenAccessor;
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -18,7 +16,6 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.renderer.CubeMap;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.PanoramaRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -29,7 +26,7 @@ import net.minecraftforge.internal.BrandingControl;
 
 import javax.annotation.Nonnull;
 
-public class AetherTitleScreen extends TitleScreen {
+public class AetherTitleScreen extends TitleScreen { //todo fix screen bugs
 	public static final Music MENU = new Music(AetherSoundEvents.MUSIC_MENU.getHolder().orElseThrow(), 20, 600, true);
 
 	private final PanoramaRenderer panorama = new PanoramaRenderer(new CubeMap(new ResourceLocation(Aether.MODID, "textures/gui/title/panorama/panorama")));
@@ -211,6 +208,7 @@ public class AetherTitleScreen extends TitleScreen {
 	}
 
 	public boolean alignElementsLeft() { //todo remove, split into two new menus
-		return (AetherConfig.CLIENT.menu_type_toggles_alignment.get() && AetherConfig.CLIENT.enable_world_preview.get()) || AetherConfig.CLIENT.align_aether_menu_elements_left.get();
+		return true;
+		//return (AetherConfig.CLIENT.menu_type_toggles_alignment.get() && AetherConfig.CLIENT.enable_world_preview.get()) || AetherConfig.CLIENT.align_aether_menu_elements_left.get();
 	}
 }

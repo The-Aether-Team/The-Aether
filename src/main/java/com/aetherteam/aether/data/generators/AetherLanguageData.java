@@ -1216,6 +1216,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         addClientConfig("gui", "enable_world_preview_button", "Adds a button to the top right of the main menu screen to toggle between the panorama and world preview");
         addClientConfig("gui", "enable_quick_load_button", "Adds a button to the top right of the main menu screen to allow quick loading into a world if the world preview is enabled");
         addClientConfig("gui", "menu_type_toggles_alignment", "Determines that menu elements will align left if the menu's world preview is active, if true, this overrides 'Align menu elements left'");
+        addClientConfig("gui", "default_aether_menu", "Determines the default Aether menu style to switch to with the menu theme button");
+        addClientConfig("gui", "default_minecraft_menu", "Determines the default Minecraft menu style to switch to with the menu theme button");
         addClientConfig("gui", "align_vanilla_menu_elements_left", "Aligns the elements of the vanilla menu to the left, only works if 'Align menu left with world preview' is set to false");
         addClientConfig("gui", "align_aether_menu_elements_left", "Aligns the elements of the Aether menu to the left, only works if 'Align menu left with world preview' is set to false");
         addClientConfig("gui", "enable_trivia", "Adds random trivia and tips to the bottom of loading screens");

@@ -1,14 +1,14 @@
 package com.aetherteam.aether.api;
 
 import com.aetherteam.aether.AetherConfig;
-import com.aetherteam.aether.client.event.hooks.GuiHooks;
 import com.aetherteam.aether.mixin.mixins.common.accessor.LevelStorageAccessAccessor;
 import com.aetherteam.aether.mixin.mixins.common.accessor.MinecraftServerAccessor;
-import com.aetherteam.nitrogen.Nitrogen;
+import com.aetherteam.nitrogen.client.NitrogenClient;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.server.IntegratedServer;
 import net.minecraft.network.chat.Component;
@@ -33,9 +33,12 @@ public class WorldDisplayHelper {
             enableWorldPreview();
         } else {
             if (disableWorldPreview(new GenericDirtMessageScreen(Component.literal("")))) {
-                Screen screen = GuiHooks.setupCustomMenu(Minecraft.getInstance().screen, Nitrogen.MENU_HELPER, false);
-                if (screen != null) {
-                    Minecraft.getInstance().forceSetScreen(screen);
+                if (Minecraft.getInstance().screen instanceof TitleScreen titleScreen) {
+                    NitrogenClient.MENU_HELPER.setShouldFade(false);
+                    Screen screen = NitrogenClient.MENU_HELPER.applyMenu(NitrogenClient.MENU_HELPER.getActiveMenu(), titleScreen);
+                    if (screen != null) {
+                        Minecraft.getInstance().forceSetScreen(screen);
+                    }
                 }
             }
         }

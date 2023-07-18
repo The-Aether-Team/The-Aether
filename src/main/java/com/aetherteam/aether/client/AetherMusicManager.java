@@ -2,9 +2,10 @@ package com.aetherteam.aether.client;
 
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
+import com.aetherteam.aether.api.AetherMenuUtil;
 import com.aetherteam.aether.api.WorldDisplayHelper;
 import com.aetherteam.aether.client.gui.screen.menu.AetherTitleScreen;
-import com.aetherteam.nitrogen.Nitrogen;
+import com.aetherteam.nitrogen.client.NitrogenClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.WinScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -93,7 +94,7 @@ public class AetherMusicManager {
 
     public static Music getSituationalMusic() {
         if (!(minecraft.screen instanceof WinScreen)) {
-            Music activeMusic = Nitrogen.MENU_HELPER.getActiveMusic();
+            Music activeMusic = NitrogenClient.MENU_HELPER.getActiveMusic();
             if (isAetherWorldPreviewEnabled()) {
                 return AetherTitleScreen.MENU;
             } else if (isVanillaWorldPreviewEnabled()) {
@@ -111,11 +112,11 @@ public class AetherMusicManager {
     }
 
     public static boolean isAetherMenuEnabled() {
-        return AetherConfig.CLIENT.enable_aether_menu.get() && !AetherConfig.CLIENT.disable_aether_menu_music.get();
+        return AetherMenuUtil.isAetherMenu() && !AetherConfig.CLIENT.disable_aether_menu_music.get();
     }
 
     public static boolean isAetherWorldPreviewEnabled() {
-        return AetherConfig.CLIENT.enable_aether_menu.get() && isWorldPreviewEnabled() && !AetherConfig.CLIENT.disable_aether_world_preview_menu_music.get();
+        return AetherMenuUtil.isAetherMenu() && isWorldPreviewEnabled() && !AetherConfig.CLIENT.disable_aether_world_preview_menu_music.get();
     }
 
     public static boolean isVanillaWorldPreviewEnabled() {

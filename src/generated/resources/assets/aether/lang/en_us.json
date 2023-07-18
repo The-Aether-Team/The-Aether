@@ -280,6 +280,8 @@
   "config.aether.client.gui.button_creative_y": "The y-coordinate of the accessories button in the creative menu",
   "config.aether.client.gui.button_inventory_x": "The x-coordinate of the accessories button in the inventory and curios menus",
   "config.aether.client.gui.button_inventory_y": "The y-coordinate of the accessories button in the inventory and curios menus",
+  "config.aether.client.gui.default_aether_menu": "Determines the default Aether menu style to switch to with the menu theme button",
+  "config.aether.client.gui.default_minecraft_menu": "Determines the default Minecraft menu style to switch to with the menu theme button",
   "config.aether.client.gui.disable_accessory_button": "Disables the Aether's accessories button from appearing in GUIs",
   "config.aether.client.gui.enable_aether_menu": "Changes the vanilla Minecraft menu into the Aether menu",
   "config.aether.client.gui.enable_aether_menu_button": "Adds a button to the top right of the main menu screen to toggle between the Aether and vanilla menu",
