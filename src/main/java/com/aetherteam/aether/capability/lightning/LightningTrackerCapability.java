@@ -4,6 +4,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LightningBolt;
 
+/**
+ * Capability class used to track {@link LightningBolt}s created by entities and weapons.
+ * @see com.aetherteam.aether.event.hooks.AbilityHooks.WeaponHooks#lightningTracking(Entity, LightningBolt)
+ */
 public class LightningTrackerCapability implements LightningTracker {
     private final LightningBolt lightningBolt;
 
@@ -18,6 +22,9 @@ public class LightningTrackerCapability implements LightningTracker {
         return this.lightningBolt;
     }
 
+    /**
+     * Saves data on world close.
+     */
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();
@@ -27,6 +34,9 @@ public class LightningTrackerCapability implements LightningTracker {
         return tag;
     }
 
+    /**
+     * Restores data from world on open.
+     */
     @Override
     public void deserializeNBT(CompoundTag tag) {
         if (tag.contains("Owner")) {
@@ -39,6 +49,9 @@ public class LightningTrackerCapability implements LightningTracker {
         this.owner = owner;
     }
 
+    /**
+     * @return The owner {@link Entity} of the lightning.
+     */
     @Override
     public Entity getOwner() {
         return this.owner;

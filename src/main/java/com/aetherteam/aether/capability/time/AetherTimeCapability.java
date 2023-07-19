@@ -18,12 +18,16 @@ import java.util.function.Supplier;
 /**
  * Capability class to store data for the Aether's custom day/night cycle.
  * This capability only has an effect on levels where the dimension type's effects are set to the Aether's.
+ * @see com.aetherteam.aether.event.hooks.CapabilityHooks.AetherTimeHooks
  */
 public class AetherTimeCapability implements AetherTime {
     private final Level level;
     private long dayTime = 18000L;
     private boolean isEternalDay = true;
 
+    /**
+     * Stores the following methods as able to be synced between client and server and vice-versa.
+     */
     private final Map<String, Triple<Type, Consumer<Object>, Supplier<Object>>> synchableFunctions = Map.ofEntries(
             Map.entry("setEternalDay", Triple.of(Type.BOOLEAN, (object) -> this.setEternalDay((boolean) object), this::getEternalDay))
     );
@@ -42,6 +46,9 @@ public class AetherTimeCapability implements AetherTime {
         return this.synchableFunctions;
     }
 
+    /**
+     * Saves data on world close.
+     */
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();
@@ -50,6 +57,9 @@ public class AetherTimeCapability implements AetherTime {
         return tag;
     }
 
+    /**
+     * Restores data from world on open.
+     */
     @Override
     public void deserializeNBT(CompoundTag tag) {
         if (tag.contains("DayTime")) {
@@ -82,7 +92,7 @@ public class AetherTimeCapability implements AetherTime {
     }
 
     /**
-     * Sends the eternal day value to the client.
+     * Sends the eternal day value to the client dimension.
      */
     @Override
     public void updateEternalDay() {
@@ -90,7 +100,7 @@ public class AetherTimeCapability implements AetherTime {
     }
 
     /**
-     * Sends the eternal day value to the client.
+     * Sends the eternal day value to the client player.
      */
     @Override
     public void updateEternalDay(ServerPlayer player) {
@@ -102,6 +112,9 @@ public class AetherTimeCapability implements AetherTime {
         this.dayTime = time;
     }
 
+    /**
+     * @return A {@link Long} for the time in the Aether.
+     */
     @Override
     public long getDayTime() {
         return this.dayTime;
@@ -112,6 +125,9 @@ public class AetherTimeCapability implements AetherTime {
         this.isEternalDay = isEternalDay;
     }
 
+    /**
+     * @return Whether eternal day is active, as a {@link Boolean}.
+     */
     @Override
     public boolean getEternalDay() {
         return this.isEternalDay;

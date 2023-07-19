@@ -47,6 +47,10 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+/**
+ * Capability class for handling {@link Player} behavior for the Aether.
+ * @see com.aetherteam.aether.event.hooks.CapabilityHooks.AetherPlayerHooks
+ */
 public class AetherPlayerCapability implements AetherPlayer {
 	private final Player player;
 
@@ -115,6 +119,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 	private boolean canShowPatreonMessage = true;
 	private int loginsUntilPatreonMessage = -1;
 
+	/**
+	 * Stores the following methods as able to be synced between client and server and vice-versa.
+	 */
 	private final Map<String, Triple<Type, Consumer<Object>, Supplier<Object>>> synchableFunctions = Map.ofEntries(
 			Map.entry("setHitting", Triple.of(Type.BOOLEAN, (object) -> this.setHitting((boolean) object), this::isHitting)),
 			Map.entry("setMoving", Triple.of(Type.BOOLEAN, (object) -> this.setMoving((boolean) object), this::isMoving)),
@@ -139,6 +146,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		return this.player;
 	}
 
+	/**
+	 * Saves data on world close.
+	 */
 	@Override
 	public CompoundTag serializeNBT() {
 		CompoundTag tag = new CompoundTag();
@@ -158,6 +168,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		return tag;
 	}
 
+	/**
+	 * Restores data from world on open.
+	 */
 	@Override
 	public void deserializeNBT(CompoundTag tag) {
 		if (tag.contains("CanGetPortal")) {
@@ -194,11 +207,17 @@ public class AetherPlayerCapability implements AetherPlayer {
 		return this.synchableFunctions;
 	}
 
+	/**
+	 * Handles functions when the player logs out of a world from {@link net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent}.
+	 */
 	@Override
 	public void onLogout() {
 		this.removeAerbunny();
 	}
 
+	/**
+	 * Handles functions when the player logs in to a world from {@link net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent}.
+	 */
 	@Override
 	public void onLogin() {
 		this.handleGivePortal();
@@ -210,6 +229,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		ServerDeveloperGlowPerkData.INSTANCE.syncFromServer(this.getPlayer());
 	}
 
+	/**
+	 * Handles functions when the player joins a world from {@link net.minecraftforge.event.entity.EntityJoinLevelEvent}.
+	 */
 	@Override
 	public void onJoinLevel() {
 		if (this.getPlayer().getLevel().isClientSide()) {
@@ -217,6 +239,11 @@ public class AetherPlayerCapability implements AetherPlayer {
 		}
 	}
 
+	/**
+	 * Used to copy data between instances of the capability from {@link net.minecraftforge.event.entity.player.PlayerEvent.Clone}.
+	 * @param other The original {@link AetherPlayer} instance.
+	 * @param isWasDeath A {@link Boolean} for whether this copying is from death. If false, the copying is from entering the End Portal.
+	 */
 	@Override
 	public void copyFrom(AetherPlayer other, boolean isWasDeath) {
 		if (!isWasDeath) {
@@ -230,6 +257,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.forceSync(INBTSynchable.Direction.CLIENT);
 	}
 
+	/**
+	 * Handles functions when the player ticks from {@link net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent}
+	 */
 	@Override
 	public void onUpdate() {
 		this.handleAetherPortal();
@@ -254,11 +284,17 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.canSpawnInAether = canSpawnInAether;
 	}
 
+	/**
+	 * @return Whether the player will spawn in the Aether dimension on first join, as a {@link Boolean}.
+	 */
 	@Override
 	public boolean canSpawnInAether() {
 		return this.canSpawnInAether;
 	}
 
+	/**
+	 * Gives the player an Aether Portal Frame item on login if the {@link AetherConfig.Common#start_with_portal} config is enabled.
+	 */
 	private void handleGivePortal() {
 		if (AetherConfig.COMMON.start_with_portal.get()) {
 			this.givePortalItem();
@@ -268,62 +304,69 @@ public class AetherPlayerCapability implements AetherPlayer {
 	}
 
 	/**
-	 * Increments or decrements the Aether portal timer depending on whether or not the player is inside an Aether portal.
+	 * Increments or decrements the Aether portal timer depending on if the player is inside an Aether portal.
 	 * On the client, this will also help to set the portal overlay.
 	 */
 	private void handleAetherPortal() {
-		if (this.player.level.isClientSide) {
+		if (this.getPlayer().getLevel().isClientSide()) {
 			this.prevPortalAnimTime = this.portalAnimTime;
-			Minecraft mc = Minecraft.getInstance();
+			Minecraft minecraft = Minecraft.getInstance();
 			if (this.isInAetherPortal) {
-				if (mc.screen != null && !mc.screen.isPauseScreen()) {
-					if (mc.screen instanceof AbstractContainerScreen) {
-						player.closeContainer();
+				if (minecraft.screen != null && !minecraft.screen.isPauseScreen()) {
+					if (minecraft.screen instanceof AbstractContainerScreen) {
+						this.getPlayer().closeContainer();
 					}
-					mc.setScreen(null);
+					minecraft.setScreen(null);
 				}
 
-				if (this.portalAnimTime == 0.0F) {
-					playPortalSound(mc);
+				if (this.getPortalAnimTime() == 0.0F) {
+					this.playPortalSound(minecraft);
 				}
 			}
 		}
 
-		if (this.isInAetherPortal) {
+		if (this.isInPortal()) {
 			++this.aetherPortalTimer;
-			if (this.player.level.isClientSide) {
+			if (this.getPlayer().getLevel().isClientSide()) {
 				this.portalAnimTime += 0.0125F;
-				if (this.portalAnimTime > 1.0F) {
+				if (this.getPortalAnimTime() > 1.0F) {
 					this.portalAnimTime = 1.0F;
 				}
 			}
 			this.isInAetherPortal = false;
 		}
 		else {
-			if (this.player.level.isClientSide) {
-				if (this.portalAnimTime > 0.0F) {
+			if (this.getPlayer().getLevel().isClientSide()) {
+				if (this.getPortalAnimTime() > 0.0F) {
 					this.portalAnimTime -= 0.05F;
 				}
 
-				if (this.portalAnimTime < 0.0F) {
+				if (this.getPortalAnimTime() < 0.0F) {
 					this.portalAnimTime = 0.0F;
 				}
 			}
-			if (this.aetherPortalTimer > 0) {
+			if (this.getPortalTimer() > 0) {
 				this.aetherPortalTimer -= 4;
 			}
 		}
 	}
 
+	/**
+	 * Plays the portal entry sound on the client.
+	 */
 	@OnlyIn(Dist.CLIENT)
-	private void playPortalSound(Minecraft mc) {
-		mc.getSoundManager().play(SimpleSoundInstance.forLocalAmbience(AetherSoundEvents.BLOCK_AETHER_PORTAL_TRIGGER.get(), this.getPlayer().getRandom().nextFloat() * 0.4F + 0.8F, 0.25F));
+	private void playPortalSound(Minecraft minecraft) {
+		minecraft.getSoundManager().play(SimpleSoundInstance.forLocalAmbience(AetherSoundEvents.BLOCK_AETHER_PORTAL_TRIGGER.get(), this.getPlayer().getRandom().nextFloat() * 0.4F + 0.8F, 0.25F));
 	}
 
+	/**
+	 * Activates any parachute that the player has in their inventory when falling fast enough.
+	 * Checks for deployable parachutes from {@link AetherTags.Items#DEPLOYABLE_PARACHUTES}.
+	 */
 	private void activateParachute() {
 		Player player = this.getPlayer();
 		Inventory inventory = this.getPlayer().getInventory();
-		Level level = player.level;
+		Level level = player.getLevel();
 		if (!player.isCreative() && !player.isShiftKeyDown() && !player.isFallFlying() && !player.isPassenger()) {
 			if (player.getDeltaMovement().y() < -1.5) {
 				if (inventory.contains(AetherTags.Items.DEPLOYABLE_PARACHUTES)) {
@@ -333,7 +376,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 							if (parachute != null) {
 								parachute.setPos(player.getX(), player.getY() - 1.0, player.getZ());
 								parachute.setDeltaMovement(player.getDeltaMovement());
-								if (!level.isClientSide) {
+								if (!level.isClientSide()) {
 									level.addFreshEntity(parachute);
 									player.startRiding(parachute);
 									stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(InteractionHand.MAIN_HAND));
@@ -348,6 +391,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		}
 	}
 
+	/**
+	 * Slowly removes darts that are rendered as stuck on the player by {@link com.aetherteam.aether.client.renderer.player.layer.DartLayer}.
+	 */
 	private void handleRemoveDarts() {
 		if (!this.getPlayer().getLevel().isClientSide()) {
 			if (this.getGoldenDartCount() > 0) {
@@ -383,8 +429,11 @@ public class AetherPlayerCapability implements AetherPlayer {
 		}
 	}
 
+	/**
+	 * Decreases the opacity of the remedy overlay vignette.
+	 */
 	private void tickDownRemedy() {
-		if (this.getPlayer().level.isClientSide()) {
+		if (this.getPlayer().getLevel().isClientSide()) {
 			if (this.getRemedyTimer() > 0) {
 				this.setRemedyTimer(this.getRemedyTimer() - 1);
 			} else {
@@ -394,8 +443,11 @@ public class AetherPlayerCapability implements AetherPlayer {
 		}
 	}
 
+	/**
+	 * Decreases the opacity of the Shield of Repulsion overlay vignette.
+	 */
 	private void tickDownProjectileImpact() {
-		if (this.getPlayer().level.isClientSide()) {
+		if (this.getPlayer().getLevel().isClientSide()) {
 			if (this.getProjectileImpactedTimer() > 0) {
 				this.setProjectileImpactedTimer(this.getProjectileImpactedTimer() - 1);
 			} else {
@@ -405,8 +457,11 @@ public class AetherPlayerCapability implements AetherPlayer {
 		}
 	}
 
+	/**
+	 * Handles the rotation for the Valkyrie Armor wings layer renderer at {@link com.aetherteam.aether.client.renderer.player.layer.PlayerWingsLayer}.
+	 */
 	private void handleWingRotation() {
-		if (this.getPlayer().level.isClientSide()) {
+		if (this.getPlayer().getLevel().isClientSide()) {
 			this.wingRotationO = this.getWingRotation();
 			if (EquipmentUtil.hasFullValkyrieSet(this.getPlayer())) {
 				this.wingRotation = this.getPlayer().tickCount;
@@ -416,6 +471,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		}
 	}
 
+	/**
+	 * Decreases the attack cooldown after a player has attacked. This is used for when the player has attacked while wearing an Invisibility Cloak.
+	 */
 	private void handleAttackCooldown() {
 		if (!this.getPlayer().getLevel().isClientSide()) {
 			if (this.attackedWithInvisibility()) {
@@ -429,6 +487,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		}
 	}
 
+	/**
+	 * Used for healing the player with a Vampire Blade. This method exists to get around a bug with heart rendering.
+	 */
 	private void handleVampireHealing() {
 		if (!this.getPlayer().getLevel().isClientSide() && this.performVampireHealing()) {
 			this.getPlayer().heal(1.0F);
@@ -436,12 +497,18 @@ public class AetherPlayerCapability implements AetherPlayer {
 		}
 	}
 
+	/**
+	 * Checks whether the capability should stop tracking a mounted Aerbunny.
+	 */
 	private void checkToRemoveAerbunny() {
 		if (this.getMountedAerbunny() != null && (!this.getMountedAerbunny().isAlive() || !this.getPlayer().isAlive())) {
 			this.setMountedAerbunny(null);
 		}
 	}
 
+	/**
+	 * Removes an Aerbunny from the world and stores it to NBT for the capability. This is used when a player logs out with an Aerbunny.
+	 */
 	private void removeAerbunny() {
 		if (this.getMountedAerbunny() != null) {
 			Aerbunny aerbunny = this.getMountedAerbunny();
@@ -453,12 +520,15 @@ public class AetherPlayerCapability implements AetherPlayer {
 		}
 	}
 
+	/**
+	 * Remounts an Aerbunny to the player if there exists stored NBT when joining the world.
+	 */
 	private void remountAerbunny() {
 		if (this.getMountedAerbunnyTag() != null) {
-			if (!this.getPlayer().level.isClientSide()) {
-				Aerbunny aerbunny = new Aerbunny(AetherEntityTypes.AERBUNNY.get(), this.getPlayer().level);
+			if (!this.getPlayer().getLevel().isClientSide()) {
+				Aerbunny aerbunny = new Aerbunny(AetherEntityTypes.AERBUNNY.get(), this.getPlayer().getLevel());
 				aerbunny.load(this.getMountedAerbunnyTag());
-				this.getPlayer().level.addFreshEntity(aerbunny);
+				this.getPlayer().getLevel().addFreshEntity(aerbunny);
 				aerbunny.startRiding(this.getPlayer());
 				this.setMountedAerbunny(aerbunny);
 				if (this.getPlayer() instanceof ServerPlayer serverPlayer) {
@@ -469,10 +539,16 @@ public class AetherPlayerCapability implements AetherPlayer {
 		}
 	}
 
+	/**
+	 * Checks whether the capability should stop tracking Cloud Minions.
+	 */
 	private void checkToRemoveCloudMinions() {
 		this.getCloudMinions().removeIf(cloudMinion -> !cloudMinion.isAlive());
 	}
 
+	/**
+	 * Used when capability data is copied. This restores any extra health the players had from Life Shards before the copy occurred.
+	 */
 	private void handleSavedHealth() {
 		if (this.getSavedHealth() > 0.0F) {
 			AttributeInstance health = this.getPlayer().getAttribute(Attributes.MAX_HEALTH);
@@ -487,19 +563,26 @@ public class AetherPlayerCapability implements AetherPlayer {
 		}
 	}
 
+	/**
+	 * Sets up the attribute modifier for extra Life Shard hearts.
+	 */
 	private void handleLifeShardModifier() {
 		if (!this.getPlayer().getLevel().isClientSide()) {
 			AttributeInstance health = this.getPlayer().getAttribute(Attributes.MAX_HEALTH);
-			AttributeModifier LIFE_SHARD_HEALTH = this.getLifeShardHealthAttributeModifier();
+			AttributeModifier lifeShardHealth = this.getLifeShardHealthAttributeModifier();
 			if (health != null) {
-				if (health.hasModifier(LIFE_SHARD_HEALTH)) {
-					health.removeModifier(LIFE_SHARD_HEALTH);
+				if (health.hasModifier(lifeShardHealth)) {
+					health.removeModifier(lifeShardHealth);
 				}
-				health.addTransientModifier(LIFE_SHARD_HEALTH);
+				health.addTransientModifier(lifeShardHealth);
 			}
 		}
 	}
 
+	/**
+	 * Sends a message linking the mod's Patreon and Discord, as long as the {@link AetherConfig.Common#show_patreon_message} config is not disabled.
+	 * The message will only be able to show up 1 or 2 logins after the player has defeated a boss, and after it sends it will not be able to show up again on any world.
+	 */
 	private void handlePatreonMessage() {
 		if (this.getPlayer() instanceof ServerPlayer serverPlayer) {
 			if (AetherConfig.COMMON.show_patreon_message.get() && this.canShowPatreonMessage) {
@@ -525,6 +608,10 @@ public class AetherPlayerCapability implements AetherPlayer {
 		}
 	}
 
+	/**
+	 * Handles the component setup for the Patreon message.
+	 * @param serverPlayer The {@link ServerPlayer} to send the message to.
+	 */
 	private void sendPatreonMessage(ServerPlayer serverPlayer) {
 		Component component = Component.translatable("gui.aether.patreon.message");
 		List<String> unlinkedBodyArray = Arrays.stream(component.getString().split("(?=(%s1))|(?<=(%s1))|(?=(%s2))|(?<=(%s2))|(?=(%s3))|(?<=(%s3))")).toList();
@@ -542,6 +629,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		serverPlayer.sendSystemMessage(note);
 	}
 
+	/**
+	 * Gives the player an Aether Portal Frame item.
+	 */
 	@Override
 	public void givePortalItem() {
 		if (this.canGetPortal()) {
@@ -555,6 +645,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.canGetPortal = canGetPortal;
 	}
 
+	/**
+	 * @return Whether the player can get the Aether Portal Frame item, as a {@link Boolean}.
+	 */
 	@Override
 	public boolean canGetPortal() {
 		return this.canGetPortal;
@@ -565,6 +658,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.isInAetherPortal = inPortal;
 	}
 
+	/**
+	 * @return Whether the player is in an Aether Portal, as a {@link Boolean}.
+	 */
 	@Override
 	public boolean isInPortal() {
 		return this.isInAetherPortal;
@@ -580,16 +676,25 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.aetherPortalTimer = timer;
 	}
 
+	/**
+	 * @return The {@link Integer} timer for how long the player has stood in a portal.
+	 */
 	@Override
 	public int getPortalTimer() {
 		return this.aetherPortalTimer;
 	}
 
+	/**
+	 * @return The {@link Float} timer for the portal vignette animation time.
+	 */
 	@Override
 	public float getPortalAnimTime() {
 		return this.portalAnimTime;
 	}
 
+	/**
+	 * @return The previous {@link Float} for the portal animation timer.
+	 */
 	@Override
 	public float getPrevPortalAnimTime() {
 		return this.prevPortalAnimTime;
@@ -600,6 +705,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.isHitting = isHitting;
 	}
 
+	/**
+	 * @return Whether the player is hitting, as a {@link Boolean}.
+	 */
 	@Override
 	public boolean isHitting() {
 		return this.isHitting;
@@ -610,6 +718,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.isMoving = isMoving;
 	}
 
+	/**
+	 * @return Whether the player is moving, as a {@link Boolean}.
+	 */
 	@Override
 	public boolean isMoving() {
 		return this.isMoving;
@@ -620,6 +731,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.isJumping = isJumping;
 	}
 
+	/**
+	 * @return Whether the player is jumping, as a {@link Boolean}.
+	 */
 	@Override
 	public boolean isJumping() {
 		return this.isJumping;
@@ -630,6 +744,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.isGravititeJumpActive = isGravititeJumpActive;
 	}
 
+	/**
+	 * @return Whether the gravitite jump ability is active, as a {@link Boolean}.
+	 */
 	@Override
 	public boolean isGravititeJumpActive() {
 		return this.isGravititeJumpActive;
@@ -640,6 +757,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.seenSunSpiritDialogue = seenDialogue;
 	}
 
+	/**
+	 * @return Whether the player has already seen the Sun Spirit's dialogue, as a {@link Boolean}.
+	 */
 	@Override
 	public boolean hasSeenSunSpiritDialogue() {
 		return this.seenSunSpiritDialogue;
@@ -650,6 +770,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.goldenDartCount = count;
 	}
 
+	/**
+	 * @return An {@link Integer} for how many Golden Darts are stuck in the player.
+	 */
 	@Override
 	public int getGoldenDartCount() {
 		return this.goldenDartCount;
@@ -660,6 +783,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.poisonDartCount = count;
 	}
 
+	/**
+	 * @return An {@link Integer} for how many Poison Darts are stuck in the player.
+	 */
 	@Override
 	public int getPoisonDartCount() {
 		return this.poisonDartCount;
@@ -670,6 +796,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.enchantedDartCount = count;
 	}
 
+	/**
+	 * @return An {@link Integer} for how many Enchanted Darts are stuck in the player.
+	 */
 	@Override
 	public int getEnchantedDartCount() {
 		return this.enchantedDartCount;
@@ -680,6 +809,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.remedyMaximum = remedyMaximum;
 	}
 
+	/**
+	 * @return An {@link Integer} for the max time duration of the remedy vignette.
+	 */
 	@Override
 	public int getRemedyMaximum() {
 		return this.remedyMaximum;
@@ -690,6 +822,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.remedyTimer = timer;
 	}
 
+	/**
+	 * @return The {@link Integer} timer for how long until the remedy vignette disappears.
+	 */
 	@Override
 	public int getRemedyTimer() {
 		return this.remedyTimer;
@@ -700,6 +835,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.impactedMaximum = projectileImpactedMaximum;
 	}
 
+	/**
+	 * @return An {@link Integer} for the max time duration of the Shield of Repulsion vignette.
+	 */
 	@Override
 	public int getProjectileImpactedMaximum() {
 		return this.impactedMaximum;
@@ -710,6 +848,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.impactedTimer = projectileImpactedTimer;
 	}
 
+	/**
+	 * @return The {@link Integer} timer for how long until the Shield of Repulsion vignette disappears.
+	 */
 	@Override
 	public int getProjectileImpactedTimer() {
 		return this.impactedTimer;
@@ -720,6 +861,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.performVampireHealing = performVampireHealing;
 	}
 
+	/**
+	 * @return Whether to heal from attacking with the Vampire Blade, as a {@link Boolean}.
+	 */
 	@Override
 	public boolean performVampireHealing() {
 		return this.performVampireHealing;
@@ -730,6 +874,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.mountedAerbunny = mountedAerbunny;
 	}
 
+	/**
+	 * @return The {@link Aerbunny} currently mounted to the player
+	 */
 	@Override
 	public Aerbunny getMountedAerbunny() {
 		return this.mountedAerbunny;
@@ -740,6 +887,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.mountedAerbunnyTag = mountedAerbunnyTag;
 	}
 
+	/**
+	 * @return The {@link CompoundTag} data for the Aerbunny currently mounted to the player.
+	 */
 	@Override
 	public CompoundTag getMountedAerbunnyTag() {
 		return this.mountedAerbunnyTag;
@@ -750,6 +900,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.lastRiddenMoa = lastRiddenMoa;
 	}
 
+	/**
+	 * @return The {@link UUID} for the last ridden Moa.
+	 */
 	@Override
 	public UUID getLastRiddenMoa() {
 		return this.lastRiddenMoa;
@@ -762,16 +915,26 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.cloudMinions.add(1, cloudMinionLeft);
 	}
 
+	/**
+	 * @return The currently summoned {@link CloudMinion}s.
+	 */
 	@Override
 	public List<CloudMinion> getCloudMinions() {
 		return this.cloudMinions;
 	}
 
+	/**
+	 * @return An {@link Integer} for the last wing rotation value.
+	 */
 	@Override
 	public int getWingRotationO() {
 		return this.wingRotationO;
 	}
 
+
+	/**
+	 * @return An {@link Integer} for the wing rotation value.
+	 */
 	@Override
 	public int getWingRotation() {
 		return this.wingRotation;
@@ -782,6 +945,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.attackedWithInvisibility = attacked;
 	}
 
+	/**
+	 * @return Whether the player attacked, as a {@link Boolean}.
+	 */
 	@Override
 	public boolean attackedWithInvisibility() {
 		return this.attackedWithInvisibility;
@@ -792,6 +958,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.invisibilityEnabled = enabled;
 	}
 
+	/**
+	 * @return Whether the player's invisibility is enabled when wearing an Invisibility Cloak, as a {@link Boolean}.
+	 */
 	@Override
 	public boolean isInvisibilityEnabled() {
 		return this.invisibilityEnabled;
@@ -802,16 +971,25 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.wearingInvisibilityCloak = wearing;
 	}
 
+	/**
+	 * @return Whether the player is wearing an Invisibility Cloak.
+	 */
 	@Override
 	public boolean isWearingInvisibilityCloak() {
 		return this.wearingInvisibilityCloak;
 	}
 
+	/**
+	 * @return An {@link Integer} for the maximum flight duration.
+	 */
 	@Override
 	public int getFlightTimerMax() {
 		return FLIGHT_TIMER_MAX;
 	}
 
+	/**
+	 * @return A {@link Float} for the maximum flight speed modifier.
+	 */
 	@Override
 	public float getFlightModifierMax() {
 		return FLIGHT_MODIFIER_MAX;
@@ -822,6 +1000,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.flightTimer = timer;
 	}
 
+	/**
+	 * @return The {@link Integer} timer for how long the player has to fly.
+	 */
 	@Override
 	public int getFlightTimer() {
 		return this.flightTimer;
@@ -832,6 +1013,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.flightModifier = modifier;
 	}
 
+	/**
+	 * @return The {@link Float} modifier for the player's flight speed.
+	 */
 	@Override
 	public float getFlightModifier() {
 		return this.flightModifier;
@@ -842,6 +1026,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.savedHealth = health;
 	}
 
+	/**
+	 * @return The {@link Float} for player health stored between capability copying.
+	 */
 	@Override
 	public float getSavedHealth() {
 		return this.savedHealth;
@@ -852,6 +1039,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.neptuneSubmergeLength = length;
 	}
 
+	/**
+	 * @return A {@link Double} for how long the player has been submerged in water while wearing Neptune Armor.
+	 */
 	@Override
 	public double getNeptuneSubmergeLength() {
 		return this.neptuneSubmergeLength;
@@ -862,11 +1052,17 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.phoenixSubmergeLength = length;
 	}
 
+	/**
+	 * @return A {@link Double} for how long the player has been submerged in lava while wearing Phoenix Armor.
+	 */
 	@Override
 	public double getPhoenixSubmergeLength() {
 		return this.phoenixSubmergeLength;
 	}
 
+	/**
+	 * @return An {@link Integer} for how long Phoenix Armor takes to convert into Obsidian Armor.
+	 */
 	@Override
 	public int getObsidianConversionTimerMax() {
 		return OBSIDIAN_TIMER_MAX;
@@ -877,6 +1073,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.obsidianConversionTime = time;
 	}
 
+	/**
+	 * @return An {@link Integer} timer for how long until Phoenix Armor converts into Obsidian Armor.
+	 */
 	@Override
 	public int getObsidianConversionTime() {
 		return this.obsidianConversionTime;
@@ -887,21 +1086,35 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.lifeShards = amount;
 	}
 
+	/**
+	 * @return An {@link Integer} for how many Life Shards the player has used.
+	 */
 	@Override
 	public int getLifeShardCount() {
 		return this.lifeShards;
 	}
 
+	/**
+	 * @return An {@link Integer} for the maximum amount of Life Shards the player can use, from {@link AetherConfig.Server#maximum_life_shards}.
+	 */
 	@Override
 	public int getLifeShardLimit() {
 		return AetherConfig.SERVER.maximum_life_shards.get();
 	}
 
+	/**
+	 * @return The Life Shard health {@link AttributeModifier}.
+	 */
 	@Override
 	public AttributeModifier getLifeShardHealthAttributeModifier() {
 		return new AttributeModifier(LIFE_SHARD_HEALTH_ID, "Life Shard health increase", this.getLifeShardCount() * 2.0F, AttributeModifier.Operation.ADDITION);
 	}
 
+	/**
+	 * Tracks the player's summoned Cloud Minions on the client.
+	 * @param cloudMinionRight The right {@link CloudMinion}.
+	 * @param cloudMinionLeft The left {@link CloudMinion}.
+	 */
 	private void sendCloudMinionPacket(CloudMinion cloudMinionRight, CloudMinion cloudMinionLeft) {
 		if (this.getPlayer() instanceof ServerPlayer serverPlayer && !this.getPlayer().level.isClientSide) {
 			PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new CloudMinionPacket(this.getPlayer().getId(), cloudMinionRight.getId(), cloudMinionLeft.getId()), serverPlayer);
