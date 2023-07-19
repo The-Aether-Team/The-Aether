@@ -27,7 +27,7 @@ import net.minecraftforge.internal.BrandingControl;
 
 import javax.annotation.Nonnull;
 
-public class AetherTitleScreen extends TitleScreen { //todo fix screen bugs
+public class AetherTitleScreen extends TitleScreen {
 	public static final Music MENU = new Music(AetherSoundEvents.MUSIC_MENU.getHolder().orElseThrow(), 20, 600, true);
 
 	private final PanoramaRenderer panorama = new PanoramaRenderer(new CubeMap(new ResourceLocation(Aether.MODID, "textures/gui/title/panorama/panorama")));
@@ -50,7 +50,6 @@ public class AetherTitleScreen extends TitleScreen { //todo fix screen bugs
 	@Override
 	protected void init() {
 		super.init();
-		this.alignedLeft = this.alignElementsLeft();
 		this.setupButtons();
 		this.modUpdateNotification = new AetherTitleScreenModUpdateIndicator();
 		this.modUpdateNotification.init();
@@ -60,7 +59,7 @@ public class AetherTitleScreen extends TitleScreen { //todo fix screen bugs
 		int buttonCount = 0;
 		for (Renderable renderable : this.renderables) {
 			if (renderable instanceof AetherMenuButton aetherMenuButton) {
-				if (this.alignElementsLeft()) {
+				if (this.alignedLeft) {
 					aetherMenuButton.setX(30);
 					aetherMenuButton.setY(80 + buttonCount * 25);
 					aetherMenuButton.setWidth(200);
@@ -77,10 +76,6 @@ public class AetherTitleScreen extends TitleScreen { //todo fix screen bugs
 	@Override
 	public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
 		TitleScreenAccessor titleScreenAccessor = (TitleScreenAccessor) this;
-		if (this.alignedLeft != this.alignElementsLeft()) {
-			this.alignedLeft = this.alignElementsLeft();
-			this.setupButtons();
-		}
 		if (this.minecraft != null) {
 			if (titleScreenAccessor.aether$getFadeInStart() == 0L && titleScreenAccessor.aether$isFading()) {
 				titleScreenAccessor.aether$setFadeInStart(Util.getMillis());
@@ -98,8 +93,8 @@ public class AetherTitleScreen extends TitleScreen { //todo fix screen bugs
 			if ((l & -67108864) != 0) {
 				ForgeHooksClient.renderMainMenu(this, poseStack, this.font, this.width, this.height, l);
 				if (titleScreenAccessor.aether$getSplash() != null) {
-					float splashX = this.alignElementsLeft() ? 200.0F : (float) this.width / 2 + 90;
-					float splashY = this.alignElementsLeft() ? 50.0F : 70.0F;
+					float splashX = this.alignedLeft ? 200.0F : (float) this.width / 2 + 90;
+					float splashY = this.alignedLeft ? 50.0F : 70.0F;
 					poseStack.pushPose();
 					poseStack.translate(splashX, splashY, 0.0F);
 					poseStack.mulPose(Axis.ZP.rotationDegrees(-20.0F));
@@ -109,7 +104,7 @@ public class AetherTitleScreen extends TitleScreen { //todo fix screen bugs
 					poseStack.popPose();
 				}
 
-				if (this.alignElementsLeft()) {
+				if (this.alignedLeft) {
 					BrandingControl.forEachLine(true, true, (brdline, brd) ->
 							drawString(poseStack, this.font, brd, width - this.font.width(brd) - 1, this.height - (10 + (brdline + 1) * (this.font.lineHeight + 1)), 16777215 | l)
 					);
@@ -179,8 +174,8 @@ public class AetherTitleScreen extends TitleScreen { //todo fix screen bugs
 	private void setupLogo(PoseStack poseStack, float transparency) {
 		RenderSystem.setShaderTexture(0, AETHER_LOGO);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, transparency);
-		int logoX = this.alignElementsLeft() ? 10 : this.width / 2 - 102;
-		int logoY = this.alignElementsLeft() ? 15 : 30;
+		int logoX = this.alignedLeft ? 10 : this.width / 2 - 102;
+		int logoY = this.alignedLeft ? 15 : 30;
 		this.blit(poseStack, logoX, logoY, 0, 0, 155, 44);
 		this.blit(poseStack, logoX + 155, logoY, 0, 45, 155, 44);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
@@ -206,10 +201,5 @@ public class AetherTitleScreen extends TitleScreen { //todo fix screen bugs
 				|| buttonText.equals(Component.translatable("fml.menu.mods"))
 				|| buttonText.equals(Component.translatable("menu.options"))
 				|| buttonText.equals(Component.translatable("menu.quit"));
-	}
-
-	public boolean alignElementsLeft() { //todo remove, depend on a constructor variable
-		return true;
-		//return (AetherConfig.CLIENT.menu_type_toggles_alignment.get() && AetherConfig.CLIENT.enable_world_preview.get()) || AetherConfig.CLIENT.align_aether_menu_elements_left.get();
 	}
 }

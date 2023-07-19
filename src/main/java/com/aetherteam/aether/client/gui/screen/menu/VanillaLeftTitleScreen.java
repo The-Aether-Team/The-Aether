@@ -9,6 +9,7 @@ import com.mojang.math.Axis;
 import net.minecraft.Util;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.LogoRenderer;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.TitleScreen;
@@ -16,6 +17,7 @@ import net.minecraft.client.renderer.PanoramaRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraftforge.client.gui.TitleScreenModUpdateIndicator;
 import net.minecraftforge.internal.BrandingControl;
 
@@ -24,6 +26,7 @@ import javax.annotation.Nonnull;
 public class VanillaLeftTitleScreen extends TitleScreen {
     private final PanoramaRenderer panorama = new PanoramaRenderer(CUBE_MAP);
     private static final ResourceLocation PANORAMA_OVERLAY = new ResourceLocation("textures/gui/title/background/panorama_overlay.png");
+    private final boolean showEasterEgg = (double) RandomSource.create().nextFloat() < 1.0E-4D;
 
     private TitleScreenModUpdateIndicator modUpdateNotification;
 
@@ -71,7 +74,7 @@ public class VanillaLeftTitleScreen extends TitleScreen {
             blit(poseStack, 0, 0, this.width, this.height, 0.0F, 0.0F, 16, 128, 16, 128);
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             float f1 = titleScreenAccessor.aether$isFading() ? Mth.clamp(f - 1.0F, 0.0F, 1.0F) : 1.0F;
-            ((TitleScreenAccessor)this).aether$getLogoRenderer().renderLogo(poseStack, this.width, f1);
+            this.renderLogo(poseStack, this.width, f1);
             int l = Mth.ceil(f1 * 255.0F) << 24;
             if ((l & -67108864) != 0) {
                 if (((TitleScreenAccessor)this).getWarningLabel() != null) {
@@ -133,6 +136,35 @@ public class VanillaLeftTitleScreen extends TitleScreen {
                 this.modUpdateNotification.render(poseStack, mouseX, mouseY, partialTicks);
             }
         }
+    }
+
+    public void renderLogo(PoseStack poseStack, int screenWidth, float transparency) {
+        this.renderLogo(poseStack, screenWidth, transparency, 30);
+    }
+
+    public void renderLogo(PoseStack poseStack, int screenWidth, float transparency, int height) {
+        RenderSystem.setShaderTexture(0, LogoRenderer.MINECRAFT_LOGO);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, transparency);
+        int i = 11;
+        int j = -11;
+        if (this.showEasterEgg) {
+            blitOutlineBlack(i, height, (x, y) -> {
+                blit(poseStack, x, y + j, 0, 0, 99, 44);
+                blit(poseStack, x + 99, y + j, 129, 0, 27, 44);
+                blit(poseStack, x + 99 + 26, y + j, 126, 0, 3, 44);
+                blit(poseStack, x + 99 + 26 + 3, y + j, 99, 0, 26, 44);
+                blit(poseStack, x + 155, y + j, 0, 45, 155, 44);
+            });
+        } else {
+            blitOutlineBlack(i, height, (x, y) -> {
+                blit(poseStack, x, y + j, 0, 0, 155, 44);
+                blit(poseStack, x + 155, y + j, 0, 45, 155, 44);
+            });
+        }
+
+        RenderSystem.setShaderTexture(0, LogoRenderer.MINECRAFT_EDITION);
+        blit(poseStack, i + 88, height + 37 + j, 0.0F, 0.0F, 98, 14, 128, 16);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
     public boolean isButtonLeft(Component buttonText) {
