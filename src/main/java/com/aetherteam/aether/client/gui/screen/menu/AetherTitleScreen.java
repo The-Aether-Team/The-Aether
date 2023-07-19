@@ -5,6 +5,7 @@ import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.gui.component.AetherMenuButton;
 import com.aetherteam.aether.client.gui.component.DynamicMenuButton;
 import com.aetherteam.aether.mixin.mixins.client.accessor.TitleScreenAccessor;
+import com.aetherteam.nitrogen.NitrogenConfig;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -136,8 +137,8 @@ public class AetherTitleScreen extends TitleScreen { //todo fix screen bugs
 				}
 			}
 
-			int offset = 0;
-			for (Renderable renderable : this.renderables) {
+			int offset = NitrogenConfig.CLIENT.enable_menu_api.get() && NitrogenConfig.CLIENT.enable_menu_list_button.get() ? -62 : 0;
+			for (Renderable renderable : this.renderables) {  //todo for some reason the buttons are showing up in the middle of the screen before aligning; this is not ideal
 				renderable.render(poseStack, mouseX, mouseY, partialTicks);
 				if (renderable instanceof AetherMenuButton aetherButton) {
 					if (aetherButton.isMouseOver(mouseX, mouseY)) {

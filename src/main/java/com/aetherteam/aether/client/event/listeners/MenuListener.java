@@ -21,7 +21,7 @@ public class MenuListener {
     @SubscribeEvent
     public static void onGuiInitialize(ScreenEvent.Init.Post event) {
         Screen screen = event.getScreen();
-        if (screen instanceof TitleScreen titleScreen) { //todo for some reason the buttons are showing up in the middle of the screen before aligning; this is not ideal
+        if (screen instanceof TitleScreen titleScreen) {
             MenuHooks.setCustomSplashText(titleScreen);
 
             Button toggleWorldButton = MenuHooks.setupToggleWorldButton(screen);

@@ -34,11 +34,9 @@ public class MenuHooks {
         NitrogenClient.MENU_HELPER.setCustomSplash(screen, condition, "Happy anniversary to the Aether!");
     }
 
-    //todo
-    //  there should also be a way to override the menu button displays with nitrogen's menu selection display
     public static Button setupToggleWorldButton(Screen screen) {
         if (screen instanceof TitleScreen) {
-            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24, 4, 20, 20, Component.translatable("gui.aether.menu.button.world_preview"),
+            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24 - getButtonOffset(), 4, 20, 20, Component.translatable("gui.aether.menu.button.world_preview"),
                     (pressed) -> {
                         AetherConfig.CLIENT.enable_world_preview.set(!AetherConfig.CLIENT.enable_world_preview.get());
                         AetherConfig.CLIENT.enable_world_preview.save();
@@ -53,7 +51,7 @@ public class MenuHooks {
 
     public static Button setupMenuSwitchButton(Screen screen) {
         if (screen instanceof TitleScreen) {
-            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24, 4, 20, 20, Component.translatable("gui.aether.menu.button.theme"),
+            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24 - getButtonOffset(), 4, 20, 20, Component.translatable("gui.aether.menu.button.theme"),
                     (pressed) -> {
                         String menu = toggleBetweenMenus();
                         if (menu != null) {
@@ -75,7 +73,7 @@ public class MenuHooks {
 
     public static Button setupQuickLoadButton(Screen screen) {
         if (screen instanceof TitleScreen) {
-            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24, 4, 20, 20, Component.translatable("gui.aether.menu.button.quick_load"),
+            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24 - getButtonOffset(), 4, 20, 20, Component.translatable("gui.aether.menu.button.quick_load"),
                     (pressed) -> {
                         WorldDisplayHelper.quickLoad();
                         Minecraft.getInstance().getMusicManager().stopPlaying();
@@ -99,5 +97,7 @@ public class MenuHooks {
         }
     }
 
-
+    private static int getButtonOffset() {
+        return NitrogenConfig.CLIENT.enable_menu_api.get() && NitrogenConfig.CLIENT.enable_menu_list_button.get() ? 62 : 0;
+    }
 }
