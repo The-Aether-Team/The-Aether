@@ -7,11 +7,11 @@ import com.aetherteam.aether.loot.functions.DoubleDrops;
 import com.aetherteam.aether.loot.functions.SpawnTNT;
 import com.aetherteam.aether.loot.functions.SpawnXP;
 import com.aetherteam.aether.mixin.mixins.common.accessor.BlockLootAccessor;
+import com.aetherteam.nitrogen.data.providers.NitrogenBlockLootSubProvider;
 import net.minecraft.advancements.critereon.BlockPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.LocationPredicate;
 import net.minecraft.core.BlockPos;
-import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -31,17 +31,12 @@ import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.minecraftforge.common.Tags;
 
 import java.util.Set;
 
-public abstract class AetherBlockLootSubProvider extends BlockLootSubProvider {
+public abstract class AetherBlockLootSubProvider extends NitrogenBlockLootSubProvider {
     public AetherBlockLootSubProvider(Set<Item> items, FeatureFlagSet flags) {
         super(items, flags);
-    }
-
-    public void dropNone(Block block) {
-        this.add(block, noDrop());
     }
 
     public void dropDoubleWithSilk(Block block, ItemLike drop) {
@@ -54,10 +49,6 @@ public abstract class AetherBlockLootSubProvider extends BlockLootSubProvider {
 
     public void dropDoubleWithFortune(Block block, Item drop) {
         this.add(block, (result) -> this.droppingDoubleItemsWithFortune(result, drop));
-    }
-
-    public void dropWithFortune(Block block, Item drop) {
-        this.add(block, (result) -> this.createOreDrop(result, drop));
     }
 
     public LootTable.Builder droppingDoubleWithSilkTouch(Block block, ItemLike noSilkTouch) {
@@ -133,13 +124,6 @@ public abstract class AetherBlockLootSubProvider extends BlockLootSubProvider {
                 .apply(DoubleDrops.builder());
     }
 
-    public LootTable.Builder droppingNameableBlockEntityTable(Block block) {
-        return LootTable.lootTable().withPool(this.applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                .add(LootItem.lootTableItem(block)
-                        .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))))
-        );
-    }
-
     public LootTable.Builder droppingBerryBush(Block block, Block stem, Item drop) {
         return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                 .add(this.applyExplosionDecay(block, LootItem.lootTableItem(drop)
@@ -189,9 +173,5 @@ public abstract class AetherBlockLootSubProvider extends BlockLootSubProvider {
                 .add(LootItem.lootTableItem(block))
                 .when(BlockLootAccessor.aether$hasSilkTouch())
         );
-    }
-
-    protected static LootTable.Builder createForgeSilkTouchOrShearsDispatchTable(Block pBlock, LootPoolEntryContainer.Builder<?> pBuilder) {
-        return createSelfDropDispatchTable(pBlock, MatchTool.toolMatches(ItemPredicate.Builder.item().of(Tags.Items.SHEARS)).or(HAS_SILK_TOUCH), pBuilder);
     }
 }
