@@ -250,7 +250,7 @@ public class AetherConfig {
             default_minecraft_menu = builder
                     .comment("Determines the default Minecraft menu style to switch to with the menu theme button")
                     .translation("config.aether.client.gui.default_minecraft_menu")
-                    .define("Default Minecraft menu style", "nitrogen:minecraft");
+                    .define("Default Minecraft menu style", "aether_nitrogen:minecraft");
             enable_trivia = builder
                     .comment("Adds random trivia and tips to the bottom of loading screens")
                     .translation("config.aether.client.gui.enable_trivia")

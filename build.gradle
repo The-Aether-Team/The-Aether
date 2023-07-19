@@ -107,7 +107,7 @@ dependencies {
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-    implementation fg.deobf("com.aetherteam.nitrogen:nitrogen:${project.nitrogen_version}")
+    implementation fg.deobf("com.aetherteam.nitrogen:aether_nitrogen:${project.nitrogen_version}")
 
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}")
 
@@ -119,7 +119,7 @@ dependencies {
 
 //    runtimeOnly fg.deobf("io.github.flemmli97:debugutils:${project.mc_version}-${project.debugutils_version}-forge")
 
-    jarJar fg.deobf("com.aetherteam.nitrogen:nitrogen:${project.nitrogen_version}") {
+    jarJar fg.deobf("com.aetherteam.nitrogen:aether_nitrogen:${project.nitrogen_version}") {
         jarJar.ranged(it, "[${project.nitrogen_version},)")
         jarJar.pin(it, "${project.nitrogen_version}")
     }
