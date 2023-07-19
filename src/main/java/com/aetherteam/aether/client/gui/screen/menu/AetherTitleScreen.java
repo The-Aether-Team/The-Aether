@@ -207,7 +207,7 @@ public class AetherTitleScreen extends TitleScreen { //todo fix screen bugs
 				|| buttonText.equals(Component.translatable("menu.quit"));
 	}
 
-	public boolean alignElementsLeft() { //todo remove, split into two new menus
+	public boolean alignElementsLeft() { //todo remove, depend on a constructor variable
 		return true;
 		//return (AetherConfig.CLIENT.menu_type_toggles_alignment.get() && AetherConfig.CLIENT.enable_world_preview.get()) || AetherConfig.CLIENT.align_aether_menu_elements_left.get();
 	}
