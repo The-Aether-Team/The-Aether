@@ -19,6 +19,11 @@ public class PerkSavedData extends SavedData {
     private final Map<UUID, Halo> storedHaloData = new HashMap<>();
     private final Map<UUID, DeveloperGlow> storedDeveloperGlowData = new HashMap<>();
 
+    /**
+     * Saves perk data to the world in a file named "perks.dat".
+     * @param tag The {@link CompoundTag} to save the data to.
+     * @return A {@link CompoundTag} with the data.
+     */
     @Override
     public CompoundTag save(CompoundTag tag) {
         CompoundTag storedSkinDataTag = new CompoundTag();
@@ -57,6 +62,11 @@ public class PerkSavedData extends SavedData {
         return tag;
     }
 
+    /**
+     * Loads perk data from the world from a {@link CompoundTag} representing the data in "perks.dat".
+     * @param tag The {@link CompoundTag}.
+     * @return The {@link PerkSavedData} created from the world data.
+     */
     public static PerkSavedData load(CompoundTag tag) {
         PerkSavedData data = PerkSavedData.create();
         for (String key : tag.getAllKeys()) {
@@ -109,47 +119,88 @@ public class PerkSavedData extends SavedData {
         return new PerkSavedData();
     }
 
+    /**
+     * Loads or creates the "perks.dat" file.
+     * @param dataStorage The {@link DimensionDataStorage} of the world.
+     * @return The {@link PerkSavedData} corresponding to the data file.
+     */
     public static PerkSavedData compute(DimensionDataStorage dataStorage) {
        return dataStorage.computeIfAbsent(PerkSavedData::load, PerkSavedData::create, FILE_NAME);
     }
 
+    /**
+     * @return A {@link Map} of player {@link UUID}s and {@link MoaData} retrieved from "perks.dat".
+     */
     Map<UUID, MoaData> getStoredSkinData() {
         return ImmutableMap.copyOf(this.storedSkinData);
     }
 
+    /**
+     * Modifies the {@link MoaData} stored in the world data.
+     * @param uuid The {@link UUID} of the player that the {@link MoaData} belongs to.
+     * @param moaData The {@link MoaData}.
+     */
     void modifyStoredSkinData(UUID uuid, MoaData moaData) {
         this.storedSkinData.put(uuid, moaData);
         this.setDirty();
     }
 
+    /**
+     * Removes an entry for a player's {@link MoaData} from the world data.
+     * @param uuid The player's {@link UUID}.
+     */
     void removeStoredSkinData(UUID uuid) {
         this.storedSkinData.remove(uuid);
         this.setDirty();
     }
 
+    /**
+     * @return A {@link Map} of player {@link UUID}s and {@link Halo} info retrieved from "perks.dat".
+     */
     Map<UUID, Halo> getStoredHaloData() {
         return ImmutableMap.copyOf(this.storedHaloData);
     }
 
+    /**
+     * Modifies the {@link Halo} info stored in the world data.
+     * @param uuid The {@link UUID} of the player that the {@link Halo} belongs to.
+     * @param halo The {@link Halo}.
+     */
     void modifyStoredHaloData(UUID uuid, Halo halo) {
         this.storedHaloData.put(uuid, halo);
         this.setDirty();
     }
 
+    /**
+     * Removes an entry for a player's {@link Halo} from the world data.
+     * @param uuid The player's {@link UUID}.
+     */
     void removeStoredHaloData(UUID uuid) {
         this.storedHaloData.remove(uuid);
         this.setDirty();
     }
 
+    /**
+     * @return A {@link Map} of player {@link UUID}s and {@link DeveloperGlow} info retrieved from "perks.dat".
+     */
     Map<UUID, DeveloperGlow> getStoredDeveloperGlowData() {
         return ImmutableMap.copyOf(this.storedDeveloperGlowData);
     }
 
+    /**
+     * Modifies the {@link DeveloperGlow} info stored in the world data.
+     * @param uuid The {@link UUID} of the player that the {@link Halo} belongs to.
+     * @param developerGlow The {@link DeveloperGlow}.
+     */
     void modifyStoredDeveloperGlowData(UUID uuid, DeveloperGlow developerGlow) {
         this.storedDeveloperGlowData.put(uuid, developerGlow);
         this.setDirty();
     }
 
+    /**
+     * Removes an entry for a player's {@link DeveloperGlow} from the world data.
+     * @param uuid The player's {@link UUID}.
+     */
     void removeStoredDeveloperGlowData(UUID uuid) {
         this.storedDeveloperGlowData.remove(uuid);
         this.setDirty();

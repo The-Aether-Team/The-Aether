@@ -159,44 +159,78 @@ public class MoaSkins {
             this.info = info;
         }
 
+        /**
+         * @return The {@link String} ID for the name of a {@link MoaSkin}.
+         */
         public String getId() {
             return this.id;
         }
 
+        /**
+         * @return The {@link Component} for the {@link MoaSkin}'s display name in GUIs.
+         */
         public Component getDisplayName() {
             return this.displayName;
         }
 
+        /**
+         * @return The {@link User} {@link Predicate} to check whether a player has access to a {@link MoaSkin}.
+         */
         public Predicate<User> getUserPredicate() {
             return this.userPredicate;
         }
 
+        /**
+         * @return The {@link ResourceLocation} of the {@link MoaSkin}'s GUI icon.
+         */
         public ResourceLocation getIconLocation() {
             return this.iconLocation;
         }
 
+        /**
+         * @return The {@link ResourceLocation} of the {@link MoaSkin}'s texture.
+         */
         public ResourceLocation getSkinLocation() {
             return this.skinLocation;
         }
 
+        /**
+         * @return The {@link ResourceLocation} of the {@link MoaSkin}'s emissive overlay texture.
+         */
         @Nullable
         public ResourceLocation getEmissiveLocation() {
             return this.emissiveLocation;
         }
 
+        /**
+         * @return The {@link ResourceLocation} of the {@link MoaSkin}'s saddle texture.
+         */
         public ResourceLocation getSaddleLocation() {
             return this.saddleLocation;
         }
 
+        /**
+         * @return The Patreon {@link com.aetherteam.nitrogen.api.users.User.Tier} and lifetime {@link Boolean} {@link Info} of the {@link MoaSkin}.
+         */
         public Info getInfo() {
             return this.info;
         }
 
+        /**
+         * Reads a {@link MoaSkin} from a {@link FriendlyByteBuf} network buffer.
+         * @param buffer The {@link FriendlyByteBuf} buffer.
+         * @return A {@link MoaSkin}.
+         */
         public static MoaSkin read(FriendlyByteBuf buffer) {
             String id = buffer.readUtf();
             return MoaSkins.getMoaSkins().get(id);
         }
 
+        /**
+         * Writes a {@link MoaSkin} to a {@link FriendlyByteBuf} network buffer.
+         * @param buffer The {@link FriendlyByteBuf} buffer.
+         * @param moaSkin A {@link MoaSkin}.
+         */
         public static void write(FriendlyByteBuf buffer, MoaSkin moaSkin) {
             buffer.writeUtf(moaSkin.getId());
         }
@@ -211,42 +245,66 @@ public class MoaSkins {
             private ResourceLocation saddleLocation;
             private Info info;
 
+            /**
+             * @see MoaSkin#getDisplayName()
+             */
             public Properties displayName(Component displayName) {
                 this.displayName = displayName;
                 return this;
             }
 
+            /**
+             * @see MoaSkin#getUserPredicate()
+             */
             public Properties userPredicate(Predicate<User> userPredicate) {
                 this.userPredicate = userPredicate;
                 return this;
             }
 
+            /**
+             * @see MoaSkin#getIconLocation()
+             */
             public Properties iconLocation(ResourceLocation iconLocation) {
                 this.iconLocation = iconLocation;
                 return this;
             }
 
+            /**
+             * @see MoaSkin#getSkinLocation()
+             */
             public Properties skinLocation(ResourceLocation skinLocation) {
                 this.skinLocation = skinLocation;
                 return this;
             }
 
+            /**
+             * @see MoaSkin#getEmissiveLocation()
+             */
             public Properties emissiveLocation(ResourceLocation emissiveLocation) {
                 this.emissiveLocation = emissiveLocation;
                 return this;
             }
 
+            /**
+             * @see MoaSkin#getSaddleLocation()
+             */
             public Properties saddleLocation(ResourceLocation saddleLocation) {
                 this.saddleLocation = saddleLocation;
                 return this;
             }
 
+            /**
+             * @see MoaSkin#getInfo()
+             */
             public Properties info(Info info) {
                 this.info = info;
                 return this;
             }
         }
 
+        /**
+         * Stores the Patreon {@link com.aetherteam.nitrogen.api.users.User.Tier} and a {@link Boolean} for whether the skin is lifetime or not.
+         */
         public record Info(User.Tier tier, boolean lifetime) { }
     }
 }
