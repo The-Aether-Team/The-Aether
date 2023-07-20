@@ -1,7 +1,6 @@
 package com.aetherteam.aether.command;
 
 import com.aetherteam.aether.AetherConfig;
-import com.aetherteam.aether.api.SunAltarWhitelist;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;

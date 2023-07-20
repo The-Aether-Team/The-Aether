@@ -7,11 +7,13 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class AetherMoaTypes {
@@ -27,15 +29,17 @@ public class AetherMoaTypes {
         return MOA_TYPE_REGISTRY.get().getValue(new ResourceLocation(id));
     }
 
+    /**
+     * Gets a random {@link MoaType} with a weighted chance. This is used when spawning Moas in the world.<br>
+     * A {@link SimpleWeightedRandomList} is built with all the {@link MoaType}s and their spawn chance weights, and one is randomly picked out of the list.
+     * @param random The {@link RandomSource} to use.
+     * @return The {@link MoaType}.
+     */
     public static MoaType getWeightedChance(RandomSource random) {
-        int totalChance = MOA_TYPE_REGISTRY.get().getValues().stream().map(MoaType::getSpawnChance).reduce(0, Integer::sum);
-        int randomChance = random.nextInt(totalChance);
-        for (MoaType moaType : MOA_TYPE_REGISTRY.get().getValues()) {
-            if (randomChance < moaType.getSpawnChance()) {
-                return moaType;
-            }
-            randomChance -= moaType.getSpawnChance();
-        }
-        return BLUE.get();
+        SimpleWeightedRandomList.Builder<MoaType> weightedListBuilder = SimpleWeightedRandomList.builder();
+        MOA_TYPE_REGISTRY.get().getValues().forEach((moaType) -> weightedListBuilder.add(moaType, moaType.getSpawnChance()));
+        SimpleWeightedRandomList<MoaType> weightedList = weightedListBuilder.build();
+        Optional<MoaType> moaType = weightedList.getRandomValue(random);
+        return moaType.orElseGet(BLUE);
     }
 }

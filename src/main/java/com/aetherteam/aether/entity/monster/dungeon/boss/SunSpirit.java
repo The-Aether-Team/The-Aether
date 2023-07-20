@@ -2,7 +2,7 @@ package com.aetherteam.aether.entity.monster.dungeon.boss;
 
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.api.BossRoomTracker;
+import com.aetherteam.aether.entity.BossRoomTracker;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.capability.AetherCapabilities;
 import com.aetherteam.aether.capability.player.AetherPlayer;

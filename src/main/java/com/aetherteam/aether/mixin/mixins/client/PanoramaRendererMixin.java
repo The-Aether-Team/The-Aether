@@ -1,7 +1,7 @@
 package com.aetherteam.aether.mixin.mixins.client;
 
 import com.aetherteam.aether.AetherConfig;
-import com.aetherteam.aether.api.WorldDisplayHelper;
+import com.aetherteam.aether.client.WorldDisplayHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.PanoramaRenderer;
 import org.spongepowered.asm.mixin.Mixin;

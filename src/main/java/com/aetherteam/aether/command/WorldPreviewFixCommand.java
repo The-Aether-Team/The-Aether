@@ -1,6 +1,6 @@
 package com.aetherteam.aether.command;
 
-import com.aetherteam.aether.api.WorldDisplayHelper;
+import com.aetherteam.aether.client.WorldDisplayHelper;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;

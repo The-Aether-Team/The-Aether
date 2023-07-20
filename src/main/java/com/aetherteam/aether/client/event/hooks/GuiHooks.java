@@ -2,7 +2,7 @@ package com.aetherteam.aether.client.event.hooks;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
-import com.aetherteam.aether.api.WorldDisplayHelper;
+import com.aetherteam.aether.client.WorldDisplayHelper;
 import com.aetherteam.aether.client.AetherKeys;
 import com.aetherteam.aether.client.AetherMusicManager;
 import com.aetherteam.aether.client.gui.component.AccessoryButton;

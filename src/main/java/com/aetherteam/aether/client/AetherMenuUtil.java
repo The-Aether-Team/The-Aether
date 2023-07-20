@@ -1,5 +1,6 @@
-package com.aetherteam.aether.api;
+package com.aetherteam.aether.client;
 
+import com.aetherteam.aether.api.AetherMenus;
 import com.aetherteam.nitrogen.NitrogenConfig;
 import com.aetherteam.nitrogen.api.menu.Menus;
 

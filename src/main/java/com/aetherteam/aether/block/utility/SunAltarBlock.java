@@ -2,7 +2,7 @@ package com.aetherteam.aether.block.utility;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
-import com.aetherteam.aether.api.SunAltarWhitelist;
+import com.aetherteam.aether.command.SunAltarWhitelist;
 import com.aetherteam.aether.blockentity.SunAltarBlockEntity;
 import com.aetherteam.aether.capability.AetherCapabilities;
 import com.aetherteam.aether.capability.time.AetherTime;

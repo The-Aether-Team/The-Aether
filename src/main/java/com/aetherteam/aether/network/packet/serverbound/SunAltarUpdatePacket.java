@@ -1,7 +1,7 @@
 package com.aetherteam.aether.network.packet.serverbound;
 
 import com.aetherteam.aether.AetherConfig;
-import com.aetherteam.aether.api.SunAltarWhitelist;
+import com.aetherteam.aether.command.SunAltarWhitelist;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.network.FriendlyByteBuf;

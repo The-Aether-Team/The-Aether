@@ -1,7 +1,7 @@
 package com.aetherteam.aether.client.event.hooks;
 
 import com.aetherteam.aether.AetherConfig;
-import com.aetherteam.aether.api.WorldDisplayHelper;
+import com.aetherteam.aether.client.WorldDisplayHelper;
 import com.aetherteam.aether.mixin.mixins.client.accessor.EntityRendererAccessor;
 import com.aetherteam.nitrogen.client.NitrogenClient;
 import net.minecraft.client.Minecraft;

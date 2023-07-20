@@ -1,6 +1,5 @@
 package com.aetherteam.aether.entity;
 
-import com.aetherteam.aether.api.BossRoomTracker;
 import com.aetherteam.aether.block.dungeon.DoorwayBlock;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

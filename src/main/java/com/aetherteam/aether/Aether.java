@@ -2,8 +2,8 @@ package com.aetherteam.aether;
 
 import com.aetherteam.aether.advancement.AetherAdvancementTriggers;
 import com.aetherteam.aether.api.AetherMoaTypes;
-import com.aetherteam.aether.api.SunAltarWhitelist;
-import com.aetherteam.aether.api.TriviaGenerator;
+import com.aetherteam.aether.command.SunAltarWhitelist;
+import com.aetherteam.aether.client.TriviaGenerator;
 import com.aetherteam.aether.api.AetherMenus;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.block.AetherCauldronInteractions;

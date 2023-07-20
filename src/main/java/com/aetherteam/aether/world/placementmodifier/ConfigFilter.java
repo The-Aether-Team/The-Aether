@@ -1,6 +1,6 @@
 package com.aetherteam.aether.world.placementmodifier;
 
-import com.aetherteam.aether.api.ConfigSerializationUtil;
+import com.aetherteam.aether.data.ConfigSerializationUtil;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import net.minecraft.core.BlockPos;

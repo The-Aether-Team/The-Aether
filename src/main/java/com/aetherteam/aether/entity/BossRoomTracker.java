@@ -1,6 +1,5 @@
-package com.aetherteam.aether.api;
+package com.aetherteam.aether.entity;
 
-import com.aetherteam.aether.entity.BossMob;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;

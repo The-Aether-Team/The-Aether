@@ -1,4 +1,4 @@
-package com.aetherteam.aether.api;
+package com.aetherteam.aether.client;
 
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.mixin.mixins.common.accessor.LevelStorageAccessAccessor;
