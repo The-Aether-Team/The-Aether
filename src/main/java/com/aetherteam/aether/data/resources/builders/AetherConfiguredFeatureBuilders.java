@@ -20,14 +20,6 @@ public class AetherConfiguredFeatureBuilders {
         return new AercloudConfiguration(bounds, BlockStateProvider.simple(blockState.setValue(AetherBlockStateProperties.DOUBLE_DROPS, true)));
     }
 
-    public static RandomPatchConfiguration grassPatch(BlockStateProvider block, int p_195204_) {
-        return FeatureUtils.simpleRandomPatchConfiguration(p_195204_, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(block)));
-    }
-
-    public static RandomPatchConfiguration tallGrassPatch(BlockStateProvider block) {
-        return FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(block));
-    }
-
     public static AetherLakeConfiguration lake(BlockStateProvider fluid, BlockStateProvider top) {
         return new AetherLakeConfiguration(fluid, top);
     }

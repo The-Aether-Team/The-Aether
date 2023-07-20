@@ -31,224 +31,75 @@ public abstract class AetherRecipeProvider extends NitrogenRecipeProvider {
     }
 
     protected ShapedRecipeBuilder fence(Supplier<? extends Block> fence, Supplier<? extends Block> material) {
-        return ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, fence.get(), 3)
-                .group("wooden_fence")
-                .define('M', material.get())
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
-                .pattern("M/M")
-                .pattern("M/M")
-                .unlockedBy(getHasName(material.get()), has(material.get()));
+        return this.fence(fence, material, Ingredient.of(AetherTags.Items.SKYROOT_STICKS));
     }
 
     protected ShapedRecipeBuilder fenceGate(Supplier<? extends Block> fenceGate, Supplier<? extends Block> material) {
-        return ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, fenceGate.get())
-                .group("wooden_fence_gate")
-                .define('M', material.get())
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
-                .pattern("/M/")
-                .pattern("/M/")
-                .unlockedBy(getHasName(material.get()), has(material.get()));
+        return this.fenceGate(fenceGate, material, Ingredient.of(AetherTags.Items.SKYROOT_STICKS));
     }
 
     protected ShapedRecipeBuilder makePickaxeWithTag(Supplier<? extends Item> pickaxe, TagKey<Item> material, String has) {
-        return ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, pickaxe.get())
-                .define('#', material)
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
-                .pattern("###")
-                .pattern(" / ")
-                .pattern(" / ")
-                .unlockedBy(has, has(material));
+        return this.makePickaxeWithTag(pickaxe, material, Ingredient.of(AetherTags.Items.SKYROOT_STICKS), has);
     }
 
     protected ShapedRecipeBuilder makePickaxeWithBlock(Supplier<? extends Item> pickaxe, Supplier<? extends Block> material) {
-        return ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, pickaxe.get())
-                .define('#', material.get())
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
-                .pattern("###")
-                .pattern(" / ")
-                .pattern(" / ")
-                .unlockedBy(getHasName(material.get()), has(material.get()));
+        return this.makePickaxeWithBlock(pickaxe, material, Ingredient.of(AetherTags.Items.SKYROOT_STICKS));
     }
 
     protected ShapedRecipeBuilder makeAxeWithTag(Supplier<? extends Item> axe, TagKey<Item> material, String has) {
-        return ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, axe.get())
-                .define('#', material)
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
-                .pattern("##")
-                .pattern("#/")
-                .pattern(" /")
-                .unlockedBy(has, has(material));
+        return this.makeAxeWithTag(axe, material, Ingredient.of(AetherTags.Items.SKYROOT_STICKS), has);
     }
 
     protected ShapedRecipeBuilder makeAxeWithBlock(Supplier<? extends Item> axe, Supplier<? extends Block> material) {
-        return ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, axe.get())
-                .define('#', material.get())
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
-                .pattern("##")
-                .pattern("#/")
-                .pattern(" /")
-                .unlockedBy(getHasName(material.get()), has(material.get()));
+        return this.makeAxeWithBlock(axe, material, Ingredient.of(AetherTags.Items.SKYROOT_STICKS));
     }
 
     protected ShapedRecipeBuilder makeShovelWithTag(Supplier<? extends Item> shovel, TagKey<Item> material, String has) {
-        return ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, shovel.get())
-                .define('#', material)
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
-                .pattern("#")
-                .pattern("/")
-                .pattern("/")
-                .unlockedBy(has, has(material));
+        return this.makeShovelWithTag(shovel, material, Ingredient.of(AetherTags.Items.SKYROOT_STICKS), has);
     }
 
     protected ShapedRecipeBuilder makeShovelWithBlock(Supplier<? extends Item> shovel, Supplier<? extends Block> material) {
-        return ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, shovel.get())
-                .define('#', material.get())
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
-                .pattern("#")
-                .pattern("/")
-                .pattern("/")
-                .unlockedBy(getHasName(material.get()), has(material.get()));
+        return this.makeShovelWithBlock(shovel, material, Ingredient.of(AetherTags.Items.SKYROOT_STICKS));
     }
 
     protected ShapedRecipeBuilder makeHoeWithTag(Supplier<? extends Item> hoe, TagKey<Item> material, String has) {
-        return ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, hoe.get())
-                .define('#', material)
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
-                .pattern("##")
-                .pattern(" /")
-                .pattern(" /")
-                .unlockedBy(has, has(material));
+        return this.makeHoeWithTag(hoe, material, Ingredient.of(AetherTags.Items.SKYROOT_STICKS), has);
     }
 
     protected ShapedRecipeBuilder makeHoeWithBlock(Supplier<? extends Item> hoe, Supplier<? extends Block> material) {
-        return ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, hoe.get())
-                .define('#', material.get())
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
-                .pattern("##")
-                .pattern(" /")
-                .pattern(" /")
-                .unlockedBy(getHasName(material.get()), has(material.get()));
+        return this.makeHoeWithBlock(hoe, material, Ingredient.of(AetherTags.Items.SKYROOT_STICKS));
     }
 
     protected ShapedRecipeBuilder makeSwordWithTag(Supplier<? extends Item> sword, TagKey<Item> material, String has) {
-        return ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, sword.get())
-                .define('#', material)
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
-                .pattern("#")
-                .pattern("#")
-                .pattern("/")
-                .unlockedBy(has, has(material));
+        return this.makeSwordWithTag(sword, material, Ingredient.of(AetherTags.Items.SKYROOT_STICKS), has);
     }
 
     protected ShapedRecipeBuilder makeSwordWithBlock(Supplier<? extends Item> sword, Supplier<? extends Block> material) {
-        return ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, sword.get())
-                .define('#', material.get())
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
-                .pattern("#")
-                .pattern("#")
-                .pattern("/")
-                .unlockedBy(getHasName(material.get()), has(material.get()));
+        return this.makeSwordWithBlock(sword, material, Ingredient.of(AetherTags.Items.SKYROOT_STICKS));
     }
 
     protected ShapedRecipeBuilder makePickaxe(Supplier<? extends Item> pickaxe, Supplier<? extends Item> material) {
-        return ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, pickaxe.get())
-                .define('#', material.get())
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
-                .pattern("###")
-                .pattern(" / ")
-                .pattern(" / ")
-                .unlockedBy(getHasName(material.get()), has(material.get()));
+        return this.makePickaxe(pickaxe, material, Ingredient.of(AetherTags.Items.SKYROOT_STICKS));
     }
 
     protected ShapedRecipeBuilder makeAxe(Supplier<? extends Item> axe, Supplier<? extends Item> material) {
-        return ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, axe.get())
-                .define('#', material.get())
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
-                .pattern("##")
-                .pattern("#/")
-                .pattern(" /")
-                .unlockedBy(getHasName(material.get()), has(material.get()));
+        return this.makeAxe(axe, material, Ingredient.of(AetherTags.Items.SKYROOT_STICKS));
     }
 
     protected ShapedRecipeBuilder makeShovel(Supplier<? extends Item> shovel, Supplier<? extends Item> material) {
-        return ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, shovel.get())
-                .define('#', material.get())
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
-                .pattern("#")
-                .pattern("/")
-                .pattern("/")
-                .unlockedBy(getHasName(material.get()), has(material.get()));
+        return this.makeShovel(shovel, material, Ingredient.of(AetherTags.Items.SKYROOT_STICKS));
     }
 
     protected ShapedRecipeBuilder makeHoe(Supplier<? extends Item> hoe, Supplier<? extends Item> material) {
-        return ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, hoe.get())
-                .define('#', material.get())
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
-                .pattern("##")
-                .pattern(" /")
-                .pattern(" /")
-                .unlockedBy(getHasName(material.get()), has(material.get()));
+        return this.makeHoe(hoe, material, Ingredient.of(AetherTags.Items.SKYROOT_STICKS));
     }
 
     protected ShapedRecipeBuilder makeSword(Supplier<? extends Item> sword, Supplier<? extends Item> material) {
-        return ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, sword.get())
-                .define('#', material.get())
-                .define('/', AetherTags.Items.SKYROOT_STICKS)
-                .pattern("#")
-                .pattern("#")
-                .pattern("/")
-                .unlockedBy(getHasName(material.get()), has(material.get()));
-    }
-
-    protected ShapedRecipeBuilder makeHelmetWithBlock(Supplier<? extends Item> helmet, Supplier<? extends Block> material) {
-        return ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, helmet.get())
-                .define('#', material.get())
-                .pattern("###")
-                .pattern("# #")
-                .unlockedBy(getHasName(material.get()), has(material.get()));
-    }
-
-    protected ShapedRecipeBuilder makeChestplateWithBlock(Supplier<? extends Item> chestplate, Supplier<? extends Block> material) {
-        return ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, chestplate.get())
-                .define('#', material.get())
-                .pattern("# #")
-                .pattern("###")
-                .pattern("###")
-                .unlockedBy(getHasName(material.get()), has(material.get()));
-    }
-
-    protected ShapedRecipeBuilder makeLeggingsWithBlock(Supplier<? extends Item> leggings, Supplier<? extends Block> material) {
-        return ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, leggings.get())
-                .define('#', material.get())
-                .pattern("###")
-                .pattern("# #")
-                .pattern("# #")
-                .unlockedBy(getHasName(material.get()), has(material.get()));
-    }
-
-    protected ShapedRecipeBuilder makeBootsWithBlock(Supplier<? extends Item> boots, Supplier<? extends Block> material) {
-        return ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, boots.get())
-                .define('#', material.get())
-                .pattern("# #")
-                .pattern("# #")
-                .unlockedBy(getHasName(material.get()), has(material.get()));
-    }
-
-    protected ShapedRecipeBuilder makeGlovesWithBlock(Supplier<? extends Item> gloves, Supplier<? extends Block> material) {
-        return ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, gloves.get())
-                .define('#', material.get())
-                .pattern("# #")
-                .unlockedBy(getHasName(material.get()), has(material.get()));
+        return this.makeSword(sword, material, Ingredient.of(AetherTags.Items.SKYROOT_STICKS));
     }
 
     protected ShapedRecipeBuilder makePendant(Supplier<? extends Item> pendant, Item material) {
-        return ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, pendant.get())
-                .define('S', Tags.Items.STRING)
-                .define('#', material)
-                .pattern("SSS")
-                .pattern("S S")
-                .pattern(" # ")
-                .unlockedBy(getHasName(material), has(material));
+        return this.makePendant(pendant, material, Ingredient.of(Tags.Items.STRING));
     }
 
     protected ShapedRecipeBuilder makeCape(Supplier<? extends Item> cape, Item material) {

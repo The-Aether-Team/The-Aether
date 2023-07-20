@@ -2,6 +2,7 @@ package com.aetherteam.aether.data.resources.builders;
 
 import com.aetherteam.aether.world.placementmodifier.DungeonBlacklistFilter;
 import com.aetherteam.aether.world.placementmodifier.ImprovedLayerPlacementModifier;
+import com.aetherteam.nitrogen.data.resources.builders.NitrogenPlacedFeatureBuilders;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -37,19 +38,5 @@ public class AetherPlacedFeatureBuilders {
                 .add(ImprovedLayerPlacementModifier.of(Heightmap.Types.OCEAN_FLOOR, UniformInt.of(0, 1), 4))
                 .add(BiomeFilter.biome())
                 .add(new DungeonBlacklistFilter());
-    }
-
-    /**
-     * Copy of {@link net.minecraft.data.worldgen.placement.OrePlacements#commonOrePlacement(int, PlacementModifier)}.
-     */
-    public static List<PlacementModifier> commonOrePlacement(int count, PlacementModifier heightRange) {
-        return orePlacement(CountPlacement.of(count), heightRange);
-    }
-
-    /**
-     * Copy of {@link net.minecraft.data.worldgen.placement.OrePlacements#orePlacement(PlacementModifier, PlacementModifier)}.
-     */
-    private static List<PlacementModifier> orePlacement(PlacementModifier count, PlacementModifier heightRange) {
-        return List.of(count, InSquarePlacement.spread(), heightRange, BiomeFilter.biome());
     }
 }
