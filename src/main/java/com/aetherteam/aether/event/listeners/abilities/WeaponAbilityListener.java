@@ -53,6 +53,10 @@ public class WeaponAbilityListener {
         }
     }
 
+    /**
+     * @see com.aetherteam.aether.event.hooks.AbilityHooks.WeaponHooks#reduceWeaponEffectiveness(LivingEntity, Entity, float)
+     * @see com.aetherteam.aether.event.hooks.AbilityHooks.WeaponHooks#reduceArmorEffectiveness(LivingEntity, Entity, float)
+     */
     @SubscribeEvent
     public static void onEntityDamage(LivingDamageEvent event) {
         LivingEntity targetEntity = event.getEntity();

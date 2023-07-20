@@ -222,6 +222,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	public void onLogin() {
 		this.handleGivePortal();
 		this.remountAerbunny();
+		this.handleLogoutSavedHealth();
 		this.handlePatreonMessage();
 		this.forceSync(INBTSynchable.Direction.CLIENT);
 		ServerMoaSkinPerkData.INSTANCE.syncFromServer(this.getPlayer());
@@ -254,6 +255,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 		}
 		this.setCanGetPortal(other.canGetPortal());
 		this.setLifeShardCount(other.getLifeShardCount());
+		this.handleCopyingSavedHealth(other, isWasDeath);
 		this.forceSync(INBTSynchable.Direction.CLIENT);
 	}
 
@@ -576,6 +578,27 @@ public class AetherPlayerCapability implements AetherPlayer {
 				}
 				health.addTransientModifier(lifeShardHealth);
 			}
+		}
+	}
+
+	/**
+	 * Sets the player's extra saved health on logout.
+	 */
+	private void handleLogoutSavedHealth() {
+		AttributeInstance health = this.getPlayer().getAttribute(Attributes.MAX_HEALTH);
+		if (health != null && health.hasModifier(this.getLifeShardHealthAttributeModifier())) {
+			this.setSavedHealth(this.getPlayer().getHealth());
+		}
+	}
+
+	/**
+	 * Sets the player's extra saved health on copy.
+	 */
+	private void handleCopyingSavedHealth(AetherPlayer other, boolean isWasDeath) {
+		if (!isWasDeath) {
+			this.setSavedHealth(other.getPlayer().getHealth());
+		} else {
+			this.setSavedHealth(1024.0F); // Max health.
 		}
 	}
 

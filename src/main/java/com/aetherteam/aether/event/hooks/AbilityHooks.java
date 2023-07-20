@@ -52,8 +52,11 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -137,6 +140,10 @@ public class AbilityHooks {
             return speed;
         }
 
+        /**
+         * Checks whether an entity can be targeted while wearing an Invisibility Cloak.
+         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onTargetSet(LivingEvent.LivingVisibilityEvent)
+         */
         public static boolean preventTargeting(LivingEntity target, Entity lookingEntity) {
             if (target instanceof Player player && AetherPlayer.get(player).isPresent() && AetherPlayer.get(player).resolve().isPresent()) {
                 return lookingEntity != null
@@ -151,6 +158,10 @@ public class AbilityHooks {
             }
         }
 
+        /**
+         * Checks if an entity recently attacked while wearing an Invisibility Cloak.
+         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onTargetSet(LivingEvent.LivingVisibilityEvent)
+         */
         public static boolean recentlyAttackedWithInvisibility(LivingEntity target, Entity lookingEntity) {
             if (target instanceof Player player && AetherPlayer.get(player).isPresent() && AetherPlayer.get(player).resolve().isPresent()) {
                 return !lookingEntity.getType().is(AetherTags.Entities.IGNORE_INVISIBILITY)
@@ -161,6 +172,10 @@ public class AbilityHooks {
             }
         }
 
+        /**
+         * Sets that the player recently attacked.
+         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onEntityHurt(net.minecraftforge.event.entity.living.LivingAttackEvent)
+         */
         public static void setAttack(DamageSource source) {
             if (source.getDirectEntity() instanceof Player player) {
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setAttackedWithInvisibility(true));
@@ -175,6 +190,10 @@ public class AbilityHooks {
             return source == entity.getLevel().damageSources().hotFloor() && EquipmentUtil.hasFreezingAccessory(entity);
         }
 
+        /**
+         * Sets that the player recently attacked with a ranged weapon.
+         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onProjectileShoot(EntityJoinLevelEvent)
+         */
         public static void setShoot(Entity entity) {
             if (entity instanceof Projectile projectile && projectile.getOwner() instanceof Player player) {
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setAttackedWithInvisibility(true));
@@ -451,22 +470,30 @@ public class AbilityHooks {
             return false;
         }
 
+        /**
+         * Reduces the effectiveness of non-Aether weapons against Aether mobs.
+         * @param target The target {@link LivingEntity} being attacked.
+         * @param source The attacking {@link Entity}.
+         * @param damage The original damage as a {@link Float}.
+         * @return The modified damage as a {@link Float}.
+         * @see com.aetherteam.aether.event.listeners.abilities.WeaponAbilityListener#onEntityDamage(LivingDamageEvent)
+         */
         public static float reduceWeaponEffectiveness(LivingEntity target, Entity source, float damage) {
-            if (AetherConfig.SERVER.tools_debuff.get() && !target.getLevel().isClientSide()) {
+            if (AetherConfig.SERVER.tools_debuff.get() && !target.getLevel().isClientSide()) { // Checks if tool debuffs are enabled and if the level is on the server side.
                 if (source instanceof LivingEntity livingEntity) {
                     ItemStack stack = livingEntity.getMainHandItem();
-                    if ((target.getType().getDescriptionId().startsWith("entity.aether") || target.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY)) && !target.getType().is(AetherTags.Entities.TREATED_AS_VANILLA_ENTITY)) {
-                        if (!stack.isEmpty() && !stack.getAttributeModifiers(EquipmentSlot.MAINHAND).isEmpty() && !stack.getAttributeModifiers(EquipmentSlot.MAINHAND).get(Attributes.ATTACK_DAMAGE).isEmpty()) {
-                            double value = stack.getAttributeModifiers(EquipmentSlot.MAINHAND).get(Attributes.ATTACK_DAMAGE).stream().mapToDouble(AttributeModifier::getAmount).sum();
-                            if (value > livingEntity.getAttributeBaseValue(Attributes.ATTACK_DAMAGE) && !stack.getItem().getDescriptionId().startsWith("item.aether.") && !stack.is(AetherTags.Items.TREATED_AS_AETHER_ITEM)) {
+                    if ((target.getType().getDescriptionId().startsWith("entity.aether") || target.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY)) && !target.getType().is(AetherTags.Entities.TREATED_AS_VANILLA_ENTITY)) { // Checks if the target is an Aether entity.
+                        if (!stack.isEmpty() && !stack.getAttributeModifiers(EquipmentSlot.MAINHAND).isEmpty() && !stack.getAttributeModifiers(EquipmentSlot.MAINHAND).get(Attributes.ATTACK_DAMAGE).isEmpty()) { // Checks if the attacking item is a weapon.
+                            double value = stack.getAttributeModifiers(EquipmentSlot.MAINHAND).get(Attributes.ATTACK_DAMAGE).stream().mapToDouble(AttributeModifier::getAmount).sum(); // Used for checking if the attack damage from the item is greater than the attacker's default (fist).
+                            if (value > livingEntity.getAttributeBaseValue(Attributes.ATTACK_DAMAGE) && !stack.getItem().getDescriptionId().startsWith("item.aether.") && !stack.is(AetherTags.Items.TREATED_AS_AETHER_ITEM)) { // Checks if the attacking item is non-Aether.
                                 damage = (float) Math.pow(damage, 0.5);
                             }
                         }
                     }
-                } else if (source instanceof Projectile) {
-                    if ((target.getType().getDescriptionId().startsWith("entity.aether") || target.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY)) && !target.getType().is(AetherTags.Entities.TREATED_AS_VANILLA_ENTITY)) {
-                        if ((!source.getType().getDescriptionId().startsWith("entity.aether") && !source.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY))
-                                && (!(source instanceof AbstractArrow abstractArrow) || !PhoenixArrow.get(abstractArrow).isPresent() || PhoenixArrow.get(abstractArrow).resolve().isEmpty() || !PhoenixArrow.get(abstractArrow).resolve().get().isPhoenixArrow())) {
+                } else if (source instanceof Projectile) { // Used for reducing projectile weapon effectiveness.
+                    if ((target.getType().getDescriptionId().startsWith("entity.aether") || target.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY)) && !target.getType().is(AetherTags.Entities.TREATED_AS_VANILLA_ENTITY)) { // Checks if the target is an Aether entity.
+                        if ((!source.getType().getDescriptionId().startsWith("entity.aether") && !source.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY)) // Checks if the projectile is non-Aether.
+                                && (!(source instanceof AbstractArrow abstractArrow) || !PhoenixArrow.get(abstractArrow).isPresent() || PhoenixArrow.get(abstractArrow).resolve().isEmpty() || !PhoenixArrow.get(abstractArrow).resolve().get().isPhoenixArrow())) { // Special check against Phoenix Arrows.
                             damage = (float) Math.pow(damage, 0.5);
                         }
                     }
@@ -475,12 +502,20 @@ public class AbilityHooks {
             return damage;
         }
 
+        /**
+         * Reduces the effectiveness of non-Aether armor against Aether mobs.
+         * @param target The target {@link LivingEntity} wearing the armor.
+         * @param source The attacking {@link Entity}.
+         * @param damage The original damage as a {@link Float}.
+         * @return The modified damage as a {@link Float}.
+         * @see com.aetherteam.aether.event.listeners.abilities.WeaponAbilityListener#onEntityDamage(LivingDamageEvent)
+         */
         public static float reduceArmorEffectiveness(LivingEntity target, Entity source, float damage) {
             if (source != null) {
-                if ((source.getType().getDescriptionId().startsWith("entity.aether") || source.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY) && !source.getType().is(AetherTags.Entities.TREATED_AS_VANILLA_ENTITY))) {
+                if ((source.getType().getDescriptionId().startsWith("entity.aether") || source.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY) && !source.getType().is(AetherTags.Entities.TREATED_AS_VANILLA_ENTITY))) { // Checks if the attacker is an Aether entity.
                     for (ItemStack stack : target.getArmorSlots()) {
-                        if (stack.getItem() instanceof ArmorItem armorItem && !stack.getItem().getDescriptionId().startsWith("item.aether.") && !stack.is(AetherTags.Items.TREATED_AS_AETHER_ITEM)) {
-                            if (!stack.getAttributeModifiers(armorItem.getEquipmentSlot()).isEmpty() && !stack.getAttributeModifiers(armorItem.getEquipmentSlot()).get(Attributes.ARMOR).isEmpty()) {
+                        if (stack.getItem() instanceof ArmorItem armorItem && !stack.getItem().getDescriptionId().startsWith("item.aether.") && !stack.is(AetherTags.Items.TREATED_AS_AETHER_ITEM)) { // Checks if the armor is non-Aether.
+                            if (!stack.getAttributeModifiers(armorItem.getEquipmentSlot()).isEmpty() && !stack.getAttributeModifiers(armorItem.getEquipmentSlot()).get(Attributes.ARMOR).isEmpty()) { // Checks if the armor has an armor modifier attribute.
                                 double value = stack.getAttributeModifiers(armorItem.getEquipmentSlot()).get(Attributes.ARMOR).stream().mapToDouble((attributeModifier) -> attributeModifier.getAmount() / 15).sum();
                                 damage += value;
                             }
