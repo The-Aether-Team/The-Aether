@@ -3,6 +3,7 @@ package com.aetherteam.aether.integration.jei.categories.block;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.recipe.recipes.block.AccessoryFreezableRecipe;
+import com.aetherteam.nitrogen.integration.jei.categories.block.AbstractBlockStateRecipeCategory;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.helpers.IPlatformFluidHelper;

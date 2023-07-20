@@ -18,7 +18,6 @@ import snownee.jade.api.*;
 
 @WailaPlugin
 public class AetherJadePlugin implements IWailaPlugin {
-
 	@Override
 	public void registerClient(IWailaClientRegistration registration) {
 		registration.addRayTraceCallback(this::registerAetherOverrides);
@@ -28,26 +27,38 @@ public class AetherJadePlugin implements IWailaPlugin {
 	public Accessor<?> registerAetherOverrides(HitResult hitResult, @Nullable Accessor<?> accessor, @Nullable Accessor<?> originalAccessor) {
 		if (accessor instanceof BlockAccessor target) {
 			Player player = accessor.getPlayer();
-			if (player.isCreative() || player.isSpectator())
+			if (player.isCreative() || player.isSpectator()) {
 				return accessor;
+			}
 			IWailaClientRegistration client = VanillaPlugin.CLIENT_REGISTRATION;
-			//trapped dungeon blocks show up as their normal dungeon blocks
-			if (target.getBlock() instanceof TrappedBlock trapped) {
+			if (target.getBlock() instanceof TrappedBlock trapped) { // Trapped dungeon blocks show up as their normal dungeon blocks
 				return client.blockAccessor().from(target).blockState(trapped.getFacadeBlock()).build();
-			//both doorways show up as locked dungeon blocks, since you won't see them if a dungeon is completed anyway
-			} else if (target.getBlock() instanceof DoorwayBlock door) {
-				return client.blockAccessor().from(target).blockState(this.getLockedDungeonBlock(ForgeRegistries.BLOCKS.getKey(door).getPath()).defaultBlockState()).build();
+			} else if (target.getBlock() instanceof DoorwayBlock door) { // Both doorways show up as locked dungeon blocks, since you won't see them if a dungeon is completed anyway
+				ResourceLocation doorLocation = ForgeRegistries.BLOCKS.getKey(door);
+				if (doorLocation != null) {
+					Block doorBlock = this.getLockedDungeonBlock(doorLocation.getPath());
+					if (doorBlock != null) {
+						return client.blockAccessor().from(target).blockState(doorBlock.defaultBlockState()).build();
+					}
+				}
 			} else if (target.getBlock() instanceof TreasureDoorwayBlock door) {
-				return client.blockAccessor().from(target).blockState(this.getLockedDungeonBlock(ForgeRegistries.BLOCKS.getKey(door).getPath()).defaultBlockState()).build();
-			//mimics show up as normal chests. There's not a single way to tell the difference between these and normal chests from the tooltip.
-			} else if (target.getBlock() == AetherBlocks.CHEST_MIMIC.get()) {
+				ResourceLocation doorLocation = ForgeRegistries.BLOCKS.getKey(door);
+				if (doorLocation != null) {
+					Block doorBlock = this.getLockedDungeonBlock(doorLocation.getPath());
+					if (doorBlock != null) {
+						return client.blockAccessor().from(target).blockState(doorBlock.defaultBlockState()).build();
+					}
+				}
+			} else if (target.getBlock() == AetherBlocks.CHEST_MIMIC.get()) { // Mimics show up as normal chests. There's not a single way to tell the difference between these and normal chests from the tooltip.
 				return client.blockAccessor().from(target).serverData(this.createFakeChestData(target)).blockState(Blocks.CHEST.defaultBlockState()).build();
 			}
 		}
 		return accessor;
 	}
 
-	//adds the "inventory not generated" text to the mimic's tooltip
+	/**
+	 * Adds the "inventory not generated" text to the mimic's tooltip
+	 */
 	private CompoundTag createFakeChestData(BlockAccessor target) {
 		CompoundTag tag = new CompoundTag();
 		if (!target.getServerData().isEmpty()) {
@@ -56,7 +67,9 @@ public class AetherJadePlugin implements IWailaPlugin {
 		return tag;
 	}
 
-	//converts doorway blocks to their appropriate locked blocks
+	/**
+	 * Converts doorway blocks to their appropriate locked blocks
+	 */
 	@Nullable
 	private Block getLockedDungeonBlock(String name) {
 		if (name.startsWith("boss_doorway_")) {
