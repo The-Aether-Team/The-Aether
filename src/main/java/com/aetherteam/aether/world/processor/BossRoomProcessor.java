@@ -1,6 +1,6 @@
 package com.aetherteam.aether.world.processor;
 
-import com.aetherteam.aether.entity.BossRoomTracker;
+import com.aetherteam.nitrogen.entity.BossRoomTracker;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;

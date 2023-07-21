@@ -1,7 +1,7 @@
 package com.aetherteam.aether.entity.ai.goal.target;
 
-import com.aetherteam.aether.entity.BossRoomTracker;
 import com.aetherteam.aether.entity.AetherBossMob;
+import com.aetherteam.nitrogen.entity.BossRoomTracker;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
