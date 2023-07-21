@@ -26,6 +26,10 @@ public class AetherStructureSets {
         return ResourceKey.create(Registries.STRUCTURE_SET, new ResourceLocation(Aether.MODID, name));
     }
 
+    /**
+     * Warning for "deprecation" is suppressed because using {@link StructurePlacement.ExclusionZone} is necessary.
+     */
+    @SuppressWarnings("deprecation")
     public static void bootstrap(BootstapContext<StructureSet> context) {
         HolderGetter<Structure> structures = context.lookup(Registries.STRUCTURE);
         context.register(LARGE_AERCLOUD, new StructureSet(structures.getOrThrow(AetherStructures.LARGE_AERCLOUD), new RandomSpreadStructurePlacement(6, 3, RandomSpreadType.LINEAR, 15536586)));

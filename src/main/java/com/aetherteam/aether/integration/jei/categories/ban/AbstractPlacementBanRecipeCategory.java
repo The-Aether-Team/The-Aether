@@ -26,6 +26,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -58,6 +59,10 @@ public abstract class AbstractPlacementBanRecipeCategory<T, S extends Predicate<
         }
     }
 
+    /**
+     * Warning for "deprecation" is suppressed because the non-sensitive version of {@link net.minecraft.world.level.block.Block#getCloneItemStack(BlockGetter, BlockPos, BlockState)} is needed in this context.
+     */
+    @SuppressWarnings("deprecation")
     protected List<Object> setupIngredients(BlockPropertyPair[] pairs) {
         List<Object> ingredients = new ArrayList<>();
         if (Minecraft.getInstance().level != null) {

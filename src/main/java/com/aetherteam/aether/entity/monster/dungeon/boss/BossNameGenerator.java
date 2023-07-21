@@ -74,14 +74,14 @@ public final class BossNameGenerator {
      * Generates a generic boss name.
      */
     public static MutableComponent generateBossName() {
-        String result = "";
-        result += name1[random.nextInt(name1.length)];
+        StringBuilder result = new StringBuilder();
+        result.append(name1[random.nextInt(name1.length)]);
         int middle = 2 + random.nextInt(2);
         for (int i = 0; i < middle; i++)
-            result += name2[random.nextInt(name2.length)];
-        result += name3[random.nextInt(name3.length)];
-        result += ", ";
-        return Component.literal(result);
+            result.append(name2[random.nextInt(name2.length)]);
+        result.append(name3[random.nextInt(name3.length)]);
+        result.append(", ");
+        return Component.literal(result.toString());
     }
 
     /**

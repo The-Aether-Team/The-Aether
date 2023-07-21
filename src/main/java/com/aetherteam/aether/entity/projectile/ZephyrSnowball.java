@@ -84,20 +84,24 @@ public class ZephyrSnowball extends Fireball implements ItemSupplier {
 		}
 	}
 
+	/**
+	 * Handles shield damaging and knockback when this projectile hits an entity.
+	 * @param result The {@link HitResult} of the projectile.
+	 */
 	@Override
 	protected void onHit(HitResult result) {
 		super.onHit(result);
 		if (result.getType() == HitResult.Type.ENTITY) {
 			Entity entity = ((EntityHitResult) result).getEntity();
 			if (entity instanceof LivingEntity livingEntity && !EquipmentUtil.hasSentryBoots(livingEntity)) {
-				if (livingEntity instanceof Player player && player.isBlocking()) {
+				if (livingEntity instanceof Player player && player.isBlocking()) { // Damages the player's shield.
 					PlayerAccessor playerAccessor = (PlayerAccessor) player;
 					playerAccessor.callHurtCurrentlyUsedShield(3.0F);
-				} else {
+				} else { // Knocks the player back.
 					entity.setDeltaMovement(entity.getDeltaMovement().x(), entity.getDeltaMovement().y() + 0.5, entity.getDeltaMovement().z());
 					entity.setDeltaMovement(entity.getDeltaMovement().x() + (this.getDeltaMovement().x() * 1.5), entity.getDeltaMovement().y(), entity.getDeltaMovement().z() + (this.getDeltaMovement().z() * 1.5));
 					if (livingEntity instanceof ServerPlayer player) {
-						if (!this.getLevel().isClientSide()) {
+						if (!this.getLevel().isClientSide()) { // Properly communicates the knockback to the client.
 							PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new ZephyrSnowballHitPacket(livingEntity.getId(), this.getDeltaMovement().x(), this.getDeltaMovement().z()), player);
 						}
 					}
@@ -107,6 +111,9 @@ public class ZephyrSnowball extends Fireball implements ItemSupplier {
 		this.discard();
 	}
 
+	/**
+	 * Prevents this projectile from being on fire.
+	 */
 	@Override
 	protected boolean shouldBurn() {
 		return false;

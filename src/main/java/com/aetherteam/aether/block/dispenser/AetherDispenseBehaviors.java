@@ -144,7 +144,7 @@ public class AetherDispenseBehaviors {
             DispensibleContainerItem dispensibleContainerItem = (DispensibleContainerItem) stack.getItem();
             BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
             Level level = source.getLevel();
-            if (dispensibleContainerItem.emptyContents(null, level, blockpos, null)) {
+            if (dispensibleContainerItem.emptyContents(null, level, blockpos, null, stack)) {
                 dispensibleContainerItem.checkExtraContent(null, level, stack, blockpos);
                 return new ItemStack(AetherItems.SKYROOT_BUCKET.get());
             } else {
