@@ -1,5 +1,6 @@
 package com.aetherteam.aether.client.event.listeners;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.event.hooks.DimensionClientHooks;
 import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.FogRenderer;
@@ -10,7 +11,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.commons.lang3.tuple.Triple;
 
-@Mod.EventBusSubscriber(Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT)
 public class DimensionClientListener {
     @SubscribeEvent
     public static void onRenderFog(ViewportEvent.RenderFog event) {

@@ -1,5 +1,6 @@
 package com.aetherteam.aether.client.event.listeners;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.event.hooks.WorldPreviewHooks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -14,7 +15,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT)
 public class WorldPreviewListener {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onGuiOpenLowest(ScreenEvent.Opening event) {

@@ -1,5 +1,6 @@
 package com.aetherteam.aether.client.event.listeners;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.event.hooks.MenuHooks;
 import com.aetherteam.nitrogen.client.NitrogenClient;
 import net.minecraft.client.gui.components.Button;
@@ -11,7 +12,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT)
 public class MenuListener {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onGuiOpenHighest(ScreenEvent.Opening event) {

@@ -1,5 +1,6 @@
 package com.aetherteam.aether.client.event.listeners;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.client.event.hooks.GuiHooks;
 import com.aetherteam.aether.client.gui.component.AccessoryButton;
@@ -23,7 +24,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-@Mod.EventBusSubscriber(Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT)
 public class GuiListener {
 	/** Set of UUIDs of boss bars that belong to Aether bosses. */
 	public static final Set<UUID> BOSS_EVENTS = new HashSet<>();
