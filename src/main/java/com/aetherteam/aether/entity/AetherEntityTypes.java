@@ -57,11 +57,11 @@ public class AetherEntityTypes {
     public static final RegistryObject<EntityType<Moa>> MOA = ENTITY_TYPES.register("moa",
             () -> EntityType.Builder.of(Moa::new, MobCategory.CREATURE).sized(0.95F, 2.15F).clientTrackingRange(10).build("moa"));
 
-    public static final RegistryObject<EntityType<Aerwhale>> AERWHALE = ENTITY_TYPES.register("aerwhale",
-            () -> EntityType.Builder.of(Aerwhale::new, AetherMobCategory.AETHER_AERWHALE).fireImmune().sized(3.0F, 3.0F).clientTrackingRange(10).build("aerwhale"));
-
     public static final RegistryObject<EntityType<Aerbunny>> AERBUNNY = ENTITY_TYPES.register("aerbunny",
             () -> EntityType.Builder.of(Aerbunny::new, MobCategory.CREATURE).sized(0.6F, 0.5F).clientTrackingRange(10).build("aerbunny"));
+
+    public static final RegistryObject<EntityType<Aerwhale>> AERWHALE = ENTITY_TYPES.register("aerwhale",
+            () -> EntityType.Builder.of(Aerwhale::new, AetherMobCategory.AETHER_AERWHALE).fireImmune().sized(3.0F, 3.0F).clientTrackingRange(10).build("aerwhale"));
 
     // Hostile Mobs
     public static final RegistryObject<EntityType<Swet>> BLUE_SWET = ENTITY_TYPES.register("blue_swet",
@@ -85,7 +85,7 @@ public class AetherEntityTypes {
     public static final RegistryObject<EntityType<Zephyr>> ZEPHYR = ENTITY_TYPES.register("zephyr",
             () -> EntityType.Builder.of(Zephyr::new, AetherMobCategory.AETHER_SKY_MONSTER).sized(4.5F, 3.5F).clientTrackingRange(10).build("zephyr"));
 
-    // Dungeon
+    // Dungeon Mobs
     public static final RegistryObject<EntityType<Mimic>> MIMIC = ENTITY_TYPES.register("mimic",
             () -> EntityType.Builder.of(Mimic::new, MobCategory.MONSTER).sized(1.0F, 2.0F).clientTrackingRange(8).build("mimic"));
 
@@ -107,8 +107,7 @@ public class AetherEntityTypes {
     public static final RegistryObject<EntityType<SunSpirit>> SUN_SPIRIT = ENTITY_TYPES.register("sun_spirit",
             () -> EntityType.Builder.of(SunSpirit::new, MobCategory.MONSTER).sized(2.5F, 3.4F).fireImmune().clientTrackingRange(10).build("sun_spirit"));
 
-
-    // Miscellaneous
+    // Miscellaneous Entities
     public static final RegistryObject<EntityType<SkyrootBoat>> SKYROOT_BOAT = ENTITY_TYPES.register("skyroot_boat",
             () -> EntityType.Builder.<SkyrootBoat>of(SkyrootBoat::new, MobCategory.MISC).sized(1.375F, 0.5625F).clientTrackingRange(10).build("skyroot_boat"));
 
@@ -166,6 +165,7 @@ public class AetherEntityTypes {
 
     @SubscribeEvent
     public static void registerSpawnPlacements(SpawnPlacementRegisterEvent event) {
+        // Passive Mobs
         event.register(AetherEntityTypes.PHYG.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AetherAnimal::checkAetherAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
         event.register(AetherEntityTypes.FLYING_COW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AetherAnimal::checkAetherAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
         event.register(AetherEntityTypes.SHEEPUFF.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AetherAnimal::checkAetherAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
@@ -173,6 +173,7 @@ public class AetherEntityTypes {
         event.register(AetherEntityTypes.AERBUNNY.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AetherAnimal::checkAetherAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
         event.register(AetherEntityTypes.AERWHALE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Aerwhale::checkAerwhaleSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
 
+        // Hostile Mobs
         event.register(AetherEntityTypes.BLUE_SWET.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Swet::checkSwetSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
         event.register(AetherEntityTypes.GOLDEN_SWET.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Swet::checkSwetSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
         event.register(AetherEntityTypes.WHIRLWIND.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AbstractWhirlwind::checkWhirlwindSpawnRules, SpawnPlacementRegisterEvent.Operation.OR);
@@ -184,13 +185,15 @@ public class AetherEntityTypes {
 
     @SubscribeEvent
     public static void registerEntityAttributes(EntityAttributeCreationEvent event) {
+        // Passive Mobs
         event.put(AetherEntityTypes.PHYG.get(), Phyg.createMobAttributes().build());
         event.put(AetherEntityTypes.FLYING_COW.get(), FlyingCow.createMobAttributes().build());
         event.put(AetherEntityTypes.SHEEPUFF.get(), Sheepuff.createMobAttributes().build());
-        event.put(AetherEntityTypes.AERBUNNY.get(), Aerbunny.createMobAttributes().build());
         event.put(AetherEntityTypes.MOA.get(), Moa.createMobAttributes().build());
+        event.put(AetherEntityTypes.AERBUNNY.get(), Aerbunny.createMobAttributes().build());
         event.put(AetherEntityTypes.AERWHALE.get(), Aerwhale.createMobAttributes().build());
 
+        // Hostile Mobs
         event.put(AetherEntityTypes.BLUE_SWET.get(), Swet.createMobAttributes().build());
         event.put(AetherEntityTypes.GOLDEN_SWET.get(), Swet.createMobAttributes().build());
         event.put(AetherEntityTypes.WHIRLWIND.get(), AbstractWhirlwind.createMobAttributes().build());
@@ -199,6 +202,7 @@ public class AetherEntityTypes {
         event.put(AetherEntityTypes.COCKATRICE.get(), Cockatrice.createMobAttributes().build());
         event.put(AetherEntityTypes.ZEPHYR.get(), Zephyr.createMobAttributes().build());
 
+        // Dungeon Mobs
         event.put(AetherEntityTypes.MIMIC.get(), Mimic.createMobAttributes().build());
         event.put(AetherEntityTypes.SENTRY.get(), Sentry.createMobAttributes().build());
         event.put(AetherEntityTypes.SLIDER.get(), Slider.createSliderAttributes().build());
@@ -207,6 +211,7 @@ public class AetherEntityTypes {
         event.put(AetherEntityTypes.FIRE_MINION.get(), FireMinion.createMobAttributes().build());
         event.put(AetherEntityTypes.SUN_SPIRIT.get(), SunSpirit.createSunSpiritAttributes().build());
 
+        // Miscellaneous Entities
         event.put(AetherEntityTypes.CLOUD_MINION.get(), CloudMinion.createMobAttributes().build());
     }
 }
