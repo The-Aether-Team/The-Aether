@@ -179,10 +179,10 @@ public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQ
                         BlockPos lowerPosition = this.blockPosition().offset(vector);
                         BlockState upperState = this.level.getBlockState(upperPosition);
                         BlockState lowerState = this.level.getBlockState(lowerPosition);
-                        if (!upperState.isAir() && !upperState.is(AetherTags.Blocks.VALKYRIE_QUEEN_UNBREAKABLE) && (upperState.getShape(this.level, upperPosition).equals(Shapes.block()) || !upperState.getCollisionShape(this.level, upperPosition).isEmpty()) && this.getDungeon().roomBounds().contains(upperPosition.getCenter())) {
+                        if (!upperState.isAir() && !upperState.is(AetherTags.Blocks.VALKYRIE_QUEEN_UNBREAKABLE) && (upperState.getShape(this.level, upperPosition).equals(Shapes.block()) || !upperState.getCollisionShape(this.level, upperPosition).isEmpty()) && (this.getDungeon() == null || this.getDungeon().roomBounds().contains(upperPosition.getCenter()))) {
                             this.getLevel().destroyBlock(upperPosition, true, this);
                             this.swing(InteractionHand.MAIN_HAND);
-                        } else if (!lowerState.isAir() && !lowerState.is(AetherTags.Blocks.VALKYRIE_QUEEN_UNBREAKABLE) && (lowerState.getShape(this.level, lowerPosition).equals(Shapes.block()) || !lowerState.getCollisionShape(this.level, lowerPosition).isEmpty()) && this.getDungeon().roomBounds().contains(lowerPosition.getCenter())) {
+                        } else if (!lowerState.isAir() && !lowerState.is(AetherTags.Blocks.VALKYRIE_QUEEN_UNBREAKABLE) && (lowerState.getShape(this.level, lowerPosition).equals(Shapes.block()) || !lowerState.getCollisionShape(this.level, lowerPosition).isEmpty()) && (this.getDungeon() == null || this.getDungeon().roomBounds().contains(lowerPosition.getCenter()))) {
                             this.getLevel().destroyBlock(lowerPosition, true, this);
                             this.swing(InteractionHand.MAIN_HAND);
                         }
