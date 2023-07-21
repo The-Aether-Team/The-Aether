@@ -2,15 +2,14 @@ package com.aetherteam.aether.entity.miscellaneous;
 
 import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.vehicle.DismountHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
@@ -120,6 +119,20 @@ public class Parachute extends Entity {
     @Override
     public double getPassengersRidingOffset() {
         return 1.35;
+    }
+
+    @Override
+    public Vec3 getDismountLocationForPassenger(LivingEntity passenger) {
+        Direction direction = this.getMotionDirection();
+        if (direction.getAxis() == Direction.Axis.Y) {
+            return this.position().add(0.0, 0.5, 0.0);
+        } else {
+            Vec3 dismountLocation = this.position().add(0.0, 0.5, 0.0);
+            if (!DismountHelper.canDismountTo(this.level, passenger, passenger.getType().getDimensions().makeBoundingBox(dismountLocation))) {
+                return this.position().add(0.0, 1.0, 0.0).add(new Vec3(direction.getStepX(), direction.getStepY(), direction.getStepZ()).scale(0.5).reverse());
+            }
+            return dismountLocation;
+        }
     }
 
     @Override
