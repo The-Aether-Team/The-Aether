@@ -1,6 +1,6 @@
 package com.aetherteam.aether.entity.ai.brain.sensing;
 
-import com.aetherteam.aether.entity.BossMob;
+import com.aetherteam.aether.entity.AetherBossMob;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntitySelector;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  * [VANILLA COPY] - PlayerSensor
  * Changed to track players within the dungeon instead of within a 16 block radius.
  */
-public class InDungeonPlayerSensor<T extends Mob & BossMob<T>> extends Sensor<T> {
+public class InDungeonPlayerSensor<T extends Mob & AetherBossMob<T>> extends Sensor<T> {
     private static final TargetingConditions TARGET_CONDITIONS_IGNORE_INVISIBILITY_TESTING = TargetingConditions.forNonCombat().range(16.0).ignoreInvisibilityTesting().ignoreLineOfSight();
     private static final TargetingConditions ATTACK_TARGET_CONDITIONS_IGNORE_INVISIBILITY_TESTING = TargetingConditions.forCombat().range(16.0).ignoreInvisibilityTesting().ignoreLineOfSight();
 

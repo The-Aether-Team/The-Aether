@@ -2,14 +2,13 @@ package com.aetherteam.aether.entity.monster.dungeon.boss;
 
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.entity.BossRoomTracker;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.capability.AetherCapabilities;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.data.resources.AetherDamageTypes;
 import com.aetherteam.aether.entity.AetherEntityTypes;
-import com.aetherteam.aether.entity.BossMob;
+import com.aetherteam.aether.entity.AetherBossMob;
 import com.aetherteam.aether.entity.ai.controller.BlankMoveControl;
 import com.aetherteam.aether.entity.monster.dungeon.FireMinion;
 import com.aetherteam.aether.entity.projectile.crystal.AbstractCrystal;
@@ -18,6 +17,7 @@ import com.aetherteam.aether.entity.projectile.crystal.IceCrystal;
 import com.aetherteam.aether.mixin.mixins.common.accessor.LookAtPlayerGoalAccessor;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.BossInfoPacket;
+import com.aetherteam.nitrogen.entity.BossRoomTracker;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -68,7 +68,7 @@ import java.util.List;
  * Implementation for the sun spirit, the final boss of the Aether. When the sun spirit is defeated, eternal day will
  * end in the dimension.
  */
-public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enemy {
+public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>, Enemy {
     public static final EntityDataAccessor<Boolean> DATA_IS_FROZEN = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.COMPONENT);
 

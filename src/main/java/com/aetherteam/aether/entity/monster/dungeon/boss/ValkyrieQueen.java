@@ -1,13 +1,12 @@
 package com.aetherteam.aether.entity.monster.dungeon.boss;
 
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.entity.BossRoomTracker;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.gui.screen.ValkyrieQueenDialogueScreen;
 import com.aetherteam.aether.data.resources.registries.AetherStructures;
 import com.aetherteam.aether.entity.AetherEntityTypes;
-import com.aetherteam.aether.entity.BossMob;
+import com.aetherteam.aether.entity.AetherBossMob;
 import com.aetherteam.aether.entity.NpcDialogue;
 import com.aetherteam.aether.entity.ai.AetherBlockPathTypes;
 import com.aetherteam.aether.entity.ai.goal.NpcDialogueGoal;
@@ -17,6 +16,7 @@ import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.BossInfoPacket;
 import com.aetherteam.aether.network.packet.serverbound.NpcPlayerInteractPacket;
+import com.aetherteam.nitrogen.entity.BossRoomTracker;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -76,7 +76,7 @@ import javax.annotation.Nullable;
  * This class holds the implementation of valkyrie queens. They are the boss version of valkyries, and they fight
  * in the same way, with the additional ability to shoot thunder crystal projectiles at their enemies.
  */
-public class ValkyrieQueen extends AbstractValkyrie implements BossMob<ValkyrieQueen>, NpcDialogue, IEntityAdditionalSpawnData {
+public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<ValkyrieQueen>, NpcDialogue, IEntityAdditionalSpawnData {
     public static final EntityDataAccessor<Boolean> DATA_IS_READY = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.COMPONENT);
 

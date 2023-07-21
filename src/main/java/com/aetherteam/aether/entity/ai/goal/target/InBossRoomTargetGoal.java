@@ -1,7 +1,7 @@
 package com.aetherteam.aether.entity.ai.goal.target;
 
 import com.aetherteam.aether.entity.BossRoomTracker;
-import com.aetherteam.aether.entity.BossMob;
+import com.aetherteam.aether.entity.AetherBossMob;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.UUID;
 
-public class InBossRoomTargetGoal<T extends LivingEntity, J extends Mob & BossMob<J>> extends TargetGoal {
+public class InBossRoomTargetGoal<T extends LivingEntity, J extends Mob & AetherBossMob<J>> extends TargetGoal {
     protected final Class<T> targetType;
     @Nullable
     protected LivingEntity target;
