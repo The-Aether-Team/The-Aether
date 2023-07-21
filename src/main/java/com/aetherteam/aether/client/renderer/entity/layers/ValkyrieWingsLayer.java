@@ -14,8 +14,6 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-import javax.annotation.Nonnull;
-
 public class ValkyrieWingsLayer<T extends AbstractValkyrie> extends RenderLayer<T, ValkyrieModel<T>> {
     private final ResourceLocation wingsLocation;
     private final ValkyrieWingsModel<Valkyrie> wings;
@@ -27,7 +25,7 @@ public class ValkyrieWingsLayer<T extends AbstractValkyrie> extends RenderLayer<
     }
 
     @Override
-    public void render(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, @Nonnull T valkyrie, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, T valkyrie, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         this.setupWingRotation(valkyrie, ageInTicks);
         VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutoutNoCull(this.wingsLocation));
         if (!valkyrie.isInvisible()) {
@@ -35,7 +33,7 @@ public class ValkyrieWingsLayer<T extends AbstractValkyrie> extends RenderLayer<
         }
     }
 
-    public void setupWingRotation(@Nonnull T entity, float ticks) {
+    public void setupWingRotation(T entity, float ticks) {
         float sinage = this.handleWingSinage(entity, ticks);
         float targetYRot = Mth.sin(sinage) / 6.0F - 0.2F;
         float targetZRot = Mth.cos(sinage) / (entity.isEntityOnGround() ? 8.0F : 3.0F) - 0.125F;
@@ -48,7 +46,7 @@ public class ValkyrieWingsLayer<T extends AbstractValkyrie> extends RenderLayer<
     /**
      * Sets the position of the wings for rendering.
      */
-    private float handleWingSinage(@Nonnull T entity, float sinage) {
+    private float handleWingSinage(T entity, float sinage) {
         if (!entity.isEntityOnGround()) {
             sinage *= 0.75F;
         } else {

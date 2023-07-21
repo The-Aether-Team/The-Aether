@@ -16,8 +16,6 @@ import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
-
 public class AccessoryButton extends ImageButton
 {
     private final AbstractContainerScreen<?> parentGui;
@@ -45,7 +43,7 @@ public class AccessoryButton extends ImageButton
     }
 
     @Override
-    public void render(@Nonnull PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
+    public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
         Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(this.parentGui);
         this.setX(this.parentGui.getGuiLeft() + offsets.getA());
         this.setY(this.parentGui.getGuiTop() + offsets.getB());

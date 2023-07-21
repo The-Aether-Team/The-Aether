@@ -1,10 +1,8 @@
 package com.aetherteam.aether;
 
 import com.aetherteam.aether.advancement.AetherAdvancementTriggers;
-import com.aetherteam.aether.api.AetherMoaTypes;
-import com.aetherteam.aether.command.SunAltarWhitelist;
-import com.aetherteam.aether.client.TriviaGenerator;
 import com.aetherteam.aether.api.AetherMenus;
+import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.block.AetherCauldronInteractions;
 import com.aetherteam.aether.block.dispenser.AetherDispenseBehaviors;
@@ -16,7 +14,9 @@ import com.aetherteam.aether.blockentity.FreezerBlockEntity;
 import com.aetherteam.aether.blockentity.IncubatorBlockEntity;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.CombinedPackResources;
+import com.aetherteam.aether.client.TriviaGenerator;
 import com.aetherteam.aether.client.particle.AetherParticleTypes;
+import com.aetherteam.aether.command.SunAltarWhitelist;
 import com.aetherteam.aether.data.generators.*;
 import com.aetherteam.aether.data.generators.tags.*;
 import com.aetherteam.aether.data.resources.AetherMobCategory;

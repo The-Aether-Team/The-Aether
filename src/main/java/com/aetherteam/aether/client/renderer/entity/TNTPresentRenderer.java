@@ -12,8 +12,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.inventory.InventoryMenu;
 
-import javax.annotation.Nonnull;
-
 public class TNTPresentRenderer extends EntityRenderer<TntPresent> {
     private final BlockRenderDispatcher blockRenderer;
     public TNTPresentRenderer(EntityRendererProvider.Context context) {
@@ -23,7 +21,7 @@ public class TNTPresentRenderer extends EntityRenderer<TntPresent> {
     }
 
     @Override
-    public void render(TntPresent present, float entityYaw, float partialTicks, PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight) {
+    public void render(TntPresent present, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
         poseStack.translate(0.0, 0.5, 0.0);
         if ((float) present.getFuse() - partialTicks + 1.0F < 10.0F) {
@@ -40,9 +38,9 @@ public class TNTPresentRenderer extends EntityRenderer<TntPresent> {
         super.render(present, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }
 
-    @Nonnull
+   
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull TntPresent present) {
+    public ResourceLocation getTextureLocation(TntPresent present) {
         return InventoryMenu.BLOCK_ATLAS;
     }
 }

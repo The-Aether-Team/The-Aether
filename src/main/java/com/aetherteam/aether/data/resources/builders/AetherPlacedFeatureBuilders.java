@@ -2,7 +2,6 @@ package com.aetherteam.aether.data.resources.builders;
 
 import com.aetherteam.aether.world.placementmodifier.DungeonBlacklistFilter;
 import com.aetherteam.aether.world.placementmodifier.ImprovedLayerPlacementModifier;
-import com.aetherteam.nitrogen.data.resources.builders.NitrogenPlacedFeatureBuilders;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.levelgen.Heightmap;

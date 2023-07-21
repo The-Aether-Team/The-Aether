@@ -2,10 +2,10 @@ package com.aetherteam.aether.block.utility;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
-import com.aetherteam.aether.command.SunAltarWhitelist;
 import com.aetherteam.aether.blockentity.SunAltarBlockEntity;
 import com.aetherteam.aether.capability.AetherCapabilities;
 import com.aetherteam.aether.capability.time.AetherTime;
+import com.aetherteam.aether.command.SunAltarWhitelist;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.clientbound.OpenSunAltarPacket;
 import com.aetherteam.nitrogen.network.PacketRelay;

@@ -22,7 +22,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.ChestType;
 import net.minecraftforge.fml.ModList;
 
-import javax.annotation.Nonnull;
 import java.util.Calendar;
 
 public class ChestMimicRenderer<T extends BlockEntity> implements BlockEntityRenderer<T>
@@ -45,7 +44,7 @@ public class ChestMimicRenderer<T extends BlockEntity> implements BlockEntityRen
 	}
 
 	@Override
-	public void render(T blockEntity, float partialTicks, @Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, int packedOverlay) {
+	public void render(T blockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
 		BlockState blockState = blockEntity.getLevel() != null ? blockEntity.getBlockState() : AetherBlocks.CHEST_MIMIC.get().defaultBlockState().setValue(ChestBlock.FACING, Direction.SOUTH);
 		if (blockState.getBlock() instanceof ChestMimicBlock) {
 			poseStack.pushPose();

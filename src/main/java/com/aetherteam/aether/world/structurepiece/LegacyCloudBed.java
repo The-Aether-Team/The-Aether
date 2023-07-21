@@ -17,7 +17,6 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 
-import javax.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -44,7 +43,7 @@ public class LegacyCloudBed extends StructurePiece {
         this.blocks = BlockStateProvider.CODEC.parse(new Dynamic<>(NbtOps.INSTANCE, tag.get("Blocks"))).getOrThrow(true, Aether.LOGGER::error);
     }
 
-    protected void addAdditionalSaveData(@Nonnull StructurePieceSerializationContext context, @Nonnull CompoundTag tag) {
+    protected void addAdditionalSaveData(StructurePieceSerializationContext context, CompoundTag tag) {
         ListTag positions = new ListTag();
         for (BlockPos position : this.positions) {
             positions.add(NbtUtils.writeBlockPos(position));
@@ -54,7 +53,7 @@ public class LegacyCloudBed extends StructurePiece {
     }
 
     @Override
-    public void postProcess(@Nonnull WorldGenLevel level, @Nonnull StructureManager manager, @Nonnull ChunkGenerator generator, @Nonnull RandomSource random, @Nonnull BoundingBox bounds, @Nonnull ChunkPos chunkPos, @Nonnull BlockPos blockPos) {
+    public void postProcess(WorldGenLevel level, StructureManager manager, ChunkGenerator generator, RandomSource random, BoundingBox bounds, ChunkPos chunkPos, BlockPos blockPos) {
         if (!this.positions.isEmpty()) {
             this.positions.removeIf(pos -> this.placeBlock(level, this.blocks.getState(random, pos), pos, bounds));
         }

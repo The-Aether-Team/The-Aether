@@ -13,8 +13,6 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 
-import javax.annotation.Nonnull;
-
 public class ZephyrTransparencyLayer extends RenderLayer<Zephyr, EntityModel<Zephyr>> {
     private static final ResourceLocation ZEPHYR_TRANSPARENCY_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/zephyr/zephyr_layer.png");
 
@@ -26,7 +24,7 @@ public class ZephyrTransparencyLayer extends RenderLayer<Zephyr, EntityModel<Zep
     }
 
     @Override
-    public void render(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, @Nonnull Zephyr zephyr, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Zephyr zephyr, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (this.getParentModel() instanceof ZephyrModel && !zephyr.isInvisible()) {
             this.getParentModel().copyPropertiesTo(this.transparency);
             this.transparency.prepareMobModel(zephyr, limbSwing, limbSwingAmount, partialTicks);

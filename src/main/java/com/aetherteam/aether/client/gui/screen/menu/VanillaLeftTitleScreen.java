@@ -21,8 +21,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraftforge.client.gui.TitleScreenModUpdateIndicator;
 import net.minecraftforge.internal.BrandingControl;
 
-import javax.annotation.Nonnull;
-
 public class VanillaLeftTitleScreen extends TitleScreen {
     private final PanoramaRenderer panorama = new PanoramaRenderer(CUBE_MAP);
     private static final ResourceLocation PANORAMA_OVERLAY = new ResourceLocation("textures/gui/title/background/panorama_overlay.png");
@@ -59,7 +57,7 @@ public class VanillaLeftTitleScreen extends TitleScreen {
     }
 
     @Override
-    public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
         TitleScreenAccessor titleScreenAccessor = (TitleScreenAccessor) this;
         if (this.minecraft != null) {
             if (titleScreenAccessor.aether$getFadeInStart() == 0L && titleScreenAccessor.aether$isFading()) {

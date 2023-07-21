@@ -22,8 +22,6 @@ import net.minecraft.world.level.block.DoubleBlockCombiner;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
 
-import javax.annotation.Nonnull;
-
 public class SkyrootBedRenderer implements BlockEntityRenderer<SkyrootBedBlockEntity>
 {
     private final ModelPart headRoot;
@@ -34,7 +32,7 @@ public class SkyrootBedRenderer implements BlockEntityRenderer<SkyrootBedBlockEn
         this.footRoot = context.bakeLayer(AetherModelLayers.SKYROOT_BED_FOOT);
     }
 
-    public void render(SkyrootBedBlockEntity bed, float partialTicks, @Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+    public void render(SkyrootBedBlockEntity bed, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         Level level = bed.getLevel();
         if (level != null) {
             BlockState blockstate = bed.getBlockState();

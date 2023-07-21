@@ -6,8 +6,6 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
 
-import javax.annotation.Nonnull;
-
 public abstract class ColorBox extends EditBox {
     protected final AetherCustomizationsScreen screen;
     protected boolean hasValidColor = false;
@@ -19,7 +17,7 @@ public abstract class ColorBox extends EditBox {
     }
 
     @Override
-    public void renderWidget(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+    public void renderWidget(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
         if (this.getValue().length() == 6) {
             try {
                 int decimal = Integer.parseInt(this.getValue(), 16);

@@ -15,7 +15,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
-import javax.annotation.Nonnull;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -72,7 +71,7 @@ public class DartLayer<T extends LivingEntity, M extends PlayerModel<T>> extends
     }
 
     @Override
-    protected int numStuck(@Nonnull T entity) {
+    protected int numStuck(T entity) {
         if (entity instanceof Player player) {
             Optional<AetherPlayer> aetherPlayerOptional = AetherPlayer.get(player).resolve();
             if (aetherPlayerOptional.isPresent()) {

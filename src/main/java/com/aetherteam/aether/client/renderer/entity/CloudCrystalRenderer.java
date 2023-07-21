@@ -7,8 +7,6 @@ import com.aetherteam.aether.entity.projectile.crystal.AbstractCrystal;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
-import javax.annotation.Nonnull;
-
 public class CloudCrystalRenderer<T extends AbstractCrystal> extends AbstractCrystalRenderer<T> {
     private static final ResourceLocation ICE_CRYSTAL_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/crystals/ice_ball.png");
 
@@ -16,9 +14,9 @@ public class CloudCrystalRenderer<T extends AbstractCrystal> extends AbstractCry
         super(context, new CrystalModel<>(context.bakeLayer(AetherModelLayers.CLOUD_CRYSTAL)));
     }
 
-    @Nonnull
+   
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull T crystal) {
+    public ResourceLocation getTextureLocation(T crystal) {
         return ICE_CRYSTAL_TEXTURE;
     }
 }

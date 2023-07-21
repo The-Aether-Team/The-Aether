@@ -23,7 +23,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
@@ -52,7 +51,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
         this.targetSelector.addGoal(4, new ResetUniversalAngerTargetGoal<>(this, false));
     }
 
-    @Nonnull
+   
     public static AttributeSupplier.Builder createMobAttributes() {
         return createAttributes()
                 .add(Attributes.FOLLOW_RANGE, 16.0)
@@ -76,8 +75,8 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
      * if they are the one who interacted with the valkyrie.
      */
     @Override
-    @Nonnull
-    protected InteractionResult mobInteract(Player player, @Nonnull InteractionHand hand) {
+   
+    protected InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack item = player.getItemInHand(hand);
         if (hand == InteractionHand.MAIN_HAND) {
             if (this.getTarget() == null) {
@@ -108,7 +107,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
      * This also handles the defeat message if their health drops below 0.
      */
     @Override
-    public boolean hurt(@Nonnull DamageSource source, float pDamageAmount) {
+    public boolean hurt(DamageSource source, float pDamageAmount) {
         boolean result = super.hurt(source, pDamageAmount);
         if (!this.level.isClientSide && source.getEntity() instanceof Player player) {
             if (this.getTarget() == null && level.getDifficulty() != Difficulty.PEACEFUL && this.getHealth() > 0) {
@@ -122,7 +121,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
      * If the valkyrie kills the player, they will speak.
      */
     @Override
-    public boolean doHurtTarget(@Nonnull Entity pEntity) {
+    public boolean doHurtTarget(Entity pEntity) {
         boolean result = super.doHurtTarget(pEntity);
         if (pEntity instanceof ServerPlayer player && player.getHealth() <= 0) {
             this.chatItUp(player, Component.translatable("gui.aether.valkyrie.dialog.playerdeath." + (char) (random.nextInt(3) + '1'), ComponentUtils.getDisplayName(player.getGameProfile())));
@@ -169,7 +168,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
     }
 
     @Override
-    protected SoundEvent getHurtSound(@Nonnull DamageSource pDamageSource) {
+    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
         return AetherSoundEvents.ENTITY_VALKYRIE_HURT.get();
     }
 

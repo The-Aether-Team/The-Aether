@@ -15,7 +15,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.block.Block;
 
-import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
 public class ParachuteRenderer extends EntityRenderer<Parachute> {
@@ -28,7 +27,7 @@ public class ParachuteRenderer extends EntityRenderer<Parachute> {
     }
 
     @Override
-    public void render(@Nonnull Parachute parachute, float entityYaw, float partialTicks, PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight) {
+    public void render(Parachute parachute, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
         Entity passenger = parachute.getControllingPassenger();
         if (passenger != null) {
@@ -44,9 +43,9 @@ public class ParachuteRenderer extends EntityRenderer<Parachute> {
         super.render(parachute, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }
 
-    @Nonnull
+   
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull Parachute parachute) {
+    public ResourceLocation getTextureLocation(Parachute parachute) {
         return InventoryMenu.BLOCK_ATLAS;
     }
 }

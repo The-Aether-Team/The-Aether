@@ -13,8 +13,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.NetworkHooks;
 
-import javax.annotation.Nonnull;
-
 public class SkyrootChestBoat extends ChestBoat implements SkyrootBoatBehavior {
     public SkyrootChestBoat(EntityType<? extends SkyrootChestBoat> entityType, Level level) {
         super(entityType, level);
@@ -28,18 +26,18 @@ public class SkyrootChestBoat extends ChestBoat implements SkyrootBoatBehavior {
         this.zo = z;
     }
 
-    @Nonnull
+   
     @Override
     public Item getDropItem() {
         return AetherItems.SKYROOT_CHEST_BOAT.get();
     }
 
     @Override
-    protected void checkFallDamage(double y, boolean onGround, @Nonnull BlockState state, @Nonnull BlockPos pos) {
+    protected void checkFallDamage(double y, boolean onGround, BlockState state, BlockPos pos) {
         this.fall(this, y, onGround);
     }
 
-    @Nonnull
+   
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);

@@ -21,8 +21,6 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
-import javax.annotation.Nonnull;
-
 public class AetherCustomizationsScreen extends Screen {
     public static final ResourceLocation SAVE_BUTTON = new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/save_button.png");
     public static final ResourceLocation UNDO_BUTTON = new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/undo_button.png");
@@ -175,7 +173,7 @@ public class AetherCustomizationsScreen extends Screen {
     }
 
     @Override
-    public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float pPartialTick) {
+    public void render(PoseStack poseStack, int mouseX, int mouseY, float pPartialTick) {
         this.renderBackground(poseStack);
         drawCenteredString(poseStack, this.font, this.title, this.width / 2, 15, 16777215);
         if (this.getMinecraft().player != null) {

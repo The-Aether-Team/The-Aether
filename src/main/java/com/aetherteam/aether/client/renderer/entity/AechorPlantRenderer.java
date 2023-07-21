@@ -10,8 +10,6 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-import javax.annotation.Nonnull;
-
 public class AechorPlantRenderer extends MobRenderer<AechorPlant, AechorPlantModel> {
     private static final ResourceLocation AECHOR_PLANT_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aechor_plant/aechor_plant.png");
 
@@ -20,7 +18,7 @@ public class AechorPlantRenderer extends MobRenderer<AechorPlant, AechorPlantMod
     }
 
     @Override
-    protected void scale(AechorPlant aechorPlant, @Nonnull PoseStack poseStack, float partialTickTime) {
+    protected void scale(AechorPlant aechorPlant, PoseStack poseStack, float partialTickTime) {
         float f2 = 0.625F + aechorPlant.getSize() / 6.0F;
         poseStack.scale(f2, f2, f2);
         poseStack.translate(0.0, 1.2, 0.0);
@@ -28,13 +26,12 @@ public class AechorPlantRenderer extends MobRenderer<AechorPlant, AechorPlantMod
     }
 
     @Override
-    protected float getBob(@Nonnull AechorPlant aechorPlant, float partialTicks) {
+    protected float getBob(AechorPlant aechorPlant, float partialTicks) {
         return Mth.lerp(partialTicks, aechorPlant.sinage, aechorPlant.sinage + aechorPlant.sinageAdd);
     }
 
-    @Nonnull
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull AechorPlant aechorPlant) {
+    public ResourceLocation getTextureLocation(AechorPlant aechorPlant) {
         return AECHOR_PLANT_TEXTURE;
     }
 }

@@ -34,7 +34,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 
-import javax.annotation.Nonnull;
 import java.util.EnumSet;
 
 /**
@@ -65,7 +64,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
     }
 
-    @Nonnull
+   
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MOVEMENT_SPEED, 0.5);
@@ -141,7 +140,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     }*/
 
     @Override
-    protected boolean canRide(@Nonnull Entity vehicle) {
+    protected boolean canRide(Entity vehicle) {
         return false;
     }
 
@@ -149,7 +148,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
      * The valkyrie will be provoked to attack the player if attacked.
      */
     @Override
-    public boolean hurt(@Nonnull DamageSource source, float pDamageAmount) {
+    public boolean hurt(DamageSource source, float pDamageAmount) {
         boolean result = super.hurt(source, pDamageAmount);
         if (!this.level.isClientSide && result && source.getEntity() instanceof LivingEntity living) {
             this.mostDamageTargetGoal.addAggro(living, pDamageAmount);

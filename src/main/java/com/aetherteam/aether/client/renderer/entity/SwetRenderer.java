@@ -9,8 +9,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.Mth;
 
-import javax.annotation.Nonnull;
-
 public abstract class SwetRenderer extends MobRenderer<Swet, SlimeModel<Swet>> {
     public SwetRenderer(EntityRendererProvider.Context context) {
         super(context, new SlimeModel<>(context.bakeLayer(AetherModelLayers.SWET)), 0.3F);
@@ -18,7 +16,7 @@ public abstract class SwetRenderer extends MobRenderer<Swet, SlimeModel<Swet>> {
     }
 
     @Override
-    protected void scale(Swet swet, @Nonnull PoseStack poseStack, float partialTickTime) {
+    protected void scale(Swet swet, PoseStack poseStack, float partialTickTime) {
         float scale = 1.5F;
         if (!swet.getPassengers().isEmpty()) {
             scale += (swet.getPassengers().get(0).getBbWidth() + swet.getPassengers().get(0).getBbHeight()) * 0.75F;

@@ -19,8 +19,6 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.data.ModelData;
 
-import javax.annotation.Nonnull;
-
 public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity> {
 	public FloatingBlockRenderer(EntityRendererProvider.Context context) {
 		super(context);
@@ -28,7 +26,7 @@ public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity> {
 	}
 
 	@Override
-	public void render(FloatingBlockEntity floatingBlock, float entityYaw, float partialTicks, @Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLightIn) {
+	public void render(FloatingBlockEntity floatingBlock, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLightIn) {
 		BlockState blockState = floatingBlock.getBlockState();
 		if (blockState.getRenderShape() == RenderShape.MODEL) {
 			Level world = floatingBlock.getLevel();
@@ -47,9 +45,8 @@ public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity> {
 		}
 	}
 
-	@Nonnull
 	@Override
-	public ResourceLocation getTextureLocation(@Nonnull FloatingBlockEntity floatingBlock) {
+	public ResourceLocation getTextureLocation(FloatingBlockEntity floatingBlock) {
 		return InventoryMenu.BLOCK_ATLAS;
 	}
 }

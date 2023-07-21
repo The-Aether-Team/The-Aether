@@ -9,8 +9,6 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-import javax.annotation.Nonnull;
-
 public class ValkyrieModel<T extends AbstractValkyrie> extends HumanoidModel<T> {
     public ModelPart upperBody;
     public ModelPart rightShoulder;
@@ -139,7 +137,7 @@ public class ValkyrieModel<T extends AbstractValkyrie> extends HumanoidModel<T> 
     }
 
     @Override
-    public void setupAnim(@Nonnull T valkyrie, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(T valkyrie, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.head.yRot = netHeadYaw * ((float) Math.PI / 180.0F);
         this.head.xRot = headPitch * ((float) Math.PI / 180.0F);
 
@@ -163,7 +161,7 @@ public class ValkyrieModel<T extends AbstractValkyrie> extends HumanoidModel<T> 
     }
 
     @Override
-    public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         super.renderToBuffer(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
         this.rightFrontSkirt.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
         this.leftFrontSkirt.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);

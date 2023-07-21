@@ -17,8 +17,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 
-import javax.annotation.Nonnull;
-
 public class CloudCrystal extends AbstractCrystal {
     public CloudCrystal(EntityType<? extends CloudCrystal> entityType, Level level) {
         super(entityType, level);
@@ -53,7 +51,7 @@ public class CloudCrystal extends AbstractCrystal {
     }
 
     @Override
-    protected void onHitBlock(@Nonnull BlockHitResult result) {
+    protected void onHitBlock(BlockHitResult result) {
         super.onHitBlock(result);
         this.discard();
     }

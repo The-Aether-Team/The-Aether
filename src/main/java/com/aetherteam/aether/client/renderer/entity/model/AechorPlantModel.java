@@ -9,8 +9,6 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 
-import javax.annotation.Nonnull;
-
 public class AechorPlantModel extends EntityModel<AechorPlant> {
     public ModelPart stem;
     public ModelPart head;
@@ -107,23 +105,23 @@ public class AechorPlantModel extends EntityModel<AechorPlant> {
         return LayerDefinition.create(meshDefinition, 64, 32);
     }
 
-    @Nonnull
+   
     public Iterable<ModelPart> stamenStemParts() {
         return ImmutableList.of(this.stamenStem1, this.stamenStem2, this.stamenStem3);
     }
 
-    @Nonnull
+   
     public Iterable<ModelPart> leafParts() {
         return ImmutableList.of(this.leaf1, this.leaf2, this.leaf3, this.leaf4, this.leaf5, this.leaf6, this.leaf7, this.leaf8, this.leaf9, this.leaf10);
     }
 
-    @Nonnull
+   
     public Iterable<ModelPart> petalParts() {
         return ImmutableList.of(this.upperPetal1, this.lowerPetal1, this.upperPetal2, this.lowerPetal2, this.upperPetal3, this.lowerPetal3, this.upperPetal4, this.lowerPetal4, this.upperPetal5, this.lowerPetal5);
     }
 
     @Override
-    public void setupAnim(@Nonnull AechorPlant aechorPlant, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(AechorPlant aechorPlant, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         float sinage1 = (float) Math.sin(ageInTicks);
         float sinage2;
 
@@ -177,7 +175,7 @@ public class AechorPlantModel extends EntityModel<AechorPlant> {
     }
 
     @Override
-    public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         this.stem.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
         this.head.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
     }

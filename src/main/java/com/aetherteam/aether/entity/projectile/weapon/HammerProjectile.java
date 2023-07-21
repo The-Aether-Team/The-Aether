@@ -18,7 +18,6 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.network.NetworkHooks;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 public class HammerProjectile extends ThrowableProjectile {
@@ -65,7 +64,7 @@ public class HammerProjectile extends ThrowableProjectile {
     }
 
     @Override
-    protected void onHit(@Nonnull HitResult result) {
+    protected void onHit(HitResult result) {
         super.onHit(result);
         if (!this.level.isClientSide) {
             this.discard();
@@ -73,7 +72,7 @@ public class HammerProjectile extends ThrowableProjectile {
     }
 
     @Override
-    protected void onHitEntity(@Nonnull EntityHitResult result) {
+    protected void onHitEntity(EntityHitResult result) {
         if (!this.level.isClientSide) {
             Entity target = result.getEntity();
             launchTarget(target);
@@ -83,7 +82,7 @@ public class HammerProjectile extends ThrowableProjectile {
     }
 
     @Override
-    protected void onHitBlock(@Nonnull BlockHitResult result) {
+    protected void onHitBlock(BlockHitResult result) {
         super.onHitBlock(result);
         if (!this.level.isClientSide) {
             List<Entity> list = this.level.getEntities(this, this.getBoundingBox().inflate(5.0));
@@ -129,7 +128,7 @@ public class HammerProjectile extends ThrowableProjectile {
         return this.entityData.get(DATA_JEB_ID);
     }
 
-    @Nonnull
+   
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);

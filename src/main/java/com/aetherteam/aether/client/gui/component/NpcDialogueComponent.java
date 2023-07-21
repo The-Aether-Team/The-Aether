@@ -6,7 +6,6 @@ import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class NpcDialogueComponent extends GuiComponent {
         this.updateDialogue(pMessage);
     }
 
-    public void render(@Nonnull PoseStack pPoseStack) {
+    public void render(PoseStack pPoseStack) {
         this.splitLines.forEach(element -> element.render(pPoseStack));
     }
 

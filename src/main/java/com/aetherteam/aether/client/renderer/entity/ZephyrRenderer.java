@@ -12,8 +12,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-import javax.annotation.Nonnull;
-
 public class ZephyrRenderer extends MultiModelRenderer<Zephyr, EntityModel<Zephyr>, ZephyrModel, ClassicZephyrModel> {
     private static final ResourceLocation ZEPHYR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/zephyr/zephyr.png");
     private static final ResourceLocation ZEPHYR_CLASSIC_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/zephyr/zephyr_classic.png");
@@ -29,7 +27,7 @@ public class ZephyrRenderer extends MultiModelRenderer<Zephyr, EntityModel<Zephy
     }
 
     @Override
-    protected void scale(Zephyr zephyr, @Nonnull PoseStack poseStack, float partialTickTime) {
+    protected void scale(Zephyr zephyr, PoseStack poseStack, float partialTickTime) {
         float f = Mth.lerp(partialTickTime, zephyr.scale, zephyr.scale + zephyr.scaleAdd);
         float f1 = f / 40.0F;
         if (f1 < 0.0F) {
@@ -49,7 +47,7 @@ public class ZephyrRenderer extends MultiModelRenderer<Zephyr, EntityModel<Zephy
     }
 
     @Override
-    protected float getBob(@Nonnull Zephyr zephyr, float partialTicks) {
+    protected float getBob(Zephyr zephyr, float partialTicks) {
         return Mth.lerp(partialTicks, zephyr.tailRot, zephyr.tailRot + zephyr.tailRotAdd);
     }
 

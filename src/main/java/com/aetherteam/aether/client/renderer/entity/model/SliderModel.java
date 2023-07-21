@@ -8,8 +8,6 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 
-import javax.annotation.Nonnull;
-
 public class SliderModel extends EntityModel<Slider> {
     private final ModelPart slider;
 
@@ -25,10 +23,10 @@ public class SliderModel extends EntityModel<Slider> {
     }
 
     @Override
-    public void setupAnim(@Nonnull Slider slider, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) { }
+    public void setupAnim(Slider slider, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) { }
 
     @Override
-    public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         this.slider.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 }

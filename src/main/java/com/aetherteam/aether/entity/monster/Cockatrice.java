@@ -41,8 +41,6 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.dimension.DimensionType;
 
-import javax.annotation.Nonnull;
-
 public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, NotGrounded {
     private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(Cockatrice.class, EntityDataSerializers.BOOLEAN);
 
@@ -68,13 +66,13 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }
 
-    @Nonnull
+   
     @Override
-    protected PathNavigation createNavigation(@Nonnull Level level) {
+    protected PathNavigation createNavigation(Level level) {
         return new FallPathNavigation(this, level);
     }
 
-    @Nonnull
+   
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0)
@@ -220,7 +218,7 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
     }
 
     @Override
-    protected SoundEvent getHurtSound(@Nonnull DamageSource damageSource) {
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
         return AetherSoundEvents.ENTITY_COCKATRICE_HURT.get();
     }
 

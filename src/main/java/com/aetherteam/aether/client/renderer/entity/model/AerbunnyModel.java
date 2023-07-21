@@ -12,8 +12,6 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
-import javax.annotation.Nonnull;
-
 public class AerbunnyModel extends EntityModel<Aerbunny> {
     public ModelPart head;
     public ModelPart rightEar;
@@ -63,13 +61,13 @@ public class AerbunnyModel extends EntityModel<Aerbunny> {
     }
 
     @Override
-    public void prepareMobModel(@Nonnull Aerbunny aerbunny, float limbSwing, float limbSwingAmount, float partialTicks) {
+    public void prepareMobModel(Aerbunny aerbunny, float limbSwing, float limbSwingAmount, float partialTicks) {
         super.prepareMobModel(aerbunny, limbSwing, limbSwingAmount, partialTicks);
         this.puffiness = Mth.lerp(partialTicks, aerbunny.getPuffiness(), aerbunny.getPuffiness() - aerbunny.puffSubtract) / 20.0F;
     }
 
     @Override
-    public void setupAnim(@Nonnull Aerbunny aerbunny, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(Aerbunny aerbunny, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.head.xRot = headPitch * (float) (Math.PI / 180.0F);
         this.head.yRot = netHeadYaw * (float) (Math.PI / 180.0F);
         this.rightFrontLeg.xRot = (Mth.cos(limbSwing * 0.6662F) * 1.0F * limbSwingAmount) - this.body.xRot;
@@ -79,7 +77,7 @@ public class AerbunnyModel extends EntityModel<Aerbunny> {
     }
 
     @Override
-    public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         this.head.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
         this.body.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
         poseStack.pushPose();

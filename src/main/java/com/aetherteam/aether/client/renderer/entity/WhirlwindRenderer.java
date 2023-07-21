@@ -6,16 +6,14 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 
-import javax.annotation.Nonnull;
-
 public class WhirlwindRenderer extends EntityRenderer<AbstractWhirlwind> {
     public WhirlwindRenderer(EntityRendererProvider.Context context) {
         super(context);
     }
 
-    @Nonnull
+   
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull AbstractWhirlwind whirlwind) {
+    public ResourceLocation getTextureLocation(AbstractWhirlwind whirlwind) {
         return InventoryMenu.BLOCK_ATLAS;
     }
 }

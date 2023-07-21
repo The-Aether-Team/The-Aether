@@ -51,7 +51,6 @@ import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.NetworkHooks;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enemy, IEntityAdditionalSpawnData {
@@ -85,7 +84,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
      * Generates a name for the boss and adjusts its position.
      */
     @Override
-    public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor pLevel, @Nonnull DifficultyInstance pDifficulty, @Nonnull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
         this.alignSpawnPos();
         SpawnGroupData data = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
         this.setBossName(BossNameGenerator.generateSliderName());
@@ -141,7 +140,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     }
 
     @Override
-    public boolean hurt(@Nonnull DamageSource source, float amount) {
+    public boolean hurt(DamageSource source, float amount) {
         if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             super.hurt(source, amount);
         } else if (source.getDirectEntity() instanceof LivingEntity attacker && this.level.getDifficulty() != Difficulty.PEACEFUL) {
@@ -201,7 +200,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     }
 
     @Override
-    public void die(@Nonnull DamageSource damageSource) {
+    public void die(DamageSource damageSource) {
         this.setDeltaMovement(Vec3.ZERO);
         this.explode();
         if (this.level instanceof ServerLevel) {
@@ -307,7 +306,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
      * to view its associated boss bar.
      */
     @Override
-    public void startSeenByPlayer(@Nonnull ServerPlayer player) {
+    public void startSeenByPlayer(ServerPlayer player) {
         super.startSeenByPlayer(player);
         PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new BossInfoPacket.Display(this.bossFight.getId()), player);
         if (this.getDungeon() == null || this.getDungeon().isPlayerTracked(player)) {
@@ -319,7 +318,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
      * Removes the given player from the list of players tracking this entity.
      */
     @Override
-    public void stopSeenByPlayer(@Nonnull ServerPlayer player) {
+    public void stopSeenByPlayer(ServerPlayer player) {
         super.stopSeenByPlayer(player);
         PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new BossInfoPacket.Remove(this.bossFight.getId()), player);
         this.bossFight.removePlayer(player);
@@ -442,7 +441,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     }
 
     @Override
-    protected SoundEvent getHurtSound(@Nonnull DamageSource damageSource) {
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
         return AetherSoundEvents.ENTITY_SLIDER_HURT.get();
     }
 
@@ -451,7 +450,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         return AetherSoundEvents.ENTITY_SLIDER_DEATH.get();
     }
 
-    @Nonnull
+   
     @Override
     public SoundSource getSoundSource() {
         return SoundSource.HOSTILE;
@@ -489,7 +488,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     }
 
     @Override
-    protected boolean canRide(@Nonnull Entity vehicle) {
+    protected boolean canRide(Entity vehicle) {
         return false;
     }
 
@@ -535,14 +534,14 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     }
 
     @Override
-    public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
+    public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         this.addBossSaveData(tag);
         tag.putBoolean("Awake", this.isAwake());
     }
 
     @Override
-    public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
+    public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.readBossSaveData(tag);
         if (tag.contains("Awake")) {

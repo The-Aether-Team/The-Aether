@@ -17,7 +17,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
-import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.UUID;
 
@@ -42,11 +41,10 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
 	}
 
 	@Override
-	protected float getBob(@Nonnull Moa moa, float partialTicks) {
+	protected float getBob(Moa moa, float partialTicks) {
 		return this.model.setupWingsAnimation(moa, partialTicks);
 	}
 
-	@Nonnull
 	@Override
 	public ResourceLocation getTextureLocation(Moa moa) {
 		ResourceLocation moaSkin = this.getMoaSkinLocation(moa);

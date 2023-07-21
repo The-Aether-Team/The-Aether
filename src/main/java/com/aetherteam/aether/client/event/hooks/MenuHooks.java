@@ -1,10 +1,10 @@
 package com.aetherteam.aether.client.event.hooks;
 
 import com.aetherteam.aether.AetherConfig;
-import com.aetherteam.aether.client.AetherMenuUtil;
 import com.aetherteam.aether.api.AetherMenus;
-import com.aetherteam.aether.client.WorldDisplayHelper;
+import com.aetherteam.aether.client.AetherMenuUtil;
 import com.aetherteam.aether.client.AetherMusicManager;
+import com.aetherteam.aether.client.WorldDisplayHelper;
 import com.aetherteam.aether.client.gui.component.DynamicMenuButton;
 import com.aetherteam.nitrogen.NitrogenConfig;
 import com.aetherteam.nitrogen.api.menu.MenuHelper;

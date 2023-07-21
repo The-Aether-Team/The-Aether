@@ -28,7 +28,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 
-import javax.annotation.Nonnull;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.UUID;
@@ -49,7 +48,7 @@ public class Aerwhale extends FlyingMob {
         this.goalSelector.addGoal(1, new SetTravelCourseGoal(this));
     }
 
-    @Nonnull
+   
     public static AttributeSupplier.Builder createMobAttributes() {
         return FlyingMob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0)
@@ -82,7 +81,7 @@ public class Aerwhale extends FlyingMob {
      * The purpose of this method override is to fix the weird movement from flying mobs.
      */
     @Override
-    public void travel(@Nonnull Vec3 positionIn) {
+    public void travel(Vec3 positionIn) {
         if (this.isEffectiveAi() || this.isControlledByLocalInstance()) {
             List<Entity> passengers = this.getPassengers();
             if (!passengers.isEmpty()) {
@@ -142,8 +141,8 @@ public class Aerwhale extends FlyingMob {
     }
 
     @Override
-    @Nonnull
-    protected InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
+   
+    protected InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (player.getUUID().equals(UUID.fromString("031025bd-0a15-439b-9c55-06a20d0de76f"))) { // SerenityLowes
             player.startRiding(this);
             if (!this.level.isClientSide) {
@@ -198,7 +197,7 @@ public class Aerwhale extends FlyingMob {
     }
 
     @Override
-    protected SoundEvent getHurtSound(@Nonnull DamageSource damageSourceIn) {
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
         return AetherSoundEvents.ENTITY_AERWHALE_DEATH.get();
     }
 

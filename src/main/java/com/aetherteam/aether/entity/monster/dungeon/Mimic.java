@@ -23,8 +23,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 
-import javax.annotation.Nonnull;
-
 public class Mimic extends Monster {
 	public Mimic(EntityType<? extends Mimic> type, Level level) {
 		super(type, level);
@@ -40,7 +38,6 @@ public class Mimic extends Monster {
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	}
 
-	@Nonnull
 	public static AttributeSupplier.Builder createMobAttributes() {
 		return Monster.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 40.0)
@@ -69,7 +66,7 @@ public class Mimic extends Monster {
 	}
 	
 	@Override
-	public boolean doHurtTarget(@Nonnull Entity entity) {
+	public boolean doHurtTarget(Entity entity) {
 		boolean result = super.doHurtTarget(entity);
 		if (entity instanceof LivingEntity livingEntity) {
 			SoundEvent sound = livingEntity.getHealth() <= 0.0 ? AetherSoundEvents.ENTITY_MIMIC_KILL.get() : AetherSoundEvents.ENTITY_MIMIC_ATTACK.get();
@@ -88,7 +85,7 @@ public class Mimic extends Monster {
 	}
 
 	@Override
-	protected SoundEvent getHurtSound(@Nonnull DamageSource damageSource) {
+	protected SoundEvent getHurtSound(DamageSource damageSource) {
 		return AetherSoundEvents.ENTITY_MIMIC_HURT.get();
 	}
 

@@ -11,8 +11,6 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 
-import javax.annotation.Nonnull;
-
 public class ClassicZephyrModel extends EntityModel<Zephyr> {
     public ModelPart body;
 
@@ -28,10 +26,10 @@ public class ClassicZephyrModel extends EntityModel<Zephyr> {
     }
 
     @Override
-    public void setupAnim(@Nonnull Zephyr zephyr, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) { }
+    public void setupAnim(Zephyr zephyr, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) { }
 
     @Override
-    public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         this.body.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 }

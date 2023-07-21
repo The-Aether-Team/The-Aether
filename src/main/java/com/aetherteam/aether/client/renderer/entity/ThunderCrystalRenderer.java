@@ -7,8 +7,6 @@ import com.aetherteam.aether.entity.projectile.crystal.ThunderCrystal;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
-import javax.annotation.Nonnull;
-
 public class ThunderCrystalRenderer extends AbstractCrystalRenderer<ThunderCrystal> {
     private static final ResourceLocation THUNDER_CRYSTAL_TEXTURE  = new ResourceLocation(Aether.MODID, "textures/entity/projectile/crystals/electric_ball.png");
 
@@ -17,8 +15,8 @@ public class ThunderCrystalRenderer extends AbstractCrystalRenderer<ThunderCryst
     }
 
     @Override
-    @Nonnull
-    public ResourceLocation getTextureLocation(@Nonnull ThunderCrystal pEntity) {
+   
+    public ResourceLocation getTextureLocation(ThunderCrystal pEntity) {
         return THUNDER_CRYSTAL_TEXTURE;
     }
 }

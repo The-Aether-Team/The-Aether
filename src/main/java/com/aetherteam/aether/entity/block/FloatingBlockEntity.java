@@ -48,7 +48,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.ITeleporter;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.function.Predicate;
 
@@ -293,7 +292,7 @@ public class FloatingBlockEntity extends Entity {
         return false;
     }
 
-    @Nonnull
+   
     @Override
     protected Entity.MovementEmission getMovementEmission() {
         return Entity.MovementEmission.NONE;
@@ -353,7 +352,7 @@ public class FloatingBlockEntity extends Entity {
     }
 
     @Override
-    public void recreateFromPacket(@Nonnull ClientboundAddEntityPacket packet) {
+    public void recreateFromPacket(ClientboundAddEntityPacket packet) {
         super.recreateFromPacket(packet);
         this.blockState = Block.stateById(packet.getData());
         this.blocksBuilding = true;
@@ -365,7 +364,7 @@ public class FloatingBlockEntity extends Entity {
     }
 
     @Override
-    public void fillCrashReportCategory(@Nonnull CrashReportCategory category) {
+    public void fillCrashReportCategory(CrashReportCategory category) {
         super.fillCrashReportCategory(category);
         category.setDetail("Immitating BlockState", this.blockState.toString());
     }

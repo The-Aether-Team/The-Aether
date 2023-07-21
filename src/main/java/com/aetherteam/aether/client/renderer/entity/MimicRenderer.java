@@ -9,7 +9,6 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.ModList;
 
-import javax.annotation.Nonnull;
 import java.util.Calendar;
 
 public class MimicRenderer extends MobRenderer<Mimic, MimicModel> {
@@ -27,9 +26,8 @@ public class MimicRenderer extends MobRenderer<Mimic, MimicModel> {
 		}
 	}
 
-	@Nonnull
 	@Override
-	public ResourceLocation getTextureLocation(@Nonnull Mimic mimic) {
+	public ResourceLocation getTextureLocation(Mimic mimic) {
 		return ModList.get().isLoaded("lootr") ? LOOTR_TEXTURE : this.isChristmas ? XMAS_TEXTURE : TEXTURE;
 	}
 }

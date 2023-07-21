@@ -6,8 +6,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 
-import javax.annotation.Nonnull;
-
 public class InactiveImageButton extends Button {
     public final ResourceLocation resourceLocation;
     public final int xTexStart;
@@ -27,7 +25,7 @@ public class InactiveImageButton extends Button {
     }
 
     @Override
-    public void renderWidget(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+    public void renderWidget(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, this.resourceLocation);
         int i = this.yTexStart;

@@ -12,8 +12,6 @@ import net.minecraft.client.renderer.entity.layers.EyesLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
-import javax.annotation.Nonnull;
-
 public class SentryLayer<T extends Sentry, M extends SlimeModel<T>> extends EyesLayer<T, M> {
 	private static final RenderType SENTRY_EYE = RenderType.eyes(new ResourceLocation(Aether.MODID, "textures/entity/mobs/sentry/eye.png"));
 	
@@ -22,14 +20,13 @@ public class SentryLayer<T extends Sentry, M extends SlimeModel<T>> extends Eyes
 	}
 
 	@Override
-	public void render(@Nonnull PoseStack poseStack, MultiBufferSource buffer, int packedLight, @Nonnull T sentry, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, T sentry, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
 		VertexConsumer consumer = buffer.getBuffer(this.renderType());
 		if (sentry.isAwake()) {
 			this.getParentModel().renderToBuffer(poseStack, consumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 		}
 	}
 
-	@Nonnull
 	@Override
 	public RenderType renderType() {
 		return SENTRY_EYE;

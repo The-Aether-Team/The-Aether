@@ -25,7 +25,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.gameevent.GameEvent;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class Sentry extends Slime {
@@ -46,7 +45,6 @@ public class Sentry extends Slime {
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, (entity) -> Math.abs(entity.getY() - this.getY()) <= 4.0));
 	}
 
-	@Nonnull
 	public static AttributeSupplier.Builder createMobAttributes() {
 		return Mob.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 10.0)
@@ -61,7 +59,7 @@ public class Sentry extends Slime {
 	}
 
 	@Override
-	public @Nullable SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor level, @Nonnull DifficultyInstance difficulty, @Nonnull MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
+	public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
 		this.setSize(1, true);
 		this.setLeftHanded(false);
 		return spawnData;
@@ -90,7 +88,7 @@ public class Sentry extends Slime {
 	}
 
 	@Override
-	public void push(@Nonnull Entity entity) {
+	public void push(Entity entity) {
 		super.push(entity);
 		if (entity instanceof LivingEntity livingEntity && !(entity instanceof Sentry)) {
 			this.explodeAt(livingEntity);
@@ -98,7 +96,7 @@ public class Sentry extends Slime {
 	}
 
 	@Override
-	public void playerTouch(@Nonnull Player player) {
+	public void playerTouch(Player player) {
 		if (EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(player)) {
 			this.explodeAt(player);
 		}
@@ -119,7 +117,7 @@ public class Sentry extends Slime {
 	}
 
 	@Override
-	public void remove(@Nonnull Entity.RemovalReason reason) {
+	public void remove(Entity.RemovalReason reason) {
 		this.setRemoved(reason);
 		if (reason == Entity.RemovalReason.KILLED) {
 			this.gameEvent(GameEvent.ENTITY_DIE);
@@ -138,27 +136,24 @@ public class Sentry extends Slime {
 	@Override
 	public void setSize(int size, boolean resetHealth) {}
 
-	@Nonnull
 	@Override
 	protected ParticleOptions getParticleType() {
 		return new BlockParticleOption(ParticleTypes.BLOCK, AetherBlocks.SENTRY_STONE.get().defaultBlockState());
 	}
 
-	@Nonnull
 	@Override
 	protected ResourceLocation getDefaultLootTable() {
 		return this.getType().getDefaultLootTable();
 	}
 
 	@SuppressWarnings("unchecked")
-	@Nonnull
 	@Override
 	public EntityType<? extends Sentry> getType() {
 		return (EntityType<? extends Sentry>) super.getType();
 	}
 
 	@Override
-	protected SoundEvent getHurtSound(@Nonnull DamageSource damageSource) {
+	protected SoundEvent getHurtSound(DamageSource damageSource) {
 		return AetherSoundEvents.ENTITY_SENTRY_HURT.get();
 	}
 
@@ -167,19 +162,16 @@ public class Sentry extends Slime {
 		return AetherSoundEvents.ENTITY_SENTRY_DEATH.get();
 	}
 
-	@Nonnull
 	@Override
 	protected SoundEvent getSquishSound() {
 		return AetherSoundEvents.ENTITY_SENTRY_JUMP.get();
 	}
 
-	@Nonnull
 	@Override
 	protected SoundEvent getJumpSound() {
 		return AetherSoundEvents.ENTITY_SENTRY_JUMP.get();
 	}
 
-	@Nonnull
 	@Override
 	public EntityDimensions getDimensions(Pose pose) {
 		return super.getDimensions(pose).scale(2*0.879F);

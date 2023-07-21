@@ -13,8 +13,6 @@ import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemDisplayContext;
 import org.joml.Quaternionf;
 
-import javax.annotation.Nonnull;
-
 public class LightningKnifeRenderer extends EntityRenderer<ThrownLightningKnife> {
 	public LightningKnifeRenderer(EntityRendererProvider.Context context) {
 		super(context);
@@ -22,7 +20,7 @@ public class LightningKnifeRenderer extends EntityRenderer<ThrownLightningKnife>
 	}
 
 	@Override
-	public void render(ThrownLightningKnife lightningKnife, float entityYaw, float partialTicks, PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight) {
+	public void render(ThrownLightningKnife lightningKnife, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
 		poseStack.pushPose();
 		Quaternionf quaternion = Axis.YP.rotationDegrees(lightningKnife.getYRot());
 		quaternion.mul(Axis.XP.rotationDegrees((-(lightningKnife.xRotO + (lightningKnife.getXRot() - lightningKnife.xRotO) * partialTicks)) - 90.0F));
@@ -33,9 +31,8 @@ public class LightningKnifeRenderer extends EntityRenderer<ThrownLightningKnife>
 		super.render(lightningKnife, entityYaw, partialTicks, poseStack, buffer, packedLight);
 	}
 
-	@Nonnull
 	@Override
-	public ResourceLocation getTextureLocation(@Nonnull ThrownLightningKnife lightningKnife) {
+	public ResourceLocation getTextureLocation(ThrownLightningKnife lightningKnife) {
 		return InventoryMenu.BLOCK_ATLAS;
 	}
 }

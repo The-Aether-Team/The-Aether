@@ -12,8 +12,6 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-import javax.annotation.Nonnull;
-
 public class AetherBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLevelRenderer
 {
     public AetherBlockEntityWithoutLevelRenderer(BlockEntityRenderDispatcher pBlockEntityRenderDispatcher, EntityModelSet pEntityModelSet) {
@@ -21,7 +19,7 @@ public class AetherBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLev
     }
 
     @Override
-    public void renderByItem(ItemStack stack, @Nonnull ItemDisplayContext context, @Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, int packedOverlay) {
+    public void renderByItem(ItemStack stack, ItemDisplayContext context, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
         Item item = stack.getItem();
         if (item instanceof EntityBlockItem blockItem && blockItem.getBlockEntity().isPresent()) {
             BlockEntity blockEntity = blockItem.getBlockEntity().orElseThrow(() -> new UnsupportedOperationException("BlockEntity was expected, but not supplied."));

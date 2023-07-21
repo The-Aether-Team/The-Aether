@@ -33,7 +33,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 
@@ -66,7 +65,7 @@ public class Swet extends Slime implements MountableMob {
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, (target) -> !this.isFriendlyTowardEntity(target) && !(target.getRootVehicle() instanceof Swet)));
     }
 
-    @Nonnull
+   
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 12.0)
@@ -85,7 +84,7 @@ public class Swet extends Slime implements MountableMob {
     }
 
     @Override
-    public void onSyncedDataUpdated(@Nonnull EntityDataAccessor<?> dataAccessor) {
+    public void onSyncedDataUpdated(EntityDataAccessor<?> dataAccessor) {
         if (DATA_WATER_DAMAGE_SCALE_ID.equals(dataAccessor)) {
             this.refreshDimensions();
         }
@@ -177,7 +176,7 @@ public class Swet extends Slime implements MountableMob {
     }
 
     @Override
-    public void travel(@Nonnull Vec3 motion) {
+    public void travel(Vec3 motion) {
         this.travel(this, motion);
         if (this.isAlive()) {
             LivingEntity entity = this.getControllingPassenger();
@@ -195,9 +194,9 @@ public class Swet extends Slime implements MountableMob {
         super.travel(motion);
     }
 
-    @Nonnull
+   
     @Override
-    public InteractionResult mobInteract(Player player, @Nonnull InteractionHand hand) {
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (!this.level.isClientSide) {
             if (!this.hasPrey() && this.isFriendlyTowardEntity(player)) {
                 this.capturePrey(player);
@@ -328,7 +327,7 @@ public class Swet extends Slime implements MountableMob {
     }
 
     @Override
-    protected SoundEvent getHurtSound(@Nonnull DamageSource damageSource) {
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
         return AetherSoundEvents.ENTITY_SWET_HURT.get();
     }
 
@@ -355,9 +354,9 @@ public class Swet extends Slime implements MountableMob {
         return true;
     }
 
-    @Nonnull
+   
     @Override
-    public Vec3 getDismountLocationForPassenger(@Nonnull LivingEntity livingEntity) {
+    public Vec3 getDismountLocationForPassenger(LivingEntity livingEntity) {
         if (this.isFriendlyTowardEntity(livingEntity)) {
             return super.getDismountLocationForPassenger(livingEntity);
         } else {
@@ -389,14 +388,14 @@ public class Swet extends Slime implements MountableMob {
     }
 
     @Override
-    public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
+    public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putFloat("WaterDamageScale", this.getWaterDamageScale());
         tag.putBoolean("DeadInWater", this.getDeadInWater());
     }
 
     @Override
-    public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
+    public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         if (tag.contains("WaterDamageScale")) {
             this.setWaterDamageScale(tag.getFloat("WaterDamageScale"));
@@ -451,9 +450,9 @@ public class Swet extends Slime implements MountableMob {
         return super.getScale() - super.getScale() * this.getWaterDamageScale();
     }
 
-    @Nonnull
+   
     @Override
-    public EntityDimensions getDimensions(@Nonnull Pose pose) {
+    public EntityDimensions getDimensions(Pose pose) {
         return this.getType().getDimensions().scale(getScale());
     }
 

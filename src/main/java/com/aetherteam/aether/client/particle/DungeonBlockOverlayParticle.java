@@ -6,8 +6,6 @@ import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nonnull;
-
 public class DungeonBlockOverlayParticle extends TextureSheetParticle {
     protected DungeonBlockOverlayParticle(ClientLevel worldIn, double xCoordIn, double yCoordIn, double zCoordIn) {
         super(worldIn, xCoordIn, yCoordIn, zCoordIn);
@@ -16,7 +14,6 @@ public class DungeonBlockOverlayParticle extends TextureSheetParticle {
         this.hasPhysics = false;
     }
 
-    @Nonnull
     @Override
     public ParticleRenderType getRenderType() {
         return ParticleRenderType.PARTICLE_SHEET_OPAQUE;

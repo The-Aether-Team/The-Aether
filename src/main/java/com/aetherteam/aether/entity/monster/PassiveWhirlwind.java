@@ -16,7 +16,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class PassiveWhirlwind extends AbstractWhirlwind {
@@ -25,14 +24,14 @@ public class PassiveWhirlwind extends AbstractWhirlwind {
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor level, @Nonnull DifficultyInstance difficulty, @Nonnull MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
         this.lifeLeft = this.random.nextInt(512) + 512;
         return super.finalizeSpawn(level, difficulty, reason, spawnData, tag);
     }
 
-    @Nonnull
+   
     @Override
-    public InteractionResult mobInteract(Player player, @Nonnull InteractionHand hand) {
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
         if (itemStack.getItem() instanceof DyeItem dyeItem && player.isCreative()) {
             this.setColorData(dyeItem.getDyeColor().getMaterialColor().col);

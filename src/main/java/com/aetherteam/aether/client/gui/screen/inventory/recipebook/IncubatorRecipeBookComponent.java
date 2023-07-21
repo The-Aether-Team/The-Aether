@@ -9,7 +9,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Set;
@@ -33,7 +32,7 @@ public class IncubatorRecipeBookComponent extends RecipeBookComponent {
     }
 
     @Override
-    public void setupGhostRecipe(@Nonnull Recipe<?> recipe, List<Slot> slots) {
+    public void setupGhostRecipe(Recipe<?> recipe, List<Slot> slots) {
         this.ghostRecipe.setRecipe(recipe);
         Slot slot = slots.get(1);
         if (slot.getItem().isEmpty()) {
@@ -51,12 +50,10 @@ public class IncubatorRecipeBookComponent extends RecipeBookComponent {
     }
 
     @Override
-    @Nonnull
     protected Component getRecipeFilterName() {
         return FILTER_NAME;
     }
 
-    @Nonnull
     protected Set<Item> getFuelItems() {
         return IncubatorBlockEntity.getIncubatingMap().keySet();
     }

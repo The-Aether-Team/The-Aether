@@ -12,8 +12,6 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
 
-import javax.annotation.Nonnull;
-
 public class TntPresent extends Entity {
     private static final EntityDataAccessor<Integer> DATA_FUSE_ID = SynchedEntityData.defineId(TntPresent.class, EntityDataSerializers.INT);
 
@@ -73,7 +71,7 @@ public class TntPresent extends Entity {
         this.entityData.set(DATA_FUSE_ID, fuse);
     }
 
-    @Nonnull
+   
     @Override
     protected Entity.MovementEmission getMovementEmission() {
         return Entity.MovementEmission.NONE;
@@ -85,7 +83,7 @@ public class TntPresent extends Entity {
     }
 
     @Override
-    protected float getEyeHeight(@Nonnull Pose pose, @Nonnull EntityDimensions dimensions) {
+    protected float getEyeHeight(Pose pose, EntityDimensions dimensions) {
         return 0.15F;
     }
 
@@ -101,7 +99,7 @@ public class TntPresent extends Entity {
         }
     }
 
-    @Nonnull
+   
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);

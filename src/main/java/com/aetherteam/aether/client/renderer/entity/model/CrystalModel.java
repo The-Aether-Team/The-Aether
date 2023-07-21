@@ -10,8 +10,6 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.world.entity.Entity;
 
-import javax.annotation.Nonnull;
-
 public class CrystalModel<T extends Entity> extends ListModel<T> {
     public final ModelPart crystal1;
     public final ModelPart crystal2;
@@ -32,14 +30,14 @@ public class CrystalModel<T extends Entity> extends ListModel<T> {
         return LayerDefinition.create(meshDefinition, 64, 32);
     }
 
-    @Nonnull
+   
     @Override
     public Iterable<ModelPart> parts() {
         return ImmutableList.of(this.crystal1, this.crystal2, this.crystal3);
     }
 
     @Override
-    public void setupAnim(@Nonnull T crystal, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(T crystal, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         for (ModelPart modelPart : this.parts()) {
             modelPart.xRot = headPitch * ((float) Math.PI / 180.0F);
             modelPart.yRot = netHeadYaw * ((float) Math.PI / 180.0F);

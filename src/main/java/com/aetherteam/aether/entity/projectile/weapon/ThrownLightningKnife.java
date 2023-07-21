@@ -15,8 +15,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.network.NetworkHooks;
 
-import javax.annotation.Nonnull;
-
 public class ThrownLightningKnife extends ThrowableItemProjectile {
 	public ThrownLightningKnife(EntityType<? extends ThrownLightningKnife> type, Level level) {
 		super(type, level);
@@ -31,7 +29,7 @@ public class ThrownLightningKnife extends ThrowableItemProjectile {
 	}
 
 	@Override
-	protected void onHit(@Nonnull HitResult result) {
+	protected void onHit(HitResult result) {
 		if (!this.level.isClientSide) {
 			if (result.getType() != HitResult.Type.MISS && this.level instanceof ServerLevel) {
 				LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(this.level);
@@ -46,13 +44,11 @@ public class ThrownLightningKnife extends ThrowableItemProjectile {
 		super.onHit(result);
 	}
 
-	@Nonnull
 	@Override
 	protected Item getDefaultItem() {
 		return AetherItems.LIGHTNING_KNIFE.get();
 	}
 
-	@Nonnull
 	@Override
 	public Packet<ClientGamePacketListener> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);

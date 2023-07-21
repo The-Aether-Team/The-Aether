@@ -6,8 +6,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 
-import javax.annotation.Nonnull;
-
 /**
  * This is a widget that allows the player to select a line of dialogue to say to an NPC.
  */
@@ -18,7 +16,7 @@ public class PlayerDialogueButton extends Button {
     }
 
     @Override
-    public void renderWidget(@Nonnull PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
+    public void renderWidget(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
         fillGradient(pPoseStack, this.getX(), this.getY(), this.getX() + this.width, this.getY() + this.height, 0x66000000, 0x66000000);
         drawString(pPoseStack, Minecraft.getInstance().font, this.getMessage(), this.getX() + 1, this.getY() + 1, this.isHovered ? 0xFFFF55: 0xFFFFFF);
     }

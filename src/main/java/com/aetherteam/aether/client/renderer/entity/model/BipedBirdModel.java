@@ -11,8 +11,6 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 
-import javax.annotation.Nonnull;
-
 public abstract class BipedBirdModel<T extends Entity & WingedBird & NotGrounded> extends EntityModel<T> {
     public ModelPart head;
     public ModelPart jaw;
@@ -58,7 +56,7 @@ public abstract class BipedBirdModel<T extends Entity & WingedBird & NotGrounded
     }
 
     @Override
-    public void setupAnim(@Nonnull T bipedBird, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(T bipedBird, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.head.xRot = headPitch * (float) (Math.PI / 180.0F);
         this.head.yRot = netHeadYaw * (float) (Math.PI / 180.0F);
         this.neck.xRot = -this.head.xRot;
@@ -91,7 +89,7 @@ public abstract class BipedBirdModel<T extends Entity & WingedBird & NotGrounded
     }
 
     @Override
-    public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         this.head.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
         this.body.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
         this.rightTailFeather.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);

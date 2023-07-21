@@ -57,7 +57,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
@@ -111,13 +110,11 @@ public class Moa extends MountableAnimal implements WingedBird {
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, AechorPlant.class, false, (livingEntity) -> this.getFollowing() == null && this.isPlayerGrown() && !this.isBaby()));
 	}
 
-	@Nonnull
 	@Override
-	protected PathNavigation createNavigation(@Nonnull Level level) {
+	protected PathNavigation createNavigation(Level level) {
 		return new FallPathNavigation(this, level);
 	}
 
-	@Nonnull
 	public static AttributeSupplier.Builder createMobAttributes() {
 		return Mob.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 35.0)
@@ -142,7 +139,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	@Override
-	public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor level, @Nonnull DifficultyInstance difficulty, @Nonnull MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
 		this.generateMoaUUID();
 		if (tag != null) {
 			if (tag.contains("IsBaby")) {
@@ -168,7 +165,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	@Override
-	public void onSyncedDataUpdated(@Nonnull EntityDataAccessor<?> dataAccessor) {
+	public void onSyncedDataUpdated(EntityDataAccessor<?> dataAccessor) {
 		if (DATA_SITTING_ID.equals(dataAccessor)) {
 			this.refreshDimensions();
 		}
@@ -290,7 +287,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	@Override
-	public void travel(@Nonnull Vec3 vector3d) {
+	public void travel(Vec3 vector3d) {
 		if (!this.isSitting()) {
 			super.travel(vector3d);
 		} else {
@@ -323,9 +320,8 @@ public class Moa extends MountableAnimal implements WingedBird {
 		this.setFlapCooldown(0);
 	}
 
-	@Nonnull
 	@Override
-	public InteractionResult mobInteract(Player playerEntity, @Nonnull InteractionHand hand) {
+	public InteractionResult mobInteract(Player playerEntity, InteractionHand hand) {
 		ItemStack itemStack = playerEntity.getItemInHand(hand);
 		if (this.isPlayerGrown() && itemStack.is(AetherItems.NATURE_STAFF.get())) {
 			itemStack.hurtAndBreak(1, playerEntity, (p) -> p.broadcastBreakEvent(hand));
@@ -536,7 +532,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	@Override
-	protected SoundEvent getHurtSound(@Nonnull DamageSource damageSource) {
+	protected SoundEvent getHurtSound(DamageSource damageSource) {
 		return AetherSoundEvents.ENTITY_MOA_HURT.get();
 	}
 
@@ -551,12 +547,12 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	@Override
-	protected void playStepSound(@Nonnull BlockPos pos, @Nonnull BlockState state) {
+	protected void playStepSound(BlockPos pos, BlockState state) {
 		this.playSound(AetherSoundEvents.ENTITY_MOA_STEP.get(), 0.15F, 1.0F);
 	}
 
 	@Override
-	public boolean isFood(@Nonnull ItemStack stack) {
+	public boolean isFood(ItemStack stack) {
 		return false;
 	}
 
@@ -616,9 +612,8 @@ public class Moa extends MountableAnimal implements WingedBird {
 		return 1.0F;
 	}
 
-	@Nonnull
 	@Override
-	public EntityDimensions getDimensions(@Nonnull Pose pose) {
+	public EntityDimensions getDimensions(Pose pose) {
 		EntityDimensions dimensions = super.getDimensions(pose);
 		if (this.isSitting()) {
 			dimensions = dimensions.scale(1.0F, 0.5F);
@@ -631,7 +626,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 
 	@Nullable
 	@Override
-	public AgeableMob getBreedOffspring(@Nonnull ServerLevel level, @Nonnull AgeableMob entity) {
+	public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob entity) {
 		return null;
 	}
 
@@ -654,7 +649,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	@Override
-	public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
+	public void readAdditionalSaveData(CompoundTag tag) {
 		super.readAdditionalSaveData(tag);
 		if (tag.contains("MoaUUID")) {
 			this.setMoaUUID(tag.getUUID("MoaUUID"));
@@ -694,7 +689,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	@Override
-	public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
+	public void addAdditionalSaveData(CompoundTag tag) {
 		super.addAdditionalSaveData(tag);
 		if (this.getMoaUUID() != null) {
 			tag.putUUID("MoaUUID", this.getMoaUUID());

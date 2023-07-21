@@ -10,8 +10,6 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 
-import javax.annotation.Nonnull;
-
 public class FireMinionRenderer extends MobRenderer<FireMinion, FireMinionModel<FireMinion>> {
     private static final ResourceLocation SUN_SPIRIT_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sun_spirit/sun_spirit.png");
     private static final ResourceLocation FROZEN_SPIRIT_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sun_spirit/frozen_sun_spirit.png");
@@ -21,11 +19,11 @@ public class FireMinionRenderer extends MobRenderer<FireMinion, FireMinionModel<
     }
 
     @Override
-    protected void scale(@Nonnull FireMinion fireMinion, PoseStack poseStack, float partialTickTime) {
+    protected void scale(FireMinion fireMinion, PoseStack poseStack, float partialTickTime) {
         poseStack.translate(0.0, 0.35, 0.0);
     }
     
-    @Nonnull
+   
     @Override
     public ResourceLocation getTextureLocation(FireMinion fireMinion) {
         if (fireMinion.hasCustomName()) {

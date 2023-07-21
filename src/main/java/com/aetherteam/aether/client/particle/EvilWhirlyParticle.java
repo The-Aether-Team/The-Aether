@@ -12,8 +12,6 @@ import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nonnull;
-
 public class EvilWhirlyParticle extends WhirlyParticle<EvilWhirlwind> {
     float smokeParticleScale;
 
@@ -38,7 +36,7 @@ public class EvilWhirlyParticle extends WhirlyParticle<EvilWhirlwind> {
     }
 
     @Override
-    public void render(@Nonnull VertexConsumer consumer, @Nonnull Camera camera, float partialTicks) {
+    public void render(VertexConsumer consumer, Camera camera, float partialTicks) {
         float f = ((float)this.age + partialTicks) / (float)this.lifetime * 32.0F;
         f = Mth.clamp(f, 0.0F, 1.0F);
         this.quadSize = this.smokeParticleScale * f;
@@ -81,7 +79,7 @@ public class EvilWhirlyParticle extends WhirlyParticle<EvilWhirlwind> {
         }
 
         @Override
-        public Particle createParticle(@Nonnull SimpleParticleType particleType, @Nonnull ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(SimpleParticleType particleType, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             EvilWhirlyParticle evilWhirlyParticle = new EvilWhirlyParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, spriteSet);
             evilWhirlyParticle.pickSprite(this.spriteSet);
             return evilWhirlyParticle;

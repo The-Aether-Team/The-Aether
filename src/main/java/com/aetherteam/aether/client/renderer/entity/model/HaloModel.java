@@ -8,8 +8,6 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.Entity;
 
-import javax.annotation.Nonnull;
-
 public class HaloModel<T extends Entity> extends EntityModel<T> {
     public ModelPart halo;
     public boolean crouching;
@@ -31,7 +29,7 @@ public class HaloModel<T extends Entity> extends EntityModel<T> {
     }
 
     @Override
-    public void setupAnim(@Nonnull T pEntity, float pLimbSwing, float pLimbSwingAmount, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
+    public void setupAnim(T pEntity, float pLimbSwing, float pLimbSwingAmount, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
         if (this.crouching) {
             this.halo.y = 4.2F;
         } else {
@@ -40,7 +38,7 @@ public class HaloModel<T extends Entity> extends EntityModel<T> {
     }
 
     @Override
-    public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         this.halo.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 }

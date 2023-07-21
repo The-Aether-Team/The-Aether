@@ -10,8 +10,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
-import javax.annotation.Nonnull;
-
 public class CockatriceRenderer extends MobRenderer<Cockatrice, CockatriceModel> {
     private static final ResourceLocation COCKATRICE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/cockatrice/cockatrice.png");
 
@@ -21,18 +19,18 @@ public class CockatriceRenderer extends MobRenderer<Cockatrice, CockatriceModel>
     }
 
     @Override
-	protected void scale(@Nonnull Cockatrice cockatrice, PoseStack poseStack, float partialTickTime) {
+	protected void scale(Cockatrice cockatrice, PoseStack poseStack, float partialTickTime) {
         poseStack.scale(1.8F, 1.8F, 1.8F);
     }
 
     @Override
-    protected float getBob(@Nonnull Cockatrice cockatrice, float partialTicks) {
+    protected float getBob(Cockatrice cockatrice, float partialTicks) {
         return this.model.setupWingsAnimation(cockatrice, partialTicks);
     }
 
-    @Nonnull
+   
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull Cockatrice cockatrice) {
+    public ResourceLocation getTextureLocation(Cockatrice cockatrice) {
         return COCKATRICE_TEXTURE;
     }
 }

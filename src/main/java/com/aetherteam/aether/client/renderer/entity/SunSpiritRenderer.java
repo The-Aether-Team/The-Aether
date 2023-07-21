@@ -10,8 +10,6 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 
-import javax.annotation.Nonnull;
-
 public class SunSpiritRenderer extends MobRenderer<SunSpirit, SunSpiritModel<SunSpirit>> {
     private static final ResourceLocation SUN_SPIRIT_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sun_spirit/sun_spirit.png");
     private static final ResourceLocation FROZEN_SPIRIT_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sun_spirit/frozen_sun_spirit.png");
@@ -21,13 +19,13 @@ public class SunSpiritRenderer extends MobRenderer<SunSpirit, SunSpiritModel<Sun
     }
 
     @Override
-    protected void scale(@Nonnull SunSpirit pLivingEntity, PoseStack pMatrixStack, float pPartialTickTime) {
+    protected void scale(SunSpirit pLivingEntity, PoseStack pMatrixStack, float pPartialTickTime) {
         pMatrixStack.scale(2.25F, 2.25F, 2.25F);
         pMatrixStack.translate(0, 0.85, 0);
     }
 
     @Override
-    @Nonnull
+   
     public ResourceLocation getTextureLocation(SunSpirit sunSpirit) {
         return sunSpirit.isFrozen() ? FROZEN_SPIRIT_TEXTURE : SUN_SPIRIT_TEXTURE;
     }

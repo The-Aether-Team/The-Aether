@@ -23,7 +23,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public abstract class MountableAnimal extends AetherAnimal implements MountableMob, Saddleable, NotGrounded {
@@ -65,7 +64,7 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
 	}
 
 	@Override
-	public void travel(@Nonnull Vec3 vector3d) {
+	public void travel(Vec3 vector3d) {
 		this.travel(this, vector3d);
 	}
 
@@ -80,9 +79,8 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
 		this.setEntityOnGround(false);
 	}
 
-	@Nonnull
 	@Override
-	public InteractionResult mobInteract(Player playerEntity, @Nonnull InteractionHand hand) {
+	public InteractionResult mobInteract(Player playerEntity, InteractionHand hand) {
 		boolean flag = this.isFood(playerEntity.getItemInHand(hand));
 		if (!flag && this.isSaddled() && !this.isVehicle() && !playerEntity.isSecondaryUseActive()) {
 			if (!this.level.isClientSide) {
@@ -100,9 +98,8 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
 		}
 	}
 
-	@Nonnull
 	@Override
-	public Vec3 getDismountLocationForPassenger(@Nonnull LivingEntity livingEntity) {
+	public Vec3 getDismountLocationForPassenger(LivingEntity livingEntity) {
 		Direction direction = this.getMotionDirection();
 		if (direction.getAxis() != Direction.Axis.Y) {
 			int[][] aint = DismountHelper.offsetsForDirection(direction);
@@ -144,7 +141,7 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
 	}
 
 	@Override
-	protected boolean canRide(@Nonnull Entity entityIn) {
+	protected boolean canRide(Entity entityIn) {
 		return true;
 	}
 
@@ -235,13 +232,13 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
 	}
 
 	@Override
-	public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
+	public void addAdditionalSaveData(CompoundTag tag) {
 		super.addAdditionalSaveData(tag);
 		tag.putBoolean("Saddled", this.isSaddled());
 	}
 
 	@Override
-	public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
+	public void readAdditionalSaveData(CompoundTag tag) {
 		super.readAdditionalSaveData(tag);
 		if (tag.contains("Saddled")) {
 			this.setSaddled(tag.getBoolean("Saddled"));

@@ -15,8 +15,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import org.joml.Vector3f;
 
-import javax.annotation.Nonnull;
-
 public class SliderRenderer extends MobRenderer<Slider, SliderModel> {
     private static final ResourceLocation SLIDER_ASLEEP_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/slider/slider_asleep.png");
     private static final ResourceLocation SLIDER_ASLEEP_CRITICAL_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/slider/slider_asleep_critical.png");
@@ -29,14 +27,14 @@ public class SliderRenderer extends MobRenderer<Slider, SliderModel> {
     }
 
     @Override
-    public void render(@Nonnull Slider slider, float entityYaw, float partialTicks, @Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight) {
+    public void render(Slider slider, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         if (!slider.isDeadOrDying()) {
             super.render(slider, entityYaw, partialTicks, poseStack, buffer, packedLight);
         }
     }
 
     @Override
-    protected void setupRotations(@Nonnull Slider slider, @Nonnull PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
+    protected void setupRotations(Slider slider, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
         if (!Minecraft.getInstance().isPaused()) {
             if (slider.getHurtAngle() != 0) {
                 poseStack.mulPose(Axis.of(new Vector3f(slider.getHurtAngleX(), 0.0F, -slider.getHurtAngleZ())).rotationDegrees(slider.getHurtAngle() * -15.0F));
@@ -51,9 +49,9 @@ public class SliderRenderer extends MobRenderer<Slider, SliderModel> {
         }
     }
 
-    @Nonnull
+   
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull Slider slider) {
+    public ResourceLocation getTextureLocation(Slider slider) {
         if (!slider.isAwake()) {
             return !slider.isCritical() ? SLIDER_ASLEEP_TEXTURE : SLIDER_ASLEEP_CRITICAL_TEXTURE;
         } else {

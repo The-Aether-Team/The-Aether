@@ -30,8 +30,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.NetworkHooks;
 
-import javax.annotation.Nonnull;
-
 public class ZephyrSnowball extends Fireball implements ItemSupplier {
 	private int ticksInAir;
 
@@ -87,7 +85,7 @@ public class ZephyrSnowball extends Fireball implements ItemSupplier {
 	}
 
 	@Override
-	protected void onHit(@Nonnull HitResult result) {
+	protected void onHit(HitResult result) {
 		super.onHit(result);
 		if (result.getType() == HitResult.Type.ENTITY) {
 			Entity entity = ((EntityHitResult) result).getEntity();
@@ -114,19 +112,16 @@ public class ZephyrSnowball extends Fireball implements ItemSupplier {
 		return false;
 	}
 
-	@Nonnull
 	@Override
 	protected ParticleOptions getTrailParticle() {
 		return AetherParticleTypes.ZEPHYR_SNOWFLAKE.get();
 	}
 
-	@Nonnull
 	@Override
 	public ItemStack getItem() {
 		return new ItemStack(Items.SNOWBALL);
 	}
 
-	@Nonnull
 	@Override
 	public Packet<ClientGamePacketListener> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);

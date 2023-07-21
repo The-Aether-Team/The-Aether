@@ -5,8 +5,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.geom.ModelPart;
 
-import javax.annotation.Nonnull;
-
 public class MoaModel extends BipedBirdModel<Moa> {
 	public boolean renderLegs;
 
@@ -15,13 +13,13 @@ public class MoaModel extends BipedBirdModel<Moa> {
 	}
 
 	@Override
-	public void prepareMobModel(@Nonnull Moa moa, float limbSwing, float limbSwingAmount, float partialTicks) {
+	public void prepareMobModel(Moa moa, float limbSwing, float limbSwingAmount, float partialTicks) {
 		super.prepareMobModel(moa, limbSwing, limbSwingAmount, partialTicks);
 		this.renderLegs = !moa.isSitting() || (!moa.isEntityOnGround() && moa.isSitting());
 	}
 
 	@Override
-	public void setupAnim(@Nonnull Moa moa, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setupAnim(Moa moa, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		super.setupAnim(moa, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 		if (moa.isSitting()) {
 			this.jaw.xRot = 0.0F;
@@ -31,7 +29,7 @@ public class MoaModel extends BipedBirdModel<Moa> {
 	}
 
 	@Override
-	public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+	public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		super.renderToBuffer(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
 		if (this.renderLegs) {
 			this.rightLeg.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);

@@ -12,8 +12,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-import javax.annotation.Nonnull;
-
 public class AerwhaleRenderer extends MultiModelRenderer<Aerwhale, EntityModel<Aerwhale>, AerwhaleModel, ClassicAerwhaleModel> {
     private static final ResourceLocation AERWHALE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aerwhale/aerwhale.png");
     private static final ResourceLocation AERWHALE_CLASSIC_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aerwhale/aerwhale_classic.png");
@@ -27,13 +25,13 @@ public class AerwhaleRenderer extends MultiModelRenderer<Aerwhale, EntityModel<A
     }
 
     @Override
-    protected void scale(@Nonnull Aerwhale aerwhale, PoseStack poseStack, float partialTickTime) {
+    protected void scale(Aerwhale aerwhale, PoseStack poseStack, float partialTickTime) {
         poseStack.translate(0.0, -0.5, 0.0);
         poseStack.scale(2.0F, 2.0F, 2.0F);
     }
 
     @Override
-    protected void setupRotations(@Nonnull Aerwhale aerwhale, @Nonnull PoseStack poseStack, float ageInTicks, float pRotationYaw, float partialTicks) {
+    protected void setupRotations(Aerwhale aerwhale, PoseStack poseStack, float ageInTicks, float pRotationYaw, float partialTicks) {
         super.setupRotations(aerwhale, poseStack, ageInTicks, pRotationYaw, partialTicks);
         poseStack.mulPose(Axis.XP.rotationDegrees(Mth.lerp(partialTicks, aerwhale.getXRotOData(), aerwhale.getXRotData())));
     }

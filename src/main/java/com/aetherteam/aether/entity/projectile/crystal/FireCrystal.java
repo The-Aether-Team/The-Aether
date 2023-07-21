@@ -18,8 +18,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
-import javax.annotation.Nonnull;
-
 /**
  * A damaging projectile shot by the sun spirit. It floats around the room for 15 seconds.
  */
@@ -119,7 +117,7 @@ public class FireCrystal extends AbstractCrystal {
     }
 
     @Override
-    public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
+    public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putDouble("XSpeed", this.xPower);
         tag.putDouble("YSpeed", this.yPower);
@@ -127,7 +125,7 @@ public class FireCrystal extends AbstractCrystal {
     }
 
     @Override
-    public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
+    public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.xPower = tag.getDouble("XSpeed");
         this.yPower = tag.getDouble("YSpeed");

@@ -15,7 +15,6 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
-import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.UUID;
 
@@ -28,7 +27,7 @@ public class MoaSaddleLayer extends RenderLayer<Moa, MoaModel> {
 	}
 
 	@Override
-	public void render(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, Moa moa, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Moa moa, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
 		if (moa.isSaddled()) {
 			ResourceLocation texture = moa.getMoaType().getSaddleTexture();
 			ResourceLocation moaSkin = this.getMoaSkinLocation(moa);

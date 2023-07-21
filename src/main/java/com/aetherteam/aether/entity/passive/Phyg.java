@@ -23,7 +23,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class Phyg extends WingedAnimal {
@@ -43,7 +42,7 @@ public class Phyg extends WingedAnimal {
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
     }
 
-    @Nonnull
+   
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 10.0)
@@ -63,7 +62,7 @@ public class Phyg extends WingedAnimal {
 
     @Nullable
     @Override
-    protected SoundEvent getHurtSound(@Nonnull DamageSource damageSource) {
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
         return AetherSoundEvents.ENTITY_PHYG_HURT.get();
     }
 
@@ -80,17 +79,17 @@ public class Phyg extends WingedAnimal {
     }
 
     @Override
-    protected void playStepSound(@Nonnull BlockPos pos, @Nonnull BlockState state) {
+    protected void playStepSound(BlockPos pos, BlockState state) {
         this.playSound(AetherSoundEvents.ENTITY_PHYG_STEP.get(), 0.15F, 1.0F);
     }
 
     @Nullable
     @Override
-    public AgeableMob getBreedOffspring(@Nonnull ServerLevel level, @Nonnull AgeableMob entity) {
+    public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob entity) {
         return AetherEntityTypes.PHYG.get().create(level);
     }
 
-    @Nonnull
+   
     @OnlyIn(Dist.CLIENT)
     public Vec3 getLeashOffset() {
         return new Vec3(0.0, 0.6F * this.getEyeHeight(), this.getBbWidth() * 0.4F);

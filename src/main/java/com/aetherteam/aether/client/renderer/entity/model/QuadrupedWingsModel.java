@@ -13,8 +13,6 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
-import javax.annotation.Nonnull;
-
 public class QuadrupedWingsModel<T extends WingedAnimal> extends EntityModel<T> {
     private final ModelPart leftWingInner;
     private final ModelPart leftWingOuter;
@@ -58,7 +56,7 @@ public class QuadrupedWingsModel<T extends WingedAnimal> extends EntityModel<T> 
     }
 
     @Override
-    public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         this.leftWingInner.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
         this.rightWingInner.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
     }

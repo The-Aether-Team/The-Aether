@@ -7,8 +7,6 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.LivingEntity;
 
-import javax.annotation.Nonnull;
-
 public class PendantModel extends HumanoidModel<LivingEntity> {
     public PendantModel(ModelPart root) {
         super(root);
@@ -22,13 +20,11 @@ public class PendantModel extends HumanoidModel<LivingEntity> {
         return LayerDefinition.create(meshDefinition, 24, 16);
     }
 
-    @Nonnull
     @Override
     protected Iterable<ModelPart> headParts() {
         return ImmutableList.of();
     }
 
-    @Nonnull
     @Override
     protected Iterable<ModelPart> bodyParts() {
         return ImmutableList.of(this.body);

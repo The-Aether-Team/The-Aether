@@ -8,8 +8,6 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 
-import javax.annotation.Nonnull;
-
 public class AerwhaleModel extends EntityModel<Aerwhale> {
 	public ModelPart head;
 
@@ -32,10 +30,10 @@ public class AerwhaleModel extends EntityModel<Aerwhale> {
 	}
 
 	@Override
-	public void setupAnim(@Nonnull Aerwhale aerwhale, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) { }
+	public void setupAnim(Aerwhale aerwhale, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) { }
 
 	@Override
-	public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+	public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		this.head.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 }

@@ -12,8 +12,6 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
-import javax.annotation.Nonnull;
-
 public class MimicModel extends EntityModel<Mimic> {
 	private final ModelPart upperBody;
 	private final ModelPart lowerBody;
@@ -41,7 +39,7 @@ public class MimicModel extends EntityModel<Mimic> {
 	}
 
 	@Override
-	public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+	public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		this.upperBody.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
 		this.lowerBody.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
 		this.leftLeg.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
@@ -49,7 +47,7 @@ public class MimicModel extends EntityModel<Mimic> {
 	}
 	
 	@Override
-	public void setupAnim(@Nonnull Mimic mimic, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setupAnim(Mimic mimic, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.upperBody.xRot = (float) Math.PI - 0.6F * (1.0F + Mth.cos(ageInTicks / 10.0F * (float) Math.PI));
 		this.rightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
 		this.leftLeg.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;

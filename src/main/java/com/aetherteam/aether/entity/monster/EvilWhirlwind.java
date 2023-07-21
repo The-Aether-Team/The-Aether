@@ -11,7 +11,6 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class EvilWhirlwind extends AbstractWhirlwind {
@@ -20,7 +19,7 @@ public class EvilWhirlwind extends AbstractWhirlwind {
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor level, @Nonnull DifficultyInstance difficulty, @Nonnull MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
         this.lifeLeft = this.random.nextInt(512) + 512;
         this.lifeLeft /= 2;
         this.isEvil = true;

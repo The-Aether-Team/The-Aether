@@ -19,7 +19,6 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.player.Player;
 import org.apache.commons.lang3.tuple.Triple;
 
-import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.UUID;
 
@@ -28,7 +27,7 @@ public class DeveloperGlowLayer<T extends Player, M extends PlayerModel<T>> exte
         super(renderer);
     }
 
-    public void render(@Nonnull PoseStack pMatrixStack, @Nonnull MultiBufferSource pBuffer, int pPackedLight, @Nonnull T pLivingEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
+    public void render(PoseStack pMatrixStack, MultiBufferSource pBuffer, int pPackedLight, T pLivingEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
         if (pLivingEntity instanceof AbstractClientPlayer abstractClientPlayer) {
             User user = UserData.Client.getClientUser();
             UUID playerUUID = abstractClientPlayer.getUUID();

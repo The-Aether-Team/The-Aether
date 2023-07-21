@@ -32,7 +32,6 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.List;
@@ -58,7 +57,7 @@ public abstract class AbstractWhirlwind extends Mob {
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, false));
     }
 
-    @Nonnull
+   
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 10.0)
@@ -73,7 +72,7 @@ public abstract class AbstractWhirlwind extends Mob {
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor level, @Nonnull DifficultyInstance difficulty, @Nonnull MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
         this.setColorData(this.getDefaultColor());
         this.movementAngle = this.random.nextFloat() * 360.0F;
         this.movementCurve = (this.random.nextFloat() - this.random.nextFloat()) * 0.1F;
@@ -88,7 +87,7 @@ public abstract class AbstractWhirlwind extends Mob {
      * Warning for "deprecation" is suppressed because vanilla calls {@link LevelReader#getSeaLevel()} just fine.
      */
     @SuppressWarnings("deprecation")
-    public boolean checkSpawnObstruction(@Nonnull LevelReader level) {
+    public boolean checkSpawnObstruction(LevelReader level) {
         if (level.isUnobstructed(this) && !level.containsAnyLiquid(this.getBoundingBox())) {
             return this.getY() >= level.getSeaLevel() + 1;
         }
@@ -192,7 +191,7 @@ public abstract class AbstractWhirlwind extends Mob {
     }
 
     @Override
-    public boolean hurt(@Nonnull DamageSource source, float damage) {
+    public boolean hurt(DamageSource source, float damage) {
         return false;
     }
 
@@ -231,12 +230,12 @@ public abstract class AbstractWhirlwind extends Mob {
     }
 
     @Override
-    protected boolean canRide(@Nonnull Entity vehicle) {
+    protected boolean canRide(Entity vehicle) {
         return false;
     }
 
     @Override
-    public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
+    public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putFloat("Movement Angle", this.movementAngle);
         tag.putFloat("Movement Curve", this.movementCurve);
@@ -245,7 +244,7 @@ public abstract class AbstractWhirlwind extends Mob {
     }
 
     @Override
-    public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
+    public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         if (tag.contains("Movement Angle")) {
             this.movementAngle = tag.getFloat("Movement Angle");

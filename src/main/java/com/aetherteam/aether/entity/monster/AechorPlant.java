@@ -36,8 +36,6 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-
 public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     public static final EntityDataAccessor<Integer> DATA_SIZE_ID = SynchedEntityData.defineId(AechorPlant.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Integer> DATA_POISON_REMAINING_ID = SynchedEntityData.defineId(AechorPlant.class, EntityDataSerializers.INT);
@@ -58,7 +56,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }
 
-    @Nonnull
+   
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 15.0)
@@ -75,7 +73,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     }
 
     @Override
-    public void onSyncedDataUpdated(@Nonnull EntityDataAccessor<?> dataAccessor) {
+    public void onSyncedDataUpdated(EntityDataAccessor<?> dataAccessor) {
         if (DATA_SIZE_ID.equals(dataAccessor)) {
             this.setBoundingBox(this.makeBoundingBox());
         }
@@ -84,7 +82,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
 
     @Nullable
     @Override
-    public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor level, @Nonnull DifficultyInstance difficulty, @Nonnull MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
         this.setPos(Math.floor(this.getX()) + 0.5, this.getY(), Math.floor(this.getZ()) + 0.5);
         this.setSize(this.random.nextInt(4) + 1);
         this.setPoisonRemaining(2);
@@ -134,9 +132,9 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     @Override
     protected void jumpFromGround() { }
 
-    @Nonnull
+   
     @Override
-    protected InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
+    protected InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
         if (itemStack.is(AetherItems.SKYROOT_BUCKET.get()) && this.getPoisonRemaining() > 0) {
             this.setPoisonRemaining(this.getPoisonRemaining() - 1);
@@ -149,7 +147,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     }
 
     @Override
-    protected void doPush(@Nonnull Entity entity) {
+    protected void doPush(Entity entity) {
         if (!this.isPassengerOfSameVehicle(entity)) {
             if (!entity.noPhysics && !this.noPhysics) {
                 double d0 = entity.getX() - this.getX();
@@ -178,7 +176,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     }
 
     @Override
-    public boolean hurt(@Nonnull DamageSource damageSource, float amount) {
+    public boolean hurt(DamageSource damageSource, float amount) {
         if (this.hurtTime == 0) {
             for (int i = 0; i < 8; ++i) {
                 double d1 = this.getX() + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.5;
@@ -207,7 +205,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
         this.level.addFreshEntity(needle);
     }
 
-    @Nonnull
+   
     @Override
     protected AABB makeBoundingBox() {
         float width = 0.75F + this.getSize() * 0.125F;
@@ -251,12 +249,12 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     }
 
     @Override
-    public boolean hasLineOfSight(@Nonnull Entity entity) {
+    public boolean hasLineOfSight(Entity entity) {
         return this.distanceTo(entity) <= 8.0 && super.hasLineOfSight(entity);
     }
 
     @Override
-    protected float getStandingEyeHeight(@Nonnull Pose pose, @Nonnull EntityDimensions size) {
+    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
         return 0.5F;
     }
 
@@ -276,14 +274,14 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     }
 
     @Override
-    public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
+    public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("Size", this.getSize());
         tag.putInt("Poison Remaining", this.getPoisonRemaining());
     }
 
     @Override
-    public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
+    public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         if (tag.contains("Size")) {
             this.setSize(tag.getInt("Size"));

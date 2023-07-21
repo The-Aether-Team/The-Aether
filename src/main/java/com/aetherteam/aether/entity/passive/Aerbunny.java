@@ -41,7 +41,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 
@@ -68,7 +67,7 @@ public class Aerbunny extends AetherAnimal {
         this.goalSelector.addGoal(5, new FallingRandomStrollGoal(this, 1.0, 80));
     }
 
-    @Nonnull
+   
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 6.0)
@@ -168,9 +167,9 @@ public class Aerbunny extends AetherAnimal {
         }
     }
 
-    @Nonnull
+   
     @Override
-    public InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
         InteractionResult result = super.mobInteract(player, hand);
         if (!(this.getVehicle() instanceof Player vehicle) || vehicle.equals(player)) {
             if ((player.isShiftKeyDown() || result == InteractionResult.PASS || result == InteractionResult.FAIL) && !super.isInWall()) {
@@ -266,7 +265,7 @@ public class Aerbunny extends AetherAnimal {
     }
 
     @Override
-    protected SoundEvent getHurtSound(@Nonnull DamageSource damageSource) {
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
         return AetherSoundEvents.ENTITY_AERBUNNY_HURT.get();
     }
 
@@ -306,7 +305,7 @@ public class Aerbunny extends AetherAnimal {
     }
 
     @Override
-    public boolean isInvulnerableTo(@Nonnull DamageSource damageSource) {
+    public boolean isInvulnerableTo(DamageSource damageSource) {
         return (this.getVehicle() != null && this.getVehicle() == damageSource.getEntity()) || super.isInvulnerableTo(damageSource);
     }
 
@@ -317,7 +316,7 @@ public class Aerbunny extends AetherAnimal {
 
     @Nullable
     @Override
-    public AgeableMob getBreedOffspring(@Nonnull ServerLevel level, @Nonnull AgeableMob entity) {
+    public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob entity) {
         return AetherEntityTypes.AERBUNNY.get().create(level);
     }
 

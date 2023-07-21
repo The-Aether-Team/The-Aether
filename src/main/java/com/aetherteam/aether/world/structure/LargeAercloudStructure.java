@@ -14,7 +14,6 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 
-import javax.annotation.Nonnull;
 import java.util.*;
 
 public class LargeAercloudStructure extends Structure {
@@ -31,9 +30,8 @@ public class LargeAercloudStructure extends Structure {
         this.size = size;
     }
 
-    @Nonnull
     @Override
-    public Optional<GenerationStub> findGenerationPoint(@Nonnull Structure.GenerationContext context) {
+    public Optional<GenerationStub> findGenerationPoint(Structure.GenerationContext context) {
         return onTopOfChunkCenter(context, Heightmap.Types.WORLD_SURFACE_WG, (builder) -> generatePieces(builder, context, this.blocks, this.size));
     }
 
@@ -82,7 +80,6 @@ public class LargeAercloudStructure extends Structure {
         });
     }
 
-    @Nonnull
     @Override
     public StructureType<?> type() {
         return AetherStructureTypes.LARGE_AERCLOUD.get();

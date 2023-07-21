@@ -10,8 +10,6 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 
-import javax.annotation.Nonnull;
-
 public class SunSpiritModel<T extends Entity> extends EntityModel<T> {
     public ModelPart base;
     public ModelPart torso;
@@ -39,7 +37,7 @@ public class SunSpiritModel<T extends Entity> extends EntityModel<T> {
     }
 
     @Override
-    public void setupAnim(@Nonnull T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.head.xRot = headPitch * 0.017453292F;
         this.head.yRot = netHeadYaw * 0.017453292F;
 
@@ -52,7 +50,7 @@ public class SunSpiritModel<T extends Entity> extends EntityModel<T> {
     }
 
     @Override
-    public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         this.base.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, red, green, blue, alpha);
     }
 }

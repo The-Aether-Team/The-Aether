@@ -11,8 +11,6 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.SaddleLayer;
 import net.minecraft.resources.ResourceLocation;
 
-import javax.annotation.Nonnull;
-
 public class FlyingCowRenderer extends MobRenderer<FlyingCow, CowModel<FlyingCow>> {
     private static final ResourceLocation FLYING_COW_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/flying_cow/flying_cow.png");
     
@@ -22,9 +20,9 @@ public class FlyingCowRenderer extends MobRenderer<FlyingCow, CowModel<FlyingCow
         this.addLayer(new SaddleLayer<>(this, new CowModel<>(context.bakeLayer(AetherModelLayers.FLYING_COW_SADDLE)), new ResourceLocation(Aether.MODID, "textures/entity/mobs/flying_cow/flying_cow_saddle.png")));
     }
 
-    @Nonnull
+   
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull FlyingCow flyingCow) {
+    public ResourceLocation getTextureLocation(FlyingCow flyingCow) {
         return FLYING_COW_TEXTURE;
     }
 }

@@ -19,8 +19,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nonnull;
-
 public class FireMinion extends Monster {
     public FireMinion(EntityType<? extends FireMinion> type, Level level) {
         super(type, level);
@@ -36,7 +34,7 @@ public class FireMinion extends Monster {
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }
 
-    @Nonnull
+   
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.FOLLOW_RANGE, 40.0)

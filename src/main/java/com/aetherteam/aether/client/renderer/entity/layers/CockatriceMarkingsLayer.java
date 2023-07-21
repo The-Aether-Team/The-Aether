@@ -8,8 +8,6 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.EyesLayer;
 import net.minecraft.resources.ResourceLocation;
 
-import javax.annotation.Nonnull;
-
 public class CockatriceMarkingsLayer<T extends Cockatrice, M extends BipedBirdModel<T>> extends EyesLayer<T, M> {
     private static final RenderType COCKATRICE_MARKINGS = RenderType.eyes(new ResourceLocation(Aether.MODID, "textures/entity/mobs/cockatrice/cockatrice_emissive.png"));
 
@@ -17,7 +15,7 @@ public class CockatriceMarkingsLayer<T extends Cockatrice, M extends BipedBirdMo
         super(entityRenderer);
     }
 
-    @Nonnull
+   
     @Override
     public RenderType renderType() {
         return COCKATRICE_MARKINGS;

@@ -5,8 +5,8 @@ import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.gui.screen.ValkyrieQueenDialogueScreen;
 import com.aetherteam.aether.data.resources.registries.AetherStructures;
-import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.AetherBossMob;
+import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.NpcDialogue;
 import com.aetherteam.aether.entity.ai.AetherBlockPathTypes;
 import com.aetherteam.aether.entity.ai.goal.NpcDialogueGoal;
@@ -69,7 +69,6 @@ import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.NetworkHooks;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
@@ -103,7 +102,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * transform the locked blocks after the fight.
      */
     @Override
-    public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor level, @Nonnull DifficultyInstance difficulty, @Nonnull MobSpawnType reason, @Nullable SpawnGroupData spawnGroupData, @Nullable CompoundTag compoundTag) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnGroupData, @Nullable CompoundTag compoundTag) {
         SpawnGroupData data = super.finalizeSpawn(level, difficulty, reason, spawnGroupData, compoundTag);
         this.setBossName(BossNameGenerator.generateValkyrieName());
         if (compoundTag != null && compoundTag.contains("Dungeon")) {
@@ -134,7 +133,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, livingEntity -> this.isBossFight()));
     }
 
-    @Nonnull
+   
     public static AttributeSupplier.Builder createQueenAttributes() {
         return AbstractValkyrie.createAttributes()
                 .add(Attributes.FOLLOW_RANGE, 28.0)
@@ -227,8 +226,8 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * Allows the players to start a conversation with the valkyrie queen.
      */
     @Override
-    @Nonnull
-    protected InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
+   
+    protected InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (hand == InteractionHand.MAIN_HAND) {
             if (!this.isBossFight() && !this.level.isClientSide) {
                 if (!this.isReady()) {
@@ -252,7 +251,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * The valkyrie queen is invulnerable until 10 victory medals are presented.
      */
     @Override
-    public boolean hurt(@Nonnull DamageSource source, float amount) {
+    public boolean hurt(DamageSource source, float amount) {
         if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             return super.hurt(source, amount);
         }
@@ -285,7 +284,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * If the valkyrie kills the player, they will speak.
      */
     @Override
-    public boolean doHurtTarget(@Nonnull Entity pEntity) {
+    public boolean doHurtTarget(Entity pEntity) {
         boolean result = super.doHurtTarget(pEntity);
         if (pEntity instanceof ServerPlayer player && player.getHealth() <= 0) {
             this.chatItUp(player, Component.translatable("gui.aether.queen.dialog.playerdeath"));
@@ -298,7 +297,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * Plays the valkyrie's defeat message.
      */
     @Override
-    public void die(@Nonnull DamageSource pCause) {
+    public void die(DamageSource pCause) {
         if (!this.level.isClientSide) {
             this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
             this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.defeated"));
@@ -378,7 +377,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * to view its associated boss bar.
      */
     @Override
-    public void startSeenByPlayer(@Nonnull ServerPlayer pPlayer) {
+    public void startSeenByPlayer(ServerPlayer pPlayer) {
         super.startSeenByPlayer(pPlayer);
         PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new BossInfoPacket.Display(this.bossFight.getId()), pPlayer);
         if (this.getDungeon() == null || this.getDungeon().isPlayerTracked(pPlayer)) {
@@ -390,7 +389,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * Removes the given player from the list of players tracking this entity.
      */
     @Override
-    public void stopSeenByPlayer(@Nonnull ServerPlayer pPlayer) {
+    public void stopSeenByPlayer(ServerPlayer pPlayer) {
         super.stopSeenByPlayer(pPlayer);
         PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new BossInfoPacket.Remove(this.bossFight.getId()), pPlayer);
         this.bossFight.removePlayer(pPlayer);
@@ -499,7 +498,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     }
 
     @Override
-    protected SoundEvent getHurtSound(@Nonnull DamageSource pDamageSource) {
+    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
         return AetherSoundEvents.ENTITY_VALKYRIE_QUEEN_HURT.get();
     }
 
@@ -589,7 +588,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     }
 
     @Override
-    public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
+    public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         this.addBossSaveData(tag);
         if (this.dungeonBounds != null) {
@@ -604,7 +603,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     }
 
     @Override
-    public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
+    public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.readBossSaveData(tag);
         if (tag.contains("DungeonBoundsMinX")) {

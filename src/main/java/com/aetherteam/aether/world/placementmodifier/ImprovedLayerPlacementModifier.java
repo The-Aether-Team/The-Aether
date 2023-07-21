@@ -12,7 +12,6 @@ import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
-import javax.annotation.Nonnull;
 import java.util.stream.Stream;
 
 public class ImprovedLayerPlacementModifier extends PlacementModifier {
@@ -35,9 +34,8 @@ public class ImprovedLayerPlacementModifier extends PlacementModifier {
         return new ImprovedLayerPlacementModifier(heightmap, count, verticalBounds);
     }
 
-    @Nonnull
     @Override
-    public Stream<BlockPos> getPositions(@Nonnull PlacementContext context, @Nonnull RandomSource random, @Nonnull BlockPos pos) {
+    public Stream<BlockPos> getPositions(PlacementContext context, RandomSource random, BlockPos pos) {
         Stream.Builder<BlockPos> builder = Stream.builder();
         int i = 0;
         boolean flag;
@@ -58,7 +56,6 @@ public class ImprovedLayerPlacementModifier extends PlacementModifier {
         return builder.build();
     }
 
-    @Nonnull
     @Override
     public PlacementModifierType<?> type() {
         return AetherPlacementModifiers.IMPROVED_LAYER_PLACEMENT;

@@ -19,8 +19,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
-import javax.annotation.Nonnull;
-
 public abstract class AbstractCrystal extends Projectile {
     protected int ticksInAir = 0;
 
@@ -100,20 +98,20 @@ public abstract class AbstractCrystal extends Projectile {
     }
 
     @Override
-    public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
+    public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("TicksInAir", this.ticksInAir);
     }
 
     @Override
-    public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
+    public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         if (tag.contains("TicksInAir")) {
             this.ticksInAir = tag.getInt("TicksInAir");
         }
     }
 
-    @Nonnull
+   
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);

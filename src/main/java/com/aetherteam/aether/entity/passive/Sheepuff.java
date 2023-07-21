@@ -48,7 +48,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.IForgeShearable;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -117,7 +116,7 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
     }
 
-    @Nonnull
+   
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 8.0)
@@ -132,7 +131,7 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor level, @Nonnull DifficultyInstance difficulty, @Nonnull MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
         this.setColor(getRandomSheepuffColor(level.getRandom()));
         return super.finalizeSpawn(level, difficulty, reason, spawnData, tag);
     }
@@ -224,9 +223,9 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
         }
     }
 
-    @Nonnull
+   
     @Override
-    public InteractionResult mobInteract(Player player, @Nonnull InteractionHand hand) {
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
         if (itemstack.getItem() instanceof DyeItem dyeItem && !this.isSheared()) {
             DyeColor color = dyeItem.getDyeColor();
@@ -254,9 +253,9 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
         return super.mobInteract(player, hand);
     }
 
-    @Nonnull
+   
     @Override
-    public List<ItemStack> onSheared(@Nullable Player player, @Nonnull ItemStack item, Level level, BlockPos pos, int fortune) {
+    public List<ItemStack> onSheared(@Nullable Player player, ItemStack item, Level level, BlockPos pos, int fortune) {
         level.playSound(null, this, AetherSoundEvents.ENTITY_SHEEPUFF_SHEAR.get(), player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
         if (!level.isClientSide()) {
             this.amountEaten = 0;
@@ -289,7 +288,7 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
     }
 
     @Override
-    public boolean isShearable(@Nonnull ItemStack item, Level world, BlockPos pos) {
+    public boolean isShearable(ItemStack item, Level world, BlockPos pos) {
         return this.readyForShearing();
     }
 
@@ -356,7 +355,7 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
 
     @Nullable
     @Override
-    protected SoundEvent getHurtSound(@Nonnull DamageSource damageSource) {
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
         return AetherSoundEvents.ENTITY_SHEEPUFF_HURT.get();
     }
 
@@ -367,7 +366,7 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
     }
 
     @Override
-    protected void playStepSound(@Nonnull BlockPos pos, @Nonnull BlockState state) {
+    protected void playStepSound(BlockPos pos, BlockState state) {
         this.level.playSound(null, this.getX(), this.getY(), this.getZ(), AetherSoundEvents.ENTITY_SHEEPUFF_STEP.get(), SoundSource.NEUTRAL, 0.15F, 1.0F);
     }
 
@@ -383,7 +382,7 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
 
     @Nullable
     @Override
-    public AgeableMob getBreedOffspring(@Nonnull ServerLevel level, @Nonnull AgeableMob entity) {
+    public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob entity) {
         Sheepuff sheepuffParent = (Sheepuff) entity;
         Sheepuff sheepuffBaby = AetherEntityTypes.SHEEPUFF.get().create(level);
         if (sheepuffBaby != null) {
@@ -408,11 +407,11 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
     }
 
     @Override
-    protected float getStandingEyeHeight(@Nonnull Pose pose, EntityDimensions size) {
+    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
         return 0.95F * size.height;
     }
 
-    @Nonnull
+   
     @Override
     public ResourceLocation getDefaultLootTable() {
         if (this.isSheared()) {
@@ -440,7 +439,7 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
     }
 
     @Override
-    public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
+    public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putBoolean("Sheared", this.isSheared());
         tag.putBoolean("Puffed", this.getPuffed());
@@ -448,7 +447,7 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
     }
 
     @Override
-    public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
+    public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         if (tag.contains("Sheared")) {
             this.setSheared(tag.getBoolean("Sheared"));
@@ -468,13 +467,13 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
         }
 
         @Override
-        @Nonnull
+       
         public ItemStack quickMoveStack(@Nullable Player pPlayer, int pIndex) {
             return ItemStack.EMPTY;
         }
 
         @Override
-        public boolean stillValid(@Nonnull Player player) {
+        public boolean stillValid(Player player) {
             return false;
         }
     }

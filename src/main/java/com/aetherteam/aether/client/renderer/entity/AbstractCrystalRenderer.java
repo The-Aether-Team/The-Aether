@@ -11,8 +11,6 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 
-import javax.annotation.Nonnull;
-
 public abstract class AbstractCrystalRenderer<T extends AbstractCrystal> extends EntityRenderer<T> {
     private final CrystalModel<AbstractCrystal> crystal;
 
@@ -22,7 +20,7 @@ public abstract class AbstractCrystalRenderer<T extends AbstractCrystal> extends
     }
 
     @Override
-    public void render(@Nonnull T crystal, float entityYaw, float partialTicks, @Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight) {
+    public void render(T crystal, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
         poseStack.translate(0.0, 0.25, 0.0);
         VertexConsumer iVertexBuilder = buffer.getBuffer(RenderType.entityTranslucent(this.getTextureLocation(crystal)));

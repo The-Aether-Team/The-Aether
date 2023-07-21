@@ -10,8 +10,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
-import javax.annotation.Nonnull;
-
 public class SentryRenderer extends MobRenderer<Sentry, SlimeModel<Sentry>> {
 	private static final ResourceLocation SENTRY_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sentry/sentry.png");
 	private static final ResourceLocation SENTRY_LIT_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sentry/sentry_lit.png");
@@ -31,7 +29,6 @@ public class SentryRenderer extends MobRenderer<Sentry, SlimeModel<Sentry>> {
 		poseStack.scale(f3 * f1, 1.0F / f3 * f1, f3 * f1);
 	}
 
-	@Nonnull
 	@Override
 	public ResourceLocation getTextureLocation(Sentry sentry) {
 		return sentry.isAwake() ? SENTRY_LIT_TEXTURE : SENTRY_TEXTURE;

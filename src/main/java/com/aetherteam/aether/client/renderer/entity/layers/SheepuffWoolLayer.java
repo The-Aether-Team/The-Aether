@@ -15,8 +15,6 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 
-import javax.annotation.Nonnull;
-
 public class SheepuffWoolLayer extends RenderLayer<Sheepuff, SheepuffModel> {
     private static final ResourceLocation SHEEPUFF_WOOL_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sheepuff/sheepuff_wool.png");
     private final SheepuffWoolModel wool;
@@ -29,7 +27,7 @@ public class SheepuffWoolLayer extends RenderLayer<Sheepuff, SheepuffModel> {
     }
 
     @Override
-    public void render(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, Sheepuff sheepuff, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Sheepuff sheepuff, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (!sheepuff.isSheared()) {
             SheepuffWoolModel woolModel = sheepuff.getPuffed() ? this.puffed : this.wool;
             if (sheepuff.isInvisible()) {

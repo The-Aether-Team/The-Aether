@@ -11,8 +11,6 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-import javax.annotation.Nonnull;
-
 public class AerbunnyRenderer extends MobRenderer<Aerbunny, AerbunnyModel> {
     private static final ResourceLocation AERBUNNY_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aerbunny/aerbunny.png");
 
@@ -29,7 +27,7 @@ public class AerbunnyRenderer extends MobRenderer<Aerbunny, AerbunnyModel> {
     }
 
     @Override
-    protected void setupRotations(@Nonnull Aerbunny aerbunny, @Nonnull PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
+    protected void setupRotations(Aerbunny aerbunny, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
         super.setupRotations(aerbunny, poseStack, ageInTicks, rotationYaw, partialTicks);
         if (!aerbunny.isOnGround()) {
             if (aerbunny.getDeltaMovement().y > 0.5) {
@@ -44,9 +42,9 @@ public class AerbunnyRenderer extends MobRenderer<Aerbunny, AerbunnyModel> {
         }
     }
 
-    @Nonnull
+   
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull Aerbunny aerbunny) {
+    public ResourceLocation getTextureLocation(Aerbunny aerbunny) {
         return AERBUNNY_TEXTURE;
     }
 }

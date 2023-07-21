@@ -10,8 +10,6 @@ import net.minecraft.world.level.levelgen.placement.PlacementFilter;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import net.minecraftforge.common.ForgeConfigSpec;
 
-import javax.annotation.Nonnull;
-
 /**
  * A PlacementFilter to prevent the feature from generating when the specified config condition is set to false.
  */
@@ -28,12 +26,11 @@ public class ConfigFilter extends PlacementFilter {
     }
 
     @Override
-    protected boolean shouldPlace(@Nonnull PlacementContext context, @Nonnull RandomSource random, @Nonnull BlockPos pos) {
+    protected boolean shouldPlace(PlacementContext context, RandomSource random, BlockPos pos) {
         return this.config.get();
     }
 
     @Override
-    @Nonnull
     public PlacementModifierType<?> type() {
         return AetherPlacementModifiers.CONFIG_FILTER;
     }

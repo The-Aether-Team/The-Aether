@@ -27,14 +27,12 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.block.Blocks;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @JeiPlugin
 public class AetherJEIPlugin implements IModPlugin {
-    @Nonnull
     @Override
     public ResourceLocation getPluginUid() {
         return new ResourceLocation(Aether.MODID, "jei");

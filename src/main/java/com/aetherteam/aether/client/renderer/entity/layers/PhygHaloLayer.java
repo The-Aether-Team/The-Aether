@@ -14,8 +14,6 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
-import javax.annotation.Nonnull;
-
 public class PhygHaloLayer extends RenderLayer<Phyg, PigModel<Phyg>> {
     private static final ResourceLocation HALO_LOCATION = new ResourceLocation(Aether.MODID, "textures/models/perks/halo.png");
     private final HaloModel<Phyg> phygHalo;
@@ -26,7 +24,7 @@ public class PhygHaloLayer extends RenderLayer<Phyg, PigModel<Phyg>> {
     }
 
     @Override
-    public void render(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, Phyg phyg, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Phyg phyg, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (phyg.hasCustomName() && phyg.getName().getString().equals("KingPhygieBoo")) {
             QuadrupedModelAccessor quadrupedModelAccessor = (QuadrupedModelAccessor) this.getParentModel();
             this.phygHalo.halo.yRot = quadrupedModelAccessor.aether$getHead().yRot;

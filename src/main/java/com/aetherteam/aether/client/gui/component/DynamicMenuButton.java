@@ -5,7 +5,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.common.ForgeConfigSpec;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 public class DynamicMenuButton extends Button {
@@ -27,7 +26,7 @@ public class DynamicMenuButton extends Button {
     }
 
     @Override
-    public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
         if (this.shouldRender()) {
             this.enabled = true;
             this.setX(this.getOriginX() + gatherOffsets(this.offsetConfigs));

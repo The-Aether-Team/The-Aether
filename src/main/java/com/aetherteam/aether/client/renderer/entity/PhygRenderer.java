@@ -13,8 +13,6 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.SaddleLayer;
 import net.minecraft.resources.ResourceLocation;
 
-import javax.annotation.Nonnull;
-
 public class PhygRenderer extends MobRenderer<Phyg, PigModel<Phyg>> {
 	private static final ResourceLocation PHYG_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/phyg/phyg.png");
 
@@ -25,9 +23,8 @@ public class PhygRenderer extends MobRenderer<Phyg, PigModel<Phyg>> {
 		this.addLayer(new PhygHaloLayer(this, new HaloModel<>(context.bakeLayer(AetherModelLayers.PHYG_HALO))));
 	}
 
-	@Nonnull
 	@Override
-	public ResourceLocation getTextureLocation(@Nonnull Phyg phyg) {
+	public ResourceLocation getTextureLocation(Phyg phyg) {
 		return PHYG_TEXTURE;
 	}
 }

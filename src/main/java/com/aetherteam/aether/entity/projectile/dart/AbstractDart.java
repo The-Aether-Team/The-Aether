@@ -23,7 +23,6 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
-import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
 public abstract class AbstractDart extends AbstractArrow {
@@ -52,7 +51,7 @@ public abstract class AbstractDart extends AbstractArrow {
     }
 
     @Override
-    protected void onHitBlock(@Nonnull BlockHitResult result) {
+    protected void onHitBlock(BlockHitResult result) {
         super.onHitBlock(result);
         this.setNoGravity(false);
     }
@@ -127,19 +126,19 @@ public abstract class AbstractDart extends AbstractArrow {
         this.setNoGravity(false);
     }
 
-    @Nonnull
+   
     @Override
     protected SoundEvent getDefaultHitGroundSoundEvent() {
         return AetherSoundEvents.ENTITY_DART_HIT.get();
     }
 
-    @Nonnull
+   
     @Override
     protected ItemStack getPickupItem() {
         return this.pickupItem != null ? new ItemStack(this.pickupItem.get()) : ItemStack.EMPTY;
     }
 
-    @Nonnull
+   
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);

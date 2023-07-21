@@ -24,7 +24,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import org.apache.commons.lang3.tuple.Triple;
 
-import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.UUID;
 
@@ -39,7 +38,7 @@ public class PlayerHaloLayer<T extends Player, M extends PlayerModel<T>> extends
     }
 
     @Override
-    public void render(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, @Nonnull T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (entity instanceof AbstractClientPlayer abstractClientPlayer) {
             User user = UserData.Client.getClientUser();
             UUID playerUUID = abstractClientPlayer.getUUID();

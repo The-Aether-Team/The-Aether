@@ -25,8 +25,6 @@ import net.minecraft.util.Mth;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.internal.BrandingControl;
 
-import javax.annotation.Nonnull;
-
 public class AetherTitleScreen extends TitleScreen {
 	public static final Music MENU = new Music(AetherSoundEvents.MUSIC_MENU.getHolder().orElseThrow(), 20, 600, true);
 
@@ -74,7 +72,7 @@ public class AetherTitleScreen extends TitleScreen {
 	}
 
 	@Override
-	public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+	public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
 		TitleScreenAccessor titleScreenAccessor = (TitleScreenAccessor) this;
 		if (this.minecraft != null) {
 			if (titleScreenAccessor.aether$getFadeInStart() == 0L && titleScreenAccessor.aether$isFading()) {
@@ -182,9 +180,8 @@ public class AetherTitleScreen extends TitleScreen {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Nonnull
 	@Override
-	protected <T extends GuiEventListener & Renderable & NarratableEntry> T addRenderableWidget(@Nonnull T renderable) {
+	protected <T extends GuiEventListener & Renderable & NarratableEntry> T addRenderableWidget(T renderable) {
 		if (renderable instanceof Button button) {
 			if (this.isButtonAether(button.getMessage())) {
 				AetherMenuButton aetherButton = new AetherMenuButton(button);

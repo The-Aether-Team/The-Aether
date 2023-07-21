@@ -7,8 +7,6 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.LivingEntity;
 
-import javax.annotation.Nonnull;
-
 public class GlovesModel extends HumanoidModel<LivingEntity> {
     public GlovesModel(ModelPart root) {
         super(root);
@@ -27,13 +25,11 @@ public class GlovesModel extends HumanoidModel<LivingEntity> {
         return LayerDefinition.create(meshDefinition, 16, 16);
     }
 
-    @Nonnull
     @Override
     protected Iterable<ModelPart> headParts() {
         return ImmutableList.of();
     }
 
-    @Nonnull
     @Override
     protected Iterable<ModelPart> bodyParts() {
         return ImmutableList.of(this.rightArm, this.leftArm);

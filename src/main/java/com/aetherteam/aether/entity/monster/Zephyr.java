@@ -24,7 +24,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
-import javax.annotation.Nonnull;
 import java.util.EnumSet;
 
 public class Zephyr extends FlyingMob implements Enemy {
@@ -48,7 +47,6 @@ public class Zephyr extends FlyingMob implements Enemy {
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, false));
 	}
 
-	@Nonnull
 	public static AttributeSupplier.Builder createMobAttributes() {
 		return FlyingMob.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 5.0)
@@ -114,7 +112,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 	}
 
 	@Override
-	protected SoundEvent getHurtSound(@Nonnull DamageSource damageSource) {
+	protected SoundEvent getHurtSound(DamageSource damageSource) {
 		return AetherSoundEvents.ENTITY_ZEPHYR_HURT.get();
 	}
 

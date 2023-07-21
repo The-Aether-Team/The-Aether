@@ -46,7 +46,6 @@ import top.theillusivec4.curios.common.network.NetworkHandler;
 import top.theillusivec4.curios.common.network.client.CPacketDestroy;
 import top.theillusivec4.curios.common.network.client.CPacketToggleRender;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class AccessoriesScreen extends EffectRenderingInventoryScreen<AccessoriesMenu> implements RecipeUpdateListener {
@@ -121,7 +120,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
                     (pressed) -> this.getMinecraft().setScreen(new MoaSkinsScreen(this)),
                     Component.translatable("gui.aether.accessories.skins_button")) {
                 @Override
-                public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+                public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
                     super.render(poseStack, mouseX, mouseY, partialTick);
                     if (!AccessoriesScreen.this.recipeBookComponent.isVisible()) {
                         this.setX(AccessoriesScreen.this.leftPos - 22);
@@ -141,7 +140,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
                         (pressed) -> this.getMinecraft().setScreen(new AetherCustomizationsScreen(this)),
                         Component.translatable("gui.aether.accessories.customization_button")) {
                     @Override
-                    public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+                    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
                         super.render(poseStack, mouseX, mouseY, partialTick);
                         if (!AccessoriesScreen.this.recipeBookComponent.isVisible()) {
                             this.setX(AccessoriesScreen.this.leftPos - 22);
@@ -169,7 +168,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
                         (button) -> NetworkHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(), new CPacketToggleRender(curioSlot.getIdentifier(), inventorySlot.getSlotIndex())))
                 {
                     @Override
-                    public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+                    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
                         this.setX(AccessoriesScreen.this.leftPos + inventorySlot.x + 11);
                         this.setY(AccessoriesScreen.this.topPos + inventorySlot.y - 3);
                     }
@@ -186,7 +185,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
     }
 
     @Override
-    public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(poseStack);
         if (this.recipeBookComponent.isVisible() && this.widthTooNarrow) {
             this.renderBg(poseStack, partialTicks, mouseX, mouseY);
@@ -237,7 +236,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
     }
 
     @Override
-    protected void renderBg(@Nonnull PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         if (this.minecraft != null && this.minecraft.player != null) {
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -250,7 +249,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
     }
 
     @Override
-    protected void renderTooltip(@Nonnull PoseStack matrixStack, int mouseX, int mouseY) {
+    protected void renderTooltip(PoseStack matrixStack, int mouseX, int mouseY) {
         Minecraft mc = this.minecraft;
         if (mc != null) {
             LocalPlayer clientPlayer = mc.player;
@@ -278,7 +277,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
     }
 
     @Override
-    protected void renderLabels(@Nonnull PoseStack matrixStack, int mouseX, int mouseY) {
+    protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
         if (this.minecraft != null && this.minecraft.player != null) {
             this.font.draw(matrixStack, this.title, 115, 6, 4210752);
         }
@@ -319,7 +318,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
     }
 
     @Override
-    protected void slotClicked(@Nullable Slot slot, int slotId, int mouseButton, @Nonnull ClickType type) {
+    protected void slotClicked(@Nullable Slot slot, int slotId, int mouseButton, ClickType type) {
         this.recipeBookComponent.slotClicked(slot);
         if (this.minecraft != null && this.minecraft.player != null && this.minecraft.gameMode != null) {
             boolean flag = type == ClickType.QUICK_MOVE;
@@ -347,7 +346,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
         this.recipeBookComponent.recipesUpdated();
     }
 
-    @Nonnull
+   
     @Override
     public RecipeBookComponent getRecipeBookComponent() {
         return this.recipeBookComponent;

@@ -13,7 +13,6 @@ import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import javax.annotation.Nonnull;
 import java.util.Map;
 
 
@@ -35,7 +34,7 @@ public class ReloadListeners {
          * Resets the block cache for {@link FreezingBlock} recipes.
          */
         @Override
-        protected void apply(@Nonnull Map<ResourceLocation, JsonElement> object, @Nonnull ResourceManager resourceManager, @Nonnull ProfilerFiller profiler) {
+        protected void apply(Map<ResourceLocation, JsonElement> object, ResourceManager resourceManager, ProfilerFiller profiler) {
             FreezingBlock.cachedBlocks.clear();
         }
     }

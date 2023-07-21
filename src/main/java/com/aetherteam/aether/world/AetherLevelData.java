@@ -6,8 +6,6 @@ import net.minecraft.world.level.storage.DerivedLevelData;
 import net.minecraft.world.level.storage.ServerLevelData;
 import net.minecraft.world.level.storage.WorldData;
 
-import javax.annotation.Nonnull;
-
 /**
  * A wrapper for ServerLevelData. This is used to detach the day cycle from the Overworld and to allow the weather to be
  * set from the Aether. It gets applied to any dimension where the effects are equal to the Aether's dimension type ID.
@@ -71,7 +69,6 @@ public class AetherLevelData extends DerivedLevelData {
      * Gets the GameRules class Instance.
      */
     @Override
-    @Nonnull
     public WrappedGameRules getGameRules() {
         return this.gameRules;
     }

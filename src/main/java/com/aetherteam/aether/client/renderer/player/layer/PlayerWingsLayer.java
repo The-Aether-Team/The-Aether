@@ -18,8 +18,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 
-import javax.annotation.Nonnull;
-
 public class PlayerWingsLayer<T extends Player, M extends PlayerModel<T>> extends RenderLayer<T, M> {
     private static final ResourceLocation VALKYRIE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/valkyrie/valkyrie.png");
     private final ValkyrieWingsModel<Player> wings;
@@ -30,7 +28,7 @@ public class PlayerWingsLayer<T extends Player, M extends PlayerModel<T>> extend
     }
 
     @Override
-    public void render(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, @Nonnull T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (EquipmentUtil.hasFullValkyrieSet(entity)) {
             AetherPlayer.get(entity).ifPresent((aetherPlayer) -> {
                 this.setupWingRotation(entity, Mth.lerp(partialTicks, aetherPlayer.getWingRotationO(), aetherPlayer.getWingRotation()));
@@ -40,7 +38,7 @@ public class PlayerWingsLayer<T extends Player, M extends PlayerModel<T>> extend
         }
     }
 
-    public void setupWingRotation(@Nonnull T entity, float sinage) {
+    public void setupWingRotation(T entity, float sinage) {
         if (!entity.isOnGround() && !entity.isInFluidType() && (entity.getVehicle() != null && !entity.getVehicle().isOnGround())) {
             sinage *= 1.5F;
         } else {

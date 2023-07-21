@@ -22,8 +22,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
-import javax.annotation.Nonnull;
-
 public class CloudMinion extends FlyingMob {
     private static final EntityDataAccessor<Integer> DATA_OWNER_ID = SynchedEntityData.defineId(CloudMinion.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_IS_RIGHT_ID = SynchedEntityData.defineId(CloudMinion.class, EntityDataSerializers.BOOLEAN);
@@ -48,7 +46,7 @@ public class CloudMinion extends FlyingMob {
         this.setYRot(this.getOwner().getYRot());
     }
 
-    @Nonnull
+   
     public static AttributeSupplier.Builder createMobAttributes() {
         return FlyingMob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 1.0)
@@ -165,7 +163,7 @@ public class CloudMinion extends FlyingMob {
     }
 
     @Override
-    public boolean hurt(@Nonnull DamageSource source, float damage) {
+    public boolean hurt(DamageSource source, float damage) {
         return false;
     }
 
@@ -201,7 +199,7 @@ public class CloudMinion extends FlyingMob {
         this.shouldShoot = shouldShoot;
     }
 
-    @Nonnull
+   
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);

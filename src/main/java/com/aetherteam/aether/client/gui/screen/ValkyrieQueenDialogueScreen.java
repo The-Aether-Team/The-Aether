@@ -20,8 +20,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
 
-import javax.annotation.Nonnull;
-
 /**
  * Screen for speaking with the valkyrie queen.
  * @see PlayerDialogueButton
@@ -82,7 +80,7 @@ public class ValkyrieQueenDialogueScreen extends Screen {
     }
 
     @Override
-    public void resize(@Nonnull Minecraft pMinecraft, int pWidth, int pHeight) {
+    public void resize(Minecraft pMinecraft, int pWidth, int pHeight) {
         this.width = pWidth;
         this.height = pHeight;
         this.positionDialogueOptions();
@@ -112,7 +110,7 @@ public class ValkyrieQueenDialogueScreen extends Screen {
     }
 
     @Override
-    public void render(@Nonnull PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
+    public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
         this.renderBackground(pPoseStack);
         this.dialogue.render(pPoseStack);
         super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
@@ -122,7 +120,7 @@ public class ValkyrieQueenDialogueScreen extends Screen {
      * Override to prevent rendering a dark gradient over the background.
      */
     @Override
-    public void renderBackground(@Nonnull PoseStack poseStack) {
+    public void renderBackground(PoseStack poseStack) {
         if (this.minecraft.level != null) {
             MinecraftForge.EVENT_BUS.post(new ScreenEvent.BackgroundRendered(this, poseStack));
         } else {

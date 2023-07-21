@@ -15,8 +15,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 
-import javax.annotation.Nonnull;
-
 public class AbstractAetherFurnaceScreen<T extends AbstractAetherFurnaceMenu> extends AbstractContainerScreen<T> implements RecipeUpdateListener {
     private static final ResourceLocation RECIPE_BUTTON_LOCATION = new ResourceLocation("textures/gui/recipe_button.png");
     public final AbstractFurnaceRecipeBookComponent recipeBookComponent;
@@ -50,7 +48,7 @@ public class AbstractAetherFurnaceScreen<T extends AbstractAetherFurnaceMenu> ex
     }
 
     @Override
-    public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
         this.renderBackground(poseStack);
         if (this.recipeBookComponent.isVisible() && this.widthTooNarrow) {
             this.renderBg(poseStack, partialTick, mouseX, mouseY);
@@ -65,7 +63,7 @@ public class AbstractAetherFurnaceScreen<T extends AbstractAetherFurnaceMenu> ex
     }
 
     @Override
-    protected void renderBg(@Nonnull PoseStack poseStack, float partialTick, int x, int y) {
+    protected void renderBg(PoseStack poseStack, float partialTick, int x, int y) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, this.texture);
@@ -90,7 +88,7 @@ public class AbstractAetherFurnaceScreen<T extends AbstractAetherFurnaceMenu> ex
     }
 
     @Override
-    protected void slotClicked(@Nonnull Slot slot, int slotId, int mouseButton, @Nonnull ClickType type) {
+    protected void slotClicked(Slot slot, int slotId, int mouseButton, ClickType type) {
         super.slotClicked(slot, slotId, mouseButton, type);
         this.recipeBookComponent.slotClicked(slot);
     }
@@ -116,7 +114,6 @@ public class AbstractAetherFurnaceScreen<T extends AbstractAetherFurnaceMenu> ex
         this.recipeBookComponent.recipesUpdated();
     }
 
-    @Nonnull
     @Override
     public RecipeBookComponent getRecipeBookComponent() {
         return this.recipeBookComponent;

@@ -8,8 +8,6 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nonnull;
-
 public abstract class WingedAnimal extends MountableAnimal {
     public float wingFold;
     public float wingAngle;
@@ -18,9 +16,9 @@ public abstract class WingedAnimal extends MountableAnimal {
         super(type, level);
     }
 
-    @Nonnull
+   
     @Override
-    protected PathNavigation createNavigation(@Nonnull Level level) {
+    protected PathNavigation createNavigation(Level level) {
         return new FallPathNavigation(this, level);
     }
 

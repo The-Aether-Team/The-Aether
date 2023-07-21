@@ -7,8 +7,8 @@ import com.aetherteam.aether.capability.AetherCapabilities;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.data.resources.AetherDamageTypes;
-import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.AetherBossMob;
+import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.ai.controller.BlankMoveControl;
 import com.aetherteam.aether.entity.monster.dungeon.FireMinion;
 import com.aetherteam.aether.entity.projectile.crystal.AbstractCrystal;
@@ -59,7 +59,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.ForgeEventFactory;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.List;
@@ -101,7 +100,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
      * Generates a name for the boss.
      */
     @Override
-    public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor pLevel, @Nonnull DifficultyInstance pDifficulty, @Nonnull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
         SpawnGroupData data = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
         this.setBossName(BossNameGenerator.generateSunSpiritName());
         this.origin = this.position();
@@ -195,7 +194,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
      * The sun spirit is immune to effects, but there is an event fired in case addons want to change that.
      */
     @Override
-    public boolean canBeAffected(@Nonnull MobEffectInstance pEffectInstance) {
+    public boolean canBeAffected(MobEffectInstance pEffectInstance) {
         net.minecraftforge.event.entity.living.MobEffectEvent.Applicable event = new net.minecraftforge.event.entity.living.MobEffectEvent.Applicable(this, pEffectInstance);
         net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event);
         if (event.getResult() != net.minecraftforge.eventbus.api.Event.Result.DEFAULT) return event.getResult() == net.minecraftforge.eventbus.api.Event.Result.ALLOW;
@@ -206,7 +205,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
      * Plays the sun spirit's defeat message and ends eternal day.
      */
     @Override
-    public void die(@Nonnull DamageSource cause) {
+    public void die(DamageSource cause) {
         if (!this.level.isClientSide) {
             this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
             this.setFrozen(true);
@@ -224,8 +223,8 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     }
 
     @Override
-    @Nonnull
-    protected InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
+   
+    protected InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (!this.level.isClientSide && !this.isBossFight()) {
             if (this.chatCooldown <= 0) {
                 this.chatCooldown = 14;
@@ -348,7 +347,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
      * to view its associated boss bar.
      */
     @Override
-    public void startSeenByPlayer(@Nonnull ServerPlayer pPlayer) {
+    public void startSeenByPlayer(ServerPlayer pPlayer) {
         super.startSeenByPlayer(pPlayer);
         PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new BossInfoPacket.Display(this.bossFight.getId()), pPlayer);
         if (this.getDungeon() == null || this.getDungeon().isPlayerTracked(pPlayer)) {
@@ -360,7 +359,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
      * Removes the given player from the list of players tracking this entity.
      */
     @Override
-    public void stopSeenByPlayer(@Nonnull ServerPlayer pPlayer) {
+    public void stopSeenByPlayer(ServerPlayer pPlayer) {
         super.stopSeenByPlayer(pPlayer);
         PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new BossInfoPacket.Remove(this.bossFight.getId()), pPlayer);
         this.bossFight.removePlayer(pPlayer);
@@ -413,7 +412,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     }
 
     @Override
-    public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
+    public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         this.addBossSaveData(tag);
         tag.putInt("ChatLine", this.chatLine);
@@ -423,7 +422,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     }
 
     @Override
-    public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
+    public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.readBossSaveData(tag);
         if (tag.contains("ChatLine")) {
@@ -444,7 +443,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     }
 
     @Override
-    protected SoundEvent getHurtSound(@Nonnull DamageSource pDamageSource) {
+    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
         return null;
     }
 

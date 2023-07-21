@@ -16,8 +16,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 
-import javax.annotation.Nonnull;
-
 public class IncubatorScreen extends AbstractContainerScreen<IncubatorMenu> implements RecipeUpdateListener {
 	private static final ResourceLocation INCUBATOR_GUI_TEXTURES = new ResourceLocation(Aether.MODID, "textures/gui/menu/incubator.png");
 	private static final ResourceLocation RECIPE_BUTTON_LOCATION = new ResourceLocation("textures/gui/recipe_button.png");
@@ -51,7 +49,7 @@ public class IncubatorScreen extends AbstractContainerScreen<IncubatorMenu> impl
 	}
 
 	@Override
-	public void render(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+	public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
 		this.renderBackground(poseStack);
 		if (this.recipeBookComponent.isVisible() && this.widthTooNarrow) {
 			this.renderBg(poseStack, partialTicks, mouseX, mouseY);
@@ -66,7 +64,7 @@ public class IncubatorScreen extends AbstractContainerScreen<IncubatorMenu> impl
 	}
 
 	@Override
-	protected void renderBg(@Nonnull PoseStack poseStack, float partialTicks, int x, int y) {
+	protected void renderBg(PoseStack poseStack, float partialTicks, int x, int y) {
 		RenderSystem.clearColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderTexture(0, INCUBATOR_GUI_TEXTURES);
@@ -92,7 +90,7 @@ public class IncubatorScreen extends AbstractContainerScreen<IncubatorMenu> impl
 	}
 
 	@Override
-	protected void slotClicked(@Nonnull Slot slot, int slotId, int mouseButton, @Nonnull ClickType type) {
+	protected void slotClicked(Slot slot, int slotId, int mouseButton, ClickType type) {
 		super.slotClicked(slot, slotId, mouseButton, type);
 		this.recipeBookComponent.slotClicked(slot);
 	}
@@ -118,7 +116,6 @@ public class IncubatorScreen extends AbstractContainerScreen<IncubatorMenu> impl
 		this.recipeBookComponent.recipesUpdated();
 	}
 
-	@Nonnull
 	@Override
 	public RecipeBookComponent getRecipeBookComponent() {
 		return this.recipeBookComponent;

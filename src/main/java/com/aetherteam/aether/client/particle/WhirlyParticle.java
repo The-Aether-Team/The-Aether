@@ -9,8 +9,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.phys.AABB;
 
-import javax.annotation.Nonnull;
-
 public abstract class WhirlyParticle<T extends AbstractWhirlwind> extends TextureSheetParticle {
     protected static final TargetingConditions TARGET_CONDITION = TargetingConditions.forNonCombat();
     protected AbstractWhirlwind whirlwind;
@@ -54,7 +52,6 @@ public abstract class WhirlyParticle<T extends AbstractWhirlwind> extends Textur
         this.move(this.xd, this.yd, this.zd);
     }
 
-    @Nonnull
     @Override
     public ParticleRenderType getRenderType() {
         return ParticleRenderType.PARTICLE_SHEET_OPAQUE;

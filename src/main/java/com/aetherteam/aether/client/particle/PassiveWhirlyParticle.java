@@ -9,8 +9,6 @@ import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nonnull;
-
 public class PassiveWhirlyParticle extends WhirlyParticle<PassiveWhirlwind> {
     public PassiveWhirlyParticle(ClientLevel level, double xCoord, double yCoord, double zCoord, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprite) {
         super(level, xCoord, yCoord, zCoord, xSpeed, ySpeed, zSpeed, sprite);
@@ -57,7 +55,7 @@ public class PassiveWhirlyParticle extends WhirlyParticle<PassiveWhirlwind> {
         }
 
         @Override
-        public Particle createParticle(@Nonnull SimpleParticleType particleType, @Nonnull ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(SimpleParticleType particleType, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             PassiveWhirlyParticle passiveWhirlyParticle = new PassiveWhirlyParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, spriteSet);
             passiveWhirlyParticle.pickSprite(this.spriteSet);
             return passiveWhirlyParticle;

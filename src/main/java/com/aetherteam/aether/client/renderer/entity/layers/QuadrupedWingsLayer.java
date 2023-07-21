@@ -12,8 +12,6 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
-import javax.annotation.Nonnull;
-
 public class QuadrupedWingsLayer<T extends WingedAnimal, M extends QuadrupedModel<T>> extends RenderLayer<T, M> {
     private final ResourceLocation resourceLocation;
     private final QuadrupedWingsModel<T> wings;
@@ -25,7 +23,7 @@ public class QuadrupedWingsLayer<T extends WingedAnimal, M extends QuadrupedMode
     }
 
     @Override
-    public void render(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (entity.isBaby()) {
             poseStack.scale(0.5F, 0.5F, 0.5F);
             poseStack.translate(0.0F, 1.5F, 0.0F);

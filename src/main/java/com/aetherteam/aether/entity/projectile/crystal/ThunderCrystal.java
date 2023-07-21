@@ -18,8 +18,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
-import javax.annotation.Nonnull;
-
 /**
  * Homing projectile used by the Valkyrie Queen for ranged lightning attacks.
  */
@@ -94,7 +92,7 @@ public class ThunderCrystal extends AbstractCrystal {
      * Called when the entity is attacked.
      */
     @Override
-    public boolean hurt(@Nonnull DamageSource source, float pAmount) {
+    public boolean hurt(DamageSource source, float pAmount) {
         if (!this.level.isClientSide && source.getSourcePosition() != null) {
             ((ServerLevel) this.level).sendParticles(ParticleTypes.CRIT, this.getX(), this.getY(), this.getZ(), 15, 0.2, 0.2, 0.2, 0.0);
             this.knockback(0.15 + pAmount / 8, this.position().subtract(source.getSourcePosition()));
@@ -134,7 +132,7 @@ public class ThunderCrystal extends AbstractCrystal {
     }
 
     @Override
-    public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
+    public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         if (this.target != null) {
             tag.putInt("Target", this.target.getId());
@@ -142,7 +140,7 @@ public class ThunderCrystal extends AbstractCrystal {
     }
 
     @Override
-    public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
+    public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         if (tag.contains("Target")) {
             this.target = this.level.getEntity(tag.getInt("Target"));

@@ -12,8 +12,6 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
-import javax.annotation.Nonnull;
-
 public class ZephyrModel extends EntityModel<Zephyr> {
     public ModelPart rightFace;
     public ModelPart leftFace;
@@ -62,7 +60,7 @@ public class ZephyrModel extends EntityModel<Zephyr> {
     }
 
     @Override
-    public void setupAnim(@Nonnull Zephyr zephyr, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(Zephyr zephyr, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         float motion = Mth.sin((limbSwing * 20.0F) / (180.0F / Mth.PI)) * limbSwingAmount * 0.5F;
 
         this.rightFace.y = 8 - motion;
@@ -91,7 +89,7 @@ public class ZephyrModel extends EntityModel<Zephyr> {
     }
 
     @Override
-    public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         this.rightFace.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
         this.leftFace.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
         this.mouth.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);

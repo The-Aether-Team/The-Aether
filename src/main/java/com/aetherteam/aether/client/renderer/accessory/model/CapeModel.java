@@ -9,8 +9,6 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 
-import javax.annotation.Nonnull;
-
 public class CapeModel extends HumanoidModel<LivingEntity> {
     private final ModelPart cloak;
 
@@ -27,12 +25,12 @@ public class CapeModel extends HumanoidModel<LivingEntity> {
     }
 
     @Override
-    public void renderToBuffer(@Nonnull PoseStack pPoseStack, @Nonnull VertexConsumer pBuffer, int pPackedLight, int pPackedOverlay, float pRed, float pGreen, float pBlue, float pAlpha) {
+    public void renderToBuffer(PoseStack pPoseStack, VertexConsumer pBuffer, int pPackedLight, int pPackedOverlay, float pRed, float pGreen, float pBlue, float pAlpha) {
         this.cloak.render(pPoseStack, pBuffer, pPackedLight, pPackedOverlay, pRed, pGreen, pBlue, pAlpha);
     }
 
     @Override
-    public void setupAnim(@Nonnull LivingEntity pEntity, float pLimbSwing, float pLimbSwingAmount, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
+    public void setupAnim(LivingEntity pEntity, float pLimbSwing, float pLimbSwingAmount, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
         super.setupAnim(pEntity, pLimbSwing, pLimbSwingAmount, pAgeInTicks, pNetHeadYaw, pHeadPitch);
         if (pEntity.getItemBySlot(EquipmentSlot.CHEST).isEmpty()) {
             if (pEntity.isCrouching()) {
