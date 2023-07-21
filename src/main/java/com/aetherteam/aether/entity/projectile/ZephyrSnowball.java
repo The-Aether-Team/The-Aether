@@ -17,6 +17,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.entity.projectile.Fireball;
 import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
@@ -45,18 +46,19 @@ public class ZephyrSnowball extends Fireball implements ItemSupplier {
 	}
 
 	/**
+	 * Based on {@link AbstractHurtingProjectile#tick()}.<br>
 	 * Warning for "deprecation" is suppressed because vanilla calls {@link Level#hasChunkAt(BlockPos)} just fine.
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
 	public void tick() {
-		if (!this.onGround) {
+		if (!this.isOnGround()) {
 			++this.ticksInAir;
 		}
 		if (this.ticksInAir > 400) {
 			this.discard();
 		}
-		if (this.level.isClientSide || (this.getOwner() == null || this.getOwner().isAlive()) && this.level.hasChunkAt(this.blockPosition())) {
+		if (this.getLevel().isClientSide() || (this.getOwner() == null || this.getOwner().isAlive()) && this.getLevel().hasChunkAt(this.blockPosition())) {
 			HitResult hitResult = ProjectileUtil.getHitResult(this, this::canHitEntity);
 			if (hitResult.getType() != HitResult.Type.MISS && !ForgeEventFactory.onProjectileImpact(this, hitResult)) {
 				this.onHit(hitResult);
@@ -71,13 +73,13 @@ public class ZephyrSnowball extends Fireball implements ItemSupplier {
 			float f = this.getInertia();
 			if (this.isInWater()) {
 				for (int i = 0; i < 4; ++i) {
-					this.level.addParticle(ParticleTypes.BUBBLE, d0 - vec3.x * 0.25, d1 - vec3.y * 0.25, d2 - vec3.z * 0.25, vec3.x, vec3.y, vec3.z);
+					this.getLevel().addParticle(ParticleTypes.BUBBLE, d0 - vec3.x * 0.25, d1 - vec3.y * 0.25, d2 - vec3.z * 0.25, vec3.x, vec3.y, vec3.z);
 				}
 				f = 0.8F;
 			}
 
 			this.setDeltaMovement(vec3.add(this.xPower, this.yPower, this.zPower).scale(f));
-			this.level.addParticle(this.getTrailParticle(), d0, d1 + 0.5, d2, 0.0, 0.0, 0.0);
+			this.getLevel().addParticle(this.getTrailParticle(), d0, d1 + 0.5, d2, 0.0, 0.0, 0.0);
 			this.setPos(d0, d1, d2);
 		} else {
 			this.discard();
@@ -94,11 +96,11 @@ public class ZephyrSnowball extends Fireball implements ItemSupplier {
 					PlayerAccessor playerAccessor = (PlayerAccessor) player;
 					playerAccessor.callHurtCurrentlyUsedShield(3.0F);
 				} else {
-					entity.setDeltaMovement(entity.getDeltaMovement().x, entity.getDeltaMovement().y + 0.5, entity.getDeltaMovement().z);
-					entity.setDeltaMovement(entity.getDeltaMovement().x + (this.getDeltaMovement().x * 1.5F), entity.getDeltaMovement().y, entity.getDeltaMovement().z + (this.getDeltaMovement().z * 1.5F));
+					entity.setDeltaMovement(entity.getDeltaMovement().x(), entity.getDeltaMovement().y() + 0.5, entity.getDeltaMovement().z());
+					entity.setDeltaMovement(entity.getDeltaMovement().x() + (this.getDeltaMovement().x() * 1.5), entity.getDeltaMovement().y(), entity.getDeltaMovement().z() + (this.getDeltaMovement().z() * 1.5));
 					if (livingEntity instanceof ServerPlayer player) {
-						if (!this.level.isClientSide) {
-							PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new ZephyrSnowballHitPacket(livingEntity.getId(), this.getDeltaMovement().x, this.getDeltaMovement().z), player);
+						if (!this.getLevel().isClientSide()) {
+							PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new ZephyrSnowballHitPacket(livingEntity.getId(), this.getDeltaMovement().x(), this.getDeltaMovement().z()), player);
 						}
 					}
 				}

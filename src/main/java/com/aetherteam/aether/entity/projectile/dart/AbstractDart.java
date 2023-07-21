@@ -14,6 +14,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
@@ -22,16 +24,20 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
+import java.util.function.Supplier;
 
 public abstract class AbstractDart extends AbstractArrow {
+    private final Supplier<Item> pickupItem;
     private int ticksInAir = 0;
 
-    protected AbstractDart(EntityType<? extends AbstractDart> type, Level level) {
+    protected AbstractDart(EntityType<? extends AbstractDart> type, Level level, Supplier<Item> pickupItem) {
         super(type, level);
+        this.pickupItem = pickupItem;
     }
 
-    public AbstractDart(EntityType<? extends AbstractDart> type, LivingEntity shooter, Level level) {
+    public AbstractDart(EntityType<? extends AbstractDart> type, Level level, LivingEntity shooter, Supplier<Item> pickupItem) {
         super(type, shooter, level);
+        this.pickupItem = pickupItem;
     }
 
     @Override
@@ -125,6 +131,12 @@ public abstract class AbstractDart extends AbstractArrow {
     @Override
     protected SoundEvent getDefaultHitGroundSoundEvent() {
         return AetherSoundEvents.ENTITY_DART_HIT.get();
+    }
+
+    @Nonnull
+    @Override
+    protected ItemStack getPickupItem() {
+        return this.pickupItem != null ? new ItemStack(this.pickupItem.get()) : ItemStack.EMPTY;
     }
 
     @Nonnull
