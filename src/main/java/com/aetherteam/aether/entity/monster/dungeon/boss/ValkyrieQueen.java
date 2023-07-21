@@ -84,7 +84,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * The player whom the valkyrie queen is currently conversing with
      */
     @Nullable
-    private Player tradingPlayer;
+    private Player conversingPlayer;
     private BossRoomTracker<ValkyrieQueen> dungeon;
     private AABB dungeonBounds;
     private final ServerBossEvent bossFight;
@@ -234,9 +234,9 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                 if (!this.isReady()) {
                     this.lookAt(player, 180F, 180F);
                     if (player instanceof ServerPlayer serverPlayer) {
-                        if (!this.isTrading()) {
+                        if (!this.isConversing()) {
                             this.level.broadcastEntityEvent(this, (byte) 71);
-                            this.setTradingPlayer(serverPlayer);
+                            this.setConversingPlayer(serverPlayer);
                         }
                     }
                 } else {
@@ -565,18 +565,18 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                 this.chatItUp(player, Component.translatable("gui.aether.queen.dialog.goodbye"));
                 break;
         }
-        this.setTradingPlayer(null);
+        this.setConversingPlayer(null);
     }
 
     @Override
     @Nullable
-    public Player getTradingPlayer() {
-        return this.tradingPlayer;
+    public Player getConversingPlayer() {
+        return this.conversingPlayer;
     }
 
     @Override
-    public void setTradingPlayer(@Nullable Player player) {
-        this.tradingPlayer = player;
+    public void setConversingPlayer(@Nullable Player player) {
+        this.conversingPlayer = player;
     }
 
     @Override

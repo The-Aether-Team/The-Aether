@@ -29,6 +29,7 @@ public interface MountableMob {
 
     /**
      * Call this at the beginning of your entity's tick method to update the state of the entity.
+     * @param vehicle The {@link Mob} being ridden.
      */
     default void riderTick(Mob vehicle) {
         if (vehicle.getControllingPassenger() instanceof Player player) {
@@ -42,6 +43,7 @@ public interface MountableMob {
 
     /**
      * Call this from your entity's tick method.
+     * @param vehicle The entity being ridden.
      */
     default <T extends Mob & MountableMob> void tick(T vehicle) {
         if (vehicle.isAlive()) {
@@ -56,7 +58,7 @@ public interface MountableMob {
                     vehicle.setPlayerJumped(false);
                     vehicle.setMountJumping(false);
                 }
-                if (passenger instanceof ServerPlayer serverPlayer) {
+                if (passenger instanceof ServerPlayer serverPlayer) { // Used for preventing fly-hack checks.
                     ServerGamePacketListenerImplAccessor serverGamePacketListenerImplAccessor = (ServerGamePacketListenerImplAccessor) serverPlayer.connection;
                     serverGamePacketListenerImplAccessor.aether$setAboveGroundTickCount(0);
                     serverGamePacketListenerImplAccessor.aether$setAboveGroundVehicleTickCount(0);
@@ -67,20 +69,25 @@ public interface MountableMob {
 
     /**
      * Call this from your entity's travel method.
+     * @param vehicle The entity being ridden.
+     * @param motion The {@link Vec3} travel movement vector.
      */
     default <T extends Mob & MountableMob> void travel(T vehicle, Vec3 motion) {
         Entity entity = vehicle.getControllingPassenger();
         if (vehicle.isVehicle() && entity instanceof LivingEntity passenger) {
+            // Handles rotations.
             vehicle.setYRot(passenger.getYRot() % 360.0F);
             vehicle.yRotO = vehicle.getYRot();
             vehicle.setXRot(passenger.getXRot() * 0.5F % 360.0F);
-            vehicle.yBodyRot = vehicle.getYRot();
-            vehicle.yHeadRot = vehicle.yBodyRot;
+            vehicle.setYBodyRot(vehicle.getYRot());
+            vehicle.setYHeadRot(vehicle.yBodyRot);
+            // Handles movement.
             float f = passenger.xxa * 0.5F;
             float f1 = passenger.zza;
             if (f1 <= 0.0F) {
                 f1 *= 0.25F;
             }
+            // Handles jumping.
             if (vehicle.getPlayerJumped() && !vehicle.isMountJumping() && vehicle.canJump()) {
                 double jumpStrength = vehicle.getMountJumpStrength() * this.jumpFactor();
                 vehicle.setDeltaMovement(vehicle.getDeltaMovement().x(), jumpStrength, vehicle.getDeltaMovement().z());
@@ -89,6 +96,7 @@ public interface MountableMob {
                 }
                 vehicle.hasImpulse = true;
             }
+            // Handles step height.
             AttributeInstance stepHeight = vehicle.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
             if (stepHeight != null) {
                 if (stepHeight.hasModifier(vehicle.getDefaultStepHeightModifier())) {
@@ -101,6 +109,7 @@ public interface MountableMob {
                     PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new StepHeightPacket(vehicle.getId()));
                 }
             }
+            // Handles movement.
             if (vehicle.isControlledByLocalInstance()) {
                 vehicle.setSpeed(vehicle.getSteeringSpeed());
                 this.travelWithInput(new Vec3(f, motion.y, f1));
@@ -109,6 +118,7 @@ public interface MountableMob {
             }
             vehicle.calculateEntityAnimation(false);
         } else {
+            // Handles step height.
             AttributeInstance stepHeight = vehicle.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
             if (stepHeight != null) {
                 if (stepHeight.hasModifier(vehicle.getMountStepHeightModifier())) {
@@ -124,25 +134,56 @@ public interface MountableMob {
 
     /**
      * Usually, this just calls the entity's super$travel method.
+     * @param motion The {@link Vec3} movement vector from input.
      */
     void travelWithInput(Vec3 motion);
 
+    /**
+     * @return Whether the player attempted to jump, as a {@link Boolean}.
+     */
     boolean getPlayerJumped();
 
+    /**
+     * Sets whether the player attempted to jump.
+     * @param playerJumped The {@link Boolean} value.
+     */
     void setPlayerJumped(boolean playerJumped);
 
+    /**
+     * @return Whether the mount can jump, as a {@link Boolean}.
+     */
     boolean canJump();
 
+    /**
+     * @return A {@link Double} for the strength of the mount's jump.
+     */
     double getMountJumpStrength();
 
+    /**
+     * @return Whether the mount is jumping, as a {@link Boolean}.
+     */
     boolean isMountJumping();
 
+    /**
+     * Sets whether the mount is jumping.
+     * @param isMountJumping The {@link Boolean} value.
+     */
     void setMountJumping(boolean isMountJumping);
 
+    /**
+     * @return A {@link Float} for the steering speed of the mount.
+     */
     float getSteeringSpeed();
 
+    /**
+     * @return A {@link Double} for the mount's jump factor, accounting for movement-affecting blocks.
+     */
     double jumpFactor();
 
+    /**
+     * Called when the mount jumps.
+     * @param vehicle The vehicle {@link Mob}.
+     */
     default void onJump(Mob vehicle) {
         net.minecraftforge.common.ForgeHooks.onLivingJump(vehicle);
     }

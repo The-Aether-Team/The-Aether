@@ -1,5 +1,8 @@
 package com.aetherteam.aether.entity;
 
+/**
+ * Interface for bird mobs with wings to handle wing rotation animation.
+ */
 public interface WingedBird extends NotGrounded {
     float getWingRotation();
     void setWingRotation(float rot);
@@ -11,6 +14,9 @@ public interface WingedBird extends NotGrounded {
     float getPrevDestPos();
     void setPrevDestPos(float pos);
 
+    /**
+     * Animates the mob's wings depending on whether it is on the ground or not.
+     */
     default void animateWings() {
         this.setPrevWingRotation(this.getWingRotation());
         this.setPrevDestPos(this.getDestPos());

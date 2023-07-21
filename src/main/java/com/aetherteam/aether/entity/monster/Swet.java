@@ -426,7 +426,6 @@ public class Swet extends Slime implements MountableMob {
         return this.getBlockJumpFactor();
     }
 
-
     @Override
     public boolean getPlayerJumped() {
         return this.entityData.get(DATA_PLAYER_JUMPED_ID);

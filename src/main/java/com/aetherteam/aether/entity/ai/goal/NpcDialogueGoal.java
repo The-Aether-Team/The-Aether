@@ -21,8 +21,8 @@ public class NpcDialogueGoal<T extends Mob & NpcDialogue> extends LookAtPlayerGo
 
     @Override
     public boolean canUse() {
-        if (this.npc.isTrading() && this.npc.getTradingPlayer().isAlive() && !this.npc.hurtMarked && this.npc.distanceToSqr(this.npc.getTradingPlayer()) <= 64.0F) {
-            this.lookAt = this.npc.getTradingPlayer();
+        if (this.npc.isConversing() && this.npc.getConversingPlayer().isAlive() && !this.npc.hurtMarked && this.npc.distanceToSqr(this.npc.getConversingPlayer()) <= 64.0F) {
+            this.lookAt = this.npc.getConversingPlayer();
             return true;
         }
         return false;
@@ -48,6 +48,6 @@ public class NpcDialogueGoal<T extends Mob & NpcDialogue> extends LookAtPlayerGo
     @Override
     public void stop() {
         super.stop();
-        this.npc.setTradingPlayer(null);
+        this.npc.setConversingPlayer(null);
     }
 }
