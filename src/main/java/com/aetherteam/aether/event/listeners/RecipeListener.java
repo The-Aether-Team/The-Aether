@@ -54,7 +54,7 @@ public class RecipeListener {
      */
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onConvert(PlacementConvertEvent event) {
-        LevelAccessor levelAccessor = event.getWorld();
+        LevelAccessor levelAccessor = event.getLevel();
         BlockPos blockPos = event.getPos();
         if (!event.isCanceled()) {
             RecipeHooks.banOrConvert(levelAccessor, blockPos);
@@ -66,7 +66,7 @@ public class RecipeListener {
      */
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onBanned(PlacementBanEvent.SpawnParticles event) {
-        LevelAccessor levelAccessor = event.getWorld();
+        LevelAccessor levelAccessor = event.getLevel();
         BlockPos blockPos = event.getPos();
         if (!event.isCanceled()) {
             RecipeHooks.banOrConvert(levelAccessor, blockPos);

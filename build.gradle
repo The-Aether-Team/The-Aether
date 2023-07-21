@@ -115,7 +115,6 @@ dependencies {
 
     compileOnly "mezz.jei:jei-${project.mc_version}-common:${project.jei_version}"
     compileOnly "mezz.jei:jei-${project.mc_version}-forge:${project.jei_version}"
-    runtimeOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}"))
 
 //    runtimeOnly fg.deobf("io.github.flemmli97:debugutils:${project.mc_version}-${project.debugutils_version}-forge")
 

@@ -5,6 +5,8 @@ import com.aetherteam.aether.AetherGameEvents;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.block.FreezingBlock;
+import com.aetherteam.aether.event.PlacementBanEvent;
+import com.aetherteam.aether.event.PlacementConvertEvent;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.recipes.ban.BlockBanRecipe;
 import com.aetherteam.aether.recipe.recipes.ban.ItemBanRecipe;
@@ -29,13 +31,27 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.level.BlockEvent;
 
 public class RecipeHooks {
+    /**
+     * Checks if an interaction in the Aether is banned. This is used both for item interaction recipes and interacting with beds in the Aether.
+     * @param player The {@link Player} performing the interaction.
+     * @param level The {@link Level} that the interaction is in.
+     * @param pos The {@link BlockPos} the interaction is at.
+     * @param face The {@link Direction} of the block face that is interacted with.
+     * @param stack The {@link ItemStack} used for interaction.
+     * @param state The {@link BlockState} being interacted with.
+     * @param spawnParticles A {@link Boolean} for whether to spawn particles from the interaction's failure.
+     * @return Whether an interaction is banned, as a {@link Boolean}.
+     * @see com.aetherteam.aether.event.listeners.RecipeListener#checkBanned(PlayerInteractEvent.RightClickBlock)
+     */
     public static boolean checkInteractionBanned(Player player, Level level, BlockPos pos, Direction face, ItemStack stack, BlockState state, boolean spawnParticles) {
         if (isItemPlacementBanned(level, pos, face, stack, spawnParticles)) {
             return true;
         }
-        if (level.getBiome(pos).is(AetherTags.Biomes.ULTRACOLD) && AetherConfig.SERVER.enable_bed_explosions.get()) {
+        if (level.getBiome(pos).is(AetherTags.Biomes.ULTRACOLD) && AetherConfig.SERVER.enable_bed_explosions.get()) { // Explodes beds in the Aether if the config for it is enabled.
             if (state.is(BlockTags.BEDS) && state.getBlock() != AetherBlocks.SKYROOT_BED.get()) {
                 if (!level.isClientSide()) {
                     if (state.getValue(BedBlock.PART) != BedPart.HEAD) {
@@ -56,6 +72,15 @@ public class RecipeHooks {
         return false;
     }
 
+    /**
+     * Checks if an item placement is banned through the {@link AetherRecipeTypes#ITEM_PLACEMENT_BAN} recipe type.
+     * @param level The {@link Level} that the interaction is in.
+     * @param pos The {@link BlockPos} the interaction is at.
+     * @param face The {@link Direction} of the block face that is interacted with.
+     * @param stack The {@link ItemStack} used for interaction.
+     * @param spawnParticles A {@link Boolean} for whether to spawn particles from the interaction's failure.
+     * @return Whether the interaction is banned, as a {@link Boolean}.
+     */
     public static boolean isItemPlacementBanned(Level level, BlockPos pos, Direction face, ItemStack stack, boolean spawnParticles) {
         for (Recipe<?> recipe : level.getRecipeManager().getAllRecipesFor(AetherRecipeTypes.ITEM_PLACEMENT_BAN.get())) {
             if (recipe instanceof ItemBanRecipe banRecipe) {
@@ -67,20 +92,33 @@ public class RecipeHooks {
         return false;
     }
 
+    /**
+     * Checks if a block is unable to exist in the Aether, and either removes it or replaces it with another block.
+     * @param levelAccessor The {@link LevelAccessor} the block is in.
+     * @param pos The {@link BlockPos} of the block.
+     * @see com.aetherteam.aether.event.listeners.RecipeListener#onNeighborNotified(BlockEvent.NeighborNotifyEvent)
+     */
     public static void checkExistenceBanned(LevelAccessor levelAccessor, BlockPos pos) {
         if (levelAccessor instanceof Level level) {
             BlockState state = levelAccessor.getBlockState(pos);
-            if (RecipeHooks.isBlockPlacementBanned(level, pos, state)) {
+            if (RecipeHooks.isBlockPlacementBanned(level, pos, state)) { // Check if block can't exist.
                 level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
                 if (state.getBlock().asItem() != Items.AIR) {
-                    Block.dropResources(state, level, pos);
+                    Block.dropResources(state, level, pos); // Drop block if it can be dropped as an item.
                 }
-            } else {
+            } else { // Check if block should be replaced.
                 RecipeHooks.isBlockPlacementConvertable(level, pos, state);
             }
         }
     }
 
+    /**
+     * Checks if a block placement is banned through the {@link AetherRecipeTypes#BLOCK_PLACEMENT_BAN} recipe type.
+     * @param level The {@link Level} that the placement is in.
+     * @param pos The {@link BlockPos} the placement is at.
+     * @param state The placed {@link BlockState}.
+     * @return Whether the placement is banned, as a {@link Boolean}.
+     */
     private static boolean isBlockPlacementBanned(Level level, BlockPos pos, BlockState state) {
         if (!level.isClientSide()) {
             for (Recipe<?> recipe : level.getRecipeManager().getAllRecipesFor(AetherRecipeTypes.BLOCK_PLACEMENT_BAN.get())) {
@@ -94,6 +132,12 @@ public class RecipeHooks {
         return false;
     }
 
+    /**
+     * Checks if a placed block should be converted through the {@link AetherRecipeTypes#PLACEMENT_CONVERSION} recipe type.
+     * @param level The {@link Level} that the placement is in.
+     * @param pos The {@link BlockPos} the placement is at.
+     * @param state The placed {@link BlockState}.
+     */
     private static void isBlockPlacementConvertable(Level level, BlockPos pos, BlockState state) {
         if (!level.isClientSide()) {
             for (Recipe<?> recipe : level.getRecipeManager().getAllRecipesFor(AetherRecipeTypes.PLACEMENT_CONVERSION.get())) {
@@ -106,6 +150,13 @@ public class RecipeHooks {
         }
     }
 
+    /**
+     * Spawns particles from a ban or conversion recipe interaction.
+     * @param accessor The {@link LevelAccessor} that the interaction is in.
+     * @param pos The {@link BlockPos} the interaction is at.
+     * @see com.aetherteam.aether.event.listeners.RecipeListener#onConvert(PlacementConvertEvent)
+     * @see com.aetherteam.aether.event.listeners.RecipeListener#onBanned(PlacementBanEvent.SpawnParticles)
+     */
     public static void banOrConvert(LevelAccessor accessor, BlockPos pos) {
         if (accessor instanceof ServerLevel serverLevel) {
             double x = pos.getX() + 0.5;
@@ -118,6 +169,13 @@ public class RecipeHooks {
         }
     }
 
+    /**
+     * Caches all Icestone freezing recipes, checks if a block is in the cache, and sends a {@link AetherGameEvents#ICESTONE_FREEZABLE_UPDATE} game event update from that block.
+     * The game event is used to let Icestone blocks know to freeze another block in a performance-efficient way.
+     * @param accessor The {@link LevelAccessor} that the block is in.
+     * @param pos The {@link BlockPos}
+     * @see com.aetherteam.aether.event.listeners.RecipeListener#onNeighborNotified(BlockEvent.NeighborNotifyEvent)
+     */
     public static void sendIcestoneFreezableUpdateEvent(LevelAccessor accessor, BlockPos pos) {
         if (accessor instanceof Level level && !level.isClientSide())  {
             BlockState oldBlockState = level.getBlockState(pos);

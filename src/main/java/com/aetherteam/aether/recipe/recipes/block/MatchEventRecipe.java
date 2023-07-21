@@ -37,7 +37,7 @@ public interface MatchEventRecipe {
      * @param newState The resulting {@link BlockState} from the recipe.
      * @return Whether {@link ItemUseConvertEvent} is cancelled.
      */
-    default boolean matches(Player player, Level level, BlockPos pos, ItemStack stack, BlockState oldState, BlockState newState, RecipeType recipeType) {
+    default boolean matches(Player player, Level level, BlockPos pos, ItemStack stack, BlockState oldState, BlockState newState, RecipeType<?> recipeType) {
         ItemUseConvertEvent event = AetherEventDispatch.onItemUseConvert(player, level, pos, stack, oldState, newState, recipeType);
         return !event.isCanceled();
     }

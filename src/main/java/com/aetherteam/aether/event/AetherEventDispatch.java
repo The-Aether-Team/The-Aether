@@ -17,60 +17,90 @@ import net.minecraftforge.common.MinecraftForge;
 import javax.annotation.Nullable;
 
 public class AetherEventDispatch {
+	/**
+	 * @see EggLayEvent
+	 */
 	public static EggLayEvent onLayEgg(Entity entity, SoundEvent sound, float volume, float pitch, Item item) {
 		EggLayEvent event = new EggLayEvent(entity, sound, volume, pitch, item);
 		MinecraftForge.EVENT_BUS.post(event);
 		return event;
 	}
 
-	public static PlacementBanEvent.SpawnParticles onPlacementSpawnParticles(LevelAccessor world, BlockPos pos, @Nullable Direction face, @Nullable ItemStack stack, @Nullable BlockState state) {
-		PlacementBanEvent.SpawnParticles event = new PlacementBanEvent.SpawnParticles(world, pos, face, stack, state);
+	/**
+	 * @see PlacementBanEvent.SpawnParticles
+	 */
+	public static PlacementBanEvent.SpawnParticles onPlacementSpawnParticles(LevelAccessor level, BlockPos pos, @Nullable Direction face, @Nullable ItemStack stack, @Nullable BlockState state) {
+		PlacementBanEvent.SpawnParticles event = new PlacementBanEvent.SpawnParticles(level, pos, face, stack, state);
 		MinecraftForge.EVENT_BUS.post(event);
 		return event;
 	}
 
-	public static boolean isItemPlacementBanned(LevelAccessor world, BlockPos pos, ItemStack stack) {
-		PlacementBanEvent.CheckItem event = new PlacementBanEvent.CheckItem(world, pos, stack.copy());
+	/**
+	 * @see PlacementBanEvent.CheckItem
+	 */
+	public static boolean isItemPlacementBanned(LevelAccessor level, BlockPos pos, ItemStack stack) {
+		PlacementBanEvent.CheckItem event = new PlacementBanEvent.CheckItem(level, pos, stack.copy());
 		MinecraftForge.EVENT_BUS.post(event);
 		return event.isBanned();
 	}
 
-	public static boolean isBlockPlacementBanned(LevelAccessor world, BlockPos pos, BlockState state) {
-		PlacementBanEvent.CheckBlock event = new PlacementBanEvent.CheckBlock(world, pos, state);
+	/**
+	 * @see PlacementBanEvent.CheckBlock
+	 */
+	public static boolean isBlockPlacementBanned(LevelAccessor level, BlockPos pos, BlockState state) {
+		PlacementBanEvent.CheckBlock event = new PlacementBanEvent.CheckBlock(level, pos, state);
 		MinecraftForge.EVENT_BUS.post(event);
 		return event.isBanned();
 	}
 
-	public static PlacementConvertEvent onPlacementConvert(LevelAccessor world, BlockPos pos, BlockState oldState, BlockState newState)  {
-		PlacementConvertEvent event = new PlacementConvertEvent(world, pos, oldState, newState);
+	/**
+	 * @see PlacementConvertEvent
+	 */
+	public static PlacementConvertEvent onPlacementConvert(LevelAccessor level, BlockPos pos, BlockState oldState, BlockState newState)  {
+		PlacementConvertEvent event = new PlacementConvertEvent(level, pos, oldState, newState);
 		MinecraftForge.EVENT_BUS.post(event);
 		return event;
 	}
 
-	public static FreezeEvent.FreezeFromBlock onBlockFreezeFluid(LevelAccessor world, BlockPos pos, BlockState fluidState, BlockState blockState, BlockState sourceBlock) {
-		FreezeEvent.FreezeFromBlock event = new FreezeEvent.FreezeFromBlock(world, pos, fluidState, blockState, sourceBlock);
+	/**
+	 * @see FreezeEvent.FreezeFromBlock
+	 */
+	public static FreezeEvent.FreezeFromBlock onBlockFreezeFluid(LevelAccessor level, BlockPos pos, BlockState fluidState, BlockState blockState, BlockState sourceBlock) {
+		FreezeEvent.FreezeFromBlock event = new FreezeEvent.FreezeFromBlock(level, pos, fluidState, blockState, sourceBlock);
 		MinecraftForge.EVENT_BUS.post(event);
 		return event;
 	}
 
-	public static FreezeEvent.FreezeFromItem onItemFreezeFluid(LevelAccessor world, BlockPos pos, BlockState fluidState, BlockState blockState, ItemStack sourceItem) {
-		FreezeEvent.FreezeFromItem event = new FreezeEvent.FreezeFromItem(world, pos, fluidState, blockState, sourceItem);
+	/**
+	 * @see FreezeEvent.FreezeFromItem
+	 */
+	public static FreezeEvent.FreezeFromItem onItemFreezeFluid(LevelAccessor level, BlockPos pos, BlockState fluidState, BlockState blockState, ItemStack sourceItem) {
+		FreezeEvent.FreezeFromItem event = new FreezeEvent.FreezeFromItem(level, pos, fluidState, blockState, sourceItem);
 		MinecraftForge.EVENT_BUS.post(event);
 		return event;
 	}
 
-	public static ItemUseConvertEvent onItemUseConvert(Player player, LevelAccessor world, BlockPos pos, ItemStack stack, BlockState oldState, BlockState newState, RecipeType recipeType) {
-		ItemUseConvertEvent event = new ItemUseConvertEvent(player, world, pos, stack, oldState, newState, recipeType);
+	/**
+	 * @see ItemUseConvertEvent
+	 */
+	public static ItemUseConvertEvent onItemUseConvert(Player player, LevelAccessor level, BlockPos pos, ItemStack stack, BlockState oldState, BlockState newState, RecipeType<?> recipeType) {
+		ItemUseConvertEvent event = new ItemUseConvertEvent(player, level, pos, stack, oldState, newState, recipeType);
 		MinecraftForge.EVENT_BUS.post(event);
 		return event;
 	}
 
+	/**
+	 * @see TriggerTrapEvent
+	 */
 	public static boolean onTriggerTrap(Player player, Level level, BlockPos pos, BlockState state) {
 		TriggerTrapEvent event = new TriggerTrapEvent(player, level, pos, state);
 		MinecraftForge.EVENT_BUS.post(event);
 		return !event.isCanceled();
 	}
 
+	/**
+	 * @see ValkyrieTeleportEvent
+	 */
 	public static ValkyrieTeleportEvent onValkyrieTeleport(LivingEntity entity, double targetX, double targetY, double targetZ) {
 		ValkyrieTeleportEvent event = new ValkyrieTeleportEvent(entity, targetX, targetY, targetZ);
 		MinecraftForge.EVENT_BUS.post(event);

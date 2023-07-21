@@ -9,7 +9,7 @@ import net.minecraft.world.level.Level;
 import java.util.Collection;
 
 /**
- * Capability class used to track {@link ItemEntity}s dropped by the player, either by death or from being thrown.
+ * Capability class used to track {@link ItemEntity}s dropped by player death.
  * @see com.aetherteam.aether.event.hooks.EntityHooks#trackDrops(LivingEntity, Collection)
  * @see com.aetherteam.aether.event.hooks.DimensionHooks#fallFromAether(Level)
  */

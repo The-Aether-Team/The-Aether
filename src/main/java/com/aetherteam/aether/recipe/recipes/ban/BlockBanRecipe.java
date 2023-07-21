@@ -46,7 +46,9 @@ public class BlockBanRecipe extends AbstractPlacementBanRecipe<BlockState, Block
     public boolean banBlock(Level level, BlockPos pos, BlockState state) {
         if (this.matches(level, pos.below(), state)) {
             if (AetherEventDispatch.isBlockPlacementBanned(level, pos, state)) {
-                AetherEventDispatch.onPlacementSpawnParticles(level, pos, null, null, state);
+                if (level.isClientSide()) {
+                    AetherEventDispatch.onPlacementSpawnParticles(level, pos, null, null, state);
+                }
                 return true;
             }
         }
