@@ -1,6 +1,6 @@
 package com.aetherteam.aether.network.packet.serverbound;
 
-import com.aetherteam.aether.perk.data.ServerHaloPerkData;
+import com.aetherteam.aether.perk.data.ServerPerkData;
 import com.aetherteam.aether.perk.types.Halo;
 import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.network.FriendlyByteBuf;
@@ -28,7 +28,7 @@ public class ServerHaloPacket {
         @Override
         public void execute(Player playerEntity) {
             if (playerEntity != null && playerEntity.getServer() != null && this.playerUUID() != null && this.halo() != null) {
-                ServerHaloPerkData.INSTANCE.applyPerkWithVerification(playerEntity.getServer(), this.playerUUID(), this.halo());
+                ServerPerkData.HALO_INSTANCE.applyPerkWithVerification(playerEntity.getServer(), this.playerUUID(), this.halo());
             }
         }
     }
@@ -50,7 +50,7 @@ public class ServerHaloPacket {
         @Override
         public void execute(Player playerEntity) {
             if (playerEntity != null && playerEntity.getServer() != null && this.playerUUID() != null) {
-                ServerHaloPerkData.INSTANCE.removePerk(playerEntity.getServer(), this.playerUUID());
+                ServerPerkData.HALO_INSTANCE.removePerk(playerEntity.getServer(), this.playerUUID());
             }
         }
     }

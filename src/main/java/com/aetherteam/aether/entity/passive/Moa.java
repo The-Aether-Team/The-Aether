@@ -20,7 +20,7 @@ import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.miscellaneous.MoaEggItem;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.clientbound.MoaInteractPacket;
-import com.aetherteam.aether.perk.data.ServerMoaSkinPerkData;
+import com.aetherteam.aether.perk.data.ServerPerkData;
 import com.aetherteam.aether.perk.types.MoaData;
 import com.aetherteam.nitrogen.capability.INBTSynchable;
 import com.aetherteam.nitrogen.network.PacketRelay;
@@ -277,9 +277,9 @@ public class Moa extends MountableAnimal implements WingedBird {
 			}
 			if (!player.getLevel().isClientSide()) {
 				AetherPlayer.get(player).ifPresent((aetherPlayer) -> aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setLastRiddenMoa", this.getMoaUUID()));
-				Map<UUID, MoaData> userSkinsData = ServerMoaSkinPerkData.INSTANCE.getServerPerkData(player.getServer());
+				Map<UUID, MoaData> userSkinsData = ServerPerkData.MOA_SKIN_INSTANCE.getServerPerkData(player.getServer());
 				if (userSkinsData.containsKey(this.getLastRider())) {
-					ServerMoaSkinPerkData.INSTANCE.applyPerkWithVerification(player.getServer(), this.getLastRider(), new MoaData(this.getMoaUUID(), userSkinsData.get(this.getLastRider()).moaSkin()));
+					ServerPerkData.MOA_SKIN_INSTANCE.applyPerkWithVerification(player.getServer(), this.getLastRider(), new MoaData(this.getMoaUUID(), userSkinsData.get(this.getLastRider()).moaSkin()));
 				}
 			}
 		}

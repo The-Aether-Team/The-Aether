@@ -1,6 +1,6 @@
 package com.aetherteam.aether.network.packet.serverbound;
 
-import com.aetherteam.aether.perk.data.ServerDeveloperGlowPerkData;
+import com.aetherteam.aether.perk.data.ServerPerkData;
 import com.aetherteam.aether.perk.types.DeveloperGlow;
 import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.network.FriendlyByteBuf;
@@ -28,7 +28,7 @@ public class ServerDeveloperGlowPacket {
         @Override
         public void execute(Player playerEntity) {
             if (playerEntity != null && playerEntity.getServer() != null && this.playerUUID() != null && this.developerGlow() != null) {
-                ServerDeveloperGlowPerkData.INSTANCE.applyPerkWithVerification(playerEntity.getServer(), this.playerUUID(), this.developerGlow());
+                ServerPerkData.DEVELOPER_GLOW_INSTANCE.applyPerkWithVerification(playerEntity.getServer(), this.playerUUID(), this.developerGlow());
             }
         }
     }
@@ -50,7 +50,7 @@ public class ServerDeveloperGlowPacket {
         @Override
         public void execute(Player playerEntity) {
             if (playerEntity != null && playerEntity.getServer() != null && this.playerUUID() != null) {
-                ServerDeveloperGlowPerkData.INSTANCE.removePerk(playerEntity.getServer(), this.playerUUID());
+                ServerPerkData.DEVELOPER_GLOW_INSTANCE.removePerk(playerEntity.getServer(), this.playerUUID());
             }
         }
     }

@@ -1,6 +1,6 @@
 package com.aetherteam.aether.network.packet.serverbound;
 
-import com.aetherteam.aether.perk.data.ServerMoaSkinPerkData;
+import com.aetherteam.aether.perk.data.ServerPerkData;
 import com.aetherteam.aether.perk.types.MoaData;
 import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.network.FriendlyByteBuf;
@@ -28,7 +28,7 @@ public abstract class ServerMoaSkinPacket {
         @Override
         public void execute(Player playerEntity) {
             if (playerEntity != null && playerEntity.getServer() != null && this.playerUUID() != null && this.moaSkinData() != null) {
-                ServerMoaSkinPerkData.INSTANCE.applyPerkWithVerification(playerEntity.getServer(), this.playerUUID(), this.moaSkinData());
+                ServerPerkData.MOA_SKIN_INSTANCE.applyPerkWithVerification(playerEntity.getServer(), this.playerUUID(), this.moaSkinData());
             }
         }
     }
@@ -50,7 +50,7 @@ public abstract class ServerMoaSkinPacket {
         @Override
         public void execute(Player playerEntity) {
             if (playerEntity != null && playerEntity.getServer() != null && this.playerUUID() != null) {
-                ServerMoaSkinPerkData.INSTANCE.removePerk(playerEntity.getServer(), this.playerUUID());
+                ServerPerkData.MOA_SKIN_INSTANCE.removePerk(playerEntity.getServer(), this.playerUUID());
             }
         }
     }

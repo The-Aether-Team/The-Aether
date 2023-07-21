@@ -225,9 +225,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.handleLogoutSavedHealth();
 		this.handlePatreonMessage();
 		this.forceSync(INBTSynchable.Direction.CLIENT);
-		ServerMoaSkinPerkData.INSTANCE.syncFromServer(this.getPlayer());
-		ServerHaloPerkData.INSTANCE.syncFromServer(this.getPlayer());
-		ServerDeveloperGlowPerkData.INSTANCE.syncFromServer(this.getPlayer());
+		ServerPerkData.MOA_SKIN_INSTANCE.syncFromServer(this.getPlayer());
+		ServerPerkData.HALO_INSTANCE.syncFromServer(this.getPlayer());
+		ServerPerkData.DEVELOPER_GLOW_INSTANCE.syncFromServer(this.getPlayer());
 	}
 
 	/**

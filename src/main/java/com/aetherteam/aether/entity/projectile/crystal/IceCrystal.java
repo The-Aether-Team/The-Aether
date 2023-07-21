@@ -41,7 +41,7 @@ public class IceCrystal extends AbstractCrystal {
         this.zPower = -Mth.cos(rotation) * 0.20;
         this.setDeltaMovement(this.xPower, 0, this.zPower);
     }
-    
+
     /**
      * @see IceCrystal#doDamage(Entity)
      */
