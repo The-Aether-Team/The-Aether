@@ -28,15 +28,19 @@ public class ThrownLightningKnife extends ThrowableItemProjectile {
 		super(AetherEntityTypes.LIGHTNING_KNIFE.get(), level);
 	}
 
+	/**
+	 * Summons lightning when hitting something, and tracks the lightning as spawned by the owner of the projectile through {@link com.aetherteam.aether.capability.lightning.LightningTrackerCapability}.
+	 * @param result The {@link HitResult} of the projectile.
+	 */
 	@Override
 	protected void onHit(HitResult result) {
-		if (!this.level.isClientSide) {
-			if (result.getType() != HitResult.Type.MISS && this.level instanceof ServerLevel) {
-				LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(this.level);
+		if (!this.getLevel().isClientSide()) {
+			if (result.getType() != HitResult.Type.MISS && this.getLevel() instanceof ServerLevel) {
+				LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(this.getLevel());
 				if (lightningBolt != null) {
 					LightningTracker.get(lightningBolt).ifPresent(lightningTracker -> lightningTracker.setOwner(this.getOwner()));
 					lightningBolt.setPos(this.getX(), this.getY(), this.getZ());
-					this.level.addFreshEntity(lightningBolt);
+					this.getLevel().addFreshEntity(lightningBolt);
 				}
 			}
 			this.discard();

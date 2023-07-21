@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -27,30 +28,38 @@ public abstract class AbstractCrystal extends Projectile {
         this.setNoGravity(true);
     }
 
+    /**
+     * Necessary to define, even if empty.
+     */
     @Override
     protected void defineSynchedData() { }
 
+    /**
+     * Based on {@link ThrowableProjectile#tick()}
+     */
     @Override
     public void tick() {
         super.tick();
-        if (!this.onGround) {
+        if (!this.isOnGround()) {
             ++this.ticksInAir;
         }
         if (this.ticksInAir > this.getLifeSpan()) {
-            this.discard();
+            if (!this.getLevel().isClientSide()) {
+                this.discard();
+            }
         }
         HitResult result = ProjectileUtil.getHitResult(this, this::canHitEntity);
         boolean flag = false;
         if (result.getType() == HitResult.Type.BLOCK) {
             BlockPos blockPos = ((BlockHitResult) result).getBlockPos();
-            BlockState blockState = this.level.getBlockState(blockPos);
+            BlockState blockState = this.getLevel().getBlockState(blockPos);
             if (blockState.is(Blocks.NETHER_PORTAL)) {
                 this.handleInsidePortal(blockPos);
                 flag = true;
             } else if (blockState.is(Blocks.END_GATEWAY)) {
-                BlockEntity blockEntity = this.level.getBlockEntity(blockPos);
+                BlockEntity blockEntity = this.getLevel().getBlockEntity(blockPos);
                 if (blockEntity instanceof TheEndGatewayBlockEntity endGatewayBlockEntity && TheEndGatewayBlockEntity.canEntityTeleport(this)) {
-                    TheEndGatewayBlockEntity.teleportEntity(this.level, blockPos, blockState, this, endGatewayBlockEntity);
+                    TheEndGatewayBlockEntity.teleportEntity(this.getLevel(), blockPos, blockState, this, endGatewayBlockEntity);
                 }
                 flag = true;
             }
@@ -62,10 +71,14 @@ public abstract class AbstractCrystal extends Projectile {
         this.tickMovement();
     }
 
+    /**
+     * Spawns explosion particles when this projectile is removed from the world.
+     * @param reason The {@link net.minecraft.world.entity.Entity.RemovalReason}.
+     */
     @Override
-    public void remove(RemovalReason pReason) {
+    public void remove(RemovalReason reason) {
         this.spawnExplosionParticles();
-        super.remove(pReason);
+        super.remove(reason);
     }
 
     /**
@@ -73,15 +86,18 @@ public abstract class AbstractCrystal extends Projectile {
      */
     protected void tickMovement() {
         Vec3 vector3d = this.getDeltaMovement();
-        double d2 = this.getX() + vector3d.x;
-        double d0 = this.getY() + vector3d.y;
-        double d1 = this.getZ() + vector3d.z;
+        double d2 = this.getX() + vector3d.x();
+        double d0 = this.getY() + vector3d.y();
+        double d1 = this.getZ() + vector3d.z();
         this.updateRotation();
         this.setPos(d2, d0, d1);
     }
 
+    /**
+     * Creates the crystal's explosion particles.
+     */
     public void spawnExplosionParticles() {
-        if (this.level instanceof ServerLevel level) {
+        if (this.getLevel() instanceof ServerLevel level) {
             for (int i = 0; i < 20; i++) {
                 double x = (this.random.nextFloat() - 0.5F) * 0.5;
                 double y = (this.random.nextFloat() - 0.5F) * 0.5;
@@ -91,10 +107,29 @@ public abstract class AbstractCrystal extends Projectile {
         }
     }
 
+    /**
+     * @return {@link ParticleOptions} for what explosion particles to spawn. Used by subclasses.
+     */
     protected abstract ParticleOptions getExplosionParticle();
 
+    /**
+     * @return The lifespan of the crystal, as an {@link Integer}.
+     */
     public int getLifeSpan() {
         return 300;
+    }
+
+    /**
+     * This is needed to make the crystal vulnerable to player attacks.
+     */
+    @Override
+    public boolean isPickable() {
+        return true;
+    }
+
+    @Override
+    public boolean isOnFire() {
+        return false;
     }
 
     @Override
@@ -111,7 +146,6 @@ public abstract class AbstractCrystal extends Projectile {
         }
     }
 
-   
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);

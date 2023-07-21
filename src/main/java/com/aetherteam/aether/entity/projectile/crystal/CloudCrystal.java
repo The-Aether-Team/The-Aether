@@ -17,6 +17,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 
+/**
+ * A crystal projectile shot by Cloud Minions. It weakens entities it hits.
+ */
 public class CloudCrystal extends AbstractCrystal {
     public CloudCrystal(EntityType<? extends CloudCrystal> entityType, Level level) {
         super(entityType, level);
@@ -26,22 +29,31 @@ public class CloudCrystal extends AbstractCrystal {
         super(AetherEntityTypes.CLOUD_CRYSTAL.get(), level);
     }
 
+    /**
+     * Weakens an entity that is hit by the projectile. The projectile is also able to damage blazes.
+     * @param result The {@link EntityHitResult} of the projectile.
+     */
     @Override
     protected void onHitEntity(EntityHitResult result) {
         Entity entity = result.getEntity();
         if (entity instanceof LivingEntity livingEntity) {
             float bonus = entity instanceof Blaze ? 3.0F : 0.0F;
-            if (livingEntity.hurt(AetherDamageTypes.indirectEntityDamageSource(this.level, AetherDamageTypes.CLOUD_CRYSTAL, this, this.getOwner()), 5.0F + bonus)) {
+            if (livingEntity.hurt(AetherDamageTypes.indirectEntityDamageSource(this.getLevel(), AetherDamageTypes.CLOUD_CRYSTAL, this, this.getOwner()), 5.0F + bonus)) {
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 10));
-                this.level.playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
-                this.discard();
+                this.getLevel().playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
+                if (!this.getLevel().isClientSide()) {
+                    this.discard();
+                }
             }
         }
     }
 
     @Override
-    protected ParticleOptions getExplosionParticle() {
-        return AetherParticleTypes.FROZEN.get();
+    protected void onHitBlock(BlockHitResult result) {
+        super.onHitBlock(result);
+        if (!this.getLevel().isClientSide()) {
+            this.discard();
+        }
     }
 
     @Override
@@ -51,12 +63,19 @@ public class CloudCrystal extends AbstractCrystal {
     }
 
     @Override
-    protected void onHitBlock(BlockHitResult result) {
-        super.onHitBlock(result);
-        this.discard();
+    protected ParticleOptions getExplosionParticle() {
+        return AetherParticleTypes.FROZEN.get();
     }
 
     public SoundEvent getImpactExplosionSoundEvent() {
         return AetherSoundEvents.ENTITY_CLOUD_CRYSTAL_EXPLODE.get();
+    }
+
+    /**
+     * This is crystal cannot be attacked.
+     */
+    @Override
+    public boolean isPickable() {
+        return false;
     }
 }

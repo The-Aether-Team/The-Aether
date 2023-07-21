@@ -24,6 +24,11 @@ public class PoisonNeedle extends AbstractDart {
         this.setBaseDamage(1.0);
     }
 
+
+    /**
+     * Handles shield damaging when this projectile hits an entity.
+     * @param result The {@link HitResult} of the projectile.
+     */
     @Override
     protected void onHit(HitResult result) {
         super.onHit(result);
@@ -36,6 +41,10 @@ public class PoisonNeedle extends AbstractDart {
         }
     }
 
+    /**
+     * Applies the Inebriation effect to an entity after being hurt.
+     * @param living The {@link LivingEntity} to affect.
+     */
     @Override
     protected void doPostHurtEffects(LivingEntity living) {
         super.doPostHurtEffects(living);

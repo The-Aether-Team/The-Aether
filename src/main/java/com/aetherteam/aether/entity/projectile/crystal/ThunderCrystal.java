@@ -19,22 +19,18 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * Homing projectile used by the Valkyrie Queen for ranged lightning attacks.
+ * A homing crystal projectile used by the Valkyrie Queen for ranged lightning attacks.
  */
 public class ThunderCrystal extends AbstractCrystal {
+    /**
+     * The target to home in on.
+     */
     private Entity target;
 
-    /**
-     * Used for registering the entity. Use the other constructor to provide more context.
-     */
     public ThunderCrystal(EntityType<? extends ThunderCrystal> entityType, Level level) {
         super(entityType, level);
     }
 
-    /**
-     * @param shooter - The entity that created this projectile
-     * @param target - The target to home in on
-     */
     public ThunderCrystal(EntityType<? extends ThunderCrystal> entityType, Level level, Entity shooter, Entity target) {
         super(entityType, level);
         this.setOwner(shooter);
@@ -42,93 +38,89 @@ public class ThunderCrystal extends AbstractCrystal {
         this.setPos(shooter.getX(), shooter.getEyeY(), shooter.getZ());
     }
 
-    @Override
-    public void tickMovement() {
-        if (!this.level.isClientSide) {
-            if (this.target == null || !this.target.isAlive()) {
-                this.discard();
-                this.playSound(AetherSoundEvents.ENTITY_THUNDER_CRYSTAL_EXPLODE.get(), 1.0F, 1.0F);
-                return;
-            }
-            if (this.ticksInAir >= this.getLifeSpan()) {
-                if (this.target != null && this.target.isAlive()) {
-                    LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(this.level);
-                    if (lightningBolt != null) {
-                        LightningTracker.get(lightningBolt).ifPresent(lightningTracker -> lightningTracker.setOwner(this.getOwner()));
-                        lightningBolt.setPos(this.getX(), this.getY(), this.getZ());
-                        this.level.addFreshEntity(lightningBolt);
-                    }
-                }
-                this.playSound(AetherSoundEvents.ENTITY_THUNDER_CRYSTAL_EXPLODE.get(), 1.0F, 1.0F);
-            } else {
-                Vec3 motion = this.getDeltaMovement().scale(0.9);
-                Vec3 targetMotion = new Vec3(this.target.getX() - this.getX(), (this.target.getEyeY() - 0.1) - this.getY(), this.target.getZ() - this.getZ()).normalize();
-                this.setDeltaMovement(motion.add(targetMotion.scale(0.02)));
-            }
-        }
-        this.checkInsideBlocks();
-        Vec3 motion = this.getDeltaMovement();
-        this.setPos(this.getX() + motion.x, this.getY() + motion.y, this.getZ() + motion.z);
-    }
-
-    @Override
-    protected ParticleOptions getExplosionParticle() {
-        return AetherParticleTypes.FROZEN.get();
-    }
-
     /**
-     * Called when the projectile hits an entity
+     * Damages and knocks back an entity when this projectile hits it.
+     * @param result The {@link EntityHitResult} of the projectile.
      */
     @Override
-    protected void onHitEntity(EntityHitResult pResult) {
-        if (pResult.getEntity() instanceof LivingEntity target && target != this.getOwner()) {
-            target.hurt(AetherDamageTypes.indirectEntityDamageSource(this.level, AetherDamageTypes.THUNDER_CRYSTAL, this, this.getOwner()), 5.0F);
-            this.knockback(0.1, this.position().subtract(target.position()));
+    protected void onHitEntity(EntityHitResult result) {
+        if (result.getEntity() instanceof LivingEntity target && target != this.getOwner()) {
+            target.hurt(AetherDamageTypes.indirectEntityDamageSource(this.getLevel(), AetherDamageTypes.THUNDER_CRYSTAL, this, this.getOwner()), 5.0F);
+            this.knockback(0.1, this.position().subtract(target.position())); // Apply knockback to the projectile from the distance difference between the projectile and hit entity.
             target.knockback(0.25, this.getX() - target.getX(), this.getZ() - target.getZ());
         }
     }
 
     /**
-     * Called when the entity is attacked.
+     * Handles various behaviors when this projectile is in motion, such as lightning creation.
+     */
+    @Override
+    public void tickMovement() {
+        if (!this.getLevel().isClientSide()) {
+            if (this.target == null || !this.target.isAlive()) {
+                this.playSound(AetherSoundEvents.ENTITY_THUNDER_CRYSTAL_EXPLODE.get(), 1.0F, 1.0F);
+                this.discard();
+            } else {
+                if (this.ticksInAir > this.getLifeSpan()) {
+                    if (this.target != null && this.target.isAlive()) { // Spawn lightning only when the target is alive to avoid destroying items.
+                        LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(this.getLevel());
+                        if (lightningBolt != null) {
+                            LightningTracker.get(lightningBolt).ifPresent(lightningTracker -> lightningTracker.setOwner(this.getOwner()));
+                            lightningBolt.setPos(this.getX(), this.getY(), this.getZ());
+                            this.getLevel().addFreshEntity(lightningBolt);
+                        }
+                    }
+                    this.playSound(AetherSoundEvents.ENTITY_THUNDER_CRYSTAL_EXPLODE.get(), 1.0F, 1.0F);
+                } else {
+                    Vec3 motion = this.getDeltaMovement().scale(0.9);
+                    Vec3 targetMotion = new Vec3(this.target.getX() - this.getX(), (this.target.getEyeY() - 0.1) - this.getY(), this.target.getZ() - this.getZ()).normalize();
+                    this.setDeltaMovement(motion.add(targetMotion.scale(0.02)));
+                }
+            }
+        }
+        this.checkInsideBlocks();
+        Vec3 motion = this.getDeltaMovement();
+        this.setPos(this.getX() + motion.x(), this.getY() + motion.y(), this.getZ() + motion.z());
+    }
+
+    /**
+     * When this projectile is hurt, this method particles, knocks the projectile back, and increases the time it is considered in the air.
      */
     @Override
     public boolean hurt(DamageSource source, float pAmount) {
-        if (!this.level.isClientSide && source.getSourcePosition() != null) {
-            ((ServerLevel) this.level).sendParticles(ParticleTypes.CRIT, this.getX(), this.getY(), this.getZ(), 15, 0.2, 0.2, 0.2, 0.0);
-            this.knockback(0.15 + pAmount / 8, this.position().subtract(source.getSourcePosition()));
+        if (!this.getLevel().isClientSide() && source.getSourcePosition() != null && this.getLevel() instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(ParticleTypes.CRIT, this.getX(), this.getY(), this.getZ(), 15, 0.2, 0.2, 0.2, 0.0);
+            this.knockback(0.15 + pAmount / 8, this.position().subtract(source.getSourcePosition())); // Sets knockback movement in the direction of the damage.
         }
         this.ticksInAir += pAmount * 10;
         return true;
     }
 
+    /**
+     * Applies knockback to this projectile.
+     * @param strength The {@link Double} strength of the knockback.
+     * @param target The {@link Vec3} motion for the knockback.
+     */
     public void knockback(double strength, Vec3 target) {
         this.hasImpulse = true;
         Vec3 vec3 = this.getDeltaMovement();
         Vec3 vec31 = target.normalize().scale(strength);
-        this.setDeltaMovement(vec3.x / 2.0 + vec31.x, vec3.y / 2 + vec31.y, vec3.z / 2.0 + vec31.z);
+        this.setDeltaMovement(vec3.x() / 2.0 + vec31.x(), vec3.y() / 2 + vec31.y(), vec3.z() / 2.0 + vec31.z());
     }
 
     /**
-     * This is needed to make the crystal vulnerable to player attacks.
-     */
-    @Override
-    public boolean isPickable() {
-        return true;
-    }
-
-    @Override
-    public boolean isOnFire() {
-        return false;
-    }
-
-    /**
-     * Makes the entity despawn if requirements are reached.
+     * Despawns the projectile in peaceful mode.
      */
     @Override
     public void checkDespawn() {
-        if (this.level.getDifficulty() == Difficulty.PEACEFUL) {
+        if (this.getLevel().getDifficulty() == Difficulty.PEACEFUL) {
             this.discard();
         }
+    }
+
+    @Override
+    protected ParticleOptions getExplosionParticle() {
+        return AetherParticleTypes.FROZEN.get();
     }
 
     @Override

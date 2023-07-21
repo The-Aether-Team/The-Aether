@@ -19,27 +19,22 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * A damaging projectile shot by the sun spirit. It floats around the room for 15 seconds.
+ * A damaging crystal projectile shot by the Sun Spirit. It floats around the room for 15 seconds.
  */
 public class FireCrystal extends AbstractCrystal {
     public double xPower;
     public double yPower;
     public double zPower;
 
-    /**
-     * Used for registering the entity. Use the other constructor to provide more context.
-     */
     public FireCrystal(EntityType<? extends FireCrystal> entityType, Level level) {
         super(entityType, level);
     }
 
-    /**
-     * @param shooter - The entity that created this projectile
-     */
     public FireCrystal(Level level, Entity shooter) {
         this(AetherEntityTypes.FIRE_CRYSTAL.get(), level);
         this.setOwner(shooter);
         this.setPos(shooter.getX(), shooter.getY() + 1, shooter.getZ());
+        // Randomizes motion on spawn.
         float rotation = this.random.nextFloat() * 360;
         this.xPower = Mth.sin(rotation) * 0.5;
         this.zPower = -Mth.cos(rotation) * 0.5;
@@ -50,18 +45,28 @@ public class FireCrystal extends AbstractCrystal {
         this.setDeltaMovement(this.xPower, this.yPower, this.zPower);
     }
 
+    /**
+     * Damages an entity and sets them on fire when they are hit by the projectile.
+     * @param result The {@link EntityHitResult} of the projectile.
+     */
     @Override
     protected void onHitEntity(EntityHitResult result) {
         Entity entity = result.getEntity();
         if (entity instanceof LivingEntity livingEntity) {
-            if (livingEntity.hurt(AetherDamageTypes.indirectEntityDamageSource(this.level, AetherDamageTypes.FIRE_CRYSTAL, this, this.getOwner()), 20.0F)) {
+            if (livingEntity.hurt(AetherDamageTypes.indirectEntityDamageSource(this.getLevel(), AetherDamageTypes.FIRE_CRYSTAL, this, this.getOwner()), 20.0F)) {
                 livingEntity.setSecondsOnFire(6);
-                this.level.playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
-                this.discard();
+                this.getLevel().playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
+                if (!this.getLevel().isClientSide()) {
+                    this.discard();
+                }
             }
         }
     }
 
+    /**
+     * Reverses the projectile's movement, bouncing it off of the block it hits.
+     * @param result The {@link BlockHitResult} of the projectile.
+     */
     @Override
     protected void onHitBlock(BlockHitResult result) {
         this.markHurt();
@@ -73,12 +78,9 @@ public class FireCrystal extends AbstractCrystal {
         this.setDeltaMovement(this.xPower, this.yPower, this.zPower);
     }
 
-    protected SoundEvent getImpactExplosionSoundEvent() {
-        return AetherSoundEvents.ENTITY_FIRE_CRYSTAL_EXPLODE.get();
-    }
-
-    /** [VANILLA COPY] - AbstractHurtingProjectile.hurt(DamageSource, float)
-     * The fire crystal doesn't reset the owner when hit back. It'll be a threat until it despawns.
+    /**
+     * [VANILLA COPY] - {@link net.minecraft.world.entity.projectile.AbstractHurtingProjectile#hurt(DamageSource, float)}<br><br>
+     * The Fire Crystal doesn't reset the owner when hit back. It'll be a threat until it despawns.
      */
     @Override
     public boolean hurt(DamageSource source, float amount) {
@@ -88,14 +90,13 @@ public class FireCrystal extends AbstractCrystal {
             this.markHurt();
             Entity entity = source.getEntity();
             if (entity != null) {
-                if (!this.level.isClientSide) {
+                if (!this.getLevel().isClientSide()) {
                     Vec3 vec3 = entity.getLookAngle();
                     this.setDeltaMovement(vec3);
-                    this.xPower = vec3.x * 0.25;
-                    this.yPower = vec3.y * 0.15;
-                    this.zPower = vec3.z * 0.25;
+                    this.xPower = vec3.x() * 0.25;
+                    this.yPower = vec3.y() * 0.15;
+                    this.zPower = vec3.z() * 0.25;
                 }
-
                 return true;
             } else {
                 return false;
@@ -103,17 +104,13 @@ public class FireCrystal extends AbstractCrystal {
         }
     }
 
-    /**
-     * This is needed to make the crystal vulnerable to player attacks.
-     */
-    @Override
-    public boolean isPickable() {
-        return true;
-    }
-
     @Override
     protected ParticleOptions getExplosionParticle() {
         return ParticleTypes.FLAME;
+    }
+
+    protected SoundEvent getImpactExplosionSoundEvent() {
+        return AetherSoundEvents.ENTITY_FIRE_CRYSTAL_EXPLODE.get();
     }
 
     @Override

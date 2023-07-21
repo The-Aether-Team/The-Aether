@@ -19,6 +19,10 @@ public class PoisonDart extends AbstractDart {
         this.setBaseDamage(2.0);
     }
 
+    /**
+     * Applies the Inebriation effect to an entity after being hurt.
+     * @param living The {@link LivingEntity} to affect.
+     */
     @Override
     protected void doPostHurtEffects(LivingEntity living) {
         super.doPostHurtEffects(living);

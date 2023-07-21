@@ -36,7 +36,7 @@ public class HammerOfKingbdogzItem extends AetherSwordItem {
                 heldStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
             }
             HammerProjectile hammerProjectile = new HammerProjectile(player, level);
-            hammerProjectile.shoot(player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1.0F);
+            hammerProjectile.shoot(player.getXRot(), player.getYRot(), 1.5F, 1.0F);
             if (heldStack.getHoverName().getString().equalsIgnoreCase("hammer of jeb")) {
                 hammerProjectile.setIsJeb(true); // Handles Hammer of Jeb texture for the projectile.
             }

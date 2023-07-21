@@ -1,6 +1,7 @@
 package com.aetherteam.aether.entity.projectile.dart;
 
 import com.aetherteam.aether.client.AetherSoundEvents;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
@@ -42,20 +43,19 @@ public abstract class AbstractDart extends AbstractArrow {
     @Override
     public void tick() {
         super.tick();
-        if (!this.onGround) {
+        if (!this.isOnGround()) {
             ++this.ticksInAir;
         }
         if (this.ticksInAir > 500) {
-            this.discard();
+            if (!this.getLevel().isClientSide()) {
+                this.discard();
+            }
         }
     }
 
-    @Override
-    protected void onHitBlock(BlockHitResult result) {
-        super.onHitBlock(result);
-        this.setNoGravity(false);
-    }
-
+    /**
+     * Based on {@link AbstractArrow#onHitEntity(EntityHitResult)}
+     */
     @Override
     protected void onHitEntity(EntityHitResult result) {
         Entity entity = result.getEntity();
@@ -116,28 +116,49 @@ public abstract class AbstractDart extends AbstractArrow {
             this.setDeltaMovement(this.getDeltaMovement().scale(-0.1));
             this.setYRot(this.getYRot() + 180.0F);
             this.yRotO += 180.0F;
-            if (!this.level.isClientSide && this.getDeltaMovement().lengthSqr() < 1.0E-7) {
+            if (!this.getLevel().isClientSide() && this.getDeltaMovement().lengthSqr() < 1.0E-7) {
                 if (this.pickup == AbstractArrow.Pickup.ALLOWED) {
                     this.spawnAtLocation(this.getPickupItem(), 0.1F);
                 }
                 this.discard();
             }
         }
-        this.setNoGravity(false);
+        this.setNoGravity(false); // Restores gravity to the dart when it hits an entity.
     }
 
+    /**
+     * Restores gravity to the dart when it hits a block.
+     * @param result The {@link BlockHitResult} of the projectile.
+     */
+    @Override
+    protected void onHitBlock(BlockHitResult result) {
+        super.onHitBlock(result);
+        this.setNoGravity(false);
+    }
    
     @Override
     protected SoundEvent getDefaultHitGroundSoundEvent() {
         return AetherSoundEvents.ENTITY_DART_HIT.get();
     }
 
-   
     @Override
     protected ItemStack getPickupItem() {
         return this.pickupItem != null ? new ItemStack(this.pickupItem.get()) : ItemStack.EMPTY;
     }
 
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putInt("TicksInAir", this.ticksInAir);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        if (tag.contains("TicksInAir")) {
+            this.ticksInAir = tag.getInt("TicksInAir");
+        }
+    }
    
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
