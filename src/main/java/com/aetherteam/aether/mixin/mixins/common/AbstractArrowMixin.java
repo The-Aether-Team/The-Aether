@@ -23,18 +23,19 @@ public class AbstractArrowMixin
     private void tick(CallbackInfo ci) {
         AbstractArrow arrow = (AbstractArrow) (Object) this;
         PhoenixArrow.get(arrow).ifPresent(phoenixArrow -> {
+            AbstractArrow innerArrow = phoenixArrow.getArrow();
             if (phoenixArrow.isPhoenixArrow()) {
-                if (!arrow.level.isClientSide) {
+                if (!innerArrow.level.isClientSide) {
                     phoenixArrow.setSynched(INBTSynchable.Direction.CLIENT, "setPhoenixArrow", true);
                     if (this.inGround) {
                         if (this.inGroundTime % 5 == 0) {
                             for (int i = 0; i < 1; i++) {
-                                this.spawnParticles(arrow);
+                                this.spawnParticles(innerArrow);
                             }
                         }
                     } else {
                         for (int i = 0; i < 2; i++) {
-                            this.spawnParticles(arrow);
+                            this.spawnParticles(innerArrow);
                         }
                     }
                 }

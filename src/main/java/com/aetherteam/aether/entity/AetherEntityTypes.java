@@ -205,11 +205,11 @@ public class AetherEntityTypes {
         // Dungeon Mobs
         event.put(AetherEntityTypes.MIMIC.get(), Mimic.createMobAttributes().build());
         event.put(AetherEntityTypes.SENTRY.get(), Sentry.createMobAttributes().build());
-        event.put(AetherEntityTypes.SLIDER.get(), Slider.createSliderAttributes().build());
+        event.put(AetherEntityTypes.SLIDER.get(), Slider.createMobAttributes().build());
         event.put(AetherEntityTypes.VALKYRIE.get(), Valkyrie.createMobAttributes().build());
-        event.put(AetherEntityTypes.VALKYRIE_QUEEN.get(), ValkyrieQueen.createQueenAttributes().build());
+        event.put(AetherEntityTypes.VALKYRIE_QUEEN.get(), ValkyrieQueen.createMobAttributes().build());
         event.put(AetherEntityTypes.FIRE_MINION.get(), FireMinion.createMobAttributes().build());
-        event.put(AetherEntityTypes.SUN_SPIRIT.get(), SunSpirit.createSunSpiritAttributes().build());
+        event.put(AetherEntityTypes.SUN_SPIRIT.get(), SunSpirit.createMobAttributes().build());
 
         // Miscellaneous Entities
         event.put(AetherEntityTypes.CLOUD_MINION.get(), CloudMinion.createMobAttributes().build());

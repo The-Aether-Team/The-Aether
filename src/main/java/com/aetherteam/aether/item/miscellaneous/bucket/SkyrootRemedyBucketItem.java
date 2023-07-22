@@ -34,7 +34,7 @@ public class SkyrootRemedyBucketItem extends Item implements ConsumableItem {
         this.consume(this, stack, user);
         if (user instanceof Player player) {
             AetherPlayer.get(player).ifPresent(aetherPlayer -> {
-                if (player.getLevel().isClientSide()) { // Values used by the green remedy screen overlay vignette.
+                if (aetherPlayer.getPlayer().getLevel().isClientSide()) { // Values used by the green remedy screen overlay vignette.
                     aetherPlayer.setRemedyMaximum(200);
                     aetherPlayer.setRemedyTimer(200);
                 }

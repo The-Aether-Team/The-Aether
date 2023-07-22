@@ -116,7 +116,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         this.goalSelector.addGoal(4, new FlyAroundGoal(this));
     }
 
-    public static AttributeSupplier.Builder createSunSpiritAttributes() {
+    public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 50.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.35);

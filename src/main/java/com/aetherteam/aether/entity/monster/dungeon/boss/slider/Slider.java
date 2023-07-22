@@ -98,7 +98,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         this.moveTo(Mth.floor(this.getX()), this.getY(), Mth.floor(this.getZ()));
     }
 
-    public static AttributeSupplier.Builder createSliderAttributes() {
+    public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 400.0)
                 .add(Attributes.FOLLOW_RANGE, 64.0);

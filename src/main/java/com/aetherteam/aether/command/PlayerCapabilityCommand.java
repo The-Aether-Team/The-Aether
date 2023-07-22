@@ -18,6 +18,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.PlayerList;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.Collection;
 
@@ -53,14 +54,15 @@ public class PlayerCapabilityCommand {
             ServerPlayer player = playerList.getPlayer(gameProfile.getId());
             if (player != null) {
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> {
+                    Player innerPlayer = aetherPlayer.getPlayer();
                     aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setLifeShardCount", value);
-                    AttributeInstance attribute = player.getAttribute(Attributes.MAX_HEALTH);
+                    AttributeInstance attribute = innerPlayer.getAttribute(Attributes.MAX_HEALTH);
                     if (attribute != null) {
                         attribute.removeModifier(aetherPlayer.getLifeShardHealthAttributeModifier());
                     }
-                    player.setHealth(player.getMaxHealth());
-                    PacketRelay.sendToNear(AetherPacketHandler.INSTANCE, new HealthResetPacket(player.getId(), value), player.getX(), player.getY(), player.getZ(), 5.0, level.dimension()); // Sync to client.
-                    source.sendSuccess(Component.translatable("commands.aether.capability.player.life_shards.set", player.getDisplayName(), value), true);
+                    innerPlayer.setHealth(innerPlayer.getMaxHealth());
+                    PacketRelay.sendToNear(AetherPacketHandler.INSTANCE, new HealthResetPacket(innerPlayer.getId(), value), innerPlayer.getX(), innerPlayer.getY(), innerPlayer.getZ(), 5.0, level.dimension()); // Sync to client.
+                    source.sendSuccess(Component.translatable("commands.aether.capability.player.life_shards.set", innerPlayer.getDisplayName(), value), true);
                 });
             }
         }

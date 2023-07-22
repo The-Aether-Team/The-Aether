@@ -41,21 +41,23 @@ public class CloudStaffItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack heldItem = player.getItemInHand(hand);
         AetherPlayer.get(player).ifPresent(aetherPlayer -> {
+            Player innerPlayer = aetherPlayer.getPlayer();
+            Level innerLevel = innerPlayer.getLevel();
             if (aetherPlayer.getCloudMinions().isEmpty()) {
-                player.swing(hand);
-                if (!level.isClientSide()) {
-                    if (!player.getAbilities().instabuild) {
-                        heldItem.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
+                innerPlayer.swing(hand);
+                if (!innerLevel.isClientSide()) {
+                    if (!innerPlayer.getAbilities().instabuild) {
+                        heldItem.hurtAndBreak(1, innerPlayer, (p) -> p.broadcastBreakEvent(hand));
                     }
-                    CloudMinion cloudMinionRight = new CloudMinion(level, player, HumanoidArm.RIGHT);
-                    CloudMinion cloudMinionLeft = new CloudMinion(level, player, HumanoidArm.LEFT);
-                    level.addFreshEntity(cloudMinionRight);
-                    level.addFreshEntity(cloudMinionLeft);
+                    CloudMinion cloudMinionRight = new CloudMinion(innerLevel, innerPlayer, HumanoidArm.RIGHT);
+                    CloudMinion cloudMinionLeft = new CloudMinion(innerLevel, innerPlayer, HumanoidArm.LEFT);
+                    innerLevel.addFreshEntity(cloudMinionRight);
+                    innerLevel.addFreshEntity(cloudMinionLeft);
                     aetherPlayer.setCloudMinions(cloudMinionRight, cloudMinionLeft);
                 }
-                this.spawnExplosionParticles(player);
-            } else if (player.isShiftKeyDown()) {
-                player.swing(hand);
+                this.spawnExplosionParticles(innerPlayer);
+            } else if (innerPlayer.isShiftKeyDown()) {
+                innerPlayer.swing(hand);
                 for (CloudMinion cloudMinion : aetherPlayer.getCloudMinions()) {
                     cloudMinion.setLifeSpan(0);
                 }

@@ -37,11 +37,11 @@ public interface ShieldOfRepulsionAccessory {
                         if (impactedLiving instanceof Player player) {
                             AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                                 if (!aetherPlayer.isMoving()) {
-                                    if (player.getLevel().isClientSide()) { // Values used by the Shield of Repulsion screen overlay vignette.
+                                    if (aetherPlayer.getPlayer().getLevel().isClientSide()) { // Values used by the Shield of Repulsion screen overlay vignette.
                                         aetherPlayer.setProjectileImpactedMaximum(150);
                                         aetherPlayer.setProjectileImpactedTimer(150);
                                     }
-                                    handleDeflection(event, projectile, impactedLiving, slotResult);
+                                    handleDeflection(event, projectile, aetherPlayer.getPlayer(), slotResult);
                                 }
                             });
                         } else {

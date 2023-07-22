@@ -252,17 +252,18 @@ public class AetherOverlays {
         GuiAccessor guiAccessor = (GuiAccessor) gui;
         if (AetherConfig.CLIENT.enable_silver_hearts.get() && gui.shouldDrawSurvivalElements()) {
             AetherPlayer.get(player).ifPresent(aetherPlayer -> {
+                Player innerPlayer = aetherPlayer.getPlayer();
                 if (aetherPlayer.getLifeShardCount() > 0) {
                     RenderSystem.setShader(GameRenderer::getPositionTexShader);
                     RenderSystem.setShaderTexture(0, TEXTURE_LIFE_SHARD_HEARTS);
                     RenderSystem.enableBlend();
 
-                    double overallHealth = player.getAttribute(Attributes.MAX_HEALTH).getValue();
+                    double overallHealth = innerPlayer.getAttribute(Attributes.MAX_HEALTH).getValue();
                     double maxLifeShardHealth = aetherPlayer.getLifeShardHealthAttributeModifier().getAmount();
 
                     int maxDefaultHealth = Mth.ceil(overallHealth - maxLifeShardHealth);
 
-                    int currentOverallHealth = Mth.ceil(player.getHealth());
+                    int currentOverallHealth = Mth.ceil(innerPlayer.getHealth());
                     int currentLifeShardHealth = Mth.ceil(maxDefaultHealth > 20 ? Mth.clamp(currentOverallHealth - 20, 0, maxLifeShardHealth) : currentOverallHealth - maxDefaultHealth);
 
                     boolean highlight = guiAccessor.aether$getHealthBlinkTime() > (long) gui.getGuiTicks() && (guiAccessor.aether$getHealthBlinkTime() - (long) gui.getGuiTicks()) / 3L % 2L == 1L;
@@ -273,7 +274,7 @@ public class AetherOverlays {
 
                     float displayOverallHealth = Math.max((float) overallHealth, Math.max(lastOverallHealth[0], currentOverallHealth));
                     float displayLifeShardHealth = Math.max((float) maxLifeShardHealth, Math.max(lastLifeShardHealth[0], currentLifeShardHealth));
-                    int absorption = Mth.ceil(player.getAbsorptionAmount());
+                    int absorption = Mth.ceil(innerPlayer.getAbsorptionAmount());
 
                     int healthRows = Mth.ceil((displayOverallHealth + absorption) / 2.0F / 10.0F);
                     int rowHeight = Math.max(10 - (healthRows - 2), 3);
@@ -282,11 +283,11 @@ public class AetherOverlays {
                     int top = height - 39;
 
                     int regen = -1;
-                    if (player.hasEffect(MobEffects.REGENERATION)) {
+                    if (innerPlayer.hasEffect(MobEffects.REGENERATION)) {
                         regen = gui.getGuiTicks() % Mth.ceil(displayOverallHealth + 5.0F);
                     }
 
-                    renderHearts(poseStack, player, gui, left, top, regen, displayOverallHealth, displayLifeShardHealth, maxDefaultHealth, currentLifeShardHealth, rowHeight, absorption, highlight);
+                    renderHearts(poseStack, innerPlayer, gui, left, top, regen, displayOverallHealth, displayLifeShardHealth, maxDefaultHealth, currentLifeShardHealth, rowHeight, absorption, highlight);
 
                     RenderSystem.disableBlend();
                 }

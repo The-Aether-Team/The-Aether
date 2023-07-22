@@ -66,7 +66,6 @@ public class Aerbunny extends AetherAnimal {
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(5, new FallingRandomStrollGoal(this, 1.0, 80));
     }
-
    
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
@@ -86,7 +85,7 @@ public class Aerbunny extends AetherAnimal {
         super.tick();
         if (!this.isFastFalling()) {
             this.handleFallSpeed();
-        } else if (this.onGround) {
+        } else if (this.isOnGround()) {
             this.setFastFalling(false);
         }
         this.setPuffiness(this.getPuffiness() - this.puffSubtract);
@@ -102,17 +101,12 @@ public class Aerbunny extends AetherAnimal {
         }
     }
 
-    @Override
-    protected float getFlyingSpeed() {
-        return this.getSpeed() * 0.21600002F;
-    }
-
     private void handleFallSpeed() {
         AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
         if (gravity != null) {
             double fallSpeed = Math.max(gravity.getValue() * -1.25, -0.1);
             if (this.getDeltaMovement().y < fallSpeed) {
-                this.setDeltaMovement(this.getDeltaMovement().x, fallSpeed, this.getDeltaMovement().z);
+                this.setDeltaMovement(this.getDeltaMovement().x(), fallSpeed, this.getDeltaMovement().z());
             }
         }
     }
@@ -134,13 +128,14 @@ public class Aerbunny extends AetherAnimal {
                     }
                 }
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> {
-                    if (this.level.isClientSide) {
-                        if (player.getDeltaMovement().y <= 0.0) {
+                    Player innerPlayer = aetherPlayer.getPlayer();
+                    if (this.getLevel().isClientSide()) {
+                        if (innerPlayer.getDeltaMovement().y <= 0.0) {
                             if (this.lastPos == null) {
                                 this.lastPos = this.position();
                             }
-                            if (!player.isOnGround() && aetherPlayer.isJumping() && player.getDeltaMovement().y <= 0.0 && this.position().y() < this.lastPos.y() - 1.1) {
-                                player.setDeltaMovement(player.getDeltaMovement().x, 0.125, player.getDeltaMovement().z);
+                            if (!innerPlayer.isOnGround() && aetherPlayer.isJumping() && innerPlayer.getDeltaMovement().y() <= 0.0 && this.position().y() < this.lastPos.y() - 1.1) {
+                                innerPlayer.setDeltaMovement(innerPlayer.getDeltaMovement().x(), 0.125, innerPlayer.getDeltaMovement().z());
                                 PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new AerbunnyPuffPacket(this.getId()));
                                 this.spawnExplosionParticle();
                                 this.lastPos = null;
@@ -166,7 +161,6 @@ public class Aerbunny extends AetherAnimal {
             this.stopRiding();
         }
     }
-
    
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
@@ -272,6 +266,11 @@ public class Aerbunny extends AetherAnimal {
     @Override
     protected SoundEvent getDeathSound() {
         return AetherSoundEvents.ENTITY_AERBUNNY_DEATH.get();
+    }
+
+    @Override
+    protected float getFlyingSpeed() {
+        return this.getSpeed() * 0.21600002F;
     }
 
     @Override

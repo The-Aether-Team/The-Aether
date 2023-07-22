@@ -133,8 +133,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, livingEntity -> this.isBossFight()));
     }
 
-   
-    public static AttributeSupplier.Builder createQueenAttributes() {
+    public static AttributeSupplier.Builder createMobAttributes() {
         return AbstractValkyrie.createAttributes()
                 .add(Attributes.FOLLOW_RANGE, 28.0)
                 .add(Attributes.ATTACK_DAMAGE, 13.5)

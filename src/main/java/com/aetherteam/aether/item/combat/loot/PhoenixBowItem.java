@@ -32,7 +32,7 @@ public class PhoenixBowItem extends BowItem {
         PhoenixArrow.get(arrow).ifPresent(phoenixArrow -> {
             phoenixArrow.setPhoenixArrow(true);
             int defaultTime = 20;
-            if (arrow.getOwner() instanceof LivingEntity livingEntity && EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAMING_ARROWS, livingEntity) > 0) {
+            if (phoenixArrow.getArrow().getOwner() instanceof LivingEntity livingEntity && EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAMING_ARROWS, livingEntity) > 0) {
                 defaultTime = 40;
             }
             phoenixArrow.setFireTime(defaultTime);

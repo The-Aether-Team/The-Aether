@@ -20,12 +20,13 @@ public interface NeptuneArmor {
             if (entity.isInWaterOrBubble()) {
                 if (entity instanceof Player player) {
                     AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
-                        float defaultBoost = boostWithDepthStrider(entity);
+                        Player innerPlayer = aetherPlayer.getPlayer();
+                        float defaultBoost = boostWithDepthStrider(innerPlayer);
                         aetherPlayer.setNeptuneSubmergeLength(Math.min(aetherPlayer.getNeptuneSubmergeLength() + 0.1, 1.0));
                         defaultBoost *= aetherPlayer.getNeptuneSubmergeLength();
-                        entity.moveRelative(0.04F * defaultBoost, new Vec3(entity.xxa, entity.yya, entity.zza));
-                        if (entity.isSwimming() || entity.getDeltaMovement().y() > 0 || entity.isCrouching()) {
-                            entity.move(MoverType.SELF, entity.getDeltaMovement().multiply(0.0, defaultBoost, 0.0));
+                        innerPlayer.moveRelative(0.04F * defaultBoost, new Vec3(innerPlayer.xxa, innerPlayer.yya, innerPlayer.zza));
+                        if (innerPlayer.isSwimming() || innerPlayer.getDeltaMovement().y() > 0 || innerPlayer.isCrouching()) {
+                            innerPlayer.move(MoverType.SELF, innerPlayer.getDeltaMovement().multiply(0.0, defaultBoost, 0.0));
                         }
                     });
                 } else {
