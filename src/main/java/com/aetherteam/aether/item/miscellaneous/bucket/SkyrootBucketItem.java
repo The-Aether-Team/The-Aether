@@ -44,8 +44,9 @@ public class SkyrootBucketItem extends BucketItem {
     }
 
     /**
-     * Based on {@link BucketItem#use(Level, Player, InteractionHand)} except blocks that can be picked up depends on {@link AetherTags.Blocks#ALLOWED_BUCKET_PICKUP} or {@link AetherTags.Fluids#ALLOWED_BUCKET_PICKUP},
-     * and the method will also swap out any returned vanilla buckets from interactions with Skyroot buckets using {@link SkyrootBucketItem#swapBucketType(ItemStack)}.
+     * [VANILLA COPY] - {@link BucketItem#use(Level, Player, InteractionHand)}.<br><br>
+     * Blocks that can be picked up depends on {@link AetherTags.Blocks#ALLOWED_BUCKET_PICKUP} or {@link AetherTags.Fluids#ALLOWED_BUCKET_PICKUP},
+     * and the method will also swap out any returned vanilla buckets from interactions with Skyroot Buckets using {@link SkyrootBucketItem#swapBucketType(ItemStack)}.
      * @param level The {@link Level} of the user.
      * @param player The {@link Player} using this item.
      * @param hand The {@link InteractionHand} in which the item is being used.
@@ -122,7 +123,8 @@ public class SkyrootBucketItem extends BucketItem {
     }
 
     /**
-     * Based on {@link BucketItem#getEmptySuccessItem(ItemStack, Player)} except it returns a Skyroot Bucket instead of a vanilla bucket.
+     * [VANILLA COPY] - {@link BucketItem#getEmptySuccessItem(ItemStack, Player)}.<br><br>
+     * Returns a Skyroot Bucket instead of a vanilla bucket.
      */
     public static ItemStack getEmptySuccessItem(ItemStack bucketStack, Player player) {
         return !player.getAbilities().instabuild ? new ItemStack(AetherItems.SKYROOT_BUCKET.get()) : bucketStack;
@@ -137,7 +139,7 @@ public class SkyrootBucketItem extends BucketItem {
     }
 
     /**
-     * Copy of BucketItem#canBlockContainFluid(Level, BlockPos, BlockState).
+     *[VANILLA COPY] - {@link BucketItem#canBlockContainFluid(Level, BlockPos, BlockState)}.
      */
     protected boolean canBlockContainFluid(Level level, BlockPos pos, BlockState state) {
         return state.getBlock() instanceof LiquidBlockContainer liquidBlockContainer && liquidBlockContainer.canPlaceLiquid(level, pos, state, this.getFluid());

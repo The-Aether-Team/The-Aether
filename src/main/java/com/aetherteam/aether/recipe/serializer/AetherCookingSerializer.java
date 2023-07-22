@@ -18,7 +18,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import javax.annotation.Nullable;
 
 /**
- * Based on {@link SimpleCookingSerializer}.
+ * [VANILLA COPY] - {@link SimpleCookingSerializer}.<br><br>
+ * Cleaned up.
  */
 public class AetherCookingSerializer<T extends AbstractAetherCookingRecipe> implements RecipeSerializer<T> {
     private final int defaultCookingTime;

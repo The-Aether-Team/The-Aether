@@ -29,7 +29,8 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 
 /**
- * Based on {@link net.minecraft.world.level.block.AbstractFurnaceBlock}.
+ * [VANILLA COPY] - {@link net.minecraft.world.level.block.AbstractFurnaceBlock}.<br><br>
+ * Has modifications for Incubator-specific behavior.
  */
 public class IncubatorBlock extends BaseEntityBlock {
 	public static final BooleanProperty LIT = BlockStateProperties.LIT;

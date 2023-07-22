@@ -134,7 +134,8 @@ public class AetherDispenseBehaviors {
     };
 
     /**
-     * Based on default dispenser behavior for filled buckets in {@link DispenseItemBehavior#bootStrap()}.
+     * [VANILLA COPY] - {@link DispenseItemBehavior#bootStrap()}.<br><br>
+     * Based on default dispenser behavior for filled buckets.
      */
     public static final DispenseItemBehavior SKYROOT_BUCKET_DISPENSE_BEHAVIOR = new DefaultDispenseItemBehavior() {
         private final DefaultDispenseItemBehavior defaultDispenseItemBehavior = new DefaultDispenseItemBehavior();
@@ -154,7 +155,8 @@ public class AetherDispenseBehaviors {
     };
 
     /**
-     * Based on default dispenser behavior for empty buckets in {@link DispenseItemBehavior#bootStrap()}.
+     * [VANILLA COPY] - {@link DispenseItemBehavior#bootStrap()}.<br><br>
+     * Based on default dispenser behavior for empty buckets.
      */
     public static final DispenseItemBehavior SKYROOT_BUCKET_PICKUP_BEHAVIOR = new DefaultDispenseItemBehavior() {
         private final DefaultDispenseItemBehavior defaultDispenseItemBehavior = new DefaultDispenseItemBehavior();

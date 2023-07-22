@@ -61,7 +61,7 @@ public class AercloudBlock extends HalfTransparentBlock {
 	public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float fallDistance) { }
 
 	/**
-	 * Based on {@link net.minecraft.world.level.block.AbstractGlassBlock#propagatesSkylightDown(BlockState, BlockGetter, BlockPos)}.
+	 * [VANILLA COPY] - {@link net.minecraft.world.level.block.AbstractGlassBlock#propagatesSkylightDown(BlockState, BlockGetter, BlockPos)}.
 	 */
 	@Override
 	public boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
@@ -69,7 +69,7 @@ public class AercloudBlock extends HalfTransparentBlock {
 	}
 
 	/**
-	 * Based on {@link net.minecraft.world.level.block.AbstractGlassBlock#getShadeBrightness(BlockState, BlockGetter, BlockPos)}.<br><br>
+	 * [VANILLA COPY] - {@link net.minecraft.world.level.block.AbstractGlassBlock#getShadeBrightness(BlockState, BlockGetter, BlockPos)}.<br><br>
 	 * Warning for "deprecation" is suppressed because the method is fine to override.
 	 */
 	@SuppressWarnings("deprecation")
@@ -79,8 +79,8 @@ public class AercloudBlock extends HalfTransparentBlock {
 	}
 
 	/**
-	 * Loosely based on {@link net.minecraft.world.level.block.PowderSnowBlock#getCollisionShape(BlockState, BlockGetter, BlockPos, CollisionContext)},
-	 * which resolves a quirk with fall behavior where an entity will still receive fall damage if falling fast enough into a block with a shape like {@link AercloudBlock#COLLISION_SHAPE},
+	 * [VANILLA COPY] - {@link net.minecraft.world.level.block.PowderSnowBlock#getCollisionShape(BlockState, BlockGetter, BlockPos, CollisionContext)}.<br><br>
+	 * Resolves a quirk with fall behavior where an entity will still receive fall damage if falling fast enough into a block with a shape like {@link AercloudBlock#COLLISION_SHAPE},
 	 * even if the fall damage should be negated.<br><br>
 	 * Warning for "deprecation" is suppressed because the method is fine to override.
 	 * @param state The {@link BlockState} of the block.
@@ -111,7 +111,7 @@ public class AercloudBlock extends HalfTransparentBlock {
 	}
 
 	/**
-	 * Based on {@link net.minecraft.world.level.block.AbstractGlassBlock#getVisualShape(BlockState, BlockGetter, BlockPos, CollisionContext)}.<br><br>
+	 * [VANILLA COPY] - {@link net.minecraft.world.level.block.AbstractGlassBlock#getVisualShape(BlockState, BlockGetter, BlockPos, CollisionContext)}.<br><br>
 	 * Warning for "deprecation" is suppressed because the method is fine to override.
 	 */
 	@SuppressWarnings("deprecation")

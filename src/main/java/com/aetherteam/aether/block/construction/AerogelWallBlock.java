@@ -26,7 +26,7 @@ public class AerogelWallBlock extends WallBlock {
 	}
 
 	/**
-	 * Based on {@link net.minecraft.world.level.block.AbstractGlassBlock#getVisualShape(BlockState, BlockGetter, BlockPos, CollisionContext)}.<br><br>
+	 * [VANILLA COPY] - {@link net.minecraft.world.level.block.AbstractGlassBlock#getVisualShape(BlockState, BlockGetter, BlockPos, CollisionContext)}.<br><br>
 	 * Warning for "deprecation" is suppressed because the method is fine to override.
 	 */
 	@SuppressWarnings("deprecation")

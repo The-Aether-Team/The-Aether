@@ -98,7 +98,7 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
 	}
 
 	/**
-	 * Based on {@link ChestBlock#use(BlockState, Level, BlockPos, Player, InteractionHand, BlockHitResult)}.
+	 * [VANILLA COPY] - {@link ChestBlock#use(BlockState, Level, BlockPos, Player, InteractionHand, BlockHitResult)}.<br><br>
 	 * Handles behavior for checking if a chest is locked and being able to unlock the chest.<br><br>
 	 * Warning for "deprecation" is suppressed because the method is fine to override.
 	 * @param state The {@link BlockState} of the block.

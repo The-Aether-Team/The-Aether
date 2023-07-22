@@ -32,7 +32,7 @@ public class SkyrootBoatItem extends Item {
     }
 
     /**
-     * Copy of {@link net.minecraft.world.item.BoatItem#use(Level, Player, InteractionHand)}.
+     * [VANILLA COPY] - {@link net.minecraft.world.item.BoatItem#use(Level, Player, InteractionHand)}.
      * @param level The {@link Level} of the user.
      * @param player The {@link Player} using this item.
      * @param hand The {@link InteractionHand} in which the item is being used.

@@ -45,7 +45,9 @@ public class AetherPortalBlock extends Block {
 	}
 
 	/**
-	 * Based on {@link Entity#handleInsidePortal(BlockPos)} and {@link Entity#handleNetherPortal()}.<br><br>
+	 * [VANILLA COPY] - {@link Entity#handleInsidePortal(BlockPos)}<br>
+	 * [VANILLA COPY] - {@link Entity#handleNetherPortal()}.<br><br>
+	 * Handle portal behavior with {@link com.aetherteam.aether.capability.player.AetherPlayerCapability}.
 	 * Warning for "deprecation" is suppressed because the method is fine to override.
 	 */
 	@SuppressWarnings("deprecation")
@@ -77,7 +79,7 @@ public class AetherPortalBlock extends Block {
 	}
 
 	/**
-	 * Based on {@link Entity#handleNetherPortal()}.
+	 * [VANILLA COPY] - {@link Entity#handleNetherPortal()}.
 	 */
 	private void handleTeleportation(Entity entity) {
 		MinecraftServer minecraftserver = entity.getLevel().getServer();
@@ -94,7 +96,7 @@ public class AetherPortalBlock extends Block {
 	}
 
 	/**
-	 * Based on {@link net.minecraft.world.level.block.NetherPortalBlock#animateTick(BlockState, Level, BlockPos, RandomSource)}.
+	 * [VANILLA COPY] - {@link net.minecraft.world.level.block.NetherPortalBlock#animateTick(BlockState, Level, BlockPos, RandomSource)}.
 	 */
 	@Override
 	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {

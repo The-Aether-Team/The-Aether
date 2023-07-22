@@ -18,7 +18,8 @@ import net.minecraft.server.players.UserWhiteListEntry;
 import java.util.Collection;
 
 /**
- * Based on {@link net.minecraft.server.commands.WhitelistCommand}
+ * [VANILLA COPY] - {@link net.minecraft.server.commands.WhitelistCommand}.<br><br>
+ * Adapted to use {@link SunAltarWhitelist}.
  */
 public class SunAltarWhitelistCommand {
     private static final SimpleCommandExceptionType ERROR_ALREADY_ENABLED = new SimpleCommandExceptionType(Component.translatable("commands.aether.sun_altar_whitelist.alreadyOn"));

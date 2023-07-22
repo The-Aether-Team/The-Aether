@@ -45,7 +45,8 @@ public class ZephyrSnowball extends Fireball implements ItemSupplier {
 	}
 
 	/**
-	 * Based on {@link AbstractHurtingProjectile#tick()}.<br>
+	 * [VANILLA COPY] - {@link AbstractHurtingProjectile#tick()}.<br><br>
+	 * Remove code for setting the projectile on fire.
 	 * Warning for "deprecation" is suppressed because vanilla calls {@link Level#hasChunkAt(BlockPos)} just fine.
 	 */
 	@SuppressWarnings("deprecation")

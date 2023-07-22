@@ -7,7 +7,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * Based on {@link top.theillusivec4.curios.common.network.server.SPacketGrabbedItem}.
+ * [VANILLA COPY] - {@link top.theillusivec4.curios.common.network.server.SPacketGrabbedItem}.<br><br>
+ * Adapted to Nitrogen packet system.
  */
 public record ClientGrabItemPacket(ItemStack stack) implements BasePacket {
     @Override

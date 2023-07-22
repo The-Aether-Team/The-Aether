@@ -21,14 +21,15 @@ public class AetherPlacedFeatureBuilders {
     }
 
     /**
-     * Copy of {@link net.minecraft.data.worldgen.placement.VegetationPlacements#treePlacement(PlacementModifier)}
+     * [VANILLA COPY] - {@link net.minecraft.data.worldgen.placement.VegetationPlacements#treePlacement(PlacementModifier)}
      */
     public static List<PlacementModifier> treePlacement(PlacementModifier count) {
         return treePlacementBase(count).build();
     }
 
     /**
-     * Based on {@link net.minecraft.data.worldgen.placement.VegetationPlacements#treePlacementBase(PlacementModifier)}
+     * [VANILLA COPY] - {@link net.minecraft.data.worldgen.placement.VegetationPlacements#treePlacementBase(PlacementModifier)}.<br><br>
+     * Add {@link ImprovedLayerPlacementModifier} and {@link DungeonBlacklistFilter}.
      */
     private static ImmutableList.Builder<PlacementModifier> treePlacementBase(PlacementModifier count) {
         return ImmutableList.<PlacementModifier>builder()

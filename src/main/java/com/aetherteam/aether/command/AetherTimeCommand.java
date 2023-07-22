@@ -9,7 +9,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 
 /**
- * Copy of {@link net.minecraft.server.commands.TimeCommand}.
+ * [VANILLA COPY] - {@link net.minecraft.server.commands.TimeCommand}.
  */
 public class AetherTimeCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {

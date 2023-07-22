@@ -14,7 +14,8 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
 /**
- * Based on {@link AbstractFurnaceMenu}.
+ * [VANILLA COPY] - {@link AbstractFurnaceMenu}.<br><br>
+ * Cleaned up.
  */
 public abstract class AbstractAetherFurnaceMenu extends RecipeBookMenu<Container> {
     private final Container container;

@@ -35,7 +35,8 @@ public abstract class AbstractCrystal extends Projectile {
     protected void defineSynchedData() { }
 
     /**
-     * Based on {@link ThrowableProjectile#tick()}
+     * [VANILLA COPY] - {@link ThrowableProjectile#tick()}.<br><br>
+     * Remove code for slowing down the projectile in water.
      */
     @Override
     public void tick() {

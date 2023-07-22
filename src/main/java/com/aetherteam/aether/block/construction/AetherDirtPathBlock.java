@@ -15,7 +15,7 @@ public class AetherDirtPathBlock extends DirtPathBlock {
     }
 
     /**
-     * Based on {@link DirtPathBlock#getStateForPlacement(BlockPlaceContext)}.
+     * [VANILLA COPY] - {@link DirtPathBlock#getStateForPlacement(BlockPlaceContext)}.
      */
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
@@ -23,7 +23,7 @@ public class AetherDirtPathBlock extends DirtPathBlock {
     }
 
     /**
-     * Based on {@link DirtPathBlock#tick(BlockState, ServerLevel, BlockPos, RandomSource)}.
+     * [VANILLA COPY] - {@link DirtPathBlock#tick(BlockState, ServerLevel, BlockPos, RandomSource)}.
      */
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {

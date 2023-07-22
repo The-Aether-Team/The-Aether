@@ -54,7 +54,8 @@ public abstract class AbstractDart extends AbstractArrow {
     }
 
     /**
-     * Based on {@link AbstractArrow#onHitEntity(EntityHitResult)}
+     * [VANILLA COPY] - {@link AbstractArrow#onHitEntity(EntityHitResult)}.<br><br>
+     * Removed behavior for the Piercing enchantment.
      */
     @Override
     protected void onHitEntity(EntityHitResult result) {

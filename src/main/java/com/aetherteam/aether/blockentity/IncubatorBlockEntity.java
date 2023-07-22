@@ -53,7 +53,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Based on {@link AbstractFurnaceBlockEntity}.
+ * [VANILLA COPY] - {@link AbstractFurnaceBlockEntity}.<br><br>
+ * Has heavy modifications for Incubator-specific behavior.
  */
 public class IncubatorBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, RecipeHolder, StackedContentsCompatible {
 	private static final int[] SLOTS_NS = {0};

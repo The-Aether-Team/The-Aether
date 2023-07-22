@@ -38,7 +38,8 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
     }
 
     /**
-     * Based on {@link LightTexture#updateLightTexture(float)}.
+     * [VANILLA COPY] - {@link LightTexture#updateLightTexture(float)}.<br><br>
+     * Copied from a specific section, and modified to make the lightmap not be tinted with any color. Checks for {@link AetherConfig.Client#colder_lightmap}.
      */
     @Override
     public void adjustLightmapColors(ClientLevel level, float partialTicks, float skyDarken, float skyLight, float blockLight, int pixelX, int pixelY, Vector3f colors) {
@@ -47,7 +48,7 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
             Vector3f vector3f1 = new Vector3f();
             float f9 = LightTexture.getBrightness(level.dimensionType(), pixelX) * skyLight;
             float f10 = f9 * (f9 * f9 * 0.6F + 0.4F);
-            vector3f1.set(f10, f10, f10);
+            vector3f1.set(f10, f10, f10); // Balance out RGB values.
             boolean flag = level.effects().forceBrightLightmap();
             if (flag) {
                 vector3f1.lerp(new Vector3f(0.99F, 1.12F, 1.0F), 0.25F);
@@ -387,7 +388,7 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
     }
 
     /**
-     * Copied from {@link LightTexture#clampColor(Vector3f)}.
+     * [VANILLA COPY] - {@link LightTexture#clampColor(Vector3f)}.
      */
     private static void clampColor(Vector3f vec) {
         vec.set(Mth.clamp(vec.x, 0.0F, 1.0F), Mth.clamp(vec.y, 0.0F, 1.0F), Mth.clamp(vec.z, 0.0F, 1.0F));

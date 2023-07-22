@@ -14,7 +14,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkHooks;
 
 /**
- * Based on {@link top.theillusivec4.curios.common.network.client.CPacketOpenCurios}.
+ * [VANILLA COPY] - {@link top.theillusivec4.curios.common.network.client.CPacketOpenCurios}.<br><br>
+ * Adapted to Nitrogen packet system.
  */
 public record OpenAccessoriesPacket(ItemStack carryStack) implements BasePacket {
     @Override

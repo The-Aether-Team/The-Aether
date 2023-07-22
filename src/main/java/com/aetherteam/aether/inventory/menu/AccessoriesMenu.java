@@ -33,7 +33,8 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * Based on {@link top.theillusivec4.curios.common.inventory.container.CuriosContainer}
+ * [VANILLA COPY] - {@link top.theillusivec4.curios.common.inventory.container.CuriosContainer}<br><br>
+ * Heavily adapted to only set up Aether curio types.
  */
 public class AccessoriesMenu extends InventoryMenu {
     private static final ResourceLocation[] ARMOR_SLOT_TEXTURES = new ResourceLocation[] {

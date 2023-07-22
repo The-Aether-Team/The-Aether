@@ -14,7 +14,8 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public interface SkyrootBoatBehavior {
     /**
-     * Based on {@link Boat#checkFallDamage(double, boolean, BlockState, BlockPos)}.
+     * [VANILLA COPY] - {@link Boat#checkFallDamage(double, boolean, BlockState, BlockPos)}.<br><br>
+     * Replace wood usage with Skyroot.
      */
     default void fall(Boat boat, double y, boolean onGround) {
         BoatAccessor boatAccessor = (BoatAccessor) boat;

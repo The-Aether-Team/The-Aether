@@ -24,7 +24,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 /**
- * Based on {@link AbstractFurnaceBlockEntity}.
+ * [VANILLA COPY] - {@link AbstractFurnaceBlockEntity}.<br><br>
+ * Certain static methods are copied with minor noted changes, and use accessors for {@link AbstractFurnaceBlockEntity}.
  */
 public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBlockEntity {
     private static final int[] SLOTS_FOR_UP = new int[]{0};
