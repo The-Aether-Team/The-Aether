@@ -15,7 +15,6 @@ public class CockatriceMarkingsLayer<T extends Cockatrice, M extends BipedBirdMo
         super(entityRenderer);
     }
 
-   
     @Override
     public RenderType renderType() {
         return COCKATRICE_MARKINGS;

@@ -14,6 +14,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
@@ -51,6 +52,10 @@ import net.minecraftforge.common.util.ITeleporter;
 import javax.annotation.Nullable;
 import java.util.function.Predicate;
 
+/**
+ * [VANILLA COPY] - {@link net.minecraft.world.entity.item.FallingBlockEntity}.<br><br>
+ * Modified for reversed gravity.
+ */
 public class FloatingBlockEntity extends Entity {
     protected static final EntityDataAccessor<BlockPos> DATA_START_POS = SynchedEntityData.defineId(FloatingBlockEntity.class, EntityDataSerializers.BLOCK_POS);
     private BlockState blockState = Blocks.SAND.defaultBlockState();
@@ -63,6 +68,9 @@ public class FloatingBlockEntity extends Entity {
     private int floatDistance;
     @Nullable
     public CompoundTag blockData;
+    /**
+     * Detects if this block was floated naturally or by a player's interaction. Naturally floated blocks are not able to drop as an item.
+     */
     private boolean natural = true;
 
     public FloatingBlockEntity(EntityType<? extends FloatingBlockEntity> type, Level level) {
@@ -88,86 +96,89 @@ public class FloatingBlockEntity extends Entity {
 
     @Override
     public void tick() {
-        if (this.blockState.isAir()) {
+        if (this.getBlockState().isAir()) {
             this.discard();
         } else {
-            Block block = this.blockState.getBlock();
+            Block block = this.getBlockState().getBlock();
             if (this.time++ == 0) {
                 BlockPos blockPos = this.blockPosition();
-                if (this.level.getBlockState(blockPos).is(block)) {
-                    this.level.removeBlock(blockPos, false);
+                if (this.getLevel().getBlockState(blockPos).is(block)) {
+                    this.getLevel().removeBlock(blockPos, false);
                 }
             }
 
             if (!this.isNoGravity()) {
                 this.floatDistance = this.blockPosition().getY() - this.getStartPos().getY();
-                this.setDeltaMovement(this.getDeltaMovement().add(0.0, 0.04, 0.0));
+                this.setDeltaMovement(this.getDeltaMovement().add(0.0, 0.04, 0.0)); // Move upwards.
                 this.causeFallDamage();
-                if (this.level.isClientSide) {
+                if (this.getLevel().isClientSide()) {
                     this.spawnFloatingBlockParticles();
                 }
             }
 
             this.move(MoverType.SELF, this.getDeltaMovement());
-            if (!this.level.isClientSide) {
+            if (!this.getLevel().isClientSide() && this.getLevel() instanceof ServerLevel serverLevel) {
                 BlockPos blockPos1 = this.blockPosition();
-                boolean isConcrete = this.blockState.getBlock() instanceof ConcretePowderBlock;
-                boolean canConvert = isConcrete && this.level.getFluidState(blockPos1).is(FluidTags.WATER);
+                boolean isConcrete = this.getBlockState().getBlock() instanceof ConcretePowderBlock;
+                boolean canConvert = isConcrete && this.getLevel().getFluidState(blockPos1).is(FluidTags.WATER);
                 double d0 = this.getDeltaMovement().lengthSqr();
                 if (isConcrete && d0 > 1.0) {
-                    BlockHitResult blockHitResult = this.level.clip(new ClipContext(new Vec3(this.xo, this.yo, this.zo), this.position(), ClipContext.Block.COLLIDER, ClipContext.Fluid.SOURCE_ONLY, this));
-                    if (blockHitResult.getType() != HitResult.Type.MISS && this.level.getFluidState(blockHitResult.getBlockPos()).is(FluidTags.WATER)) {
+                    BlockHitResult blockHitResult = this.getLevel().clip(new ClipContext(new Vec3(this.xo, this.yo, this.zo), this.position(), ClipContext.Block.COLLIDER, ClipContext.Fluid.SOURCE_ONLY, this));
+                    if (blockHitResult.getType() != HitResult.Type.MISS && this.getLevel().getFluidState(blockHitResult.getBlockPos()).is(FluidTags.WATER)) {
                         blockPos1 = blockHitResult.getBlockPos();
                         canConvert = true;
                     }
                 }
 
-                if ((!this.verticalCollision || this.onGround) && !canConvert) {
-                    if (!this.level.isClientSide && (this.time > 100 && (blockPos1.getY() <= this.level.getMinBuildHeight() || blockPos1.getY() > this.level.getMaxBuildHeight()) || this.time > 600)) {
-                        if ((!this.natural || !this.blockState.requiresCorrectToolForDrops()) && this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
-                            this.dropBlock(this.blockState);
+                if ((!this.verticalCollision || this.isOnGround()) && !canConvert) {
+                    if (!this.getLevel().isClientSide() && (this.time > 100 && (blockPos1.getY() <= this.getLevel().getMinBuildHeight() || blockPos1.getY() > this.getLevel().getMaxBuildHeight()) || this.time > 600)) { // Checks max y-level.
+                        if ((!this.natural || !this.getBlockState().requiresCorrectToolForDrops()) && this.dropItem && this.getLevel().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+                            this.dropBlock(this.getBlockState());
                         }
                         this.discard();
                     }
                 } else {
-                    BlockState blockState = this.level.getBlockState(blockPos1);
+                    BlockState blockState = this.getLevel().getBlockState(blockPos1);
                     this.setDeltaMovement(this.getDeltaMovement().multiply(0.7, -0.5, 0.7));
                     if (!blockState.is(Blocks.MOVING_PISTON)) {
                         if (!this.cancelDrop) {
-                            boolean canBeReplaced = blockState.canBeReplaced(new DirectionalPlaceContext(this.level, blockPos1, Direction.UP, ItemStack.EMPTY, Direction.DOWN));
-                            boolean isAboveFree = FloatingBlock.isFree(this.level.getBlockState(blockPos1.above())) && (!isConcrete || !canConvert);
-                            boolean canBlockSurvive = this.blockState.canSurvive(this.level, blockPos1) && !isAboveFree;
+                            boolean canBeReplaced = blockState.canBeReplaced(new DirectionalPlaceContext(this.getLevel(), blockPos1, Direction.UP, ItemStack.EMPTY, Direction.DOWN));
+                            boolean isAboveFree = FloatingBlock.isFree(this.getLevel().getBlockState(blockPos1.above())) && (!isConcrete || !canConvert); // Check above position.
+                            boolean canBlockSurvive = this.getBlockState().canSurvive(this.getLevel(), blockPos1) && !isAboveFree;
                             if ((canBeReplaced && canBlockSurvive) || (this.natural && blockState.getBlock().defaultDestroyTime() >= 0)) {
-                                if (this.blockState.hasProperty(BlockStateProperties.WATERLOGGED) && this.level.getFluidState(blockPos1).is(Fluids.WATER)) {
-                                    this.blockState = this.blockState.setValue(BlockStateProperties.WATERLOGGED, true);
+                                if (this.getBlockState().hasProperty(BlockStateProperties.WATERLOGGED) && this.getLevel().getFluidState(blockPos1).is(Fluids.WATER)) {
+                                    this.blockState = this.getBlockState().setValue(BlockStateProperties.WATERLOGGED, true);
                                 }
-                                BlockState previousBlockState = this.level.getBlockState(blockPos1);
-                                if (this.level.setBlock(blockPos1, this.blockState, 1 | 2)) {
+                                BlockState previousBlockState = this.getLevel().getBlockState(blockPos1);
+                                if (this.getLevel().setBlock(blockPos1, this.getBlockState(), 1 | 2)) {
                                     if (this.natural && !previousBlockState.isAir()) {
                                         this.dropBlock(previousBlockState);
                                     }
 
-                                    ((ServerLevel) this.level).getChunkSource().chunkMap.broadcast(this, new ClientboundBlockUpdatePacket(blockPos1, this.level.getBlockState(blockPos1)));
+                                    serverLevel.getChunkSource().chunkMap.broadcast(this, new ClientboundBlockUpdatePacket(blockPos1, this.getLevel().getBlockState(blockPos1)));
                                     this.discard();
                                     if (block instanceof Floatable floatable) {
-                                        floatable.onCollide(this.level, blockPos1, this.blockState, blockState, this);
+                                        floatable.onCollide(this.getLevel(), blockPos1, this.getBlockState(), blockState, this);
                                     } else if (block instanceof ConcretePowderBlock concretePowderBlock) {
-                                        if (ConcretePowderBlockAccessor.callShouldSolidify(this.level, blockPos1, blockState)) {
+                                        if (ConcretePowderBlockAccessor.callShouldSolidify(this.getLevel(), blockPos1, blockState)) {
                                             ConcretePowderBlockAccessor concretePowderBlockAccessor = (ConcretePowderBlockAccessor) concretePowderBlock;
-                                            this.level.setBlock(blockPos1, concretePowderBlockAccessor.aether$getConcrete(), 1 | 2);
+                                            this.getLevel().setBlock(blockPos1, concretePowderBlockAccessor.aether$getConcrete(), 1 | 2);
                                         }
                                     } else if (block instanceof AnvilBlock) {
                                         if (!this.isSilent()) {
-                                            this.level.levelEvent(1029, blockPos1, 0);
+                                            this.getLevel().levelEvent(1029, blockPos1, 0);
                                         }
                                     }
 
-                                    if (this.blockData != null && this.blockState.hasBlockEntity()) {
-                                        BlockEntity blockEntity = this.level.getBlockEntity(blockPos1);
+                                    if (this.blockData != null && this.getBlockState().hasBlockEntity()) {
+                                        BlockEntity blockEntity = this.getLevel().getBlockEntity(blockPos1);
                                         if (blockEntity != null) {
                                             CompoundTag tag = blockEntity.saveWithoutMetadata();
                                             for (String string : this.blockData.getAllKeys()) {
-                                                tag.put(string, this.blockData.get(string).copy());
+                                                Tag blockDataTag = this.blockData.get(string);
+                                                if (blockDataTag != null) {
+                                                    tag.put(string, blockDataTag.copy());
+                                                }
                                             }
 
                                             try {
@@ -178,16 +189,16 @@ public class FloatingBlockEntity extends Entity {
                                             blockEntity.setChanged();
                                         }
                                     }
-                                } else if ((!this.natural || !this.blockState.requiresCorrectToolForDrops()) && this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+                                } else if ((!this.natural || !this.getBlockState().requiresCorrectToolForDrops()) && this.dropItem && this.getLevel().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                                     this.discard();
                                     this.callOnBrokenAfterFall(block, blockPos1);
-                                    this.dropBlock(this.blockState);
+                                    this.dropBlock(this.getBlockState());
                                 }
                             } else {
                                 this.discard();
-                                if ((!this.natural || !this.blockState.requiresCorrectToolForDrops() || blockState.getBlock().defaultDestroyTime() < 0) && this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+                                if ((!this.natural || !this.getBlockState().requiresCorrectToolForDrops() || blockState.getBlock().defaultDestroyTime() < 0) && this.dropItem && this.getLevel().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                                     this.callOnBrokenAfterFall(block, blockPos1);
-                                    this.dropBlock(this.blockState);
+                                    this.dropBlock(this.getBlockState());
                                 }
                             }
                         } else {
@@ -208,8 +219,8 @@ public class FloatingBlockEntity extends Entity {
     }
 
     private void dropBlock(BlockState state) {
-        if (this.level instanceof ServerLevel) {
-            for (ItemStack stack : Block.getDrops(state, (ServerLevel) this.level, this.blockPosition(), null)) {
+        if (this.getLevel() instanceof ServerLevel serverLevel) {
+            for (ItemStack stack : Block.getDrops(state, serverLevel, this.blockPosition(), null)) {
                 this.spawnAtLocation(stack);
             }
         }
@@ -217,7 +228,7 @@ public class FloatingBlockEntity extends Entity {
 
     public void callOnBrokenAfterFall(Block block, BlockPos pos) {
         if (block instanceof Floatable floatable) {
-            floatable.onBrokenAfterCollide(this.level, pos, this);
+            floatable.onBrokenAfterCollide(this.getLevel(), pos, this);
         }
     }
 
@@ -225,19 +236,19 @@ public class FloatingBlockEntity extends Entity {
         if (this.hurtEntities) {
             Predicate<Entity> predicate;
             DamageSource damageSource;
-            if (this.blockState.getBlock() instanceof Floatable floatable) {
+            if (this.getBlockState().getBlock() instanceof Floatable floatable) {
                 predicate = floatable.getHurtsEntitySelector();
                 damageSource = floatable.getFallDamageSource(this);
             } else {
                 predicate = EntitySelector.NO_SPECTATORS;
-                damageSource = AetherDamageTypes.entityDamageSource(this.level, AetherDamageTypes.FLOATING_BLOCK, this);
+                damageSource = AetherDamageTypes.entityDamageSource(this.getLevel(), AetherDamageTypes.FLOATING_BLOCK, this);
             }
 
             float f = (float) Math.min(Mth.floor((float) this.floatDistance * this.fallDamagePerDistance), this.fallDamageMax);
-            this.level.getEntities(this, this.getBoundingBox(), predicate).forEach((p_149649_) -> p_149649_.hurt(damageSource, f));
-            boolean flag = this.blockState.is(BlockTags.ANVIL);
+            this.getLevel().getEntities(this, this.getBoundingBox(), predicate).forEach((p_149649_) -> p_149649_.hurt(damageSource, f));
+            boolean flag = this.getBlockState().is(BlockTags.ANVIL);
             if (flag && f > 0.0F && this.random.nextFloat() < 0.05F + (float) this.floatDistance * 0.05F) {
-                BlockState blockstate = AnvilBlock.damage(this.blockState);
+                BlockState blockstate = AnvilBlock.damage(this.getBlockState());
                 if (blockstate == null) {
                     this.cancelDrop = true;
                 } else {
@@ -252,7 +263,7 @@ public class FloatingBlockEntity extends Entity {
             double d0 = (this.getX() - 0.5) + this.random.nextDouble();
             double d1 = this.getY() - 0.05;
             double d2 = (this.getZ() - 0.5) + this.random.nextDouble();
-            this.level.addParticle(new BlockParticleOption(ParticleTypes.FALLING_DUST, this.getBlockState()), d0, d1, d2, 0.0, 0.0, 0.0);
+            this.getLevel().addParticle(new BlockParticleOption(ParticleTypes.FALLING_DUST, this.getBlockState()), d0, d1, d2, 0.0, 0.0, 0.0);
         }
     }
 
@@ -366,6 +377,6 @@ public class FloatingBlockEntity extends Entity {
     @Override
     public void fillCrashReportCategory(CrashReportCategory category) {
         super.fillCrashReportCategory(category);
-        category.setDetail("Immitating BlockState", this.blockState.toString());
+        category.setDetail("Immitating BlockState", this.getBlockState().toString());
     }
 }

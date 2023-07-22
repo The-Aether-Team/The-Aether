@@ -32,7 +32,7 @@ public class SpawnTNT extends LootItemConditionalFunction {
         ServerLevel serverLevel = context.getLevel();
         Vec3 originVec = context.getParamOrNull(LootContextParams.ORIGIN);
         if (originVec != null) {
-            TntPresent tnt = new TntPresent(serverLevel, originVec.x(), originVec.y(), originVec.z());
+            TntPresent tnt = new TntPresent(serverLevel, originVec.x(), originVec.y(), originVec.z(), null);
             serverLevel.addFreshEntity(tnt);
             serverLevel.playSound(null, BlockPos.containing(originVec), SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F);
         }

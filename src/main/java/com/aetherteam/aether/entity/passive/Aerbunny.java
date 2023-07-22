@@ -105,7 +105,7 @@ public class Aerbunny extends AetherAnimal {
         AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
         if (gravity != null) {
             double fallSpeed = Math.max(gravity.getValue() * -1.25, -0.1);
-            if (this.getDeltaMovement().y < fallSpeed) {
+            if (this.getDeltaMovement().y() < fallSpeed) {
                 this.setDeltaMovement(this.getDeltaMovement().x(), fallSpeed, this.getDeltaMovement().z());
             }
         }
@@ -130,7 +130,7 @@ public class Aerbunny extends AetherAnimal {
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                     Player innerPlayer = aetherPlayer.getPlayer();
                     if (this.getLevel().isClientSide()) {
-                        if (innerPlayer.getDeltaMovement().y <= 0.0) {
+                        if (innerPlayer.getDeltaMovement().y() <= 0.0) {
                             if (this.lastPos == null) {
                                 this.lastPos = this.position();
                             }
@@ -157,7 +157,7 @@ public class Aerbunny extends AetherAnimal {
     public void baseTick() {
         super.baseTick();
         if (this.isAlive() && this.isPassenger() && this.getVehicle() != null && this.getVehicle().isEyeInFluidType(ForgeMod.WATER_TYPE.get())
-                && !this.level.getBlockState(BlockPos.containing(this.getVehicle().getX(), this.getVehicle().getEyeY(), this.getVehicle().getZ())).is(Blocks.BUBBLE_COLUMN)) {
+                && !this.getLevel().getBlockState(BlockPos.containing(this.getVehicle().getX(), this.getVehicle().getEyeY(), this.getVehicle().getZ())).is(Blocks.BUBBLE_COLUMN)) {
             this.stopRiding();
         }
     }
@@ -179,10 +179,10 @@ public class Aerbunny extends AetherAnimal {
                 this.stopRiding();
                 this.setFastFalling(true);
                 Vec3 playerMovement = player.getDeltaMovement();
-                this.setDeltaMovement(playerMovement.x * 5, playerMovement.y * 0.5 + 0.5, playerMovement.z * 5);
+                this.setDeltaMovement(playerMovement.x() * 5, playerMovement.y() * 0.5 + 0.5, playerMovement.z() * 5);
             } else if (this.startRiding(player)) {
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setMountedAerbunny(this));
-                this.level.playSound(player, this, AetherSoundEvents.ENTITY_AERBUNNY_LIFT.get(), SoundSource.NEUTRAL, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+                this.getLevel().playSound(player, this, AetherSoundEvents.ENTITY_AERBUNNY_LIFT.get(), SoundSource.NEUTRAL, 1.0F, (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.2F + 1.0F);
             }
             return InteractionResult.SUCCESS;
         }
@@ -198,9 +198,9 @@ public class Aerbunny extends AetherAnimal {
     }
 
     @Override
-    public boolean hurt(DamageSource pSource, float pAmount) {
-        boolean flag = super.hurt(pSource, pAmount);
-        if (flag && pSource.getEntity() instanceof Player) {
+    public boolean hurt(DamageSource source, float amount) {
+        boolean flag = super.hurt(source, amount);
+        if (flag && source.getEntity() instanceof Player) {
             this.setAfraid(true);
         }
         return flag;
@@ -211,14 +211,14 @@ public class Aerbunny extends AetherAnimal {
      */
     protected void midairJump() {
         Vec3 motion = this.getDeltaMovement();
-        if (motion.y < 0) {
+        if (motion.y() < 0) {
             this.puff();
         }
-        this.setDeltaMovement(new Vec3(motion.x, 0.25, motion.z));
+        this.setDeltaMovement(new Vec3(motion.x(), 0.25, motion.z()));
     }
 
     public void puff() {
-        if (this.level instanceof ServerLevel) {
+        if (this.getLevel() instanceof ServerLevel) {
             this.setPuffiness(11);
         }
     }
@@ -270,7 +270,7 @@ public class Aerbunny extends AetherAnimal {
 
     @Override
     protected float getFlyingSpeed() {
-        return this.getSpeed() * 0.21600002F;
+        return this.getSpeed() * 0.216F;
     }
 
     @Override
@@ -336,22 +336,22 @@ public class Aerbunny extends AetherAnimal {
 
         @Override
         public boolean canContinueToUse() {
-            return !this.aerbunny.getNavigation().isDone() && this.aerbunny.random.nextInt(20) != 0;
+            return !this.aerbunny.getNavigation().isDone() && this.aerbunny.getRandom().nextInt(20) != 0;
         }
 
         @Override
         public void start() {
-            LivingEntity attacker = this.aerbunny.level.getNearestPlayer(this.aerbunny, 12);
+            LivingEntity attacker = this.aerbunny.getLevel().getNearestPlayer(this.aerbunny, 12);
             if (attacker == null) {
                 return;
             }
             Vec3 position = this.aerbunny.position();
             double angle = Mth.atan2(position.x() - attacker.getX(), position.z() - attacker.getZ());
-            float angleOffset = this.aerbunny.random.nextFloat() * 2 - 1;
+            float angleOffset = this.aerbunny.getRandom().nextFloat() * 2 - 1;
             angle += angleOffset * 0.75;
             double x = position.x() + Math.sin(angle) * 8;
             double z = position.z() + Math.cos(angle) * 8;
-            boolean flag = this.aerbunny.navigation.moveTo(x, this.aerbunny.getY(), z, this.speedModifier);
+            boolean flag = this.aerbunny.getNavigation().moveTo(x, this.aerbunny.getY(), z, this.speedModifier);
             if (!flag) {
                 this.aerbunny.getLookControl().setLookAt(attacker, 30, 30);
             }
@@ -360,7 +360,7 @@ public class Aerbunny extends AetherAnimal {
         @Override
         public void tick() {
             if (this.aerbunny.getRandom().nextInt(4) == 0) {
-                ((ServerLevel)this.aerbunny.level).sendParticles(ParticleTypes.SPLASH, this.aerbunny.getRandomX(0.5), this.aerbunny.getRandomY(), this.aerbunny.getRandomZ(0.5), 2, 0, 0, 0, 0);
+                ((ServerLevel)this.aerbunny.getLevel()).sendParticles(ParticleTypes.SPLASH, this.aerbunny.getRandomX(0.5), this.aerbunny.getRandomY(), this.aerbunny.getRandomZ(0.5), 2, 0, 0, 0, 0);
             }
         }
     }
@@ -377,13 +377,13 @@ public class Aerbunny extends AetherAnimal {
         public void tick() {
             super.tick();
             if (this.aerbunny.zza != 0) {
-                if (this.aerbunny.onGround) {
-                    this.aerbunny.jumpControl.jump();
+                if (this.aerbunny.isOnGround()) {
+                    this.aerbunny.getJumpControl().jump();
                 } else {
                     int x = Mth.floor(this.aerbunny.getX());
                     int y = Mth.floor(this.aerbunny.getBoundingBox().minY);
                     int z = Mth.floor(this.aerbunny.getZ());
-                    if (this.checkForSurfaces(this.aerbunny.level, x, y, z)) {
+                    if (this.checkForSurfaces(this.aerbunny.getLevel(), x, y, z)) {
                         this.aerbunny.midairJump();
                     }
                 }
