@@ -30,6 +30,9 @@ public class Parachute extends Entity {
         this.zo = this.getZ();
     }
 
+    /**
+     * Necessary to define, even if empty.
+     */
     @Override
     protected void defineSynchedData() { }
 
@@ -38,10 +41,10 @@ public class Parachute extends Entity {
         super.tick();
         LivingEntity passenger = this.getControllingPassenger();
         if (passenger != null) {
-            this.checkSlowFallDistance();
+            this.checkSlowFallDistance(); // Resets the Parachute's fall distance.
             this.moveParachute(passenger);
             this.spawnExplosionParticle();
-            if (this.isOnGround() || this.isInFluidType()) {
+            if (this.isOnGround() || this.isInFluidType()) { // The parachute breaks when it collides with something.
                 this.ejectPassengers();
                 this.die();
             }
@@ -50,32 +53,36 @@ public class Parachute extends Entity {
         }
     }
 
+    /**
+     * Handles parachute and passenger movement.
+     * @param passenger The {@link LivingEntity} passenger.
+     */
     public void moveParachute(LivingEntity passenger) {
         if (this.isVehicle()) {
             this.setYRot(passenger.getYRot());
             this.yRotO = this.getYRot();
             this.setXRot(passenger.getXRot() * 0.5F);
             this.setRot(this.getYRot(), this.getXRot());
-            float f = passenger.xxa * 0.5F;
-            float f1 = passenger.zza;
-            if (f1 <= 0.0F) {
-                f1 *= 0.25F;
+            float x = passenger.xxa * 0.5F; // Side-to-side movement is slowed.
+            float z = passenger.zza; // Forward movement is normal.
+            if (z <= 0.0F) {
+                z *= 0.25F; // Backwards movement is slowed.
             }
-            Vec3 travelVec = new Vec3(f, passenger.yya, f1);
+            Vec3 travelVec = new Vec3(x, passenger.yya, z);
             AttributeInstance gravity = passenger.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
-            double d0 = gravity != null ? gravity.getValue() : 0.08;
+            double gravityModifier = gravity != null ? gravity.getValue() : 0.08;
 
             Vec3 movement = this.calculateMovement(travelVec);
-            double d2 = movement.y;
+            double y = movement.y();
             if (!this.isNoGravity()) {
-                d2 -= d0;
+                y -= gravityModifier;
             }
-            d2 *= 0.98;
+            y *= 0.98;
 
-            double fallSpeed = Math.max(d0 * -3.125, -0.25);
-            this.setDeltaMovement(movement.x * (double) 0.91F, Math.max(d2, fallSpeed), movement.z * (double) 0.91F);
+            double fallSpeed = Math.max(gravityModifier * -3.125, -0.25); // Slows fall speed and slows the parachute from falling too slow and getting stuck midair.
+            this.setDeltaMovement(movement.x() * (double) 0.91F, Math.max(y, fallSpeed), movement.z() * (double) 0.91F);
 
-            if (passenger instanceof ServerPlayer serverPlayer) {
+            if (passenger instanceof ServerPlayer serverPlayer) { // Prevents the player from being kicked for flying.
                 ServerGamePacketListenerImplAccessor serverGamePacketListenerImplAccessor = (ServerGamePacketListenerImplAccessor) serverPlayer.connection;
                 serverGamePacketListenerImplAccessor.aether$setAboveGroundTickCount(0);
                 serverGamePacketListenerImplAccessor.aether$setAboveGroundVehicleTickCount(0);
@@ -83,6 +90,11 @@ public class Parachute extends Entity {
         }
     }
 
+    /**
+     * Calculates the movement vector for the parachute from the passenger.
+     * @param vec3 The passenger {@link Vec3}.
+     * @return The modified {@link Vec3}.
+     */
     public Vec3 calculateMovement(Vec3 vec3) {
         float speed = 0.03F;
         this.moveRelative(speed, vec3);
@@ -90,16 +102,22 @@ public class Parachute extends Entity {
         return this.getDeltaMovement();
     }
 
-    public void spawnExplosionParticle() {
-        if (!this.level.isClientSide) {
-            this.level.broadcastEntityEvent(this, (byte) 70);
+    /**
+     * Kills the parachute along with spawning particles.
+     */
+    public void die() {
+        this.spawnExplosionParticle();
+        if (!this.getLevel().isClientSide()) {
+            this.kill();
         }
     }
 
-    public void die() {
-        this.spawnExplosionParticle();
-        if (!this.level.isClientSide) {
-            this.kill();
+    /**
+     * Spawn explosion particles in {@link Parachute#handleEntityEvent(byte)}.
+     */
+    public void spawnExplosionParticle() {
+        if (!this.getLevel().isClientSide()) {
+            this.getLevel().broadcastEntityEvent(this, (byte) 70);
         }
     }
 
@@ -123,6 +141,11 @@ public class Parachute extends Entity {
         return 1.35;
     }
 
+    /**
+     * Handles where the passenger will dismount to.
+     * @param passenger The {@link LivingEntity} passenger.
+     * @return The {@link Vec3} position to dismount to.
+     */
     @Override
     public Vec3 getDismountLocationForPassenger(LivingEntity passenger) {
         Direction direction = this.getMotionDirection();
@@ -130,15 +153,16 @@ public class Parachute extends Entity {
             return this.position().add(0.0, 0.5, 0.0);
         } else {
             Vec3 dismountLocation = this.position().add(0.0, 0.5, 0.0);
-            if (!DismountHelper.canDismountTo(this.level, passenger, passenger.getType().getDimensions().makeBoundingBox(dismountLocation))) {
+            // Fixes a block clipping exploit by pushing the player away from a block if it tries to dismount to an unsafe spot (like inside a block).
+            if (!DismountHelper.canDismountTo(this.getLevel(), passenger, passenger.getType().getDimensions().makeBoundingBox(dismountLocation))) {
                 return this.position().add(0.0, 1.0, 0.0).add(new Vec3(direction.getStepX(), direction.getStepY(), direction.getStepZ()).scale(0.5).reverse());
             }
             return dismountLocation;
         }
     }
 
-    @Override
     @Nullable
+    @Override
     public LivingEntity getControllingPassenger() {
         Entity entity = this.getFirstPassenger();
         if (entity instanceof LivingEntity rider) {
@@ -176,7 +200,6 @@ public class Parachute extends Entity {
 
     @Override
     protected void readAdditionalSaveData(CompoundTag tag) { }
-
    
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {

@@ -80,7 +80,7 @@ public class Mimic extends Monster {
 		if (this.level.isClientSide) {
 			EntityUtil.spawnSummoningExplosionParticles(this);
 		} else {
-			this.level.broadcastEntityEvent(this, (byte) 20);
+			this.level.broadcastEntityEvent(this, (byte) 70);
 		}
 	}
 
@@ -97,5 +97,14 @@ public class Mimic extends Monster {
 	@Override
 	protected boolean shouldDespawnInPeaceful() {
 		return true;
+	}
+
+	@Override
+	public void handleEntityEvent(byte id) {
+		if (id == 70) {
+			EntityUtil.spawnSummoningExplosionParticles(this);
+		} else {
+			super.handleEntityEvent(id);
+		}
 	}
 }

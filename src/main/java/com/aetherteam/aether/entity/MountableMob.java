@@ -58,7 +58,7 @@ public interface MountableMob {
                     vehicle.setPlayerJumped(false);
                     vehicle.setMountJumping(false);
                 }
-                if (passenger instanceof ServerPlayer serverPlayer) { // Used for preventing fly-hack checks.
+                if (passenger instanceof ServerPlayer serverPlayer) { // Prevents the player from being kicked for flying.
                     ServerGamePacketListenerImplAccessor serverGamePacketListenerImplAccessor = (ServerGamePacketListenerImplAccessor) serverPlayer.connection;
                     serverGamePacketListenerImplAccessor.aether$setAboveGroundTickCount(0);
                     serverGamePacketListenerImplAccessor.aether$setAboveGroundVehicleTickCount(0);

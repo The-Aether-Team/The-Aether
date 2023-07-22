@@ -284,7 +284,7 @@ public class DimensionHooks {
      */
     public static void travelling(Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
-            if (teleportationTimer > 0) {
+            if (teleportationTimer > 0) { // Prevents the player from being kicked for flying.
                 ServerGamePacketListenerImplAccessor serverGamePacketListenerImplAccessor = (ServerGamePacketListenerImplAccessor) serverPlayer.connection;
                 serverGamePacketListenerImplAccessor.aether$setAboveGroundTickCount(0);
                 serverGamePacketListenerImplAccessor.aether$setAboveGroundVehicleTickCount(0);

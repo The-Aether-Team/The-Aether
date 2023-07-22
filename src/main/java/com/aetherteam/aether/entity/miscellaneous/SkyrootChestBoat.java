@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.entity.vehicle.ChestBoat;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
@@ -26,18 +27,19 @@ public class SkyrootChestBoat extends ChestBoat implements SkyrootBoatBehavior {
         this.zo = z;
     }
 
-   
     @Override
     public Item getDropItem() {
         return AetherItems.SKYROOT_CHEST_BOAT.get();
     }
 
+    /**
+     * @see SkyrootBoatBehavior#fall(Boat, double, boolean)
+     */
     @Override
     protected void checkFallDamage(double y, boolean onGround, BlockState state, BlockPos pos) {
         this.fall(this, y, onGround);
     }
 
-   
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);

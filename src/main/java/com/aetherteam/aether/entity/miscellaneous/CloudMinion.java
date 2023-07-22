@@ -45,7 +45,6 @@ public class CloudMinion extends FlyingMob {
         this.setXRot(this.getOwner().getXRot());
         this.setYRot(this.getOwner().getYRot());
     }
-
    
     public static AttributeSupplier.Builder createMobAttributes() {
         return FlyingMob.createMobAttributes()
@@ -53,6 +52,7 @@ public class CloudMinion extends FlyingMob {
                 .add(Attributes.MOVEMENT_SPEED, 10.0);
     }
 
+    @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_OWNER_ID, 0);
@@ -64,7 +64,7 @@ public class CloudMinion extends FlyingMob {
     public void tick() {
         super.tick();
         this.setLifeSpan(this.getLifeSpan() - 1);
-        if (this.getLifeSpan() <= 0) {
+        if (this.getLifeSpan() <= 0) { // Removes if lifespan is up.
             this.spawnExplosionParticles();
             this.remove(RemovalReason.DISCARDED);
         } else {
@@ -75,33 +75,35 @@ public class CloudMinion extends FlyingMob {
                     if (this.atShoulder()) {
                         Vec3 motion = this.getDeltaMovement();
                         this.setDeltaMovement(motion.multiply(0.65, 0.65, 0.65));
-                        if (this.shouldShoot()) {
+                        if (this.shouldShoot()) { // Checks if able to shoot a Cloud Crystal
                             float offset = this.getSide() == HumanoidArm.RIGHT ? 2.0F : -2.0F;
                             float rotation = Mth.wrapDegrees(this.getYRot() + offset);
-                            CloudCrystal crystal = new CloudCrystal(this.level);
+                            CloudCrystal crystal = new CloudCrystal(this.getLevel()); // Sets up Cloud Crystal.
                             crystal.setPos(this.getX(), this.getY(), this.getZ());
                             crystal.shootFromRotation(this, this.getXRot(), rotation, 0.0F, 1.0F, 1.0F);
                             crystal.setOwner(this.getOwner());
-                            if (!this.level.isClientSide) {
-                                this.level.addFreshEntity(crystal);
+                            if (!this.getLevel().isClientSide()) {
+                                this.getLevel().addFreshEntity(crystal);
                             }
-                            this.playSound(AetherSoundEvents.ENTITY_CLOUD_MINION_SHOOT.get(), 0.75F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-
-                            this.setShouldShoot(false);
+                            this.playSound(AetherSoundEvents.ENTITY_CLOUD_MINION_SHOOT.get(), 0.75F, (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.2F + 1.0F);
+                            this.setShouldShoot(false); // Finish shoot.
                         }
-                    } else {
+                    } else { // Approaches owner if not at shoulder.
                         this.approachOwner();
                     }
-                } else {
+                } else { // Removes if owner is dead.
                     this.spawnExplosionParticles();
                     this.remove(RemovalReason.KILLED);
                 }
-            } else {
+            } else { // Removes if owner doesn't exist.
                 this.remove(RemovalReason.DISCARDED);
             }
         }
     }
 
+    /**
+     * Sets the position that the Cloud Minion should hover at on the side of the player.
+     */
     public void setPositionFromOwner() {
         if (this.distanceTo(this.getOwner()) > 2.0F) {
             this.targetX = this.getOwner().getX();
@@ -121,12 +123,18 @@ public class CloudMinion extends FlyingMob {
         }
     }
 
+    /**
+     * Rotates the Cloud Minion according to the player's rotation.
+     */
     public void setRotationFromOwner() {
         this.setYRot(this.getOwner().getYRot() + (this.getSide() == HumanoidArm.RIGHT ? 1.0F : -1.0F));
         this.setXRot(this.getOwner().getXRot());
         this.setYHeadRot(this.getOwner().getYHeadRot());
     }
 
+    /**
+     * @return A {@link Boolean} for whether the Cloud Minion is with the player at their shoulder.
+     */
     public boolean atShoulder() {
         double x = this.getX() - this.targetX;
         double y = this.getY() - this.targetY;
@@ -134,6 +142,10 @@ public class CloudMinion extends FlyingMob {
         return Math.sqrt(x * x + y * y + z * z) < 0.4;
     }
 
+    /**
+     * Moves the Cloud Minion towards the owner based on the target position.
+     * Called if the Cloud Minion is not at the player's shoulder, according to {@link CloudMinion#atShoulder()}.
+     */
     public void approachOwner() {
         double x = this.targetX - this.getX();
         double y = this.targetY - this.getY();
@@ -146,14 +158,20 @@ public class CloudMinion extends FlyingMob {
         this.setDeltaMovement(motionX, motionY, motionZ);
     }
 
-    private void spawnExplosionParticles() {
-        if (this.level.isClientSide) {
+    /**
+     * Spawn explosion particles on client or in {@link Parachute#handleEntityEvent(byte)}.
+     */
+    public void spawnExplosionParticles() {
+        if (this.getLevel().isClientSide()) {
             EntityUtil.spawnSummoningExplosionParticles(this);
         } else {
-            this.level.broadcastEntityEvent(this, (byte) 20);
+            this.getLevel().broadcastEntityEvent(this, (byte) 70);
         }
     }
 
+    /**
+     * Cloud Minions have no collision.
+     */
     @Override
     protected void pushEntities() { }
 
@@ -162,43 +180,82 @@ public class CloudMinion extends FlyingMob {
         return false;
     }
 
+    /**
+     * Cloud Minions cannot be damaged.
+     */
     @Override
     public boolean hurt(DamageSource source, float damage) {
         return false;
     }
 
+    /**
+     * @return The owner {@link Player} of the Cloud Minion.
+     */
     public Player getOwner() {
         return (Player) this.level.getEntity(this.entityData.get(DATA_OWNER_ID));
     }
 
+    /**
+     * Sets the owner {@link Player} of the Cloud Minion.
+     * @param entity The owner {@link Player}.
+     */
     public void setOwner(Player entity) {
         this.entityData.set(DATA_OWNER_ID, entity.getId());
     }
 
+    /**
+     * @return The {@link HumanoidArm} side that the Cloud Minion should hover at.
+     */
     public HumanoidArm getSide() {
         return this.entityData.get(DATA_IS_RIGHT_ID) ? HumanoidArm.RIGHT : HumanoidArm.LEFT;
     }
 
+    /**
+     * Sets the {@link HumanoidArm} side that the Cloud Minion should hover at
+     * @param armSide The {@link HumanoidArm} side.
+     */
     public void setSide(HumanoidArm armSide) {
         this.entityData.set(DATA_IS_RIGHT_ID, armSide == HumanoidArm.RIGHT);
     }
 
+    /**
+     * @return The lifespan of the Cloud Minion, as an {@link Integer}.
+     */
     public int getLifeSpan() {
         return this.entityData.get(DATA_LIFESPAN_ID);
     }
 
+    /**
+     * Sets the lifespan of the Cloud Minion.
+     * @param lifespan The lifespan, as an {@link Integer}.
+     */
     public void setLifeSpan(int lifespan) {
         this.entityData.set(DATA_LIFESPAN_ID, lifespan);
     }
 
+    /**
+     * @return Whether the Cloud Minion can shoot a Cloud Crystal, as a {@link Boolean}.
+     */
     public boolean shouldShoot() {
         return this.shouldShoot;
     }
 
+    /**
+     * Sets whether the Cloud Minion can shoot a Cloud Crystal.
+     * @param shouldShoot Whether it should shoot, as a {@link Boolean}.
+     */
     public void setShouldShoot(boolean shouldShoot) {
         this.shouldShoot = shouldShoot;
     }
 
+    @Override
+    public void handleEntityEvent(byte id) {
+        if (id == 70) {
+            EntityUtil.spawnSummoningExplosionParticles(this);
+        } else {
+            super.handleEntityEvent(id);
+        }
+    }
    
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {

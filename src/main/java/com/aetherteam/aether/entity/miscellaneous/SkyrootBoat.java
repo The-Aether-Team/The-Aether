@@ -26,18 +26,19 @@ public class SkyrootBoat extends Boat implements SkyrootBoatBehavior {
         this.zo = z;
     }
 
-   
     @Override
     public Item getDropItem() {
         return AetherItems.SKYROOT_BOAT.get();
     }
 
+    /**
+     * @see SkyrootBoatBehavior#fall(Boat, double, boolean)
+     */
     @Override
     protected void checkFallDamage(double y, boolean onGround, BlockState state, BlockPos pos) {
         this.fall(this, y, onGround);
     }
 
-   
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
