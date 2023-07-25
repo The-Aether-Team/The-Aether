@@ -10,7 +10,7 @@ jobs:
   publish:
     machine:
       image: ubuntu-2204:2022.07.1
-    resource_class: medium
+    resource_class: large
     environment:
       _JAVA_OPTIONS: -Xmx3200m
       GRADLE_OPTS: -Dorg.gradle.daemon=false
@@ -39,6 +39,8 @@ workflows:
     jobs:
       - path-filtering/filter:
           name: filter
+          mapping: |
+            src/.* allow-deploy-and-discord-publish true
           base-revision: << pipeline.git.branch >>
           config-path: .circleci/continue_config.yml
   publish:
