@@ -1,0 +1,59 @@
+name: Trigger build
+
+on: 
+  workflow_dispatch:
+    inputs:
+      remote_user:
+        description: 'GitHub name of the fork organization'
+        required: true
+        default: 'The-Aether-Team'
+        type: string
+      remote_name:
+        description: 'GitHub name of the fork repository'
+        required: true
+        default: 'The-Aether'
+        type: string
+      remote_branch:
+        description: 'GitHub branch that the pull request is merging from'
+        required: true
+        default: '1.19.4-develop'
+        type: string
+  
+jobs:
+  trigger-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GIT_TOKEN }}
+          fetch-depth: 0
+      - name: Trigger build
+        env: 
+          REMOTE_USER: ${{ inputs.remote_user }}
+          REMOTE_URL: ${{ format('https://Aether-Team-Bot:{0}@github.com/{1}/{2}', secrets.GIT_TOKEN, inputs.remote_user, inputs.remote_name) }}
+          BRANCH: ${{ inputs.remote_branch }}
+          REMOTE_BRANCH: ${{ format('{0}/{1}', inputs.remote_user, inputs.remote_branch) }}
+          LOCAL_BRANCH: ${{ format('local/{0}/{1}', inputs.remote_user, inputs.remote_branch) }}
+          MERGE_BRANCH: ${{ format('merge/{0}', inputs.remote_branch) }}
+        run: |
+            git config --local user.email "machine@gildedgames.com"
+            git config --local user.name "Aether-Team-Bot"
+            
+            git checkout -b ${MERGE_BRANCH} ${{ github.action_ref }}
+            
+            git remote add ${REMOTE_USER} ${REMOTE_URL}
+            git fetch ${REMOTE_USER}
+            git checkout -b ${LOCAL_BRANCH} ${REMOTE_BRANCH}
+            
+            git checkout ${MERGE_BRANCH} 
+            git merge ${LOCAL_BRANCH} 
+            git commit --allow-empty -m "chore: Trigger build"
+            git push --set-upstream origin ${MERGE_BRANCH}
+            
+            git checkout ${LOCAL_BRANCH} 
+            git merge ${MERGE_BRANCH} 
+            git push ${REMOTE_USER} HEAD:${BRANCH} 
+            
+            sleep 60
+            git branch -d ${MERGE_BRANCH} 
+            git push origin --delete ${MERGE_BRANCH}
