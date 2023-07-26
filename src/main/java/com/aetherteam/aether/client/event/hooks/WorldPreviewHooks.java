@@ -3,7 +3,7 @@ package com.aetherteam.aether.client.event.hooks;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.client.WorldDisplayHelper;
 import com.aetherteam.aether.mixin.mixins.client.accessor.EntityRendererAccessor;
-import com.aetherteam.nitrogen.client.NitrogenClient;
+import com.aetherteam.cumulus.client.CumulusClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.Screen;
@@ -37,8 +37,8 @@ public class WorldPreviewHooks {
 
     public static void setupMenu(Minecraft minecraft) {
         WorldDisplayHelper.setupLevelForDisplay();
-        NitrogenClient.MENU_HELPER.setShouldFade(false);
-        Screen screen = NitrogenClient.MENU_HELPER.applyMenu(NitrogenClient.MENU_HELPER.getActiveMenu());
+        CumulusClient.MENU_HELPER.setShouldFade(false);
+        Screen screen = CumulusClient.MENU_HELPER.applyMenu(CumulusClient.MENU_HELPER.getActiveMenu());
         if (screen != null) {
             minecraft.forceSetScreen(screen);
         }

@@ -3,7 +3,7 @@ package com.aetherteam.aether.client;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.mixin.mixins.common.accessor.LevelStorageAccessAccessor;
 import com.aetherteam.aether.mixin.mixins.common.accessor.MinecraftServerAccessor;
-import com.aetherteam.nitrogen.client.NitrogenClient;
+import com.aetherteam.cumulus.client.CumulusClient;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
@@ -32,8 +32,8 @@ public class WorldDisplayHelper {
             enableWorldPreview();
         } else {
             if (disableWorldPreview(new GenericDirtMessageScreen(Component.literal("")))) {
-                NitrogenClient.MENU_HELPER.setShouldFade(false);
-                Screen screen = NitrogenClient.MENU_HELPER.applyMenu(NitrogenClient.MENU_HELPER.getActiveMenu());
+                CumulusClient.MENU_HELPER.setShouldFade(false);
+                Screen screen = CumulusClient.MENU_HELPER.applyMenu(CumulusClient.MENU_HELPER.getActiveMenu());
                 if (screen != null) {
                     Minecraft.getInstance().forceSetScreen(screen);
                 }

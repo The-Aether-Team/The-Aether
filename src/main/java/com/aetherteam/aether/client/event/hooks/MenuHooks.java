@@ -6,9 +6,9 @@ import com.aetherteam.aether.client.AetherMenuUtil;
 import com.aetherteam.aether.client.AetherMusicManager;
 import com.aetherteam.aether.client.WorldDisplayHelper;
 import com.aetherteam.aether.client.gui.component.DynamicMenuButton;
-import com.aetherteam.nitrogen.NitrogenConfig;
-import com.aetherteam.nitrogen.api.menu.MenuHelper;
-import com.aetherteam.nitrogen.client.NitrogenClient;
+import com.aetherteam.cumulus.CumulusConfig;
+import com.aetherteam.cumulus.api.MenuHelper;
+import com.aetherteam.cumulus.client.CumulusClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
@@ -31,7 +31,7 @@ public class MenuHooks {
      */
     public static void setCustomSplashText(TitleScreen screen) {
         Predicate<Calendar> condition = (calendar) -> calendar.get(Calendar.MONTH) + 1 == 7 && calendar.get(Calendar.DATE) == 22;
-        NitrogenClient.MENU_HELPER.setCustomSplash(screen, condition, "Happy anniversary to the Aether!");
+        CumulusClient.MENU_HELPER.setCustomSplash(screen, condition, "Happy anniversary to the Aether!");
     }
 
     public static Button setupToggleWorldButton(Screen screen) {
@@ -55,11 +55,11 @@ public class MenuHooks {
                     (pressed) -> {
                         String menu = toggleBetweenMenus();
                         if (menu != null) {
-                            NitrogenConfig.CLIENT.active_menu.set(menu);
-                            NitrogenConfig.CLIENT.active_menu.save();
+                            CumulusConfig.CLIENT.active_menu.set(menu);
+                            CumulusConfig.CLIENT.active_menu.save();
                         }
-                        NitrogenClient.MENU_HELPER.setShouldFade(true);
-                        Minecraft.getInstance().setScreen(NitrogenClient.MENU_HELPER.applyMenu(NitrogenClient.MENU_HELPER.getActiveMenu()));
+                        CumulusClient.MENU_HELPER.setShouldFade(true);
+                        Minecraft.getInstance().setScreen(CumulusClient.MENU_HELPER.applyMenu(CumulusClient.MENU_HELPER.getActiveMenu()));
                         Minecraft.getInstance().getMusicManager().stopPlaying();
                         AetherMusicManager.stopPlaying();
                     });
@@ -98,6 +98,6 @@ public class MenuHooks {
     }
 
     private static int getButtonOffset() {
-        return NitrogenConfig.CLIENT.enable_menu_api.get() && NitrogenConfig.CLIENT.enable_menu_list_button.get() ? 62 : 0;
+        return CumulusConfig.CLIENT.enable_menu_api.get() && CumulusConfig.CLIENT.enable_menu_list_button.get() ? 62 : 0;
     }
 }

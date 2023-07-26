@@ -1239,6 +1239,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addClientConfig("audio", "disable_vanilla_world_preview_menu_music", "Disables the menu music on the vanilla world preview menu, only works if 'Disables Aether music manager' is false");
         this.addClientConfig("audio", "disable_aether_world_preview_menu_music", "Disables the menu music on the Aether world preview menu, only works if 'Disables Aether music manager' is false");
 
+        this.addClientConfig("miscellaneous", "should_disable_cumulus_button", "Disables the Cumulus menu selection screen button on launch");
+
 
         this.addPackTitle("125", "Aether 1.2.5 Textures");
         this.addPackTitle("b173", "Aether b1.7.3 Textures");

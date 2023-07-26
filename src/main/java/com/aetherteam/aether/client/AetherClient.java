@@ -1,6 +1,7 @@
 package com.aetherteam.aether.client;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.client.gui.screen.SunAltarScreen;
 import com.aetherteam.aether.client.gui.screen.inventory.*;
 import com.aetherteam.aether.client.renderer.AetherRenderers;
@@ -9,6 +10,7 @@ import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
 import com.aetherteam.aether.inventory.menu.LoreBookMenu;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.perk.CustomizationsOptions;
+import com.aetherteam.cumulus.CumulusConfig;
 import com.google.common.reflect.Reflection;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -25,6 +27,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public class AetherClient {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
+        disableCumulusButton();
         Reflection.initialize(CustomizationsOptions.class);
         AetherRenderers.registerCuriosRenderers();
         event.enqueueWork(() -> {
@@ -34,6 +37,15 @@ public class AetherClient {
             registerItemModelProperties();
         });
         registerLoreOverrides();
+    }
+
+    public static void disableCumulusButton() {
+        if (AetherConfig.CLIENT.should_disable_cumulus_button.get()) {
+            CumulusConfig.CLIENT.enable_menu_list_button.set(false);
+            CumulusConfig.CLIENT.enable_menu_list_button.save();
+            AetherConfig.CLIENT.should_disable_cumulus_button.set(false);
+            AetherConfig.CLIENT.should_disable_cumulus_button.save();
+        }
     }
 
     public static void registerGuiFactories() {

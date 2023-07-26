@@ -3,7 +3,7 @@ package com.aetherteam.aether.client;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.client.gui.screen.menu.AetherTitleScreen;
-import com.aetherteam.nitrogen.client.NitrogenClient;
+import com.aetherteam.cumulus.client.CumulusClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.WinScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -92,7 +92,7 @@ public class AetherMusicManager {
 
     public static Music getSituationalMusic() {
         if (!(minecraft.screen instanceof WinScreen)) {
-            Music activeMusic = NitrogenClient.MENU_HELPER.getActiveMusic();
+            Music activeMusic = CumulusClient.MENU_HELPER.getActiveMusic();
             if (isAetherWorldPreviewEnabled()) {
                 return AetherTitleScreen.MENU;
             } else if (isVanillaWorldPreviewEnabled()) {

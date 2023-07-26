@@ -2,7 +2,7 @@ package com.aetherteam.aether.client.event.listeners;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.event.hooks.MenuHooks;
-import com.aetherteam.nitrogen.client.NitrogenClient;
+import com.aetherteam.cumulus.client.CumulusClient;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 public class MenuListener {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onGuiOpenHighest(ScreenEvent.Opening event) {
-        MenuHooks.prepareCustomMenus(NitrogenClient.MENU_HELPER);
+        MenuHooks.prepareCustomMenus(CumulusClient.MENU_HELPER);
     }
 
     @SubscribeEvent

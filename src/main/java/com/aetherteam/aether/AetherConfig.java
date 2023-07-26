@@ -202,6 +202,8 @@ public class AetherConfig {
         public final ConfigValue<Boolean> disable_vanilla_world_preview_menu_music;
         public final ConfigValue<Boolean> disable_aether_world_preview_menu_music;
 
+        public final ConfigValue<Boolean> should_disable_cumulus_button;
+
         public Client(ForgeConfigSpec.Builder builder) {
             builder.push("Rendering");
             legacy_models = builder
@@ -250,7 +252,7 @@ public class AetherConfig {
             default_minecraft_menu = builder
                     .comment("Determines the default Minecraft menu style to switch to with the menu theme button")
                     .translation("config.aether.client.gui.default_minecraft_menu")
-                    .define("Default Minecraft menu style", "nitrogen_internals:minecraft");
+                    .define("Default Minecraft menu style", "cumulus_menus:minecraft");
             enable_trivia = builder
                     .comment("Adds random trivia and tips to the bottom of loading screens")
                     .translation("config.aether.client.gui.enable_trivia")
@@ -322,6 +324,13 @@ public class AetherConfig {
                     .comment("Disables the menu music on the Aether world preview menu, only works if 'Disables Aether music manager' is false")
                     .translation("config.aether.client.audio.disable_aether_world_preview_menu_music")
                     .define("Disables Aether world preview menu music", false);
+            builder.pop();
+
+            builder.push("Miscellaneous");
+            should_disable_cumulus_button = builder
+                    .comment("Disables the Cumulus menu selection screen button on launch")
+                    .translation("config.aether.server.miscellaneous.should_disable_cumulus_button")
+                    .define("Disable Cumulus button", true);
             builder.pop();
         }
     }

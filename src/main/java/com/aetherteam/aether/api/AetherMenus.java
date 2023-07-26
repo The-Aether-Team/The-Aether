@@ -4,10 +4,10 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.client.gui.screen.menu.AetherTitleScreen;
 import com.aetherteam.aether.client.gui.screen.menu.VanillaLeftTitleScreen;
-import com.aetherteam.nitrogen.Nitrogen;
-import com.aetherteam.nitrogen.NitrogenConfig;
-import com.aetherteam.nitrogen.api.menu.Menu;
-import com.aetherteam.nitrogen.api.menu.Menus;
+import com.aetherteam.cumulus.Cumulus;
+import com.aetherteam.cumulus.CumulusConfig;
+import com.aetherteam.cumulus.api.Menu;
+import com.aetherteam.cumulus.api.Menus;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.DeferredRegister;
@@ -19,7 +19,7 @@ import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 public class AetherMenus {
-    public static final DeferredRegister<Menu> MENUS = DeferredRegister.create(Nitrogen.MENU_REGISTRY_KEY, Aether.MODID);
+    public static final DeferredRegister<Menu> MENUS = DeferredRegister.create(Cumulus.MENU_REGISTRY_KEY, Aether.MODID);
     public static final Supplier<IForgeRegistry<Menu>> MENU_REGISTRY = MENUS.makeRegistry(RegistryBuilder::new);
 
     // Icons
@@ -44,9 +44,9 @@ public class AetherMenus {
             .tabButton(THE_AETHER_TAB_BUTTON);
 
     // Behavior
-    private static final BooleanSupplier MINECRAFT_LEFT_CONDITION = () -> NitrogenConfig.CLIENT.active_menu.get().equals("aether:minecraft_left") || (NitrogenConfig.CLIENT.active_menu.get().equals("nitrogen_internals:minecraft") && AetherConfig.CLIENT.menu_type_toggles_alignment.get() && AetherConfig.CLIENT.enable_world_preview.get());
-    private static final BooleanSupplier THE_AETHER_CONDITION = () -> NitrogenConfig.CLIENT.active_menu.get().equals("aether:the_aether");
-    private static final BooleanSupplier THE_AETHER_LEFT_CONDITION = () -> NitrogenConfig.CLIENT.active_menu.get().equals("aether:the_aether_left") || (NitrogenConfig.CLIENT.active_menu.get().equals("aether:the_aether") && AetherConfig.CLIENT.menu_type_toggles_alignment.get() && AetherConfig.CLIENT.enable_world_preview.get());
+    private static final BooleanSupplier MINECRAFT_LEFT_CONDITION = () -> CumulusConfig.CLIENT.active_menu.get().equals("aether:minecraft_left") || (CumulusConfig.CLIENT.active_menu.get().equals("cumulus_menus:minecraft") && AetherConfig.CLIENT.menu_type_toggles_alignment.get() && AetherConfig.CLIENT.enable_world_preview.get());
+    private static final BooleanSupplier THE_AETHER_CONDITION = () -> CumulusConfig.CLIENT.active_menu.get().equals("aether:the_aether");
+    private static final BooleanSupplier THE_AETHER_LEFT_CONDITION = () -> CumulusConfig.CLIENT.active_menu.get().equals("aether:the_aether_left") || (CumulusConfig.CLIENT.active_menu.get().equals("aether:the_aether") && AetherConfig.CLIENT.menu_type_toggles_alignment.get() && AetherConfig.CLIENT.enable_world_preview.get());
 
     // Menus
     public static final RegistryObject<Menu> MINECRAFT_LEFT = MENUS.register("minecraft_left", () -> new Menu(Menus.MINECRAFT_ICON, MINECRAFT_LEFT_NAME, new VanillaLeftTitleScreen(), MINECRAFT_LEFT_CONDITION));

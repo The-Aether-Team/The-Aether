@@ -34,4 +34,8 @@ public abstract class AetherLanguageProvider extends NitrogenLanguageProvider {
     public void addProTip(String key, String name) {
         this.add("aether.pro_tips.line." + this.id + "." + key, name);
     }
+
+    public void addMenuTitle(String key, String name) {
+        this.add(this.id + ".menu_title." + key, name);
+    }
 }

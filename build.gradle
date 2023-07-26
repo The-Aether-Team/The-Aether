@@ -91,7 +91,7 @@ minecraft {
         }
 
         data {
-            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing', file('src/generated/resources/'), '--existing-mod', 'nitrogen_internals'
+            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing', file('src/generated/resources/'), '--existing-mod', 'nitrogen_internals', '--existing-mod', 'cumulus_menus'
 
             environment 'target', 'fmluserdevdata'
         }
@@ -108,6 +108,7 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     implementation fg.deobf("com.aetherteam.nitrogen:nitrogen_internals:${project.nitrogen_version}")
+    implementation fg.deobf("com.aetherteam.cumulus:cumulus_menus:${project.cumulus_version}")
 
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}")
 
@@ -121,6 +122,11 @@ dependencies {
     jarJar fg.deobf("com.aetherteam.nitrogen:nitrogen_internals:${project.nitrogen_version}") {
         jarJar.ranged(it, "[${project.nitrogen_version},)")
         jarJar.pin(it, "${project.nitrogen_version}")
+    }
+
+    jarJar fg.deobf("com.aetherteam.cumulus:cumulus_menus:${project.cumulus_version}") {
+        jarJar.ranged(it, "[${project.cumulus_version},)")
+        jarJar.pin(it, "${project.cumulus_version}")
     }
 
     jarJar fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}") {
@@ -145,6 +151,7 @@ repositories {
     maven { url = "https://www.cursemaven.com" }
     maven { url = "https://gitlab.com/api/v4/projects/21830712/packages/maven" }
     maven githubPackage.invoke("The-Aether-Team/Nitrogen")
+    maven githubPackage.invoke("The-Aether-Team/Cumulus")
 }
 
 tasks.named('jar', Jar).configure {
@@ -212,6 +219,7 @@ curseforge {
             displayName = "${project.mod_name} - ${version}"
             relations {
                 embeddedLibrary "curios"
+                embeddedLibrary "cumulus"
                 optionalDependency "starlight-forge"
             }
         }
@@ -230,6 +238,7 @@ modrinth {
     loaders = ["forge"]
     dependencies {
         embedded.version "curios", "${project.curios_version}"
+        embedded.version "cumulus", "${project.cumulus_version}"
         optional.project "starlight-forge"
     }
 }
