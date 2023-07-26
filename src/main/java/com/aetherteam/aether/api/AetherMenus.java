@@ -44,7 +44,7 @@ public class AetherMenus {
             .tabButton(THE_AETHER_TAB_BUTTON);
 
     // Behavior
-    private static final BooleanSupplier MINECRAFT_LEFT_CONDITION = () -> NitrogenConfig.CLIENT.active_menu.get().equals("aether:minecraft_left") || (NitrogenConfig.CLIENT.active_menu.get().equals("aether_nitrogen:minecraft") && AetherConfig.CLIENT.menu_type_toggles_alignment.get() && AetherConfig.CLIENT.enable_world_preview.get());
+    private static final BooleanSupplier MINECRAFT_LEFT_CONDITION = () -> NitrogenConfig.CLIENT.active_menu.get().equals("aether:minecraft_left") || (NitrogenConfig.CLIENT.active_menu.get().equals("nitrogen_internals:minecraft") && AetherConfig.CLIENT.menu_type_toggles_alignment.get() && AetherConfig.CLIENT.enable_world_preview.get());
     private static final BooleanSupplier THE_AETHER_CONDITION = () -> NitrogenConfig.CLIENT.active_menu.get().equals("aether:the_aether");
     private static final BooleanSupplier THE_AETHER_LEFT_CONDITION = () -> NitrogenConfig.CLIENT.active_menu.get().equals("aether:the_aether_left") || (NitrogenConfig.CLIENT.active_menu.get().equals("aether:the_aether") && AetherConfig.CLIENT.menu_type_toggles_alignment.get() && AetherConfig.CLIENT.enable_world_preview.get());
 
