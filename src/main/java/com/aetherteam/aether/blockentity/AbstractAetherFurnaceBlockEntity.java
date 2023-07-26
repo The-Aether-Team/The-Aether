@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 /**
- * [VANILLA COPY] - {@link AbstractFurnaceBlockEntity}.<br><br>
+ * [CODE COPY] - {@link AbstractFurnaceBlockEntity}.<br><br>
  * Certain static methods are copied with minor noted changes, and use accessors for {@link AbstractFurnaceBlockEntity}.
  */
 public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBlockEntity {

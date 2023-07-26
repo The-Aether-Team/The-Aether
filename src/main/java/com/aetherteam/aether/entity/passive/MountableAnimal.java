@@ -25,6 +25,10 @@ import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 
+/**
+ * [CODE COPY] - {@link net.minecraft.world.entity.animal.Pig}.<br><br>
+ * Method copies with changes to make methods more abstracted through {@link MountableMob}.
+ */
 public abstract class MountableAnimal extends AetherAnimal implements MountableMob, Saddleable, NotGrounded {
 	private static final EntityDataAccessor<Boolean> DATA_SADDLE_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> DATA_PLAYER_JUMPED_ID = SynchedEntityData.defineId(MountableAnimal.class, EntityDataSerializers.BOOLEAN);
@@ -39,13 +43,17 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
-		this.entityData.define(DATA_SADDLE_ID, false);
-		this.entityData.define(DATA_PLAYER_JUMPED_ID, false);
-		this.entityData.define(DATA_MOUNT_JUMPING_ID, false);
-		this.entityData.define(DATA_PLAYER_CROUCHED_ID, false);
-		this.entityData.define(DATA_ENTITY_ON_GROUND_ID, true);
+		this.getEntityData().define(DATA_SADDLE_ID, false);
+		this.getEntityData().define(DATA_PLAYER_JUMPED_ID, false);
+		this.getEntityData().define(DATA_MOUNT_JUMPING_ID, false);
+		this.getEntityData().define(DATA_PLAYER_CROUCHED_ID, false);
+		this.getEntityData().define(DATA_ENTITY_ON_GROUND_ID, true);
 	}
 
+	/**
+	 * Handles various tick methods and also sets when this entity is on the ground or not with more control than vanilla methods.
+	 * @see MountableMob#tick(Mob)
+	 */
 	@Override
 	public void tick() {
 		this.tick(this);
@@ -59,10 +67,16 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
 		}
 	}
 
+	/**
+	 * @see MountableMob#riderTick(Mob)
+	 */
 	public void riderTick() {
 		this.riderTick(this);
 	}
 
+	/**
+	 * @see MountableMob#travel(Mob, Vec3)
+	 */
 	@Override
 	public void travel(Vec3 vector3d) {
 		this.travel(this, vector3d);
@@ -83,17 +97,17 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
 	public InteractionResult mobInteract(Player playerEntity, InteractionHand hand) {
 		boolean flag = this.isFood(playerEntity.getItemInHand(hand));
 		if (!flag && this.isSaddled() && !this.isVehicle() && !playerEntity.isSecondaryUseActive()) {
-			if (!this.level.isClientSide) {
+			if (!this.getLevel().isClientSide()) {
 				playerEntity.startRiding(this);
 			}
-			return InteractionResult.sidedSuccess(this.level.isClientSide);
+			return InteractionResult.sidedSuccess(this.getLevel().isClientSide());
 		} else {
-			InteractionResult actionresulttype = super.mobInteract(playerEntity, hand);
-			if (!actionresulttype.consumesAction()) {
+			InteractionResult interactionResult = super.mobInteract(playerEntity, hand);
+			if (!interactionResult.consumesAction()) {
 				ItemStack itemstack = playerEntity.getItemInHand(hand);
 				return itemstack.is(Items.SADDLE) ? itemstack.interactLivingEntity(playerEntity, this, hand) : InteractionResult.PASS;
 			} else {
-				return actionresulttype;
+				return interactionResult;
 			}
 		}
 	}
@@ -102,17 +116,17 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
 	public Vec3 getDismountLocationForPassenger(LivingEntity livingEntity) {
 		Direction direction = this.getMotionDirection();
 		if (direction.getAxis() != Direction.Axis.Y) {
-			int[][] aint = DismountHelper.offsetsForDirection(direction);
+			int[][] offsets = DismountHelper.offsetsForDirection(direction);
 			BlockPos blockPos = this.blockPosition();
 			BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
 			for (Pose pose : livingEntity.getDismountPoses()) {
-				AABB axisalignedbb = livingEntity.getLocalBoundsForPose(pose);
-				for (int[] aint1 : aint) {
-					mutableBlockPos.set(blockPos.getX() + aint1[0], blockPos.getY(), blockPos.getZ() + aint1[1]);
-					double d0 = this.level.getBlockFloorHeight(mutableBlockPos);
+				AABB bounds = livingEntity.getLocalBoundsForPose(pose);
+				for (int[] offset : offsets) {
+					mutableBlockPos.set(blockPos.getX() + offset[0], blockPos.getY(), blockPos.getZ() + offset[1]);
+					double d0 = this.getLevel().getBlockFloorHeight(mutableBlockPos);
 					if (DismountHelper.isBlockFloorValid(d0)) {
 						Vec3 vector3d = Vec3.upFromBottomCenterOf(mutableBlockPos, d0);
-						if (DismountHelper.canDismountTo(this.level, livingEntity, axisalignedbb.move(vector3d))) {
+						if (DismountHelper.canDismountTo(this.getLevel(), livingEntity, bounds.move(vector3d))) {
 							livingEntity.setPose(pose);
 							return vector3d;
 						}
@@ -149,7 +163,7 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
 	public void equipSaddle(@Nullable SoundSource soundCategory) {
 		this.setSaddled(true);
 		if (soundCategory != null && this.getSaddledSound() != null) {
-			this.level.playSound(null, this, this.getSaddledSound(), soundCategory, 0.5F, 1.0F);
+			this.getLevel().playSound(null, this, this.getSaddledSound(), soundCategory, 0.5F, 1.0F);
 		}
 	}
 
@@ -158,67 +172,114 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
 		return this.isAlive() && !this.isBaby();
 	}
 
+	/**
+	 * @return Whether this entity is saddled, as a {@link Boolean}.
+	 */
 	@Override
 	public boolean isSaddled() {
-		return this.entityData.get(DATA_SADDLE_ID);
+		return this.getEntityData().get(DATA_SADDLE_ID);
 	}
 
+	/**
+	 * Sets whether this entity is saddled.
+	 * @param isSaddled The {@link Boolean} value.
+	 */
 	public void setSaddled(boolean isSaddled) {
-		this.entityData.set(DATA_SADDLE_ID, isSaddled);
+		this.getEntityData().set(DATA_SADDLE_ID, isSaddled);
 	}
 
+	/**
+	 * @return Whether the player attempted to jump, as a {@link Boolean}.
+	 */
 	public boolean getPlayerJumped() {
-		return this.entityData.get(DATA_PLAYER_JUMPED_ID);
+		return this.getEntityData().get(DATA_PLAYER_JUMPED_ID);
 	}
 
+	/**
+	 * ets whether the player attempted to jump.
+	 * @param playerJumped The {@link Boolean} value.
+	 */
 	public void setPlayerJumped(boolean playerJumped) {
-		this.entityData.set(DATA_PLAYER_JUMPED_ID, playerJumped);
+		this.getEntityData().set(DATA_PLAYER_JUMPED_ID, playerJumped);
 	}
 
+	/**
+	 * @return Whether this mount is jumping, as a {@link Boolean}.
+	 */
 	public boolean isMountJumping() {
-		return this.entityData.get(DATA_MOUNT_JUMPING_ID);
+		return this.getEntityData().get(DATA_MOUNT_JUMPING_ID);
 	}
 
+	/**
+	 * Sets whether the mount is jumping.
+	 * @param isMountJumping The {@link Boolean} value.
+	 */
 	public void setMountJumping(boolean isMountJumping) {
-		this.entityData.set(DATA_MOUNT_JUMPING_ID, isMountJumping);
+		this.getEntityData().set(DATA_MOUNT_JUMPING_ID, isMountJumping);
 	}
 
+	/**
+	 * @return Whether the passenger player tried to crouch.
+	 */
+	public boolean playerTriedToCrouch() {
+		return this.getEntityData().get(DATA_PLAYER_CROUCHED_ID);
+	}
+
+	/**
+	 * Sets whether the passenger player tried to crouch.
+	 * @param playerTriedToCrouch The {@link Boolean} value.
+	 */
+	public void setPlayerTriedToCrouch(boolean playerTriedToCrouch) {
+		this.getEntityData().set(DATA_PLAYER_CROUCHED_ID, playerTriedToCrouch);
+	}
+
+	/**
+	 * @return Whether this entity has been set as on the ground, as a {@link Boolean} value.
+	 */
+	@Override
+	public boolean isEntityOnGround() {
+		return this.getEntityData().get(DATA_ENTITY_ON_GROUND_ID);
+	}
+
+	/**
+	 * Sets whether this entity is on the ground.
+	 * @param onGround The {@link Boolean} value.
+	 */
+	@Override
+	public void setEntityOnGround(boolean onGround) {
+		this.getEntityData().set(DATA_ENTITY_ON_GROUND_ID, onGround);
+	}
+
+	/**
+	 * @return A {@link Boolean} for whether this entity can perform a boosted jump, depending on whether it is saddled according to {@link MountableAnimal#isSaddled()} and is also on the ground.
+	 */
 	@Override
 	public boolean canJump() {
 		return this.isSaddled() && this.isOnGround();
 	}
 
+	/**
+	 * @see MountableMob#getMountJumpStrength()
+	 */
 	@Override
 	public double getMountJumpStrength() {
 		return 1.8;
 	}
 
+	/**
+	 * @see MountableMob#getSteeringSpeed()
+	 */
 	@Override
 	public float getSteeringSpeed() {
 		return (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED) * 0.625F;
 	}
 
+	/**
+	 * @return A {@link Float} for the midair speed of this entity.
+	 */
 	@Override
 	public float getFlyingSpeed() {
 		return this.getControllingPassenger() != null ? this.getSteeringSpeed() * 0.25F : 0.02F;
-	}
-
-	public boolean playerTriedToCrouch() {
-		return this.entityData.get(DATA_PLAYER_CROUCHED_ID);
-	}
-
-	public void setPlayerTriedToCrouch(boolean playerTriedToCrouch) {
-		this.entityData.set(DATA_PLAYER_CROUCHED_ID, playerTriedToCrouch);
-	}
-
-	@Override
-	public boolean isEntityOnGround() {
-		return this.entityData.get(DATA_ENTITY_ON_GROUND_ID);
-	}
-
-	@Override
-	public void setEntityOnGround(boolean onGround) {
-		this.entityData.set(DATA_ENTITY_ON_GROUND_ID, onGround);
 	}
 
 	@Override

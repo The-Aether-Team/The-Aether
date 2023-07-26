@@ -210,7 +210,7 @@ public class GuiHooks {
     }
 
     /**
-     * Vanilla copy
+     * CODE COPY
      * @see net.minecraft.client.gui.components.BossHealthOverlay#render(PoseStack)
      * This is used to draw the Aether's custom boss health bars.
      */

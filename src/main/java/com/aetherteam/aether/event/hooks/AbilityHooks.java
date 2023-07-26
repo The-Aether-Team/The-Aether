@@ -368,7 +368,7 @@ public class AbilityHooks {
                     AttributeModifier valkyrieModifier = attackRange.getModifier(ValkyrieTool.ATTACK_RANGE_MODIFIER_UUID);
                     if (valkyrieModifier != null) {
                         double range = player.getAttributeValue(ForgeMod.ENTITY_REACH.get()) - valkyrieModifier.getAmount();
-                        double trueReach = range == 0 ? 0 : range + (player.isCreative() ? 3 : 0); // [VANILLA COPY] - IForgePlayer#getAttackRange().
+                        double trueReach = range == 0 ? 0 : range + (player.isCreative() ? 3 : 0); // [CODE COPY] - IForgePlayer#getAttackRange().
                         return !player.isCloseEnough(target, trueReach);
                     }
                 }
@@ -389,7 +389,7 @@ public class AbilityHooks {
                     AttributeModifier valkyrieModifier = reachDistance.getModifier(ValkyrieTool.REACH_DISTANCE_MODIFIER_UUID);
                     if (valkyrieModifier != null) {
                         double reach = player.getAttributeValue(ForgeMod.BLOCK_REACH.get()) - valkyrieModifier.getAmount();
-                        double trueReach = reach == 0 ? 0 : reach + (player.isCreative() ? 0.5 : 0); // [VANILLA COPY] - IForgePlayer#getReachDistance().
+                        double trueReach = reach == 0 ? 0 : reach + (player.isCreative() ? 0.5 : 0); // [CODE COPY] - IForgePlayer#getReachDistance().
                         return player.pick(trueReach, 0.0F, false).getType() != HitResult.Type.BLOCK;
                     }
                 }

@@ -264,7 +264,7 @@ public class Swet extends Slime implements MountableMob {
     }
 
     /**
-     * [VANILLA COPY] - {@link Entity#remove(RemovalReason)}.
+     * [CODE COPY] - {@link Entity#remove(RemovalReason)}.
      */
     @Override
     public void remove(Entity.RemovalReason pReason) {

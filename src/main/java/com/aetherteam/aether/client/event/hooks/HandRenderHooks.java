@@ -71,7 +71,7 @@ public class HandRenderHooks {
     }
 
     /**
-     * [VANILLA COPY] - {@link ItemInHandRenderer#renderArmWithItem(AbstractClientPlayer, float, float, InteractionHand, float, ItemStack, float, PoseStack, MultiBufferSource, int)}.<br><br>
+     * [CODE COPY] - {@link ItemInHandRenderer#renderArmWithItem(AbstractClientPlayer, float, float, InteractionHand, float, ItemStack, float, PoseStack, MultiBufferSource, int)}.<br><br>
      * Remove any checks for items that don't display the player's hands.
      */
     private static void renderArmWithItem(ItemInHandRenderer itemInHandRenderer, ICurioRenderer renderer, ItemStack glovesStack, AbstractClientPlayer player, ItemStack heldItem, InteractionHand hand, float pitch, float swingProgress, float equippedProgress, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, HandRenderType handRenderType) {
@@ -95,7 +95,7 @@ public class HandRenderHooks {
     }
 
     /**
-     * [VANILLA COPY] - {@link ItemInHandRenderer#renderPlayerArm(PoseStack, MultiBufferSource, int, float, float, HumanoidArm)}.<br><br>
+     * [CODE COPY] - {@link ItemInHandRenderer#renderPlayerArm(PoseStack, MultiBufferSource, int, float, float, HumanoidArm)}.<br><br>
      * Checks if the model is slim and also checks for what {@link HandRenderType} to display.
      */
     private static void renderPlayerArm(ICurioRenderer renderer, ItemStack glovesStack, AbstractClientPlayer player, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, float swingProgress, float equippedProgress, HumanoidArm arm, HandRenderType handRenderType) {
@@ -128,7 +128,7 @@ public class HandRenderHooks {
     }
 
     /**
-     * [VANILLA COPY] - {@link ItemInHandRenderer#renderTwoHandedMap(PoseStack, MultiBufferSource, int, float, float, float)}.<br><br>
+     * [CODE COPY] - {@link ItemInHandRenderer#renderTwoHandedMap(PoseStack, MultiBufferSource, int, float, float, float)}.<br><br>
      * Revmoe check for invisibility, as it is not necessary from {@link net.minecraftforge.client.event.RenderHandEvent} in {@link com.aetherteam.aether.client.event.listeners.HandRenderListener#onRenderHand(RenderHandEvent)}.
      */
     private static void renderTwoHandedMap(ItemInHandRenderer itemInHandRenderer, ICurioRenderer renderer, ItemStack glovesStack, AbstractClientPlayer player, ItemStack heldItem, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, float swingProgress, float equippedProgress, float pitch, HandRenderType handRenderType) {
@@ -153,7 +153,7 @@ public class HandRenderHooks {
     }
 
     /**
-     * [VANILLA COPY] - {@link ItemInHandRenderer#renderOneHandedMap(PoseStack, MultiBufferSource, int, float, HumanoidArm, float, ItemStack)}.<br><br>
+     * [CODE COPY] - {@link ItemInHandRenderer#renderOneHandedMap(PoseStack, MultiBufferSource, int, float, HumanoidArm, float, ItemStack)}.<br><br>
      * Revmoe check for invisibility, as it is not necessary from {@link net.minecraftforge.client.event.RenderHandEvent} in {@link com.aetherteam.aether.client.event.listeners.HandRenderListener#onRenderHand(RenderHandEvent)}.
      */
     private static void renderOneHandedMap(ItemInHandRenderer itemInHandRenderer, ICurioRenderer renderer, ItemStack glovesStack, AbstractClientPlayer player, ItemStack heldItem, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, float swingProgress, float equippedProgress, HumanoidArm arm, HandRenderType handRenderType) {
@@ -180,7 +180,7 @@ public class HandRenderHooks {
     }
 
     /**
-     * [VANILLA COPY] - {@link ItemInHandRenderer#renderMapHand(PoseStack, MultiBufferSource, int, HumanoidArm)}.<br><br>
+     * [CODE COPY] - {@link ItemInHandRenderer#renderMapHand(PoseStack, MultiBufferSource, int, HumanoidArm)}.<br><br>
      * Checks for what {@link HandRenderType} to display.
      */
     private static void renderMapHand(ICurioRenderer renderer, ItemStack glovesStack, AbstractClientPlayer player, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, HumanoidArm arm, HandRenderType handRenderType) {

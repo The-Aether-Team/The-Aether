@@ -14,6 +14,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -42,7 +43,6 @@ public class Phyg extends WingedAnimal {
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
     }
 
-   
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 10.0)
@@ -89,7 +89,9 @@ public class Phyg extends WingedAnimal {
         return AetherEntityTypes.PHYG.get().create(level);
     }
 
-   
+    /**
+     * [CODE COPY] - {@link Pig#getLeashOffset()}.
+     */
     @OnlyIn(Dist.CLIENT)
     public Vec3 getLeashOffset() {
         return new Vec3(0.0, 0.6F * this.getEyeHeight(), this.getBbWidth() * 0.4F);

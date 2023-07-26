@@ -61,7 +61,7 @@ public class AetherMusicManager {
     }
 
     /**
-     * Vanilla copy
+     * CODE COPY
      * @see MusicManager#startPlaying(Music)
      */
     public static void startPlaying(Music pSelector) {
@@ -74,7 +74,7 @@ public class AetherMusicManager {
     }
 
     /**
-     * Vanilla copy
+     * CODE COPY
      * @see MusicManager#stopPlaying()
      */
     public static void stopPlaying() {

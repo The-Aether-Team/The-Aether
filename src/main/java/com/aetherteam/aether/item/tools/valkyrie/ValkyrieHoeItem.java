@@ -55,7 +55,7 @@ public class ValkyrieHoeItem extends HoeItem implements ValkyrieTool {
     }
 
     /**
-     * [VANILLA COPY] - {@link HoeItem#useOn(UseOnContext)}.<br><br>
+     * [CODE COPY] - {@link HoeItem#useOn(UseOnContext)}.<br><br>
      * Triggers {@link CriteriaTriggers#ITEM_USED_ON_BLOCK} for advancements.
      */
     @Override

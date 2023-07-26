@@ -18,7 +18,7 @@ import net.minecraft.server.players.UserWhiteListEntry;
 import java.util.Collection;
 
 /**
- * [VANILLA COPY] - {@link net.minecraft.server.commands.WhitelistCommand}.<br><br>
+ * [CODE COPY] - {@link net.minecraft.server.commands.WhitelistCommand}.<br><br>
  * Adapted to use {@link SunAltarWhitelist}.
  */
 public class SunAltarWhitelistCommand {

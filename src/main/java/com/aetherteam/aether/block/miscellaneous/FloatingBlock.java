@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 
 /**
- * [VANILLA COPY] - {@link net.minecraft.world.level.block.FallingBlock}.<br><br>
+ * [CODE COPY] - {@link net.minecraft.world.level.block.FallingBlock}.<br><br>
  * Add power checks for Enchanted Gravitite.
  */
 public class FloatingBlock extends Block implements Floatable {

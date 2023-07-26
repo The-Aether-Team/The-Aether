@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 
 public class AerogelStairsBlock extends StairBlock {
     /**
-     * [VANILLA COPY] - {@link Block#OCCLUSION_CACHE}.
+     * [CODE COPY] - {@link Block#OCCLUSION_CACHE}.
      */
     private static final ThreadLocal<Object2ByteLinkedOpenHashMap<BlockStatePairKey>> OCCLUSION_CACHE = ThreadLocal.withInitial(() -> {
         Object2ByteLinkedOpenHashMap<Block.BlockStatePairKey> occlusionCache = new Object2ByteLinkedOpenHashMap<>() {
@@ -64,7 +64,7 @@ public class AerogelStairsBlock extends StairBlock {
     }
 
     /**
-     * [VANILLA COPY] - {@link Block#hidesNeighborFace(BlockGetter, BlockPos, BlockState, BlockState, Direction)}.
+     * [CODE COPY] - {@link Block#hidesNeighborFace(BlockGetter, BlockPos, BlockState, BlockState, Direction)}.
      */
     @Override
     public boolean hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState, Direction direction) {

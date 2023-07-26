@@ -53,7 +53,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * [VANILLA COPY] - {@link AbstractFurnaceBlockEntity}.<br><br>
+ * [CODE COPY] - {@link AbstractFurnaceBlockEntity}.<br><br>
  * Has heavy modifications for Incubator-specific behavior.
  */
 public class IncubatorBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, RecipeHolder, StackedContentsCompatible {

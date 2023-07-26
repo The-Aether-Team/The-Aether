@@ -40,7 +40,7 @@ public class HammerProjectile extends ThrowableProjectile {
 
     @Override
     protected void defineSynchedData() {
-        this.entityData.define(DATA_JEB_ID, false);
+        this.getEntityData().define(DATA_JEB_ID, false);
     }
 
     @Override
@@ -147,14 +147,14 @@ public class HammerProjectile extends ThrowableProjectile {
     }
 
     public void setIsJeb(boolean isJeb) {
-        this.entityData.set(DATA_JEB_ID, isJeb);
+        this.getEntityData().set(DATA_JEB_ID, isJeb);
     }
 
     /**
      * @return Whether the texture for this projectile is of the Hammer of Jeb, as a {@link Boolean}.
      */
     public boolean getIsJeb() {
-        return this.entityData.get(DATA_JEB_ID);
+        return this.getEntityData().get(DATA_JEB_ID);
     }
 
     @Override

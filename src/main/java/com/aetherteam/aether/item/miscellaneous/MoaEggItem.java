@@ -60,7 +60,7 @@ public class MoaEggItem extends Item {
     }
 
     /**
-     * [VANILLA COPY] - {@link net.minecraft.world.item.SpawnEggItem#useOn(UseOnContext)}<br><br>
+     * [CODE COPY] - {@link net.minecraft.world.item.SpawnEggItem#useOn(UseOnContext)}<br><br>
      * Modified for Moa spawning specifically and ensuring all the Moa's NBT tags are set.
      * @param context The {@link UseOnContext} of the usage interaction.
      */
@@ -111,7 +111,7 @@ public class MoaEggItem extends Item {
     }
 
     /**
-     * [VANILLA COPY] - {@link net.minecraft.world.item.SpawnEggItem#use(Level, Player, InteractionHand)}<br><br>
+     * [CODE COPY] - {@link net.minecraft.world.item.SpawnEggItem#use(Level, Player, InteractionHand)}<br><br>
      * Modified for Moa spawning specifically and ensuring all the Moa's NBT tags are set.
      * @param level The {@link Level} of the user.
      * @param player The {@link Player} using this item.

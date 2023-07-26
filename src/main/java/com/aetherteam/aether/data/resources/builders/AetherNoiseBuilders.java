@@ -57,7 +57,7 @@ public class AetherNoiseBuilders {
     }
 
     /**
-     * [VANILLA COPY] - {@link NoiseRouterData#slide(DensityFunction, int, int, int, int, double, int, int, double)}.
+     * [CODE COPY] - {@link NoiseRouterData#slide(DensityFunction, int, int, int, int, double, int, int, double)}.
      */
     private static DensityFunction slide(DensityFunction density, int minY, int maxY, int fromYTop, int toYTop, double offset1, int fromYBottom, int toYBottom, double offset2) {
         DensityFunction topSlide = DensityFunctions.yClampedGradient(minY + maxY - fromYTop, minY + maxY - toYTop, 1, 0);
@@ -67,7 +67,7 @@ public class AetherNoiseBuilders {
     }
 
     /**
-     * [VANILLA COPY] - {@link NoiseRouterData#noNewCaves(HolderGetter, HolderGetter, DensityFunction)}.<br><br>
+     * [CODE COPY] - {@link NoiseRouterData#noNewCaves(HolderGetter, HolderGetter, DensityFunction)}.<br><br>
      * Logic that called {@link NoiseRouterData#postProcess(DensityFunction)} has been moved to {@link AetherNoiseBuilders#buildFinalDensity(HolderGetter)}.
      */
     private static NoiseRouter createNoiseRouter(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noise, DensityFunction finalDensity) {

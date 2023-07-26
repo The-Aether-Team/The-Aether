@@ -15,7 +15,7 @@ import net.minecraftforge.network.NetworkHooks;
 import javax.annotation.Nullable;
 
 /**
- * [VANILLA COPY] - {@link net.minecraft.world.entity.item.PrimedTnt}.
+ * [CODE COPY] - {@link net.minecraft.world.entity.item.PrimedTnt}.
  */
 public class TntPresent extends Entity implements TraceableEntity {
     private static final EntityDataAccessor<Integer> DATA_FUSE_ID = SynchedEntityData.defineId(TntPresent.class, EntityDataSerializers.INT);
@@ -41,7 +41,7 @@ public class TntPresent extends Entity implements TraceableEntity {
 
     @Override
     protected void defineSynchedData() {
-        this.entityData.define(DATA_FUSE_ID, 80);
+        this.getEntityData().define(DATA_FUSE_ID, 80);
     }
 
     @Override
@@ -72,11 +72,11 @@ public class TntPresent extends Entity implements TraceableEntity {
     }
 
     public int getFuse() {
-        return this.entityData.get(DATA_FUSE_ID);
+        return this.getEntityData().get(DATA_FUSE_ID);
     }
 
     public void setFuse(int fuse) {
-        this.entityData.set(DATA_FUSE_ID, fuse);
+        this.getEntityData().set(DATA_FUSE_ID, fuse);
     }
 
     @Nullable

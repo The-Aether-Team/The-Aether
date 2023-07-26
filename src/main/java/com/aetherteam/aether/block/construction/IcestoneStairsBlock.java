@@ -40,7 +40,7 @@ public class IcestoneStairsBlock extends StairBlock implements EntityBlock {
     }
 
     /**
-     * [VANILLA COPY] - {@link net.minecraft.world.level.block.BaseEntityBlock#triggerEvent(BlockState, Level, BlockPos, int, int)}.<br><br>
+     * [CODE COPY] - {@link net.minecraft.world.level.block.BaseEntityBlock#triggerEvent(BlockState, Level, BlockPos, int, int)}.<br><br>
      * Warning for "deprecation" is suppressed because the method is fine to override.
      */
     @SuppressWarnings("deprecation")
@@ -52,7 +52,7 @@ public class IcestoneStairsBlock extends StairBlock implements EntityBlock {
     }
 
     /**
-     * [VANILLA COPY] - {@link net.minecraft.world.level.block.BaseEntityBlock#getMenuProvider(BlockState, Level, BlockPos)}.<br><br>
+     * [CODE COPY] - {@link net.minecraft.world.level.block.BaseEntityBlock#getMenuProvider(BlockState, Level, BlockPos)}.<br><br>
      * Warning for "deprecation" is suppressed because the method is fine to override.
      */
     @SuppressWarnings("deprecation")

@@ -72,7 +72,7 @@ public class IceCrystal extends AbstractCrystal {
     }
 
     /**
-     * [VANILLA COPY] - {@link net.minecraft.world.entity.projectile.AbstractHurtingProjectile#hurt(DamageSource, float)}<br><br>
+     * [CODE COPY] - {@link net.minecraft.world.entity.projectile.AbstractHurtingProjectile#hurt(DamageSource, float)}<br><br>
      * The Ice Crystal needs to move only horizontally when attacked, so yPower isn't copied over.
      */
     public boolean hurt(DamageSource source, float amount) {

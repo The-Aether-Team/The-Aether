@@ -386,7 +386,7 @@ public class Aether {
     }
 
     /**
-     * [VANILLA COPY] - {@link PackSource#create(UnaryOperator, boolean)}.
+     * [CODE COPY] - {@link PackSource#create(UnaryOperator, boolean)}.
      */
     static PackSource create(final UnaryOperator<Component> decorator, final boolean shouldAddAutomatically) {
         return new PackSource() {
@@ -401,7 +401,7 @@ public class Aether {
     }
 
     /**
-     * [VANILLA COPY] - {@link PackSource#decorateWithSource(String)}.
+     * [CODE COPY] - {@link PackSource#decorateWithSource(String)}.
      */
     private static UnaryOperator<Component> decorateWithSource(String translationKey) {
         Component component = Component.translatable(translationKey);
@@ -456,7 +456,7 @@ public class Aether {
     }
 
     /**
-     * [VANILLA COPY] - {@link ComposterBlock#add(float, ItemLike)}.
+     * [CODE COPY] - {@link ComposterBlock#add(float, ItemLike)}.
      * @param chance Chance (as a {@link Float}) to fill a compost layer.
      * @param item The {@link ItemLike} that can be composted.
      */

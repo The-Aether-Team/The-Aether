@@ -45,7 +45,7 @@ public class LorePageButton extends Button
         drawCenteredString(matrixStack, fontrenderer, this.getMessage(), this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2, j | Mth.ceil(this.alpha * 255.0F) << 24);
     }
 
-    // [VANILLA COPY] - AbstractButton.getTextureY()
+    // [CODE COPY] - AbstractButton.getTextureY()
     private int getTextureY() {
         int i = 1;
         if (!this.isActive) {

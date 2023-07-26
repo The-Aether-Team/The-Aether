@@ -101,7 +101,7 @@ public class DoorwayBlock extends Block {
     }
 
     /**
-     * [VANILLA COPY] - {@link ClientLevel#getMarkerParticleTarget()} and {@link ClientLevel#doAnimateTick(int, int, int, int, RandomSource, Block, BlockPos.MutableBlockPos)}.<br><br>
+     * [CODE COPY] - {@link ClientLevel#getMarkerParticleTarget()} and {@link ClientLevel#doAnimateTick(int, int, int, int, RandomSource, Block, BlockPos.MutableBlockPos)}.<br><br>
      * Similar to barrier blocks, this renders the boss doorway block overlay icon at a doorway block's position while it's invisible if the block is held by the player.
      * @param state The {@link BlockState} of the block.
      * @param level The {@link Level} the block is in.

@@ -33,7 +33,7 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * [VANILLA COPY] - {@link top.theillusivec4.curios.common.inventory.container.CuriosContainer}<br><br>
+ * [CODE COPY] - {@link top.theillusivec4.curios.common.inventory.container.CuriosContainer}<br><br>
  * Heavily adapted to only set up Aether curio types.
  */
 public class AccessoriesMenu extends InventoryMenu {

@@ -10,7 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * [VANILLA COPY] - {@link top.theillusivec4.curios.common.network.client.CPacketOpenVanilla}.<br><br>
+ * [CODE COPY] - {@link top.theillusivec4.curios.common.network.client.CPacketOpenVanilla}.<br><br>
  * Adapted to Nitrogen packet system.
  */
 public record OpenInventoryPacket(ItemStack carryStack) implements BasePacket {

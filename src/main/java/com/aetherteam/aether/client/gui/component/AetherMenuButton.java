@@ -49,7 +49,7 @@ public class AetherMenuButton extends Button
 	    drawString(matrixStack, fontrenderer, this.getMessage(), this.getX() + 35 + this.renderOffset, this.getY() + (this.height - 8) / 2, this.getColor(mouseX, mouseY) | Mth.ceil(this.alpha * 255.0F) << 24);
 	}
 
-	// [VANILLA COPY] - AbstractButton.getTextureY()
+	// [CODE COPY] - AbstractButton.getTextureY()
 	private int getTextureY() {
 		int i = 1;
 		if (!this.isActive()) {

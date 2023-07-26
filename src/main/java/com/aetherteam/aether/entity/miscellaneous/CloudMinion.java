@@ -55,9 +55,9 @@ public class CloudMinion extends FlyingMob {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(DATA_OWNER_ID, 0);
-        this.entityData.define(DATA_IS_RIGHT_ID, true);
-        this.entityData.define(DATA_LIFESPAN_ID, 0);
+        this.getEntityData().define(DATA_OWNER_ID, 0);
+        this.getEntityData().define(DATA_IS_RIGHT_ID, true);
+        this.getEntityData().define(DATA_LIFESPAN_ID, 0);
     }
 
     @Override
@@ -192,7 +192,7 @@ public class CloudMinion extends FlyingMob {
      * @return The owner {@link Player} of the Cloud Minion.
      */
     public Player getOwner() {
-        return (Player) this.level.getEntity(this.entityData.get(DATA_OWNER_ID));
+        return (Player) this.getLevel().getEntity(this.getEntityData().get(DATA_OWNER_ID));
     }
 
     /**
@@ -200,14 +200,14 @@ public class CloudMinion extends FlyingMob {
      * @param entity The owner {@link Player}.
      */
     public void setOwner(Player entity) {
-        this.entityData.set(DATA_OWNER_ID, entity.getId());
+        this.getEntityData().set(DATA_OWNER_ID, entity.getId());
     }
 
     /**
      * @return The {@link HumanoidArm} side that the Cloud Minion should hover at.
      */
     public HumanoidArm getSide() {
-        return this.entityData.get(DATA_IS_RIGHT_ID) ? HumanoidArm.RIGHT : HumanoidArm.LEFT;
+        return this.getEntityData().get(DATA_IS_RIGHT_ID) ? HumanoidArm.RIGHT : HumanoidArm.LEFT;
     }
 
     /**
@@ -215,14 +215,14 @@ public class CloudMinion extends FlyingMob {
      * @param armSide The {@link HumanoidArm} side.
      */
     public void setSide(HumanoidArm armSide) {
-        this.entityData.set(DATA_IS_RIGHT_ID, armSide == HumanoidArm.RIGHT);
+        this.getEntityData().set(DATA_IS_RIGHT_ID, armSide == HumanoidArm.RIGHT);
     }
 
     /**
      * @return The lifespan of the Cloud Minion, as an {@link Integer}.
      */
     public int getLifeSpan() {
-        return this.entityData.get(DATA_LIFESPAN_ID);
+        return this.getEntityData().get(DATA_LIFESPAN_ID);
     }
 
     /**
@@ -230,7 +230,7 @@ public class CloudMinion extends FlyingMob {
      * @param lifespan The lifespan, as an {@link Integer}.
      */
     public void setLifeSpan(int lifespan) {
-        this.entityData.set(DATA_LIFESPAN_ID, lifespan);
+        this.getEntityData().set(DATA_LIFESPAN_ID, lifespan);
     }
 
     /**

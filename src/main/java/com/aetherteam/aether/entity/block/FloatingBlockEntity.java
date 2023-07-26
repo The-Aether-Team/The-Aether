@@ -53,7 +53,7 @@ import javax.annotation.Nullable;
 import java.util.function.Predicate;
 
 /**
- * [VANILLA COPY] - {@link net.minecraft.world.entity.item.FallingBlockEntity}.<br><br>
+ * [CODE COPY] - {@link net.minecraft.world.entity.item.FallingBlockEntity}.<br><br>
  * Modified for reversed gravity.
  */
 public class FloatingBlockEntity extends Entity {
@@ -91,7 +91,7 @@ public class FloatingBlockEntity extends Entity {
 
     @Override
     protected void defineSynchedData() {
-        this.entityData.define(DATA_START_POS, BlockPos.ZERO);
+        this.getEntityData().define(DATA_START_POS, BlockPos.ZERO);
     }
 
     @Override
@@ -268,11 +268,11 @@ public class FloatingBlockEntity extends Entity {
     }
 
     public void setStartPos(BlockPos pOrigin) {
-        this.entityData.set(DATA_START_POS, pOrigin);
+        this.getEntityData().set(DATA_START_POS, pOrigin);
     }
 
     public BlockPos getStartPos() {
-        return this.entityData.get(DATA_START_POS);
+        return this.getEntityData().get(DATA_START_POS);
     }
 
     public BlockState getBlockState() {

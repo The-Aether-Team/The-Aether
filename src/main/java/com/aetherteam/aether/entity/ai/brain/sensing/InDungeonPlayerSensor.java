@@ -19,7 +19,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * [VANILLA COPY] - PlayerSensor
+ * [CODE COPY] - PlayerSensor
  * Changed to track players within the dungeon instead of within a 16 block radius.
  */
 public class InDungeonPlayerSensor<T extends Mob & AetherBossMob<T>> extends Sensor<T> {

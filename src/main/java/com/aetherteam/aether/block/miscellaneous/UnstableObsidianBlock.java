@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.PushReaction;
 
 /**
- * [VANILLA COPY] - {@link net.minecraft.world.level.block.FrostedIceBlock}.
+ * [CODE COPY] - {@link net.minecraft.world.level.block.FrostedIceBlock}.
  */
 public class UnstableObsidianBlock extends Block {
     public static final IntegerProperty AGE = BlockStateProperties.AGE_3;

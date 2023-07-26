@@ -279,8 +279,8 @@ public class MoaSkinsScreen extends Screen {
     }
 
     /**
-     * [VANILLA COPY] - {@link net.minecraft.client.gui.screens.inventory.InventoryScreen#renderEntityInInventoryFollowsAngle(PoseStack, int, int, int, float, float, LivingEntity)}.<br>
-     * [VANILLA COPY] - {@link net.minecraft.client.gui.screens.inventory.InventoryScreen#renderEntityInInventory(PoseStack, int, int, int, Quaternionf, Quaternionf, LivingEntity)}.<br><br>
+     * [CODE COPY] - {@link net.minecraft.client.gui.screens.inventory.InventoryScreen#renderEntityInInventoryFollowsAngle(PoseStack, int, int, int, float, float, LivingEntity)}.<br>
+     * [CODE COPY] - {@link net.minecraft.client.gui.screens.inventory.InventoryScreen#renderEntityInInventory(PoseStack, int, int, int, Quaternionf, Quaternionf, LivingEntity)}.<br><br>
      * Merged code from the two methods, and modified so that the head rotation follows the body rotation and doesn't rotate separately.
      */
     public static void renderRotatingEntity(int posX, int posY, int scale, float angleXComponent, float angleYComponent, LivingEntity livingEntity) {

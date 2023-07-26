@@ -34,7 +34,7 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
 /**
- * [VANILLA COPY] - {@link ChestBlockEntity}.<br><br>
+ * [CODE COPY] - {@link ChestBlockEntity}.<br><br>
  * Has additional locking behavior.
  */
 public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity implements LidBlockEntity {

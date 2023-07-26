@@ -18,7 +18,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import javax.annotation.Nullable;
 
 /**
- * [VANILLA COPY] - {@link SimpleCookingSerializer}.<br><br>
+ * [CODE COPY] - {@link SimpleCookingSerializer}.<br><br>
  * Cleaned up.
  */
 public class AetherCookingSerializer<T extends AbstractAetherCookingRecipe> implements RecipeSerializer<T> {

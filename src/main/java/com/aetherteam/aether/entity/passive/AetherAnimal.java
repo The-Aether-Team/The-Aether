@@ -11,6 +11,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 
+/**
+ * Overrides ground-related checks for animals to be specific to the Aether.
+ */
 public abstract class AetherAnimal extends Animal {
 	protected AetherAnimal(EntityType<? extends Animal> type, Level level) {
 		super(type, level);

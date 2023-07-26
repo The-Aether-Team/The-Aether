@@ -44,7 +44,7 @@ public class SkyrootBucketItem extends BucketItem {
     }
 
     /**
-     * [VANILLA COPY] - {@link BucketItem#use(Level, Player, InteractionHand)}.<br><br>
+     * [CODE COPY] - {@link BucketItem#use(Level, Player, InteractionHand)}.<br><br>
      * Blocks that can be picked up depends on {@link AetherTags.Blocks#ALLOWED_BUCKET_PICKUP} or {@link AetherTags.Fluids#ALLOWED_BUCKET_PICKUP},
      * and the method will also swap out any returned vanilla buckets from interactions with Skyroot Buckets using {@link SkyrootBucketItem#swapBucketType(ItemStack)}.
      * @param level The {@link Level} of the user.
@@ -123,7 +123,7 @@ public class SkyrootBucketItem extends BucketItem {
     }
 
     /**
-     * [VANILLA COPY] - {@link BucketItem#getEmptySuccessItem(ItemStack, Player)}.<br><br>
+     * [CODE COPY] - {@link BucketItem#getEmptySuccessItem(ItemStack, Player)}.<br><br>
      * Returns a Skyroot Bucket instead of a vanilla bucket.
      */
     public static ItemStack getEmptySuccessItem(ItemStack bucketStack, Player player) {
@@ -139,7 +139,7 @@ public class SkyrootBucketItem extends BucketItem {
     }
 
     /**
-     *[VANILLA COPY] - {@link BucketItem#canBlockContainFluid(Level, BlockPos, BlockState)}.
+     *[CODE COPY] - {@link BucketItem#canBlockContainFluid(Level, BlockPos, BlockState)}.
      */
     protected boolean canBlockContainFluid(Level level, BlockPos pos, BlockState state) {
         return state.getBlock() instanceof LiquidBlockContainer liquidBlockContainer && liquidBlockContainer.canPlaceLiquid(level, pos, state, this.getFluid());

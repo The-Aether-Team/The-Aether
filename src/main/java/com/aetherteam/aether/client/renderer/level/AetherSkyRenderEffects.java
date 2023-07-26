@@ -38,7 +38,7 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
     }
 
     /**
-     * [VANILLA COPY] - {@link LightTexture#updateLightTexture(float)}.<br><br>
+     * [CODE COPY] - {@link LightTexture#updateLightTexture(float)}.<br><br>
      * Copied from a specific section, and modified to make the lightmap not be tinted with any color. Checks for {@link AetherConfig.Client#colder_lightmap}.
      */
     @Override
@@ -388,7 +388,7 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
     }
 
     /**
-     * [VANILLA COPY] - {@link LightTexture#clampColor(Vector3f)}.
+     * [CODE COPY] - {@link LightTexture#clampColor(Vector3f)}.
      */
     private static void clampColor(Vector3f vec) {
         vec.set(Mth.clamp(vec.x, 0.0F, 1.0F), Mth.clamp(vec.y, 0.0F, 1.0F), Mth.clamp(vec.z, 0.0F, 1.0F));

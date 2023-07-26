@@ -41,7 +41,6 @@ public class FlyingCow extends WingedAnimal {
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
     }
 
-   
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 10.0)
@@ -53,7 +52,9 @@ public class FlyingCow extends WingedAnimal {
         return stack.is(AetherTags.Items.FLYING_COW_TEMPTATION_ITEMS);
     }
 
-   
+    /**
+     * [CODE COPY] - {@link net.minecraft.world.entity.animal.Cow#mobInteract(Player, InteractionHand)}.
+     */
     @Override
     public InteractionResult mobInteract(Player playerEntity, InteractionHand hand) {
         ItemStack itemStack = playerEntity.getItemInHand(hand);
@@ -61,7 +62,7 @@ public class FlyingCow extends WingedAnimal {
             playerEntity.playSound(AetherSoundEvents.ENTITY_FLYING_COW_MILK.get(), 1.0F, 1.0F);
             ItemStack itemStack1 = ItemUtils.createFilledResult(itemStack, playerEntity, Items.MILK_BUCKET.getDefaultInstance());
             playerEntity.setItemInHand(hand, itemStack1);
-            return InteractionResult.sidedSuccess(this.level.isClientSide);
+            return InteractionResult.sidedSuccess(this.getLevel().isClientSide());
         } else {
             return super.mobInteract(playerEntity, hand);
         }
@@ -112,6 +113,9 @@ public class FlyingCow extends WingedAnimal {
         return AetherEntityTypes.FLYING_COW.get().create(level);
     }
 
+    /**
+     * [CODE COPY] - {@link net.minecraft.world.entity.animal.Cow#getStandingEyeHeight(Pose, EntityDimensions)}.
+     */
     @Override
     protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
         return this.isBaby() ? size.height * 0.95F : 1.3F;

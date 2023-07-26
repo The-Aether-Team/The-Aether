@@ -45,7 +45,7 @@ public class ItemMixin {
                 AttributeModifier valkyrieModifier = reachDistance.getModifier(ValkyrieTool.REACH_DISTANCE_MODIFIER_UUID);
                 if (valkyrieModifier != null) {
                     double reach = player.getAttributeValue(ForgeMod.BLOCK_REACH.get()) - valkyrieModifier.getAmount();
-                    double trueReach = reach == 0 ? 0 : reach + (player.isCreative() ? 0.5 : 0); // [VANILLA COPY] - IForgePlayer#getReachDistance().
+                    double trueReach = reach == 0 ? 0 : reach + (player.isCreative() ? 0.5 : 0); // [CODE COPY] - IForgePlayer#getReachDistance().
                     return getPlayerPOVHitResultForReach(level, player, trueReach, fluidMode);
                 }
             }
@@ -54,7 +54,7 @@ public class ItemMixin {
     }
 
     /**
-     * [VANILLA COPY] - {@link net.minecraft.world.item.Item#getPlayerPOVHitResult(Level, Player, ClipContext.Fluid)}.<br><br>
+     * [CODE COPY] - {@link net.minecraft.world.item.Item#getPlayerPOVHitResult(Level, Player, ClipContext.Fluid)}.<br><br>
      * Accepts a specified reach value from a parameter instead of a hardcoded one.
      */
     private static BlockHitResult getPlayerPOVHitResultForReach(Level level, Player player, double reach, ClipContext.Fluid fluidClip) {

@@ -79,7 +79,7 @@ public class FireCrystal extends AbstractCrystal {
     }
 
     /**
-     * [VANILLA COPY] - {@link net.minecraft.world.entity.projectile.AbstractHurtingProjectile#hurt(DamageSource, float)}<br><br>
+     * [CODE COPY] - {@link net.minecraft.world.entity.projectile.AbstractHurtingProjectile#hurt(DamageSource, float)}<br><br>
      * The Fire Crystal doesn't reset the owner when hit back. It'll be a threat until it despawns.
      */
     @Override
