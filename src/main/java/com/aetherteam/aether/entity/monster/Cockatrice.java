@@ -185,22 +185,22 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
     }
 
     @Override
-    public float getDestPos() {
+    public float getWingDestPos() {
         return this.destPos;
     }
 
     @Override
-    public void setDestPos(float pos) {
+    public void setWingDestPos(float pos) {
         this.destPos = pos;
     }
 
     @Override
-    public float getPrevDestPos() {
+    public float getPrevWingDestPos() {
         return this.prevDestPos;
     }
 
     @Override
-    public void setPrevDestPos(float pos) {
+    public void setPrevWingDestPos(float pos) {
         this.prevDestPos = pos;
     }
 

@@ -84,7 +84,7 @@ public abstract class BipedBirdModel<T extends Entity & WingedBird & NotGrounded
 
     public float setupWingsAnimation(T bipedBird, float partialTicks) {
         float rotVal = Mth.lerp(partialTicks, bipedBird.getPrevWingRotation(), bipedBird.getWingRotation());
-        float destVal = Mth.lerp(partialTicks, bipedBird.getPrevDestPos(), bipedBird.getDestPos());
+        float destVal = Mth.lerp(partialTicks, bipedBird.getPrevWingDestPos(), bipedBird.getWingDestPos());
         return (Mth.sin(rotVal * 0.225F) + 1.0F) * destVal;
     }
 

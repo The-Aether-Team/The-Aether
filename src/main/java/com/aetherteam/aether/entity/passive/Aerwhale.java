@@ -82,10 +82,10 @@ public class Aerwhale extends FlyingMob {
 
     /**
      * The purpose of this method override is to fix the weird movement from flying mobs.
-     * @param position The {@link Vec3} for travel movement.
+     * @param vector The {@link Vec3} for travel movement.
      */
     @Override
-    public void travel(Vec3 position) {
+    public void travel(Vec3 vector) {
         if (this.isEffectiveAi() || this.isControlledByLocalInstance()) {
             List<Entity> passengers = this.getPassengers();
             if (!passengers.isEmpty()) {
@@ -97,7 +97,7 @@ public class Aerwhale extends FlyingMob {
                     this.xRotO = this.getXRot() * 0.5F;
                     this.setYHeadRot(player.yHeadRot);
 
-                    position = new Vec3(player.xxa, 0.0, (player.zza <= 0.0F)? player.zza * 0.25F : player.zza);
+                    vector = new Vec3(player.xxa, 0.0, (player.zza <= 0.0F)? player.zza * 0.25F : player.zza);
 
                     if (AetherPlayer.get(player).map(AetherPlayer::isJumping).orElse(false)) {
                         this.setDeltaMovement(new Vec3(0.0, 0.0, 0.0));
@@ -113,7 +113,7 @@ public class Aerwhale extends FlyingMob {
                     }
 
                     if (!this.getLevel().isClientSide()) {
-                        super.travel(position);
+                        super.travel(vector);
                     }
 
                     double d0 = this.getX() - this.xo;
@@ -126,7 +126,7 @@ public class Aerwhale extends FlyingMob {
                     this.walkAnimation.update(f4, 0.4F);
                 }
             } else {
-                super.travel(position);
+                super.travel(vector);
             }
         }
     }
@@ -361,6 +361,7 @@ public class Aerwhale extends FlyingMob {
             Vec3 motion = new Vec3(x, y, z);
             this.mob.setDeltaMovement(motion);
 
+            // [VANILLA COPY] - PathfinderMob#tickLeash()
             Entity entity = this.mob.getLeashHolder();
             if (entity != null && entity.getLevel() == this.mob.getLevel()) {
                 this.mob.restrictTo(entity.blockPosition(), 5);
