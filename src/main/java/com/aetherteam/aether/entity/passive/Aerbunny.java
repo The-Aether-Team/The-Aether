@@ -48,6 +48,8 @@ public class Aerbunny extends AetherAnimal {
     public static final EntityDataAccessor<Integer> DATA_PUFFINESS_ID = SynchedEntityData.defineId(Aerbunny.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Boolean> DATA_FAST_FALLING = SynchedEntityData.defineId(Aerbunny.class, EntityDataSerializers.BOOLEAN);
 
+    private static final int MAXIMUM_PUFFS = 11;
+
     public int puffSubtract;
     private boolean afraid;
     private Vec3 lastPos;
@@ -60,7 +62,7 @@ public class Aerbunny extends AetherAnimal {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new RunLikeHellGoal(this, 1.3));
+        this.goalSelector.addGoal(1, new RunWhenAfraid(this, 1.3));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.2, Ingredient.of(AetherTags.Items.AERBUNNY_TEMPTATION_ITEMS), false));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
@@ -76,14 +78,17 @@ public class Aerbunny extends AetherAnimal {
     @Override
     public void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(DATA_PUFFINESS_ID, 0);
-        this.entityData.define(DATA_FAST_FALLING, false);
+        this.getEntityData().define(DATA_PUFFINESS_ID, 0);
+        this.getEntityData().define(DATA_FAST_FALLING, false);
     }
 
+    /**
+     * Handles slow-falling, puffiness tracking, and other mount behavior.
+     */
     @Override
     public void tick() {
         super.tick();
-        if (!this.isFastFalling()) {
+        if (!this.isFastFalling()) { // Handle slow-falling unless the Aerbunny is set to fall fast.
             this.handleFallSpeed();
         } else if (this.isOnGround()) {
             this.setFastFalling(false);
@@ -96,21 +101,27 @@ public class Aerbunny extends AetherAnimal {
             this.setPuffiness(0);
         }
         this.handlePlayerInput();
-        if (this.getVehicle() != null && (this.getVehicle().isOnGround() || this.getVehicle().isInFluidType())) {
+        if (this.getVehicle() != null && (this.getVehicle().isOnGround() || this.getVehicle().isInFluidType())) { // Reset the last tracked fall position if the Aerbunny touches a surface.
             this.lastPos = null;
         }
     }
 
+    /**
+     * Makes this entity fall slowly.
+     */
     private void handleFallSpeed() {
-        AttributeInstance gravity = this.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
+        AttributeInstance gravity = this.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
         if (gravity != null) {
-            double fallSpeed = Math.max(gravity.getValue() * -1.25, -0.1);
+            double fallSpeed = Math.max(gravity.getValue() * -1.25, -0.1); // Entity isn't allowed to fall too slowly from gravity.
             if (this.getDeltaMovement().y() < fallSpeed) {
                 this.setDeltaMovement(this.getDeltaMovement().x(), fallSpeed, this.getDeltaMovement().z());
             }
         }
     }
 
+    /**
+     * Makes the vehicle player fall slowly, and handles the jump ability for the player.
+     */
     private void handlePlayerInput() {
         if (this.getVehicle() instanceof Player player) {
             if (player.isSpectator()) {
@@ -121,9 +132,9 @@ public class Aerbunny extends AetherAnimal {
 
             player.resetFallDistance();
             if (!player.isOnGround() && !player.isFallFlying()) {
-                AttributeInstance playerGravity = player.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
+                AttributeInstance playerGravity = player.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
                 if (playerGravity != null) {
-                    if (!player.getAbilities().flying && !player.isInFluidType() && playerGravity.getValue() > 0.02) {
+                    if (!player.getAbilities().flying && !player.isInFluidType() && playerGravity.getValue() > 0.02) {  // Entity isn't allowed to fall too slowly from gravity.
                         player.setDeltaMovement(player.getDeltaMovement().add(0.0, 0.05, 0.0));
                     }
                 }
@@ -131,28 +142,32 @@ public class Aerbunny extends AetherAnimal {
                     Player innerPlayer = aetherPlayer.getPlayer();
                     if (this.getLevel().isClientSide()) {
                         if (innerPlayer.getDeltaMovement().y() <= 0.0) {
-                            if (this.lastPos == null) {
+                            if (this.lastPos == null) { // Tracks the last position when the player starts falling.
                                 this.lastPos = this.position();
                             }
+                            // The player is only able to jump if the Aerbunny's position is below the last tracked falling position, to avoid infinite jump exploits.
                             if (!innerPlayer.isOnGround() && aetherPlayer.isJumping() && innerPlayer.getDeltaMovement().y() <= 0.0 && this.position().y() < this.lastPos.y() - 1.1) {
                                 innerPlayer.setDeltaMovement(innerPlayer.getDeltaMovement().x(), 0.125, innerPlayer.getDeltaMovement().z());
-                                PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new AerbunnyPuffPacket(this.getId()));
+                                PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new AerbunnyPuffPacket(this.getId())); // Calls Aerbunny#puff() on the server.
                                 this.spawnExplosionParticle();
                                 this.lastPos = null;
                             }
                         }
                     }
                 });
-            } else if (player.isFallFlying()) {
+            } else if (player.isFallFlying()) { // Dismount when wearing Elytra.
                 this.stopRiding();
             }
-            if (player instanceof ServerPlayer serverPlayer) {
+            if (player instanceof ServerPlayer serverPlayer) { // Prevents the player from being kicked for flying.
                 ServerGamePacketListenerImplAccessor serverGamePacketListenerImplAccessor = (ServerGamePacketListenerImplAccessor) serverPlayer.connection;
                 serverGamePacketListenerImplAccessor.aether$setAboveGroundTickCount(0);
             }
         }
     }
 
+    /**
+     * Dismounts the Aerbunny when in water.
+     */
     @Override
     public void baseTick() {
         super.baseTick();
@@ -161,11 +176,18 @@ public class Aerbunny extends AetherAnimal {
             this.stopRiding();
         }
     }
-   
+
+    /**
+     * Handles right-clicking the Aerbunny for mounting and dismounting.
+     * @param player The interacting {@link Player}.
+     * @param hand The {@link InteractionHand}.
+     * @return The {@link InteractionResult}.
+     */
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         InteractionResult result = super.mobInteract(player, hand);
-        if (!(this.getVehicle() instanceof Player vehicle) || vehicle.equals(player)) {
+        if (!(this.getVehicle() instanceof Player vehicle) || vehicle.equals(player)) { // Interacting player has to be the one wearing the Aerbunny.
+            // Aerbunny can be mounted/dismounted if the shift key is held or no other interaction actions succeed, but only if the Aerbunny is not inside a block.
             if ((player.isShiftKeyDown() || result == InteractionResult.PASS || result == InteractionResult.FAIL) && !super.isInWall()) {
                 return this.ridePlayer(player);
             }
@@ -173,14 +195,19 @@ public class Aerbunny extends AetherAnimal {
         return result;
     }
 
+    /**
+     * Method used for both mounting and dismounting the Aerbunny to a vehicle player.
+     * @param player The {@link Player}.
+     * @return The {@link InteractionResult}.
+     */
     private InteractionResult ridePlayer(Player player) {
         if (!this.isBaby()) {
-            if (this.isPassenger()) {
+            if (this.isPassenger()) { // Dismount segment.
                 this.stopRiding();
-                this.setFastFalling(true);
+                this.setFastFalling(true); // Aerbunny will fall fast when dismounted.
                 Vec3 playerMovement = player.getDeltaMovement();
                 this.setDeltaMovement(playerMovement.x() * 5, playerMovement.y() * 0.5 + 0.5, playerMovement.z() * 5);
-            } else if (this.startRiding(player)) {
+            } else if (this.startRiding(player)) { // Mount segment.
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setMountedAerbunny(this));
                 this.getLevel().playSound(player, this, AetherSoundEvents.ENTITY_AERBUNNY_LIFT.get(), SoundSource.NEUTRAL, 1.0F, (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.2F + 1.0F);
             }
@@ -189,6 +216,9 @@ public class Aerbunny extends AetherAnimal {
         return InteractionResult.PASS;
     }
 
+    /**
+     * Stop tracking mounted Aerbunny with {@link com.aetherteam.aether.capability.player.AetherPlayerCapability}.
+     */
     @Override
     public void stopRiding() {
         if (this.getVehicle() instanceof Player player) {
@@ -197,6 +227,12 @@ public class Aerbunny extends AetherAnimal {
         super.stopRiding();
     }
 
+    /**
+     * Sets the Aerbunny as afraid when hit by a player.
+     * @param source The {@link DamageSource}.
+     * @param amount The damage amount, as a {@link Float}.
+     * @return Whether the entity was hurt, as a {@link Boolean}.
+     */
     @Override
     public boolean hurt(DamageSource source, float amount) {
         boolean flag = super.hurt(source, amount);
@@ -207,7 +243,7 @@ public class Aerbunny extends AetherAnimal {
     }
 
     /**
-     * Handle the small hops in the air
+     * Handles the small hops in the air.
      */
     protected void midairJump() {
         Vec3 motion = this.getDeltaMovement();
@@ -217,9 +253,12 @@ public class Aerbunny extends AetherAnimal {
         this.setDeltaMovement(new Vec3(motion.x(), 0.25, motion.z()));
     }
 
+    /**
+     * Sets the puffiness to the maximum amount, from {@link AerbunnyPuffPacket}.
+     */
     public void puff() {
         if (this.getLevel() instanceof ServerLevel) {
-            this.setPuffiness(11);
+            this.setPuffiness(MAXIMUM_PUFFS);
         }
     }
 
@@ -229,33 +268,49 @@ public class Aerbunny extends AetherAnimal {
         }
     }
 
+    /**
+     * @return The {@link Integer} value for the puffiness, used for animation.
+     */
     public int getPuffiness() {
         return this.entityData.get(DATA_PUFFINESS_ID);
     }
 
-    public void setPuffiness(int i) {
-        this.entityData.set(DATA_PUFFINESS_ID, i);
+    /**
+     * Sets the puffiness value, used for animation.
+     * @param puffiness The {@link Integer} value.
+     */
+    public void setPuffiness(int puffiness) {
+        this.entityData.set(DATA_PUFFINESS_ID, puffiness);
     }
 
+    /**
+     * @return The {@link Boolean} value for whether the Aerbunny is falling fast.
+     */
     public boolean isFastFalling() {
         return this.entityData.get(DATA_FAST_FALLING);
     }
 
-    public void setFastFalling(boolean flag) {
-        this.entityData.set(DATA_FAST_FALLING, flag);
+    /**
+     * Sets whether the Aerbunny is falling fast.
+     * @param fastFalling The {@link Boolean} value.
+     */
+    public void setFastFalling(boolean fastFalling) {
+        this.entityData.set(DATA_FAST_FALLING, fastFalling);
     }
 
+    /**
+     * @return The {@link Boolean} value for whether the Aerbunny is afraid.
+     */
     public boolean isAfraid() {
         return this.afraid;
     }
 
-    public void setAfraid(boolean fear) {
-        this.afraid = fear;
-    }
-
-    @Override
-    public boolean isFood(ItemStack stack) {
-        return stack.is(AetherTags.Items.AERBUNNY_TEMPTATION_ITEMS);
+    /**
+     * Sets whether the Aerbunny is afraid.
+     * @param afraid The {@link Boolean} value.
+     */
+    public void setAfraid(boolean afraid) {
+        this.afraid = afraid;
     }
 
     @Override
@@ -268,9 +323,17 @@ public class Aerbunny extends AetherAnimal {
         return AetherSoundEvents.ENTITY_AERBUNNY_DEATH.get();
     }
 
+    /**
+     * @return A {@link Float} for the midair speed of this entity.
+     */
     @Override
     protected float getFlyingSpeed() {
         return this.getSpeed() * 0.216F;
+    }
+
+    @Override
+    public boolean isFood(ItemStack stack) {
+        return stack.is(AetherTags.Items.AERBUNNY_TEMPTATION_ITEMS);
     }
 
     @Override
@@ -278,17 +341,48 @@ public class Aerbunny extends AetherAnimal {
         return true;
     }
 
+    /**
+     * @return The offset {@link Double} for an Aerbunny when riding another entity.
+     */
     @Override
     public double getMyRidingOffset() {
         return this.getVehicle() != null && this.getVehicle().isCrouching() ? 0.4 : 0.575;
     }
 
+    /**
+     * @return Whether the Aerbunny can be interacted with. The Aerbunny can only be interacted when it is within a certain range of the player's view vector,
+     * to avoid bugs with displaying the player's crosshairs.
+     */
     @Override
     public boolean isPickable() {
         if (this.getVehicle() instanceof Player player) {
             return player.getBoundingBox().expandTowards(player.getViewVector(0.0F)).contains(this.getBoundingBox().getCenter().add(0, this.getBoundingBox().getSize() / 2, 0));
         }
         return true;
+    }
+
+    /**
+     * Prevents the Aerbunny from being hurt by the vehicle entity.
+     * @param damageSource The {@link DamageSource}.
+     * @return Whether the Aerbunny is invulnerable to the damage, as a {@link Boolean}.
+     */
+    @Override
+    public boolean isInvulnerableTo(DamageSource damageSource) {
+        return (this.getVehicle() != null && this.getVehicle() == damageSource.getEntity()) || super.isInvulnerableTo(damageSource);
+    }
+
+    /**
+     * @return A {@link Boolean} for whether the Aerbunny is checked as being in a wall, which is false when this Aerbunny is mounted to another entity.
+     */
+    @Override
+    public boolean isInWall() {
+        return !this.isPassenger() && super.isInWall();
+    }
+
+    @Nullable
+    @Override
+    public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob entity) {
+        return AetherEntityTypes.AERBUNNY.get().create(level);
     }
 
     @Override
@@ -303,27 +397,14 @@ public class Aerbunny extends AetherAnimal {
         this.afraid = tag.getBoolean("Afraid");
     }
 
-    @Override
-    public boolean isInvulnerableTo(DamageSource damageSource) {
-        return (this.getVehicle() != null && this.getVehicle() == damageSource.getEntity()) || super.isInvulnerableTo(damageSource);
-    }
-
-    @Override
-    public boolean isInWall() {
-        return !this.isPassenger() && super.isInWall();
-    }
-
-    @Nullable
-    @Override
-    public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob entity) {
-        return AetherEntityTypes.AERBUNNY.get().create(level);
-    }
-
-    public static class RunLikeHellGoal extends Goal {
+    /**
+     * Sets a position for the Aerbunny to run away to.
+     */
+    public static class RunWhenAfraid extends Goal {
         private final Aerbunny aerbunny;
         private final double speedModifier;
 
-        public RunLikeHellGoal(Aerbunny aerbunny, double speedModifier) {
+        public RunWhenAfraid(Aerbunny aerbunny, double speedModifier) {
             this.aerbunny = aerbunny;
             this.speedModifier = speedModifier;
             this.setFlags(EnumSet.of(Flag.MOVE));
@@ -357,14 +438,22 @@ public class Aerbunny extends AetherAnimal {
             }
         }
 
+        /**
+         * Spawns crying particles.
+         */
         @Override
         public void tick() {
-            if (this.aerbunny.getRandom().nextInt(4) == 0) {
-                ((ServerLevel)this.aerbunny.getLevel()).sendParticles(ParticleTypes.SPLASH, this.aerbunny.getRandomX(0.5), this.aerbunny.getRandomY(), this.aerbunny.getRandomZ(0.5), 2, 0, 0, 0, 0);
+            if (this.aerbunny.getLevel() instanceof ServerLevel serverLevel) {
+                if (this.aerbunny.getRandom().nextInt(4) == 0) {
+                    serverLevel.sendParticles(ParticleTypes.SPLASH, this.aerbunny.getRandomX(0.5), this.aerbunny.getRandomY(), this.aerbunny.getRandomZ(0.5), 2, 0, 0, 0, 0);
+                }
             }
         }
     }
 
+    /**
+     * Handles jumping movement for the Aerbunny.
+     */
     public static class AerbunnyMoveControl extends MoveControl {
         private final Aerbunny aerbunny;
 
