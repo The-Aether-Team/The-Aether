@@ -6,7 +6,7 @@ import com.aetherteam.aether.capability.item.DroppedItem;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.ai.goal.BeeGrowBerryBushGoal;
 import com.aetherteam.aether.entity.ai.goal.FoxEatBerryBushGoal;
-import com.aetherteam.aether.entity.monster.dungeon.boss.slider.Slider;
+import com.aetherteam.aether.entity.monster.dungeon.boss.Slider;
 import com.aetherteam.aether.entity.passive.FlyingCow;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.miscellaneous.bucket.SkyrootBucketItem;

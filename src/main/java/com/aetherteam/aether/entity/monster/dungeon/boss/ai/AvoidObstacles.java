@@ -1,8 +1,9 @@
-package com.aetherteam.aether.entity.monster.dungeon.boss.slider;
+package com.aetherteam.aether.entity.monster.dungeon.boss.ai;
 
 
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.entity.ai.brain.memory.AetherMemoryModuleTypes;
+import com.aetherteam.aether.entity.monster.dungeon.boss.Slider;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

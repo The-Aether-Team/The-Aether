@@ -1,11 +1,11 @@
-package com.aetherteam.aether.entity.monster.dungeon.boss.slider;
+package com.aetherteam.aether.entity.monster.dungeon.boss;
 
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.AetherBossMob;
 import com.aetherteam.aether.entity.ai.controller.BlankMoveControl;
-import com.aetherteam.aether.entity.monster.dungeon.boss.BossNameGenerator;
+import com.aetherteam.aether.entity.monster.dungeon.boss.ai.SliderAi;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.BossInfoPacket;
 import com.aetherteam.nitrogen.entity.BossRoomTracker;
@@ -292,7 +292,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         }
     }
 
-    protected void blockDestroySmoke(BlockPos pos) {
+    public void blockDestroySmoke(BlockPos pos) {
         double a = pos.getX() + 0.5 + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375;
         double b = pos.getY() + 0.5 + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375;
         double c = pos.getZ() + 0.5 + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375;
@@ -414,11 +414,11 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         return this.isCritical() ? 1 + this.random.nextInt(10) : 2 + this.random.nextInt(14);
     }
 
-    protected float getVelocityIncrease() {
+    public float getVelocityIncrease() {
         return this.isCritical() ? 0.045F - (this.getHealth()/10000) : 0.035F - (this.getHealth()/30000);
     }
 
-    protected float getMaxVelocity() {
+    public float getMaxVelocity() {
         return 2.5F;
     }
 

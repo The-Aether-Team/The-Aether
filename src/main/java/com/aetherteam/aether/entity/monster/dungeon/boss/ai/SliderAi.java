@@ -1,7 +1,8 @@
-package com.aetherteam.aether.entity.monster.dungeon.boss.slider;
+package com.aetherteam.aether.entity.monster.dungeon.boss.ai;
 
 import com.aetherteam.aether.entity.ai.brain.memory.AetherMemoryModuleTypes;
 import com.aetherteam.aether.entity.ai.brain.sensing.AetherSensorTypes;
+import com.aetherteam.aether.entity.monster.dungeon.boss.Slider;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Dynamic;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
@@ -68,7 +69,7 @@ public class SliderAi {
     /**
      * Reduces the aggro every second.
      */
-    protected static void tick(Slider slider) {
+    public static void tick(Slider slider) {
         if (slider.tickCount % 20 != 0) {
             return;
         }
@@ -91,7 +92,7 @@ public class SliderAi {
     /**
      * Adds aggro when attacked by a player.
      */
-    protected static void wasHurtBy(Slider slider, LivingEntity attacker, float damage) {
+    public static void wasHurtBy(Slider slider, LivingEntity attacker, float damage) {
         Brain<?> brain = slider.getBrain();
         Optional<Object2DoubleMap<LivingEntity>> optional = brain.getMemory(AetherMemoryModuleTypes.AGGRO_TRACKER.get());
         if (optional.isPresent()) {

@@ -15,7 +15,7 @@ import com.aetherteam.aether.entity.monster.dungeon.Sentry;
 import com.aetherteam.aether.entity.monster.dungeon.Valkyrie;
 import com.aetherteam.aether.entity.monster.dungeon.boss.SunSpirit;
 import com.aetherteam.aether.entity.monster.dungeon.boss.ValkyrieQueen;
-import com.aetherteam.aether.entity.monster.dungeon.boss.slider.Slider;
+import com.aetherteam.aether.entity.monster.dungeon.boss.Slider;
 import com.aetherteam.aether.entity.passive.*;
 import com.aetherteam.aether.entity.projectile.PoisonNeedle;
 import com.aetherteam.aether.entity.projectile.ZephyrSnowball;

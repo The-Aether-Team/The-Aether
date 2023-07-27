@@ -4,7 +4,7 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.aetherteam.aether.client.renderer.entity.layers.SliderGlowLayer;
 import com.aetherteam.aether.client.renderer.entity.model.SliderModel;
-import com.aetherteam.aether.entity.monster.dungeon.boss.slider.Slider;
+import com.aetherteam.aether.entity.monster.dungeon.boss.Slider;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
