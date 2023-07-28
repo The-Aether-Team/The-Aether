@@ -26,7 +26,7 @@ public class AetherPlayerSyncPacket extends SyncEntityPacket<AetherPlayer> {
     }
 
     @Override
-    protected LazyOptional<AetherPlayer> getCapability(Entity entity) {
+    public LazyOptional<AetherPlayer> getCapability(Entity entity) {
         return AetherPlayer.get((Player) entity);
     }
 }

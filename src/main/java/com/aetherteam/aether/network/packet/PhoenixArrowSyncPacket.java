@@ -26,7 +26,7 @@ public class PhoenixArrowSyncPacket extends SyncEntityPacket<PhoenixArrow> {
     }
 
     @Override
-    protected LazyOptional<PhoenixArrow> getCapability(Entity entity) {
+    public LazyOptional<PhoenixArrow> getCapability(Entity entity) {
         return PhoenixArrow.get((AbstractArrow) entity);
     }
 }

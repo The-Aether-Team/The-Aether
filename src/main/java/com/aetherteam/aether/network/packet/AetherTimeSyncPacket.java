@@ -25,7 +25,7 @@ public class AetherTimeSyncPacket extends SyncLevelPacket<AetherTime> {
     }
 
     @Override
-    protected LazyOptional<AetherTime> getCapability(Level level) {
+    public LazyOptional<AetherTime> getCapability(Level level) {
         return AetherTime.get(level);
     }
 }
