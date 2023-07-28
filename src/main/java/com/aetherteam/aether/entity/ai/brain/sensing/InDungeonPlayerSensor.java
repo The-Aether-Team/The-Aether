@@ -28,9 +28,7 @@ public class InDungeonPlayerSensor<T extends Mob & AetherBossMob<T>> extends Sen
 
     @Override
     protected void doTick(ServerLevel level, T entity) {
-        List<Player> targets = level.players().stream().filter(EntitySelector.NO_SPECTATORS).filter((target) -> {
-            return entity.getDungeon() != null ? entity.getDungeon().isPlayerTracked(target) : entity.closerThan(target, 16.0);
-        }).sorted(Comparator.comparingDouble(entity::distanceToSqr)).collect(Collectors.toList());
+        List<Player> targets = level.players().stream().filter(EntitySelector.NO_SPECTATORS).filter((target) -> entity.getDungeon() != null ? entity.getDungeon().isPlayerTracked(target) : entity.closerThan(target, 16.0)).sorted(Comparator.comparingDouble(entity::distanceToSqr)).collect(Collectors.toList());
         Brain<?> brain = entity.getBrain();
         brain.setMemory(MemoryModuleType.NEAREST_PLAYERS, targets);
 

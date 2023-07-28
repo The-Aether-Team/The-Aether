@@ -3,7 +3,7 @@ package com.aetherteam.aether.entity.monster.dungeon;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.NotGrounded;
-import com.aetherteam.aether.entity.ai.goal.target.MostDamageTargetGoal;
+import com.aetherteam.aether.entity.ai.goal.MostDamageTargetGoal;
 import com.aetherteam.aether.event.AetherEventDispatch;
 import com.aetherteam.aether.event.ValkyrieTeleportEvent;
 import net.minecraft.core.BlockPos;

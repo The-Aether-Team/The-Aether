@@ -1,4 +1,4 @@
-package com.aetherteam.aether.entity.ai.goal.target;
+package com.aetherteam.aether.entity.ai.goal;
 
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleOpenHashMap;

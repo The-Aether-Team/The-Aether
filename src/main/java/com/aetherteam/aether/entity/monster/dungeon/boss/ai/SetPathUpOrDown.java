@@ -39,11 +39,7 @@ public class SetPathUpOrDown extends Behavior<Slider> {
         }
 
         Optional<Direction> optionalDir = slider.getBrain().getMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get());
-        if (optionalDir.isPresent() && optionalDir.get().getAxis() == Direction.Axis.Y) {
-            return false;
-        }
-
-        return true;
+        return optionalDir.isEmpty() || optionalDir.get().getAxis() != Direction.Axis.Y;
     }
 
     @Override
