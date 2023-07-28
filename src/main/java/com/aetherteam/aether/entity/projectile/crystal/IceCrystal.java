@@ -104,15 +104,13 @@ public class IceCrystal extends AbstractCrystal {
     public void doDamage(Entity entity) {
         if (this.getOwner() != entity) {
             if (entity instanceof LivingEntity livingEntity) {
-                if (livingEntity.hurt(AetherDamageTypes.indirectEntityDamageSource(this.level, AetherDamageTypes.ICE_CRYSTAL, this, this.getOwner()), 7.0F)) {
-                    if (livingEntity.hurt(AetherDamageTypes.indirectEntityDamageSource(this.getLevel(), AetherDamageTypes.ICE_CRYSTAL, this, this.getOwner()), 7.0F)) {
-                        livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 10));
-                        this.level.playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
+                if (livingEntity.hurt(AetherDamageTypes.indirectEntityDamageSource(this.getLevel(), AetherDamageTypes.ICE_CRYSTAL, this, this.getOwner()), 7.0F)) {
+                    livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 10));
+                    this.level.playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
+                    this.discard();
+                    this.getLevel().playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
+                    if (!this.getLevel().isClientSide()) {
                         this.discard();
-                        this.getLevel().playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
-                        if (!this.getLevel().isClientSide()) {
-                            this.discard();
-                        }
                     }
                 }
             }
