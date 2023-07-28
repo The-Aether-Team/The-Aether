@@ -1,5 +1,6 @@
 package com.aetherteam.aether.entity.projectile.crystal;
 
+import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.particle.AetherParticleTypes;
 import com.aetherteam.aether.data.resources.AetherDamageTypes;
@@ -12,7 +13,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -37,7 +37,7 @@ public class CloudCrystal extends AbstractCrystal {
     protected void onHitEntity(EntityHitResult result) {
         Entity entity = result.getEntity();
         if (entity instanceof LivingEntity livingEntity) {
-            float bonus = entity instanceof Blaze ? 3.0F : 0.0F;
+            float bonus = entity.getType().is(AetherTags.Entities.FIRE_MOB) ? 3.0F : 0.0F;
             if (livingEntity.hurt(AetherDamageTypes.indirectEntityDamageSource(this.getLevel(), AetherDamageTypes.CLOUD_CRYSTAL, this, this.getOwner()), 5.0F + bonus)) {
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 10));
                 this.getLevel().playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);

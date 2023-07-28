@@ -157,6 +157,7 @@ public class AetherTags {
 		public static final TagKey<EntityType<?>> SWETS = tag("swets");
 		public static final TagKey<EntityType<?>> WHIRLWIND_UNAFFECTED = tag("whirlwind_unaffected");
 		public static final TagKey<EntityType<?>> PIGS = tag("pigs");
+		public static final TagKey<EntityType<?>> FIRE_MOB = tag("fire_mob");
 		public static final TagKey<EntityType<?>> NO_SKYROOT_DOUBLE_DROPS = tag("no_skyroot_double_drops");
 		public static final TagKey<EntityType<?>> NO_AMBROSIUM_DROPS = tag("no_ambrosium_drops");
 		public static final TagKey<EntityType<?>> UNLAUNCHABLE = tag("unlaunchable");

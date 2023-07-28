@@ -196,7 +196,7 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
 	}
 
 	/**
-	 * ets whether the player attempted to jump.
+	 * Sets whether the player attempted to jump.
 	 * @param playerJumped The {@link Boolean} value.
 	 */
 	public void setPlayerJumped(boolean playerJumped) {

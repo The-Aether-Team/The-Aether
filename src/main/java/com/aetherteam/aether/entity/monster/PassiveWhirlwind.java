@@ -23,13 +23,29 @@ public class PassiveWhirlwind extends AbstractWhirlwind {
         super(type, level);
     }
 
+    /**
+     * Sets the Whirlwind's lifespan.<br><br>
+     * Warning for "deprecation" is suppressed because this is fine to override.
+     * @param level The {@link ServerLevelAccessor} where the entity is spawned.
+     * @param difficulty The {@link DifficultyInstance} of the game.
+     * @param reason The {@link MobSpawnType} reason.
+     * @param spawnData The {@link SpawnGroupData}.
+     * @param tag The {@link CompoundTag} to apply to this entity.
+     * @return The {@link SpawnGroupData} to return.
+     */
     @Override
+    @SuppressWarnings("deprecation")
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
-        this.lifeLeft = this.random.nextInt(512) + 512;
-        return super.finalizeSpawn(level, difficulty, reason, spawnData, tag);
+        this.lifeLeft = this.getRandom().nextInt(512) + 512;
+        return spawnData;
     }
 
-   
+    /**
+     * Allows creative mode players to color Passive Whirlwinds, as an easter egg.
+     * @param player The interacting {@link Player}.
+     * @param hand The {@link InteractionHand}.
+     * @return The {@link InteractionResult}.
+     */
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
@@ -41,13 +57,13 @@ public class PassiveWhirlwind extends AbstractWhirlwind {
     }
 
     @Override
-    public void updateParticles() {
+    public void spawnParticles() {
         for (int i = 0; i < 2; i++) {
-            double d1 = this.getX() + this.random.nextDouble() * 0.25;
+            double d1 = this.getX() + this.getRandom().nextDouble() * 0.25;
             double d4 = getY() + getBbHeight() + 0.125;
-            double d7 = this.getZ() + this.random.nextDouble() * 0.25;
-            float f = this.random.nextFloat() * 360;
-            this.level.addParticle(AetherParticleTypes.PASSIVE_WHIRLWIND.get(), d1, d4 - 0.25, d7, -Math.sin(0.01745329F * f) * 0.75, 0.125, Math.cos(0.01745329F * f) * 0.75);
+            double d7 = this.getZ() + this.getRandom().nextDouble() * 0.25;
+            float f = this.getRandom().nextFloat() * 360;
+            this.getLevel().addParticle(AetherParticleTypes.PASSIVE_WHIRLWIND.get(), d1, d4 - 0.25, d7, -Math.sin(0.0175F * f) * 0.75, 0.125, Math.cos(0.0175F * f) * 0.75);
         }
     }
 

@@ -87,7 +87,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
         this.alignSpawnPos();
         SpawnGroupData data = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
-        this.setBossName(BossNameGenerator.generateSliderName());
+        this.setBossName(BossNameGenerator.generateSliderName(this.getRandom()));
         return data;
     }
 

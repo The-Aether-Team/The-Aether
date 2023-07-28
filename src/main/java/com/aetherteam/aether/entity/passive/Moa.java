@@ -176,7 +176,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	/**
-	 * Refreshes the Moa's bounding box dimensions when sitting down.
+	 * Refreshes the Moa's bounding box dimensions.
 	 * @param dataAccessor The {@link EntityDataAccessor} for the entity.
 	 */
 	@Override
@@ -272,27 +272,17 @@ public class Moa extends MountableAnimal implements WingedBird {
 				this.setRider(null);
 			}
 		}
-	}
 
-	/**
-	 * Handles flap sounds and fall distance.
-	 */
-	@Override
-	public void riderTick() {
-		if (!this.isSitting()) {
-			super.riderTick();
-			if (this.getControllingPassenger() instanceof Player) { // Handles flap cooldown for sounds.
-				if (this.getFlapCooldown() > 0) {
-					this.setFlapCooldown(this.getFlapCooldown() - 1);
-				} else if (this.getFlapCooldown() == 0) {
-					if (!this.isOnGround()) {
-						this.getLevel().playSound(null, this, AetherSoundEvents.ENTITY_MOA_FLAP.get(), SoundSource.NEUTRAL, 0.15F, Mth.clamp(this.getRandom().nextFloat(), 0.7F, 1.0F) + Mth.clamp(this.getRandom().nextFloat(), 0.0F, 0.3F));
-						this.setFlapCooldown(15);
-					}
-				}
-				this.checkSlowFallDistance(); // Resets the Moa's fall distance.
+		// Handles flap cooldown for sounds.
+		if (this.getFlapCooldown() > 0) {
+			this.setFlapCooldown(this.getFlapCooldown() - 1);
+		} else if (this.getFlapCooldown() == 0) {
+			if (!this.isOnGround()) {
+				this.getLevel().playSound(null, this, AetherSoundEvents.ENTITY_MOA_FLAP.get(), SoundSource.NEUTRAL, 0.15F, Mth.clamp(this.getRandom().nextFloat(), 0.7F, 1.0F) + Mth.clamp(this.getRandom().nextFloat(), 0.0F, 0.3F));
+				this.setFlapCooldown(15);
 			}
 		}
+		this.checkSlowFallDistance(); // Resets the Moa's fall distance.
 	}
 
 	/**
@@ -727,7 +717,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	/**
-	 * Makes Moas immune to Inebriation.
+	 * Makes player-raised Moas immune to Inebriation.
 	 * @param effect The {@link MobEffectInstance} to check whether this mob is affected by.
 	 * @return Whether the mob is affected.
 	 */

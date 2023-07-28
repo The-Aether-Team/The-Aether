@@ -64,8 +64,22 @@ public class Aerwhale extends FlyingMob {
         this.getEntityData().define(DATA_Y_ROT_ID, this.getYRot());
     }
 
+    /**
+     * Aerwhales can spawn if {@link Mob#checkMobSpawnRules(EntityType, LevelAccessor, MobSpawnType, BlockPos, RandomSource)} is true, if they aren't spawning in fluid,
+     * if they are spawning at a light level above 8, if they are spawning in view of the sky, and they spawn with a random chance of 1/40.
+     * @param aerwhale The {@link Aerwhale} {@link EntityType}.
+     * @param level The {@link LevelAccessor}.
+     * @param reason The {@link MobSpawnType} reason.
+     * @param pos The spawn {@link BlockPos}.
+     * @param random The {@link RandomSource}.
+     * @return Whether this entity can spawn, as a {@link Boolean}.
+     */
     public static boolean checkAerwhaleSpawnRules(EntityType<? extends Aerwhale> aerwhale, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
-        return level.getFluidState(pos).is(Fluids.EMPTY) && level.getRawBrightness(pos, 0) > 8 && checkMobSpawnRules(aerwhale, level, reason, pos, random) && (reason != MobSpawnType.NATURAL || random.nextInt(40) == 0) && level.canSeeSky(pos);
+        return Mob.checkMobSpawnRules(aerwhale, level, reason, pos, random)
+                && level.getFluidState(pos).is(Fluids.EMPTY)
+                && level.getRawBrightness(pos, 0) > 8
+                && level.canSeeSky(pos)
+                && (reason != MobSpawnType.NATURAL || random.nextInt(40) == 0);
     }
 
     /**
@@ -361,7 +375,7 @@ public class Aerwhale extends FlyingMob {
             Vec3 motion = new Vec3(x, y, z);
             this.mob.setDeltaMovement(motion);
 
-            // [VANILLA COPY] - PathfinderMob#tickLeash()
+            // [CODE COPY] - PathfinderMob#tickLeash()
             Entity entity = this.mob.getLeashHolder();
             if (entity != null && entity.getLevel() == this.mob.getLevel()) {
                 this.mob.restrictTo(entity.blockPosition(), 5);

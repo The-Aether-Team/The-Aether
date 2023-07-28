@@ -5,20 +5,17 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.RandomSource;
 
 public final class BossNameGenerator {
-    public static RandomSource random = RandomSource.create();
     /**
      * Valkyrie names
      */
     public static String[] valkyrieNameFirst = { "Signy", "Har", "Her", "Gon", "Sko", "Hil" };
-
     public static String[] valkyrieNameMiddle = { "fjo", "ska", "bri", ""};
-
     public static String[] valkyrieNameLast = { "tur", "pul", "dul", "gul", "or"};
 
     /**
-     * Slider and sun spirit names
+     * Slider and Sun Spirit names
      */
-    public static String[] name1 = new String[] { "Del", "Ros", "Per", "Cyn",
+    public static String[] genericNameFirst = new String[] { "Del", "Ros", "Per", "Cyn",
             "Flar", "Ba", "Lab", "Az", "Ob", "Al", "Pas", "Nun", "Ur", "Ter",
             "Jar", "Est", "Car", "Houl", "In", "Kop", "Shot", "Vast", "Ael",
             "Skal", "Geld", "Er", "Sald", "Sar", "Binthe", "Haur", "Syn",
@@ -36,8 +33,7 @@ public final class BossNameGenerator {
             "I", "Ca", "Vad", "Ro", "Dez", "Kuv", "Vab", "Dar", "Ral", "Mar",
             "Quarne", "Pulg", "Hor", "Ka", "Quer", "And", "Ny", "Ym", "Wal",
             "Tarl", "Vart","Pro" };
-
-    public static String[] name2 = new String[] { "cath", "yd", "rik", "nal",
+    public static String[] genericNameMiddle = new String[] { "cath", "yd", "rik", "nal",
             "y", "ro", "stead", "carn", "tak", "chean", "ain", "ak", "loc",
             "ras", "ien", "cuth", "alen", "is", "carad", "acy", "la", "asc",
             "arn", "ayn", "sene", "art", "lyn", "cam", "mel", "ly", "eas",
@@ -53,8 +49,7 @@ public final class BossNameGenerator {
             "dar", "end", "doth", "en", "aller", "reth", "juin", "arny", "un",
             "len", "ere", "ane", "aryn", "dy", "gary", "arry", "arty", "ydd",
             "ris", "ar", "ance", "hen", "el", "air", "rum" };
-
-    public static String[] name3 = new String[] { "cath", "carth", "ayne",
+    public static String[] genericNameLast = new String[] { "cath", "carth", "ayne",
             "yd", "arik", "asty", "rik", "lir", "dor", "nal", "on", "codd",
             "y", "ber", "ro", "stead", "ta", "tyne", "wat", "carn", "erry",
             "chean", "ain", "aryne", "al", "ak", "ert", "ras", "ien", "alen",
@@ -73,29 +68,30 @@ public final class BossNameGenerator {
     /**
      * Generates a generic boss name.
      */
-    public static MutableComponent generateBossName() {
+    public static MutableComponent generateBossName(RandomSource random) {
         StringBuilder result = new StringBuilder();
-        result.append(name1[random.nextInt(name1.length)]);
+        result.append(genericNameFirst[random.nextInt(genericNameFirst.length)]);
         int middle = 2 + random.nextInt(2);
-        for (int i = 0; i < middle; i++)
-            result.append(name2[random.nextInt(name2.length)]);
-        result.append(name3[random.nextInt(name3.length)]);
+        for (int i = 0; i < middle; i++) {
+            result.append(genericNameMiddle[random.nextInt(genericNameMiddle.length)]);
+        }
+        result.append(genericNameLast[random.nextInt(genericNameLast.length)]);
         result.append(", ");
         return Component.literal(result.toString());
     }
 
     /**
-     * Generates a name for the slider boss.
+     * Generates a name for the Slider boss.
      */
-    public static MutableComponent generateSliderName() {
-        MutableComponent result = generateBossName();
+    public static MutableComponent generateSliderName(RandomSource random) {
+        MutableComponent result = generateBossName(random);
         return result.append(Component.translatable("gui.aether.slider.title"));
     }
 
     /**
-     * Generates a name for the valkyrie queen boss.
+     * Generates a name for the Valkyrie Queen boss.
      */
-    public static MutableComponent generateValkyrieName() {
+    public static MutableComponent generateValkyrieName(RandomSource random) {
         String result = "";
         int index = random.nextInt(valkyrieNameFirst.length);
         result += valkyrieNameFirst[index];
@@ -108,11 +104,11 @@ public final class BossNameGenerator {
     }
 
     /**
-     * Generates a name for the sun spirit boss.
+     * Generates a name for the Sun Spirit boss.
      */
-    public static MutableComponent generateSunSpiritName() {
-        int index = random.nextInt(name1.length + 1);
-        MutableComponent result = index == 0 ? Component.literal("Karthuul, ") : generateBossName();
+    public static MutableComponent generateSunSpiritName(RandomSource random) {
+        int index = random.nextInt(genericNameFirst.length + 1);
+        MutableComponent result = index == 0 ? Component.literal("Karthuul, ") : generateBossName(random);
         return result.append(Component.translatable("gui.aether.sun_spirit.title"));
     }
 }

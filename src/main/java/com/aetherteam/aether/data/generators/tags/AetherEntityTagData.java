@@ -35,6 +35,9 @@ public class AetherEntityTagData extends EntityTypeTagsProvider {
                 EntityType.ZOMBIFIED_PIGLIN,
                 EntityType.HOGLIN,
                 EntityType.ZOGLIN);
+        this.tag(AetherTags.Entities.FIRE_MOB).add(
+                EntityType.BLAZE,
+                AetherEntityTypes.FIRE_MINION.get());
         this.tag(AetherTags.Entities.NO_SKYROOT_DOUBLE_DROPS).add(
                 EntityType.PLAYER,
                 EntityType.WITHER,

@@ -104,7 +104,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnGroupData, @Nullable CompoundTag compoundTag) {
         SpawnGroupData data = super.finalizeSpawn(level, difficulty, reason, spawnGroupData, compoundTag);
-        this.setBossName(BossNameGenerator.generateValkyrieName());
+        this.setBossName(BossNameGenerator.generateValkyrieName(this.getRandom()));
         if (compoundTag != null && compoundTag.contains("Dungeon")) {
             // Set the bounds for the whole dungeon
             StructureManager manager = level.getLevel().structureManager();

@@ -102,7 +102,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
         SpawnGroupData data = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
-        this.setBossName(BossNameGenerator.generateSunSpiritName());
+        this.setBossName(BossNameGenerator.generateSunSpiritName(this.getRandom()));
         this.origin = this.position();
         return data;
     }
