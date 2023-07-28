@@ -139,7 +139,7 @@ public class Aether {
         }
 
         DistExecutor.unsafeRunForDist(() -> () -> {
-            Menus.MENUS.register(modEventBus);
+            AetherMenus.MENUS.register(modEventBus);
             return true;
         }, () -> () -> false);
 
