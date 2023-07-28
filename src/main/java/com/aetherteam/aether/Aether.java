@@ -44,6 +44,8 @@ import com.aetherteam.aether.world.structure.AetherStructureTypes;
 import com.aetherteam.aether.world.structurepiece.AetherStructurePieceTypes;
 import com.aetherteam.aether.world.treedecorator.AetherTreeDecoratorTypes;
 import com.aetherteam.aether.world.trunkplacer.AetherTrunkPlacerTypes;
+import com.aetherteam.cumulus.CumulusConfig;
+import com.aetherteam.cumulus.api.Menus;
 import com.google.common.reflect.Reflection;
 import com.mojang.logging.LogUtils;
 import net.minecraft.ChatFormatting;
@@ -67,6 +69,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -127,7 +130,6 @@ public class Aether {
                 AetherSoundEvents.SOUNDS,
                 AetherGameEvents.GAME_EVENTS,
                 AetherMoaTypes.MOA_TYPES,
-                AetherMenus.MENUS,
                 AetherSensorTypes.SENSOR_TYPES,
                 AetherMemoryModuleTypes.MEMORY_TYPES
         };
@@ -135,6 +137,11 @@ public class Aether {
         for (DeferredRegister<?> register : registers) {
             register.register(modEventBus);
         }
+
+        DistExecutor.unsafeRunForDist(() -> () -> {
+            Menus.MENUS.register(modEventBus);
+            return true;
+        }, () -> () -> false);
 
         AetherBlocks.registerWoodTypes(); // Registered this early to avoid bugs with WoodTypes and signs.
 
