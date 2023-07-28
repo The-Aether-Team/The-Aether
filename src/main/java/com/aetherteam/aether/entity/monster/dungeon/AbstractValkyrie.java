@@ -33,6 +33,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.ForgeMod;
 
 import java.util.EnumSet;
 
@@ -42,10 +43,11 @@ import java.util.EnumSet;
 public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(AbstractValkyrie.class, EntityDataSerializers.BOOLEAN);
 
+    /**
+     * Goal for targeting in groups of entities
+     */
+    private MostDamageTargetGoal mostDamageTargetGoal;
     private double lastMotionY;
-
-    /** Goal for targeting in groups of entities */
-    MostDamageTargetGoal mostDamageTargetGoal;
 
     public AbstractValkyrie(EntityType<? extends AbstractValkyrie> type, Level level) {
         super(type, level);
@@ -63,7 +65,6 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         this.targetSelector.addGoal(1, this.mostDamageTargetGoal);
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
     }
-
    
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
@@ -77,7 +78,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     }
 
     /**
-     * Handles some movement logic for the valkyrie.
+     * Handles some movement logic for the Valkyrie.
      */
     @Override
     public void tick() {
@@ -85,31 +86,19 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         if (this.isOnGround()) {
             this.setEntityOnGround(true);
         }
-
-        double motionY = this.getDeltaMovement().y;
-
-        if (!this.onGround && Math.abs(motionY - this.lastMotionY) > 0.07 && Math.abs(motionY - this.lastMotionY) < 0.09) {
+        double motionY = this.getDeltaMovement().y();
+        if (!this.isOnGround() && Math.abs(motionY - this.lastMotionY) > 0.07 && Math.abs(motionY - this.lastMotionY) < 0.09) {
             this.setDeltaMovement(this.getDeltaMovement().add(0, 0.055, 0));
         }
     }
 
-    @Override
-    public void travel(Vec3 motion) {
-        this.lastMotionY = this.getDeltaMovement().y;
-        super.travel(motion);
-    }
-
-    @Override
-    protected float getFlyingSpeed() {
-        return this.getSpeed() * 0.21600002F;
-    }
-
     /**
-     * Increments the teleport timer.
+     * Handles some motion tracking for the Valkyrie.
      */
     @Override
-    public void customServerAiStep() {
-        super.customServerAiStep();
+    public void travel(Vec3 motion) {
+        this.lastMotionY = this.getDeltaMovement().y();
+        super.travel(motion);
     }
 
     @Override
@@ -118,78 +107,49 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         this.setEntityOnGround(false);
     }
 
-    /*@Override
-    protected float getJumpPower() {
-        return 0.6F * this.getBlockJumpFactor();
-    }*/
-
-    /*@Override
-    public void knockback(double pStrength, double pX, double pZ) {
-        net.minecraftforge.event.entity.living.LivingKnockBackEvent event = net.minecraftforge.common.ForgeHooks.onLivingKnockBack(this, (float) pStrength, pX, pZ);
-        if(event.isCanceled()) return;
-        pStrength = event.getStrength();
-        pX = event.getRatioX();
-        pZ = event.getRatioZ();
-        pStrength *= 1.0D - this.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
-        if (!(pStrength <= 0.0D)) {
-            this.hasImpulse = true;
-            Vec3 vec3 = this.getDeltaMovement();
-            Vec3 vec31 = (new Vec3(pX, 0.0D, pZ)).normalize().scale(pStrength);
-            this.setDeltaMovement(vec3.x / 2.0D - vec31.x, this.onGround ? 0.4D : vec3.y, vec3.z / 2.0D - vec31.z);
-        }
-    }*/
-
-    @Override
-    protected boolean canRide(Entity vehicle) {
-        return false;
-    }
-
     /**
-     * The valkyrie will be provoked to attack the player if attacked.
+     * The Valkyrie will be provoked to attack the player if attacked.
+     * @param source The {@link DamageSource}.
+     * @param amount The {@link Float} amount of damage.
+     * @return Whether the entity was hurt, as a {@link Boolean}.
      */
     @Override
-    public boolean hurt(DamageSource source, float pDamageAmount) {
-        boolean result = super.hurt(source, pDamageAmount);
-        if (!this.level.isClientSide && result && source.getEntity() instanceof LivingEntity living) {
-            this.mostDamageTargetGoal.addAggro(living, pDamageAmount);
+    public boolean hurt(DamageSource source, float amount) {
+        boolean result = super.hurt(source, amount);
+        if (!this.getLevel().isClientSide() && result && source.getEntity() instanceof LivingEntity living) {
+            this.mostDamageTargetGoal.addAggro(living, amount);
         }
         return result;
     }
 
     /**
-     * Spawns explosion particles.
-     */
-    public void spawnExplosionParticles() {
-        if (!this.level.isClientSide) {
-            this.level.broadcastEntityEvent(this, (byte) 70);
-        }
-    }
-
-    /**
-     * Teleports near a target outside of a specified radius. Returns false if it fails.
+     * Teleports near a target outside a specified radius.
+     * @return Whether the teleportation succeeded, as a {@link Boolean}.
      */
     protected boolean teleportAroundTarget(Entity target) {
-        Vec2 targetVec = new Vec2((this.random.nextFloat() - 0.5F), (this.random.nextFloat() - 0.5F)).normalized();
+        Vec2 targetVec = new Vec2(this.getRandom().nextFloat() - 0.5F, this.getRandom().nextFloat() - 0.5F).normalized();
         double x = target.getX() + targetVec.x * 7;
         double y = target.getY();
         double z = target.getZ() + targetVec.y * 7;
-        BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos(x, y, z);
-
-        while(blockpos$mutableblockpos.getY() > this.level.getMinBuildHeight() && !this.level.getBlockState(blockpos$mutableblockpos).getMaterial().blocksMotion()) {
-            blockpos$mutableblockpos.move(Direction.DOWN);
+        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos(x, y, z);
+        while (mutableBlockPos.getY() > this.getLevel().getMinBuildHeight() && !this.getLevel().getBlockState(mutableBlockPos).getMaterial().blocksMotion()) {
+            mutableBlockPos.move(Direction.DOWN);
         }
 
-        BlockState blockstate = this.level.getBlockState(blockpos$mutableblockpos);
-        boolean isValidSpot = blockstate.is(AetherTags.Blocks.VALKYRIE_TELEPORTABLE_ON);
+        BlockState blockState = this.getLevel().getBlockState(mutableBlockPos);
+        boolean isValidSpot = blockState.is(AetherTags.Blocks.VALKYRIE_TELEPORTABLE_ON); // Valkyries can only teleport within the Silver Dungeon.
         return isValidSpot && this.teleport(x, y, z);
     }
 
     /**
-     * Teleports to the specified position. Returns false if it fails.
+     * Teleports to the specified position.
+     * @return Whether the teleportation succeeded, as a {@link Boolean}.
      */
-    protected boolean teleport(double pX, double pY, double pZ) {
-        ValkyrieTeleportEvent event = AetherEventDispatch.onValkyrieTeleport(this, pX, pY, pZ);
-        if (event.isCanceled()) return false;
+    protected boolean teleport(double x, double y, double z) {
+        ValkyrieTeleportEvent event = AetherEventDispatch.onValkyrieTeleport(this, x, y, z);
+        if (event.isCanceled()) {
+            return false;
+        }
         boolean flag = this.randomTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ(), false);
         if (flag) {
             this.spawnExplosionParticles();
@@ -198,20 +158,49 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     }
 
     /**
-     * Sends a message to the player who interacted with the valkyrie.
+     * Spawn explosion particles in {@link AbstractValkyrie#handleEntityEvent(byte)}.
      */
-    protected void chatItUp(Player player, Component message) {
+    public void spawnExplosionParticles() {
+        if (!this.getLevel().isClientSide()) {
+            this.getLevel().broadcastEntityEvent(this, (byte) 70);
+        }
+    }
+
+    /**
+     * Sends a message to the player who interacted with the Valkyrie.
+     */
+    protected void chat(Player player, Component message) {
         player.sendSystemMessage(message);
     }
 
+    /**
+     * @return Whether this entity has been set as on the ground, as a {@link Boolean} value.
+     */
     @Override
     public boolean isEntityOnGround() {
-        return this.entityData.get(DATA_ENTITY_ON_GROUND_ID);
+        return this.getEntityData().get(DATA_ENTITY_ON_GROUND_ID);
+    }
+
+    /**
+     * Sets whether this entity is on the ground.
+     * @param onGround The {@link Boolean} value.
+     */
+    @Override
+    public void setEntityOnGround(boolean onGround) {
+        this.getEntityData().set(DATA_ENTITY_ON_GROUND_ID, onGround);
+    }
+
+    /**
+     * @return A {@link Float} for the midair speed of this entity.
+     */
+    @Override
+    protected float getFlyingSpeed() {
+        return this.getSpeed() * 0.216F;
     }
 
     @Override
-    public void setEntityOnGround(boolean onGround) {
-        this.entityData.set(DATA_ENTITY_ON_GROUND_ID, onGround);
+    protected boolean canRide(Entity vehicle) {
+        return false;
     }
 
     @Override
@@ -236,8 +225,9 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     public static class ValkyrieTeleportGoal extends Goal {
         private final AbstractValkyrie valkyrie;
         protected int teleportTimer;
-        public ValkyrieTeleportGoal(AbstractValkyrie mob) {
-            this.valkyrie = mob;
+
+        public ValkyrieTeleportGoal(AbstractValkyrie valkyrie) {
+            this.valkyrie = valkyrie;
             this.teleportTimer = this.valkyrie.getRandom().nextInt(200);
         }
 
@@ -251,8 +241,8 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
             if (this.teleportTimer++ < 450) {
                 return;
             }
-            if (this.valkyrie.getTarget() != null && this.valkyrie.teleportAroundTarget(valkyrie.getTarget())) {
-                this.teleportTimer = this.valkyrie.random.nextInt(40);
+            if (this.valkyrie.getTarget() != null && this.valkyrie.teleportAroundTarget(this.valkyrie.getTarget())) {
+                this.teleportTimer = this.valkyrie.getRandom().nextInt(40);
             } else {
                 this.teleportTimer -= 20;
             }
@@ -272,21 +262,21 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         private final double speedModifier;
         private int flyingTicks;
 
-        public LungeGoal(AbstractValkyrie mob, double speedModifier) {
-            this.valkyrie = mob;
+        public LungeGoal(AbstractValkyrie valkyrie, double speedModifier) {
+            this.valkyrie = valkyrie;
             this.speedModifier = speedModifier;
             this.setFlags(EnumSet.of(Flag.MOVE));
         }
 
         @Override
         public boolean canUse() {
-            return !this.valkyrie.onGround;
+            return !this.valkyrie.isOnGround();
         }
 
         @Override
         public void tick() {
             LivingEntity target = this.valkyrie.getTarget();
-            double motionY = this.valkyrie.getDeltaMovement().y;
+            double motionY = this.valkyrie.getDeltaMovement().y();
             if (target != null) {
                 if (motionY < 0.2 && this.valkyrie.lastMotionY >= 0.2 && this.valkyrie.distanceTo(target) <= 16) {
                     double x = target.getX() - this.valkyrie.getX();
@@ -301,19 +291,19 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
                 if (this.flyingTicks > 0) {
                     this.flyingTicks--;
                     double fallSpeed;
-                    AttributeInstance gravity = this.valkyrie.getAttribute(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get());
+                    AttributeInstance gravity = this.valkyrie.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
                     if (gravity != null) {
                         fallSpeed = Math.max(gravity.getValue() * -0.625, -0.275);
                     } else {
                         fallSpeed = -0.275;
                     }
                     if (motionY < fallSpeed) {
-                        this.valkyrie.setDeltaMovement(this.valkyrie.getDeltaMovement().x, fallSpeed, this.valkyrie.getDeltaMovement().z);
+                        this.valkyrie.setDeltaMovement(this.valkyrie.getDeltaMovement().x(), fallSpeed, this.valkyrie.getDeltaMovement().z());
                         this.valkyrie.setEntityOnGround(false);
                     }
                 }
                 Vec3 position = target.position();
-                this.valkyrie.getMoveControl().setWantedPosition(position.x, position.y, position.z, this.speedModifier);
+                this.valkyrie.getMoveControl().setWantedPosition(position.x(), position.y(), position.z(), this.speedModifier);
             }
         }
 

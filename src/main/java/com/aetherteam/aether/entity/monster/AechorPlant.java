@@ -197,12 +197,12 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
 
     /**
      * Spawns particles when the Aechor Plant's hurt animation is complete.
-     * @param damageSource The {@link DamageSource}.
+     * @param source The {@link DamageSource}.
      * @param amount The {@link Float} amount of damage.
      * @return Whether the entity was hurt, as a {@link Boolean}.
      */
     @Override
-    public boolean hurt(DamageSource damageSource, float amount) {
+    public boolean hurt(DamageSource source, float amount) {
         if (this.hurtTime == 0) {
             for (int i = 0; i < 8; ++i) {
                 double d1 = this.getX() + (double) (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.5;
@@ -213,7 +213,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
                 this.getLevel().addParticle(ParticleTypes.PORTAL, d1, d2, d3, d4, 0.25, d5);
             }
         }
-        return super.hurt(damageSource, amount);
+        return super.hurt(source, amount);
     }
 
     /**

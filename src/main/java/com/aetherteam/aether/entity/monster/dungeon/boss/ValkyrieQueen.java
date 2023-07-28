@@ -286,7 +286,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     public boolean doHurtTarget(Entity pEntity) {
         boolean result = super.doHurtTarget(pEntity);
         if (pEntity instanceof ServerPlayer player && player.getHealth() <= 0) {
-            this.chatItUp(player, Component.translatable("gui.aether.queen.dialog.playerdeath"));
+            this.chat(player, Component.translatable("gui.aether.queen.dialog.playerdeath"));
         }
         return result;
     }
@@ -359,7 +359,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * Sends a message to the player who interacted with the valkyrie.
      */
     @Override
-    protected void chatItUp(Player player, Component message) {
+    protected void chat(Player player, Component message) {
         player.sendSystemMessage(Component.literal("[").append(this.getBossName().copy().withStyle(ChatFormatting.YELLOW)).append("]: ").append(message));
     }
 
@@ -368,7 +368,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      */
     protected void chatWithNearby(Component message) {
         AABB room = this.dungeon == null ? this.getBoundingBox().inflate(16) : this.dungeon.roomBounds();
-        this.level.getNearbyPlayers(NON_COMBAT, this, room).forEach(player -> this.chatItUp(player, message));
+        this.level.getNearbyPlayers(NON_COMBAT, this, room).forEach(player -> this.chat(player, message));
     }
 
     /**
@@ -529,11 +529,11 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     public void handleNpcInteraction(Player player, byte interactionID) {
         switch (interactionID) {
             case 0: // Responds to the player's question of where they are.
-                this.chatItUp(player, Component.translatable("gui.aether.queen.dialog.answer"));
+                this.chat(player, Component.translatable("gui.aether.queen.dialog.answer"));
                 break;
             case 1: // Tells the players nearby to ready up for a fight.
                 if (level.getDifficulty() == Difficulty.PEACEFUL) {
-                    this.chatItUp(player, Component.translatable("gui.aether.queen.dialog.peaceful"));
+                    this.chat(player, Component.translatable("gui.aether.queen.dialog.peaceful"));
                 } else {
                     if (player.getInventory().countItem(AetherItems.VICTORY_MEDAL.get()) >= 10) {
                         this.readyUp();
@@ -551,16 +551,16 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                             if (count <= 0) break;
                         }
                     } else {
-                        this.chatItUp(player, Component.translatable("gui.aether.queen.dialog.no_medals"));
+                        this.chat(player, Component.translatable("gui.aether.queen.dialog.no_medals"));
                     }
                 }
                 break;
             case 2:
-                this.chatItUp(player, Component.translatable("gui.aether.queen.dialog.deny_fight"));
+                this.chat(player, Component.translatable("gui.aether.queen.dialog.deny_fight"));
                 break;
             case 3:
             default: //Goodbye.
-                this.chatItUp(player, Component.translatable("gui.aether.queen.dialog.goodbye"));
+                this.chat(player, Component.translatable("gui.aether.queen.dialog.goodbye"));
                 break;
         }
         this.setConversingPlayer(null);

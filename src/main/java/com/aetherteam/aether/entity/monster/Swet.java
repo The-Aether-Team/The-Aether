@@ -446,7 +446,7 @@ public class Swet extends Slime implements MountableMob {
     // We don't use the size data, so we don't need this method to run from Slime.
 
     /**
-     * This method is overriden to be empty to remove the behavior from {@link Slime#setSize(int, boolean)}.
+     * This method is overridden to be empty to remove the behavior from {@link Slime#setSize(int, boolean)}.
      * @param size The size {@link Integer}.
      * @param resetHealth Whether to reset the entity's health, as a {@link Boolean}.
      */

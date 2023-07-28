@@ -42,27 +42,38 @@ public class FireMinion extends Monster {
                 .add(Attributes.MAX_HEALTH, 40.0);
     }
 
+    /**
+     * Handles particle spawning for Fire Minions.
+     */
     @Override
     public void tick() {
         super.tick();
-        ParticleOptions particle = ParticleTypes.FLAME;
-        if (this.hasCustomName()) {
-            String name = this.getName().getString();
-            if (name.equals("JorgeQ") || name.equals("Jorge_SunSpirit")) {
-                particle = ParticleTypes.ITEM_SNOWBALL;
+        if (this.getLevel().isClientSide()) {
+            ParticleOptions particle = ParticleTypes.FLAME;
+            if (this.hasCustomName()) {
+                String name = this.getName().getString();
+                if (name.equals("JorgeQ") || name.equals("Jorge_SunSpirit")) { // Frozen Fire Minion easter egg.
+                    particle = ParticleTypes.ITEM_SNOWBALL;
+                }
             }
-        }
-        for (int i = 0; i < 1; i++) {
-            double d = this.random.nextFloat() - 0.5F;
-            double d1 = this.random.nextFloat();
-            double d2 = this.random.nextFloat() - 0.5F;
-            double x = this.getX() + d * d1;
-            double y = this.getBoundingBox().minY + d1 + 0.5;
-            double z = this.getZ() + d2 * d1;
-            this.level.addParticle(particle, x, y, z, 0.0, -0.075, 0.0);
+            for (int i = 0; i < 1; i++) {
+                double d = this.getRandom().nextFloat() - 0.5F;
+                double d1 = this.getRandom().nextFloat();
+                double d2 = this.getRandom().nextFloat() - 0.5F;
+                double x = this.getX() + d * d1;
+                double y = this.getBoundingBox().minY + d1 + 0.5;
+                double z = this.getZ() + d2 * d1;
+                this.getLevel().addParticle(particle, x, y, z, 0.0, -0.075, 0.0);
+            }
         }
     }
 
+    /**
+     * Increases damage from Snowballs.
+     * @param source The {@link DamageSource}.
+     * @param amount The {@link Float} amount of damage.
+     * @return Whether the entity was hurt, as a {@link Boolean}.
+     */
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (source.getDirectEntity() instanceof Snowball) {
@@ -71,6 +82,11 @@ public class FireMinion extends Monster {
         return super.hurt(source, amount);
     }
 
+    /**
+     * Prevents Fire Minions from being damaged by the Sun Spirit.
+     * @param source The {@link DamageSource}.
+     * @return Whether the Fire Minion is invulnerable to the damage, as a {@link Boolean}.
+     */
     @Override
     public boolean isInvulnerableTo(DamageSource source) {
         return super.isInvulnerableTo(source) || source.getEntity() != null && source.getEntity().getType() == AetherEntityTypes.SUN_SPIRIT.get();
