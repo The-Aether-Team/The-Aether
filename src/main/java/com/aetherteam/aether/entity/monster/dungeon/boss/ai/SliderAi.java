@@ -75,12 +75,16 @@ public class SliderAi {
         }
 
         Brain<?> brain = slider.getBrain();
-        Optional<Object2DoubleMap<LivingEntity>> optional = brain.getMemory(AetherMemoryModuleTypes.AGGRO_TRACKER.get());
-        if (optional.isPresent()) {
-            Object2DoubleMap<LivingEntity> attackers = optional.get();
+        Optional<Object2DoubleMap<LivingEntity>> aggroTracker = brain.getMemory(AetherMemoryModuleTypes.AGGRO_TRACKER.get());
+        Optional<LivingEntity> attackTarget = brain.getMemory(MemoryModuleType.ATTACK_TARGET);
+        if (aggroTracker.isPresent()) {
+            Object2DoubleMap<LivingEntity> attackers = aggroTracker.get();
             attackers.forEach((target, oldAggro) -> {
                 double aggro = oldAggro - 1;
                 if (!target.isAlive() || (aggro <= 0 && !Sensor.isEntityAttackable(slider, target) || (target instanceof Player player && (player.isCreative() || player.isSpectator())))) {
+                    if (attackTarget.isPresent() && attackTarget.get() == target) {
+                        brain.eraseMemory(MemoryModuleType.ATTACK_TARGET);
+                    }
                     attackers.removeDouble(target);
                 } else {
                     attackers.put(target, aggro);
