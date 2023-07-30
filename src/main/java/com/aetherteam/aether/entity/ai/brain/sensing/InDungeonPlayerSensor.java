@@ -19,7 +19,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * [CODE COPY] - PlayerSensor
+ * [CODE COPY] - {@link net.minecraft.world.entity.ai.sensing.PlayerSensor}.<br><br>
  * Changed to track players within the dungeon instead of within a 16 block radius.
  */
 public class InDungeonPlayerSensor<T extends Mob & AetherBossMob<T>> extends Sensor<T> {
@@ -28,7 +28,10 @@ public class InDungeonPlayerSensor<T extends Mob & AetherBossMob<T>> extends Sen
 
     @Override
     protected void doTick(ServerLevel level, T entity) {
-        List<Player> targets = level.players().stream().filter(EntitySelector.NO_SPECTATORS).filter((target) -> entity.getDungeon() != null ? entity.getDungeon().isPlayerTracked(target) : entity.closerThan(target, 16.0)).sorted(Comparator.comparingDouble(entity::distanceToSqr)).collect(Collectors.toList());
+        List<Player> targets = level.players().stream().filter(EntitySelector.NO_SPECTATORS).filter((target) -> entity.getDungeon() != null
+                ? entity.getDungeon().isPlayerTracked(target)
+                : entity.closerThan(target, 16.0)).sorted(Comparator.comparingDouble(entity::distanceToSqr)).collect(Collectors.toList());
+
         Brain<?> brain = entity.getBrain();
         brain.setMemory(MemoryModuleType.NEAREST_PLAYERS, targets);
 
@@ -44,11 +47,11 @@ public class InDungeonPlayerSensor<T extends Mob & AetherBossMob<T>> extends Sen
         return ImmutableSet.of(MemoryModuleType.NEAREST_PLAYERS, MemoryModuleType.NEAREST_VISIBLE_PLAYER, MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER);
     }
 
-    public static boolean isEntityTargetable(LivingEntity pLivingEntity, LivingEntity pTarget) {
-        return TARGET_CONDITIONS_IGNORE_INVISIBILITY_TESTING.test(pLivingEntity, pTarget);
+    public static boolean isEntityTargetable(LivingEntity livingEntity, LivingEntity target) {
+        return TARGET_CONDITIONS_IGNORE_INVISIBILITY_TESTING.test(livingEntity, target);
     }
 
-    public static boolean isEntityAttackable(LivingEntity pAttacker, LivingEntity pTarget) {
-        return ATTACK_TARGET_CONDITIONS_IGNORE_INVISIBILITY_TESTING.test(pAttacker, pTarget);
+    public static boolean isEntityAttackable(LivingEntity attacker, LivingEntity target) {
+        return ATTACK_TARGET_CONDITIONS_IGNORE_INVISIBILITY_TESTING.test(attacker, target);
     }
 }

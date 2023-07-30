@@ -4,9 +4,12 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 
-public class FallingMovementController extends MoveControl {
-    public FallingMovementController(Mob mobEntity) {
-        super(mobEntity);
+/**
+ * A move control that allows an entity to choose a path after it has jumped when it is falling.
+ */
+public class FallingMoveControl extends MoveControl {
+    public FallingMoveControl(Mob mob) {
+        super(mob);
     }
 
     @Override

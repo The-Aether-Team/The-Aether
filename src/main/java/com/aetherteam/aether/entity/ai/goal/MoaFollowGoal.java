@@ -8,6 +8,10 @@ import net.minecraft.world.item.crafting.Ingredient;
 
 import javax.annotation.Nullable;
 
+/**
+ * [CODE COPY] - {@link TemptGoal}.
+ * Modified to handle following a player by checking {@link Moa#getFollowing()} instead of checking for a temptation item.
+ */
 public class MoaFollowGoal extends TemptGoal {
     private static final TargetingConditions TEMP_TARGETING = TargetingConditions.forNonCombat().range(10.0).ignoreLineOfSight();
     private final TargetingConditions targetingConditions;

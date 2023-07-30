@@ -3,7 +3,7 @@ package com.aetherteam.aether.entity.passive;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.AetherEntityTypes;
-import com.aetherteam.aether.entity.ai.controller.FallingMovementController;
+import com.aetherteam.aether.entity.ai.controller.FallingMoveControl;
 import com.aetherteam.aether.entity.ai.goal.EatAetherGrassGoal;
 import com.aetherteam.aether.entity.ai.goal.FallingRandomStrollGoal;
 import com.aetherteam.aether.entity.ai.navigator.FallPathNavigation;
@@ -104,7 +104,7 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
 
     public Sheepuff(EntityType<? extends Sheepuff> type, Level level) {
         super(type, level);
-        this.moveControl = new FallingMovementController(this);
+        this.moveControl = new FallingMoveControl(this);
         this.fallNavigation = new FallPathNavigation(this, level);
         this.groundNavigation = new GroundPathNavigation(this, level);
     }

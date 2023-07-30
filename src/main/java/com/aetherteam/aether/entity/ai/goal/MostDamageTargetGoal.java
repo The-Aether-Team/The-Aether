@@ -4,7 +4,6 @@ import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleOpenHashMap;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
@@ -33,18 +32,17 @@ public class MostDamageTargetGoal extends TargetGoal {
     private final float calmDownRate;
     private int aiTicks;
 
-    public MostDamageTargetGoal(Mob pMob) {
-        this(pMob, 1F);
+    public MostDamageTargetGoal(Mob mob) {
+        this(mob, 1.0F);
     }
 
-    public MostDamageTargetGoal(Mob pMob, float calmDownRate) {
-        super(pMob, true);
+    public MostDamageTargetGoal(Mob mob, float calmDownRate) {
+        super(mob, true);
         this.setFlags(EnumSet.of(Flag.TARGET));
         this.calmDownRate = calmDownRate;
     }
 
     /**
-     * @see HurtByTargetGoal#canUse()
      * This is where we'll set the data in this goal.
      */
     @Override
@@ -108,9 +106,9 @@ public class MostDamageTargetGoal extends TargetGoal {
      * Returns the entity within the targeting range that has dealt the most damage.
      */
     private LivingEntity getStrongestAttacker() {
-        Map.Entry<LivingEntity, Double> entry = attackers.object2DoubleEntrySet().stream().filter((entityEntry) ->
-                this.canAttack(entityEntry.getKey(), HURT_BY_TARGETING)
-        ).max(Comparator.comparingDouble(Map.Entry::getValue)).orElse(null);
+        Map.Entry<LivingEntity, Double> entry = attackers.object2DoubleEntrySet().stream()
+                .filter((entityEntry) -> this.canAttack(entityEntry.getKey(), HURT_BY_TARGETING))
+                .max(Comparator.comparingDouble(Map.Entry::getValue)).orElse(null);
         if (entry == null) {
             return null;
         } else {

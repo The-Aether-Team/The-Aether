@@ -7,30 +7,33 @@ import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 
+/**
+ * A stroll goal that is capable of looking for land positions to target while falling.
+ */
 public class FallingRandomStrollGoal extends RandomStrollGoal {
     protected final float probability;
 
-    public FallingRandomStrollGoal(PathfinderMob creatureEntity, double speed) {
-        this(creatureEntity, speed, 120, 0.001F);
+    public FallingRandomStrollGoal(PathfinderMob mob, double speed) {
+        this(mob, speed, 120, 0.001F);
     }
 
-    public FallingRandomStrollGoal(PathfinderMob creatureEntity, double speed, int interval) {
-        this(creatureEntity, speed, interval, 0.001F);
+    public FallingRandomStrollGoal(PathfinderMob mob, double speed, int interval) {
+        this(mob, speed, interval, 0.001F);
     }
 
-    public FallingRandomStrollGoal(PathfinderMob creatureEntity, double speed, int interval, float probability) {
-        super(creatureEntity, speed, interval);
+    public FallingRandomStrollGoal(PathfinderMob mob, double speed, int interval, float probability) {
+        super(mob, speed, interval);
         this.probability = probability;
     }
 
     @Nullable
     protected Vec3 getPosition() {
         if (this.mob.isInWaterOrBubble()) {
-            Vec3 vector3d = LandRandomPos.getPos(this.mob, 15, this.mob.getMaxFallDistance());
-            return vector3d == null ? super.getPosition() : vector3d;
+            Vec3 vec3 = LandRandomPos.getPos(this.mob, 15, this.mob.getMaxFallDistance());
+            return vec3 == null ? super.getPosition() : vec3;
         } else if (!this.mob.isOnGround()) {
-            Vec3 vector3d = LandRandomPos.getPos(this.mob, 12, this.mob.getMaxFallDistance());
-            return vector3d != null ? vector3d : super.getPosition();
+            Vec3 vec3 = LandRandomPos.getPos(this.mob, 12, this.mob.getMaxFallDistance());
+            return vec3 != null ? vec3 : super.getPosition();
         } else {
             return this.mob.getRandom().nextFloat() >= this.probability ? LandRandomPos.getPos(this.mob, 10, this.mob.getMaxFallDistance()) : super.getPosition();
         }

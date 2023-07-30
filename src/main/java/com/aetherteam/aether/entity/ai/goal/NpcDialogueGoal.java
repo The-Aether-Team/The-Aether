@@ -13,6 +13,7 @@ import java.util.EnumSet;
  */
 public class NpcDialogueGoal<T extends Mob & NpcDialogue> extends LookAtPlayerGoal {
     private final T npc;
+
     public NpcDialogueGoal(T npc) {
         super(npc, Player.class, 8.0F);
         this.npc = npc;
@@ -34,7 +35,7 @@ public class NpcDialogueGoal<T extends Mob & NpcDialogue> extends LookAtPlayerGo
     }
 
     /**
-     * Stops the npc from moving
+     * Stops the NPC from moving.
      */
     @Override
     public void start() {
@@ -43,7 +44,7 @@ public class NpcDialogueGoal<T extends Mob & NpcDialogue> extends LookAtPlayerGo
     }
 
     /**
-     * Makes the npc stop talking to the player.
+     * Makes the NPC stop talking to the player.
      */
     @Override
     public void stop() {
