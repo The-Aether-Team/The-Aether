@@ -6,10 +6,8 @@ import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfigur
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 
 public record AercloudConfiguration(int bounds, BlockStateProvider block) implements FeatureConfiguration {
-
-    public static final Codec<AercloudConfiguration> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final Codec<AercloudConfiguration> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
             Codec.INT.fieldOf("bounds").forGetter(AercloudConfiguration::bounds),
             BlockStateProvider.CODEC.fieldOf("blocks").forGetter(AercloudConfiguration::block)
     ).apply(instance, AercloudConfiguration::new));
-
 }
