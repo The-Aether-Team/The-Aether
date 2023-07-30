@@ -690,8 +690,6 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addGuiText("jei.block_placement_ban", "Block Place Prevention");
 
 
-        this.addGuiText("boss.message.far", "You must be in the boss room to interact.");
-
         this.addGuiText("slider.title", "the Slider");
         this.addGuiText("slider.message.attack.invalid", "Hmm. Perhaps I need to attack it with a Pickaxe?");
 

@@ -1,12 +1,11 @@
 package com.aetherteam.aether.block.dungeon;
 
 import com.aetherteam.aether.client.particle.AetherParticleTypes;
+import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.ai.AetherBlockPathTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -89,12 +88,7 @@ public class DoorwayBlock extends Block {
             Level level = context.getLevel();
             BlockPos pos = context.getClickedPos();
             for (int i = 0; i < 2; i++) {
-                double a = pos.getX() + 0.5 + (double) (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.375;
-                double b = pos.getY() + 0.5 + (double) (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.375;
-                double c = pos.getZ() + 0.5 + (double) (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.375;
-                if (level instanceof ServerLevel serverLevel) {
-                    serverLevel.sendParticles(ParticleTypes.POOF, a, b, c, 1, 0.0, 0.0, 0.0, 0.0);
-                }
+                EntityUtil.spawnRemovalParticles(level, pos);
             }
         }
         return flag;

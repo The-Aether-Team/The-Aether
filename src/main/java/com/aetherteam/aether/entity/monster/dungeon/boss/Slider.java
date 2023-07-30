@@ -42,16 +42,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
-import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.NetworkHooks;
+import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
+import java.util.function.Predicate;
 
 public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enemy, IEntityAdditionalSpawnData {
     public static final EntityDataAccessor<Boolean> DATA_AWAKE_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.BOOLEAN);
@@ -60,18 +58,21 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     public static final EntityDataAccessor<Float> DATA_HURT_ANGLE_X_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.FLOAT);
     public static final EntityDataAccessor<Float> DATA_HURT_ANGLE_Z_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.FLOAT);
 
-    private BossRoomTracker<Slider> bronzeDungeon;
+    /**
+     * Boss health bar manager
+     */
     private final ServerBossEvent bossFight;
+    private BossRoomTracker<Slider> bronzeDungeon;
 
     private int chatCooldown;
 
-    public Slider(EntityType<? extends Slider> entityType, Level level) {
-        super(entityType, level);
+    public Slider(EntityType<? extends Slider> type, Level level) {
+        super(type, level);
+        this.moveControl = new BlankMoveControl(this);
         this.bossFight = new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
-        this.bossFight.setVisible(false);
+        this.setBossFight(false);
         this.xpReward = XP_REWARD_BOSS;
         this.setRot(0, 0);
-        this.moveControl = new BlankMoveControl(this);
         this.setPersistenceRequired();
     }
 
@@ -81,21 +82,21 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     }
 
     /**
-     * Generates a name for the boss and adjusts its position.
+     * Generates a name for the boss and adjusts its position.<br><br>
+     * Warning for "deprecation" is suppressed because this is fine to override.
+     * @param level The {@link ServerLevelAccessor} where the entity is spawned.
+     * @param difficulty The {@link DifficultyInstance} of the game.
+     * @param reason The {@link MobSpawnType} reason.
+     * @param spawnData The {@link SpawnGroupData}.
+     * @param tag The {@link CompoundTag} to apply to this entity.
+     * @return The {@link SpawnGroupData} to return.
      */
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
-        this.alignSpawnPos();
-        SpawnGroupData data = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
+    @SuppressWarnings("deprecation")
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
         this.setBossName(BossNameGenerator.generateSliderName(this.getRandom()));
-        return data;
-    }
-
-    /**
-     * Aligns the slider with the blocks below it
-     */
-    protected void alignSpawnPos() {
-        this.moveTo(Mth.floor(this.getX()), this.getY(), Mth.floor(this.getZ()));
+        this.moveTo(Mth.floor(this.getX()), this.getY(), Mth.floor(this.getZ())); // Aligns the Slider with the blocks below it.
+        return spawnData;
     }
 
     public static AttributeSupplier.Builder createMobAttributes() {
@@ -107,13 +108,16 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     @Override
     public void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(DATA_AWAKE_ID, false);
-        this.entityData.define(DATA_BOSS_NAME_ID, Component.literal("Slider"));
-        this.entityData.define(DATA_HURT_ANGLE_ID, 0.0F);
-        this.entityData.define(DATA_HURT_ANGLE_X_ID, 0.0F);
-        this.entityData.define(DATA_HURT_ANGLE_Z_ID, 0.0F);
+        this.getEntityData().define(DATA_AWAKE_ID, false);
+        this.getEntityData().define(DATA_BOSS_NAME_ID, Component.literal("Slider"));
+        this.getEntityData().define(DATA_HURT_ANGLE_ID, 0.0F);
+        this.getEntityData().define(DATA_HURT_ANGLE_X_ID, 0.0F);
+        this.getEntityData().define(DATA_HURT_ANGLE_Z_ID, 0.0F);
     }
 
+    /**
+     * Handles stopping target tracking, liquid evaporation, and chat message cooldown.
+     */
     @Override
     public void tick() {
         super.tick();
@@ -121,37 +125,58 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
             this.setTarget(null);
         }
         this.evaporate();
-
         if (this.getChatCooldown() > 0) {
             this.chatCooldown--;
         }
     }
 
-    @SuppressWarnings("unchecked")
+    /**
+     * Evaporates liquid blocks.
+     * @see AetherBossMob#evaporate(Mob, BlockPos, BlockPos, Predicate)
+     */
+    private void evaporate() {
+        Pair<BlockPos, BlockPos> minMax = this.getDefaultBounds(this);
+        AetherBossMob.super.evaporate(this, minMax.getLeft(), minMax.getRight(), (blockState) -> true);
+    }
+
+    /**
+     * Handles boss fight and health tracking, dungeon tracking, and brain ticking.<br><br>
+     * Warning for "unchecked" is suppressed because the brain is always a Slider brain.
+     */
     @Override
+    @SuppressWarnings("unchecked")
     public void customServerAiStep() {
         super.customServerAiStep();
         this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
         this.trackDungeon();
-        Brain<Slider> brain = (Brain<Slider>) this.getBrain();
-        brain.tick((ServerLevel)this.level, this);
-        SliderAi.updateActivity(this);
-        SliderAi.tick(this);
+        if (this.getLevel() instanceof ServerLevel serverLevel) {
+            Brain<Slider> brain = (Brain<Slider>) this.getBrain();
+            brain.tick(serverLevel, this);
+            SliderAi.updateActivity(this);
+            SliderAi.tick(this);
+        }
     }
 
+    /**
+     * Handles damaging the Slider or playing a chat message if the player attempts to damage with the wrong tool.
+     * @param source The {@link DamageSource}.
+     * @param amount The {@link Float} amount of damage.
+     * @return Whether the entity was hurt, as a {@link Boolean}.
+     */
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             super.hurt(source, amount);
-        } else if (source.getDirectEntity() instanceof LivingEntity attacker && this.level.getDifficulty() != Difficulty.PEACEFUL) {
-            if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoomInterior(attacker)) {
-                if (attacker.getMainHandItem().is(AetherTags.Items.SLIDER_DAMAGING_ITEMS)) {
+        } else if (source.getDirectEntity() instanceof LivingEntity attacker && this.getLevel().getDifficulty() != Difficulty.PEACEFUL) {
+            if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoomInterior(attacker)) { // Only allow damage within the boss room.
+                if (attacker.getMainHandItem().is(AetherTags.Items.SLIDER_DAMAGING_ITEMS)) { // Check for correct tool.
                     if (super.hurt(source, amount) && this.getHealth() > 0) {
                         if (!this.isBossFight()) {
                             this.start();
                         }
                         this.setDeltaMovement(this.getDeltaMovement().scale(0.75F));
 
+                        // Handle the Slider's model tilt when damaged.
                         double a = Math.abs(this.position().x() - attacker.position().x());
                         double c = Math.abs(this.position().z() - attacker.position().z());
                         if (a > c) {
@@ -169,23 +194,23 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
                         }
                         this.setHurtAngle(0.7F - (this.getHealth() / 875.0F));
 
-                        SliderAi.wasHurtBy(this, attacker, amount);
+                        SliderAi.wasHurtBy(this, attacker, amount); // AI behavior for being hurt.
 
                         return true;
                     }
                 } else {
-                    if (!this.level.isClientSide && attacker instanceof Player player) {
+                    if (!this.getLevel().isClientSide() && attacker instanceof Player player) {
                         if (this.getChatCooldown() <= 0) {
-                            this.displayInvalidToolMessage(player);
+                            player.sendSystemMessage(Component.translatable("gui.aether.slider.message.attack.invalid")); // Invalid tool.
                             this.setChatCooldown(15);
                             return false;
                         }
                     }
                 }
             } else {
-                if (!this.level.isClientSide && attacker instanceof Player player) {
+                if (!this.getLevel().isClientSide() && attacker instanceof Player player) {
                     if (this.getChatCooldown() <= 0) {
-                        this.displayTooFarMessage(player);
+                        this.displayTooFarMessage(player); // Too far from Slider
                         this.setChatCooldown(15);
                         return false;
                     }
@@ -195,27 +220,12 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         return false;
     }
 
-    public void displayInvalidToolMessage(Player player) {
-        player.sendSystemMessage(Component.translatable("gui.aether.slider.message.attack.invalid"));
-    }
-
-    @Override
-    public void die(DamageSource damageSource) {
-        this.setDeltaMovement(Vec3.ZERO);
-        this.explode();
-        if (this.level instanceof ServerLevel) {
-            this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
-            if (this.getDungeon() != null) {
-                this.getDungeon().grantAdvancements(damageSource);
-                this.tearDownRoom();
-            }
-        }
-        super.die(damageSource);
-    }
-
+    /**
+     * Awakens the boss, starts the boss fight, and closes the boss room.
+     */
     private void start() {
         if (this.getAwakenSound() != null) {
-            this.playSound(this.getAwakenSound(), 2.5F, 1.0F / (this.random.nextFloat() * 0.2F + 0.9F));
+            this.playSound(this.getAwakenSound(), 2.5F, 1.0F / (this.getRandom().nextFloat() * 0.2F + 0.9F));
         }
         this.setAwake(true);
         this.setBossFight(true);
@@ -224,34 +234,11 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         }
     }
 
-    private void evaporate() {
-        if (ForgeEventFactory.getMobGriefingEvent(this.getLevel(), this)) {
-            AABB entity = this.getBoundingBox();
-            BlockPos min = BlockPos.containing(entity.minX - 1, entity.minY - 1, entity.minZ - 1);
-            BlockPos max = BlockPos.containing(Math.ceil(entity.maxX - 1) + 1, Math.ceil(entity.maxY - 1) + 1, Math.ceil(entity.maxZ - 1) + 1);
-            for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
-                if (this.level.getBlockState(pos).getBlock() instanceof LiquidBlock) {
-                    this.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-                    this.evaporateEffects(pos);
-                } else if (!this.level.getFluidState(pos).isEmpty() && this.level.getBlockState(pos).hasProperty(BlockStateProperties.WATERLOGGED)) {
-                    this.level.setBlockAndUpdate(pos, this.level.getBlockState(pos).setValue(BlockStateProperties.WATERLOGGED, false));
-                    this.evaporateEffects(pos);
-                }
-            }
-        }
-    }
-
-    private void evaporateEffects(BlockPos pos) {
-        this.blockDestroySmoke(pos);
-        this.level.playSound(null, pos, AetherSoundEvents.WATER_EVAPORATE.get(), SoundSource.BLOCKS, 0.5F, 2.6F + (this.level.random.nextFloat() - this.level.random.nextFloat()) * 0.8F);
-    }
-
-    private void stop() {
-        this.setDeltaMovement(Vec3.ZERO);
-    }
-
+    /**
+     * Resets the boss fight.
+     */
     public void reset() {
-        this.stop();
+        this.setDeltaMovement(Vec3.ZERO);
         this.setAwake(false);
         this.setBossFight(false);
         this.setTarget(null);
@@ -263,7 +250,57 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     }
 
     /**
-     * Called on every block in the dungeon when the boss is defeated.
+     * Ends the boss fight, opens the room, and grants advancements when the boss dies.
+     * @param source The {@link DamageSource}.
+     */
+    @Override
+    public void die(DamageSource source) {
+        this.setDeltaMovement(Vec3.ZERO);
+        this.explode();
+        if (this.getLevel() instanceof ServerLevel) {
+            this.bossFight.setProgress(this.getHealth() / this.getMaxHealth()); // Forces an update to the boss health meter.
+            if (this.getDungeon() != null) {
+                this.getDungeon().grantAdvancements(source);
+                this.tearDownRoom();
+            }
+        }
+        super.die(source);
+    }
+
+    /**
+     * Explosion particles for the Slider.
+     */
+    private void explode() {
+        for (int i = 0; i < (this.getHealth() <= 0 ? 16 : 48); i++) {
+            double x = this.position().x() + (double) (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 1.5;
+            double y = this.getBoundingBox().minY + 1.75 + (double) (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 1.5;
+            double z = this.position().z() + (double) (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 1.5;
+            this.getLevel().addParticle(ParticleTypes.POOF, x, y, z, 0.0, 0.0, 0.0);
+        }
+    }
+
+    /**
+     * Disallows the Slider from receiving knockback.
+     * @param strength The {@link Double} for knockback strength.
+     * @param x The {@link Double} for knockback x-direction.
+     * @param z The {@link Double} for knockback z-direction.
+     */
+    @Override
+    public void knockback(double strength, double x, double z) { }
+
+    /**
+     * Disallows the Slider from being pushed.
+     * @param x The {@link Double} for x-motion.
+     * @param y The {@link Double} for y-motion.
+     * @param z The {@link Double} for z-motion.
+     */
+    @Override
+    public void push(double x, double y, double z) { }
+
+    /**
+     * Called on every block in the boss room when the boss is defeated.
+     * @param state The {@link BlockState} to try to convert.
+     * @return The converted {@link BlockState}.
      */
     @Override
     @Nullable
@@ -283,27 +320,9 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         return null;
     }
 
-    private void explode() {
-        for (int i = 0; i < (this.getHealth() <= 0 ? 16 : 48); i++) {
-            double x = this.position().x() + (double) (this.random.nextFloat() - this.random.nextFloat()) * 1.5;
-            double y = this.getBoundingBox().minY + 1.75 + (double) (this.random.nextFloat() - this.random.nextFloat()) * 1.5;
-            double z = this.position().z() + (double) (this.random.nextFloat() - this.random.nextFloat()) * 1.5;
-            this.level.addParticle(ParticleTypes.POOF, x, y, z, 0.0, 0.0, 0.0);
-        }
-    }
-
-    public void blockDestroySmoke(BlockPos pos) {
-        double a = pos.getX() + 0.5 + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375;
-        double b = pos.getY() + 0.5 + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375;
-        double c = pos.getZ() + 0.5 + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375;
-        if (this.level instanceof ServerLevel serverLevel) {
-            serverLevel.sendParticles(ParticleTypes.POOF, a, b, c, 1, 0.0, 0.0, 0.0, 0.0);
-        }
-    }
-
     /**
-     * Add the given player to the list of players tracking this entity. For instance, a player may track a boss in order
-     * to view its associated boss bar.
+     * Tracks the player as a part of the boss fight when the player is nearby, displaying the boss bar for them.
+     * @param player The {@link ServerPlayer}.
      */
     @Override
     public void startSeenByPlayer(ServerPlayer player) {
@@ -315,7 +334,8 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     }
 
     /**
-     * Removes the given player from the list of players tracking this entity.
+     * Tracks the player as no longer in the boss fight when the player is nearby, removing the boss bar for them.
+     * @param player The {@link ServerPlayer}.
      */
     @Override
     public void stopSeenByPlayer(ServerPlayer player) {
@@ -324,6 +344,10 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         this.bossFight.removePlayer(player);
     }
 
+    /**
+     * Adds a player to the boss fight when they've entered the dungeon.
+     * @param player The {@link Player}.
+     */
     @Override
     public void onDungeonPlayerAdded(@Nullable Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
@@ -331,6 +355,10 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         }
     }
 
+    /**
+     * Removes a player from the boss fight when they've left the dungeon.
+     * @param player The {@link Player}.
+     */
     @Override
     public void onDungeonPlayerRemoved(@Nullable Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
@@ -338,98 +366,180 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         }
     }
 
+    /**
+     * @return Whether the entity is awake, as a {@link Boolean}.
+     */
     public boolean isAwake() {
-        return this.entityData.get(DATA_AWAKE_ID);
+        return this.getEntityData().get(DATA_AWAKE_ID);
     }
 
-    public void setAwake(boolean ready) {
-        this.entityData.set(DATA_AWAKE_ID, ready);
+    /**
+     * Sets whether the entity is awake.
+     * @param awake The {@link Boolean} value.
+     */
+    public void setAwake(boolean awake) {
+        this.getEntityData().set(DATA_AWAKE_ID, awake);
     }
 
+    /**
+     * @return The {@link Component} for the boss name.
+     */
     @Override
     public Component getBossName() {
-        return this.entityData.get(DATA_BOSS_NAME_ID);
+        return this.getEntityData().get(DATA_BOSS_NAME_ID);
     }
 
+    /**
+     * Sets the {@link Component} for the boss name and in the boss fight.
+     * @param component The name {@link Component}.
+     */
     @Override
     public void setBossName(Component component) {
-        this.entityData.set(DATA_BOSS_NAME_ID, component);
+        this.getEntityData().set(DATA_BOSS_NAME_ID, component);
         this.bossFight.setName(component);
     }
 
+    /**
+     * @return The {@link Float} for the x-angle for the Slider to tilt when damaged.
+     */
     public float getHurtAngleX() {
-        return this.entityData.get(DATA_HURT_ANGLE_X_ID);
+        return this.getEntityData().get(DATA_HURT_ANGLE_X_ID);
     }
 
+    /**
+     * Sets the x-angle for the Slider to tilt when damaged.
+     * @param hurtAngleX The {@link Float} value.
+     */
     public void setHurtAngleX(float hurtAngleX) {
-        this.entityData.set(DATA_HURT_ANGLE_X_ID, hurtAngleX);
+        this.getEntityData().set(DATA_HURT_ANGLE_X_ID, hurtAngleX);
     }
 
+    /**
+     * @return The {@link Float} for the z-angle for the Slider to tilt when damaged.
+     */
     public float getHurtAngleZ() {
-        return this.entityData.get(DATA_HURT_ANGLE_Z_ID);
+        return this.getEntityData().get(DATA_HURT_ANGLE_Z_ID);
     }
 
+    /**
+     * Sets the z-angle for the Slider to tilt when damaged.
+     * @param hurtAngleZ The {@link Float} value.
+     */
     public void setHurtAngleZ(float hurtAngleZ) {
-        this.entityData.set(DATA_HURT_ANGLE_Z_ID, hurtAngleZ);
+        this.getEntityData().set(DATA_HURT_ANGLE_Z_ID, hurtAngleZ);
     }
 
+    /**
+     * @return The {@link Float} for the magnitude of the hurt angle tilt.
+     */
     public float getHurtAngle() {
-        return this.entityData.get(DATA_HURT_ANGLE_ID);
+        return this.getEntityData().get(DATA_HURT_ANGLE_ID);
     }
 
+    /**
+     * Sets the magnitude of the hurt angle tilt.
+     * @param hurtAngle The {@link Float} value.
+     */
     public void setHurtAngle(float hurtAngle) {
-        this.entityData.set(DATA_HURT_ANGLE_ID, hurtAngle);
+        this.getEntityData().set(DATA_HURT_ANGLE_ID, hurtAngle);
     }
 
+    /**
+     * @return The {@link Slider} {@link BossRoomTracker} for the Bronze Dungeon.
+     */
     @Override
     public BossRoomTracker<Slider> getDungeon() {
         return this.bronzeDungeon;
     }
 
+    /**
+     * Sets the tracker for the Bronze Dungeon.
+     * @param dungeon The {@link Slider} {@link BossRoomTracker}.
+     */
     @Override
     public void setDungeon(BossRoomTracker<Slider> dungeon) {
         this.bronzeDungeon = dungeon;
     }
 
-    @Override
-    public int getDeathScore() {
-        return this.deathScore;
-    }
-
+    /**
+     * @return Whether the boss fight is active and the boss bar is visible, as a {@link Boolean}.
+     */
     @Override
     public boolean isBossFight() {
         return this.bossFight.isVisible();
     }
 
+    /**
+     * Sets whether the boss fight is active and the boss bar is visible.
+     * @param isFighting The {@link Boolean} value.
+     */
     @Override
     public void setBossFight(boolean isFighting) {
         this.bossFight.setVisible(isFighting);
     }
 
+    /**
+     * @return The {@link Integer} for the cooldown until another chat message can display.
+     */
+    public int getChatCooldown() {
+        return this.chatCooldown;
+    }
+
+    /**
+     * Sets the cooldown for when another chat message can display.
+     * @param cooldown The {@link Integer} cooldown.
+     */
+    public void setChatCooldown(int cooldown) {
+        this.chatCooldown = cooldown;
+    }
+
+    /**
+     * @return The death score {@link Integer} for the awarded kill score from this entity.
+     */
+    @Override
+    public int getDeathScore() {
+        return this.deathScore;
+    }
+
+    /**
+     * @return The {@link Integer} cooldown for when the Slider can move again.
+     * Slightly randomized and dependent on whether the Slider is in critical mode.
+     */
+    public int calculateMoveDelay() {
+        return this.isCritical() ? 1 + this.getRandom().nextInt(10) : 2 + this.getRandom().nextInt(14);
+    }
+
+    /**
+     * @return The {@link Float} for how much to add to the Slider's velocity.
+     * Dependent on whether the Slider is in critical mode.
+     */
+    public float getVelocityIncrease() {
+        return this.isCritical() ? 0.045F - (this.getHealth() / 10000) : 0.035F - (this.getHealth() / 30000);
+    }
+
+    /**
+     * @return A {@link Boolean} for whether the Slider is in critical mode.
+     * The Slider goes critical when its health is at 100.
+     */
     public boolean isCritical() {
         return this.getHealth() <= 100;
     }
 
-    public int calculateMoveDelay() {
-        return this.isCritical() ? 1 + this.random.nextInt(10) : 2 + this.random.nextInt(14);
-    }
-
-    public float getVelocityIncrease() {
-        return this.isCritical() ? 0.045F - (this.getHealth()/10000) : 0.035F - (this.getHealth()/30000);
-    }
-
+    /**=
+     * @return The {@link Float} for the maximum velocity limit.
+     */
     public float getMaxVelocity() {
         return 2.5F;
     }
 
-    protected SoundEvent getAwakenSound() {
-        return AetherSoundEvents.ENTITY_SLIDER_AWAKEN.get();
+    @Override
+    public void setCustomName(@Nullable Component name) {
+        super.setCustomName(name);
+        this.setBossName(name);
     }
 
-    @Nullable
-    @Override
-    protected SoundEvent getAmbientSound() {
-        return AetherSoundEvents.ENTITY_SLIDER_AMBIENT.get();
+    protected SoundEvent getAwakenSound() {
+        return AetherSoundEvents.ENTITY_SLIDER_AWAKEN.get();
     }
 
     public SoundEvent getCollideSound() {
@@ -438,6 +548,12 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
 
     public SoundEvent getMoveSound() {
         return AetherSoundEvents.ENTITY_SLIDER_MOVE.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return AetherSoundEvents.ENTITY_SLIDER_AMBIENT.get();
     }
 
     @Override
@@ -450,16 +566,9 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         return AetherSoundEvents.ENTITY_SLIDER_DEATH.get();
     }
 
-   
     @Override
     public SoundSource getSoundSource() {
         return SoundSource.HOSTILE;
-    }
-
-    @Override
-    public void setCustomName(@Nullable Component name) {
-        super.setCustomName(name);
-        this.setBossName(name);
     }
 
     @Override
@@ -467,16 +576,9 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         return target.canBeSeenAsEnemy();
     }
 
-    @Override
-    public void knockback(double pStrength, double pX, double pZ) {
-
-    }
-
-    @Override
-    public void push(double x, double y, double z) {
-
-    }
-
+    /**
+     * @return A false {@link Boolean}, preventing the Slider from being affected by explosions.
+     */
     @Override
     public boolean ignoreExplosion() {
         return true;
@@ -492,47 +594,75 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         return false;
     }
 
+    /**
+     * @return A {@link Boolean} for whether the Slider can be collided with as if it were a block.
+     * It can only be collided with when it is asleep.
+     */
     @Override
     public boolean canBeCollidedWith() {
         return !this.isAwake();
     }
 
+    /**
+     * @return A false {@link Boolean}, preventing the Slider from being pushed.
+     */
     @Override
     public boolean isPushable() {
         return false;
     }
 
+    /**
+     * @return A true {@link Boolean}, preventing the Slider from being affected by gravity.
+     */
     @Override
     public boolean isNoGravity() {
         return true;
     }
 
+    /**
+     * @return A true {@link Boolean}, preventing the Slider from being affected by friction.
+     */
     @Override
     public boolean shouldDiscardFriction() {
         return true;
     }
 
+    /**
+     * @return A false {@link Boolean}, preventing the Slider from being affected by liquids.
+     */
     @Override
     protected boolean isAffectedByFluids() {
         return false;
     }
 
+    /**
+     * @return A false {@link Boolean}, preventing the Slider from being on fire.
+     */
     @Override
     public boolean displayFireAnimation() {
         return false;
     }
 
+    /**
+     * @return A false {@link Boolean}, preventing the Slider from being affected by freezing.
+     */
     @Override
     public boolean isFullyFrozen() {
         return false;
     }
 
-    // The slider should not be making footstep sounds.
+    /**
+     * Disallows the Slider from making footstep noises.
+     * @return The type of {@link net.minecraft.world.entity.Entity.MovementEmission}.
+     */
     @Override
     protected Entity.MovementEmission getMovementEmission() {
         return Entity.MovementEmission.EVENTS;
     }
 
+    /**
+     * @see com.aetherteam.nitrogen.entity.BossMob#addBossSaveData(CompoundTag)
+     */
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
@@ -540,6 +670,9 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         tag.putBoolean("Awake", this.isAwake());
     }
 
+    /**
+     * @see com.aetherteam.nitrogen.entity.BossMob#readBossSaveData(CompoundTag)
+     */
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
@@ -549,6 +682,9 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         }
     }
 
+    /**
+     * @see com.aetherteam.nitrogen.entity.BossMob#addBossSaveData(CompoundTag)
+     */
     @Override
     public void writeSpawnData(FriendlyByteBuf buffer) {
         CompoundTag tag = new CompoundTag();
@@ -556,6 +692,9 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         buffer.writeNbt(tag);
     }
 
+    /**
+     * @see com.aetherteam.nitrogen.entity.BossMob#readBossSaveData(CompoundTag)
+     */
     @Override
     public void readSpawnData(FriendlyByteBuf additionalData) {
         CompoundTag tag = additionalData.readNbt();
@@ -567,13 +706,5 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
-    }
-
-    public int getChatCooldown() {
-        return this.chatCooldown;
-    }
-
-    public void setChatCooldown(int cooldown) {
-        this.chatCooldown = cooldown;
     }
 }

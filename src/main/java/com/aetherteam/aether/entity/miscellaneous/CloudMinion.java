@@ -159,7 +159,7 @@ public class CloudMinion extends FlyingMob {
     }
 
     /**
-     * Spawn explosion particles on client or in {@link Parachute#handleEntityEvent(byte)}.
+     * Spawn explosion particles on client or in {@link CloudMinion#handleEntityEvent(byte)}.
      */
     public void spawnExplosionParticles() {
         if (this.getLevel().isClientSide()) {

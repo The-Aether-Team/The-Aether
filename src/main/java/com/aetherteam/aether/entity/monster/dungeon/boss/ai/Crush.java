@@ -1,6 +1,7 @@
 package com.aetherteam.aether.entity.monster.dungeon.boss.ai;
 
 import com.aetherteam.aether.AetherTags;
+import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.ai.brain.memory.AetherMemoryModuleTypes;
 import com.aetherteam.aether.entity.monster.dungeon.boss.Slider;
 import com.google.common.collect.ImmutableMap;
@@ -42,7 +43,7 @@ public class Crush extends Behavior<Slider> {
                     BlockState blockState = slider.level.getBlockState(pos);
                     if (this.isBreakable(blockState)) {
                         crushed = slider.level.destroyBlock(pos, true, slider) || crushed;
-                        slider.blockDestroySmoke(pos);
+                        EntityUtil.spawnRemovalParticles(slider.getLevel(), pos);
                     }
                 }
             }

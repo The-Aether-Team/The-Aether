@@ -122,6 +122,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
 
     /**
      * Plays the message for the Valkyrie defeating the player.
+     * @param entity The hurt {@link Entity}.
      */
     @Override
     public boolean doHurtTarget(Entity entity) {
@@ -134,6 +135,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
 
     /**
      * Plays the Valkyrie's defeat message.
+     * @param source The {@link DamageSource}.
      */
     @Override
     public void die(DamageSource source) {

@@ -1,9 +1,12 @@
 package com.aetherteam.aether.entity;
 
 import com.aetherteam.aether.mixin.mixins.common.accessor.EntityAccessor;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
 
 public final class EntityUtil {
     /**
@@ -49,6 +52,20 @@ public final class EntityUtil {
             double y = entity.getRandomY() - d1 * d3;
             double z = entity.getRandomZ(1.0) - d2 * d3;
             entity.getLevel().addParticle(ParticleTypes.POOF, x, y, z, d0, d1, d2);
+        }
+    }
+
+    /**
+     * Spawns particles for block removal interactions.
+     * @param level The {@link Level} to spawn the particles in.
+     * @param pos The {@link BlockPos} to spawn the particles at.
+     */
+    public static void spawnRemovalParticles(Level level, BlockPos pos) {
+        double a = pos.getX() + 0.5 + (double) (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.375;
+        double b = pos.getY() + 0.5 + (double) (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.375;
+        double c = pos.getZ() + 0.5 + (double) (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.375;
+        if (level instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(ParticleTypes.POOF, a, b, c, 1, 0.0, 0.0, 0.0, 0.0);
         }
     }
 }
