@@ -16,7 +16,7 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import net.minecraft.world.level.levelgen.structure.Structure;
 
 /**
- * Features with this filter cannot be placed inside a dungeon.
+ * A {@link PlacementFilter} to prevent the feature from generating inside of a dungeon.
  */
 public class DungeonBlacklistFilter extends PlacementFilter {
     public static final Codec<DungeonBlacklistFilter> CODEC = Codec.unit(DungeonBlacklistFilter::new);

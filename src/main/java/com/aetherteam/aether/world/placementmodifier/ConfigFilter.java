@@ -11,15 +11,15 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 /**
- * A PlacementFilter to prevent the feature from generating when the specified config condition is set to false.
+ * A {@link PlacementFilter} to prevent the feature from generating when the specified config condition is set to false.
  */
 public class ConfigFilter extends PlacementFilter {
-    public static final Codec<ConfigFilter> CODEC = Codec.STRING.comapFlatMap(ConfigFilter::build, configFilter -> ConfigSerializationUtil.serialize(configFilter.config));
+    public static final Codec<ConfigFilter> CODEC = Codec.STRING.comapFlatMap(ConfigFilter::buildDeserialization, configFilter -> ConfigSerializationUtil.serialize(configFilter.config));
 
     private final ForgeConfigSpec.ConfigValue<Boolean> config;
 
     /**
-     * @param config The config value for the filter to use."
+     * @param config The config value for the filter to use.
      */
     public ConfigFilter(ForgeConfigSpec.ConfigValue<Boolean> config) {
         this.config = config;
@@ -35,15 +35,11 @@ public class ConfigFilter extends PlacementFilter {
         return AetherPlacementModifiers.CONFIG_FILTER;
     }
 
-    private static DataResult<ConfigFilter> build(String configID) {
-        @SuppressWarnings("rawtypes") // The type of value coming from the config ID cannot be trusted
-        ForgeConfigSpec.ConfigValue unsafeConfigEntry = ConfigSerializationUtil.deserialize(configID);
-        // Java erases generics after compile, meaning the code executed during ConfigSerializer.deserialize will not error,
-        // even if the generic type is not Boolean. Otherwise, it will error and crash, while executing `this.config.get()` during Worldgen.
-
-        if (unsafeConfigEntry instanceof ForgeConfigSpec.BooleanValue booleanConfigEntry)
+    private static DataResult<ConfigFilter> buildDeserialization(String configId) {
+        ForgeConfigSpec.ConfigValue<?> configEntry = ConfigSerializationUtil.deserialize(configId);
+        if (configEntry instanceof ForgeConfigSpec.BooleanValue booleanConfigEntry) {
             return DataResult.success(new ConfigFilter(booleanConfigEntry));
-
-        return DataResult.error(() -> "Config entry " + configID + " does not provide a boolean! Must be boolean (true/false), to be valid for ConfigFilter.");
+        }
+        return DataResult.error(() -> "Config entry " + configId + " does not provide a boolean! Must be boolean (true/false), to be valid for ConfigFilter.");
     }
 }
