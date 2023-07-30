@@ -19,16 +19,16 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import java.util.function.Function;
 
 /**
- * Extension of TemplateStructurePiece to make our lives easier when making custom structure pieces.
+ * Extension of {@link TemplateStructurePiece} to make our lives easier when making custom structure pieces.
  */
 public abstract class AetherTemplateStructurePiece extends TemplateStructurePiece {
-    public AetherTemplateStructurePiece(StructurePieceType type, StructureTemplateManager pStructureTemplateManager, ResourceLocation name, StructurePlaceSettings placeSettings, BlockPos templatePosition) {
-        super(type, 0, pStructureTemplateManager, name, name.toString(), placeSettings, templatePosition);
+    public AetherTemplateStructurePiece(StructurePieceType type, StructureTemplateManager templateManager, ResourceLocation name, StructurePlaceSettings placeSettings, BlockPos templatePosition) {
+        super(type, 0, templateManager, name, name.toString(), placeSettings, templatePosition);
         this.setOrientation(this.getRotation().rotate(Direction.SOUTH));
     }
 
-    public AetherTemplateStructurePiece(StructurePieceType type, CompoundTag tag, StructureTemplateManager manager, Function<ResourceLocation, StructurePlaceSettings> settingsFactory) {
-        super(type, tag, manager, settingsFactory.andThen(settings -> readAdditionalSaveData(tag, settings)));
+    public AetherTemplateStructurePiece(StructurePieceType type, CompoundTag tag, StructureTemplateManager templateManager, Function<ResourceLocation, StructurePlaceSettings> settingsFactory) {
+        super(type, tag, templateManager, settingsFactory.andThen(settings -> readAdditionalSaveData(tag, settings)));
         this.setOrientation(this.getRotation().rotate(Direction.SOUTH));
     }
 
@@ -61,7 +61,5 @@ public abstract class AetherTemplateStructurePiece extends TemplateStructurePiec
     }
 
     @Override
-    protected void handleDataMarker(String pName, BlockPos pPos, ServerLevelAccessor pLevel, RandomSource pRandom, BoundingBox pBox) {
-
-    }
+    protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox box) { }
 }

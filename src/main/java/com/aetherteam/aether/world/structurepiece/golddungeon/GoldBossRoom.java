@@ -37,7 +37,7 @@ public class GoldBossRoom extends GoldDungeonPiece {
     }
 
     @Override
-    protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox chunkBB) {
+    protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox box) {
         if (name.equals("Treasure Chest")) {
             BlockPos chest = pos.below();
             RandomizableContainerBlockEntity.setLootTable(level, random, chest, AetherLoot.GOLD_DUNGEON_REWARD);

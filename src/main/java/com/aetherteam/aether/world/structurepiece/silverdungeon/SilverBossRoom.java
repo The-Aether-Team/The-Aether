@@ -57,7 +57,7 @@ public class SilverBossRoom extends SilverDungeonPiece {
     }
 
     @Override
-    protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox chunkBB) {
+    protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox box) {
         if (name.equals("Treasure Chest")) {
             BlockPos chest = pos.below();
             RandomizableContainerBlockEntity.setLootTable(level, random, chest, AetherLoot.SILVER_DUNGEON_REWARD);

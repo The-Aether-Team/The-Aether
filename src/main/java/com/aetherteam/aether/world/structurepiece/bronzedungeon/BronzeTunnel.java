@@ -32,7 +32,7 @@ public class BronzeTunnel extends BronzeDungeonPiece implements PieceBeardifierM
     }
 
     @Override
-    protected void handleDataMarker(String pName, BlockPos pPos, ServerLevelAccessor pLevel, RandomSource pRandom, BoundingBox pBox) {
+    protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox box) {
 
     }
 

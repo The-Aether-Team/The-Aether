@@ -19,7 +19,7 @@ import java.util.Locale;
 public class AetherStructurePieceTypes {
     public static final DeferredRegister<StructurePieceType> STRUCTURE_PIECE_TYPES = DeferredRegister.create(Registries.STRUCTURE_PIECE, Aether.MODID);
 
-    public static RegistryObject<StructurePieceType> LARGE_AERCLOUD = register("ALC", LargeAercloudChunk::new);
+    public static final RegistryObject<StructurePieceType> LARGE_AERCLOUD = register("ALC", LargeAercloudChunk::new);
     public static final RegistryObject<StructurePieceType> BRONZE_BOSS_ROOM = register("BBossRoom", BronzeBossRoom::new);
     public static final RegistryObject<StructurePieceType> BRONZE_DUNGEON_ROOM = register("BDungeonRoom", BronzeDungeonRoom::new);
     public static final RegistryObject<StructurePieceType> BRONZE_TUNNEL = register("BTunnel", BronzeTunnel::new);

@@ -21,7 +21,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * This piece exists to hold the positions of the aercloud blocks placed by the structure.
+ * This piece exists to hold the positions of the Aercloud blocks and place them for the structure.
  */
 public class LargeAercloudChunk extends StructurePiece {
     private final Set<BlockPos> positions = new HashSet<>();
