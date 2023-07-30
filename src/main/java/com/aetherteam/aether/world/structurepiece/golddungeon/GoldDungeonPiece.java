@@ -16,10 +16,10 @@ import java.util.function.Function;
  * Superclass for all gold dungeon structure pieces. This exists to simplify the code.
  */
 public abstract class GoldDungeonPiece extends AetherTemplateStructurePiece {
-    public static final RuleProcessor LOCKED_HELLFIRE_STONE = new RuleProcessor(ImmutableList.of(
+    protected static final RuleProcessor LOCKED_HELLFIRE_STONE = new RuleProcessor(ImmutableList.of(
             new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.LOCKED_HELLFIRE_STONE.get(), 0.1F), AlwaysTrueTest.INSTANCE, AetherBlocks.LOCKED_LIGHT_HELLFIRE_STONE.get().defaultBlockState())
     ));
-    public static final RuleProcessor MOSSY_HOLYSTONE = new RuleProcessor(ImmutableList.of(
+    protected static final RuleProcessor MOSSY_HOLYSTONE = new RuleProcessor(ImmutableList.of(
             new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.HOLYSTONE.get(), 0.2F), AlwaysTrueTest.INSTANCE, AetherBlocks.MOSSY_HOLYSTONE.get().defaultBlockState())
     ));
 

@@ -141,7 +141,7 @@ public class GoldDungeonStructure extends Structure {
             int x = center.getX() + random.nextInt(24) - random.nextInt(24);
             int y = center.getY() + random.nextInt(24) - random.nextInt(24);
             int z = center.getZ() + random.nextInt(24) - random.nextInt(24);
-            builder.addPiece(new GumdropCave(new BoundingBox(new BlockPos(x, y, z))));
+            builder.addPiece(new GoldStubCave(new BoundingBox(new BlockPos(x, y, z))));
         }
     }
 

@@ -18,22 +18,19 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 
 /**
- * Little caves that are placed around the gold dungeon island.
+ * Little caves that are placed around the Gold Dungeon island.
  */
-public class GumdropCave extends StructurePiece {
-
-    public GumdropCave(BoundingBox box) {
+public class GoldStubCave extends StructurePiece {
+    public GoldStubCave(BoundingBox box) {
         super(AetherStructurePieceTypes.GUMDROP_CAVE.get(), 0, box);
     }
 
-    public GumdropCave(StructurePieceSerializationContext context, CompoundTag tag) {
+    public GoldStubCave(StructurePieceSerializationContext context, CompoundTag tag) {
         super(AetherStructurePieceTypes.GUMDROP_CAVE.get(), tag);
     }
 
     @Override
-    protected void addAdditionalSaveData(StructurePieceSerializationContext context, CompoundTag tag) {
-
-    }
+    protected void addAdditionalSaveData(StructurePieceSerializationContext context, CompoundTag tag) { }
 
     @Override
     public void postProcess(WorldGenLevel level, StructureManager structureManager, ChunkGenerator generator, RandomSource random, BoundingBox chunkBox, ChunkPos chunkPos, BlockPos startPos) {

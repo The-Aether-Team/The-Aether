@@ -6,6 +6,7 @@ import com.aetherteam.aether.blockentity.TreasureChestBlockEntity;
 import com.aetherteam.aether.loot.AetherLoot;
 import com.aetherteam.aether.world.processor.BossRoomProcessor;
 import com.aetherteam.aether.world.structurepiece.AetherStructurePieceTypes;
+import com.aetherteam.aether.world.structurepiece.AetherTemplateStructurePiece;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -20,20 +21,22 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 /**
- * A room inside the island. This should contain the sun spirit.
+ * A room inside the island. This should contain the Sun Spirit.
  */
 public class GoldBossRoom extends GoldDungeonPiece {
-
     public GoldBossRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
-        super(AetherStructurePieceTypes.GOLD_BOSS_ROOM.get(), manager, name, makeSettingsWithPivot(makeSettings(), manager, makeLocation(name), rotation), pos);
+        super(AetherStructurePieceTypes.GOLD_BOSS_ROOM.get(), manager, name, AetherTemplateStructurePiece.makeSettingsWithPivot(GoldBossRoom.makeSettings(), manager, GoldDungeonPiece.makeLocation(name), rotation), pos);
     }
 
     public GoldBossRoom(StructurePieceSerializationContext context, CompoundTag tag) {
-        super(AetherStructurePieceTypes.GOLD_BOSS_ROOM.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
+        super(AetherStructurePieceTypes.GOLD_BOSS_ROOM.get(), tag, context.structureTemplateManager(), resourceLocation -> GoldBossRoom.makeSettings());
     }
 
     private static StructurePlaceSettings makeSettings() {
-        return new StructurePlaceSettings().addProcessor(LOCKED_HELLFIRE_STONE).addProcessor(BossRoomProcessor.INSTANCE).setFinalizeEntities(true);
+        return new StructurePlaceSettings()
+                .addProcessor(GoldDungeonPiece.LOCKED_HELLFIRE_STONE)
+                .addProcessor(BossRoomProcessor.INSTANCE)
+                .setFinalizeEntities(true);
     }
 
     @Override

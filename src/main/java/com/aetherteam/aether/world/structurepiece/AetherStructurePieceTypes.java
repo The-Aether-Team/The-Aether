@@ -31,7 +31,7 @@ public class AetherStructurePieceTypes {
     public static final RegistryObject<StructurePieceType> GOLD_ISLAND = register("GIsland", GoldIsland::new);
     public static final RegistryObject<StructurePieceType> GOLD_STUB = register("GStub", GoldStub::new);
     public static final RegistryObject<StructurePieceType> GOLD_TUNNEL = register("GTunnel", GoldTunnel::new);
-    public static final RegistryObject<StructurePieceType> GUMDROP_CAVE = register("GumdropCave", GumdropCave::new);
+    public static final RegistryObject<StructurePieceType> GUMDROP_CAVE = register("GumdropCave", GoldStubCave::new);
 
     private static RegistryObject<StructurePieceType> register(String name, StructurePieceType structurePieceType) {
         return STRUCTURE_PIECE_TYPES.register(name.toLowerCase(Locale.ROOT), () -> structurePieceType);
