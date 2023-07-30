@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * Modified to only work for Berry Bushes.
  */
 public class BeeGrowBerryBushGoal extends Goal {
-    public final Bee bee;
+    private final Bee bee;
 
     public BeeGrowBerryBushGoal(Bee bee) {
         this.bee = bee;

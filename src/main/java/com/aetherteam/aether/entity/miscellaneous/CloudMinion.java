@@ -27,8 +27,8 @@ public class CloudMinion extends FlyingMob {
     private static final EntityDataAccessor<Boolean> DATA_IS_RIGHT_ID = SynchedEntityData.defineId(CloudMinion.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> DATA_LIFESPAN_ID = SynchedEntityData.defineId(CloudMinion.class, EntityDataSerializers.INT);
 
-    public boolean shouldShoot;
-    public double targetX, targetY, targetZ;
+    private boolean shouldShoot;
+    private double targetX, targetY, targetZ;
 
     public CloudMinion(EntityType<? extends FlyingMob> type, Level level) {
         super(type, level);

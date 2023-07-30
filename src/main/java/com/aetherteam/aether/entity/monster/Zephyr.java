@@ -27,12 +27,12 @@ import net.minecraft.world.phys.Vec3;
 import java.util.EnumSet;
 
 public class Zephyr extends FlyingMob implements Enemy {
-	public static final EntityDataAccessor<Boolean> DATA_IS_CHARGING = SynchedEntityData.defineId(Zephyr.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> DATA_IS_CHARGING = SynchedEntityData.defineId(Zephyr.class, EntityDataSerializers.BOOLEAN);
 
-	public int scale;
-	public int scaleAdd;
-	public float tailRot;
-	public float tailRotAdd;
+	private int cloudScale;
+	private int cloudScaleAdd;
+	private float tailRot;
+	private float tailRotAdd;
 
 	public Zephyr(EntityType<? extends Zephyr> type, Level level) {
 		super(type, level);
@@ -87,13 +87,13 @@ public class Zephyr extends FlyingMob implements Enemy {
 			this.discard();
 		}
 		if (this.getLevel().isClientSide()) {
-			this.scale += this.scaleAdd;
+			this.cloudScale += this.cloudScaleAdd;
 			this.tailRot += this.tailRotAdd;
-			if (this.isCharging() && this.scale < 40) {
-				this.scaleAdd = 1;
+			if (this.isCharging() && this.cloudScale < 40) {
+				this.cloudScaleAdd = 1;
 			} else {
-				this.scaleAdd = 0;
-				this.scale = 0;
+				this.cloudScaleAdd = 0;
+				this.cloudScale = 0;
 			}
 			this.tailRotAdd = 0.015F;
 			if (this.tailRot >= Mth.TWO_PI) {
@@ -108,6 +108,34 @@ public class Zephyr extends FlyingMob implements Enemy {
 
 	public void setCharging(boolean isCharging) {
 		this.getEntityData().set(DATA_IS_CHARGING, isCharging);
+	}
+
+	/**
+	 * @return The {@link Integer} amount for the scale of the Zephyr.
+	 */
+	public int getCloudScale() {
+		return this.cloudScale;
+	}
+
+	/**
+	 * @return The {@link Integer} amount to add to the Zephyr's scale.
+	 */
+	public int getCloudScaleAdd() {
+		return this.cloudScaleAdd;
+	}
+
+	/**
+	 * @return The {@link Float} amount for the tail's rotation.
+	 */
+	public float getTailRot() {
+		return this.tailRot;
+	}
+
+	/**
+	 * @return The {@link Float} amount to add to the tail's rotation.
+	 */
+	public float getTailRotAdd() {
+		return this.tailRotAdd;
 	}
 
 	@Override

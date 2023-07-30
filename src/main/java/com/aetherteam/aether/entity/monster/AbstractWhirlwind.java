@@ -40,13 +40,12 @@ import java.util.List;
 public abstract class AbstractWhirlwind extends Mob {
     public static final EntityDataAccessor<Integer> DATA_COLOR_ID = SynchedEntityData.defineId(AbstractWhirlwind.class, EntityDataSerializers.INT);
 
-    public int lifeLeft;
-    public int dropsTimer;
-    public int stuckTick;
-    public float movementAngle;
-    public float movementCurve;
-    protected boolean isPullingEntity = false;
-    protected boolean isEvil = false;
+    private int lifeLeft;
+    private int dropsTimer;
+    private int stuckTick;
+    private float movementAngle;
+    private float movementCurve;
+    private boolean isEvil = false;
 
     public AbstractWhirlwind(EntityType<? extends AbstractWhirlwind> type, Level level) {
         super(type, level);
@@ -133,7 +132,6 @@ public abstract class AbstractWhirlwind extends Mob {
         // This code is used to move other entities around the Whirlwind.
         List<Entity> entityList = this.getLevel().getEntities(this, this.getBoundingBox().expandTowards(2.5, 2.5, 2.5))
                 .stream().filter((entity -> !entity.getType().is(AetherTags.Entities.WHIRLWIND_UNAFFECTED))).toList();
-        this.isPullingEntity = !entityList.isEmpty();
         for (Entity entity : entityList) {
             double x = (float) entity.getX();
             double y = (float) entity.getY() - entity.getMyRidingOffset() * 0.6F;
@@ -223,6 +221,36 @@ public abstract class AbstractWhirlwind extends Mob {
      */
     public void setColorData(int color) {
         this.getEntityData().set(DATA_COLOR_ID, color);
+    }
+
+    /**
+     * @return The {@link Integer} for how much life duration is left.
+     */
+    public int getLifeLeft() {
+        return this.lifeLeft;
+    }
+
+    /**
+     * Sets how much life duration is left.
+     * @param lifeLeft The {@link Integer} value.
+     */
+    public void setLifeLeft(int lifeLeft) {
+        this.lifeLeft = lifeLeft;
+    }
+
+    /**
+     * @return Whether the Whirlwind is evil, as a {@link Boolean}.
+     */
+    public boolean isEvil() {
+        return this.isEvil;
+    }
+
+    /**
+     * Sets whether the Whirlwind is evil.
+     * @param evil The {@link Boolean} value.
+     */
+    public void setEvil(boolean evil) {
+        this.isEvil = evil;
     }
 
     public abstract int getDefaultColor();

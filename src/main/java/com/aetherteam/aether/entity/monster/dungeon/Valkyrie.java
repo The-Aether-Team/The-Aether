@@ -38,7 +38,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
      * Timer for how long until the player can interact to talk with a Valkyrie again.
      * This Prevents the player from quickly talking to the Valkyrie in succession.
      */
-    protected int chatTimer;
+    private int chatTimer;
 
     public Valkyrie(EntityType<? extends Valkyrie> type, Level worldIn) {
         super(type, worldIn);

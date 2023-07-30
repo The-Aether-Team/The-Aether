@@ -45,12 +45,12 @@ import javax.annotation.Nullable;
 import java.util.EnumSet;
 
 public class Aerbunny extends AetherAnimal {
-    public static final EntityDataAccessor<Integer> DATA_PUFFINESS_ID = SynchedEntityData.defineId(Aerbunny.class, EntityDataSerializers.INT);
-    public static final EntityDataAccessor<Boolean> DATA_FAST_FALLING = SynchedEntityData.defineId(Aerbunny.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> DATA_PUFFINESS_ID = SynchedEntityData.defineId(Aerbunny.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> DATA_FAST_FALLING = SynchedEntityData.defineId(Aerbunny.class, EntityDataSerializers.BOOLEAN);
 
     private static final int MAXIMUM_PUFFS = 11;
 
-    public int puffSubtract;
+    private int puffSubtract;
     private boolean afraid;
     private Vec3 lastPos;
 
@@ -296,6 +296,13 @@ public class Aerbunny extends AetherAnimal {
      */
     public void setFastFalling(boolean fastFalling) {
         this.entityData.set(DATA_FAST_FALLING, fastFalling);
+    }
+
+    /**
+     * @return The {@link Integer} amount to subtract from puffiness in animation.
+     */
+    public int getPuffSubtract() {
+        return this.puffSubtract;
     }
 
     /**

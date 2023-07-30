@@ -47,10 +47,10 @@ import net.minecraftforge.common.ForgeMod;
 public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, NotGrounded {
     private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(Cockatrice.class, EntityDataSerializers.BOOLEAN);
 
-    public float wingRotation;
-    public float prevWingRotation;
-    public float destPos;
-    public float prevDestPos;
+    private float wingRotation;
+    private float prevWingRotation;
+    private float destPos;
+    private float prevDestPos;
     private int flapCooldown;
 
     public Cockatrice(EntityType<? extends Cockatrice> type, Level level) {

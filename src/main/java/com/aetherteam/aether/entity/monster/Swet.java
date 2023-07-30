@@ -42,12 +42,12 @@ public class Swet extends Slime implements MountableMob {
     private static final EntityDataAccessor<Boolean> DATA_MID_JUMP_ID = SynchedEntityData.defineId(Swet.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Float> DATA_WATER_DAMAGE_SCALE_ID = SynchedEntityData.defineId(Swet.class, EntityDataSerializers.FLOAT);
 
-    public boolean wasOnGround;
-    public int jumpTimer;
-    public float swetHeight = 1.0F;
-    public float swetHeightO = 1.0F;
-    public float swetWidth = 1.0F;
-    public float swetWidthO = 1.0F;
+    private boolean wasOnGround;
+    private int jumpTimer;
+    private float swetHeight = 1.0F;
+    private float swetHeightO = 1.0F;
+    private float swetWidth = 1.0F;
+    private float swetWidthO = 1.0F;
 
     public Swet(EntityType<? extends Swet> type, Level level) {
         super(type, level);
@@ -313,6 +313,34 @@ public class Swet extends Slime implements MountableMob {
     @Override
     public void setMountJumping(boolean isMountJumping) {
         this.getEntityData().set(DATA_MOUNT_JUMPING_ID, isMountJumping);
+    }
+
+    /**
+     * @return The {@link Float} height of the Swet model.
+     */
+    public float getSwetHeight() {
+        return this.swetHeight;
+    }
+
+    /**
+     * @return The old {@link Float} height of the Swet model.
+     */
+    public float getSwetHeightO() {
+        return this.swetHeightO;
+    }
+
+    /**
+     * @return The {@link Float} width of the Swet model.
+     */
+    public float getSwetWidth() {
+        return this.swetWidth;
+    }
+
+    /**
+     * @return The old {@link Float} width of the Swet model.
+     */
+    public float getSwetWidthO() {
+        return this.swetWidthO;
     }
 
     @Override

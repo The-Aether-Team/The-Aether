@@ -63,7 +63,7 @@ public class AerbunnyModel extends EntityModel<Aerbunny> {
     @Override
     public void prepareMobModel(Aerbunny aerbunny, float limbSwing, float limbSwingAmount, float partialTicks) {
         super.prepareMobModel(aerbunny, limbSwing, limbSwingAmount, partialTicks);
-        this.puffiness = Mth.lerp(partialTicks, aerbunny.getPuffiness(), aerbunny.getPuffiness() - aerbunny.puffSubtract) / 20.0F;
+        this.puffiness = Mth.lerp(partialTicks, aerbunny.getPuffiness(), aerbunny.getPuffiness() - aerbunny.getPuffSubtract()) / 20.0F;
     }
 
     @Override

@@ -86,8 +86,8 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
     private int eatAnimationTick, amountEaten;
     private EatAetherGrassGoal eatBlockGoal;
 
-    protected final FallPathNavigation fallNavigation;
-    protected final GroundPathNavigation groundNavigation;
+    private final FallPathNavigation fallNavigation;
+    private final GroundPathNavigation groundNavigation;
 
     private static float[] createSheepColor(DyeColor p_192020_0_) {
         if (p_192020_0_ == DyeColor.WHITE) {

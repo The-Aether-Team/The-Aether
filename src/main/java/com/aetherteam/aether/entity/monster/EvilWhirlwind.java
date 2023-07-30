@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
 public class EvilWhirlwind extends AbstractWhirlwind {
     public EvilWhirlwind(EntityType<? extends EvilWhirlwind> type, Level level) {
         super(type, level);
-        this.isEvil = true;
+        this.setEvil(true);
     }
 
     /**
@@ -32,7 +32,7 @@ public class EvilWhirlwind extends AbstractWhirlwind {
     @Override
     @SuppressWarnings("deprecation")
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
-        this.lifeLeft = (this.getRandom().nextInt(512) + 512) / 2;
+        this.setLifeLeft((this.getRandom().nextInt(512) + 512) / 2);
         return spawnData;
     }
 

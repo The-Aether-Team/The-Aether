@@ -21,9 +21,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 public class Sentry extends Slime {
-	public static final EntityDataAccessor<Boolean> DATA_AWAKE_ID = SynchedEntityData.defineId(Sentry.class, EntityDataSerializers.BOOLEAN);
-	
-	public float timeSpotted = 0.0F;
+	private static final EntityDataAccessor<Boolean> DATA_AWAKE_ID = SynchedEntityData.defineId(Sentry.class, EntityDataSerializers.BOOLEAN);
+
+	private float timeSpotted = 0.0F;
 	
 	public Sentry(EntityType<? extends Sentry> type, Level level) {
 		super(type, level);

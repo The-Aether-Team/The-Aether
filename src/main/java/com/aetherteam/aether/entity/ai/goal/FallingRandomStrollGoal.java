@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
  * A stroll goal that is capable of looking for land positions to target while falling.
  */
 public class FallingRandomStrollGoal extends RandomStrollGoal {
-    protected final float probability;
+    private final float probability;
 
     public FallingRandomStrollGoal(PathfinderMob mob, double speed) {
         this(mob, speed, 120, 0.001F);

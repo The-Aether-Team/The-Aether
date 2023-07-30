@@ -28,7 +28,7 @@ public class ZephyrRenderer extends MultiModelRenderer<Zephyr, EntityModel<Zephy
 
     @Override
     protected void scale(Zephyr zephyr, PoseStack poseStack, float partialTickTime) {
-        float f = Mth.lerp(partialTickTime, zephyr.scale, zephyr.scale + zephyr.scaleAdd);
+        float f = Mth.lerp(partialTickTime, zephyr.getCloudScale(), zephyr.getCloudScale() + zephyr.getCloudScaleAdd());
         float f1 = f / 40.0F;
         if (f1 < 0.0F) {
             f1 = 0.0F;
@@ -48,7 +48,7 @@ public class ZephyrRenderer extends MultiModelRenderer<Zephyr, EntityModel<Zephy
 
     @Override
     protected float getBob(Zephyr zephyr, float partialTicks) {
-        return Mth.lerp(partialTicks, zephyr.tailRot, zephyr.tailRot + zephyr.tailRotAdd);
+        return Mth.lerp(partialTicks, zephyr.getTailRot(), zephyr.getTailRot() + zephyr.getTailRotAdd());
     }
 
     @Override

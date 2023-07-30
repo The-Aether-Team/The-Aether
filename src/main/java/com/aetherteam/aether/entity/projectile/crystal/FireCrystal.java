@@ -22,9 +22,9 @@ import net.minecraft.world.phys.Vec3;
  * A damaging crystal projectile shot by the Sun Spirit. It floats around the room for 15 seconds.
  */
 public class FireCrystal extends AbstractCrystal {
-    public double xPower;
-    public double yPower;
-    public double zPower;
+    private double xPower;
+    private double yPower;
+    private double zPower;
 
     public FireCrystal(EntityType<? extends FireCrystal> entityType, Level level) {
         super(entityType, level);

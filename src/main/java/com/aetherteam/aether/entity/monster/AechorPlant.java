@@ -37,12 +37,12 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 public class AechorPlant extends PathfinderMob implements RangedAttackMob {
-    public static final EntityDataAccessor<Integer> DATA_SIZE_ID = SynchedEntityData.defineId(AechorPlant.class, EntityDataSerializers.INT);
-    public static final EntityDataAccessor<Integer> DATA_POISON_REMAINING_ID = SynchedEntityData.defineId(AechorPlant.class, EntityDataSerializers.INT);
-    public static final EntityDataAccessor<Boolean> DATA_TARGETING_ENTITY_ID = SynchedEntityData.defineId(AechorPlant.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> DATA_SIZE_ID = SynchedEntityData.defineId(AechorPlant.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> DATA_POISON_REMAINING_ID = SynchedEntityData.defineId(AechorPlant.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> DATA_TARGETING_ENTITY_ID = SynchedEntityData.defineId(AechorPlant.class, EntityDataSerializers.BOOLEAN);
 
-    public float sinage;
-    public float sinageAdd;
+    private float sinage;
+    private float sinageAdd;
 
     public AechorPlant(EntityType<? extends AechorPlant> type, Level level) {
         super(type, level);
@@ -279,6 +279,20 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
      */
     public void setTargetingEntity(boolean targetingEntity) {
         this.getEntityData().set(DATA_TARGETING_ENTITY_ID, targetingEntity);
+    }
+
+    /**
+     * @return The {@link Float} value for the petals' sinage.
+     */
+    public float getSinage() {
+        return this.sinage;
+    }
+
+    /**
+     * @return The {@link Float} value to add to the petals' sinage.
+     */
+    public float getSinageAdd() {
+        return this.sinageAdd;
     }
 
     @Override

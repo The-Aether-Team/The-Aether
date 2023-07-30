@@ -68,8 +68,8 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>, Enemy, IEntityAdditionalSpawnData {
-    public static final EntityDataAccessor<Boolean> DATA_IS_FROZEN = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.BOOLEAN);
-    public static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.COMPONENT);
+    private static final EntityDataAccessor<Boolean> DATA_IS_FROZEN = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.COMPONENT);
 
     /**
      * Boss health bar manager

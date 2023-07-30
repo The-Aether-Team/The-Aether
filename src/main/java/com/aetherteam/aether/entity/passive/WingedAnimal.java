@@ -14,8 +14,8 @@ public abstract class WingedAnimal extends MountableAnimal {
      * Used for wing animations.
      * @see com.aetherteam.aether.client.renderer.entity.layers.QuadrupedWingsLayer
      */
-    public float wingFold;
-    public float wingAngle;
+    private float wingFold;
+    private float wingAngle;
 
     public WingedAnimal(EntityType<? extends Animal> type, Level level) {
         super(type, level);
@@ -57,6 +57,36 @@ public abstract class WingedAnimal extends MountableAnimal {
         if (this.getControllingPassenger() instanceof Player) {
             this.checkSlowFallDistance();
         }
+    }
+
+    /**
+     * @return The {@link Float} for the wings' fold amount.
+     */
+    public float getWingFold() {
+        return this.wingFold;
+    }
+
+    /**
+     * Sets the wings' fold amount.
+     * @param wingFold The {@link Float} amount.
+     */
+    public void setWingFold(float wingFold) {
+        this.wingFold = wingFold;
+    }
+
+    /**
+     * @return The {@link Float} for the wings' angle.
+     */
+    public float getWingAngle() {
+        return this.wingAngle;
+    }
+
+    /**
+     * Sets the wings' angle
+     * @param wingAngle The {@link Float} amount.
+     */
+    public void setWingAngle(float wingAngle) {
+        this.wingAngle = wingAngle;
     }
 
     /**

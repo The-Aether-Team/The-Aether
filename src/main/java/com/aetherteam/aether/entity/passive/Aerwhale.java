@@ -34,9 +34,9 @@ import java.util.List;
 import java.util.UUID;
 
 public class Aerwhale extends FlyingMob {
-    public static final EntityDataAccessor<Float> DATA_X_ROT_O_ID = SynchedEntityData.defineId(Aerwhale.class, EntityDataSerializers.FLOAT);
-    public static final EntityDataAccessor<Float> DATA_X_ROT_ID = SynchedEntityData.defineId(Aerwhale.class, EntityDataSerializers.FLOAT);
-    public static final EntityDataAccessor<Float> DATA_Y_ROT_ID = SynchedEntityData.defineId(Aerwhale.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Float> DATA_X_ROT_O_ID = SynchedEntityData.defineId(Aerwhale.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Float> DATA_X_ROT_ID = SynchedEntityData.defineId(Aerwhale.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Float> DATA_Y_ROT_ID = SynchedEntityData.defineId(Aerwhale.class, EntityDataSerializers.FLOAT);
 
     public Aerwhale(EntityType<? extends Aerwhale> type, Level level) {
         super(type, level);

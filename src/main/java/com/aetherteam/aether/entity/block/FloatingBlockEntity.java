@@ -57,17 +57,17 @@ import java.util.function.Predicate;
  * Modified for reversed gravity.
  */
 public class FloatingBlockEntity extends Entity {
-    protected static final EntityDataAccessor<BlockPos> DATA_START_POS = SynchedEntityData.defineId(FloatingBlockEntity.class, EntityDataSerializers.BLOCK_POS);
+    private static final EntityDataAccessor<BlockPos> DATA_START_POS = SynchedEntityData.defineId(FloatingBlockEntity.class, EntityDataSerializers.BLOCK_POS);
     private BlockState blockState = Blocks.SAND.defaultBlockState();
-    public int time;
-    public boolean dropItem = true;
+    private int time;
+    private boolean dropItem = true;
     private boolean cancelDrop;
     private boolean hurtEntities;
     private int fallDamageMax = 40;
     private float fallDamagePerDistance;
     private int floatDistance;
     @Nullable
-    public CompoundTag blockData;
+    private CompoundTag blockData;
     /**
      * Detects if this block was floated naturally or by a player's interaction. Naturally floated blocks are not able to drop as an item.
      */

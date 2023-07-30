@@ -77,15 +77,15 @@ public class Moa extends MountableAnimal implements WingedBird {
 	private static final EntityDataAccessor<Boolean> DATA_SITTING_ID = SynchedEntityData.defineId(Moa.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Optional<UUID>> DATA_FOLLOWING_ID = SynchedEntityData.defineId(Moa.class, EntityDataSerializers.OPTIONAL_UUID);
 
-	public float wingRotation;
-	public float prevWingRotation;
-	public float destPos;
-	public float prevDestPos;
+	private float wingRotation;
+	private float prevWingRotation;
+	private float destPos;
+	private float prevDestPos;
 
 	private int jumpCooldown;
 	private int flapCooldown;
 
-	public int eggTime = this.getEggTime();
+	private int eggTime = this.getEggTime();
 
 	public Moa(EntityType<? extends Moa> type, Level level) {
 		super(type, level);

@@ -15,10 +15,10 @@ import javax.annotation.Nullable;
 public class MoaFollowGoal extends TemptGoal {
     private static final TargetingConditions TEMP_TARGETING = TargetingConditions.forNonCombat().range(10.0).ignoreLineOfSight();
     private final TargetingConditions targetingConditions;
-    protected final Moa moa;
+    private final Moa moa;
     private final double speedModifier;
     @Nullable
-    protected Player player;
+    private Player player;
     private int calmDown;
     private boolean isRunning;
 

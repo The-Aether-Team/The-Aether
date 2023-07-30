@@ -45,11 +45,11 @@ public class QuadrupedWingsModel<T extends WingedAnimal> extends EntityModel<T> 
             } else {
                 aimingForFold = 1.0F;
             }
-            entity.wingAngle = entity.wingFold * Mth.sin(ageInTicks / 31.83098862F);
-            entity.wingFold += (aimingForFold - entity.wingFold) / 75.0F;
-            float wingBend = -((float) Math.acos(entity.wingFold));
-            this.leftWingInner.zRot = -(entity.wingAngle + wingBend + (float) (Math.PI / 2.0F));
-            this.leftWingOuter.zRot = -(entity.wingAngle - wingBend + (float) (Math.PI / 2.0F)) - this.leftWingInner.zRot;
+            entity.setWingAngle(entity.getWingFold() * Mth.sin(ageInTicks / 31.83098862F));
+            entity.setWingFold(entity.getWingFold() + ((aimingForFold - entity.getWingFold()) / 75.0F));
+            float wingBend = -((float) Math.acos(entity.getWingFold()));
+            this.leftWingInner.zRot = -(entity.getWingAngle() + wingBend + (float) (Math.PI / 2.0F));
+            this.leftWingOuter.zRot = -(entity.getWingAngle() - wingBend + (float) (Math.PI / 2.0F)) - this.leftWingInner.zRot;
             this.rightWingInner.zRot = -this.leftWingInner.zRot;
             this.rightWingOuter.zRot = -this.leftWingOuter.zRot;
         }
