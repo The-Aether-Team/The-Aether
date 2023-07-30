@@ -10,17 +10,23 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
+/**
+ * A floor in the Silver Dungeon.
+ */
 public class SilverFloorPiece extends SilverDungeonPiece {
     public SilverFloorPiece(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
-        super(AetherStructurePieceTypes.SILVER_FLOOR_PIECE.get(), manager, name, makeSettings().setRotation(rotation), pos);
+        super(AetherStructurePieceTypes.SILVER_FLOOR_PIECE.get(), manager, name, SilverFloorPiece.makeSettings().setRotation(rotation), pos);
         this.setOrientation(rotation.rotate(Direction.SOUTH));
     }
 
     public SilverFloorPiece(StructurePieceSerializationContext context, CompoundTag tag) {
-        super(AetherStructurePieceTypes.SILVER_FLOOR_PIECE.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
+        super(AetherStructurePieceTypes.SILVER_FLOOR_PIECE.get(), tag, context.structureTemplateManager(), resourceLocation -> SilverFloorPiece.makeSettings());
     }
 
     private static StructurePlaceSettings makeSettings() {
-        return new StructurePlaceSettings().addProcessor(LOCKED_ANGELIC_STONE).addProcessor(TRAPPED_ANGELIC_STONE).addProcessor(DoubleDropsProcessor.INSTANCE);
+        return new StructurePlaceSettings()
+                .addProcessor(SilverDungeonPiece.LOCKED_ANGELIC_STONE)
+                .addProcessor(SilverDungeonPiece.TRAPPED_ANGELIC_STONE)
+                .addProcessor(DoubleDropsProcessor.INSTANCE);
     }
 }

@@ -13,20 +13,20 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * This class randomly assembles the silver dungeon using a 3x3x3 grid.
+ * This class randomly assembles the Silver Dungeon rooms using a 3x3x3 grid.
  */
 public class SilverDungeonBuilder {
-    public static final int CHEST_ROOM = 0b1;
-    public static final int STAIRS = 0b10;
-    public static final int FINAL_STAIRS = 0b100;
-    public static final int STAIRS_MIDDLE = 0b1000;
-    public static final int STAIRS_TOP = 0b10000;
-    public static final int NORTH_DOOR = 0b100000;
-    public static final int WEST_DOOR = 0b1000000;
-    public static final int VISITED = 0b10000000;
+    private static final int CHEST_ROOM = 0b1;
+    private static final int STAIRS = 0b10;
+    private static final int FINAL_STAIRS = 0b100;
+    private static final int STAIRS_MIDDLE = 0b1000;
+    private static final int STAIRS_TOP = 0b10000;
+    private static final int NORTH_DOOR = 0b100000;
+    private static final int WEST_DOOR = 0b1000000;
+    private static final int VISITED = 0b10000000;
 
-    public final RandomSource random;
-    public final int[][][] grid;
+    private final RandomSource random;
+    private final int[][][] grid;
     private final int width;
     private final int height;
     private final int length;
@@ -42,10 +42,10 @@ public class SilverDungeonBuilder {
     }
 
     /**
-     * Set up all rooms in the dungeon
+     * Set up all rooms in the dungeon.
      */
     private void populateGrid() {
-        // Place the stairs
+        // Place the stairs.
         int finalStairsX = this.random.nextInt(this.width);
         this.grid[finalStairsX][0][0] = FINAL_STAIRS;
         this.grid[finalStairsX][1][0] = STAIRS_MIDDLE;
@@ -75,9 +75,11 @@ public class SilverDungeonBuilder {
 
     /**
      * Recursively traverse through the rooms to build a path through them.
-     * Returns false if the path must not be made.
-     *
-     * @param typesToAvoid - A bitmask of the types of rooms that should not be connected to.
+     * @param x The x {@link Integer} offset for the room position.
+     * @param y The y {@link Integer} offset for the room position.
+     * @param z The z {@link Integer} offset for the room position.
+     * @param typesToAvoid An {@link Integer} bitmask of the types of rooms that should not be connected to.
+     * @return Whether the path can be made between the rooms, as a {@link Boolean}.
      */
     private boolean traverseRooms(int x, int y, int z, int typesToAvoid) {
         // Check if out of bounds of the array
@@ -141,8 +143,13 @@ public class SilverDungeonBuilder {
 
     /**
      * Build the rooms based on the grid.
+     * @param builder The {@link StructurePiecesBuilder}.
+     * @param templateManager The {@link StructureTemplateManager}.
+     * @param startPos The starting {@link BlockPos} for the structure.
+     * @param rotation The structure's {@link Rotation}.
+     * @param direction The structure's {@link Direction}.
      */
-    public void assembleDungeon(StructurePiecesBuilder builder, StructureTemplateManager manager, BlockPos startPos, Rotation rotation, Direction direction) {
+    public void assembleDungeon(StructurePiecesBuilder builder, StructureTemplateManager templateManager, BlockPos startPos, Rotation rotation, Direction direction) {
         startPos = startPos.offset(direction.getStepZ() * 5 - direction.getStepX(), 5, -direction.getStepX() * 5 - direction.getStepZ());
         BlockPos.MutableBlockPos offset = new BlockPos.MutableBlockPos();
         Rotation sideways = rotation.getRotated(Rotation.CLOCKWISE_90);
@@ -157,21 +164,21 @@ public class SilverDungeonBuilder {
                     offset.set(xOffset, offset.getY(), zOffset);
 
                     int room = this.grid[x][y][z];
-                    builder.addPiece(new SilverFloorPiece(manager, "floor",
+                    builder.addPiece(new SilverFloorPiece(templateManager, "floor",
                             offset.offset(direction.getStepX() + direction.getStepZ(), -1, direction.getStepZ() - direction.getStepX()), rotation));
-                    builder.addPiece(new SilverTemplePiece(manager, (room & NORTH_DOOR) == NORTH_DOOR ? "door" : "wall",
+                    builder.addPiece(new SilverTemplePiece(templateManager, (room & NORTH_DOOR) == NORTH_DOOR ? "door" : "wall",
                             offset.offset(direction.getStepZ(), 0, -direction.getStepX()), rotation));
-                    builder.addPiece(new SilverTemplePiece(manager, (room & WEST_DOOR) == WEST_DOOR ? "door" : "wall",
+                    builder.addPiece(new SilverTemplePiece(templateManager, (room & WEST_DOOR) == WEST_DOOR ? "door" : "wall",
                             offset.relative(direction), sideways));
 
                     if ((room & FINAL_STAIRS) == FINAL_STAIRS) {
-                        builder.addPiece(new SilverDungeonRoom(manager, "tall_staircase", offset.offset(2, 0, 2), rotation));
-                        builder.addPiece(new SilverTemplePiece(manager, "boss_door",
+                        builder.addPiece(new SilverDungeonRoom(templateManager, "tall_staircase", offset.offset(2, 0, 2), rotation));
+                        builder.addPiece(new SilverTemplePiece(templateManager, "boss_door",
                                 offset.offset(direction.getStepZ() * 3, 0, -direction.getStepX() * 3), rotation));
                     } else if ((room & STAIRS) == STAIRS) {
-                        builder.addPiece(new SilverDungeonRoom(manager, "staircase", offset.offset(2, 0, 2), rotation));
+                        builder.addPiece(new SilverDungeonRoom(templateManager, "staircase", offset.offset(2, 0, 2), rotation));
                     } else if ((room & CHEST_ROOM) == CHEST_ROOM) {
-                        builder.addPiece(new SilverDungeonRoom(manager, "chest_room", offset.offset(3, 0, 3), rotation));
+                        builder.addPiece(new SilverDungeonRoom(templateManager, "chest_room", offset.offset(3, 0, 3), rotation));
                     }
                 }
             }
