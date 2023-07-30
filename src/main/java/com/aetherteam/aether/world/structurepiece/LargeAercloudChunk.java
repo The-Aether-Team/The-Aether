@@ -23,18 +23,18 @@ import java.util.Set;
 /**
  * This piece exists to hold the positions of the aercloud blocks placed by the structure.
  */
-public class LegacyCloudBed extends StructurePiece {
+public class LargeAercloudChunk extends StructurePiece {
     private final Set<BlockPos> positions = new HashSet<>();
     private final BlockStateProvider blocks;
 
-    public LegacyCloudBed(Set<BlockPos> positions, BlockStateProvider blocks, BoundingBox bounds, Direction direction) {
+    public LargeAercloudChunk(Set<BlockPos> positions, BlockStateProvider blocks, BoundingBox bounds, Direction direction) {
         super(AetherStructurePieceTypes.LARGE_AERCLOUD.get(), 0, bounds);
         this.setOrientation(direction);
         this.positions.addAll(positions);
         this.blocks = blocks;
     }
 
-    public LegacyCloudBed(StructurePieceSerializationContext context, CompoundTag tag) {
+    public LargeAercloudChunk(StructurePieceSerializationContext context, CompoundTag tag) {
         super(AetherStructurePieceTypes.LARGE_AERCLOUD.get(), tag);
         ListTag positions = tag.getList("Positions", Tag.TAG_COMPOUND);
         for (Tag position : positions) {
