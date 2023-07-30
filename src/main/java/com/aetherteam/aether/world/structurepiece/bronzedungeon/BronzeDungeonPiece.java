@@ -22,10 +22,10 @@ public abstract class BronzeDungeonPiece extends AetherTemplateStructurePiece {
     // This helps Bronze Dungeons merge more cleanly when they overlap, and blends the tunnels in with the landscape.
     protected static final ProtectedBlockProcessor AVOID_DUNGEONS = new ProtectedBlockProcessor(AetherTags.Blocks.NON_BRONZE_DUNGEON_REPLACEABLE);
 
-    protected static RuleProcessor LOCKED_SENTRY_STONE = new RuleProcessor(ImmutableList.of(
+    protected static final RuleProcessor LOCKED_SENTRY_STONE = new RuleProcessor(ImmutableList.of(
             new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.LOCKED_CARVED_STONE.get(), 0.05F), AlwaysTrueTest.INSTANCE, AetherBlocks.LOCKED_SENTRY_STONE.get().defaultBlockState())
     ));
-    protected static RuleProcessor BRONZE_DUNGEON_STONE = new RuleProcessor(ImmutableList.of(
+    protected static final RuleProcessor BRONZE_DUNGEON_STONE = new RuleProcessor(ImmutableList.of(
             new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.CARVED_STONE.get(), 0.1F), AlwaysTrueTest.INSTANCE, AetherBlocks.SENTRY_STONE.get().defaultBlockState()),
             new ProcessorRule(new RandomBlockMatchTest(AetherBlocks.HOLYSTONE.get(), 0.2F), AlwaysTrueTest.INSTANCE, AetherBlocks.MOSSY_HOLYSTONE.get().defaultBlockState())
     ));

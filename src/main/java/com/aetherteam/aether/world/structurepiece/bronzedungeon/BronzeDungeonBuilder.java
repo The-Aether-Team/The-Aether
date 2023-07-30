@@ -215,7 +215,7 @@ public class BronzeDungeonBuilder {
 
     /**
      * Adds all the pieces to the StructurePieceAccessor so that it can generate in the world.
-     * @param The {@link StructurePiecesBuilder} for the structure.
+     * @param builder The {@link StructurePiecesBuilder} for the structure.
      */
     public void populatePiecesBuilder(StructurePiecesBuilder builder) {
         StructurePiece bossRoom = this.nodes.remove(0);
