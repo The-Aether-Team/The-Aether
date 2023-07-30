@@ -8,6 +8,7 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 
 public class CrystalModel<T extends Entity> extends ListModel<T> {
@@ -39,8 +40,8 @@ public class CrystalModel<T extends Entity> extends ListModel<T> {
     @Override
     public void setupAnim(T crystal, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         for (ModelPart modelPart : this.parts()) {
-            modelPart.xRot = headPitch * ((float) Math.PI / 180.0F);
-            modelPart.yRot = netHeadYaw * ((float) Math.PI / 180.0F);
+            modelPart.xRot = headPitch * Mth.DEG_TO_RAD;
+            modelPart.yRot = netHeadYaw * Mth.DEG_TO_RAD;
         }
     }
 }

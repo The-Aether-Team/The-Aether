@@ -354,13 +354,13 @@ public class Aerwhale extends FlyingMob {
                 this.operation = Operation.WAIT;
             }
 
-            float xRotTarget = (float) (Mth.atan2(y, distance) * (180F / (float) Math.PI)); // Pitch
+            float xRotTarget = (float) (Mth.atan2(y, distance) * Mth.RAD_TO_DEG); // Pitch
             float xRot = Mth.wrapDegrees(this.mob.getXRot());
             xRot = Mth.approachDegrees(xRot, xRotTarget, 0.2F);
             this.mob.setXRot(xRot);
             this.mob.setXRotData(this.mob.getXRot());
 
-            float yRotTarget = Mth.wrapDegrees((float) Mth.atan2(z, x) * (180F / (float) Math.PI)); // Yaw
+            float yRotTarget = Mth.wrapDegrees((float) Mth.atan2(z, x) * Mth.RAD_TO_DEG); // Yaw
             float yRot = Mth.wrapDegrees(this.mob.getYRot() + 90F);
             yRot = Mth.approachDegrees(yRot, yRotTarget, 0.5F);
             this.mob.setYRot(yRot - 90F);
@@ -368,9 +368,9 @@ public class Aerwhale extends FlyingMob {
             this.mob.setYBodyRot(yRot);
             this.mob.setYHeadRot(yRot);
 
-            x = this.mob.getAttributeValue(Attributes.FLYING_SPEED) * Mth.cos(yRot * ((float) Math.PI / 180F));
-            y = this.mob.getAttributeValue(Attributes.FLYING_SPEED) * Mth.sin(xRot * ((float) Math.PI / 180F));
-            z = this.mob.getAttributeValue(Attributes.FLYING_SPEED) * Mth.sin(yRot * ((float) Math.PI / 180F));
+            x = this.mob.getAttributeValue(Attributes.FLYING_SPEED) * Mth.cos(yRot * Mth.DEG_TO_RAD);
+            y = this.mob.getAttributeValue(Attributes.FLYING_SPEED) * Mth.sin(xRot * Mth.DEG_TO_RAD);
+            z = this.mob.getAttributeValue(Attributes.FLYING_SPEED) * Mth.sin(yRot * Mth.DEG_TO_RAD);
 
             Vec3 motion = new Vec3(x, y, z);
             this.mob.setDeltaMovement(motion);

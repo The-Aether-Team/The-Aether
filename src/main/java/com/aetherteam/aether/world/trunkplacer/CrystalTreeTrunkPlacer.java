@@ -38,7 +38,7 @@ public class CrystalTreeTrunkPlacer extends StraightTrunkPlacer {
                 int k = (int) Mth.sin(f);
                 BlockPos blockpos = pos.offset(j, i, k);
                 this.placeLog(level, blockSetter, random, blockpos, config);
-                f += 0.25F * ((float) Math.PI * 2.0F);
+                f += 0.25F * Mth.TWO_PI;
             }
         }
         return ImmutableList.of(new FoliagePlacer.FoliageAttachment(pos.above(height), 0, false));

@@ -249,7 +249,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
         if (hand == InteractionHand.MAIN_HAND) {
             if (!this.isBossFight() && !this.getLevel().isClientSide()) {
                 if (!this.isReady()) {
-                    this.lookAt(player, 180F, 180F);
+                    this.lookAt(player, 180.0F, 180.0F);
                     if (player instanceof ServerPlayer serverPlayer) {
                         if (!this.isConversing()) {
                             this.getLevel().broadcastEntityEvent(this, (byte) 71);

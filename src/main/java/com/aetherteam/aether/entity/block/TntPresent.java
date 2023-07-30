@@ -8,6 +8,7 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
@@ -30,7 +31,7 @@ public class TntPresent extends Entity implements TraceableEntity {
     public TntPresent(Level level, double x, double y, double z, @Nullable LivingEntity owner) {
         this(AetherEntityTypes.TNT_PRESENT.get(), level);
         this.setPos(x, y, z);
-        double d0 = level.getRandom().nextDouble() * (Math.PI * 2.0F);
+        double d0 = level.getRandom().nextDouble() * Mth.TWO_PI;
         this.setDeltaMovement(-Math.sin(d0) * 0.02, 0.2, -Math.cos(d0) * 0.02);
         this.setFuse(10); // Short fuse.
         this.xo = x;

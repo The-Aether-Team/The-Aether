@@ -70,10 +70,10 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
     @Override
     public float[] getSunriseColor(float timeOfDay, float partialTicks) {
         if (AetherConfig.CLIENT.green_sunset.get()) {
-            float f1 = Mth.cos(timeOfDay * ((float) Math.PI * 2F)) - 0.0F;
+            float f1 = Mth.cos(timeOfDay * Mth.TWO_PI) - 0.0F;
             if (f1 >= -0.4F && f1 <= 0.4F) {
                 float f3 = (f1 + 0.0F) / 0.4F * 0.5F + 0.5F;
-                float f4 = 1.0F - (1.0F - Mth.sin(f3 * (float) Math.PI)) * 0.99F;
+                float f4 = 1.0F - (1.0F - Mth.sin(f3 * Mth.PI) * 0.99F;
                 f4 *= f4;
                 this.sunriseCol[0] = f3 * 0.5F + 0.0F; //RED
                 this.sunriseCol[1] = f3 * f3 * 0.3F + 0.3F; //GREEN
@@ -84,10 +84,10 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
                 return null;
             }
         } else {
-            float f1 = Mth.cos(timeOfDay * ((float) Math.PI * 2F)) - 0.0F;
+            float f1 = Mth.cos(timeOfDay * Mth.TWO_PI) - 0.0F;
             if (f1 >= -0.4F && f1 <= 0.4F) {
                 float f3 = (f1 + 0.0F) / 0.4F * 0.5F + 0.5F;
-                float f4 = 1.0F - (1.0F - Mth.sin(f3 * (float) Math.PI)) * 0.99F;
+                float f4 = 1.0F - (1.0F - Mth.sin(f3 * Mth.PI) * 0.99F;
                 f4 *= f4;
                 this.sunriseCol[0] = f3 * 0.3F + 0.65F; //RED
                 this.sunriseCol[1] = f3 * f3 * 0.7F + 0.25F; //GREEN
@@ -189,7 +189,7 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
 
     public Vec3 getCloudColor(ClientLevel world, float partialTick) {
         float f = world.getTimeOfDay(partialTick);
-        float f1 = Mth.cos(f * ((float)Math.PI * 2F)) * 2.0F + 0.5F;
+        float f1 = Mth.cos(f * Mth.TWO_PI) * 2.0F + 0.5F;
         f1 = Mth.clamp(f1, 0.0F, 1.0F);
         float f2 = 1.0F;
         float f3 = 1.0F;
@@ -251,7 +251,7 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
             bufferbuilder.vertex(matrix4f, 0.0F, 100.0F, 0.0F).color(f4, f5, f6, sunRiseRGBA[3]).endVertex();
 
             for (int j = 0; j <= 16; ++j) {
-                float f7 = (float) j * ((float) Math.PI * 2F) / 16.0F;
+                float f7 = (float) j * Mth.TWO_PI) / 16.0F;
                 float f8 = Mth.sin(f7);
                 float f9 = Mth.cos(f7);
                 bufferbuilder.vertex(matrix4f, f8 * 120.0F, f9 * 120.0F, -f9 * 40.0F * sunRiseRGBA[3]).color(sunRiseRGBA[0], sunRiseRGBA[1], sunRiseRGBA[2], 0.0F).endVertex();
@@ -290,7 +290,7 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
         Vec3 vec3 = pPos.subtract(2.0, 2.0, 2.0).scale(0.25);
         BiomeManager biomemanager = world.getBiomeManager();
         Vec3 vec31 = CubicSampler.gaussianSampleVec3(vec3, (p_194161_, p_194162_, p_194163_) -> Vec3.fromRGB24(biomemanager.getNoiseBiomeAtQuart(p_194161_, p_194162_, p_194163_).value().getSkyColor()));
-        float f1 = Mth.cos(f * ((float)Math.PI * 2F)) * 2.0F + 0.5F;
+        float f1 = Mth.cos(f * Mth.TWO_PI) * 2.0F + 0.5F;
         f1 = Mth.clamp(f1, 0.0F, 1.0F);
         float f2 = (float) vec31.x * f1;
         float f3 = (float) vec31.y * f1;

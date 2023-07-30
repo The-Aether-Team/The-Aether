@@ -103,13 +103,13 @@ public class HandRenderHooks {
         boolean flag = arm != HumanoidArm.LEFT;
         float f = flag ? 1.0F : -1.0F;
         float f1 = Mth.sqrt(swingProgress);
-        float f2 = -0.3F * Mth.sin(f1 * (float) Math.PI);
-        float f3 = 0.4F * Mth.sin(f1 * ((float) Math.PI * 2.0F));
-        float f4 = -0.4F * Mth.sin(swingProgress * (float) Math.PI);
+        float f2 = -0.3F * Mth.sin(f1 * Mth.PI);
+        float f3 = 0.4F * Mth.sin(f1 * Mth.TWO_PI);
+        float f4 = -0.4F * Mth.sin(swingProgress * Mth.PI);
         poseStack.translate(f * (f2 + 0.64000005F), f3 - 0.6F + equippedProgress * -0.6F, f4 - 0.71999997F);
         poseStack.mulPose(Axis.YP.rotationDegrees(f * 45.0F));
-        float f5 = Mth.sin(swingProgress * swingProgress * (float) Math.PI);
-        float f6 = Mth.sin(f1 * (float) Math.PI);
+        float f5 = Mth.sin(swingProgress * swingProgress * Mth.PI);
+        float f6 = Mth.sin(f1 * Mth.PI);
         poseStack.mulPose(Axis.YP.rotationDegrees(f * f6 * 70.0F));
         poseStack.mulPose(Axis.ZP.rotationDegrees(f * f5 * -20.0F));
         poseStack.translate(f * -1.0F, 3.6F, 3.5F);
@@ -133,8 +133,8 @@ public class HandRenderHooks {
      */
     private static void renderTwoHandedMap(ItemInHandRenderer itemInHandRenderer, ICurioRenderer renderer, ItemStack glovesStack, AbstractClientPlayer player, ItemStack heldItem, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, float swingProgress, float equippedProgress, float pitch, HandRenderType handRenderType) {
         float f = Mth.sqrt(swingProgress);
-        float f1 = -0.2F * Mth.sin(swingProgress * (float) Math.PI);
-        float f2 = -0.4F * Mth.sin(f * (float) Math.PI);
+        float f1 = -0.2F * Mth.sin(swingProgress * Mth.PI);
+        float f2 = -0.4F * Mth.sin(f * Mth.PI);
         poseStack.translate(0.0F, -f1 / 2.0F, f2);
         float f3 = ((ItemInHandRendererAccessor) itemInHandRenderer).callCalculateMapTilt(pitch);
         poseStack.translate(0.0F, 0.04F + equippedProgress * -1.2F + f3 * -0.5F, -0.72F);
@@ -146,7 +146,7 @@ public class HandRenderHooks {
         renderMapHand(renderer, glovesStack, player, poseStack, buffer, combinedLight, HumanoidArm.LEFT, handRenderType);
         poseStack.popPose();
 
-        float f4 = Mth.sin(f * (float)Math.PI);
+        float f4 = Mth.sin(f * Mth.PI);
         poseStack.mulPose(Axis.XP.rotationDegrees(f4 * 20.0F));
         poseStack.scale(2.0F, 2.0F, 2.0F);
         ((ItemInHandRendererAccessor) itemInHandRenderer).callRenderMap(poseStack, buffer, combinedLight, heldItem);
@@ -168,10 +168,10 @@ public class HandRenderHooks {
         poseStack.pushPose();
         poseStack.translate(f * 0.51F, -0.08F + equippedProgress * -1.2F, -0.75F);
         float f1 = Mth.sqrt(swingProgress);
-        float f2 = Mth.sin(f1 * (float) Math.PI);
+        float f2 = Mth.sin(f1 * Mth.PI);
         float f3 = -0.5F * f2;
-        float f4 = 0.4F * Mth.sin(f1 * ((float) Math.PI * 2F));
-        float f5 = -0.3F * Mth.sin(swingProgress * (float) Math.PI);
+        float f4 = 0.4F * Mth.sin(f1 * Mth.TWO_PI);
+        float f5 = -0.3F * Mth.sin(swingProgress * Mth.PI);
         poseStack.translate(f * f3, f4 - 0.3F * f2, f5);
         poseStack.mulPose(Axis.XP.rotationDegrees(f2 * -45.0F));
         poseStack.mulPose(Axis.YP.rotationDegrees(f * f2 * -30.0F));

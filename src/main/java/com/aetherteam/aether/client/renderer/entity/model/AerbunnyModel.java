@@ -50,8 +50,8 @@ public class AerbunnyModel extends EntityModel<Aerbunny> {
         head.addOrReplaceChild("left_ear", CubeListBuilder.create().texOffs(14, 0).addBox(1.0F, -5.0F, -3.0F, 1.0F, 4.0F, 2.0F), PartPose.ZERO);
         head.addOrReplaceChild("right_whiskers", CubeListBuilder.create().texOffs(20, 0).addBox(-4.0F, 0.0F, -3.0F, 2.0F, 3.0F, 2.0F), PartPose.ZERO);
         head.addOrReplaceChild("left_whiskers", CubeListBuilder.create().texOffs(20, 0).addBox(2.0F, 0.0F, -3.0F, 2.0F, 3.0F, 2.0F), PartPose.ZERO);
-        PartDefinition body = partDefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 10).addBox(-3.0F, -4.0F, -3.0F, 6.0F, 8.0F, 6.0F), PartPose.offsetAndRotation(0.0F, 16.0F, 0.0F, (float) (Math.PI / 2.0F), 0.0F, 0.0F));
-        partDefinition.addOrReplaceChild("puff", CubeListBuilder.create().texOffs(29, 0).addBox(-3.5F, -3.5F, -3.5F, 7.0F, 7.0F, 7.0F), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, (float) (Math.PI / 2.0F), 0.0F, 0.0F));
+        PartDefinition body = partDefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 10).addBox(-3.0F, -4.0F, -3.0F, 6.0F, 8.0F, 6.0F), PartPose.offsetAndRotation(0.0F, 16.0F, 0.0F, Mth.HALF_PI, 0.0F, 0.0F));
+        partDefinition.addOrReplaceChild("puff", CubeListBuilder.create().texOffs(29, 0).addBox(-3.5F, -3.5F, -3.5F, 7.0F, 7.0F, 7.0F), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, Mth.HALF_PI, 0.0F, 0.0F));
         body.addOrReplaceChild("tail", CubeListBuilder.create().texOffs(0, 24).addBox(-2.0F, 4.0F, -2.0F, 4.0F, 3.0F, 4.0F), PartPose.ZERO);
         body.addOrReplaceChild("right_front_leg", CubeListBuilder.create().texOffs(24, 16).addBox(0.0F, 0.0F, -1.0F, 2.0F, 2.0F, 2.0F), PartPose.offset(-3.0F, -3.0F, -3.0F));
         body.addOrReplaceChild("left_front_leg", CubeListBuilder.create().texOffs(24, 16).addBox(-2.0F, 0.0F, -1.0F, 2.0F, 2.0F, 2.0F), PartPose.offset(3.0F, -3.0F, -3.0F));
@@ -68,12 +68,12 @@ public class AerbunnyModel extends EntityModel<Aerbunny> {
 
     @Override
     public void setupAnim(Aerbunny aerbunny, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.head.xRot = headPitch * (float) (Math.PI / 180.0F);
-        this.head.yRot = netHeadYaw * (float) (Math.PI / 180.0F);
+        this.head.xRot = headPitch * Mth.DEG_TO_RAD;
+        this.head.yRot = netHeadYaw * Mth.DEG_TO_RAD;
         this.rightFrontLeg.xRot = (Mth.cos(limbSwing * 0.6662F) * 1.0F * limbSwingAmount) - this.body.xRot;
         this.leftFrontLeg.xRot = (Mth.cos(limbSwing * 0.6662F) * 1.0F * limbSwingAmount) - this.body.xRot;
-        this.rightBackLeg.xRot = (Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.2F * limbSwingAmount) - this.body.xRot;
-        this.leftBackLeg.xRot = (Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.2F * limbSwingAmount) - this.body.xRot;
+        this.rightBackLeg.xRot = (Mth.cos(limbSwing * 0.6662F + Mth.PI) * 1.2F * limbSwingAmount) - this.body.xRot;
+        this.leftBackLeg.xRot = (Mth.cos(limbSwing * 0.6662F + Mth.PI) * 1.2F * limbSwingAmount) - this.body.xRot;
     }
 
     @Override

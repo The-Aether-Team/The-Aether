@@ -8,6 +8,7 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.util.Mth;
 
 public class AechorPlantModel extends EntityModel<AechorPlant> {
     public ModelPart stem;
@@ -145,7 +146,7 @@ public class AechorPlantModel extends EntityModel<AechorPlant> {
         for (ModelPart modelPart : this.stamenStemParts()) {
             modelPart.xRot = 0.2F + (i / 15.0F);
             modelPart.yRot = this.head.yRot + 0.1F;
-            modelPart.yRot += ((Math.PI * 2.0F) / 3.0F) * i;
+            modelPart.yRot += (Mth.TWO_PI / 3.0F) * i;
             modelPart.xRot += sinage1 * 0.4F;
             modelPart.y = sinage2 + (sinage1 * 2.0F);
             i++;
@@ -155,8 +156,8 @@ public class AechorPlantModel extends EntityModel<AechorPlant> {
         for (ModelPart modelPart : this.leafParts()) {
             modelPart.xRot = ((i % 2 == 0) ? 0.1F : 0.2F);
             modelPart.xRot += sinage1 * 0.75F;
-            modelPart.yRot = (float) (this.head.yRot + ((Math.PI * 2.0F) / 10.0F / 2.0F));
-            modelPart.yRot += ((Math.PI * 2.0F) / 10.0F) * i;
+            modelPart.yRot = this.head.yRot + (Mth.TWO_PI/ 10.0F / 2.0F);
+            modelPart.yRot += (Mth.TWO_PI / 10.0F) * i;
             modelPart.y = sinage2;
             i++;
         }
@@ -166,7 +167,7 @@ public class AechorPlantModel extends EntityModel<AechorPlant> {
             modelPart.xRot = ((i % 2 == 0) ? -0.25F : -0.4125F);
             modelPart.xRot += sinage1;
             modelPart.yRot = this.head.yRot;
-            modelPart.yRot += ((Math.PI * 2.0F) / 10.0F) * i;
+            modelPart.yRot += (Mth.TWO_PI / 10.0F) * i;
             modelPart.y = sinage2;
             i++;
         }

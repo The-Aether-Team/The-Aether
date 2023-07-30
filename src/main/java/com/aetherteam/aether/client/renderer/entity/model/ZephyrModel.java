@@ -61,7 +61,7 @@ public class ZephyrModel extends EntityModel<Zephyr> {
 
     @Override
     public void setupAnim(Zephyr zephyr, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        float motion = Mth.sin((limbSwing * 20.0F) / (180.0F / Mth.PI)) * limbSwingAmount * 0.5F;
+        float motion = Mth.sin((limbSwing * 20.0F) / Mth.RAD_TO_DEG) * limbSwingAmount * 0.5F;
 
         this.rightFace.y = 8 - motion;
         this.rightFace.x = -motion * 0.5F;
@@ -75,15 +75,15 @@ public class ZephyrModel extends EntityModel<Zephyr> {
         this.bodyLeftSideFront.y = this.bodyRightSideFront.y;
         this.bodyLeftSideBack.y = this.bodyRightSideBack.y;
 
-        this.tailBase.x = Mth.sin((limbSwing * 20.0F) / (180.0F / Mth.PI)) * limbSwingAmount * 0.75F;
+        this.tailBase.x = Mth.sin((limbSwing * 20.0F) / Mth.RAD_TO_DEG) * limbSwingAmount * 0.75F;
         this.tailBase.y = 8 - motion;
         this.tailBase.yRot = Mth.sin(ageInTicks * 0.5F) * limbSwingAmount * 0.75F;
 
-        this.tailMiddle.x = Mth.sin((limbSwing * 15.0F) / (180.0F / Mth.PI)) * limbSwingAmount * 0.85F;
+        this.tailMiddle.x = Mth.sin((limbSwing * 15.0F) / Mth.RAD_TO_DEG) * limbSwingAmount * 0.85F;
         this.tailMiddle.y = motion * 1.25F;
         this.tailMiddle.yRot = this.tailBase.yRot + 0.25F;
 
-        this.tailEnd.x = Mth.sin((limbSwing * 10.0F) / (180.0F / Mth.PI)) * limbSwingAmount * 0.95F;
+        this.tailEnd.x = Mth.sin((limbSwing * 10.0F) / Mth.RAD_TO_DEG) * limbSwingAmount * 0.95F;
         this.tailEnd.y = -motion;
         this.tailEnd.yRot = this.tailMiddle.yRot + 0.35F;
     }

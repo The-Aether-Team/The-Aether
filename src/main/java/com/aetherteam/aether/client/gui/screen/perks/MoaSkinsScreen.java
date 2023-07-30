@@ -292,8 +292,8 @@ public class MoaSkinsScreen extends Screen {
         PoseStack poseStack1 = new PoseStack();
         poseStack1.translate(0.0F, 0.0F, 1000.0F);
         poseStack1.scale((float) scale, (float) scale, (float) scale);
-        Quaternionf quaternionf = new Quaternionf().rotateZ((float) Math.PI);
-        Quaternionf quaternionf1 = new Quaternionf().rotateX(angleYComponent * ((float) Math.PI / 180.0F));
+        Quaternionf quaternionf = new Quaternionf().rotateZ(Mth.PI);
+        Quaternionf quaternionf1 = new Quaternionf().rotateX(angleYComponent * Mth.DEG_TO_RAD);
         quaternionf.mul(quaternionf1);
         poseStack1.mulPose(quaternionf);
         float f2 = livingEntity.yBodyRot;

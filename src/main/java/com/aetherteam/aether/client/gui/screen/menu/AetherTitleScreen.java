@@ -96,7 +96,7 @@ public class AetherTitleScreen extends TitleScreen {
 					poseStack.pushPose();
 					poseStack.translate(splashX, splashY, 0.0F);
 					poseStack.mulPose(Axis.ZP.rotationDegrees(-20.0F));
-					float f2 = 1.8F - Mth.abs(Mth.sin((float) (Util.getMillis() % 1000L) / 1000.0F * ((float) Math.PI * 2F)) * 0.1F);
+					float f2 = 1.8F - Mth.abs(Mth.sin((float) (Util.getMillis() % 1000L) / 1000.0F * Mth.TWO_PI) * 0.1F);
 					f2 = f2 * 100.0F / (float) (this.font.width(titleScreenAccessor.aether$getSplash()) + 32); poseStack.scale(f2, f2, f2);
 					drawCenteredString(poseStack, this.font, titleScreenAccessor.aether$getSplash(), 0, -8, 16776960 | l);
 					poseStack.popPose();

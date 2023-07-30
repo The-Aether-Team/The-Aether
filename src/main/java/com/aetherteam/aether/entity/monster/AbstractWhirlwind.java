@@ -10,6 +10,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
@@ -340,7 +341,7 @@ public abstract class AbstractWhirlwind extends Mob {
                 if (speed != null) {
                     modifier = speed.getValue();
                 }
-                this.whirlwind.setDeltaMovement(Math.cos(this.movementAngle * ((float) Math.PI / 180)) * modifier, this.whirlwind.getDeltaMovement().y, Math.sin(this.movementAngle * ((float) Math.PI / 180)) * modifier);
+                this.whirlwind.setDeltaMovement(Math.cos(this.movementAngle * Mth.DEG_TO_RAD) * modifier, this.whirlwind.getDeltaMovement().y, Math.sin(this.movementAngle * Mth.DEG_TO_RAD) * modifier);
             } else {
                 this.whirlwind.setDeltaMovement(Vec3.ZERO);
             }

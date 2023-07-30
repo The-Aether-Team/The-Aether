@@ -61,10 +61,10 @@ public class ItemMixin {
         float f = player.getXRot();
         float f1 = player.getYRot();
         Vec3 vec3 = player.getEyePosition();
-        float f2 = Mth.cos(-f1 * ((float) Math.PI / 180.0F) - (float) Math.PI);
-        float f3 = Mth.sin(-f1 * ((float) Math.PI / 180.0F) - (float) Math.PI);
-        float f4 = -Mth.cos(-f * ((float) Math.PI / 180.0F));
-        float f5 = Mth.sin(-f * ((float) Math.PI / 180.0F));
+        float f2 = Mth.cos(-f1 * Mth.DEG_TO_RAD - Mth.PI);
+        float f3 = Mth.sin(-f1 * Mth.DEG_TO_RAD - Mth.PI);
+        float f4 = -Mth.cos(-f * Mth.DEG_TO_RAD);
+        float f5 = Mth.sin(-f * Mth.DEG_TO_RAD);
         float f6 = f3 * f4;
         float f7 = f2 * f4;
         Vec3 vec31 = vec3.add((double) f6 * reach, (double) f5 * reach, (double) f7 * reach);

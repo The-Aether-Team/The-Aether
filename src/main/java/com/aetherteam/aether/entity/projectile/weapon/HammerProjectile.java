@@ -67,9 +67,9 @@ public class HammerProjectile extends ThrowableProjectile {
      * @param inaccuracy The {@link Float} inaccuracy of the projectile.
      */
     public void shoot(float rotationPitch, float rotationYaw, float velocity, float inaccuracy) {
-        float x = -Mth.sin(rotationYaw * ((float) Math.PI / 180.0F)) * Mth.cos(rotationPitch * ((float) Math.PI / 180.0F));
-        float y = -Mth.sin(rotationPitch * ((float) Math.PI / 180.0F));
-        float z = Mth.cos(rotationYaw * ((float) Math.PI / 180.0F)) * Mth.cos(rotationPitch * ((float) Math.PI / 180.0F));
+        float x = -Mth.sin(rotationYaw * Mth.DEG_TO_RAD) * Mth.cos(rotationPitch * Mth.DEG_TO_RAD);
+        float y = -Mth.sin(rotationPitch * Mth.DEG_TO_RAD);
+        float z = Mth.cos(rotationYaw * Mth.DEG_TO_RAD) * Mth.cos(rotationPitch * Mth.DEG_TO_RAD);
         super.shoot(x, y, z, velocity, inaccuracy);
     }
 

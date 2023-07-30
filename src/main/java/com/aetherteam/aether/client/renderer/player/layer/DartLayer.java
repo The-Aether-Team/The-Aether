@@ -63,8 +63,8 @@ public class DartLayer<T extends LivingEntity, M extends PlayerModel<T>> extends
         float f = Mth.sqrt(x * x + z * z);
         AbstractDart dart = this.dart.apply(entity);
         dart.setPos(entity.position());
-        dart.setYRot((float) (Math.atan2(x, z) * (double) (180.0F / (float) Math.PI)));
-        dart.setXRot((float) (Math.atan2(y, f) * (double) (180.0F / (float) Math.PI)));
+        dart.setYRot((float) (Math.atan2(x, z) * Mth.RAD_TO_DEG));
+        dart.setXRot((float) (Math.atan2(y, f) * Mth.RAD_TO_DEG));
         dart.yRotO = dart.getYRot();
         dart.xRotO = dart.getXRot();
         this.dispatcher.render(dart, 0.0, 0.0, 0.0, 0.0F, partialTick, poseStack, buffer, packedLight);

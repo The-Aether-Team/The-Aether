@@ -188,14 +188,14 @@ public class Zephyr extends FlyingMob implements Enemy {
 		public void tick() {
 			if (this.zephyr.getTarget() == null) {
 				Vec3 vec3d = this.zephyr.getDeltaMovement();
-				this.zephyr.setYRot(-((float) Mth.atan2(vec3d.x(), vec3d.z())) * (180.0F / (float) Math.PI));
+				this.zephyr.setYRot(-((float) Mth.atan2(vec3d.x(), vec3d.z())) * Mth.RAD_TO_DEG);
 				this.zephyr.yBodyRot = this.zephyr.getYRot();
 			} else {
 				LivingEntity livingEntity = this.zephyr.getTarget();
 				if (livingEntity.distanceToSqr(this.zephyr) < 4096.0) {
 					double x = livingEntity.getX() - this.zephyr.getX();
 					double z = livingEntity.getZ() - this.zephyr.getZ();
-					this.zephyr.setYRot(-((float) Mth.atan2(x, z)) * (180.0F / (float) Math.PI));
+					this.zephyr.setYRot(-((float) Mth.atan2(x, z)) * Mth.RAD_TO_DEG);
 					this.zephyr.setYBodyRot(this.zephyr.getYRot());
 				}
 			}

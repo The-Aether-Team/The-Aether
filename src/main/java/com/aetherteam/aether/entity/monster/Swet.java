@@ -518,7 +518,7 @@ public class Swet extends Slime implements MountableMob {
     public void handleEntityEvent(byte id) {
         if (id == 70) {
             for (int i = 0; i < 10; i++) {
-                double f = this.getRandom().nextFloat() * Math.PI * 2.0F;
+                double f = this.getRandom().nextFloat() * Mth.TWO_PI;
                 double f1 = this.getRandom().nextFloat() * this.swetWidth + 0.25F;
                 double f2 = (this.getRandom().nextFloat() * this.swetHeight) - (this.getRandom().nextGaussian() * 0.02 * 10.0);
                 double f3 = Mth.sin((float) f) * f1;
@@ -708,7 +708,7 @@ public class Swet extends Slime implements MountableMob {
         public SwetMoveControl(Swet swet) {
             super(swet);
             this.swet = swet;
-            this.yRot = 180.0F * swet.getYRot() / (float) Math.PI;
+            this.yRot = 180.0F * swet.getYRot() / Mth.PI;
         }
 
         public void setDirection(float yRot, boolean isAggressive) {
@@ -778,7 +778,7 @@ public class Swet extends Slime implements MountableMob {
         public void tick() {
             SwetMoveControl moveHelperController = (SwetMoveControl) this.swet.getMoveControl();
             float rot = moveHelperController.yRot;
-            Vec3 offset = new Vec3(-Math.sin(rot * ((float) Math.PI / 180)) * 2, 0.0, Math.cos(rot * ((float) Math.PI / 180)) * 2);
+            Vec3 offset = new Vec3(-Math.sin(rot * Mth.DEG_TO_RAD) * 2, 0.0, Math.cos(rot * Mth.DEG_TO_RAD) * 2);
             BlockPos offsetPos = BlockPos.containing(this.swet.position().add(offset));
             // Rotate the Swet if the next position in the direction it is facing is beyond its fall distance to jump to.
             if (this.swet.getLevel().getHeight(Heightmap.Types.WORLD_SURFACE, offsetPos.getX(), offsetPos.getZ()) < offsetPos.getY() - this.swet.getMaxFallDistance()) {

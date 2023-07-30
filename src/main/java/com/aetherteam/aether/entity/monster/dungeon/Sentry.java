@@ -11,6 +11,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -195,7 +196,7 @@ public class Sentry extends Slime {
 				double y = this.getY() + 0.5;
 				double z = this.getZ() + (this.getRandom().nextFloat() * 0.25);
 				float f1 = this.getRandom().nextFloat() * 360.0F;
-				this.getLevel().addParticle(ParticleTypes.POOF, x, y, z, -Math.sin((Math.PI / 180.0F) * f1) * 0.75, 0.125, Math.cos((Math.PI / 180.0F) * f1) * 0.75);
+				this.getLevel().addParticle(ParticleTypes.POOF, x, y, z, -Math.sin(Mth.DEG_TO_RAD * f1) * 0.75, 0.125, Math.cos(Mth.DEG_TO_RAD * f1) * 0.75);
 			}
 		} else {
 			super.handleEntityEvent(id);

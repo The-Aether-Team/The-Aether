@@ -446,9 +446,9 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
     public float getHeadEatAngleScale(float angle) {
         if (this.eatAnimationTick > 4 && this.eatAnimationTick <= 36) {
             float f = ((float) (this.eatAnimationTick - 4) - angle) / 32.0F;
-            return ((float) Math.PI / 5.0F) + 0.21991149F * Mth.sin(f * 28.7F);
+            return (Mth.PI / 5.0F) + 0.21991149F * Mth.sin(f * 28.7F);
         } else {
-            return this.eatAnimationTick > 0 ? ((float) Math.PI / 5.0F) : this.getXRot() * ((float) Math.PI / 180.0F);
+            return this.eatAnimationTick > 0 ? (Mth.PI / 5.0F) : this.getXRot() * Mth.DEG_TO_RAD;
         }
     }
 

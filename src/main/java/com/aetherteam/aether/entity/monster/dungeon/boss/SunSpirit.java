@@ -660,8 +660,8 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         @Override
         public void tick() {
             boolean changedCourse = this.outOfBounds();
-            double x = Mth.sin(this.rotation * Mth.PI / 180F) * this.sunSpirit.getAttributeValue(Attributes.MOVEMENT_SPEED) * this.sunSpirit.velocity;
-            double z = -Mth.cos(this.rotation * Mth.PI / 180F) * this.sunSpirit.getAttributeValue(Attributes.MOVEMENT_SPEED) * this.sunSpirit.velocity;
+            double x = Mth.sin(this.rotation * Mth.DEG_TO_RAD) * this.sunSpirit.getAttributeValue(Attributes.MOVEMENT_SPEED) * this.sunSpirit.velocity;
+            double z = -Mth.cos(this.rotation * Mth.DEG_TO_RAD) * this.sunSpirit.getAttributeValue(Attributes.MOVEMENT_SPEED) * this.sunSpirit.velocity;
             this.sunSpirit.setDeltaMovement(x, 0, z);
             if (changedCourse || ++this.courseChangeTimer >= 20) {
                 if (this.sunSpirit.getRandom().nextInt(3) == 0) {

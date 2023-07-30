@@ -30,7 +30,7 @@ public class MimicModel extends EntityModel<Mimic> {
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshDefinition = new MeshDefinition();
 		PartDefinition partDefinition = meshDefinition.getRoot();
-		PartDefinition upperBody = partDefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(0, 10).addBox(0.0F, 0.0F, 0.0F, 16, 6, 16), PartPose.offsetAndRotation(-8.0F, 0.0F, 8.0F, (float)Math.PI, 0.0F, 0.0F));
+		PartDefinition upperBody = partDefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(0, 10).addBox(0.0F, 0.0F, 0.0F, 16, 6, 16), PartPose.offsetAndRotation(-8.0F, 0.0F, 8.0F, Mth.PI, 0.0F, 0.0F));
 		partDefinition.addOrReplaceChild("lower_body", CubeListBuilder.create().texOffs(0, 38).addBox(0.0F, 0.0F, 0.0F, 16, 10, 16), PartPose.offset(-8.0F, 0.0F, -8.0F));
 		partDefinition.addOrReplaceChild("left_leg", CubeListBuilder.create().texOffs(64, 0).addBox(0.0F, 0.0F, -3.0F, 6, 15, 6), PartPose.offset(1.5F, 9.0F, 0.0F));
 		partDefinition.addOrReplaceChild("right_leg", CubeListBuilder.create().texOffs(64, 0).mirror().addBox(-5.1F, 0.0F, -3.0F, 6, 15, 6), PartPose.offset(-2.5F, 9.0F, 0.0F));
@@ -48,8 +48,8 @@ public class MimicModel extends EntityModel<Mimic> {
 	
 	@Override
 	public void setupAnim(Mimic mimic, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		this.upperBody.xRot = (float) Math.PI - 0.6F * (1.0F + Mth.cos(ageInTicks / 10.0F * (float) Math.PI));
+		this.upperBody.xRot = Mth.PI - 0.6F * (1.0F + Mth.cos(ageInTicks / 10.0F * Mth.PI));
 		this.rightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-		this.leftLeg.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
+		this.leftLeg.xRot = Mth.cos(limbSwing * 0.6662F + Mth.PI) * 1.4F * limbSwingAmount;
 	}
 }

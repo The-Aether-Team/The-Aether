@@ -116,7 +116,7 @@ public class CloudMinion extends FlyingMob {
             } else {
                 yaw += 90.0;
             }
-            yaw /= -(180.0 / Math.PI);
+            yaw /= -Mth.RAD_TO_DEG;
             this.targetX = this.getOwner().getX() + Math.sin(yaw) * 1.05;
             this.targetY = this.getOwner().getY() + 1.0;
             this.targetZ = this.getOwner().getZ() + Math.cos(yaw) * 1.05;
