@@ -73,7 +73,7 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
             float f1 = Mth.cos(timeOfDay * Mth.TWO_PI) - 0.0F;
             if (f1 >= -0.4F && f1 <= 0.4F) {
                 float f3 = (f1 + 0.0F) / 0.4F * 0.5F + 0.5F;
-                float f4 = 1.0F - (1.0F - Mth.sin(f3 * Mth.PI) * 0.99F;
+                float f4 = 1.0F - (1.0F - Mth.sin(f3 * Mth.PI)) * 0.99F;
                 f4 *= f4;
                 this.sunriseCol[0] = f3 * 0.5F + 0.0F; //RED
                 this.sunriseCol[1] = f3 * f3 * 0.3F + 0.3F; //GREEN
@@ -87,7 +87,7 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
             float f1 = Mth.cos(timeOfDay * Mth.TWO_PI) - 0.0F;
             if (f1 >= -0.4F && f1 <= 0.4F) {
                 float f3 = (f1 + 0.0F) / 0.4F * 0.5F + 0.5F;
-                float f4 = 1.0F - (1.0F - Mth.sin(f3 * Mth.PI) * 0.99F;
+                float f4 = 1.0F - (1.0F - Mth.sin(f3 * Mth.PI)) * 0.99F;
                 f4 *= f4;
                 this.sunriseCol[0] = f3 * 0.3F + 0.65F; //RED
                 this.sunriseCol[1] = f3 * f3 * 0.7F + 0.25F; //GREEN
@@ -251,7 +251,7 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects //todo: futu
             bufferbuilder.vertex(matrix4f, 0.0F, 100.0F, 0.0F).color(f4, f5, f6, sunRiseRGBA[3]).endVertex();
 
             for (int j = 0; j <= 16; ++j) {
-                float f7 = (float) j * Mth.TWO_PI) / 16.0F;
+                float f7 = j * Mth.TWO_PI / 16.0F;
                 float f8 = Mth.sin(f7);
                 float f9 = Mth.cos(f7);
                 bufferbuilder.vertex(matrix4f, f8 * 120.0F, f9 * 120.0F, -f9 * 40.0F * sunRiseRGBA[3]).color(sunRiseRGBA[0], sunRiseRGBA[1], sunRiseRGBA[2], 0.0F).endVertex();
