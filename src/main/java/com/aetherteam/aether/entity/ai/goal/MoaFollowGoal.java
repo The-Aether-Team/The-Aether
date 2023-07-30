@@ -60,11 +60,13 @@ public class MoaFollowGoal extends TemptGoal {
 
     @Override
     public void tick() {
-        this.moa.getLookControl().setLookAt(this.player, (float) (this.moa.getMaxHeadYRot() + 20), (float) this.moa.getMaxHeadXRot());
-        if (this.moa.distanceToSqr(this.player) < 6.25) {
-            this.moa.getNavigation().stop();
-        } else {
-            this.moa.getNavigation().moveTo(this.player, this.speedModifier);
+        if (this.player != null) {
+            this.moa.getLookControl().setLookAt(this.player, (float) (this.moa.getMaxHeadYRot() + 20), (float) this.moa.getMaxHeadXRot());
+            if (this.moa.distanceToSqr(this.player) < 6.25) {
+                this.moa.getNavigation().stop();
+            } else {
+                this.moa.getNavigation().moveTo(this.player, this.speedModifier);
+            }
         }
     }
 

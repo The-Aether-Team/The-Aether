@@ -8,14 +8,14 @@ public final class BossNameGenerator {
     /**
      * Valkyrie names
      */
-    public static String[] valkyrieNameFirst = { "Signy", "Har", "Her", "Gon", "Sko", "Hil" };
-    public static String[] valkyrieNameMiddle = { "fjo", "ska", "bri", ""};
-    public static String[] valkyrieNameLast = { "tur", "pul", "dul", "gul", "or"};
+    public static final String[] valkyrieNameFirst = { "Signy", "Har", "Her", "Gon", "Sko", "Hil" };
+    public static final String[] valkyrieNameMiddle = { "fjo", "ska", "bri", ""};
+    public static final String[] valkyrieNameLast = { "tur", "pul", "dul", "gul", "or"};
 
     /**
      * Slider and Sun Spirit names
      */
-    public static String[] genericNameFirst = new String[] { "Del", "Ros", "Per", "Cyn",
+    public static final String[] genericNameFirst = new String[] { "Del", "Ros", "Per", "Cyn",
             "Flar", "Ba", "Lab", "Az", "Ob", "Al", "Pas", "Nun", "Ur", "Ter",
             "Jar", "Est", "Car", "Houl", "In", "Kop", "Shot", "Vast", "Ael",
             "Skal", "Geld", "Er", "Sald", "Sar", "Binthe", "Haur", "Syn",
@@ -33,7 +33,7 @@ public final class BossNameGenerator {
             "I", "Ca", "Vad", "Ro", "Dez", "Kuv", "Vab", "Dar", "Ral", "Mar",
             "Quarne", "Pulg", "Hor", "Ka", "Quer", "And", "Ny", "Ym", "Wal",
             "Tarl", "Vart","Pro" };
-    public static String[] genericNameMiddle = new String[] { "cath", "yd", "rik", "nal",
+    public static final String[] genericNameMiddle = new String[] { "cath", "yd", "rik", "nal",
             "y", "ro", "stead", "carn", "tak", "chean", "ain", "ak", "loc",
             "ras", "ien", "cuth", "alen", "is", "carad", "acy", "la", "asc",
             "arn", "ayn", "sene", "art", "lyn", "cam", "mel", "ly", "eas",
@@ -49,7 +49,7 @@ public final class BossNameGenerator {
             "dar", "end", "doth", "en", "aller", "reth", "juin", "arny", "un",
             "len", "ere", "ane", "aryn", "dy", "gary", "arry", "arty", "ydd",
             "ris", "ar", "ance", "hen", "el", "air", "rum" };
-    public static String[] genericNameLast = new String[] { "cath", "carth", "ayne",
+    public static final String[] genericNameLast = new String[] { "cath", "carth", "ayne",
             "yd", "arik", "asty", "rik", "lir", "dor", "nal", "on", "codd",
             "y", "ber", "ro", "stead", "ta", "tyne", "wat", "carn", "erry",
             "chean", "ain", "aryne", "al", "ak", "ert", "ras", "ien", "alen",

@@ -6,6 +6,7 @@ import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.StepHeightPacket;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -92,7 +93,10 @@ public interface MountableMob {
                 double jumpStrength = vehicle.getMountJumpStrength() * this.jumpFactor();
                 vehicle.setDeltaMovement(vehicle.getDeltaMovement().x(), jumpStrength, vehicle.getDeltaMovement().z());
                 if (vehicle.hasEffect(MobEffects.JUMP)) {
-                    vehicle.push(0.0, 0.1 * (vehicle.getEffect(MobEffects.JUMP).getAmplifier() + 1), 0.0);
+                    MobEffectInstance jumpBoost = vehicle.getEffect(MobEffects.JUMP);
+                    if (jumpBoost != null) {
+                        vehicle.push(0.0, 0.1 * (jumpBoost.getAmplifier() + 1), 0.0);
+                    }
                 }
                 vehicle.hasImpulse = true;
             }

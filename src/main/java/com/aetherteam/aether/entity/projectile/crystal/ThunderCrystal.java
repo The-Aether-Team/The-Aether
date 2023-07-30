@@ -1,9 +1,9 @@
 package com.aetherteam.aether.entity.projectile.crystal;
 
-import com.aetherteam.aether.capability.lightning.LightningTracker;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.particle.AetherParticleTypes;
 import com.aetherteam.aether.data.resources.AetherDamageTypes;
+import com.aetherteam.aether.entity.EntityUtil;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -12,7 +12,6 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
@@ -63,12 +62,7 @@ public class ThunderCrystal extends AbstractCrystal {
             } else {
                 if (this.ticksInAir > this.getLifeSpan()) {
                     if (this.target != null && this.target.isAlive()) { // Spawn lightning only when the target is alive to avoid destroying items.
-                        LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(this.getLevel());
-                        if (lightningBolt != null) {
-                            LightningTracker.get(lightningBolt).ifPresent(lightningTracker -> lightningTracker.setOwner(this.getOwner()));
-                            lightningBolt.setPos(this.getX(), this.getY(), this.getZ());
-                            this.getLevel().addFreshEntity(lightningBolt);
-                        }
+                        EntityUtil.summonLightningFromProjectile(this);
                     }
                     this.playSound(AetherSoundEvents.ENTITY_THUNDER_CRYSTAL_EXPLODE.get(), 1.0F, 1.0F);
                 } else {

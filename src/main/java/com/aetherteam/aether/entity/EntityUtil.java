@@ -1,11 +1,15 @@
 package com.aetherteam.aether.entity;
 
+import com.aetherteam.aether.capability.lightning.LightningTracker;
 import com.aetherteam.aether.mixin.mixins.common.accessor.EntityAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 
 public final class EntityUtil {
@@ -66,6 +70,19 @@ public final class EntityUtil {
         double c = pos.getZ() + 0.5 + (double) (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.375;
         if (level instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(ParticleTypes.POOF, a, b, c, 1, 0.0, 0.0, 0.0, 0.0);
+        }
+    }
+
+    /**
+     * Summons a {@link LightningBolt}.
+     * @param projectile The {@link Projectile} that is summoning lightning.
+     */
+    public static void summonLightningFromProjectile(Projectile projectile) {
+        LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(projectile.getLevel());
+        if (lightningBolt != null) {
+            LightningTracker.get(lightningBolt).ifPresent(lightningTracker -> lightningTracker.setOwner(projectile.getOwner()));
+            lightningBolt.setPos(projectile.getX(), projectile.getY(), projectile.getZ());
+            projectile.getLevel().addFreshEntity(lightningBolt);
         }
     }
 }
