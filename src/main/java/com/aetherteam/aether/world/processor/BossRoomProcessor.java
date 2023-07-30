@@ -19,17 +19,17 @@ import java.util.ArrayList;
 public class BossRoomProcessor extends StructureProcessor {
     public static final BossRoomProcessor INSTANCE = new BossRoomProcessor();
 
-    public static final Codec<BossRoomProcessor> CODEC = Codec.unit(INSTANCE);
+    public static final Codec<BossRoomProcessor> CODEC = Codec.unit(BossRoomProcessor.INSTANCE);
 
     @Override
-    public StructureTemplate.StructureEntityInfo processEntity(LevelReader world, BlockPos seedPos, StructureTemplate.StructureEntityInfo rawEntityInfo, StructureTemplate.StructureEntityInfo entityInfo, StructurePlaceSettings placementSettings, StructureTemplate template) {
+    public StructureTemplate.StructureEntityInfo processEntity(LevelReader level, BlockPos seedPos, StructureTemplate.StructureEntityInfo rawEntityInfo, StructureTemplate.StructureEntityInfo entityInfo, StructurePlaceSettings placementSettings, StructureTemplate template) {
         BoundingBox boundingBox = template.getBoundingBox(placementSettings, seedPos);
         BossRoomTracker<?> tracker = new BossRoomTracker<>(null,
                 entityInfo.pos,
                 new AABB(boundingBox.minX(), boundingBox.minY(), boundingBox.minZ(), boundingBox.maxX() + 1, boundingBox.maxY() + 1, boundingBox.maxZ() + 1),
                 new ArrayList<>());
         entityInfo.nbt.put("Dungeon", tracker.addAdditionalSaveData());
-        return super.processEntity(world, seedPos, rawEntityInfo, entityInfo, placementSettings, template);
+        return super.processEntity(level, seedPos, rawEntityInfo, entityInfo, placementSettings, template);
     }
 
     @Override

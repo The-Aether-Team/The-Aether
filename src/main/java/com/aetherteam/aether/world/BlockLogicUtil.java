@@ -2,6 +2,8 @@ package com.aetherteam.aether.world;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.SectionPos;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 
 public final class BlockLogicUtil {
@@ -43,5 +45,19 @@ public final class BlockLogicUtil {
                 -(box.getYSpan() >> 1),
                 zOffset
         );
+    }
+
+    /**
+     * Checks if a position for block placement is within a center chunk.
+     * @param pos The {@link BlockPos}.
+     * @param centerChunk The center {@link ChunkPos}.
+     * @return Whether the position is in bounds, as a {@link Boolean}.
+     */
+    public static boolean isOutOfBounds(BlockPos pos, ChunkPos centerChunk) {
+        int x = SectionPos.blockToSectionCoord(pos.getX());
+        int z = SectionPos.blockToSectionCoord(pos.getZ());
+        int xDistance = Math.abs(x - centerChunk.x);
+        int zDistance = Math.abs(z - centerChunk.z);
+        return xDistance > 1 || zDistance > 1;
     }
 }
