@@ -19,7 +19,8 @@ import net.minecraft.world.phys.Vec3;
  */
 public class AvoidObstacles extends Behavior<Slider> {
     public AvoidObstacles() {
-        super(ImmutableMap.of(AetherMemoryModuleTypes.MOVE_DIRECTION.get(), MemoryStatus.REGISTERED));
+        super(ImmutableMap.of(AetherMemoryModuleTypes.MOVE_DIRECTION.get(),
+                MemoryStatus.REGISTERED));
     }
 
     @Override
@@ -40,18 +41,18 @@ public class AvoidObstacles extends Behavior<Slider> {
         if (targetPos == null) {
             return;
         }
-
-        Direction direction = SliderAi.calculateDirection(targetPos.x - slider.getX(), targetPos.y - slider.getY(), targetPos.z - slider.getZ());
+        Direction direction = SliderAi.calculateDirection(targetPos.x() - slider.getX(), targetPos.y() - slider.getY(), targetPos.z() - slider.getZ());
         AABB collisionBox = SliderAi.calculateAdjacentBox(slider.getBoundingBox(), direction);
+        BlockPos min = new BlockPos(Mth.floor(collisionBox.minX), Mth.floor(collisionBox.minY), Mth.floor(collisionBox.minZ));
+        BlockPos max = new BlockPos(Mth.ceil(collisionBox.maxX - 1), Mth.ceil(collisionBox.maxY - 1), Mth.ceil(collisionBox.maxZ - 1));
 
         boolean isTouchingWall = false;
-        for (BlockPos pos : BlockPos.betweenClosed(Mth.floor(collisionBox.minX), Mth.floor(collisionBox.minY), Mth.floor(collisionBox.minZ), Mth.ceil(collisionBox.maxX - 1), Mth.ceil(collisionBox.maxY - 1), Mth.ceil(collisionBox.maxZ - 1))) {
-            if (slider.level.getBlockState(pos).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
+        for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
+            if (slider.getLevel().getBlockState(pos).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
                 isTouchingWall = true;
                 break;
             }
         }
-
         if (isTouchingWall) {
             BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
             int y = Mth.floor(collisionBox.minY);
@@ -60,14 +61,14 @@ public class AvoidObstacles extends Behavior<Slider> {
                 isTouchingWall = false;
                 for (int x = Mth.floor(collisionBox.minX); x < collisionBox.maxX; x++) {
                     for (int z = Mth.floor(collisionBox.minZ); z < collisionBox.maxZ; z++) {
-                        if (slider.level.getBlockState(pos.set(x, y, z)).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
+                        if (slider.getLevel().getBlockState(pos.set(x, y, z)).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
                             isTouchingWall = true;
                         }
                     }
                 }
             }
             Vec3 currentPos = slider.position();
-            brain.setMemory(AetherMemoryModuleTypes.TARGET_POSITION.get(), new Vec3(currentPos.x, y, currentPos.z));
+            brain.setMemory(AetherMemoryModuleTypes.TARGET_POSITION.get(), new Vec3(currentPos.x(), y, currentPos.z()));
             brain.setMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get(), Direction.UP);
         }
     }

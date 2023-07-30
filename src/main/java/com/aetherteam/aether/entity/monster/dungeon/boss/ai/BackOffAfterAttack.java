@@ -18,7 +18,10 @@ import java.util.Optional;
  */
 public class BackOffAfterAttack extends Behavior<Slider> {
     public BackOffAfterAttack() {
-        super(ImmutableMap.of(AetherMemoryModuleTypes.HAS_ATTACKED.get(), MemoryStatus.VALUE_PRESENT, AetherMemoryModuleTypes.MOVE_DELAY.get(), MemoryStatus.VALUE_PRESENT));
+        super(ImmutableMap.of(AetherMemoryModuleTypes.HAS_ATTACKED.get(),
+                MemoryStatus.VALUE_PRESENT,
+                AetherMemoryModuleTypes.MOVE_DELAY.get(),
+                MemoryStatus.VALUE_PRESENT));
     }
 
     @Override
@@ -33,7 +36,7 @@ public class BackOffAfterAttack extends Behavior<Slider> {
         if (optional.isPresent()) {
             LivingEntity target = optional.get();
             if (slider.getBoundingBox().inflate(1.5).contains(target.position())) {
-                // Move one block in the opposite direction of the target
+                // Move one block in the opposite direction of the target.
                 Direction direction = SliderAi.calculateDirection(slider.getX() - target.getX(), 0, slider.getZ() - target.getZ());
                 brain.setMemory(AetherMemoryModuleTypes.TARGET_POSITION.get(), slider.position().relative(direction, 2));
             }

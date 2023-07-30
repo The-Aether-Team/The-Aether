@@ -26,7 +26,6 @@ import java.util.Map;
 import java.util.Optional;
 
 public class SliderAi {
-
     private static final ImmutableList<SensorType<? extends Sensor<Slider>>> SENSOR_TYPES = ImmutableList.of(AetherSensorTypes.SLIDER_PLAYER_SENSOR.get());
     private static final ImmutableList<MemoryModuleType<?>> MEMORY_TYPES = ImmutableList.of(
             MemoryModuleType.NEAREST_PLAYERS,
@@ -45,11 +44,14 @@ public class SliderAi {
     public static Brain<Slider> makeBrain(Dynamic<?> dynamic) {
         Brain<Slider> brain = Brain.provider(MEMORY_TYPES, SENSOR_TYPES).makeBrain(dynamic);
         initFightActivity(brain);
-        // Initialize the aggro tracker
-        brain.setMemory(AetherMemoryModuleTypes.AGGRO_TRACKER.get(), new Object2DoubleOpenHashMap<>());
+        brain.setMemory(AetherMemoryModuleTypes.AGGRO_TRACKER.get(), new Object2DoubleOpenHashMap<>()); // Initialize the tracker for all targeted entities.
         return brain;
     }
 
+    /**
+     * Sets up fight type activities.
+     * @param brain The {@link Slider} {@link Brain}.
+     */
     private static void initFightActivity(Brain<Slider> brain) {
         brain.addActivity(Activity.FIGHT, 10, ImmutableList.of(
                 StartAttacking.create(SliderAi::findNearestValidAttackTarget),
@@ -62,18 +64,22 @@ public class SliderAi {
         ));
     }
 
+    /**
+     * Sets activity type priority.
+     * @param slider The {@link Slider} that the brain belongs to.
+     */
     public static void updateActivity(Slider slider) {
         slider.getBrain().setActiveActivityToFirstValid(ACTIVITY_PRIORITY);
     }
 
     /**
-     * Reduces the aggro every second.
+     * Reduces the aggro every second, and checks to remove any targets.
+     * @param slider The {@link Slider} that the brain belongs to.
      */
     public static void tick(Slider slider) {
         if (slider.tickCount % 20 != 0) {
             return;
         }
-
         Brain<?> brain = slider.getBrain();
         Optional<Object2DoubleMap<LivingEntity>> aggroTracker = brain.getMemory(AetherMemoryModuleTypes.AGGRO_TRACKER.get());
         Optional<LivingEntity> attackTarget = brain.getMemory(MemoryModuleType.ATTACK_TARGET);
@@ -95,13 +101,16 @@ public class SliderAi {
 
     /**
      * Adds aggro when attacked by a player.
+     * @param slider The {@link Slider} that the brain belongs to.
+     * @param attacker The attacking {@link LivingEntity}.
+     * @param damage The {@link Float} amount of damage.
      */
     public static void wasHurtBy(Slider slider, LivingEntity attacker, float damage) {
         Brain<?> brain = slider.getBrain();
         Optional<Object2DoubleMap<LivingEntity>> optional = brain.getMemory(AetherMemoryModuleTypes.AGGRO_TRACKER.get());
         if (optional.isPresent()) {
             Object2DoubleMap<LivingEntity> attackers = optional.get();
-            attackers.mergeDouble(attacker, damage, (Double::sum));
+            attackers.mergeDouble(attacker, damage, Double::sum);
             LivingEntity target = getStrongestAttacker(slider, attackers);
             brain.eraseMemory(MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE);
             brain.setMemory(MemoryModuleType.ATTACK_TARGET, target);
@@ -110,6 +119,9 @@ public class SliderAi {
 
     /**
      * Returns the entity within the targeting range that has dealt the most damage.
+     * @param slider The {@link Slider} that the brain belongs to.
+     * @param attackers The {@link Object2DoubleMap} of {@link LivingEntity LivingEntities} storing the tracked targets.
+     * @return The strongest attacking {@link LivingEntity}.
      */
     private static LivingEntity getStrongestAttacker(Slider slider, Object2DoubleMap<LivingEntity> attackers) {
         Map.Entry<LivingEntity, Double> entry = attackers.object2DoubleEntrySet().stream().filter((entityEntry) ->
@@ -124,11 +136,18 @@ public class SliderAi {
 
     /**
      * Finds a new target if there isn't one currently.
+     * @param slider The {@link Slider} that the brain belongs to.
+     * @return An {@link Optional} {@link LivingEntity}.
      */
     private static Optional<? extends LivingEntity> findNearestValidAttackTarget(Slider slider) {
         return slider.isAwake() && !slider.isDeadOrDying() ? slider.getBrain().getMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER) : Optional.empty();
     }
 
+    /**
+     * Tracks a target position from the current attack target.
+     * @param brain The {@link Brain}.
+     * @return The {@link Vec3} position.
+     */
     @Nullable
     public static Vec3 getTargetPoint(Brain<?> brain) {
         Optional<Vec3> pos = brain.getMemory(AetherMemoryModuleTypes.TARGET_POSITION.get());
@@ -140,6 +159,13 @@ public class SliderAi {
         }
     }
 
+    /**
+     * Calculates the direction for the Slider to move.
+     * @param x The x-direction.
+     * @param y The y-direction.
+     * @param z The z-direction.
+     * @return The {@link Direction}.
+     */
     public static Direction calculateDirection(double x, double y, double z) {
         double absX = Math.abs(x);
         double absY = Math.abs(y);
@@ -155,6 +181,9 @@ public class SliderAi {
 
     /**
      * Calculates a box adjacent to the original, with equal dimensions except for the axis it's translated along.
+     * @param box The {@link AABB} bounding box.
+     * @param direction The movement {@link Direction}.
+     * @return The adjacent {@link AABB} bounding box.
      */
     public static AABB calculateAdjacentBox(AABB box, Direction direction) {
         double minX = box.minX;
@@ -182,7 +211,6 @@ public class SliderAi {
             maxX = minX;
             minX -= 1;
         }
-
         return new AABB(minX, minY, minZ, maxX, maxY, maxZ);
     }
 }

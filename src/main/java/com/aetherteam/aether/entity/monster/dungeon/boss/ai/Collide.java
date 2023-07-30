@@ -15,6 +15,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
+/**
+ * Handles Slider collision with the player.
+ */
 public class Collide extends Behavior<Slider> {
     public Collide() {
         super(ImmutableMap.of());
@@ -36,11 +39,12 @@ public class Collide extends Behavior<Slider> {
     @Override
     protected void tick(ServerLevel level, Slider slider, long gameTime) {
         Brain<?> brain = slider.getBrain();
-        AABB collisionBounds = new AABB(slider.getBoundingBox().minX - 0.1, slider.getBoundingBox().minY - 0.1, slider.getBoundingBox().minZ - 0.1,
-                slider.getBoundingBox().maxX + 0.1, slider.getBoundingBox().maxY + 0.1, slider.getBoundingBox().maxZ + 0.1);
+        Vec3 min = new Vec3(slider.getBoundingBox().minX - 0.1, slider.getBoundingBox().minY - 0.1, slider.getBoundingBox().minZ - 0.1);
+        Vec3 max = new Vec3(slider.getBoundingBox().maxX + 0.1, slider.getBoundingBox().maxY + 0.1, slider.getBoundingBox().maxZ + 0.1);
+        AABB collisionBounds = new AABB(min, max);
         for (Entity entity : level.getEntities(slider, collisionBounds)) {
-            if (entity instanceof LivingEntity livingEntity && entity.hurt(AetherDamageTypes.entityDamageSource(slider.level, AetherDamageTypes.CRUSH, slider), 6)) {
-                if (livingEntity instanceof Player player && player.getUseItem().is(Items.SHIELD) && player.isBlocking()) {
+            if (entity instanceof LivingEntity livingEntity && entity.hurt(AetherDamageTypes.entityDamageSource(slider.getLevel(), AetherDamageTypes.CRUSH, slider), 6)) {
+                if (livingEntity instanceof Player player && player.getUseItem().is(Items.SHIELD) && player.isBlocking()) { // Disables the player's Shield if one is being used.
                     player.getCooldowns().addCooldown(Items.SHIELD, 100);
                     player.stopUsingItem();
                     level.broadcastEntityEvent(player, (byte) 30);
@@ -51,7 +55,7 @@ public class Collide extends Behavior<Slider> {
                 brain.setMemoryWithExpiry(AetherMemoryModuleTypes.MOVE_DELAY.get(), Unit.INSTANCE, slider.calculateMoveDelay());
                 brain.eraseMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get());
 
-                // Stop the slider movement
+                // Stop the Slider's movement.
                 slider.playSound(slider.getCollideSound(), 2.5F, 1.0F / (slider.getRandom().nextFloat() * 0.2F + 0.9F));
                 slider.setDeltaMovement(Vec3.ZERO);
             } else if (!(entity instanceof Player player && player.isCreative()) && !(entity instanceof Slider)) {
