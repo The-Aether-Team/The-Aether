@@ -27,10 +27,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A directed graph used for assembling the bronze dungeon. This allows us to keep track of how far away a room is
+ * A directed graph used for assembling the Bronze Dungeon. This allows us to keep track of how far away a room is
  * from the starting point by counting along the path.
- *
- * https://en.wikipedia.org/wiki/Directed_graph
+ * @see <a href="https://en.wikipedia.org/wiki/Directed_graph">https://en.wikipedia.org/wiki/Directed_graph</a>
  */
 public class BronzeDungeonBuilder {
     private final Structure.GenerationContext context;
@@ -42,9 +41,8 @@ public class BronzeDungeonBuilder {
     private final int edgeLength;
     private final int maxSize;
 
-    public final List<StructurePiece> nodes = new ArrayList<>();
-    public final Map<StructurePiece, Map<Direction, Connection>> edges = new HashMap<>();
-
+    private final List<StructurePiece> nodes = new ArrayList<>();
+    private final Map<StructurePiece, Map<Direction, Connection>> edges = new HashMap<>();
 
     public BronzeDungeonBuilder(Structure.GenerationContext context, int maxSize) {
         this.context = context;
@@ -70,29 +68,34 @@ public class BronzeDungeonBuilder {
         }
         BronzeBossRoom bossRoom = new BronzeBossRoom(this.manager, "boss_room", startPos, rotation);
         Direction direction = bossRoom.getOrientation();
+        if (direction != null) {
+            BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(bossRoom.getBoundingBox().moved(0, 2, 0), direction, this.edgeWidth);
+            BronzeDungeonRoom hallway = new BronzeDungeonRoom(this.manager, "square_tunnel", pos, bossRoom.getRotation());
+            pos = BlockLogicUtil.tunnelFromEvenSquareRoom(hallway.getBoundingBox(), direction, this.nodeWidth);
+            BronzeDungeonRoom chestRoom = new BronzeDungeonRoom(manager, "chest_room", pos, hallway.getRotation());
 
-        BlockPos pos = BlockLogicUtil.tunnelFromEvenSquareRoom(bossRoom.getBoundingBox().moved(0, 2, 0), direction, this.edgeWidth);
-        BronzeDungeonRoom hallway = new BronzeDungeonRoom(this.manager, "square_tunnel", pos, bossRoom.getRotation());
-        pos = BlockLogicUtil.tunnelFromEvenSquareRoom(hallway.getBoundingBox(), direction, this.nodeWidth);
-        BronzeDungeonRoom chestRoom = new BronzeDungeonRoom(manager, "chest_room", pos, hallway.getRotation());
+            this.nodes.add(bossRoom);
+            this.nodes.add(chestRoom);
+            new Connection(bossRoom, chestRoom, hallway, direction);
 
-        this.nodes.add(bossRoom);
-        this.nodes.add(chestRoom);
-        new Connection(bossRoom, chestRoom, hallway, direction);
+            for (int i = 2; i < this.maxSize - 1; ++i) {
+                this.propagateRooms(chestRoom, chunkPos, false);
+            }
 
-        for (int i = 2; i < this.maxSize - 1; ++i) {
-            this.propagateRooms(chestRoom, chunkPos, false);
+            this.propagateRooms(chestRoom, chunkPos, true);
+            StructurePiece lobby = this.nodes.get(this.nodes.size() - 1);
+            this.buildEndTunnel(lobby, startPos);
+
+            this.populatePiecesBuilder(builder);
         }
-
-        this.propagateRooms(chestRoom, chunkPos, true);
-        StructurePiece lobby = this.nodes.get(this.nodes.size() - 1);
-        this.buildEndTunnel(lobby, startPos);
-
-        this.populatePiecesBuilder(builder);
     }
 
     /**
-     * Recursively move through the graph of rooms to add new pieces. Returns true if successful in placing a new piece.
+     * Recursively move through the graph of rooms to add new pieces.
+     * @param currentNode The current {@link StructurePiece} node to try to add.
+     * @param chunkPos The {@link ChunkPos} for the piece.
+     * @param placeLobby Whether to place a lobby or a chest room, as a {@link Boolean}.
+     * @return Whether the new piece was successfully placed, as a {@link Boolean}.
      */
     private boolean propagateRooms(StructurePiece currentNode, ChunkPos chunkPos, boolean placeLobby) {
         Rotation rotation = currentNode.getRotation();
@@ -102,7 +105,7 @@ public class BronzeDungeonBuilder {
         rotations.add(rotation.getRotated(Rotation.CLOCKWISE_90));
         String roomName = placeLobby ? "lobby" : "chest_room";
 
-        // Attempt to generate a room in each direction
+        // Attempt to generate a room in each direction.
         for (int i = 3; i > 0; i--) {
             rotation = rotations.remove(this.random.nextInt(i));
             Direction direction = rotation.rotate(Direction.SOUTH);
@@ -159,11 +162,12 @@ public class BronzeDungeonBuilder {
 
     /**
      * Builds a tunnel from a symmetrical room to make an entrance.
-     *
-     * @param connectedRoom - The room the tunnel leads to
-     * @param rotation      - The rotation of the template
-     * @param direction     - The direction to build in
-     * @param origin        - The start position of the structure
+     * @param connectedRoom The {@link StructurePiece} for the room that the tunnel leads to.
+     * @param list The {@link List} of {@link StructurePiece}s to add to.
+     * @param rotation The {@link Rotation} of the template.
+     * @param direction The {@link Direction} to build in.
+     * @param origin The start {@link BlockPos} of the structure.
+     * @return Whether the tunnel should stop generating, as a {@link Boolean}.
      */
     public boolean buildTunnelFromRoom(StructurePiece connectedRoom, List<StructurePiece> list, Rotation rotation, Direction direction, BlockPos origin) {
         StructureTemplate template = this.manager.getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/entrance"));
@@ -181,7 +185,7 @@ public class BronzeDungeonBuilder {
             pos = startPos.relative(direction, i);
             BronzeTunnel tunnel = new BronzeTunnel(this.manager, "end_corridor", pos, rotation);
 
-            //Skip the connected piece, since the tunnel will be digging into it.
+            // Skip the connected piece, since the tunnel will be digging into it.
             StructurePiece col = null;
             for (StructurePiece piece : this.nodes) {
                 if (piece != null && piece != connectedRoom && piece.getBoundingBox().intersects(tunnel.getBoundingBox())) {
@@ -209,7 +213,10 @@ public class BronzeDungeonBuilder {
         return noOverlap && reachedAir;
     }
 
-    /** Adds all the pieces to the StructurePieceAccessor so that it can generate in the world. */
+    /**
+     * Adds all the pieces to the StructurePieceAccessor so that it can generate in the world.
+     * @param The {@link StructurePiecesBuilder} for the structure.
+     */
     public void populatePiecesBuilder(StructurePiecesBuilder builder) {
         StructurePiece bossRoom = this.nodes.remove(0);
         this.nodes.forEach(builder::addPiece);
@@ -218,7 +225,12 @@ public class BronzeDungeonBuilder {
         builder.addPiece(bossRoom);
     }
 
-    /** Returns true if there is a hallway going in the given direction from the room. */
+    /**
+     * Checks if there is a hallway going in the given direction from the room.
+     * @param node The {@link StructurePiece} node.
+     * @param direction The {@link Direction} to check.
+     * @return Whether there is a hallway, as a {@link Boolean}.
+     */
     private boolean hasConnection(StructurePiece node, Direction direction) {
         Map<Direction, Connection> map = this.edges.get(node);
         return map != null && map.containsKey(direction);
@@ -229,13 +241,22 @@ public class BronzeDungeonBuilder {
         return column.getBlock(y).isAir();
     }
 
-    // Return false if the room is more than three chunks away.
+    /**
+     * Checks whether the room position at the current chunk is less than three chunks away from the structure's starting chunk.
+     * @param chunkPos The starting {@link ChunkPos}.
+     * @param pos The {@link BlockPos} for the current room.
+     * @return Whether the room position is close enough to the starting chunk, as a {@link Boolean}.
+     */
     private boolean isCloseToCenter(ChunkPos chunkPos, BlockPos pos) {
         ChunkPos currentChunk = new ChunkPos(pos);
         return chunkPos.getChessboardDistance(currentChunk) <= 3;
     }
 
-    // Return true if the room is covered at all four corner columns.
+    /**
+     * Checks whether the room is covered at all four corner columns.
+     * @param room The {@link BoundingBox} of the room.
+     * @return Whether the room is covered, as a {@link Boolean}.
+     */
     private boolean isCoveredAtPos(BoundingBox room) {
         ChunkGenerator chunkGenerator = this.context.chunkGenerator();
         LevelHeightAccessor heightAccessor = this.context.heightAccessor();
@@ -256,12 +277,15 @@ public class BronzeDungeonBuilder {
     }
 
     /**
-     * Find a viable direction for the boss room to face. Returns null if there isn't one.
+     * Find a viable direction for the boss room to face.
+     * @param minPos The starting corner {@link BlockPos} for the boss room.
+     * @param maxPos The ending corner {@link BlockPos} for the boss room.
+     * @return A viable {@link Rotation} direction.
      */
-    private Rotation getBossRoomRotation(BlockPos startPos, BlockPos cornerPos) {
+    private Rotation getBossRoomRotation(BlockPos minPos, BlockPos maxPos) {
         StructureTemplate template = this.context.structureTemplateManager().getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/chest_room"));
         RandomSource random = this.context.random();
-        BoundingBox bossBox = new BoundingBox(startPos.getX(), startPos.getY() + 1, startPos.getZ(), cornerPos.getX(), cornerPos.getY(), cornerPos.getZ());
+        BoundingBox bossBox = new BoundingBox(minPos.getX(), minPos.getY() + 1, minPos.getZ(), maxPos.getX(), maxPos.getY(), maxPos.getZ());
 
         for (Rotation rotation : Rotation.getShuffled(random)) {
             Direction direction = rotation.rotate(Direction.SOUTH);
@@ -272,11 +296,15 @@ public class BronzeDungeonBuilder {
             }
         }
 
-        return null;
+        return null; // Returns null if there isn't a viable direction for the boss room.
     }
 
     /**
-     * Iterates through an array of noise columns. If any of them have air in the range specified, return false.
+     * Iterates through an array of noise columns and checks if any of them have air in the range specified.
+     * @param columns The {@link NoiseColumn NoiseColumn[]} array to check.
+     * @param minY The minimum y {@link Integer} for the range.
+     * @param maxY The maximum y {@link Integer} for the range.
+     * @return If there is no air in the range, as a {@link Boolean}.
      */
     private static boolean isSolidInColumns(NoiseColumn[] columns, int minY, int maxY) {
         for (NoiseColumn column : columns) {
@@ -290,12 +318,18 @@ public class BronzeDungeonBuilder {
     }
 
     /** An edge going in one direction. When iterating through the graph, you cannot go backward through these. */
-    class Connection {
+    private class Connection {
         public final StructurePiece start;
         public final StructurePiece end;
         public final StructurePiece hallway;
 
-        /** Creates a new Connection and adds it to the map. */
+        /**
+         * Creates a new Connection and adds it to the map.
+         * @param start The {@link StructurePiece} at the start.
+         * @param end The {@link StructurePiece} at the end.
+         * @param hallway The {@link StructurePiece} for the hallway connecting the rooms.
+         * @param direction The {@link Direction} of the connection.
+         */
         public Connection(StructurePiece start, StructurePiece end, StructurePiece hallway, Direction direction) {
             this.start = start;
             this.end = end;
@@ -304,7 +338,7 @@ public class BronzeDungeonBuilder {
         }
 
         public StructurePiece endPiece() {
-            return end;
+            return this.end;
         }
     }
 }

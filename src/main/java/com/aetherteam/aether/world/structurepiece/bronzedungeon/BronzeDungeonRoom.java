@@ -17,22 +17,22 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 /**
- * A normal bronze dungeon room or hallway.
+ * A normal Bronze Dungeon room or hallway.
  */
 public class BronzeDungeonRoom extends BronzeDungeonPiece {
     public BronzeDungeonRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
-        super(AetherStructurePieceTypes.BRONZE_DUNGEON_ROOM.get(), manager, name, makeSettings().setRotation(rotation), pos);
+        super(AetherStructurePieceTypes.BRONZE_DUNGEON_ROOM.get(), manager, name, BronzeDungeonRoom.makeSettings().setRotation(rotation), pos);
     }
 
     public BronzeDungeonRoom(StructurePieceSerializationContext context, CompoundTag tag) {
-        super(AetherStructurePieceTypes.BRONZE_DUNGEON_ROOM.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
+        super(AetherStructurePieceTypes.BRONZE_DUNGEON_ROOM.get(), tag, context.structureTemplateManager(), resourceLocation -> BronzeDungeonRoom.makeSettings());
     }
 
     static StructurePlaceSettings makeSettings() {
         return new StructurePlaceSettings()
-                .addProcessor(BRONZE_DUNGEON_STONE)
-                .addProcessor(TRAPPED_CARVED_STONE)
-                .addProcessor(AVOID_DUNGEONS)
+                .addProcessor(BronzeDungeonPiece.BRONZE_DUNGEON_STONE)
+                .addProcessor(BronzeDungeonPiece.TRAPPED_CARVED_STONE)
+                .addProcessor(BronzeDungeonPiece.AVOID_DUNGEONS)
                 .addProcessor(DoubleDropsProcessor.INSTANCE);
     }
 
