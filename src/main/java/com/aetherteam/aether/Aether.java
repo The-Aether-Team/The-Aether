@@ -44,8 +44,6 @@ import com.aetherteam.aether.world.structure.AetherStructureTypes;
 import com.aetherteam.aether.world.structurepiece.AetherStructurePieceTypes;
 import com.aetherteam.aether.world.treedecorator.AetherTreeDecoratorTypes;
 import com.aetherteam.aether.world.trunkplacer.AetherTrunkPlacerTypes;
-import com.aetherteam.cumulus.CumulusConfig;
-import com.aetherteam.cumulus.api.Menus;
 import com.google.common.reflect.Reflection;
 import com.mojang.logging.LogUtils;
 import net.minecraft.ChatFormatting;
