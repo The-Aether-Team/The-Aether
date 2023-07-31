@@ -9,7 +9,7 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 
 public class AerwhaleModel extends EntityModel<Aerwhale> {
-	public ModelPart head;
+	public final ModelPart head;
 
 	public AerwhaleModel(ModelPart root) {
 		this.head = root.getChild("head");

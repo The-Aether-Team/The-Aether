@@ -15,7 +15,6 @@ public class CloudMinionRenderer extends MobRenderer<CloudMinion, CloudMinionMod
         super(context, new CloudMinionModel(context.bakeLayer(AetherModelLayers.CLOUD_MINION)), 0.25F);
     }
 
-   
     @Override
     public ResourceLocation getTextureLocation(CloudMinion cloudMinion) {
         return CLOUD_MINION_TEXTURE;

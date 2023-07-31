@@ -11,6 +11,9 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 
+/**
+ * [CODE COPY] - {@link net.minecraft.client.renderer.entity.layers.SlimeOuterLayer}.
+ */
 public class SwetOuterLayer extends RenderLayer<Swet, SlimeModel<Swet>> {
     private final SlimeModel<Swet> outer;
 
@@ -19,6 +22,7 @@ public class SwetOuterLayer extends RenderLayer<Swet, SlimeModel<Swet>> {
         this.outer = outerModel;
     }
 
+    @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Swet swet, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         Minecraft minecraft = Minecraft.getInstance();
         boolean flag = minecraft.shouldEntityAppearGlowing(swet) && swet.isInvisible();

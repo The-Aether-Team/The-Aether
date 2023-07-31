@@ -30,9 +30,17 @@ public class AerwhaleRenderer extends MultiModelRenderer<Aerwhale, EntityModel<A
         poseStack.scale(2.0F, 2.0F, 2.0F);
     }
 
+    /**
+     * Rotates the Aerwhale from data values stored in the entity.
+     * @param aerwhale The {@link Aerwhale} entity.
+     * @param poseStack The rendering {@link PoseStack}.
+     * @param ageInTicks The {@link Float} for the entity's age in ticks.
+     * @param rotationYaw The {@link Float} for the rotation yaw.
+     * @param partialTicks The {@link Float} for the game's partial ticks.
+     */
     @Override
-    protected void setupRotations(Aerwhale aerwhale, PoseStack poseStack, float ageInTicks, float pRotationYaw, float partialTicks) {
-        super.setupRotations(aerwhale, poseStack, ageInTicks, pRotationYaw, partialTicks);
+    protected void setupRotations(Aerwhale aerwhale, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
+        super.setupRotations(aerwhale, poseStack, ageInTicks, rotationYaw, partialTicks);
         poseStack.mulPose(Axis.XP.rotationDegrees(Mth.lerp(partialTicks, aerwhale.getXRotOData(), aerwhale.getXRotData())));
     }
 

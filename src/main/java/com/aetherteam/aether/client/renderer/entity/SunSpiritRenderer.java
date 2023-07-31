@@ -25,7 +25,6 @@ public class SunSpiritRenderer extends MobRenderer<SunSpirit, SunSpiritModel<Sun
     }
 
     @Override
-   
     public ResourceLocation getTextureLocation(SunSpirit sunSpirit) {
         return sunSpirit.isFrozen() ? FROZEN_SPIRIT_TEXTURE : SUN_SPIRIT_TEXTURE;
     }

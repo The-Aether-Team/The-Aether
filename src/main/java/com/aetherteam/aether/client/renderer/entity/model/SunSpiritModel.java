@@ -11,11 +11,11 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 
 public class SunSpiritModel<T extends Entity> extends EntityModel<T> {
-    public ModelPart base;
-    public ModelPart torso;
-    public ModelPart head;
-    public ModelPart rightArm;
-    public ModelPart leftArm;
+    public final ModelPart base;
+    public final ModelPart torso;
+    public final ModelPart head;
+    public final ModelPart rightArm;
+    public final ModelPart leftArm;
 
     public SunSpiritModel(ModelPart root) {
         this.base = root.getChild("base");

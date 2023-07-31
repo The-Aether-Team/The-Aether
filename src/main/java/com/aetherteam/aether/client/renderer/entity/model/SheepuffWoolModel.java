@@ -7,7 +7,7 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 
 public class SheepuffWoolModel extends QuadrupedModel<Sheepuff> {
-    private float headXRot;
+    public float headXRot;
 
     public SheepuffWoolModel(ModelPart root) {
         super(root, false, 8.0F, 4.0F, 2.0F, 2.0F, 24);

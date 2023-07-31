@@ -12,7 +12,7 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 
 public class ClassicZephyrModel extends EntityModel<Zephyr> {
-    public ModelPart body;
+    public final ModelPart body;
 
     public ClassicZephyrModel(ModelPart root) {
         this.body = root.getChild("body");

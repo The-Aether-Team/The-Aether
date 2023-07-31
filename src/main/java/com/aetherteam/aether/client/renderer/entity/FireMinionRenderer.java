@@ -22,8 +22,13 @@ public class FireMinionRenderer extends MobRenderer<FireMinion, FireMinionModel<
     protected void scale(FireMinion fireMinion, PoseStack poseStack, float partialTickTime) {
         poseStack.translate(0.0, 0.35, 0.0);
     }
-    
-   
+
+    /**
+     * If the Fire Minion has specific custom names, it will use the frozen texture as an easter egg.
+     * Otherwise it uses the normal texture.
+     * @param fireMinion The {@link FireMinion} entity.
+     * @return The texture {@link ResourceLocation}.
+     */
     @Override
     public ResourceLocation getTextureLocation(FireMinion fireMinion) {
         if (fireMinion.hasCustomName()) {

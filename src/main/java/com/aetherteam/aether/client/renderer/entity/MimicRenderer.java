@@ -21,13 +21,18 @@ public class MimicRenderer extends MobRenderer<Mimic, MimicModel> {
 	public MimicRenderer(EntityRendererProvider.Context renderer) {
 		super(renderer, new MimicModel(renderer.bakeLayer(AetherModelLayers.MIMIC)), 1.0F);
 		Calendar calendar = Calendar.getInstance();
-		if (calendar.get(Calendar.MONTH) == Calendar.DECEMBER && calendar.get(Calendar.DAY_OF_MONTH) >= 24 && calendar.get(Calendar.DAY_OF_MONTH) <= 26) {
+		if (calendar.get(Calendar.MONTH) == Calendar.DECEMBER && calendar.get(Calendar.DAY_OF_MONTH) >= 24 && calendar.get(Calendar.DAY_OF_MONTH) <= 26) { // Time period when chests display as presents in Vanilla.
 			this.isChristmas = true;
 		}
 	}
 
+	/**
+	 * If the Lootr mod is installed or if it is Christmas, Mimics will have a custom texture.
+	 * @param Mimic The {@link Mimic} entity.
+	 * @return The texture {@link ResourceLocation}.
+	 */
 	@Override
-	public ResourceLocation getTextureLocation(Mimic mimic) {
+	public ResourceLocation getTextureLocation(Mimic Mimic) {
 		return ModList.get().isLoaded("lootr") ? LOOTR_TEXTURE : this.isChristmas ? XMAS_TEXTURE : TEXTURE;
 	}
 }

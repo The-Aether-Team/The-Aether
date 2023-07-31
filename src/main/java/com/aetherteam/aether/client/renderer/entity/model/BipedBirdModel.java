@@ -12,17 +12,17 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 
 public abstract class BipedBirdModel<T extends Entity & WingedBird & NotGrounded> extends EntityModel<T> {
-    public ModelPart head;
-    public ModelPart jaw;
-    public ModelPart neck;
-    public ModelPart body;
-    public ModelPart rightLeg;
-    public ModelPart leftLeg;
-    public ModelPart rightWing;
-    public ModelPart leftWing;
-    public ModelPart rightTailFeather;
-    public ModelPart middleTailFeather;
-    public ModelPart leftTailFeather;
+    public final ModelPart head;
+    public final ModelPart jaw;
+    public final ModelPart neck;
+    public final ModelPart body;
+    public final ModelPart rightLeg;
+    public final ModelPart leftLeg;
+    public final ModelPart rightWing;
+    public final ModelPart leftWing;
+    public final ModelPart rightTailFeather;
+    public final ModelPart middleTailFeather;
+    public final ModelPart leftTailFeather;
 
     public BipedBirdModel(ModelPart root) {
         this.head = root.getChild("head");

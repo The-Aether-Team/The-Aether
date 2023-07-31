@@ -12,13 +12,13 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 
 public class ClassicAerwhaleModel extends EntityModel<Aerwhale> {
-	public ModelPart middleBody;
-	public ModelPart leftFin;
-	public ModelPart head;
-	public ModelPart backFinLeft;
-	public ModelPart backBody;
-	public ModelPart backFinRight;
-	public ModelPart rightFin;
+	public final ModelPart middleBody;
+	public final ModelPart leftFin;
+	public final ModelPart head;
+	public final ModelPart backFinLeft;
+	public final ModelPart backBody;
+	public final ModelPart backFinRight;
+	public final ModelPart rightFin;
 	
 	public ClassicAerwhaleModel(ModelPart root) {
 		this.middleBody = root.getChild("middle_body");

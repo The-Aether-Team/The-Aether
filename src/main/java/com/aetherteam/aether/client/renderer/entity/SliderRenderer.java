@@ -10,6 +10,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -33,6 +34,14 @@ public class SliderRenderer extends MobRenderer<Slider, SliderModel> {
         }
     }
 
+    /**
+     * Rotates the Slider to tilt based on the direction and angle of the damage it has received.
+     * @param slider The {@link Slider} entity.
+     * @param poseStack The rendering {@link PoseStack}.
+     * @param ageInTicks The {@link Float} for the entity's age in ticks.
+     * @param rotationYaw The {@link Float} for the rotation yaw.
+     * @param partialTicks The {@link Float} for the game's partial ticks.
+     */
     @Override
     protected void setupRotations(Slider slider, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
         if (!Minecraft.getInstance().isPaused()) {
@@ -42,13 +51,12 @@ public class SliderRenderer extends MobRenderer<Slider, SliderModel> {
             if (slider.getHurtAngle() > 0.0) {
                 slider.setHurtAngle(Mth.lerp(partialTicks, slider.getHurtAngle(), slider.getHurtAngle() * 0.98F));
             }
-            if (isEntityUpsideDown(slider)) {
+            if (LivingEntityRenderer.isEntityUpsideDown(slider)) {
                 poseStack.translate(0.0, slider.getBbHeight() + 0.1F, 0.0);
                 poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
             }
         }
     }
-
    
     @Override
     public ResourceLocation getTextureLocation(Slider slider) {

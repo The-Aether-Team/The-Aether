@@ -2,7 +2,7 @@ package com.aetherteam.aether.client.renderer.entity;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
-import com.aetherteam.aether.client.renderer.entity.layers.SentryLayer;
+import com.aetherteam.aether.client.renderer.entity.layers.SentryGlowLayer;
 import com.aetherteam.aether.entity.monster.dungeon.Sentry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.SlimeModel;
@@ -16,11 +16,17 @@ public class SentryRenderer extends MobRenderer<Sentry, SlimeModel<Sentry>> {
 	
 	public SentryRenderer(EntityRendererProvider.Context context) {
 		super(context, new SlimeModel<>(context.bakeLayer(AetherModelLayers.SENTRY)), 0.3F);
-		this.addLayer(new SentryLayer<>(this));
+		this.addLayer(new SentryGlowLayer(this));
 	}
 
+	/**
+	 * Scales the Sentry according to its size.
+	 * @param sentry The {@link Sentry} entity.
+	 * @param poseStack The rendering {@link PoseStack}.
+	 * @param partialTicks The {@link Float} for the game's partial ticks.
+	 */
 	@Override
-	protected void scale(Sentry sentry, PoseStack poseStack, float partialTickTime) {
+	protected void scale(Sentry sentry, PoseStack poseStack, float partialTicks) {
 		float f = 0.879F;
 		poseStack.scale(f, f, f);
 		float f1 = sentry.getSize() + 1.0F;

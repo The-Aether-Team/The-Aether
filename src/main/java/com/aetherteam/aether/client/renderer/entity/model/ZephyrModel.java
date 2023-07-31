@@ -13,18 +13,18 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
 public class ZephyrModel extends EntityModel<Zephyr> {
-    public ModelPart rightFace;
-    public ModelPart leftFace;
-    public ModelPart mouth;
-    public ModelPart body;
-    public ModelPart bodyRightSideFront;
-    public ModelPart bodyRightSideBack;
-    public ModelPart bodyLeftSideFront;
-    public ModelPart bodyLeftSideBack;
-    public ModelPart cloudButt;
-    public ModelPart tailBase;
-    public ModelPart tailMiddle;
-    public ModelPart tailEnd;
+    public final ModelPart rightFace;
+    public final ModelPart leftFace;
+    public final ModelPart mouth;
+    public final ModelPart body;
+    public final ModelPart bodyRightSideFront;
+    public final ModelPart bodyRightSideBack;
+    public final ModelPart bodyLeftSideFront;
+    public final ModelPart bodyLeftSideBack;
+    public final ModelPart cloudButt;
+    public final ModelPart tailBase;
+    public final ModelPart tailMiddle;
+    public final ModelPart tailEnd;
 
     public ZephyrModel(ModelPart model) {
         this.rightFace = model.getChild("right_face");

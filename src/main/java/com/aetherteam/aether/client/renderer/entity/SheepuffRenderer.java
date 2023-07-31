@@ -17,7 +17,6 @@ public class SheepuffRenderer extends MobRenderer<Sheepuff, SheepuffModel> {
         super(context, new SheepuffModel(context.bakeLayer(AetherModelLayers.SHEEPUFF)), 0.7F);
         this.addLayer(new SheepuffWoolLayer(this, new SheepuffWoolModel(context.bakeLayer(AetherModelLayers.SHEEPUFF_WOOL)), new SheepuffWoolModel(context.bakeLayer(AetherModelLayers.SHEEPUFF_WOOL_PUFFED))));
     }
-
    
     @Override
     public ResourceLocation getTextureLocation(Sheepuff sheepuff) {

@@ -9,7 +9,7 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 
 public class SliderModel extends EntityModel<Slider> {
-    private final ModelPart slider;
+    public final ModelPart slider;
 
     public SliderModel(ModelPart root) {
         this.slider = root.getChild("slider");

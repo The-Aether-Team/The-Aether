@@ -12,9 +12,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.inventory.InventoryMenu;
 
-public class TNTPresentRenderer extends EntityRenderer<TntPresent> {
+/**
+ * [CODE COPY] - {@link net.minecraft.client.renderer.entity.TntRenderer}.
+ */
+public class TntPresentRenderer extends EntityRenderer<TntPresent> {
     private final BlockRenderDispatcher blockRenderer;
-    public TNTPresentRenderer(EntityRendererProvider.Context context) {
+
+    public TntPresentRenderer(EntityRendererProvider.Context context) {
         super(context);
         this.blockRenderer = context.getBlockRenderDispatcher();
         this.shadowRadius = 0.5F;
@@ -37,7 +41,6 @@ public class TNTPresentRenderer extends EntityRenderer<TntPresent> {
         poseStack.popPose();
         super.render(present, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }
-
    
     @Override
     public ResourceLocation getTextureLocation(TntPresent present) {

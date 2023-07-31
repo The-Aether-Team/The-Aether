@@ -14,7 +14,6 @@ public class CloudCrystalRenderer<T extends AbstractCrystal> extends AbstractCry
         super(context, new CrystalModel<>(context.bakeLayer(AetherModelLayers.CLOUD_CRYSTAL)));
     }
 
-   
     @Override
     public ResourceLocation getTextureLocation(T crystal) {
         return ICE_CRYSTAL_TEXTURE;

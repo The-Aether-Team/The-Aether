@@ -27,12 +27,18 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
 
 	public MoaRenderer(EntityRendererProvider.Context context) {
 		super(context, new MoaModel(context.bakeLayer(AetherModelLayers.MOA)), 0.7F);
-		this.addLayer(new MoaEmissiveLayer<>(this));
+		this.addLayer(new MoaEmissiveLayer(this));
 		this.addLayer(new MoaSaddleLayer(this, new MoaModel(context.bakeLayer(AetherModelLayers.MOA_SADDLE))));
 	}
 
+	/**
+	 * Scales the Moa and also repositions it if it is sitting.
+	 * @param moa The {@link Moa} entity.
+	 * @param poseStack The rendering {@link PoseStack}.
+	 * @param partialTicks The {@link Float} for the game's partial ticks.
+	 */
 	@Override
-	protected void scale(Moa moa, PoseStack poseStack, float partialTickTime) {
+	protected void scale(Moa moa, PoseStack poseStack, float partialTicks) {
 		float moaScale = moa.isBaby() ? 1.0F : 1.8F;
 		poseStack.scale(moaScale, moaScale, moaScale);
 		if (moa.isSitting()) {
@@ -40,11 +46,22 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
 		}
 	}
 
+	/**
+	 * Passes the Moa's wing rotation to the model as the "ageInTicks" parameter.
+	 * @param moa The {@link Moa} entity.
+	 * @param partialTicks The {@link Float} for the game's partial ticks.
+	 * @return The {@link Float} for the petal rotation.
+	 */
 	@Override
 	protected float getBob(Moa moa, float partialTicks) {
 		return this.model.setupWingsAnimation(moa, partialTicks);
 	}
 
+	/**
+	 * Retrieves the texture for the Moa, whether it be from the {@link MoaType}, a player's {@link com.aetherteam.aether.perk.types.MoaSkins.MoaSkin}, or an easter egg skin.
+	 * @param moa The {@link Moa} to retrieve the skin from.
+	 * @return The {@link ResourceLocation} for the emissive texture.
+	 */
 	@Override
 	public ResourceLocation getTextureLocation(Moa moa) {
 		ResourceLocation moaSkin = this.getMoaSkinLocation(moa);
@@ -62,6 +79,11 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
 		return moaType == null ? DEFAULT_TEXTURE : moaType.getMoaTexture();
 	}
 
+	/**
+	 * Retrieves the texture for the player's {@link com.aetherteam.aether.perk.types.MoaSkins.MoaSkin}, if there is one and the player has a Moa Skin.
+	 * @param moa The {@link Moa} to retrieve the skin from.
+	 * @return The {@link ResourceLocation} for the emissive texture.
+	 */
 	private ResourceLocation getMoaSkinLocation(Moa moa) {
 		UUID lastRiderUUID = moa.getLastRider();
 		UUID moaUUID = moa.getMoaUUID();

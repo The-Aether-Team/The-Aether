@@ -8,7 +8,7 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 
 public class CloudMinionModel extends ListModel<CloudMinion> {
-    public ModelPart cloudMinion;
+    public final ModelPart cloudMinion;
 
     public CloudMinionModel(ModelPart root) {
         this.cloudMinion = root.getChild("cloudMinion");
@@ -26,7 +26,6 @@ public class CloudMinionModel extends ListModel<CloudMinion> {
         return LayerDefinition.create(meshDefinition, 64, 32);
     }
 
-   
     @Override
     public Iterable<ModelPart> parts() {
         return ImmutableList.of(this.cloudMinion);

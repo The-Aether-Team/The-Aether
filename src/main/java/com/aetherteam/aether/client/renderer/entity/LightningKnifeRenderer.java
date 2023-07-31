@@ -19,6 +19,15 @@ public class LightningKnifeRenderer extends EntityRenderer<ThrownLightningKnife>
 		this.shadowRadius = 0.0F;
 	}
 
+	/**
+	 * Rotates and renders the Lightning Knife to look as if it has been thrown.
+	 * @param lightningKnife The {@link ThrownLightningKnife} entity.
+	 * @param entityYaw The {@link Float} for the entity's yaw rotation.
+	 * @param partialTicks The {@link Float} for the game's partial ticks.
+	 * @param poseStack The rendering {@link PoseStack}.
+	 * @param buffer The rendering {@link MultiBufferSource}.
+	 * @param packedLight The {@link Integer} for the packed lighting for rendering.
+	 */
 	@Override
 	public void render(ThrownLightningKnife lightningKnife, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
 		poseStack.pushPose();
@@ -26,7 +35,7 @@ public class LightningKnifeRenderer extends EntityRenderer<ThrownLightningKnife>
 		quaternion.mul(Axis.XP.rotationDegrees((-(lightningKnife.xRotO + (lightningKnife.getXRot() - lightningKnife.xRotO) * partialTicks)) - 90.0F));
 		quaternion.mul(Axis.ZP.rotationDegrees(-135.0F));
 		poseStack.mulPose(quaternion);
-		Minecraft.getInstance().getItemRenderer().renderStatic(lightningKnife.getItem(), ItemDisplayContext.GUI, packedLight, OverlayTexture.NO_OVERLAY, poseStack, buffer, lightningKnife.level, lightningKnife.getId());
+		Minecraft.getInstance().getItemRenderer().renderStatic(lightningKnife.getItem(), ItemDisplayContext.GUI, packedLight, OverlayTexture.NO_OVERLAY, poseStack, buffer, lightningKnife.getLevel(), lightningKnife.getId());
 		poseStack.popPose();
 		super.render(lightningKnife, entityYaw, partialTicks, poseStack, buffer, packedLight);
 	}

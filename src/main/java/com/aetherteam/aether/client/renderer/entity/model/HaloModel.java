@@ -9,7 +9,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.Entity;
 
 public class HaloModel<T extends Entity> extends EntityModel<T> {
-    public ModelPart halo;
+    public final ModelPart halo;
     public boolean crouching;
 
     public HaloModel(ModelPart root) {

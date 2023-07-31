@@ -23,6 +23,9 @@ public class HammerProjectileRenderer extends EntityRenderer<HammerProjectile> {
         this.shadowRadius = 0.0F;
     }
 
+    /**
+     * [VANILLA COPY] - {@link net.minecraft.client.renderer.entity.DragonFireballRenderer}.
+     */
     @Override
     public void render(HammerProjectile hammer, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
@@ -44,7 +47,11 @@ public class HammerProjectileRenderer extends EntityRenderer<HammerProjectile> {
         consumer.vertex(matrix, offsetX - 0.5F, offsetY - 0.25F, 0.0F).color(255, 255, 255, 255).uv(textureX, textureY).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(packedLight).normal(normals, 0.0F, 1.0F, 0.0F).endVertex();
     }
 
-   
+    /**
+     * Checks whether the projectile should use the Kingbdogz or Jeb hammer texture.
+     * @param hammer The {@link HammerProjectile} entity.
+     * @return The texture {@link ResourceLocation}.
+     */
     @Override
     public ResourceLocation getTextureLocation(HammerProjectile hammer) {
         return !hammer.getIsJeb() ? KINGBDOGZ_WAVE_TEXTURE : JEB_WAVE_TEXTURE;

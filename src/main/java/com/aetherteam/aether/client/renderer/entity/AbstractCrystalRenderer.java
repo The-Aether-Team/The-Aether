@@ -19,10 +19,19 @@ public abstract class AbstractCrystalRenderer<T extends AbstractCrystal> extends
         this.crystal = crystalModel;
     }
 
+    /**
+     * Rotates the different parts of the crystal model.
+     * @param crystal The entity.
+     * @param entityYaw The {@link Float} for the entity's yaw rotation.
+     * @param partialTicks The {@link Float} for the game's partial ticks.
+     * @param poseStack The rendering {@link PoseStack}.
+     * @param buffer The rendering {@link MultiBufferSource}.
+     * @param packedLight The {@link Integer} for the packed lighting for rendering.
+     */
     @Override
     public void render(T crystal, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
-        poseStack.translate(0.0, 0.25, 0.0);
+        poseStack.translate(0.0, 0.4, 0.0);
         VertexConsumer iVertexBuilder = buffer.getBuffer(RenderType.entityTranslucent(this.getTextureLocation(crystal)));
         float f = (float) crystal.tickCount + partialTicks;
         poseStack.mulPose(Axis.XP.rotationDegrees(f * 0.1F * 360.0F));

@@ -14,10 +14,10 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
 public class QuadrupedWingsModel<T extends WingedAnimal> extends EntityModel<T> {
-    private final ModelPart leftWingInner;
-    private final ModelPart leftWingOuter;
-    private final ModelPart rightWingInner;
-    private final ModelPart rightWingOuter;
+    public final ModelPart leftWingInner;
+    public final ModelPart leftWingOuter;
+    public final ModelPart rightWingInner;
+    public final ModelPart rightWingOuter;
 
     public QuadrupedWingsModel(ModelPart root) {
         this.leftWingInner = root.getChild("left_wing_inner");

@@ -1,7 +1,7 @@
 package com.aetherteam.aether.client.renderer.entity.layers;
 
 import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
-import com.aetherteam.aether.client.renderer.entity.model.BipedBirdModel;
+import com.aetherteam.aether.client.renderer.entity.model.MoaModel;
 import com.aetherteam.aether.entity.passive.Moa;
 import com.aetherteam.aether.perk.data.ClientMoaSkinPerkData;
 import com.aetherteam.aether.perk.types.MoaData;
@@ -18,13 +18,26 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.Map;
 import java.util.UUID;
 
-public class MoaEmissiveLayer<T extends Moa, M extends BipedBirdModel<T>> extends RenderLayer<T, M> {
-    public MoaEmissiveLayer(RenderLayerParent<T, M> entityRenderer) {
+public class MoaEmissiveLayer extends RenderLayer<Moa, MoaModel> {
+    public MoaEmissiveLayer(RenderLayerParent<Moa, MoaModel> entityRenderer) {
         super(entityRenderer);
     }
 
+    /**
+     * Renders an emissive layer on a Moa if the texture from a {@link com.aetherteam.aether.perk.types.MoaSkins.MoaSkin} is present.
+     * @param poseStack The rendering {@link PoseStack}.
+     * @param buffer The rendering {@link MultiBufferSource}.
+     * @param packedLight The {@link Integer} for the packed lighting for rendering.
+     * @param moa The {@link Moa} entity.
+     * @param limbSwing The {@link Float} for the limb swing rotation.
+     * @param limbSwingAmount The {@link Float} for the limb swing amount.
+     * @param partialTicks The {@link Float} for the game's partial ticks.
+     * @param ageInTicks The {@link Float} for the entity's age in ticks.
+     * @param netHeadYaw The {@link Float} for the head yaw rotation.
+     * @param headPitch The {@link Float} for the head pitch rotation.
+     */
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, T moa, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Moa moa, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         ResourceLocation moaSkin = this.getMoaSkinLocation(moa);
         if (moaSkin != null) {
             RenderType renderType = RenderType.eyes(moaSkin);
@@ -33,6 +46,11 @@ public class MoaEmissiveLayer<T extends Moa, M extends BipedBirdModel<T>> extend
         }
     }
 
+    /**
+     * Retrieves the emissive texture for the player's {@link com.aetherteam.aether.perk.types.MoaSkins.MoaSkin}, if there is one and the player has a Moa Skin.
+     * @param moa The {@link Moa} to retrieve the skin from.
+     * @return The {@link ResourceLocation} for the emissive texture.
+     */
     private ResourceLocation getMoaSkinLocation(Moa moa) {
         UUID lastRiderUUID = moa.getLastRider();
         UUID moaUUID = moa.getMoaUUID();

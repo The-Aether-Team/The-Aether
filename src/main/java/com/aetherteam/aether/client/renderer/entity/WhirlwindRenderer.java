@@ -11,7 +11,6 @@ public class WhirlwindRenderer extends EntityRenderer<AbstractWhirlwind> {
         super(context);
     }
 
-   
     @Override
     public ResourceLocation getTextureLocation(AbstractWhirlwind whirlwind) {
         return InventoryMenu.BLOCK_ATLAS;

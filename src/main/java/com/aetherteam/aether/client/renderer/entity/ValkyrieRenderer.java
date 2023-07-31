@@ -18,7 +18,6 @@ public class ValkyrieRenderer extends MobRenderer<Valkyrie, ValkyrieModel<Valkyr
         this.addLayer(new ValkyrieWingsLayer<>(this, VALKYRIE_TEXTURE, new ValkyrieWingsModel<>(context.bakeLayer(AetherModelLayers.VALKYRIE_WINGS))));
     }
 
-   
     @Override
     public ResourceLocation getTextureLocation(Valkyrie valkyrie) {
         return VALKYRIE_TEXTURE;

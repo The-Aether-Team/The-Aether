@@ -13,18 +13,18 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
 public class AerbunnyModel extends EntityModel<Aerbunny> {
-    public ModelPart head;
-    public ModelPart rightEar;
-    public ModelPart leftEar;
-    public ModelPart rightWhiskers;
-    public ModelPart leftWhiskers;
-    public ModelPart body;
-    public ModelPart puff;
-    public ModelPart tail;
-    public ModelPart rightFrontLeg;
-    public ModelPart leftFrontLeg;
-    public ModelPart rightBackLeg;
-    public ModelPart leftBackLeg;
+    public final ModelPart head;
+    public final ModelPart rightEar;
+    public final ModelPart leftEar;
+    public final ModelPart rightWhiskers;
+    public final ModelPart leftWhiskers;
+    public final ModelPart body;
+    public final ModelPart puff;
+    public final ModelPart tail;
+    public final ModelPart rightFrontLeg;
+    public final ModelPart leftFrontLeg;
+    public final ModelPart rightBackLeg;
+    public final ModelPart leftBackLeg;
     public float puffiness;
 
     public AerbunnyModel(ModelPart root) {

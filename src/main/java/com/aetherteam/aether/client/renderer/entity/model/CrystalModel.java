@@ -31,7 +31,6 @@ public class CrystalModel<T extends Entity> extends ListModel<T> {
         return LayerDefinition.create(meshDefinition, 64, 32);
     }
 
-   
     @Override
     public Iterable<ModelPart> parts() {
         return ImmutableList.of(this.crystal1, this.crystal2, this.crystal3);

@@ -12,7 +12,6 @@ public class BlueSwetRenderer extends SwetRenderer {
         super(context);
     }
 
-   
     @Override
     public ResourceLocation getTextureLocation(Swet swet) {
         return BLUE_TEXTURE;

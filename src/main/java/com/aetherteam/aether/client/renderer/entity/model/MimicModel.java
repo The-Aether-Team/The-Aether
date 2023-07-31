@@ -13,11 +13,11 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
 public class MimicModel extends EntityModel<Mimic> {
-	private final ModelPart upperBody;
-	private final ModelPart lowerBody;
-	private final ModelPart leftLeg;
-	private final ModelPart rightLeg;
-	private final ModelPart knob;
+	public final ModelPart upperBody;
+	public final ModelPart lowerBody;
+	public final ModelPart leftLeg;
+	public final ModelPart rightLeg;
+	public final ModelPart knob;
 
 	public MimicModel(ModelPart root) {
 		this.upperBody = root.getChild("upper_body");

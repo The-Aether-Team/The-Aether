@@ -20,7 +20,6 @@ public class FlyingCowRenderer extends MobRenderer<FlyingCow, CowModel<FlyingCow
         this.addLayer(new SaddleLayer<>(this, new CowModel<>(context.bakeLayer(AetherModelLayers.FLYING_COW_SADDLE)), new ResourceLocation(Aether.MODID, "textures/entity/mobs/flying_cow/flying_cow_saddle.png")));
     }
 
-   
     @Override
     public ResourceLocation getTextureLocation(FlyingCow flyingCow) {
         return FLYING_COW_TEXTURE;

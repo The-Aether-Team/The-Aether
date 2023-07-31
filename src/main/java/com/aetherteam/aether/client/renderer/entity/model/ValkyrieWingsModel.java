@@ -12,8 +12,8 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.world.entity.Entity;
 
 public class ValkyrieWingsModel<T extends Entity> extends EntityModel<T> {
-    public ModelPart rightWing;
-    public ModelPart leftWing;
+    public final ModelPart rightWing;
+    public final ModelPart leftWing;
 
     public ValkyrieWingsModel(ModelPart root) {
         this.rightWing = root.getChild("right_wing");

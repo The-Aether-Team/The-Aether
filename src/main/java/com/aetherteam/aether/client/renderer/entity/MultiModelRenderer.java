@@ -9,6 +9,9 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Mob;
 
+/**
+ * Used for renderers that have swappable models and textures.
+ */
 public abstract class MultiModelRenderer<T extends Mob, M extends EntityModel<T>, N extends M, O extends M> extends MobRenderer<T, M> {
     public MultiModelRenderer(EntityRendererProvider.Context context, N defaultModel, float shadowRadius) {
         super(context, defaultModel, shadowRadius);
@@ -20,7 +23,6 @@ public abstract class MultiModelRenderer<T extends Mob, M extends EntityModel<T>
         super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }
 
-   
     @Override
     public M getModel() {
         return AetherConfig.CLIENT.legacy_models.get() ? this.getOldModel() : this.getDefaultModel();
@@ -29,7 +31,6 @@ public abstract class MultiModelRenderer<T extends Mob, M extends EntityModel<T>
     public abstract N getDefaultModel();
 
     public abstract O getOldModel();
-
    
     @Override
     public ResourceLocation getTextureLocation(T entity) {
