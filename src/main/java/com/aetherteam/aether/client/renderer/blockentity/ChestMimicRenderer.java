@@ -25,7 +25,7 @@ import net.minecraftforge.fml.ModList;
 import java.util.Calendar;
 
 /**
- * [CODE COPY] - {@link net.minecraft.client.renderer.blockentity.ChestRenderer}.
+ * [CODE COPY] - {@link net.minecraft.client.renderer.blockentity.ChestRenderer}.<br><br>
  * Stripped down to only use what is necessary.
  */
 public class ChestMimicRenderer implements BlockEntityRenderer<ChestMimicBlockEntity> {

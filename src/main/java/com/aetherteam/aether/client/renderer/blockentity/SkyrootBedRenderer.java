@@ -23,7 +23,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
 
 /**
- * [CODE COPY] - {@link net.minecraft.client.renderer.blockentity.BedRenderer}.
+ * [CODE COPY] - {@link net.minecraft.client.renderer.blockentity.BedRenderer}.<br><br>
  * Stripped down to only use what is necessary.
  */
 public class SkyrootBedRenderer implements BlockEntityRenderer<SkyrootBedBlockEntity> {
