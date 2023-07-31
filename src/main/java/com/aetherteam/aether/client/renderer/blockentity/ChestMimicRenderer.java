@@ -2,6 +2,7 @@ package com.aetherteam.aether.client.renderer.blockentity;
 
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.block.dungeon.ChestMimicBlock;
+import com.aetherteam.aether.blockentity.ChestMimicBlockEntity;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -17,20 +18,22 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.block.ChestBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.ChestType;
 import net.minecraftforge.fml.ModList;
 
 import java.util.Calendar;
 
-public class ChestMimicRenderer<T extends BlockEntity> implements BlockEntityRenderer<T>
-{
+/**
+ * [CODE COPY] - {@link net.minecraft.client.renderer.blockentity.ChestRenderer}.
+ * Stripped down to only use what is necessary.
+ */
+public class ChestMimicRenderer implements BlockEntityRenderer<ChestMimicBlockEntity> {
+	private static final Material LOOTR_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, new ResourceLocation("lootr", "chest"));
 	private final ModelPart lid;
 	private final ModelPart bottom;
 	private final ModelPart lock;
 	private boolean xmasTextures = false;
-	public static final Material LOOTR_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, new ResourceLocation("lootr", "chest"));
 
 	public ChestMimicRenderer(BlockEntityRendererProvider.Context context) {
 		Calendar calendar = Calendar.getInstance();
@@ -44,7 +47,7 @@ public class ChestMimicRenderer<T extends BlockEntity> implements BlockEntityRen
 	}
 
 	@Override
-	public void render(T blockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
+	public void render(ChestMimicBlockEntity blockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
 		BlockState blockState = blockEntity.getLevel() != null ? blockEntity.getBlockState() : AetherBlocks.CHEST_MIMIC.get().defaultBlockState().setValue(ChestBlock.FACING, Direction.SOUTH);
 		if (blockState.getBlock() instanceof ChestMimicBlock) {
 			poseStack.pushPose();
@@ -65,7 +68,7 @@ public class ChestMimicRenderer<T extends BlockEntity> implements BlockEntityRen
 		chestBottom.render(poseStack, consumer, packedLight, packedOverlay);
 	}
 
-	protected Material getMaterial(T blockEntity) {
+	private Material getMaterial(ChestMimicBlockEntity blockEntity) {
 		if (ModList.get().isLoaded("lootr")) {
 			return LOOTR_MATERIAL;
 		}

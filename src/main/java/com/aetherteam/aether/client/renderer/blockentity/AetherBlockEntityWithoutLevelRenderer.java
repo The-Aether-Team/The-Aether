@@ -12,10 +12,12 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-public class AetherBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLevelRenderer
-{
-    public AetherBlockEntityWithoutLevelRenderer(BlockEntityRenderDispatcher pBlockEntityRenderDispatcher, EntityModelSet pEntityModelSet) {
-        super(pBlockEntityRenderDispatcher, pEntityModelSet);
+/**
+ * Used in the registration of block items that have block entity renderers.
+ */
+public class AetherBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLevelRenderer {
+    public AetherBlockEntityWithoutLevelRenderer(BlockEntityRenderDispatcher blockEntityRenderDispatcher, EntityModelSet entityModelSet) {
+        super(blockEntityRenderDispatcher, entityModelSet);
     }
 
     @Override
