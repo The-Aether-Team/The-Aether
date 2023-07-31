@@ -23,18 +23,32 @@ import java.util.Map;
 import java.util.UUID;
 
 public class DeveloperGlowLayer<T extends Player, M extends PlayerModel<T>> extends RenderLayer<T, M> {
-    public DeveloperGlowLayer(RenderLayerParent<T, M> renderer) {
-        super(renderer);
+    public DeveloperGlowLayer(RenderLayerParent<T, M> entityRenderer) {
+        super(entityRenderer);
     }
 
-    public void render(PoseStack pMatrixStack, MultiBufferSource pBuffer, int pPackedLight, T pLivingEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
-        if (pLivingEntity instanceof AbstractClientPlayer abstractClientPlayer) {
+    /**
+     * If the player has Developer Glow, this will render it in the {@link AetherCustomizationsScreen} or in the world, and color it based on the settings the player has defined.
+     * @param poseStack The rendering {@link PoseStack}.
+     * @param buffer The rendering {@link MultiBufferSource}.
+     * @param packedLight The {@link Integer} for the packed lighting for rendering.
+     * @param entity The entity.
+     * @param limbSwing The {@link Float} for the limb swing rotation.
+     * @param limbSwingAmount The {@link Float} for the limb swing amount.
+     * @param partialTicks The {@link Float} for the game's partial ticks.
+     * @param ageInTicks The {@link Float} for the entity's age in ticks.
+     * @param netHeadYaw The {@link Float} for the head yaw rotation.
+     * @param headPitch The {@link Float} for the head pitch rotation.
+     */
+    @Override
+    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+        if (entity instanceof AbstractClientPlayer abstractClientPlayer) {
             User user = UserData.Client.getClientUser();
             UUID playerUUID = abstractClientPlayer.getUUID();
             Map<UUID, DeveloperGlow> developerGlows = ClientDeveloperGlowPerkData.INSTANCE.getClientPerkData();
             if ((Minecraft.getInstance().screen instanceof AetherCustomizationsScreen aetherCustomizationsScreen && aetherCustomizationsScreen.developerGlowEnabled && Minecraft.getInstance().player != null && playerUUID.equals(Minecraft.getInstance().player.getUUID()) && user != null && PerkUtil.hasDeveloperGlow().test(user))
                     || (!(Minecraft.getInstance().screen instanceof AetherCustomizationsScreen) && developerGlows.containsKey(playerUUID))) {
-                VertexConsumer vertexconsumer = pBuffer.getBuffer(RenderType.eyes(abstractClientPlayer.getSkinTextureLocation()));
+                VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.eyes(abstractClientPlayer.getSkinTextureLocation()));
                 Triple<Float, Float, Float> color;
                 if (Minecraft.getInstance().screen instanceof AetherCustomizationsScreen aetherCustomizationsScreen) {
                     color = PerkUtil.getPerkColor(aetherCustomizationsScreen.developerGlowColor);
@@ -42,9 +56,9 @@ public class DeveloperGlowLayer<T extends Player, M extends PlayerModel<T>> exte
                     color = PerkUtil.getPerkColor(developerGlows.get(playerUUID).hexColor());
                 }
                 if (color != null) {
-                    this.getParentModel().renderToBuffer(pMatrixStack, vertexconsumer, 15728640, OverlayTexture.NO_OVERLAY, color.getLeft(), color.getMiddle(), color.getRight(), 1.0F);
+                    this.getParentModel().renderToBuffer(poseStack, vertexconsumer, 15728640, OverlayTexture.NO_OVERLAY, color.getLeft(), color.getMiddle(), color.getRight(), 1.0F);
                 } else {
-                    this.getParentModel().renderToBuffer(pMatrixStack, vertexconsumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+                    this.getParentModel().renderToBuffer(poseStack, vertexconsumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
                 }
             }
         }

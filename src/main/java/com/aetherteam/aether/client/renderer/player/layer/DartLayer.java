@@ -32,6 +32,9 @@ public class DartLayer<T extends LivingEntity, M extends PlayerModel<T>> extends
         this.offset = offset;
     }
 
+    /**
+     * [CODE COPY] - {@link StuckInBodyLayer#render(PoseStack, MultiBufferSource, int, LivingEntity, float, float, float, float, float, float)}.
+     */
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, T livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         int i = this.numStuck(livingEntity);
         float offset = this.offset;
@@ -58,6 +61,10 @@ public class DartLayer<T extends LivingEntity, M extends PlayerModel<T>> extends
         }
     }
 
+    /**
+     * [CODE COPY] - {@link net.minecraft.client.renderer.entity.layers.ArrowLayer#renderStuckItem(PoseStack, MultiBufferSource, int, Entity, float, float, float, float)}.
+     * Adapted for {@link AbstractDart}.
+     */
     @Override
     protected void renderStuckItem(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Entity entity, float x, float y, float z, float partialTick) {
         float f = Mth.sqrt(x * x + z * z);

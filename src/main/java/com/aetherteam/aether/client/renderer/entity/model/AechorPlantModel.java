@@ -123,16 +123,16 @@ public class AechorPlantModel extends EntityModel<AechorPlant> {
 
     @Override
     public void setupAnim(AechorPlant aechorPlant, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        float sinage1 = (float) Math.sin(ageInTicks);
+        float sinage1 = Mth.sin(ageInTicks);
         float sinage2;
 
         if (aechorPlant.hurtTime > 0) {
             sinage1 *= 0.45F;
             sinage1 -= 0.125F;
-            sinage2 = 1.75F + (float) Math.sin(ageInTicks + 2.0F) * 1.5F;
+            sinage2 = 1.75F + Mth.sin(ageInTicks + 2.0F) * 1.5F;
         } else if (aechorPlant.getTargetingEntity()) {
             sinage1 *= 0.25F;
-            sinage2 = 1.75F + (float) Math.sin(ageInTicks + 2.0F) * 1.5F;
+            sinage2 = 1.75F + Mth.sin(ageInTicks + 2.0F) * 1.5F;
         } else {
             sinage1 *= 0.125F;
             sinage2 = 1.75F;
