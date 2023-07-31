@@ -6,11 +6,9 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class PassiveWhirlyParticle extends WhirlyParticle<PassiveWhirlwind> {
-    public PassiveWhirlyParticle(ClientLevel level, double xCoord, double yCoord, double zCoord, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprite) {
+public class PassiveWhirlwindParticle extends AbstractWhirlwindParticle<PassiveWhirlwind> {
+    public PassiveWhirlwindParticle(ClientLevel level, double xCoord, double yCoord, double zCoord, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprite) {
         super(level, xCoord, yCoord, zCoord, xSpeed, ySpeed, zSpeed, sprite);
         if (this.whirlwind != null) {
             this.quadSize = this.random.nextFloat() * this.random.nextFloat() * 0.5F;
@@ -26,18 +24,18 @@ public class PassiveWhirlyParticle extends WhirlyParticle<PassiveWhirlwind> {
     @Override
     public void tick() {
         super.tick();
-        this.xd *= 0.8999999761581421;
-        this.yd *= 0.8999999761581421;
-        this.zd *= 0.8999999761581421;
+        this.xd *= 0.9;
+        this.yd *= 0.9;
+        this.zd *= 0.9;
         if (this.onGround) {
-            this.xd *= 0.699999988079071;
-            this.zd *= 0.699999988079071;
+            this.xd *= 0.7;
+            this.zd *= 0.7;
         }
     }
 
     @Override
     protected double getBaseSpeedModifier() {
-        return 0.05000000074505806;
+        return 0.05;
     }
 
     @Override
@@ -45,20 +43,12 @@ public class PassiveWhirlyParticle extends WhirlyParticle<PassiveWhirlwind> {
         return PassiveWhirlwind.class;
     }
 
-    @OnlyIn(Dist.CLIENT)
-    public static class Factory implements ParticleProvider<SimpleParticleType>
-    {
-        private final SpriteSet spriteSet;
-
-        public Factory(SpriteSet spriteSetIn) {
-            this.spriteSet = spriteSetIn;
-        }
-
+    public record Factory(SpriteSet spriteSet) implements ParticleProvider<SimpleParticleType> {
         @Override
         public Particle createParticle(SimpleParticleType particleType, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            PassiveWhirlyParticle passiveWhirlyParticle = new PassiveWhirlyParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, spriteSet);
-            passiveWhirlyParticle.pickSprite(this.spriteSet);
-            return passiveWhirlyParticle;
+            PassiveWhirlwindParticle particle = new PassiveWhirlwindParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, this.spriteSet());
+            particle.pickSprite(this.spriteSet());
+            return particle;
         }
     }
 }

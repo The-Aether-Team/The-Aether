@@ -9,12 +9,12 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.phys.AABB;
 
-public abstract class WhirlyParticle<T extends AbstractWhirlwind> extends TextureSheetParticle {
-    protected static final TargetingConditions TARGET_CONDITION = TargetingConditions.forNonCombat();
-    protected AbstractWhirlwind whirlwind;
-    protected SpriteSet animatedSprite;
+public abstract class AbstractWhirlwindParticle<T extends AbstractWhirlwind> extends TextureSheetParticle {
+    private static final TargetingConditions TARGET_CONDITION = TargetingConditions.forNonCombat();
+    private final SpriteSet animatedSprite;
+    protected final AbstractWhirlwind whirlwind;
 
-    public WhirlyParticle(ClientLevel level, double xCoord, double yCoord, double zCoord, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprite) {
+    public AbstractWhirlwindParticle(ClientLevel level, double xCoord, double yCoord, double zCoord, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprite) {
         super(level, xCoord, yCoord, zCoord, xSpeed, ySpeed, zSpeed);
         this.animatedSprite = sprite;
         this.whirlwind = level.getNearestEntity(this.getWhirlwindType(), TARGET_CONDITION, null, xCoord, yCoord, zCoord, new AABB(this.x, this.y, this.z, this.x + 1, this.y + 1, this.z + 1));
@@ -42,11 +42,11 @@ public abstract class WhirlyParticle<T extends AbstractWhirlwind> extends Textur
             float d1 = Mth.sqrt(x * x + y * y + z * z);
 
             double minY = this.getBoundingBox().minY - this.y;
-            double d2 = Math.atan2(this.whirlwind.getX() - this.x, this.whirlwind.getZ() - this.z) / 0.01745329424738884;
+            double d2 = Math.atan2(this.whirlwind.getX() - this.x, this.whirlwind.getZ() - this.z) / 0.0175;
             d2 += 160.0;
-            this.xd = -Math.cos(0.01745329424738884 * d2) * (d1 * 2.5 - minY) * 0.10000000149011612;
-            this.zd = Math.sin(0.01745329424738884 * d2) * (d1 * 2.5 - minY) * 0.10000000149011612;
-            this.yd = 0.11500000208616257;
+            this.xd = -Math.cos(0.0175 * d2) * (d1 * 2.5 - minY) * 0.1;
+            this.zd = Math.sin(0.01745 * d2) * (d1 * 2.5 - minY) * 0.1;
+            this.yd = 0.115;
         }
         this.yd += 0.004;
         this.move(this.xd, this.yd, this.zd);

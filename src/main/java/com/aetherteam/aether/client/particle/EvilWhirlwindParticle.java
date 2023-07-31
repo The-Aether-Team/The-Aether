@@ -9,19 +9,17 @@ import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.Mth;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class EvilWhirlyParticle extends WhirlyParticle<EvilWhirlwind> {
-    float smokeParticleScale;
+public class EvilWhirlwindParticle extends AbstractWhirlwindParticle<EvilWhirlwind> {
+    private final float smokeParticleScale;
 
-    public EvilWhirlyParticle(ClientLevel level, double xCoord, double yCoord, double zCoord, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprite) {
+    public EvilWhirlwindParticle(ClientLevel level, double xCoord, double yCoord, double zCoord, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprite) {
         this(level, xCoord, yCoord, zCoord, xSpeed, ySpeed, zSpeed, 3.5F, sprite);
     }
 
-    public EvilWhirlyParticle(ClientLevel level, double xCoord, double yCoord, double zCoord, double xSpeed, double ySpeed, double zSpeed, float scale, SpriteSet sprite) {
+    public EvilWhirlwindParticle(ClientLevel level, double xCoord, double yCoord, double zCoord, double xSpeed, double ySpeed, double zSpeed, float scale, SpriteSet sprite) {
         super(level, xCoord, yCoord, zCoord, xSpeed, ySpeed, zSpeed, sprite);
-        float f = (float) (Math.random() * 0.30000001192092896);
+        float f = (float) (Math.random() * 0.3);
         this.rCol = f;
         this.gCol = f;
         this.bCol = f;
@@ -37,7 +35,7 @@ public class EvilWhirlyParticle extends WhirlyParticle<EvilWhirlwind> {
 
     @Override
     public void render(VertexConsumer consumer, Camera camera, float partialTicks) {
-        float f = ((float)this.age + partialTicks) / (float)this.lifetime * 32.0F;
+        float f = ((float) this.age + partialTicks) / (float)this.lifetime * 32.0F;
         f = Mth.clamp(f, 0.0F, 1.0F);
         this.quadSize = this.smokeParticleScale * f;
         super.render(consumer, camera, partialTicks);
@@ -50,18 +48,18 @@ public class EvilWhirlyParticle extends WhirlyParticle<EvilWhirlwind> {
             this.xd *= 1.1;
             this.zd *= 1.1;
         }
-        this.xd *= 0.9599999785423279;
-        this.yd *= 0.9599999785423279;
-        this.zd *= 0.9599999785423279;
+        this.xd *= 0.96;
+        this.yd *= 0.96;
+        this.zd *= 0.96;
         if (this.onGround) {
-            this.xd *= 0.699999988079071;
-            this.zd *= 0.699999988079071;
+            this.xd *= 0.7;
+            this.zd *= 0.7;
         }
     }
 
     @Override
     public double getBaseSpeedModifier() {
-        return 0.10000000149011612;
+        return 0.1;
     }
 
     @Override
@@ -69,20 +67,12 @@ public class EvilWhirlyParticle extends WhirlyParticle<EvilWhirlwind> {
         return EvilWhirlwind.class;
     }
 
-    @OnlyIn(Dist.CLIENT)
-    public static class Factory implements ParticleProvider<SimpleParticleType>
-    {
-        private final SpriteSet spriteSet;
-
-        public Factory(SpriteSet spriteSetIn) {
-            this.spriteSet = spriteSetIn;
-        }
-
+    public record Factory(SpriteSet spriteSet) implements ParticleProvider<SimpleParticleType> {
         @Override
         public Particle createParticle(SimpleParticleType particleType, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            EvilWhirlyParticle evilWhirlyParticle = new EvilWhirlyParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, spriteSet);
-            evilWhirlyParticle.pickSprite(this.spriteSet);
-            return evilWhirlyParticle;
+            EvilWhirlwindParticle particle = new EvilWhirlwindParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, this.spriteSet());
+            particle.pickSprite(this.spriteSet());
+            return particle;
         }
     }
 }
