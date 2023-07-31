@@ -34,8 +34,23 @@ public class GlovesRenderer implements ICurioRenderer {
         this.glovesFirstPerson = new GlovesModel(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.GLOVES_FIRST_PERSON));
     }
 
+    /**
+     * Renders gloves in third person on the player's model.
+     * @param stack The {@link ItemStack} for the Curio.
+     * @param slotContext The {@link SlotContext} for the Curio.
+     * @param poseStack The rendering {@link PoseStack}.
+     * @param renderLayerParent The {@link RenderLayerParent} for the renderer.
+     * @param buffer The rendering {@link MultiBufferSource}.
+     * @param packedLight The {@link Integer} for the packed lighting for rendering.
+     * @param limbSwing The {@link Float} for the limb swing rotation.
+     * @param limbSwingAmount The {@link Float} for the limb swing amount.
+     * @param partialTicks The {@link Float} for the game's partial ticks.
+     * @param ageInTicks The {@link Float} for the entity's age in ticks.
+     * @param netHeadYaw The {@link Float} for the head yaw rotation.
+     * @param headPitch The {@link Float} for the head pitch rotation.
+     */
     @Override
-    public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack poseStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource buffer, int light, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack poseStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource buffer, int packedLight, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         GlovesItem glovesItem = (GlovesItem) stack.getItem();
         GlovesModel model = this.glovesModel;
         ResourceLocation texture = glovesItem.getGlovesTexture();
@@ -51,11 +66,20 @@ public class GlovesRenderer implements ICurioRenderer {
         float green = glovesItem.getColors(stack).getMiddle();
         float blue = glovesItem.getColors(stack).getRight();
 
-        VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.armorCutoutNoCull(texture), false, stack.isEnchanted());;
-        model.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0F);
+        VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.armorCutoutNoCull(texture), false, stack.isEnchanted());
+        model.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0F);
     }
 
-    public void renderFirstPerson(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, AbstractClientPlayer player, HumanoidArm arm) {
+    /**
+     * Renders a glove in the player's hand in first person.
+     * @param stack The {@link ItemStack} for the Curio.
+     * @param poseStack The rendering {@link PoseStack}.
+     * @param buffer The rendering {@link MultiBufferSource}.
+     * @param packedLight The {@link Integer} for the packed lighting for rendering.
+     * @param player The {@link AbstractClientPlayer} to render for.
+     * @param arm The {@link HumanoidArm} to render on.
+     */
+    public void renderFirstPerson(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int packedLight, AbstractClientPlayer player, HumanoidArm arm) {
         GlovesModel model = this.glovesFirstPerson;
 
         model.setAllVisible(false);
@@ -71,16 +95,9 @@ public class GlovesRenderer implements ICurioRenderer {
         float green = glovesItem.getColors(stack).getMiddle();
         float blue = glovesItem.getColors(stack).getRight();
 
-        if (arm == HumanoidArm.RIGHT) {
-            this.renderGlove(model.rightArm, poseStack, combinedLight, consumer, red, green, blue);
-        } else if (arm == HumanoidArm.LEFT) {
-            this.renderGlove(model.leftArm, poseStack, combinedLight, consumer, red, green, blue);
-        }
-    }
-
-    private void renderGlove(ModelPart gloveArm, PoseStack poseStack, int combinedLight, VertexConsumer consumer, float red, float green, float blue) {
+        ModelPart gloveArm = arm == HumanoidArm.RIGHT ? model.rightArm : model.leftArm;
         gloveArm.visible = true;
         gloveArm.xRot = 0.0F;
-        gloveArm.render(poseStack, consumer, combinedLight, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0F);
+        gloveArm.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0F);
     }
 }
