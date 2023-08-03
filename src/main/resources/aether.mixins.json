@@ -3,7 +3,6 @@
   "package": "com.aetherteam.aether.mixin.mixins",
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_17",
-  "plugin": "com.aetherteam.aether.mixin.AetherMixinPlugin",
   "refmap": "aether.refmap.json",
   "mixins": [
     "common.AbstractArrowMixin",
