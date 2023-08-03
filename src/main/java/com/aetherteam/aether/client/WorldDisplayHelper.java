@@ -56,7 +56,7 @@ public class WorldDisplayHelper {
         Minecraft minecraft = Minecraft.getInstance();
         LevelSummary summary = getLevelSummary();
         if (summary != null && minecraft.getLevelSource().levelExists(summary.getLevelId()) && minecraft.getSingleplayerServer() != null) {
-            openSessionLock();
+            lockLevel();
             resetStates();
             minecraft.forceSetScreen(null);
         }
@@ -166,12 +166,12 @@ public class WorldDisplayHelper {
         if (server != null) {
             Minecraft.getInstance().options.hideGui = true;
             Minecraft.getInstance().options.setCameraType(CameraType.THIRD_PERSON_BACK);
-            deleteSessionLock();
+            unlockLevel();
             WorldDisplayHelper.setMenu();
         }
     }
 
-    public static void deleteSessionLock() {
+    public static void unlockLevel() {
         try {
             LevelStorageSource.LevelStorageAccess storageAccess = getStorageAccess();
             if (storageAccess != null) {
@@ -182,7 +182,7 @@ public class WorldDisplayHelper {
         }
     }
 
-    public static void openSessionLock() {
+    public static void lockLevel() {
         try {
             LevelStorageSource.LevelStorageAccess storageAccess = getStorageAccess();
             if (storageAccess != null) {
