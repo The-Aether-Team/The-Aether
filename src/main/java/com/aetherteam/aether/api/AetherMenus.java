@@ -2,6 +2,7 @@ package com.aetherteam.aether.api;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.client.WorldDisplayHelper;
 import com.aetherteam.aether.client.gui.screen.menu.AetherTitleScreen;
 import com.aetherteam.aether.client.gui.screen.menu.VanillaLeftTitleScreen;
 import com.aetherteam.cumulus.Cumulus;
@@ -40,9 +41,9 @@ public class AetherMenus {
             .tabButton(THE_AETHER_TAB_BUTTON);
 
     // Behavior
-    private static final BooleanSupplier MINECRAFT_LEFT_CONDITION = () -> CumulusConfig.CLIENT.active_menu.get().equals("aether:minecraft_left") || (CumulusConfig.CLIENT.active_menu.get().equals("cumulus_menus:minecraft") && AetherConfig.CLIENT.menu_type_toggles_alignment.get() && AetherConfig.CLIENT.enable_world_preview.get());
+    private static final BooleanSupplier MINECRAFT_LEFT_CONDITION = () -> CumulusConfig.CLIENT.active_menu.get().equals("aether:minecraft_left") || (CumulusConfig.CLIENT.active_menu.get().equals("cumulus_menus:minecraft") && AetherConfig.CLIENT.menu_type_toggles_alignment.get() && WorldDisplayHelper.isActive());
     private static final BooleanSupplier THE_AETHER_CONDITION = () -> CumulusConfig.CLIENT.active_menu.get().equals("aether:the_aether");
-    private static final BooleanSupplier THE_AETHER_LEFT_CONDITION = () -> CumulusConfig.CLIENT.active_menu.get().equals("aether:the_aether_left") || (CumulusConfig.CLIENT.active_menu.get().equals("aether:the_aether") && AetherConfig.CLIENT.menu_type_toggles_alignment.get() && AetherConfig.CLIENT.enable_world_preview.get());
+    private static final BooleanSupplier THE_AETHER_LEFT_CONDITION = () -> CumulusConfig.CLIENT.active_menu.get().equals("aether:the_aether_left") || (CumulusConfig.CLIENT.active_menu.get().equals("aether:the_aether") && AetherConfig.CLIENT.menu_type_toggles_alignment.get() && WorldDisplayHelper.isActive());
 
     // Menus
     public static final RegistryObject<Menu> MINECRAFT_LEFT = MENUS.register("minecraft_left", () -> new Menu(Menus.MINECRAFT_ICON, MINECRAFT_LEFT_NAME, new VanillaLeftTitleScreen(), MINECRAFT_LEFT_CONDITION));
