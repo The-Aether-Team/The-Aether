@@ -74,13 +74,15 @@ public class WorldDisplayHelper {
         resetStates();
         Minecraft minecraft = Minecraft.getInstance();
         IntegratedServer server = minecraft.getSingleplayerServer();
-        if (server != null) {
-            server.halt(false);
-        }
-        if (screen != null) {
-            minecraft.clearLevel(screen);
-        } else {
-            minecraft.clearLevel();
+        if (minecraft.level != null) {
+            if (server != null) {
+                server.halt(false);
+            }
+            if (screen != null) {
+                minecraft.clearLevel(screen);
+            } else {
+                minecraft.clearLevel();
+            }
         }
     }
 
