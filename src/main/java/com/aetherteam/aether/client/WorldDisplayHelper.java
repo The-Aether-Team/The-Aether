@@ -1,8 +1,6 @@
 package com.aetherteam.aether.client;
 
 import com.aetherteam.aether.AetherConfig;
-import com.aetherteam.aether.mixin.mixins.common.accessor.LevelStorageAccessAccessor;
-import com.aetherteam.aether.mixin.mixins.common.accessor.MinecraftServerAccessor;
 import com.aetherteam.cumulus.client.CumulusClient;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
@@ -10,11 +8,9 @@ import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.server.IntegratedServer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.DirectoryLock;
 import net.minecraft.world.level.storage.LevelStorageSource;
 import net.minecraft.world.level.storage.LevelSummary;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -47,7 +43,7 @@ public class WorldDisplayHelper {
             minecraft.forceSetScreen(new GenericDirtMessageScreen(Component.translatable("selectWorld.data_read")));
             minecraft.createWorldOpenFlows().loadLevel(minecraft.screen, summary.getLevelId());
         } else {
-            resetHelperState();
+            resetActive();
             resetConfig();
         }
     }
@@ -56,7 +52,6 @@ public class WorldDisplayHelper {
         Minecraft minecraft = Minecraft.getInstance();
         LevelSummary summary = getLevelSummary();
         if (summary != null && minecraft.getLevelSource().levelExists(summary.getLevelId()) && minecraft.getSingleplayerServer() != null) {
-            lockLevel();
             resetStates();
             minecraft.forceSetScreen(null);
         }
@@ -122,7 +117,7 @@ public class WorldDisplayHelper {
                 }
             }
         } catch (ExecutionException | InterruptedException | UnsupportedOperationException e) {
-            resetHelperState();
+            resetActive();
             resetConfig();
             e.printStackTrace();
         }
@@ -134,7 +129,7 @@ public class WorldDisplayHelper {
 
     public static void resetStates() {
         resetPlayerState();
-        resetHelperState();
+        resetActive();
     }
 
     public static void resetPlayerState() {
@@ -142,14 +137,13 @@ public class WorldDisplayHelper {
         Minecraft.getInstance().options.setCameraType(CameraType.FIRST_PERSON);
     }
 
-    public static void resetHelperState() {
-        loadedSummary = null;
-        menuActive = false;
-    }
-
     public static void resetConfig() {
         AetherConfig.CLIENT.enable_world_preview.set(false);
         AetherConfig.CLIENT.enable_world_preview.save();
+    }
+
+    public static void resetActive() {
+        menuActive = false;
     }
 
     public static void setActive() {
@@ -166,42 +160,7 @@ public class WorldDisplayHelper {
         if (server != null) {
             Minecraft.getInstance().options.hideGui = true;
             Minecraft.getInstance().options.setCameraType(CameraType.THIRD_PERSON_BACK);
-            unlockLevel();
             WorldDisplayHelper.setMenu();
-        }
-    }
-
-    public static void unlockLevel() {
-        try {
-            LevelStorageSource.LevelStorageAccess storageAccess = getStorageAccess();
-            if (storageAccess != null) {
-                storageAccess.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void lockLevel() {
-        try {
-            LevelStorageSource.LevelStorageAccess storageAccess = getStorageAccess();
-            if (storageAccess != null) {
-                LevelStorageAccessAccessor levelStorageAccessAccessor = (LevelStorageAccessAccessor) storageAccess;
-                levelStorageAccessAccessor.aether$setLock(DirectoryLock.create(storageAccess.getWorldDir()));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static LevelStorageSource.LevelStorageAccess getStorageAccess() {
-        Minecraft minecraft = Minecraft.getInstance();
-        IntegratedServer server = minecraft.getSingleplayerServer();
-        if (server != null) {
-            MinecraftServerAccessor minecraftServerAccessor = (MinecraftServerAccessor) server;
-            return minecraftServerAccessor.aether$getStorageSource();
-        } else {
-            return null;
         }
     }
 }

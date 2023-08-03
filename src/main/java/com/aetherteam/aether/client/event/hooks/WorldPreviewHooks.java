@@ -18,7 +18,7 @@ public class WorldPreviewHooks {
         if (screen instanceof TitleScreen && AetherConfig.CLIENT.enable_world_preview.get()) {
             WorldDisplayHelper.enableWorldPreview();
         } else if (screen instanceof TitleScreen && !AetherConfig.CLIENT.enable_world_preview.get()) {
-            WorldDisplayHelper.resetHelperState();
+            WorldDisplayHelper.resetActive();
         }
     }
 
@@ -34,7 +34,7 @@ public class WorldPreviewHooks {
                     WorldDisplayHelper.setupLevelForDisplay();
                 }
             } else {
-                WorldDisplayHelper.resetHelperState();
+                WorldDisplayHelper.resetActive();
             }
         }
     }
