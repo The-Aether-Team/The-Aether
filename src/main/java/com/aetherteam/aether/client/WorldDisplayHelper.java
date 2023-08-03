@@ -1,6 +1,5 @@
 package com.aetherteam.aether.client;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.mixin.mixins.common.accessor.LevelStorageAccessAccessor;
 import com.aetherteam.aether.mixin.mixins.common.accessor.MinecraftServerAccessor;
@@ -14,7 +13,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.DirectoryLock;
 import net.minecraft.world.level.storage.LevelStorageSource;
 import net.minecraft.world.level.storage.LevelSummary;
-import net.minecraft.world.level.storage.PrimaryLevelData;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,9 +46,6 @@ public class WorldDisplayHelper {
             setActive();
             minecraft.forceSetScreen(new GenericDirtMessageScreen(Component.translatable("selectWorld.data_read")));
             minecraft.createWorldOpenFlows().loadLevel(minecraft.screen, summary.getLevelId());
-            if (minecraft.getSingleplayerServer() != null && minecraft.getSingleplayerServer().getWorldData() instanceof PrimaryLevelData primaryLevelData) {
-                primaryLevelData.withConfirmedWarning(true);
-            }
         } else {
             resetHelperState();
             resetConfig();
