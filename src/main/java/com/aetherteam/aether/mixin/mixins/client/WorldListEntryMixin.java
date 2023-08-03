@@ -1,7 +1,6 @@
 package com.aetherteam.aether.mixin.mixins.client;
 
 import com.aetherteam.aether.client.WorldDisplayHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
 import net.minecraft.client.gui.screens.worldselection.WorldSelectionList;
 import net.minecraft.network.chat.Component;
@@ -22,7 +21,7 @@ public class WorldListEntryMixin {
     @Inject(at = @At(value = "HEAD"), method = "doDeleteWorld")
     public void doDeleteWorld(CallbackInfo ci) {
         if (WorldDisplayHelper.isActive() && WorldDisplayHelper.sameSummaries(this.summary)) {
-            WorldDisplayHelper.stopLevel(Minecraft.getInstance(), null);
+            WorldDisplayHelper.stopLevel(null);
         }
     }
 
@@ -37,8 +36,7 @@ public class WorldListEntryMixin {
     @Inject(at = @At(value = "HEAD"), method = "loadWorld")
     private void loadWorld(CallbackInfo ci) {
         if (WorldDisplayHelper.isActive() && !WorldDisplayHelper.sameSummaries(this.summary)) {
-            //Aether.LOGGER.info("true");
-            WorldDisplayHelper.stopLevel(Minecraft.getInstance(), new GenericDirtMessageScreen(Component.literal("")));
+            WorldDisplayHelper.stopLevel(new GenericDirtMessageScreen(Component.literal("")));
         }
     }
 }

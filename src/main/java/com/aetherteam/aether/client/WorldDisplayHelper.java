@@ -65,13 +65,14 @@ public class WorldDisplayHelper {
     public static void disableWorldPreview() {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.level != null) {
-            stopLevel(minecraft, new GenericDirtMessageScreen(Component.literal("")));
+            stopLevel(new GenericDirtMessageScreen(Component.literal("")));
             setMenu();
         }
     }
 
-    public static void stopLevel(Minecraft minecraft, Screen screen) {
+    public static void stopLevel(Screen screen) {
         resetStates();
+        Minecraft minecraft = Minecraft.getInstance();
         IntegratedServer server = minecraft.getSingleplayerServer();
         if (server != null) {
             server.halt(false);

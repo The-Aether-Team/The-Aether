@@ -16,7 +16,7 @@ public class CreateWorldScreenMixin {
     @Inject(at = @At(value = "HEAD"), method = "openFresh")
     private static void openFresh(Minecraft minecraft, Screen screen, CallbackInfo ci) {
         if (WorldDisplayHelper.isActive()) {
-            WorldDisplayHelper.stopLevel(Minecraft.getInstance(), new GenericDirtMessageScreen(Component.literal("")));
+            WorldDisplayHelper.stopLevel(new GenericDirtMessageScreen(Component.literal("")));
         }
     }
 }
