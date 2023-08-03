@@ -41,7 +41,7 @@ public class PassiveWhirlwind extends AbstractWhirlwind {
     }
 
     /**
-     * Allows creative mode players to color Passive Whirlwinds, as an easter egg.
+     * Allows creative mode players to color Passive Whirlwinds, as an Easter Egg.
      * @param player The interacting {@link Player}.
      * @param hand The {@link InteractionHand}.
      * @return The {@link InteractionResult}.

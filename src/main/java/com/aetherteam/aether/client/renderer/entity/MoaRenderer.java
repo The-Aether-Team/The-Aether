@@ -58,7 +58,7 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
 	}
 
 	/**
-	 * Retrieves the texture for the Moa, whether it be from the {@link MoaType}, a player's {@link com.aetherteam.aether.perk.types.MoaSkins.MoaSkin}, or an easter egg skin.
+	 * Retrieves the texture for the Moa, whether it be from the {@link MoaType}, a player's {@link com.aetherteam.aether.perk.types.MoaSkins.MoaSkin}, or an Easter Egg skin.
 	 * @param moa The {@link Moa} to retrieve the skin from.
 	 * @return The {@link ResourceLocation} for the emissive texture.
 	 */

@@ -52,7 +52,7 @@ public class FireMinion extends Monster {
             ParticleOptions particle = ParticleTypes.FLAME;
             if (this.hasCustomName()) {
                 String name = this.getName().getString();
-                if (name.equals("JorgeQ") || name.equals("Jorge_SunSpirit")) { // Frozen Fire Minion easter egg.
+                if (name.equals("JorgeQ") || name.equals("Jorge_SunSpirit")) { // Frozen Fire Minion Easter Egg.
                     particle = ParticleTypes.ITEM_SNOWBALL;
                 }
             }

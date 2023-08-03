@@ -24,7 +24,7 @@ public class FireMinionRenderer extends MobRenderer<FireMinion, FireMinionModel<
     }
 
     /**
-     * If the Fire Minion has specific custom names, it will use the frozen texture as an easter egg.
+     * If the Fire Minion has specific custom names, it will use the frozen texture as an Easter Egg.
      * Otherwise it uses the normal texture.
      * @param fireMinion The {@link FireMinion} entity.
      * @return The texture {@link ResourceLocation}.
