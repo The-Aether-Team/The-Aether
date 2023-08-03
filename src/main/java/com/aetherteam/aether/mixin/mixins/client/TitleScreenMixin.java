@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class TitleScreenMixin {
     @Inject(at = @At(value = "HEAD"), method = "isPauseScreen", cancellable = true)
     public void isPauseScreen(CallbackInfoReturnable<Boolean> cir) {
-        if (WorldDisplayHelper.loadedSummary != null && WorldDisplayHelper.loadedLevel != null) {
+        if (WorldDisplayHelper.isActive()) {
             cir.setReturnValue(true);
         }
     }

@@ -21,8 +21,7 @@ public class WorldPreviewFixCommand {
      * @return An {@link Integer}.
      */
     private static int fix(CommandSourceStack source) {
-        WorldDisplayHelper.loadedLevel = null;
-        WorldDisplayHelper.loadedSummary = null;
+        WorldDisplayHelper.resetStates();
         source.sendSuccess(Component.translatable("commands.aether.menu.fix"), true);
         return 1;
     }

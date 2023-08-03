@@ -14,7 +14,9 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
 
 import java.util.Calendar;
 import java.util.function.Predicate;
@@ -40,7 +42,7 @@ public class MenuHooks {
                     (pressed) -> {
                         AetherConfig.CLIENT.enable_world_preview.set(!AetherConfig.CLIENT.enable_world_preview.get());
                         AetherConfig.CLIENT.enable_world_preview.save();
-                        WorldDisplayHelper.toggleWorldPreview(AetherConfig.CLIENT.enable_world_preview.get());
+                        WorldDisplayHelper.toggleWorldPreview();
                     });
             dynamicMenuButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.menu.preview")));
             dynamicMenuButton.setDisplayConfigs(AetherConfig.CLIENT.enable_world_preview_button);
@@ -75,9 +77,11 @@ public class MenuHooks {
         if (screen instanceof TitleScreen) {
             DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24 - getButtonOffset(), 4, 20, 20, Component.translatable("gui.aether.menu.button.quick_load"),
                     (pressed) -> {
-                        WorldDisplayHelper.quickLoad();
+                        WorldDisplayHelper.enterLoadedLevel();
                         Minecraft.getInstance().getMusicManager().stopPlaying();
-                        AetherMusicManager.stopPlaying(); //todo doesn't quite work. might need to stop it through the sound manager
+                        Minecraft.getInstance().getSoundManager().stop();
+                        AetherMusicManager.stopPlaying();
+                        Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
                     });
             dynamicMenuButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.menu.load")));
             dynamicMenuButton.setOffsetConfigs(AetherConfig.CLIENT.enable_world_preview_button, AetherConfig.CLIENT.enable_aether_menu_button);

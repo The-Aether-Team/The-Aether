@@ -15,8 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class CreateWorldScreenMixin {
     @Inject(at = @At(value = "HEAD"), method = "openFresh")
     private static void openFresh(Minecraft minecraft, Screen screen, CallbackInfo ci) {
-        if (WorldDisplayHelper.loadedLevel != null && WorldDisplayHelper.loadedSummary != null) {
-            WorldDisplayHelper.stopWorld(Minecraft.getInstance(), new GenericDirtMessageScreen(Component.literal("")));
+        if (WorldDisplayHelper.isActive()) {
+            WorldDisplayHelper.stopLevel(Minecraft.getInstance(), new GenericDirtMessageScreen(Component.literal("")));
         }
     }
 }

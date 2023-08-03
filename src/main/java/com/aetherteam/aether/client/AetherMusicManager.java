@@ -118,7 +118,7 @@ public class AetherMusicManager {
     }
 
     public static boolean isWorldPreviewEnabled() {
-        return minecraft.player != null && AetherConfig.CLIENT.enable_world_preview.get() && WorldDisplayHelper.loadedLevel != null && WorldDisplayHelper.loadedSummary != null;
+        return minecraft.player != null && WorldDisplayHelper.isActive();
     }
 
     public static boolean isCreative(Holder<Biome> holder, Player player) {

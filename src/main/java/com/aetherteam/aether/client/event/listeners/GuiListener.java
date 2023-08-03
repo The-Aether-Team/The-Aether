@@ -6,7 +6,6 @@ import com.aetherteam.aether.client.event.hooks.GuiHooks;
 import com.aetherteam.aether.client.gui.component.AccessoryButton;
 import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.LerpingBossEvent;
 import net.minecraft.client.gui.layouts.GridLayout;
 import net.minecraft.client.gui.screens.PauseScreen;
@@ -61,9 +60,7 @@ public class GuiListener {
 
 	@SubscribeEvent
 	public static void onClientTick(TickEvent.ClientTickEvent event) {
-		Minecraft minecraft = Minecraft.getInstance();
 		if (event.phase == TickEvent.Phase.END) {
-			GuiHooks.tickMenuWhenPaused(minecraft);
 			GuiHooks.handleRefreshRebound();
 		}
 	}

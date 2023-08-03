@@ -1,9 +1,9 @@
 package com.aetherteam.aether.client.event.hooks;
 
 import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.client.AetherMusicManager;
 import com.aetherteam.aether.client.WorldDisplayHelper;
 import com.aetherteam.aether.mixin.mixins.client.accessor.EntityRendererAccessor;
-import com.aetherteam.cumulus.client.CumulusClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.Screen;
@@ -17,40 +17,51 @@ public class WorldPreviewHooks {
     public static void setupWorldPreview(Screen screen) {
         if (screen instanceof TitleScreen && AetherConfig.CLIENT.enable_world_preview.get()) {
             WorldDisplayHelper.enableWorldPreview();
+        } else if (screen instanceof TitleScreen && !AetherConfig.CLIENT.enable_world_preview.get()) {
+            WorldDisplayHelper.resetHelperState();
         }
     }
 
-    public static void renderMenuWithWorld(RenderLevelStageEvent.Stage stage, Minecraft minecraft) {
+    public static boolean hideScreen(Screen screen) {
+        return screen instanceof TitleScreen && AetherConfig.CLIENT.enable_world_preview.get() && Minecraft.getInstance().level == null;
+    }
+
+    public static void renderMenuWithWorld(RenderLevelStageEvent.Stage stage) {
+        Minecraft minecraft = Minecraft.getInstance();
         if (stage == RenderLevelStageEvent.Stage.AFTER_WEATHER) {
-            if (AetherConfig.CLIENT.enable_world_preview.get()) {
-                if (WorldDisplayHelper.loadedSummary != null) {
-                    if (minecraft.screen == null || minecraft.screen instanceof PauseScreen) {
-                        setupMenu(minecraft);
-                    }
+            if (WorldDisplayHelper.isActive()) {
+                if (minecraft.screen == null || minecraft.screen instanceof PauseScreen) {
+                    WorldDisplayHelper.setupLevelForDisplay();
                 }
             } else {
-                WorldDisplayHelper.loadedLevel = null;
-                WorldDisplayHelper.loadedSummary = null;
+                WorldDisplayHelper.resetHelperState();
             }
         }
     }
 
-    public static void setupMenu(Minecraft minecraft) {
-        WorldDisplayHelper.setupLevelForDisplay();
-        CumulusClient.MENU_HELPER.setShouldFade(false);
-        Screen screen = CumulusClient.MENU_HELPER.applyMenu(CumulusClient.MENU_HELPER.getActiveMenu());
-        if (screen != null) {
-            minecraft.forceSetScreen(screen);
+    public static void tickMenuWhenPaused() {
+        Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.level != null && minecraft.player != null) {
+            if (WorldDisplayHelper.isActive() && minecraft.isPaused()) {
+                minecraft.gameRenderer.tick();
+                minecraft.levelRenderer.tick();
+                AetherMusicManager.tick();
+                minecraft.getMusicManager().tick();
+                minecraft.getSoundManager().tick(false);
+                minecraft.level.animateTick(minecraft.player.getBlockX(), minecraft.player.getBlockY(), minecraft.player.getBlockZ());
+                Minecraft.getInstance().particleEngine.tick();
+            }
         }
     }
 
     public static void angleCamera() {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
-        if (AetherConfig.CLIENT.enable_world_preview.get() && WorldDisplayHelper.loadedLevel != null && WorldDisplayHelper.loadedSummary != null && player != null) {
+        if (WorldDisplayHelper.isActive() && player != null) {
             float f = (float) (minecraft.getDeltaFrameTime() * minecraft.options.panoramaSpeed().get());
             float spin = wrapDegrees(player.getViewYRot(minecraft.getDeltaFrameTime()) + f * 0.2F);
             player.setYRot(spin);
+            player.setXRot(0);
         }
     }
 
@@ -59,16 +70,15 @@ public class WorldPreviewHooks {
     }
 
     public static boolean hideOverlays() {
-        return AetherConfig.CLIENT.enable_world_preview.get() && WorldDisplayHelper.loadedLevel != null && WorldDisplayHelper.loadedSummary != null;
+        return WorldDisplayHelper.isActive();
     }
 
     public static boolean shouldHidePlayer() {
-        return AetherConfig.CLIENT.enable_world_preview.get() && WorldDisplayHelper.loadedLevel != null && WorldDisplayHelper.loadedSummary != null;
+        return WorldDisplayHelper.isActive();
     }
 
     public static boolean shouldHideEntity(Entity entity) {
-        return AetherConfig.CLIENT.enable_world_preview.get() && WorldDisplayHelper.loadedLevel != null && WorldDisplayHelper.loadedSummary != null
-                && Minecraft.getInstance().player != null && Minecraft.getInstance().player.getVehicle() != null && Minecraft.getInstance().player.getVehicle().is(entity);
+        return WorldDisplayHelper.isActive() && Minecraft.getInstance().player != null && Minecraft.getInstance().player.getVehicle() != null && Minecraft.getInstance().player.getVehicle().is(entity);
     }
 
     public static void adjustShadow(EntityRenderer<?> renderer, boolean flag) {

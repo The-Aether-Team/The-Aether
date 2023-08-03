@@ -2,7 +2,6 @@ package com.aetherteam.aether.client.event.listeners;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.event.hooks.WorldPreviewHooks;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -11,6 +10,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -24,10 +24,24 @@ public class WorldPreviewListener {
     }
 
     @SubscribeEvent
+    public static void onScreenRender(ScreenEvent.Render event) {
+        Screen screen = event.getScreen();
+        if (WorldPreviewHooks.hideScreen(screen)) {
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
     public static void onRenderLevelLast(RenderLevelStageEvent event) {
         RenderLevelStageEvent.Stage stage = event.getStage();
-        Minecraft minecraft = Minecraft.getInstance();
-        WorldPreviewHooks.renderMenuWithWorld(stage, minecraft);
+        WorldPreviewHooks.renderMenuWithWorld(stage);
+    }
+
+    @SubscribeEvent
+    public static void onClientTick(TickEvent.ClientTickEvent event) {
+        if (event.phase == TickEvent.Phase.END) {
+            WorldPreviewHooks.tickMenuWhenPaused();
+        }
     }
 
     @SubscribeEvent
