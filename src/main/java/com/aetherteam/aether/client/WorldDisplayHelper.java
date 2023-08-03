@@ -53,6 +53,7 @@ public class WorldDisplayHelper {
             }
         } else {
             resetHelperState();
+            resetConfig();
         }
     }
 
@@ -124,6 +125,7 @@ public class WorldDisplayHelper {
             }
         } catch (ExecutionException | InterruptedException | UnsupportedOperationException e) {
             resetHelperState();
+            resetConfig();
             e.printStackTrace();
         }
     }
@@ -145,6 +147,11 @@ public class WorldDisplayHelper {
     public static void resetHelperState() {
         loadedSummary = null;
         menuActive = false;
+    }
+
+    public static void resetConfig() {
+        AetherConfig.CLIENT.enable_world_preview.set(false);
+        AetherConfig.CLIENT.enable_world_preview.save();
     }
 
     public static void setActive() {
