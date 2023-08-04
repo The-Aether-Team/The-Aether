@@ -139,6 +139,7 @@ dependencies {
     //compileOnly fg.deobf("curse.maven:colytra-280200:${project.colytra_version}")
     //compileOnly fg.deobf("curse.maven:curious-elytra-317716:${project.curiouselytra_version}")
     compileOnly fg.deobf("curse.maven:jade-324717:${project.jade_version}")
+    compileOnly fg.deobf("curse.maven:lootr-361276:${project.lootr_version}")
 
     //runtimeOnly fg.deobf("io.github.ultimateboomer:smoothboot-forge:${project.smoothboot_version}")
 
