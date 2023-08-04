@@ -31,7 +31,7 @@ public class AdvancementToastMixin {
      * @param timeSinceLastVisible The {@link Long} time since the toast was last visible.
      * @param cir The {@link net.minecraft.client.gui.components.toasts.Toast.Visibility} {@link CallbackInfoReturnable} used for the method's return value.
      */
-    @Inject(at = @At("HEAD"), method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/gui/components/toasts/ToastComponent;J)Lnet/minecraft/client/gui/components/toasts/Toast$Visibility;")
+    @Inject(at = @At(value = "FIELD", target = "net/minecraft/client/gui/components/toasts/AdvancementToast.playedSound:Z"), method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/gui/components/toasts/ToastComponent;J)Lnet/minecraft/client/gui/components/toasts/Toast$Visibility;")
     private void render(PoseStack poseStack, ToastComponent toastComponent, long timeSinceLastVisible, CallbackInfoReturnable<Toast.Visibility> cir) {
         if (!this.playedSound) { // Checks if a sound hasn't been played yet.
             if (this.checkRoot()) {
