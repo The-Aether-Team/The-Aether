@@ -22,10 +22,8 @@ public class DirectoryLockMixin {
      */
     @Inject(at = @At(value = "HEAD"), method = "isLocked(Ljava/nio/file/Path;)Z", cancellable = true)
     private static void isLocked(Path basePath, CallbackInfoReturnable<Boolean> cir) {
-        if (WorldDisplayHelper.isActive()) {
-            if (AetherMixinHooks.canUnlockLevel(basePath)) {
-                cir.setReturnValue(false);
-            }
+        if (WorldDisplayHelper.isActive() && AetherMixinHooks.canUnlockLevel(basePath)) {
+            cir.setReturnValue(false);
         }
     }
 }
