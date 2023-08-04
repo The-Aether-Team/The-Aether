@@ -17,8 +17,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(AdvancementToast.class)
-public class AdvancementToastMixin
-{
+public class AdvancementToastMixin {
     @Final
     @Shadow
     private Advancement advancement;
@@ -26,12 +25,15 @@ public class AdvancementToastMixin
     private boolean playedSound;
 
     /**
-     * {@link AdvancementToast#render(PoseStack, ToastComponent, long)}
-     * Injector mixin to play the Aether's advancement sounds when the player gets an Aether advancement.
+     * Plays the Aether's advancement sounds when the player gets an Aether advancement.
+     * @param poseStack The {@link PoseStack} for rendering.
+     * @param toastComponent The {@link ToastComponent} for rendering.
+     * @param timeSinceLastVisible The {@link Long} time since the toast was last visible.
+     * @param cir The {@link net.minecraft.client.gui.components.toasts.Toast.Visibility} {@link CallbackInfoReturnable} used for the method's return value.
      */
-    @Inject(at = @At("HEAD"), method = "render")
+    @Inject(at = @At("HEAD"), method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/gui/components/toasts/ToastComponent;J)Lnet/minecraft/client/gui/components/toasts/Toast$Visibility;")
     private void render(PoseStack poseStack, ToastComponent toastComponent, long timeSinceLastVisible, CallbackInfoReturnable<Toast.Visibility> cir) {
-        if (!this.playedSound) {
+        if (!this.playedSound) { // Checks if a sound hasn't been played yet.
             if (this.checkRoot()) {
                 this.playedSound = true;
                 switch (this.advancement.getId().getPath()) {

@@ -6,8 +6,10 @@ import com.aetherteam.aether.capability.item.DroppedItem;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.ai.goal.BeeGrowBerryBushGoal;
 import com.aetherteam.aether.entity.ai.goal.FoxEatBerryBushGoal;
+import com.aetherteam.aether.entity.monster.Swet;
 import com.aetherteam.aether.entity.monster.dungeon.boss.Slider;
 import com.aetherteam.aether.entity.passive.FlyingCow;
+import com.aetherteam.aether.entity.passive.MountableAnimal;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.miscellaneous.bucket.SkyrootBucketItem;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -52,6 +54,20 @@ public class EntityHooks {
             Fox fox = (Fox) entity;
             fox.goalSelector.addGoal(10, new FoxEatBerryBushGoal(fox, 1.2F, 12, 1));
         }
+    }
+
+    /**
+     * Prevents dismounting Aether mounts in the air, and Swets when consumed.
+     * @param rider The {@link Entity} riding the mount.
+     * @param mount The mounted {@link Entity}.
+     * @param dismounting Whether the rider is trying to dismount, as a {@link Boolean}.
+     * @return Whether to prevent the rider from dismounting, as a {@link Boolean}.
+     */
+    public static boolean dismountPrevention(Entity rider, Entity mount, boolean dismounting) {
+        if (dismounting && rider.isShiftKeyDown()) {
+            return (mount instanceof MountableAnimal && !mount.isOnGround() && !mount.isInFluidType() && !mount.isPassenger()) || (mount instanceof Swet swet && !swet.isFriendly());
+        }
+        return false;
     }
 
     /**

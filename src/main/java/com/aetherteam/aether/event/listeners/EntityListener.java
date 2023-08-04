@@ -12,6 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -32,6 +33,17 @@ public class EntityListener {
     public static void onEntityJoin(EntityJoinLevelEvent event) {
         Entity entity = event.getEntity();
         EntityHooks.addGoals(entity);
+    }
+
+    /**
+     * @see EntityHooks#dismountPrevention(Entity, Entity, boolean)
+     */
+    @SubscribeEvent
+    public static void onMountEntity(EntityMountEvent event) {
+        Entity riderEntity = event.getEntityMounting();
+        Entity mountEntity = event.getEntityBeingMounted();
+        boolean isDismounting = event.isDismounting();
+        event.setCanceled(EntityHooks.dismountPrevention(riderEntity, mountEntity, isDismounting));
     }
 
     /**

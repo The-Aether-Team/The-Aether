@@ -41,7 +41,6 @@
     "client.BossHealthOverlayMixin",
     "client.ConnectScreenMixin",
     "client.CreateWorldScreenMixin",
-    "client.LocalPlayerMixin",
     "client.PanoramaRendererMixin",
     "client.PauseScreenMixin",
     "client.TippableArrowRendererMixin",

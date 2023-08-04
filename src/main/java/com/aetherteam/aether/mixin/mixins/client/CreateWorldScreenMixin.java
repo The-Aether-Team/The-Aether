@@ -13,7 +13,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(CreateWorldScreen.class)
 public class CreateWorldScreenMixin {
-    @Inject(at = @At(value = "HEAD"), method = "openFresh")
+    /**
+     * Used by the world preview system.<br>
+     * Unloads the currently loaded world preview level if a new level is being created.
+     * @param minecraft The {@link Minecraft} instance.
+     * @param screen The last {@link Screen}.
+     * @param ci The {@link CallbackInfo} for the void method return.
+     * @see WorldDisplayHelper#isActive()
+     * @see WorldDisplayHelper#stopLevel(Screen)
+     */
+    @Inject(at = @At(value = "HEAD"), method = "openFresh(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/screens/Screen;)V")
     private static void openFresh(Minecraft minecraft, Screen screen, CallbackInfo ci) {
         if (WorldDisplayHelper.isActive()) {
             WorldDisplayHelper.stopLevel(new GenericDirtMessageScreen(Component.literal("")));
