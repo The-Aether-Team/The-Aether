@@ -34,18 +34,18 @@ public class IncubatorRecipeBookComponent extends RecipeBookComponent {
     @Override
     public void setupGhostRecipe(Recipe<?> recipe, List<Slot> slots) {
         this.ghostRecipe.setRecipe(recipe);
-        Slot slot = slots.get(1);
-        if (slot.getItem().isEmpty()) {
+        Slot fuelSlot = slots.get(1);
+        if (fuelSlot.getItem().isEmpty()) {
             if (this.fuels == null) {
                 this.fuels = Ingredient.of(this.getFuelItems().stream().map(ItemStack::new));
             }
-            this.ghostRecipe.addIngredient(this.fuels, slot.x, slot.y);
+            this.ghostRecipe.addIngredient(this.fuels, fuelSlot.x, fuelSlot.y);
         }
 
         Ingredient ingredient = recipe.getIngredients().get(0);
         if (!ingredient.isEmpty()) {
-            Slot slot1 = slots.get(0);
-            this.ghostRecipe.addIngredient(ingredient, slot1.x, slot1.y);
+            Slot eggSlot = slots.get(0);
+            this.ghostRecipe.addIngredient(ingredient, eggSlot.x, eggSlot.y);
         }
     }
 
