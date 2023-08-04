@@ -153,7 +153,7 @@ public class AetherSoundEvents {
 	public static final RegistryObject<SoundEvent> MUSIC_MENU = register("music.menu");
 	public static final RegistryObject<SoundEvent> MUSIC_AETHER = register("music.aether");
 
-	private static RegistryObject<SoundEvent> register(String name) {
-		return SOUNDS.register(name, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Aether.MODID, name)));
+	private static RegistryObject<SoundEvent> register(String location) {
+		return SOUNDS.register(location, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Aether.MODID, location)));
 	}
 }

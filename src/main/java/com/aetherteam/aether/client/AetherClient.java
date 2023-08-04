@@ -39,6 +39,9 @@ public class AetherClient {
         registerLoreOverrides();
     }
 
+    /**
+     * Disables the Cumulus menu switcher button, since Aether has its own for theme toggling.
+     */
     public static void disableCumulusButton() {
         if (AetherConfig.CLIENT.should_disable_cumulus_button.get()) {
             CumulusConfig.CLIENT.enable_menu_list_button.set(false);
@@ -57,27 +60,28 @@ public class AetherClient {
     }
 
     public static void registerItemModelProperties() {
-        ItemProperties.register(AetherItems.PHOENIX_BOW.get(), new ResourceLocation("pulling"), (stack, world, living, i)
-                -> living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F);
-        ItemProperties.register(AetherItems.PHOENIX_BOW.get(), new ResourceLocation("pull"), (stack, world, living, i) -> {
-            if (living == null) {
-                return 0.0F;
-            } else {
-                return living.getUseItem() != stack ? 0.0F : (float)(stack.getUseDuration() - living.getUseItemRemainingTicks()) / 20.0F;
-            }
-        });
+        ItemProperties.register(AetherItems.PHOENIX_BOW.get(), new ResourceLocation("pulling"),
+                (stack, world, living, i) -> living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F);
+        ItemProperties.register(AetherItems.PHOENIX_BOW.get(), new ResourceLocation("pull"),
+                (stack, world, living, i) -> living != null ? living.getUseItem() != stack ? 0.0F : (float) (stack.getUseDuration() - living.getUseItemRemainingTicks()) / 20.0F : 0.0F);
 
-        ItemProperties.register(AetherItems.CANDY_CANE_SWORD.get(), new ResourceLocation(Aether.MODID, "named"), (stack, world, living, i)
-                -> stack.getHoverName().getString().equalsIgnoreCase("green candy cane sword") ? 1.0F : 0.0F);
+        ItemProperties.register(AetherItems.CANDY_CANE_SWORD.get(), new ResourceLocation(Aether.MODID, "named"), // Easter Egg texture.
+                (stack, world, living, i) -> stack.getHoverName().getString().equalsIgnoreCase("green candy cane sword") ? 1.0F : 0.0F);
 
-        ItemProperties.register(AetherItems.HAMMER_OF_KINGBDOGZ.get(), new ResourceLocation(Aether.MODID, "named"), (stack, world, living, i)
-                -> stack.getHoverName().getString().equalsIgnoreCase("hammer of jeb") ? 1.0F : 0.0F);
+        ItemProperties.register(AetherItems.HAMMER_OF_KINGBDOGZ.get(), new ResourceLocation(Aether.MODID, "named"), // Easter Egg texture.
+                (stack, world, living, i) -> stack.getHoverName().getString().equalsIgnoreCase("hammer of jeb") ? 1.0F : 0.0F);
     }
 
+    /**
+     * Applies a unique lore entry in the Book of Lore for the Hammer of Jeb Easter Egg item texture.
+     */
     public static void registerLoreOverrides() {
         LoreBookMenu.addLoreEntryOverride(stack -> stack.getHoverName().getString().equalsIgnoreCase("hammer of jeb"), "lore.item.aether.hammer_of_jeb");
     }
 
+    /**
+     * Registers a unique shader for spectating the Sun Spirit, which tints the screen red.
+     */
     @SubscribeEvent
     public static void registerSpectatorShaders(RegisterEntitySpectatorShadersEvent event) {
         event.register(AetherEntityTypes.SUN_SPIRIT.get(), new ResourceLocation(Aether.MODID, "shaders/post/sun_spirit.json"));

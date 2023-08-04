@@ -10,6 +10,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+/**
+ * Used to create built-in resource packs by merging two separate resource folders. Used for the legacy resource packs.
+ */
 public class CombinedPackResources extends DelegatingPackResources {
     private final Path source;
 
@@ -22,6 +25,9 @@ public class CombinedPackResources extends DelegatingPackResources {
         return this.source;
     }
 
+    /**
+     * [CODE COPY] - {@link net.minecraftforge.resource.PathPackResources#resolve(String...)}.
+     */
     protected Path resolve(String... paths) {
         Path path = getSource();
         for (String name : paths) {
@@ -30,6 +36,9 @@ public class CombinedPackResources extends DelegatingPackResources {
         return path;
     }
 
+    /**
+     * [CODE COPY] - {@link net.minecraftforge.resource.PathPackResources#getRootResource(String...)}.
+     */
     @Override
     public IoSupplier<InputStream> getRootResource(String... paths) {
         final Path path = resolve(paths);
