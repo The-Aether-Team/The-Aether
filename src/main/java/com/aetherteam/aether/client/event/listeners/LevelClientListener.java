@@ -13,6 +13,9 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT)
 public class LevelClientListener {
+    /**
+     * @see LevelClientHooks#renderDungeonBlockOverlays(RenderLevelStageEvent.Stage, PoseStack, Camera, Frustum, Minecraft)
+     */
     @SubscribeEvent
     public static void onRenderLevelLast(RenderLevelStageEvent event) {
         RenderLevelStageEvent.Stage stage = event.getStage();

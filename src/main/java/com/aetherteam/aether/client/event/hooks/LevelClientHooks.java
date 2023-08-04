@@ -34,7 +34,7 @@ public class LevelClientHooks {
     private static final TextureAtlasSprite DOOR = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation(Aether.MODID, "block/dungeon/door"));
     private static final TextureAtlasSprite TREASURE = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation(Aether.MODID, "block/dungeon/treasure"));
     private static final HashMap<Integer, List<BlockPos>> positionsForTypes = new HashMap<>();
-
+    
     public static void renderDungeonBlockOverlays(RenderLevelStageEvent.Stage stage, PoseStack poseStack, Camera camera, Frustum frustum, Minecraft minecraft) {
         if (stage == RenderLevelStageEvent.Stage.AFTER_PARTICLES && minecraft.level != null) {
             LocalPlayer player = minecraft.player;
@@ -62,9 +62,9 @@ public class LevelClientHooks {
         positionsForTypes.putIfAbsent(2, new ArrayList<>());
         positionsForTypes.putIfAbsent(3, new ArrayList<>());
         for (int c = 0; c < 667; ++c) {
-            int x = playerPos.getX() + level.random.nextInt(range) - level.random.nextInt(range);
-            int y = playerPos.getY() + level.random.nextInt(range) - level.random.nextInt(range);
-            int z = playerPos.getZ() + level.random.nextInt(range) - level.random.nextInt(range);
+            int x = playerPos.getX() + level.getRandom().nextInt(range) - level.getRandom().nextInt(range);
+            int y = playerPos.getY() + level.getRandom().nextInt(range) - level.getRandom().nextInt(range);
+            int z = playerPos.getZ() + level.getRandom().nextInt(range) - level.getRandom().nextInt(range);
             if (!depopulate) {
                 BlockPos pos = new BlockPos(x, y, z);
                 if (stack.is(level.getBlockState(pos).getBlock().asItem())) {
@@ -74,8 +74,8 @@ public class LevelClientHooks {
                 }
             } else {
                 List<BlockPos> positions = positionsForTypes.get(type);
-                if (positions.size() > 0 && level.random.nextInt(100) == 0) {
-                    BlockPos pos = positions.get(level.random.nextInt(positions.size()));
+                if (positions.size() > 0 && level.getRandom().nextInt(100) == 0) {
+                    BlockPos pos = positions.get(level.getRandom().nextInt(positions.size()));
                     if (!stack.is(level.getBlockState(pos).getBlock().asItem())) {
                         positions.remove(pos);
                         positionsForTypes.put(type, positions);

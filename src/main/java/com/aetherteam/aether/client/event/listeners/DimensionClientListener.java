@@ -13,6 +13,10 @@ import org.apache.commons.lang3.tuple.Triple;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT)
 public class DimensionClientListener {
+    /**
+     * @see DimensionClientHooks#renderNearFog(Camera, FogRenderer.FogMode, float)
+     * @see DimensionClientHooks#reduceLavaFog(Camera, float)
+     */
     @SubscribeEvent
     public static void onRenderFog(ViewportEvent.RenderFog event) {
         Camera camera = event.getCamera();
@@ -31,8 +35,8 @@ public class DimensionClientListener {
     }
 
     /**
-     * The purpose of this event handler is to prevent the fog from turning black near the void in the Aether.
-     * This works with any dimension using the Aether's dimension effects.
+     * @see DimensionClientHooks#renderFogColors(Camera, float, float, float)
+     * @see DimensionClientHooks#adjustWeatherFogColors(Camera, float, float, float)
      */
     @SubscribeEvent
     public static void onRenderFogColor(ViewportEvent.ComputeFogColor event) {
@@ -52,7 +56,7 @@ public class DimensionClientListener {
     }
 
     /**
-     * Ticks time in clientside Aether levels.
+     * @see DimensionClientHooks#tickTime()
      */
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {

@@ -2,6 +2,7 @@ package com.aetherteam.aether.client.event.listeners;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.event.hooks.MenuHooks;
+import com.aetherteam.cumulus.api.MenuHelper;
 import com.aetherteam.cumulus.client.CumulusClient;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
@@ -14,11 +15,19 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT)
 public class MenuListener {
+    /**
+     * @see MenuHooks#prepareCustomMenus(MenuHelper)
+     */
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onGuiOpenHighest(ScreenEvent.Opening event) {
         MenuHooks.prepareCustomMenus(CumulusClient.MENU_HELPER);
     }
 
+    /**
+     * @see MenuHooks#setupToggleWorldButton(Screen)
+     * @see MenuHooks#setupMenuSwitchButton(Screen)
+     * @see MenuHooks#setupQuickLoadButton(Screen)
+     */
     @SubscribeEvent
     public static void onGuiInitialize(ScreenEvent.Init.Post event) {
         Screen screen = event.getScreen();

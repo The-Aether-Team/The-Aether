@@ -12,6 +12,9 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT)
 public class AetherPlayerClientListener {
+    /**
+     * @see CapabilityClientHooks.AetherPlayerHooks#movementInput(Player, Input)
+     */
     @SubscribeEvent
     public static void onMove(MovementInputUpdateEvent event) {
         Player player = event.getEntity();
@@ -19,14 +22,20 @@ public class AetherPlayerClientListener {
         CapabilityClientHooks.AetherPlayerHooks.movementInput(player, input);
     }
 
+    /**
+     * @see CapabilityClientHooks.AetherPlayerHooks#mouseInput(int)
+     */
     @SubscribeEvent
     public static void onClick(InputEvent.MouseButton.Post event) {
         int button = event.getButton();
         CapabilityClientHooks.AetherPlayerHooks.mouseInput(button);
     }
 
+    /**
+     * @see CapabilityClientHooks.AetherPlayerHooks#keyInput(int)
+     */
     @SubscribeEvent
-    public static void onClick(InputEvent.Key event) {
+    public static void onPress(InputEvent.Key event) {
         int key = event.getKey();
         CapabilityClientHooks.AetherPlayerHooks.keyInput(key);
     }
