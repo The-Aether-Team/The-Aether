@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:loot_table",
-          "name": "aether:chests/dungeon/bronze/silver_dungeon_cape_config",
+          "name": "aether:chests/dungeon/silver/silver_dungeon_cape_config",
           "weight": 3
         },
         {
