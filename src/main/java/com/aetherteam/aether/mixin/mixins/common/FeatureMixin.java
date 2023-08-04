@@ -18,7 +18,7 @@ public class FeatureMixin {
      * @param pos The {@link BlockPos} to check for the block.
      * @param cir The {@link Boolean} {@link CallbackInfoReturnable} used for the method's return value.
      */
-    @Deprecated(forRemoval = true, since = "1.19.4")
+    @Deprecated(forRemoval = true)
     @Inject(at = @At(value = "HEAD"), method = "isGrassOrDirt(Lnet/minecraft/world/level/LevelSimulatedReader;Lnet/minecraft/core/BlockPos;)Z", cancellable = true)
     private static void isGrassOrDirt(LevelSimulatedReader level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         if (level.isStateAtPosition(pos, state -> state.is(AetherTags.Blocks.AETHER_DIRT))) {
