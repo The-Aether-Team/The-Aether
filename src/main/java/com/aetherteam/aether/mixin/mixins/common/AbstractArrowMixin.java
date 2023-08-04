@@ -12,22 +12,26 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AbstractArrow.class)
-public class AbstractArrowMixin
-{
+public class AbstractArrowMixin {
     @Shadow
     protected boolean inGround;
     @Shadow
     protected int inGroundTime;
 
+    /**
+     * Spawns particles from Phoenix Arrows.
+     * @param ci The {@link CallbackInfo} for the void method return.
+     * @see AbstractArrowMixin#spawnParticles(AbstractArrow)
+     */
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/projectile/Projectile;tick()V", shift = At.Shift.AFTER), method = "tick")
     private void tick(CallbackInfo ci) {
         AbstractArrow arrow = (AbstractArrow) (Object) this;
         PhoenixArrow.get(arrow).ifPresent(phoenixArrow -> {
             AbstractArrow innerArrow = phoenixArrow.getArrow();
             if (phoenixArrow.isPhoenixArrow()) {
-                if (!innerArrow.level.isClientSide) {
-                    phoenixArrow.setSynched(INBTSynchable.Direction.CLIENT, "setPhoenixArrow", true);
-                    if (this.inGround) {
+                if (!innerArrow.getLevel().isClientSide()) {
+                    phoenixArrow.setSynched(INBTSynchable.Direction.CLIENT, "setPhoenixArrow", true); // Sync Phoenix Arrow variable to client.
+                    if (this.inGround) { // Spawn less particles when the arrow is in the ground.
                         if (this.inGroundTime % 5 == 0) {
                             for (int i = 0; i < 1; i++) {
                                 this.spawnParticles(innerArrow);
@@ -44,7 +48,7 @@ public class AbstractArrowMixin
     }
 
     private void spawnParticles(AbstractArrow arrow) {
-        if (arrow.level instanceof ServerLevel serverLevel) {
+        if (arrow.getLevel() instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(ParticleTypes.FLAME,
                     arrow.getX() + (serverLevel.getRandom().nextGaussian() / 5.0),
                     arrow.getY() + (serverLevel.getRandom().nextGaussian() / 3.0),

@@ -12,7 +12,15 @@ import java.nio.file.Path;
 
 @Mixin(DirectoryLock.class)
 public class DirectoryLockMixin {
-    @Inject(at = @At(value = "HEAD"), method = "isLocked", cancellable = true)
+    /**
+     * Used by the world preview system.<br>
+     * Unlocks the active world preview level when in the world selection screen.
+     * @param basePath The {@link Path} for the level directory.
+     * @param cir The {@link Boolean} {@link CallbackInfoReturnable} used for the method's return value.
+     * @see WorldDisplayHelper#isActive()
+     * @see AetherMixinHooks#canUnlockLevel(Path)
+     */
+    @Inject(at = @At(value = "HEAD"), method = "isLocked(Ljava/nio/file/Path;)Z", cancellable = true)
     private static void isLocked(Path basePath, CallbackInfoReturnable<Boolean> cir) {
         if (WorldDisplayHelper.isActive()) {
             if (AetherMixinHooks.canUnlockLevel(basePath)) {

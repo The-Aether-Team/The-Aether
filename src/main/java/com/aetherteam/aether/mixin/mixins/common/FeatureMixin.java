@@ -11,8 +11,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Feature.class)
 public class FeatureMixin {
-    @Inject(at = @At(value = "HEAD"), method = "isGrassOrDirt", cancellable = true)
-    private static void placeBlockAt(LevelSimulatedReader level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
+    /**
+     * Prevents Aether Dirt from being replaced by Podzol.<br><br>
+     * Marked for deprecation as it will be replaced by a NeoForge event in 1.20.
+     * @param level The {@link LevelSimulatedReader} that is being checked in.
+     * @param pos The {@link BlockPos} to check for the block.
+     * @param cir The {@link Boolean} {@link CallbackInfoReturnable} used for the method's return value.
+     */
+    @Deprecated(forRemoval = true, since = "1.19.4")
+    @Inject(at = @At(value = "HEAD"), method = "isGrassOrDirt(Lnet/minecraft/world/level/LevelSimulatedReader;Lnet/minecraft/core/BlockPos;)Z", cancellable = true)
+    private static void isGrassOrDirt(LevelSimulatedReader level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         if (level.isStateAtPosition(pos, state -> state.is(AetherTags.Blocks.AETHER_DIRT))) {
             cir.setReturnValue(false);
         }

@@ -9,7 +9,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getFluidJumpThreshold()D", shift = At.Shift.AFTER), method = "travel")
+    /**
+     * Handles vertical swimming for Phoenix Armor in lava without being affected by the upwards speed debuff from lava.
+     * @param ci The {@link CallbackInfo} for the void method return.
+     * @see PhoenixArmor#boostVerticalLavaSwimming(LivingEntity)
+     */
+    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getFluidJumpThreshold()D", shift = At.Shift.AFTER), method = "travel(Lnet/minecraft/world/phys/Vec3;)V")
     private void travel(CallbackInfo ci) {
         LivingEntity livingEntity = (LivingEntity) (Object) this;
         PhoenixArmor.boostVerticalLavaSwimming(livingEntity);
