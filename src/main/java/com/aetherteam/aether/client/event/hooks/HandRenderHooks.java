@@ -155,7 +155,7 @@ public class HandRenderHooks {
 
     /**
      * [CODE COPY] - {@link ItemInHandRenderer#renderTwoHandedMap(PoseStack, MultiBufferSource, int, float, float, float)}.<br><br>
-     * Revmoe check for invisibility, as it is not necessary from {@link net.minecraftforge.client.event.RenderHandEvent} in {@link com.aetherteam.aether.client.event.listeners.HandRenderListener#onRenderHand(RenderHandEvent)}.
+     * Remove check for invisibility, as it is not necessary from {@link net.minecraftforge.client.event.RenderHandEvent} in {@link com.aetherteam.aether.client.event.listeners.HandRenderListener#onRenderHand(RenderHandEvent)}.
      */
     private static void renderTwoHandedMap(ItemInHandRenderer itemInHandRenderer, ICurioRenderer renderer, ItemStack glovesStack, AbstractClientPlayer player, ItemStack heldItem, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, float swingProgress, float equippedProgress, float pitch, HandRenderType handRenderType) {
         float f = Mth.sqrt(swingProgress);
@@ -180,7 +180,7 @@ public class HandRenderHooks {
 
     /**
      * [CODE COPY] - {@link ItemInHandRenderer#renderOneHandedMap(PoseStack, MultiBufferSource, int, float, HumanoidArm, float, ItemStack)}.<br><br>
-     * Revmoe check for invisibility, as it is not necessary from {@link net.minecraftforge.client.event.RenderHandEvent} in {@link com.aetherteam.aether.client.event.listeners.HandRenderListener#onRenderHand(RenderHandEvent)}.
+     * Remove check for invisibility, as it is not necessary from {@link net.minecraftforge.client.event.RenderHandEvent} in {@link com.aetherteam.aether.client.event.listeners.HandRenderListener#onRenderHand(RenderHandEvent)}.
      */
     private static void renderOneHandedMap(ItemInHandRenderer itemInHandRenderer, ICurioRenderer renderer, ItemStack glovesStack, AbstractClientPlayer player, ItemStack heldItem, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, float swingProgress, float equippedProgress, HumanoidArm arm, HandRenderType handRenderType) {
         float f = arm == HumanoidArm.RIGHT ? 1.0F : -1.0F;
