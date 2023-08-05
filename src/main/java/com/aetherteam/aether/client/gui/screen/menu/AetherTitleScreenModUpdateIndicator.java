@@ -12,14 +12,15 @@ import net.minecraftforge.fml.VersionChecker;
 import net.minecraftforge.fml.loading.FMLConfig;
 import net.minecraftforge.versions.forge.ForgeVersion;
 
-public class AetherTitleScreenModUpdateIndicator extends TitleScreenModUpdateIndicator
-{
+public class AetherTitleScreenModUpdateIndicator extends TitleScreenModUpdateIndicator {
 	private static final ResourceLocation VERSION_CHECK_ICONS = new ResourceLocation(ForgeVersion.MOD_ID, "textures/gui/version_check_icons.png");
+	private final AetherTitleScreen menu;
 	private VersionChecker.Status showNotification = null;
 	private boolean hasCheckedForUpdates = false;
 	
-	public AetherTitleScreenModUpdateIndicator() {
+	public AetherTitleScreenModUpdateIndicator(AetherTitleScreen menu) {
 		super(null);
+		this.menu = menu;
 	}
 
 	@Override
@@ -33,7 +34,15 @@ public class AetherTitleScreenModUpdateIndicator extends TitleScreenModUpdateInd
 			int tModCount = ModList.get().size();
 			String modLine = ForgeI18n.parseMessage("fml.menu.loadingmods", tModCount);
 
-			blit(mStack, width - font.width(modLine) - 11, height - font.lineHeight - 11, this.showNotification.getSheetOffset() * 8, (this.showNotification.isAnimated() && ((System.currentTimeMillis() / 800 & 1) == 1)) ? 8 : 0, 8, 8, 64, 16);
+			int x = width - font.width(modLine) - 11;
+			int y = height - font.lineHeight - 11;
+
+			if (!this.menu.isAlignedLeft()) {
+				x = font.width(modLine) + 4;
+				y = height - font.lineHeight - 1;
+			}
+
+			blit(mStack, x, y, this.showNotification.getSheetOffset() * 8, (this.showNotification.isAnimated() && ((System.currentTimeMillis() / 800 & 1) == 1)) ? 8 : 0, 8, 8, 64, 16);
 		}
 	}
 
