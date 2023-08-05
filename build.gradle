@@ -105,7 +105,9 @@ sourceSets.main.resources {
 dependencies {
     minecraft "net.minecraftforge:forge:${project.mc_version}-${project.forge_version}"
 
+    implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-common:0.2.0-beta.9"))
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    implementation('com.github.llamalad7.mixinextras:mixinextras-forge:0.2.0-beta.9')
 
     implementation fg.deobf("com.aetherteam.nitrogen:nitrogen_internals:${project.nitrogen_version}")
     implementation fg.deobf("com.aetherteam.cumulus:cumulus_menus:${project.cumulus_version}")
@@ -118,6 +120,11 @@ dependencies {
     compileOnly "mezz.jei:jei-${project.mc_version}-forge:${project.jei_version}"
 
 //    runtimeOnly fg.deobf("io.github.flemmli97:debugutils:${project.mc_version}-${project.debugutils_version}-forge")
+
+    jarJar('com.github.llamalad7.mixinextras:mixinextras-forge:0.2.0-beta.9') {
+        jarJar.ranged(it, "[${project.mixinextras_version},)")
+        jarJar.pin(it, "${project.mixinextras_version}")
+    }
 
     jarJar fg.deobf("com.aetherteam.nitrogen:nitrogen_internals:${project.nitrogen_version}") {
         jarJar.ranged(it, "[${project.nitrogen_version},)")
@@ -147,6 +154,7 @@ dependencies {
 }
 
 repositories {
+    maven { url = "https://jitpack.io" }
     maven { url = "https://maven.blamejared.com" }
     maven { url = "https://maven.theillusivec4.top/" }
     maven { url = "https://www.cursemaven.com" }

@@ -9,7 +9,6 @@
     "common.DimensionTypeMixin",
     "common.DirectoryLockMixin",
     "common.FeatureMixin",
-    "common.ItemMixin",
     "common.LivingEntityMixin",
     "common.PlayerMixin",
     "common.accessor.AbstractContainerMenuAccessor",

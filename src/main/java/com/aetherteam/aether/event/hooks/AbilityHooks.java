@@ -355,49 +355,6 @@ public class AbilityHooks {
         }
 
         /**
-         * Checks if an entity is too far away for the player to be able to interact with if they're trying to interact using a hand that doesn't contain a {@link ValkyrieTool}, but are still holding a Valkyrie Tool in another hand.
-         * @param target The target {@link Entity} being interacted with.
-         * @param player The {@link Player} attempting to interact.
-         * @param hand The {@link InteractionHand} used to interact.
-         * @return Whether the player is too far to interact, as a {@link Boolean}.
-         */
-        public static boolean entityTooFar(Entity target, Player player, InteractionHand hand) {
-            if (hand == InteractionHand.OFF_HAND && hasValkyrieItemInMainHandOnly(player)) {
-                AttributeInstance attackRange = player.getAttribute(ForgeMod.ENTITY_REACH.get());
-                if (attackRange != null) {
-                    AttributeModifier valkyrieModifier = attackRange.getModifier(ValkyrieTool.ATTACK_RANGE_MODIFIER_UUID);
-                    if (valkyrieModifier != null) {
-                        double range = player.getAttributeValue(ForgeMod.ENTITY_REACH.get()) - valkyrieModifier.getAmount();
-                        double trueReach = range == 0 ? 0 : range + (player.isCreative() ? 3 : 0); // [CODE COPY] - IForgePlayer#getAttackRange().
-                        return !player.isCloseEnough(target, trueReach);
-                    }
-                }
-            }
-            return false;
-        }
-
-        /**
-         * Checks if a block is too far away for the player to be able to interact with if they're trying to interact using a hand that doesn't contain a {@link ValkyrieTool}, but are still holding a Valkyrie Tool in another hand.
-         * @param player The {@link Player} attempting to interact.
-         * @param hand The {@link InteractionHand} used to interact.
-         * @return Whether the player is too far to interact, as a {@link Boolean}.
-         */
-        public static boolean blockTooFar(Player player, InteractionHand hand) {
-            if (hand == InteractionHand.OFF_HAND && hasValkyrieItemInMainHandOnly(player)) {
-                AttributeInstance reachDistance = player.getAttribute(ForgeMod.BLOCK_REACH.get());
-                if (reachDistance != null) {
-                    AttributeModifier valkyrieModifier = reachDistance.getModifier(ValkyrieTool.REACH_DISTANCE_MODIFIER_UUID);
-                    if (valkyrieModifier != null) {
-                        double reach = player.getAttributeValue(ForgeMod.BLOCK_REACH.get()) - valkyrieModifier.getAmount();
-                        double trueReach = reach == 0 ? 0 : reach + (player.isCreative() ? 0.5 : 0); // [CODE COPY] - IForgePlayer#getReachDistance().
-                        return player.pick(trueReach, 0.0F, false).getType() != HitResult.Type.BLOCK;
-                    }
-                }
-            }
-            return false;
-        }
-
-        /**
          * Checks if the player is holding a {@link ValkyrieTool} in the main hand.
          * @param player The {@link Player} holding the Valkyrie Tool.
          * @return A {@link Boolean} of whether the player is holding a Valkyrie Tool in the main hand.
