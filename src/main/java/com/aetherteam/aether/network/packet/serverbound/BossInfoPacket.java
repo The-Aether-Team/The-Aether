@@ -1,6 +1,6 @@
 package com.aetherteam.aether.network.packet.serverbound;
 
-import com.aetherteam.aether.client.event.listeners.GuiListener;
+import com.aetherteam.aether.client.event.hooks.GuiHooks;
 import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
@@ -37,7 +37,7 @@ public abstract class BossInfoPacket implements BasePacket {
 
         @Override
         public void execute(Player playerEntity) {
-            GuiListener.BOSS_EVENTS.add(this.bossEvent);
+            GuiHooks.BOSS_EVENTS.add(this.bossEvent);
         }
     }
 
@@ -56,7 +56,7 @@ public abstract class BossInfoPacket implements BasePacket {
 
         @Override
         public void execute(Player playerEntity) {
-            GuiListener.BOSS_EVENTS.remove(this.bossEvent);
+            GuiHooks.BOSS_EVENTS.remove(this.bossEvent);
         }
     }
 }

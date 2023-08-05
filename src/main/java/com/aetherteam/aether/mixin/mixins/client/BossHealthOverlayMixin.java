@@ -1,6 +1,6 @@
 package com.aetherteam.aether.mixin.mixins.client;
 
-import com.aetherteam.aether.client.event.listeners.GuiListener;
+import com.aetherteam.aether.client.event.hooks.GuiHooks;
 import net.minecraft.client.gui.components.BossHealthOverlay;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,7 +18,7 @@ public class BossHealthOverlayMixin {
      */
     @ModifyVariable(at = @At(value = "STORE"), method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;)V", index = 7)
     private CustomizeGuiOverlayEvent.BossEventProgress event(CustomizeGuiOverlayEvent.BossEventProgress event) {
-        event.setCanceled(GuiListener.BOSS_EVENTS.contains(event.getBossEvent().getId()));
+        event.setCanceled(GuiHooks.BOSS_EVENTS.contains(event.getBossEvent().getId()));
         return event;
     }
 }

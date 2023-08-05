@@ -40,36 +40,41 @@ import net.minecraft.util.Tuple;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
+import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.client.event.ScreenEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.tags.ITagManager;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+
 public class GuiHooks {
     private static final ResourceLocation AETHER_BARS_LOCATION = new ResourceLocation(Aether.MODID, "textures/gui/boss_bar.png");
+    /**
+     * Set of UUIDs of boss bars that belong to Aether bosses.
+     */
+    public static final Set<UUID> BOSS_EVENTS = new HashSet<>();
     private static boolean shouldAddButton = true;
     private static boolean generateTrivia = true;
     private static Screen lastScreen = null;
 
-    public static AccessoryButton setupAccessoryButtonWithinInventories(Screen screen, Tuple<Integer, Integer> offsets) {
-        if (screen instanceof InventoryScreen || screen instanceof CuriosScreen || screen instanceof CreativeModeInventoryScreen) {
-            AbstractContainerScreen<?> inventoryScreen = (AbstractContainerScreen<?>) screen;
-            return new AccessoryButton(inventoryScreen, inventoryScreen.getGuiLeft() + offsets.getA(), inventoryScreen.getGuiTop() + offsets.getB(), AccessoriesScreen.ACCESSORIES_BUTTON);
-        }
-        return null;
+    /**
+     * Checks whether the accessory button isn't disabled by {@link AetherConfig.Client#disable_accessory_button} or accessory tags being empty.
+     * @return The {@link Boolean} value.
+     * @see com.aetherteam.aether.client.event.listeners.GuiListener#onGuiInitialize(ScreenEvent.Init.Post)
+     */
+    public static boolean isAccessoryButtonEnabled() {
+        return !AetherConfig.CLIENT.disable_accessory_button.get() && areAccessoryTagsFilled();
     }
 
-    public static AccessoryButton setupAccessoryButtonWithinAccessoryMenu(Screen screen, Tuple<Integer, Integer> offsets) {
-        if (screen instanceof AccessoriesScreen accessoriesScreen) {
-            if (shouldAddButton) {
-                return new AccessoryButton(accessoriesScreen, accessoriesScreen.getGuiLeft() + offsets.getA(), accessoriesScreen.getGuiTop() + offsets.getB(), AccessoriesScreen.ACCESSORIES_BUTTON);
-            } else {
-                shouldAddButton = true;
-            }
-        }
-        return null;
-    }
-
-    public static boolean areItemsPresent() {
+    /**
+     * @return Whether any tags for accessories are empty, as a {@link Boolean}.
+     */
+    private static boolean areAccessoryTagsFilled() {
         boolean flag = true;
         for (String string : AccessoriesMenu.AETHER_IDENTIFIERS) {
             ITagManager<Item> itemTags = ForgeRegistries.ITEMS.tags();
@@ -82,38 +87,129 @@ public class GuiHooks {
         return flag;
     }
 
+    /**
+     * Creates an {@link AccessoryButton} if one can be created for the screen according to {@link GuiHooks#canCreateAccessoryButtonForScreen(Screen)}.
+     * @param screen The parent {@link Screen}.
+     * @param offsets A {@link Tuple} containing the x and y offset {@link Integer}s.
+     * @return The {@link AccessoryButton}.
+     * @see com.aetherteam.aether.client.event.listeners.GuiListener#onGuiInitialize(ScreenEvent.Init.Post)
+     */
+    public static AccessoryButton setupAccessoryButton(Screen screen, Tuple<Integer, Integer> offsets) {
+        AbstractContainerScreen<?> containerScreen = canCreateAccessoryButtonForScreen(screen);
+        if (containerScreen != null) {
+            return new AccessoryButton(containerScreen, containerScreen.getGuiLeft() + offsets.getA(), containerScreen.getGuiTop() + offsets.getB(), AccessoriesScreen.ACCESSORIES_BUTTON);
+        }
+        return null;
+    }
+
+    /**
+     * Checks whether the screen is an inventory screen or if it's the {@link AccessoriesScreen} and a button can be added to it.
+     * If the screen is the {@link AccessoriesScreen}, then it sets the {@link AccessoryButton} should be rendered in it.
+     * @param screen The parent {@link Screen}.
+     * @return The parent screen, casted to a {@link AbstractContainerScreen}.
+     */
+    private static AbstractContainerScreen<?> canCreateAccessoryButtonForScreen(Screen screen) {
+        if (screen instanceof InventoryScreen || screen instanceof CuriosScreen || screen instanceof CreativeModeInventoryScreen || (screen instanceof AccessoriesScreen && shouldAddButton)) {
+            return (AbstractContainerScreen<?>) screen;
+        } else if (screen instanceof AccessoriesScreen) {
+            shouldAddButton = true;
+        }
+        return null;
+    }
+
+    /**
+     * Sets up the buttons for the {@link MoaSkinsScreen} and the {@link AetherCustomizationsScreen} in a {@link GridLayout}.
+     * @param screen The parent {@link Screen}.
+     * @return The {@link GridLayout} holding the buttons.
+     * @see com.aetherteam.aether.client.event.listeners.GuiListener#onGuiInitialize(ScreenEvent.Init.Post)
+     */
     public static GridLayout setupPerksButtons(Screen screen) {
-        int x = AetherConfig.CLIENT.layout_perks_x.get();
-        int y = AetherConfig.CLIENT.layout_perks_y.get();
+        if (screen instanceof PauseScreen) {
+            int x = AetherConfig.CLIENT.layout_perks_x.get();
+            int y = AetherConfig.CLIENT.layout_perks_y.get();
 
-        GridLayout gridLayout = new GridLayout();
-        gridLayout.defaultCellSetting().padding(4, 4, 4, 0);
-        GridLayout.RowHelper rowHelper = gridLayout.createRowHelper(1);
+            // Sets up the GridLayout.
+            GridLayout gridLayout = new GridLayout();
+            gridLayout.defaultCellSetting().padding(4, 4, 4, 0);
+            GridLayout.RowHelper rowHelper = gridLayout.createRowHelper(1);
 
+            createSkinsButton(screen, gridLayout, rowHelper); // Skins button.
+
+            User user = UserData.Client.getClientUser();
+            if (user != null && (PerkUtil.hasDeveloperGlow().test(user) || PerkUtil.hasHalo().test(user))) { // Only add the customizations button if the User has perks.
+                createCustomizationsButton(screen, rowHelper); // Customizations button.
+            } else {
+                y -= 6;
+            }
+
+            // Arranges and aligns the GridLayout.
+            gridLayout.arrangeElements();
+            FrameLayout.alignInRectangle(gridLayout, x, y, screen.width, screen.height, 0.5F, 0.25F);
+
+            return gridLayout;
+        }
+        return null;
+    }
+
+    /**
+     * Creates the button for the {@link MoaSkinsScreen}.
+     * @param screen The parent {@link Screen}.
+     * @param gridLayout The {@link GridLayout} for the button.
+     * @param rowHelper The {@link net.minecraft.client.gui.layouts.GridLayout.RowHelper} to add the button to.
+     */
+    private static void createSkinsButton(Screen screen, GridLayout gridLayout, GridLayout.RowHelper rowHelper) {
         ImageButton skinsButton = new ImageButton(0, 0, 20, 20, 0, 0, 20, AccessoriesScreen.SKINS_BUTTON, 20, 40,
                 (pressed) -> Minecraft.getInstance().setScreen(new MoaSkinsScreen(screen)),
                 Component.translatable("gui.aether.accessories.skins_button"));
         skinsButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.skins_button")));
         rowHelper.addChild(skinsButton, gridLayout.newCellSettings().paddingTop(58));
-
-        User user = UserData.Client.getClientUser();
-        if (user != null && (PerkUtil.hasDeveloperGlow().test(user) || PerkUtil.hasHalo().test(user))) {
-            ImageButton customizationButton = new ImageButton(0, 0, 20, 20, 0, 0, 20, AccessoriesScreen.CUSTOMIZATION_BUTTON, 20, 40,
-                    (pressed) -> Minecraft.getInstance().setScreen(new AetherCustomizationsScreen(screen)),
-                    Component.translatable("gui.aether.accessories.customization_button"));
-            customizationButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.customization_button")));
-            rowHelper.addChild(customizationButton);
-        } else {
-            y -= 6;
-        }
-
-        gridLayout.arrangeElements();
-        FrameLayout.alignInRectangle(gridLayout, x, y, screen.width, screen.height, 0.5F, 0.25F);
-
-        return gridLayout;
     }
 
+    /**
+     * Creates the button for the {@link AetherCustomizationsScreen}.
+     * @param screen The parent {@link Screen}.
+     * @param rowHelper The {@link net.minecraft.client.gui.layouts.GridLayout.RowHelper} to add the button to.
+     */
+    private static void createCustomizationsButton(Screen screen, GridLayout.RowHelper rowHelper) {
+        ImageButton customizationButton = new ImageButton(0, 0, 20, 20, 0, 0, 20, AccessoriesScreen.CUSTOMIZATION_BUTTON, 20, 40,
+                (pressed) -> Minecraft.getInstance().setScreen(new AetherCustomizationsScreen(screen)),
+                Component.translatable("gui.aether.accessories.customization_button"));
+        customizationButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.customization_button")));
+        rowHelper.addChild(customizationButton);
+    }
+
+    /**
+     * Generates and draws the Aether's trivia lines in various loading screens.
+     * @param screen The current {@link Screen}.
+     * @param poseStack The link rendering {@link PoseStack}.
+     * @see com.aetherteam.aether.client.event.listeners.GuiListener#onGuiDraw(ScreenEvent.Render)
+     */
     public static void drawTrivia(Screen screen, PoseStack poseStack) {
+        generateTrivia(screen);
+        if (screen instanceof GenericDirtMessageScreen || screen instanceof LevelLoadingScreen || screen instanceof ReceivingLevelScreen) {
+            Component triviaLine = Aether.TRIVIA_READER.getTriviaLine(); // Get the current trivia line to display.
+            if (triviaLine != null && AetherConfig.CLIENT.enable_trivia.get()) {
+                Font font = Minecraft.getInstance().font;
+                int y = (screen.height - 7) - font.wordWrapHeight(triviaLine, screen.width);
+                for (FormattedCharSequence sequence : font.split(triviaLine, screen.width)) {
+                    Screen.drawCenteredString(poseStack, font, sequence, screen.width / 2, y, 16777113);
+                    y += 9;
+                }
+            }
+            if (screen != lastScreen) { // Randomize the trivia to display if a new screen has been switched to.
+                if (!Aether.TRIVIA_READER.getTrivia().isEmpty()) {
+                    Aether.TRIVIA_READER.randomizeTriviaIndex();
+                }
+            }
+        }
+        lastScreen = screen;
+    }
+
+    /**
+     * Generates the trivia lines for display.
+     * @param screen The current {@link Screen}.
+     */
+    private static void generateTrivia(Screen screen) {
         if (screen instanceof TitleScreen) {
             if (generateTrivia) {
                 if (Aether.TRIVIA_READER.getTrivia().isEmpty()) {
@@ -129,26 +225,15 @@ public class GuiHooks {
                 }
             }
         }
-
-        if (screen instanceof GenericDirtMessageScreen || screen instanceof LevelLoadingScreen || screen instanceof ReceivingLevelScreen) {
-            Component triviaLine = Aether.TRIVIA_READER.getTriviaLine();
-            if (triviaLine != null && AetherConfig.CLIENT.enable_trivia.get()) {
-                Font font = Minecraft.getInstance().font;
-                int y = (screen.height - 7) - font.wordWrapHeight(triviaLine, screen.width);
-                for (FormattedCharSequence sequence : font.split(triviaLine, screen.width)) {
-                    Screen.drawCenteredString(poseStack, font, sequence, screen.width / 2, y, 16777113);
-                    y += 9;
-                }
-            }
-            if (screen != lastScreen) {
-                if (!Aether.TRIVIA_READER.getTrivia().isEmpty()) {
-                    Aether.TRIVIA_READER.randomizeTriviaIndex();
-                }
-            }
-        }
-        lastScreen = screen;
     }
 
+    /**
+     * Draws text for leaving and entering the Aether.
+     * Checks for when to display different text are handled by {@link DimensionHooks}.
+     * @param screen The current {@link Screen}.
+     * @param poseStack The link rendering {@link PoseStack}.
+     * @see com.aetherteam.aether.client.event.listeners.GuiListener#onGuiDraw(ScreenEvent.Render)
+     */
     public static void drawAetherTravelMessage(Screen screen, PoseStack poseStack) {
         if (screen instanceof ReceivingLevelScreen || screen instanceof ProgressScreen) {
             if (Minecraft.getInstance().player != null) {
@@ -165,26 +250,11 @@ public class GuiHooks {
         }
     }
 
-    public static void closeContainerMenu(int key, int action) {
-        Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft.screen instanceof AbstractContainerScreen abstractContainerScreen && !abstractContainerScreen.passEvents) {
-            if (!AetherConfig.CLIENT.disable_accessory_button.get() && AetherKeys.OPEN_ACCESSORY_INVENTORY.getKey().getValue() == key && (action == InputConstants.PRESS || action == InputConstants.REPEAT)) {
-                abstractContainerScreen.onClose();
-            }
-        }
-    }
-
-    public static void openAccessoryMenu() {
-        Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft.player != null && minecraft.getOverlay() == null && (minecraft.screen == null || minecraft.screen.passEvents)) {
-            if (!AetherConfig.CLIENT.disable_accessory_button.get() && AetherKeys.OPEN_ACCESSORY_INVENTORY.consumeClick()) {
-                PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new OpenAccessoriesPacket(ItemStack.EMPTY));
-                shouldAddButton = false;
-            }
-        }
-    }
-
-    public static void handleRefreshRebound() {
+    /**
+     * Handles the time until the Patreon {@link RefreshButton} can be clicked again.
+     * @see com.aetherteam.aether.client.event.listeners.GuiListener#onClientTick(TickEvent.ClientTickEvent)
+     */
+    public static void handlePatreonRefreshRebound() {
         if (RefreshButton.reboundTimer > 0) {
             RefreshButton.reboundTimer--;
         }
@@ -194,9 +264,38 @@ public class GuiHooks {
     }
 
     /**
-     * CODE COPY
-     * @see net.minecraft.client.gui.components.BossHealthOverlay#render(PoseStack)
-     * This is used to draw the Aether's custom boss health bars.
+     * Handles opening the {@link AccessoriesMenu} when clicking the {@link AetherKeys#OPEN_ACCESSORY_INVENTORY} keybind.
+     * @see com.aetherteam.aether.client.event.listeners.GuiListener#onKeyPress(InputEvent.Key)
+     */
+    public static void openAccessoryMenu() {
+        Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.player != null && minecraft.getOverlay() == null && (minecraft.screen == null || minecraft.screen.passEvents)) {
+            if (!AetherConfig.CLIENT.disable_accessory_button.get() && AetherKeys.OPEN_ACCESSORY_INVENTORY.consumeClick()) {
+                PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new OpenAccessoriesPacket(ItemStack.EMPTY));
+                shouldAddButton = false; // The AccessoryButton is not added to menus opened with the key.
+            }
+        }
+    }
+
+    /**
+     * Allows various menus to be closed with the {@link AetherKeys#OPEN_ACCESSORY_INVENTORY} keybind.
+     * @param key The {@link Integer} ID for the key.
+     * @param action The {@link Integer} for the key action.
+     * @see com.aetherteam.aether.client.event.listeners.GuiListener#onKeyPress(InputEvent.Key)
+     */
+    public static void closeContainerMenu(int key, int action) {
+        Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.screen instanceof AbstractContainerScreen abstractContainerScreen && !abstractContainerScreen.passEvents) {
+            if (!AetherConfig.CLIENT.disable_accessory_button.get() && AetherKeys.OPEN_ACCESSORY_INVENTORY.getKey().getValue() == key && (action == InputConstants.PRESS || action == InputConstants.REPEAT)) {
+                abstractContainerScreen.onClose();
+            }
+        }
+    }
+
+    /**
+     * [CODE COPY] - {@link net.minecraft.client.gui.components.BossHealthOverlay#render(PoseStack)}
+     * Modified to draw the Aether's custom boss health bars.
+     * @see com.aetherteam.aether.client.event.listeners.GuiListener#onRenderBossBar(CustomizeGuiOverlayEvent.BossEventProgress)
      */
     public static void drawBossHealthBar(PoseStack poseStack, int x, int y, LerpingBossEvent bossEvent) {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
@@ -206,20 +305,28 @@ public class GuiHooks {
         int nameLength = Minecraft.getInstance().font.width(component);
         int nameX = Minecraft.getInstance().getWindow().getGuiScaledWidth() / 2 - nameLength / 2;
         int nameY = y - 9;
-        Minecraft.getInstance().font.drawShadow(poseStack, component, (float)nameX, (float)nameY, 16777215);
+        Minecraft.getInstance().font.drawShadow(poseStack, component, (float) nameX, (float) nameY, 16777215);
     }
 
     /**
-     * @see net.minecraft.client.gui.components.BossHealthOverlay#drawBar(PoseStack, int, int, BossEvent)
-     * Draws the boss health bar. This version of the method doesn't account for other types of boss bars because the
-     * Aether only has one.
+     * [CODE COPY] - {@link net.minecraft.client.gui.components.BossHealthOverlay#drawBar(PoseStack, int, int, BossEvent)}
+     * This version of the method doesn't account for other types of boss bars because the Aether only has one.
      */
-    public static void drawBar(PoseStack pPoseStack, int pX, int pY, BossEvent pBossEvent) {
-        pX -= 37; // The default boss health bar is offset by -91. We need -128.
-        GuiComponent.blit(pPoseStack, pX, pY, -90, 0, 16, 256, 16, 256, 256);
-        int health = (int)(pBossEvent.getProgress() * 256.0F);
+    public static void drawBar(PoseStack poseStack, int x, int y, BossEvent pBossEvent) {
+        x -= 37; // The default boss health bar is offset by -91. We need -128.
+        GuiComponent.blit(poseStack, x, y, -90, 0, 16, 256, 16, 256, 256);
+        int health = (int) (pBossEvent.getProgress() * 256.0F);
         if (health > 0) {
-            GuiComponent.blit(pPoseStack, pX, pY, -90, 0, 0, health, 16, 256, 256);
+            GuiComponent.blit(poseStack, x, y, -90, 0, 0, health, 16, 256, 256);
         }
+    }
+
+    /**
+     * Checks whether a boss bar belongs to an Aether boss, as determined by {@link GuiHooks#BOSS_EVENTS}.
+     * @param uuid The boss {@link UUID}.
+     * @return The {@link Boolean} value.
+     */
+    public static boolean isAetherBossBar(UUID uuid) {
+        return BOSS_EVENTS.contains(uuid);
     }
 }

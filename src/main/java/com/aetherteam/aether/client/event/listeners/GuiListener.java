@@ -1,14 +1,12 @@
 package com.aetherteam.aether.client.event.listeners;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.client.event.hooks.GuiHooks;
 import com.aetherteam.aether.client.gui.component.AccessoryButton;
 import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.LerpingBossEvent;
 import net.minecraft.client.gui.layouts.GridLayout;
-import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.api.distmarker.Dist;
@@ -19,37 +17,36 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT)
 public class GuiListener {
-	/** Set of UUIDs of boss bars that belong to Aether bosses. */
-	public static final Set<UUID> BOSS_EVENTS = new HashSet<>();
-
+	/**
+	 * @see AccessoriesScreen#getButtonOffset(Screen)
+	 * @see GuiHooks#setupAccessoryButton(Screen, Tuple)
+	 * @see GuiHooks#setupPerksButtons(Screen)
+	 */
 	@SubscribeEvent
 	public static void onGuiInitialize(ScreenEvent.Init.Post event) {
 		Screen screen = event.getScreen();
-		if (!AetherConfig.CLIENT.disable_accessory_button.get() && GuiHooks.areItemsPresent()) {
+		if (GuiHooks.isAccessoryButtonEnabled()) {
 			Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(screen);
-			AccessoryButton inventoryAccessoryButton = GuiHooks.setupAccessoryButtonWithinInventories(screen, offsets);
+			AccessoryButton inventoryAccessoryButton = GuiHooks.setupAccessoryButton(screen, offsets);
 			if (inventoryAccessoryButton != null) {
 				event.addListener(inventoryAccessoryButton);
 			}
-
-			AccessoryButton accessoryMenuAccessoryButton = GuiHooks.setupAccessoryButtonWithinAccessoryMenu(screen, offsets);
-			if (accessoryMenuAccessoryButton != null) {
-				event.addListener(accessoryMenuAccessoryButton);
-			}
 		} else {
-			if (screen instanceof PauseScreen) {
-				GridLayout layout = GuiHooks.setupPerksButtons(screen);
+			GridLayout layout = GuiHooks.setupPerksButtons(screen);
+			if (layout != null) {
 				layout.visitWidgets(event::addListener);
 			}
 		}
 	}
 
+	/**
+	 * @see GuiHooks#drawTrivia(Screen, PoseStack)
+	 * @see GuiHooks#drawAetherTravelMessage(Screen, PoseStack)
+	 */
 	@SubscribeEvent
 	public static void onGuiDraw(ScreenEvent.Render event) {
 		Screen screen = event.getScreen();
@@ -58,13 +55,20 @@ public class GuiListener {
 		GuiHooks.drawAetherTravelMessage(screen, poseStack);
 	}
 
+	/**
+	 * @see GuiHooks#handlePatreonRefreshRebound()
+	 */
 	@SubscribeEvent
 	public static void onClientTick(TickEvent.ClientTickEvent event) {
 		if (event.phase == TickEvent.Phase.END) {
-			GuiHooks.handleRefreshRebound();
+			GuiHooks.handlePatreonRefreshRebound();
 		}
 	}
 
+	/**
+	 * @see GuiHooks#openAccessoryMenu()
+	 * @see GuiHooks#closeContainerMenu(int, int)
+	 */
 	@SubscribeEvent
 	public static void onKeyPress(InputEvent.Key event) {
 		GuiHooks.openAccessoryMenu();
@@ -72,16 +76,17 @@ public class GuiListener {
 	}
 
 	/**
-	 * Draws the Aether boss bar.
+	 * This event is cancelled in BossHealthOverlayMixin. See it for more info.
+	 * @see com.aetherteam.aether.mixin.mixins.client.BossHealthOverlayMixin#event(CustomizeGuiOverlayEvent.BossEventProgress)
+	 * @see GuiHooks#drawBossHealthBar(PoseStack, int, int, LerpingBossEvent)
 	 */
 	@SubscribeEvent
-	public static void onRenderBoss(CustomizeGuiOverlayEvent.BossEventProgress event) {
+	public static void onRenderBossBar(CustomizeGuiOverlayEvent.BossEventProgress event) {
 		LerpingBossEvent bossEvent = event.getBossEvent();
-		if (BOSS_EVENTS.contains(bossEvent.getId())) {
+		UUID bossUUID = bossEvent.getId();
+		if (GuiHooks.isAetherBossBar(bossUUID)) {
 			GuiHooks.drawBossHealthBar(event.getPoseStack(), event.getX(), event.getY(), bossEvent);
 			event.setIncrement(event.getIncrement() + 13);
-			// This event is cancelled in BossHealthOverlayMixin. see it for more info.
-			//event.setCanceled(true);
 		}
 	}
 }
