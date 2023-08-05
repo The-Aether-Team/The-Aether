@@ -29,7 +29,7 @@ public class HandRenderHooks {
      * @param hand The {@link InteractionHand} to render a glove on.
      * @param pitch The interpolated pitch for the hand, as a {@link Float}.
      * @param swingProgress The swing progress for the hand, as a {@link Float}.
-     * @param equippedProgress The equip progress for the hand, as a {@link Float}.
+     * @param equippedProgress The equipping progress for the hand, as a {@link Float}.
      * @param poseStack The rendering {@link PoseStack}.
      * @param buffer The rendering {@link MultiBufferSource}.
      * @param packedLight The {@link Integer} for the packed lighting for rendering.
@@ -66,7 +66,7 @@ public class HandRenderHooks {
      * @param hand The {@link InteractionHand} to render a glove on.
      * @param pitch The interpolated pitch for the hand, as a {@link Float}.
      * @param swingProgress The swing progress for the hand, as a {@link Float}.
-     * @param equippedProgress The equip progress for the hand, as a {@link Float}.
+     * @param equippedProgress The equipping progress for the hand, as a {@link Float}.
      * @param poseStack The rendering {@link PoseStack}.
      * @param buffer The rendering {@link MultiBufferSource}.
      * @param packedLight The {@link Integer} for the packed lighting for rendering.

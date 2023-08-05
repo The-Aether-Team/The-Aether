@@ -106,7 +106,7 @@ public class GuiHooks {
      * Checks whether the screen is an inventory screen or if it's the {@link AccessoriesScreen} and a button can be added to it.
      * If the screen is the {@link AccessoriesScreen}, then it sets the {@link AccessoryButton} should be rendered in it.
      * @param screen The parent {@link Screen}.
-     * @return The parent screen, casted to a {@link AbstractContainerScreen}.
+     * @return The parent screen, cast to a {@link AbstractContainerScreen}.
      */
     private static AbstractContainerScreen<?> canCreateAccessoryButtonForScreen(Screen screen) {
         if (screen instanceof InventoryScreen || screen instanceof CuriosScreen || screen instanceof CreativeModeInventoryScreen || (screen instanceof AccessoriesScreen && shouldAddButton)) {
