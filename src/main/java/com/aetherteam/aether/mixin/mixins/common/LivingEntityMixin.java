@@ -1,7 +1,18 @@
 package com.aetherteam.aether.mixin.mixins.common;
 
+import com.aetherteam.aether.event.hooks.AbilityHooks;
+import com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener;
 import com.aetherteam.aether.item.combat.abilities.armor.PhoenixArmor;
+import com.aetherteam.aether.item.tools.abilities.ValkyrieTool;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.common.ForgeMod;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -11,6 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class LivingEntityMixin {
     /**
      * Handles vertical swimming for Phoenix Armor in lava without being affected by the upwards speed debuff from lava.
+     *
      * @param ci The {@link CallbackInfo} for the void method return.
      * @see PhoenixArmor#boostVerticalLavaSwimming(LivingEntity)
      */
@@ -18,5 +30,24 @@ public class LivingEntityMixin {
     private void travel(CallbackInfo ci) {
         LivingEntity livingEntity = (LivingEntity) (Object) this;
         PhoenixArmor.boostVerticalLavaSwimming(livingEntity);
+    }
+
+    @ModifyExpressionValue(at = @At(value = "INVOKE", target = "net/minecraft/world/entity/ai/attributes/AttributeMap.getValue(Lnet/minecraft/world/entity/ai/attributes/Attribute;)D"), method = "getAttributeValue(Lnet/minecraft/world/entity/ai/attributes/Attribute;)D")
+    private double modifyReachAttribute(double reach, Attribute attribute) {
+        if ((LivingEntity) (Object) this instanceof Player player && (attribute == ForgeMod.ENTITY_REACH.get() || attribute == ForgeMod.BLOCK_REACH.get())) {
+            InteractionHand hand = ToolAbilityListener.INTERACTION_HAND;
+
+            if (hand == InteractionHand.OFF_HAND && AbilityHooks.ToolHooks.hasValkyrieItemInMainHandOnly(player)) {
+                AttributeInstance reachDistance = player.getAttribute(attribute);
+                if (reachDistance != null) {
+                    AttributeModifier valkyrieModifier = reachDistance.getModifier(ValkyrieTool.REACH_DISTANCE_MODIFIER_UUID);
+                    if (valkyrieModifier != null) {
+                        return reach - valkyrieModifier.getAmount();
+                    }
+                }
+            }
+        }
+
+        return reach;
     }
 }

@@ -5,6 +5,7 @@ import com.aetherteam.aether.event.hooks.AbilityHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -84,7 +85,7 @@ public class ToolAbilityListener {
     }
 
     /**
-     * @see com.aetherteam.aether.mixin.mixins.common.IForgePlayerMixin#modifyReach(Player, double)
+     * @see com.aetherteam.aether.mixin.mixins.common.LivingEntityMixin#modifyReachAttribute(double, Attribute)
      */
     @SubscribeEvent
     public static void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
