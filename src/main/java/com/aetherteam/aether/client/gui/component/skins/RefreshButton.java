@@ -9,7 +9,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.GameRenderer;
 
 public class RefreshButton extends Button {
-    public static int reboundMax = 1200;
+    public static final int reboundMax = 1200;
     public static int reboundTimer = 0;
 
     public RefreshButton(Builder builder) {

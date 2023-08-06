@@ -3,7 +3,6 @@ package com.aetherteam.aether.client;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.api.AetherMenus;
-import com.aetherteam.aether.client.gui.screen.menu.AetherTitleScreen;
 import com.aetherteam.cumulus.api.Menus;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.WinScreen;

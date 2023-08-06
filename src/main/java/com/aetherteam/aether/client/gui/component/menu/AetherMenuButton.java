@@ -22,10 +22,10 @@ public class AetherMenuButton extends Button {
 	private static final int INITIAL_Y_OFFSET = 100;
 	private static final int TEXTURE_SIZE = 512;
 	private final AetherTitleScreen screen;
-	public int originalX;
-	public int originalY;
-	public int originalWidth;
-	public int originalHeight;
+	public final int originalX;
+	public final int originalY;
+	public final int originalWidth;
+	public final int originalHeight;
 	public int hoverOffset;
 	public int buttonCountOffset;
 
