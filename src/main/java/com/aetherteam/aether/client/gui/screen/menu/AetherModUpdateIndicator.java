@@ -24,6 +24,14 @@ public class AetherModUpdateIndicator extends TitleScreenModUpdateIndicator {
 		this.screen = screen;
 	}
 
+	@Override
+	public void init() {
+		if (!this.hasCheckedForUpdates) {
+			this.showNotification = ClientModLoader.checkForUpdates();
+			this.hasCheckedForUpdates = true;
+		}
+	}
+
 	/**
 	 * Renders Forge's mod update indicator next to the "# mods loaded" text on the title screen.
 	 * @param poseStack The rendering {@link PoseStack}.
@@ -51,14 +59,6 @@ public class AetherModUpdateIndicator extends TitleScreenModUpdateIndicator {
 			}
 
 			GuiComponent.blit(poseStack, x, y, this.showNotification.getSheetOffset() * 8, (this.showNotification.isAnimated() && ((System.currentTimeMillis() / 800 & 1) == 1)) ? 8 : 0, 8, 8, 64, 16);
-		}
-	}
-
-	@Override
-	public void init() {
-		if (!this.hasCheckedForUpdates) {
-			this.showNotification = ClientModLoader.checkForUpdates();
-			this.hasCheckedForUpdates = true;
 		}
 	}
 }
