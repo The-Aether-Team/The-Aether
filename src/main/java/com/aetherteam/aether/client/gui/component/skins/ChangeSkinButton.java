@@ -43,7 +43,6 @@ public class ChangeSkinButton extends Button {
         RenderSystem.defaultBlendFunc();
         RenderSystem.enableDepthTest();
         this.blit(matrixStack, this.getX(), this.getY(), u * 7, 184, 7, 7);
-        //this.renderBg(matrixStack, minecraft, mouseX, mouseY);
     }
 
     public void setIsActive(boolean active) {
