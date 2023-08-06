@@ -10,27 +10,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * GuiComponent for the npc to respond to the player with.
+ * A widget to handle an NPC's name and their response inside the dialogue screen.
  */
 public class DialogueAnswerComponent extends GuiComponent {
     private final List<NpcDialogueElement> splitLines;
     public int height;
 
-    public DialogueAnswerComponent(Component pMessage) {
+    public DialogueAnswerComponent(Component message) {
         this.splitLines = new ArrayList<>();
-        this.updateDialogue(pMessage);
+        this.updateDialogue(message);
     }
 
-    public void render(PoseStack pPoseStack) {
-        this.splitLines.forEach(element -> element.render(pPoseStack));
+    public void render(PoseStack poseStack) {
+        this.splitLines.forEach(element -> element.render(poseStack));
     }
 
     /**
      * Repositions the dialogue to the center of the screen.
+     * @param width The {@link Integer} for the parent screen width.
+     * @param height The {@link Integer} for the parent screen height.
      */
     public void reposition(int width, int height) {
         int i = 0;
-        for (NpcDialogueElement dialogue : splitLines) {
+        for (NpcDialogueElement dialogue : this.splitLines) {
             dialogue.width = Minecraft.getInstance().font.width(dialogue.text) + 2;
             dialogue.x = width / 2 - dialogue.width / 2;
             dialogue.y = height / 2 + i * 12;
@@ -39,9 +41,9 @@ public class DialogueAnswerComponent extends GuiComponent {
         this.height = this.splitLines.size() * 12;
     }
 
-    public void updateDialogue(Component pMessage) {
+    public void updateDialogue(Component message) {
         this.splitLines.clear();
-        List<FormattedCharSequence> list = Minecraft.getInstance().font.split(pMessage, 300);
+        List<FormattedCharSequence> list = Minecraft.getInstance().font.split(message, 300);
         this.height = list.size() * 12;
         list.forEach(text -> this.splitLines.add(new NpcDialogueElement(0, 0, 0, text)));
     }
@@ -49,22 +51,22 @@ public class DialogueAnswerComponent extends GuiComponent {
     /**
      * This inner class is used to store data for each line of text.
      */
-    public class NpcDialogueElement {
-        public int x;
-        public int y;
-        public int width;
-        public FormattedCharSequence text;
+    public static class NpcDialogueElement {
+        private final FormattedCharSequence text;
+        private int x;
+        private int y;
+        private int width;
 
         public NpcDialogueElement(int x, int y, int width, FormattedCharSequence text) {
+            this.text = text;
             this.x = x;
             this.y = y;
             this.width = width;
-            this.text = text;
         }
 
-        public void render(PoseStack pPoseStack) {
-            DialogueAnswerComponent.this.fillGradient(pPoseStack, this.x, this.y, this.x + width, this.y + 12, 0x66000000, 0x66000000);
-            drawString(pPoseStack, Minecraft.getInstance().font, this.text, this.x + 1, this.y + 1, 0xFFFFFF);
+        public void render(PoseStack poseStack) {
+            GuiComponent.fillGradient(poseStack, this.x, this.y, this.x + width, this.y + 12, 0x66000000, 0x66000000);
+            GuiComponent.drawString(poseStack, Minecraft.getInstance().font, this.text, this.x + 1, this.y + 1, 0xFFFFFF);
         }
     }
 }
