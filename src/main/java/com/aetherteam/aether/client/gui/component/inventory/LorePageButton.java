@@ -13,11 +13,10 @@ import net.minecraft.resources.ResourceLocation;
 
 public class LorePageButton extends Button {
     private static final ResourceLocation BUTTON_TEXTURES = new ResourceLocation(Aether.MODID, "textures/gui/menu/lore_widgets.png");
-    private boolean isActive;
 
-    public LorePageButton(Button.Builder builder) {
+    public LorePageButton(Builder builder) {
         super(builder.createNarration(DEFAULT_NARRATION));
-        this.setIsActive(false);
+        this.active = false;
     }
 
     public void onPress() {
@@ -44,16 +43,11 @@ public class LorePageButton extends Button {
      */
     private int getTextureY() {
         int i = 1;
-        if (!this.isActive) {
+        if (!this.isActive()) {
             i = 0;
         } else if (this.isHoveredOrFocused()) {
             i = 2;
         }
-
         return 46 + i * 20;
-    }
-
-    public void setIsActive(boolean active) {
-        this.isActive = active;
     }
 }

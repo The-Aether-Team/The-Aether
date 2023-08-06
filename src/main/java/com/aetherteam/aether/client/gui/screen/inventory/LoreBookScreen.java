@@ -106,8 +106,8 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
         }
 
         // Determines when the page switching buttons can be clicked.
-        this.previousButton.setIsActive(this.currentPageNumber > 0);
-        this.nextButton.setIsActive(this.currentPageNumber < this.pages.size() - 1);
+        this.previousButton.active = this.currentPageNumber > 0;
+        this.nextButton.active = this.currentPageNumber < this.pages.size() - 1;
 
         this.lastStack = itemStack;
     }

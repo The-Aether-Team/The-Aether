@@ -187,8 +187,8 @@ public class MoaSkinsScreen extends Screen {
     private void renderInterface(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
         User user = UserData.Client.getClientUser();
         if (user != null && this.getSelectedSkin().getUserPredicate().test(user)) {
-            this.applyButton.setIsActive(true);
-            this.removeButton.setIsActive(true);
+            this.applyButton.active = true;
+            this.removeButton.active = true;
 
             if (this.getSelectedSkin().getInfo().lifetime() || user.getCurrentTier() == null || user.getCurrentTierLevel() < this.getSelectedSkin().getInfo().tier().getLevel()) {
                 boolean mouseOver = this.isMouseOverIcon(mouseX, mouseY, 8);
@@ -204,8 +204,8 @@ public class MoaSkinsScreen extends Screen {
                 }
             }
         } else {
-            this.applyButton.setIsActive(false);
-            this.removeButton.setIsActive(false);
+            this.applyButton.active = false;
+            this.removeButton.active = false;
 
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
