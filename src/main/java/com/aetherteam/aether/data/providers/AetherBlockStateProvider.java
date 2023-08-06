@@ -27,24 +27,20 @@ public abstract class AetherBlockStateProvider extends NitrogenBlockStateProvide
     }
 
     public void grass(Block block, Block dirtBlock) {
-        ModelFile grass = this.grassBlock(block, dirtBlock);
-        ModelFile grassSnowed = this.cubeBottomTop(this.name(block) + "_snow",
-                this.extend(this.texture(this.name(block), "natural/"), "_snow"),
-                this.texture(this.name(dirtBlock), "natural/"),
-                this.extend(this.texture(this.name(block), "natural/"), "_top"));
-        this.getVariantBuilder(block).forAllStatesExcept(state -> {
-            boolean snowy = state.getValue(SnowyDirtBlock.SNOWY);
-            return ConfiguredModel.allYRotations(snowy ? grassSnowed : grass, 0, false);
-        }, AetherBlockStateProperties.DOUBLE_DROPS);
+        this.grassBlock(block, block, dirtBlock);
     }
 
     public void enchantedGrass(Block block, Block grassBlock, Block dirtBlock) {
-        ModelFile grass = this.grassBlock(block, dirtBlock);
-        ModelFile grassSnowed = this.cubeBottomTop(this.name(grassBlock) + "_snow",
-                this.extend(this.texture(this.name(grassBlock), "natural/"), "_snow"),
-                this.texture(this.name(dirtBlock), "natural/"),
-                this.extend(this.texture(this.name(block), "natural/"), "_top"));
-        this.getVariantBuilder(block).forAllStatesExcept(state -> {
+        this.grassBlock(block, grassBlock, dirtBlock);
+    }
+
+    public void grassBlock(Block baseBlock, Block blockForSnow, Block blockForDirt) {
+        ModelFile grass = this.grassBlock(baseBlock, blockForDirt);
+        ModelFile grassSnowed = this.cubeBottomTop(this.name(blockForSnow) + "_snow",
+                this.extend(this.texture(this.name(blockForSnow), "natural/"), "_snow"),
+                this.texture(this.name(blockForDirt), "natural/"),
+                this.extend(this.texture(this.name(baseBlock), "natural/"), "_top"));
+        this.getVariantBuilder(baseBlock).forAllStatesExcept(state -> {
             boolean snowy = state.getValue(SnowyDirtBlock.SNOWY);
             return ConfiguredModel.allYRotations(snowy ? grassSnowed : grass, 0, false);
         }, AetherBlockStateProperties.DOUBLE_DROPS);
