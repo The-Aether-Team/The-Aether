@@ -16,12 +16,15 @@ import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
-public class AccessoryButton extends ImageButton
-{
-    private final AbstractContainerScreen<?> parentGui;
+/**
+ * [CODE COPY] - {@link top.theillusivec4.curios.client.gui.CuriosButton}.<br><br>
+ * Opens the {@link AccessoriesScreen} instead.
+ */
+public class AccessoryButton extends ImageButton {
+    private final AbstractContainerScreen<?> parentScreen;
 
-    public AccessoryButton(AbstractContainerScreen<?> parentGui, int xIn, int yIn, ResourceLocation resource) {
-        super(xIn, yIn, 12, 8, 0, 0, 8, resource, 12, 16,
+    public AccessoryButton(AbstractContainerScreen<?> parentScreen, int x, int y, ResourceLocation texture) {
+        super(x, y, 12, 8, 0, 0, 8, texture, 12, 16,
                 (button) -> {
                     Minecraft minecraft = Minecraft.getInstance();
                     Player player = minecraft.player;
@@ -29,7 +32,7 @@ public class AccessoryButton extends ImageButton
                         ItemStack stack = player.containerMenu.getCarried();
                         player.containerMenu.setCarried(ItemStack.EMPTY);
 
-                        if (parentGui instanceof AccessoriesScreen) {
+                        if (parentScreen instanceof AccessoriesScreen) {
                             InventoryScreen inventory = new InventoryScreen(player);
                             minecraft.setScreen(inventory);
                             player.inventoryMenu.setCarried(stack);
@@ -39,21 +42,21 @@ public class AccessoryButton extends ImageButton
                         }
                     }
                 });
-        this.parentGui = parentGui;
+        this.parentScreen = parentScreen;
     }
 
     @Override
     public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
-        Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(this.parentGui);
-        this.setX(this.parentGui.getGuiLeft() + offsets.getA());
-        this.setY(this.parentGui.getGuiTop() + offsets.getB());
-        if (this.parentGui instanceof CreativeModeInventoryScreen screen) {
+        Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(this.parentScreen);
+        this.setX(this.parentScreen.getGuiLeft() + offsets.getA());
+        this.setY(this.parentScreen.getGuiTop() + offsets.getB());
+        if (this.parentScreen instanceof CreativeModeInventoryScreen screen) {
             boolean isInventoryTab = screen.isInventoryOpen();
             this.active = isInventoryTab;
             if (isInventoryTab) {
                 super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
             }
-        } else if (this.parentGui instanceof AccessoriesScreen screen) {
+        } else if (this.parentScreen instanceof AccessoriesScreen screen) {
             if (screen.getMenu().hasButton) {
                 super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
             }

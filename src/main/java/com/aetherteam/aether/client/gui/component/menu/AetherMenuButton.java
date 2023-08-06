@@ -7,6 +7,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -93,6 +94,10 @@ public class AetherMenuButton extends Button {
 		return textPixelWidth / guiScale;
 	}
 
+	/**
+	 * [CODE COPY] - {@link AbstractButton#getTextureY()}
+	 * Modified the final offset multipliers.
+	 */
 	private int getTextureY() {
 		int i = 1;
 		if (!this.isActive()) {

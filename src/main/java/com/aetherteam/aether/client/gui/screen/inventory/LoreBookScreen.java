@@ -8,6 +8,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.language.I18n;
@@ -43,16 +44,16 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
         super.init();
         int xPos = (this.width - this.getXSize()) / 2;
         int yPos = (this.height - (this.getYSize())) / 2;
-        this.previousButton = this.addRenderableWidget(new LorePageButton(xPos + 14, yPos + 169, 20, 20, Component.literal("<"), (p_214201_1_) -> {
+        this.previousButton = this.addRenderableWidget(new LorePageButton(new Button.Builder(Component.literal("<"), (button) -> {
             if (this.currentPageNumber > 0) {
                 this.currentPageNumber--;
             }
-        }));
-        this.nextButton = this.addRenderableWidget(new LorePageButton(xPos + 221, yPos + 169, 20, 20, Component.literal(">"), (p_214201_1_) -> {
+        }).pos(xPos + 14, yPos + 169).size(20, 20)));
+        this.nextButton = this.addRenderableWidget(new LorePageButton(new Button.Builder(Component.literal(">"), (button) -> {
             if (this.currentPageNumber < this.pages.size() - 1) {
                 this.currentPageNumber++;
             }
-        }));
+        }).pos(xPos + 221, yPos + 169).size(20, 20)));
     }
 
     @Override
