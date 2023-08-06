@@ -205,7 +205,6 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
 
     @Override
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
-        Aether.LOGGER.info(String.valueOf(this.getGuiLeft()));
         this.renderBackground(poseStack);
         if (this.getRecipeBookComponent().isVisible() && this.widthTooNarrow) {
             this.renderBg(poseStack, partialTicks, mouseX, mouseY);
