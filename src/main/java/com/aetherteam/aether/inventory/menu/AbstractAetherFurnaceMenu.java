@@ -15,7 +15,7 @@ import net.minecraft.world.level.Level;
 
 /**
  * [CODE COPY] - {@link AbstractFurnaceMenu}.<br><br>
- * Cleaned up.
+ * Cleaned up. This has to be its own class and not a subclass because of different slots.
  */
 public abstract class AbstractAetherFurnaceMenu extends RecipeBookMenu<Container> {
     private final Container container;

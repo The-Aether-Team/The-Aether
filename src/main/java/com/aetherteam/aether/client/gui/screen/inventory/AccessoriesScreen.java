@@ -17,6 +17,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.Tooltip;
@@ -48,24 +49,28 @@ import top.theillusivec4.curios.common.network.client.CPacketToggleRender;
 
 import javax.annotation.Nullable;
 
-public class AccessoriesScreen extends EffectRenderingInventoryScreen<AccessoriesMenu> implements RecipeUpdateListener {
-    public static final ResourceLocation ACCESSORIES_INVENTORY = new ResourceLocation(Aether.MODID, "textures/gui/inventory/accessories.png");
-    public static final ResourceLocation ACCESSORIES_INVENTORY_CREATIVE = new ResourceLocation(Aether.MODID, "textures/gui/inventory/accessories_creative.png");
-    public static final ResourceLocation CURIO_INVENTORY = new ResourceLocation(Curios.MODID, "textures/gui/inventory.png");
-
+/**
+ * [CODE COPY] - {@link CuriosScreen}.<br>
+ * [CODE COPY] - {@link InventoryScreen}.<br><br>
+ * Modified to register slots for Aether accessories only.
+ */
+public class AccessoriesScreen extends EffectRenderingInventoryScreen<AccessoriesMenu> implements RecipeUpdateListener, RecipeBookBehavior<AccessoriesMenu, AccessoriesScreen> {
     public static final ResourceLocation ACCESSORIES_BUTTON = new ResourceLocation(Aether.MODID, "textures/gui/inventory/button/accessories_button.png");
-    public static final ResourceLocation RECIPE_BUTTON_LOCATION = new ResourceLocation("textures/gui/recipe_button.png");
-
     public static final ResourceLocation SKINS_BUTTON = new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/skins_button.png");
     public static final ResourceLocation CUSTOMIZATION_BUTTON = new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/customization_button.png");
 
+    private static final ResourceLocation ACCESSORIES_INVENTORY = new ResourceLocation(Aether.MODID, "textures/gui/inventory/accessories.png");
+    private static final ResourceLocation ACCESSORIES_INVENTORY_CREATIVE = new ResourceLocation(Aether.MODID, "textures/gui/inventory/accessories_creative.png");
+    private static final ResourceLocation CURIO_INVENTORY = new ResourceLocation(Curios.MODID, "textures/gui/inventory.png");
+    private static final ResourceLocation RECIPE_BUTTON_LOCATION = new ResourceLocation("textures/gui/recipe_button.png");
+
+    private static final SimpleContainer DESTROY_ITEM_CONTAINER = new SimpleContainer(1);
     private final RecipeBookComponent recipeBookComponent = new RecipeBookComponent();
     private boolean widthTooNarrow;
     private boolean buttonClicked;
     private boolean isRenderButtonHovered;
     @Nullable
     private Slot destroyItemSlot;
-    private static final SimpleContainer DESTROY_ITEM_CONTAINER = new SimpleContainer(1);
 
     public AccessoriesScreen(AccessoriesMenu accessoriesMenu, Inventory playerInventory, Component title) {
         super(accessoriesMenu, playerInventory, title);
@@ -74,103 +79,124 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
 
     @Override
     protected void containerTick() {
-        this.recipeBookComponent.tick();
-    }
-
-    public static Tuple<Integer, Integer> getButtonOffset(Screen screen) {
-        int x = 0;
-        int y = 0;
-        if (screen instanceof InventoryScreen || screen instanceof CuriosScreen) {
-            x = AetherConfig.CLIENT.button_inventory_x.get();
-            y = AetherConfig.CLIENT.button_inventory_y.get();
-        }
-        if (screen instanceof CreativeModeInventoryScreen) {
-            x = AetherConfig.CLIENT.button_creative_x.get();
-            y = AetherConfig.CLIENT.button_creative_y.get();
-        }
-        if (screen instanceof AccessoriesScreen) {
-            x = AetherConfig.CLIENT.button_accessories_x.get();
-            y = AetherConfig.CLIENT.button_accessories_y.get();
-        }
-        return new Tuple<>(x, y);
+        RecipeBookBehavior.super.containerTick(this);
     }
 
     @Override
     public void init() {
         super.init();
-        if (this.minecraft != null) {
-            if (this.minecraft.player != null) {
-                this.imageWidth = this.minecraft.player.isCreative() ? 176 + this.creativeXOffset() : 176;
-            }
-            this.widthTooNarrow = this.width < 379;
-            this.recipeBookComponent.init(this.width, this.height, this.minecraft, this.widthTooNarrow, this.menu);
-            this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
-            this.addRenderableWidget(new ImageButton(this.leftPos + 142, this.height / 2 - 22, 20, 18, 0, 0, 19, RECIPE_BUTTON_LOCATION, (pressed) -> {
-                this.recipeBookComponent.toggleVisibility();
-                this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
-                pressed.setPosition(this.leftPos + 142, this.height / 2 - 22);
-                this.buttonClicked = true;
-            }));
-            this.addWidget(this.recipeBookComponent);
-            this.setInitialFocus(this.recipeBookComponent);
+        // Basic Curio-based initialization.
+        if (this.getMinecraft().player != null) {
+            this.imageWidth = this.getMinecraft().player.isCreative() ? 176 + this.creativeXOffset() : 176;
+        }
+        this.widthTooNarrow = this.width < 379;
+        this.getRecipeBookComponent().init(this.width, this.height, this.getMinecraft(), this.widthTooNarrow, this.getMenu());
+        this.updateScreenPosition();
+        this.addWidget(this.getRecipeBookComponent());
+        this.setInitialFocus(this.getRecipeBookComponent());
 
-            this.updateRenderButtons();
+        if (this.getMinecraft().player != null && this.getRecipeBookComponent().isVisible()) {
+            this.getRecipeBookComponent().toggleVisibility();
+            this.updateScreenPosition();
+        }
 
-            ImageButton skinsButton = new ImageButton(this.leftPos - 22, this.topPos + 2, 20, 20, 0, 0, 20, SKINS_BUTTON, 20, 40,
-                    (pressed) -> this.getMinecraft().setScreen(new MoaSkinsScreen(this)),
-                    Component.translatable("gui.aether.accessories.skins_button")) {
-                @Override
-                public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-                    super.render(poseStack, mouseX, mouseY, partialTick);
-                    if (!AccessoriesScreen.this.recipeBookComponent.isVisible()) {
-                        this.setX(AccessoriesScreen.this.leftPos - 22);
-                        this.setY(AccessoriesScreen.this.topPos + 2);
-                    } else {
-                        this.setX(AccessoriesScreen.this.leftPos + 2);
-                        this.setY(AccessoriesScreen.this.topPos - 22);
-                    }
-                }
-            };
-            skinsButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.skins_button")));
-            this.addRenderableWidget(skinsButton);
+        this.addRenderableWidget(new ImageButton(this.getGuiLeft() + 142, this.height / 2 - 22, 20, 18, 0, 0, 19, RECIPE_BUTTON_LOCATION, (pressed) -> {
+            this.getRecipeBookComponent().toggleVisibility();
+            this.updateScreenPosition();
+            pressed.setPosition(this.getGuiLeft() + 142, this.height / 2 - 22);
+            this.buttonClicked = true;
+        }));
 
-            User user = UserData.Client.getClientUser();
-            if (user != null && (PerkUtil.hasDeveloperGlow().test(user) || PerkUtil.hasHalo().test(user))) {
-                ImageButton customizationButton = new ImageButton(this.leftPos - 22, this.topPos + 24, 20, 20, 0, 0, 20, CUSTOMIZATION_BUTTON, 20, 40,
-                        (pressed) -> this.getMinecraft().setScreen(new AetherCustomizationsScreen(this)),
-                        Component.translatable("gui.aether.accessories.customization_button")) {
-                    @Override
-                    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-                        super.render(poseStack, mouseX, mouseY, partialTick);
-                        if (!AccessoriesScreen.this.recipeBookComponent.isVisible()) {
-                            this.setX(AccessoriesScreen.this.leftPos - 22);
-                            this.setY(AccessoriesScreen.this.topPos + 24);
-                        } else {
-                            this.setX(AccessoriesScreen.this.leftPos + 24);
-                            this.setY(AccessoriesScreen.this.topPos - 22);
-                        }
-                    }
-                };
-                customizationButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.customization_button")));
-                this.addRenderableWidget(customizationButton);
-            }
+        this.updateRenderButtons();
+
+        // Create perk-related buttons.
+        ImageButton skinsButton = this.createSkinsButton();
+        this.addRenderableWidget(skinsButton);
+
+        User user = UserData.Client.getClientUser();
+        if (user != null && (PerkUtil.hasDeveloperGlow().test(user) || PerkUtil.hasHalo().test(user))) {
+            ImageButton customizationButton = this.createCustomizationButton();
+            this.addRenderableWidget(customizationButton);
         }
     }
 
-    public void updateRenderButtons() {
+    /**
+     * [CODE COPY] - {@link CuriosScreen#updateScreenPosition()}.<br>
+     * [CODE COPY] - {@link RecipeBookComponent#updateScreenPosition(int, int)}.
+     */
+    private void updateScreenPosition() {
+        int i;
+        if (this.getRecipeBookComponent().isVisible() && !this.widthTooNarrow) {
+            int offset = 200 - this.creativeXOffset();
+            i = 177 + (this.width - this.getXSize() - offset) / 2;
+        } else {
+            i = (this.width - this.getXSize()) / 2;
+        }
+        this.leftPos = i;
+        this.updateRenderButtons();
+    }
+
+    /**
+     * Creates the button for the {@link MoaSkinsScreen}.
+     * @return The {@link ImageButton}.
+     */
+    private ImageButton createSkinsButton() {
+        ImageButton skinsButton = new ImageButton(this.getGuiLeft() - 22, this.getGuiTop() + 2, 20, 20, 0, 0, 20, SKINS_BUTTON, 20, 40,
+                (pressed) -> this.getMinecraft().setScreen(new MoaSkinsScreen(this)),
+                Component.translatable("gui.aether.accessories.skins_button")) {
+            @Override
+            public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+                super.render(poseStack, mouseX, mouseY, partialTick);
+                if (!AccessoriesScreen.this.getRecipeBookComponent().isVisible()) {
+                    this.setX(AccessoriesScreen.this.getGuiLeft() - 22);
+                    this.setY(AccessoriesScreen.this.getGuiTop() + 2);
+                } else {
+                    this.setX(AccessoriesScreen.this.getGuiLeft() + 2);
+                    this.setY(AccessoriesScreen.this.getGuiTop() - 22);
+                }
+            }
+        };
+        skinsButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.skins_button")));
+        return skinsButton;
+    }
+
+    /**
+     * Creates the button for the {@link AetherCustomizationsScreen}.
+     * @return The {@link ImageButton}.
+     */
+    private ImageButton createCustomizationButton() {
+        ImageButton customizationButton = new ImageButton(this.getGuiLeft() - 22, this.getGuiTop() + 24, 20, 20, 0, 0, 20, CUSTOMIZATION_BUTTON, 20, 40,
+                (pressed) -> this.getMinecraft().setScreen(new AetherCustomizationsScreen(this)),
+                Component.translatable("gui.aether.accessories.customization_button")) {
+            @Override
+            public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+                super.render(poseStack, mouseX, mouseY, partialTick);
+                if (!AccessoriesScreen.this.getRecipeBookComponent().isVisible()) {
+                    this.setX(AccessoriesScreen.this.getGuiLeft() - 22);
+                    this.setY(AccessoriesScreen.this.getGuiTop() + 24);
+                } else {
+                    this.setX(AccessoriesScreen.this.getGuiLeft() + 24);
+                    this.setY(AccessoriesScreen.this.getGuiTop() - 22);
+                }
+            }
+        };
+        customizationButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.customization_button")));
+        return customizationButton;
+    }
+
+    private void updateRenderButtons() {
         ScreenAccessor screenAccessor = (ScreenAccessor) this;
         screenAccessor.aether$getNarratables().removeIf(widget -> widget instanceof RenderButton);
         this.children().removeIf(widget -> widget instanceof RenderButton);
         this.renderables.removeIf(widget -> widget instanceof RenderButton);
-        for (Slot inventorySlot : this.menu.slots) {
+        for (Slot inventorySlot : this.getMenu().slots) {
             if (inventorySlot instanceof CurioSlot curioSlot && !(inventorySlot instanceof CosmeticCurioSlot)) {
-                this.addRenderableWidget(new RenderButton(curioSlot, this.leftPos + inventorySlot.x + 11, this.topPos + inventorySlot.y - 3, 8, 8, 75, 0, 8, CURIO_INVENTORY,
-                        (button) -> NetworkHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(), new CPacketToggleRender(curioSlot.getIdentifier(), inventorySlot.getSlotIndex())))
-                {
+                this.addRenderableWidget(new RenderButton(curioSlot, this.getGuiLeft() + inventorySlot.x + 11, this.getGuiTop() + inventorySlot.y - 3, 8, 8, 75, 0, 8, CURIO_INVENTORY,
+                        (button) -> NetworkHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(), new CPacketToggleRender(curioSlot.getIdentifier(), inventorySlot.getSlotIndex()))) {
                     @Override
                     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-                        this.setX(AccessoriesScreen.this.leftPos + inventorySlot.x + 11);
-                        this.setY(AccessoriesScreen.this.topPos + inventorySlot.y - 3);
+                        this.setX(AccessoriesScreen.this.getGuiLeft() + inventorySlot.x + 11);
+                        this.setY(AccessoriesScreen.this.getGuiTop() + inventorySlot.y - 3);
                     }
                 });
             }
@@ -178,22 +204,16 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
     }
 
     @Override
-    public boolean canSeeEffects() {
-        int i = this.leftPos + this.imageWidth + 2 + this.creativeXOffset();
-        int j = this.width - i;
-        return j > 13;
-    }
-
-    @Override
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+        Aether.LOGGER.info(String.valueOf(this.getGuiLeft()));
         this.renderBackground(poseStack);
-        if (this.recipeBookComponent.isVisible() && this.widthTooNarrow) {
+        if (this.getRecipeBookComponent().isVisible() && this.widthTooNarrow) {
             this.renderBg(poseStack, partialTicks, mouseX, mouseY);
-            this.recipeBookComponent.render(poseStack, mouseX, mouseY, partialTicks);
+            this.getRecipeBookComponent().render(poseStack, mouseX, mouseY, partialTicks);
         } else {
-            this.recipeBookComponent.render(poseStack, mouseX, mouseY, partialTicks);
+            this.getRecipeBookComponent().render(poseStack, mouseX, mouseY, partialTicks);
             super.render(poseStack, mouseX, mouseY, partialTicks);
-            this.recipeBookComponent.renderGhostRecipe(poseStack, this.leftPos, this.topPos, false, partialTicks);
+            this.getRecipeBookComponent().renderGhostRecipe(poseStack, this.getGuiLeft(), this.getGuiTop(), false, partialTicks);
 
             boolean isButtonHovered = false;
             for (Renderable renderable : this.renderables) {
@@ -213,12 +233,12 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
                 }
             }
 
-            if (this.minecraft != null && this.minecraft.player != null) {
-                if (this.minecraft.player.isCreative() && this.destroyItemSlot == null) {
+            if (this.getMinecraft().player != null) {
+                if (this.getMinecraft().player.isCreative() && this.destroyItemSlot == null) {
                     this.destroyItemSlot = new Slot(DESTROY_ITEM_CONTAINER, 0, 172, 142);
-                    this.menu.slots.add(this.destroyItemSlot);
-                } else if (!this.minecraft.player.isCreative() && this.destroyItemSlot != null) {
-                    this.menu.slots.remove(this.destroyItemSlot);
+                    this.getMenu().slots.add(this.destroyItemSlot);
+                } else if (!this.getMinecraft().player.isCreative() && this.destroyItemSlot != null) {
+                    this.getMenu().slots.remove(this.destroyItemSlot);
                     this.destroyItemSlot = null;
                 }
             }
@@ -227,59 +247,69 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
                 this.renderTooltip(poseStack, Component.translatable("inventory.binSlot"), mouseX, mouseY);
             }
 
-            if (this.minecraft != null && this.minecraft.player != null) {
-                this.imageWidth = this.minecraft.player.isCreative() ? 176 + this.creativeXOffset() : 176;
+            if (this.getMinecraft().player != null) {
+                this.imageWidth = this.getMinecraft().player.isCreative() ? 176 + this.creativeXOffset() : 176;
             }
         }
         this.renderTooltip(poseStack, mouseX, mouseY);
-        this.recipeBookComponent.renderTooltip(poseStack, this.leftPos, this.topPos, mouseX, mouseY);
+        this.getRecipeBookComponent().renderTooltip(poseStack, this.getGuiLeft(), this.getGuiTop(), mouseX, mouseY);
     }
 
     @Override
-    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-        if (this.minecraft != null && this.minecraft.player != null) {
+    protected void renderBg(PoseStack poseStack, float partialTicks, int mouseX, int mouseY) {
+        if (this.getMinecraft().player != null) {
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            RenderSystem.setShaderTexture(0, this.minecraft.player.isCreative() ? ACCESSORIES_INVENTORY_CREATIVE : ACCESSORIES_INVENTORY);
+            RenderSystem.setShaderTexture(0, this.getMinecraft().player.isCreative() ? ACCESSORIES_INVENTORY_CREATIVE : ACCESSORIES_INVENTORY);
             int i = this.getGuiLeft();
             int j = this.getGuiTop();
-            blit(matrixStack, i, j, 0, 0, this.getXSize() + this.creativeXOffset(), this.getYSize());
-            InventoryScreen.renderEntityInInventoryFollowsMouse(matrixStack, i + 33, j + 75, 30, (float) (i + 31) - mouseX, (float) (j + 75 - 50) - mouseY, this.minecraft.player);
+            GuiComponent.blit(poseStack, i, j, 0, 0, this.getXSize() + this.creativeXOffset(), this.getYSize());
+            InventoryScreen.renderEntityInInventoryFollowsMouse(poseStack, i + 33, j + 75, 30, (float) (i + 31) - mouseX, (float) (j + 75 - 50) - mouseY, this.getMinecraft().player);
         }
     }
 
+    /**
+     * @return The {@link Integer} y-offset for the GUI.
+     */
+    private int creativeXOffset() {
+        return this.getMinecraft().player != null && this.getMinecraft().player.isCreative() ? 18 : 0;
+    }
+
     @Override
-    protected void renderTooltip(PoseStack matrixStack, int mouseX, int mouseY) {
-        Minecraft mc = this.minecraft;
-        if (mc != null) {
-            LocalPlayer clientPlayer = mc.player;
-            if (clientPlayer != null && clientPlayer.inventoryMenu.getCarried().isEmpty()) {
-                if (this.isRenderButtonHovered) {
-                    this.renderTooltip(matrixStack, Component.translatable("gui.curios.toggle"), mouseX, mouseY);
-                } else if (this.hoveredSlot != null && this.hoveredSlot.hasItem()) {
-                    this.renderTooltip(matrixStack, this.hoveredSlot.getItem(), mouseX, mouseY);
-                }
+    protected void renderTooltip(PoseStack poseStack, int mouseX, int mouseY) {
+        Minecraft minecraft = this.getMinecraft();
+        LocalPlayer clientPlayer = minecraft.player;
+        if (clientPlayer != null && clientPlayer.inventoryMenu.getCarried().isEmpty()) {
+            if (this.isRenderButtonHovered) {
+                this.renderTooltip(poseStack, Component.translatable("gui.curios.toggle"), mouseX, mouseY);
+            } else if (this.hoveredSlot != null && this.hoveredSlot.hasItem()) {
+                this.renderTooltip(poseStack, this.hoveredSlot.getItem(), mouseX, mouseY);
             }
         }
     }
 
     @Override
-    public boolean keyPressed(int p_keyPressed_1_, int p_keyPressed_2_, int p_keyPressed_3_) {
-        if (AetherKeys.OPEN_ACCESSORY_INVENTORY.isActiveAndMatches(InputConstants.getKey(p_keyPressed_1_, p_keyPressed_2_))) {
+    protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
+        if (this.getMinecraft().player != null) {
+            this.font.draw(poseStack, this.title, 115, 6, 4210752);
+        }
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (this.getRecipeBookComponent().isVisible() && this.widthTooNarrow) {
+            this.getRecipeBookComponent().toggleVisibility();
+            this.updateScreenPosition();
+            return true;
+        } else
+        if (AetherKeys.OPEN_ACCESSORY_INVENTORY.isActiveAndMatches(InputConstants.getKey(keyCode, scanCode))) {
             LocalPlayer playerEntity = this.getMinecraft().player;
             if (playerEntity != null) {
                 playerEntity.closeContainer();
             }
             return true;
         } else {
-            return super.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_);
-        }
-    }
-
-    @Override
-    protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
-        if (this.minecraft != null && this.minecraft.player != null) {
-            this.font.draw(matrixStack, this.title, 115, 6, 4210752);
+            return super.keyPressed(keyCode, scanCode, modifiers);
         }
     }
 
@@ -288,51 +318,54 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
         if (this.isRenderButtonHovered) {
             return false;
         }
-        return (!this.widthTooNarrow || !this.recipeBookComponent.isVisible()) && super.isHovering(rectX, rectY, rectWidth, rectHeight, pointX, pointY);
+        return (!this.widthTooNarrow || !this.getRecipeBookComponent().isVisible()) && super.isHovering(rectX, rectY, rectWidth, rectHeight, pointX, pointY);
     }
 
     @Override
-    public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
-        if (this.recipeBookComponent.mouseClicked(pMouseX, pMouseY, pButton)) {
-            this.setFocused(this.recipeBookComponent);
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (this.getRecipeBookComponent().mouseClicked(mouseX, mouseY, button)) {
+            this.setFocused(this.getRecipeBookComponent());
             return true;
         } else {
-            return (!this.widthTooNarrow || !this.recipeBookComponent.isVisible()) && super.mouseClicked(pMouseX, pMouseY, pButton);
+            return (!this.widthTooNarrow || !this.getRecipeBookComponent().isVisible()) && super.mouseClicked(mouseX, mouseY, button);
         }
     }
 
     @Override
-    public boolean mouseReleased(double mouseReleased1, double mouseReleased3, int mouseReleased5) {
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
         if (this.buttonClicked) {
             this.buttonClicked = false;
             return true;
         } else {
-            return super.mouseReleased(mouseReleased1, mouseReleased3, mouseReleased5);
+            return super.mouseReleased(mouseX, mouseY, button);
         }
     }
 
     @Override
     protected boolean hasClickedOutside(double mouseX, double mouseY, int guiLeft, int guiTop, int mouseButton) {
-        boolean flag = mouseX < (double) guiLeft || mouseY < (double) guiTop || mouseX >= (double) (guiLeft + this.imageWidth) || mouseY >= (double) (guiTop + this.imageHeight);
-        return this.recipeBookComponent.hasClickedOutside(mouseX, mouseY, this.leftPos, this.topPos, this.imageWidth, this.imageHeight, mouseButton) && flag;
+        return RecipeBookBehavior.super.hasClickedOutside(this, mouseX, mouseY, guiLeft, guiTop, mouseButton);
     }
 
+    /**
+     * [CODE COPY] {@link net.minecraft.client.gui.screens.inventory.AbstractContainerScreen}.<br><br>
+     * Heavily modified to only have behavior for the item trash slot.
+     */
     @Override
     protected void slotClicked(@Nullable Slot slot, int slotId, int mouseButton, ClickType type) {
-        this.recipeBookComponent.slotClicked(slot);
-        if (this.minecraft != null && this.minecraft.player != null && this.minecraft.gameMode != null) {
+        RecipeBookBehavior.super.slotClicked(this, slot);
+        if (this.getMinecraft().player != null && this.getMinecraft().gameMode != null) {
             boolean flag = type == ClickType.QUICK_MOVE;
             if (slot != null || type == ClickType.QUICK_CRAFT) {
-                if (slot == null || slot.mayPickup(this.minecraft.player)) {
+                if (slot == null || slot.mayPickup(this.getMinecraft().player)) {
                     if (slot == this.destroyItemSlot && this.destroyItemSlot != null && flag) {
-                        for (int j = 0; j < this.minecraft.player.inventoryMenu.getItems().size(); ++j) {
-                            this.minecraft.gameMode.handleCreativeModeItemAdd(ItemStack.EMPTY, j);
+                        for (int j = 0; j < this.getMinecraft().player.inventoryMenu.getItems().size(); ++j) {
+                            this.getMinecraft().gameMode.handleCreativeModeItemAdd(ItemStack.EMPTY, j);
                             NetworkHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(), new CPacketDestroy());
                         }
                     } else {
                         if (slot == this.destroyItemSlot && this.destroyItemSlot != null) {
-                            this.menu.setCarried(ItemStack.EMPTY);
-                            PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ClearItemPacket(this.minecraft.player.getId()));
+                            this.getMenu().setCarried(ItemStack.EMPTY);
+                            PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ClearItemPacket(this.getMinecraft().player.getId()));
                         }
                     }
                 }
@@ -343,20 +376,41 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
 
     @Override
     public void recipesUpdated() {
-        this.recipeBookComponent.recipesUpdated();
+        RecipeBookBehavior.super.recipesUpdated(this);
     }
 
-   
     @Override
     public RecipeBookComponent getRecipeBookComponent() {
         return this.recipeBookComponent;
     }
 
-    public int creativeXOffset() {
-        if (this.minecraft != null && this.minecraft.player != null && this.minecraft.player.isCreative()) {
-            return 18;
-        } else {
-            return 0;
+    @Override
+    public boolean canSeeEffects() {
+        int i = this.getGuiLeft() + this.getXSize() + 2 + this.creativeXOffset();
+        int j = this.width - i;
+        return j > 13;
+    }
+
+    /**
+     * Offsets the accessories screen button based on what screen is currently open.
+     * @param screen The current {@link Screen}.
+     * @return A {@link Tuple} containing the x and y {@link Integer}s.
+     */
+    public static Tuple<Integer, Integer> getButtonOffset(Screen screen) {
+        int x = 0;
+        int y = 0;
+        if (screen instanceof InventoryScreen || screen instanceof CuriosScreen) {
+            x = AetherConfig.CLIENT.button_inventory_x.get();
+            y = AetherConfig.CLIENT.button_inventory_y.get();
         }
+        if (screen instanceof CreativeModeInventoryScreen) {
+            x = AetherConfig.CLIENT.button_creative_x.get();
+            y = AetherConfig.CLIENT.button_creative_y.get();
+        }
+        if (screen instanceof AccessoriesScreen) {
+            x = AetherConfig.CLIENT.button_accessories_x.get();
+            y = AetherConfig.CLIENT.button_accessories_y.get();
+        }
+        return new Tuple<>(x, y);
     }
 }

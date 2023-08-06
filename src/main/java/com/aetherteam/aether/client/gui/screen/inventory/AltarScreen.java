@@ -10,7 +10,7 @@ import net.minecraft.world.entity.player.Inventory;
 public class AltarScreen extends AbstractAetherFurnaceScreen<AltarMenu> {
 	private static final ResourceLocation ALTAR_GUI_TEXTURES = new ResourceLocation(Aether.MODID, "textures/gui/menu/altar.png");
 	
-	public AltarScreen(AltarMenu container, Inventory inventory, Component title) {
-		super(container, new AltarRecipeBookComponent(), inventory, title, ALTAR_GUI_TEXTURES);
+	public AltarScreen(AltarMenu menu, Inventory inventory, Component title) {
+		super(menu, new AltarRecipeBookComponent(), inventory, title, ALTAR_GUI_TEXTURES);
 	}
 }
