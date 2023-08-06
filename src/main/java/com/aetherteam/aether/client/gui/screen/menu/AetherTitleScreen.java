@@ -32,7 +32,7 @@ public class AetherTitleScreen extends TitleScreen {
 	private static final ResourceLocation AETHER_LOGO = new ResourceLocation(Aether.MODID, "textures/gui/title/aether.png");
 	public static final Music MENU = new Music(AetherSoundEvents.MUSIC_MENU.getHolder().orElseThrow(), 20, 600, true);
 	private final PanoramaRenderer panorama = new PanoramaRenderer(new CubeMap(new ResourceLocation(Aether.MODID, "textures/gui/title/panorama/panorama")));
-	private AetherTitleScreenModUpdateIndicator modUpdateNotification;
+	private AetherModUpdateIndicator modUpdateNotification;
 	private boolean alignedLeft;
 	private int rows;
 
@@ -49,7 +49,7 @@ public class AetherTitleScreen extends TitleScreen {
 	protected void init() {
 		super.init();
 		this.setupButtons();
-		this.modUpdateNotification = new AetherTitleScreenModUpdateIndicator(this);
+		this.modUpdateNotification = new AetherModUpdateIndicator(this);
 		this.modUpdateNotification.init();
 	}
 
