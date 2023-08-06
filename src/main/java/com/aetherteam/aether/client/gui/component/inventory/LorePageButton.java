@@ -1,4 +1,4 @@
-package com.aetherteam.aether.client.gui.component;
+package com.aetherteam.aether.client.gui.component.inventory;
 
 import com.aetherteam.aether.Aether;
 import com.mojang.blaze3d.systems.RenderSystem;

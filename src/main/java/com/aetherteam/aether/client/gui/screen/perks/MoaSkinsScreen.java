@@ -26,7 +26,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.ConfirmLinkScreen;
@@ -97,14 +97,14 @@ public class MoaSkinsScreen extends Screen {
             UUID uuid = this.getMinecraft().player.getUUID();
             Map<UUID, MoaData> userSkinsData = ClientMoaSkinPerkData.INSTANCE.getClientPerkData();
 
-            if (this.selectedSkin == null) {
+            if (this.getSelectedSkin() == null) {
                 this.selectedSkin = userSkinsData.containsKey(uuid) ? userSkinsData.get(uuid).moaSkin() : this.moaSkins.get(0);
             }
 
             this.applyButton = this.addRenderableWidget(new ChangeSkinButton(ChangeSkinButton.ButtonType.APPLY, Button.builder(Component.translatable("gui.aether.moa_skins.button.apply"),
                     (pressed) -> AetherPlayer.get(this.getMinecraft().player).ifPresent((aetherPlayer) -> {
-                        PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Apply(this.getMinecraft().player.getUUID(), new MoaData(aetherPlayer.getLastRiddenMoa(), this.selectedSkin)));
-                        this.customizations.setMoaSkin(this.selectedSkin.getId());
+                        PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Apply(this.getMinecraft().player.getUUID(), new MoaData(aetherPlayer.getLastRiddenMoa(), this.getSelectedSkin())));
+                        this.customizations.setMoaSkin(this.getSelectedSkin().getId());
                         this.customizations.save();
                         this.customizations.load();
                     })
@@ -149,21 +149,20 @@ public class MoaSkinsScreen extends Screen {
     }
 
     @Override
-    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
         User user = UserData.Client.getClientUser();
         this.renderBackground(poseStack);
         this.renderWindow(poseStack);
         this.renderSlots(poseStack, mouseX, mouseY);
-        this.renderInterface(poseStack, mouseX, mouseY, partialTick);
-        super.render(poseStack, mouseX, mouseY, partialTick);
+        this.renderInterface(poseStack, mouseX, mouseY, partialTicks);
+        super.render(poseStack, mouseX, mouseY, partialTicks);
         if (this.getMinecraft().player != null) {
             if (user == null && this.connectionStatus) {
                 PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Remove(this.getMinecraft().player.getUUID()));
                 this.connectionStatus = false;
             } else if (user != null && !this.connectionStatus) {
-                AetherPlayer.get(this.getMinecraft().player).ifPresent((aetherPlayer) -> {
-                    PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Apply(this.getMinecraft().player.getUUID(), new MoaData(aetherPlayer.getLastRiddenMoa(), MoaSkins.getMoaSkins().get(this.customizations.getMoaSkin()))));
-                });
+                AetherPlayer.get(this.getMinecraft().player).ifPresent((aetherPlayer) ->
+                        PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Apply(this.getMinecraft().player.getUUID(), new MoaData(aetherPlayer.getLastRiddenMoa(), MoaSkins.getMoaSkins().get(this.customizations.getMoaSkin())))));
                 this.connectionStatus = true;
             }
         }
@@ -175,23 +174,23 @@ public class MoaSkinsScreen extends Screen {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, MOA_SKINS_GUI);
-        this.blit(poseStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        GuiComponent.blit(poseStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
 
         Component component = user == null ? Component.translatable("gui.aether.moa_skins.text.donate") : Component.translatable("gui.aether.moa_skins.text.reward");
         int y = (this.topPos + this.imageHeight - 69) + font.wordWrapHeight(component, this.imageWidth - 20);
         for (FormattedCharSequence sequence : font.split(component, this.imageWidth - 20)) {
-            Gui.drawCenteredString(poseStack, font, sequence, this.leftPos + (this.imageWidth / 2), y, 16777215);
+            GuiComponent.drawCenteredString(poseStack, font, sequence, this.leftPos + (this.imageWidth / 2), y, 16777215);
             y += 12;
         }
     }
 
-    private void renderInterface(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+    private void renderInterface(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
         User user = UserData.Client.getClientUser();
-        if (user != null && this.selectedSkin.getUserPredicate().test(user)) {
+        if (user != null && this.getSelectedSkin().getUserPredicate().test(user)) {
             this.applyButton.setIsActive(true);
             this.removeButton.setIsActive(true);
 
-            if (this.selectedSkin.getInfo().lifetime() || user.getCurrentTier() == null || user.getCurrentTierLevel() < this.selectedSkin.getInfo().tier().getLevel()) {
+            if (this.getSelectedSkin().getInfo().lifetime() || user.getCurrentTier() == null || user.getCurrentTierLevel() < this.getSelectedSkin().getInfo().tier().getLevel()) {
                 boolean mouseOver = this.isMouseOverIcon(mouseX, mouseY, 8);
                 this.renderLifetimeIcon(poseStack, mouseOver);
                 if (mouseOver) {
@@ -211,24 +210,24 @@ public class MoaSkinsScreen extends Screen {
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.setShaderTexture(0, MOA_SKINS_GUI);
-            this.blit(poseStack, this.leftPos + 13, this.topPos + 13, 54, 191, 10, 14); // Lock Icon
+            GuiComponent.blit(poseStack, this.leftPos + 13, this.topPos + 13, 54, 191, 10, 14); // Lock Icon
 
-            if (this.selectedSkin.getInfo().lifetime()) {
+            if (this.getSelectedSkin().getInfo().lifetime()) {
                 boolean mouseOver = this.isMouseOverIcon(mouseX, mouseY, 8);
                 this.renderLifetimeIcon(poseStack, mouseOver);
                 if (mouseOver) {
-                    this.renderTooltip(Component.translatable("gui.aether.moa_skins.tooltip.title.access.lifetime"), Component.translatable("gui.aether.moa_skins.tooltip.access.lifetime", this.selectedSkin.getInfo().tier().getDisplayName()), poseStack, mouseX, mouseY);
+                    this.renderTooltip(Component.translatable("gui.aether.moa_skins.tooltip.title.access.lifetime"), Component.translatable("gui.aether.moa_skins.tooltip.access.lifetime", this.getSelectedSkin().getInfo().tier().getDisplayName()), poseStack, mouseX, mouseY);
                 }
             } else {
                 boolean mouseOver = this.isMouseOverIcon(mouseX, mouseY, 7);
                 this.renderPledgingIcon(poseStack, mouseOver);
                 if (mouseOver) {
-                    this.renderTooltip(Component.translatable("gui.aether.moa_skins.tooltip.title.access.pledging"), Component.translatable("gui.aether.moa_skins.tooltip.access.pledging", this.selectedSkin.getInfo().tier().getDisplayName()), poseStack, mouseX, mouseY);
+                    this.renderTooltip(Component.translatable("gui.aether.moa_skins.tooltip.title.access.pledging"), Component.translatable("gui.aether.moa_skins.tooltip.access.pledging", this.getSelectedSkin().getInfo().tier().getDisplayName()), poseStack, mouseX, mouseY);
                 }
             }
         }
-        this.renderMoa(partialTick);
-        Screen.drawCenteredString(poseStack, this.getMinecraft().font, this.selectedSkin.getDisplayName(), this.leftPos + (this.imageWidth / 2), this.topPos + 12, 16777215); // Skin Name
+        this.renderMoa(partialTicks);
+        Screen.drawCenteredString(poseStack, this.getMinecraft().font, this.getSelectedSkin().getDisplayName(), this.leftPos + (this.imageWidth / 2), this.topPos + 12, 16777215); // Skin Name
         Screen.drawCenteredString(poseStack, this.getMinecraft().font, this.getTitle(), this.leftPos + (this.imageWidth / 2), this.topPos - 15, 16777215); // Title
     }
 
@@ -263,7 +262,7 @@ public class MoaSkinsScreen extends Screen {
 
     private void renderMoa(float partialTick) {
         if (this.getMinecraft().level != null) {
-            if (this.previewMoa == null) {
+            if (this.getPreviewMoa() == null) {
                 Moa moa = AetherEntityTypes.MOA.get().create(this.getMinecraft().level);
                 if (moa != null) {
                     moa.generateMoaUUID();
@@ -273,7 +272,7 @@ public class MoaSkinsScreen extends Screen {
                 }
             } else {
                 this.moaRotation = Mth.wrapDegrees(Mth.lerp(partialTick, this.moaRotation, this.moaRotation + 2.5F));
-                renderRotatingEntity(this.leftPos + (this.imageWidth / 2), this.topPos + (this.imageHeight / 2) - 4, 27, this.moaRotation, -20.0F, this.previewMoa);
+                renderRotatingEntity(this.leftPos + (this.imageWidth / 2), this.topPos + (this.imageHeight / 2) - 4, 27, this.moaRotation, -20.0F, this.getPreviewMoa());
             }
         }
     }
@@ -284,39 +283,39 @@ public class MoaSkinsScreen extends Screen {
      * Merged code from the two methods, and modified so that the head rotation follows the body rotation and doesn't rotate separately.
      */
     public static void renderRotatingEntity(int posX, int posY, int scale, float angleXComponent, float angleYComponent, LivingEntity livingEntity) {
-        PoseStack poseStack = RenderSystem.getModelViewStack();
-        poseStack.pushPose();
-        poseStack.translate((float) posX, (float) posY, 1050.0F);
-        poseStack.scale(1.0F, 1.0F, -1.0F);
+        PoseStack viewStack = RenderSystem.getModelViewStack();
+        viewStack.pushPose();
+        viewStack.translate((float) posX, (float) posY, 1050.0F);
+        viewStack.scale(1.0F, 1.0F, -1.0F);
         RenderSystem.applyModelViewMatrix();
-        PoseStack poseStack1 = new PoseStack();
-        poseStack1.translate(0.0F, 0.0F, 1000.0F);
-        poseStack1.scale((float) scale, (float) scale, (float) scale);
-        Quaternionf quaternionf = new Quaternionf().rotateZ(Mth.PI);
-        Quaternionf quaternionf1 = new Quaternionf().rotateX(angleYComponent * Mth.DEG_TO_RAD);
-        quaternionf.mul(quaternionf1);
-        poseStack1.mulPose(quaternionf);
-        float f2 = livingEntity.yBodyRot;
-        float f3 = livingEntity.getYRot();
-        float f4 = livingEntity.getXRot();
-        livingEntity.yBodyRot = 180.0F + angleXComponent;
+        PoseStack poseStack = new PoseStack();
+        poseStack.translate(0.0F, 0.0F, 1000.0F);
+        poseStack.scale((float) scale, (float) scale, (float) scale);
+        Quaternionf xQuaternion = new Quaternionf().rotateZ(Mth.PI);
+        Quaternionf zQuaternion = new Quaternionf().rotateX(angleYComponent * Mth.DEG_TO_RAD);
+        xQuaternion.mul(zQuaternion);
+        poseStack.mulPose(xQuaternion);
+        float yBodyRot = livingEntity.yBodyRot;
+        float yRot = livingEntity.getYRot();
+        float xRot = livingEntity.getXRot();
+        livingEntity.setYBodyRot(180.0F + angleXComponent);
         livingEntity.setYRot(180.0F + angleXComponent);
         livingEntity.setXRot(-angleYComponent);
-        livingEntity.yHeadRot = livingEntity.getYRot();
+        livingEntity.setYHeadRot(livingEntity.getYRot());
         livingEntity.yHeadRotO = livingEntity.getYRot();
         Lighting.setupForEntityInInventory();
         EntityRenderDispatcher entityRenderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
-        quaternionf1.conjugate();
-        entityRenderDispatcher.overrideCameraOrientation(quaternionf1);
+        zQuaternion.conjugate();
+        entityRenderDispatcher.overrideCameraOrientation(zQuaternion);
         entityRenderDispatcher.setRenderShadow(false);
         MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
-        RenderSystem.runAsFancy(() -> entityRenderDispatcher.render(livingEntity, 0.0, 0.0, 0.0, 0.0F, 1.0F, poseStack1, bufferSource, 15728880));
+        RenderSystem.runAsFancy(() -> entityRenderDispatcher.render(livingEntity, 0.0, 0.0, 0.0, 0.0F, 1.0F, poseStack, bufferSource, 15728880));
         bufferSource.endBatch();
         entityRenderDispatcher.setRenderShadow(true);
-        livingEntity.yBodyRot = f2;
-        livingEntity.setYRot(f3);
-        livingEntity.setXRot(f4);
-        poseStack.popPose();
+        livingEntity.setYBodyRot(yBodyRot);
+        livingEntity.setYRot(yRot);
+        livingEntity.setXRot(xRot);
+        viewStack.popPose();
         RenderSystem.applyModelViewMatrix();
         Lighting.setupFor3DItems();
     }
@@ -334,25 +333,25 @@ public class MoaSkinsScreen extends Screen {
                 int x = this.leftPos + 7 + (slotIndex * 18);
                 int y = (this.topPos + (this.imageHeight / 2)) + 9;
 
-                if (user == null || !skin.getUserPredicate().test(user) || skin == this.selectedSkin || this.getSlotIndex(mouseX, mouseY) == slotIndex) {
-                    int u = skin == this.selectedSkin || this.getSlotIndex(mouseX, mouseY) == slotIndex ? 18 : 0; // Highlighted slot vs. Darkened slot.
+                if (user == null || !skin.getUserPredicate().test(user) || skin == this.getSelectedSkin() || this.getSlotIndex(mouseX, mouseY) == slotIndex) {
+                    int u = skin == this.getSelectedSkin() || this.getSlotIndex(mouseX, mouseY) == slotIndex ? 18 : 0; // Highlighted slot vs. Darkened slot.
                     RenderSystem.setShader(GameRenderer::getPositionTexShader);
                     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
                     RenderSystem.setShaderTexture(0, MOA_SKINS_GUI);
-                    this.blit(poseStack, x, y, u, 191, 18, 18); // Render slot.
+                    GuiComponent.blit(poseStack, x, y, u, 191, 18, 18); // Render slot.
                 }
 
                 if (userSkinsData.containsKey(uuid) && userSkinsData.get(uuid).moaSkin() == skin) {
                     RenderSystem.setShader(GameRenderer::getPositionTexShader);
                     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
                     RenderSystem.setShaderTexture(0, MOA_SKINS_GUI);
-                    this.blit(poseStack, x, y, 36, 191, 18, 18); // Render golden slot outline.
+                    GuiComponent.blit(poseStack, x, y, 36, 191, 18, 18); // Render golden slot outline.
                 }
 
                 RenderSystem.setShader(GameRenderer::getPositionTexShader);
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
                 RenderSystem.setShaderTexture(0, skin.getIconLocation());
-                blit(poseStack, x + 1, y + 1, 0, 0, 16, 16, 16, 16); // Render Moa skin icon.
+                GuiComponent.blit(poseStack, x + 1, y + 1, 0, 0, 16, 16, 16, 16); // Render Moa skin icon.
 
                 slotIndex++;
             }
@@ -365,7 +364,7 @@ public class MoaSkinsScreen extends Screen {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, MOA_SKINS_GUI);
-        this.blit(poseStack, (int) (scrollbarLeft + this.scrollX), scrollbarTop, scrollbarU, 209, 13, 6); // Render scrollbar.
+        GuiComponent.blit(poseStack, (int) (scrollbarLeft + this.scrollX), scrollbarTop, scrollbarU, 209, 13, 6); // Render scrollbar.
 
         this.renderSlotTooltips(poseStack, mouseX, mouseY);
     }

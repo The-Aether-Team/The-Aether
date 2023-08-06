@@ -5,7 +5,7 @@ import com.aetherteam.aether.api.AetherMenus;
 import com.aetherteam.aether.client.AetherMenuUtil;
 import com.aetherteam.aether.client.AetherMusicManager;
 import com.aetherteam.aether.client.WorldDisplayHelper;
-import com.aetherteam.aether.client.gui.component.DynamicMenuButton;
+import com.aetherteam.aether.client.gui.component.menu.DynamicMenuButton;
 import com.aetherteam.cumulus.CumulusConfig;
 import com.aetherteam.cumulus.api.MenuHelper;
 import com.aetherteam.cumulus.client.CumulusClient;

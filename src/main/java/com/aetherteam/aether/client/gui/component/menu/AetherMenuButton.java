@@ -1,4 +1,4 @@
-package com.aetherteam.aether.client.gui.component;
+package com.aetherteam.aether.client.gui.component.menu;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.gui.screen.menu.AetherTitleScreen;

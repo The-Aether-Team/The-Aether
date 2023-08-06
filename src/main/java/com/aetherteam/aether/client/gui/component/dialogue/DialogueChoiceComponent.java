@@ -1,4 +1,4 @@
-package com.aetherteam.aether.client.gui.component;
+package com.aetherteam.aether.client.gui.component.dialogue;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -9,8 +9,8 @@ import net.minecraft.network.chat.MutableComponent;
 /**
  * This is a widget that allows the player to select a line of dialogue to say to an NPC.
  */
-public class PlayerDialogueButton extends Button {
-    public PlayerDialogueButton(MutableComponent pMessage, Button.OnPress onPress) {
+public class DialogueChoiceComponent extends Button {
+    public DialogueChoiceComponent(MutableComponent pMessage, Button.OnPress onPress) {
         super(0, 0, 0, 12, appendBrackets(pMessage), onPress, DEFAULT_NARRATION);
         this.width = Minecraft.getInstance().font.width(this.getMessage()) + 2;
     }

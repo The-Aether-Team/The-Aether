@@ -1,4 +1,4 @@
-package com.aetherteam.aether.client.gui.component;
+package com.aetherteam.aether.client.gui.component.menu;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.Button;

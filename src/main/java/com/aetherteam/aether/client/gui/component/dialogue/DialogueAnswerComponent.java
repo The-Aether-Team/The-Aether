@@ -1,4 +1,4 @@
-package com.aetherteam.aether.client.gui.component;
+package com.aetherteam.aether.client.gui.component.dialogue;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -12,13 +12,11 @@ import java.util.List;
 /**
  * GuiComponent for the npc to respond to the player with.
  */
-public class NpcDialogueComponent extends GuiComponent {
-    public int x;
-    public int y;
+public class DialogueAnswerComponent extends GuiComponent {
+    private final List<NpcDialogueElement> splitLines;
     public int height;
-    public final List<NpcDialogueElement> splitLines;
 
-    public NpcDialogueComponent(Component pMessage) {
+    public DialogueAnswerComponent(Component pMessage) {
         this.splitLines = new ArrayList<>();
         this.updateDialogue(pMessage);
     }
@@ -65,7 +63,7 @@ public class NpcDialogueComponent extends GuiComponent {
         }
 
         public void render(PoseStack pPoseStack) {
-            NpcDialogueComponent.this.fillGradient(pPoseStack, this.x, this.y, this.x + width, this.y + 12, 0x66000000, 0x66000000);
+            DialogueAnswerComponent.this.fillGradient(pPoseStack, this.x, this.y, this.x + width, this.y + 12, 0x66000000, 0x66000000);
             drawString(pPoseStack, Minecraft.getInstance().font, this.text, this.x + 1, this.y + 1, 0xFFFFFF);
         }
     }

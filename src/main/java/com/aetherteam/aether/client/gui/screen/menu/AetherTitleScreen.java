@@ -2,8 +2,8 @@ package com.aetherteam.aether.client.gui.screen.menu;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.AetherSoundEvents;
-import com.aetherteam.aether.client.gui.component.AetherMenuButton;
-import com.aetherteam.aether.client.gui.component.DynamicMenuButton;
+import com.aetherteam.aether.client.gui.component.menu.AetherMenuButton;
+import com.aetherteam.aether.client.gui.component.menu.DynamicMenuButton;
 import com.aetherteam.aether.mixin.mixins.client.accessor.TitleScreenAccessor;
 import com.aetherteam.cumulus.CumulusConfig;
 import com.mojang.blaze3d.systems.RenderSystem;
