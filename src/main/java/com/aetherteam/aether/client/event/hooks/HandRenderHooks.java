@@ -21,6 +21,8 @@ import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 import top.theillusivec4.curios.api.client.ICurioRenderer;
 
+import javax.annotation.Nullable;
+
 public class HandRenderHooks {
     /**
      * Handles rendering gloves on the player's hands in first person, if they aren't wearing an Invisibility Cloak and if the gloves are set to be visible.
@@ -35,7 +37,7 @@ public class HandRenderHooks {
      * @param packedLight The {@link Integer} for the packed lighting for rendering.
      * @see com.aetherteam.aether.client.event.listeners.HandRenderListener#onRenderHand(RenderHandEvent)
      */
-    public static void renderGloveHandOverlay(ItemInHandRenderer itemInHandRenderer, AbstractClientPlayer player, InteractionHand hand, float pitch, float swingProgress, float equippedProgress, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+    public static void renderGloveHandOverlay(ItemInHandRenderer itemInHandRenderer, @Nullable AbstractClientPlayer player, InteractionHand hand, float pitch, float swingProgress, float equippedProgress, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         if (player != null) {
             AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
                 if (!aetherPlayer.isWearingInvisibilityCloak()) { // Check for Invisibility Cloak.
@@ -72,7 +74,7 @@ public class HandRenderHooks {
      * @param packedLight The {@link Integer} for the packed lighting for rendering.
      * @see com.aetherteam.aether.client.event.listeners.HandRenderListener#onRenderHand(RenderHandEvent)
      */
-    public static void renderShieldOfRepulsionHandOverlay(ItemInHandRenderer itemInHandRenderer, AbstractClientPlayer player, InteractionHand hand, float pitch, float swingProgress, float equippedProgress, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+    public static void renderShieldOfRepulsionHandOverlay(ItemInHandRenderer itemInHandRenderer, @Nullable AbstractClientPlayer player, InteractionHand hand, float pitch, float swingProgress, float equippedProgress, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         if (player != null) {
             AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
                 if (aetherPlayer.isWearingInvisibilityCloak()) { // Check for Invisibility Cloak.

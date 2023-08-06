@@ -7,6 +7,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
+import javax.annotation.Nullable;
+
 /**
  * Communicates whether a language entry for lore exists from the client to the server.
  */
@@ -26,7 +28,7 @@ public record LoreExistsPacket(int playerID, ItemStack itemStack, boolean exists
     }
 
     @Override
-    public void execute(Player player) {
+    public void execute(@Nullable Player player) {
         if (player != null && player.getServer() != null && player.getLevel().getEntity(this.playerID()) instanceof ServerPlayer && player.containerMenu instanceof LoreBookMenu menu) {
             menu.setLoreEntryExists(this.exists());
         }

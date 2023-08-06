@@ -93,7 +93,7 @@ public class DimensionHooks {
      * @return Whether the portal should be created, as a {@link Boolean}.
      * @see com.aetherteam.aether.event.listeners.DimensionListener#onInteractWithPortalFrame(PlayerInteractEvent.RightClickBlock)
      */
-    public static boolean createPortal(Player player, Level level, BlockPos pos, Direction direction, ItemStack stack, InteractionHand hand) {
+    public static boolean createPortal(Player player, Level level, BlockPos pos, @Nullable Direction direction, ItemStack stack, InteractionHand hand) {
         if (direction != null) {
             BlockPos relativePos = pos.relative(direction);
             if (stack.is(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS)) { // Checks if the item can activate the portal.

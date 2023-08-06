@@ -697,11 +697,6 @@ public class AetherPlayerCapability implements AetherPlayer {
 	}
 
 	@Override
-	public void addPortalTime(int time) {
-		this.aetherPortalTimer += time;
-	}
-
-	@Override
 	public void setPortalTimer(int timer) {
 		this.aetherPortalTimer = timer;
 	}

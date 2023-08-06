@@ -9,9 +9,12 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.phys.AABB;
 
+import javax.annotation.Nullable;
+
 public abstract class AbstractWhirlwindParticle<T extends AbstractWhirlwind> extends TextureSheetParticle {
     private static final TargetingConditions TARGET_CONDITION = TargetingConditions.forNonCombat();
     private final SpriteSet animatedSprite;
+    @Nullable
     protected final AbstractWhirlwind whirlwind;
 
     public AbstractWhirlwindParticle(ClientLevel level, double xCoord, double yCoord, double zCoord, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprite) {

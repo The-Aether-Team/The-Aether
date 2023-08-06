@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.Button;
 import net.minecraftforge.common.ForgeConfigSpec;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -40,7 +41,7 @@ public class DynamicMenuButton extends Button {
         return true;
     }
 
-    private int gatherOffsets(List<ForgeConfigSpec.ConfigValue<Boolean>> configs) {
+    private int gatherOffsets(@Nullable List<ForgeConfigSpec.ConfigValue<Boolean>> configs) {
         int offset = 0;
         if (configs != null) {
             for (ForgeConfigSpec.ConfigValue<Boolean> value : configs) {

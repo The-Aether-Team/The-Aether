@@ -22,6 +22,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
+import javax.annotation.Nullable;
+
 public class CloudMinion extends FlyingMob {
     private static final EntityDataAccessor<Integer> DATA_OWNER_ID = SynchedEntityData.defineId(CloudMinion.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_IS_RIGHT_ID = SynchedEntityData.defineId(CloudMinion.class, EntityDataSerializers.BOOLEAN);
@@ -42,8 +44,8 @@ public class CloudMinion extends FlyingMob {
         this.noPhysics = true;
         this.setPositionFromOwner();
         this.setPos(this.targetX, this.targetY, this.targetZ);
-        this.setXRot(this.getOwner().getXRot());
-        this.setYRot(this.getOwner().getYRot());
+        this.setXRot(player.getXRot());
+        this.setYRot(player.getYRot());
     }
    
     public static AttributeSupplier.Builder createMobAttributes() {
@@ -105,21 +107,23 @@ public class CloudMinion extends FlyingMob {
      * Sets the position that the Cloud Minion should hover at on the side of the player.
      */
     public void setPositionFromOwner() {
-        if (this.distanceTo(this.getOwner()) > 2.0F) {
-            this.targetX = this.getOwner().getX();
-            this.targetY = this.getOwner().getY() + 1.0;
-            this.targetZ = this.getOwner().getZ();
-        } else {
-            double yaw = this.getOwner().getYRot();
-            if (this.getSide() == HumanoidArm.RIGHT) {
-                yaw -= 90.0;
+        if (this.getOwner() != null) {
+            if (this.distanceTo(this.getOwner()) > 2.0F) {
+                this.targetX = this.getOwner().getX();
+                this.targetY = this.getOwner().getY() + 1.0;
+                this.targetZ = this.getOwner().getZ();
             } else {
-                yaw += 90.0;
+                double yaw = this.getOwner().getYRot();
+                if (this.getSide() == HumanoidArm.RIGHT) {
+                    yaw -= 90.0;
+                } else {
+                    yaw += 90.0;
+                }
+                yaw /= -Mth.RAD_TO_DEG;
+                this.targetX = this.getOwner().getX() + Math.sin(yaw) * 1.05;
+                this.targetY = this.getOwner().getY() + 1.0;
+                this.targetZ = this.getOwner().getZ() + Math.cos(yaw) * 1.05;
             }
-            yaw /= -Mth.RAD_TO_DEG;
-            this.targetX = this.getOwner().getX() + Math.sin(yaw) * 1.05;
-            this.targetY = this.getOwner().getY() + 1.0;
-            this.targetZ = this.getOwner().getZ() + Math.cos(yaw) * 1.05;
         }
     }
 
@@ -127,9 +131,11 @@ public class CloudMinion extends FlyingMob {
      * Rotates the Cloud Minion according to the player's rotation.
      */
     public void setRotationFromOwner() {
-        this.setYRot(this.getOwner().getYRot() + (this.getSide() == HumanoidArm.RIGHT ? 1.0F : -1.0F));
-        this.setXRot(this.getOwner().getXRot());
-        this.setYHeadRot(this.getOwner().getYHeadRot());
+        if (this.getOwner() != null) {
+            this.setYRot(this.getOwner().getYRot() + (this.getSide() == HumanoidArm.RIGHT ? 1.0F : -1.0F));
+            this.setXRot(this.getOwner().getXRot());
+            this.setYHeadRot(this.getOwner().getYHeadRot());
+        }
     }
 
     /**
@@ -191,6 +197,7 @@ public class CloudMinion extends FlyingMob {
     /**
      * @return The owner {@link Player} of the Cloud Minion.
      */
+    @Nullable
     public Player getOwner() {
         return (Player) this.getLevel().getEntity(this.getEntityData().get(DATA_OWNER_ID));
     }

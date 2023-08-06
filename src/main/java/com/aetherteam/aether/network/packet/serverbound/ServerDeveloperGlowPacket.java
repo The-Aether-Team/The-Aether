@@ -6,6 +6,7 @@ import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 
+import javax.annotation.Nullable;
 import java.util.UUID;
 
 public class ServerDeveloperGlowPacket {
@@ -26,7 +27,7 @@ public class ServerDeveloperGlowPacket {
         }
 
         @Override
-        public void execute(Player playerEntity) {
+        public void execute(@Nullable Player playerEntity) {
             if (playerEntity != null && playerEntity.getServer() != null && this.playerUUID() != null && this.developerGlow() != null) {
                 ServerPerkData.DEVELOPER_GLOW_INSTANCE.applyPerkWithVerification(playerEntity.getServer(), this.playerUUID(), this.developerGlow());
             }
@@ -48,7 +49,7 @@ public class ServerDeveloperGlowPacket {
         }
 
         @Override
-        public void execute(Player playerEntity) {
+        public void execute(@Nullable Player playerEntity) {
             if (playerEntity != null && playerEntity.getServer() != null && this.playerUUID() != null) {
                 ServerPerkData.DEVELOPER_GLOW_INSTANCE.removePerk(playerEntity.getServer(), this.playerUUID());
             }

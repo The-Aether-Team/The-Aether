@@ -60,6 +60,7 @@ public final class EquipmentUtil {
      * @param entity The {@link LivingEntity} wearer.
      * @return The {@link SlotResult} for the curio item.
      */
+    @Nullable
     public static SlotResult getZanitePendant(LivingEntity entity) {
         return getCurio(entity, AetherItems.ZANITE_PENDANT.get());
     }

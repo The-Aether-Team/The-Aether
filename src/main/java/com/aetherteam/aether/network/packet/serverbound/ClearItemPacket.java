@@ -6,6 +6,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
+import javax.annotation.Nullable;
+
 /**
  * Clears the item currently held by the player's mouse in a container GUI.
  */
@@ -21,7 +23,7 @@ public record ClearItemPacket(int playerID) implements BasePacket {
     }
 
     @Override
-    public void execute(Player playerEntity) {
+    public void execute(@Nullable Player playerEntity) {
         if (playerEntity != null && playerEntity.getServer() != null && playerEntity.getLevel().getEntity(this.playerID()) instanceof ServerPlayer serverPlayer) {
             serverPlayer.containerMenu.setCarried(ItemStack.EMPTY);
         }

@@ -5,6 +5,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.state.BlockState;
 
+import javax.annotation.Nullable;
+
 public interface SkyrootTool {
     /**
      * Doubles the count of item drops as long as the harvesting tool doesn't have silk touch and the block is able to have double drops.
@@ -14,7 +16,7 @@ public interface SkyrootTool {
      * @return The new modified {@link ItemStack} of the item drop.
      * @see com.aetherteam.aether.loot.functions.DoubleDrops
      */
-    default ItemStack doubleDrops(ItemStack drop, ItemStack tool, BlockState state) {
+    default ItemStack doubleDrops(ItemStack drop, @Nullable ItemStack tool, @Nullable BlockState state) {
         if (tool != null && tool.getEnchantmentLevel(Enchantments.SILK_TOUCH) == 0) {
             if (state != null && state.getValue(AetherBlockStateProperties.DOUBLE_DROPS)) {
                 if (tool.isCorrectToolForDrops(state)) {

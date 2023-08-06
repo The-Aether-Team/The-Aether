@@ -95,8 +95,7 @@ public class WorldDisplayHelper {
      * Stops a level if one exists, after resetting the player and helper states to default with {@link WorldDisplayHelper#resetStates()}.
      * @param screen The current {@link Screen}.
      */
-    @Nullable
-    public static void stopLevel(Screen screen) {
+    public static void stopLevel(@Nullable Screen screen) {
         resetStates();
         Minecraft minecraft = Minecraft.getInstance();
         IntegratedServer server = minecraft.getSingleplayerServer();
@@ -126,6 +125,7 @@ public class WorldDisplayHelper {
     /**
      * @return The {@link LevelSummary} for the world preview level.
      */
+    @Nullable
     public static LevelSummary getLevelSummary() {
         if (loadedSummary == null) {
             findLevelSummary(); // This sets loadedSummary if it is null.

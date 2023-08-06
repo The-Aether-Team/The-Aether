@@ -90,7 +90,7 @@ public final class PerkUtil {
      * @return A {@link Triple} storing three {@link Float}s for RGB values.
      */
     @Nullable
-    public static Triple<Float, Float, Float> getPerkColor(String hex) {
+    public static Triple<Float, Float, Float> getPerkColor(@Nullable String hex) {
         if (hex != null && !hex.isEmpty()) {
             try {
                 int decimal = Integer.parseInt(hex, 16);

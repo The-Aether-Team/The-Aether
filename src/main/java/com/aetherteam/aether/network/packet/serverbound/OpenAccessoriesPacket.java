@@ -13,6 +13,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkHooks;
 
+import javax.annotation.Nullable;
+
 /**
  * [CODE COPY] - {@link top.theillusivec4.curios.common.network.client.CPacketOpenCurios}.<br><br>
  * Adapted to Nitrogen packet system.
@@ -29,7 +31,7 @@ public record OpenAccessoriesPacket(ItemStack carryStack) implements BasePacket 
     }
 
     @Override
-    public void execute(Player player) {
+    public void execute(@Nullable Player player) {
         if (player != null && player.getServer() != null && player instanceof ServerPlayer serverPlayer) {
             ItemStack itemStack = serverPlayer.isCreative() ? this.carryStack() : serverPlayer.containerMenu.getCarried();
             serverPlayer.containerMenu.setCarried(ItemStack.EMPTY);

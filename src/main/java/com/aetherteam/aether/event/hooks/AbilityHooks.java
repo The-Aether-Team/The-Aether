@@ -62,6 +62,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -141,7 +142,7 @@ public class AbilityHooks {
          * Checks whether an entity can be targeted while wearing an Invisibility Cloak.
          * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onTargetSet(LivingEvent.LivingVisibilityEvent)
          */
-        public static boolean preventTargeting(LivingEntity target, Entity lookingEntity) {
+        public static boolean preventTargeting(LivingEntity target, @Nullable Entity lookingEntity) {
             if (target instanceof Player player && AetherPlayer.get(player).isPresent() && AetherPlayer.get(player).resolve().isPresent()) {
                 return lookingEntity != null
                         && !lookingEntity.getType().is(AetherTags.Entities.IGNORE_INVISIBILITY)
@@ -464,7 +465,7 @@ public class AbilityHooks {
          * @return The modified damage as a {@link Float}.
          * @see com.aetherteam.aether.event.listeners.abilities.WeaponAbilityListener#onEntityDamage(LivingDamageEvent)
          */
-        public static float reduceArmorEffectiveness(LivingEntity target, Entity source, float damage) {
+        public static float reduceArmorEffectiveness(LivingEntity target, @Nullable Entity source, float damage) {
             if (source != null) {
                 if ((source.getType().getDescriptionId().startsWith("entity.aether") || source.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY) && !source.getType().is(AetherTags.Entities.TREATED_AS_VANILLA_ENTITY))) { // Checks if the attacker is an Aether entity.
                     for (ItemStack stack : target.getArmorSlots()) {

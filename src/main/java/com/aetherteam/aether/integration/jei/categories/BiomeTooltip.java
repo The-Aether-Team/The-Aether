@@ -8,10 +8,11 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public interface BiomeTooltip {
-    default void populateBiomeInformation(ResourceKey<Biome> biomeKey, TagKey<Biome> biomeTag, List<Component> tooltip) {
+    default void populateBiomeInformation(@Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, List<Component> tooltip) {
         if (Minecraft.getInstance().level != null) {
             if (biomeKey != null || biomeTag != null) {
                 tooltip.add(Component.translatable("gui.aether.jei.biome.tooltip").withStyle(ChatFormatting.GRAY));

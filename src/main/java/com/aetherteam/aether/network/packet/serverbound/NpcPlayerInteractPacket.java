@@ -5,6 +5,8 @@ import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 
+import javax.annotation.Nullable;
+
 /**
  * This packet is sent to the server whenever the player chooses an important action in the NPC dialogue.
  */
@@ -20,7 +22,7 @@ public record NpcPlayerInteractPacket(int entityID, byte interactionID) implemen
     }
 
     @Override
-    public void execute(Player playerEntity) {
+    public void execute(@Nullable Player playerEntity) {
         if (playerEntity != null && playerEntity.getServer() != null && playerEntity.getLevel().getEntity(this.entityID()) instanceof NpcDialogue npc) {
             npc.handleNpcInteraction(playerEntity, this.interactionID());
         }
