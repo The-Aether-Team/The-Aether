@@ -51,13 +51,11 @@ public class MenuHooks {
      */
     public static Button setupToggleWorldButton(Screen screen) {
         if (screen instanceof TitleScreen) {
-            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24 - getButtonOffset(), 4, 20, 20, Component.translatable("gui.aether.menu.button.world_preview"),
-                    (pressed) -> {
-                        AetherConfig.CLIENT.enable_world_preview.set(!AetherConfig.CLIENT.enable_world_preview.get());
-                        AetherConfig.CLIENT.enable_world_preview.save();
-                        WorldDisplayHelper.toggleWorldPreview();
-                    });
-            dynamicMenuButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.menu.preview")));
+            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(new Button.Builder(Component.translatable("gui.aether.menu.button.world_preview"), (pressed) -> {
+                AetherConfig.CLIENT.enable_world_preview.set(!AetherConfig.CLIENT.enable_world_preview.get());
+                AetherConfig.CLIENT.enable_world_preview.save();
+                WorldDisplayHelper.toggleWorldPreview();
+            }).bounds(screen.width - 24 - getButtonOffset(), 4, 20, 20).tooltip(Tooltip.create(Component.translatable("gui.aether.menu.preview"))));
             dynamicMenuButton.setDisplayConfigs(AetherConfig.CLIENT.enable_world_preview_button);
             return dynamicMenuButton;
         }
@@ -72,19 +70,17 @@ public class MenuHooks {
      */
     public static Button setupMenuSwitchButton(Screen screen) {
         if (screen instanceof TitleScreen) {
-            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24 - getButtonOffset(), 4, 20, 20, Component.translatable("gui.aether.menu.button.theme"),
-                    (pressed) -> {
-                        String menu = toggleBetweenMenus();
-                        if (menu != null) {
-                            CumulusConfig.CLIENT.active_menu.set(menu);
-                            CumulusConfig.CLIENT.active_menu.save();
-                        }
-                        CumulusClient.MENU_HELPER.setShouldFade(true);
-                        Minecraft.getInstance().setScreen(CumulusClient.MENU_HELPER.applyMenu(CumulusClient.MENU_HELPER.getActiveMenu()));
-                        Minecraft.getInstance().getMusicManager().stopPlaying();
-                        AetherMusicManager.stopPlaying();
-                    });
-            dynamicMenuButton.setTooltip(Tooltip.create(Component.translatable(AetherMenuUtil.isAetherMenu() ? "gui.aether.menu.minecraft" : "gui.aether.menu.aether")));
+            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(new Button.Builder(Component.translatable("gui.aether.menu.button.theme"), (pressed) -> {
+                String menu = toggleBetweenMenus();
+                if (menu != null) {
+                    CumulusConfig.CLIENT.active_menu.set(menu);
+                    CumulusConfig.CLIENT.active_menu.save();
+                }
+                CumulusClient.MENU_HELPER.setShouldFade(true);
+                Minecraft.getInstance().setScreen(CumulusClient.MENU_HELPER.applyMenu(CumulusClient.MENU_HELPER.getActiveMenu()));
+                Minecraft.getInstance().getMusicManager().stopPlaying();
+                AetherMusicManager.stopPlaying();
+            }).bounds(screen.width - 24 - getButtonOffset(), 4, 20, 20).tooltip(Tooltip.create(Component.translatable(AetherMenuUtil.isAetherMenu() ? "gui.aether.menu.minecraft" : "gui.aether.menu.aether"))));
             dynamicMenuButton.setOffsetConfigs(AetherConfig.CLIENT.enable_world_preview_button);
             dynamicMenuButton.setDisplayConfigs(AetherConfig.CLIENT.enable_aether_menu_button);
             return dynamicMenuButton;
@@ -100,15 +96,13 @@ public class MenuHooks {
      */
     public static Button setupQuickLoadButton(Screen screen) {
         if (screen instanceof TitleScreen) {
-            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(screen.width - 24 - getButtonOffset(), 4, 20, 20, Component.translatable("gui.aether.menu.button.quick_load"),
-                    (pressed) -> {
-                        WorldDisplayHelper.enterLoadedLevel();
-                        Minecraft.getInstance().getMusicManager().stopPlaying();
-                        Minecraft.getInstance().getSoundManager().stop();
-                        AetherMusicManager.stopPlaying();
-                        Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
-                    });
-            dynamicMenuButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.menu.load")));
+            DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(new Button.Builder(Component.translatable("gui.aether.menu.button.quick_load"), (pressed) -> {
+                WorldDisplayHelper.enterLoadedLevel();
+                Minecraft.getInstance().getMusicManager().stopPlaying();
+                Minecraft.getInstance().getSoundManager().stop();
+                AetherMusicManager.stopPlaying();
+                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+            }).bounds(screen.width - 24 - getButtonOffset(), 4, 20, 20).tooltip(Tooltip.create(Component.translatable("gui.aether.menu.load"))));
             dynamicMenuButton.setOffsetConfigs(AetherConfig.CLIENT.enable_world_preview_button, AetherConfig.CLIENT.enable_aether_menu_button);
             dynamicMenuButton.setDisplayConfigs(AetherConfig.CLIENT.enable_world_preview, AetherConfig.CLIENT.enable_quick_load_button);
             return dynamicMenuButton;

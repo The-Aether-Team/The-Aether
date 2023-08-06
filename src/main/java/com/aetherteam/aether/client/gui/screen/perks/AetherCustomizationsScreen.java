@@ -80,7 +80,7 @@ public class AetherCustomizationsScreen extends Screen {
                 this.setupDeveloperGlowOptions(xPos, yPos, i);
             }
         }
-        this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, (pressed) -> this.onClose()).pos(this.width / 2 - 100, this.height - 30).size(200, 20).build());
+        this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, (pressed) -> this.onClose()).bounds(this.width / 2 - 100, this.height - 30, 200, 20).build());
     }
 
     /**
@@ -91,10 +91,10 @@ public class AetherCustomizationsScreen extends Screen {
      */
     private void setupHaloOptions(int xPos, int yPos, int i) {
         this.haloToggleButton = this.addRenderableWidget(Button.builder(Component.translatable(this.haloEnabled ? "gui.aether.customization.halo.on" : "gui.aether.customization.halo.off"),
-                (pressed) -> {
-                    this.haloEnabled = !this.haloEnabled;
-                    pressed.setMessage(Component.translatable(this.haloEnabled ? "gui.aether.customization.halo.on" : "gui.aether.customization.halo.off"));
-                }).pos(xPos, yPos + (25 * i)).build());
+            (pressed) -> {
+                this.haloEnabled = !this.haloEnabled;
+                pressed.setMessage(Component.translatable(this.haloEnabled ? "gui.aether.customization.halo.on" : "gui.aether.customization.halo.off"));
+            }).pos(xPos, yPos + (25 * i)).build());
 
         this.haloColorBox = this.addRenderableWidget(new HaloColorBox(this, this.getMinecraft().font, xPos + 155, yPos + (25 * i), 60, 20, Component.translatable("gui.aether.customization.halo.color")));
         if (this.haloColor != null && !this.haloColor.isEmpty()) {
@@ -161,10 +161,10 @@ public class AetherCustomizationsScreen extends Screen {
      */
     private void setupDeveloperGlowOptions(int xPos, int yPos, int i) {
         this.developerGlowToggleButton = this.addRenderableWidget(Button.builder(Component.translatable(this.developerGlowEnabled ? "gui.aether.customization.developer_glow.on" : "gui.aether.customization.developer_glow.off"),
-                (pressed) -> {
-                    this.developerGlowEnabled = !this.developerGlowEnabled;
-                    pressed.setMessage(Component.translatable(this.developerGlowEnabled ? "gui.aether.customization.developer_glow.on" : "gui.aether.customization.developer_glow.off"));
-                }).pos(xPos, yPos + (25 * i)).build());
+            (pressed) -> {
+                this.developerGlowEnabled = !this.developerGlowEnabled;
+                pressed.setMessage(Component.translatable(this.developerGlowEnabled ? "gui.aether.customization.developer_glow.on" : "gui.aether.customization.developer_glow.off"));
+            }).pos(xPos, yPos + (25 * i)).build());
 
         this.developerGlowColorBox = this.addRenderableWidget(new DeveloperGlowColorBox(this, this.getMinecraft().font, xPos + 155, yPos + (25 * i), 60, 20, Component.translatable("gui.aether.customization.developer_glow.color")));
         if (this.developerGlowColor != null && !this.developerGlowColor.isEmpty()) {

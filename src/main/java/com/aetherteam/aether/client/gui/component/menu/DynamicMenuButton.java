@@ -7,22 +7,18 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.List;
 
+/**
+ * Button that determines whether it can display and how much to the left it should offset depending on whether certain config options are enabled.
+ */
 public class DynamicMenuButton extends Button {
     private final int originX;
     private List<ForgeConfigSpec.ConfigValue<Boolean>> displayConfigs;
     private List<ForgeConfigSpec.ConfigValue<Boolean>> offsetConfigs;
     public boolean enabled = true;
 
-    public DynamicMenuButton(int x, int y, int width, int height, Component message, OnPress onPress) {
-        super(x, y, width, height, message, onPress, DEFAULT_NARRATION);
-        this.originX = x;
-    }
-
-    @Override
-    public void onPress() {
-        if (this.enabled) {
-            super.onPress();
-        }
+    public DynamicMenuButton(Builder builder) {
+        super(builder.createNarration(DEFAULT_NARRATION));
+        this.originX = this.getX();
     }
 
     @Override
@@ -36,7 +32,16 @@ public class DynamicMenuButton extends Button {
         }
     }
 
-    public int gatherOffsets(List<ForgeConfigSpec.ConfigValue<Boolean>> configs) {
+    private boolean shouldRender() {
+        for (ForgeConfigSpec.ConfigValue<Boolean> value : this.displayConfigs) {
+            if (!value.get()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private int gatherOffsets(List<ForgeConfigSpec.ConfigValue<Boolean>> configs) {
         int offset = 0;
         if (configs != null) {
             for (ForgeConfigSpec.ConfigValue<Boolean> value : configs) {
@@ -48,13 +53,11 @@ public class DynamicMenuButton extends Button {
         return offset;
     }
 
-    public boolean shouldRender() {
-        for (ForgeConfigSpec.ConfigValue<Boolean> value : this.displayConfigs) {
-            if (!value.get()) {
-                return false;
-            }
+    @Override
+    public void onPress() {
+        if (this.enabled) {
+            super.onPress();
         }
-        return true;
     }
 
     @SafeVarargs

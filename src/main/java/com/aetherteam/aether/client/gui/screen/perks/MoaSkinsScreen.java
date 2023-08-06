@@ -113,54 +113,54 @@ public class MoaSkinsScreen extends Screen {
 
             // Button for saving a selected skin as the one that will be applied to the player's Moa.
             this.applyButton = this.addRenderableWidget(new ChangeSkinButton(ChangeSkinButton.ButtonType.APPLY, Button.builder(Component.translatable("gui.aether.moa_skins.button.apply"),
-                    (pressed) -> AetherPlayer.get(this.getMinecraft().player).ifPresent((aetherPlayer) -> {
-                        PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Apply(this.getMinecraft().player.getUUID(), new MoaData(aetherPlayer.getLastRiddenMoa(), this.getSelectedSkin())));
-                        this.customizations.setMoaSkin(this.getSelectedSkin().getId());
-                        this.customizations.save();
-                        this.customizations.load();
-                    })
-            ).pos((this.leftPos + this.imageWidth) - 20, this.topPos + 13).size(7, 7)));
+                (pressed) -> AetherPlayer.get(this.getMinecraft().player).ifPresent((aetherPlayer) -> {
+                    PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Apply(this.getMinecraft().player.getUUID(), new MoaData(aetherPlayer.getLastRiddenMoa(), this.getSelectedSkin())));
+                    this.customizations.setMoaSkin(this.getSelectedSkin().getId());
+                    this.customizations.save();
+                    this.customizations.load();
+                })
+            ).bounds((this.leftPos + this.imageWidth) - 20, this.topPos + 13, 7, 7)));
 
             // Button for removing the player's currently applied Moa Skin.
             this.removeButton = this.addRenderableWidget(new ChangeSkinButton(ChangeSkinButton.ButtonType.REMOVE, Button.builder(Component.translatable("gui.aether.moa_skins.button.remove"),
-                    (pressed) -> {
-                        PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Remove(this.getMinecraft().player.getUUID()));
-                        this.customizations.setMoaSkin("");
-                        this.customizations.save();
-                        this.customizations.load();
-                    }
-            ).pos((this.leftPos + this.imageWidth) - 20, this.topPos + 22).size(7, 7)));
+                (pressed) -> {
+                    PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Remove(this.getMinecraft().player.getUUID()));
+                    this.customizations.setMoaSkin("");
+                    this.customizations.save();
+                    this.customizations.load();
+                }
+            ).bounds((this.leftPos + this.imageWidth) - 20, this.topPos + 22, 7, 7)));
 
             // Button that opens a screen with a redirect to Patreon.
             this.addRenderableWidget(new PatreonButton(Button.builder(Component.translatable("gui.aether.moa_skins.button.donate"),
-                    (pressed) -> this.getMinecraft().setScreen(new ConfirmLinkScreen((callback) -> {
-                        if (callback) {
-                            Util.getPlatform().openUri(PATREON_LINK);
-                        }
-                        this.getMinecraft().setScreen(this);
-                    }, PATREON_LINK, true))
-            ).pos(this.leftPos + (this.imageWidth / 2) - 67, this.topPos + this.imageHeight - 25).size(54, 18)));
+                (pressed) -> this.getMinecraft().setScreen(new ConfirmLinkScreen((callback) -> {
+                    if (callback) {
+                        Util.getPlatform().openUri(PATREON_LINK);
+                    }
+                    this.getMinecraft().setScreen(this);
+                }, PATREON_LINK, true))
+            ).bounds(this.leftPos + (this.imageWidth / 2) - 67, this.topPos + this.imageHeight - 25, 54, 18)));
 
             // Button that opens a verification link so this player can tie their UUID to their Patreon account through the Patreon login API.
             String link = "https://www.aether-mod.net/verify?uuid=" + uuid;
             this.addRenderableWidget(new PatreonButton(Button.builder(Component.translatable("gui.aether.moa_skins.button.connect"),
-                    (pressed) -> this.getMinecraft().setScreen(new ConfirmLinkScreen((callback) -> {
-                        if (callback) {
-                            Util.getPlatform().openUri(link);
-                        }
-                        this.getMinecraft().setScreen(this);
-                    }, link, true))
-            ).pos(this.leftPos + (this.imageWidth / 2) - 5, this.topPos + this.imageHeight - 25).size(54, 18)));
+                (pressed) -> this.getMinecraft().setScreen(new ConfirmLinkScreen((callback) -> {
+                    if (callback) {
+                        Util.getPlatform().openUri(link);
+                    }
+                    this.getMinecraft().setScreen(this);
+                }, link, true))
+            ).bounds(this.leftPos + (this.imageWidth / 2) - 5, this.topPos + this.imageHeight - 25, 54, 18)));
 
             // Button that forces the server to re-check the status of the player's user info and Patreon connection.
             this.addRenderableWidget(new RefreshButton(Button.builder(Component.literal(""),
-                    (pressed) -> {
-                        if (RefreshButton.reboundTimer == 0) {
-                            PacketRelay.sendToServer(NitrogenPacketHandler.INSTANCE, new TriggerUpdateInfoPacket(this.getMinecraft().player.getId()));
-                            RefreshButton.reboundTimer = RefreshButton.reboundMax;
-                        }
+                (pressed) -> {
+                    if (RefreshButton.reboundTimer == 0) {
+                        PacketRelay.sendToServer(NitrogenPacketHandler.INSTANCE, new TriggerUpdateInfoPacket(this.getMinecraft().player.getId()));
+                        RefreshButton.reboundTimer = RefreshButton.reboundMax;
                     }
-            ).pos(this.leftPos + (this.imageWidth / 2) + 49, this.topPos + this.imageHeight - 25).size(18, 18).tooltip(Tooltip.create(Component.translatable("gui.aether.moa_skins.button.refresh")))));
+                }
+            ).bounds(this.leftPos + (this.imageWidth / 2) + 49, this.topPos + this.imageHeight - 25, 18, 18).tooltip(Tooltip.create(Component.translatable("gui.aether.moa_skins.button.refresh")))));
         }
     }
 

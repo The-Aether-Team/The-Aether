@@ -48,12 +48,12 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
             if (this.currentPageNumber > 0) {
                 this.currentPageNumber--;
             }
-        }).pos(xPos + 14, yPos + 169).size(20, 20)));
+        }).bounds(xPos + 14, yPos + 169, 20, 20)));
         this.nextButton = this.addRenderableWidget(new LorePageButton(new Button.Builder(Component.literal(">"), (button) -> {
             if (this.currentPageNumber < this.pages.size() - 1) {
                 this.currentPageNumber++;
             }
-        }).pos(xPos + 221, yPos + 169).size(20, 20)));
+        }).bounds(xPos + 221, yPos + 169, 20, 20)));
     }
 
     @Override
