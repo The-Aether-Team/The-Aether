@@ -42,13 +42,13 @@ public class DimensionClientListener {
     public static void onRenderFogColor(ViewportEvent.ComputeFogColor event) {
         Camera camera = event.getCamera();
         Triple<Float, Float, Float> renderFogColors = DimensionClientHooks.renderFogColors(camera, event.getRed(), event.getGreen(), event.getBlue());
-        if (renderFogColors.getLeft() != null && renderFogColors.getMiddle() != null && renderFogColors.getRight() != null) {
+        if (renderFogColors != null) {
             event.setRed(renderFogColors.getLeft());
             event.setGreen(renderFogColors.getMiddle());
             event.setBlue(renderFogColors.getRight());
         }
         Triple<Float, Float, Float> adjustWeatherFogColors = DimensionClientHooks.adjustWeatherFogColors(camera, event.getRed(), event.getGreen(), event.getBlue());
-        if (adjustWeatherFogColors.getLeft() != null && adjustWeatherFogColors.getMiddle() != null && adjustWeatherFogColors.getRight() != null) {
+        if (adjustWeatherFogColors != null) {
             event.setRed(adjustWeatherFogColors.getLeft());
             event.setGreen(adjustWeatherFogColors.getMiddle());
             event.setBlue(adjustWeatherFogColors.getRight());

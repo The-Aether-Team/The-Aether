@@ -26,6 +26,7 @@ import net.minecraftforge.client.event.RenderLevelStageEvent;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -194,6 +195,7 @@ public class LevelClientHooks {
      * @param id The {@link Integer} ID.
      * @return The {@link TextureAtlasSprite} for the overlay.
      */
+    @Nullable
     private static TextureAtlasSprite spriteForId(int id) {
         switch(id) {
             case 0 -> {

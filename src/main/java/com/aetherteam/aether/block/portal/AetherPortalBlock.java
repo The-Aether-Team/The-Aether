@@ -82,10 +82,10 @@ public class AetherPortalBlock extends Block {
 	 * [CODE COPY] - {@link Entity#handleNetherPortal()}.
 	 */
 	private void handleTeleportation(Entity entity) {
-		MinecraftServer minecraftserver = entity.getLevel().getServer();
+		MinecraftServer server = entity.getLevel().getServer();
 		ResourceKey<Level> destinationKey = entity.getLevel().dimension() == LevelUtil.destinationDimension() ? LevelUtil.returnDimension() : LevelUtil.destinationDimension();
-		if (minecraftserver != null) {
-			ServerLevel destinationLevel = minecraftserver.getLevel(destinationKey);
+		if (server != null) {
+			ServerLevel destinationLevel = server.getLevel(destinationKey);
 			if (destinationLevel != null && !entity.isPassenger()) {
 				entity.getLevel().getProfiler().push("aether_portal");
 				entity.setPortalCooldown();

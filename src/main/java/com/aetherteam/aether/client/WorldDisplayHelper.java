@@ -11,6 +11,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.storage.LevelStorageSource;
 import net.minecraft.world.level.storage.LevelSummary;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.concurrent.ExecutionException;
 
 public class WorldDisplayHelper {
     public static boolean menuActive = false;
+    @Nullable
     private static LevelSummary loadedSummary = null;
 
     /**
@@ -93,6 +95,7 @@ public class WorldDisplayHelper {
      * Stops a level if one exists, after resetting the player and helper states to default with {@link WorldDisplayHelper#resetStates()}.
      * @param screen The current {@link Screen}.
      */
+    @Nullable
     public static void stopLevel(Screen screen) {
         resetStates();
         Minecraft minecraft = Minecraft.getInstance();

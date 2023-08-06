@@ -22,7 +22,7 @@ public class NpcDialogueGoal<T extends Mob & NpcDialogue> extends LookAtPlayerGo
 
     @Override
     public boolean canUse() {
-        if (this.npc.isConversing() && this.npc.getConversingPlayer().isAlive() && !this.npc.hurtMarked && this.npc.distanceToSqr(this.npc.getConversingPlayer()) <= 64.0F) {
+        if (this.npc.getConversingPlayer() != null && this.npc.getConversingPlayer().isAlive() && !this.npc.hurtMarked && this.npc.distanceToSqr(this.npc.getConversingPlayer()) <= 64.0F) {
             this.lookAt = this.npc.getConversingPlayer();
             return true;
         }

@@ -20,6 +20,8 @@ import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
+import javax.annotation.Nullable;
+
 public class AetherSkyRenderEffects extends DimensionSpecialEffects {
     private static final ResourceLocation CLOUDS_LOCATION = new ResourceLocation("textures/environment/clouds.png");
     private static final ResourceLocation MOON_LOCATION = new ResourceLocation("textures/environment/moon_phases.png");
@@ -80,6 +82,7 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects {
      * Modified to have a config for different coloration if {@link AetherConfig.Client#green_sunset} is enabled,
      * along with slight changes to the coloration when it isn't.
      */
+    @Nullable
     @Override
     public float[] getSunriseColor(float timeOfDay, float partialTicks) {
         if (AetherConfig.CLIENT.green_sunset.get()) {

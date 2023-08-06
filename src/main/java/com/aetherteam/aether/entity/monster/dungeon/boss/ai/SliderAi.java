@@ -123,6 +123,7 @@ public class SliderAi {
      * @param attackers The {@link Object2DoubleMap} of {@link LivingEntity LivingEntities} storing the tracked targets.
      * @return The strongest attacking {@link LivingEntity}.
      */
+    @Nullable
     private static LivingEntity getStrongestAttacker(Slider slider, Object2DoubleMap<LivingEntity> attackers) {
         Map.Entry<LivingEntity, Double> entry = attackers.object2DoubleEntrySet().stream().filter((entityEntry) ->
                 Sensor.isEntityAttackable(slider, entityEntry.getKey())

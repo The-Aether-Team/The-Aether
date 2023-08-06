@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
 
+import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -102,6 +103,7 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
      * @param blockState The {@link BlockState} to check.
      * @return A cached {@link BlockPropertyPair}, or null if there was no matching pair.
      */
+    @Nullable
     static BlockPropertyPair matchesCache(Block block, BlockState blockState) {
         if (cachedBlocks.containsRow(block)) {
             BlockPropertyPair pair = null;

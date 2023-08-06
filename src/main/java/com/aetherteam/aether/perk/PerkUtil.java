@@ -3,6 +3,7 @@ package com.aetherteam.aether.perk;
 import com.aetherteam.nitrogen.api.users.User;
 import org.apache.commons.lang3.tuple.Triple;
 
+import javax.annotation.Nullable;
 import java.util.function.Predicate;
 
 public final class PerkUtil {
@@ -88,6 +89,7 @@ public final class PerkUtil {
      * @param hex The color hex code as a {@link String}.
      * @return A {@link Triple} storing three {@link Float}s for RGB values.
      */
+    @Nullable
     public static Triple<Float, Float, Float> getPerkColor(String hex) {
         if (hex != null && !hex.isEmpty()) {
             try {

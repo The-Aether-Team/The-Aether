@@ -24,9 +24,11 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
+import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 public abstract class AbstractDart extends AbstractArrow {
+    @Nullable
     private final Supplier<Item> pickupItem;
     private int ticksInAir = 0;
 

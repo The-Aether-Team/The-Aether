@@ -46,6 +46,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.simple.SimpleChannel;
 import org.apache.commons.lang3.tuple.Triple;
 
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -87,9 +88,12 @@ public class AetherPlayerCapability implements AetherPlayer {
 
 	private boolean performVampireHealing;
 
+	@Nullable
 	private Aerbunny mountedAerbunny;
+	@Nullable
 	private CompoundTag mountedAerbunnyTag;
 
+	@Nullable
 	private UUID lastRiddenMoa;
 
 	private final List<CloudMinion> cloudMinions = new ArrayList<>(2);
@@ -895,6 +899,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 		return this.performVampireHealing;
 	}
 
+	@Nullable
 	@Override
 	public void setMountedAerbunny(Aerbunny mountedAerbunny) {
 		this.mountedAerbunny = mountedAerbunny;
@@ -903,11 +908,13 @@ public class AetherPlayerCapability implements AetherPlayer {
 	/**
 	 * @return The {@link Aerbunny} currently mounted to the player
 	 */
+	@Nullable
 	@Override
 	public Aerbunny getMountedAerbunny() {
 		return this.mountedAerbunny;
 	}
 
+	@Nullable
 	@Override
 	public void setMountedAerbunnyTag(CompoundTag mountedAerbunnyTag) {
 		this.mountedAerbunnyTag = mountedAerbunnyTag;
@@ -916,19 +923,21 @@ public class AetherPlayerCapability implements AetherPlayer {
 	/**
 	 * @return The {@link CompoundTag} data for the Aerbunny currently mounted to the player.
 	 */
+	@Nullable
 	@Override
 	public CompoundTag getMountedAerbunnyTag() {
 		return this.mountedAerbunnyTag;
 	}
 
 	@Override
-	public void setLastRiddenMoa(UUID lastRiddenMoa) {
+	public void setLastRiddenMoa(@Nullable UUID lastRiddenMoa) {
 		this.lastRiddenMoa = lastRiddenMoa;
 	}
 
 	/**
 	 * @return The {@link UUID} for the last ridden Moa.
 	 */
+	@Nullable
 	@Override
 	public UUID getLastRiddenMoa() {
 		return this.lastRiddenMoa;

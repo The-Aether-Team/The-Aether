@@ -1,7 +1,6 @@
 package com.aetherteam.aether.entity.miscellaneous;
 
 import com.aetherteam.aether.entity.AetherEntityTypes;
-import com.aetherteam.aether.entity.SkyrootBoatBehavior;
 import com.aetherteam.aether.item.AetherItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.Packet;

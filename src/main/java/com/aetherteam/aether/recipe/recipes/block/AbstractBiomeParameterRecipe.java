@@ -16,7 +16,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 
 public abstract class AbstractBiomeParameterRecipe extends AbstractBlockStateRecipe {
+    @Nullable
     private final ResourceKey<Biome> biomeKey;
+    @Nullable
     private final TagKey<Biome> biomeTag;
 
     public AbstractBiomeParameterRecipe(RecipeType<?> type, ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, CommandFunction.CacheableFunction function) {

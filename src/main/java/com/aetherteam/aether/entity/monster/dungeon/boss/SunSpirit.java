@@ -75,6 +75,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
      * Boss health bar manager
      */
     private final ServerBossEvent bossFight;
+    @Nullable
     private BossRoomTracker<SunSpirit> dungeon;
 
     private Vec3 origin;
@@ -462,6 +463,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     /**
      * @return The {@link SunSpirit} {@link BossRoomTracker} for the Gold Dungeon.
      */
+    @Nullable
     @Override
     public BossRoomTracker<SunSpirit> getDungeon() {
         return this.dungeon;
@@ -472,7 +474,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
      * @param dungeon The {@link SunSpirit} {@link BossRoomTracker}.
      */
     @Override
-    public void setDungeon(BossRoomTracker<SunSpirit> dungeon) {
+    public void setDungeon(@Nullable BossRoomTracker<SunSpirit> dungeon) {
         this.dungeon = dungeon;
         if (dungeon != null) {
             this.origin = dungeon.originCoordinates();
@@ -538,11 +540,13 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         return AetherSoundEvents.ENTITY_SUN_SPIRIT_SHOOT.get();
     }
 
+    @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
         return null;
     }
 
+    @Nullable
     @Override
     protected SoundEvent getDeathSound() {
         return null;

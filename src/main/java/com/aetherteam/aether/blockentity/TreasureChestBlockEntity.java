@@ -33,6 +33,8 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
+import javax.annotation.Nullable;
+
 /**
  * [CODE COPY] - {@link ChestBlockEntity}.<br><br>
  * Has additional locking behavior.
@@ -64,6 +66,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     private final ChestLidController chestLidController = new ChestLidController();
     private boolean locked;
     private ResourceLocation kind;
+    @Nullable
     private LazyOptional<IItemHandlerModifiable> chestHandler;
 
     public TreasureChestBlockEntity() {

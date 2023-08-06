@@ -6,6 +6,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
@@ -19,6 +20,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
+
+import javax.annotation.Nullable;
 
 public abstract class AbstractCrystal extends Projectile {
     protected int ticksInAir = 0;
@@ -112,6 +115,11 @@ public abstract class AbstractCrystal extends Projectile {
      * @return {@link ParticleOptions} for what explosion particles to spawn. Used by subclasses.
      */
     protected abstract ParticleOptions getExplosionParticle();
+
+    @Nullable
+    protected SoundEvent getImpactExplosionSoundEvent() {
+        return null;
+    }
 
     /**
      * @return The lifespan of the crystal, as an {@link Integer}.

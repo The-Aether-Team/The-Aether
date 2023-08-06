@@ -44,6 +44,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import org.joml.Quaternionf;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -529,6 +530,7 @@ public class MoaSkinsScreen extends Screen {
      * @param mouseY The {@link Integer} for the mouse's y-position.
      * @return The {@link com.aetherteam.aether.perk.types.MoaSkins.MoaSkin} from the corresponding slot.
      */
+    @Nullable
     private MoaSkins.MoaSkin getSkinFromSlot(double mouseX, double mouseY) {
         int slot = this.getSlotIndex(mouseX, mouseY);
         if (slot != -1) {

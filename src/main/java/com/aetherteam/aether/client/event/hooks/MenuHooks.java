@@ -19,6 +19,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.client.event.ScreenEvent;
 
+import javax.annotation.Nullable;
 import java.util.Calendar;
 import java.util.function.Predicate;
 
@@ -49,6 +50,7 @@ public class MenuHooks {
      * @return The created {@link Button}.
      * @see com.aetherteam.aether.client.event.listeners.MenuListener#onGuiInitialize(ScreenEvent.Init.Post)
      */
+    @Nullable
     public static Button setupToggleWorldButton(Screen screen) {
         if (screen instanceof TitleScreen) {
             DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(new Button.Builder(Component.translatable("gui.aether.menu.button.world_preview"), (pressed) -> {
@@ -68,6 +70,7 @@ public class MenuHooks {
      * @return The created {@link Button}.
      * @see com.aetherteam.aether.client.event.listeners.MenuListener#onGuiInitialize(ScreenEvent.Init.Post)
      */
+    @Nullable
     public static Button setupMenuSwitchButton(Screen screen) {
         if (screen instanceof TitleScreen) {
             DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(new Button.Builder(Component.translatable("gui.aether.menu.button.theme"), (pressed) -> {
@@ -94,6 +97,7 @@ public class MenuHooks {
      * @return The created {@link Button}.
      * @see com.aetherteam.aether.client.event.listeners.MenuListener#onGuiInitialize(ScreenEvent.Init.Post)
      */
+    @Nullable
     public static Button setupQuickLoadButton(Screen screen) {
         if (screen instanceof TitleScreen) {
             DynamicMenuButton dynamicMenuButton = new DynamicMenuButton(new Button.Builder(Component.translatable("gui.aether.menu.button.quick_load"), (pressed) -> {
@@ -115,6 +119,7 @@ public class MenuHooks {
      * {@link AetherConfig.Client#default_minecraft_menu} and {@link AetherConfig.Client#default_aether_menu}.
      * @return The {@link String} for the menu's ID.
      */
+    @Nullable
     private static String toggleBetweenMenus() {
         if (AetherMenuUtil.isAetherMenu()) {
             return AetherConfig.CLIENT.default_minecraft_menu.get();

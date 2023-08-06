@@ -18,7 +18,9 @@ import javax.annotation.Nullable;
 
 public abstract class PlacementBanBuilder implements RecipeBuilder {
     private final BlockStateIngredient bypassBlock;
+    @Nullable
     private final ResourceKey<Biome> biomeKey;
+    @Nullable
     private final TagKey<Biome> biomeTag;
     private final RecipeSerializer<?> serializer;
 
@@ -38,10 +40,12 @@ public abstract class PlacementBanBuilder implements RecipeBuilder {
         return this.bypassBlock;
     }
 
+    @Nullable
     public ResourceKey<Biome> getBiomeKey() {
         return this.biomeKey;
     }
 
+    @Nullable
     public TagKey<Biome> getBiomeTag() {
         return this.biomeTag;
     }
@@ -62,7 +66,9 @@ public abstract class PlacementBanBuilder implements RecipeBuilder {
 
     public static class Result implements FinishedRecipe {
         private final ResourceLocation id;
+        @Nullable
         private final ResourceKey<Biome> biomeKey;
+        @Nullable
         private final TagKey<Biome> biomeTag;
         private final BlockStateIngredient bypassBlock;
         private final RecipeSerializer<?> serializer;

@@ -21,6 +21,7 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilde
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -282,6 +283,7 @@ public class BronzeDungeonBuilder {
      * @param maxPos The ending corner {@link BlockPos} for the boss room.
      * @return A viable {@link Rotation} direction.
      */
+    @Nullable
     private Rotation getBossRoomRotation(BlockPos minPos, BlockPos maxPos) {
         StructureTemplate template = this.context.structureTemplateManager().getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/chest_room"));
         RandomSource random = this.context.random();

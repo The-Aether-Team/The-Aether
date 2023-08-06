@@ -52,6 +52,7 @@ public class Aerbunny extends AetherAnimal {
 
     private int puffSubtract;
     private boolean afraid;
+    @Nullable
     private Vec3 lastPos;
 
     public Aerbunny(EntityType<? extends Aerbunny> type, Level level) {

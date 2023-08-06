@@ -2,12 +2,13 @@ package com.aetherteam.aether.perk.types;
 
 import net.minecraft.network.FriendlyByteBuf;
 
+import javax.annotation.Nullable;
 import java.util.UUID;
 
 /**
  * A data type tying together a {@link com.aetherteam.aether.entity.passive.Moa}'s {@link UUID} and a {@link com.aetherteam.aether.perk.types.MoaSkins.MoaSkin}.
  */
-public record MoaData(UUID moaUUID, MoaSkins.MoaSkin moaSkin) {
+public record MoaData(@Nullable UUID moaUUID, @Nullable MoaSkins.MoaSkin moaSkin) {
     /**
      * Reads {@link MoaData} from a {@link FriendlyByteBuf} network buffer.
      * @param buffer The {@link FriendlyByteBuf} buffer.

@@ -12,6 +12,7 @@ import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
+import javax.annotation.Nullable;
 import java.util.stream.Stream;
 
 /**
@@ -65,6 +66,7 @@ public class ImprovedLayerPlacementModifier extends PlacementModifier {
         return AetherPlacementModifiers.IMPROVED_LAYER_PLACEMENT;
     }
 
+    @Nullable
     private BlockPos findOnGroundPosition(PlacementContext context, BlockPos pos, int count) {
         int i = 0;
         int x = pos.getX();

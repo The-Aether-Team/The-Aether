@@ -76,7 +76,9 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * Boss health bar manager
      */
     private final ServerBossEvent bossFight;
+    @Nullable
     private BossRoomTracker<ValkyrieQueen> dungeon;
+    @Nullable
     private AABB dungeonBounds;
     /**
      * The player whom the valkyrie queen is currently conversing with.
@@ -251,7 +253,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                 if (!this.isReady()) {
                     this.lookAt(player, 180.0F, 180.0F);
                     if (player instanceof ServerPlayer serverPlayer) {
-                        if (!this.isConversing()) {
+                        if (this.getConversingPlayer() == null) {
                             this.getLevel().broadcastEntityEvent(this, (byte) 71);
                             this.setConversingPlayer(serverPlayer);
                         }
@@ -451,8 +453,8 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * @param state The {@link BlockState} to try to convert.
      * @return The converted {@link BlockState}.
      */
-    @Override
     @Nullable
+    @Override
     public BlockState convertBlock(BlockState state) {
         if (state.is(AetherBlocks.LOCKED_ANGELIC_STONE.get()) || state.is(AetherBlocks.TRAPPED_ANGELIC_STONE.get())) {
             return AetherBlocks.ANGELIC_STONE.get().defaultBlockState();
@@ -551,6 +553,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     /**
      * @return The {@link ValkyrieQueen} {@link BossRoomTracker} for the Silver Dungeon.
      */
+    @Nullable
     @Override
     public BossRoomTracker<ValkyrieQueen> getDungeon() {
         return this.dungeon;
@@ -561,7 +564,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * @param dungeon The {@link ValkyrieQueen} {@link BossRoomTracker}.
      */
     @Override
-    public void setDungeon(BossRoomTracker<ValkyrieQueen> dungeon) {
+    public void setDungeon(@Nullable BossRoomTracker<ValkyrieQueen> dungeon) {
         this.dungeon = dungeon;
         if (this.dungeonBounds == null) {
             this.dungeonBounds = dungeon.roomBounds();
@@ -589,7 +592,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * Sets the bounds of the entire Silver Dungeon.
      * @param dungeonBounds The {@link AABB} bounds.
      */
-    public void setDungeonBounds(AABB dungeonBounds) {
+    public void setDungeonBounds(@Nullable AABB dungeonBounds) {
         this.dungeonBounds = dungeonBounds;
     }
 

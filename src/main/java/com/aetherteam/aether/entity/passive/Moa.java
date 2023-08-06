@@ -561,6 +561,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 	/**
 	 * @return Whether this Moa is following the player, as a {@link Boolean}.
 	 */
+	@Nullable
 	public UUID getFollowing() {
 		return this.getEntityData().get(DATA_FOLLOWING_ID).orElse(null);
 	}
@@ -569,7 +570,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 	 * Sets whether this Moa is following the player.
 	 * @param uuid The {@link Boolean} value.
 	 */
-	public void setFollowing(UUID uuid) {
+	public void setFollowing(@Nullable UUID uuid) {
 		this.getEntityData().set(DATA_FOLLOWING_ID, Optional.ofNullable(uuid));
 	}
 
@@ -840,6 +841,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 	/**
 	 * @return A Moa Egg {@link ItemStack} corresponding to the Moa's {@link MoaType}.
 	 */
+	@Nullable
 	@Override
 	public ItemStack getPickResult() {
 		MoaEggItem moaEggItem = MoaEggItem.byId(this.getMoaType());

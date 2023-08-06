@@ -48,6 +48,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.tags.ITagManager;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
 
+import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -60,6 +61,7 @@ public class GuiHooks {
     public static final Set<UUID> BOSS_EVENTS = new HashSet<>();
     private static boolean shouldAddButton = true;
     private static boolean generateTrivia = true;
+    @Nullable
     private static Screen lastScreen = null;
 
     /**
@@ -94,6 +96,7 @@ public class GuiHooks {
      * @return The {@link AccessoryButton}.
      * @see com.aetherteam.aether.client.event.listeners.GuiListener#onGuiInitialize(ScreenEvent.Init.Post)
      */
+    @Nullable
     public static AccessoryButton setupAccessoryButton(Screen screen, Tuple<Integer, Integer> offsets) {
         AbstractContainerScreen<?> containerScreen = canCreateAccessoryButtonForScreen(screen);
         if (containerScreen != null) {
@@ -108,6 +111,7 @@ public class GuiHooks {
      * @param screen The parent {@link Screen}.
      * @return The parent screen, cast to a {@link AbstractContainerScreen}.
      */
+    @Nullable
     private static AbstractContainerScreen<?> canCreateAccessoryButtonForScreen(Screen screen) {
         if (screen instanceof InventoryScreen || screen instanceof CuriosScreen || screen instanceof CreativeModeInventoryScreen || (screen instanceof AccessoriesScreen && shouldAddButton)) {
             return (AbstractContainerScreen<?>) screen;
@@ -123,6 +127,7 @@ public class GuiHooks {
      * @return The {@link GridLayout} holding the buttons.
      * @see com.aetherteam.aether.client.event.listeners.GuiListener#onGuiInitialize(ScreenEvent.Init.Post)
      */
+    @Nullable
     public static GridLayout setupPerksButtons(Screen screen) {
         if (screen instanceof PauseScreen) {
             int x = AetherConfig.CLIENT.layout_perks_x.get();

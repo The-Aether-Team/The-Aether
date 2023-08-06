@@ -18,6 +18,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
+import javax.annotation.Nullable;
+
 /**
  * A damaging crystal projectile shot by the Sun Spirit. It floats around the room for 15 seconds.
  */
@@ -55,7 +57,9 @@ public class FireCrystal extends AbstractCrystal {
         if (entity instanceof LivingEntity livingEntity) {
             if (livingEntity.hurt(AetherDamageTypes.indirectEntityDamageSource(this.getLevel(), AetherDamageTypes.FIRE_CRYSTAL, this, this.getOwner()), 20.0F)) {
                 livingEntity.setSecondsOnFire(6);
-                this.getLevel().playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
+                if (this.getImpactExplosionSoundEvent() != null) {
+                    this.getLevel().playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
+                }
                 if (!this.getLevel().isClientSide()) {
                     this.discard();
                 }
@@ -109,6 +113,8 @@ public class FireCrystal extends AbstractCrystal {
         return ParticleTypes.FLAME;
     }
 
+    @Nullable
+    @Override
     protected SoundEvent getImpactExplosionSoundEvent() {
         return AetherSoundEvents.ENTITY_FIRE_CRYSTAL_EXPLODE.get();
     }

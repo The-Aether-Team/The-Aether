@@ -133,6 +133,7 @@ public class SkyrootBucketItem extends BucketItem {
     /**
      * We don't initialize the Forge {@link net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper} for Skyroot Buckets.
      */
+    @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag tag) {
         return null;

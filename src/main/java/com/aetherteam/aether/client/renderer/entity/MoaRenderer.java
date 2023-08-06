@@ -17,6 +17,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
+import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.UUID;
 
@@ -84,6 +85,7 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
 	 * @param moa The {@link Moa} to retrieve the skin from.
 	 * @return The {@link ResourceLocation} for the emissive texture.
 	 */
+	@Nullable
 	private ResourceLocation getMoaSkinLocation(Moa moa) {
 		UUID lastRiderUUID = moa.getLastRider();
 		UUID moaUUID = moa.getMoaUUID();

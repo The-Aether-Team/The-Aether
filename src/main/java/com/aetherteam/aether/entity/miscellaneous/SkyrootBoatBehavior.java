@@ -1,4 +1,4 @@
-package com.aetherteam.aether.entity;
+package com.aetherteam.aether.entity.miscellaneous;
 
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.item.AetherItems;

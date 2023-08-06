@@ -96,6 +96,7 @@ public class AetherMusicManager {
      * Determines when to play different music.
      * @return The {@link Music} to play.
      */
+    @Nullable
     public static Music getSituationalMusic() {
         if (!(minecraft.screen instanceof WinScreen)) {
             if (isAetherWorldPreviewEnabled()) { // Play Aether menu music when the Aether menu world preview is enabled.

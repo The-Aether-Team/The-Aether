@@ -105,6 +105,7 @@ public class MostDamageTargetGoal extends TargetGoal {
     /**
      * Returns the entity within the targeting range that has dealt the most damage.
      */
+    @Nullable
     private LivingEntity getStrongestAttacker() {
         Map.Entry<LivingEntity, Double> entry = attackers.object2DoubleEntrySet().stream()
                 .filter((entityEntry) -> this.canAttack(entityEntry.getKey(), HURT_BY_TARGETING))

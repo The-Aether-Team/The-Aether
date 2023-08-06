@@ -5,6 +5,7 @@ import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.resources.IoSupplier;
 import net.minecraftforge.resource.DelegatingPackResources;
 
+import javax.annotation.Nullable;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -39,6 +40,7 @@ public class CombinedPackResources extends DelegatingPackResources {
     /**
      * [CODE COPY] - {@link net.minecraftforge.resource.PathPackResources#getRootResource(String...)}.
      */
+    @Nullable
     @Override
     public IoSupplier<InputStream> getRootResource(String... paths) {
         final Path path = resolve(paths);

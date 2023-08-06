@@ -21,7 +21,9 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class BiomeParameterRecipeBuilder extends BlockStateRecipeBuilder {
+    @Nullable
     private final ResourceKey<Biome> biomeKey;
+    @Nullable
     private final TagKey<Biome> biomeTag;
 
     public BiomeParameterRecipeBuilder(BlockPropertyPair result, BlockStateIngredient ingredient, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateRecipeSerializer<?> serializer) {
@@ -64,7 +66,9 @@ public class BiomeParameterRecipeBuilder extends BlockStateRecipeBuilder {
     }
 
     public static class Result extends BlockStateRecipeBuilder.Result {
+        @Nullable
         private final ResourceKey<Biome> biomeKey;
+        @Nullable
         private final TagKey<Biome> biomeTag;
 
         public Result(ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, RecipeSerializer<? extends AbstractBlockStateRecipe> serializer) {

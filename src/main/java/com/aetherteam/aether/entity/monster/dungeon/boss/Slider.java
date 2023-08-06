@@ -62,6 +62,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
      * Boss health bar manager
      */
     private final ServerBossEvent bossFight;
+    @Nullable
     private BossRoomTracker<Slider> bronzeDungeon;
 
     private int chatCooldown;
@@ -302,8 +303,8 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
      * @param state The {@link BlockState} to try to convert.
      * @return The converted {@link BlockState}.
      */
-    @Override
     @Nullable
+    @Override
     public BlockState convertBlock(BlockState state) {
         if (state.is(AetherBlocks.LOCKED_CARVED_STONE.get())) {
             return AetherBlocks.CARVED_STONE.get().defaultBlockState();
@@ -447,6 +448,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     /**
      * @return The {@link Slider} {@link BossRoomTracker} for the Bronze Dungeon.
      */
+    @Nullable
     @Override
     public BossRoomTracker<Slider> getDungeon() {
         return this.bronzeDungeon;
@@ -457,7 +459,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
      * @param dungeon The {@link Slider} {@link BossRoomTracker}.
      */
     @Override
-    public void setDungeon(BossRoomTracker<Slider> dungeon) {
+    public void setDungeon(@Nullable BossRoomTracker<Slider> dungeon) {
         this.bronzeDungeon = dungeon;
     }
 

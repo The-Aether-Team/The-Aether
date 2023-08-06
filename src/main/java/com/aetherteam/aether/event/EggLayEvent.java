@@ -26,7 +26,9 @@ import javax.annotation.Nullable;
  */
 @Cancelable
 public class EggLayEvent extends EntityEvent {
+    @Nullable
     private Item item;
+    @Nullable
     private SoundEvent sound;
     private float volume;
     private float pitch;
@@ -38,7 +40,7 @@ public class EggLayEvent extends EntityEvent {
      * @param pitch The original pitch of the sound as a {@link Float}.
      * @param item The original egg {@link Item} to be laid.
      */
-    public EggLayEvent(Entity entity, SoundEvent sound, float volume, float pitch, Item item) {
+    public EggLayEvent(Entity entity, @Nullable SoundEvent sound, float volume, float pitch, @Nullable Item item) {
         super(entity);
         this.sound = sound;
         this.volume = volume;

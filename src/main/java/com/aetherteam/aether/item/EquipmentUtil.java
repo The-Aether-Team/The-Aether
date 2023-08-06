@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +40,7 @@ public final class EquipmentUtil {
      * @param entity The {@link LivingEntity} wearer.
      * @return The {@link SlotResult} for the curio item.
      */
+    @Nullable
     public static SlotResult getGloves(LivingEntity entity) {
         Optional<SlotResult> slotResultOptional = CuriosApi.getCuriosHelper().findFirstCurio(entity, (stack) -> stack.getItem() instanceof GlovesItem);
         return slotResultOptional.orElse(null);
@@ -103,6 +105,7 @@ public final class EquipmentUtil {
      * @param entity The {@link LivingEntity} wearer.
      * @return The {@link SlotResult} for the curio item.
      */
+    @Nullable
     public static SlotResult getCape(LivingEntity entity) {
         return CuriosApi.getCuriosHelper().findFirstCurio(entity, stack -> stack.getItem() instanceof CapeItem).orElse(null);
     }
@@ -123,6 +126,7 @@ public final class EquipmentUtil {
      * @param item The curio {@link Item} to look for.
      * @return The {@link SlotResult} for the curio item.
      */
+    @Nullable
     public static SlotResult getCurio(LivingEntity entity, Item item) {
         return CuriosApi.getCuriosHelper().findFirstCurio(entity, item).orElse(null);
     }

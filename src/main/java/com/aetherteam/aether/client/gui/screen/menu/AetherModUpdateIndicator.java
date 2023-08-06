@@ -13,9 +13,12 @@ import net.minecraftforge.fml.VersionChecker;
 import net.minecraftforge.fml.loading.FMLConfig;
 import net.minecraftforge.versions.forge.ForgeVersion;
 
+import javax.annotation.Nullable;
+
 public class AetherModUpdateIndicator extends TitleScreenModUpdateIndicator {
 	private static final ResourceLocation VERSION_CHECK_ICONS = new ResourceLocation(ForgeVersion.MOD_ID, "textures/gui/version_check_icons.png");
 	private final AetherTitleScreen screen;
+	@Nullable
 	private VersionChecker.Status showNotification = null;
 	private boolean hasCheckedForUpdates = false;
 	

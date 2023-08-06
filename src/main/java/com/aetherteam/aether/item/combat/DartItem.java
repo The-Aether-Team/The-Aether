@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 
+import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 public class DartItem extends Item {
@@ -27,6 +28,7 @@ public class DartItem extends Item {
      * @param shooter {@link LivingEntity} shooting dart.
      * @return {@link AbstractDart} entity created from dart entity type.
      */
+    @Nullable
     public AbstractDart createDart(Level level, LivingEntity shooter) {
         AbstractDart dart = this.createDart(level);
         if (dart != null) {
@@ -43,6 +45,7 @@ public class DartItem extends Item {
      * @param level The corresponding {@link Level}.
      * @return {@link AbstractDart} entity created from dart entity type.
      */
+    @Nullable
     public AbstractDart createDart(Level level) {
         Entity entity = this.getDartEntityType().get().create(level);
         if (entity instanceof AbstractDart dart) {

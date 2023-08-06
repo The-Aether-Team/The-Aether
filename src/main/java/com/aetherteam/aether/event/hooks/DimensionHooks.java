@@ -320,6 +320,7 @@ public class DimensionHooks {
      * @param level The {@link LevelAccessor}.
      * @see com.aetherteam.aether.event.listeners.DimensionListener#onSleepFinish(SleepFinishedTimeEvent)
      */
+    @Nullable
     public static Long finishSleep(LevelAccessor level, long newTime) {
         if (level instanceof ServerLevel && level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
             ServerLevelAccessor serverLevelAccessor = (ServerLevelAccessor) level;

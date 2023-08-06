@@ -280,7 +280,7 @@ public class MoaSkins {
             /**
              * @see MoaSkin#getEmissiveLocation()
              */
-            public Properties emissiveLocation(ResourceLocation emissiveLocation) {
+            public Properties emissiveLocation(@Nullable ResourceLocation emissiveLocation) {
                 this.emissiveLocation = emissiveLocation;
                 return this;
             }

@@ -17,6 +17,8 @@ import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.event.TickEvent;
 import org.apache.commons.lang3.tuple.Triple;
 
+import javax.annotation.Nullable;
+
 public class DimensionClientHooks {
     /**
      * Halves the far fog distance in the Aether to add to the dimension's ambience, similar to beta.
@@ -26,6 +28,7 @@ public class DimensionClientHooks {
      * @return The new far distance for the fog, as a {@link Float}.
      * @see com.aetherteam.aether.client.event.listeners.DimensionClientListener#onRenderFog(ViewportEvent.RenderFog)
      */
+    @Nullable
     public static Float renderNearFog(Camera camera, FogRenderer.FogMode mode, float farDistance) {
         if (camera.getEntity().getLevel() instanceof ClientLevel clientLevel) {
             if (clientLevel.effects() instanceof AetherSkyRenderEffects) {
@@ -45,6 +48,7 @@ public class DimensionClientHooks {
      * @return The new near distance for the fog, as a {@link Float}.
      * @see com.aetherteam.aether.client.event.listeners.DimensionClientListener#onRenderFog(ViewportEvent.RenderFog)
      */
+    @Nullable
     public static Float reduceLavaFog(Camera camera, float nearDistance) {
         if (camera.getEntity().getLevel() instanceof ClientLevel) {
             if (camera.getEntity() instanceof LivingEntity livingEntity && EquipmentUtil.hasFullPhoenixSet(livingEntity)) {
@@ -67,6 +71,7 @@ public class DimensionClientHooks {
      * @return A {@link Triple} of {@link Float}s, containing the RGB values for the fog color.
      * @see com.aetherteam.aether.client.event.listeners.DimensionClientListener#onRenderFogColor(ViewportEvent.ComputeFogColor)
      */
+    @Nullable
     public static Triple<Float, Float, Float> renderFogColors(Camera camera, float red, float green, float blue) {
         if (camera.getEntity().getLevel() instanceof ClientLevel clientLevel) {
             if (clientLevel.effects() instanceof AetherSkyRenderEffects) {
@@ -84,7 +89,7 @@ public class DimensionClientHooks {
                 }
             }
         }
-        return Triple.of(null, null, null);
+        return null;
     }
 
     /**
@@ -96,6 +101,7 @@ public class DimensionClientHooks {
      * @return A {@link Triple} of {@link Float}s, containing the RGB values for the fog color.
      * @see com.aetherteam.aether.client.event.listeners.DimensionClientListener#onRenderFogColor(ViewportEvent.ComputeFogColor)
      */
+    @Nullable
     public static Triple<Float, Float, Float> adjustWeatherFogColors(Camera camera, float red, float green, float blue) {
         if (camera.getEntity().getLevel() instanceof ClientLevel clientLevel) {
             if (clientLevel.effects() instanceof AetherSkyRenderEffects) {
@@ -123,7 +129,7 @@ public class DimensionClientHooks {
                 }
             }
         }
-        return Triple.of(null, null, null);
+        return null;
     }
 
     /**

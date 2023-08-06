@@ -283,6 +283,7 @@ public class FloatingBlockEntity extends Entity {
         this.natural = natural;
     }
 
+    @Nullable
     @Override
     public Entity changeDimension(ServerLevel destination, ITeleporter teleporter) {
         return null;
