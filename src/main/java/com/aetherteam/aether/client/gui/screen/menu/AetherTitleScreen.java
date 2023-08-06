@@ -5,7 +5,6 @@ import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.gui.component.menu.AetherMenuButton;
 import com.aetherteam.aether.client.gui.component.menu.DynamicMenuButton;
 import com.aetherteam.aether.mixin.mixins.client.accessor.TitleScreenAccessor;
-import com.aetherteam.cumulus.CumulusConfig;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -20,14 +19,13 @@ import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.renderer.CubeMap;
 import net.minecraft.client.renderer.PanoramaRenderer;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.Music;
 import net.minecraft.util.Mth;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.internal.BrandingControl;
 
-public class AetherTitleScreen extends TitleScreen {
+public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavior {
 	private static final ResourceLocation PANORAMA_OVERLAY = new ResourceLocation("textures/gui/title/background/panorama_overlay.png");
 	private static final ResourceLocation AETHER_LOGO = new ResourceLocation(Aether.MODID, "textures/gui/title/aether.png");
 	public static final Music MENU = new Music(AetherSoundEvents.MUSIC_MENU.getHolder().orElseThrow(), 20, 600, true);
@@ -58,20 +56,19 @@ public class AetherTitleScreen extends TitleScreen {
 		int lastY = 0;
 		for (Renderable renderable : this.renderables) {
 			if (renderable instanceof AbstractWidget abstractWidget) {
-				if (this.isImageButton(abstractWidget.getMessage())) {
-					abstractWidget.visible = false;
+				if (TitleScreenBehavior.isImageButton(abstractWidget.getMessage())) {
+					abstractWidget.visible = false; // The visibility handling is necessary here to avoid a bug where the buttons will render in the center of the screen before they have a specified offset.
 				}
-				if (abstractWidget instanceof AetherMenuButton aetherMenuButton) {
+				if (abstractWidget instanceof AetherMenuButton aetherMenuButton) { // Sets button values that determine their positioning on the screen.
 					if (this.isAlignedLeft()) {
 						buttonRows++;
-						aetherMenuButton.buttonCountOffset = buttonRows;
 					} else {
 						if (lastY < aetherMenuButton.originalY) {
 							lastY = aetherMenuButton.originalY;
 							buttonRows++;
 						}
-						aetherMenuButton.buttonCountOffset = buttonRows;
 					}
+					aetherMenuButton.buttonCountOffset = buttonRows;
 				}
 			}
 		}
@@ -81,164 +78,128 @@ public class AetherTitleScreen extends TitleScreen {
 	@Override
 	public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
 		TitleScreenAccessor titleScreenAccessor = (TitleScreenAccessor) this;
-		if (this.minecraft != null) {
-			if (titleScreenAccessor.aether$getFadeInStart() == 0L && titleScreenAccessor.aether$isFading()) {
-				titleScreenAccessor.aether$setFadeInStart(Util.getMillis());
+		float fadeAmount = TitleScreenBehavior.super.handleFading(poseStack, this, titleScreenAccessor, this.panorama, PANORAMA_OVERLAY, partialTicks);
+		float scale = getScale(this, this.getMinecraft());
+		this.setupLogo(poseStack, fadeAmount, scale);
+		int roundedFadeAmount = Mth.ceil(fadeAmount * 255.0F) << 24;
+		if ((roundedFadeAmount & -67108864) != 0) {
+			ForgeHooksClient.renderMainMenu(this, poseStack, this.font, this.width, this.height, roundedFadeAmount);
+			if (titleScreenAccessor.aether$getSplash() != null) {
+				float splashX = this.alignedLeft ? 400.0F / scale : (float) this.width / 2 + (175 / scale);
+				float splashY = this.alignedLeft ? 100.0F / scale : (int) (20 + (76 / scale));
+				poseStack.pushPose();
+				poseStack.translate(splashX, splashY, 0.0F);
+				poseStack.mulPose(Axis.ZP.rotationDegrees(-20.0F));
+				float textSize = 1.8F - Mth.abs(Mth.sin((float) (Util.getMillis() % 1000L) / 1000.0F * Mth.TWO_PI) * 0.1F);
+				String splash = titleScreenAccessor.aether$getSplash();
+				textSize = textSize * (200.0F / scale) / (this.font.width(splash) + (64 / scale));
+				poseStack.scale(textSize, textSize, textSize);
+				GuiComponent.drawCenteredString(poseStack, this.font, splash, 0, (int) (-16 / scale), 16776960 | roundedFadeAmount);
+				poseStack.popPose();
 			}
-			float scale = getScale(this, this.minecraft);
-			float f = titleScreenAccessor.aether$isFading() ? (float) (Util.getMillis() - titleScreenAccessor.aether$getFadeInStart()) / 1000.0F : 1.0F;
-			this.panorama.render(partialTicks, Mth.clamp(f, 0.0F, 1.0F));
-			RenderSystem.setShaderTexture(0, PANORAMA_OVERLAY);
-			RenderSystem.enableBlend();
-			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, titleScreenAccessor.aether$isFading() ? (float)Mth.ceil(Mth.clamp(f, 0.0F, 1.0F)) : 1.0F);
-			blit(poseStack, 0, 0, this.width, this.height, 0.0F, 0.0F, 16, 128, 16, 128);
-			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-			float f1 = titleScreenAccessor.aether$isFading() ? Mth.clamp(f - 1.0F, 0.0F, 1.0F) : 1.0F;
-			this.setupLogo(poseStack, f1, scale);
-			int l = Mth.ceil(f1 * 255.0F) << 24;
-			if ((l & -67108864) != 0) {
-				ForgeHooksClient.renderMainMenu(this, poseStack, this.font, this.width, this.height, l);
-				if (titleScreenAccessor.aether$getSplash() != null) {
-					float splashX = this.alignedLeft ? 400.0F / scale : (float) this.width / 2 + (175 / scale);
-					float splashY = this.alignedLeft ? 100.0F / scale : (int) (20 + (76 / scale));
-					poseStack.pushPose();
-					poseStack.translate(splashX, splashY, 0.0F);
-					poseStack.mulPose(Axis.ZP.rotationDegrees(-20.0F));
-					float f2 = 1.8F - Mth.abs(Mth.sin((float) (Util.getMillis() % 1000L) / 1000.0F * Mth.TWO_PI) * 0.1F);
-					String splash = titleScreenAccessor.aether$getSplash();
-					f2 = f2 * (200.0F / scale) / (this.font.width(splash) + (64 / scale));
-					poseStack.scale(f2, f2, f2);
-					drawCenteredString(poseStack, this.font, splash, 0, (int) (-16 / scale), 16776960 | l);
-					poseStack.popPose();
-				}
 
-				if (this.alignedLeft) {
-					BrandingControl.forEachLine(true, true, (brdline, brd) ->
-							drawString(poseStack, this.font, brd, width - this.font.width(brd) - 1, this.height - (10 + (brdline + 1) * (this.font.lineHeight + 1)), 16777215 | l)
-					);
-					BrandingControl.forEachAboveCopyrightLine((brdline, brd) ->
-							drawString(poseStack, this.font, brd, 1, this.height - (brdline + 1) * (this.font.lineHeight + 1), 16777215 | l)
-					);
+			if (this.alignedLeft) {
+				TitleScreenBehavior.super.renderRightBranding(poseStack, this, this.font, roundedFadeAmount);
+			} else {
+				BrandingControl.forEachLine(true, true, (brandingLine, branding) ->
+						drawString(poseStack, this.font, branding, 2, this.height - (10 + brandingLine * (this.font.lineHeight + 1)), 16777215 | roundedFadeAmount)
+				);
+				BrandingControl.forEachAboveCopyrightLine((brandingLine, branding) ->
+						drawString(poseStack, this.font, branding, this.width - this.font.width(branding), this.height - (10 + (brandingLine + 1) * (this.font.lineHeight + 1)), 16777215 | roundedFadeAmount)
+				);
+			}
+		}
+
+		int xOffset = TitleScreenBehavior.super.handleButtonVisibility(this, fadeAmount);
+		for (Renderable renderable : this.renderables) {
+			renderable.render(poseStack, mouseX, mouseY, partialTicks);
+			if (renderable instanceof AetherMenuButton aetherButton) { // Smoothly shifts the Aether-styled buttons to the right slightly when hovered over.
+				if (aetherButton.isMouseOver(mouseX, mouseY)) {
+					if (aetherButton.hoverOffset < 15) {
+						aetherButton.hoverOffset += 4;
+					}
 				} else {
-					BrandingControl.forEachLine(true, true, (brdline, brd) ->
-							drawString(poseStack, this.font, brd, 2, this.height - (10 + brdline * (this.font.lineHeight + 1)), 16777215 | l)
-					);
-					BrandingControl.forEachAboveCopyrightLine((brdline, brd) ->
-							drawString(poseStack, this.font, brd, this.width - this.font.width(brd), this.height - (10 + (brdline + 1) * (this.font.lineHeight + 1)), 16777215 | l)
-					);
+					if (aetherButton.hoverOffset > 0) {
+						aetherButton.hoverOffset -= 4;
+					}
 				}
 			}
+			if (renderable instanceof DynamicMenuButton dynamicMenuButton) {  // Increases the x-offset to the left for image buttons if there are menu buttons on the screen.
+				if (dynamicMenuButton.enabled) {
+					xOffset -= 24;
+				}
+			}
+		}
+		TitleScreenBehavior.super.handleImageButtons(this, xOffset);
 
-			for (GuiEventListener guiEventListener : this.children()) {
-				if (guiEventListener instanceof AbstractWidget abstractWidget) {
-					if (f1 > 0.02F) {
-						if (!this.isImageButton(abstractWidget.getMessage())) {
-							abstractWidget.setAlpha(f1);
-							abstractWidget.visible = true;
-						}
-					} else {
-						abstractWidget.visible = false;
-					}
-				}
-			}
-
-			int offset = CumulusConfig.CLIENT.enable_menu_api.get() && CumulusConfig.CLIENT.enable_menu_list_button.get() ? -62 : 0;
-			for (Renderable renderable : this.renderables) {
-				renderable.render(poseStack, mouseX, mouseY, partialTicks);
-				if (renderable instanceof AetherMenuButton aetherButton) {
-					if (aetherButton.isMouseOver(mouseX, mouseY)) {
-						if (aetherButton.hoverOffset < 15) {
-							aetherButton.hoverOffset += 4;
-						}
-					} else {
-						if (aetherButton.hoverOffset > 0) {
-							aetherButton.hoverOffset -= 4;
-						}
-					}
-				}
-				if (renderable instanceof DynamicMenuButton dynamicMenuButton) {
-					if (dynamicMenuButton.enabled) {
-						offset -= 24;
-					}
-				}
-			}
-			for (Renderable renderable : this.renderables) {
-				if (renderable instanceof Button button) {
-					Component buttonText = button.getMessage();
-					if (this.isImageButton(buttonText)) {
-						button.visible = true;
-					}
-					if (buttonText.equals(Component.translatable("narrator.button.accessibility"))) {
-						button.setX(this.width - 48 + offset);
-						button.setY(4);
-					} else if (buttonText.equals(Component.translatable("narrator.button.language"))) {
-						button.setX(this.width - 24 + offset);
-						button.setY(4);
-					}
-				}
-			}
-
-			if (f1 >= 1.0f) {
-				this.modUpdateNotification.render(poseStack, mouseX, mouseY, partialTicks);
-			}
+		if (fadeAmount >= 1.0F) {
+			this.modUpdateNotification.render(poseStack, mouseX, mouseY, partialTicks);
 		}
 	}
 
+	/**
+	 * Renders the Aether logo on the title screen.
+	 * @param poseStack The rendering {@link PoseStack}.
+	 * @param transparency The transparency {@link Float} for the logo.
+	 * @param scale The {@link Float} for the scaling of the logo relative to the true screen scale.
+	 */
 	private void setupLogo(PoseStack poseStack, float transparency, float scale) {
-		if (this.minecraft != null) {
-			RenderSystem.setShaderTexture(0, AETHER_LOGO);
-			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, transparency);
-			int width = (int) (350 / scale);
-			int height = (int) (76 / scale);
-			int logoX = this.alignedLeft ? (int) (10 + (18 / scale)) : (int) ((this.width / 2 - 175 / scale));
-			int logoY = this.alignedLeft ? (int) (15 + (10 / scale)) : (int) (25 + (10 / scale));
-			GuiComponent.blit(poseStack, logoX, logoY, 0, 0, width, height, width, height);
-			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		}
+		RenderSystem.setShaderTexture(0, AETHER_LOGO);
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, transparency);
+		int width = (int) (350 / scale);
+		int height = (int) (76 / scale);
+		int logoX = this.alignedLeft ? (int) (10 + (18 / scale)) : (int) ((this.width / 2 - 175 / scale));
+		int logoY = this.alignedLeft ? (int) (15 + (10 / scale)) : (int) (25 + (10 / scale));
+		GuiComponent.blit(poseStack, logoX, logoY, 0, 0, width, height, width, height);
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 	}
 
-	public static float getScale(AetherTitleScreen titleScreen, Minecraft minecraft) {
-		int guiScale = minecraft.getWindow().calculateScale(minecraft.options.guiScale().get(), minecraft.isEnforceUnicode());
-		return calculateScale(titleScreen, guiScale, guiScale - 1);
+	/**
+	 * Determines the proper scaling for menu elements relative to the true screen scale.
+	 * @param screen The parent {@link AetherTitleScreen}.
+	 * @param minecraft The {@link Minecraft} instance.
+	 * @return The {@link Float} scale for menu elements.
+	 */
+	public static float getScale(AetherTitleScreen screen, Minecraft minecraft) {
+		int guiScale = minecraft.getWindow().calculateScale(minecraft.options.guiScale().get(), minecraft.isEnforceUnicode());  // The true screen GUI scale.
+		return calculateScale(screen, guiScale, guiScale - 1);
 	}
-
-	public static float calculateScale(AetherTitleScreen titleScreen, float guiScale, float lowerScale) {
+	/**
+	 * Determines the proper scaling for menu elements relative to the given scale factors.
+	 * @param screen The parent {@link AetherTitleScreen}.
+	 * @param guiScale The base GUI scale {@link Float}.
+	 * @param lowerScale A GUI scale {@link Float} value that is one less than the base.
+	 * @return The {@link Float} scale for menu elements.
+	 */
+	public static float calculateScale(AetherTitleScreen screen, float guiScale, float lowerScale) {
 		float scale = 1.0F;
 		if (guiScale > 1) {
-			scale = guiScale / lowerScale;
+			scale = guiScale / lowerScale; // A scale factor to counteract the GUI scale option's changing of menu element's pixel scale (pixels-per-pixel).
 		}
-		int range = AetherMenuButton.totalHeightRange(titleScreen.rows, scale);
-		if (range > titleScreen.height && scale != 1.0F) {
-            return calculateScale(titleScreen, guiScale, lowerScale - 1);
+		int range = AetherMenuButton.totalHeightRange(screen.rows, scale);
+		if (range > screen.height && scale != 1.0F) { // Recursive check to see if the menu elements can actually fit on the screen, otherwise it'll try to shrink to a lower GUI scale.
+            return calculateScale(screen, guiScale, lowerScale - 1);
 		} else {
 			return scale;
 		}
 	}
 
-	@SuppressWarnings("unchecked")
+	/**
+	 * Changes main menu buttons into Aether-styled main menu buttons.<br><br>
+	 * Warning for "unchecked" is suppressed because the buttons should always be able to be cast.
+	 * @param renderable A renderable widget.
+	 * @return A new renderable widget.
+	 */
 	@Override
+	@SuppressWarnings("unchecked")
 	protected <T extends GuiEventListener & Renderable & NarratableEntry> T addRenderableWidget(T renderable) {
 		if (renderable instanceof Button button) {
-			if (this.isAetherButton(button.getMessage())) {
+			if (TitleScreenBehavior.isMainButton(button.getMessage())) {
 				AetherMenuButton aetherButton = new AetherMenuButton(this, button);
 				return (T) super.addRenderableWidget(aetherButton);
 			}
 		}
 		return super.addRenderableWidget(renderable);
-	}
-
-	public boolean isImageButton(Component buttonText) {
-		return buttonText.equals(Component.translatable("narrator.button.accessibility"))
-				|| buttonText.equals(Component.translatable("narrator.button.language"));
-	}
-
-	public boolean isAetherButton(Component buttonText) {
-		return buttonText.equals(Component.translatable("menu.singleplayer"))
-				|| buttonText.equals(Component.translatable("menu.multiplayer"))
-				|| buttonText.equals(Component.translatable("menu.online"))
-				|| buttonText.equals(Component.translatable("fml.menu.mods"))
-				|| buttonText.equals(Component.translatable("menu.options"))
-				|| buttonText.equals(Component.translatable("menu.quit"));
 	}
 
 	public boolean isAlignedLeft() {
