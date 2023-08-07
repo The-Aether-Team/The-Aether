@@ -77,7 +77,7 @@ public class HandRenderHooks {
     public static void renderShieldOfRepulsionHandOverlay(ItemInHandRenderer itemInHandRenderer, @Nullable AbstractClientPlayer player, InteractionHand hand, float pitch, float swingProgress, float equippedProgress, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         if (player != null) {
             AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
-                if (aetherPlayer.isWearingInvisibilityCloak()) { // Check for Invisibility Cloak.
+                if (!aetherPlayer.isWearingInvisibilityCloak()) { // Check for Invisibility Cloak.
                     CuriosApi.getCuriosHelper().findFirstCurio(player, (item) -> item.getItem() instanceof ShieldOfRepulsionItem).ifPresent((slotResult) -> {
                         String identifier = slotResult.slotContext().identifier();
                         int id = slotResult.slotContext().index();
@@ -134,7 +134,7 @@ public class HandRenderHooks {
         float f2 = -0.3F * Mth.sin(f1 * Mth.PI);
         float f3 = 0.4F * Mth.sin(f1 * Mth.TWO_PI);
         float f4 = -0.4F * Mth.sin(swingProgress * Mth.PI);
-        poseStack.translate(f * (f2 + 0.64000005F), f3 - 0.6F + equippedProgress * -0.6F, f4 - 0.71999997F);
+        poseStack.translate(f * (f2 + 0.64F), f3 - 0.6F + equippedProgress * -0.6F, f4 - 0.72F);
         poseStack.mulPose(Axis.YP.rotationDegrees(f * 45.0F));
         float f5 = Mth.sin(swingProgress * swingProgress * Mth.PI);
         float f6 = Mth.sin(f1 * Mth.PI);

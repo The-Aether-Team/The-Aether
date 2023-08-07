@@ -36,7 +36,6 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
     private final HumanoidModel<LivingEntity> shieldModel;
     private final PlayerModel<LivingEntity> shieldModelSlim;
     public final HumanoidModel<LivingEntity> shieldModelArm;
-    public final PlayerModel<LivingEntity> shieldModelArmSlim;
     public final PlayerModel<LivingEntity> dummyArm;
     public final PlayerModel<LivingEntity> dummyArmSlim;
 
@@ -44,7 +43,6 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
         this.shieldModel = new HumanoidModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.SHIELD_OF_REPULSION));
         this.shieldModelSlim = new PlayerModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.SHIELD_OF_REPULSION_SLIM) , true);
         this.shieldModelArm = new HumanoidModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.SHIELD_OF_REPULSION_ARM));
-        this.shieldModelArmSlim = new PlayerModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(AetherModelLayers.SHIELD_OF_REPULSION_ARM_SLIM) , true);
         this.dummyArm = new PlayerModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayers.PLAYER), false);
         this.dummyArmSlim = new PlayerModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayers.PLAYER_SLIM), true);
     }
@@ -122,7 +120,7 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
         if (!player.isInvisible()) {
             this.setupHand(isSlim ? this.dummyArmSlim : this.dummyArm, poseStack, buffer, packedLight, player, arm);
         }
-        this.setupShieldOnHand(stack, isSlim ? this.shieldModelArmSlim : this.shieldModelArm, poseStack, buffer, packedLight, player, arm, isSlim);
+        this.setupShieldOnHand(stack, this.shieldModelArm, poseStack, buffer, packedLight, player, arm, isSlim);
     }
 
     /**
@@ -145,15 +143,16 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
         Optional<AetherPlayer> aetherPlayerOptional = AetherPlayer.get(player).resolve();
         if (aetherPlayerOptional.isPresent()) {
             if (!aetherPlayerOptional.get().isMoving()) {
-                texture = isSlim ? shield.getShieldOfRepulsionSlimTexture() : shield.getShieldOfRepulsionTexture();
+                texture = shield.getShieldOfRepulsionTexture();
             } else {
-                texture = isSlim ? shield.getShieldOfRepulsionSlimInactiveTexture() : shield.getShieldOfRepulsionInactiveTexture();
+                texture = shield.getShieldOfRepulsionInactiveTexture();
             }
         } else {
-            texture = isSlim ? shield.getShieldOfRepulsionSlimInactiveTexture() : shield.getShieldOfRepulsionInactiveTexture();
+            texture = shield.getShieldOfRepulsionInactiveTexture();
         }
 
         VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.entityTranslucent(texture), false, stack.isEnchanted());
+        poseStack.translate((arm != HumanoidArm.LEFT ? 1.0F : -1.0F) * 0.05F, 0.0F, 0.0F);
         if (arm == HumanoidArm.RIGHT) {
             this.renderShieldOnHand(model.rightArm, poseStack, packedLight, consumer);
         } else if (arm == HumanoidArm.LEFT) {
@@ -176,11 +175,12 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
         Optional<AetherPlayer> aetherPlayerOptional = AetherPlayer.get(player).resolve();
         if (aetherPlayerOptional.isPresent()) {
             if (!aetherPlayerOptional.get().isMoving()) {
-                VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entityTranslucent(player.getSkinTextureLocation()));
+                VertexConsumer consumer = buffer.getBuffer(RenderType.entityTranslucent(player.getSkinTextureLocation()));
+                poseStack.translate((arm != HumanoidArm.LEFT ? 1.0F : -1.0F) * -0.05F, 0.0F, 0.0F);
                 if (arm == HumanoidArm.RIGHT) {
-                    this.renderHand(model.rightArm, model.rightSleeve, poseStack, packedLight, vertexConsumer);
+                    this.renderHand(model.rightArm, model.rightSleeve, poseStack, packedLight, consumer);
                 } else if (arm == HumanoidArm.LEFT) {
-                    this.renderHand(model.leftArm, model.leftSleeve, poseStack, packedLight, vertexConsumer);
+                    this.renderHand(model.leftArm, model.leftSleeve, poseStack, packedLight, consumer);
                 }
             }
         }
