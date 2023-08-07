@@ -52,6 +52,6 @@ public class BiomeParameterRecipeSerializer<T extends AbstractBiomeParameterReci
     }
 
     public interface CookieBaker<T extends AbstractBiomeParameterRecipe> {
-        T create(ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, CommandFunction.CacheableFunction function);
+        T create(ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, @Nullable CommandFunction.CacheableFunction function);
     }
 }

@@ -10,8 +10,10 @@ import net.minecraft.commands.CommandFunction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
+import javax.annotation.Nullable;
+
 public class AccessoryFreezableRecipe extends AbstractBlockStateRecipe {
-    public AccessoryFreezableRecipe(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result, CommandFunction.CacheableFunction function) {
+    public AccessoryFreezableRecipe(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result, @Nullable CommandFunction.CacheableFunction function) {
         super(AetherRecipeTypes.ACCESSORY_FREEZABLE.get(), id, ingredient, result, function);
     }
 

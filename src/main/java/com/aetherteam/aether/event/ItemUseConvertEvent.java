@@ -11,6 +11,8 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.fml.LogicalSide;
 
+import javax.annotation.Nullable;
+
 /**
  * ItemUseConvertEvent is fired after an item that can convert blocks is used, but before the block is converted by the recipe.
  * <br>
@@ -29,6 +31,7 @@ import net.minecraftforge.fml.LogicalSide;
 public class ItemUseConvertEvent extends PlayerEvent {
 	private final LevelAccessor level;
 	private final BlockPos pos;
+	@Nullable
 	private final ItemStack itemStack;
 	private final RecipeType<?> recipeType;
 	private final BlockState oldBlockState;
@@ -43,7 +46,7 @@ public class ItemUseConvertEvent extends PlayerEvent {
 	 * @param newBlockState The original result {@link BlockState} from the conversion.
 	 * @param recipe The {@link RecipeType}.
 	 */
-	public ItemUseConvertEvent(Player player, LevelAccessor level, BlockPos pos, ItemStack itemStack, BlockState oldBlockState, BlockState newBlockState, RecipeType<?> recipe) {
+	public ItemUseConvertEvent(@Nullable Player player, LevelAccessor level, BlockPos pos, @Nullable ItemStack itemStack, BlockState oldBlockState, BlockState newBlockState, RecipeType<?> recipe) {
 		super(player);
 		this.level = level;
 		this.pos = pos;
@@ -70,6 +73,7 @@ public class ItemUseConvertEvent extends PlayerEvent {
 	/**
 	 * @return The {@link ItemStack} being used for the conversion.
 	 */
+	@Nullable
 	public ItemStack getItemStack() {
 		return this.itemStack;
 	}

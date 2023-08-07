@@ -20,11 +20,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 
 public class PlacementConversionRecipe extends AbstractBiomeParameterRecipe {
-    public PlacementConversionRecipe(ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, CommandFunction.CacheableFunction function) {
+    public PlacementConversionRecipe(ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, @Nullable CommandFunction.CacheableFunction function) {
         super(AetherRecipeTypes.PLACEMENT_CONVERSION.get(), id, biomeKey, biomeTag, ingredient, result, function);
     }
 
-    public PlacementConversionRecipe(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result, CommandFunction.CacheableFunction function) {
+    public PlacementConversionRecipe(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result, @Nullable CommandFunction.CacheableFunction function) {
         this(id, null, null, ingredient, result, function);
     }
 

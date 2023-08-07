@@ -83,7 +83,7 @@ public class AetherEventDispatch {
 	/**
 	 * @see ItemUseConvertEvent
 	 */
-	public static ItemUseConvertEvent onItemUseConvert(Player player, LevelAccessor level, BlockPos pos, ItemStack stack, BlockState oldState, BlockState newState, RecipeType<?> recipeType) {
+	public static ItemUseConvertEvent onItemUseConvert(@Nullable Player player, LevelAccessor level, BlockPos pos, @Nullable ItemStack stack, BlockState oldState, BlockState newState, RecipeType<?> recipeType) {
 		ItemUseConvertEvent event = new ItemUseConvertEvent(player, level, pos, stack, oldState, newState, recipeType);
 		MinecraftForge.EVENT_BUS.post(event);
 		return event;
