@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
 
-public abstract class AbstractBiomeParameterRecipeCategory<T extends AbstractBiomeParameterRecipe> extends AetherBlockStateRecipeCategory<T> implements BiomeTooltip {
+public abstract class AbstractBiomeParameterRecipeCategory<T extends AbstractBiomeParameterRecipe> extends AbstractAetherBlockStateRecipeCategory<T> implements BiomeTooltip {
     public AbstractBiomeParameterRecipeCategory(String id, ResourceLocation uid, IDrawable background, IDrawable icon, RecipeType<T> recipeType, IPlatformFluidHelper<?> fluidHelper) {
         super(id, uid, background, icon, recipeType, fluidHelper);
     }

@@ -8,8 +8,8 @@ import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
-public abstract class AetherBlockStateRecipeCategory<T extends AbstractBlockStateRecipe> extends AbstractBlockStateRecipeCategory<T> {
-    public AetherBlockStateRecipeCategory(String id, ResourceLocation uid, IDrawable background, IDrawable icon, RecipeType<T> recipeType, IPlatformFluidHelper<?> fluidHelper) {
+public abstract class AbstractAetherBlockStateRecipeCategory<T extends AbstractBlockStateRecipe> extends AbstractBlockStateRecipeCategory<T> {
+    public AbstractAetherBlockStateRecipeCategory(String id, ResourceLocation uid, IDrawable background, IDrawable icon, RecipeType<T> recipeType, IPlatformFluidHelper<?> fluidHelper) {
         super(id, uid, background, icon, recipeType, fluidHelper);
     }
 
