@@ -10,7 +10,6 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
-@EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Bus.MOD)
 public class AetherAtlases {
 	public static Material TREASURE_CHEST_MATERIAL;
 	public static Material TREASURE_CHEST_LEFT_MATERIAL;
