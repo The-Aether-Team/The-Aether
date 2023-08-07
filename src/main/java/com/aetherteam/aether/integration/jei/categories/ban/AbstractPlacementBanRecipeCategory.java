@@ -48,6 +48,11 @@ public abstract class AbstractPlacementBanRecipeCategory<T, S extends Predicate<
     }
 
     @Override
+    public Component getTitle() {
+        return Component.translatable("gui.aether.jei." + this.id);
+    }
+
+    @Override
     public void setRecipe(IRecipeLayoutBuilder builder, R recipe, IFocusGroup focusGroup) {
         BlockStateIngredient bypassBlockIngredient = recipe.getBypassBlock();
         BlockPropertyPair[] pairs = bypassBlockIngredient.getPairs();

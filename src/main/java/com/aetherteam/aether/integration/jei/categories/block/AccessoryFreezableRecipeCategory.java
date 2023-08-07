@@ -3,7 +3,6 @@ package com.aetherteam.aether.integration.jei.categories.block;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.recipe.recipes.block.AccessoryFreezableRecipe;
-import com.aetherteam.nitrogen.integration.jei.categories.block.AbstractBlockStateRecipeCategory;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.helpers.IPlatformFluidHelper;
@@ -11,7 +10,7 @@ import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
-public class AccessoryFreezableRecipeCategory extends AbstractBlockStateRecipeCategory<AccessoryFreezableRecipe> {
+public class AccessoryFreezableRecipeCategory extends AetherBlockStateRecipeCategory<AccessoryFreezableRecipe> {
     public static final ResourceLocation UID = new ResourceLocation(Aether.MODID, "accessory_freezable");
     public static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/menu/jei_render.png");
     public static final RecipeType<AccessoryFreezableRecipe> RECIPE_TYPE = RecipeType.create(Aether.MODID, "accessory_freezable", AccessoryFreezableRecipe.class);

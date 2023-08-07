@@ -21,6 +21,11 @@ public abstract class AbstractAetherCookingRecipeCategory<T> extends AbstractRec
         this.animatedProgressArrow = animatedProgressArrow;
     }
 
+    @Override
+    public Component getTitle() {
+        return Component.translatable("gui.aether.jei." + this.id);
+    }
+
     protected void drawExperience(AbstractCookingRecipe recipe, PoseStack poseStack, int y, IDrawable background) {
         float experience = recipe.getExperience();
         if (experience > 0) {
