@@ -2,13 +2,14 @@ package com.aetherteam.aether.item.miscellaneous;
 
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.item.AetherItems;
+import com.aetherteam.nitrogen.capability.INBTSynchable;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
@@ -39,7 +40,7 @@ public class LifeShardItem extends Item implements ConsumableItem {
                     player.swing(hand);
                     if (!level.isClientSide()) {
                         this.consume(this, heldStack, player);
-                        aetherPlayer.addToLifeShardCount(1);
+                        aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setLifeShardCount", aetherPlayer.getLifeShardCount() + 1);
                         return InteractionResultHolder.consume(heldStack);
                     } else {
                         return InteractionResultHolder.success(heldStack);

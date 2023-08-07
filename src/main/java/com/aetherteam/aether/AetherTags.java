@@ -1,15 +1,15 @@
 package com.aetherteam.aether;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.item.Item;
-import net.minecraft.tags.*;
-import net.minecraft.resources.ResourceLocation;
 import top.theillusivec4.curios.api.CuriosApi;
 
 public class AetherTags {
@@ -157,6 +157,7 @@ public class AetherTags {
 		public static final TagKey<EntityType<?>> SWETS = tag("swets");
 		public static final TagKey<EntityType<?>> WHIRLWIND_UNAFFECTED = tag("whirlwind_unaffected");
 		public static final TagKey<EntityType<?>> PIGS = tag("pigs");
+		public static final TagKey<EntityType<?>> FIRE_MOB = tag("fire_mob");
 		public static final TagKey<EntityType<?>> NO_SKYROOT_DOUBLE_DROPS = tag("no_skyroot_double_drops");
 		public static final TagKey<EntityType<?>> NO_AMBROSIUM_DROPS = tag("no_ambrosium_drops");
 		public static final TagKey<EntityType<?>> UNLAUNCHABLE = tag("unlaunchable");

@@ -1,10 +1,9 @@
 package com.aetherteam.aether.block.natural;
 
 import com.aetherteam.aether.block.AetherBlockStateProperties;
-
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 
 public class AetherLogBlock extends RotatedPillarBlock {

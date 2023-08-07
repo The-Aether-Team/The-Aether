@@ -1,8 +1,8 @@
 package com.aetherteam.aether.item.miscellaneous;
 
-import com.aetherteam.aether.entity.passive.Moa;
-import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.api.registers.MoaType;
+import com.aetherteam.aether.entity.AetherEntityTypes;
+import com.aetherteam.aether.entity.passive.Moa;
 import com.aetherteam.aether.mixin.mixins.common.accessor.BaseSpawnerAccessor;
 import com.google.common.collect.Iterables;
 import net.minecraft.core.BlockPos;
@@ -60,7 +60,8 @@ public class MoaEggItem extends Item {
     }
 
     /**
-     * Based on {@link net.minecraft.world.item.SpawnEggItem#useOn(UseOnContext)} except it's modified for Moa spawning specifically and ensuring all the Moa's NBT tags are set.
+     * [CODE COPY] - {@link net.minecraft.world.item.SpawnEggItem#useOn(UseOnContext)}<br><br>
+     * Modified for Moa spawning specifically and ensuring all the Moa's NBT tags are set.
      * @param context The {@link UseOnContext} of the usage interaction.
      */
     @Override
@@ -110,7 +111,8 @@ public class MoaEggItem extends Item {
     }
 
     /**
-     * Based on {@link net.minecraft.world.item.SpawnEggItem#use(Level, Player, InteractionHand)} except it's modified for Moa spawning specifically and ensuring all the Moa's NBT tags are set.
+     * [CODE COPY] - {@link net.minecraft.world.item.SpawnEggItem#use(Level, Player, InteractionHand)}<br><br>
+     * Modified for Moa spawning specifically and ensuring all the Moa's NBT tags are set.
      * @param level The {@link Level} of the user.
      * @param player The {@link Player} using this item.
      * @param hand The {@link InteractionHand} in which the item is being used.

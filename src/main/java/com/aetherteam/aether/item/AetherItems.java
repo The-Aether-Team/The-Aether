@@ -1,39 +1,74 @@
 package com.aetherteam.aether.item;
 
-import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.api.AetherMoaTypes;
+import com.aetherteam.aether.client.AetherSoundEvents;
+import com.aetherteam.aether.entity.AetherEntityTypes;
+import com.aetherteam.aether.item.accessories.cape.AgilityCapeItem;
+import com.aetherteam.aether.item.accessories.cape.CapeItem;
+import com.aetherteam.aether.item.accessories.cape.InvisibilityCloakItem;
+import com.aetherteam.aether.item.accessories.cape.ValkyrieCapeItem;
+import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
+import com.aetherteam.aether.item.accessories.gloves.GoldGlovesItem;
+import com.aetherteam.aether.item.accessories.gloves.LeatherGlovesItem;
+import com.aetherteam.aether.item.accessories.gloves.ZaniteGlovesItem;
+import com.aetherteam.aether.item.accessories.miscellaneous.GoldenFeatherItem;
+import com.aetherteam.aether.item.accessories.miscellaneous.IronBubbleItem;
+import com.aetherteam.aether.item.accessories.miscellaneous.RegenerationStoneItem;
+import com.aetherteam.aether.item.accessories.miscellaneous.ShieldOfRepulsionItem;
+import com.aetherteam.aether.item.accessories.pendant.IcePendantItem;
+import com.aetherteam.aether.item.accessories.pendant.PendantItem;
+import com.aetherteam.aether.item.accessories.pendant.ZanitePendantItem;
+import com.aetherteam.aether.item.accessories.ring.IceRingItem;
+import com.aetherteam.aether.item.accessories.ring.RingItem;
+import com.aetherteam.aether.item.accessories.ring.ZaniteRingItem;
+import com.aetherteam.aether.item.combat.*;
+import com.aetherteam.aether.item.combat.loot.*;
+import com.aetherteam.aether.item.food.AetherFoods;
+import com.aetherteam.aether.item.food.GummySwetItem;
+import com.aetherteam.aether.item.food.HealingStoneItem;
+import com.aetherteam.aether.item.food.WhiteAppleItem;
+import com.aetherteam.aether.item.materials.AmbrosiumShardItem;
+import com.aetherteam.aether.item.materials.SkyrootStickItem;
+import com.aetherteam.aether.item.materials.SwetBallItem;
+import com.aetherteam.aether.item.miscellaneous.*;
+import com.aetherteam.aether.item.miscellaneous.bucket.*;
+import com.aetherteam.aether.item.tools.gravitite.GravititeAxeItem;
+import com.aetherteam.aether.item.tools.gravitite.GravititeHoeItem;
+import com.aetherteam.aether.item.tools.gravitite.GravititePickaxeItem;
+import com.aetherteam.aether.item.tools.gravitite.GravititeShovelItem;
+import com.aetherteam.aether.item.tools.holystone.HolystoneAxeItem;
+import com.aetherteam.aether.item.tools.holystone.HolystoneHoeItem;
+import com.aetherteam.aether.item.tools.holystone.HolystonePickaxeItem;
+import com.aetherteam.aether.item.tools.holystone.HolystoneShovelItem;
+import com.aetherteam.aether.item.tools.skyroot.SkyrootAxeItem;
+import com.aetherteam.aether.item.tools.skyroot.SkyrootHoeItem;
+import com.aetherteam.aether.item.tools.skyroot.SkyrootPickaxeItem;
+import com.aetherteam.aether.item.tools.skyroot.SkyrootShovelItem;
+import com.aetherteam.aether.item.tools.valkyrie.ValkyrieAxeItem;
+import com.aetherteam.aether.item.tools.valkyrie.ValkyrieHoeItem;
+import com.aetherteam.aether.item.tools.valkyrie.ValkyriePickaxeItem;
+import com.aetherteam.aether.item.tools.valkyrie.ValkyrieShovelItem;
+import com.aetherteam.aether.item.tools.zanite.ZaniteAxeItem;
+import com.aetherteam.aether.item.tools.zanite.ZaniteHoeItem;
+import com.aetherteam.aether.item.tools.zanite.ZanitePickaxeItem;
+import com.aetherteam.aether.item.tools.zanite.ZaniteShovelItem;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
-import net.minecraft.world.item.*;
-import com.aetherteam.aether.item.food.*;
-import com.aetherteam.aether.item.accessories.ring.*;
-import com.aetherteam.aether.item.accessories.pendant.*;
-import com.aetherteam.aether.item.accessories.gloves.*;
-import com.aetherteam.aether.item.accessories.cape.*;
-import com.aetherteam.aether.item.accessories.miscellaneous.*;
-import com.aetherteam.aether.item.tools.skyroot.*;
-import com.aetherteam.aether.item.tools.holystone.*;
-import com.aetherteam.aether.item.tools.zanite.*;
-import com.aetherteam.aether.item.tools.gravitite.*;
-import com.aetherteam.aether.item.tools.valkyrie.*;
-import com.aetherteam.aether.item.combat.*;
-import com.aetherteam.aether.item.combat.loot.*;
-import com.aetherteam.aether.item.materials.*;
-import com.aetherteam.aether.item.miscellaneous.*;
-import com.aetherteam.aether.item.miscellaneous.bucket.*;
-import com.aetherteam.aether.api.AetherMoaTypes;
-import com.aetherteam.aether.entity.AetherEntityTypes;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.ChatFormatting;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-
 import net.minecraftforge.registries.RegistryObject;
 
 public class AetherItems {
@@ -256,6 +291,7 @@ public class AetherItems {
 
 	/**
 	 * Sets up the possible replacements for vanilla buckets to Skyroot buckets.
+	 * @see com.aetherteam.aether.event.hooks.EntityHooks#pickupBucketable(Entity, Player, InteractionHand)
 	 */
 	public static void setupBucketReplacements() {
 		SkyrootBucketItem.REPLACEMENTS.put(() -> Items.WATER_BUCKET, AetherItems.SKYROOT_WATER_BUCKET);

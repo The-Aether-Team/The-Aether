@@ -54,6 +54,8 @@ public class AccessoryAbilityListener {
 
     /**
      * Makes the wearer invisible to other mobs' targeting if wearing an Invisibility Cloak.
+     * @see com.aetherteam.aether.event.hooks.AbilityHooks.AccessoryHooks#preventTargeting(LivingEntity, Entity)
+     * @see com.aetherteam.aether.event.hooks.AbilityHooks.AccessoryHooks#recentlyAttackedWithInvisibility(LivingEntity, Entity)
      */
     @SubscribeEvent
     public static void onTargetSet(LivingEvent.LivingVisibilityEvent event) {
@@ -90,6 +92,9 @@ public class AccessoryAbilityListener {
         }
     }
 
+    /**
+     * @see com.aetherteam.aether.event.hooks.AbilityHooks.AccessoryHooks#setShoot(Entity)
+     */
     @SubscribeEvent
     public static void onProjectileShoot(EntityJoinLevelEvent event) {
         Entity entity = event.getEntity();

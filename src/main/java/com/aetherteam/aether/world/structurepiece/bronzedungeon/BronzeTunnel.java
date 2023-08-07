@@ -15,26 +15,26 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import net.minecraftforge.common.world.PieceBeardifierModifier;
 
 /**
- * The entrance to the bronze dungeon. It shouldn't replace air so that it matches the landscape.
+ * The entrance to the Bronze Dungeon. It shouldn't replace air so that it matches the landscape.
  */
 public class BronzeTunnel extends BronzeDungeonPiece implements PieceBeardifierModifier {
-
-    public BronzeTunnel(StructureTemplateManager pStructureTemplateManager, String name, BlockPos pTemplatePosition, Rotation rotation) {
-        super(AetherStructurePieceTypes.BRONZE_TUNNEL.get(), pStructureTemplateManager, name, makeSettings().setRotation(rotation), pTemplatePosition);
+    public BronzeTunnel(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
+        super(AetherStructurePieceTypes.BRONZE_TUNNEL.get(), manager, name, BronzeTunnel.makeSettings().setRotation(rotation), pos);
     }
 
     public BronzeTunnel(StructurePieceSerializationContext context, CompoundTag tag) {
-        super(AetherStructurePieceTypes.BRONZE_TUNNEL.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
+        super(AetherStructurePieceTypes.BRONZE_TUNNEL.get(), tag, context.structureTemplateManager(), resourceLocation -> BronzeTunnel.makeSettings());
     }
 
     static StructurePlaceSettings makeSettings() {
-        return new StructurePlaceSettings().addProcessor(AVOID_DUNGEONS).addProcessor(BRONZE_DUNGEON_STONE).addProcessor(DoubleDropsProcessor.INSTANCE);
+        return new StructurePlaceSettings()
+                .addProcessor(BronzeDungeonPiece.AVOID_DUNGEONS)
+                .addProcessor(BronzeDungeonPiece.BRONZE_DUNGEON_STONE)
+                .addProcessor(DoubleDropsProcessor.INSTANCE);
     }
 
     @Override
-    protected void handleDataMarker(String pName, BlockPos pPos, ServerLevelAccessor pLevel, RandomSource pRandom, BoundingBox pBox) {
-
-    }
+    protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox box) { }
 
     @Override
     public BoundingBox getBeardifierBox() {

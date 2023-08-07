@@ -5,29 +5,28 @@ import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.particle.AetherParticleTypes;
 import com.aetherteam.aether.mixin.mixins.common.accessor.EntityAccessor;
-import com.aetherteam.aether.util.LevelUtil;
+import com.aetherteam.aether.world.LevelUtil;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
-
-import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.util.LazyOptional;
 
 public class AetherPortalBlock extends Block {
@@ -46,7 +45,9 @@ public class AetherPortalBlock extends Block {
 	}
 
 	/**
-	 * Based on {@link Entity#handleInsidePortal(BlockPos)} and {@link Entity#handleNetherPortal()}.<br><br>
+	 * [CODE COPY] - {@link Entity#handleInsidePortal(BlockPos)}<br>
+	 * [CODE COPY] - {@link Entity#handleNetherPortal()}.<br><br>
+	 * Handle portal behavior with {@link com.aetherteam.aether.capability.player.AetherPlayerCapability}.
 	 * Warning for "deprecation" is suppressed because the method is fine to override.
 	 */
 	@SuppressWarnings("deprecation")
@@ -78,13 +79,13 @@ public class AetherPortalBlock extends Block {
 	}
 
 	/**
-	 * Based on {@link Entity#handleNetherPortal()}.
+	 * [CODE COPY] - {@link Entity#handleNetherPortal()}.
 	 */
 	private void handleTeleportation(Entity entity) {
-		MinecraftServer minecraftserver = entity.getLevel().getServer();
+		MinecraftServer server = entity.getLevel().getServer();
 		ResourceKey<Level> destinationKey = entity.getLevel().dimension() == LevelUtil.destinationDimension() ? LevelUtil.returnDimension() : LevelUtil.destinationDimension();
-		if (minecraftserver != null) {
-			ServerLevel destinationLevel = minecraftserver.getLevel(destinationKey);
+		if (server != null) {
+			ServerLevel destinationLevel = server.getLevel(destinationKey);
 			if (destinationLevel != null && !entity.isPassenger()) {
 				entity.getLevel().getProfiler().push("aether_portal");
 				entity.setPortalCooldown();
@@ -95,7 +96,7 @@ public class AetherPortalBlock extends Block {
 	}
 
 	/**
-	 * Based on {@link net.minecraft.world.level.block.NetherPortalBlock#animateTick(BlockState, Level, BlockPos, RandomSource)}.
+	 * [CODE COPY] - {@link net.minecraft.world.level.block.NetherPortalBlock#animateTick(BlockState, Level, BlockPos, RandomSource)}.
 	 */
 	@Override
 	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
@@ -143,11 +144,11 @@ public class AetherPortalBlock extends Block {
 	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-		return switch (state.getValue(AXIS)) {
-			case Z -> Z_AXIS_AABB;
-			case X -> X_AXIS_AABB;
-			default -> X_AXIS_AABB;
-		};
+		if (state.getValue(AXIS) == Direction.Axis.Z) {
+			return Z_AXIS_AABB;
+		} else {
+			return X_AXIS_AABB;
+		}
 	}
 
 	/**

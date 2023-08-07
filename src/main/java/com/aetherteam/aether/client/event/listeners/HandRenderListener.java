@@ -15,6 +15,10 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT)
 public class HandRenderListener {
+    /**
+     * @see HandRenderHooks#renderGloveHandOverlay(ItemInHandRenderer, AbstractClientPlayer, InteractionHand, float, float, float, PoseStack, MultiBufferSource, int)
+     * @see HandRenderHooks#renderShieldOfRepulsionHandOverlay(ItemInHandRenderer, AbstractClientPlayer, InteractionHand, float, float, float, PoseStack, MultiBufferSource, int)
+     */
     @SubscribeEvent
     public static void onRenderHand(RenderHandEvent event) {
         ItemInHandRenderer itemInHandRenderer = Minecraft.getInstance().gameRenderer.itemInHandRenderer;

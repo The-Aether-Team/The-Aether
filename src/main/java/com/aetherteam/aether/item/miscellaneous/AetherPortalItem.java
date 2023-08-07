@@ -1,16 +1,16 @@
 package com.aetherteam.aether.item.miscellaneous;
 
-import com.aetherteam.aether.block.portal.AetherPortalBlock;
 import com.aetherteam.aether.block.AetherBlocks;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.block.Blocks;
+import com.aetherteam.aether.block.portal.AetherPortalBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 
 public class AetherPortalItem extends Item {
     public AetherPortalItem(Properties properties) {

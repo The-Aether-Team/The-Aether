@@ -9,45 +9,43 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-import javax.annotation.Nonnull;
-
 public class ValkyrieModel<T extends AbstractValkyrie> extends HumanoidModel<T> {
-    public ModelPart upperBody;
-    public ModelPart rightShoulder;
-    public ModelPart leftShoulder;
-    public ModelPart rightFrontSkirt;
-    public ModelPart leftFrontSkirt;
-    public ModelPart rightBackSkirt;
-    public ModelPart leftBackSkirt;
-    public ModelPart rightSideSkirt;
-    public ModelPart leftSideSkirt;
-    public ModelPart swordHandle;
-    public ModelPart swordHilt;
-    public ModelPart swordBladeBase;
-    public ModelPart swordBladeMiddle;
-    public ModelPart swordBladeEnd;
-    public ModelPart hair1;
-    public ModelPart hair2;
-    public ModelPart hair3;
-    public ModelPart hair4;
-    public ModelPart hair5;
-    public ModelPart hair6;
-    public ModelPart hair7;
-    public ModelPart hair8;
-    public ModelPart hair9;
-    public ModelPart hair10;
-    public ModelPart hair11;
-    public ModelPart hair12;
-    public ModelPart hair13;
-    public ModelPart hair14;
-    public ModelPart hair15;
-    public ModelPart hair16;
-    public ModelPart hair17;
-    public ModelPart hair18;
-    public ModelPart hair19;
-    public ModelPart hair20;
-    public ModelPart hair21;
-    public ModelPart hair22;
+    public final ModelPart upperBody;
+    public final ModelPart rightShoulder;
+    public final ModelPart leftShoulder;
+    public final ModelPart rightFrontSkirt;
+    public final ModelPart leftFrontSkirt;
+    public final ModelPart rightBackSkirt;
+    public final ModelPart leftBackSkirt;
+    public final ModelPart rightSideSkirt;
+    public final ModelPart leftSideSkirt;
+    public final ModelPart swordHandle;
+    public final ModelPart swordHilt;
+    public final ModelPart swordBladeBase;
+    public final ModelPart swordBladeMiddle;
+    public final ModelPart swordBladeEnd;
+    public final ModelPart hair1;
+    public final ModelPart hair2;
+    public final ModelPart hair3;
+    public final ModelPart hair4;
+    public final ModelPart hair5;
+    public final ModelPart hair6;
+    public final ModelPart hair7;
+    public final ModelPart hair8;
+    public final ModelPart hair9;
+    public final ModelPart hair10;
+    public final ModelPart hair11;
+    public final ModelPart hair12;
+    public final ModelPart hair13;
+    public final ModelPart hair14;
+    public final ModelPart hair15;
+    public final ModelPart hair16;
+    public final ModelPart hair17;
+    public final ModelPart hair18;
+    public final ModelPart hair19;
+    public final ModelPart hair20;
+    public final ModelPart hair21;
+    public final ModelPart hair22;
 
     public ValkyrieModel(ModelPart root) {
         super(root);
@@ -139,22 +137,22 @@ public class ValkyrieModel<T extends AbstractValkyrie> extends HumanoidModel<T> 
     }
 
     @Override
-    public void setupAnim(@Nonnull T valkyrie, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.head.yRot = netHeadYaw * ((float) Math.PI / 180.0F);
-        this.head.xRot = headPitch * ((float) Math.PI / 180.0F);
+    public void setupAnim(T valkyrie, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        this.head.yRot = netHeadYaw * Mth.DEG_TO_RAD;
+        this.head.xRot = headPitch * Mth.DEG_TO_RAD;
 
         this.rightArm.x = -4.0F;
         this.rightArm.z = 0.0F;
         this.leftArm.x = 5.0F;
         this.leftArm.z = 0.0F;
 
-        this.rightArm.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 2.0F * limbSwingAmount * 0.5F;
+        this.rightArm.xRot = Mth.cos(limbSwing * 0.6662F + Mth.PI) * 2.0F * limbSwingAmount * 0.5F;
         this.leftArm.xRot = Mth.cos(limbSwing * 0.6662F) * 2.0F * limbSwingAmount * 0.5F;
         this.rightArm.zRot = 0.0F;
         this.leftArm.zRot = 0.0F;
 
         this.rightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        this.leftLeg.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
+        this.leftLeg.xRot = Mth.cos(limbSwing * 0.6662F + Mth.PI) * 1.4F * limbSwingAmount;
 
         this.rightArm.yRot = 0.0F;
         this.leftArm.yRot = 0.0F;
@@ -163,7 +161,7 @@ public class ValkyrieModel<T extends AbstractValkyrie> extends HumanoidModel<T> 
     }
 
     @Override
-    public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         super.renderToBuffer(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
         this.rightFrontSkirt.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
         this.leftFrontSkirt.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);

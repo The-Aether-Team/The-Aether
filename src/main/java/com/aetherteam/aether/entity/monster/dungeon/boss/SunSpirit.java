@@ -2,14 +2,13 @@ package com.aetherteam.aether.entity.monster.dungeon.boss;
 
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.api.BossRoomTracker;
 import com.aetherteam.aether.block.AetherBlocks;
+import com.aetherteam.aether.capability.AetherCapabilities;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.data.resources.AetherDamageTypes;
+import com.aetherteam.aether.entity.AetherBossMob;
 import com.aetherteam.aether.entity.AetherEntityTypes;
-import com.aetherteam.aether.entity.BossMob;
-import com.aetherteam.aether.capability.AetherCapabilities;
 import com.aetherteam.aether.entity.ai.controller.BlankMoveControl;
 import com.aetherteam.aether.entity.monster.dungeon.FireMinion;
 import com.aetherteam.aether.entity.projectile.crystal.AbstractCrystal;
@@ -17,21 +16,23 @@ import com.aetherteam.aether.entity.projectile.crystal.FireCrystal;
 import com.aetherteam.aether.entity.projectile.crystal.IceCrystal;
 import com.aetherteam.aether.mixin.mixins.common.accessor.LookAtPlayerGoalAccessor;
 import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.client.BossInfoPacket;
-import com.aetherteam.aether.api.BossNameGenerator;
+import com.aetherteam.aether.network.packet.serverbound.BossInfoPacket;
+import com.aetherteam.nitrogen.entity.BossRoomTracker;
+import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
@@ -51,61 +52,68 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.entity.IEntityAdditionalSpawnData;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
+import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.network.NetworkHooks;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.function.Predicate;
 
-/**
- * Implementation for the sun spirit, the final boss of the Aether. When the sun spirit is defeated, eternal day will
- * end in the dimension.
- */
-public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enemy {
-    public static final EntityDataAccessor<Boolean> DATA_IS_FROZEN = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.BOOLEAN);
-    public static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.COMPONENT);
+public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>, Enemy, IEntityAdditionalSpawnData {
+    private static final EntityDataAccessor<Boolean> DATA_IS_FROZEN = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.COMPONENT);
 
-    private BossRoomTracker<SunSpirit> goldDungeon;
-    private Vec3 origin;
-    /** Boss health bar manager */
+    /**
+     * Boss health bar manager
+     */
     private final ServerBossEvent bossFight;
+    @Nullable
+    private BossRoomTracker<SunSpirit> dungeon;
 
+    private Vec3 origin;
     private int xMax = 9;
     private int zMax = 9;
-
-    private int chatLine = 0;
-    private int chatCooldown = 0;
+    private int chatLine;
+    private int chatCooldown;
 
     protected double velocity;
 
-    public SunSpirit(EntityType<? extends SunSpirit> entityType, Level level) {
-        super(entityType, level);
+    public SunSpirit(EntityType<? extends SunSpirit> type, Level level) {
+        super(type, level);
         this.moveControl = new BlankMoveControl(this);
         this.bossFight = new ServerBossEvent(this.getBossName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
         this.setBossFight(false);
+        this.origin = this.position();
         this.xpReward = XP_REWARD_BOSS;
         this.noPhysics = true;
         this.velocity =  1 - this.getHealth() / 700;
-        this.origin = this.position();
         this.setPersistenceRequired();
     }
 
     /**
-     * Generates a name for the boss.
+     * Generates a name for the boss and tracks the origin where the boss spawned.<br><br>
+     * Warning for "deprecation" is suppressed because this is fine to override.
+     * @param level The {@link ServerLevelAccessor} where the entity is spawned.
+     * @param difficulty The {@link DifficultyInstance} of the game.
+     * @param reason The {@link MobSpawnType} reason.
+     * @param spawnData The {@link SpawnGroupData}.
+     * @param tag The {@link CompoundTag} to apply to this entity.
+     * @return The {@link SpawnGroupData} to return.
      */
     @Override
-    public SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor pLevel, @Nonnull DifficultyInstance pDifficulty, @Nonnull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
-        SpawnGroupData data = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
-        this.setBossName(BossNameGenerator.generateSunSpiritName());
+    @SuppressWarnings("deprecation")
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
+        this.setBossName(BossNameGenerator.generateSunSpiritName(this.getRandom()));
         this.origin = this.position();
-        return data;
+        return spawnData;
     }
 
     @Override
@@ -117,7 +125,7 @@ public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enem
         this.goalSelector.addGoal(4, new FlyAroundGoal(this));
     }
 
-    public static AttributeSupplier.Builder createSunSpiritAttributes() {
+    public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 50.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.35);
@@ -126,109 +134,86 @@ public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enem
     @Override
     public void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(DATA_IS_FROZEN, false);
-        this.entityData.define(DATA_BOSS_NAME, Component.literal("Sun Spirit"));
-    }
-
-    @Override
-    public void tick() {
-        this.setNoGravity(true);
-        super.tick();
-        if (this.getHealth() > 0) {
-            double x = this.getX() + (this.random.nextFloat() - 0.5F) * this.random.nextFloat();
-            double y = this.getBoundingBox().minY + this.random.nextFloat() - 0.5;
-            double z = this.getZ() + (this.random.nextFloat() - 0.5F) * this.random.nextFloat();
-            this.level.addParticle(ParticleTypes.FLAME, x, y, z, 0, -0.07500000298023224, 0);
-
-            this.burnEntities();
-        }
-        this.setYRot(Mth.rotateIfNecessary(this.getYRot(), this.yHeadRot, 20));
+        this.getEntityData().define(DATA_IS_FROZEN, false);
+        this.getEntityData().define(DATA_BOSS_NAME, Component.literal("Sun Spirit"));
     }
 
     /**
-     * Burns all entities directly under the sun spirit
+     * Handles evaporating liquids, chat message cooldown, burning entities below the Sun Spirit, and adjusting the Sun Spirit's rotation.
+     */
+    @Override
+    public void tick() {
+        super.tick();
+        this.evaporate();
+        if (this.getChatCooldown() > 0) {
+            this.chatCooldown--;
+        }
+        if (this.getHealth() > 0) {
+            double x = this.getX() + (this.getRandom().nextFloat() - 0.5F) * this.getRandom().nextFloat();
+            double y = this.getBoundingBox().minY + this.getRandom().nextFloat() - 0.5;
+            double z = this.getZ() + (this.getRandom().nextFloat() - 0.5F) * this.getRandom().nextFloat();
+            this.getLevel().addParticle(ParticleTypes.FLAME, x, y, z, 0, -0.075, 0);
+            this.burnEntities();
+        }
+        this.setYRot(Mth.rotateIfNecessary(this.getYRot(), this.getYHeadRot(), 20));
+    }
+
+    /**
+     * Evaporates liquid blocks.
+     * @see AetherBossMob#evaporate(Mob, BlockPos, BlockPos, Predicate)
+     */
+    private void evaporate() {
+        AABB boundingBox = this.getBoundingBox();
+        BlockPos min = BlockPos.containing(boundingBox.minX - this.xMax, boundingBox.minY - 3, boundingBox.minZ - this.zMax);
+        BlockPos max = BlockPos.containing(Math.ceil(boundingBox.maxX - 1) + this.xMax, Math.ceil(boundingBox.maxY - 1) + 4, Math.ceil(boundingBox.maxZ - 1) + this.zMax);
+        AetherBossMob.super.evaporate(this, min, max, (blockState) -> true);
+    }
+
+    /**
+     * Burns all entities directly under the Sun Spirit.
      */
     public void burnEntities() {
-        List<Entity> entities = this.level.getEntities(this, this.getBoundingBox().expandTowards(0, -2, 0).contract(-0.75, 0, -0.75).contract(0.75, 0, 0.75));
+        List<Entity> entities = this.getLevel().getEntities(this, this.getBoundingBox().expandTowards(0, -2, 0).contract(-0.75, 0, -0.75).contract(0.75, 0, 0.75));
         for (Entity target : entities) {
             if (target instanceof LivingEntity) {
-                target.hurt(AetherDamageTypes.entityDamageSource(this.level, AetherDamageTypes.INCINERATION, this), 20);
+                target.hurt(AetherDamageTypes.entityDamageSource(this.getLevel(), AetherDamageTypes.INCINERATION, this), 20);
                 target.setSecondsOnFire(8);
             }
         }
     }
 
+    /**
+     * Handles boss fight and health tracking, dungeon tracking, checking for Ice Crystal collision, and checking to set the Sun Spirit as frozen.
+     */
     @Override
     public void customServerAiStep() {
         super.customServerAiStep();
         this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
-        this.setFrozen(this.hurtTime > 0);
-        if (this.chatCooldown > 0) {
-            this.chatCooldown--;
-        }
         this.trackDungeon();
-        if (this.tickCount % 10 == 0) {
-            this.evaporate();
-        }
         this.checkIceCrystals();
-    }
-
-    @Override
-    public boolean hurt(DamageSource source, float amount) {
-        boolean flag = super.hurt(source, amount);
-        if (!this.level.isClientSide && flag && this.getHealth() > 0 && source.getEntity() instanceof LivingEntity entity) {
-            FireMinion minion = new FireMinion(AetherEntityTypes.FIRE_MINION.get(), this.level);
-            minion.setPos(this.position());
-            minion.setTarget(entity);
-            this.level.addFreshEntity(minion);
-        }
-        this.velocity =  1 - this.getHealth() / 700;
-        return flag;
-    }
-
-    @Override
-    public boolean isInvulnerableTo(DamageSource source) {
-        return this.isRemoved() || !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) && !source.is(AetherTags.DamageTypes.IS_COLD);
+        this.setFrozen(this.hurtTime > 0);
     }
 
     /**
-     * The sun spirit is immune to effects, but there is an event fired in case addons want to change that.
+     * Extra checks for seeing if an Ice Crystal is close enough to the Sun Spirit to damage it.
      */
-    @Override
-    public boolean canBeAffected(@Nonnull MobEffectInstance pEffectInstance) {
-        net.minecraftforge.event.entity.living.MobEffectEvent.Applicable event = new net.minecraftforge.event.entity.living.MobEffectEvent.Applicable(this, pEffectInstance);
-        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event);
-        if (event.getResult() != net.minecraftforge.eventbus.api.Event.Result.DEFAULT) return event.getResult() == net.minecraftforge.eventbus.api.Event.Result.ALLOW;
-        return false;
+    private void checkIceCrystals() {
+        for (IceCrystal iceCrystal : this.getLevel().getEntitiesOfClass(IceCrystal.class, this.getBoundingBox().inflate(0.1))) {
+            iceCrystal.doDamage(this);
+        }
     }
 
     /**
-     * Plays the sun spirit's defeat message and ends eternal day.
+     * Plays the Sun Spirit's intro chat dialogue.
+     * @param player The interacting {@link Player}.
+     * @param hand The {@link InteractionHand}.
+     * @return The {@link InteractionResult}.
      */
     @Override
-    public void die(@Nonnull DamageSource cause) {
-        if (!this.level.isClientSide) {
-            this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
-            this.setFrozen(true);
-            this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.dead").withStyle(ChatFormatting.AQUA));
-            this.level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).ifPresent(aetherTime -> {
-                aetherTime.setEternalDay(false);
-                aetherTime.updateEternalDay();
-            });
-            if (this.getDungeon() != null) {
-                this.getDungeon().grantAdvancements(cause);
-                this.tearDownRoom();
-            }
-        }
-        super.die(cause);
-    }
-
-    @Override
-    @Nonnull
-    protected InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
-        if (!this.level.isClientSide && !this.isBossFight()) {
-            if (this.chatCooldown <= 0) {
-                this.chatCooldown = 14;
+    protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+        if (!this.getLevel().isClientSide() && !this.isBossFight()) {
+            if (this.getChatCooldown() <= 0) {
+                this.setChatCooldown(14);
                 if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoomInterior(player)) {
                     LazyOptional<AetherPlayer> aetherPlayer = player.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
                     if (!AetherConfig.COMMON.repeat_sun_spirit_dialogue.get()) {
@@ -260,7 +245,7 @@ public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enem
                         case 9 -> {
                             this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line9").withStyle(ChatFormatting.GOLD));
                             this.setBossFight(true);
-                            if (this.goldDungeon != null) {
+                            if (this.getDungeon() != null) {
                                 this.closeRoom();
                             }
                             aetherPlayer.ifPresent(cap -> cap.setSeenSunSpiritDialogue(true));
@@ -278,94 +263,149 @@ public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enem
         return super.mobInteract(player, hand);
     }
 
-
-    private void evaporate() {
-        if (ForgeEventFactory.getMobGriefingEvent(this.getLevel(), this)) {
-            AABB aabb = this.getBoundingBox();
-            BlockPos min = BlockPos.containing(aabb.minX - this.xMax, aabb.minY - 3, aabb.minZ - this.zMax);
-            BlockPos max = BlockPos.containing(Math.ceil(aabb.maxX - 1) + this.xMax, Math.ceil(aabb.maxY - 1) + 4, Math.ceil(aabb.maxZ - 1) + this.zMax);
-            for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
-                if (this.level.getBlockState(pos).getBlock() instanceof LiquidBlock) {
-                    this.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-                    this.evaporateEffects(pos);
-                } else if (!this.level.getFluidState(pos).isEmpty() && this.level.getBlockState(pos).hasProperty(BlockStateProperties.WATERLOGGED)) {
-                    this.level.setBlockAndUpdate(pos, this.level.getBlockState(pos).setValue(BlockStateProperties.WATERLOGGED, false));
-                    this.evaporateEffects(pos);
-                }
-            }
-        }
-    }
-
-    private void evaporateEffects(BlockPos pos) {
-        this.blockDestroySmoke(pos);
-        this.level.playSound(null, pos, AetherSoundEvents.WATER_EVAPORATE.get(), SoundSource.BLOCKS, 0.5F, 2.6F + (this.level.random.nextFloat() - this.level.random.nextFloat()) * 0.8F);
-    }
-
-    private void blockDestroySmoke(BlockPos pos) {
-        double a = pos.getX() + 0.5D + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375D;
-        double b = pos.getY() + 0.5D + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375D;
-        double c = pos.getZ() + 0.5D + (double) (this.random.nextFloat() - this.random.nextFloat()) * 0.375D;
-        if (this.level instanceof ServerLevel serverLevel) {
-            serverLevel.sendParticles(ParticleTypes.POOF, a, b, c, 1, 0.0, 0.0, 0.0, 0.0);
-        }
-    }
-
-    private void checkIceCrystals() {
-        for (IceCrystal iceCrystal : this.level.getEntitiesOfClass(IceCrystal.class, this.getBoundingBox().inflate(0.1))) {
-            iceCrystal.doDamage(this);
-        }
-    }
-
     /**
      * Sends a message to nearby players. Useful for boss fights.
+     * @param message The message {@link Component}.
      */
     protected void chatWithNearby(Component message) {
         AABB room = this.getDungeon() == null ? this.getBoundingBox().inflate(16) : this.getDungeon().roomBounds();
-        this.level.getNearbyPlayers(NON_COMBAT, this, room).forEach(player ->
-                player.sendSystemMessage(message));
+        this.getLevel().getNearbyPlayers(NON_COMBAT, this, room).forEach(player -> player.sendSystemMessage(message));
     }
 
     /**
-     * The sun spirit doesn't take knockback
+     * Spawns a Fire Minion when the Sun Spirit is damaged and increases velocity.
+     * @param source The {@link DamageSource}.
+     * @param amount The {@link Float} amount of damage.
+     * @return Whether the entity was hurt, as a {@link Boolean}.
      */
     @Override
-    public void knockback(double strength, double ratioX, double ratioZ) {
-
-    }
-
-    @Override
-    public void push(double x, double y, double z) {
-
-    }
-
-    @Override
-    public boolean ignoreExplosion() {
-        return true;
+    public boolean hurt(DamageSource source, float amount) {
+        boolean flag = super.hurt(source, amount);
+        if (!this.getLevel().isClientSide() && flag && this.getHealth() > 0 && source.getEntity() instanceof LivingEntity entity) {
+            FireMinion minion = new FireMinion(AetherEntityTypes.FIRE_MINION.get(), this.getLevel());
+            minion.setPos(this.position());
+            minion.setTarget(entity);
+            this.getLevel().addFreshEntity(minion);
+        }
+        this.velocity = 1 - this.getHealth() / 700;
+        return flag;
     }
 
     /**
-     * Add the given player to the list of players tracking this entity. For instance, a player may track a boss in order
-     * to view its associated boss bar.
+     * Resets the boss fight.
      */
     @Override
-    public void startSeenByPlayer(@Nonnull ServerPlayer pPlayer) {
-        super.startSeenByPlayer(pPlayer);
-        AetherPacketHandler.sendToPlayer(new BossInfoPacket.Display(this.bossFight.getId()), pPlayer);
-        if (this.getDungeon() == null || this.getDungeon().isPlayerTracked(pPlayer)) {
-            this.bossFight.addPlayer(pPlayer);
+    public void reset() {
+        this.setBossFight(false);
+        this.setTarget(null);
+        this.setHealth(this.getMaxHealth());
+        if (this.dungeon != null) {
+            this.openRoom();
         }
     }
 
     /**
-     * Removes the given player from the list of players tracking this entity.
+     * Plays the Sun Spirit's defeat message, ends the boss fight, opens the room, grants advancements when the boss dies, and ends eternal day.
+     * @param source The {@link DamageSource}.
      */
     @Override
-    public void stopSeenByPlayer(@Nonnull ServerPlayer pPlayer) {
-        super.stopSeenByPlayer(pPlayer);
-        AetherPacketHandler.sendToPlayer(new BossInfoPacket.Remove(this.bossFight.getId()), pPlayer);
-        this.bossFight.removePlayer(pPlayer);
+    public void die(DamageSource source) {
+        if (!this.getLevel().isClientSide()) {
+            this.setFrozen(true);
+            this.bossFight.setProgress(this.getHealth() / this.getMaxHealth()); // Forces an update to the boss health meter.
+            this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.dead").withStyle(ChatFormatting.AQUA));
+            if (this.getDungeon() != null) {
+                this.getDungeon().grantAdvancements(source);
+                this.tearDownRoom();
+            }
+            this.getLevel().getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).ifPresent((aetherTime) -> {
+                aetherTime.setEternalDay(false);
+                aetherTime.updateEternalDay();
+            });
+        }
+        super.die(source);
     }
 
+    /**
+     * Disallows the Sun Spirit from receiving knockback.
+     * @param strength The {@link Double} for knockback strength.
+     * @param x The {@link Double} for knockback x-direction.
+     * @param z The {@link Double} for knockback z-direction.
+     */
+    @Override
+    public void knockback(double strength, double x, double z) { }
+
+    /**
+     * Disallows the Sun Spirit from being pushed.
+     * @param x The {@link Double} for x-motion.
+     * @param y The {@link Double} for y-motion.
+     * @param z The {@link Double} for z-motion.
+     */
+    @Override
+    public void push(double x, double y, double z) { }
+
+    /**
+     * [CODE COPY] - {@link LivingEntity#canBeAffected(MobEffectInstance)}.<br><br>
+     * The Sun Spirit is immune to all effects unless the event hook determines otherwise.
+     */
+    @Override //code copy
+    public boolean canBeAffected(MobEffectInstance pEffectInstance) {
+        MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, pEffectInstance);
+        MinecraftForge.EVENT_BUS.post(event);
+        if (event.getResult() != Event.Result.DEFAULT) {
+            return event.getResult() == Event.Result.ALLOW;
+        }
+        return false;
+    }
+
+    /**
+     * Called on every block in the boss room when the boss is defeated.
+     * @param state The {@link BlockState} to try to convert.
+     * @return The converted {@link BlockState}.
+     */
+    @Nullable
+    @Override
+    public BlockState convertBlock(BlockState state) {
+        if (state.is(AetherBlocks.LOCKED_HELLFIRE_STONE.get())) {
+            return AetherBlocks.HELLFIRE_STONE.get().defaultBlockState();
+        }
+        if (state.is(AetherBlocks.LOCKED_LIGHT_HELLFIRE_STONE.get())) {
+            return AetherBlocks.LIGHT_HELLFIRE_STONE.get().defaultBlockState();
+        }
+        if (state.is(AetherBlocks.BOSS_DOORWAY_HELLFIRE_STONE.get()) || state.is(AetherBlocks.TREASURE_DOORWAY_HELLFIRE_STONE.get())) {
+            return Blocks.AIR.defaultBlockState();
+        }
+        return null;
+    }
+
+    /**
+     * Tracks the player as a part of the boss fight when the player is nearby, displaying the boss bar for them.
+     * @param player The {@link ServerPlayer}.
+     */
+    @Override
+    public void startSeenByPlayer(ServerPlayer player) {
+        super.startSeenByPlayer(player);
+        PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new BossInfoPacket.Display(this.bossFight.getId()), player);
+        if (this.getDungeon() == null || this.getDungeon().isPlayerTracked(player)) {
+            this.bossFight.addPlayer(player);
+        }
+    }
+
+    /**
+     * Tracks the player as no longer in the boss fight when the player is nearby, removing the boss bar for them.
+     * @param player The {@link ServerPlayer}.
+     */
+    @Override
+    public void stopSeenByPlayer(ServerPlayer player) {
+        super.stopSeenByPlayer(player);
+        PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new BossInfoPacket.Remove(this.bossFight.getId()), player);
+        this.bossFight.removePlayer(player);
+    }
+
+    /**
+     * Adds a player to the boss fight when they've entered the dungeon.
+     * @param player The {@link Player}.
+     */
     @Override
     public void onDungeonPlayerAdded(@Nullable Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
@@ -373,6 +413,10 @@ public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enem
         }
     }
 
+    /**
+     * Removes a player from the boss fight when they've left the dungeon.
+     * @param player The {@link Player}.
+     */
     @Override
     public void onDungeonPlayerRemoved(@Nullable Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
@@ -383,37 +427,152 @@ public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enem
         }
     }
 
+    /**
+     * @return Whether the Sun Spirit should display as frozen, as a {@link Boolean}.
+     */
     public boolean isFrozen() {
-        return this.entityData.get(DATA_IS_FROZEN);
+        return this.getEntityData().get(DATA_IS_FROZEN);
     }
 
+    /**
+     * Sets whether the Sun Spirit should display as frozen.
+     * @param frozen The {@link Boolean} value.
+     */
     public void setFrozen(boolean frozen) {
-        this.entityData.set(DATA_IS_FROZEN, frozen);
+        this.getEntityData().set(DATA_IS_FROZEN, frozen);
     }
 
+    /**
+     * @return The {@link Component} for the boss name.
+     */
     @Override
     public Component getBossName() {
-        return this.entityData.get(DATA_BOSS_NAME);
+        return this.getEntityData().get(DATA_BOSS_NAME);
     }
 
+    /**
+     * Sets the {@link Component} for the boss name and in the boss fight.
+     * @param component The name {@link Component}.
+     */
     @Override
     public void setBossName(Component component) {
-        this.entityData.set(DATA_BOSS_NAME, component);
+        this.getEntityData().set(DATA_BOSS_NAME, component);
         this.bossFight.setName(component);
     }
 
+    /**
+     * @return The {@link SunSpirit} {@link BossRoomTracker} for the Gold Dungeon.
+     */
+    @Nullable
+    @Override
+    public BossRoomTracker<SunSpirit> getDungeon() {
+        return this.dungeon;
+    }
+
+    /**
+     * Sets the tracker for the Gold Dungeon and also tracks the boss origin point and maximum movement distances.
+     * @param dungeon The {@link SunSpirit} {@link BossRoomTracker}.
+     */
+    @Override
+    public void setDungeon(@Nullable BossRoomTracker<SunSpirit> dungeon) {
+        this.dungeon = dungeon;
+        if (dungeon != null) {
+            this.origin = dungeon.originCoordinates();
+            this.xMax = this.zMax = Mth.floor(dungeon.roomBounds().getXsize() / 2 - 5);
+        } else {
+            this.origin = this.position();
+            this.xMax = 9;
+            this.zMax = 9;
+        }
+    }
+
+    /**
+     * @return Whether the boss fight is active and the boss bar is visible, as a {@link Boolean}.
+     */
     @Override
     public boolean isBossFight() {
         return this.bossFight.isVisible();
     }
 
+    /**
+     * Sets whether the boss fight is active and the boss bar is visible.
+     * @param isFighting The {@link Boolean} value.
+     */
     @Override
     public void setBossFight(boolean isFighting) {
         this.bossFight.setVisible(isFighting);
     }
 
+    /**
+     * @return The {@link Integer} for the cooldown until another chat message can display.
+     */
+    public int getChatCooldown() {
+        return this.chatCooldown;
+    }
+
+    /**
+     * Sets the cooldown for when another chat message can display.
+     * @param cooldown The {@link Integer} cooldown.
+     */
+    public void setChatCooldown(int cooldown) {
+        this.chatCooldown = cooldown;
+    }
+
+    /**
+     * @return The death score {@link Integer} for the awarded kill score from this entity.
+     */
     @Override
-    public void addAdditionalSaveData(@Nonnull CompoundTag tag) {
+    public int getDeathScore() {
+        return this.deathScore;
+    }
+
+    /**
+     * Makes the Sun Spirit immune to all damage except cold damage from Ice Crystals, as determined by {@link AetherTags.DamageTypes#IS_COLD}.
+     * @param source The {@link DamageSource}.
+     * @return Whether the Sun Spirit is invulnerable to the damage, as a {@link Boolean}.
+     */
+    @Override
+    public boolean isInvulnerableTo(DamageSource source) {
+        return this.isRemoved() || !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) && !source.is(AetherTags.DamageTypes.IS_COLD);
+    }
+
+    protected SoundEvent getShootSound() {
+        return AetherSoundEvents.ENTITY_SUN_SPIRIT_SHOOT.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+        return null;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return null;
+    }
+
+    /**
+     * @return A false {@link Boolean}, preventing the Sun Spirit from being affected by explosions.
+     */
+    @Override
+    public boolean ignoreExplosion() {
+        return true;
+    }
+
+    /**
+     * @return A true {@link Boolean}, preventing the Sun Spirit from being affected by gravity.
+     */
+    @Override
+    public boolean isNoGravity() {
+        return true;
+    }
+
+    /**
+     * @see com.aetherteam.nitrogen.entity.BossMob#addBossSaveData(CompoundTag)
+     */
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         this.addBossSaveData(tag);
         tag.putInt("ChatLine", this.chatLine);
@@ -422,8 +581,11 @@ public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enem
         tag.putDouble("OffsetZ", this.origin.z() - this.getZ());
     }
 
+    /**
+     * @see com.aetherteam.nitrogen.entity.BossMob#readBossSaveData(CompoundTag)
+     */
     @Override
-    public void readAdditionalSaveData(@Nonnull CompoundTag tag) {
+    public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.readBossSaveData(tag);
         if (tag.contains("ChatLine")) {
@@ -439,70 +601,35 @@ public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enem
         }
     }
 
-    protected SoundEvent getShootSound() {
-        return AetherSoundEvents.ENTITY_SUN_SPIRIT_SHOOT.get();
-    }
-
+    /**
+     * @see com.aetherteam.nitrogen.entity.BossMob#addBossSaveData(CompoundTag)
+     */
     @Override
-    protected SoundEvent getHurtSound(@Nonnull DamageSource pDamageSource) {
-        return null;
-    }
-
-    @Override
-    protected SoundEvent getDeathSound() {
-        return null;
-    }
-
-    @Override
-    public BossRoomTracker<SunSpirit> getDungeon() {
-        return this.goldDungeon;
-    }
-
-    @Override
-    public void setDungeon(BossRoomTracker<SunSpirit> dungeon) {
-        this.goldDungeon = dungeon;
-        if (dungeon != null) {
-            this.origin = dungeon.originCoordinates();
-            this.xMax = this.zMax = Mth.floor(dungeon.roomBounds().getXsize() / 2 - 5);
-        } else {
-            this.origin = this.position();
-            this.xMax = 9;
-            this.zMax = 9;
-        }
-    }
-
-    @Override
-    public int getDeathScore() {
-        return this.deathScore;
-    }
-
-    @Override
-    public void reset() {
-        this.setBossFight(false);
-        this.setHealth(this.getMaxHealth());
-        if (this.goldDungeon != null) {
-            this.openRoom();
-        }
+    public void writeSpawnData(FriendlyByteBuf buffer) {
+        CompoundTag tag = new CompoundTag();
+        this.addBossSaveData(tag);
+        buffer.writeNbt(tag);
     }
 
     /**
-     * Called on every block in the dungeon when the boss is defeated.
+     * @see com.aetherteam.nitrogen.entity.BossMob#readBossSaveData(CompoundTag)
      */
     @Override
-    @Nullable
-    public BlockState convertBlock(BlockState state) {
-        if (state.is(AetherBlocks.LOCKED_HELLFIRE_STONE.get())) {
-            return AetherBlocks.HELLFIRE_STONE.get().defaultBlockState();
+    public void readSpawnData(FriendlyByteBuf additionalData) {
+        CompoundTag tag = additionalData.readNbt();
+        if (tag != null) {
+            this.readBossSaveData(tag);
         }
-        if (state.is(AetherBlocks.LOCKED_LIGHT_HELLFIRE_STONE.get())) {
-            return AetherBlocks.LIGHT_HELLFIRE_STONE.get().defaultBlockState();
-        }
-        if (state.is(AetherBlocks.BOSS_DOORWAY_HELLFIRE_STONE.get()) || state.is(AetherBlocks.TREASURE_DOORWAY_HELLFIRE_STONE.get())) {
-            return Blocks.AIR.defaultBlockState();
-        }
-        return null;
     }
 
+    @Override
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
+    }
+
+    /**
+     * Handles the Sun Spirit looking at the player, prevents it if the player is invisible.
+     */
     public static class SunSpiritLookGoal extends LookAtPlayerGoal {
         public SunSpiritLookGoal(Mob mob, Class<? extends LivingEntity> lookAtType, float lookDistance, float probability) {
             this(mob, lookAtType, lookDistance, probability, false);
@@ -521,7 +648,7 @@ public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enem
     }
 
     /**
-     * Sets the wanted movement direction of the sun spirit during the fight.
+     * Sets the wanted movement direction of the Sun Spirit during the fight.
      */
     public static class FlyAroundGoal extends Goal {
         private final SunSpirit sunSpirit;
@@ -537,14 +664,12 @@ public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enem
         @Override
         public void tick() {
             boolean changedCourse = this.outOfBounds();
-            double x = Mth.sin(rotation * Mth.PI / 180F) * this.sunSpirit.getAttributeValue(Attributes.MOVEMENT_SPEED) * this.sunSpirit.velocity;
-            double z = -Mth.cos(rotation * Mth.PI / 180F) * this.sunSpirit.getAttributeValue(Attributes.MOVEMENT_SPEED) * this.sunSpirit.velocity;
-            this.sunSpirit.setDeltaMovement(x,
-                    0,
-                    z);
+            double x = Mth.sin(this.rotation * Mth.DEG_TO_RAD) * this.sunSpirit.getAttributeValue(Attributes.MOVEMENT_SPEED) * this.sunSpirit.velocity;
+            double z = -Mth.cos(this.rotation * Mth.DEG_TO_RAD) * this.sunSpirit.getAttributeValue(Attributes.MOVEMENT_SPEED) * this.sunSpirit.velocity;
+            this.sunSpirit.setDeltaMovement(x, 0, z);
             if (changedCourse || ++this.courseChangeTimer >= 20) {
-                if (this.sunSpirit.random.nextInt(3) == 0) {
-                    this.rotation += this.sunSpirit.random.nextFloat() - this.sunSpirit.random.nextFloat() * 60;
+                if (this.sunSpirit.getRandom().nextInt(3) == 0) {
+                    this.rotation += this.sunSpirit.getRandom().nextFloat() - this.sunSpirit.getRandom().nextFloat() * 60;
                 }
                 this.rotation = Mth.wrapDegrees(this.rotation);
                 this.courseChangeTimer = 0;
@@ -553,13 +678,13 @@ public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enem
 
         protected boolean outOfBounds() {
             boolean flag = false;
-            if ((this.sunSpirit.getDeltaMovement().x >= 0 && this.sunSpirit.getX() >= this.sunSpirit.origin.x + this.sunSpirit.xMax) ||
-                    (this.sunSpirit.getDeltaMovement().x <= 0 && this.sunSpirit.getX() <= this.sunSpirit.origin.x - this.sunSpirit.xMax)) {
+            if ((this.sunSpirit.getDeltaMovement().x() >= 0 && this.sunSpirit.getX() >= this.sunSpirit.origin.x() + this.sunSpirit.xMax) ||
+                    (this.sunSpirit.getDeltaMovement().x() <= 0 && this.sunSpirit.getX() <= this.sunSpirit.origin.x() - this.sunSpirit.xMax)) {
                 this.rotation = 360 - this.rotation;
                 flag = true;
             }
-            if ((this.sunSpirit.getDeltaMovement().z >= 0 && this.sunSpirit.getZ() >= this.sunSpirit.origin.z + this.sunSpirit.zMax) ||
-                    (this.sunSpirit.getDeltaMovement().z <= 0 && this.sunSpirit.getZ() <= this.sunSpirit.origin.z - this.sunSpirit.zMax)) {
+            if ((this.sunSpirit.getDeltaMovement().z() >= 0 && this.sunSpirit.getZ() >= this.sunSpirit.origin.z() + this.sunSpirit.zMax) ||
+                    (this.sunSpirit.getDeltaMovement().z() <= 0 && this.sunSpirit.getZ() <= this.sunSpirit.origin.z() - this.sunSpirit.zMax)) {
                 this.rotation = 180 - this.rotation;
                 flag = true;
             }
@@ -578,10 +703,11 @@ public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enem
     }
 
     /**
-     * The sun spirit will stay at its origin point when not in a boss fight.
+     * The Sun Spirit will stay at its origin point when not in a boss fight.
      */
     public static class DoNothingGoal extends Goal {
         private final SunSpirit sunSpirit;
+
         public DoNothingGoal(SunSpirit sunSpirit) {
             this.sunSpirit = sunSpirit;
             this.setFlags(EnumSet.of(Flag.MOVE, Flag.JUMP));
@@ -593,20 +719,18 @@ public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enem
         }
 
         /**
-         * Returns the sun spirit to its original position.
+         * Returns the Sun Spirit to its original position.
          */
         @Override
         public void start() {
             this.sunSpirit.setDeltaMovement(Vec3.ZERO);
-            this.sunSpirit.setPos(this.sunSpirit.origin.x,
-                    this.sunSpirit.origin.y,
-                    this.sunSpirit.origin.z);
+            this.sunSpirit.setPos(this.sunSpirit.origin.x(), this.sunSpirit.origin.y(), this.sunSpirit.origin.z());
         }
     }
 
     /**
-     * This goal makes the sun spirit shoot fire crystals and ice crystals randomly. It shoots more crystals as
-     * its health gets lower.
+     * This goal makes the Sun Spirit shoot Fire Crystals and Ice Crystals randomly.
+     * It shoots more crystals as its health gets lower.
      */
     public static class ShootFireballGoal extends Goal {
         private final SunSpirit sunSpirit;
@@ -627,14 +751,14 @@ public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enem
         public void start() {
             AbstractCrystal crystal;
             if (--this.crystalCount <= 0) {
-                crystal = new IceCrystal(this.sunSpirit.level, this.sunSpirit);
-                this.crystalCount = 4 + this.sunSpirit.random.nextInt(4);
+                crystal = new IceCrystal(this.sunSpirit.getLevel(), this.sunSpirit);
+                this.crystalCount = 4 + this.sunSpirit.getRandom().nextInt(4);
             } else {
-                crystal = new FireCrystal(this.sunSpirit.level, this.sunSpirit);
+                crystal = new FireCrystal(this.sunSpirit.getLevel(), this.sunSpirit);
             }
-            this.sunSpirit.playSound(this.sunSpirit.getShootSound(), 1.0F, this.sunSpirit.level.random.nextFloat() - this.sunSpirit.level.random.nextFloat() * 0.2F + 1.2F);
-            this.sunSpirit.level.addFreshEntity(crystal);
-            this.shootInterval = (int) (15 + sunSpirit.getHealth() / 2);
+            this.sunSpirit.playSound(this.sunSpirit.getShootSound(), 1.0F, this.sunSpirit.getLevel().getRandom().nextFloat() - this.sunSpirit.getLevel().getRandom().nextFloat() * 0.2F + 1.2F);
+            this.sunSpirit.getLevel().addFreshEntity(crystal);
+            this.shootInterval = (int) (15 + this.sunSpirit.getHealth() / 2);
         }
 
         @Override
@@ -644,7 +768,7 @@ public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enem
     }
 
     /**
-     * Randomly places fire below the sun spirit
+     * Randomly places fire below the Sun Spirit
      */
     public static class SummonFireGoal extends Goal {
         private final SunSpirit sunSpirit;
@@ -652,7 +776,7 @@ public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enem
 
         public SummonFireGoal(SunSpirit sunSpirit) {
             this.sunSpirit = sunSpirit;
-            this.shootInterval = 10 + sunSpirit.random.nextInt(40);
+            this.shootInterval = 10 + sunSpirit.getRandom().nextInt(40);
         }
 
         @Override
@@ -664,13 +788,13 @@ public class SunSpirit extends PathfinderMob implements BossMob<SunSpirit>, Enem
         public void start() {
             BlockPos pos = BlockPos.containing(this.sunSpirit.getX(), this.sunSpirit.getY(), this.sunSpirit.getZ());
             for (int i = 0; i <= 3; i++) {
-                if (this.sunSpirit.level.isEmptyBlock(pos) && !this.sunSpirit.level.isEmptyBlock(pos.below())) {
-                    this.sunSpirit.level.setBlock(pos, Blocks.FIRE.defaultBlockState(), 1 | 2 | 8);
+                if (this.sunSpirit.getLevel().isEmptyBlock(pos) && !this.sunSpirit.getLevel().isEmptyBlock(pos.below())) {
+                    this.sunSpirit.getLevel().setBlock(pos, Blocks.FIRE.defaultBlockState(), 1 | 2 | 8);
                     break;
                 }
                 pos = pos.below();
             }
-            this.shootInterval = 10 + this.sunSpirit.random.nextInt(40);
+            this.shootInterval = 10 + this.sunSpirit.getRandom().nextInt(40);
         }
 
         @Override

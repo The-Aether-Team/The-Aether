@@ -25,19 +25,16 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
 import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 
 /**
- * This is the arena for fighting the valkyrie queen.
+ * This is the throne room for fighting the Valkyrie Queen.
  */
 public class SilverBossRoom extends SilverDungeonPiece {
-
     public SilverBossRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
-        super(AetherStructurePieceTypes.SILVER_BOSS_ROOM.get(), manager, name, makeSettings(manager, makeLocation(name)).setRotation(rotation), pos);
+        super(AetherStructurePieceTypes.SILVER_BOSS_ROOM.get(), manager, name, SilverBossRoom.makeSettings(manager, SilverDungeonPiece.makeLocation(name)).setRotation(rotation), pos);
         this.setOrientation(rotation.rotate(Direction.SOUTH));
     }
 
     public SilverBossRoom(StructurePieceSerializationContext context, CompoundTag tag) {
-        super(AetherStructurePieceTypes.SILVER_BOSS_ROOM.get(), tag, context.structureTemplateManager(), resourceLocation -> {
-            return makeSettings(context.structureTemplateManager(), new ResourceLocation(tag.getString("Template")));
-        });
+        super(AetherStructurePieceTypes.SILVER_BOSS_ROOM.get(), tag, context.structureTemplateManager(), resourceLocation -> SilverBossRoom.makeSettings(context.structureTemplateManager(), new ResourceLocation(tag.getString("Template"))));
     }
 
     private static StructurePlaceSettings makeSettings(StructureTemplateManager templateManager, ResourceLocation name) {
@@ -57,7 +54,7 @@ public class SilverBossRoom extends SilverDungeonPiece {
     }
 
     @Override
-    protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox chunkBB) {
+    protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox box) {
         if (name.equals("Treasure Chest")) {
             BlockPos chest = pos.below();
             RandomizableContainerBlockEntity.setLootTable(level, random, chest, AetherLoot.SILVER_DUNGEON_REWARD);

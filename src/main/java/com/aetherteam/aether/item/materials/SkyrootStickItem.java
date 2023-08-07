@@ -2,7 +2,6 @@ package com.aetherteam.aether.item.materials;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-
 import net.minecraft.world.item.crafting.RecipeType;
 
 public class SkyrootStickItem extends Item {

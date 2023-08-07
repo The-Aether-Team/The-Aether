@@ -1,19 +1,18 @@
 package com.aetherteam.aether.item.combat.loot;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.item.combat.AetherItemTiers;
 import com.aetherteam.aether.item.AetherItems;
+import com.aetherteam.aether.item.EquipmentUtil;
+import com.aetherteam.aether.item.combat.AetherItemTiers;
 import com.aetherteam.aether.item.combat.AetherSwordItem;
-import com.aetherteam.aether.util.EquipmentUtil;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import net.minecraft.world.item.Item;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID)
 public class FlamingSwordItem extends AetherSwordItem {

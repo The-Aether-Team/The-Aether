@@ -1,7 +1,7 @@
 package com.aetherteam.aether.item.materials.behavior;
 
-import com.aetherteam.aether.recipe.recipes.block.BlockStateRecipe;
 import com.aetherteam.aether.recipe.recipes.block.MatchEventRecipe;
+import com.aetherteam.nitrogen.recipe.recipes.BlockStateRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;

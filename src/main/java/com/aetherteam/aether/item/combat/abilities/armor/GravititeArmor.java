@@ -2,7 +2,7 @@ package com.aetherteam.aether.item.combat.abilities.armor;
 
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.capability.player.AetherPlayerCapability;
-import com.aetherteam.aether.util.EquipmentUtil;
+import com.aetherteam.aether.item.EquipmentUtil;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,9 +21,9 @@ public interface GravititeArmor {
         if (EquipmentUtil.hasFullGravititeSet(entity)) {
             if (entity instanceof Player player) {
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> {
-                    if (aetherPlayer.isGravititeJumpActive()) {
-                        player.push(0.0, 1.0, 0.0);
-                        if (player instanceof ServerPlayer serverPlayer) {
+                    if (aetherPlayer.getPlayer().isOnGround() && aetherPlayer.isGravititeJumpActive()) {
+                        aetherPlayer.getPlayer().push(0.0, 1.0, 0.0);
+                        if (aetherPlayer.getPlayer() instanceof ServerPlayer serverPlayer) {
                             serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(serverPlayer));
                         }
                     }

@@ -1,0 +1,40 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aether:chests/dungeon/silver/silver_dungeon_valkyrie",
+          "weight": 6
+        },
+        {
+          "type": "minecraft:loot_table",
+          "name": "aether:chests/dungeon/silver/silver_dungeon_neptune",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:lightning_sword",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:holy_sword",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:invisibility_cloak"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aether:regeneration_stone",
+          "weight": 3
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

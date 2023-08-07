@@ -1,5 +1,5 @@
 {
-  "parent": "aether:block/stairs_translucent",
+  "parent": "nitrogen_internals:block/stairs_translucent",
   "textures": {
     "bottom": "aether:block/construction/aerogel",
     "top": "aether:block/construction/aerogel",

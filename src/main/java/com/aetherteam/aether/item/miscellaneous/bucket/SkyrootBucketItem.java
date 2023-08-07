@@ -1,27 +1,29 @@
 package com.aetherteam.aether.item.miscellaneous.bucket;
 
-import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.AetherTags;
+import com.aetherteam.aether.item.AetherItems;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.*;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.BucketPickup;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.stats.Stats;
-import net.minecraft.world.level.Level;
-
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -42,8 +44,9 @@ public class SkyrootBucketItem extends BucketItem {
     }
 
     /**
-     * Based on {@link BucketItem#use(Level, Player, InteractionHand)} except blocks that can be picked up depends on {@link AetherTags.Blocks#ALLOWED_BUCKET_PICKUP} or {@link AetherTags.Fluids#ALLOWED_BUCKET_PICKUP},
-     * and the method will also swap out any returned vanilla buckets from interactions with Skyroot buckets using {@link SkyrootBucketItem#swapBucketType(ItemStack)}.
+     * [CODE COPY] - {@link BucketItem#use(Level, Player, InteractionHand)}.<br><br>
+     * Blocks that can be picked up depends on {@link AetherTags.Blocks#ALLOWED_BUCKET_PICKUP} or {@link AetherTags.Fluids#ALLOWED_BUCKET_PICKUP},
+     * and the method will also swap out any returned vanilla buckets from interactions with Skyroot Buckets using {@link SkyrootBucketItem#swapBucketType(ItemStack)}.
      * @param level The {@link Level} of the user.
      * @param player The {@link Player} using this item.
      * @param hand The {@link InteractionHand} in which the item is being used.
@@ -84,7 +87,7 @@ public class SkyrootBucketItem extends BucketItem {
                 } else {
                     BlockState blockState = level.getBlockState(blockPos);
                     BlockPos newPos = canBlockContainFluid(level, blockPos, blockState) ? blockPos : relativePos;
-                    if (this.emptyContents(player, level, newPos, blockhitResult)) {
+                    if (this.emptyContents(player, level, newPos, blockhitResult, heldStack)) {
                         this.checkExtraContent(player, level, heldStack, newPos);
                         if (player instanceof ServerPlayer serverPlayer) {
                             CriteriaTriggers.PLACED_BLOCK.trigger(serverPlayer, newPos, heldStack);
@@ -120,7 +123,8 @@ public class SkyrootBucketItem extends BucketItem {
     }
 
     /**
-     * Based on {@link BucketItem#getEmptySuccessItem(ItemStack, Player)} except it returns a Skyroot Bucket instead of a vanilla bucket.
+     * [CODE COPY] - {@link BucketItem#getEmptySuccessItem(ItemStack, Player)}.<br><br>
+     * Returns a Skyroot Bucket instead of a vanilla bucket.
      */
     public static ItemStack getEmptySuccessItem(ItemStack bucketStack, Player player) {
         return !player.getAbilities().instabuild ? new ItemStack(AetherItems.SKYROOT_BUCKET.get()) : bucketStack;
@@ -129,13 +133,14 @@ public class SkyrootBucketItem extends BucketItem {
     /**
      * We don't initialize the Forge {@link net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper} for Skyroot Buckets.
      */
+    @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag tag) {
         return null;
     }
 
     /**
-     * Copy of BucketItem#canBlockContainFluid(Level, BlockPos, BlockState).
+     *[CODE COPY] - {@link BucketItem#canBlockContainFluid(Level, BlockPos, BlockState)}.
      */
     protected boolean canBlockContainFluid(Level level, BlockPos pos, BlockState state) {
         return state.getBlock() instanceof LiquidBlockContainer liquidBlockContainer && liquidBlockContainer.canPlaceLiquid(level, pos, state, this.getFluid());

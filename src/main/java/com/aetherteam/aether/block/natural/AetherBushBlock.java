@@ -1,10 +1,10 @@
 package com.aetherteam.aether.block.natural;
 
 import com.aetherteam.aether.AetherTags;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class AetherBushBlock extends BushBlock {
 	public AetherBushBlock(Properties properties) {

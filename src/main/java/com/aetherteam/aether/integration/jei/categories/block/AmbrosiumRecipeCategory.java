@@ -10,7 +10,7 @@ import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
-public class AmbrosiumRecipeCategory extends AbstractBlockStateRecipeCategory<AmbrosiumRecipe> {
+public class AmbrosiumRecipeCategory extends AbstractAetherBlockStateRecipeCategory<AmbrosiumRecipe> {
     public static final ResourceLocation UID = new ResourceLocation(Aether.MODID, "ambrosium_enchanting");
     public static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/menu/jei_render.png");
     public static final RecipeType<AmbrosiumRecipe> RECIPE_TYPE = RecipeType.create(Aether.MODID, "ambrosium_enchanting", AmbrosiumRecipe.class);

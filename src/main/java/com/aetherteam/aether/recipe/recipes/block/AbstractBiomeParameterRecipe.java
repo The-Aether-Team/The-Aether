@@ -1,7 +1,8 @@
 package com.aetherteam.aether.recipe.recipes.block;
 
-import com.aetherteam.aether.recipe.BlockPropertyPair;
-import com.aetherteam.aether.recipe.BlockStateIngredient;
+import com.aetherteam.nitrogen.recipe.BlockPropertyPair;
+import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
+import com.aetherteam.nitrogen.recipe.recipes.AbstractBlockStateRecipe;
 import net.minecraft.commands.CommandFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
@@ -14,11 +15,13 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 
-public abstract class AbstractBiomeParameterRecipe extends AbstractBlockStateRecipe  {
+public abstract class AbstractBiomeParameterRecipe extends AbstractBlockStateRecipe {
+    @Nullable
     private final ResourceKey<Biome> biomeKey;
+    @Nullable
     private final TagKey<Biome> biomeTag;
 
-    public AbstractBiomeParameterRecipe(RecipeType<?> type, ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, CommandFunction.CacheableFunction function) {
+    public AbstractBiomeParameterRecipe(RecipeType<?> type, ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, @Nullable CommandFunction.CacheableFunction function) {
         super(type, id, ingredient, result, function);
         this.biomeKey = biomeKey;
         this.biomeTag = biomeTag;

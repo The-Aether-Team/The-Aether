@@ -1,7 +1,5 @@
 package com.aetherteam.aether.block.construction;
 
-import java.util.function.Supplier;
-
 import it.unimi.dsi.fastutil.objects.Object2ByteLinkedOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -14,9 +12,11 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import java.util.function.Supplier;
+
 public class AerogelStairsBlock extends StairBlock {
     /**
-     * Copy of {@link Block#OCCLUSION_CACHE}.
+     * [CODE COPY] - {@link Block#OCCLUSION_CACHE}.
      */
     private static final ThreadLocal<Object2ByteLinkedOpenHashMap<BlockStatePairKey>> OCCLUSION_CACHE = ThreadLocal.withInitial(() -> {
         Object2ByteLinkedOpenHashMap<Block.BlockStatePairKey> occlusionCache = new Object2ByteLinkedOpenHashMap<>() {
@@ -64,7 +64,7 @@ public class AerogelStairsBlock extends StairBlock {
     }
 
     /**
-     * Based on {@link Block#hidesNeighborFace(BlockGetter, BlockPos, BlockState, BlockState, Direction)}.
+     * [CODE COPY] - {@link Block#hidesNeighborFace(BlockGetter, BlockPos, BlockState, BlockState, Direction)}.
      */
     @Override
     public boolean hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState, Direction direction) {

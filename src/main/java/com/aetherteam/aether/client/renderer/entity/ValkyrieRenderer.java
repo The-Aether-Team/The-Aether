@@ -10,8 +10,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
-import javax.annotation.Nonnull;
-
 public class ValkyrieRenderer extends MobRenderer<Valkyrie, ValkyrieModel<Valkyrie>> {
     private static final ResourceLocation VALKYRIE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/valkyrie/valkyrie.png");
 
@@ -20,9 +18,8 @@ public class ValkyrieRenderer extends MobRenderer<Valkyrie, ValkyrieModel<Valkyr
         this.addLayer(new ValkyrieWingsLayer<>(this, VALKYRIE_TEXTURE, new ValkyrieWingsModel<>(context.bakeLayer(AetherModelLayers.VALKYRIE_WINGS))));
     }
 
-    @Nonnull
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull Valkyrie valkyrie) {
+    public ResourceLocation getTextureLocation(Valkyrie valkyrie) {
         return VALKYRIE_TEXTURE;
     }
 }

@@ -1,18 +1,22 @@
 package com.aetherteam.aether;
 
 import com.aetherteam.aether.advancement.AetherAdvancementTriggers;
+import com.aetherteam.aether.api.AetherMenus;
 import com.aetherteam.aether.api.AetherMoaTypes;
-import com.aetherteam.aether.block.dispenser.DispenseUsableItemBehavior;
-import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.block.AetherCauldronInteractions;
 import com.aetherteam.aether.block.dispenser.AetherDispenseBehaviors;
-import com.aetherteam.aether.client.particle.AetherParticleTypes;
-import com.aetherteam.aether.client.AetherSoundEvents;
-import com.aetherteam.aether.blockentity.IncubatorBlockEntity;
 import com.aetherteam.aether.block.dispenser.DispenseDartBehavior;
+import com.aetherteam.aether.block.dispenser.DispenseUsableItemBehavior;
+import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
 import com.aetherteam.aether.blockentity.AltarBlockEntity;
 import com.aetherteam.aether.blockentity.FreezerBlockEntity;
+import com.aetherteam.aether.blockentity.IncubatorBlockEntity;
+import com.aetherteam.aether.client.AetherSoundEvents;
+import com.aetherteam.aether.client.CombinedPackResources;
+import com.aetherteam.aether.client.TriviaGenerator;
+import com.aetherteam.aether.client.particle.AetherParticleTypes;
+import com.aetherteam.aether.command.SunAltarWhitelist;
 import com.aetherteam.aether.data.generators.*;
 import com.aetherteam.aether.data.generators.tags.*;
 import com.aetherteam.aether.data.resources.AetherMobCategory;
@@ -21,24 +25,20 @@ import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.ai.AetherBlockPathTypes;
 import com.aetherteam.aether.entity.ai.brain.memory.AetherMemoryModuleTypes;
 import com.aetherteam.aether.entity.ai.brain.sensing.AetherSensorTypes;
-import com.aetherteam.aether.event.AetherGameEvents;
-import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
 import com.aetherteam.aether.inventory.AetherRecipeBookTypes;
+import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.loot.conditions.AetherLootConditions;
 import com.aetherteam.aether.loot.functions.AetherLootFunctions;
 import com.aetherteam.aether.loot.modifiers.AetherLootModifiers;
+import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.perk.types.MoaSkins;
 import com.aetherteam.aether.recipe.AetherRecipeSerializers;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.world.AetherPoi;
-import com.aetherteam.aether.world.foliageplacer.AetherFoliagePlacerTypes;
 import com.aetherteam.aether.world.feature.AetherFeatures;
+import com.aetherteam.aether.world.foliageplacer.AetherFoliagePlacerTypes;
 import com.aetherteam.aether.world.placementmodifier.AetherPlacementModifiers;
-import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.client.CombinedPackResources;
-import com.aetherteam.aether.api.SunAltarWhitelist;
-import com.aetherteam.aether.api.TriviaGenerator;
 import com.aetherteam.aether.world.processor.AetherStructureProcessors;
 import com.aetherteam.aether.world.structure.AetherStructureTypes;
 import com.aetherteam.aether.world.structurepiece.AetherStructurePieceTypes;
@@ -61,18 +61,22 @@ import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.ComposterBlock;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.*;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.resource.PathPackResources;
 import org.slf4j.Logger;
@@ -131,6 +135,11 @@ public class Aether {
         for (DeferredRegister<?> register : registers) {
             register.register(modEventBus);
         }
+
+        DistExecutor.unsafeRunForDist(() -> () -> {
+            AetherMenus.MENUS.register(modEventBus);
+            return true;
+        }, () -> () -> false);
 
         AetherBlocks.registerWoodTypes(); // Registered this early to avoid bugs with WoodTypes and signs.
 
@@ -273,17 +282,17 @@ public class Aether {
         Pack.Info info = Pack.readPackInfo(name, resourcesSupplier);
         if (info != null) {
             event.addRepositorySource((source) ->
-                    source.accept(Pack.create(
-                            name,
-                            Component.translatable(title),
-                            false,
-                            resourcesSupplier,
-                            info,
-                            PackType.CLIENT_RESOURCES,
-                            Pack.Position.TOP,
-                            false,
-                            PackSource.BUILT_IN)
-                    ));
+                source.accept(Pack.create(
+                    name,
+                    Component.translatable(title),
+                    false,
+                    resourcesSupplier,
+                    info,
+                    PackType.CLIENT_RESOURCES,
+                    Pack.Position.TOP,
+                    false,
+                    PackSource.BUILT_IN)
+                ));
         }
     }
 
@@ -297,17 +306,18 @@ public class Aether {
             PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
             PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.ctm.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
             event.addRepositorySource((source) ->
-                    source.accept(Pack.create(
-                        "builtin/aether_ctm_fix",
-                            Component.translatable("pack.aether.ctm.title"),
-                            true,
-                            (string) -> pack,
-                            new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
-                            PackType.CLIENT_RESOURCES,
-                            Pack.Position.TOP,
-                            false,
-                            PackSource.BUILT_IN)
-                ));
+                source.accept(Pack.create(
+                "builtin/aether_ctm_fix",
+                    Component.translatable("pack.aether.ctm.title"),
+                    true,
+                    (string) -> pack,
+                    new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
+                    PackType.CLIENT_RESOURCES,
+                    Pack.Position.TOP,
+                    false,
+                    PackSource.BUILT_IN)
+                )
+            );
         }
     }
 
@@ -320,17 +330,18 @@ public class Aether {
             PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
             PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.colorblind.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
             event.addRepositorySource((source) ->
-                    source.accept(Pack.create(
-                            "builtin/aether_colorblind",
-                            Component.translatable("pack.aether.colorblind.title"),
-                            false,
-                            (string) -> pack,
-                            new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
-                            PackType.CLIENT_RESOURCES,
-                            Pack.Position.TOP,
-                            false,
-                            PackSource.BUILT_IN)
-                    ));
+                source.accept(Pack.create(
+                    "builtin/aether_colorblind",
+                    Component.translatable("pack.aether.colorblind.title"),
+                    false,
+                    (string) -> pack,
+                    new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
+                    PackType.CLIENT_RESOURCES,
+                    Pack.Position.TOP,
+                    false,
+                    PackSource.BUILT_IN)
+                )
+            );
         }
     }
 
@@ -344,17 +355,18 @@ public class Aether {
             PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
             PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.curios.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
             event.addRepositorySource((source) ->
-                    source.accept(Pack.create(
-                            "builtin/aether_curios_tags",
-                            Component.translatable("pack.aether.curios.title"),
-                            true,
-                            (string) -> pack,
-                            new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
-                            PackType.SERVER_DATA,
-                            Pack.Position.TOP,
-                            false,
-                            PackSource.BUILT_IN)
-                    ));
+                source.accept(Pack.create(
+                    "builtin/aether_curios_tags",
+                    Component.translatable("pack.aether.curios.title"),
+                    true,
+                    (string) -> pack,
+                    new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
+                    PackType.SERVER_DATA,
+                    Pack.Position.TOP,
+                    false,
+                    PackSource.BUILT_IN)
+                )
+            );
         }
     }
 
@@ -367,22 +379,23 @@ public class Aether {
             PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
             PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.freezing.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
             event.addRepositorySource((source) ->
-                    source.accept(Pack.create(
-                            "builtin/aether_temporary_freezing",
-                            Component.translatable("pack.aether.freezing.title"),
-                            false,
-                            (string) -> pack,
-                            new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
-                            PackType.SERVER_DATA,
-                            Pack.Position.TOP,
-                            false,
-                            create(decorateWithSource("pack.source.builtin"), false))
-                    ));
+                source.accept(Pack.create(
+                    "builtin/aether_temporary_freezing",
+                    Component.translatable("pack.aether.freezing.title"),
+                    false,
+                    (string) -> pack,
+                    new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
+                    PackType.SERVER_DATA,
+                    Pack.Position.TOP,
+                    false,
+                    create(decorateWithSource("pack.source.builtin"), false))
+                )
+            );
         }
     }
 
     /**
-     * Copied from {@link PackSource#create(UnaryOperator, boolean)}.
+     * [CODE COPY] - {@link PackSource#create(UnaryOperator, boolean)}.
      */
     static PackSource create(final UnaryOperator<Component> decorator, final boolean shouldAddAutomatically) {
         return new PackSource() {
@@ -397,7 +410,7 @@ public class Aether {
     }
 
     /**
-     * Copied from {@link PackSource#decorateWithSource(String)}.
+     * [CODE COPY] - {@link PackSource#decorateWithSource(String)}.
      */
     private static UnaryOperator<Component> decorateWithSource(String translationKey) {
         Component component = Component.translatable(translationKey);
@@ -452,7 +465,7 @@ public class Aether {
     }
 
     /**
-     * Copy of {@link ComposterBlock#add(float, ItemLike)}.
+     * [CODE COPY] - {@link ComposterBlock#add(float, ItemLike)}.
      * @param chance Chance (as a {@link Float}) to fill a compost layer.
      * @param item The {@link ItemLike} that can be composted.
      */

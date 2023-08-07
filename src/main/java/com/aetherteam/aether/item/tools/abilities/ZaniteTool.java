@@ -1,6 +1,6 @@
 package com.aetherteam.aether.item.tools.abilities;
 
-import com.aetherteam.aether.util.EquipmentUtil;
+import com.aetherteam.aether.item.EquipmentUtil;
 import net.minecraft.world.item.ItemStack;
 
 public interface ZaniteTool {

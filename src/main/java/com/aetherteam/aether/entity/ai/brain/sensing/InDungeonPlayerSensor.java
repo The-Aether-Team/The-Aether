@@ -1,6 +1,6 @@
 package com.aetherteam.aether.entity.ai.brain.sensing;
 
-import com.aetherteam.aether.entity.BossMob;
+import com.aetherteam.aether.entity.AetherBossMob;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntitySelector;
@@ -19,18 +19,19 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * [VANILLA COPY] - PlayerSensor
+ * [CODE COPY] - {@link net.minecraft.world.entity.ai.sensing.PlayerSensor}.<br><br>
  * Changed to track players within the dungeon instead of within a 16 block radius.
  */
-public class InDungeonPlayerSensor<T extends Mob & BossMob<T>> extends Sensor<T> {
-    private static final TargetingConditions TARGET_CONDITIONS_IGNORE_INVISIBILITY_TESTING = TargetingConditions.forNonCombat().range(16.0D).ignoreInvisibilityTesting().ignoreLineOfSight();
-    private static final TargetingConditions ATTACK_TARGET_CONDITIONS_IGNORE_INVISIBILITY_TESTING = TargetingConditions.forCombat().range(16.0D).ignoreInvisibilityTesting().ignoreLineOfSight();
+public class InDungeonPlayerSensor<T extends Mob & AetherBossMob<T>> extends Sensor<T> {
+    private static final TargetingConditions TARGET_CONDITIONS_IGNORE_INVISIBILITY_TESTING = TargetingConditions.forNonCombat().range(16.0).ignoreInvisibilityTesting().ignoreLineOfSight();
+    private static final TargetingConditions ATTACK_TARGET_CONDITIONS_IGNORE_INVISIBILITY_TESTING = TargetingConditions.forCombat().range(16.0).ignoreInvisibilityTesting().ignoreLineOfSight();
 
     @Override
     protected void doTick(ServerLevel level, T entity) {
-        List<Player> targets = level.players().stream().filter(EntitySelector.NO_SPECTATORS).filter((target) -> {
-            return entity.getDungeon() != null ? entity.getDungeon().isPlayerTracked(target) : entity.closerThan(target, 16.0D);
-        }).sorted(Comparator.comparingDouble(entity::distanceToSqr)).collect(Collectors.toList());
+        List<Player> targets = level.players().stream().filter(EntitySelector.NO_SPECTATORS).filter((target) -> entity.getDungeon() != null
+                ? entity.getDungeon().isPlayerTracked(target)
+                : entity.closerThan(target, 16.0)).sorted(Comparator.comparingDouble(entity::distanceToSqr)).collect(Collectors.toList());
+
         Brain<?> brain = entity.getBrain();
         brain.setMemory(MemoryModuleType.NEAREST_PLAYERS, targets);
 
@@ -46,11 +47,11 @@ public class InDungeonPlayerSensor<T extends Mob & BossMob<T>> extends Sensor<T>
         return ImmutableSet.of(MemoryModuleType.NEAREST_PLAYERS, MemoryModuleType.NEAREST_VISIBLE_PLAYER, MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER);
     }
 
-    public static boolean isEntityTargetable(LivingEntity pLivingEntity, LivingEntity pTarget) {
-        return TARGET_CONDITIONS_IGNORE_INVISIBILITY_TESTING.test(pLivingEntity, pTarget);
+    public static boolean isEntityTargetable(LivingEntity livingEntity, LivingEntity target) {
+        return TARGET_CONDITIONS_IGNORE_INVISIBILITY_TESTING.test(livingEntity, target);
     }
 
-    public static boolean isEntityAttackable(LivingEntity pAttacker, LivingEntity pTarget) {
-        return ATTACK_TARGET_CONDITIONS_IGNORE_INVISIBILITY_TESTING.test(pAttacker, pTarget);
+    public static boolean isEntityAttackable(LivingEntity attacker, LivingEntity target) {
+        return ATTACK_TARGET_CONDITIONS_IGNORE_INVISIBILITY_TESTING.test(attacker, target);
     }
 }

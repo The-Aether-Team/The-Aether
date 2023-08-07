@@ -1,13 +1,14 @@
 package com.aetherteam.aether.block;
 
-import com.aetherteam.aether.event.events.FreezeEvent;
-import com.aetherteam.aether.event.dispatch.AetherEventDispatch;
+import com.aetherteam.aether.event.AetherEventDispatch;
+import com.aetherteam.aether.event.FreezeEvent;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
-import com.aetherteam.aether.recipe.BlockPropertyPair;
 import com.aetherteam.aether.recipe.recipes.block.IcestoneFreezableRecipe;
+import com.aetherteam.nitrogen.recipe.BlockPropertyPair;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import net.minecraft.commands.CommandFunction;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -15,11 +16,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
 
-import java.util.*;
+import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.Map;
 
 public interface FreezingBlock extends FreezingBehavior<BlockState> {
     /**
@@ -101,6 +103,7 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
      * @param blockState The {@link BlockState} to check.
      * @return A cached {@link BlockPropertyPair}, or null if there was no matching pair.
      */
+    @Nullable
     static BlockPropertyPair matchesCache(Block block, BlockState blockState) {
         if (cachedBlocks.containsRow(block)) {
             BlockPropertyPair pair = null;

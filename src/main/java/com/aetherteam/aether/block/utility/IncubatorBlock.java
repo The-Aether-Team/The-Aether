@@ -1,34 +1,36 @@
 package com.aetherteam.aether.block.utility;
 
-import com.aetherteam.aether.blockentity.IncubatorBlockEntity;
-
 import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
+import com.aetherteam.aether.blockentity.IncubatorBlockEntity;
 import com.aetherteam.aether.client.AetherSoundEvents;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.entity.*;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.Containers;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.level.Level;
 
 /**
- * Based on {@link net.minecraft.world.level.block.AbstractFurnaceBlock}.
+ * [CODE COPY] - {@link net.minecraft.world.level.block.AbstractFurnaceBlock}.<br><br>
+ * Has modifications for Incubator-specific behavior.
  */
 public class IncubatorBlock extends BaseEntityBlock {
 	public static final BooleanProperty LIT = BlockStateProperties.LIT;
@@ -127,10 +129,10 @@ public class IncubatorBlock extends BaseEntityBlock {
 	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
 		if (state.getValue(LIT)) {
 			double f = pos.getX() + 0.5;
-			double f1 = pos.getY() + 1.0 + (random.nextFloat() * 15.0D) / 16.0;
+			double f1 = pos.getY() + 1.0 + (random.nextFloat() * 15.0) / 16.0;
 			double f2 = pos.getZ() + 0.5;
-			level.addParticle(ParticleTypes.SMOKE, f, f1, f2, 0.0D, 0.0D, 0.0D);
-			level.addParticle(ParticleTypes.FLAME, f, f1, f2, 0.0D, 0.0D, 0.0D);
+			level.addParticle(ParticleTypes.SMOKE, f, f1, f2, 0.0, 0.0, 0.0);
+			level.addParticle(ParticleTypes.FLAME, f, f1, f2, 0.0, 0.0, 0.0);
 			if (random.nextDouble() < 0.1) {
 				level.playLocalSound(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, AetherSoundEvents.BLOCK_INCUBATOR_CRACKLE.get(), SoundSource.BLOCKS, 1.0F, 1.0F, false);
 			}

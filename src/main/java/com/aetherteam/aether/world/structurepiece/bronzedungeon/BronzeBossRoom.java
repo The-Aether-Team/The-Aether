@@ -6,6 +6,7 @@ import com.aetherteam.aether.blockentity.TreasureChestBlockEntity;
 import com.aetherteam.aether.loot.AetherLoot;
 import com.aetherteam.aether.world.processor.BossRoomProcessor;
 import com.aetherteam.aether.world.structurepiece.AetherStructurePieceTypes;
+import com.aetherteam.aether.world.structurepiece.AetherTemplateStructurePiece;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -20,20 +21,22 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 /**
- * Starting piece for the bronze dungeon. Has the slider.
+ * Starting piece for the Bronze Dungeon. Has the slider.
  */
 public class BronzeBossRoom extends BronzeDungeonPiece {
-
     public BronzeBossRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
-        super(AetherStructurePieceTypes.BRONZE_BOSS_ROOM.get(), manager, name, makeSettingsWithPivot(makeSettings(), manager, makeLocation(name), rotation), pos);
+        super(AetherStructurePieceTypes.BRONZE_BOSS_ROOM.get(), manager, name, AetherTemplateStructurePiece.makeSettingsWithPivot(makeSettings(), manager, BronzeDungeonPiece.makeLocation(name), rotation), pos);
     }
 
     public BronzeBossRoom(StructurePieceSerializationContext context, CompoundTag tag) {
-        super(AetherStructurePieceTypes.BRONZE_BOSS_ROOM.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
+        super(AetherStructurePieceTypes.BRONZE_BOSS_ROOM.get(), tag, context.structureTemplateManager(), resourceLocation -> BronzeBossRoom.makeSettings());
     }
 
     static StructurePlaceSettings makeSettings() {
-        return new StructurePlaceSettings().addProcessor(LOCKED_SENTRY_STONE).addProcessor(BossRoomProcessor.INSTANCE).setFinalizeEntities(true);
+        return new StructurePlaceSettings()
+                .addProcessor(BronzeDungeonPiece.LOCKED_SENTRY_STONE)
+                .addProcessor(BossRoomProcessor.INSTANCE)
+                .setFinalizeEntities(true);
     }
 
     @Override

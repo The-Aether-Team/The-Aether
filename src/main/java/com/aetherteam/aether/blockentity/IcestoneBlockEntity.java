@@ -1,12 +1,15 @@
 package com.aetherteam.aether.blockentity;
 
+import com.aetherteam.aether.AetherGameEvents;
 import com.aetherteam.aether.block.FreezingBlock;
-import com.aetherteam.aether.event.AetherGameEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.*;
+import net.minecraft.world.level.gameevent.BlockPositionSource;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.gameevent.GameEventListener;
+import net.minecraft.world.level.gameevent.PositionSource;
 import net.minecraft.world.phys.Vec3;
 
 public class IcestoneBlockEntity extends BlockEntity implements FreezingBlock {

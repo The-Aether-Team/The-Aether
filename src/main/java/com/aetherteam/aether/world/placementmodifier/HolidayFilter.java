@@ -10,11 +10,14 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
 import java.util.Calendar;
 
+/**
+ * A {@link PlacementFilter} to prevent limit generation of this feature to the holidays, dependent on certain configs.
+ */
 public class HolidayFilter extends PlacementFilter {
     public static final Codec<HolidayFilter> CODEC = Codec.unit(HolidayFilter::new);
 
     @Override
-    protected boolean shouldPlace(PlacementContext p_191835_, RandomSource p_191836_, BlockPos p_191837_) {
+    protected boolean shouldPlace(PlacementContext context, RandomSource random, BlockPos pos) {
         Calendar calendar = Calendar.getInstance();
         boolean isChristmas = calendar.get(Calendar.MONTH) == Calendar.DECEMBER || calendar.get(Calendar.MONTH) == Calendar.JANUARY;
         return AetherConfig.SERVER.generate_holiday_tree_always.get() || (AetherConfig.SERVER.generate_holiday_tree_seasonally.get() && isChristmas);

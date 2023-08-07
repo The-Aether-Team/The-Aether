@@ -8,8 +8,12 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.block.state.BlockState;
 
+/**
+ * [CODE COPY] - {@link Bee.BeeGrowCropGoal}.<br><br>
+ * Modified to only work for Berry Bushes.
+ */
 public class BeeGrowBerryBushGoal extends Goal {
-    public final Bee bee;
+    private final Bee bee;
 
     public BeeGrowBerryBushGoal(Bee bee) {
         this.bee = bee;

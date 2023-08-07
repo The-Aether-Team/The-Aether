@@ -5,7 +5,6 @@ import com.aetherteam.aether.client.renderer.entity.model.SheepuffModel;
 import com.aetherteam.aether.client.renderer.entity.model.SheepuffWoolModel;
 import com.aetherteam.aether.entity.passive.Sheepuff;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -13,11 +12,12 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.DyeColor;
 
-import javax.annotation.Nonnull;
-
+/**
+ * [CODE COPY] - {@link net.minecraft.client.renderer.entity.layers.SheepFurLayer}.
+ */
 public class SheepuffWoolLayer extends RenderLayer<Sheepuff, SheepuffModel> {
     private static final ResourceLocation SHEEPUFF_WOOL_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sheepuff/sheepuff_wool.png");
     private final SheepuffWoolModel wool;
@@ -30,7 +30,7 @@ public class SheepuffWoolLayer extends RenderLayer<Sheepuff, SheepuffModel> {
     }
 
     @Override
-    public void render(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, Sheepuff sheepuff, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Sheepuff sheepuff, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (!sheepuff.isSheared()) {
             SheepuffWoolModel woolModel = sheepuff.getPuffed() ? this.puffed : this.wool;
             if (sheepuff.isInvisible()) {

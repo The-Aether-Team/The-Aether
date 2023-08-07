@@ -6,5 +6,8 @@ import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfigur
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 
 public record AetherLakeConfiguration(BlockStateProvider fluid, BlockStateProvider top) implements FeatureConfiguration {
-    public static final Codec<AetherLakeConfiguration> CODEC = RecordCodecBuilder.create((p_190962_) -> p_190962_.group(BlockStateProvider.CODEC.fieldOf("fluid").forGetter(AetherLakeConfiguration::fluid), BlockStateProvider.CODEC.fieldOf("top").forGetter(AetherLakeConfiguration::top)).apply(p_190962_, AetherLakeConfiguration::new));
+    public static final Codec<AetherLakeConfiguration> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+            BlockStateProvider.CODEC.fieldOf("fluid").forGetter(AetherLakeConfiguration::fluid),
+            BlockStateProvider.CODEC.fieldOf("top").forGetter(AetherLakeConfiguration::top)
+    ).apply(instance, AetherLakeConfiguration::new));
 }

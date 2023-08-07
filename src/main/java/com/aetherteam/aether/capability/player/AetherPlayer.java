@@ -1,14 +1,15 @@
 package com.aetherteam.aether.capability.player;
 
+import com.aetherteam.aether.capability.AetherCapabilities;
 import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
 import com.aetherteam.aether.entity.passive.Aerbunny;
-import com.aetherteam.aether.capability.AetherCapabilities;
-import com.aetherteam.aether.capability.INBTSynchable;
+import com.aetherteam.nitrogen.capability.INBTSynchable;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.LazyOptional;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,7 +39,6 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 	void setInPortal(boolean inPortal);
 	boolean isInPortal();
 
-	void addPortalTime(int time);
 	void setPortalTimer(int timer);
 	int getPortalTimer();
 
@@ -80,12 +80,15 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 	void setVampireHealing(boolean performVampireHealing);
 	boolean performVampireHealing();
 
-	void setMountedAerbunny(Aerbunny mountedAerbunny);
+	void setMountedAerbunny(@Nullable Aerbunny mountedAerbunny);
+	@Nullable
 	Aerbunny getMountedAerbunny();
-	void setMountedAerbunnyTag(CompoundTag mountedAerbunny);
+	void setMountedAerbunnyTag(@Nullable CompoundTag mountedAerbunny);
+	@Nullable
 	CompoundTag getMountedAerbunnyTag();
 
-	void setLastRiddenMoa(UUID lastRiddenMoa);
+	void setLastRiddenMoa(@Nullable UUID lastRiddenMoa);
+	@Nullable
 	UUID getLastRiddenMoa();
 
 	void setCloudMinions(CloudMinion cloudMinionRight, CloudMinion cloudMinionLeft);
@@ -127,7 +130,6 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 	void setObsidianConversionTime(int time);
 	int getObsidianConversionTime();
 
-	void addToLifeShardCount(int amountToAdd);
 	void setLifeShardCount(int amount);
 	int getLifeShardCount();
 	int getLifeShardLimit();

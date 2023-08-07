@@ -56,6 +56,7 @@ Jonathing
 - Fixes to a null error with block entities.
 - Fixes to jarJar-built file not reobfuscating.
 - Fixes to Jade compatibility with boss bars.
+- Cleanup of mixin and event code relating to Valkyrie Tools' reach.
 
 Kelvin285
 - Implementation of the world preview feature for the Aether's main menu.

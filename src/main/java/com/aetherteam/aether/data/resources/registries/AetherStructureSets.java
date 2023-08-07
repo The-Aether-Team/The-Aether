@@ -1,10 +1,6 @@
 package com.aetherteam.aether.data.resources.registries;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.aetherteam.aether.Aether;
-
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.Vec3i;
@@ -18,6 +14,9 @@ import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStruct
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
 import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement;
 
+import java.util.List;
+import java.util.Optional;
+
 public class AetherStructureSets {
     public static final ResourceKey<StructureSet> LARGE_AERCLOUD = createKey("large_aercloud");
     public static final ResourceKey<StructureSet> BRONZE_DUNGEON = createKey("bronze_dungeon");    
@@ -27,6 +26,10 @@ public class AetherStructureSets {
         return ResourceKey.create(Registries.STRUCTURE_SET, new ResourceLocation(Aether.MODID, name));
     }
 
+    /**
+     * Warning for "deprecation" is suppressed because using {@link StructurePlacement.ExclusionZone} is necessary.
+     */
+    @SuppressWarnings("deprecation")
     public static void bootstrap(BootstapContext<StructureSet> context) {
         HolderGetter<Structure> structures = context.lookup(Registries.STRUCTURE);
         context.register(LARGE_AERCLOUD, new StructureSet(structures.getOrThrow(AetherStructures.LARGE_AERCLOUD), new RandomSpreadStructurePlacement(6, 3, RandomSpreadType.LINEAR, 15536586)));

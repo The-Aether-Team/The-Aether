@@ -27,7 +27,8 @@ public class SliderSpawnEggItem extends ForgeSpawnEggItem {
     }
 
     /**
-     * Based on {@link net.minecraft.world.item.SpawnEggItem#useOn(UseOnContext)} except it rounds the X/Z values based on the click location.
+     * [CODE COPY] - {@link net.minecraft.world.item.SpawnEggItem#useOn(UseOnContext)}.<br><br>
+     * Changed to round the X/Z values based on the click location.
      * This makes it so the slider will always spawn in the center of a 2x2 region based on what corner of a block the player is aiming.<br><br>
      * The position still needs to be aligned with Math.floor once the entity is spawned, so the Slider rounds it's X and Z coordinates down after spawning.
      * @param context The {@link UseOnContext} of the usage interaction.

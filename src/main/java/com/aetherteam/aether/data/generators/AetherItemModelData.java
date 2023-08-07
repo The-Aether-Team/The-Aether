@@ -1,8 +1,8 @@
 package com.aetherteam.aether.data.generators;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.data.providers.AetherItemModelProvider;
 import com.aetherteam.aether.block.AetherBlocks;
+import com.aetherteam.aether.data.providers.AetherItemModelProvider;
 import com.aetherteam.aether.item.AetherItems;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -263,7 +263,7 @@ public class AetherItemModelData extends AetherItemModelProvider {
         this.itemBlock(AetherBlocks.FREEZER.get());
         this.itemBlock(AetherBlocks.INCUBATOR.get());
 
-        this.itemTorch(AetherBlocks.AMBROSIUM_TORCH.get(), "utility/");
+        this.itemBlockFlat(AetherBlocks.AMBROSIUM_TORCH.get(), "utility/");
         this.item(AetherBlocks.SKYROOT_SIGN.get().asItem(), "miscellaneous/");
 
         this.itemBlock(AetherBlocks.BERRY_BUSH.get());

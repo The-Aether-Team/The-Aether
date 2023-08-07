@@ -6,18 +6,15 @@ import net.minecraft.client.renderer.entity.ArrowRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
-import javax.annotation.Nonnull;
-
 public class PoisonDartRenderer extends ArrowRenderer<PoisonDart> {
-    public static final ResourceLocation POISON_DART_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/dart/poison_dart.png");
+    private static final ResourceLocation POISON_DART_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/dart/poison_dart.png");
 
     public PoisonDartRenderer(EntityRendererProvider.Context context) {
         super(context);
     }
 
-    @Nonnull
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull PoisonDart dart) {
+    public ResourceLocation getTextureLocation(PoisonDart dart) {
         return POISON_DART_TEXTURE;
     }
 }

@@ -1,7 +1,6 @@
 package com.aetherteam.aether.command;
 
 import com.aetherteam.aether.AetherConfig;
-import com.aetherteam.aether.api.SunAltarWhitelist;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -19,7 +18,8 @@ import net.minecraft.server.players.UserWhiteListEntry;
 import java.util.Collection;
 
 /**
- * Based on {@link net.minecraft.server.commands.WhitelistCommand}
+ * [CODE COPY] - {@link net.minecraft.server.commands.WhitelistCommand}.<br><br>
+ * Adapted to use {@link SunAltarWhitelist}.
  */
 public class SunAltarWhitelistCommand {
     private static final SimpleCommandExceptionType ERROR_ALREADY_ENABLED = new SimpleCommandExceptionType(Component.translatable("commands.aether.sun_altar_whitelist.alreadyOn"));

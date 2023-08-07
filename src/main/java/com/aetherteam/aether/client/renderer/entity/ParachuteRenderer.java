@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -14,8 +15,9 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.client.model.data.ModelData;
 
-import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
 public class ParachuteRenderer extends EntityRenderer<Parachute> {
@@ -27,13 +29,24 @@ public class ParachuteRenderer extends EntityRenderer<Parachute> {
         this.shadowRadius = 0.0F;
     }
 
+    /**
+     * Renders and rotates the Parachute with the player.<br><br>
+     * The warning for "deprecation" is suppressed because {@link net.minecraft.client.renderer.block.BlockRenderDispatcher#renderSingleBlock(BlockState, PoseStack, MultiBufferSource, int, int, ModelData, RenderType)} is fine to use.
+     * @param parachute The {@link Parachute} entity.
+     * @param entityYaw The {@link Float} for the entity's yaw rotation.
+     * @param partialTicks The {@link Float} for the game's partial ticks.
+     * @param poseStack The rendering {@link PoseStack}.
+     * @param buffer The rendering {@link MultiBufferSource}.
+     * @param packedLight The {@link Integer} for the packed lighting for rendering.
+     */
     @Override
-    public void render(@Nonnull Parachute parachute, float entityYaw, float partialTicks, PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight) {
+    @SuppressWarnings("deprecation")
+    public void render(Parachute parachute, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
         Entity passenger = parachute.getControllingPassenger();
         if (passenger != null) {
             if (passenger instanceof Player player) {
-                poseStack.mulPose(Axis.YP.rotationDegrees(-Mth.lerp(partialTicks, player.yHeadRotO, player.yHeadRot)));
+                poseStack.mulPose(Axis.YP.rotationDegrees(-Mth.lerp(partialTicks, player.yHeadRotO, player.getYHeadRot())));
             } else {
                 poseStack.mulPose(Axis.YP.rotationDegrees(-Mth.lerp(partialTicks, passenger.yRotO, passenger.getYRot())));
             }
@@ -44,9 +57,8 @@ public class ParachuteRenderer extends EntityRenderer<Parachute> {
         super.render(parachute, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }
 
-    @Nonnull
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull Parachute parachute) {
+    public ResourceLocation getTextureLocation(Parachute parachute) {
         return InventoryMenu.BLOCK_ATLAS;
     }
 }

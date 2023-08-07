@@ -1,13 +1,11 @@
 package com.aetherteam.aether.client.renderer.accessory.model;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.LivingEntity;
-
-import javax.annotation.Nonnull;
 
 public class GlovesModel extends HumanoidModel<LivingEntity> {
     public GlovesModel(ModelPart root) {
@@ -27,13 +25,11 @@ public class GlovesModel extends HumanoidModel<LivingEntity> {
         return LayerDefinition.create(meshDefinition, 16, 16);
     }
 
-    @Nonnull
     @Override
     protected Iterable<ModelPart> headParts() {
         return ImmutableList.of();
     }
 
-    @Nonnull
     @Override
     protected Iterable<ModelPart> bodyParts() {
         return ImmutableList.of(this.rightArm, this.leftArm);

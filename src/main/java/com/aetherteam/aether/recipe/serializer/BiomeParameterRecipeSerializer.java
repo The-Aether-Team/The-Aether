@@ -1,9 +1,10 @@
 package com.aetherteam.aether.recipe.serializer;
 
-import com.aetherteam.aether.recipe.BlockPropertyPair;
-import com.aetherteam.aether.recipe.BlockStateIngredient;
 import com.aetherteam.aether.recipe.recipes.block.AbstractBiomeParameterRecipe;
-import com.aetherteam.aether.util.BlockStateRecipeUtil;
+import com.aetherteam.nitrogen.recipe.BlockPropertyPair;
+import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
+import com.aetherteam.nitrogen.recipe.BlockStateRecipeUtil;
+import com.aetherteam.nitrogen.recipe.serializer.BlockStateRecipeSerializer;
 import com.google.gson.JsonObject;
 import net.minecraft.commands.CommandFunction;
 import net.minecraft.network.FriendlyByteBuf;
@@ -51,6 +52,6 @@ public class BiomeParameterRecipeSerializer<T extends AbstractBiomeParameterReci
     }
 
     public interface CookieBaker<T extends AbstractBiomeParameterRecipe> {
-        T create(ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, CommandFunction.CacheableFunction function);
+        T create(ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, @Nullable CommandFunction.CacheableFunction function);
     }
 }

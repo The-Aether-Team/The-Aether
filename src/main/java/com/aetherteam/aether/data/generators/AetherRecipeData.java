@@ -1,19 +1,22 @@
 package com.aetherteam.aether.data.generators;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.api.AetherMoaTypes;
-import com.aetherteam.aether.data.providers.AetherRecipeProvider;
 import com.aetherteam.aether.block.AetherBlocks;
+import com.aetherteam.aether.data.providers.AetherRecipeProvider;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.item.AetherItems;
-import com.aetherteam.aether.AetherTags;
-import net.minecraft.advancements.critereon.*;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.item.Items;
-import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 
 import java.util.List;
@@ -33,13 +36,13 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .requires(AetherBlocks.HOLYSTONE.get())
                 .requires(Blocks.VINE)
                 .unlockedBy(getHasName(AetherBlocks.HOLYSTONE.get()), has(AetherBlocks.HOLYSTONE.get()))
-                .save(consumer, name("mossy_holystone_with_vine"));
+                .save(consumer, this.name("mossy_holystone_with_vine"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.MOSSY_HOLYSTONE.get())
                 .group("mossy_holystone")
                 .requires(AetherBlocks.HOLYSTONE.get())
                 .requires(Blocks.MOSS_BLOCK)
                 .unlockedBy(getHasName(AetherBlocks.HOLYSTONE.get()), has(AetherBlocks.HOLYSTONE.get()))
-                .save(consumer, name("mossy_holystone_with_moss"));
+                .save(consumer, this.name("mossy_holystone_with_moss"));
 
         woodFromLogs(consumer, AetherBlocks.SKYROOT_WOOD.get(), AetherBlocks.SKYROOT_LOG.get());
         woodFromLogs(consumer, AetherBlocks.GOLDEN_OAK_WOOD.get(), AetherBlocks.GOLDEN_OAK_LOG.get());
@@ -53,8 +56,8 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .unlockedBy(getHasName(AetherBlocks.HOLYSTONE.get()), has(AetherBlocks.HOLYSTONE.get()))
                 .save(consumer);
 
-        oreBlockStorageRecipesRecipesWithCustomUnpacking(consumer, RecipeCategory.MISC, AetherItems.AMBROSIUM_SHARD.get(), RecipeCategory.BUILDING_BLOCKS, AetherBlocks.AMBROSIUM_BLOCK.get(), "ambrosium_shard_from_ambrosium_block", "ambrosium_shard");
-        oreBlockStorageRecipesRecipesWithCustomUnpacking(consumer, RecipeCategory.MISC, AetherItems.ZANITE_GEMSTONE.get(), RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ZANITE_BLOCK.get(), "zanite_gemstone_from_zanite_block", "zanite_gemstone");
+        this.oreBlockStorageRecipesRecipesWithCustomUnpacking(consumer, RecipeCategory.MISC, AetherItems.AMBROSIUM_SHARD.get(), RecipeCategory.BUILDING_BLOCKS, AetherBlocks.AMBROSIUM_BLOCK.get(), "ambrosium_shard_from_ambrosium_block", "ambrosium_shard");
+        this.oreBlockStorageRecipesRecipesWithCustomUnpacking(consumer, RecipeCategory.MISC, AetherItems.ZANITE_GEMSTONE.get(), RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ZANITE_BLOCK.get(), "zanite_gemstone_from_zanite_block", "zanite_gemstone");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, AetherBlocks.QUICKSOIL_GLASS_PANE.get(), 16)
                 .define('#', AetherBlocks.QUICKSOIL_GLASS.get())
@@ -109,8 +112,8 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .unlockedBy(getHasName(AetherBlocks.SKYROOT_PLANKS.get()), has(AetherBlocks.SKYROOT_PLANKS.get()))
                 .save(consumer);
 
-        fence(AetherBlocks.SKYROOT_FENCE, AetherBlocks.SKYROOT_PLANKS).save(consumer);
-        fenceGate(AetherBlocks.SKYROOT_FENCE_GATE, AetherBlocks.SKYROOT_PLANKS).save(consumer);
+        this.fence(AetherBlocks.SKYROOT_FENCE, AetherBlocks.SKYROOT_PLANKS).save(consumer);
+        this.fenceGate(AetherBlocks.SKYROOT_FENCE_GATE, AetherBlocks.SKYROOT_PLANKS).save(consumer);
 
         wall(consumer, RecipeCategory.DECORATIONS, AetherBlocks.CARVED_WALL.get(), AetherBlocks.CARVED_STONE.get());
         wall(consumer, RecipeCategory.DECORATIONS, AetherBlocks.ANGELIC_WALL.get(), AetherBlocks.ANGELIC_STONE.get());
@@ -121,15 +124,15 @@ public class AetherRecipeData extends AetherRecipeProvider {
         wall(consumer, RecipeCategory.DECORATIONS, AetherBlocks.HOLYSTONE_BRICK_WALL.get(), AetherBlocks.HOLYSTONE_BRICKS.get());
         wall(consumer, RecipeCategory.DECORATIONS, AetherBlocks.AEROGEL_WALL.get(), AetherBlocks.AEROGEL.get());
 
-        stairs(AetherBlocks.SKYROOT_STAIRS, AetherBlocks.SKYROOT_PLANKS).group("wooden_stairs").save(consumer);
-        stairs(AetherBlocks.CARVED_STAIRS, AetherBlocks.CARVED_STONE).save(consumer);
-        stairs(AetherBlocks.ANGELIC_STAIRS, AetherBlocks.ANGELIC_STONE).save(consumer);
-        stairs(AetherBlocks.HELLFIRE_STAIRS, AetherBlocks.HELLFIRE_STONE).save(consumer);
-        stairs(AetherBlocks.HOLYSTONE_STAIRS, AetherBlocks.HOLYSTONE).save(consumer);
-        stairs(AetherBlocks.MOSSY_HOLYSTONE_STAIRS, AetherBlocks.MOSSY_HOLYSTONE).save(consumer);
-        stairs(AetherBlocks.ICESTONE_STAIRS, AetherBlocks.ICESTONE).save(consumer);
-        stairs(AetherBlocks.HOLYSTONE_BRICK_STAIRS, AetherBlocks.HOLYSTONE_BRICKS).save(consumer);
-        stairs(AetherBlocks.AEROGEL_STAIRS, AetherBlocks.AEROGEL).save(consumer);
+        this.stairs(AetherBlocks.SKYROOT_STAIRS, AetherBlocks.SKYROOT_PLANKS).group("wooden_stairs").save(consumer);
+        this.stairs(AetherBlocks.CARVED_STAIRS, AetherBlocks.CARVED_STONE).save(consumer);
+        this.stairs(AetherBlocks.ANGELIC_STAIRS, AetherBlocks.ANGELIC_STONE).save(consumer);
+        this.stairs(AetherBlocks.HELLFIRE_STAIRS, AetherBlocks.HELLFIRE_STONE).save(consumer);
+        this.stairs(AetherBlocks.HOLYSTONE_STAIRS, AetherBlocks.HOLYSTONE).save(consumer);
+        this.stairs(AetherBlocks.MOSSY_HOLYSTONE_STAIRS, AetherBlocks.MOSSY_HOLYSTONE).save(consumer);
+        this.stairs(AetherBlocks.ICESTONE_STAIRS, AetherBlocks.ICESTONE).save(consumer);
+        this.stairs(AetherBlocks.HOLYSTONE_BRICK_STAIRS, AetherBlocks.HOLYSTONE_BRICKS).save(consumer);
+        this.stairs(AetherBlocks.AEROGEL_STAIRS, AetherBlocks.AEROGEL).save(consumer);
 
         slabBuilder(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.SKYROOT_SLAB.get(), Ingredient.of(AetherBlocks.SKYROOT_PLANKS.get()))
                 .group("wooden_slab")
@@ -166,39 +169,39 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .group("purple_dye")
                 .requires(AetherBlocks.PURPLE_FLOWER.get())
                 .unlockedBy(getHasName(AetherBlocks.PURPLE_FLOWER.get()), has(AetherBlocks.PURPLE_FLOWER.get()))
-                .save(consumer, name("flower_to_purple_dye"));
+                .save(consumer, this.name("flower_to_purple_dye"));
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.WHITE_DYE)
                 .group("white_dye")
                 .requires(AetherBlocks.WHITE_FLOWER.get())
                 .unlockedBy(getHasName(AetherBlocks.WHITE_FLOWER.get()), has(AetherBlocks.WHITE_FLOWER.get()))
-                .save(consumer, name("flower_to_white_dye"));
+                .save(consumer, this.name("flower_to_white_dye"));
 
 
-        makePickaxeWithTag(AetherItems.SKYROOT_PICKAXE, AetherTags.Items.SKYROOT_TOOL_CRAFTING, "has_planks").save(consumer);
-        makeAxeWithTag(AetherItems.SKYROOT_AXE, AetherTags.Items.SKYROOT_TOOL_CRAFTING, "has_planks").save(consumer);
-        makeShovelWithTag(AetherItems.SKYROOT_SHOVEL, AetherTags.Items.SKYROOT_TOOL_CRAFTING, "has_planks").save(consumer);
-        makeHoeWithTag(AetherItems.SKYROOT_HOE, AetherTags.Items.SKYROOT_TOOL_CRAFTING, "has_planks").save(consumer);
+        this.makePickaxeWithTag(AetherItems.SKYROOT_PICKAXE, AetherTags.Items.SKYROOT_TOOL_CRAFTING, "has_planks").save(consumer);
+        this.makeAxeWithTag(AetherItems.SKYROOT_AXE, AetherTags.Items.SKYROOT_TOOL_CRAFTING, "has_planks").save(consumer);
+        this.makeShovelWithTag(AetherItems.SKYROOT_SHOVEL, AetherTags.Items.SKYROOT_TOOL_CRAFTING, "has_planks").save(consumer);
+        this.makeHoeWithTag(AetherItems.SKYROOT_HOE, AetherTags.Items.SKYROOT_TOOL_CRAFTING, "has_planks").save(consumer);
 
-        makePickaxeWithBlock(AetherItems.HOLYSTONE_PICKAXE, AetherBlocks.HOLYSTONE).save(consumer);
-        makeAxeWithBlock(AetherItems.HOLYSTONE_AXE, AetherBlocks.HOLYSTONE).save(consumer);
-        makeShovelWithBlock(AetherItems.HOLYSTONE_SHOVEL, AetherBlocks.HOLYSTONE).save(consumer);
-        makeHoeWithBlock(AetherItems.HOLYSTONE_HOE, AetherBlocks.HOLYSTONE).save(consumer);
+        this.makePickaxeWithBlock(AetherItems.HOLYSTONE_PICKAXE, AetherBlocks.HOLYSTONE).save(consumer);
+        this.makeAxeWithBlock(AetherItems.HOLYSTONE_AXE, AetherBlocks.HOLYSTONE).save(consumer);
+        this.makeShovelWithBlock(AetherItems.HOLYSTONE_SHOVEL, AetherBlocks.HOLYSTONE).save(consumer);
+        this.makeHoeWithBlock(AetherItems.HOLYSTONE_HOE, AetherBlocks.HOLYSTONE).save(consumer);
 
-        makePickaxe(AetherItems.ZANITE_PICKAXE, AetherItems.ZANITE_GEMSTONE).save(consumer);
-        makeAxe(AetherItems.ZANITE_AXE, AetherItems.ZANITE_GEMSTONE).save(consumer);
-        makeShovel(AetherItems.ZANITE_SHOVEL, AetherItems.ZANITE_GEMSTONE).save(consumer);
-        makeHoe(AetherItems.ZANITE_HOE, AetherItems.ZANITE_GEMSTONE).save(consumer);
+        this.makePickaxe(AetherItems.ZANITE_PICKAXE, AetherItems.ZANITE_GEMSTONE).save(consumer);
+        this.makeAxe(AetherItems.ZANITE_AXE, AetherItems.ZANITE_GEMSTONE).save(consumer);
+        this.makeShovel(AetherItems.ZANITE_SHOVEL, AetherItems.ZANITE_GEMSTONE).save(consumer);
+        this.makeHoe(AetherItems.ZANITE_HOE, AetherItems.ZANITE_GEMSTONE).save(consumer);
 
-        makePickaxeWithBlock(AetherItems.GRAVITITE_PICKAXE, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
-        makeAxeWithBlock(AetherItems.GRAVITITE_AXE, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
-        makeShovelWithBlock(AetherItems.GRAVITITE_SHOVEL, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
-        makeHoeWithBlock(AetherItems.GRAVITITE_HOE, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
+        this.makePickaxeWithBlock(AetherItems.GRAVITITE_PICKAXE, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
+        this.makeAxeWithBlock(AetherItems.GRAVITITE_AXE, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
+        this.makeShovelWithBlock(AetherItems.GRAVITITE_SHOVEL, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
+        this.makeHoeWithBlock(AetherItems.GRAVITITE_HOE, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
 
-        makeSwordWithTag(AetherItems.SKYROOT_SWORD, AetherTags.Items.SKYROOT_TOOL_CRAFTING, "has_planks").save(consumer);
-        makeSwordWithBlock(AetherItems.HOLYSTONE_SWORD, AetherBlocks.HOLYSTONE).save(consumer);
-        makeSword(AetherItems.ZANITE_SWORD, AetherItems.ZANITE_GEMSTONE).save(consumer);
-        makeSwordWithBlock(AetherItems.GRAVITITE_SWORD, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
+        this.makeSwordWithTag(AetherItems.SKYROOT_SWORD, AetherTags.Items.SKYROOT_TOOL_CRAFTING, "has_planks").save(consumer);
+        this.makeSwordWithBlock(AetherItems.HOLYSTONE_SWORD, AetherBlocks.HOLYSTONE).save(consumer);
+        this.makeSword(AetherItems.ZANITE_SWORD, AetherItems.ZANITE_GEMSTONE).save(consumer);
+        this.makeSwordWithBlock(AetherItems.GRAVITITE_SWORD, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, AetherItems.GOLDEN_DART.get(), 4)
                 .define('F', Tags.Items.FEATHERS)
@@ -237,39 +240,39 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .unlockedBy(getHasName(AetherItems.AECHOR_PETAL.get()), has(AetherItems.AECHOR_PETAL.get()))
                 .save(consumer);
 
-        makeHelmet(AetherItems.ZANITE_HELMET, AetherItems.ZANITE_GEMSTONE).save(consumer);
-        makeChestplate(AetherItems.ZANITE_CHESTPLATE, AetherItems.ZANITE_GEMSTONE).save(consumer);
-        makeLeggings(AetherItems.ZANITE_LEGGINGS, AetherItems.ZANITE_GEMSTONE).save(consumer);
-        makeBoots(AetherItems.ZANITE_BOOTS, AetherItems.ZANITE_GEMSTONE).save(consumer);
+        this.makeHelmet(AetherItems.ZANITE_HELMET, AetherItems.ZANITE_GEMSTONE).save(consumer);
+        this.makeChestplate(AetherItems.ZANITE_CHESTPLATE, AetherItems.ZANITE_GEMSTONE).save(consumer);
+        this.makeLeggings(AetherItems.ZANITE_LEGGINGS, AetherItems.ZANITE_GEMSTONE).save(consumer);
+        this.makeBoots(AetherItems.ZANITE_BOOTS, AetherItems.ZANITE_GEMSTONE).save(consumer);
 
-        makeHelmetWithBlock(AetherItems.GRAVITITE_HELMET, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
-        makeChestplateWithBlock(AetherItems.GRAVITITE_CHESTPLATE, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
-        makeLeggingsWithBlock(AetherItems.GRAVITITE_LEGGINGS, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
-        makeBootsWithBlock(AetherItems.GRAVITITE_BOOTS, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
+        this.makeHelmetWithBlock(AetherItems.GRAVITITE_HELMET, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
+        this.makeChestplateWithBlock(AetherItems.GRAVITITE_CHESTPLATE, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
+        this.makeLeggingsWithBlock(AetherItems.GRAVITITE_LEGGINGS, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
+        this.makeBootsWithBlock(AetherItems.GRAVITITE_BOOTS, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
 
-        makeRing(AetherItems.IRON_RING, Items.IRON_INGOT).save(consumer);
-        makeRing(AetherItems.GOLDEN_RING, Items.GOLD_INGOT).save(consumer);
-        makeRing(AetherItems.ZANITE_RING, AetherItems.ZANITE_GEMSTONE.get()).save(consumer);
+        this.makeRing(AetherItems.IRON_RING, Items.IRON_INGOT).save(consumer);
+        this.makeRing(AetherItems.GOLDEN_RING, Items.GOLD_INGOT).save(consumer);
+        this.makeRing(AetherItems.ZANITE_RING, AetherItems.ZANITE_GEMSTONE.get()).save(consumer);
 
-        makePendant(AetherItems.IRON_PENDANT, Items.IRON_INGOT).save(consumer);
-        makePendant(AetherItems.GOLDEN_PENDANT, Items.GOLD_INGOT).save(consumer);
-        makePendant(AetherItems.ZANITE_PENDANT, AetherItems.ZANITE_GEMSTONE.get()).save(consumer);
+        this.makePendant(AetherItems.IRON_PENDANT, Items.IRON_INGOT).save(consumer);
+        this.makePendant(AetherItems.GOLDEN_PENDANT, Items.GOLD_INGOT).save(consumer);
+        this.makePendant(AetherItems.ZANITE_PENDANT, AetherItems.ZANITE_GEMSTONE.get()).save(consumer);
 
-        makeCape(AetherItems.RED_CAPE, Blocks.RED_WOOL.asItem()).save(consumer);
-        makeCape(AetherItems.BLUE_CAPE, Blocks.BLUE_WOOL.asItem()).group("blue_cape").save(consumer, name("blue_cape_blue_wool"));
-        makeCape(AetherItems.BLUE_CAPE, Blocks.LIGHT_BLUE_WOOL.asItem()).group("blue_cape").save(consumer, name("blue_cape_light_blue_wool"));
-        makeCape(AetherItems.BLUE_CAPE, Blocks.CYAN_WOOL.asItem()).group("blue_cape").save(consumer, name("blue_cape_cyan_wool"));
-        makeCape(AetherItems.YELLOW_CAPE, Blocks.YELLOW_WOOL.asItem()).save(consumer);
-        makeCape(AetherItems.WHITE_CAPE, Blocks.WHITE_WOOL.asItem()).save(consumer);
+        this.makeCape(AetherItems.RED_CAPE, Blocks.RED_WOOL.asItem()).save(consumer);
+        this.makeCape(AetherItems.BLUE_CAPE, Blocks.BLUE_WOOL.asItem()).group("blue_cape").save(consumer, this.name("blue_cape_blue_wool"));
+        this.makeCape(AetherItems.BLUE_CAPE, Blocks.LIGHT_BLUE_WOOL.asItem()).group("blue_cape").save(consumer, this.name("blue_cape_light_blue_wool"));
+        this.makeCape(AetherItems.BLUE_CAPE, Blocks.CYAN_WOOL.asItem()).group("blue_cape").save(consumer, this.name("blue_cape_cyan_wool"));
+        this.makeCape(AetherItems.YELLOW_CAPE, Blocks.YELLOW_WOOL.asItem()).save(consumer);
+        this.makeCape(AetherItems.WHITE_CAPE, Blocks.WHITE_WOOL.asItem()).save(consumer);
 
-        makeGlovesWithTag(AetherItems.LEATHER_GLOVES, Tags.Items.LEATHER, "leather").save(consumer);
-        makeGlovesWithTag(AetherItems.IRON_GLOVES, Tags.Items.INGOTS_IRON, "iron").save(consumer);
-        makeGlovesWithTag(AetherItems.GOLDEN_GLOVES, Tags.Items.INGOTS_GOLD, "gold").save(consumer);
-        makeGlovesWithTag(AetherItems.DIAMOND_GLOVES, Tags.Items.GEMS_DIAMOND, "diamond").save(consumer);
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(AetherItems.DIAMOND_GLOVES.get()), Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.COMBAT, AetherItems.NETHERITE_GLOVES.get()).unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT)).save(consumer, name("old_" + getItemName(AetherItems.NETHERITE_GLOVES.get()) + "_smithing"));
-        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE), Ingredient.of(AetherItems.DIAMOND_GLOVES.get()), Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.COMBAT, AetherItems.NETHERITE_GLOVES.get()).unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT)).save(consumer, name(getItemName(AetherItems.NETHERITE_GLOVES.get()) + "_smithing"));
-        makeGloves(AetherItems.ZANITE_GLOVES, AetherItems.ZANITE_GEMSTONE).save(consumer);
-        makeGlovesWithBlock(AetherItems.GRAVITITE_GLOVES, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
+        this.makeGlovesWithTag(AetherItems.LEATHER_GLOVES, Tags.Items.LEATHER, "leather").save(consumer);
+        this.makeGlovesWithTag(AetherItems.IRON_GLOVES, Tags.Items.INGOTS_IRON, "iron").save(consumer);
+        this.makeGlovesWithTag(AetherItems.GOLDEN_GLOVES, Tags.Items.INGOTS_GOLD, "gold").save(consumer);
+        this.makeGlovesWithTag(AetherItems.DIAMOND_GLOVES, Tags.Items.GEMS_DIAMOND, "diamond").save(consumer);
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(AetherItems.DIAMOND_GLOVES.get()), Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.COMBAT, AetherItems.NETHERITE_GLOVES.get()).unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT)).save(consumer, this.name("old_" + getItemName(AetherItems.NETHERITE_GLOVES.get()) + "_smithing"));
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE), Ingredient.of(AetherItems.DIAMOND_GLOVES.get()), Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.COMBAT, AetherItems.NETHERITE_GLOVES.get()).unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT)).save(consumer, this.name(getItemName(AetherItems.NETHERITE_GLOVES.get()) + "_smithing"));
+        this.makeGloves(AetherItems.ZANITE_GLOVES, AetherItems.ZANITE_GEMSTONE).save(consumer);
+        this.makeGlovesWithBlock(AetherItems.GRAVITITE_GLOVES, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AetherItems.SKYROOT_STICK.get(), 4)
                 .group("sticks")
@@ -318,7 +321,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("LLL")
                 .pattern("LSL")
                 .unlockedBy(getHasName(Items.LEATHER), has(Items.LEATHER))
-                .save(consumer, name("aether_saddle"));
+                .save(consumer, this.name("aether_saddle"));
 
         doorBuilder(AetherBlocks.SKYROOT_DOOR.get(), Ingredient.of(AetherBlocks.SKYROOT_PLANKS.get())).unlockedBy(getHasName(AetherBlocks.SKYROOT_PLANKS.get()), has(AetherBlocks.SKYROOT_PLANKS.get())).group("wooden_door").save(consumer);
         trapdoorBuilder(AetherBlocks.SKYROOT_TRAPDOOR.get(), Ingredient.of(AetherBlocks.SKYROOT_PLANKS.get())).unlockedBy(getHasName(AetherBlocks.SKYROOT_PLANKS.get()), has(AetherBlocks.SKYROOT_PLANKS.get())).group("wooden_trapdoor").save(consumer);
@@ -336,7 +339,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("SB ")
                 .pattern("  S")
                 .unlockedBy("has_swet_balls", has(AetherTags.Items.SWET_BALLS))
-                .save(consumer, name("swet_lead"));
+                .save(consumer, this.name("swet_lead"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, Blocks.STICKY_PISTON, 1)
                 .group("minecraft:sticky_piston")
@@ -345,7 +348,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("B")
                 .pattern("P")
                 .unlockedBy("has_swet_balls", has(AetherTags.Items.SWET_BALLS))
-                .save(consumer, name("swet_sticky_piston"));
+                .save(consumer, this.name("swet_sticky_piston"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, Blocks.SLIME_BLOCK, 1)
                 .group("minecraft:slime_block")
@@ -354,7 +357,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("BBB")
                 .pattern("BBB")
                 .unlockedBy("has_swet_balls", has(AetherTags.Items.SWET_BALLS))
-                .save(consumer, name("swet_slime_block"));
+                .save(consumer, this.name("swet_slime_block"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.BARREL, 1)
                 .group("minecraft:barrel")
@@ -365,7 +368,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("PHP")
                 .unlockedBy("has_planks", has(AetherTags.Items.PLANKS_CRAFTING))
                 .unlockedBy("has_slabs", has(ItemTags.WOODEN_SLABS))
-                .save(consumer, name("skyroot_barrel"));
+                .save(consumer, this.name("skyroot_barrel"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.BEEHIVE, 1)
                 .group("minecraft:beehive")
@@ -375,7 +378,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("CCC")
                 .pattern("PPP")
                 .unlockedBy(getHasName(Items.HONEYCOMB), has(Items.HONEYCOMB))
-                .save(consumer, name("skyroot_beehive"));
+                .save(consumer, this.name("skyroot_beehive"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.CARTOGRAPHY_TABLE, 1)
                 .group("minecraft:cartography_table")
@@ -385,7 +388,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("PP")
                 .pattern("PP")
                 .unlockedBy(getHasName(Items.PAPER), has(Items.PAPER))
-                .save(consumer, name("skyroot_cartography_table"));
+                .save(consumer, this.name("skyroot_cartography_table"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.CHEST, 1)
                 .group("minecraft:chest")
@@ -394,7 +397,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("P P")
                 .pattern("PPP")
                 .unlockedBy("has_lots_of_items", new InventoryChangeTrigger.TriggerInstance(EntityPredicate.Composite.ANY, MinMaxBounds.Ints.atLeast(10), MinMaxBounds.Ints.ANY, MinMaxBounds.Ints.ANY, new ItemPredicate[0]))
-                .save(consumer, name("skyroot_chest"));
+                .save(consumer, this.name("skyroot_chest"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.CRAFTING_TABLE, 1)
                 .group("minecraft:crafting_table")
@@ -402,7 +405,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("PP")
                 .pattern("PP")
                 .unlockedBy("has_planks", has(AetherTags.Items.PLANKS_CRAFTING))
-                .save(consumer, name("skyroot_crafting_table"));
+                .save(consumer, this.name("skyroot_crafting_table"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.FLETCHING_TABLE, 1)
                 .group("minecraft:fletching_table")
@@ -412,7 +415,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("PP")
                 .pattern("PP")
                 .unlockedBy(getHasName(Items.FLINT), has(Items.FLINT))
-                .save(consumer, name("skyroot_fletching_table"));
+                .save(consumer, this.name("skyroot_fletching_table"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.GRINDSTONE, 1)
                 .group("minecraft:grindstone")
@@ -422,7 +425,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("/H/")
                 .pattern("P P")
                 .unlockedBy(getHasName(Blocks.STONE_SLAB), has(Blocks.STONE_SLAB))
-                .save(consumer, name("skyroot_grindstone"));
+                .save(consumer, this.name("skyroot_grindstone"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.JUKEBOX, 1)
                 .group("minecraft:jukebox")
@@ -432,7 +435,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("PDP")
                 .pattern("PPP")
                 .unlockedBy("has_diamond", has(Tags.Items.GEMS_DIAMOND))
-                .save(consumer, name("skyroot_jukebox"));
+                .save(consumer, this.name("skyroot_jukebox"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.JUKEBOX, 1)
                 .group("minecraft:jukebox")
@@ -442,7 +445,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("PGP")
                 .pattern("PPP")
                 .unlockedBy(getHasName(AetherBlocks.ENCHANTED_GRAVITITE.get()), has(AetherBlocks.ENCHANTED_GRAVITITE.get()))
-                .save(consumer, name("gravitite_jukebox"));
+                .save(consumer, this.name("gravitite_jukebox"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.JUKEBOX, 1)
                 .group("minecraft:jukebox")
@@ -452,7 +455,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("PGP")
                 .pattern("PPP")
                 .unlockedBy(getHasName(AetherBlocks.ENCHANTED_GRAVITITE.get()), has(AetherBlocks.ENCHANTED_GRAVITITE.get()))
-                .save(consumer, name("skyroot_gravitite_jukebox"));
+                .save(consumer, this.name("skyroot_gravitite_jukebox"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.LOOM, 1)
                 .group("minecraft:loom")
@@ -461,7 +464,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("TT")
                 .pattern("PP")
                 .unlockedBy("has_string", has(Tags.Items.STRING))
-                .save(consumer, name("skyroot_loom"));
+                .save(consumer, this.name("skyroot_loom"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, Blocks.NOTE_BLOCK, 1)
                 .group("minecraft:note_block")
@@ -471,7 +474,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("PRP")
                 .pattern("PPP")
                 .unlockedBy("has_redstone", has(Tags.Items.DUSTS_REDSTONE))
-                .save(consumer, name("skyroot_note_block"));
+                .save(consumer, this.name("skyroot_note_block"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, Blocks.PISTON, 1)
                 .group("minecraft:piston")
@@ -483,7 +486,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("CIC")
                 .pattern("CRC")
                 .unlockedBy("has_redstone", has(Tags.Items.DUSTS_REDSTONE))
-                .save(consumer, name("skyroot_piston"));
+                .save(consumer, this.name("skyroot_piston"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, Items.SHIELD, 1)
                 .group("minecraft:shield")
@@ -493,7 +496,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("PPP")
                 .pattern(" P ")
                 .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
-                .save(consumer, name("skyroot_iron_vanilla_shield"));
+                .save(consumer, this.name("skyroot_iron_vanilla_shield"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, Items.SHIELD, 1)
                 .group("minecraft:shield")
@@ -503,7 +506,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("PPP")
                 .pattern(" P ")
                 .unlockedBy("has_zanite_gemstone", has(AetherItems.ZANITE_GEMSTONE.get()))
-                .save(consumer, name("skyroot_zanite_vanilla_shield"));
+                .save(consumer, this.name("skyroot_zanite_vanilla_shield"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, Items.SHIELD, 1)
                 .group("minecraft:shield")
@@ -513,7 +516,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("PPP")
                 .pattern(" P ")
                 .unlockedBy("has_zanite_gemstone", has(AetherItems.ZANITE_GEMSTONE.get()))
-                .save(consumer, name("wood_zanite_vanilla_shield"));
+                .save(consumer, this.name("wood_zanite_vanilla_shield"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.SMITHING_TABLE, 1)
                 .group("minecraft:smithing_table")
@@ -523,7 +526,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("PP")
                 .pattern("PP")
                 .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
-                .save(consumer, name("skyroot_smithing_table"));
+                .save(consumer, this.name("skyroot_smithing_table"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, Blocks.TRIPWIRE_HOOK, 2)
                 .group("minecraft:tripwire_hook")
@@ -534,7 +537,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("/")
                 .pattern("P")
                 .unlockedBy("has_string", has(Tags.Items.STRING))
-                .save(consumer, name("skyroot_tripwire_hook"));
+                .save(consumer, this.name("skyroot_tripwire_hook"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.STONECUTTER)
                 .group("minecraft:stonecutter")
@@ -543,7 +546,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern(" I ")
                 .pattern("###")
                 .unlockedBy("has_holystone", has(AetherBlocks.HOLYSTONE.get()))
-                .save(consumer, name("holystone_stonecutter"));
+                .save(consumer, this.name("holystone_stonecutter"));
 
 
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, Blocks.CAKE)
@@ -556,7 +559,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("BEB")
                 .pattern("CCC")
                 .unlockedBy("has_egg", has(Items.EGG))
-                .save(consumer, name("skyroot_milk_bucket_cake"));
+                .save(consumer, this.name("skyroot_milk_bucket_cake"));
 
 
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, Blocks.CAKE)
@@ -569,7 +572,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("BEB")
                 .pattern("CCC")
                 .unlockedBy("has_moa_egg", has(AetherTags.Items.MOA_EGGS))
-                .save(consumer, name("moa_egg_cake"));
+                .save(consumer, this.name("moa_egg_cake"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, Blocks.CAKE)
                 .group("minecraft:cake")
@@ -581,7 +584,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("BEB")
                 .pattern("CCC")
                 .unlockedBy("has_moa_egg", has(AetherTags.Items.MOA_EGGS))
-                .save(consumer, name("skyroot_milk_bucket_moa_egg_cake"));
+                .save(consumer, this.name("skyroot_milk_bucket_moa_egg_cake"));
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.PUMPKIN_PIE)
                 .group("minecraft:pumpkin_pie")
@@ -590,261 +593,261 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .requires(AetherTags.Items.MOA_EGGS)
                 .unlockedBy("has_carved_pumpkin", has(Blocks.CARVED_PUMPKIN))
                 .unlockedBy("has_pumpkin", has(Blocks.PUMPKIN))
-                .save(consumer, name("moa_egg_pumpkin_pie"));
+                .save(consumer, this.name("moa_egg_pumpkin_pie"));
 
 
 
-        smeltingOreRecipe(AetherItems.AMBROSIUM_SHARD.get(), AetherBlocks.AMBROSIUM_ORE.get(), 0.1F).save(consumer, name("ambrosium_shard_from_smelting"));
-        blastingOreRecipe(AetherItems.AMBROSIUM_SHARD.get(), AetherBlocks.AMBROSIUM_ORE.get(), 0.1F).save(consumer, name("ambrosium_shard_from_blasting"));
+        this.smeltingOreRecipe(AetherItems.AMBROSIUM_SHARD.get(), AetherBlocks.AMBROSIUM_ORE.get(), 0.1F).save(consumer, this.name("ambrosium_shard_from_smelting"));
+        this.blastingOreRecipe(AetherItems.AMBROSIUM_SHARD.get(), AetherBlocks.AMBROSIUM_ORE.get(), 0.1F).save(consumer, this.name("ambrosium_shard_from_blasting"));
 
-        smeltingOreRecipe(AetherItems.ZANITE_GEMSTONE.get(), AetherBlocks.ZANITE_ORE.get(), 0.7F).save(consumer, name("zanite_gemstone_from_smelting"));
-        blastingOreRecipe(AetherItems.ZANITE_GEMSTONE.get(), AetherBlocks.ZANITE_ORE.get(), 0.7F).save(consumer, name("zanite_gemstone_from_blasting"));
+        this.smeltingOreRecipe(AetherItems.ZANITE_GEMSTONE.get(), AetherBlocks.ZANITE_ORE.get(), 0.7F).save(consumer, this.name("zanite_gemstone_from_smelting"));
+        this.blastingOreRecipe(AetherItems.ZANITE_GEMSTONE.get(), AetherBlocks.ZANITE_ORE.get(), 0.7F).save(consumer, this.name("zanite_gemstone_from_blasting"));
 
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(AetherItems.GOLDEN_GLOVES.get(), AetherItems.GOLDEN_PENDANT.get(), AetherItems.GOLDEN_RING.get()), RecipeCategory.MISC, Items.GOLD_NUGGET, 0.1F, 100).unlockedBy("has_golden_gloves", has(AetherItems.GOLDEN_GLOVES.get())).unlockedBy("has_golden_pendant", has(AetherItems.GOLDEN_PENDANT.get())).unlockedBy("has_golden_ring", has(AetherItems.GOLDEN_RING.get())).group(getSmeltingRecipeName(Items.GOLD_NUGGET)).save(consumer, name("aether_" + getSmeltingRecipeName(Items.GOLD_NUGGET)));
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(AetherItems.IRON_GLOVES.get(), AetherItems.IRON_PENDANT.get(), AetherItems.IRON_RING.get(), AetherItems.CHAINMAIL_GLOVES.get()), RecipeCategory.MISC, Items.IRON_NUGGET, 0.1F, 100).unlockedBy("has_iron_gloves", has(AetherItems.IRON_GLOVES.get())).unlockedBy("has_iron_pendant", has(AetherItems.IRON_PENDANT.get())).unlockedBy("has_iron_ring", has(AetherItems.IRON_RING.get())).unlockedBy("has_chainmail_gloves", has(AetherItems.CHAINMAIL_GLOVES.get())).group(getSmeltingRecipeName(Items.IRON_NUGGET)).save(consumer, name("aether_" + getSmeltingRecipeName(Items.IRON_NUGGET)));
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(AetherItems.GOLDEN_GLOVES.get(), AetherItems.GOLDEN_PENDANT.get(), AetherItems.GOLDEN_RING.get()), RecipeCategory.MISC, Items.GOLD_NUGGET, 0.1F, 100).unlockedBy("has_golden_gloves", has(AetherItems.GOLDEN_GLOVES.get())).unlockedBy("has_golden_pendant", has(AetherItems.GOLDEN_PENDANT.get())).unlockedBy("has_golden_ring", has(AetherItems.GOLDEN_RING.get())).group(getSmeltingRecipeName(Items.GOLD_NUGGET)).save(consumer, this.name("aether_" + getSmeltingRecipeName(Items.GOLD_NUGGET)));
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(AetherItems.IRON_GLOVES.get(), AetherItems.IRON_PENDANT.get(), AetherItems.IRON_RING.get(), AetherItems.CHAINMAIL_GLOVES.get()), RecipeCategory.MISC, Items.IRON_NUGGET, 0.1F, 100).unlockedBy("has_iron_gloves", has(AetherItems.IRON_GLOVES.get())).unlockedBy("has_iron_pendant", has(AetherItems.IRON_PENDANT.get())).unlockedBy("has_iron_ring", has(AetherItems.IRON_RING.get())).unlockedBy("has_chainmail_gloves", has(AetherItems.CHAINMAIL_GLOVES.get())).group(getSmeltingRecipeName(Items.IRON_NUGGET)).save(consumer, this.name("aether_" + getSmeltingRecipeName(Items.IRON_NUGGET)));
 
-        SimpleCookingRecipeBuilder.blasting(Ingredient.of(AetherItems.GOLDEN_GLOVES.get(), AetherItems.GOLDEN_PENDANT.get(), AetherItems.GOLDEN_RING.get()), RecipeCategory.MISC, Items.GOLD_NUGGET, 0.1F, 100).unlockedBy("has_golden_gloves", has(AetherItems.GOLDEN_GLOVES.get())).unlockedBy("has_golden_pendant", has(AetherItems.GOLDEN_PENDANT.get())).unlockedBy("has_golden_ring", has(AetherItems.GOLDEN_RING.get())).group(getBlastingRecipeName(Items.GOLD_NUGGET)).save(consumer, name("aether_" + getBlastingRecipeName(Items.GOLD_NUGGET)));
-        SimpleCookingRecipeBuilder.blasting(Ingredient.of(AetherItems.IRON_GLOVES.get(), AetherItems.IRON_PENDANT.get(), AetherItems.IRON_RING.get(), AetherItems.CHAINMAIL_GLOVES.get()), RecipeCategory.MISC, Items.IRON_NUGGET, 0.1F, 100).unlockedBy("has_iron_gloves", has(AetherItems.IRON_GLOVES.get())).unlockedBy("has_iron_pendant", has(AetherItems.IRON_PENDANT.get())).unlockedBy("has_iron_ring", has(AetherItems.IRON_RING.get())).unlockedBy("has_chainmail_gloves", has(AetherItems.CHAINMAIL_GLOVES.get())).group(getBlastingRecipeName(Items.IRON_NUGGET)).save(consumer, name("aether_" + getBlastingRecipeName(Items.IRON_NUGGET)));
-
-
-        stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.CARVED_WALL.get(), AetherBlocks.CARVED_STONE.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.CARVED_STAIRS.get(), AetherBlocks.CARVED_STONE.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.CARVED_SLAB.get(), AetherBlocks.CARVED_STONE.get(), 2);
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.SENTRY_STONE.get(), AetherBlocks.CARVED_STONE.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.CARVED_STONE.get(), AetherBlocks.SENTRY_STONE.get());
-
-        stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.ANGELIC_WALL.get(), AetherBlocks.ANGELIC_STONE.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ANGELIC_STAIRS.get(), AetherBlocks.ANGELIC_STONE.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ANGELIC_SLAB.get(), AetherBlocks.ANGELIC_STONE.get(), 2);
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.PILLAR.get(), AetherBlocks.ANGELIC_STONE.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.PILLAR_TOP.get(), AetherBlocks.ANGELIC_STONE.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ANGELIC_STONE.get(), AetherBlocks.PILLAR.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ANGELIC_STONE.get(), AetherBlocks.PILLAR_TOP.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.PILLAR_TOP.get(), AetherBlocks.PILLAR.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.PILLAR.get(), AetherBlocks.PILLAR_TOP.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.LIGHT_ANGELIC_STONE.get(), AetherBlocks.ANGELIC_STONE.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ANGELIC_STONE.get(), AetherBlocks.LIGHT_ANGELIC_STONE.get());
-
-        stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.HELLFIRE_WALL.get(), AetherBlocks.HELLFIRE_STONE.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HELLFIRE_STAIRS.get(), AetherBlocks.HELLFIRE_STONE.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HELLFIRE_SLAB.get(), AetherBlocks.HELLFIRE_STONE.get(), 2);
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.LIGHT_HELLFIRE_STONE.get(), AetherBlocks.HELLFIRE_STONE.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HELLFIRE_STONE.get(), AetherBlocks.LIGHT_HELLFIRE_STONE.get());
-
-        stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.HOLYSTONE_WALL.get(), AetherBlocks.HOLYSTONE.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_STAIRS.get(), AetherBlocks.HOLYSTONE.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_SLAB.get(), AetherBlocks.HOLYSTONE.get(), 2);
-
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_BRICKS.get(), AetherBlocks.HOLYSTONE.get());
-        stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.HOLYSTONE_BRICK_WALL.get(), AetherBlocks.HOLYSTONE.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_BRICK_STAIRS.get(), AetherBlocks.HOLYSTONE.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_BRICK_SLAB.get(), AetherBlocks.HOLYSTONE.get(), 2);
-
-        stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.MOSSY_HOLYSTONE_WALL.get(), AetherBlocks.MOSSY_HOLYSTONE.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.MOSSY_HOLYSTONE_STAIRS.get(), AetherBlocks.MOSSY_HOLYSTONE.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.MOSSY_HOLYSTONE_SLAB.get(), AetherBlocks.MOSSY_HOLYSTONE.get(), 2);
-
-        stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.HOLYSTONE_BRICK_WALL.get(), AetherBlocks.HOLYSTONE_BRICKS.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_BRICK_STAIRS.get(), AetherBlocks.HOLYSTONE_BRICKS.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_BRICK_SLAB.get(), AetherBlocks.HOLYSTONE_BRICKS.get(), 2);
-
-        stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.ICESTONE_WALL.get(), AetherBlocks.ICESTONE.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ICESTONE_STAIRS.get(), AetherBlocks.ICESTONE.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ICESTONE_SLAB.get(), AetherBlocks.ICESTONE.get(), 2);
-
-        stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.AEROGEL_WALL.get(), AetherBlocks.AEROGEL.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.AEROGEL_STAIRS.get(), AetherBlocks.AEROGEL.get());
-        stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.AEROGEL_SLAB.get(), AetherBlocks.AEROGEL.get(), 2);
+        SimpleCookingRecipeBuilder.blasting(Ingredient.of(AetherItems.GOLDEN_GLOVES.get(), AetherItems.GOLDEN_PENDANT.get(), AetherItems.GOLDEN_RING.get()), RecipeCategory.MISC, Items.GOLD_NUGGET, 0.1F, 100).unlockedBy("has_golden_gloves", has(AetherItems.GOLDEN_GLOVES.get())).unlockedBy("has_golden_pendant", has(AetherItems.GOLDEN_PENDANT.get())).unlockedBy("has_golden_ring", has(AetherItems.GOLDEN_RING.get())).group(getBlastingRecipeName(Items.GOLD_NUGGET)).save(consumer, this.name("aether_" + getBlastingRecipeName(Items.GOLD_NUGGET)));
+        SimpleCookingRecipeBuilder.blasting(Ingredient.of(AetherItems.IRON_GLOVES.get(), AetherItems.IRON_PENDANT.get(), AetherItems.IRON_RING.get(), AetherItems.CHAINMAIL_GLOVES.get()), RecipeCategory.MISC, Items.IRON_NUGGET, 0.1F, 100).unlockedBy("has_iron_gloves", has(AetherItems.IRON_GLOVES.get())).unlockedBy("has_iron_pendant", has(AetherItems.IRON_PENDANT.get())).unlockedBy("has_iron_ring", has(AetherItems.IRON_RING.get())).unlockedBy("has_chainmail_gloves", has(AetherItems.CHAINMAIL_GLOVES.get())).group(getBlastingRecipeName(Items.IRON_NUGGET)).save(consumer, this.name("aether_" + getBlastingRecipeName(Items.IRON_NUGGET)));
 
 
-        repairingRecipe(RecipeCategory.TOOLS, Items.FISHING_ROD, 600).save(consumer, name("fishing_rod_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, Items.BOW, 4000).save(consumer, name("bow_repairing"));
+        this.stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.CARVED_WALL.get(), AetherBlocks.CARVED_STONE.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.CARVED_STAIRS.get(), AetherBlocks.CARVED_STONE.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.CARVED_SLAB.get(), AetherBlocks.CARVED_STONE.get(), 2);
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.SENTRY_STONE.get(), AetherBlocks.CARVED_STONE.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.CARVED_STONE.get(), AetherBlocks.SENTRY_STONE.get());
 
-        repairingRecipe(RecipeCategory.COMBAT, Items.SHIELD, 3000).save(consumer, name("shield_repairing"));
+        this.stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.ANGELIC_WALL.get(), AetherBlocks.ANGELIC_STONE.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ANGELIC_STAIRS.get(), AetherBlocks.ANGELIC_STONE.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ANGELIC_SLAB.get(), AetherBlocks.ANGELIC_STONE.get(), 2);
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.PILLAR.get(), AetherBlocks.ANGELIC_STONE.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.PILLAR_TOP.get(), AetherBlocks.ANGELIC_STONE.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ANGELIC_STONE.get(), AetherBlocks.PILLAR.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ANGELIC_STONE.get(), AetherBlocks.PILLAR_TOP.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.PILLAR_TOP.get(), AetherBlocks.PILLAR.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.PILLAR.get(), AetherBlocks.PILLAR_TOP.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.LIGHT_ANGELIC_STONE.get(), AetherBlocks.ANGELIC_STONE.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ANGELIC_STONE.get(), AetherBlocks.LIGHT_ANGELIC_STONE.get());
 
-        repairingRecipe(RecipeCategory.TOOLS, AetherItems.SKYROOT_PICKAXE.get(), 250).group("altar_pickaxe_repair").save(consumer, name("skyroot_pickaxe_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, AetherItems.SKYROOT_AXE.get(), 250).group("altar_axe_repair").save(consumer, name("skyroot_axe_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, AetherItems.SKYROOT_SHOVEL.get(), 250).group("altar_shovel_repair").save(consumer, name("skyroot_shovel_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, AetherItems.SKYROOT_HOE.get(), 250).group("altar_hoe_repair").save(consumer, name("skyroot_hoe_repairing"));
+        this.stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.HELLFIRE_WALL.get(), AetherBlocks.HELLFIRE_STONE.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HELLFIRE_STAIRS.get(), AetherBlocks.HELLFIRE_STONE.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HELLFIRE_SLAB.get(), AetherBlocks.HELLFIRE_STONE.get(), 2);
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.LIGHT_HELLFIRE_STONE.get(), AetherBlocks.HELLFIRE_STONE.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HELLFIRE_STONE.get(), AetherBlocks.LIGHT_HELLFIRE_STONE.get());
 
-        repairingRecipe(RecipeCategory.TOOLS, AetherItems.HOLYSTONE_PICKAXE.get(), 500).group("altar_pickaxe_repair").save(consumer, name("holystone_pickaxe_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, AetherItems.HOLYSTONE_AXE.get(), 500).group("altar_axe_repair").save(consumer, name("holystone_axe_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, AetherItems.HOLYSTONE_SHOVEL.get(), 500).group("altar_shovel_repair").save(consumer, name("holystone_shovel_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, AetherItems.HOLYSTONE_HOE.get(), 500).group("altar_hoe_repair").save(consumer, name("holystone_hoe_repairing"));
+        this.stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.HOLYSTONE_WALL.get(), AetherBlocks.HOLYSTONE.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_STAIRS.get(), AetherBlocks.HOLYSTONE.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_SLAB.get(), AetherBlocks.HOLYSTONE.get(), 2);
 
-        repairingRecipe(RecipeCategory.TOOLS, AetherItems.ZANITE_PICKAXE.get(), 750).group("altar_pickaxe_repair").save(consumer, name("zanite_pickaxe_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, AetherItems.ZANITE_AXE.get(), 750).group("altar_axe_repair").save(consumer, name("zanite_axe_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, AetherItems.ZANITE_SHOVEL.get(), 750).group("altar_shovel_repair").save(consumer, name("zanite_shovel_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, AetherItems.ZANITE_HOE.get(), 750).group("altar_hoe_repair").save(consumer, name("zanite_hoe_repairing"));
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_BRICKS.get(), AetherBlocks.HOLYSTONE.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.HOLYSTONE_BRICK_WALL.get(), AetherBlocks.HOLYSTONE.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_BRICK_STAIRS.get(), AetherBlocks.HOLYSTONE.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_BRICK_SLAB.get(), AetherBlocks.HOLYSTONE.get(), 2);
 
-        repairingRecipe(RecipeCategory.TOOLS, AetherItems.GRAVITITE_PICKAXE.get(), 1500).group("altar_pickaxe_repair").save(consumer, name("gravitite_pickaxe_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, AetherItems.GRAVITITE_AXE.get(), 1500).group("altar_axe_repair").save(consumer, name("gravitite_axe_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, AetherItems.GRAVITITE_SHOVEL.get(), 1500).group("altar_shovel_repair").save(consumer, name("gravitite_shovel_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, AetherItems.GRAVITITE_HOE.get(), 1500).group("altar_hoe_repair").save(consumer, name("gravitite_hoe_repairing"));
+        this.stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.MOSSY_HOLYSTONE_WALL.get(), AetherBlocks.MOSSY_HOLYSTONE.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.MOSSY_HOLYSTONE_STAIRS.get(), AetherBlocks.MOSSY_HOLYSTONE.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.MOSSY_HOLYSTONE_SLAB.get(), AetherBlocks.MOSSY_HOLYSTONE.get(), 2);
 
-        repairingRecipe(RecipeCategory.COMBAT, AetherItems.SKYROOT_SWORD.get(), 250).group("altar_sword_repair").save(consumer, name("skyroot_sword_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, AetherItems.HOLYSTONE_SWORD.get(), 500).group("altar_sword_repair").save(consumer, name("holystone_sword_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, AetherItems.ZANITE_SWORD.get(), 750).group("altar_sword_repair").save(consumer, name("zanite_sword_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, AetherItems.GRAVITITE_SWORD.get(), 1500).group("altar_sword_repair").save(consumer, name("gravitite_sword_repairing"));
+        this.stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.HOLYSTONE_BRICK_WALL.get(), AetherBlocks.HOLYSTONE_BRICKS.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_BRICK_STAIRS.get(), AetherBlocks.HOLYSTONE_BRICKS.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.HOLYSTONE_BRICK_SLAB.get(), AetherBlocks.HOLYSTONE_BRICKS.get(), 2);
 
-        repairingRecipe(RecipeCategory.COMBAT, AetherItems.ZANITE_HELMET.get(), 750).group("altar_helmet_repair").save(consumer, name("zanite_helmet_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, AetherItems.ZANITE_CHESTPLATE.get(), 750).group("altar_chestplate_repair").save(consumer, name("zanite_chestplate_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, AetherItems.ZANITE_LEGGINGS.get(), 750).group("altar_leggings_repair").save(consumer, name("zanite_leggings_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, AetherItems.ZANITE_BOOTS.get(), 750).group("altar_boots_repair").save(consumer, name("zanite_boots_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, AetherItems.ZANITE_GLOVES.get(), 750).group("altar_gloves_repair").save(consumer, name("zanite_gloves_repairing"));
+        this.stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.ICESTONE_WALL.get(), AetherBlocks.ICESTONE.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ICESTONE_STAIRS.get(), AetherBlocks.ICESTONE.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ICESTONE_SLAB.get(), AetherBlocks.ICESTONE.get(), 2);
 
-        repairingRecipe(RecipeCategory.COMBAT, AetherItems.GRAVITITE_HELMET.get(), 1500).group("altar_helmet_repair").save(consumer, name("gravitite_helmet_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, AetherItems.GRAVITITE_CHESTPLATE.get(), 1500).group("altar_chestplate_repair").save(consumer, name("gravitite_chestplate_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, AetherItems.GRAVITITE_LEGGINGS.get(), 1500).group("altar_leggings_repair").save(consumer, name("gravitite_leggings_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, AetherItems.GRAVITITE_BOOTS.get(), 1500).group("altar_boots_repair").save(consumer, name("gravitite_boots_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, AetherItems.GRAVITITE_GLOVES.get(), 1500).group("altar_gloves_repair").save(consumer, name("gravitite_gloves_repairing"));
+        this.stonecuttingRecipe(consumer, RecipeCategory.DECORATIONS, AetherBlocks.AEROGEL_WALL.get(), AetherBlocks.AEROGEL.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.AEROGEL_STAIRS.get(), AetherBlocks.AEROGEL.get());
+        this.stonecuttingRecipe(consumer, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.AEROGEL_SLAB.get(), AetherBlocks.AEROGEL.get(), 2);
 
-        repairingRecipe(RecipeCategory.TOOLS, Items.WOODEN_PICKAXE, 250).group("altar_pickaxe_repair").save(consumer, name("wooden_pickaxe_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, Items.WOODEN_AXE, 250).group("altar_axe_repair").save(consumer, name("wooden_axe_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, Items.WOODEN_SHOVEL, 250).group("altar_shovel_repair").save(consumer, name("wooden_shovel_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, Items.WOODEN_HOE, 250).group("altar_hoe_repair").save(consumer, name("wooden_hoe_repairing"));
 
-        repairingRecipe(RecipeCategory.TOOLS, Items.STONE_PICKAXE, 500).group("altar_pickaxe_repair").save(consumer, name("stone_pickaxe_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, Items.STONE_AXE, 500).group("altar_axe_repair").save(consumer, name("stone_axe_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, Items.STONE_SHOVEL, 500).group("altar_shovel_repair").save(consumer, name("stone_shovel_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, Items.STONE_HOE, 500).group("altar_hoe_repair").save(consumer, name("stone_hoe_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.FISHING_ROD, 600).save(consumer, this.name("fishing_rod_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.BOW, 4000).save(consumer, this.name("bow_repairing"));
 
-        repairingRecipe(RecipeCategory.TOOLS, Items.IRON_PICKAXE, 750).group("altar_pickaxe_repair").save(consumer, name("iron_pickaxe_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, Items.IRON_AXE, 750).group("altar_axe_repair").save(consumer, name("iron_axe_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, Items.IRON_SHOVEL, 750).group("altar_shovel_repair").save(consumer, name("iron_shovel_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, Items.IRON_HOE, 750).group("altar_hoe_repair").save(consumer, name("iron_hoe_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.SHIELD, 3000).save(consumer, this.name("shield_repairing"));
 
-        repairingRecipe(RecipeCategory.TOOLS, Items.GOLDEN_PICKAXE, 300).group("altar_pickaxe_repair").save(consumer, name("golden_pickaxe_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, Items.GOLDEN_AXE, 300).group("altar_axe_repair").save(consumer, name("golden_axe_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, Items.GOLDEN_SHOVEL, 300).group("altar_shovel_repair").save(consumer, name("golden_shovel_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, Items.GOLDEN_HOE, 300).group("altar_hoe_repair").save(consumer, name("golden_hoe_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, AetherItems.SKYROOT_PICKAXE.get(), 250).group("altar_pickaxe_repair").save(consumer, this.name("skyroot_pickaxe_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, AetherItems.SKYROOT_AXE.get(), 250).group("altar_axe_repair").save(consumer, this.name("skyroot_axe_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, AetherItems.SKYROOT_SHOVEL.get(), 250).group("altar_shovel_repair").save(consumer, this.name("skyroot_shovel_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, AetherItems.SKYROOT_HOE.get(), 250).group("altar_hoe_repair").save(consumer, this.name("skyroot_hoe_repairing"));
 
-        repairingRecipe(RecipeCategory.TOOLS, Items.DIAMOND_PICKAXE, 1500).group("altar_pickaxe_repair").save(consumer, name("diamond_pickaxe_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, Items.DIAMOND_AXE, 1500).group("altar_axe_repair").save(consumer, name("diamond_axe_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, Items.DIAMOND_SHOVEL, 1500).group("altar_shovel_repair").save(consumer, name("diamond_shovel_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, Items.DIAMOND_HOE, 1500).group("altar_hoe_repair").save(consumer, name("diamond_hoe_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, AetherItems.HOLYSTONE_PICKAXE.get(), 500).group("altar_pickaxe_repair").save(consumer, this.name("holystone_pickaxe_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, AetherItems.HOLYSTONE_AXE.get(), 500).group("altar_axe_repair").save(consumer, this.name("holystone_axe_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, AetherItems.HOLYSTONE_SHOVEL.get(), 500).group("altar_shovel_repair").save(consumer, this.name("holystone_shovel_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, AetherItems.HOLYSTONE_HOE.get(), 500).group("altar_hoe_repair").save(consumer, this.name("holystone_hoe_repairing"));
 
-        repairingRecipe(RecipeCategory.TOOLS, Items.NETHERITE_PICKAXE, 2000).group("altar_pickaxe_repair").save(consumer, name("netherite_pickaxe_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, Items.NETHERITE_AXE, 2000).group("altar_axe_repair").save(consumer, name("netherite_axe_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, Items.NETHERITE_SHOVEL, 2000).group("altar_shovel_repair").save(consumer, name("netherite_shovel_repairing"));
-        repairingRecipe(RecipeCategory.TOOLS, Items.NETHERITE_HOE, 2000).group("altar_hoe_repair").save(consumer, name("netherite_hoe_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, AetherItems.ZANITE_PICKAXE.get(), 750).group("altar_pickaxe_repair").save(consumer, this.name("zanite_pickaxe_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, AetherItems.ZANITE_AXE.get(), 750).group("altar_axe_repair").save(consumer, this.name("zanite_axe_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, AetherItems.ZANITE_SHOVEL.get(), 750).group("altar_shovel_repair").save(consumer, this.name("zanite_shovel_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, AetherItems.ZANITE_HOE.get(), 750).group("altar_hoe_repair").save(consumer, this.name("zanite_hoe_repairing"));
 
-        repairingRecipe(RecipeCategory.COMBAT, Items.WOODEN_SWORD, 250).group("altar_sword_repair").save(consumer, name("wooden_sword_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, Items.STONE_SWORD, 500).group("altar_sword_repair").save(consumer, name("stone_sword_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, Items.IRON_SWORD, 750).group("altar_sword_repair").save(consumer, name("iron_sword_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, Items.GOLDEN_SWORD, 300).group("altar_sword_repair").save(consumer, name("golden_sword_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, Items.DIAMOND_SWORD, 1500).group("altar_sword_repair").save(consumer, name("diamond_sword_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, Items.NETHERITE_SWORD, 2000).group("altar_sword_repair").save(consumer, name("netherite_sword_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, AetherItems.GRAVITITE_PICKAXE.get(), 1500).group("altar_pickaxe_repair").save(consumer, this.name("gravitite_pickaxe_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, AetherItems.GRAVITITE_AXE.get(), 1500).group("altar_axe_repair").save(consumer, this.name("gravitite_axe_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, AetherItems.GRAVITITE_SHOVEL.get(), 1500).group("altar_shovel_repair").save(consumer, this.name("gravitite_shovel_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, AetherItems.GRAVITITE_HOE.get(), 1500).group("altar_hoe_repair").save(consumer, this.name("gravitite_hoe_repairing"));
 
-        repairingRecipe(RecipeCategory.COMBAT, Items.LEATHER_HELMET, 250).group("altar_helmet_repair").save(consumer, name("leather_helmet_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, Items.LEATHER_CHESTPLATE, 250).group("altar_chestplate_repair").save(consumer, name("leather_chestplate_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, Items.LEATHER_LEGGINGS, 250).group("altar_leggings_repair").save(consumer, name("leather_leggings_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, Items.LEATHER_BOOTS, 250).group("altar_boots_repair").save(consumer, name("leather_boots_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, AetherItems.LEATHER_GLOVES.get(), 250).group("altar_gloves_repair").save(consumer, name("leather_gloves_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, AetherItems.SKYROOT_SWORD.get(), 250).group("altar_sword_repair").save(consumer, this.name("skyroot_sword_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, AetherItems.HOLYSTONE_SWORD.get(), 500).group("altar_sword_repair").save(consumer, this.name("holystone_sword_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, AetherItems.ZANITE_SWORD.get(), 750).group("altar_sword_repair").save(consumer, this.name("zanite_sword_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, AetherItems.GRAVITITE_SWORD.get(), 1500).group("altar_sword_repair").save(consumer, this.name("gravitite_sword_repairing"));
 
-        repairingRecipe(RecipeCategory.COMBAT, Items.IRON_HELMET, 750).group("altar_helmet_repair").save(consumer, name("iron_helmet_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, Items.IRON_CHESTPLATE, 750).group("altar_chestplate_repair").save(consumer, name("iron_chestplate_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, Items.IRON_LEGGINGS, 750).group("altar_leggings_repair").save(consumer, name("iron_leggings_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, Items.IRON_BOOTS, 750).group("altar_boots_repair").save(consumer, name("iron_boots_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, AetherItems.IRON_GLOVES.get(), 750).group("altar_gloves_repair").save(consumer, name("iron_gloves_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, AetherItems.ZANITE_HELMET.get(), 750).group("altar_helmet_repair").save(consumer, this.name("zanite_helmet_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, AetherItems.ZANITE_CHESTPLATE.get(), 750).group("altar_chestplate_repair").save(consumer, this.name("zanite_chestplate_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, AetherItems.ZANITE_LEGGINGS.get(), 750).group("altar_leggings_repair").save(consumer, this.name("zanite_leggings_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, AetherItems.ZANITE_BOOTS.get(), 750).group("altar_boots_repair").save(consumer, this.name("zanite_boots_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, AetherItems.ZANITE_GLOVES.get(), 750).group("altar_gloves_repair").save(consumer, this.name("zanite_gloves_repairing"));
 
-        repairingRecipe(RecipeCategory.COMBAT, Items.GOLDEN_HELMET, 300).group("altar_helmet_repair").save(consumer, name("golden_helmet_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, Items.GOLDEN_CHESTPLATE, 300).group("altar_chestplate_repair").save(consumer, name("golden_chestplate_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, Items.GOLDEN_LEGGINGS, 300).group("altar_leggings_repair").save(consumer, name("golden_leggings_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, Items.GOLDEN_BOOTS, 300).group("altar_boots_repair").save(consumer, name("golden_boots_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, AetherItems.GOLDEN_GLOVES.get(), 300).group("altar_gloves_repair").save(consumer, name("golden_gloves_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, AetherItems.GRAVITITE_HELMET.get(), 1500).group("altar_helmet_repair").save(consumer, this.name("gravitite_helmet_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, AetherItems.GRAVITITE_CHESTPLATE.get(), 1500).group("altar_chestplate_repair").save(consumer, this.name("gravitite_chestplate_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, AetherItems.GRAVITITE_LEGGINGS.get(), 1500).group("altar_leggings_repair").save(consumer, this.name("gravitite_leggings_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, AetherItems.GRAVITITE_BOOTS.get(), 1500).group("altar_boots_repair").save(consumer, this.name("gravitite_boots_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, AetherItems.GRAVITITE_GLOVES.get(), 1500).group("altar_gloves_repair").save(consumer, this.name("gravitite_gloves_repairing"));
 
-        repairingRecipe(RecipeCategory.COMBAT, Items.CHAINMAIL_HELMET, 700).group("altar_helmet_repair").save(consumer, name("chainmail_helmet_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, Items.CHAINMAIL_CHESTPLATE, 700).group("altar_chestplate_repair").save(consumer, name("chainmail_chestplate_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, Items.CHAINMAIL_LEGGINGS, 700).group("altar_leggings_repair").save(consumer, name("chainmail_leggings_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, Items.CHAINMAIL_BOOTS, 700).group("altar_boots_repair").save(consumer, name("chainmail_boots_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, AetherItems.CHAINMAIL_GLOVES.get(), 700).group("altar_gloves_repair").save(consumer, name("chainmail_gloves_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.WOODEN_PICKAXE, 250).group("altar_pickaxe_repair").save(consumer, this.name("wooden_pickaxe_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.WOODEN_AXE, 250).group("altar_axe_repair").save(consumer, this.name("wooden_axe_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.WOODEN_SHOVEL, 250).group("altar_shovel_repair").save(consumer, this.name("wooden_shovel_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.WOODEN_HOE, 250).group("altar_hoe_repair").save(consumer, this.name("wooden_hoe_repairing"));
 
-        repairingRecipe(RecipeCategory.COMBAT, Items.DIAMOND_HELMET, 1500).group("altar_helmet_repair").save(consumer, name("diamond_helmet_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, Items.DIAMOND_CHESTPLATE, 1500).group("altar_chestplate_repair").save(consumer, name("diamond_chestplate_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, Items.DIAMOND_LEGGINGS, 1500).group("altar_leggings_repair").save(consumer, name("diamond_leggings_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, Items.DIAMOND_BOOTS, 1500).group("altar_boots_repair").save(consumer, name("diamond_boots_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, AetherItems.DIAMOND_GLOVES.get(), 1500).group("altar_gloves_repair").save(consumer, name("diamond_gloves_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.STONE_PICKAXE, 500).group("altar_pickaxe_repair").save(consumer, this.name("stone_pickaxe_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.STONE_AXE, 500).group("altar_axe_repair").save(consumer, this.name("stone_axe_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.STONE_SHOVEL, 500).group("altar_shovel_repair").save(consumer, this.name("stone_shovel_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.STONE_HOE, 500).group("altar_hoe_repair").save(consumer, this.name("stone_hoe_repairing"));
 
-        repairingRecipe(RecipeCategory.COMBAT, Items.NETHERITE_HELMET, 2000).group("altar_helmet_repair").save(consumer, name("netherite_helmet_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, Items.NETHERITE_CHESTPLATE, 2000).group("altar_chestplate_repair").save(consumer, name("netherite_chestplate_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, Items.NETHERITE_LEGGINGS, 2000).group("altar_leggings_repair").save(consumer, name("netherite_leggings_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, Items.NETHERITE_BOOTS, 2000).group("altar_boots_repair").save(consumer, name("netherite_boots_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, AetherItems.NETHERITE_GLOVES.get(), 2000).group("altar_gloves_repair").save(consumer, name("netherite_gloves_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.IRON_PICKAXE, 750).group("altar_pickaxe_repair").save(consumer, this.name("iron_pickaxe_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.IRON_AXE, 750).group("altar_axe_repair").save(consumer, this.name("iron_axe_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.IRON_SHOVEL, 750).group("altar_shovel_repair").save(consumer, this.name("iron_shovel_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.IRON_HOE, 750).group("altar_hoe_repair").save(consumer, this.name("iron_hoe_repairing"));
 
-        repairingRecipe(RecipeCategory.COMBAT, AetherItems.ZANITE_RING.get(), 500).group("altar_ring_repair").save(consumer, name("zanite_ring_repairing"));
-        repairingRecipe(RecipeCategory.COMBAT, AetherItems.ZANITE_PENDANT.get(), 500).group("altar_pendant_repair").save(consumer, name("zanite_pendant_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.GOLDEN_PICKAXE, 300).group("altar_pickaxe_repair").save(consumer, this.name("golden_pickaxe_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.GOLDEN_AXE, 300).group("altar_axe_repair").save(consumer, this.name("golden_axe_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.GOLDEN_SHOVEL, 300).group("altar_shovel_repair").save(consumer, this.name("golden_shovel_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.GOLDEN_HOE, 300).group("altar_hoe_repair").save(consumer, this.name("golden_hoe_repairing"));
 
-        enchantingRecipe(RecipeCategory.MISC, AetherItems.ENCHANTED_DART.get(), AetherItems.GOLDEN_DART.get(), 0.15F, 50).save(consumer, name("enchanted_dart_enchanting"));
-        enchantingRecipe(RecipeCategory.MISC, AetherItems.ENCHANTED_DART_SHOOTER.get(), AetherItems.GOLDEN_DART_SHOOTER.get(), 1.0F, 750).save(consumer, name("enchanted_dart_shooter_enchanting"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.DIAMOND_PICKAXE, 1500).group("altar_pickaxe_repair").save(consumer, this.name("diamond_pickaxe_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.DIAMOND_AXE, 1500).group("altar_axe_repair").save(consumer, this.name("diamond_axe_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.DIAMOND_SHOVEL, 1500).group("altar_shovel_repair").save(consumer, this.name("diamond_shovel_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.DIAMOND_HOE, 1500).group("altar_hoe_repair").save(consumer, this.name("diamond_hoe_repairing"));
 
-        enchantingRecipe(RecipeCategory.FOOD, AetherItems.HEALING_STONE.get(), AetherBlocks.HOLYSTONE.get(), 0.35F, 500).save(consumer, name("healing_stone_enchanting"));
-        enchantingRecipe(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ENCHANTED_GRAVITITE.get(), AetherBlocks.GRAVITITE_ORE.get(), 1.0F, 750).save(consumer, name("enchanted_gravitite_enchanting"));
-        enchantingRecipe(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.QUICKSOIL_GLASS.get(), AetherBlocks.QUICKSOIL.get(), 0.1F, 250).save(consumer, name("quicksoil_glass_enchanting"));
-        enchantingRecipe(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.GOLDEN_AERCLOUD.get(), AetherBlocks.COLD_AERCLOUD.get(), 0.1F, 1000).save(consumer, name("golden_aercloud_enchanting"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.NETHERITE_PICKAXE, 2000).group("altar_pickaxe_repair").save(consumer, this.name("netherite_pickaxe_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.NETHERITE_AXE, 2000).group("altar_axe_repair").save(consumer, this.name("netherite_axe_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.NETHERITE_SHOVEL, 2000).group("altar_shovel_repair").save(consumer, this.name("netherite_shovel_repairing"));
+        this.repairingRecipe(RecipeCategory.TOOLS, Items.NETHERITE_HOE, 2000).group("altar_hoe_repair").save(consumer, this.name("netherite_hoe_repairing"));
 
-        enchantingRecipe(RecipeCategory.FOOD, AetherItems.ENCHANTED_BERRY.get(), AetherItems.BLUE_BERRY.get(), 0.35F, 250).save(consumer, name("enchanted_berry_enchanting"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.WOODEN_SWORD, 250).group("altar_sword_repair").save(consumer, this.name("wooden_sword_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.STONE_SWORD, 500).group("altar_sword_repair").save(consumer, this.name("stone_sword_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.IRON_SWORD, 750).group("altar_sword_repair").save(consumer, this.name("iron_sword_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.GOLDEN_SWORD, 300).group("altar_sword_repair").save(consumer, this.name("golden_sword_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.DIAMOND_SWORD, 1500).group("altar_sword_repair").save(consumer, this.name("diamond_sword_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.NETHERITE_SWORD, 2000).group("altar_sword_repair").save(consumer, this.name("netherite_sword_repairing"));
 
-        enchantingRecipe(RecipeCategory.MISC, AetherItems.MUSIC_DISC_AETHER_TUNE.get(), AetherTags.Items.ACCEPTED_MUSIC_DISCS, 1.0F, 500, "disc").save(consumer, name("aether_tune_enchanting"));
-        hiddenEnchantingRecipe(RecipeCategory.MISC, AetherItems.MUSIC_DISC_CHINCHILLA.get(), Items.MUSIC_DISC_STRAD, 1.0F, 500).save(consumer, name("chinchilla_enchanting"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.LEATHER_HELMET, 250).group("altar_helmet_repair").save(consumer, this.name("leather_helmet_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.LEATHER_CHESTPLATE, 250).group("altar_chestplate_repair").save(consumer, this.name("leather_chestplate_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.LEATHER_LEGGINGS, 250).group("altar_leggings_repair").save(consumer, this.name("leather_leggings_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.LEATHER_BOOTS, 250).group("altar_boots_repair").save(consumer, this.name("leather_boots_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, AetherItems.LEATHER_GLOVES.get(), 250).group("altar_gloves_repair").save(consumer, this.name("leather_gloves_repairing"));
 
-        enchantingRecipe(RecipeCategory.MISC, AetherItems.SKYROOT_REMEDY_BUCKET.get(), AetherItems.SKYROOT_POISON_BUCKET.get(), 0.35F, 500).save(consumer, name("remedy_bucket_enchanting"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.IRON_HELMET, 750).group("altar_helmet_repair").save(consumer, this.name("iron_helmet_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.IRON_CHESTPLATE, 750).group("altar_chestplate_repair").save(consumer, this.name("iron_chestplate_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.IRON_LEGGINGS, 750).group("altar_leggings_repair").save(consumer, this.name("iron_leggings_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.IRON_BOOTS, 750).group("altar_boots_repair").save(consumer, this.name("iron_boots_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, AetherItems.IRON_GLOVES.get(), 750).group("altar_gloves_repair").save(consumer, this.name("iron_gloves_repairing"));
 
-        freezingRecipe(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.BLUE_AERCLOUD.get(), AetherBlocks.COLD_AERCLOUD.get(), 0.1F, 400).save(consumer, name("blue_aercloud_freezing"));
-        freezingRecipe(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.CRYSTAL_LEAVES.get(), AetherBlocks.SKYROOT_LEAVES.get(), 0.1F, 500).save(consumer, name("crystal_leaves_freezing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.GOLDEN_HELMET, 300).group("altar_helmet_repair").save(consumer, this.name("golden_helmet_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.GOLDEN_CHESTPLATE, 300).group("altar_chestplate_repair").save(consumer, this.name("golden_chestplate_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.GOLDEN_LEGGINGS, 300).group("altar_leggings_repair").save(consumer, this.name("golden_leggings_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.GOLDEN_BOOTS, 300).group("altar_boots_repair").save(consumer, this.name("golden_boots_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, AetherItems.GOLDEN_GLOVES.get(), 300).group("altar_gloves_repair").save(consumer, this.name("golden_gloves_repairing"));
 
-        hiddenFreezingRecipe(RecipeCategory.MISC, AetherItems.MUSIC_DISC_HIGH.get(), AetherItems.MUSIC_DISC_CHINCHILLA.get(), 1.0F, 500).save(consumer, name("high_freezing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.CHAINMAIL_HELMET, 700).group("altar_helmet_repair").save(consumer, this.name("chainmail_helmet_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.CHAINMAIL_CHESTPLATE, 700).group("altar_chestplate_repair").save(consumer, this.name("chainmail_chestplate_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.CHAINMAIL_LEGGINGS, 700).group("altar_leggings_repair").save(consumer, this.name("chainmail_leggings_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.CHAINMAIL_BOOTS, 700).group("altar_boots_repair").save(consumer, this.name("chainmail_boots_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, AetherItems.CHAINMAIL_GLOVES.get(), 700).group("altar_gloves_repair").save(consumer, this.name("chainmail_gloves_repairing"));
 
-        freezingRecipeWithUnlockTag(RecipeCategory.BUILDING_BLOCKS, Blocks.BLUE_ICE, Blocks.PACKED_ICE, AetherTags.Items.FREEZABLE_BUCKETS, 0.1F, 500, "water_bucket").save(consumer, name("blue_ice_freezing"));
-        freezingRecipeWithUnlockTag(RecipeCategory.BUILDING_BLOCKS, Blocks.PACKED_ICE, Blocks.ICE, AetherTags.Items.FREEZABLE_BUCKETS, 0.1F, 300, "water_bucket").save(consumer, name("packed_ice_freezing"));
-        freezingRecipeWithTag(RecipeCategory.BUILDING_BLOCKS, Blocks.ICE, AetherTags.Items.FREEZABLE_BUCKETS, 0.1F, 200, "water_bucket").save(consumer, name("ice_from_bucket_freezing"));
-        freezingRecipe(RecipeCategory.BUILDING_BLOCKS, Blocks.OBSIDIAN, Items.LAVA_BUCKET, 0.1F, 200).save(consumer, name("obsidian_from_bucket_freezing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.DIAMOND_HELMET, 1500).group("altar_helmet_repair").save(consumer, this.name("diamond_helmet_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.DIAMOND_CHESTPLATE, 1500).group("altar_chestplate_repair").save(consumer, this.name("diamond_chestplate_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.DIAMOND_LEGGINGS, 1500).group("altar_leggings_repair").save(consumer, this.name("diamond_leggings_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.DIAMOND_BOOTS, 1500).group("altar_boots_repair").save(consumer, this.name("diamond_boots_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, AetherItems.DIAMOND_GLOVES.get(), 1500).group("altar_gloves_repair").save(consumer, this.name("diamond_gloves_repairing"));
 
-        freezingRecipeWithTag(RecipeCategory.MISC, AetherItems.ICE_RING.get(), AetherTags.Items.FREEZABLE_RINGS, 1.0F, 800, "ring").save(consumer, name("ice_ring_from_freezing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.NETHERITE_HELMET, 2000).group("altar_helmet_repair").save(consumer, this.name("netherite_helmet_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.NETHERITE_CHESTPLATE, 2000).group("altar_chestplate_repair").save(consumer, this.name("netherite_chestplate_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.NETHERITE_LEGGINGS, 2000).group("altar_leggings_repair").save(consumer, this.name("netherite_leggings_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, Items.NETHERITE_BOOTS, 2000).group("altar_boots_repair").save(consumer, this.name("netherite_boots_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, AetherItems.NETHERITE_GLOVES.get(), 2000).group("altar_gloves_repair").save(consumer, this.name("netherite_gloves_repairing"));
 
-        freezingRecipeWithTag(RecipeCategory.MISC, AetherItems.ICE_PENDANT.get(), AetherTags.Items.FREEZABLE_PENDANTS, 1.0F, 800, "pendant").save(consumer, name("ice_pendant_from_freezing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, AetherItems.ZANITE_RING.get(), 500).group("altar_ring_repair").save(consumer, this.name("zanite_ring_repairing"));
+        this.repairingRecipe(RecipeCategory.COMBAT, AetherItems.ZANITE_PENDANT.get(), 500).group("altar_pendant_repair").save(consumer, this.name("zanite_pendant_repairing"));
 
-        moaIncubationRecipe(AetherEntityTypes.MOA.get(), AetherMoaTypes.BLUE, AetherItems.BLUE_MOA_EGG.get()).save(consumer, name("blue_moa_incubation"));
-        moaIncubationRecipe(AetherEntityTypes.MOA.get(), AetherMoaTypes.WHITE, AetherItems.WHITE_MOA_EGG.get()).save(consumer, name("white_moa_incubation"));
-        moaIncubationRecipe(AetherEntityTypes.MOA.get(), AetherMoaTypes.BLACK, AetherItems.BLACK_MOA_EGG.get()).save(consumer, name("black_moa_incubation"));
+        this.enchantingRecipe(RecipeCategory.MISC, AetherItems.ENCHANTED_DART.get(), AetherItems.GOLDEN_DART.get(), 0.15F, 50).save(consumer, this.name("enchanted_dart_enchanting"));
+        this.enchantingRecipe(RecipeCategory.MISC, AetherItems.ENCHANTED_DART_SHOOTER.get(), AetherItems.GOLDEN_DART_SHOOTER.get(), 1.0F, 750).save(consumer, this.name("enchanted_dart_shooter_enchanting"));
 
-        ambrosiumEnchanting(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_GRASS_BLOCK.get()).save(consumer, name("ambrosium_enchant_aether_grass_to_enchanted_aether_grass"));
+        this.enchantingRecipe(RecipeCategory.FOOD, AetherItems.HEALING_STONE.get(), AetherBlocks.HOLYSTONE.get(), 0.35F, 500).save(consumer, this.name("healing_stone_enchanting"));
+        this.enchantingRecipe(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ENCHANTED_GRAVITITE.get(), AetherBlocks.GRAVITITE_ORE.get(), 1.0F, 750).save(consumer, this.name("enchanted_gravitite_enchanting"));
+        this.enchantingRecipe(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.QUICKSOIL_GLASS.get(), AetherBlocks.QUICKSOIL.get(), 0.1F, 250).save(consumer, this.name("quicksoil_glass_enchanting"));
+        this.enchantingRecipe(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.GOLDEN_AERCLOUD.get(), AetherBlocks.COLD_AERCLOUD.get(), 0.1F, 1000).save(consumer, this.name("golden_aercloud_enchanting"));
 
-        swetBallConversion(Blocks.GRASS_BLOCK, Blocks.DIRT).save(consumer, name("swet_ball_dirt_to_grass"));
-        swetBallConversion(AetherBlocks.AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_DIRT.get()).save(consumer, name("swet_ball_aether_dirt_to_aether_grass"));
-        swetBallConversionTag(Blocks.MYCELIUM, Blocks.DIRT, AetherTags.Biomes.MYCELIUM_CONVERSION).save(consumer, name("swet_ball_dirt_to_mycelium"));
-        swetBallConversionTag(Blocks.PODZOL, Blocks.GRASS_BLOCK, AetherTags.Biomes.PODZOL_CONVERSION).save(consumer, name("swet_ball_grass_to_podzol"));
-        swetBallConversionTag(Blocks.CRIMSON_NYLIUM, Blocks.NETHERRACK, AetherTags.Biomes.CRIMSON_NYLIUM_CONVERSION).save(consumer, name("swet_ball_netherrack_to_crimson_nylium"));
-        swetBallConversionTag(Blocks.WARPED_NYLIUM, Blocks.NETHERRACK, AetherTags.Biomes.WARPED_NYLIUM_CONVERSION).save(consumer, name("swet_ball_netherrack_to_warped_nylium"));
+        this.enchantingRecipe(RecipeCategory.FOOD, AetherItems.ENCHANTED_BERRY.get(), AetherItems.BLUE_BERRY.get(), 0.35F, 250).save(consumer, this.name("enchanted_berry_enchanting"));
 
-        icestoneFreezable(Blocks.ICE, Blocks.WATER).save(consumer, name("icestone_freeze_water"));
-        icestoneFreezable(Blocks.OBSIDIAN, Blocks.LAVA).save(consumer, name("icestone_freeze_lava"));
+        this.enchantingRecipe(RecipeCategory.MISC, AetherItems.MUSIC_DISC_AETHER_TUNE.get(), AetherTags.Items.ACCEPTED_MUSIC_DISCS, 1.0F, 500, "disc").save(consumer, this.name("aether_tune_enchanting"));
+        this.hiddenEnchantingRecipe(RecipeCategory.MISC, AetherItems.MUSIC_DISC_CHINCHILLA.get(), Items.MUSIC_DISC_STRAD, 1.0F, 500).save(consumer, this.name("chinchilla_enchanting"));
 
-        accessoryFreezable(Blocks.ICE, Blocks.WATER).save(consumer, name("accessory_freeze_water"));
-        accessoryFreezable(Blocks.OBSIDIAN, Blocks.LAVA).save(consumer, name("accessory_freeze_lava"));
+        this.enchantingRecipe(RecipeCategory.MISC, AetherItems.SKYROOT_REMEDY_BUCKET.get(), AetherItems.SKYROOT_POISON_BUCKET.get(), 0.35F, 500).save(consumer, this.name("remedy_bucket_enchanting"));
 
-        convertPlacement(AetherBlocks.AEROGEL.get(), Blocks.LAVA, AetherTags.Biomes.ULTRACOLD).save(consumer, name("aerogel_conversion"));
-        convertPlacementWithProperties(Blocks.CAMPFIRE, Map.of(CampfireBlock.LIT, false), Blocks.CAMPFIRE, Map.of(CampfireBlock.LIT, true), AetherTags.Biomes.ULTRACOLD).save(consumer, name("campfire_conversion"));
+        this.freezingRecipe(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.BLUE_AERCLOUD.get(), AetherBlocks.COLD_AERCLOUD.get(), 0.1F, 400).save(consumer, this.name("blue_aercloud_freezing"));
+        this.freezingRecipe(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.CRYSTAL_LEAVES.get(), AetherBlocks.SKYROOT_LEAVES.get(), 0.1F, 500).save(consumer, this.name("crystal_leaves_freezing"));
+
+        this.hiddenFreezingRecipe(RecipeCategory.MISC, AetherItems.MUSIC_DISC_HIGH.get(), AetherItems.MUSIC_DISC_CHINCHILLA.get(), 1.0F, 500).save(consumer, this.name("high_freezing"));
+
+        this.freezingRecipeWithUnlockTag(RecipeCategory.BUILDING_BLOCKS, Blocks.BLUE_ICE, Blocks.PACKED_ICE, AetherTags.Items.FREEZABLE_BUCKETS, 0.1F, 500, "water_bucket").save(consumer, this.name("blue_ice_freezing"));
+        this.freezingRecipeWithUnlockTag(RecipeCategory.BUILDING_BLOCKS, Blocks.PACKED_ICE, Blocks.ICE, AetherTags.Items.FREEZABLE_BUCKETS, 0.1F, 300, "water_bucket").save(consumer, this.name("packed_ice_freezing"));
+        this.freezingRecipeWithTag(RecipeCategory.BUILDING_BLOCKS, Blocks.ICE, AetherTags.Items.FREEZABLE_BUCKETS, 0.1F, 200, "water_bucket").save(consumer, this.name("ice_from_bucket_freezing"));
+        this.freezingRecipe(RecipeCategory.BUILDING_BLOCKS, Blocks.OBSIDIAN, Items.LAVA_BUCKET, 0.1F, 200).save(consumer, this.name("obsidian_from_bucket_freezing"));
+
+        this.freezingRecipeWithTag(RecipeCategory.MISC, AetherItems.ICE_RING.get(), AetherTags.Items.FREEZABLE_RINGS, 1.0F, 800, "ring").save(consumer, this.name("ice_ring_from_freezing"));
+
+        this.freezingRecipeWithTag(RecipeCategory.MISC, AetherItems.ICE_PENDANT.get(), AetherTags.Items.FREEZABLE_PENDANTS, 1.0F, 800, "pendant").save(consumer, this.name("ice_pendant_from_freezing"));
+
+        this.moaIncubationRecipe(AetherEntityTypes.MOA.get(), AetherMoaTypes.BLUE, AetherItems.BLUE_MOA_EGG.get()).save(consumer, this.name("blue_moa_incubation"));
+        this.moaIncubationRecipe(AetherEntityTypes.MOA.get(), AetherMoaTypes.WHITE, AetherItems.WHITE_MOA_EGG.get()).save(consumer, this.name("white_moa_incubation"));
+        this.moaIncubationRecipe(AetherEntityTypes.MOA.get(), AetherMoaTypes.BLACK, AetherItems.BLACK_MOA_EGG.get()).save(consumer, this.name("black_moa_incubation"));
+
+        this.ambrosiumEnchanting(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_GRASS_BLOCK.get()).save(consumer, this.name("ambrosium_enchant_aether_grass_to_enchanted_aether_grass"));
+
+        this.swetBallConversion(Blocks.GRASS_BLOCK, Blocks.DIRT).save(consumer, this.name("swet_ball_dirt_to_grass"));
+        this.swetBallConversion(AetherBlocks.AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_DIRT.get()).save(consumer, this.name("swet_ball_aether_dirt_to_aether_grass"));
+        this.swetBallConversionTag(Blocks.MYCELIUM, Blocks.DIRT, AetherTags.Biomes.MYCELIUM_CONVERSION).save(consumer, this.name("swet_ball_dirt_to_mycelium"));
+        this.swetBallConversionTag(Blocks.PODZOL, Blocks.GRASS_BLOCK, AetherTags.Biomes.PODZOL_CONVERSION).save(consumer, this.name("swet_ball_grass_to_podzol"));
+        this.swetBallConversionTag(Blocks.CRIMSON_NYLIUM, Blocks.NETHERRACK, AetherTags.Biomes.CRIMSON_NYLIUM_CONVERSION).save(consumer, this.name("swet_ball_netherrack_to_crimson_nylium"));
+        this.swetBallConversionTag(Blocks.WARPED_NYLIUM, Blocks.NETHERRACK, AetherTags.Biomes.WARPED_NYLIUM_CONVERSION).save(consumer, this.name("swet_ball_netherrack_to_warped_nylium"));
+
+        this.icestoneFreezable(Blocks.ICE, Blocks.WATER).save(consumer, this.name("icestone_freeze_water"));
+        this.icestoneFreezable(Blocks.OBSIDIAN, Blocks.LAVA).save(consumer, this.name("icestone_freeze_lava"));
+
+        this.accessoryFreezable(Blocks.ICE, Blocks.WATER).save(consumer, this.name("accessory_freeze_water"));
+        this.accessoryFreezable(Blocks.OBSIDIAN, Blocks.LAVA).save(consumer, this.name("accessory_freeze_lava"));
+
+        this.convertPlacement(AetherBlocks.AEROGEL.get(), Blocks.LAVA, AetherTags.Biomes.ULTRACOLD).save(consumer, this.name("aerogel_conversion"));
+        this.convertPlacementWithProperties(Blocks.CAMPFIRE, Map.of(CampfireBlock.LIT, false), Blocks.CAMPFIRE, Map.of(CampfireBlock.LIT, true), AetherTags.Biomes.ULTRACOLD).save(consumer, this.name("campfire_conversion"));
 
         List<Block> candles = List.of(Blocks.CANDLE, Blocks.WHITE_CANDLE, Blocks.ORANGE_CANDLE, Blocks.MAGENTA_CANDLE, Blocks.LIGHT_BLUE_CANDLE, Blocks.YELLOW_CANDLE, Blocks.LIME_CANDLE, Blocks.PINK_CANDLE, Blocks.GRAY_CANDLE, Blocks.LIGHT_GRAY_CANDLE, Blocks.CYAN_CANDLE, Blocks.PURPLE_CANDLE, Blocks.BLUE_CANDLE, Blocks.BROWN_CANDLE, Blocks.GREEN_CANDLE, Blocks.RED_CANDLE, Blocks.BLACK_CANDLE);
         for (Block candle : candles) {
-            convertPlacementWithProperties(candle, Map.of(CandleBlock.LIT, false), candle, Map.of(CandleBlock.LIT, true), AetherTags.Biomes.ULTRACOLD).save(consumer, name(candle.getDescriptionId().replace(".", "_").replace("block_minecraft_", "") + "_conversion"));
+            this.convertPlacementWithProperties(candle, Map.of(CandleBlock.LIT, false), candle, Map.of(CandleBlock.LIT, true), AetherTags.Biomes.ULTRACOLD).save(consumer, this.name(candle.getDescriptionId().replace(".", "_").replace("block_minecraft_", "") + "_conversion"));
         }
 
         List<Block> candleCakes = List.of(Blocks.CANDLE_CAKE, Blocks.WHITE_CANDLE_CAKE, Blocks.ORANGE_CANDLE_CAKE, Blocks.MAGENTA_CANDLE_CAKE, Blocks.LIGHT_BLUE_CANDLE_CAKE, Blocks.YELLOW_CANDLE_CAKE, Blocks.LIME_CANDLE_CAKE, Blocks.PINK_CANDLE_CAKE, Blocks.GRAY_CANDLE_CAKE, Blocks.LIGHT_GRAY_CANDLE_CAKE, Blocks.CYAN_CANDLE_CAKE, Blocks.PURPLE_CANDLE_CAKE, Blocks.BLUE_CANDLE_CAKE, Blocks.BROWN_CANDLE_CAKE, Blocks.GREEN_CANDLE_CAKE, Blocks.RED_CANDLE_CAKE, Blocks.BLACK_CANDLE_CAKE);
         for (Block candleCake : candleCakes) {
-            convertPlacementWithProperties(candleCake, Map.of(CandleCakeBlock.LIT, false), candleCake, Map.of(CandleCakeBlock.LIT, true), AetherTags.Biomes.ULTRACOLD).save(consumer, name(candleCake.getDescriptionId().replace(".", "_").replace("block_minecraft_", "") + "_conversion"));
+            this.convertPlacementWithProperties(candleCake, Map.of(CandleCakeBlock.LIT, false), candleCake, Map.of(CandleCakeBlock.LIT, true), AetherTags.Biomes.ULTRACOLD).save(consumer, this.name(candleCake.getDescriptionId().replace(".", "_").replace("block_minecraft_", "") + "_conversion"));
         }
 
-        convertPlacement(Blocks.CARVED_PUMPKIN, Blocks.JACK_O_LANTERN, AetherTags.Biomes.ULTRACOLD).save(consumer, name("jack_o_lantern_conversion"));
+        this.convertPlacement(Blocks.CARVED_PUMPKIN, Blocks.JACK_O_LANTERN, AetherTags.Biomes.ULTRACOLD).save(consumer, this.name("jack_o_lantern_conversion"));
 
-        banItemPlacementWithBypass(Items.FLINT_AND_STEEL, AetherTags.Blocks.ALLOWED_FLAMMABLES, AetherTags.Biomes.ULTRACOLD).save(consumer, name("flint_and_steel_item_ban"));
-        banItemPlacementWithBypass(Items.FIRE_CHARGE, AetherTags.Blocks.ALLOWED_FLAMMABLES, AetherTags.Biomes.ULTRACOLD).save(consumer, name("fire_charge_item_ban"));
-        banItemPlacement(Items.TORCH, AetherTags.Biomes.ULTRACOLD).save(consumer, name("torch_item_ban"));
-        banItemPlacement(Items.LANTERN, AetherTags.Biomes.ULTRACOLD).save(consumer, name("lantern_item_ban"));
+        this.banItemPlacementWithBypass(Items.FLINT_AND_STEEL, AetherTags.Blocks.ALLOWED_FLAMMABLES, AetherTags.Biomes.ULTRACOLD).save(consumer, this.name("flint_and_steel_item_ban"));
+        this.banItemPlacementWithBypass(Items.FIRE_CHARGE, AetherTags.Blocks.ALLOWED_FLAMMABLES, AetherTags.Biomes.ULTRACOLD).save(consumer, this.name("fire_charge_item_ban"));
+        this.banItemPlacement(Items.TORCH, AetherTags.Biomes.ULTRACOLD).save(consumer, this.name("torch_item_ban"));
+        this.banItemPlacement(Items.LANTERN, AetherTags.Biomes.ULTRACOLD).save(consumer, this.name("lantern_item_ban"));
 
-        banBlockPlacementWithBypass(Blocks.FIRE, AetherTags.Blocks.ALLOWED_FLAMMABLES, AetherTags.Biomes.ULTRACOLD).save(consumer, name("fire_block_ban"));
-        banBlockPlacement(Blocks.TORCH, AetherTags.Biomes.ULTRACOLD).save(consumer, name("torch_block_ban"));
-        banBlockPlacement(Blocks.LANTERN, AetherTags.Biomes.ULTRACOLD).save(consumer, name("lantern_block_ban"));
+        this.banBlockPlacementWithBypass(Blocks.FIRE, AetherTags.Blocks.ALLOWED_FLAMMABLES, AetherTags.Biomes.ULTRACOLD).save(consumer, this.name("fire_block_ban"));
+        this.banBlockPlacement(Blocks.TORCH, AetherTags.Biomes.ULTRACOLD).save(consumer, this.name("torch_block_ban"));
+        this.banBlockPlacement(Blocks.LANTERN, AetherTags.Biomes.ULTRACOLD).save(consumer, this.name("lantern_block_ban"));
     }
 }

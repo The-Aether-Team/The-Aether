@@ -23,7 +23,8 @@ import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
 /**
- * Based on {@link net.minecraft.data.recipes.SimpleCookingRecipeBuilder}.
+ * [CODE COPY] - {@link net.minecraft.data.recipes.SimpleCookingRecipeBuilder}.<br><br>
+ * Cleaned up, removed unnecessary static builder methods, and added support for Aether recipe categories.
  */
 public class AetherCookingRecipeBuilder implements RecipeBuilder {
     private final RecipeCategory category;

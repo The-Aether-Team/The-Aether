@@ -2,7 +2,10 @@ package com.aetherteam.aether.event.listeners.abilities;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.event.hooks.AbilityHooks;
-import com.aetherteam.aether.item.combat.abilities.armor.*;
+import com.aetherteam.aether.item.combat.abilities.armor.GravititeArmor;
+import com.aetherteam.aether.item.combat.abilities.armor.NeptuneArmor;
+import com.aetherteam.aether.item.combat.abilities.armor.PhoenixArmor;
+import com.aetherteam.aether.item.combat.abilities.armor.ValkyrieArmor;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;

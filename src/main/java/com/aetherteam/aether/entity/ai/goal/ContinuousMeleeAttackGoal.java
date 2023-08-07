@@ -9,9 +9,10 @@ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
  */
 public class ContinuousMeleeAttackGoal extends MeleeAttackGoal {
     private final double speedModifier;
-    public ContinuousMeleeAttackGoal(PathfinderMob pMob, double pSpeedModifier, boolean pFollowingTargetEvenIfNotSeen) {
-        super(pMob, pSpeedModifier, pFollowingTargetEvenIfNotSeen);
-        this.speedModifier = pSpeedModifier;
+
+    public ContinuousMeleeAttackGoal(PathfinderMob mob, double speedModifier, boolean followingTargetEvenIfNotSeen) {
+        super(mob, speedModifier, followingTargetEvenIfNotSeen);
+        this.speedModifier = speedModifier;
     }
 
     /**
@@ -30,7 +31,7 @@ public class ContinuousMeleeAttackGoal extends MeleeAttackGoal {
     }
 
     @Override
-    protected double getAttackReachSqr(LivingEntity pAttackTarget) {
-        return 2.0F + pAttackTarget.getBbWidth();
+    protected double getAttackReachSqr(LivingEntity attackTarget) {
+        return 2.0F + attackTarget.getBbWidth();
     }
 }

@@ -1,13 +1,13 @@
 package com.aetherteam.aether.loot.conditions;
 
-import com.aetherteam.aether.util.ConfigSerializationUtil;
+import com.aetherteam.aether.data.ConfigSerializationUtil;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.util.GsonHelper;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 /**

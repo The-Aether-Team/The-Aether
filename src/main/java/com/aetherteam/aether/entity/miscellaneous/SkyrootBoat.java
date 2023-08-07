@@ -1,7 +1,6 @@
 package com.aetherteam.aether.entity.miscellaneous;
 
 import com.aetherteam.aether.entity.AetherEntityTypes;
-import com.aetherteam.aether.entity.SkyrootBoatBehavior;
 import com.aetherteam.aether.item.AetherItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.Packet;
@@ -12,8 +11,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.NetworkHooks;
-
-import javax.annotation.Nonnull;
 
 public class SkyrootBoat extends Boat implements SkyrootBoatBehavior {
     public SkyrootBoat(EntityType<? extends SkyrootBoat> type, Level level) {
@@ -28,18 +25,19 @@ public class SkyrootBoat extends Boat implements SkyrootBoatBehavior {
         this.zo = z;
     }
 
-    @Nonnull
     @Override
     public Item getDropItem() {
         return AetherItems.SKYROOT_BOAT.get();
     }
 
+    /**
+     * @see SkyrootBoatBehavior#fall(Boat, double, boolean)
+     */
     @Override
-    protected void checkFallDamage(double y, boolean onGround, @Nonnull BlockState state, @Nonnull BlockPos pos) {
+    protected void checkFallDamage(double y, boolean onGround, BlockState state, BlockPos pos) {
         this.fall(this, y, onGround);
     }
 
-    @Nonnull
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);

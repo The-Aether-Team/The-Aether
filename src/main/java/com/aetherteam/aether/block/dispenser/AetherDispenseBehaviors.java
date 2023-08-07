@@ -13,14 +13,17 @@ import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.DispensibleContainerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BucketPickup;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.entity.DispenserBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -131,7 +134,8 @@ public class AetherDispenseBehaviors {
     };
 
     /**
-     * Based on default dispenser behavior for filled buckets in {@link DispenseItemBehavior#bootStrap()}.
+     * [CODE COPY] - {@link DispenseItemBehavior#bootStrap()}.<br><br>
+     * Based on default dispenser behavior for filled buckets.
      */
     public static final DispenseItemBehavior SKYROOT_BUCKET_DISPENSE_BEHAVIOR = new DefaultDispenseItemBehavior() {
         private final DefaultDispenseItemBehavior defaultDispenseItemBehavior = new DefaultDispenseItemBehavior();
@@ -141,7 +145,7 @@ public class AetherDispenseBehaviors {
             DispensibleContainerItem dispensibleContainerItem = (DispensibleContainerItem) stack.getItem();
             BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
             Level level = source.getLevel();
-            if (dispensibleContainerItem.emptyContents(null, level, blockpos, null)) {
+            if (dispensibleContainerItem.emptyContents(null, level, blockpos, null, stack)) {
                 dispensibleContainerItem.checkExtraContent(null, level, stack, blockpos);
                 return new ItemStack(AetherItems.SKYROOT_BUCKET.get());
             } else {
@@ -151,7 +155,8 @@ public class AetherDispenseBehaviors {
     };
 
     /**
-     * Based on default dispenser behavior for empty buckets in {@link DispenseItemBehavior#bootStrap()}.
+     * [CODE COPY] - {@link DispenseItemBehavior#bootStrap()}.<br><br>
+     * Based on default dispenser behavior for empty buckets.
      */
     public static final DispenseItemBehavior SKYROOT_BUCKET_PICKUP_BEHAVIOR = new DefaultDispenseItemBehavior() {
         private final DefaultDispenseItemBehavior defaultDispenseItemBehavior = new DefaultDispenseItemBehavior();

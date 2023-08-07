@@ -1,19 +1,17 @@
 package com.aetherteam.aether.entity.miscellaneous;
 
 import com.aetherteam.aether.entity.AetherEntityTypes;
-import com.aetherteam.aether.entity.SkyrootBoatBehavior;
 import com.aetherteam.aether.item.AetherItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.entity.vehicle.ChestBoat;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.NetworkHooks;
-
-import javax.annotation.Nonnull;
 
 public class SkyrootChestBoat extends ChestBoat implements SkyrootBoatBehavior {
     public SkyrootChestBoat(EntityType<? extends SkyrootChestBoat> entityType, Level level) {
@@ -28,18 +26,19 @@ public class SkyrootChestBoat extends ChestBoat implements SkyrootBoatBehavior {
         this.zo = z;
     }
 
-    @Nonnull
     @Override
     public Item getDropItem() {
         return AetherItems.SKYROOT_CHEST_BOAT.get();
     }
 
+    /**
+     * @see SkyrootBoatBehavior#fall(Boat, double, boolean)
+     */
     @Override
-    protected void checkFallDamage(double y, boolean onGround, @Nonnull BlockState state, @Nonnull BlockPos pos) {
+    protected void checkFallDamage(double y, boolean onGround, BlockState state, BlockPos pos) {
         this.fall(this, y, onGround);
     }
 
-    @Nonnull
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);

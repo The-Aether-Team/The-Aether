@@ -1,16 +1,16 @@
 package com.aetherteam.aether.item.miscellaneous.bucket;
 
-import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.capability.player.AetherPlayer;
+import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.miscellaneous.ConsumableItem;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.UseAnim;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.item.ItemUtils;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 
 public class SkyrootRemedyBucketItem extends Item implements ConsumableItem {
@@ -34,7 +34,7 @@ public class SkyrootRemedyBucketItem extends Item implements ConsumableItem {
         this.consume(this, stack, user);
         if (user instanceof Player player) {
             AetherPlayer.get(player).ifPresent(aetherPlayer -> {
-                if (player.getLevel().isClientSide()) { // Values used by the green remedy screen overlay vignette.
+                if (aetherPlayer.getPlayer().getLevel().isClientSide()) { // Values used by the green remedy screen overlay vignette.
                     aetherPlayer.setRemedyMaximum(200);
                     aetherPlayer.setRemedyTimer(200);
                 }

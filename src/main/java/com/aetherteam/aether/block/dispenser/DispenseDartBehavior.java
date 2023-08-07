@@ -3,7 +3,6 @@ package com.aetherteam.aether.block.dispenser;
 import com.aetherteam.aether.entity.projectile.dart.AbstractDart;
 import com.aetherteam.aether.item.combat.DartItem;
 import net.minecraft.Util;
-import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.core.BlockSource;
 import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
@@ -12,6 +11,8 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.DispenserBlock;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
@@ -31,8 +32,10 @@ public class DispenseDartBehavior extends AbstractProjectileDispenseBehavior {
     @Override
     public ItemStack execute(BlockSource blockSource, ItemStack stack) {
         Projectile projectile = this.getProjectile(blockSource.getLevel(), DispenserBlock.getDispensePosition(blockSource), stack);
-        AetherDispenseBehaviors.spawnProjectile(blockSource, projectile, this.getPower(), this.getUncertainty());
-        stack.shrink(1);
+        if (projectile != null) {
+            AetherDispenseBehaviors.spawnProjectile(blockSource, projectile, this.getPower(), this.getUncertainty());
+            stack.shrink(1);
+        }
         return stack;
     }
 
@@ -43,18 +46,21 @@ public class DispenseDartBehavior extends AbstractProjectileDispenseBehavior {
      * @param stack The {@link ItemStack} in the dispenser.
      * @return The {@link Projectile} to dispense.
      */
+    @Nullable
     @Override
     protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
         Item item = this.dartItem.get();
         if (item instanceof DartItem dartItem) {
-            return Util.make(dartItem.createDart(level), (dart) -> {
-                dart.setPos(position.x(), position.y(), position.z());
-                dart.pickup = AbstractArrow.Pickup.ALLOWED;
-                dart.setNoGravity(true);
-            });
-        } else {
-            return null;
+            AbstractDart abstractDart = dartItem.createDart(level);
+            if (abstractDart != null) {
+                return Util.make(abstractDart, (dart) -> {
+                    dart.setPos(position.x(), position.y(), position.z());
+                    dart.pickup = AbstractArrow.Pickup.ALLOWED;
+                    dart.setNoGravity(true);
+                });
+            }
         }
+        return null;
     }
 
     @Override

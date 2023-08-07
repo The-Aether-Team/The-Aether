@@ -1,16 +1,15 @@
 package com.aetherteam.aether.inventory.menu;
 
 import com.aetherteam.aether.blockentity.IncubatorBlockEntity;
-
 import com.aetherteam.aether.inventory.AetherRecipeBookTypes;
 import com.aetherteam.aether.inventory.menu.slot.IncubatorFuelSlot;
 import com.aetherteam.aether.inventory.menu.slot.IncubatorItemSlot;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;

@@ -2,23 +2,20 @@ package com.aetherteam.aether.client.renderer.entity.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.util.Mth;
-
-import javax.annotation.Nonnull;
+import net.minecraft.world.entity.Entity;
 
 public class SunSpiritModel<T extends Entity> extends EntityModel<T> {
-    public ModelPart base;
-    public ModelPart torso;
-    public ModelPart head;
-    public ModelPart rightArm;
-    public ModelPart leftArm;
+    public final ModelPart base;
+    public final ModelPart torso;
+    public final ModelPart head;
+    public final ModelPart rightArm;
+    public final ModelPart leftArm;
 
     public SunSpiritModel(ModelPart root) {
         this.base = root.getChild("base");
@@ -40,7 +37,7 @@ public class SunSpiritModel<T extends Entity> extends EntityModel<T> {
     }
 
     @Override
-    public void setupAnim(@Nonnull T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.head.xRot = headPitch * 0.017453292F;
         this.head.yRot = netHeadYaw * 0.017453292F;
 
@@ -53,7 +50,7 @@ public class SunSpiritModel<T extends Entity> extends EntityModel<T> {
     }
 
     @Override
-    public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         this.base.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, red, green, blue, alpha);
     }
 }

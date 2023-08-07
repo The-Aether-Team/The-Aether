@@ -3,9 +3,9 @@ package com.aetherteam.aether.item.materials;
 import com.aetherteam.aether.item.materials.behavior.ItemUseConversion;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.recipes.block.SwetBallRecipe;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.InteractionResult;
 
 public class SwetBallItem extends Item implements ItemUseConversion<SwetBallRecipe> {
 	public SwetBallItem(Properties properties) {

@@ -13,13 +13,11 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
-import javax.annotation.Nonnull;
-
 public class QuadrupedWingsModel<T extends WingedAnimal> extends EntityModel<T> {
-    private final ModelPart leftWingInner;
-    private final ModelPart leftWingOuter;
-    private final ModelPart rightWingInner;
-    private final ModelPart rightWingOuter;
+    public final ModelPart leftWingInner;
+    public final ModelPart leftWingOuter;
+    public final ModelPart rightWingInner;
+    public final ModelPart rightWingOuter;
 
     public QuadrupedWingsModel(ModelPart root) {
         this.leftWingInner = root.getChild("left_wing_inner");
@@ -47,18 +45,18 @@ public class QuadrupedWingsModel<T extends WingedAnimal> extends EntityModel<T> 
             } else {
                 aimingForFold = 1.0F;
             }
-            entity.wingAngle = entity.wingFold * Mth.sin(ageInTicks / 31.83098862F);
-            entity.wingFold += (aimingForFold - entity.wingFold) / 75.0F;
-            float wingBend = -((float) Math.acos(entity.wingFold));
-            this.leftWingInner.zRot = -(entity.wingAngle + wingBend + (float) (Math.PI / 2.0F));
-            this.leftWingOuter.zRot = -(entity.wingAngle - wingBend + (float) (Math.PI / 2.0F)) - this.leftWingInner.zRot;
+            entity.setWingAngle(entity.getWingFold() * Mth.sin(ageInTicks / 15.9F));
+            entity.setWingFold(entity.getWingFold() + ((aimingForFold - entity.getWingFold()) / 37.5F));
+            float wingBend = -((float) Math.acos(entity.getWingFold()));
+            this.leftWingInner.zRot = -(entity.getWingAngle() + wingBend + Mth.HALF_PI);
+            this.leftWingOuter.zRot = -(entity.getWingAngle() - wingBend + Mth.HALF_PI) - this.leftWingInner.zRot;
             this.rightWingInner.zRot = -this.leftWingInner.zRot;
             this.rightWingOuter.zRot = -this.leftWingOuter.zRot;
         }
     }
 
     @Override
-    public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         this.leftWingInner.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
         this.rightWingInner.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
     }

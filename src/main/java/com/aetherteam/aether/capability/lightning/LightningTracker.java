@@ -1,9 +1,9 @@
 package com.aetherteam.aether.capability.lightning;
 
 import com.aetherteam.aether.capability.AetherCapabilities;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LightningBolt;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
