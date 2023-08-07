@@ -28,7 +28,7 @@ public class InvisibilityCloakItem extends AccessoryItem {
         if (livingEntity.getLevel().isClientSide() && livingEntity instanceof Player player) {
             AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
                 if (AetherKeys.INVISIBILITY_TOGGLE.consumeClick()) {
-                    aetherPlayer.setSynched(INBTSynchable.Direction.SERVER, "setInvisibilityEnabled", aetherPlayer.isInvisibilityEnabled());
+                    aetherPlayer.setSynched(INBTSynchable.Direction.SERVER, "setInvisibilityEnabled", !aetherPlayer.isInvisibilityEnabled());
                 }
             });
         }
