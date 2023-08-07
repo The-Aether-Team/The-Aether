@@ -61,7 +61,9 @@ public class CapabilityClientHooks {
                     boolean isAttack = input == Minecraft.getInstance().options.keyAttack.getKey().getValue();
                     boolean isPressing = Minecraft.getInstance().options.keyAttack.isDown();
                     boolean isHitting = isAttack && isPressing;
-                    aetherPlayer.setSynched(INBTSynchable.Direction.SERVER, "setHitting", isHitting);
+                    if (isHitting != aetherPlayer.isHitting()) {
+                        aetherPlayer.setSynched(INBTSynchable.Direction.SERVER, "setHitting", isHitting);
+                    }
                 });
             }
         }
