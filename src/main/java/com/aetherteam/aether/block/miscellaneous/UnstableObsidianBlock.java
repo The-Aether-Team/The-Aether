@@ -56,13 +56,13 @@ public class UnstableObsidianBlock extends Block implements MeltingBehavior {
     @Override
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
         if (block.defaultBlockState().is(this) && MeltingBehavior.super.fewerNeigboursThan(block, level, pos, 2)) {
-            this.melt(state, level, pos);
+            this.melt(state, level, pos, AGE);
         }
         super.neighborChanged(state, level, pos, block, fromPos, isMoving);
     }
 
     @Override
-    public void melt(BlockState state, Level level, BlockPos pos) {
+    public void melt(BlockState state, Level level, BlockPos pos, IntegerProperty age) {
         level.setBlockAndUpdate(pos, Blocks.LAVA.defaultBlockState());
         level.neighborChanged(pos, Blocks.LAVA, pos);
     }

@@ -53,10 +53,10 @@ public interface MeltingBehavior {
             level.setBlock(pos, state.setValue(age, i + 1), 2);
             return false;
         } else {
-            this.melt(state, level, pos);
+            this.melt(state, level, pos, age);
             return true;
         }
     }
 
-    void melt(BlockState state, Level level, BlockPos pos);
+    void melt(BlockState state, Level level, BlockPos pos, IntegerProperty age);
 }

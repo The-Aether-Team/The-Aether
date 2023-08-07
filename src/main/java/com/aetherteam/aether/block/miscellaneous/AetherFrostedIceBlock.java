@@ -7,6 +7,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.FrostedIceBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
 public class AetherFrostedIceBlock extends FrostedIceBlock implements MeltingBehavior {
     public AetherFrostedIceBlock(Properties properties) {
@@ -19,7 +20,7 @@ public class AetherFrostedIceBlock extends FrostedIceBlock implements MeltingBeh
     }
 
     @Override
-    public void melt(BlockState state, Level level, BlockPos pos) {
+    public void melt(BlockState state, Level level, BlockPos pos, IntegerProperty age) {
         super.melt(state, level, pos);
     }
 }
