@@ -92,7 +92,7 @@ public class PlacementBanEvent extends Event {
 	 * <br>
 	 * This event is only fired on the {@link LogicalSide#SERVER} side.
 	 */
-	public static class CheckBlock extends PlacementBanEvent { //server only
+	public static class CheckBlock extends PlacementBanEvent {
 		private boolean banned = true;
 		private final LevelAccessor level;
 		private final BlockPos pos;
@@ -154,7 +154,7 @@ public class PlacementBanEvent extends Event {
 	 * <br>
 	 * This event does not have a result. {@link net.minecraftforge.eventbus.api.Event.HasResult}<br>
 	 * <br>
-	 * This event is only fired on the {@link LogicalSide#CLIENT} side.<br>
+	 * This event is fired on both {@link LogicalSide sides}.<br>
 	 * <br>
 	 * If this event is canceled, the particles will not be spawned.
 	 */

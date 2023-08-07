@@ -50,9 +50,7 @@ public class ItemBanRecipe extends AbstractPlacementBanRecipe<ItemStack, Ingredi
         if (this.matches(level, pos, stack)) {
             if (AetherEventDispatch.isItemPlacementBanned(level, pos, stack)) {
                 if (spawnParticles) {
-                    if (level.isClientSide()) {
-                        AetherEventDispatch.onPlacementSpawnParticles(level, pos, direction, stack, null);
-                    }
+                    AetherEventDispatch.onPlacementSpawnParticles(level, pos, direction, stack, null);
                 }
                 return true;
             }
