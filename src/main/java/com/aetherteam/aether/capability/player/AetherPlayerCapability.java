@@ -143,6 +143,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 			Map.entry("setLifeShardCount", Triple.of(Type.INT, (object) -> this.setLifeShardCount((int) object), this::getLifeShardCount)),
 			Map.entry("setLastRiddenMoa", Triple.of(Type.UUID, (object) -> this.setLastRiddenMoa((UUID) object), this::getLastRiddenMoa))
 	);
+	private boolean shouldSyncAfterJoin;
 	
 	public AetherPlayerCapability(Player player) {
 		this.player = player;
@@ -220,6 +221,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	@Override
 	public void onLogout() {
 		this.removeAerbunny();
+		this.handleLogoutSavedHealth();
 	}
 
 	/**
@@ -229,9 +231,8 @@ public class AetherPlayerCapability implements AetherPlayer {
 	public void onLogin() {
 		this.handleGivePortal();
 		this.remountAerbunny();
-		this.handleLogoutSavedHealth();
 		this.handlePatreonMessage();
-		this.forceSync(INBTSynchable.Direction.CLIENT);
+		this.shouldSyncAfterJoin = true;
 		ServerPerkData.MOA_SKIN_INSTANCE.syncFromServer(this.getPlayer());
 		ServerPerkData.HALO_INSTANCE.syncFromServer(this.getPlayer());
 		ServerPerkData.DEVELOPER_GLOW_INSTANCE.syncFromServer(this.getPlayer());
@@ -263,7 +264,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.setCanGetPortal(other.canGetPortal());
 		this.setLifeShardCount(other.getLifeShardCount());
 		this.handleCopyingSavedHealth(other, isWasDeath);
-		this.forceSync(INBTSynchable.Direction.CLIENT);
+		this.shouldSyncAfterJoin = true;
 	}
 
 	/**
@@ -271,6 +272,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	 */
 	@Override
 	public void onUpdate() {
+		this.syncAfterJoin();
 		this.handleAetherPortal();
 		this.activateParachute();
 		this.handleRemoveDarts();
@@ -286,6 +288,13 @@ public class AetherPlayerCapability implements AetherPlayer {
 		ClientMoaSkinPerkData.INSTANCE.syncFromClient(this.getPlayer());
 		ClientHaloPerkData.INSTANCE.syncFromClient(this.getPlayer());
 		ClientDeveloperGlowPerkData.INSTANCE.syncFromClient(this.getPlayer());
+	}
+
+	private void syncAfterJoin() {
+		if (this.shouldSyncAfterJoin) {
+			this.forceSync(INBTSynchable.Direction.CLIENT);
+			this.shouldSyncAfterJoin = false;
+		}
 	}
 
 	@Override
