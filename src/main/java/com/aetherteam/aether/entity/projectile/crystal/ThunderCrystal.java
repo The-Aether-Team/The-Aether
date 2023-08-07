@@ -56,7 +56,7 @@ public class ThunderCrystal extends AbstractCrystal {
     @Override
     public void tickMovement() {
         if (!this.getLevel().isClientSide()) {
-            if (this.target == null || !this.target.isAlive()) {
+            if (this.target == null || !this.target.isAlive() || this.getOwner() == null || !this.getOwner().isAlive()) {
                 this.playSound(AetherSoundEvents.ENTITY_THUNDER_CRYSTAL_EXPLODE.get(), 1.0F, 1.0F);
                 this.discard();
             } else {
