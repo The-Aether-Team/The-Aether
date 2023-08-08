@@ -38,5 +38,6 @@
     [
       "black_moa"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

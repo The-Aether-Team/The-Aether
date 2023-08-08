@@ -68,7 +68,7 @@ public class EntityHooks {
      */
     public static boolean dismountPrevention(Entity rider, Entity mount, boolean dismounting) {
         if (dismounting && rider.isShiftKeyDown()) {
-            return (mount instanceof MountableAnimal && !mount.isOnGround() && !mount.isInFluidType() && !mount.isPassenger()) || (mount instanceof Swet swet && !swet.isFriendly());
+            return (mount instanceof MountableAnimal && !mount.onGround() && !mount.isInFluidType() && !mount.isPassenger()) || (mount instanceof Swet swet && !swet.isFriendly());
         }
         return false;
     }
@@ -81,8 +81,8 @@ public class EntityHooks {
     public static void launchMount(Player player) {
         Entity mount = player.getVehicle();
         if (player.isPassenger() && mount != null) {
-            if (mount.getLevel().getBlockStates(mount.getBoundingBox()).anyMatch((state) -> state.is(AetherBlocks.BLUE_AERCLOUD.get()))) {
-                if (player.getLevel().isClientSide()) {
+            if (mount.level().getBlockStates(mount.getBoundingBox()).anyMatch((state) -> state.is(AetherBlocks.BLUE_AERCLOUD.get()))) {
+                if (player.level().isClientSide()) {
                     mount.setDeltaMovement(mount.getDeltaMovement().x(), 2.0, mount.getDeltaMovement().z());
                 }
             }
@@ -132,7 +132,7 @@ public class EntityHooks {
                     bucketable.saveToBucketTag(bucketStack);
                     ItemStack filledStack = ItemUtils.createFilledResult(heldStack, player, bucketStack, false);
                     player.setItemInHand(hand, filledStack);
-                    Level level = livingEntity.getLevel();
+                    Level level = livingEntity.level();
                     if (!level.isClientSide()) {
                         CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer) player, bucketStack);
                     }

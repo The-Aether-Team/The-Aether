@@ -83,10 +83,10 @@ public class Zephyr extends FlyingMob implements Enemy {
 	@Override
 	public void aiStep() {
 		super.aiStep();
-		if (this.getY() < this.getLevel().getMinBuildHeight() - 2 || this.getY() > this.getLevel().getMaxBuildHeight()) {
+		if (this.getY() < this.level().getMinBuildHeight() - 2 || this.getY() > this.level().getMaxBuildHeight()) {
 			this.discard();
 		}
-		if (this.getLevel().isClientSide()) {
+		if (this.level().isClientSide()) {
 			this.cloudScale += this.cloudScaleAdd;
 			this.tailRot += this.tailRotAdd;
 			if (this.getChargeTime() < 20 && this.getChargeTime() > 0) {
@@ -235,7 +235,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 			AABB axisalignedbb = this.zephyr.getBoundingBox();
 			for (int i = 1; i < distance; ++i) {
 				axisalignedbb = axisalignedbb.move(pos);
-				if (!this.zephyr.getLevel().noCollision(this.zephyr, axisalignedbb)) {
+				if (!this.zephyr.level().noCollision(this.zephyr, axisalignedbb)) {
 					return false;
 				}
 			}
@@ -273,7 +273,7 @@ public class Zephyr extends FlyingMob implements Enemy {
 			LivingEntity livingEntity = this.zephyr.getTarget();
 			if (livingEntity != null) {
 				if (livingEntity.distanceToSqr(this.zephyr) < 1600.0 && this.zephyr.hasLineOfSight(livingEntity)) {
-					Level level = this.zephyr.getLevel();
+					Level level = this.zephyr.level();
 					this.zephyr.setChargeTime(this.zephyr.getChargeTime() + 1);
 					if (this.zephyr.getChargeTime() == 10) {
 						if (this.zephyr.getAmbientSound() != null) {

@@ -34,5 +34,6 @@
     [
       "lance_loot"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

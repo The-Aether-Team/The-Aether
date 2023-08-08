@@ -30,5 +30,6 @@
     "recipes": [
       "aether:angelic_slab_from_angelic_stone_stonecutting"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

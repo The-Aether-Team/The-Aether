@@ -34,11 +34,11 @@ public class ThrownLightningKnife extends ThrowableItemProjectile {
 	@Override
 	protected void onHit(HitResult result) {
 		super.onHit(result);
-		if (!this.getLevel().isClientSide()) {
-			if (result.getType() != HitResult.Type.MISS && this.getLevel() instanceof ServerLevel) {
+		if (!this.level().isClientSide()) {
+			if (result.getType() != HitResult.Type.MISS && this.level() instanceof ServerLevel) {
 				EntityUtil.summonLightningFromProjectile(this);
 			}
-			this.getLevel().broadcastEntityEvent(this, (byte) 3);
+			this.level().broadcastEntityEvent(this, (byte) 3);
 			this.discard();
 		}
 	}

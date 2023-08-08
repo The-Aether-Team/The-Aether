@@ -35,5 +35,6 @@
     [
       "kill_slider"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

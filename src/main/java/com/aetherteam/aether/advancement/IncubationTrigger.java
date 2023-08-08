@@ -20,9 +20,9 @@ public class IncubationTrigger extends SimpleCriterionTrigger<IncubationTrigger.
     }
 
     @Override
-    public IncubationTrigger.Instance createInstance(JsonObject json, EntityPredicate.Composite entity, DeserializationContext context) {
+    protected IncubationTrigger.Instance createInstance(JsonObject json, ContextAwarePredicate predicate, DeserializationContext deserializationContext) {
         ItemPredicate itemPredicate = ItemPredicate.fromJson(json.get("item"));
-        return new IncubationTrigger.Instance(entity, itemPredicate);
+        return new IncubationTrigger.Instance(predicate, itemPredicate);
     }
 
     public void trigger(ServerPlayer player, ItemStack stack) {
@@ -32,13 +32,13 @@ public class IncubationTrigger extends SimpleCriterionTrigger<IncubationTrigger.
     public static class Instance extends AbstractCriterionTriggerInstance {
         private final ItemPredicate item;
 
-        public Instance(EntityPredicate.Composite entity, ItemPredicate item) {
-            super(IncubationTrigger.ID, entity);
+        public Instance(ContextAwarePredicate predicate, ItemPredicate item) {
+            super(IncubationTrigger.ID, predicate);
             this.item = item;
         }
 
         public static IncubationTrigger.Instance forItem(ItemPredicate item) {
-            return new IncubationTrigger.Instance(EntityPredicate.Composite.ANY, item);
+            return new IncubationTrigger.Instance(ContextAwarePredicate.ANY, item);
         }
 
         public boolean test(ItemStack stack) {

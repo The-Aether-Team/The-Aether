@@ -1,6 +1,6 @@
 package com.aetherteam.aether.client.gui.component.menu;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraftforge.common.ForgeConfigSpec;
 
@@ -22,11 +22,11 @@ public class DynamicMenuButton extends Button {
     }
 
     @Override
-    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         if (this.shouldRender()) {
             this.enabled = true;
             this.setX(this.getOriginX() + gatherOffsets(this.offsetConfigs));
-            super.render(poseStack, mouseX, mouseY, partialTicks);
+            super.render(guiGraphics, mouseX, mouseY, partialTicks);
         } else {
             this.enabled = false;
         }

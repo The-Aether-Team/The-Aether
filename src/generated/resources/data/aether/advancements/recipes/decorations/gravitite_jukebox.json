@@ -30,5 +30,6 @@
     "recipes": [
       "aether:gravitite_jukebox"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

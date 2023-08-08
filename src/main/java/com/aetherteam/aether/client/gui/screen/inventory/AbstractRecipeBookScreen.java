@@ -1,6 +1,6 @@
 package com.aetherteam.aether.client.gui.screen.inventory;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
@@ -46,18 +46,18 @@ public abstract class AbstractRecipeBookScreen<T extends RecipeBookMenu<Containe
     }
 
     @Override
-    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(poseStack);
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(guiGraphics);
         if (this.getRecipeBookComponent().isVisible() && this.widthTooNarrow) {
-            this.renderBg(poseStack, partialTicks, mouseX, mouseY);
-            this.getRecipeBookComponent().render(poseStack, mouseX, mouseY, partialTicks);
+            this.renderBg(guiGraphics, partialTicks, mouseX, mouseY);
+            this.getRecipeBookComponent().render(guiGraphics, mouseX, mouseY, partialTicks);
         } else {
-            this.getRecipeBookComponent().render(poseStack, mouseX, mouseY, partialTicks);
-            super.render(poseStack, mouseX, mouseY, partialTicks);
-            this.getRecipeBookComponent().renderGhostRecipe(poseStack, this.getGuiLeft(), this.getGuiTop(), true, partialTicks);
+            this.getRecipeBookComponent().render(guiGraphics, mouseX, mouseY, partialTicks);
+            super.render(guiGraphics, mouseX, mouseY, partialTicks);
+            this.getRecipeBookComponent().renderGhostRecipe(guiGraphics, this.getGuiLeft(), this.getGuiTop(), true, partialTicks);
         }
-        this.renderTooltip(poseStack, mouseX, mouseY);
-        this.getRecipeBookComponent().renderTooltip(poseStack, this.getGuiLeft(), this.getGuiTop(), mouseX, mouseY);
+        this.renderTooltip(guiGraphics, mouseX, mouseY);
+        this.getRecipeBookComponent().renderTooltip(guiGraphics, this.getGuiLeft(), this.getGuiTop(), mouseX, mouseY);
     }
 
     @Override

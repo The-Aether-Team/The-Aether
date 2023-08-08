@@ -16,7 +16,7 @@
               "type": "minecraft:item",
               "conditions": [
                 {
-                  "condition": "minecraft:alternative",
+                  "condition": "minecraft:any_of",
                   "terms": [
                     {
                       "condition": "minecraft:match_tool",
@@ -78,5 +78,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "aether:blocks/holiday_leaves"
 }

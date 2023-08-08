@@ -20,7 +20,7 @@ public interface Floatable {
     default void onBrokenAfterCollide(Level level, BlockPos pos, FloatingBlockEntity floatingBlock) { }
 
     default DamageSource getFallDamageSource(Entity entity) {
-        return AetherDamageTypes.damageSource(entity.level, AetherDamageTypes.FLOATING_BLOCK);
+        return AetherDamageTypes.damageSource(entity.level(), AetherDamageTypes.FLOATING_BLOCK);
     }
 
     default Predicate<Entity> getHurtsEntitySelector() {

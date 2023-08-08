@@ -62,7 +62,7 @@ public class PlayerCapabilityCommand {
                     }
                     innerPlayer.setHealth(innerPlayer.getMaxHealth());
                     PacketRelay.sendToNear(AetherPacketHandler.INSTANCE, new HealthResetPacket(innerPlayer.getId(), value), innerPlayer.getX(), innerPlayer.getY(), innerPlayer.getZ(), 5.0, level.dimension()); // Sync to client.
-                    source.sendSuccess(Component.translatable("commands.aether.capability.player.life_shards.set", innerPlayer.getDisplayName(), value), true);
+                    source.sendSuccess(() -> Component.translatable("commands.aether.capability.player.life_shards.set", innerPlayer.getDisplayName(), value), true);
                 });
             }
         }

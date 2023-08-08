@@ -1,11 +1,8 @@
 package com.aetherteam.aether.client.gui.component.skins;
 
 import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.renderer.GameRenderer;
 
 public class ChangeSkinButton extends Button {
     private final ButtonType buttonType;
@@ -23,9 +20,7 @@ public class ChangeSkinButton extends Button {
     }
 
     @Override
-    public void renderWidget(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, MoaSkinsScreen.MOA_SKINS_GUI);
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         int u = 0;
         if (this.buttonType == ButtonType.REMOVE) {
             u += 3;
@@ -36,7 +31,7 @@ public class ChangeSkinButton extends Button {
                 u += 1;
             }
         }
-        GuiComponent.blit(poseStack, this.getX(), this.getY(), u * 7, 184, 7, 7);
+        guiGraphics.blit(MoaSkinsScreen.MOA_SKINS_GUI, this.getX(), this.getY(), u * 7, 184, 7, 7);
     }
 
     public enum ButtonType {

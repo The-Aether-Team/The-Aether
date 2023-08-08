@@ -25,5 +25,6 @@
     [
       "lore_book_entry"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

@@ -43,21 +43,21 @@ public class SurfaceRuleProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo process(LevelReader level, BlockPos origin, BlockPos centerBottom, StructureTemplate.StructureBlockInfo originalBlockInfo, StructureTemplate.StructureBlockInfo modifiedBlockInfo, StructurePlaceSettings settings, @Nullable StructureTemplate template) {
         if (level instanceof WorldGenLevel worldGenLevel) {
             // If the processor is running outside the center chunk, return immediately.
-            if (worldGenLevel instanceof WorldGenRegion region && BlockLogicUtil.isOutOfBounds(modifiedBlockInfo.pos, region.getCenter())) {
+            if (worldGenLevel instanceof WorldGenRegion region && BlockLogicUtil.isOutOfBounds(modifiedBlockInfo.pos(), region.getCenter())) {
                 return modifiedBlockInfo;
             }
             if (worldGenLevel.getChunkSource() instanceof ServerChunkCache serverChunkCache) {
                 if (serverChunkCache.getGenerator() instanceof NoiseBasedChunkGenerator noiseBasedChunkGenerator) {
                     NoiseGeneratorSettings settingsHolder = noiseBasedChunkGenerator.generatorSettings().get();
                     SurfaceRules.RuleSource surfaceRule = settingsHolder.surfaceRule();
-                    ChunkAccess chunkAccess = worldGenLevel.getChunk(modifiedBlockInfo.pos);
+                    ChunkAccess chunkAccess = worldGenLevel.getChunk(modifiedBlockInfo.pos());
                     NoiseChunk noisechunk = ((ChunkAccessAccessor) chunkAccess).aether$getNoiseChunk();
                     if (noisechunk != null) {
                         CarvingContext carvingcontext = new CarvingContext(noiseBasedChunkGenerator, worldGenLevel.registryAccess(), chunkAccess.getHeightAccessorForGeneration(), noisechunk, serverChunkCache.randomState(), surfaceRule);
-                        Optional<BlockState> state = carvingcontext.topMaterial(worldGenLevel.getBiomeManager()::getBiome, chunkAccess, modifiedBlockInfo.pos, false);
+                        Optional<BlockState> state = carvingcontext.topMaterial(worldGenLevel.getBiomeManager()::getBiome, chunkAccess, modifiedBlockInfo.pos(), false);
                         if (state.isPresent()) {
-                            if (modifiedBlockInfo.state.is(AetherTags.Blocks.AETHER_DIRT) && !modifiedBlockInfo.state.is(AetherBlocks.AETHER_DIRT.get()) && state.get().is(AetherTags.Blocks.AETHER_DIRT)) {
-                                return new StructureTemplate.StructureBlockInfo(modifiedBlockInfo.pos, state.get(), null);
+                            if (modifiedBlockInfo.state().is(AetherTags.Blocks.AETHER_DIRT) && !modifiedBlockInfo.state().is(AetherBlocks.AETHER_DIRT.get()) && state.get().is(AetherTags.Blocks.AETHER_DIRT)) {
+                                return new StructureTemplate.StructureBlockInfo(modifiedBlockInfo.pos(), state.get(), null);
                             }
                         }
                     }

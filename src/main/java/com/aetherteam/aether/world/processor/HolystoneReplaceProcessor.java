@@ -41,11 +41,11 @@ public class HolystoneReplaceProcessor extends StructureProcessor {
     @Nullable
     @Override
     public StructureTemplate.StructureBlockInfo process(LevelReader level, BlockPos otherPos, BlockPos pos, StructureTemplate.StructureBlockInfo blockInfo, StructureTemplate.StructureBlockInfo relativeBlockInfo, StructurePlaceSettings settings, @Nullable StructureTemplate template) {
-        Block block = this.replacements.get(relativeBlockInfo.state.getBlock());
+        Block block = this.replacements.get(relativeBlockInfo.state().getBlock());
         if (block == null) {
             return relativeBlockInfo;
         } else {
-            BlockState originalState = relativeBlockInfo.state;
+            BlockState originalState = relativeBlockInfo.state();
             BlockState newState = block.defaultBlockState();
             if (originalState.hasProperty(StairBlock.FACING)) {
                 newState = newState.setValue(StairBlock.FACING, originalState.getValue(StairBlock.FACING));
@@ -56,7 +56,7 @@ public class HolystoneReplaceProcessor extends StructureProcessor {
             if (originalState.hasProperty(SlabBlock.TYPE)) {
                 newState = newState.setValue(SlabBlock.TYPE, originalState.getValue(SlabBlock.TYPE));
             }
-            return new StructureTemplate.StructureBlockInfo(relativeBlockInfo.pos, newState, relativeBlockInfo.nbt);
+            return new StructureTemplate.StructureBlockInfo(relativeBlockInfo.pos(), newState, relativeBlockInfo.nbt());
         }
     }
 

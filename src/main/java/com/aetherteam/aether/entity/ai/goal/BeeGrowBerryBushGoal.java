@@ -50,15 +50,15 @@ public class BeeGrowBerryBushGoal extends Goal {
         if (this.bee.getRandom().nextInt(this.adjustedTickDelay(30)) == 0) {
             for (int i = 1; i <= 2; ++i) {
                 BlockPos blockPos = this.bee.blockPosition().below(i);
-                BlockState blockState = this.bee.getLevel().getBlockState(blockPos);
+                BlockState blockState = this.bee.level().getBlockState(blockPos);
                 boolean isStem = false;
                 if (blockState.is(BlockTags.BEE_GROWABLES)) {
                     if (blockState.is(AetherBlocks.BERRY_BUSH_STEM.get())) {
                         isStem = true;
                     }
                     if (isStem) {
-                        this.bee.getLevel().levelEvent(2005, blockPos, 0);
-                        this.bee.getLevel().setBlockAndUpdate(blockPos, AetherBlocks.BERRY_BUSH.get().defaultBlockState());
+                        this.bee.level().levelEvent(2005, blockPos, 0);
+                        this.bee.level().setBlockAndUpdate(blockPos, AetherBlocks.BERRY_BUSH.get().defaultBlockState());
                         beeAccessor.callIncrementNumCropsGrownSincePollination();
                     }
                 }

@@ -24,7 +24,7 @@ public class CandyCaneSwordItem extends SwordItem {
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (EquipmentUtil.isFullStrength(attacker)) {
-            if (!target.getType().is(AetherTags.Entities.NO_CANDY_CANE_DROPS) && target.getLevel().getRandom().nextBoolean()) {
+            if (!target.getType().is(AetherTags.Entities.NO_CANDY_CANE_DROPS) && target.level().getRandom().nextBoolean()) {
                 target.spawnAtLocation(AetherItems.CANDY_CANE.get());
             }
         }

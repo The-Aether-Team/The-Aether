@@ -43,5 +43,6 @@
     "recipes": [
       "aether:moa_egg_pumpkin_pie"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -61,7 +61,7 @@ public class AccessoriesMenu extends InventoryMenu {
     public final LazyOptional<ICuriosItemHandler> curiosHandler;
     private final Player player;
 
-    private final CraftingContainer craftMatrix = new CraftingContainer(this, 2, 2);
+    private final CraftingContainer craftMatrix = new TransientCraftingContainer(this, 2, 2);
     private final ResultContainer craftResult = new ResultContainer();
 
     public final boolean hasButton;
@@ -71,7 +71,7 @@ public class AccessoriesMenu extends InventoryMenu {
     }
 
     public AccessoriesMenu(int containerId, Inventory playerInventory, boolean hasButton) {
-        super(playerInventory, playerInventory.player.getLevel().isClientSide(), playerInventory.player);
+        super(playerInventory, playerInventory.player.level().isClientSide(), playerInventory.player);
         AbstractContainerMenuAccessor abstractContainerMenuAccessor = (AbstractContainerMenuAccessor) this;
         abstractContainerMenuAccessor.aether$setMenuType(AetherMenuTypes.ACCESSORIES.get());
         abstractContainerMenuAccessor.aether$setContainerId(containerId);
@@ -153,7 +153,7 @@ public class AccessoriesMenu extends InventoryMenu {
                 if (!stacksHandler.isVisible()) {
                     for (int i = 0; i < stackHandler.getSlots(); i++) {
                         if (!identifier.equals("aether_accessory")) {
-                            this.addSlot(new CurioSlot(this.player, stackHandler, i, identifier, xOffset, yOffset, stacksHandler.getRenders()));
+                            this.addSlot(new CurioSlot(this.player, stackHandler, i, identifier, xOffset, yOffset, stacksHandler.getRenders(), true));
                             slots++;
                             yOffset += 18;
                             if (slots % 3 == 0) {
@@ -164,7 +164,7 @@ public class AccessoriesMenu extends InventoryMenu {
                             if (slots == 6) {
                                 xOffset = 77;
                             }
-                            this.addSlot(new CurioSlot(this.player, stackHandler, i, identifier, xOffset, 62, stacksHandler.getRenders()));
+                            this.addSlot(new CurioSlot(this.player, stackHandler, i, identifier, xOffset, 62, stacksHandler.getRenders(), true));
                             slots++;
                             xOffset += 18;
                         }
@@ -187,7 +187,7 @@ public class AccessoriesMenu extends InventoryMenu {
 
     @Override
     public boolean recipeMatches(Recipe<? super CraftingContainer> recipe) {
-        return recipe.matches(this.craftMatrix, this.player.getLevel());
+        return recipe.matches(this.craftMatrix, this.player.level());
     }
 
     @Override
@@ -212,20 +212,20 @@ public class AccessoriesMenu extends InventoryMenu {
 
     @Override
     public void slotsChanged(Container container) {
-        if (!this.player.getLevel().isClientSide()) {
+        if (!this.player.level().isClientSide()) {
             ServerPlayer playerMP = (ServerPlayer) this.player;
             ItemStack itemStack = ItemStack.EMPTY;
-            MinecraftServer server = this.player.getLevel().getServer();
+            MinecraftServer server = this.player.level().getServer();
 
             if (server == null) {
                 return;
             }
-            Optional<CraftingRecipe> recipe = server.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, this.craftMatrix, this.player.getLevel());
+            Optional<CraftingRecipe> recipe = server.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, this.craftMatrix, this.player.level());
 
             if (recipe.isPresent()) {
                 CraftingRecipe craftingRecipe = recipe.get();
-                if (this.craftResult.setRecipeUsed(this.player.getLevel(), playerMP, craftingRecipe)) {
-                    itemStack = craftingRecipe.assemble(this.craftMatrix, this.player.getLevel().registryAccess());
+                if (this.craftResult.setRecipeUsed(this.player.level(), playerMP, craftingRecipe)) {
+                    itemStack = craftingRecipe.assemble(this.craftMatrix, this.player.level().registryAccess());
                 }
             }
             this.craftResult.setItem(0, itemStack);
@@ -238,7 +238,7 @@ public class AccessoriesMenu extends InventoryMenu {
     public void removed(Player player) {
         super.removed(player);
         this.craftResult.clearContent();
-        if (!player.getLevel().isClientSide()) {
+        if (!player.level().isClientSide()) {
             this.clearContainer(player, this.craftMatrix);
         }
     }

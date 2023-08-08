@@ -5,8 +5,8 @@ import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.OpenAccessoriesPacket;
 import com.aetherteam.aether.network.packet.serverbound.OpenInventoryPacket;
 import com.aetherteam.nitrogen.network.PacketRelay;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
@@ -46,7 +46,7 @@ public class AccessoryButton extends ImageButton {
     }
 
     @Override
-    public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
+    public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(this.parentScreen);
         this.setX(this.parentScreen.getGuiLeft() + offsets.getA());
         this.setY(this.parentScreen.getGuiTop() + offsets.getB());
@@ -54,14 +54,14 @@ public class AccessoryButton extends ImageButton {
             boolean isInventoryTab = screen.isInventoryOpen();
             this.active = isInventoryTab;
             if (isInventoryTab) {
-                super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
+                super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
             }
         } else if (this.parentScreen instanceof AccessoriesScreen screen) {
             if (screen.getMenu().hasButton) {
-                super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
+                super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
             }
         } else {
-            super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
+            super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
         }
     }
 }

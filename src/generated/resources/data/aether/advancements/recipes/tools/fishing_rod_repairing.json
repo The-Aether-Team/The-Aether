@@ -30,5 +30,6 @@
     "recipes": [
       "aether:fishing_rod_repairing"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

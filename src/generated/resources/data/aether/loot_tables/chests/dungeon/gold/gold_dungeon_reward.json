@@ -168,5 +168,6 @@
         "min": 0.0
       }
     }
-  ]
+  ],
+  "random_sequence": "aether:chests/dungeon/gold/gold_dungeon_reward"
 }

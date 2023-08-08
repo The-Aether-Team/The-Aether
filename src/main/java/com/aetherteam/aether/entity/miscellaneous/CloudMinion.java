@@ -80,12 +80,12 @@ public class CloudMinion extends FlyingMob {
                         if (this.shouldShoot()) { // Checks if able to shoot a Cloud Crystal
                             float offset = this.getSide() == HumanoidArm.RIGHT ? 2.0F : -2.0F;
                             float rotation = Mth.wrapDegrees(this.getYRot() + offset);
-                            CloudCrystal crystal = new CloudCrystal(this.getLevel()); // Sets up Cloud Crystal.
+                            CloudCrystal crystal = new CloudCrystal(this.level()); // Sets up Cloud Crystal.
                             crystal.setPos(this.getX(), this.getY(), this.getZ());
                             crystal.shootFromRotation(this, this.getXRot(), rotation, 0.0F, 1.0F, 1.0F);
                             crystal.setOwner(this.getOwner());
-                            if (!this.getLevel().isClientSide()) {
-                                this.getLevel().addFreshEntity(crystal);
+                            if (!this.level().isClientSide()) {
+                                this.level().addFreshEntity(crystal);
                             }
                             this.playSound(AetherSoundEvents.ENTITY_CLOUD_MINION_SHOOT.get(), 0.75F, (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.2F + 1.0F);
                             this.setShouldShoot(false); // Finish shoot.
@@ -168,10 +168,10 @@ public class CloudMinion extends FlyingMob {
      * Spawn explosion particles on client or in {@link CloudMinion#handleEntityEvent(byte)}.
      */
     public void spawnExplosionParticles() {
-        if (this.getLevel().isClientSide()) {
+        if (this.level().isClientSide()) {
             EntityUtil.spawnSummoningExplosionParticles(this);
         } else {
-            this.getLevel().broadcastEntityEvent(this, (byte) 70);
+            this.level().broadcastEntityEvent(this, (byte) 70);
         }
     }
 
@@ -199,7 +199,7 @@ public class CloudMinion extends FlyingMob {
      */
     @Nullable
     public Player getOwner() {
-        return (Player) this.getLevel().getEntity(this.getEntityData().get(DATA_OWNER_ID));
+        return (Player) this.level().getEntity(this.getEntityData().get(DATA_OWNER_ID));
     }
 
     /**

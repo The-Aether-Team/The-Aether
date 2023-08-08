@@ -55,13 +55,13 @@ public interface AetherBossMob<T extends Mob & AetherBossMob<T>> extends BossMob
      * @param check An additional check using a {@link BlockState} {@link Predicate}.
      */
     default void evaporate(T entity, BlockPos min, BlockPos max, Predicate<BlockState> check) {
-        if (ForgeEventFactory.getMobGriefingEvent(entity.getLevel(), entity)) {
+        if (ForgeEventFactory.getMobGriefingEvent(entity.level(), entity)) {
             for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
-                if (entity.getLevel().getBlockState(pos).getBlock() instanceof LiquidBlock && check.test(entity.getLevel().getBlockState(pos))) {
-                    entity.getLevel().setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+                if (entity.level().getBlockState(pos).getBlock() instanceof LiquidBlock && check.test(entity.level().getBlockState(pos))) {
+                    entity.level().setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
                     this.evaporateEffects(entity, pos);
-                } else if (!entity.getLevel().getFluidState(pos).isEmpty() && entity.getLevel().getBlockState(pos).hasProperty(BlockStateProperties.WATERLOGGED) && check.test(entity.getLevel().getFluidState(pos).createLegacyBlock())) {
-                    entity.getLevel().setBlockAndUpdate(pos, entity.getLevel().getBlockState(pos).setValue(BlockStateProperties.WATERLOGGED, false));
+                } else if (!entity.level().getFluidState(pos).isEmpty() && entity.level().getBlockState(pos).hasProperty(BlockStateProperties.WATERLOGGED) && check.test(entity.level().getFluidState(pos).createLegacyBlock())) {
+                    entity.level().setBlockAndUpdate(pos, entity.level().getBlockState(pos).setValue(BlockStateProperties.WATERLOGGED, false));
                     this.evaporateEffects(entity, pos);
                 }
             }
@@ -74,8 +74,8 @@ public interface AetherBossMob<T extends Mob & AetherBossMob<T>> extends BossMob
      * @param pos The {@link BlockPos} for effects.
      */
     default void evaporateEffects(T entity, BlockPos pos) {
-        EntityUtil.spawnRemovalParticles(entity.getLevel(), pos);
-        entity.getLevel().playSound(null, pos, AetherSoundEvents.WATER_EVAPORATE.get(), SoundSource.BLOCKS, 0.5F, 2.6F + (entity.getLevel().getRandom().nextFloat() - entity.getLevel().getRandom().nextFloat()) * 0.8F);
+        EntityUtil.spawnRemovalParticles(entity.level(), pos);
+        entity.level().playSound(null, pos, AetherSoundEvents.WATER_EVAPORATE.get(), SoundSource.BLOCKS, 0.5F, 2.6F + (entity.level().getRandom().nextFloat() - entity.level().getRandom().nextFloat()) * 0.8F);
     }
 
     /**

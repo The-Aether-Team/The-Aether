@@ -24,6 +24,7 @@ import com.aetherteam.aether.entity.ai.brain.memory.AetherMemoryModuleTypes;
 import com.aetherteam.aether.entity.ai.brain.sensing.AetherSensorTypes;
 import com.aetherteam.aether.inventory.AetherRecipeBookTypes;
 import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
+import com.aetherteam.aether.item.AetherCreativeTabs;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.loot.conditions.AetherLootConditions;
 import com.aetherteam.aether.loot.functions.AetherLootFunctions;
@@ -126,7 +127,8 @@ public class Aether {
                 AetherGameEvents.GAME_EVENTS,
                 AetherMoaTypes.MOA_TYPES,
                 AetherSensorTypes.SENSOR_TYPES,
-                AetherMemoryModuleTypes.MEMORY_TYPES
+                AetherMemoryModuleTypes.MEMORY_TYPES,
+                AetherCreativeTabs.CREATIVE_TABS
         };
 
         for (DeferredRegister<?> register : registers) {

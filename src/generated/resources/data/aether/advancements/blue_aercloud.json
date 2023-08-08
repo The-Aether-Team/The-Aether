@@ -27,5 +27,6 @@
     [
       "blue_aercloud"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

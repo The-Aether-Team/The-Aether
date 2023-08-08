@@ -27,23 +27,23 @@ public class GlowstonePortalAgeProcessor extends StructureProcessor {
     @Nullable
     @Override
     public StructureTemplate.StructureBlockInfo process(LevelReader level, BlockPos otherPos, BlockPos pos, StructureTemplate.StructureBlockInfo blockInfo, StructureTemplate.StructureBlockInfo relativeBlockInfo, StructurePlaceSettings settings, @Nullable StructureTemplate template) {
-        RandomSource random = settings.getRandom(relativeBlockInfo.pos);
-        BlockState originalState = relativeBlockInfo.state;
-        BlockPos blockPos = relativeBlockInfo.pos;
+        RandomSource random = settings.getRandom(relativeBlockInfo.pos());
+        BlockState originalState = relativeBlockInfo.state();
+        BlockPos blockPos = relativeBlockInfo.pos();
         BlockState newState = null;
         if (!originalState.is(Blocks.COBBLESTONE)) {
             if (originalState.is(Blocks.COBBLESTONE_STAIRS)) {
-                newState = this.maybeReplaceStairs(random, relativeBlockInfo.state);
+                newState = this.maybeReplaceStairs(random, relativeBlockInfo.state());
             } else if (originalState.is(Blocks.COBBLESTONE_SLAB)) {
-                newState = this.maybeReplaceSlab(random, relativeBlockInfo.state);
+                newState = this.maybeReplaceSlab(random, relativeBlockInfo.state());
             } else if (originalState.is(Blocks.COBBLESTONE_WALL)) {
-                newState = this.maybeReplaceWall(random, relativeBlockInfo.state);
+                newState = this.maybeReplaceWall(random, relativeBlockInfo.state());
             }
         } else {
             newState = this.maybeReplaceFullStoneBlock(random);
         }
 
-        return newState != null ? new StructureTemplate.StructureBlockInfo(blockPos, newState, relativeBlockInfo.nbt) : relativeBlockInfo;
+        return newState != null ? new StructureTemplate.StructureBlockInfo(blockPos, newState, relativeBlockInfo.nbt()) : relativeBlockInfo;
     }
 
     @Nullable

@@ -28,7 +28,7 @@ public record SunAltarUpdatePacket(long dayTime) implements BasePacket {
 
     @Override
     public void execute(@Nullable Player playerEntity) {
-        if (playerEntity != null && playerEntity.getLevel() instanceof ServerLevel level && (!AetherConfig.SERVER.sun_altar_whitelist.get() || playerEntity.hasPermissions(4) || SunAltarWhitelist.INSTANCE.isWhiteListed(playerEntity.getGameProfile()))) {
+        if (playerEntity != null && playerEntity.level() instanceof ServerLevel level && (!AetherConfig.SERVER.sun_altar_whitelist.get() || playerEntity.hasPermissions(4) || SunAltarWhitelist.INSTANCE.isWhiteListed(playerEntity.getGameProfile()))) {
             // Get how many days have passed in the world first, then add to it.
             var dayBase = level.getDayTime() / (long) AetherDimensions.AETHER_TICKS_PER_DAY;
             var dayTime = (dayBase * AetherDimensions.AETHER_TICKS_PER_DAY) + this.dayTime();

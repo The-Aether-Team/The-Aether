@@ -14,10 +14,8 @@ import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import com.mojang.blaze3d.platform.InputConstants;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.Tooltip;
@@ -28,7 +26,6 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.client.gui.screens.recipebook.RecipeUpdateListener;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
@@ -74,7 +71,6 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
 
     public AccessoriesScreen(AccessoriesMenu accessoriesMenu, Inventory playerInventory, Component title) {
         super(accessoriesMenu, playerInventory, title);
-        this.passEvents = true;
     }
 
     @Override
@@ -145,8 +141,8 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
                 (pressed) -> this.getMinecraft().setScreen(new MoaSkinsScreen(this)),
                 Component.translatable("gui.aether.accessories.skins_button")) {
             @Override
-            public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-                super.render(poseStack, mouseX, mouseY, partialTick);
+            public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+                super.render(guiGraphics, mouseX, mouseY, partialTick);
                 if (!AccessoriesScreen.this.getRecipeBookComponent().isVisible()) {
                     this.setX(AccessoriesScreen.this.getGuiLeft() - 22);
                     this.setY(AccessoriesScreen.this.getGuiTop() + 2);
@@ -169,8 +165,8 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
                 (pressed) -> this.getMinecraft().setScreen(new AetherCustomizationsScreen(this)),
                 Component.translatable("gui.aether.accessories.customization_button")) {
             @Override
-            public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-                super.render(poseStack, mouseX, mouseY, partialTick);
+            public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+                super.render(guiGraphics, mouseX, mouseY, partialTick);
                 if (!AccessoriesScreen.this.getRecipeBookComponent().isVisible()) {
                     this.setX(AccessoriesScreen.this.getGuiLeft() - 22);
                     this.setY(AccessoriesScreen.this.getGuiTop() + 24);
@@ -194,7 +190,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
                 this.addRenderableWidget(new RenderButton(curioSlot, this.getGuiLeft() + inventorySlot.x + 11, this.getGuiTop() + inventorySlot.y - 3, 8, 8, 75, 0, 8, CURIO_INVENTORY,
                         (button) -> NetworkHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(), new CPacketToggleRender(curioSlot.getIdentifier(), inventorySlot.getSlotIndex()))) {
                     @Override
-                    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+                    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
                         this.setX(AccessoriesScreen.this.getGuiLeft() + inventorySlot.x + 11);
                         this.setY(AccessoriesScreen.this.getGuiTop() + inventorySlot.y - 3);
                     }
@@ -204,20 +200,20 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
     }
 
     @Override
-    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(poseStack);
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(guiGraphics);
         if (this.getRecipeBookComponent().isVisible() && this.widthTooNarrow) {
-            this.renderBg(poseStack, partialTicks, mouseX, mouseY);
-            this.getRecipeBookComponent().render(poseStack, mouseX, mouseY, partialTicks);
+            this.renderBg(guiGraphics, partialTicks, mouseX, mouseY);
+            this.getRecipeBookComponent().render(guiGraphics, mouseX, mouseY, partialTicks);
         } else {
-            this.getRecipeBookComponent().render(poseStack, mouseX, mouseY, partialTicks);
-            super.render(poseStack, mouseX, mouseY, partialTicks);
-            this.getRecipeBookComponent().renderGhostRecipe(poseStack, this.getGuiLeft(), this.getGuiTop(), false, partialTicks);
+            this.getRecipeBookComponent().render(guiGraphics, mouseX, mouseY, partialTicks);
+            super.render(guiGraphics, mouseX, mouseY, partialTicks);
+            this.getRecipeBookComponent().renderGhostRecipe(guiGraphics, this.getGuiLeft(), this.getGuiTop(), false, partialTicks);
 
             boolean isButtonHovered = false;
             for (Renderable renderable : this.renderables) {
                 if (renderable instanceof RenderButton renderButton) {
-                    renderButton.renderButtonOverlay(poseStack, mouseX, mouseY, partialTicks);
+                    renderButton.renderButtonOverlay(guiGraphics, mouseX, mouseY, partialTicks);
                     if (renderButton.isHovered()) {
                         isButtonHovered = true;
                     }
@@ -228,7 +224,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
             if (!this.isRenderButtonHovered && clientPlayer != null && clientPlayer.inventoryMenu.getCarried().isEmpty() && this.getSlotUnderMouse() != null) {
                 Slot slot = this.getSlotUnderMouse();
                 if (slot instanceof CurioSlot curioSlot && !slot.hasItem()) {
-                    this.renderTooltip(poseStack, Component.literal(curioSlot.getSlotName()), mouseX, mouseY);
+                    guiGraphics.renderTooltip(this.font, Component.literal(curioSlot.getSlotName()), mouseX, mouseY);
                 }
             }
 
@@ -243,27 +239,25 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
             }
 
             if (this.destroyItemSlot != null && this.isHovering(this.destroyItemSlot.x, this.destroyItemSlot.y, 16, 16, mouseX, mouseY)) {
-                this.renderTooltip(poseStack, Component.translatable("inventory.binSlot"), mouseX, mouseY);
+                guiGraphics.renderTooltip(this.font, Component.translatable("inventory.binSlot"), mouseX, mouseY);
             }
 
             if (this.getMinecraft().player != null) {
                 this.imageWidth = this.getMinecraft().player.isCreative() ? 176 + this.creativeXOffset() : 176;
             }
         }
-        this.renderTooltip(poseStack, mouseX, mouseY);
-        this.getRecipeBookComponent().renderTooltip(poseStack, this.getGuiLeft(), this.getGuiTop(), mouseX, mouseY);
+        this.renderTooltip(guiGraphics, mouseX, mouseY);
+        this.getRecipeBookComponent().renderTooltip(guiGraphics, this.getGuiLeft(), this.getGuiTop(), mouseX, mouseY);
     }
 
     @Override
-    protected void renderBg(PoseStack poseStack, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
         if (this.getMinecraft().player != null) {
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            RenderSystem.setShaderTexture(0, this.getMinecraft().player.isCreative() ? ACCESSORIES_INVENTORY_CREATIVE : ACCESSORIES_INVENTORY);
+            guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
             int i = this.getGuiLeft();
             int j = this.getGuiTop();
-            GuiComponent.blit(poseStack, i, j, 0, 0, this.getXSize() + this.creativeXOffset(), this.getYSize());
-            InventoryScreen.renderEntityInInventoryFollowsMouse(poseStack, i + 33, j + 75, 30, (float) (i + 31) - mouseX, (float) (j + 75 - 50) - mouseY, this.getMinecraft().player);
+            guiGraphics.blit(this.getMinecraft().player.isCreative() ? ACCESSORIES_INVENTORY_CREATIVE : ACCESSORIES_INVENTORY, i, j, 0, 0, this.getXSize() + this.creativeXOffset(), this.getYSize());
+            InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics, i + 33, j + 75, 30, (float) (i + 31) - mouseX, (float) (j + 75 - 50) - mouseY, this.getMinecraft().player);
         }
     }
 
@@ -275,22 +269,22 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
     }
 
     @Override
-    protected void renderTooltip(PoseStack poseStack, int mouseX, int mouseY) {
+    protected void renderTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         Minecraft minecraft = this.getMinecraft();
         LocalPlayer clientPlayer = minecraft.player;
         if (clientPlayer != null && clientPlayer.inventoryMenu.getCarried().isEmpty()) {
             if (this.isRenderButtonHovered) {
-                this.renderTooltip(poseStack, Component.translatable("gui.curios.toggle"), mouseX, mouseY);
+                guiGraphics.renderTooltip(this.font, Component.translatable("gui.curios.toggle"), mouseX, mouseY);
             } else if (this.hoveredSlot != null && this.hoveredSlot.hasItem()) {
-                this.renderTooltip(poseStack, this.hoveredSlot.getItem(), mouseX, mouseY);
+                guiGraphics.renderTooltip(this.font, this.hoveredSlot.getItem(), mouseX, mouseY);
             }
         }
     }
 
     @Override
-    protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
+    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         if (this.getMinecraft().player != null) {
-            this.font.draw(poseStack, this.title, 115, 6, 4210752);
+            guiGraphics.drawString(this.font, this.title, 115, 6, 4210752);
         }
     }
 

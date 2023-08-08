@@ -21,9 +21,9 @@ public class LoreTrigger extends SimpleCriterionTrigger<LoreTrigger.Instance> {
     }
 
     @Override
-    public LoreTrigger.Instance createInstance(JsonObject json, EntityPredicate.Composite entity, DeserializationContext context) {
+    public LoreTrigger.Instance createInstance(JsonObject json, ContextAwarePredicate predicate, DeserializationContext context) {
         ItemPredicate itemPredicate = ItemPredicate.fromJson(json.get("item"));
-        return new LoreTrigger.Instance(entity, itemPredicate);
+        return new LoreTrigger.Instance(predicate, itemPredicate);
     }
 
     public void trigger(ServerPlayer player, ItemStack stack) {
@@ -33,13 +33,13 @@ public class LoreTrigger extends SimpleCriterionTrigger<LoreTrigger.Instance> {
     public static class Instance extends AbstractCriterionTriggerInstance {
         private final ItemPredicate item;
 
-        public Instance(EntityPredicate.Composite entity, ItemPredicate item) {
-            super(LoreTrigger.ID, entity);
+        public Instance(ContextAwarePredicate predicate, ItemPredicate item) {
+            super(LoreTrigger.ID, predicate);
             this.item = item;
         }
 
         public static LoreTrigger.Instance forItem(ItemPredicate item) {
-            return new LoreTrigger.Instance(EntityPredicate.Composite.ANY, item);
+            return new LoreTrigger.Instance(ContextAwarePredicate.ANY, item);
         }
 
         public static LoreTrigger.Instance forItem(ItemLike item) {

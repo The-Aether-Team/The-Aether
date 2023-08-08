@@ -43,5 +43,6 @@
     "recipes": [
       "aether:poison_dart_shooter"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

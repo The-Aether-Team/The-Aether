@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.material.Material;
 
 /**
  * [CODE COPY] - {@link net.minecraft.world.level.levelgen.feature.LakeFeature}.<br><br>
@@ -67,11 +66,11 @@ public class AetherLakeFeature extends Feature<AetherLakeConfiguration> {
                     for (int l2 = 0; l2 < 8; ++l2) {
                         boolean flag = !booleans[(k1 * 16 + k) * 8 + l2] && (k1 < 15 && booleans[((k1 + 1) * 16 + k) * 8 + l2] || k1 > 0 && booleans[((k1 - 1) * 16 + k) * 8 + l2] || k < 15 && booleans[(k1 * 16 + k + 1) * 8 + l2] || k > 0 && booleans[(k1 * 16 + (k - 1)) * 8 + l2] || l2 < 7 && booleans[(k1 * 16 + k) * 8 + l2 + 1] || l2 > 0 && booleans[(k1 * 16 + k) * 8 + (l2 - 1)]);
                         if (flag) {
-                            Material material = level.getBlockState(blockPos.offset(k1, l2, k)).getMaterial();
-                            if (l2 >= 4 && material.isLiquid()) {
+                            BlockState blockState = level.getBlockState(blockPos.offset(k1, l2, k));
+                            if (l2 >= 4 && blockState.liquid()) {
                                 return false;
                             }
-                            if (l2 < 4 && !material.isSolid() && level.getBlockState(blockPos.offset(k1, l2, k)) != fluidBlockState) {
+                            if (l2 < 4 && !blockState.isSolid() && level.getBlockState(blockPos.offset(k1, l2, k)) != fluidBlockState) {
                                 return false;
                             }
                         }

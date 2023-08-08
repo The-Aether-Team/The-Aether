@@ -12,7 +12,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 
 /**
  * [CODE COPY] - {@link net.minecraft.world.level.block.FallingBlock}.<br><br>
@@ -68,8 +67,7 @@ public class FloatingBlock extends Block implements Floatable {
 	protected void floating(FloatingBlockEntity entity) { }
 
 	public static boolean isFree(BlockState state) {
-		Material material = state.getMaterial();
-		return state.isAir() || state.is(BlockTags.FIRE) || material.isLiquid() || material.isReplaceable();
+		return state.isAir() || state.is(BlockTags.FIRE) || state.liquid() || state.canBeReplaced();
 	}
 
 	protected int getDelayAfterPlace() {

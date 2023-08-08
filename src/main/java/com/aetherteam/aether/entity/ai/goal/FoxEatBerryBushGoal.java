@@ -59,8 +59,8 @@ public class FoxEatBerryBushGoal extends MoveToBlockGoal {
     }
 
     protected void onReachedTarget() {
-        if (ForgeEventFactory.getMobGriefingEvent(this.fox.getLevel(), this.fox)) {
-            BlockState blockState = this.mob.getLevel().getBlockState(this.blockPos);
+        if (ForgeEventFactory.getMobGriefingEvent(this.fox.level(), this.fox)) {
+            BlockState blockState = this.mob.level().getBlockState(this.blockPos);
             if (blockState.is(AetherBlocks.BERRY_BUSH.get())) {
                 this.pickBlueBerries();
             }
@@ -68,18 +68,18 @@ public class FoxEatBerryBushGoal extends MoveToBlockGoal {
     }
 
     private void pickBlueBerries() {
-        boolean onEnchantedGrass = this.mob.getLevel().getBlockState(this.blockPos.below()).is(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get());
-        int j = 1 + this.mob.getLevel().getRandom().nextInt(3) + (onEnchantedGrass ? 1 : 0);
+        boolean onEnchantedGrass = this.mob.level().getBlockState(this.blockPos.below()).is(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get());
+        int j = 1 + this.mob.level().getRandom().nextInt(3) + (onEnchantedGrass ? 1 : 0);
         ItemStack itemStack = this.mob.getItemBySlot(EquipmentSlot.MAINHAND);
         if (itemStack.isEmpty()) {
             this.mob.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(AetherItems.BLUE_BERRY.get()));
             --j;
         }
         if (j > 0) {
-            Block.popResource(this.mob.getLevel(), this.blockPos, new ItemStack(AetherItems.BLUE_BERRY.get(), j));
+            Block.popResource(this.mob.level(), this.blockPos, new ItemStack(AetherItems.BLUE_BERRY.get(), j));
         }
         this.mob.playSound(SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, 1.0F, 1.0F);
-        this.mob.getLevel().setBlock(this.blockPos, AetherBlocks.BERRY_BUSH_STEM.get().defaultBlockState(), 2);
+        this.mob.level().setBlock(this.blockPos, AetherBlocks.BERRY_BUSH_STEM.get().defaultBlockState(), 2);
     }
 
     @Override

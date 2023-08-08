@@ -28,7 +28,7 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
     default void freezeTick(SlotContext context, ItemStack stack) {
         LivingEntity livingEntity = context.entity();
         if (!(livingEntity instanceof Player player) || (!player.getAbilities().flying && !player.isSpectator())) {
-            int damage = this.freezeBlocks(livingEntity.getLevel(), livingEntity.blockPosition(), stack, 1.9F);
+            int damage = this.freezeBlocks(livingEntity.level(), livingEntity.blockPosition(), stack, 1.9F);
             stack.hurtAndBreak(damage / 3, livingEntity, wearer -> CuriosApi.getCuriosHelper().onBrokenCurio(context));
         }
     }

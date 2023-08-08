@@ -35,7 +35,7 @@ public class LightningKnifeRenderer extends EntityRenderer<ThrownLightningKnife>
 		quaternion.mul(Axis.XP.rotationDegrees((-(lightningKnife.xRotO + (lightningKnife.getXRot() - lightningKnife.xRotO) * partialTicks)) - 90.0F));
 		quaternion.mul(Axis.ZP.rotationDegrees(-135.0F));
 		poseStack.mulPose(quaternion);
-		Minecraft.getInstance().getItemRenderer().renderStatic(lightningKnife.getItem(), ItemDisplayContext.GUI, packedLight, OverlayTexture.NO_OVERLAY, poseStack, buffer, lightningKnife.getLevel(), lightningKnife.getId());
+		Minecraft.getInstance().getItemRenderer().renderStatic(lightningKnife.getItem(), ItemDisplayContext.GUI, packedLight, OverlayTexture.NO_OVERLAY, poseStack, buffer, lightningKnife.level(), lightningKnife.getId());
 		poseStack.popPose();
 		super.render(lightningKnife, entityYaw, partialTicks, poseStack, buffer, packedLight);
 	}

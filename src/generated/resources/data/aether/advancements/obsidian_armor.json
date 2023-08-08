@@ -94,5 +94,6 @@
     [
       "obsidian_gloves"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

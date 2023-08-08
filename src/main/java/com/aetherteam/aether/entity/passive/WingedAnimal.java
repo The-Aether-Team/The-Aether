@@ -94,7 +94,7 @@ public abstract class WingedAnimal extends MountableAnimal {
      */
     @Override
     public float getFlyingSpeed() {
-        if (this.isEffectiveAi() && !this.isOnGround() && this.getPassengers().isEmpty()) {
+        if (this.isEffectiveAi() && !this.onGround() && this.getPassengers().isEmpty()) {
             return this.getSpeed() * (0.24F / ((float) Math.pow(0.91F, 3)));
         } else {
             return super.getFlyingSpeed();
@@ -114,6 +114,6 @@ public abstract class WingedAnimal extends MountableAnimal {
      */
     @Override
     public int getMaxFallDistance() {
-        return this.isOnGround() ? super.getMaxFallDistance() : 14;
+        return this.onGround() ? super.getMaxFallDistance() : 14;
     }
 }

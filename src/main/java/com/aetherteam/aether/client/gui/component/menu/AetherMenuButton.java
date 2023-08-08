@@ -7,7 +7,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.resources.ResourceLocation;
@@ -46,7 +46,7 @@ public class AetherMenuButton extends Button {
 	}
 
 	@Override
-	public void renderWidget(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+	public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
 		Minecraft minecraft = Minecraft.getInstance();
 		Font font = minecraft.font;
 		int i = this.getTextureY();
@@ -63,23 +63,23 @@ public class AetherMenuButton extends Button {
 		}
 		this.setHeight((int) (BUTTON_HEIGHT / scale));
 
-		RenderSystem.setShaderTexture(0, AETHER_WIDGETS);
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
+		guiGraphics.setColor(1.0F, 1.0F, 1.0F, this.alpha);
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		RenderSystem.enableDepthTest();
-	    GuiComponent.blit(poseStack, this.getX() + this.hoverOffset, this.getY(), 0, Mth.ceil(i / scale), this.getWidth(), this.getHeight(), (int) (TEXTURE_SIZE / scale), (int) (TEXTURE_SIZE / scale));
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+	    guiGraphics.blit(AETHER_WIDGETS, this.getX() + this.hoverOffset, this.getY(), 0, Mth.ceil(i / scale), this.getWidth(), this.getHeight(), (int) (TEXTURE_SIZE / scale), (int) (TEXTURE_SIZE / scale));
+		guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.disableDepthTest();
 		RenderSystem.disableBlend();
 
+		PoseStack poseStack = guiGraphics.pose();
 		poseStack.pushPose();
 		float textScale = getTextScale(this.screen, minecraft);  // The scaling for text relative to the true screen scale.
 		float textX = this.getX() + (35 * textScale) + this.hoverOffset;
 		float textY = this.getY() + (this.height - (8 * textScale)) / 2.0F;
 		poseStack.translate(textX, textY, 0.0F);
 		poseStack.scale(textScale, textScale, textScale);
-		GuiComponent.drawString(poseStack, font, this.getMessage(), 0, 0, this.getTextColor(mouseX, mouseY) | Mth.ceil(this.alpha * 255.0F) << 24);
+		guiGraphics.drawString(font, this.getMessage(), 0, 0, this.getTextColor(mouseX, mouseY) | Mth.ceil(this.alpha * 255.0F) << 24);
 		poseStack.popPose();
 	}
 

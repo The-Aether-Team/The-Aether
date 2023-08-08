@@ -30,5 +30,6 @@
     "recipes": [
       "aether:flower_to_purple_dye"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -30,5 +30,6 @@
     "recipes": [
       "aether:wooden_pickaxe_repairing"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

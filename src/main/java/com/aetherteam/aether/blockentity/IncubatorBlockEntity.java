@@ -50,6 +50,7 @@ import net.minecraftforge.registries.tags.ITagManager;
 
 import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -349,7 +350,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 	@Override
 	public void setItem(int index, ItemStack stack) {
 		ItemStack itemstack = this.items.get(index);
-		boolean flag = !stack.isEmpty() && stack.sameItem(itemstack) && ItemStack.tagMatches(stack, itemstack);
+		boolean flag = !stack.isEmpty() && ItemStack.isSameItem(stack, itemstack) && ItemStack.isSameItemSameTags(stack, itemstack);
 		this.items.set(index, stack);
 		if (stack.getCount() > this.getMaxStackSize()) {
 			stack.setCount(this.getMaxStackSize());
@@ -416,7 +417,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 	}
 
 	@Override
-	public void awardUsedRecipes(Player player) { }
+	public void awardUsedRecipes(Player player, List<ItemStack> items) { }
 
 	@Override
 	public boolean stillValid(Player player) {

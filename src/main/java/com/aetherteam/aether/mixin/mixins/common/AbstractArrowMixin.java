@@ -29,7 +29,7 @@ public class AbstractArrowMixin {
         PhoenixArrow.get(arrow).ifPresent(phoenixArrow -> {
             AbstractArrow innerArrow = phoenixArrow.getArrow();
             if (phoenixArrow.isPhoenixArrow()) {
-                if (!innerArrow.getLevel().isClientSide()) {
+                if (!innerArrow.level().isClientSide()) {
                     phoenixArrow.setSynched(INBTSynchable.Direction.CLIENT, "setPhoenixArrow", true); // Sync Phoenix Arrow variable to client.
                     if (this.inGround) { // Spawn less particles when the arrow is in the ground.
                         if (this.inGroundTime % 5 == 0) {
@@ -48,7 +48,7 @@ public class AbstractArrowMixin {
     }
 
     private void spawnParticles(AbstractArrow arrow) {
-        if (arrow.getLevel() instanceof ServerLevel serverLevel) {
+        if (arrow.level() instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(ParticleTypes.FLAME,
                     arrow.getX() + (serverLevel.getRandom().nextGaussian() / 5.0),
                     arrow.getY() + (serverLevel.getRandom().nextGaussian() / 3.0),

@@ -36,6 +36,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
@@ -150,7 +151,7 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
 
     @Override
     public void aiStep() {
-        if (this.getLevel().isClientSide()) {
+        if (this.level().isClientSide()) {
             this.eatAnimationTick = Math.max(0, this.eatAnimationTick - 1);
         }
         super.aiStep();
@@ -215,7 +216,7 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
             if (this.getColor() != color) {
                 if (this.getPuffed() && itemstack.getCount() >= 2) {
                     player.swing(hand);
-                    if (!player.getLevel().isClientSide()) {
+                    if (!player.level().isClientSide()) {
                         this.setColor(color);
                         if (!player.getAbilities().instabuild) {
                             itemstack.shrink(2);
@@ -223,7 +224,7 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
                     }
                 } else if (!this.getPuffed()) {
                     player.swing(hand);
-                    if (!player.getLevel().isClientSide()) {
+                    if (!player.level().isClientSide()) {
                         this.setColor(color);
                         if (!player.getAbilities().instabuild) {
                             itemstack.shrink(1);
@@ -261,7 +262,7 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
      */
     @Override
     public void shear(SoundSource source) {
-        this.getLevel().playSound(null, this, AetherSoundEvents.ENTITY_SHEEPUFF_SHEAR.get(), source, 1.0F, 1.0F);
+        this.level().playSound(null, this, AetherSoundEvents.ENTITY_SHEEPUFF_SHEAR.get(), source, 1.0F, 1.0F);
         this.amountEaten = 0;
         this.setSheared(true);
         this.setPuffed(false);
@@ -362,7 +363,7 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
-        this.getLevel().playSound(null, this.getX(), this.getY(), this.getZ(), AetherSoundEvents.ENTITY_SHEEPUFF_STEP.get(), SoundSource.NEUTRAL, 0.15F, 1.0F);
+        this.level().playSound(null, this.getX(), this.getY(), this.getZ(), AetherSoundEvents.ENTITY_SHEEPUFF_STEP.get(), SoundSource.NEUTRAL, 0.15F, 1.0F);
     }
 
     @Override
@@ -398,7 +399,7 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
 
     @Override
     public int getMaxFallDistance() {
-        return !this.isOnGround() && this.getPuffed() ? 20 : super.getMaxFallDistance();
+        return !this.onGround() && this.getPuffed() ? 20 : super.getMaxFallDistance();
     }
 
     @Nullable
@@ -416,13 +417,13 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
         DyeColor dyeColor1 = ((Sheepuff) parent1).getColor();
         DyeColor dyeColor2 = ((Sheepuff) parent2).getColor();
         CraftingContainer craftingInventory = makeContainer(dyeColor1, dyeColor2);
-        return this.getLevel().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, craftingInventory, this.getLevel())
-                .map((p_213614_1_) -> p_213614_1_.assemble(craftingInventory, this.getLevel().registryAccess()))
-                .map(ItemStack::getItem).filter(DyeItem.class::isInstance).map(DyeItem.class::cast).map(DyeItem::getDyeColor).orElseGet(() -> this.getLevel().getRandom().nextBoolean() ? dyeColor1 : dyeColor2);
+        return this.level().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, craftingInventory, this.level())
+                .map((p_213614_1_) -> p_213614_1_.assemble(craftingInventory, this.level().registryAccess()))
+                .map(ItemStack::getItem).filter(DyeItem.class::isInstance).map(DyeItem.class::cast).map(DyeItem::getDyeColor).orElseGet(() -> this.level().getRandom().nextBoolean() ? dyeColor1 : dyeColor2);
     }
 
     private static CraftingContainer makeContainer(DyeColor dyeColor1, DyeColor dyeColor2) {
-        CraftingContainer craftingInventory = new CraftingContainer(new SheepuffContainer(null, -1), 2, 1);
+        CraftingContainer craftingInventory = new TransientCraftingContainer(new SheepuffContainer(null, -1), 2, 1);
         craftingInventory.setItem(0, new ItemStack(DyeItem.byColor(dyeColor1)));
         craftingInventory.setItem(1, new ItemStack(DyeItem.byColor(dyeColor2)));
         return craftingInventory;

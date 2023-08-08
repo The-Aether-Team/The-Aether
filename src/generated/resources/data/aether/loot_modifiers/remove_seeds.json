@@ -2,7 +2,7 @@
   "type": "aether:remove_seeds",
   "conditions": [
     {
-      "condition": "minecraft:alternative",
+      "condition": "minecraft:any_of",
       "terms": [
         {
           "block": "minecraft:grass",

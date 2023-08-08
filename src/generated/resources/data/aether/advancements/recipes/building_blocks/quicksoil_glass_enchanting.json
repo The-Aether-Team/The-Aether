@@ -30,5 +30,6 @@
     "recipes": [
       "aether:quicksoil_glass_enchanting"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

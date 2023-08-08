@@ -31,9 +31,10 @@ public class WorldPreviewListener {
      */
     @SubscribeEvent
     public static void onScreenRender(ScreenEvent.Render event) {
+        // TODO: 1.19.4 / 1.20.1, fix incorrect usage of `setCanceled` here as per Forge Changes
         Screen screen = event.getScreen();
         if (WorldPreviewHooks.hideScreen(screen)) {
-            event.setCanceled(true);
+            //event.setCanceled(true);
         }
     }
 

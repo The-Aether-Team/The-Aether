@@ -1,9 +1,7 @@
 package com.aetherteam.aether.client.gui.screen.menu;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.gui.TitleScreenModUpdateIndicator;
 import net.minecraftforge.client.loading.ClientModLoader;
@@ -37,16 +35,14 @@ public class AetherModUpdateIndicator extends TitleScreenModUpdateIndicator {
 
 	/**
 	 * Renders Forge's mod update indicator next to the "# mods loaded" text on the title screen.
-	 * @param poseStack The rendering {@link PoseStack}.
+	 * @param guiGraphics The rendering {@link GuiGraphics}.
 	 * @param mouseX The {@link Integer} for the mouse's x-position.
 	 * @param mouseY The {@link Integer} for the mouse's y-position.
 	 * @param partialTicks The {@link Float} for the game's partial ticks.
 	 */
 	@Override
-	public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
-		if (this.showNotification != null && this.showNotification.shouldDraw() && FMLConfig.runVersionCheck() && Minecraft.getInstance().screen != null) {
-			RenderSystem.setShaderTexture(0, VERSION_CHECK_ICONS);
-
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+		if (this.showNotification != null && this.showNotification.shouldDraw() && FMLConfig.getBoolConfigValue(FMLConfig.ConfigValue.VERSION_CHECK) && Minecraft.getInstance().screen != null) {
 			this.width = Minecraft.getInstance().screen.width;
 			this.height = Minecraft.getInstance().screen.height;
 			this.font = Minecraft.getInstance().font;
@@ -61,7 +57,7 @@ public class AetherModUpdateIndicator extends TitleScreenModUpdateIndicator {
 				y = this.height - this.font.lineHeight - 1;
 			}
 
-			GuiComponent.blit(poseStack, x, y, this.showNotification.getSheetOffset() * 8, (this.showNotification.isAnimated() && ((System.currentTimeMillis() / 800 & 1) == 1)) ? 8 : 0, 8, 8, 64, 16);
+			guiGraphics.blit(VERSION_CHECK_ICONS, x, y, this.showNotification.getSheetOffset() * 8, (this.showNotification.isAnimated() && ((System.currentTimeMillis() / 800 & 1) == 1)) ? 8 : 0, 8, 8, 64, 16);
 		}
 	}
 }

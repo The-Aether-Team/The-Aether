@@ -43,7 +43,7 @@ public class EvilWhirlwind extends AbstractWhirlwind {
             double d5 = getY() + getBbHeight() + 0.125;
             double d8 = getZ() + this.getRandom().nextDouble() * 0.25;
             float f1 = this.getRandom().nextFloat() * 360;
-            this.getLevel().addParticle(AetherParticleTypes.EVIL_WHIRLWIND.get(), d2, d5 - 0.25, d8, -Math.sin(0.0175F * f1) * 0.75, 0.125, Math.cos(0.0175F * f1) * 0.75);
+            this.level().addParticle(AetherParticleTypes.EVIL_WHIRLWIND.get(), d2, d5 - 0.25, d8, -Math.sin(0.0175F * f1) * 0.75, 0.125, Math.cos(0.0175F * f1) * 0.75);
         }
     }
 

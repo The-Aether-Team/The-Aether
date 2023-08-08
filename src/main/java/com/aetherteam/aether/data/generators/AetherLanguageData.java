@@ -440,16 +440,16 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addContainerType("sun_altar", "Sun Altar");
 
 
-        this.addCreativeTab(AetherCreativeTabs.AETHER_BUILDING_BLOCKS, "Aether Building Blocks");
-        this.addCreativeTab(AetherCreativeTabs.AETHER_DUNGEON_BLOCKS, "Aether Dungeon Blocks");
-        this.addCreativeTab(AetherCreativeTabs.AETHER_NATURAL_BLOCKS, "Aether Natural Blocks");
-        this.addCreativeTab(AetherCreativeTabs.AETHER_FUNCTIONAL_BLOCKS, "Aether Functional Blocks");
-        this.addCreativeTab(AetherCreativeTabs.AETHER_REDSTONE_BLOCKS, "Aether Redstone Blocks");
-        this.addCreativeTab(AetherCreativeTabs.AETHER_EQUIPMENT_AND_UTILITIES, "Aether Equipment & Utilities");
-        this.addCreativeTab(AetherCreativeTabs.AETHER_ARMOR_AND_ACCESSORIES, "Aether Armor & Accessories");
-        this.addCreativeTab(AetherCreativeTabs.AETHER_FOOD_AND_DRINKS, "Aether Food & Drinks");
-        this.addCreativeTab(AetherCreativeTabs.AETHER_INGREDIENTS, "Aether Ingredients");
-        this.addCreativeTab(AetherCreativeTabs.AETHER_SPAWN_EGGS, "Aether Spawn Eggs");
+        this.addCreativeTab(AetherCreativeTabs.AETHER_BUILDING_BLOCKS.get(), "Aether Building Blocks");
+        this.addCreativeTab(AetherCreativeTabs.AETHER_DUNGEON_BLOCKS.get(), "Aether Dungeon Blocks");
+        this.addCreativeTab(AetherCreativeTabs.AETHER_NATURAL_BLOCKS.get(), "Aether Natural Blocks");
+        this.addCreativeTab(AetherCreativeTabs.AETHER_FUNCTIONAL_BLOCKS.get(), "Aether Functional Blocks");
+        this.addCreativeTab(AetherCreativeTabs.AETHER_REDSTONE_BLOCKS.get(), "Aether Redstone Blocks");
+        this.addCreativeTab(AetherCreativeTabs.AETHER_EQUIPMENT_AND_UTILITIES.get(), "Aether Equipment & Utilities");
+        this.addCreativeTab(AetherCreativeTabs.AETHER_ARMOR_AND_ACCESSORIES.get(), "Aether Armor & Accessories");
+        this.addCreativeTab(AetherCreativeTabs.AETHER_FOOD_AND_DRINKS.get(), "Aether Food & Drinks");
+        this.addCreativeTab(AetherCreativeTabs.AETHER_INGREDIENTS.get(), "Aether Ingredients");
+        this.addCreativeTab(AetherCreativeTabs.AETHER_SPAWN_EGGS.get(), "Aether Spawn Eggs");
 
 
         this.addAdvancement("the_aether", "The Aether");

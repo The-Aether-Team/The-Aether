@@ -167,24 +167,24 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      */
     private void breakBlocks() {
         LivingEntity target = this.getTarget();
-        if (!this.getLevel().isClientSide()) {
+        if (!this.level().isClientSide()) {
             if (target != null) {
-                if (ForgeEventFactory.getMobGriefingEvent(this.getLevel(), this)) {
+                if (ForgeEventFactory.getMobGriefingEvent(this.level(), this)) {
                     for (int i = 0; i < 2; i++) {
                         Vec3i vector = i == 0 ? this.getMotionDirection().getNormal() : Vec3i.ZERO;
                         BlockPos upperPosition = BlockPos.containing(this.getEyePosition()).offset(vector);
                         BlockPos lowerPosition = this.blockPosition().offset(vector);
-                        BlockState upperState = this.getLevel().getBlockState(upperPosition);
-                        BlockState lowerState = this.getLevel().getBlockState(lowerPosition);
+                        BlockState upperState = this.level().getBlockState(upperPosition);
+                        BlockState lowerState = this.level().getBlockState(lowerPosition);
                         if (!upperState.isAir() && !upperState.is(AetherTags.Blocks.VALKYRIE_QUEEN_UNBREAKABLE) // Check upper block at player height.
-                                && (upperState.getShape(this.getLevel(), upperPosition).equals(Shapes.block()) || !upperState.getCollisionShape(this.getLevel(), upperPosition).isEmpty())
+                                && (upperState.getShape(this.level(), upperPosition).equals(Shapes.block()) || !upperState.getCollisionShape(this.level(), upperPosition).isEmpty())
                                 && (this.getDungeon() == null || this.getDungeon().roomBounds().contains(upperPosition.getCenter()))) {
-                            this.getLevel().destroyBlock(upperPosition, true, this);
+                            this.level().destroyBlock(upperPosition, true, this);
                             this.swing(InteractionHand.MAIN_HAND);
                         } else if (!lowerState.isAir() && !lowerState.is(AetherTags.Blocks.VALKYRIE_QUEEN_UNBREAKABLE) // Check lower block at player height.
-                                && (lowerState.getShape(this.getLevel(), lowerPosition).equals(Shapes.block()) || !lowerState.getCollisionShape(this.getLevel(), lowerPosition).isEmpty())
+                                && (lowerState.getShape(this.level(), lowerPosition).equals(Shapes.block()) || !lowerState.getCollisionShape(this.level(), lowerPosition).isEmpty())
                                 && (this.getDungeon() == null || this.getDungeon().roomBounds().contains(lowerPosition.getCenter()))) {
-                            this.getLevel().destroyBlock(lowerPosition, true, this);
+                            this.level().destroyBlock(lowerPosition, true, this);
                             this.swing(InteractionHand.MAIN_HAND);
                         }
                     }
@@ -249,12 +249,12 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     @Override
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (hand == InteractionHand.MAIN_HAND) {
-            if (!this.isBossFight() && !this.getLevel().isClientSide()) {
+            if (!this.isBossFight() && !this.level().isClientSide()) {
                 if (!this.isReady()) {
                     this.lookAt(player, 180.0F, 180.0F);
                     if (player instanceof ServerPlayer serverPlayer) {
                         if (this.getConversingPlayer() == null) {
-                            this.getLevel().broadcastEntityEvent(this, (byte) 71);
+                            this.level().broadcastEntityEvent(this, (byte) 71);
                             this.setConversingPlayer(serverPlayer);
                         }
                     }
@@ -293,7 +293,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                 this.chat(player, Component.translatable("gui.aether.queen.dialog.answer"));
                 break;
             case 1: // Tells the players nearby to ready up for a fight.
-                if (this.getLevel().getDifficulty() == Difficulty.PEACEFUL) { // Check for peaceful mode.
+                if (this.level().getDifficulty() == Difficulty.PEACEFUL) { // Check for peaceful mode.
                     this.chat(player, Component.translatable("gui.aether.queen.dialog.peaceful"));
                 } else {
                     if (player.getInventory().countItem(AetherItems.VICTORY_MEDAL.get()) >= 10) { // Checks for Victory Medals.
@@ -342,7 +342,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      */
     protected void chatWithNearby(Component message) {
         AABB room = this.dungeon == null ? this.getBoundingBox().inflate(16) : this.dungeon.roomBounds();
-        this.level.getNearbyPlayers(NON_COMBAT, this, room).forEach(player -> this.chat(player, message));
+        this.level().getNearbyPlayers(NON_COMBAT, this, room).forEach(player -> this.chat(player, message));
     }
 
     /**
@@ -367,10 +367,10 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
             return super.hurt(source, amount);
         }
         if (this.isReady()) {
-            if (source.getDirectEntity() instanceof LivingEntity attacker && this.getLevel().getDifficulty() != Difficulty.PEACEFUL) {
+            if (source.getDirectEntity() instanceof LivingEntity attacker && this.level().getDifficulty() != Difficulty.PEACEFUL) {
                 if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoomInterior(attacker)) {
                     if (super.hurt(source, amount) && this.getHealth() > 0) {
-                        if (!this.getLevel().isClientSide() && !this.isBossFight()) {
+                        if (!this.level().isClientSide() && !this.isBossFight()) {
                             this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.fight"));
                             this.setBossFight(true);
                             if (this.getDungeon() != null) {
@@ -380,7 +380,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                         return true;
                     }
                 } else {
-                    if (!this.getLevel().isClientSide() && attacker instanceof Player player) {
+                    if (!this.level().isClientSide() && attacker instanceof Player player) {
                         this.displayTooFarMessage(player);
                         return false;
                     }
@@ -422,7 +422,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      */
     @Override
     public void die(DamageSource source) {
-        if (!this.level.isClientSide) {
+        if (!this.level().isClientSide) {
             this.bossFight.setProgress(this.getHealth() / this.getMaxHealth()); // Forces an update to the boss health meter.
             this.chatWithNearby(Component.translatable("gui.aether.queen.dialog.defeated"));
             this.spawnExplosionParticles();
@@ -440,10 +440,10 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     @Override
     public void tearDownRoom() {
         for (BlockPos pos : BlockPos.betweenClosed((int) this.dungeonBounds.minX, (int) this.dungeonBounds.minY, (int) this.dungeonBounds.minZ, (int) this.dungeonBounds.maxX, (int) this.dungeonBounds.maxY, (int) this.dungeonBounds.maxZ)) {
-            BlockState state = this.getLevel().getBlockState(pos);
+            BlockState state = this.level().getBlockState(pos);
             BlockState newState = this.convertBlock(state);
             if (newState != null) {
-                this.getLevel().setBlock(pos, newState, 1 | 2);
+                this.level().setBlock(pos, newState, 1 | 2);
             }
         }
     }
@@ -747,7 +747,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
         public boolean canUse() {
             LivingEntity target = this.mob.getTarget();
             if (target != null && target.isAlive()) {
-                return this.mob.getLevel().getDifficulty() != Difficulty.PEACEFUL;
+                return this.mob.level().getDifficulty() != Difficulty.PEACEFUL;
             } else {
                 return false;
             }
@@ -759,8 +759,8 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                 double distance = this.mob.distanceTo(this.mob.getTarget());
                 if (distance < this.attackRadius) {
                     if (++this.attackTime >= this.attackInterval) {
-                        ThunderCrystal thunderCrystal = new ThunderCrystal(AetherEntityTypes.THUNDER_CRYSTAL.get(), this.mob.getLevel(), this.mob, this.mob.getTarget());
-                        this.mob.getLevel().addFreshEntity(thunderCrystal);
+                        ThunderCrystal thunderCrystal = new ThunderCrystal(AetherEntityTypes.THUNDER_CRYSTAL.get(), this.mob.level(), this.mob, this.mob.getTarget());
+                        this.mob.level().addFreshEntity(thunderCrystal);
                         this.attackTime = this.mob.getRandom().nextInt(40);
                     }
                 }

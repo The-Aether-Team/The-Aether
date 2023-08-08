@@ -41,5 +41,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "aether:chests/dungeon/silver/silver_dungeon_cape_config"
 }

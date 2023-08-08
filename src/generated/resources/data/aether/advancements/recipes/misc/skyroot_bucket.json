@@ -28,5 +28,6 @@
     "recipes": [
       "aether:skyroot_bucket"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

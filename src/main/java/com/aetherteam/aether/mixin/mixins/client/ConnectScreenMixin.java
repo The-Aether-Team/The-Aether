@@ -26,8 +26,8 @@ public class ConnectScreenMixin {
      * @see WorldDisplayHelper#isActive()
      * @see WorldDisplayHelper#stopLevel(Screen)
      */
-    @Inject(at = @At(value = "HEAD"), method = "startConnecting(Lnet/minecraft/client/gui/screens/Screen;Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/multiplayer/resolver/ServerAddress;Lnet/minecraft/client/multiplayer/ServerData;)V")
-    private static void startConnecting(Screen screen, Minecraft minecraft, ServerAddress serverAddress, ServerData serverData, CallbackInfo ci) {
+    @Inject(at = @At(value = "HEAD"), method = "startConnecting")
+    private static void startConnecting(Screen screen, Minecraft minecraft, ServerAddress serverAddress, ServerData serverData, boolean isQuickPlay, CallbackInfo ci) {
         if (WorldDisplayHelper.isActive()) {
             WorldDisplayHelper.stopLevel(new GenericDirtMessageScreen(Component.literal("")));
         }

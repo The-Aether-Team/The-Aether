@@ -52,16 +52,16 @@ public class ZephyrSnowball extends Fireball implements ItemSupplier {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void tick() {
-		if (!this.isOnGround()) {
+		if (!this.onGround()) {
 			++this.ticksInAir;
 		}
 		if (this.ticksInAir > 400) {
-			if (!this.getLevel().isClientSide()) {
+			if (!this.level().isClientSide()) {
 				this.discard();
 			}
 		}
-		if (this.getLevel().isClientSide() || (this.getOwner() == null || this.getOwner().isAlive()) && this.getLevel().hasChunkAt(this.blockPosition())) {
-			HitResult hitResult = ProjectileUtil.getHitResult(this, this::canHitEntity);
+		if (this.level().isClientSide() || (this.getOwner() == null || this.getOwner().isAlive()) && this.level().hasChunkAt(this.blockPosition())) {
+			HitResult hitResult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
 			if (hitResult.getType() != HitResult.Type.MISS && !ForgeEventFactory.onProjectileImpact(this, hitResult)) {
 				this.onHit(hitResult);
 			}
@@ -75,13 +75,13 @@ public class ZephyrSnowball extends Fireball implements ItemSupplier {
 			float f = this.getInertia();
 			if (this.isInWater()) {
 				for (int i = 0; i < 4; ++i) {
-					this.getLevel().addParticle(ParticleTypes.BUBBLE, d0 - vec3.x() * 0.25, d1 - vec3.y() * 0.25, d2 - vec3.z() * 0.25, vec3.x(), vec3.y(), vec3.z());
+					this.level().addParticle(ParticleTypes.BUBBLE, d0 - vec3.x() * 0.25, d1 - vec3.y() * 0.25, d2 - vec3.z() * 0.25, vec3.x(), vec3.y(), vec3.z());
 				}
 				f = 0.8F;
 			}
 
 			this.setDeltaMovement(vec3.add(this.xPower, this.yPower, this.zPower).scale(f));
-			this.getLevel().addParticle(this.getTrailParticle(), d0, d1 + 0.5, d2, 0.0, 0.0, 0.0);
+			this.level().addParticle(this.getTrailParticle(), d0, d1 + 0.5, d2, 0.0, 0.0, 0.0);
 			this.setPos(d0, d1, d2);
 		} else {
 			this.discard();
@@ -91,7 +91,7 @@ public class ZephyrSnowball extends Fireball implements ItemSupplier {
 	@Override
 	protected void onHit(HitResult result) {
 		super.onHit(result);
-		if (!this.getLevel().isClientSide()) {
+		if (!this.level().isClientSide()) {
 			this.discard();
 		}
 	}
@@ -111,7 +111,7 @@ public class ZephyrSnowball extends Fireball implements ItemSupplier {
 				entity.setDeltaMovement(entity.getDeltaMovement().x(), entity.getDeltaMovement().y() + 0.5, entity.getDeltaMovement().z());
 				entity.setDeltaMovement(entity.getDeltaMovement().x() + (this.getDeltaMovement().x() * 1.5), entity.getDeltaMovement().y(), entity.getDeltaMovement().z() + (this.getDeltaMovement().z() * 1.5));
 				if (livingEntity instanceof ServerPlayer player) {
-					if (!this.getLevel().isClientSide()) { // Properly communicates the knockback to the client.
+					if (!this.level().isClientSide()) { // Properly communicates the knockback to the client.
 						PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new ZephyrSnowballHitPacket(livingEntity.getId(), this.getDeltaMovement().x(), this.getDeltaMovement().z()), player);
 					}
 				}

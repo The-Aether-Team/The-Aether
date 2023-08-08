@@ -88,5 +88,6 @@
         "min": 3.0
       }
     }
-  ]
+  ],
+  "random_sequence": "aether:chests/dungeon/bronze/bronze_dungeon_disc"
 }

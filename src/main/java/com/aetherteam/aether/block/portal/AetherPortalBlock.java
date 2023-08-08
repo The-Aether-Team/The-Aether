@@ -58,7 +58,7 @@ public class AetherPortalBlock extends Block {
 			if (entity.isOnPortalCooldown()) {
 				entity.setPortalCooldown();
 			} else {
-				if (!entity.getLevel().isClientSide() && !pos.equals(entityAccessor.aether$getPortalEntrancePos())) {
+				if (!entity.level().isClientSide() && !pos.equals(entityAccessor.aether$getPortalEntrancePos())) {
 					entityAccessor.aether$setPortalEntrancePos(pos.immutable());
 				}
 				LazyOptional<AetherPlayer> aetherPlayer = entity.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
@@ -82,15 +82,15 @@ public class AetherPortalBlock extends Block {
 	 * [CODE COPY] - {@link Entity#handleNetherPortal()}.
 	 */
 	private void handleTeleportation(Entity entity) {
-		MinecraftServer server = entity.getLevel().getServer();
-		ResourceKey<Level> destinationKey = entity.getLevel().dimension() == LevelUtil.destinationDimension() ? LevelUtil.returnDimension() : LevelUtil.destinationDimension();
+		MinecraftServer server = entity.level().getServer();
+		ResourceKey<Level> destinationKey = entity.level().dimension() == LevelUtil.destinationDimension() ? LevelUtil.returnDimension() : LevelUtil.destinationDimension();
 		if (server != null) {
 			ServerLevel destinationLevel = server.getLevel(destinationKey);
 			if (destinationLevel != null && !entity.isPassenger()) {
-				entity.getLevel().getProfiler().push("aether_portal");
+				entity.level().getProfiler().push("aether_portal");
 				entity.setPortalCooldown();
 				entity.changeDimension(destinationLevel, new AetherPortalForcer(destinationLevel, true));
-				entity.getLevel().getProfiler().pop();
+				entity.level().getProfiler().pop();
 			}
 		}
 	}

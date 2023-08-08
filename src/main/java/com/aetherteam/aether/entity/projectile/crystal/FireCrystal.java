@@ -53,7 +53,7 @@ public class FireCrystal extends AbstractCrystal {
      */
     @Override
     protected void tickMovement() {
-        if (!this.getLevel().isClientSide()) {
+        if (!this.level().isClientSide()) {
             if (this.getOwner() == null || !this.getOwner().isAlive() || (this.getOwner() instanceof SunSpirit sunSpirit && sunSpirit.getDungeon() != null && sunSpirit.getDungeon().dungeonPlayers().isEmpty())) {
                 if (this.getImpactExplosionSoundEvent() != null) {
                     this.playSound(this.getImpactExplosionSoundEvent(), 1.0F, 1.0F);
@@ -71,12 +71,12 @@ public class FireCrystal extends AbstractCrystal {
     protected void onHitEntity(EntityHitResult result) {
         Entity entity = result.getEntity();
         if (entity instanceof LivingEntity livingEntity) {
-            if (livingEntity.hurt(AetherDamageTypes.indirectEntityDamageSource(this.getLevel(), AetherDamageTypes.FIRE_CRYSTAL, this, this.getOwner()), 20.0F)) {
+            if (livingEntity.hurt(AetherDamageTypes.indirectEntityDamageSource(this.level(), AetherDamageTypes.FIRE_CRYSTAL, this, this.getOwner()), 20.0F)) {
                 livingEntity.setSecondsOnFire(6);
                 if (this.getImpactExplosionSoundEvent() != null) {
-                    this.getLevel().playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
+                    this.level().playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
                 }
-                if (!this.getLevel().isClientSide()) {
+                if (!this.level().isClientSide()) {
                     this.discard();
                 }
             }
@@ -110,7 +110,7 @@ public class FireCrystal extends AbstractCrystal {
             this.markHurt();
             Entity entity = source.getEntity();
             if (entity != null) {
-                if (!this.getLevel().isClientSide()) {
+                if (!this.level().isClientSide()) {
                     Vec3 vec3 = entity.getLookAngle();
                     this.setDeltaMovement(vec3);
                     this.xPower = vec3.x() * 0.25;

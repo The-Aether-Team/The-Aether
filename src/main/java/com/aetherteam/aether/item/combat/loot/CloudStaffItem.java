@@ -37,7 +37,7 @@ public class CloudStaffItem extends Item {
         ItemStack heldItem = player.getItemInHand(hand);
         AetherPlayer.get(player).ifPresent(aetherPlayer -> {
             Player innerPlayer = aetherPlayer.getPlayer();
-            Level innerLevel = innerPlayer.getLevel();
+            Level innerLevel = innerPlayer.level();
             if (aetherPlayer.getCloudMinions().isEmpty()) {
                 innerPlayer.swing(hand);
                 if (!innerLevel.isClientSide()) {
@@ -94,7 +94,7 @@ public class CloudStaffItem extends Item {
      * @param player The {@link Player} to spawn the particles at.
      */
     private void spawnExplosionParticles(Player player) {
-        if (player.getLevel().isClientSide()) {
+        if (player.level().isClientSide()) {
             EntityUtil.spawnSummoningExplosionParticles(player);
         }
     }

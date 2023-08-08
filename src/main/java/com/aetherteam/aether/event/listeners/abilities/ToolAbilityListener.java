@@ -43,7 +43,7 @@ public class ToolAbilityListener {
     @SubscribeEvent
     public static void doHolystoneAbility(BlockEvent.BreakEvent event) {
         Player player = event.getPlayer();
-        Level level = player.getLevel();
+        Level level = player.level();
         BlockPos blockPos = event.getPos();
         ItemStack itemStack = player.getMainHandItem();
         BlockState blockState = event.getState();

@@ -92,7 +92,7 @@ public class Aerbunny extends AetherAnimal {
         super.tick();
         if (!this.isFastFalling()) { // Handle slow-falling unless the Aerbunny is set to fall fast.
             this.handleFallSpeed();
-        } else if (this.isOnGround()) {
+        } else if (this.onGround()) {
             this.setFastFalling(false);
         }
         this.setPuffiness(this.getPuffiness() - this.puffSubtract);
@@ -103,7 +103,7 @@ public class Aerbunny extends AetherAnimal {
             this.setPuffiness(0);
         }
         this.handlePlayerInput();
-        if (this.getVehicle() != null && (this.getVehicle().isOnGround() || this.getVehicle().isInFluidType())) { // Reset the last tracked fall position if the Aerbunny touches a surface.
+        if (this.getVehicle() != null && (this.getVehicle().onGround() || this.getVehicle().isInFluidType())) { // Reset the last tracked fall position if the Aerbunny touches a surface.
             this.lastPos = null;
         }
     }
@@ -144,7 +144,7 @@ public class Aerbunny extends AetherAnimal {
             EntityUtil.copyRotations(this, player);
 
             player.resetFallDistance();
-            if (!player.isOnGround() && !player.isFallFlying()) {
+            if (!player.onGround() && !player.isFallFlying()) {
                 AttributeInstance playerGravity = player.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
                 if (playerGravity != null) {
                     if (!player.getAbilities().flying && !player.isInFluidType() && playerGravity.getValue() > 0.02) {  // Entity isn't allowed to fall too slowly from gravity.
@@ -153,13 +153,13 @@ public class Aerbunny extends AetherAnimal {
                 }
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                     Player innerPlayer = aetherPlayer.getPlayer();
-                    if (this.getLevel().isClientSide()) {
+                    if (this.level().isClientSide()) {
                         if (innerPlayer.getDeltaMovement().y() <= 0.0) {
                             if (this.lastPos == null) { // Tracks the last position when the player starts falling.
                                 this.lastPos = this.position();
                             }
                             // The player is only able to jump if the Aerbunny's position is below the last tracked falling position, to avoid infinite jump exploits.
-                            if (!innerPlayer.isOnGround() && aetherPlayer.isJumping() && innerPlayer.getDeltaMovement().y() <= 0.0 && this.position().y() < this.lastPos.y() - 1.1) {
+                            if (!innerPlayer.onGround() && aetherPlayer.isJumping() && innerPlayer.getDeltaMovement().y() <= 0.0 && this.position().y() < this.lastPos.y() - 1.1) {
                                 innerPlayer.setDeltaMovement(innerPlayer.getDeltaMovement().x(), 0.125, innerPlayer.getDeltaMovement().z());
                                 PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new AerbunnyPuffPacket(this.getId())); // Calls Aerbunny#puff() on the server.
                                 this.spawnExplosionParticle();
@@ -185,7 +185,7 @@ public class Aerbunny extends AetherAnimal {
     public void baseTick() {
         super.baseTick();
         if (this.isAlive() && this.isPassenger() && this.getVehicle() != null && this.getVehicle().isEyeInFluidType(ForgeMod.WATER_TYPE.get())
-                && !this.getLevel().getBlockState(BlockPos.containing(this.getVehicle().getX(), this.getVehicle().getEyeY(), this.getVehicle().getZ())).is(Blocks.BUBBLE_COLUMN)) {
+                && !this.level().getBlockState(BlockPos.containing(this.getVehicle().getX(), this.getVehicle().getEyeY(), this.getVehicle().getZ())).is(Blocks.BUBBLE_COLUMN)) {
             this.stopRiding();
         }
     }
@@ -222,7 +222,7 @@ public class Aerbunny extends AetherAnimal {
                 this.setDeltaMovement(playerMovement.x() * 5, playerMovement.y() * 0.5 + 0.5, playerMovement.z() * 5);
             } else if (this.startRiding(player)) { // Mount segment.
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setMountedAerbunny(this));
-                this.getLevel().playSound(player, this, AetherSoundEvents.ENTITY_AERBUNNY_LIFT.get(), SoundSource.NEUTRAL, 1.0F, (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.2F + 1.0F);
+                this.level().playSound(player, this, AetherSoundEvents.ENTITY_AERBUNNY_LIFT.get(), SoundSource.NEUTRAL, 1.0F, (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.2F + 1.0F);
             }
             return InteractionResult.SUCCESS;
         }
@@ -262,7 +262,7 @@ public class Aerbunny extends AetherAnimal {
         Vec3 motion = this.getDeltaMovement();
         if (motion.y() < 0) {
             this.puff();
-            this.getLevel().broadcastEntityEvent(this, (byte) 70);
+            this.level().broadcastEntityEvent(this, (byte) 70);
         }
         this.setDeltaMovement(new Vec3(motion.x(), 0.25, motion.z()));
     }
@@ -271,7 +271,7 @@ public class Aerbunny extends AetherAnimal {
      * Sets the puffiness to the maximum amount, from {@link AerbunnyPuffPacket}.
      */
     public void puff() {
-        if (this.getLevel() instanceof ServerLevel) {
+        if (this.level() instanceof ServerLevel) {
             this.setPuffiness(MAXIMUM_PUFFS);
         }
     }
@@ -454,7 +454,7 @@ public class Aerbunny extends AetherAnimal {
 
         @Override
         public void start() {
-            LivingEntity attacker = this.aerbunny.getLevel().getNearestPlayer(this.aerbunny, 12);
+            LivingEntity attacker = this.aerbunny.level().getNearestPlayer(this.aerbunny, 12);
             if (attacker == null) {
                 return;
             }
@@ -475,7 +475,7 @@ public class Aerbunny extends AetherAnimal {
          */
         @Override
         public void tick() {
-            if (this.aerbunny.getLevel() instanceof ServerLevel serverLevel) {
+            if (this.aerbunny.level() instanceof ServerLevel serverLevel) {
                 if (this.aerbunny.getRandom().nextInt(4) == 0) {
                     serverLevel.sendParticles(ParticleTypes.SPLASH, this.aerbunny.getRandomX(0.5), this.aerbunny.getRandomY(), this.aerbunny.getRandomZ(0.5), 2, 0, 0, 0, 0);
                 }
@@ -498,13 +498,13 @@ public class Aerbunny extends AetherAnimal {
         public void tick() {
             super.tick();
             if (this.aerbunny.zza != 0) {
-                if (this.aerbunny.isOnGround()) {
+                if (this.aerbunny.onGround()) {
                     this.aerbunny.getJumpControl().jump();
                 } else {
                     int x = Mth.floor(this.aerbunny.getX());
                     int y = Mth.floor(this.aerbunny.getBoundingBox().minY);
                     int z = Mth.floor(this.aerbunny.getZ());
-                    if (this.checkForSurfaces(this.aerbunny.getLevel(), x, y, z) && !this.aerbunny.horizontalCollision) {
+                    if (this.checkForSurfaces(this.aerbunny.level(), x, y, z) && !this.aerbunny.horizontalCollision) {
                         this.aerbunny.midairJump();
                     }
                 }
