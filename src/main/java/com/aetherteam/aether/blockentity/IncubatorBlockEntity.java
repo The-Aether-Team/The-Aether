@@ -279,7 +279,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 		return incubatingMap;
 	}
 
-	private static void addItemTagIncubatingTime(TagKey<Item> itemTag, int burnTime) {
+	public static void addItemTagIncubatingTime(TagKey<Item> itemTag, int burnTime) {
 		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
 		if (tags != null) {
 			tags.getTag(itemTag).stream().forEach((item) -> getIncubatingMap().put(item, burnTime));
@@ -289,6 +289,18 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 	public static void addItemIncubatingTime(ItemLike itemProvider, int burnTime) {
 		Item item = itemProvider.asItem();
 		getIncubatingMap().put(item, burnTime);
+	}
+
+	public static void removeItemTagIncubatingTime(TagKey<Item> itemTag, int burnTime) {
+		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
+		if (tags != null) {
+			tags.getTag(itemTag).stream().forEach((item) -> getIncubatingMap().remove(item, burnTime));
+		}
+	}
+
+	public static void removeItemIncubatingTime(ItemLike itemProvider, int burnTime) {
+		Item item = itemProvider.asItem();
+		getIncubatingMap().remove(item, burnTime);
 	}
 
 	public void setPlayer(ServerPlayer player) {

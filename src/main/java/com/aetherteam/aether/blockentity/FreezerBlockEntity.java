@@ -48,7 +48,7 @@ public class FreezerBlockEntity extends AbstractAetherFurnaceBlockEntity {
 		return freezingMap;
 	}
 
-	private static void addItemTagFreezingTime(TagKey<Item> itemTag, int burnTime) {
+	public static void addItemTagFreezingTime(TagKey<Item> itemTag, int burnTime) {
 		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
 		if (tags != null) {
 			tags.getTag(itemTag).stream().forEach((item) -> getFreezingMap().put(item, burnTime));
@@ -57,6 +57,18 @@ public class FreezerBlockEntity extends AbstractAetherFurnaceBlockEntity {
 
 	public static void addItemFreezingTime(ItemLike itemProvider, int burnTime) {
 		Item item = itemProvider.asItem();
-		getFreezingMap().put(item, burnTime);
+		getFreezingMap().remove(item, burnTime);
+	}
+
+	public static void removeItemTagFreezingTime(TagKey<Item> itemTag, int burnTime) {
+		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
+		if (tags != null) {
+			tags.getTag(itemTag).stream().forEach((item) -> getFreezingMap().remove(item, burnTime));
+		}
+	}
+
+	public static void removeItemFreezingTime(ItemLike itemProvider, int burnTime) {
+		Item item = itemProvider.asItem();
+		getFreezingMap().remove(item, burnTime);
 	}
 }

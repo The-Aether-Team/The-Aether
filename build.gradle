@@ -116,9 +116,6 @@ dependencies {
 
     compileOnly fg.deobf("top.theillusivec4.caelus:caelus-forge:${project.caelus_version}")
 
-    compileOnly "mezz.jei:jei-${project.mc_version}-common:${project.jei_version}"
-    compileOnly "mezz.jei:jei-${project.mc_version}-forge:${project.jei_version}"
-
 //    runtimeOnly fg.deobf("io.github.flemmli97:debugutils:${project.mc_version}-${project.debugutils_version}-forge")
 
     jarJar('com.github.llamalad7.mixinextras:mixinextras-forge:0.2.0-beta.9') {
@@ -140,6 +137,11 @@ dependencies {
         jarJar.ranged(it, "[${project.curios_version},)")
         jarJar.pin(it, "${project.curios_version}")
     }
+
+    compileOnly "mezz.jei:jei-${project.mc_version}-common:${project.jei_version}"
+    compileOnly "mezz.jei:jei-${project.mc_version}-forge:${project.jei_version}"
+
+    compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-${project.crafttweaker_version}")
 
     // compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-${project.crafttweaker_version}")
 

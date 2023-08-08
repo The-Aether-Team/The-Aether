@@ -48,7 +48,7 @@ public class AltarBlockEntity extends AbstractAetherFurnaceBlockEntity {
 		return enchantingMap;
 	}
 
-	private static void addItemTagEnchantingTime(TagKey<Item> itemTag, int burnTime) {
+	public static void addItemTagEnchantingTime(TagKey<Item> itemTag, int burnTime) {
 		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
 		if (tags != null) {
 			tags.getTag(itemTag).stream().forEach((item) -> getEnchantingMap().put(item, burnTime));
@@ -58,5 +58,17 @@ public class AltarBlockEntity extends AbstractAetherFurnaceBlockEntity {
 	public static void addItemEnchantingTime(ItemLike itemProvider, int burnTime) {
 		Item item = itemProvider.asItem();
 		getEnchantingMap().put(item, burnTime);
+	}
+
+	public static void removeItemTagEnchantingTime(TagKey<Item> itemTag, int burnTime) {
+		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
+		if (tags != null) {
+			tags.getTag(itemTag).stream().forEach((item) -> getEnchantingMap().remove(item, burnTime));
+		}
+	}
+
+	public static void removeItemEnchantingTime(ItemLike itemProvider, int burnTime) {
+		Item item = itemProvider.asItem();
+		getEnchantingMap().remove(item, burnTime);
 	}
 }
