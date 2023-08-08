@@ -1,6 +1,7 @@
 {
   "values": [
     "minecraft:air",
+    "minecraft:water",
     "minecraft:chest",
     "aether:chest_mimic",
     "aether:treasure_chest",

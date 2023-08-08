@@ -1,4 +1,4 @@
-// 1.19.4	2023-06-15T13:39:13.9053215	Tags for minecraft:block mod id aether
+// 1.19.4	2023-08-07T19:37:19.2852511	Tags for minecraft:block mod id aether
 fc9b66cee900f1b4f341fcec6da19eb45d575f43 data/aether/tags/blocks/aechor_plant_spawnable_on.json
 7f0ca5740d7eeb3d83a96088ad6c30a672b55609 data/aether/tags/blocks/aerclouds.json
 16a15f0767946dfa61ee9dfb544a3aeb3439340c data/aether/tags/blocks/aerogel.json
@@ -18,7 +18,8 @@ b7b37d30e23e65ee6925f4068e6d142f874fadd6 data/aether/tags/blocks/dungeon_blocks.
 7a6ab5f621a7a401034f482edac807cc203ff72b data/aether/tags/blocks/holystone.json
 b39b9a730fa6d6ce0d57bcbb88a249b6617d6822 data/aether/tags/blocks/infiniburn.json
 022a06d2a296e488a68e47fe0cebd62c586c55ea data/aether/tags/blocks/locked_dungeon_blocks.json
-18ee5a49c07b861ab3287546980320c558bdc3c4 data/aether/tags/blocks/non_tunnel_replaceable.json
+cf3608bd187922aeb48c566c19e8482b0dca34c7 data/aether/tags/blocks/non_bronze_dungeon_spawnable.json
+f044320c552d2490be4d416f191e85aff1a934e6 data/aether/tags/blocks/non_tunnel_replaceable.json
 adc60af0231716fa635707337a7147da3eef4eb6 data/aether/tags/blocks/sentry_blocks.json
 df16ed8f5964fbb722ae2040903fb88c95ad2b99 data/aether/tags/blocks/skyroot_logs.json
 31c6217cf1ecdd680f867d440f3dca420bbf9b99 data/aether/tags/blocks/slider_unbreakable.json

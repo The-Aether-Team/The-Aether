@@ -35,6 +35,7 @@ public class AetherTags {
 		public static final TagKey<Block> HELLFIRE_BLOCKS = tag("hellfire_blocks");
 		public static final TagKey<Block> SLIDER_UNBREAKABLE = tag("slider_unbreakable");
 		public static final TagKey<Block> VALKYRIE_QUEEN_UNBREAKABLE = tag("valkyrie_queen_unbreakable");
+		public static final TagKey<Block> NON_BRONZE_DUNGEON_SPAWNABLE = tag("non_bronze_dungeon_spawnable");
 		public static final TagKey<Block> NON_BRONZE_DUNGEON_REPLACEABLE = tag("non_tunnel_replaceable");
 		public static final TagKey<Block> GRAVITITE_ABILITY_BLACKLIST = tag("gravitite_ability_blacklist");
 		public static final TagKey<Block> AETHER_ANIMALS_SPAWNABLE_ON = tag("aether_animals_spawnable_on");

@@ -173,6 +173,7 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS);
         this.tag(AetherTags.Blocks.NON_BRONZE_DUNGEON_REPLACEABLE).add(
                 Blocks.AIR,
+                Blocks.WATER,
                 Blocks.CHEST,
                 AetherBlocks.CHEST_MIMIC.get(),
                 AetherBlocks.TREASURE_CHEST.get()
@@ -180,6 +181,8 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
                 AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS,
                 AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS);
+        this.tag(AetherTags.Blocks.NON_BRONZE_DUNGEON_SPAWNABLE).add(
+                Blocks.WATER);
         this.tag(AetherTags.Blocks.GRAVITITE_ABILITY_BLACKLIST).addTags(
                 BlockTags.BUTTONS,
                 BlockTags.PRESSURE_PLATES,
