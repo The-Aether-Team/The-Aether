@@ -12,27 +12,24 @@ import org.openzen.zencode.java.ZenCodeType;
 
 @ZenRegister
 @ZenCodeType.Name("mods.aether.FreezerFuelManager")
-public enum FreezerFuelManager {
-    @ZenCodeGlobals.Global("freezer")
-    INSTANCE;
-
+public class FreezerFuelManager {
     @ZenCodeType.Method
-    public void addFuel(IItemStack item, int burnTime) {
+    public static void addFuel(IItemStack item, int burnTime) {
         CraftTweakerAPI.apply(new AddFuelAction<>(FreezerBlockEntity::addItemFreezingTime, FreezerBlockEntity::removeItemFreezingTime, item.asItemLike(), burnTime));
     }
 
     @ZenCodeType.Method
-    public void addFuelTag(MCTag tag, int burnTime) {
+    public static void addFuelTag(MCTag tag, int burnTime) {
         CraftTweakerAPI.apply(new AddFuelAction<>(FreezerBlockEntity::addItemTagFreezingTime, FreezerBlockEntity::removeItemTagFreezingTime, tag.getTagKey(), burnTime));
     }
 
     @ZenCodeType.Method
-    public void removeFuel(IItemStack item, int burnTime) {
+    public static void removeFuel(IItemStack item, int burnTime) {
         CraftTweakerAPI.apply(new RemoveFuelAction<>(FreezerBlockEntity::removeItemFreezingTime, FreezerBlockEntity::addItemFreezingTime, item.asItemLike(), burnTime));
     }
 
     @ZenCodeType.Method
-    public void removeFuelTag(MCTag tag, int burnTime) {
+    public static void removeFuelTag(MCTag tag, int burnTime) {
         CraftTweakerAPI.apply(new RemoveFuelAction<>(FreezerBlockEntity::removeItemTagFreezingTime, FreezerBlockEntity::addItemTagFreezingTime, tag.getTagKey(), burnTime));
     }
 }

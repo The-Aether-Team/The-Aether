@@ -12,27 +12,24 @@ import org.openzen.zencode.java.ZenCodeType;
 
 @ZenRegister
 @ZenCodeType.Name("mods.aether.AltarFuelManager")
-public enum AltarFuelManager {
-    @ZenCodeGlobals.Global("altar")
-    INSTANCE;
-
+public class AltarFuelManager {
     @ZenCodeType.Method
-    public void addFuel(IItemStack item, int burnTime) {
+    public static void addFuel(IItemStack item, int burnTime) {
         CraftTweakerAPI.apply(new AddFuelAction<>(AltarBlockEntity::addItemEnchantingTime, AltarBlockEntity::removeItemEnchantingTime, item.asItemLike(), burnTime));
     }
 
     @ZenCodeType.Method
-    public void addFuelTag(MCTag tag, int burnTime) {
+    public static void addFuelTag(MCTag tag, int burnTime) {
         CraftTweakerAPI.apply(new AddFuelAction<>(AltarBlockEntity::addItemTagEnchantingTime, AltarBlockEntity::removeItemTagEnchantingTime, tag.getTagKey(), burnTime));
     }
 
     @ZenCodeType.Method
-    public void removeFuel(IItemStack item, int burnTime) {
+    public static void removeFuel(IItemStack item, int burnTime) {
         CraftTweakerAPI.apply(new RemoveFuelAction<>(AltarBlockEntity::removeItemEnchantingTime, AltarBlockEntity::addItemEnchantingTime, item.asItemLike(), burnTime));
     }
 
     @ZenCodeType.Method
-    public void removeFuelTag(MCTag tag, int burnTime) {
+    public static void removeFuelTag(MCTag tag, int burnTime) {
         CraftTweakerAPI.apply(new RemoveFuelAction<>(AltarBlockEntity::removeItemTagEnchantingTime, AltarBlockEntity::addItemTagEnchantingTime, tag.getTagKey(), burnTime));
     }
 }

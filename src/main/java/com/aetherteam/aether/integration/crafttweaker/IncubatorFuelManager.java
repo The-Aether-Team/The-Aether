@@ -12,27 +12,24 @@ import org.openzen.zencode.java.ZenCodeType;
 
 @ZenRegister
 @ZenCodeType.Name("mods.aether.IncubatorFuelManager")
-public enum IncubatorFuelManager {
-    @ZenCodeGlobals.Global("incubator")
-    INSTANCE;
-
+public class IncubatorFuelManager {
     @ZenCodeType.Method
-    public void addFuel(IItemStack item, int burnTime) {
+    public static void addFuel(IItemStack item, int burnTime) {
         CraftTweakerAPI.apply(new AddFuelAction<>(IncubatorBlockEntity::addItemIncubatingTime, IncubatorBlockEntity::removeItemIncubatingTime, item.asItemLike(), burnTime));
     }
 
     @ZenCodeType.Method
-    public void addFuelTag(MCTag tag, int burnTime) {
+    public static void addFuelTag(MCTag tag, int burnTime) {
         CraftTweakerAPI.apply(new AddFuelAction<>(IncubatorBlockEntity::addItemTagIncubatingTime, IncubatorBlockEntity::removeItemTagIncubatingTime, tag.getTagKey(), burnTime));
     }
 
     @ZenCodeType.Method
-    public void removeFuel(IItemStack item, int burnTime) {
+    public static void removeFuel(IItemStack item, int burnTime) {
         CraftTweakerAPI.apply(new RemoveFuelAction<>(IncubatorBlockEntity::removeItemIncubatingTime, IncubatorBlockEntity::addItemIncubatingTime, item.asItemLike(), burnTime));
     }
 
     @ZenCodeType.Method
-    public void removeFuelTag(MCTag tag, int burnTime) {
+    public static void removeFuelTag(MCTag tag, int burnTime) {
         CraftTweakerAPI.apply(new RemoveFuelAction<>(IncubatorBlockEntity::removeItemTagIncubatingTime, IncubatorBlockEntity::addItemTagIncubatingTime, tag.getTagKey(), burnTime));
     }
 }
