@@ -1,0 +1,28 @@
+{
+  "type": "aether:enchanted_grass",
+  "conditions": [
+    {
+      "condition": "minecraft:alternative",
+      "terms": [
+        {
+          "block": "minecraft:sweet_berry_bush",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "age": "3"
+          }
+        },
+        {
+          "block": "minecraft:sweet_berry_bush",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "age": "2"
+          }
+        }
+      ]
+    }
+  ],
+  "item": {
+    "Count": 1,
+    "id": "aether:blue_berry"
+  }
+}

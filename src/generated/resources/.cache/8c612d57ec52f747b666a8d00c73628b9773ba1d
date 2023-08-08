@@ -1,5 +1,7 @@
-// 1.19.4	2023-04-28T14:11:24.4578402	Global Loot Modifiers : aether
+// 1.19.4	2023-08-07T20:09:44.8794295	Global Loot Modifiers : aether
 09b253d9321c1d9f192a40b16483f85c39b96b75 data/aether/loot_modifiers/double_drops.json
+285e0ac500bdf69974bfac3b7c0a1a33a430ed15 data/aether/loot_modifiers/enchanted_grass_berry_bush.json
+3bba33480c4bb9c98ff5370dd02c38d8a75cf46e data/aether/loot_modifiers/enchanted_grass_sweet_berry_bush.json
 bef2c642d1e9edfcac4f9d3301e51bf6cab20e4c data/aether/loot_modifiers/pig_drops.json
 57f1a7642250141784a6ed47e848a4861fe5a54b data/aether/loot_modifiers/remove_seeds.json
-b4ad9b72a0178ac1b8113924778f76dd51c6f95b data/forge/loot_modifiers/global_loot_modifiers.json
+f3cf245d2b0802c56b897d7f08a80dcdfad3a480 data/forge/loot_modifiers/global_loot_modifiers.json

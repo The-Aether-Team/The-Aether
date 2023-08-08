@@ -1,4 +1,4 @@
-// 1.19.4	2023-06-15T13:39:13.9053215	Tags for minecraft:block mod id aether
+// 1.19.4	2023-08-07T20:20:32.9806409	Tags for minecraft:block mod id aether
 fc9b66cee900f1b4f341fcec6da19eb45d575f43 data/aether/tags/blocks/aechor_plant_spawnable_on.json
 7f0ca5740d7eeb3d83a96088ad6c30a672b55609 data/aether/tags/blocks/aerclouds.json
 16a15f0767946dfa61ee9dfb544a3aeb3439340c data/aether/tags/blocks/aerogel.json
@@ -12,6 +12,7 @@ befda0e6594eed38bd37a692d75b8fcb44d812c5 data/aether/tags/blocks/allowed_flammab
 eb4cdf6f9a5abc219ab893139c2ed512fb1e06de data/aether/tags/blocks/angelic_blocks.json
 d9dcb253fe96193998f03751892165ee5f5c1924 data/aether/tags/blocks/boss_doorway_dungeon_blocks.json
 b7b37d30e23e65ee6925f4068e6d142f874fadd6 data/aether/tags/blocks/dungeon_blocks.json
+f88e31ba010e8b41d4256635de26d1cf8a0aa221 data/aether/tags/blocks/enchanted_grass.json
 65976e3564baed2ae1f9323801f6fdc2faa84331 data/aether/tags/blocks/golden_oak_logs.json
 919fec6673778567a924cacfa590d985b91709d9 data/aether/tags/blocks/gravitite_ability_blacklist.json
 14656c5bacbe085775af17b37cc6fe661f3c5c00 data/aether/tags/blocks/hellfire_blocks.json
