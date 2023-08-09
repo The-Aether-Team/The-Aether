@@ -17,6 +17,7 @@ import net.minecraftforge.registries.tags.ITagManager;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class FreezerBlockEntity extends AbstractAetherFurnaceBlockEntity {
 	private static final Map<Item, Integer> freezingMap = new LinkedHashMap<>();
@@ -48,15 +49,35 @@ public class FreezerBlockEntity extends AbstractAetherFurnaceBlockEntity {
 		return freezingMap;
 	}
 
-	private static void addItemTagFreezingTime(TagKey<Item> itemTag, int burnTime) {
+	public static void addItemFreezingTime(ItemLike itemProvider, int burnTime) {
+		Item item = itemProvider.asItem();
+		getFreezingMap().put(item, burnTime);
+	}
+
+	public static void addItemsFreezingTime(ItemLike[] itemProviders, int burnTime) {
+		Stream.of(itemProviders).map(ItemLike::asItem).forEach((item) -> getFreezingMap().put(item, burnTime));
+	}
+
+	public static void addItemTagFreezingTime(TagKey<Item> itemTag, int burnTime) {
 		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
 		if (tags != null) {
 			tags.getTag(itemTag).stream().forEach((item) -> getFreezingMap().put(item, burnTime));
 		}
 	}
 
-	public static void addItemFreezingTime(ItemLike itemProvider, int burnTime) {
+	public static void removeItemFreezingTime(ItemLike itemProvider) {
 		Item item = itemProvider.asItem();
-		getFreezingMap().put(item, burnTime);
+		getFreezingMap().remove(item);
+	}
+
+	public static void removeItemsFreezingTime(ItemLike[] itemProviders) {
+		Stream.of(itemProviders).map(ItemLike::asItem).forEach((item) -> getFreezingMap().remove(item));
+	}
+
+	public static void removeItemTagFreezingTime(TagKey<Item> itemTag) {
+		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
+		if (tags != null) {
+			tags.getTag(itemTag).stream().forEach((item) -> getFreezingMap().remove(item));
+		}
 	}
 }

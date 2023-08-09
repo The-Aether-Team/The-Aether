@@ -17,6 +17,7 @@ import net.minecraftforge.registries.tags.ITagManager;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class AltarBlockEntity extends AbstractAetherFurnaceBlockEntity {
 	private static final Map<Item, Integer> enchantingMap = new LinkedHashMap<>();
@@ -48,15 +49,35 @@ public class AltarBlockEntity extends AbstractAetherFurnaceBlockEntity {
 		return enchantingMap;
 	}
 
-	private static void addItemTagEnchantingTime(TagKey<Item> itemTag, int burnTime) {
+	public static void addItemEnchantingTime(ItemLike itemProvider, int burnTime) {
+		Item item = itemProvider.asItem();
+		getEnchantingMap().put(item, burnTime);
+	}
+
+	public static void addItemsEnchantingTime(ItemLike[] itemProviders, int burnTime) {
+		Stream.of(itemProviders).map(ItemLike::asItem).forEach((item) -> getEnchantingMap().put(item, burnTime));
+	}
+
+	public static void addItemTagEnchantingTime(TagKey<Item> itemTag, int burnTime) {
 		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
 		if (tags != null) {
 			tags.getTag(itemTag).stream().forEach((item) -> getEnchantingMap().put(item, burnTime));
 		}
 	}
 
-	public static void addItemEnchantingTime(ItemLike itemProvider, int burnTime) {
+	public static void removeItemEnchantingTime(ItemLike itemProvider) {
 		Item item = itemProvider.asItem();
-		getEnchantingMap().put(item, burnTime);
+		getEnchantingMap().remove(item);
+	}
+
+	public static void removeItemsEnchantingTime(ItemLike[] itemProviders) {
+		Stream.of(itemProviders).map(ItemLike::asItem).forEach((item) -> getEnchantingMap().remove(item));
+	}
+
+	public static void removeItemTagEnchantingTime(TagKey<Item> itemTag) {
+		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
+		if (tags != null) {
+			tags.getTag(itemTag).stream().forEach((item) -> getEnchantingMap().remove(item));
+		}
 	}
 }
