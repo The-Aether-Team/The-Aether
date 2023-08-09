@@ -3,7 +3,6 @@
     "aether:remove_seeds",
     "aether:pig_drops",
     "aether:enchanted_grass_berry_bush",
-    "aether:enchanted_grass_sweet_berry_bush",
     "aether:double_drops"
   ],
   "replace": false
