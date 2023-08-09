@@ -66,7 +66,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 	private int litDuration; // Total time it takes a fuel item to burn.
 	private int incubationProgress; // The current incubation progress time.
 	private int incubationTotalTime; // Total time a recipe takes to incubate.
-    private int x; // The x position of the block entity.
+	private int x; // The x position of the block entity.
 	private int y; // The y position of the block entity.
 	private int z; // The z position of the block entity.
 	protected final ContainerData dataAccess = new ContainerData() {
@@ -77,7 +77,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 				case 1 -> IncubatorBlockEntity.this.litDuration;
 				case 2 -> IncubatorBlockEntity.this.incubationProgress;
 				case 3 -> IncubatorBlockEntity.this.incubationTotalTime;
-                case 4 -> IncubatorBlockEntity.this.x;
+				case 4 -> IncubatorBlockEntity.this.x;
 				case 5 -> IncubatorBlockEntity.this.y;
 				case 6 -> IncubatorBlockEntity.this.z;
 				default -> 0;
