@@ -1,17 +1,13 @@
 package com.aetherteam.aether.data.providers;
 
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.loot.functions.DoubleDrops;
 import com.aetherteam.aether.loot.functions.SpawnTNT;
 import com.aetherteam.aether.loot.functions.SpawnXP;
 import com.aetherteam.aether.mixin.mixins.common.accessor.BlockLootAccessor;
 import com.aetherteam.nitrogen.data.providers.NitrogenBlockLootSubProvider;
-import net.minecraft.advancements.critereon.BlockPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.advancements.critereon.LocationPredicate;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -127,16 +123,7 @@ public abstract class AetherBlockLootSubProvider extends NitrogenBlockLootSubPro
     public LootTable.Builder droppingBerryBush(Block block, Block stem, Item drop) {
         return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                 .add(this.applyExplosionDecay(block, LootItem.lootTableItem(drop)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))
-                                .when(LocationCheck.checkLocation(
-                                        LocationPredicate.Builder.location().setBlock(
-                                                BlockPredicate.Builder.block().of(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get()).build()),
-                                        new BlockPos(0, -1, 0)).invert()))
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 4.0F))
-                                .when(LocationCheck.checkLocation(
-                                        LocationPredicate.Builder.location().setBlock(
-                                                BlockPredicate.Builder.block().of(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get()).build()),
-                                        new BlockPos(0, -1, 0)))))
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
                         .apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE)))
                 .when(BlockLootAccessor.aether$hasSilkTouch().invert())
                 .apply(DoubleDrops.builder())
