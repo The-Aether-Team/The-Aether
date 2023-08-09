@@ -24,7 +24,6 @@ public interface AerogelCulling {
             List<AABB> faceBounds = state.getBlockSupportShape(level, pos).getFaceShape(dir).toAabbs();
             List<AABB> neighborFaceBounds = neighborState.getBlockSupportShape(level, pos.offset(dir.getNormal())).getFaceShape(dir.getOpposite()).toAabbs();
             return faceBounds.equals(neighborFaceBounds);
-        }
-        return false;
+        } else return neighborState.getBlock() instanceof AerogelWallBlock;
     }
 }
