@@ -51,6 +51,7 @@ import net.minecraftforge.registries.tags.ITagManager;
 import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * [CODE COPY] - {@link AbstractFurnaceBlockEntity}.<br><br>
@@ -279,6 +280,15 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 		return incubatingMap;
 	}
 
+	public static void addItemIncubatingTime(ItemLike itemProvider, int burnTime) {
+		Item item = itemProvider.asItem();
+		getIncubatingMap().put(item, burnTime);
+	}
+
+	public static void addItemsIncubatingTime(ItemLike[] itemProviders, int burnTime) {
+		Stream.of(itemProviders).map(ItemLike::asItem).forEach((item) -> getIncubatingMap().put(item, burnTime));
+	}
+
 	public static void addItemTagIncubatingTime(TagKey<Item> itemTag, int burnTime) {
 		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
 		if (tags != null) {
@@ -286,21 +296,20 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 		}
 	}
 
-	public static void addItemIncubatingTime(ItemLike itemProvider, int burnTime) {
+	public static void removeItemIncubatingTime(ItemLike itemProvider) {
 		Item item = itemProvider.asItem();
-		getIncubatingMap().put(item, burnTime);
+		getIncubatingMap().remove(item);
 	}
 
-	public static void removeItemTagIncubatingTime(TagKey<Item> itemTag, int burnTime) {
+	public static void removeItemsIncubatingTime(ItemLike[] itemProviders) {
+		Stream.of(itemProviders).map(ItemLike::asItem).forEach((item) -> getIncubatingMap().remove(item));
+	}
+
+	public static void removeItemTagIncubatingTime(TagKey<Item> itemTag) {
 		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
 		if (tags != null) {
-			tags.getTag(itemTag).stream().forEach((item) -> getIncubatingMap().remove(item, burnTime));
+			tags.getTag(itemTag).stream().forEach((item) -> getIncubatingMap().remove(item));
 		}
-	}
-
-	public static void removeItemIncubatingTime(ItemLike itemProvider, int burnTime) {
-		Item item = itemProvider.asItem();
-		getIncubatingMap().remove(item, burnTime);
 	}
 
 	public void setPlayer(ServerPlayer player) {
