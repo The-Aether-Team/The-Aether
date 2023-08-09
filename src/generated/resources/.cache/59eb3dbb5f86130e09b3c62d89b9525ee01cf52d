@@ -1,4 +1,4 @@
-// 1.19.4	2023-08-03T20:15:49.052912	Loot Tables
+// 1.19.4	2023-08-07T20:03:25.1835164	Loot Tables
 d025471306910ea35dcf85d28fc188182a1b3c8d data/aether/loot_tables/advancements/enter_aether.json
 96aec873b17d2a5aed2a22fe094efa32b8d54645 data/aether/loot_tables/blocks/aerogel.json
 ffdecdc23fdf03314c666c6d8638f7f44bdbcc8b data/aether/loot_tables/blocks/aerogel_slab.json
@@ -18,7 +18,7 @@ a17e74dbf32e992b871e0798eb498292c270f06b data/aether/loot_tables/blocks/ambrosiu
 d6ab159d767f8b5591a29da3f1e6e674ca96de2b data/aether/loot_tables/blocks/angelic_stairs.json
 c6fa40b8f4c6090d949b5006deed5809600ede91 data/aether/loot_tables/blocks/angelic_stone.json
 725033b18efe98990e89b5adf80a871549e88297 data/aether/loot_tables/blocks/angelic_wall.json
-7af6acadfcbc889af042c045ac4c69b95d7447de data/aether/loot_tables/blocks/berry_bush.json
+b3096d0d42faa835d60d87a6a4634f5c9ab07ff4 data/aether/loot_tables/blocks/berry_bush.json
 43fed59caef30ed669337807c1808a0d4c33395e data/aether/loot_tables/blocks/berry_bush_stem.json
 3c5c73ce4c3d84594ec85f3f9d45a15f77b8eda3 data/aether/loot_tables/blocks/blue_aercloud.json
 1d4929d7d6176f60e5ea991a577527ed251ef375 data/aether/loot_tables/blocks/boss_doorway_angelic_stone.json

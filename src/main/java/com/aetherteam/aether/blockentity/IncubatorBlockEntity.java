@@ -51,6 +51,7 @@ import net.minecraftforge.registries.tags.ITagManager;
 import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * [CODE COPY] - {@link AbstractFurnaceBlockEntity}.<br><br>
@@ -65,7 +66,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 	private int litDuration; // Total time it takes a fuel item to burn.
 	private int incubationProgress; // The current incubation progress time.
 	private int incubationTotalTime; // Total time a recipe takes to incubate.
-    private int x; // The x position of the block entity.
+	private int x; // The x position of the block entity.
 	private int y; // The y position of the block entity.
 	private int z; // The z position of the block entity.
 	protected final ContainerData dataAccess = new ContainerData() {
@@ -76,7 +77,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 				case 1 -> IncubatorBlockEntity.this.litDuration;
 				case 2 -> IncubatorBlockEntity.this.incubationProgress;
 				case 3 -> IncubatorBlockEntity.this.incubationTotalTime;
-                case 4 -> IncubatorBlockEntity.this.x;
+				case 4 -> IncubatorBlockEntity.this.x;
 				case 5 -> IncubatorBlockEntity.this.y;
 				case 6 -> IncubatorBlockEntity.this.z;
 				default -> 0;
@@ -279,6 +280,15 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 		return incubatingMap;
 	}
 
+	public static void addItemIncubatingTime(ItemLike itemProvider, int burnTime) {
+		Item item = itemProvider.asItem();
+		getIncubatingMap().put(item, burnTime);
+	}
+
+	public static void addItemsIncubatingTime(ItemLike[] itemProviders, int burnTime) {
+		Stream.of(itemProviders).map(ItemLike::asItem).forEach((item) -> getIncubatingMap().put(item, burnTime));
+	}
+
 	public static void addItemTagIncubatingTime(TagKey<Item> itemTag, int burnTime) {
 		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
 		if (tags != null) {
@@ -286,21 +296,20 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 		}
 	}
 
-	public static void addItemIncubatingTime(ItemLike itemProvider, int burnTime) {
+	public static void removeItemIncubatingTime(ItemLike itemProvider) {
 		Item item = itemProvider.asItem();
-		getIncubatingMap().put(item, burnTime);
+		getIncubatingMap().remove(item);
 	}
 
-	public static void removeItemTagIncubatingTime(TagKey<Item> itemTag, int burnTime) {
+	public static void removeItemsIncubatingTime(ItemLike[] itemProviders) {
+		Stream.of(itemProviders).map(ItemLike::asItem).forEach((item) -> getIncubatingMap().remove(item));
+	}
+
+	public static void removeItemTagIncubatingTime(TagKey<Item> itemTag) {
 		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
 		if (tags != null) {
-			tags.getTag(itemTag).stream().forEach((item) -> getIncubatingMap().remove(item, burnTime));
+			tags.getTag(itemTag).stream().forEach((item) -> getIncubatingMap().remove(item));
 		}
-	}
-
-	public static void removeItemIncubatingTime(ItemLike itemProvider, int burnTime) {
-		Item item = itemProvider.asItem();
-		getIncubatingMap().remove(item, burnTime);
 	}
 
 	public void setPlayer(ServerPlayer player) {

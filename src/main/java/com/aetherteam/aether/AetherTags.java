@@ -19,6 +19,7 @@ public class AetherTags {
 		public static final TagKey<Block> AETHER_PORTAL_BLACKLIST = tag("aether_portal_blacklist");
 		public static final TagKey<Block> AETHER_ISLAND_BLOCKS = tag("aether_island_blocks");
 		public static final TagKey<Block> AETHER_DIRT = tag("aether_dirt");
+		public static final TagKey<Block> ENCHANTED_GRASS = tag("enchanted_grass");
 		public static final TagKey<Block> HOLYSTONE = tag("holystone");
 		public static final TagKey<Block> AERCLOUDS = tag("aerclouds");
 		public static final TagKey<Block> SKYROOT_LOGS = tag("skyroot_logs");
