@@ -20,7 +20,7 @@ public interface AerogelCulling {
      * @return Whether the neighbor block should skip rendering the neighboring face, as a {@link Boolean}.
      */
     default boolean shouldHideNeighboringAerogelFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState, Direction dir) {
-        if (state.getBlock() instanceof AerogelCulling) {
+        if (neighborState.getBlock() instanceof AerogelCulling) {
             List<AABB> faceBounds = state.getBlockSupportShape(level, pos).getFaceShape(dir).toAabbs();
             List<AABB> neighborFaceBounds = neighborState.getBlockSupportShape(level, pos.offset(dir.getNormal())).getFaceShape(dir.getOpposite()).toAabbs();
             return faceBounds.equals(neighborFaceBounds);
