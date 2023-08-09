@@ -67,7 +67,7 @@ public interface FreezingBehavior<T> {
         }
 
         // Update the center manually too
-        return this.freezeFromRecipe(level, origin, source, FLAG_SHELL) + blocksFrozen;
+        return this.freezeFromRecipe(level, origin, origin, source, FLAG_SHELL) + blocksFrozen;
     }
 
     /**
@@ -79,29 +79,31 @@ public interface FreezingBehavior<T> {
      * @param dZ The z {@link Integer} offset from the center of the circle.
      * @param source The source causing the freezing, which is accepted as {@link T}.
      * @param flag The flag to use for block placement when freezing.
-     * @return An {@link Integer} added up from the blocks being frozen. See {@link FreezingBehavior#freezeFromRecipe(Level, BlockPos, Object, int)}.
+     * @return An {@link Integer} added up from the blocks being frozen. See {@link FreezingBehavior#freezeFromRecipe(Level, BlockPos, BlockPos, Object, int)}.
      */
     private int quarters(Level level, BlockPos origin, int dX, int dY, int dZ, T source, int flag) {
-        return this.freezeFromRecipe(level, origin.offset(dX, dY, dZ), source, flag)
-                + this.freezeFromRecipe(level, origin.offset(-dZ, dY, dX), source, flag)
-                + this.freezeFromRecipe(level, origin.offset(-dX, dY, -dZ), source, flag)
-                + this.freezeFromRecipe(level, origin.offset(dZ, dY, -dX), source, flag);
+        return this.freezeFromRecipe(level, origin.offset(dX, dY, dZ), origin, source, flag)
+                + this.freezeFromRecipe(level, origin.offset(-dZ, dY, dX), origin, source, flag)
+                + this.freezeFromRecipe(level, origin.offset(-dX, dY, -dZ), origin, source, flag)
+                + this.freezeFromRecipe(level, origin.offset(dZ, dY, -dX), origin, source, flag);
     }
 
     /**
      * Handles pre-block modification freezing behavior, should be used by subclasses for recipe and source-specific code.
      * @param level The {@link Level} to freeze the blocks in.
      * @param pos The {@link BlockPos} the freezing occurred at.
+     * @param origin The {@link BlockPos} of the source that is causing the freezing.
      * @param source The source causing the freezing, which is accepted as {@link T}.
      * @param flag The {@link Integer} representing the block placement flag (see {@link net.minecraft.world.level.LevelWriter#setBlock(BlockPos, BlockState, int)}).
      * @return An {@link Integer} 1 if a block was successfully frozen, or a 0 if it wasn't.
      */
-    int freezeFromRecipe(Level level, BlockPos pos, T source, int flag);
+    int freezeFromRecipe(Level level, BlockPos pos, BlockPos origin, T source, int flag);
 
     /**
      * Freezes (sets) a block at a position if the {@link FreezeEvent} isn't cancelled. Also schedules a tick if the block can randomly tick, and plays a lava extinguishing sound if the old block is in the {@link FluidTags#LAVA} tag.
      * @param level The {@link Level} to perform the freezing in.
      * @param pos The {@link BlockPos} to freeze at.
+     * @param origin The {@link BlockPos} of the source that is causing the freezing.
      * @param oldBlockState The original {@link BlockState} being frozen.
      * @param newBlockState The new {@link BlockState} to freeze into.
      * @param function The {@link CommandFunction.CacheableFunction} to run after freezing.
@@ -109,8 +111,8 @@ public interface FreezingBehavior<T> {
      * @param flag The {@link Integer} placement flag.
      * @return An {@link Integer} 0 if the block failed to freeze or 1 if it succeeded
      */
-    default int freezeBlockAt(Level level, BlockPos pos, BlockState oldBlockState, BlockState newBlockState, @Nullable CommandFunction.CacheableFunction function, T source, int flag) {
-        FreezeEvent event = this.onFreeze(level, pos, oldBlockState, newBlockState, source);
+    default int freezeBlockAt(Level level, BlockPos pos, BlockPos origin, BlockState oldBlockState, BlockState newBlockState, @Nullable CommandFunction.CacheableFunction function, T source, int flag) {
+        FreezeEvent event = this.onFreeze(level, pos, origin, oldBlockState, newBlockState, source);
         if (!event.isCanceled()) {
             level.setBlock(pos, newBlockState, flag);
             if (newBlockState.isRandomlyTicking()) {
@@ -126,10 +128,11 @@ public interface FreezingBehavior<T> {
      * Event hook call for freezing blocks, used by subclasses.
      * @param level The {@link Level} to perform the freezing in.
      * @param pos The {@link BlockPos} to freeze at.
+     * @param origin The {@link BlockPos} of the source that is causing the freezing.
      * @param oldBlockState The original {@link BlockState} being frozen.
      * @param newBlockState The new {@link BlockState} to freeze into.
      * @param source The source causing the freezing, which is accepted as {@link T}.
      * @return The {@link FreezeEvent} for this behavior.
      */
-    FreezeEvent onFreeze(LevelAccessor level, BlockPos pos, BlockState oldBlockState, BlockState newBlockState, T source);
+    FreezeEvent onFreeze(LevelAccessor level, BlockPos pos, BlockPos origin, BlockState oldBlockState, BlockState newBlockState, T source);
 }

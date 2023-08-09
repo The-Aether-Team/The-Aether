@@ -31,11 +31,12 @@ public class ReloadListeners {
         }
 
         /**
-         * Resets the block cache for {@link FreezingBlock} recipes.
+         * Resets the block caches for {@link FreezingBlock} recipes.
          */
         @Override
         protected void apply(Map<ResourceLocation, JsonElement> object, ResourceManager resourceManager, ProfilerFiller profiler) {
             FreezingBlock.cachedBlocks.clear();
+            FreezingBlock.cachedResults.clear();
         }
     }
 }

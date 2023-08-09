@@ -5,6 +5,8 @@ import com.aetherteam.aether.AetherGameEvents;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.block.FreezingBlock;
+import com.aetherteam.aether.blockentity.IcestoneBlockEntity;
+import com.aetherteam.aether.event.FreezeEvent;
 import com.aetherteam.aether.event.PlacementBanEvent;
 import com.aetherteam.aether.event.PlacementConvertEvent;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
@@ -33,6 +35,8 @@ import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
+
+import java.util.Map;
 
 public class RecipeHooks {
     /**
@@ -184,5 +188,24 @@ public class RecipeHooks {
                 level.gameEvent(null, AetherGameEvents.ICESTONE_FREEZABLE_UPDATE.get(), pos);
             }
         }
+    }
+
+    /**
+     * Prevents freezing blocks at a position from Icestone if that position is marked to have delayed freezing.
+     * @param accessor The {@link LevelAccessor} that the block is in.
+     * @param sourcePos The {@link BlockPos} of the source of the freezing.
+     * @param pos The {@link BlockPos} of the block to freeze.
+     * @return Whether freezing a block should be prevented, as a {@link Boolean}.
+     * @see com.aetherteam.aether.event.listeners.RecipeListener#onBlockFreeze(FreezeEvent.FreezeFromBlock)
+     */
+    public static boolean preventBlockFreezing(LevelAccessor accessor, BlockPos sourcePos, BlockPos pos) {
+        if (accessor.getBlockEntity(sourcePos) instanceof IcestoneBlockEntity blockEntity) {
+            for (Map.Entry<BlockPos, Integer> entry : blockEntity.getLastBrokenPositions().entrySet()) {
+                if (entry.getKey().equals(pos) && entry.getValue() > 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
