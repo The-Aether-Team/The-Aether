@@ -10,9 +10,7 @@ import com.aetherteam.aether.block.miscellaneous.UnstableObsidianBlock;
 import com.aetherteam.aether.block.natural.*;
 import com.aetherteam.aether.block.portal.AetherPortalBlock;
 import com.aetherteam.aether.block.utility.*;
-import com.aetherteam.aether.blockentity.ChestMimicBlockEntity;
-import com.aetherteam.aether.blockentity.SkyrootBedBlockEntity;
-import com.aetherteam.aether.blockentity.TreasureChestBlockEntity;
+import com.aetherteam.aether.blockentity.*;
 import com.aetherteam.aether.client.particle.AetherParticleTypes;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.AetherEntityTypes;
@@ -232,6 +230,16 @@ public class AetherBlocks {
 
     public static final RegistryObject<Block> FROSTED_ICE = BLOCKS.register("frosted_ice", () -> new AetherFrostedIceBlock(BlockBehaviour.Properties.of(Material.ICE).friction(0.98F).randomTicks().strength(0.5F).sound(SoundType.GLASS).noOcclusion().isValidSpawn((state, level, pos, entityType) -> entityType == EntityType.POLAR_BEAR)));
     public static final RegistryObject<Block> UNSTABLE_OBSIDIAN = BLOCKS.register("unstable_obsidian", () -> new UnstableObsidianBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).randomTicks().requiresCorrectToolForDrops().strength(50.0F, 1200.0F)));
+
+    public static void registerFuels() {
+        AltarBlockEntity.addItemEnchantingTime(AetherItems.AMBROSIUM_SHARD.get(), 250);
+        AltarBlockEntity.addItemEnchantingTime(AetherBlocks.AMBROSIUM_BLOCK.get(), 2500);
+        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE.get(), 400);
+        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE_SLAB.get(), 200);
+        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE_STAIRS.get(), 400);
+        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE_WALL.get(), 400);
+        IncubatorBlockEntity.addItemIncubatingTime(AetherBlocks.AMBROSIUM_TORCH.get(), 500);
+    }
 
     public static void registerPots() {
         FlowerPotBlock pot = (FlowerPotBlock) Blocks.FLOWER_POT;

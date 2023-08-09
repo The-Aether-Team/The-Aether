@@ -41,6 +41,8 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherBlocks.AETHER_GRASS_BLOCK.get(),
                 AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get(),
                 AetherBlocks.AETHER_DIRT.get());
+        this.tag(AetherTags.Blocks.ENCHANTED_GRASS).add(
+                AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get());
         this.tag(AetherTags.Blocks.HOLYSTONE).add(
                 AetherBlocks.HOLYSTONE.get(),
                 AetherBlocks.MOSSY_HOLYSTONE.get());
