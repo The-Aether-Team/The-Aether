@@ -9,9 +9,6 @@ import com.aetherteam.aether.block.dispenser.AetherDispenseBehaviors;
 import com.aetherteam.aether.block.dispenser.DispenseDartBehavior;
 import com.aetherteam.aether.block.dispenser.DispenseUsableItemBehavior;
 import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
-import com.aetherteam.aether.blockentity.AltarBlockEntity;
-import com.aetherteam.aether.blockentity.FreezerBlockEntity;
-import com.aetherteam.aether.blockentity.IncubatorBlockEntity;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.CombinedPackResources;
 import com.aetherteam.aether.client.TriviaGenerator;
@@ -162,9 +159,8 @@ public class Aether {
 
         MoaSkins.registerMoaSkins();
 
-        this.registerFuels();
-
         event.enqueueWork(() -> {
+            AetherBlocks.registerFuels();
             AetherBlocks.registerPots();
             AetherBlocks.registerFlammability();
             AetherBlocks.registerFluidInteractions();
@@ -471,15 +467,5 @@ public class Aether {
      */
     private void addCompost(float chance, ItemLike item) {
         ComposterBlock.COMPOSTABLES.put(item.asItem(), chance);
-    }
-
-    private void registerFuels() {
-        AltarBlockEntity.addItemEnchantingTime(AetherItems.AMBROSIUM_SHARD.get(), 250);
-        AltarBlockEntity.addItemEnchantingTime(AetherBlocks.AMBROSIUM_BLOCK.get(), 2500);
-        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE.get(), 400);
-        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE_SLAB.get(), 200);
-        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE_STAIRS.get(), 400);
-        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE_WALL.get(), 400);
-        IncubatorBlockEntity.addItemIncubatingTime(AetherBlocks.AMBROSIUM_TORCH.get(), 500);
     }
 }
