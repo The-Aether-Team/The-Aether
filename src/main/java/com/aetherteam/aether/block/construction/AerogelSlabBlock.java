@@ -6,9 +6,8 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.SlabType;
 
-public class AerogelSlabBlock extends SlabBlock {
+public class AerogelSlabBlock extends SlabBlock implements AerogelCulling {
 	public AerogelSlabBlock(Properties properties) {
 		super(properties);
 	}
@@ -38,29 +37,16 @@ public class AerogelSlabBlock extends SlabBlock {
 	}
 
 	/**
-	 * Skips rendering for the sides of slab blocks if the neighboring slab matches the position, making the sides not visible when looking through the blocks.<br><br>
-	 * Warning for "deprecation" is suppressed because the method is fine to override.
+	 * Skips rendering for Aerogel blocks that are neighboring this block, using {@link AerogelCulling#shouldHideNeighboringAerogelFace(BlockGetter, BlockPos, BlockState, BlockState, Direction)}.
+	 * @param level The {@link Level} that the block is in.
+	 * @param pos The {@link BlockPos} of this block.
 	 * @param state The {@link BlockState} of the block.
-	 * @param adjacentBlockState The {@link BlockState} of the adjacent block.
-	 * @param direction The {@link Direction} of the side to check for rendering.
-	 * @return Whether to skip the rendering for a side, as a {@link Boolean}.
+	 * @param neighborState The {@link BlockState} of the neighboring block.
+	 * @param dir The {@link Direction} to the neighboring state.
+	 * @return Whether the neighbor block should skip rendering the neighboring face, as a {@link Boolean}.
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
-	public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction direction) {
-        if (adjacentBlockState.is(this)) {
-            switch (direction) {
-                case UP -> {
-                    return state.getValue(TYPE) != SlabType.BOTTOM && adjacentBlockState.getValue(TYPE) != SlabType.TOP;
-                }
-                case DOWN -> {
-                    return state.getValue(TYPE) != SlabType.TOP && adjacentBlockState.getValue(TYPE) != SlabType.BOTTOM;
-                }
-                default -> {
-                    return state.getValue(TYPE) == adjacentBlockState.getValue(TYPE);
-                }
-            }
-        }
-		return super.skipRendering(state, adjacentBlockState, direction);
+	public boolean hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState, Direction dir) {
+		return AerogelCulling.super.shouldHideNeighboringAerogelFace(level, pos, state, neighborState, dir);
 	}
 }
