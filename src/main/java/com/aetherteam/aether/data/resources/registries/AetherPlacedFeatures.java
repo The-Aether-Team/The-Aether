@@ -127,7 +127,7 @@ public class AetherPlacedFeatures {
         register(context, ORE_ZANITE_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.ORE_ZANITE_CONFIGURATION),
                 NitrogenPlacedFeatureBuilders.commonOrePlacement(14, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.aboveBottom(75))));
         register(context, ORE_GRAVITITE_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.ORE_GRAVITITE_CONFIGURATION),
-                NitrogenPlacedFeatureBuilders.commonOrePlacement(1, HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(56), VerticalAnchor.aboveBottom(74))));
+                NitrogenPlacedFeatureBuilders.commonOrePlacement(1, HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(48), VerticalAnchor.aboveBottom(74))));
         register(context, ORE_GRAVITITE_LOWER_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.ORE_GRAVITITE_LOWER_CONFIGURATION),
                 NitrogenPlacedFeatureBuilders.commonOrePlacement(2, HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(8), VerticalAnchor.aboveBottom(56))));
 //        register(context, ORE_GRAVITITE_LOWER_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.ORE_GRAVITITE_LOWER_CONFIGURATION),
