@@ -1,4 +1,4 @@
-// 1.19.4	2023-08-10T14:37:33.9836735	Registries
+// 1.19.4	2023-08-10T15:06:11.1090626	Registries
 25d924fdac4392adb88fe3b6aa2c23420f6fb4f9 data/aether/damage_type/armor_piercing_attack.json
 03d6a63bae7e4458c11da22471bf0f8b5051023c data/aether/damage_type/cloud_crystal.json
 024fc58ce3f33e1542dfe59582a4da47cc178764 data/aether/damage_type/crush.json
@@ -24,7 +24,7 @@ e8a26e105aaec63ce90962277b1d0075eaf16a71 data/aether/worldgen/configured_feature
 dfc78a16e715dbf5702264789746f4cc747bd188 data/aether/worldgen/configured_feature/golden_aercloud.json
 6ed5f270a8e3594b1860c10348f5e200e59628c7 data/aether/worldgen/configured_feature/golden_oak_tree.json
 c75a69a06a66ad5a2ab402d7bca52e3e58098362 data/aether/worldgen/configured_feature/grass_patch.json
-92a2a92c7b0bb2d8db0a3355ab560003c4202b69 data/aether/worldgen/configured_feature/gravitite_ore.json
+df7baff686b5d66e4e816e1ef2716751fe927f0e data/aether/worldgen/configured_feature/gravitite_ore.json
 601b9ac6551101ffa824913082400b735e3232a2 data/aether/worldgen/configured_feature/holiday_tree.json
 4da1c6c8ba94f003e7428eb8d080ca06a999d2af data/aether/worldgen/configured_feature/icestone_ore.json
 922e214f5e2c8564e532b37c76aff07a17340414 data/aether/worldgen/configured_feature/lower_gravitite_ore.json

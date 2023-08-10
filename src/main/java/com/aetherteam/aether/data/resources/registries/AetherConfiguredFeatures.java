@@ -137,7 +137,7 @@ public class AetherConfiguredFeatures {
         register(context, ORE_ICESTONE_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.ICESTONE, 32));
         register(context, ORE_AMBROSIUM_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.AMBROSIUM_ORE, 16));
         register(context, ORE_ZANITE_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.ZANITE_ORE, 5, 0.5F));
-        register(context, ORE_GRAVITITE_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.GRAVITITE_ORE, 3, 1.0F));
+        register(context, ORE_GRAVITITE_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.GRAVITITE_ORE, 3, 0.5F));
         register(context, ORE_GRAVITITE_LOWER_CONFIGURATION, Feature.ORE, new OreConfiguration(AetherFeatureRules.HOLYSTONE, AetherFeatureStates.GRAVITITE_ORE, 4));
         register(context, TREES_SKYROOT_AND_GOLDEN_OAK_CONFIGURATION, Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(
                         PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(GOLDEN_OAK_TREE_CONFIGURATION), PlacementUtils.filteredByBlockSurvival(AetherBlocks.GOLDEN_OAK_SAPLING.get())), 0.01F)),
