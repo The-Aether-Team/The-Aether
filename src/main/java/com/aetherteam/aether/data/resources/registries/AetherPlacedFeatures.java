@@ -130,8 +130,6 @@ public class AetherPlacedFeatures {
                 NitrogenPlacedFeatureBuilders.commonOrePlacement(1, HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(48), VerticalAnchor.aboveBottom(74))));
         register(context, ORE_GRAVITITE_LOWER_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.ORE_GRAVITITE_LOWER_CONFIGURATION),
                 NitrogenPlacedFeatureBuilders.commonOrePlacement(2, HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(8), VerticalAnchor.aboveBottom(56))));
-//        register(context, ORE_GRAVITITE_LOWER_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.ORE_GRAVITITE_LOWER_CONFIGURATION),
-//                NitrogenPlacedFeatureBuilders.commonOrePlacement(2, HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(8), VerticalAnchor.aboveBottom(56))));
     }
 
     private static void register(BootstapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, Holder<ConfiguredFeature<?, ?>> configuration, List<PlacementModifier> modifiers) {
