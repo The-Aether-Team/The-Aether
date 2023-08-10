@@ -1,6 +1,7 @@
 package com.aetherteam.aether.event.listeners;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.event.FreezeEvent;
 import com.aetherteam.aether.event.PlacementBanEvent;
 import com.aetherteam.aether.event.PlacementConvertEvent;
 import com.aetherteam.aether.event.hooks.RecipeHooks;
@@ -47,6 +48,19 @@ public class RecipeListener {
         BlockPos blockPos = event.getPos();
         RecipeHooks.checkExistenceBanned(levelAccessor, blockPos);
         RecipeHooks.sendIcestoneFreezableUpdateEvent(levelAccessor, blockPos);
+    }
+
+    /**
+     * @see RecipeHooks#preventBlockFreezing(LevelAccessor, BlockPos, BlockPos)
+     */
+    @SubscribeEvent
+    public static void onBlockFreeze(FreezeEvent.FreezeFromBlock event) {
+        LevelAccessor level = event.getLevel();
+        BlockPos sourcePos = event.getSourcePos();
+        BlockPos pos = event.getPos();
+        if (RecipeHooks.preventBlockFreezing(level, sourcePos, pos)) {
+            event.setCanceled(true);
+        }
     }
 
     /**

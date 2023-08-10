@@ -84,17 +84,20 @@ public class FreezeEvent extends Event {
      */
     @Cancelable
     public static class FreezeFromBlock extends FreezeEvent {
+        private final BlockPos sourcePos;
         private final BlockState sourceBlock;
 
         /**
          * @param level The {@link LevelAccessor} that the freezing is occurring in.
          * @param pos The {@link BlockPos} that the freezing is occurring at.
+         * @param sourcePos The {@link BlockPos} of the source that is causing the freezing.
          * @param priorBlock The old {@link BlockState} that is to be frozen.
          * @param frozenBlock The original result {@link BlockState} from the freezing.
          * @param sourceBlock The source {@link BlockState} performing the freezing.
          */
-        public FreezeFromBlock(LevelAccessor level, BlockPos pos, BlockState priorBlock, BlockState frozenBlock, BlockState sourceBlock) {
+        public FreezeFromBlock(LevelAccessor level, BlockPos pos, BlockPos sourcePos, BlockState priorBlock, BlockState frozenBlock, BlockState sourceBlock) {
             super(level, pos, priorBlock, frozenBlock);
+            this.sourcePos = sourcePos;
             this.sourceBlock = sourceBlock;
         }
 
@@ -103,6 +106,13 @@ public class FreezeEvent extends Event {
          */
         public BlockState getSourceBlock() {
             return this.sourceBlock;
+        }
+
+        /**
+         * @return The {@link BlockPos} of the source that is causing the freezing.
+         */
+        public BlockPos getSourcePos() {
+            return this.sourcePos;
         }
     }
 

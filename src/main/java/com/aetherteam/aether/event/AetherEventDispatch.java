@@ -65,8 +65,8 @@ public class AetherEventDispatch {
 	/**
 	 * @see FreezeEvent.FreezeFromBlock
 	 */
-	public static FreezeEvent.FreezeFromBlock onBlockFreezeFluid(LevelAccessor level, BlockPos pos, BlockState fluidState, BlockState blockState, BlockState sourceBlock) {
-		FreezeEvent.FreezeFromBlock event = new FreezeEvent.FreezeFromBlock(level, pos, fluidState, blockState, sourceBlock);
+	public static FreezeEvent.FreezeFromBlock onBlockFreezeFluid(LevelAccessor level, BlockPos pos, BlockPos origin, BlockState fluidState, BlockState blockState, BlockState sourceBlock) {
+		FreezeEvent.FreezeFromBlock event = new FreezeEvent.FreezeFromBlock(level, pos, origin, fluidState, blockState, sourceBlock);
 		MinecraftForge.EVENT_BUS.post(event);
 		return event;
 	}
