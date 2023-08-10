@@ -52,17 +52,17 @@ public class FloatingBlock extends Block implements Floatable {
 	@Override
 	public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
 		super.tick(state, level, pos, random);
-		if (((this.powered && level.hasNeighborSignal(pos)) || (!this.powered && pos.getY() <= level.getMaxBuildHeight())) && isFree(level.getBlockState(pos.above()))) {
-			FloatingBlockEntity floatingBlockEntity = new FloatingBlockEntity(level, (double) pos.getX() + 0.5, pos.getY(), (double) pos.getZ() + 0.5, level.getBlockState(pos));
-			if (this.powered) {
-				floatingBlockEntity.setNatural(false);
-			}
-			level.addFreshEntity(floatingBlockEntity);
-			level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-			this.floating(floatingBlockEntity);
-		} else {
-			level.scheduleTick(pos, this, this.getDelayAfterPlace());
-		}
+//		if (((this.powered && level.hasNeighborSignal(pos)) || (!this.powered && pos.getY() <= level.getMaxBuildHeight())) && isFree(level.getBlockState(pos.above()))) {
+//			FloatingBlockEntity floatingBlockEntity = new FloatingBlockEntity(level, (double) pos.getX() + 0.5, pos.getY(), (double) pos.getZ() + 0.5, level.getBlockState(pos));
+//			if (this.powered) {
+//				floatingBlockEntity.setNatural(false);
+//			}
+//			level.addFreshEntity(floatingBlockEntity);
+//			level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+//			this.floating(floatingBlockEntity);
+//		} else {
+//			level.scheduleTick(pos, this, this.getDelayAfterPlace());
+//		}
 	}
 
 	protected void floating(FloatingBlockEntity entity) { }
