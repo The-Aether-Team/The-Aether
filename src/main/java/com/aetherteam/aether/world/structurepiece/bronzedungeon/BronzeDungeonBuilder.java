@@ -1,6 +1,7 @@
 package com.aetherteam.aether.world.structurepiece.bronzedungeon;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.world.BlockLogicUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -311,7 +312,7 @@ public class BronzeDungeonBuilder {
     private static boolean isSolidInColumns(NoiseColumn[] columns, int minY, int maxY) {
         for (NoiseColumn column : columns) {
             for (int y = minY; y <= maxY; ++y) {
-                if (column.getBlock(y).isAir()) {
+                if (column.getBlock(y).isAir() || column.getBlock(y).is(AetherTags.Blocks.NON_BRONZE_DUNGEON_SPAWNABLE)) {
                     return false;
                 }
             }
