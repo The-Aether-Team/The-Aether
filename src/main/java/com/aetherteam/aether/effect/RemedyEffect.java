@@ -1,6 +1,7 @@
 package com.aetherteam.aether.effect;
 
 import com.aetherteam.aether.capability.player.AetherPlayer;
+import com.aetherteam.nitrogen.capability.INBTSynchable;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,7 +25,7 @@ public class RemedyEffect extends MobEffect {
             if (player.getLevel().isClientSide()) {
                 AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
                     if (aetherPlayer.getRemedyStartDuration() <= 0) {
-                        aetherPlayer.setRemedyStartDuration(this.effectDuration);
+                        aetherPlayer.setSynched(INBTSynchable.Direction.SERVER, "setRemedyStartDuration", this.effectDuration);
                     }
                 });
             }

@@ -137,6 +137,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 			Map.entry("setGoldenDartCount", Triple.of(Type.INT, (object) -> this.setGoldenDartCount((int) object), this::getGoldenDartCount)),
 			Map.entry("setPoisonDartCount", Triple.of(Type.INT, (object) -> this.setPoisonDartCount((int) object), this::getPoisonDartCount)),
 			Map.entry("setEnchantedDartCount", Triple.of(Type.INT, (object) -> this.setEnchantedDartCount((int) object), this::getEnchantedDartCount)),
+			Map.entry("setRemedyStartDuration", Triple.of(Type.INT, (object) -> this.setRemedyStartDuration((int) object), this::getRemedyStartDuration)),
 			Map.entry("setAttackedWithInvisibility", Triple.of(Type.BOOLEAN, (object) -> this.setAttackedWithInvisibility((boolean) object), this::attackedWithInvisibility)),
 			Map.entry("setInvisibilityEnabled", Triple.of(Type.BOOLEAN, (object) -> this.setInvisibilityEnabled((boolean) object), this::isInvisibilityEnabled)),
 			Map.entry("setWearingInvisibilityCloak", Triple.of(Type.BOOLEAN, (object) -> this.setWearingInvisibilityCloak((boolean) object), this::isWearingInvisibilityCloak)),
@@ -165,6 +166,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 		tag.putFloat("SavedHealth", this.getSavedHealth());
 		tag.putInt("LifeShardCount", this.getLifeShardCount());
 		tag.putBoolean("HasSeenSunSpirit", this.hasSeenSunSpiritDialogue());
+		tag.putInt("RemedyStartDuration", this.getRemedyStartDuration());
 		if (this.getMountedAerbunnyTag() != null) {
 			tag.put("MountedAerbunnyTag", this.getMountedAerbunnyTag());
 		}
@@ -195,6 +197,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		}
 		if (tag.contains("HasSeenSunSpirit")) {
 			this.setSeenSunSpiritDialogue(tag.getBoolean("HasSeenSunSpirit"));
+		}
+		if (tag.contains("RemedyStartDuration")) {
+			this.setRemedyStartDuration(tag.getInt("RemedyStartDuration"));
 		}
 		if (tag.contains("MountedAerbunnyTag")) {
 			this.setMountedAerbunnyTag(tag.getCompound("MountedAerbunnyTag"));
