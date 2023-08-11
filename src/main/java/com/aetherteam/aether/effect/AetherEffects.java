@@ -10,4 +10,5 @@ public class AetherEffects {
 	public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, Aether.MODID);
 
 	public static final RegistryObject<MobEffect> INEBRIATION = EFFECTS.register("inebriation", InebriationEffect::new);
+	public static final RegistryObject<MobEffect> REMEDY = EFFECTS.register("remedy", RemedyEffect::new);
 }

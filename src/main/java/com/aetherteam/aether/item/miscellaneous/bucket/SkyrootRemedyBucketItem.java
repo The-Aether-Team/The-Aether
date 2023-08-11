@@ -1,10 +1,11 @@
 package com.aetherteam.aether.item.miscellaneous.bucket;
 
-import com.aetherteam.aether.capability.player.AetherPlayer;
+import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.miscellaneous.ConsumableItem;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -19,8 +20,7 @@ public class SkyrootRemedyBucketItem extends Item implements ConsumableItem {
     }
 
     /**
-     * Cures any potion effects that are removed by Skyroot Remedy Buckets, then sets the remedy vignette if the user was a player.
-     * Also consumes the item using {@link ConsumableItem#consume(Item, ItemStack, LivingEntity)}.
+     * Inflicts Curative for 200 ticks and consumes the item using {@link ConsumableItem#consume(Item, ItemStack, LivingEntity)}.
      * @param stack The {@link ItemStack} in use.
      * @param level The {@link Level} of the user.
      * @param user The {@link LivingEntity} using the stack.
@@ -29,17 +29,9 @@ public class SkyrootRemedyBucketItem extends Item implements ConsumableItem {
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity user) {
         if (!level.isClientSide()) {
-            user.curePotionEffects(new ItemStack(AetherItems.SKYROOT_REMEDY_BUCKET.get()));
+            user.addEffect(new MobEffectInstance(AetherEffects.REMEDY.get(), 200, 0, false, false, true));
         }
         this.consume(this, stack, user);
-        if (user instanceof Player player) {
-            AetherPlayer.get(player).ifPresent(aetherPlayer -> {
-                if (aetherPlayer.getPlayer().getLevel().isClientSide()) { // Values used by the green remedy screen overlay vignette.
-                    aetherPlayer.setRemedyMaximum(200);
-                    aetherPlayer.setRemedyTimer(200);
-                }
-            });
-        }
         return stack.isEmpty() ? new ItemStack(AetherItems.SKYROOT_BUCKET.get()) : stack;
     }
 
