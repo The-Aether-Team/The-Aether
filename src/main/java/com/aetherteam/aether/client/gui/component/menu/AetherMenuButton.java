@@ -125,6 +125,6 @@ public class AetherMenuButton extends Button {
 	}
 
 	public static int totalHeightRange(int buttonCount, float scale) {
-		return (int) ((INITIAL_Y_OFFSET / scale) + ((buttonCount) * (BUTTON_SEPARATION / scale)));
+		return (int) ((INITIAL_Y_OFFSET / scale) + ((buttonCount) * ((BUTTON_SEPARATION + 10) / scale)));
 	}
 }
