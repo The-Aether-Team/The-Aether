@@ -1,5 +1,6 @@
 package com.aetherteam.aether.block.natural;
 
+import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
 import com.aetherteam.aether.blockentity.IcestoneBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -33,7 +34,7 @@ public class IcestoneBlock extends BaseEntityBlock {
 	@Nullable
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-		return null;
+		return level.isClientSide() ? null : createTickerHelper(blockEntityType, AetherBlockEntityTypes.ICESTONE.get(), IcestoneBlockEntity::serverTick);
 	}
 
 	/**

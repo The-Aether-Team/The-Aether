@@ -118,7 +118,7 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
     public void renderFirstPerson(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int packedLight, AbstractClientPlayer player, HumanoidArm arm) {
         boolean isSlim = player.getModelName().equals("slim");
         if (!player.isInvisible()) {
-            this.setupHand(isSlim ? this.dummyArmSlim : this.dummyArm, poseStack, buffer, packedLight, player, arm);
+            this.setupHand(isSlim ? this.dummyArmSlim : this.dummyArm, poseStack, buffer, packedLight, player, arm, isSlim);
         }
         this.setupShieldOnHand(stack, this.shieldModelArm, poseStack, buffer, packedLight, player, arm, isSlim);
     }
@@ -152,7 +152,9 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
         }
 
         VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.entityTranslucent(texture), false, stack.isEnchanted());
-        poseStack.translate((arm != HumanoidArm.LEFT ? 1.0F : -1.0F) * 0.05F, 0.0F, 0.0F);
+        if (isSlim) {
+            poseStack.translate((arm != HumanoidArm.LEFT ? 1.0F : -1.0F) * 0.05F, 0.0F, 0.0F);
+        }
         if (arm == HumanoidArm.RIGHT) {
             this.renderShieldOnHand(model.rightArm, poseStack, packedLight, consumer);
         } else if (arm == HumanoidArm.LEFT) {
@@ -168,15 +170,18 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
      * @param packedLight The {@link Integer} for the packed lighting for rendering.
      * @param player The {@link AbstractClientPlayer} to render for.
      * @param arm The {@link HumanoidArm} to render on.
+     * @param isSlim Whether the arm model is slim, as a {@link Boolean}.
      */
-    private void setupHand(PlayerModel<LivingEntity> model, PoseStack poseStack, MultiBufferSource buffer, int packedLight, AbstractClientPlayer player, HumanoidArm arm) {
+    private void setupHand(PlayerModel<LivingEntity> model, PoseStack poseStack, MultiBufferSource buffer, int packedLight, AbstractClientPlayer player, HumanoidArm arm, boolean isSlim) {
         this.setupModel(model, player);
 
         Optional<AetherPlayer> aetherPlayerOptional = AetherPlayer.get(player).resolve();
         if (aetherPlayerOptional.isPresent()) {
             if (!aetherPlayerOptional.get().isMoving()) {
                 VertexConsumer consumer = buffer.getBuffer(RenderType.entityTranslucent(player.getSkinTextureLocation()));
-                poseStack.translate((arm != HumanoidArm.LEFT ? 1.0F : -1.0F) * -0.05F, 0.0F, 0.0F);
+                if (isSlim) {
+                    poseStack.translate((arm != HumanoidArm.LEFT ? 1.0F : -1.0F) * -0.05F, 0.0F, 0.0F);
+                }
                 if (arm == HumanoidArm.RIGHT) {
                     this.renderHand(model.rightArm, model.rightSleeve, poseStack, packedLight, consumer);
                 } else if (arm == HumanoidArm.LEFT) {

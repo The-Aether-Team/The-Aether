@@ -1,6 +1,7 @@
 package com.aetherteam.aether.world.structure;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.world.structurepiece.bronzedungeon.BronzeDungeonBuilder;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -143,7 +144,7 @@ public class BronzeDungeonStructure extends Structure {
      */
     private static boolean checkEachCornerAtY(NoiseColumn[] columns, int y) {
         for (NoiseColumn column : columns) {
-            if (column.getBlock(y).isAir()) {
+            if (column.getBlock(y).isAir() || column.getBlock(y).is(AetherTags.Blocks.NON_BRONZE_DUNGEON_SPAWNABLE)) {
                 return false;
             }
         }
