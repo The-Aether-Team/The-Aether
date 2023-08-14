@@ -393,6 +393,7 @@
   "gui.aether.book_of_lore.next": "Next",
   "gui.aether.book_of_lore.of_lore": "Of Lore",
   "gui.aether.book_of_lore.previous": "Prev.",
+  "gui.aether.customization.color": "Hex Color",
   "gui.aether.customization.developer_glow.color": "Developer Glow Color",
   "gui.aether.customization.developer_glow.off": "Developer Glow: OFF",
   "gui.aether.customization.developer_glow.on": "Developer Glow: ON",
