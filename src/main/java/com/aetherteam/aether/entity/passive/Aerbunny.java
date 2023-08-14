@@ -490,7 +490,7 @@ public class Aerbunny extends AetherAnimal {
                     int x = Mth.floor(this.aerbunny.getX());
                     int y = Mth.floor(this.aerbunny.getBoundingBox().minY);
                     int z = Mth.floor(this.aerbunny.getZ());
-                    if (this.checkForSurfaces(this.aerbunny.getLevel(), x, y, z)) {
+                    if (this.checkForSurfaces(this.aerbunny.getLevel(), x, y, z) && !this.aerbunny.horizontalCollision) {
                         this.aerbunny.midairJump();
                     }
                 }
