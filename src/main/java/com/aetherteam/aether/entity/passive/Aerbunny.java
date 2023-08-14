@@ -46,12 +46,12 @@ import java.util.EnumSet;
 
 public class Aerbunny extends AetherAnimal {
     private static final EntityDataAccessor<Integer> DATA_PUFFINESS_ID = SynchedEntityData.defineId(Aerbunny.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Boolean> DATA_FAST_FALLING = SynchedEntityData.defineId(Aerbunny.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> DATA_AFRAID_TIME_ID = SynchedEntityData.defineId(Aerbunny.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> DATA_FAST_FALLING_ID = SynchedEntityData.defineId(Aerbunny.class, EntityDataSerializers.BOOLEAN);
 
     private static final int MAXIMUM_PUFFS = 11;
 
     private int puffSubtract;
-    private boolean afraid;
     @Nullable
     private Vec3 lastPos;
 
@@ -80,7 +80,8 @@ public class Aerbunny extends AetherAnimal {
     public void defineSynchedData() {
         super.defineSynchedData();
         this.getEntityData().define(DATA_PUFFINESS_ID, 0);
-        this.getEntityData().define(DATA_FAST_FALLING, false);
+        this.getEntityData().define(DATA_AFRAID_TIME_ID, 0);
+        this.getEntityData().define(DATA_FAST_FALLING_ID, false);
     }
 
     /**
@@ -104,6 +105,17 @@ public class Aerbunny extends AetherAnimal {
         this.handlePlayerInput();
         if (this.getVehicle() != null && (this.getVehicle().isOnGround() || this.getVehicle().isInFluidType())) { // Reset the last tracked fall position if the Aerbunny touches a surface.
             this.lastPos = null;
+        }
+    }
+
+    /**
+     * Handles the length of time that the Aerbunny is afraid.
+     */
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        if (this.getAfraidTime() > 0) {
+            this.setAfraidTime(this.getAfraidTime() - 1);
         }
     }
 
@@ -238,7 +250,7 @@ public class Aerbunny extends AetherAnimal {
     public boolean hurt(DamageSource source, float amount) {
         boolean flag = super.hurt(source, amount);
         if (flag && source.getEntity() instanceof Player) {
-            this.setAfraid(true);
+            this.setAfraidTime(100 + this.getRandom().nextInt(50));
         }
         return flag;
     }
@@ -286,10 +298,25 @@ public class Aerbunny extends AetherAnimal {
     }
 
     /**
+     * @return The {@link Integer} value for how long the Aerbunny should be afraid for.
+     */
+    public int getAfraidTime() {
+        return this.entityData.get(DATA_AFRAID_TIME_ID);
+    }
+
+    /**
+     * Sets how long the Aerbunny should be afraid for.
+     * @param afraidTime The {@link Integer} value.
+     */
+    public void setAfraidTime(int afraidTime) {
+        this.entityData.set(DATA_AFRAID_TIME_ID, afraidTime);
+    }
+
+    /**
      * @return The {@link Boolean} value for whether the Aerbunny is falling fast.
      */
     public boolean isFastFalling() {
-        return this.entityData.get(DATA_FAST_FALLING);
+        return this.entityData.get(DATA_FAST_FALLING_ID);
     }
 
     /**
@@ -297,7 +324,7 @@ public class Aerbunny extends AetherAnimal {
      * @param fastFalling The {@link Boolean} value.
      */
     public void setFastFalling(boolean fastFalling) {
-        this.entityData.set(DATA_FAST_FALLING, fastFalling);
+        this.entityData.set(DATA_FAST_FALLING_ID, fastFalling);
     }
 
     /**
@@ -305,21 +332,6 @@ public class Aerbunny extends AetherAnimal {
      */
     public int getPuffSubtract() {
         return this.puffSubtract;
-    }
-
-    /**
-     * @return The {@link Boolean} value for whether the Aerbunny is afraid.
-     */
-    public boolean isAfraid() {
-        return this.afraid;
-    }
-
-    /**
-     * Sets whether the Aerbunny is afraid.
-     * @param afraid The {@link Boolean} value.
-     */
-    public void setAfraid(boolean afraid) {
-        this.afraid = afraid;
     }
 
     @Override
@@ -406,13 +418,15 @@ public class Aerbunny extends AetherAnimal {
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putBoolean("Afraid", this.afraid);
+        tag.putInt("AfraidTime", this.getAfraidTime());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        this.afraid = tag.getBoolean("Afraid");
+        if (tag.contains("AfraidTime")) {
+            this.setAfraidTime(tag.getInt("AfraidTime"));
+        }
     }
 
     /**
@@ -430,7 +444,7 @@ public class Aerbunny extends AetherAnimal {
 
         @Override
         public boolean canUse() {
-            return this.aerbunny.isAfraid();
+            return this.aerbunny.getAfraidTime() > 0;
         }
 
         @Override
