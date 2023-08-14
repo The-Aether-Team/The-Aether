@@ -9,8 +9,9 @@ import org.apache.commons.lang3.tuple.Pair;
 public class AetherConfig {
     public static class Server {
         public final ConfigValue<Boolean> enable_bed_explosions;
-        public final ConfigValue<Boolean> edible_ambrosium;
         public final ConfigValue<Boolean> tools_debuff;
+        public final ConfigValue<Boolean> edible_ambrosium;
+        public final ConfigValue<Boolean> right_click_bushes;
         public final ConfigValue<Boolean> healing_gummy_swets;
         public final ConfigValue<Integer> hammer_of_kingbdogz_cooldown;
         public final ConfigValue<Integer> cloud_staff_cooldown;
@@ -48,6 +49,10 @@ public class AetherConfig {
                     .comment("Ambrosium Shards can be eaten to restore a half heart of health")
                     .translation("config.aether.server.gameplay.edible_ambrosium")
                     .define("Ambrosium Shards are edible", true);
+            right_click_bushes = builder
+                    .comment("Berry Bushes can be right-clicked to harvest from, similar to Sweet Berry Bushes")
+                    .translation("config.aether.server.gameplay.right_click_bushes")
+                    .define("Berry Bush right-click harvesting", false);
             healing_gummy_swets = builder
                     .comment("Gummy Swets when eaten restore full health instead of full hunger")
                     .translation("config.aether.server.gameplay.healing_gummy_swets")
