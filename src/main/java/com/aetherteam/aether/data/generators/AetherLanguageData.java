@@ -798,6 +798,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
 
 
         this.addCustomizationText("title", "Customization");
+        this.addCustomizationText("color", "Hex Color");
         this.addCustomizationText("halo.on", "Player Halo: ON");
         this.addCustomizationText("halo.off", "Player Halo: OFF");
         this.addCustomizationText("halo.color", "Halo Color");
