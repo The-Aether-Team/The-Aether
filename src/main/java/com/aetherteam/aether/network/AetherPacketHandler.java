@@ -26,7 +26,6 @@ public class AetherPacketHandler {
 	public static synchronized void register() {
 		// CLIENTBOUND
 		register(AetherTravelPacket.class, AetherTravelPacket::decode);
-		register(CloudMinionPacket.class, CloudMinionPacket::decode);
 		register(ClientDeveloperGlowPacket.Apply.class, ClientDeveloperGlowPacket.Apply::decode);
 		register(ClientDeveloperGlowPacket.Remove.class, ClientDeveloperGlowPacket.Remove::decode);
 		register(ClientDeveloperGlowPacket.Sync.class, ClientDeveloperGlowPacket.Sync::decode);
@@ -37,6 +36,8 @@ public class AetherPacketHandler {
 		register(ClientMoaSkinPacket.Apply.class, ClientMoaSkinPacket.Apply::decode);
 		register(ClientMoaSkinPacket.Remove.class, ClientMoaSkinPacket.Remove::decode);
 		register(ClientMoaSkinPacket.Sync.class, ClientMoaSkinPacket.Sync::decode);
+		register(CloudMinionPacket.class, CloudMinionPacket::decode);
+		register(HammerProjectileOwnerPacket.class, HammerProjectileOwnerPacket::decode);
 		register(HealthResetPacket.class, HealthResetPacket::decode);
 		register(LeavingAetherPacket.class, LeavingAetherPacket::decode);
 		register(MoaInteractPacket.class, MoaInteractPacket::decode);

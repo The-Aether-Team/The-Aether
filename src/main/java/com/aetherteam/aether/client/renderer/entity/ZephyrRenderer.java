@@ -34,8 +34,8 @@ public class ZephyrRenderer extends MultiModelRenderer<Zephyr, EntityModel<Zephy
      */
     @Override
     protected void scale(Zephyr zephyr, PoseStack poseStack, float partialTicks) {
-        float f = Mth.lerp(partialTicks, zephyr.getCloudScale(), zephyr.getCloudScale() + zephyr.getCloudScaleAdd());
-        float f1 = f / 40.0F;
+        float f = Math.min(Mth.lerp(partialTicks, zephyr.getCloudScale(), zephyr.getCloudScale() + zephyr.getCloudScaleAdd()), 38.0F);
+        float f1 = f / 38.0F;
         if (f1 < 0.0F) {
             f1 = 0.0F;
         }

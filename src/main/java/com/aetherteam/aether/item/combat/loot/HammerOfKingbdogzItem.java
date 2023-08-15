@@ -6,6 +6,9 @@ import com.aetherteam.aether.entity.projectile.weapon.HammerProjectile;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.combat.AetherItemTiers;
 import com.aetherteam.aether.item.combat.AetherSwordItem;
+import com.aetherteam.aether.network.AetherPacketHandler;
+import com.aetherteam.aether.network.packet.clientbound.HammerProjectileOwnerPacket;
+import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -41,6 +44,7 @@ public class HammerOfKingbdogzItem extends AetherSwordItem {
                 hammerProjectile.setIsJeb(true); // Handles Hammer of Jeb texture for the projectile.
             }
             level.addFreshEntity(hammerProjectile);
+            PacketRelay.sendToNear(AetherPacketHandler.INSTANCE, new HammerProjectileOwnerPacket(hammerProjectile.getId(), player.getId()), player.getX(), player.getY(), player.getZ(), 10, player.getLevel().dimension());
         }
         level.playLocalSound(player.getX(), player.getY(), player.getZ(), AetherSoundEvents.ITEM_HAMMER_OF_KINGBDOGZ_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (player.getRandom().nextFloat() * 0.4F + 0.8F), false);
         player.awardStat(Stats.ITEM_USED.get(this));
