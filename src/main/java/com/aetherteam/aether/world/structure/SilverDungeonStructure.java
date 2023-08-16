@@ -8,6 +8,7 @@ import com.aetherteam.aether.world.structurepiece.silverdungeon.SilverBossRoom;
 import com.aetherteam.aether.world.structurepiece.silverdungeon.SilverDungeonBuilder;
 import com.aetherteam.aether.world.structurepiece.silverdungeon.SilverTemplePiece;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -30,10 +31,28 @@ import net.minecraft.world.phys.AABB;
 import java.util.*;
 
 public class SilverDungeonStructure extends Structure {
-    public static final Codec<SilverDungeonStructure> CODEC = simpleCodec(SilverDungeonStructure::new);
+    public static final Codec<SilverDungeonStructure> CODEC = RecordCodecBuilder.create(builder -> builder.group(
+            settingsCodec(builder),
+            Codec.INT.fieldOf("maxY").forGetter(o -> o.maxY),
+            Codec.INT.fieldOf("belowTerrain").forGetter(o -> o.belowTerrain),
+            Codec.INT.fieldOf("aboveTerrain").forGetter(o -> o.aboveTerrain),
+            Codec.INT.fieldOf("minY").forGetter(o -> o.minY),
+            Codec.INT.fieldOf("rangeY").forGetter(o -> o.rangeY)
+    ).apply(builder, SilverDungeonStructure::new));
 
-    public SilverDungeonStructure(StructureSettings settings) {
+    private final int maxY;
+    private final int belowTerrain;
+    private final int aboveTerrain;
+    private final int minY;
+    private final int rangeY;
+
+    public SilverDungeonStructure(StructureSettings settings, int maxY, int belowTerrain, int aboveTerrain, int minY, int rangeY) {
         super(settings);
+        this.maxY = maxY;
+        this.belowTerrain = belowTerrain;
+        this.aboveTerrain = aboveTerrain;
+        this.minY = minY;
+        this.rangeY = rangeY;
     }
 
     @Override
@@ -46,18 +65,18 @@ public class SilverDungeonStructure extends Structure {
         int x = chunkPos.getMiddleBlockX();
         int z = chunkPos.getMiddleBlockZ();
 
-        int maxHeight = 128;
-        int minHeight = chunkGenerator.getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, heightAccessor, context.randomState()) - 2;
+        int maxHeight = this.maxY;
+        int minHeight = chunkGenerator.getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, heightAccessor, context.randomState()) - this.belowTerrain;
 
         int height;
         if (random.nextInt(5) < 3) {
             // The structure has a 40% chance of being forced above ground.
-            height = minHeight + 18;
+            height = minHeight + this.aboveTerrain;
             if (height < maxHeight) {
                 height += random.nextInt(maxHeight - height);
             }
         } else {
-            height = Math.max(minHeight, 35 + random.nextInt(70));
+            height = Math.max(minHeight, this.minY + random.nextInt(this.rangeY));
         }
 
         BlockPos blockpos = new BlockPos(chunkPos.getMiddleBlockX(), height, chunkPos.getMiddleBlockZ());

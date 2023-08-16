@@ -54,17 +54,18 @@ public class AetherStructures {
                 mobSpawnsPiece,
                 GenerationStep.Decoration.SURFACE_STRUCTURES,
                 TerrainAdjustment.NONE),
-                8));
+                8, 32, 24));
         context.register(SILVER_DUNGEON, new SilverDungeonStructure(AetherStructureBuilders.structure(
                 biomes.getOrThrow(AetherTags.Biomes.HAS_SILVER_DUNGEON),
                 mobSpawnsBox,
                 GenerationStep.Decoration.SURFACE_STRUCTURES,
-                TerrainAdjustment.NONE)));
+                TerrainAdjustment.NONE),
+                128, 2, 18, 35, 70));
         context.register(GOLD_DUNGEON, new GoldDungeonStructure(AetherStructureBuilders.structure(
                 biomes.getOrThrow(AetherTags.Biomes.HAS_GOLD_DUNGEON),
                 mobSpawnsBox,
                 GenerationStep.Decoration.SURFACE_STRUCTURES,
                 TerrainAdjustment.NONE),
-                8));
+                8, 20, 40, 60));
     }
 }
