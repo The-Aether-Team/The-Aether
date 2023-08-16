@@ -157,7 +157,10 @@ public class Moa extends MountableAnimal implements WingedBird {
 				this.setBaby(tag.getBoolean("IsBaby"));
 			}
 			if (tag.contains("MoaType")) {
-				this.setMoaType(AetherMoaTypes.get(tag.getString("MoaType")));
+				MoaType moaType = AetherMoaTypes.get(tag.getString("MoaType"));
+				if (moaType != null) {
+					this.setMoaType(moaType);
+				}
 			}
 			if (tag.contains("Hungry")) {
 				this.setHungry(tag.getBoolean("Hungry"));
