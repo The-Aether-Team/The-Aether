@@ -227,6 +227,7 @@ public class AetherCustomizationsScreen extends Screen {
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(poseStack);
         GuiComponent.drawCenteredString(poseStack, this.font, this.getTitle(), this.width / 2, 15, 16777215);
+        GuiComponent.drawCenteredString(poseStack, this.font, Component.translatable("gui.aether.customization.color"), (this.width / 2 - 65) + 184, (this.height / 2 - 10) - 14, 16777215);
         if (this.getMinecraft().player != null) {
             int x = (this.width / 2) - 175;
             int y = (this.height / 2) + 50;
