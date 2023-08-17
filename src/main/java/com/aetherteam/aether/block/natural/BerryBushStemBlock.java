@@ -1,10 +1,14 @@
 package com.aetherteam.aether.block.natural;
 
+import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.block.AetherBlockStateProperties;
 import com.aetherteam.aether.block.AetherBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -12,6 +16,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeHooks;
@@ -27,6 +32,20 @@ public class BerryBushStemBlock extends AetherBushBlock implements BonemealableB
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(AetherBlockStateProperties.DOUBLE_DROPS);
+	}
+
+	/**
+	 * [CODE COPY] - {@link net.minecraft.world.level.block.SweetBerryBushBlock#entityInside(BlockState, Level, BlockPos, Entity)}.<br><br>
+	 * Modified to remove damage behavior.<br><br>
+	 * Warning for "deprecation" is suppressed because the method is fine to override.
+	 */
+	@SuppressWarnings("deprecation")
+	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+		if (AetherConfig.SERVER.berry_bush_consistency.get()) {
+			if (entity instanceof LivingEntity && entity.getType() != EntityType.FOX && entity.getType() != EntityType.BEE) {
+				entity.makeStuckInBlock(state, new Vec3(0.8F, 0.75D, 0.8F));
+			}
+		}
 	}
 
 	/**

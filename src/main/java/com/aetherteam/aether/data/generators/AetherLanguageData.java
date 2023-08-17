@@ -1173,6 +1173,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addServerConfig("gameplay", "enable_bed_explosions", "Vanilla's beds will explode in the Aether");
         this.addServerConfig("gameplay", "tools_debuff", "Tools that aren't from the Aether will mine Aether blocks slower than tools that are from the Aether");
         this.addServerConfig("gameplay", "edible_ambrosium", "Ambrosium Shards can be eaten to restore a half heart of health");
+        this.addServerConfig("gameplay", "berry_bush_consistency", "Makes Berry Bushes and Bush Stems behave consistently with Sweet Berry Bushes");
         this.addServerConfig("gameplay", "healing_gummy_swets", "Gummy Swets when eaten restore full health instead of full hunger");
         this.addServerConfig("gameplay", "maximum_life_shards", "Determines the limit of the amount of Life Shards a player can consume to increase their health");
         this.addServerConfig("gameplay", "hammer_of_kingbdogz_cooldown", "Determines the cooldown in ticks for the Hammer of Kingbdogz's ability");
