@@ -436,7 +436,7 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherBlocks.AETHER_DIRT.get(),
                 AetherBlocks.QUICKSOIL.get()
         );
-        this.tag(BlockTags.SNAPS_GOAT_HORN).addTag(AetherTags.Blocks.SKYROOT_LOGS).add(
+        this.tag(BlockTags.SNAPS_GOAT_HORN).addTags(AetherTags.Blocks.SKYROOT_LOGS, AetherTags.Blocks.GOLDEN_OAK_LOGS).add(
                 AetherBlocks.HOLYSTONE.get(),
                 AetherBlocks.ICESTONE.get(),
                 AetherBlocks.AMBROSIUM_ORE.get(),

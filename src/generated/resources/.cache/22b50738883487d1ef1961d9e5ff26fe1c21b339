@@ -1,4 +1,4 @@
-// 1.19.4	2023-08-17T15:10:17.6109139	Tags for minecraft:block mod id aether
+// 1.19.4	2023-08-17T16:05:34.6151252	Tags for minecraft:block mod id aether
 fc9b66cee900f1b4f341fcec6da19eb45d575f43 data/aether/tags/blocks/aechor_plant_spawnable_on.json
 7f0ca5740d7eeb3d83a96088ad6c30a672b55609 data/aether/tags/blocks/aerclouds.json
 16a15f0767946dfa61ee9dfb544a3aeb3439340c data/aether/tags/blocks/aerogel.json
@@ -68,7 +68,7 @@ af3c295b85cf6b6b265eacda66de70b6f5ac09dc data/minecraft/tags/blocks/needs_iron_t
 4e89693965783122d7db8ecf51da4c69cf0070bf data/minecraft/tags/blocks/signs.json
 b830e607f8f1f40961d24f70f71b34ede14bfb3e data/minecraft/tags/blocks/slabs.json
 6b8be3d5114ac4f45dbfff26c82216c0b54ed097 data/minecraft/tags/blocks/small_flowers.json
-07955d57d11d73bfc558fcdad91101b654f35c9b data/minecraft/tags/blocks/snaps_goat_horn.json
+d3af8c97e70c279b7712d20a4391e1829f2a660c data/minecraft/tags/blocks/snaps_goat_horn.json
 193ad729a0f9ff9a88afc7626cec0c4a2d12c73c data/minecraft/tags/blocks/snow_layer_cannot_survive_on.json
 457cae0b6a74abc669c26ef099149e7149ff70bb data/minecraft/tags/blocks/stairs.json
 ef0249e5296febb809f365800a45d4fb24f13322 data/minecraft/tags/blocks/standing_signs.json
