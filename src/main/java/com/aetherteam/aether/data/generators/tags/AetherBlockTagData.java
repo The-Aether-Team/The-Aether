@@ -203,7 +203,6 @@ public class AetherBlockTagData extends BlockTagsProvider {
         this.tag(AetherTags.Blocks.TREATED_AS_AETHER_BLOCK);
 
         // Vanilla
-        this.tag(BlockTags.STONE_BRICKS).add(AetherBlocks.HOLYSTONE_BRICKS.get()).addTag(AetherTags.Blocks.DUNGEON_BLOCKS);
         this.tag(BlockTags.WOODEN_STAIRS).add(AetherBlocks.SKYROOT_STAIRS.get());
         this.tag(BlockTags.WOODEN_SLABS).add(AetherBlocks.SKYROOT_SLAB.get());
         this.tag(BlockTags.WOODEN_FENCES).add(AetherBlocks.SKYROOT_FENCE.get());

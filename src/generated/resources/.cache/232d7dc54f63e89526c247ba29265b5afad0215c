@@ -1,4 +1,4 @@
-// 1.19.4	2023-07-06T21:40:53.0434947	Tags for minecraft:item mod id aether
+// 1.19.4	2023-08-16T12:37:52.2782281	Tags for minecraft:item mod id aether
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/items/accepted_music_discs.json
 b1ab124000a7da5fa5e186c46b51223391f132d9 data/aether/tags/items/accessories.json
 99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/aether/tags/items/accessories_capes.json
@@ -114,7 +114,6 @@ ef0249e5296febb809f365800a45d4fb24f13322 data/minecraft/tags/items/signs.json
 b830e607f8f1f40961d24f70f71b34ede14bfb3e data/minecraft/tags/items/slabs.json
 6b8be3d5114ac4f45dbfff26c82216c0b54ed097 data/minecraft/tags/items/small_flowers.json
 457cae0b6a74abc669c26ef099149e7149ff70bb data/minecraft/tags/items/stairs.json
-4c0df21f724d72f265a9cf9cf4a4fda33a8afeae data/minecraft/tags/items/stone_bricks.json
 336a5cf28e3a807615f25965e0a90c7bf33dd3ac data/minecraft/tags/items/stone_crafting_materials.json
 5d4a9617f9199aa91aa4d20684b2c262120a033d data/minecraft/tags/items/swords.json
 8a35a44c0a25f20d1ebd014a96d33cf7359a7555 data/minecraft/tags/items/walls.json
