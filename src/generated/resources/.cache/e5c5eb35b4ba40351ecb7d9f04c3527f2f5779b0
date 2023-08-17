@@ -1,4 +1,4 @@
-// 1.19.4	2023-03-18T15:59:38.7311382	Advancements
+// 1.19.4	2023-08-16T20:37:27.3417428	Advancements
 06e4eff332e36648b2a1bc237e738ec2a5584897 data/aether/advancements/aether_sleep.json
 63a80813c0c6f54bf16c23f6ac28c91836bdf5db data/aether/advancements/black_moa.json
 a6a7ec78b783342af08b1021cf32a7f5cf76d6a7 data/aether/advancements/blue_aercloud.json
@@ -7,7 +7,7 @@ efd339a33f705488af0ea59398e615253f1d54e0 data/aether/advancements/bronze_dungeon
 989a06b550d55e15316683b15aed845a805b87c7 data/aether/advancements/enchanted_gravitite.json
 581a42f27ecf9554d1797d0eb0ce4fac12a8cd88 data/aether/advancements/enter_aether.json
 a2cb6ee3de066685f05961e2ff5ddb2a52753d56 data/aether/advancements/gold_dungeon.json
-c0fc125b60e8e8d289c2874b0669bd3bc6de5e64 data/aether/advancements/gravitite_armor.json
+2c0cd6da6cb7856171ac3e53243ec8245eae8824 data/aether/advancements/gravitite_armor.json
 807ec6b68f6d4f809176fcea04989adebf953f3f data/aether/advancements/hammer_loot.json
 aef150f8789b124eaba4cd703f5a09878653a2c9 data/aether/advancements/icestone.json
 dd0236aef2071358b8962da0482e723de2f48801 data/aether/advancements/ice_accessory.json

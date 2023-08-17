@@ -456,9 +456,9 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addAdvancement("read_lore", "The More You Know!");
         this.addAdvancement("loreception", "Lore-Ception!");
         this.addAdvancement("blue_aercloud", "To Infinity and Beyond!");
-        this.addAdvancement("obtain_egg", "Don't Count your Moas...");
+        this.addAdvancement("obtain_egg", "Don't Count Your Moas...");
         this.addAdvancement("obtain_petal", "Baby Food");
-        this.addAdvancement("incubate_moa", "... Until they hatch!");
+        this.addAdvancement("incubate_moa", "... Until They hatch!");
         this.addAdvancement("black_moa", "Let's Fly!");
         this.addAdvancement("zanite", "Exotic Hardware");
         this.addAdvancement("craft_altar", "Do You Believe in Magic?");
@@ -472,13 +472,13 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addAdvancement("zephyr_hammer", "Ultimate Ban Hammer");
         this.addAdvancement("lance_loot", "Challenger to the Throne");
         this.addAdvancement("silver_dungeon", "Dethroned");
-        this.addAdvancement("valkyrie_loot", "Earning your wings");
+        this.addAdvancement("valkyrie_loot", "Earning your Wings");
         this.addAdvancement("valkyrie_hoe", "Plunderer's Remorse");
         this.addAdvancement("regen_stone", "Battle Hardened");
         this.addAdvancement("gold_dungeon", "Extinguished");
         this.addAdvancement("phoenix_armor", "Fireproof");
         this.addAdvancement("obsidian_armor", "Ice Bucket Armor");
-        this.addAdvancement("aether_sleep", "A well earned rest");
+        this.addAdvancement("aether_sleep", "A Well Earned Rest");
 
         this.addAdvancementDesc("the_aether", "It's not dead!");
         this.addAdvancementDesc("enter_aether", "Enter the Aether");
@@ -499,9 +499,9 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addAdvancementDesc("bronze_dungeon", "Defeat the bronze boss");
         this.addAdvancementDesc("hammer_loot", "Obtain the Hammer of Kingbdogz from the Bronze Dungeon");
         this.addAdvancementDesc("zephyr_hammer", "Kill a Zephyr with the Hammer of Kingbdogz. Sweet Revenge!");
-        this.addAdvancementDesc("lance_loot", "Obtain the Valkyrie Lance from the bronze dungeon. Time to challenge the Silver Dungeon!");
+        this.addAdvancementDesc("lance_loot", "Obtain the Valkyrie Lance from the Bronze Dungeon. Time to challenge the Silver Dungeon!");
         this.addAdvancementDesc("silver_dungeon", "Defeat the silver boss");
-        this.addAdvancementDesc("regen_stone", "Obtain a Regeneration Stone from the Valkyrie dungeon. The final dungeon awaits...");
+        this.addAdvancementDesc("regen_stone", "Obtain a Regeneration Stone from the Silver Dungeon. The final dungeon awaits...");
         this.addAdvancementDesc("valkyrie_loot", "Obtain a piece of Valkyrie equipment from the Silver Dungeon");
         this.addAdvancementDesc("valkyrie_hoe", "I defeated the Silver Dungeon and all I got was this stupid Hoe");
         this.addAdvancementDesc("gold_dungeon", "Defeat the gold boss");

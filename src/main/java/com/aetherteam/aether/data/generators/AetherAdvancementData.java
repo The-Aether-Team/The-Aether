@@ -204,7 +204,11 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                             Component.translatable("advancement.aether.gravitite_armor.desc"),
                             null,
                             FrameType.GOAL, true, true, false)
-                    .addCriterion("gravitite_armor", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.GRAVITITE_HELMET.get(), AetherItems.GRAVITITE_CHESTPLATE.get(), AetherItems.GRAVITITE_LEGGINGS.get(), AetherItems.GRAVITITE_BOOTS.get(), AetherItems.GRAVITITE_GLOVES.get()))
+                    .addCriterion("gravitite_helmet", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.GRAVITITE_HELMET.get()))
+                    .addCriterion("gravitite_chestplate", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.GRAVITITE_CHESTPLATE.get()))
+                    .addCriterion("gravitite_leggings", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.GRAVITITE_LEGGINGS.get()))
+                    .addCriterion("gravitite_boots", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.GRAVITITE_BOOTS.get()))
+                    .addCriterion("gravitite_gloves", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.GRAVITITE_GLOVES.get()))
                     .save(consumer, new ResourceLocation(Aether.MODID, "gravitite_armor"), existingFileHelper);
 
             Advancement bronzeDungeon = Advancement.Builder.advancement()
