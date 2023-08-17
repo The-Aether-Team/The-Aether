@@ -26,14 +26,20 @@ import java.util.Optional;
 public class BronzeDungeonStructure extends Structure {
     public static final Codec<BronzeDungeonStructure> CODEC = RecordCodecBuilder.create(builder -> builder.group(
             settingsCodec(builder),
-            Codec.INT.fieldOf("maxrooms").forGetter(o -> o.maxRooms)
+            Codec.INT.fieldOf("maxrooms").forGetter(o -> o.maxRooms),
+            Codec.INT.fieldOf("aboveBottom").forGetter(o -> o.aboveBottom),
+            Codec.INT.fieldOf("belowTop").forGetter(o -> o.belowTop)
     ).apply(builder, BronzeDungeonStructure::new));
 
     private final int maxRooms;
+    private final int aboveBottom;
+    private final int belowTop;
 
-    public BronzeDungeonStructure(StructureSettings settings, int maxRooms) {
+    public BronzeDungeonStructure(StructureSettings settings, int maxRooms, int aboveBottom, int belowTop) {
         super(settings);
         this.maxRooms = maxRooms;
+        this.aboveBottom = aboveBottom;
+        this.belowTop = belowTop;
     }
 
     @Override
@@ -43,11 +49,11 @@ public class BronzeDungeonStructure extends Structure {
         LevelHeightAccessor heightAccessor = context.heightAccessor();
         RandomState randomState = context.randomState();
         StructureTemplateManager templateManager = context.structureTemplateManager();
-        int height = findStartingHeight(chunkGenerator, heightAccessor, chunkPos, randomState, templateManager);
+        int height = findStartingHeight(chunkGenerator, heightAccessor, chunkPos, randomState, templateManager, this.aboveBottom, this.belowTop);
         // To make structure placement more reliable, we check the surrounding 8 chunks for suitable locations.
         if (height <= heightAccessor.getMinBuildHeight()) {
             MutableInt y = new MutableInt(height);
-            chunkPos = searchNearbyChunks(chunkPos, y, chunkGenerator, heightAccessor, randomState, templateManager);
+            chunkPos = searchNearbyChunks(chunkPos, y, chunkGenerator, heightAccessor, randomState, templateManager, this.aboveBottom, this.belowTop);
             height = y.getValue();
             if (height <= heightAccessor.getMinBuildHeight()) {
                 return Optional.empty();
@@ -72,13 +78,13 @@ public class BronzeDungeonStructure extends Structure {
      * @param templateManager The {@link StructureTemplateManager}.
      * @return A {@link ChunkPos} for placement.
      */
-    private static ChunkPos searchNearbyChunks(ChunkPos chunkPos, MutableInt height, ChunkGenerator generator, LevelHeightAccessor heightAccessor, RandomState randomState, StructureTemplateManager templateManager) {
+    private static ChunkPos searchNearbyChunks(ChunkPos chunkPos, MutableInt height, ChunkGenerator generator, LevelHeightAccessor heightAccessor, RandomState randomState, StructureTemplateManager templateManager, int aboveBottom, int belowTop) {
         int y;
         for (int x = -1; x <= 1; x++) {
             for (int z = -1; z <= 1; z++) {
                 if (x != 0 || z != 0) {
                     ChunkPos offset = new ChunkPos(chunkPos.x + x, chunkPos.z + z);
-                    y = BronzeDungeonStructure.findStartingHeight(generator, heightAccessor, offset, randomState, templateManager);
+                    y = BronzeDungeonStructure.findStartingHeight(generator, heightAccessor, offset, randomState, templateManager, aboveBottom, belowTop);
                     if (y > heightAccessor.getMinBuildHeight()) {
                         height.setValue(y);
                         return offset;
@@ -99,7 +105,7 @@ public class BronzeDungeonStructure extends Structure {
      * @param templateManager The {@link StructureTemplateManager}.
      * @return The starting height as an {@link Integer}.
      */
-    private static int findStartingHeight(ChunkGenerator generator, LevelHeightAccessor heightAccessor, ChunkPos chunkPos, RandomState random, StructureTemplateManager templateManager) {
+    private static int findStartingHeight(ChunkGenerator generator, LevelHeightAccessor heightAccessor, ChunkPos chunkPos, RandomState random, StructureTemplateManager templateManager, int aboveBottom, int belowTop) {
         int minX = chunkPos.getMinBlockX() - 1;
         int minZ = chunkPos.getMinBlockZ() - 1;
         int maxX = chunkPos.getMaxBlockX() + 1;
@@ -112,10 +118,10 @@ public class BronzeDungeonStructure extends Structure {
         };
         int roomHeight = checkRoomHeight(templateManager, new ResourceLocation(Aether.MODID, "bronze_dungeon/boss_room"));
         int height = heightAccessor.getMinBuildHeight();
-        int maxHeight = heightAccessor.getMaxBuildHeight() - 24;
+        int maxHeight = heightAccessor.getMaxBuildHeight() - belowTop;
         int thickness = roomHeight + 2;
         int currentThickness = 0;
-        for (int y = height + 32; y <= maxHeight; y++) {
+        for (int y = height + aboveBottom; y <= maxHeight; y++) {
             if (checkEachCornerAtY(columns, y)) {
                 ++currentThickness;
             } else {
