@@ -19,30 +19,33 @@ import java.util.*;
 public class LargeAercloudStructure extends Structure {
     public static final Codec<LargeAercloudStructure> CODEC = RecordCodecBuilder.create((p_229075_) -> p_229075_.group(settingsCodec(p_229075_),
             BlockStateProvider.CODEC.fieldOf("blocks").forGetter(structure -> structure.blocks),
-            Codec.INT.fieldOf("size").forGetter(structure -> structure.size)
+            Codec.INT.fieldOf("size").forGetter(structure -> structure.size),
+            Codec.INT.fieldOf("rangeY").forGetter(o -> o.rangeY)
     ).apply(p_229075_, LargeAercloudStructure::new));
 
     private final BlockStateProvider blocks;
     private final int size;
+    private final int rangeY;
 
-    public LargeAercloudStructure(StructureSettings settings, BlockStateProvider blocks, int size) {
+    public LargeAercloudStructure(StructureSettings settings, BlockStateProvider blocks, int size, int rangeY) {
         super(settings);
         this.blocks = blocks;
         this.size = size;
+        this.rangeY = rangeY;
     }
 
     @Override
     public Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
-        return Structure.onTopOfChunkCenter(context, Heightmap.Types.WORLD_SURFACE_WG, (builder) -> generatePieces(builder, context, this.blocks, this.size));
+        return Structure.onTopOfChunkCenter(context, Heightmap.Types.WORLD_SURFACE_WG, (builder) -> generatePieces(builder, context, this.blocks, this.size, this.rangeY));
     }
 
-    private static void generatePieces(StructurePiecesBuilder builder, GenerationContext context, BlockStateProvider blocks, int size) {
+    private static void generatePieces(StructurePiecesBuilder builder, GenerationContext context, BlockStateProvider blocks, int size, int rangeY) {
         Map<ChunkPos, Set<BlockPos>> chunks = new LinkedHashMap<>();
         Set<BlockPos> positions = new LinkedHashSet<>();
 
         WorldgenRandom random = context.random();
         boolean direction = random.nextBoolean();
-        int initialY = context.heightAccessor().getMinBuildHeight() + context.random().nextInt(32);
+        int initialY = context.heightAccessor().getMinBuildHeight() + context.random().nextInt(rangeY);
         int x = context.chunkPos().getMinBlockX();
         int y = initialY;
         int z = context.chunkPos().getMinBlockZ();
