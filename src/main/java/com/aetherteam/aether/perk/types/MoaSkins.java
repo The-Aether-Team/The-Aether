@@ -31,11 +31,11 @@ public class MoaSkins {
                     .info(new MoaSkin.Info(User.Tier.ASCENTAN, true))
             ));
         }
-        register("orange_moa", new MoaSkin("orange_moa", new MoaSkin.Properties()
-                .displayName(Component.translatable("gui.aether.moa_skins.skin.orange_moa"))
+        register("classic_moa", new MoaSkin("classic_moa", new MoaSkin.Properties()
+                .displayName(Component.translatable("gui.aether.moa_skins.skin.classic_moa"))
                 .userPredicate((user) -> PerkUtil.hasLifetimeAscentanMoaSkins().test(user))
-                .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/orange_moa_icon.png"))
-                .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/orange_moa.png"))
+                .iconLocation(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/icons/classic_moa_icon.png"))
+                .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/classic_moa.png"))
                 .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png"))
                 .info(new MoaSkin.Info(User.Tier.ASCENTAN, true))
         ));
