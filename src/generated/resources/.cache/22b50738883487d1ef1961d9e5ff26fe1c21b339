@@ -1,4 +1,4 @@
-// 1.19.4	2023-08-16T12:37:52.2722297	Tags for minecraft:block mod id aether
+// 1.19.4	2023-08-17T15:10:17.6109139	Tags for minecraft:block mod id aether
 fc9b66cee900f1b4f341fcec6da19eb45d575f43 data/aether/tags/blocks/aechor_plant_spawnable_on.json
 7f0ca5740d7eeb3d83a96088ad6c30a672b55609 data/aether/tags/blocks/aerclouds.json
 16a15f0767946dfa61ee9dfb544a3aeb3439340c data/aether/tags/blocks/aerogel.json
@@ -9,19 +9,19 @@ bb498e0a98701cc967bc1f2c7967f79163cdb470 data/aether/tags/blocks/aether_portal_b
 2e32a7b83e54ddce24aaeff94c215bb46e0c6628 data/aether/tags/blocks/aether_portal_blocks.json
 bc8701774f57ab000a8f0f1d390702175a6cdbb8 data/aether/tags/blocks/allowed_bucket_pickup.json
 befda0e6594eed38bd37a692d75b8fcb44d812c5 data/aether/tags/blocks/allowed_flammables.json
-eb4cdf6f9a5abc219ab893139c2ed512fb1e06de data/aether/tags/blocks/angelic_blocks.json
+f9a76a30f0eda4e77d73593fb077e89632e058ac data/aether/tags/blocks/angelic_blocks.json
 d9dcb253fe96193998f03751892165ee5f5c1924 data/aether/tags/blocks/boss_doorway_dungeon_blocks.json
 b7b37d30e23e65ee6925f4068e6d142f874fadd6 data/aether/tags/blocks/dungeon_blocks.json
 f88e31ba010e8b41d4256635de26d1cf8a0aa221 data/aether/tags/blocks/enchanted_grass.json
 65976e3564baed2ae1f9323801f6fdc2faa84331 data/aether/tags/blocks/golden_oak_logs.json
 919fec6673778567a924cacfa590d985b91709d9 data/aether/tags/blocks/gravitite_ability_blacklist.json
-14656c5bacbe085775af17b37cc6fe661f3c5c00 data/aether/tags/blocks/hellfire_blocks.json
+5ea4f558d543cb964893d8ab6a84ec20de337f88 data/aether/tags/blocks/hellfire_blocks.json
 7a6ab5f621a7a401034f482edac807cc203ff72b data/aether/tags/blocks/holystone.json
 b39b9a730fa6d6ce0d57bcbb88a249b6617d6822 data/aether/tags/blocks/infiniburn.json
 022a06d2a296e488a68e47fe0cebd62c586c55ea data/aether/tags/blocks/locked_dungeon_blocks.json
 cf3608bd187922aeb48c566c19e8482b0dca34c7 data/aether/tags/blocks/non_bronze_dungeon_spawnable.json
 f044320c552d2490be4d416f191e85aff1a934e6 data/aether/tags/blocks/non_tunnel_replaceable.json
-adc60af0231716fa635707337a7147da3eef4eb6 data/aether/tags/blocks/sentry_blocks.json
+66891bf965b86e92235cc816a4a0c898ada827e6 data/aether/tags/blocks/sentry_blocks.json
 df16ed8f5964fbb722ae2040903fb88c95ad2b99 data/aether/tags/blocks/skyroot_logs.json
 31c6217cf1ecdd680f867d440f3dca420bbf9b99 data/aether/tags/blocks/slider_unbreakable.json
 fc9b66cee900f1b4f341fcec6da19eb45d575f43 data/aether/tags/blocks/swet_spawnable_on.json
