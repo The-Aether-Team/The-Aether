@@ -1,1 +1,12 @@
-{}
+{
+  "advancement.aether.aether_sleep": "Zaslúžený oddych",
+  "advancement.aether.craft_altar": "Veríš v mágiu?",
+  "advancement.aether.icestone": "Chladný ako ľad",
+  "advancement.aether.loreception.desc": "Polož knihu múdrosti do knihy múdrosti",
+  "advancement.aether.the_aether": "Aether",
+  "aether.menu_title.the_aether": "Aether",
+  "aether.menu_title.the_aether_left": "Aether (vľavo)",
+  "aether.pro_tips.line.aether.mimic_chest": "Niektoré dungeony v Aetheri obsahujú truhlice, ktoré sú mimiky.",
+  "gui.aether.jei.biome.tooltip.biomes": "Biómy v tagu",
+  "gui.aether.jei.biome.tooltip.tag": "Tag biómu"
+}

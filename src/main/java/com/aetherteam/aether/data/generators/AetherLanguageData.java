@@ -456,9 +456,9 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addAdvancement("read_lore", "The More You Know!");
         this.addAdvancement("loreception", "Lore-Ception!");
         this.addAdvancement("blue_aercloud", "To Infinity and Beyond!");
-        this.addAdvancement("obtain_egg", "Don't Count your Moas...");
+        this.addAdvancement("obtain_egg", "Don't Count Your Moas...");
         this.addAdvancement("obtain_petal", "Baby Food");
-        this.addAdvancement("incubate_moa", "... Until they hatch!");
+        this.addAdvancement("incubate_moa", "... Until They hatch!");
         this.addAdvancement("black_moa", "Let's Fly!");
         this.addAdvancement("zanite", "Exotic Hardware");
         this.addAdvancement("craft_altar", "Do You Believe in Magic?");
@@ -472,13 +472,13 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addAdvancement("zephyr_hammer", "Ultimate Ban Hammer");
         this.addAdvancement("lance_loot", "Challenger to the Throne");
         this.addAdvancement("silver_dungeon", "Dethroned");
-        this.addAdvancement("valkyrie_loot", "Earning your wings");
+        this.addAdvancement("valkyrie_loot", "Earning your Wings");
         this.addAdvancement("valkyrie_hoe", "Plunderer's Remorse");
         this.addAdvancement("regen_stone", "Battle Hardened");
         this.addAdvancement("gold_dungeon", "Extinguished");
         this.addAdvancement("phoenix_armor", "Fireproof");
         this.addAdvancement("obsidian_armor", "Ice Bucket Armor");
-        this.addAdvancement("aether_sleep", "A well earned rest");
+        this.addAdvancement("aether_sleep", "A Well Earned Rest");
 
         this.addAdvancementDesc("the_aether", "It's not dead!");
         this.addAdvancementDesc("enter_aether", "Enter the Aether");
@@ -499,9 +499,9 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addAdvancementDesc("bronze_dungeon", "Defeat the bronze boss");
         this.addAdvancementDesc("hammer_loot", "Obtain the Hammer of Kingbdogz from the Bronze Dungeon");
         this.addAdvancementDesc("zephyr_hammer", "Kill a Zephyr with the Hammer of Kingbdogz. Sweet Revenge!");
-        this.addAdvancementDesc("lance_loot", "Obtain the Valkyrie Lance from the bronze dungeon. Time to challenge the Silver Dungeon!");
+        this.addAdvancementDesc("lance_loot", "Obtain the Valkyrie Lance from the Bronze Dungeon. Time to challenge the Silver Dungeon!");
         this.addAdvancementDesc("silver_dungeon", "Defeat the silver boss");
-        this.addAdvancementDesc("regen_stone", "Obtain a Regeneration Stone from the Valkyrie dungeon. The final dungeon awaits...");
+        this.addAdvancementDesc("regen_stone", "Obtain a Regeneration Stone from the Silver Dungeon. The final dungeon awaits...");
         this.addAdvancementDesc("valkyrie_loot", "Obtain a piece of Valkyrie equipment from the Silver Dungeon");
         this.addAdvancementDesc("valkyrie_hoe", "I defeated the Silver Dungeon and all I got was this stupid Hoe");
         this.addAdvancementDesc("gold_dungeon", "Defeat the gold boss");
@@ -775,7 +775,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addMoaSkinsText("skin.blue_moa", "Blue Moa");
         this.addMoaSkinsText("skin.white_moa", "White Moa");
         this.addMoaSkinsText("skin.black_moa", "Black Moa");
-        this.addMoaSkinsText("skin.orange_moa", "Orange Moa");
+        this.addMoaSkinsText("skin.classic_moa", "Classic Moa");
         this.addMoaSkinsText("skin.boko_yellow", "Boko Yellow");
         this.addMoaSkinsText("skin.crookjaw_purple", "Crookjaw Purple");
         this.addMoaSkinsText("skin.gharrix_red", "Gharrix Red");
@@ -1173,6 +1173,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addServerConfig("gameplay", "enable_bed_explosions", "Vanilla's beds will explode in the Aether");
         this.addServerConfig("gameplay", "tools_debuff", "Tools that aren't from the Aether will mine Aether blocks slower than tools that are from the Aether");
         this.addServerConfig("gameplay", "edible_ambrosium", "Ambrosium Shards can be eaten to restore a half heart of health");
+        this.addServerConfig("gameplay", "berry_bush_consistency", "Makes Berry Bushes and Bush Stems behave consistently with Sweet Berry Bushes");
         this.addServerConfig("gameplay", "healing_gummy_swets", "Gummy Swets when eaten restore full health instead of full hunger");
         this.addServerConfig("gameplay", "maximum_life_shards", "Determines the limit of the amount of Life Shards a player can consume to increase their health");
         this.addServerConfig("gameplay", "hammer_of_kingbdogz_cooldown", "Determines the cooldown in ticks for the Hammer of Kingbdogz's ability");

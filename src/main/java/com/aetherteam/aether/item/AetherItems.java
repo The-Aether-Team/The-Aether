@@ -259,7 +259,7 @@ public class AetherItems {
 	public static final RegistryObject<Item> WHITE_MOA_EGG = ITEMS.register("white_moa_egg", () -> new MoaEggItem(AetherMoaTypes.WHITE, 0xFFFFFF, new Item.Properties()));
 	public static final RegistryObject<Item> BLACK_MOA_EGG = ITEMS.register("black_moa_egg", () -> new MoaEggItem(AetherMoaTypes.BLACK, 0x222222, new Item.Properties()));
 
-	public static final RegistryObject<Item> NATURE_STAFF = ITEMS.register("nature_staff", () -> new Item(new Item.Properties().durability(100).rarity(AETHER_LOOT)));
+	public static final RegistryObject<Item> NATURE_STAFF = ITEMS.register("nature_staff", () -> new Item(new Item.Properties().durability(100)));
 	public static final RegistryObject<Item> CLOUD_STAFF = ITEMS.register("cloud_staff", CloudStaffItem::new);
 
 	public static final RegistryObject<Item> LIFE_SHARD = ITEMS.register("life_shard", () -> new LifeShardItem(new Item.Properties().stacksTo(1).rarity(AETHER_LOOT)));

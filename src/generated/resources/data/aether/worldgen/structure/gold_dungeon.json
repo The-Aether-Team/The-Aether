@@ -1,6 +1,9 @@
 {
   "type": "aether:gold_dungeon",
+  "belowTerrain": 20,
   "biomes": "#aether:has_gold_dungeon",
+  "minY": 40,
+  "rangeY": 60,
   "spawn_overrides": {
     "aether_aerwhale": {
       "bounding_box": "full",

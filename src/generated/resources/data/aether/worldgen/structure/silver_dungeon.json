@@ -1,6 +1,11 @@
 {
   "type": "aether:silver_dungeon",
+  "aboveTerrain": 18,
+  "belowTerrain": 2,
   "biomes": "#aether:has_silver_dungeon",
+  "maxY": 128,
+  "minY": 35,
+  "rangeY": 70,
   "spawn_overrides": {
     "aether_aerwhale": {
       "bounding_box": "full",
