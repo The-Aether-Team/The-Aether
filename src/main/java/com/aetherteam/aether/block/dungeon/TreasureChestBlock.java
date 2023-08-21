@@ -124,7 +124,9 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
 						if (player instanceof ServerPlayer) {
 							player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
 						}
-						stack.shrink(1);
+						if (!player.getAbilities().instabuild) {
+							stack.shrink(1);
+						}
 					}
 				} else if (!ChestBlock.isChestBlockedAt(level, pos) && menuProvider != null) {
 					player.openMenu(menuProvider);
