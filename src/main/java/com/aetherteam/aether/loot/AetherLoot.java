@@ -34,6 +34,7 @@ public class AetherLoot {
 	public static final ResourceLocation BRONZE_DUNGEON_DISC = register("chests/dungeon/bronze/bronze_dungeon_disc");
 	public static final ResourceLocation BRONZE_DUNGEON_REWARD = register("chests/dungeon/bronze/bronze_dungeon_reward");
 	public static final ResourceLocation BRONZE_DUNGEON_TREASURE = register("chests/dungeon/bronze/bronze_dungeon_treasure");
+	public static final ResourceLocation BRONZE_DUNGEON_NEPTUNE = register("chests/dungeon/bronze/bronze_dungeon_neptune");
 	public static final ResourceLocation BRONZE_DUNGEON_GUMMIES = register("chests/dungeon/bronze/bronze_dungeon_gummies");
 
 	public static final ResourceLocation SILVER_DUNGEON = register("chests/dungeon/silver/silver_dungeon");
@@ -43,7 +44,6 @@ public class AetherLoot {
 	public static final ResourceLocation SILVER_DUNGEON_REWARD = register("chests/dungeon/silver/silver_dungeon_reward");
 	public static final ResourceLocation SILVER_DUNGEON_TREASURE = register("chests/dungeon/silver/silver_dungeon_treasure");
 	public static final ResourceLocation SILVER_DUNGEON_VALKYRIE = register("chests/dungeon/silver/silver_dungeon_valkyrie");
-	public static final ResourceLocation SILVER_DUNGEON_NEPTUNE = register("chests/dungeon/silver/silver_dungeon_neptune");
 	public static final ResourceLocation SILVER_DUNGEON_GRAVITITE = register("chests/dungeon/silver/silver_dungeon_gravitite");
 	public static final ResourceLocation SILVER_DUNGEON_CAPE_CONFIG = register("chests/dungeon/silver/silver_dungeon_cape_config");
 	public static final ResourceLocation SILVER_DUNGEON_GUMMIES = register("chests/dungeon/silver/silver_dungeon_gummies");
