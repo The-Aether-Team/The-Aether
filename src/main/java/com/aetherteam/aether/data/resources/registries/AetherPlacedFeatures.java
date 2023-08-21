@@ -46,8 +46,8 @@ public class AetherPlacedFeatures {
     public static final ResourceKey<PlacedFeature> ORE_ICESTONE_PLACEMENT = createKey("icestone_ore");
     public static final ResourceKey<PlacedFeature> ORE_AMBROSIUM_PLACEMENT = createKey("ambrosium_ore");
     public static final ResourceKey<PlacedFeature> ORE_ZANITE_PLACEMENT = createKey("zanite_ore");
+    public static final ResourceKey<PlacedFeature> ORE_GRAVITITE_BURIED_PLACEMENT = createKey("gravitite_ore_buried");
     public static final ResourceKey<PlacedFeature> ORE_GRAVITITE_PLACEMENT = createKey("gravitite_ore");
-    public static final ResourceKey<PlacedFeature> ORE_GRAVITITE_LOWER_PLACEMENT = createKey("lower_gravitite_ore");
 
     private static ResourceKey<PlacedFeature> createKey(String name) {
         return ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(Aether.MODID, name));
@@ -126,9 +126,9 @@ public class AetherPlacedFeatures {
                 NitrogenPlacedFeatureBuilders.commonOrePlacement(20, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.aboveBottom(128))));
         register(context, ORE_ZANITE_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.ORE_ZANITE_CONFIGURATION),
                 NitrogenPlacedFeatureBuilders.commonOrePlacement(14, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.aboveBottom(75))));
-        register(context, ORE_GRAVITITE_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.ORE_GRAVITITE_CONFIGURATION),
+        register(context, ORE_GRAVITITE_BURIED_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.ORE_GRAVITITE_BURIED_CONFIGURATION),
                 NitrogenPlacedFeatureBuilders.commonOrePlacement(5, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.aboveBottom(74))));
-        register(context, ORE_GRAVITITE_LOWER_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.ORE_GRAVITITE_LOWER_CONFIGURATION),
+        register(context, ORE_GRAVITITE_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.ORE_GRAVITITE_CONFIGURATION),
                 NitrogenPlacedFeatureBuilders.commonOrePlacement(7, HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-58), VerticalAnchor.aboveBottom(74))));
     }
 
