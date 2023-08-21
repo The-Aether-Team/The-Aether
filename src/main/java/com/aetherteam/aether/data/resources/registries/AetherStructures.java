@@ -32,6 +32,8 @@ public class AetherStructures {
     public static final ResourceKey<Structure> BRONZE_DUNGEON = createKey("bronze_dungeon");
     public static final ResourceKey<Structure> SILVER_DUNGEON = createKey("silver_dungeon");
     public static final ResourceKey<Structure> GOLD_DUNGEON = createKey("gold_dungeon");
+    public static final ResourceKey<Structure> RUINED_PORTAL_STANDARD = createKey("ruined_portal_standard");
+    public static final ResourceKey<Structure> RUINED_PORTAL_AETHER = createKey("ruined_portal_aether");
 
     private static ResourceKey<Structure> createKey(String name) {
         return ResourceKey.create(Registries.STRUCTURE, new ResourceLocation(Aether.MODID, name));

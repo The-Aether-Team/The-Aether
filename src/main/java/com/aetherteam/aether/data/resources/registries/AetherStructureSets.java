@@ -21,6 +21,7 @@ public class AetherStructureSets {
     public static final ResourceKey<StructureSet> LARGE_AERCLOUD = createKey("large_aercloud");
     public static final ResourceKey<StructureSet> BRONZE_DUNGEON = createKey("bronze_dungeon");    
     public static final ResourceKey<StructureSet> SILVER_AND_GOLD_DUNGEONS = createKey("silver_and_gold_dungeons");
+    public static final ResourceKey<StructureSet> RUINED_PORTALS = createKey("ruined_portals");
 
     private static ResourceKey<StructureSet> createKey(String name) {
         return ResourceKey.create(Registries.STRUCTURE_SET, new ResourceLocation(Aether.MODID, name));
