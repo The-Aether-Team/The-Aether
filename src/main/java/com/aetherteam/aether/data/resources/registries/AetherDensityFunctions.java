@@ -9,7 +9,6 @@ import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.synth.BlendedNoise;
 
 public class AetherDensityFunctions {
-	
 	public static final ResourceKey<DensityFunction> BASE_3D_NOISE_AETHER = createKey("base_3d_noise_aether");
 	
 	private static ResourceKey<DensityFunction> createKey(String name) {
@@ -24,5 +23,4 @@ public class AetherDensityFunctions {
         		160.0, // y factor
         		8.0)); // smear scale multiplier, capped at 8
     }
-							
 }

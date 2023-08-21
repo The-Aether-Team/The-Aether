@@ -1,4 +1,4 @@
-// 1.19.4	2023-07-06T21:40:53.0434947	Tags for minecraft:item mod id aether
+// 1.19.4	2023-08-17T15:10:17.6469133	Tags for minecraft:item mod id aether
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/items/accepted_music_discs.json
 b1ab124000a7da5fa5e186c46b51223391f132d9 data/aether/tags/items/accessories.json
 99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/aether/tags/items/accessories_capes.json
@@ -12,7 +12,7 @@ cd70d1f5f10c0f6f5aaa22bcd218352b3a14cb69 data/aether/tags/items/accessories_ring
 16a15f0767946dfa61ee9dfb544a3aeb3439340c data/aether/tags/items/aerogel.json
 d520be56403df209dca245912dc672e8c5c3bf0e data/aether/tags/items/aether_dirt.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/aether_portal_activation_items.json
-eb4cdf6f9a5abc219ab893139c2ed512fb1e06de data/aether/tags/items/angelic_blocks.json
+f9a76a30f0eda4e77d73593fb077e89632e058ac data/aether/tags/items/angelic_blocks.json
 4c3f53ffa001534a8db6e1a65a1bdefc3fa0142f data/aether/tags/items/book_of_lore_materials.json
 d9dcb253fe96193998f03751892165ee5f5c1924 data/aether/tags/items/boss_doorway_dungeon_blocks.json
 ac1d9421f0295d2b3a733f9b307cb39c2a63629d data/aether/tags/items/candy_cane_repairing.json
@@ -31,7 +31,7 @@ bbd431b5ea0dbbac9aa71e30c71140e28ae93250 data/aether/tags/items/freezable_rings.
 65976e3564baed2ae1f9323801f6fdc2faa84331 data/aether/tags/items/golden_oak_logs.json
 24739a7c6e39fa7efc02d98276194ef47fa70290 data/aether/tags/items/gravitite_repairing.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/hammer_of_kingbdogz_repairing.json
-14656c5bacbe085775af17b37cc6fe661f3c5c00 data/aether/tags/items/hellfire_blocks.json
+5ea4f558d543cb964893d8ab6a84ec20de337f88 data/aether/tags/items/hellfire_blocks.json
 7a6ab5f621a7a401034f482edac807cc203ff72b data/aether/tags/items/holystone.json
 336a5cf28e3a807615f25965e0a90c7bf33dd3ac data/aether/tags/items/holystone_repairing.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/holy_repairing.json
@@ -51,7 +51,7 @@ d0f09b8dfc6381aa826e9b27dfc398b8b7c02625 data/aether/tags/items/moa_temptation_i
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/pig_slayer_repairing.json
 d57e931f91a1b51aa96c3007c5fce585e2e84cc2 data/aether/tags/items/planks_crafting.json
 7662bf8395dc6e9d79fc291d51aae6ef32a050fd data/aether/tags/items/save_nbt_in_recipe.json
-adc60af0231716fa635707337a7147da3eef4eb6 data/aether/tags/items/sentry_blocks.json
+66891bf965b86e92235cc816a4a0c898ada827e6 data/aether/tags/items/sentry_blocks.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/sentry_repairing.json
 6404c17e75ed612591fd253fd1cfd8c6a5ea4a8a data/aether/tags/items/sheepuff_temptation_items.json
 df16ed8f5964fbb722ae2040903fb88c95ad2b99 data/aether/tags/items/skyroot_logs.json
@@ -114,7 +114,6 @@ ef0249e5296febb809f365800a45d4fb24f13322 data/minecraft/tags/items/signs.json
 b830e607f8f1f40961d24f70f71b34ede14bfb3e data/minecraft/tags/items/slabs.json
 6b8be3d5114ac4f45dbfff26c82216c0b54ed097 data/minecraft/tags/items/small_flowers.json
 457cae0b6a74abc669c26ef099149e7149ff70bb data/minecraft/tags/items/stairs.json
-4c0df21f724d72f265a9cf9cf4a4fda33a8afeae data/minecraft/tags/items/stone_bricks.json
 336a5cf28e3a807615f25965e0a90c7bf33dd3ac data/minecraft/tags/items/stone_crafting_materials.json
 5d4a9617f9199aa91aa4d20684b2c262120a033d data/minecraft/tags/items/swords.json
 8a35a44c0a25f20d1ebd014a96d33cf7359a7555 data/minecraft/tags/items/walls.json

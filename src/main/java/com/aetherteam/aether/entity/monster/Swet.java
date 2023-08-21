@@ -116,12 +116,13 @@ public class Swet extends Slime implements MountableMob {
         // Handle dissolving in water.
         if (this.isInWater()) {
             this.spawnDissolveParticles();
-            if (this.getWaterDamageScale() < 1.0F) {
+            if (this.getWaterDamageScale() < 0.9F) {
                 this.setWaterDamageScale(this.getWaterDamageScale() + 0.02F);
-            } else if (!this.getLevel().isClientSide()) {
-                this.getLevel().broadcastEntityEvent(this, (byte) 60);
-                this.remove(Entity.RemovalReason.KILLED);
             }
+        }
+        if (this.getWaterDamageScale() >= 0.9F && !this.getLevel().isClientSide()) {
+            this.getLevel().broadcastEntityEvent(this, (byte) 60);
+            this.remove(Entity.RemovalReason.KILLED);
         }
 
         this.tick(this);
@@ -216,7 +217,9 @@ public class Swet extends Slime implements MountableMob {
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (!this.getLevel().isClientSide()) {
             if (!this.hasPrey() && this.isFriendlyTowardEntity(player)) {
-                this.consumePassenger(player);
+                if (this.getScale() >= super.getScale()) {
+                    this.consumePassenger(player);
+                }
             }
         }
         return InteractionResult.PASS;

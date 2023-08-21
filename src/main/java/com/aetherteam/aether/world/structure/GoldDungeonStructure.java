@@ -40,14 +40,23 @@ import java.util.Optional;
 public class GoldDungeonStructure extends Structure {
     public static final Codec<GoldDungeonStructure> CODEC = RecordCodecBuilder.create(builder -> builder.group(
             settingsCodec(builder),
-            Codec.INT.fieldOf("stubcount").forGetter(o -> o.stubIslandCount)
+            Codec.INT.fieldOf("stubcount").forGetter(o -> o.stubIslandCount),
+            Codec.INT.fieldOf("belowTerrain").forGetter(o -> o.belowTerrain),
+            Codec.INT.fieldOf("minY").forGetter(o -> o.minY),
+            Codec.INT.fieldOf("rangeY").forGetter(o -> o.rangeY)
     ).apply(builder, GoldDungeonStructure::new));
 
     private final int stubIslandCount;
+    private final int belowTerrain;
+    private final int minY;
+    private final int rangeY;
 
-    public GoldDungeonStructure(StructureSettings settings, int stubIslandCount) {
+    public GoldDungeonStructure(StructureSettings settings, int stubIslandCount, int belowTerrain, int minY, int rangeY) {
         super(settings);
         this.stubIslandCount = stubIslandCount;
+        this.belowTerrain = belowTerrain;
+        this.minY = minY;
+        this.rangeY = rangeY;
     }
 
     @Override
@@ -57,8 +66,8 @@ public class GoldDungeonStructure extends Structure {
         int x = chunkpos.getMiddleBlockX();
         int z = chunkpos.getMiddleBlockZ();
         // We want the Gold Dungeon to sometimes blend in with the terrain, and sometimes be floating in the sky. However, we never want it to be fully buried.
-        int terrainHeight = context.chunkGenerator().getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState()) - 20;
-        int height = 40 + random.nextInt(60);
+        int terrainHeight = context.chunkGenerator().getBaseHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState()) - this.belowTerrain;
+        int height = this.minY + random.nextInt(this.rangeY);
         height = Math.max(terrainHeight, height);
         BlockPos blockpos = new BlockPos(chunkpos.getMiddleBlockX(), height, chunkpos.getMiddleBlockZ());
         return Optional.of(new GenerationStub(blockpos, piecesBuilder -> this.generatePieces(piecesBuilder, context, blockpos)));

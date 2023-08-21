@@ -49,7 +49,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -175,7 +174,7 @@ public class AbilityHooks {
          * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onEntityHurt(net.minecraftforge.event.entity.living.LivingAttackEvent)
          */
         public static void setAttack(DamageSource source) {
-            if (source.getDirectEntity() instanceof Player player) {
+            if (source.getEntity() instanceof Player player) {
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setAttackedWithInvisibility(true));
             }
         }
@@ -186,16 +185,6 @@ public class AbilityHooks {
          */
         public static boolean preventMagmaDamage(LivingEntity entity, DamageSource source) {
             return source == entity.getLevel().damageSources().hotFloor() && EquipmentUtil.hasFreezingAccessory(entity);
-        }
-
-        /**
-         * Sets that the player recently attacked with a ranged weapon.
-         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onProjectileShoot(EntityJoinLevelEvent)
-         */
-        public static void setShoot(Entity entity) {
-            if (entity instanceof Projectile projectile && projectile.getOwner() instanceof Player player) {
-                AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setAttackedWithInvisibility(true));
-            }
         }
     }
 
