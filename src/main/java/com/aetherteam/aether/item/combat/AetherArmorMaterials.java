@@ -26,18 +26,18 @@ public enum AetherArmorMaterials implements ArmorMaterial {
 		map.put(ArmorItem.Type.CHESTPLATE, 8);
 		map.put(ArmorItem.Type.HELMET, 3);
 	}), 10, AetherSoundEvents.ITEM_ARMOR_EQUIP_GRAVITITE, 2.0F, () -> Ingredient.of(AetherTags.Items.GRAVITITE_REPAIRING)),
+	NEPTUNE("neptune", 15, Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
+		map.put(ArmorItem.Type.BOOTS, 2);
+		map.put(ArmorItem.Type.LEGGINGS, 5);
+		map.put(ArmorItem.Type.CHESTPLATE, 6);
+		map.put(ArmorItem.Type.HELMET, 2);
+	}), 10, AetherSoundEvents.ITEM_ARMOR_EQUIP_NEPTUNE, 1.0F, () -> Ingredient.of(AetherTags.Items.NEPTUNE_REPAIRING)),
 	VALKYRIE("valkyrie", 33, Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
 		map.put(ArmorItem.Type.BOOTS, 3);
 		map.put(ArmorItem.Type.LEGGINGS, 6);
 		map.put(ArmorItem.Type.CHESTPLATE, 8);
 		map.put(ArmorItem.Type.HELMET, 3);
 	}), 10, AetherSoundEvents.ITEM_ARMOR_EQUIP_VALKYRIE, 2.0F, () -> Ingredient.of(AetherTags.Items.VALKYRIE_REPAIRING)),
-	NEPTUNE("neptune", 33, Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
-		map.put(ArmorItem.Type.BOOTS, 3);
-		map.put(ArmorItem.Type.LEGGINGS, 6);
-		map.put(ArmorItem.Type.CHESTPLATE, 8);
-		map.put(ArmorItem.Type.HELMET, 3);
-	}), 10, AetherSoundEvents.ITEM_ARMOR_EQUIP_NEPTUNE, 2.0F, () -> Ingredient.of(AetherTags.Items.NEPTUNE_REPAIRING)),
 	PHOENIX("phoenix", 33, Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
 		map.put(ArmorItem.Type.BOOTS, 3);
 		map.put(ArmorItem.Type.LEGGINGS, 6);

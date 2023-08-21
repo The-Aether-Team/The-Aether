@@ -6,13 +6,7 @@
       "entries": [
         {
           "type": "minecraft:loot_table",
-          "name": "aether:chests/dungeon/silver/silver_dungeon_valkyrie",
-          "weight": 4
-        },
-        {
-          "type": "minecraft:loot_table",
-          "name": "aether:chests/dungeon/silver/silver_dungeon_neptune",
-          "weight": 3
+          "name": "aether:chests/dungeon/silver/silver_dungeon_valkyrie"
         }
       ],
       "rolls": 1.0
@@ -173,12 +167,7 @@
         {
           "type": "minecraft:loot_table",
           "name": "aether:chests/dungeon/silver/silver_dungeon_valkyrie",
-          "weight": 6
-        },
-        {
-          "type": "minecraft:loot_table",
-          "name": "aether:chests/dungeon/silver/silver_dungeon_neptune",
-          "weight": 6
+          "weight": 10
         },
         {
           "type": "minecraft:item",
