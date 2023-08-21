@@ -548,6 +548,16 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .unlockedBy("has_holystone", has(AetherBlocks.HOLYSTONE.get()))
                 .save(consumer, this.name("holystone_stonecutter"));
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, Blocks.LECTERN)
+                .group("minecraft:lectern")
+                .define('S', ItemTags.WOODEN_SLABS)
+                .define('B', AetherBlocks.SKYROOT_BOOKSHELF.get())
+                .pattern("SSS")
+                .pattern(" B ")
+                .pattern(" S ")
+                .unlockedBy("has_book", has(Items.BOOK))
+                .save(consumer, this.name("skyroot_lectern"));
+
 
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, Blocks.CAKE)
                 .group("minecraft:cake")
@@ -560,8 +570,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("CCC")
                 .unlockedBy("has_egg", has(Items.EGG))
                 .save(consumer, this.name("skyroot_milk_bucket_cake"));
-
-
+        
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, Blocks.CAKE)
                 .group("minecraft:cake")
                 .define('A', Items.MILK_BUCKET)
