@@ -156,11 +156,11 @@ public class CloudMinion extends FlyingMob {
         double x = this.targetX - this.getX();
         double y = this.targetY - this.getY();
         double z = this.targetZ - this.getZ();
-        double sqrt = Math.sqrt(x * x + y * y + z * z) * 3.25;
+        double sqrt = Math.sqrt(x * x + y * y + z * z);
         Vec3 motion = this.getDeltaMovement();
-        double motionX = (motion.x() + x / sqrt) / 2.0;
-        double motionY = (motion.y() + y / sqrt) / 2.0;
-        double motionZ = (motion.z() + z / sqrt) / 2.0;
+        double motionX = ((motion.x() + x / (sqrt * 3.25)) * sqrt) / 2.0;
+        double motionY = ((motion.y() + y / (sqrt * 3.25)) * sqrt) / 2.0;
+        double motionZ = ((motion.z() + z / (sqrt * 3.25)) * sqrt) / 2.0;
         this.setDeltaMovement(motionX, motionY, motionZ);
     }
 
