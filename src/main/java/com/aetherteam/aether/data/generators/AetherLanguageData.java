@@ -421,6 +421,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
 
 
         this.addEffect(AetherEffects.INEBRIATION, "Inebriation");
+        this.addEffect(AetherEffects.REMEDY, "Remedy");
 
 
         this.addBiome(AetherBiomes.SKYROOT_MEADOW, "Skyroot Meadow");

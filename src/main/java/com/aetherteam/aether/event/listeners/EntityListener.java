@@ -5,6 +5,7 @@ import com.aetherteam.aether.event.hooks.EntityHooks;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -16,8 +17,10 @@ import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -107,5 +110,17 @@ public class EntityListener {
         LivingEntity entity = event.getEntity();
         Collection<ItemEntity> itemDrops = event.getDrops();
         EntityHooks.trackDrops(entity, itemDrops);
+    }
+
+    /**
+     * @see EntityHooks#preventInebriation(LivingEntity, MobEffectInstance)
+     */
+    @SubscribeEvent
+    public static void onEffectApply(MobEffectEvent.Applicable event) {
+        LivingEntity livingEntity = event.getEntity();
+        MobEffectInstance effectInstance = event.getEffectInstance();
+        if (EntityHooks.preventInebriation(livingEntity, effectInstance)) {
+            event.setResult(Event.Result.DENY);
+        }
     }
 }

@@ -4,6 +4,7 @@ import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.capability.item.DroppedItem;
 import com.aetherteam.aether.client.AetherSoundEvents;
+import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.ai.goal.BeeGrowBerryBushGoal;
 import com.aetherteam.aether.entity.ai.goal.FoxEatBerryBushGoal;
 import com.aetherteam.aether.entity.monster.Swet;
@@ -18,6 +19,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.*;
@@ -34,6 +36,7 @@ import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
@@ -191,5 +194,16 @@ public class EntityHooks {
         if (entity instanceof Player player) {
             itemDrops.forEach(itemEntity -> DroppedItem.get(itemEntity).ifPresent(droppedItem -> droppedItem.setOwner(player)));
         }
+    }
+
+    /**
+     * Prevents an entity from being inflicted with {@link AetherEffects#INEBRIATION} if it has {@link AetherEffects#REMEDY} applied.
+     * @param livingEntity The {@link LivingEntity} that the effect is being applied to.
+     * @param appliedInstance The {@link MobEffectInstance}.
+     * @return Whether Inebriation application can be prevented.
+     * @see com.aetherteam.aether.event.listeners.EntityListener#onEffectApply(MobEffectEvent.Applicable)
+     */
+    public static boolean preventInebriation(LivingEntity livingEntity, MobEffectInstance appliedInstance) {
+        return livingEntity.hasEffect(AetherEffects.REMEDY.get()) && appliedInstance.getEffect() == AetherEffects.INEBRIATION.get();
     }
 }

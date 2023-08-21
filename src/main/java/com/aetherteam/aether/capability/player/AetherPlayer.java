@@ -67,10 +67,8 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 	void setEnchantedDartCount(int count);
 	int getEnchantedDartCount();
 
-	void setRemedyMaximum(int max);
-	int getRemedyMaximum();
-	void setRemedyTimer(int timer);
-	int getRemedyTimer();
+	void setRemedyStartDuration(int duration);
+	int getRemedyStartDuration();
 
 	void setProjectileImpactedMaximum(int max);
 	int getProjectileImpactedMaximum();
