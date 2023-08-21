@@ -133,7 +133,7 @@ public class HammerProjectile extends ThrowableProjectile {
         if (target != this.getOwner()) {
             if (this.getOwner() == null || target != this.getOwner().getVehicle()) {
                 if (target instanceof LivingEntity livingEntity) {
-                    livingEntity.hurt(this.damageSources().thrown(this, this.getOwner()), 5);
+                    livingEntity.hurt(this.damageSources().thrown(this, this.getOwner()), 7);
                     livingEntity.push(this.getDeltaMovement().x(), 0.6, this.getDeltaMovement().z());
                 }
             }
