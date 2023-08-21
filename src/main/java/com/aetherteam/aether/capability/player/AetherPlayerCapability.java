@@ -5,6 +5,7 @@ import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
+import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
 import com.aetherteam.aether.entity.miscellaneous.Parachute;
@@ -80,8 +81,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	private int removePoisonDartTime;
 	private int removeEnchantedDartTime;
 
-	private int remedyMaximum;
-	private int remedyTimer;
+	private int remedyStartDuration;
 
 	private int impactedMaximum;
 	private int impactedTimer;
@@ -137,6 +137,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 			Map.entry("setGoldenDartCount", Triple.of(Type.INT, (object) -> this.setGoldenDartCount((int) object), this::getGoldenDartCount)),
 			Map.entry("setPoisonDartCount", Triple.of(Type.INT, (object) -> this.setPoisonDartCount((int) object), this::getPoisonDartCount)),
 			Map.entry("setEnchantedDartCount", Triple.of(Type.INT, (object) -> this.setEnchantedDartCount((int) object), this::getEnchantedDartCount)),
+			Map.entry("setRemedyStartDuration", Triple.of(Type.INT, (object) -> this.setRemedyStartDuration((int) object), this::getRemedyStartDuration)),
 			Map.entry("setAttackedWithInvisibility", Triple.of(Type.BOOLEAN, (object) -> this.setAttackedWithInvisibility((boolean) object), this::attackedWithInvisibility)),
 			Map.entry("setInvisibilityEnabled", Triple.of(Type.BOOLEAN, (object) -> this.setInvisibilityEnabled((boolean) object), this::isInvisibilityEnabled)),
 			Map.entry("setWearingInvisibilityCloak", Triple.of(Type.BOOLEAN, (object) -> this.setWearingInvisibilityCloak((boolean) object), this::isWearingInvisibilityCloak)),
@@ -165,6 +166,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 		tag.putFloat("SavedHealth", this.getSavedHealth());
 		tag.putInt("LifeShardCount", this.getLifeShardCount());
 		tag.putBoolean("HasSeenSunSpirit", this.hasSeenSunSpiritDialogue());
+		tag.putInt("RemedyStartDuration", this.getRemedyStartDuration());
 		if (this.getMountedAerbunnyTag() != null) {
 			tag.put("MountedAerbunnyTag", this.getMountedAerbunnyTag());
 		}
@@ -195,6 +197,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		}
 		if (tag.contains("HasSeenSunSpirit")) {
 			this.setSeenSunSpiritDialogue(tag.getBoolean("HasSeenSunSpirit"));
+		}
+		if (tag.contains("RemedyStartDuration")) {
+			this.setRemedyStartDuration(tag.getInt("RemedyStartDuration"));
 		}
 		if (tag.contains("MountedAerbunnyTag")) {
 			this.setMountedAerbunnyTag(tag.getCompound("MountedAerbunnyTag"));
@@ -256,8 +261,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	@Override
 	public void copyFrom(AetherPlayer other, boolean isWasDeath) {
 		if (!isWasDeath) {
-			this.setRemedyMaximum(other.getRemedyMaximum());
-			this.setRemedyTimer(other.getRemedyTimer());
+			this.setRemedyStartDuration(other.getRemedyStartDuration());
 			this.setProjectileImpactedMaximum(other.getProjectileImpactedMaximum());
 			this.setProjectileImpactedTimer(other.getProjectileImpactedTimer());
 		}
@@ -276,7 +280,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 		this.handleAetherPortal();
 		this.activateParachute();
 		this.handleRemoveDarts();
-		this.tickDownRemedy();
+		this.removeRemedyDuration();
 		this.tickDownProjectileImpact();
 		this.handleWingRotation();
 		this.handleAttackCooldown();
@@ -447,16 +451,10 @@ public class AetherPlayerCapability implements AetherPlayer {
 		}
 	}
 
-	/**
-	 * Decreases the opacity of the remedy overlay vignette.
-	 */
-	private void tickDownRemedy() {
-		if (this.getPlayer().getLevel().isClientSide()) {
-			if (this.getRemedyTimer() > 0) {
-				this.setRemedyTimer(this.getRemedyTimer() - 1);
-			} else {
-				this.setRemedyMaximum(0);
-				this.setRemedyTimer(0);
+	private void removeRemedyDuration() {
+		if (this.remedyStartDuration > 0) {
+			if (!this.getPlayer().hasEffect(AetherEffects.REMEDY.get())) {
+				this.remedyStartDuration = 0;
 			}
 		}
 	}
@@ -839,29 +837,16 @@ public class AetherPlayerCapability implements AetherPlayer {
 	}
 
 	@Override
-	public void setRemedyMaximum(int remedyMaximum) {
-		this.remedyMaximum = remedyMaximum;
+	public void setRemedyStartDuration(int duration) {
+		this.remedyStartDuration = duration;
 	}
 
 	/**
-	 * @return An {@link Integer} for the max time duration of the remedy vignette.
+	 * @return An {@link Integer} for the original time duration of the remedy effect.
 	 */
 	@Override
-	public int getRemedyMaximum() {
-		return this.remedyMaximum;
-	}
-
-	@Override
-	public void setRemedyTimer(int timer) {
-		this.remedyTimer = timer;
-	}
-
-	/**
-	 * @return The {@link Integer} timer for how long until the remedy vignette disappears.
-	 */
-	@Override
-	public int getRemedyTimer() {
-		return this.remedyTimer;
+	public int getRemedyStartDuration() {
+		return this.remedyStartDuration;
 	}
 
 	@Override

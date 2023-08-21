@@ -162,12 +162,16 @@ public class AetherOverlays {
      * @param handler The {@link AetherPlayer} capability for the player.
      */
     private static void renderRemedyOverlay(PoseStack poseStack, Minecraft minecraft, Window window, AetherPlayer handler) {
-        int remedyMaximum = handler.getRemedyMaximum();
-        int remedyTimer = handler.getRemedyTimer();
+        Player player = handler.getPlayer();
+        MobEffectInstance remedy = player.getEffect(AetherEffects.REMEDY.get());
         double effectScale = minecraft.options.screenEffectScale().get();
-        if (remedyTimer > 0) {
-            float alpha = ((float) remedyTimer / remedyMaximum) / 1.5F;
-            renderVignette(poseStack, window, effectScale, alpha, TEXTURE_REMEDY_VIGNETTE);
+        if (remedy != null) {
+            int remedyStartDuration = handler.getRemedyStartDuration();
+            int remedyDuration = remedy.getDuration();
+            if (remedyStartDuration > 0 && remedyDuration > 0) {
+                float alpha = ((float) remedyDuration / remedyStartDuration) / 1.5F;
+                renderVignette(poseStack, window, effectScale, alpha, TEXTURE_REMEDY_VIGNETTE);
+            }
         }
     }
 

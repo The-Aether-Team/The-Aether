@@ -1,10 +1,10 @@
 package com.aetherteam.aether.item.food;
 
-import com.aetherteam.aether.capability.player.AetherPlayer;
-import com.aetherteam.aether.item.AetherItems;
+import com.aetherteam.aether.effect.AetherEffects;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -27,15 +27,9 @@ public class WhiteAppleItem extends Item {
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity user) {
         if (!level.isClientSide()) {
-            user.curePotionEffects(new ItemStack(AetherItems.WHITE_APPLE.get()));
+            user.addEffect(new MobEffectInstance(AetherEffects.REMEDY.get(), 300, 0, false, false, true));
         }
         if (user instanceof Player player) {
-            AetherPlayer.get(player).ifPresent(aetherPlayer -> {
-                if (aetherPlayer.getPlayer().getLevel().isClientSide()) { // Values used by the green remedy screen overlay vignette.
-                    aetherPlayer.setRemedyMaximum(300);
-                    aetherPlayer.setRemedyTimer(300);
-                }
-            });
             if (player instanceof ServerPlayer serverPlayer) {
                 CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, stack);
                 serverPlayer.awardStat(Stats.ITEM_USED.get(this));

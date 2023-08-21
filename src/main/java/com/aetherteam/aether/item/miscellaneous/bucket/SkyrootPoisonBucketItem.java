@@ -29,7 +29,7 @@ public class SkyrootPoisonBucketItem extends Item implements ConsumableItem {
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity user) {
         if (!level.isClientSide()) {
-            user.addEffect(new MobEffectInstance(AetherEffects.INEBRIATION.get(), 500, 0));
+            user.addEffect(new MobEffectInstance(AetherEffects.INEBRIATION.get(), 500, 0, false, false, true));
         }
         this.consume(this, stack, user);
         return stack.isEmpty() ? new ItemStack(AetherItems.SKYROOT_BUCKET.get()) : stack;
