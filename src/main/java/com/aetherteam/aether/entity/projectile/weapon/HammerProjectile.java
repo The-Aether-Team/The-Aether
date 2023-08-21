@@ -1,6 +1,9 @@
 package com.aetherteam.aether.entity.projectile.weapon;
 
 import com.aetherteam.aether.entity.AetherEntityTypes;
+import com.aetherteam.aether.network.AetherPacketHandler;
+import com.aetherteam.aether.network.packet.serverbound.HammerProjectileLaunchPacket;
+import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -93,8 +96,11 @@ public class HammerProjectile extends ThrowableProjectile {
     @Override
     protected void onHitEntity(EntityHitResult result) {
         Entity target = result.getEntity();
-        this.launchTarget(target);
-        if (this.getLevel().isClientSide()) {
+        if (!this.getLevel().isClientSide()) {
+            this.launchTarget(target);
+            this.getLevel().broadcastEntityEvent(this, (byte) 70);
+        } else {
+            PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new HammerProjectileLaunchPacket(target.getId(), this.getId()));
             this.spawnParticles();
         }
     }
@@ -108,9 +114,15 @@ public class HammerProjectile extends ThrowableProjectile {
         super.onHitBlock(result);
         List<Entity> list = this.getLevel().getEntities(this, this.getBoundingBox().inflate(5.0));
         for (Entity target : list) {
-            this.launchTarget(target);
+            if (!this.getLevel().isClientSide()) {
+                this.launchTarget(target);
+            } else {
+                PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new HammerProjectileLaunchPacket(target.getId(), this.getId()));
+            }
         }
-        if (this.getLevel().isClientSide()) {
+        if (!this.getLevel().isClientSide()) {
+            this.getLevel().broadcastEntityEvent(this, (byte) 70);
+        } else {
             this.spawnParticles();
         }
     }
@@ -129,11 +141,11 @@ public class HammerProjectile extends ThrowableProjectile {
      * Hurts and pushes back an entity.
      * @param target The {@link Entity} to affect.
      */
-    private void launchTarget(Entity target) {
+    public void launchTarget(Entity target) {
         if (target != this.getOwner()) {
             if (this.getOwner() == null || target != this.getOwner().getVehicle()) {
                 if (target instanceof LivingEntity livingEntity) {
-                    livingEntity.hurt(this.damageSources().thrown(this, this.getOwner()), 5);
+                    livingEntity.hurt(this.damageSources().thrown(this, this.getOwner()), 7);
                     livingEntity.push(this.getDeltaMovement().x(), 0.6, this.getDeltaMovement().z());
                 }
             }
@@ -154,6 +166,15 @@ public class HammerProjectile extends ThrowableProjectile {
      */
     public boolean getIsJeb() {
         return this.getEntityData().get(DATA_JEB_ID);
+    }
+
+    @Override
+    public void handleEntityEvent(byte id) {
+        if (id == 70) {
+            this.spawnParticles();
+        } else {
+            super.handleEntityEvent(id);
+        }
     }
 
     @Override

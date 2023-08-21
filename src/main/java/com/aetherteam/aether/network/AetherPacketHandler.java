@@ -37,7 +37,6 @@ public class AetherPacketHandler {
 		register(ClientMoaSkinPacket.Remove.class, ClientMoaSkinPacket.Remove::decode);
 		register(ClientMoaSkinPacket.Sync.class, ClientMoaSkinPacket.Sync::decode);
 		register(CloudMinionPacket.class, CloudMinionPacket::decode);
-		register(HammerProjectileOwnerPacket.class, HammerProjectileOwnerPacket::decode);
 		register(HealthResetPacket.class, HealthResetPacket::decode);
 		register(LeavingAetherPacket.class, LeavingAetherPacket::decode);
 		register(MoaInteractPacket.class, MoaInteractPacket::decode);
@@ -53,6 +52,7 @@ public class AetherPacketHandler {
 		register(BossInfoPacket.Display.class, BossInfoPacket.Display::decode);
 		register(BossInfoPacket.Remove.class, BossInfoPacket.Remove::decode);
 		register(ClearItemPacket.class, ClearItemPacket::decode);
+		register(HammerProjectileLaunchPacket.class, HammerProjectileLaunchPacket::decode);
 		register(LoreExistsPacket.class, LoreExistsPacket::decode);
 		register(NpcPlayerInteractPacket.class, NpcPlayerInteractPacket::decode);
 		register(OpenAccessoriesPacket.class, OpenAccessoriesPacket::decode);

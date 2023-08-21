@@ -64,7 +64,7 @@ public class AetherConfig {
             hammer_of_kingbdogz_cooldown = builder
                     .comment("Determines the cooldown in ticks for the Hammer of Kingbdogz's ability")
                     .translation("config.aether.server.gameplay.hammer_of_kingbdogz_cooldown")
-                    .define("Cooldown for the Hammer of Kingbdogz", 75);
+                    .define("Cooldown for the Hammer of Kingbdogz projectile", 50);
             cloud_staff_cooldown = builder
                     .comment("Determines the cooldown in ticks for the Cloud Staff's ability")
                     .translation("config.aether.server.gameplay.cloud_staff_cooldown")

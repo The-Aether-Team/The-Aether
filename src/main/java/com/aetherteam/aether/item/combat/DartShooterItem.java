@@ -82,7 +82,7 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
                     AbstractDart dart = dartItem.createDart(level, player);
                     if (dart != null) {
                         dart = this.customDart(dart);
-                        dart.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.0F, 1.0F);
+                        dart.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 3.25F, 1.0F);
                         dart.setNoGravity(true); // Darts have no gravity.
 
                         int powerModifier = stack.getEnchantmentLevel(Enchantments.POWER_ARROWS);
