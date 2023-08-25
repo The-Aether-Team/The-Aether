@@ -64,7 +64,7 @@ public class AccessoryAbilityListener {
             event.modifyVisibility(0.0);
         }
         if (AbilityHooks.AccessoryHooks.recentlyAttackedWithInvisibility(livingEntity, lookingEntity)) {
-            event.modifyVisibility(50);
+            event.modifyVisibility(1.0);
         }
     }
 
