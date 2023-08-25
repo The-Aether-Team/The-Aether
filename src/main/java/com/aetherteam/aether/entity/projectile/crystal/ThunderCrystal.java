@@ -8,6 +8,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -16,6 +17,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+
+import javax.annotation.Nullable;
 
 /**
  * A homing crystal projectile used by the Valkyrie Queen for ranged lightning attacks.
@@ -57,14 +60,18 @@ public class ThunderCrystal extends AbstractCrystal {
     public void tickMovement() {
         if (!this.getLevel().isClientSide()) {
             if (this.target == null || !this.target.isAlive() || this.getOwner() == null || !this.getOwner().isAlive()) {
-                this.playSound(AetherSoundEvents.ENTITY_THUNDER_CRYSTAL_EXPLODE.get(), 1.0F, 1.0F);
+                if (this.getImpactExplosionSoundEvent() != null) {
+                    this.playSound(this.getImpactExplosionSoundEvent(), 1.0F, 1.0F);
+                }
                 this.discard();
             } else {
                 if (this.ticksInAir > this.getLifeSpan()) {
                     if (this.target != null && this.target.isAlive()) { // Spawn lightning only when the target is alive to avoid destroying items.
                         EntityUtil.summonLightningFromProjectile(this);
                     }
-                    this.playSound(AetherSoundEvents.ENTITY_THUNDER_CRYSTAL_EXPLODE.get(), 1.0F, 1.0F);
+                    if (this.getImpactExplosionSoundEvent() != null) {
+                        this.playSound(this.getImpactExplosionSoundEvent(), 1.0F, 1.0F);
+                    }
                 } else {
                     Vec3 motion = this.getDeltaMovement().scale(0.9);
                     Vec3 targetMotion = new Vec3(this.target.getX() - this.getX(), (this.target.getEyeY() - 0.1) - this.getY(), this.target.getZ() - this.getZ()).normalize();
@@ -115,6 +122,12 @@ public class ThunderCrystal extends AbstractCrystal {
     @Override
     protected ParticleOptions getExplosionParticle() {
         return AetherParticleTypes.FROZEN.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getImpactExplosionSoundEvent() {
+        return AetherSoundEvents.ENTITY_THUNDER_CRYSTAL_EXPLODE.get();
     }
 
     @Override

@@ -48,6 +48,21 @@ public class FireCrystal extends AbstractCrystal {
     }
 
     /**
+     * Discards the projectile if the owner no longer exists.
+     */
+    @Override
+    protected void tickMovement() {
+        if (!this.getLevel().isClientSide()) {
+            if (this.getOwner() == null || !this.getOwner().isAlive()) {
+                if (this.getImpactExplosionSoundEvent() != null) {
+                    this.playSound(this.getImpactExplosionSoundEvent(), 1.0F, 1.0F);
+                }
+                this.discard();
+            }
+        }
+    }
+
+    /**
      * Damages an entity and sets them on fire when they are hit by the projectile.
      * @param result The {@link EntityHitResult} of the projectile.
      */
