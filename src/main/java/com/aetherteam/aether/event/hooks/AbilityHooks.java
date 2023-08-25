@@ -162,6 +162,7 @@ public class AbilityHooks {
         public static boolean recentlyAttackedWithInvisibility(LivingEntity target, Entity lookingEntity) {
             if (target instanceof Player player && AetherPlayer.get(player).isPresent() && AetherPlayer.get(player).resolve().isPresent()) {
                 return !lookingEntity.getType().is(AetherTags.Entities.IGNORE_INVISIBILITY)
+                        && AetherPlayer.get(player).resolve().get().isWearingInvisibilityCloak()
                         && AetherPlayer.get(player).resolve().get().isInvisibilityEnabled()
                         && AetherPlayer.get(player).resolve().get().attackedWithInvisibility();
             } else {
