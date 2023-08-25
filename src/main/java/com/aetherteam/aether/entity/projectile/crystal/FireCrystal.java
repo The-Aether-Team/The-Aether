@@ -3,6 +3,7 @@ package com.aetherteam.aether.entity.projectile.crystal;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.data.resources.AetherDamageTypes;
 import com.aetherteam.aether.entity.AetherEntityTypes;
+import com.aetherteam.aether.entity.monster.dungeon.boss.SunSpirit;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -53,7 +54,7 @@ public class FireCrystal extends AbstractCrystal {
     @Override
     protected void tickMovement() {
         if (!this.getLevel().isClientSide()) {
-            if (this.getOwner() == null || !this.getOwner().isAlive()) {
+            if (this.getOwner() == null || !this.getOwner().isAlive() || (this.getOwner() instanceof SunSpirit sunSpirit && sunSpirit.getDungeon() != null && sunSpirit.getDungeon().dungeonPlayers().isEmpty())) {
                 if (this.getImpactExplosionSoundEvent() != null) {
                     this.playSound(this.getImpactExplosionSoundEvent(), 1.0F, 1.0F);
                 }
