@@ -5,7 +5,6 @@ import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.projectile.weapon.HammerProjectile;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.combat.AetherItemTiers;
-import com.aetherteam.aether.item.combat.AetherSwordItem;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -13,9 +12,10 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.level.Level;
 
-public class HammerOfKingbdogzItem extends AetherSwordItem {
+public class HammerOfKingbdogzItem extends SwordItem {
     public HammerOfKingbdogzItem() {
         super(AetherItemTiers.HAMMER_OF_KINGBDOGZ, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
     }

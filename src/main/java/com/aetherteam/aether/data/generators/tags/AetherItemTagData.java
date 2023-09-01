@@ -126,6 +126,55 @@ public class AetherItemTagData extends ItemTagsProvider {
                 .add(AetherItems.IRON_PENDANT.get())
                 .add(AetherItems.GOLDEN_PENDANT.get());
         this.tag(AetherTags.Items.SLIDER_DAMAGING_ITEMS).addTag(ItemTags.PICKAXES);
+        this.tag(AetherTags.Items.BRONZE_DUNGEON_LOOT).add(
+                AetherItems.VALKYRIE_LANCE.get(),
+                AetherItems.FLAMING_SWORD.get(),
+                AetherItems.HAMMER_OF_KINGBDOGZ.get(),
+                AetherItems.NEPTUNE_HELMET.get(),
+                AetherItems.NEPTUNE_CHESTPLATE.get(),
+                AetherItems.NEPTUNE_LEGGINGS.get(),
+                AetherItems.NEPTUNE_BOOTS.get(),
+                AetherItems.NEPTUNE_GLOVES.get(),
+                AetherItems.SENTRY_BOOTS.get(),
+                AetherItems.AGILITY_CAPE.get(),
+                AetherItems.SWET_CAPE.get(),
+                AetherItems.SHIELD_OF_REPULSION.get(),
+                AetherItems.MUSIC_DISC_AETHER_TUNE.get(),
+                AetherItems.CLOUD_STAFF.get(),
+                AetherItems.LIGHTNING_KNIFE.get(),
+                AetherItems.PHOENIX_BOW.get(),
+                AetherItems.BLUE_GUMMY_SWET.get(),
+                AetherItems.GOLDEN_GUMMY_SWET.get());
+        this.tag(AetherTags.Items.SILVER_DUNGEON_LOOT).add(
+                AetherItems.LIGHTNING_SWORD.get(),
+                AetherItems.HOLY_SWORD.get(),
+                AetherItems.VALKYRIE_HELMET.get(),
+                AetherItems.VALKYRIE_CHESTPLATE.get(),
+                AetherItems.VALKYRIE_LEGGINGS.get(),
+                AetherItems.VALKYRIE_BOOTS.get(),
+                AetherItems.VALKYRIE_GLOVES.get(),
+                AetherItems.INVISIBILITY_CLOAK.get(),
+                AetherItems.VALKYRIE_CAPE.get(),
+                AetherItems.GOLDEN_FEATHER.get(),
+                AetherItems.REGENERATION_STONE.get(),
+                AetherItems.MUSIC_DISC_AETHER_TUNE.get(),
+                AetherItems.MUSIC_DISC_ASCENDING_DAWN.get(),
+                AetherItems.BLUE_GUMMY_SWET.get(),
+                AetherItems.GOLDEN_GUMMY_SWET.get(),
+                AetherItems.VALKYRIE_PICKAXE.get(),
+                AetherItems.VALKYRIE_AXE.get(),
+                AetherItems.VALKYRIE_SHOVEL.get(),
+                AetherItems.VALKYRIE_HOE.get());
+        this.tag(AetherTags.Items.GOLD_DUNGEON_LOOT).add(
+                AetherItems.VAMPIRE_BLADE.get(),
+                AetherItems.PIG_SLAYER.get(),
+                AetherItems.PHOENIX_HELMET.get(),
+                AetherItems.PHOENIX_CHESTPLATE.get(),
+                AetherItems.PHOENIX_LEGGINGS.get(),
+                AetherItems.PHOENIX_BOOTS.get(),
+                AetherItems.PHOENIX_GLOVES.get(),
+                AetherItems.IRON_BUBBLE.get(),
+                AetherItems.LIFE_SHARD.get());
 
         this.tag(AetherTags.Items.PHYG_TEMPTATION_ITEMS).add(AetherItems.BLUE_BERRY.get());
         this.tag(AetherTags.Items.FLYING_COW_TEMPTATION_ITEMS).add(AetherItems.BLUE_BERRY.get());
