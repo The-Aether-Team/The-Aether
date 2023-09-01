@@ -1,4 +1,4 @@
-// 1.19.4	2023-08-21T12:12:13.6710015	Tags for minecraft:item mod id aether
+// 1.19.4	2023-08-31T19:31:43.6225938	Tags for minecraft:item mod id aether
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/items/accepted_music_discs.json
 b1ab124000a7da5fa5e186c46b51223391f132d9 data/aether/tags/items/accessories.json
 99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/aether/tags/items/accessories_capes.json
@@ -15,6 +15,7 @@ d520be56403df209dca245912dc672e8c5c3bf0e data/aether/tags/items/aether_dirt.json
 f9a76a30f0eda4e77d73593fb077e89632e058ac data/aether/tags/items/angelic_blocks.json
 4c3f53ffa001534a8db6e1a65a1bdefc3fa0142f data/aether/tags/items/book_of_lore_materials.json
 d9dcb253fe96193998f03751892165ee5f5c1924 data/aether/tags/items/boss_doorway_dungeon_blocks.json
+499e32dd1fed37572283bfff6d2f07da393e730f data/aether/tags/items/bronze_dungeon_loot.json
 ac1d9421f0295d2b3a733f9b307cb39c2a63629d data/aether/tags/items/candy_cane_repairing.json
 c365c56c9363907f546b5d4778b8608912fa27c9 data/aether/tags/items/crafts_skyroot_planks.json
 321cad0c802b794f364a9ba5a34536ecc36271ec data/aether/tags/items/darts.json
@@ -29,6 +30,7 @@ cf02540e648766882006eb0eb293476a9c3d33c5 data/aether/tags/items/freezable_pendan
 bbd431b5ea0dbbac9aa71e30c71140e28ae93250 data/aether/tags/items/freezable_rings.json
 1fa02ed3118a751ff7ef2022d14fa9d0ba8b31e6 data/aether/tags/items/golden_amber_harvesters.json
 65976e3564baed2ae1f9323801f6fdc2faa84331 data/aether/tags/items/golden_oak_logs.json
+957be727d32dc68397dfa668523e6adf63de4feb data/aether/tags/items/gold_dungeon_loot.json
 24739a7c6e39fa7efc02d98276194ef47fa70290 data/aether/tags/items/gravitite_repairing.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/hammer_of_kingbdogz_repairing.json
 5ea4f558d543cb964893d8ab6a84ec20de337f88 data/aether/tags/items/hellfire_blocks.json
@@ -54,6 +56,7 @@ d57e931f91a1b51aa96c3007c5fce585e2e84cc2 data/aether/tags/items/planks_crafting.
 66891bf965b86e92235cc816a4a0c898ada827e6 data/aether/tags/items/sentry_blocks.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/sentry_repairing.json
 6404c17e75ed612591fd253fd1cfd8c6a5ea4a8a data/aether/tags/items/sheepuff_temptation_items.json
+e3e66ddb175f22a1a2381fb1d176847db1c513c9 data/aether/tags/items/silver_dungeon_loot.json
 df16ed8f5964fbb722ae2040903fb88c95ad2b99 data/aether/tags/items/skyroot_logs.json
 d57e931f91a1b51aa96c3007c5fce585e2e84cc2 data/aether/tags/items/skyroot_repairing.json
 4d0fcd44af39fa4f1950e841827bfde973be863f data/aether/tags/items/skyroot_stick.json
