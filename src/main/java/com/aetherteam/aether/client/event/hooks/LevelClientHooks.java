@@ -32,10 +32,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class LevelClientHooks {
-    private static final TextureAtlasSprite LOCK = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation(Aether.MODID, "block/dungeon/lock"));
-    private static final TextureAtlasSprite EXCLAMATION = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation(Aether.MODID, "block/dungeon/exclamation"));
-    private static final TextureAtlasSprite DOOR = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation(Aether.MODID, "block/dungeon/door"));
-    private static final TextureAtlasSprite TREASURE = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation(Aether.MODID, "block/dungeon/treasure"));
     private static final HashMap<Integer, List<BlockPos>> positionsForTypes = new HashMap<>();
 
     /**
@@ -199,16 +195,16 @@ public class LevelClientHooks {
     private static TextureAtlasSprite spriteForId(int id) {
         switch(id) {
             case 0 -> {
-                return LOCK;
+                return Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation(Aether.MODID, "block/dungeon/lock"));
             }
             case 1 -> {
-                return EXCLAMATION;
+                return Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation(Aether.MODID, "block/dungeon/exclamation"));
             }
             case 2 -> {
-                return DOOR;
+                return Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation(Aether.MODID, "block/dungeon/door"));
             }
             case 3 -> {
-                return TREASURE;
+                return Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation(Aether.MODID, "block/dungeon/treasure"));
             }
             default -> {
                 return null;
