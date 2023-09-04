@@ -130,7 +130,7 @@ public class Swet extends Slime implements MountableMob {
         super.tick();
 
         // Spawn particles when no target is captured.
-        if (!this.hasPrey()) {
+        if (!this.hasPrey() && this.canSpawnSplashParticles()) {
             if (this.getLevel().isClientSide()) {
                 double d = (float) this.getX() + (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.3F;
                 double d1 = (float) this.getY() + this.getBbHeight();
@@ -366,6 +366,13 @@ public class Swet extends Slime implements MountableMob {
      */
     public boolean hasPrey() {
         return getFirstPassenger() != null;
+    }
+
+    /**
+     * @return A {@link Boolean} for whether the Swet can spawn splash particles.
+     */
+    public boolean canSpawnSplashParticles() {
+        return true;
     }
 
     /**
