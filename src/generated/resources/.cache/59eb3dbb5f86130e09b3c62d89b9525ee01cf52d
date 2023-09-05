@@ -1,4 +1,4 @@
-// 1.19.4	2023-08-21T23:01:34.1170563	Loot Tables
+// 1.19.4	2023-09-05T16:03:13.347550496	Loot Tables
 d025471306910ea35dcf85d28fc188182a1b3c8d data/aether/loot_tables/advancements/enter_aether.json
 96aec873b17d2a5aed2a22fe094efa32b8d54645 data/aether/loot_tables/blocks/aerogel.json
 ffdecdc23fdf03314c666c6d8638f7f44bdbcc8b data/aether/loot_tables/blocks/aerogel_slab.json
@@ -52,10 +52,10 @@ cbc3fb3a3766eef0e267efcae14f68f4beb991ec data/aether/loot_tables/blocks/hellfire
 71c2dca6991829c42cdb80e19d8eee48200ef1d9 data/aether/loot_tables/blocks/hellfire_wall.json
 2ec1f8602d4690cd04c9bc27fecf94dd90b18a26 data/aether/loot_tables/blocks/holiday_leaves.json
 79deca1b81a28a777fd5fdea98a797ab3ae2ff4a data/aether/loot_tables/blocks/holystone.json
-55dac0b82e3254167cd0e58330e673947f7baa44 data/aether/loot_tables/blocks/holystone_bricks.json
 e61bb0fb22a7797507fa466f1786671c133baa0d data/aether/loot_tables/blocks/holystone_brick_slab.json
 ad19af6454a6f77e72c3f496dd3854c3797ec5e9 data/aether/loot_tables/blocks/holystone_brick_stairs.json
 8059f85cfd0f3cb2b35c3021cdb8ef928be266f7 data/aether/loot_tables/blocks/holystone_brick_wall.json
+55dac0b82e3254167cd0e58330e673947f7baa44 data/aether/loot_tables/blocks/holystone_bricks.json
 10f246dcf4434028b08e52b5d52f881dcda12f90 data/aether/loot_tables/blocks/holystone_button.json
 6161f683aa3c6ee8b09c6f9243c47cd9a1d218d9 data/aether/loot_tables/blocks/holystone_pressure_plate.json
 fbddd14e2d0b5c0c1949ccdd530c864eeee43bb0 data/aether/loot_tables/blocks/holystone_slab.json
@@ -148,6 +148,7 @@ b1371b8b9502081e328598828693168ee9d3a4b1 data/aether/loot_tables/chests/dungeon/
 509fcc4c3ed95d67346dad14ed6bfecc9c13386a data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_trash.json
 3079e254072e05046d8c4883e6a803fc6c3c0779 data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_treasure.json
 1d9641db1436b4e086312ce1e517fd39316d7b44 data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_valkyrie.json
+d44c0d91f9a79794d9a1bddb882e4be793607ec9 data/aether/loot_tables/chests/ruined_portal/.json
 df0825811c297a2490f3108da95334235f829324 data/aether/loot_tables/entities/aechor_plant.json
 8d9ec859066d8908362d317ef37e9d2bdbfc9cce data/aether/loot_tables/entities/aerbunny.json
 ef017fe8afbc1e704a7cfb4818ece7ba018f9c91 data/aether/loot_tables/entities/aerwhale.json
