@@ -19,7 +19,7 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 import java.util.function.BiConsumer;
 
-public class AetherDungeonLoot implements LootTableSubProvider {
+public class AetherChestLoot implements LootTableSubProvider {
     @Override
     public void generate(BiConsumer<ResourceLocation, LootTable.Builder> builder) {
         builder.accept(AetherLoot.BRONZE_DUNGEON, LootTable.lootTable()
