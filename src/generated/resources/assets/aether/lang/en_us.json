@@ -962,6 +962,8 @@
   "pack.aether.freezing.description": "Ice Accessories create temporary blocks",
   "pack.aether.freezing.title": "Aether Temporary Freezing",
   "pack.aether.mod.description": "Aether Resources",
+  "pack.aether.ruined_portal.description": "Generate ruined glowstone portals",
+  "pack.aether.ruined_portal.title": "Aether Ruined Portals",
   "subtitles.aether.block.aether_portal.ambient": "Aether Portal whooshes",
   "subtitles.aether.block.aether_portal.trigger": "Aether Portal noise intensifies",
   "subtitles.aether.block.altar.crackle": "Altar crackles",

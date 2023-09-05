@@ -1,32 +1,36 @@
 package com.aetherteam.aether.world.structure;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.world.structurepiece.GlowstoneRuinedPortalPiece;
+import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.QuartPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelHeightAccessor;
+import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.RandomState;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
-import net.minecraft.world.level.levelgen.structure.structures.RuinedPortalPiece;
-import net.minecraft.world.level.levelgen.structure.structures.RuinedPortalStructure;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import java.util.List;
 import java.util.Optional;
 
 public class GlowstoneRuinedPortalStructure extends Structure {
-//    private static final String[] STRUCTURE_LOCATION_PORTALS = new String[]{"ruined_portal/portal_1", "ruined_portal/portal_2", "ruined_portal/portal_3", "ruined_portal/portal_4", "ruined_portal/portal_5", "ruined_portal/portal_6", "ruined_portal/portal_7", "ruined_portal/portal_8", "ruined_portal/portal_9", "ruined_portal/portal_10"};
-//    private static final String[] STRUCTURE_LOCATION_GIANT_PORTALS = new String[]{"ruined_portal/giant_portal_1", "ruined_portal/giant_portal_2", "ruined_portal/giant_portal_3"};
+    private static final String[] STRUCTURE_LOCATION_PORTALS = new String[]{"ruined_portal/portal_1", "ruined_portal/portal_2", "ruined_portal/portal_3", "ruined_portal/portal_4", "ruined_portal/portal_5", "ruined_portal/portal_6", "ruined_portal/portal_7", "ruined_portal/portal_8", "ruined_portal/portal_9", "ruined_portal/portal_10"};
+    private static final String[] STRUCTURE_LOCATION_GIANT_PORTALS = new String[]{"ruined_portal/giant_portal_1", "ruined_portal/giant_portal_2", "ruined_portal/giant_portal_3"};
 
     private final List<GlowstoneRuinedPortalStructure.Setup> setups;
     public static final Codec<GlowstoneRuinedPortalStructure> CODEC = RecordCodecBuilder.create((codec) -> codec.group(settingsCodec(codec),
@@ -44,67 +48,106 @@ public class GlowstoneRuinedPortalStructure extends Structure {
 
     @Override
     protected Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
-        return Optional.empty();
-//        GlowstoneRuinedPortalPiece.Properties ruinedportalpiece$properties = new GlowstoneRuinedPortalPiece.Properties();
-//        WorldgenRandom worldgenrandom = context.random();
-//        Setup ruinedportalstructure$setup = null;
-//        if (this.setups.size() > 1) {
-//            float f = 0.0F;
-//
-//            for(Setup ruinedportalstructure$setup1 : this.setups) {
-//                f += ruinedportalstructure$setup1.weight();
-//            }
-//
-//            float f1 = worldgenrandom.nextFloat();
-//
-//            for(Setup ruinedportalstructure$setup2 : this.setups) {
-//                f1 -= ruinedportalstructure$setup2.weight() / f;
-//                if (f1 < 0.0F) {
-//                    ruinedportalstructure$setup = ruinedportalstructure$setup2;
-//                    break;
-//                }
-//            }
-//        } else {
-//            ruinedportalstructure$setup = this.setups.get(0);
-//        }
-//
-//        if (ruinedportalstructure$setup == null) {
-//            throw new IllegalStateException();
-//        } else {
-//            Setup ruinedportalstructure$setup3 = ruinedportalstructure$setup;
-//            ruinedportalpiece$properties.airPocket = sample(worldgenrandom, ruinedportalstructure$setup3.airPocketProbability());
-//            ruinedportalpiece$properties.mossiness = ruinedportalstructure$setup3.mossiness();
-//            ruinedportalpiece$properties.overgrown = ruinedportalstructure$setup3.overgrown();
-//            ruinedportalpiece$properties.vines = ruinedportalstructure$setup3.vines();
-//            ruinedportalpiece$properties.replaceWithHolystone = ruinedportalstructure$setup3.replaceWithBlackstone();
-//            ResourceLocation resourcelocation;
-//            if (worldgenrandom.nextFloat() < 0.05F) {
-//                resourcelocation = new ResourceLocation(STRUCTURE_LOCATION_GIANT_PORTALS[worldgenrandom.nextInt(STRUCTURE_LOCATION_GIANT_PORTALS.length)]);
-//            } else {
-//                resourcelocation = new ResourceLocation(STRUCTURE_LOCATION_PORTALS[worldgenrandom.nextInt(STRUCTURE_LOCATION_PORTALS.length)]);
-//            }
-//
-//            StructureTemplate structuretemplate = context.structureTemplateManager().getOrCreate(resourcelocation);
-//            Rotation rotation = Util.getRandom(Rotation.values(), worldgenrandom);
-//            Mirror mirror = worldgenrandom.nextFloat() < 0.5F ? Mirror.NONE : Mirror.FRONT_BACK;
-//            BlockPos blockpos = new BlockPos(structuretemplate.getSize().getX() / 2, 0, structuretemplate.getSize().getZ() / 2);
-//            ChunkGenerator chunkgenerator = context.chunkGenerator();
-//            LevelHeightAccessor levelheightaccessor = context.heightAccessor();
-//            RandomState randomstate = context.randomState();
-//            BlockPos blockpos1 = context.chunkPos().getWorldPosition();
-//            BoundingBox boundingbox = structuretemplate.getBoundingBox(blockpos1, rotation, blockpos, mirror);
-//            BlockPos blockpos2 = boundingbox.getCenter();
-//            int i = chunkgenerator.getBaseHeight(blockpos2.getX(), blockpos2.getZ(), RuinedPortalPiece.getHeightMapType(ruinedportalstructure$setup3.placement()), levelheightaccessor, randomstate) - 1;
-//            int j = findSuitableY(worldgenrandom, chunkgenerator, ruinedportalstructure$setup3.placement(), ruinedportalpiece$properties.airPocket, i, boundingbox.getYSpan(), boundingbox, levelheightaccessor, randomstate);
-//            BlockPos blockpos3 = new BlockPos(blockpos1.getX(), j, blockpos1.getZ());
-//            return Optional.of(new GenerationStub(blockpos3, (p_229297_) -> {
-//                if (ruinedportalstructure$setup3.canBeCold()) {
-//                    ruinedportalpiece$properties.cold = isCold(blockpos3, context.chunkGenerator().getBiomeSource().getNoiseBiome(QuartPos.fromBlock(blockpos3.getX()), QuartPos.fromBlock(blockpos3.getY()), QuartPos.fromBlock(blockpos3.getZ()), randomstate.sampler()));
-//                }
-//
-//                p_229297_.addPiece(new RuinedPortalPiece(context.structureTemplateManager(), blockpos3, ruinedportalstructure$setup3.placement(), ruinedportalpiece$properties, resourcelocation, structuretemplate, rotation, mirror, blockpos));
-//            }));
-//        }
+        GlowstoneRuinedPortalPiece.Properties pieceProperties = new GlowstoneRuinedPortalPiece.Properties();
+        WorldgenRandom worldGenRandom = context.random();
+        ChunkGenerator chunkGenerator = context.chunkGenerator();
+        LevelHeightAccessor levelheightaccessor = context.heightAccessor();
+        RandomState randomstate = context.randomState();
+        BlockPos blockPosChunk = context.chunkPos().getWorldPosition();
+
+        Setup portalSetup = null;
+        if (this.setups.size() > 1) {
+            float f = 0.0F;
+
+            for (Setup setup1 : this.setups) {
+                f += setup1.weight();
+            }
+
+            float f1 = worldGenRandom.nextFloat();
+
+            for (Setup setup2 : this.setups) {
+                f1 -= setup2.weight() / f;
+                if (f1 < 0.0F) {
+                    portalSetup = setup2;
+                    break;
+                }
+            }
+        } else {
+            portalSetup = this.setups.get(0);
+        }
+
+        if (portalSetup == null) {
+            throw new IllegalStateException();
+        } else {
+            Setup setup3 = portalSetup;
+            pieceProperties.airPocket = sample(worldGenRandom, setup3.airPocketProbability());
+            pieceProperties.mossiness = setup3.mossiness();
+            pieceProperties.overgrown = setup3.overgrown();
+            pieceProperties.vines = setup3.vines();
+            pieceProperties.replaceWithHolystone = setup3.replaceWithHolystone();
+            ResourceLocation location;
+            if (worldGenRandom.nextFloat() < 0.05F) {
+                location = new ResourceLocation(Aether.MODID, STRUCTURE_LOCATION_GIANT_PORTALS[worldGenRandom.nextInt(STRUCTURE_LOCATION_GIANT_PORTALS.length)]);
+            } else {
+                location = new ResourceLocation(Aether.MODID, STRUCTURE_LOCATION_PORTALS[worldGenRandom.nextInt(STRUCTURE_LOCATION_PORTALS.length)]);
+            }
+
+            StructureTemplate template = context.structureTemplateManager().getOrCreate(location);
+            Rotation rotation = Util.getRandom(Rotation.values(), worldGenRandom);
+            Mirror mirror = worldGenRandom.nextFloat() < 0.5F ? Mirror.NONE : Mirror.FRONT_BACK;
+            BlockPos blockPos = new BlockPos(template.getSize().getX() / 2, 0, template.getSize().getZ() / 2);
+            BoundingBox boundingbox = template.getBoundingBox(blockPosChunk, rotation, blockPos, mirror);
+            BlockPos centerPos = boundingbox.getCenter();
+            int i = chunkGenerator.getBaseHeight(centerPos.getX(), centerPos.getZ(), GlowstoneRuinedPortalPiece.getHeightMapType(setup3.placement()), levelheightaccessor, randomstate) - 1;
+            int j = findSuitableY(worldGenRandom, chunkGenerator, setup3.placement(), i, boundingbox.getYSpan(), boundingbox, levelheightaccessor, randomstate);
+            BlockPos spawnPos = new BlockPos(blockPosChunk.getX(), j, blockPosChunk.getZ());
+            if (spawnPos.getY() > levelheightaccessor.getMinBuildHeight()) {
+                return Optional.of(new GenerationStub(spawnPos, (builder) -> builder.addPiece(new GlowstoneRuinedPortalPiece(context.structureTemplateManager(), spawnPos, setup3.placement(), pieceProperties, location, template, rotation, mirror, blockPos))));
+            } else {
+                return Optional.empty();
+            }
+        }
+    }
+
+    private static boolean sample(WorldgenRandom random, float threshold) {
+        if (threshold == 0.0F) {
+            return false;
+        } else if (threshold == 1.0F) {
+            return true;
+        } else {
+            return random.nextFloat() < threshold;
+        }
+    }
+
+    private static int findSuitableY(RandomSource random, ChunkGenerator chunkGenerator, GlowstoneRuinedPortalPiece.VerticalPlacement verticalPlacement, int height, int blockCountY, BoundingBox box, LevelHeightAccessor p_229274_, RandomState p_229275_) {
+        int j = p_229274_.getMinBuildHeight() + 15;
+        int i;
+        if (verticalPlacement == GlowstoneRuinedPortalPiece.VerticalPlacement.PARTLY_BURIED) {
+            i = height - blockCountY + Mth.randomBetweenInclusive(random, 2, 8);
+        } else {
+            i = height;
+        }
+
+        List<BlockPos> positions = ImmutableList.of(new BlockPos(box.minX(), 0, box.minZ()), new BlockPos(box.maxX(), 0, box.minZ()), new BlockPos(box.minX(), 0, box.maxZ()), new BlockPos(box.maxX(), 0, box.maxZ()));
+        List<NoiseColumn> noiseColumns = positions.stream().map((p_229280_) -> chunkGenerator.getBaseColumn(p_229280_.getX(), p_229280_.getZ(), p_229274_, p_229275_)).toList();
+        Heightmap.Types heightmap$types = verticalPlacement == GlowstoneRuinedPortalPiece.VerticalPlacement.ON_OCEAN_FLOOR ? Heightmap.Types.OCEAN_FLOOR : Heightmap.Types.WORLD_SURFACE;
+
+        int l;
+        for (l = i; l > j; --l) {
+            int i1 = 0;
+
+            for (NoiseColumn noiseColumn : noiseColumns) {
+                BlockState blockState = noiseColumn.getBlock(l);
+                if (heightmap$types.isOpaque().test(blockState)) {
+                    ++i1;
+                    if (i1 == 3) {
+                        return l;
+                    }
+                }
+            }
+        }
+
+        return l;
     }
 
     @Override
@@ -112,13 +155,14 @@ public class GlowstoneRuinedPortalStructure extends Structure {
         return AetherStructureTypes.RUINED_PORTAL.get();
     }
 
-    public record Setup(GlowstoneRuinedPortalPiece.VerticalPlacement placement, float airPocketProbability, float mossiness, boolean overgrown, boolean vines, boolean canBeCold, boolean replaceWithBlackstone, float weight) {
+    public record Setup(GlowstoneRuinedPortalPiece.VerticalPlacement placement, float airPocketProbability, float mossiness, boolean overgrown, boolean vines, boolean replaceWithHolystone, float weight) {
         public static final Codec<GlowstoneRuinedPortalStructure.Setup> CODEC = RecordCodecBuilder.create((codec) -> codec.group(
                 GlowstoneRuinedPortalPiece.VerticalPlacement.CODEC.fieldOf("placement").forGetter(GlowstoneRuinedPortalStructure.Setup::placement),
                 Codec.floatRange(0.0F, 1.0F).fieldOf("air_pocket_probability").forGetter(GlowstoneRuinedPortalStructure.Setup::airPocketProbability),
                 Codec.floatRange(0.0F, 1.0F).fieldOf("mossiness").forGetter(GlowstoneRuinedPortalStructure.Setup::mossiness),
-                Codec.BOOL.fieldOf("overgrown").forGetter(GlowstoneRuinedPortalStructure.Setup::overgrown), Codec.BOOL.fieldOf("vines").forGetter(GlowstoneRuinedPortalStructure.Setup::vines),
-                Codec.BOOL.fieldOf("can_be_cold").forGetter(GlowstoneRuinedPortalStructure.Setup::canBeCold), Codec.BOOL.fieldOf("replace_with_blackstone").forGetter(GlowstoneRuinedPortalStructure.Setup::replaceWithBlackstone),
+                Codec.BOOL.fieldOf("overgrown").forGetter(GlowstoneRuinedPortalStructure.Setup::overgrown),
+                Codec.BOOL.fieldOf("vines").forGetter(GlowstoneRuinedPortalStructure.Setup::vines),
+                Codec.BOOL.fieldOf("replace_with_holystone").forGetter(GlowstoneRuinedPortalStructure.Setup::replaceWithHolystone),
                 ExtraCodecs.POSITIVE_FLOAT.fieldOf("weight").forGetter(GlowstoneRuinedPortalStructure.Setup::weight)).apply(codec, GlowstoneRuinedPortalStructure.Setup::new));
     }
 }

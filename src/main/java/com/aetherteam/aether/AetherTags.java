@@ -189,6 +189,12 @@ public class AetherTags {
 		public static final TagKey<Biome> HAS_BRONZE_DUNGEON = tag("has_bronze_dungeon");
 		public static final TagKey<Biome> HAS_SILVER_DUNGEON = tag("has_silver_dungeon");
 		public static final TagKey<Biome> HAS_GOLD_DUNGEON = tag("has_gold_dungeon");
+		public static final TagKey<Biome> HAS_RUINED_PORTAL_STANDARD = tag("has_ruined_portal_standard");
+		public static final TagKey<Biome> HAS_RUINED_PORTAL_DESERT = tag("has_ruined_portal_desert");
+		public static final TagKey<Biome> HAS_RUINED_PORTAL_JUNGLE = tag("has_ruined_portal_jungle");
+		public static final TagKey<Biome> HAS_RUINED_PORTAL_SWAMP = tag("has_ruined_portal_swamp");
+		public static final TagKey<Biome> HAS_RUINED_PORTAL_MOUNTAIN = tag("has_ruined_portal_mountain");
+		public static final TagKey<Biome> HAS_RUINED_PORTAL_AETHER = tag("has_ruined_portal_aether");
 
 		public static final TagKey<Biome> MYCELIUM_CONVERSION = tag("mycelium_conversion");
 		public static final TagKey<Biome> PODZOL_CONVERSION = tag("podzol_conversion");
