@@ -299,6 +299,12 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     public void push(double x, double y, double z) { }
 
     /**
+     * Required despite call to {@link Mob#setPersistenceRequired()} in constructor.
+     */
+    @Override
+    public void checkDespawn() { }
+
+    /**
      * Called on every block in the boss room when the boss is defeated.
      * @param state The {@link BlockState} to try to convert.
      * @return The converted {@link BlockState}.

@@ -6,7 +6,6 @@ import com.aetherteam.aether.data.resources.AetherDamageTypes;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.item.combat.AetherItemTiers;
-import com.aetherteam.aether.item.combat.AetherSwordItem;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ZombifiedPiglinAccessor;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -17,12 +16,13 @@ import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID)
-public class PigSlayerItem extends AetherSwordItem {
+public class PigSlayerItem extends SwordItem {
 	public PigSlayerItem() {
 		super(AetherItemTiers.PIG_SLAYER, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
 	}

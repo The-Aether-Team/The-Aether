@@ -7,12 +7,7 @@
         {
           "type": "minecraft:loot_table",
           "name": "aether:chests/dungeon/silver/silver_dungeon_valkyrie",
-          "weight": 6
-        },
-        {
-          "type": "minecraft:loot_table",
-          "name": "aether:chests/dungeon/silver/silver_dungeon_neptune",
-          "weight": 5
+          "weight": 8
         },
         {
           "type": "minecraft:item",

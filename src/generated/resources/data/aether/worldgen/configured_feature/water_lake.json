@@ -15,7 +15,7 @@
       "state": {
         "Name": "aether:aether_grass_block",
         "Properties": {
-          "double_drops": "false",
+          "double_drops": "true",
           "snowy": "false"
         }
       }

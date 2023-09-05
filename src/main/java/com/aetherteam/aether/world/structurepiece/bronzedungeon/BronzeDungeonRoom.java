@@ -10,7 +10,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
@@ -40,14 +40,8 @@ public class BronzeDungeonRoom extends BronzeDungeonPiece {
     protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox box) {
         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
         if (name.equals("Chest")) {
-            if (random.nextInt(5) > 1) {
-                level.setBlock(pos, Blocks.CHEST.defaultBlockState(), 2);
-                if (level.getBlockEntity(pos) instanceof ChestBlockEntity chest) {
-                    chest.setLootTable(AetherLoot.BRONZE_DUNGEON, random.nextLong());
-                }
-            } else {
-                level.setBlock(pos, AetherBlocks.CHEST_MIMIC.get().defaultBlockState(), 1 | 2);
-            }
+            BlockState state = (random.nextInt(5) > 1 ? Blocks.CHEST : AetherBlocks.CHEST_MIMIC.get()).defaultBlockState();
+            this.createChest(level, box, random, pos, AetherLoot.BRONZE_DUNGEON, state);
         }
     }
 }

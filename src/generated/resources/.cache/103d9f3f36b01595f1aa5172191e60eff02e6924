@@ -1,4 +1,4 @@
-// 1.19.4	2023-09-04T17:00:17.6344199	Registries
+// 1.19.4	2023-09-04T17:26:10.6352949	Registries
 25d924fdac4392adb88fe3b6aa2c23420f6fb4f9 data/aether/damage_type/armor_piercing_attack.json
 03d6a63bae7e4458c11da22471bf0f8b5051023c data/aether/damage_type/cloud_crystal.json
 024fc58ce3f33e1542dfe59582a4da47cc178764 data/aether/damage_type/crush.json
@@ -33,7 +33,7 @@ af2a686d0f5b3bc24e92d80e542f5f7d17fd13bd data/aether/worldgen/configured_feature
 f46be64b74246276492162453c5ad440bb09a3fb data/aether/worldgen/configured_feature/skyroot_tree.json
 06029a837eb77f1213cdb3c86f3b30cfa877ba18 data/aether/worldgen/configured_feature/tall_grass_patch.json
 ad9a38a87e4927b4b215fd473dbc459ed0a462bf data/aether/worldgen/configured_feature/trees_skyroot_and_golden_oak.json
-e3a804c5d61371bc4fdfe9132d82488a30f465e8 data/aether/worldgen/configured_feature/water_lake.json
+d6c9179bc1619ebbcaac85e75ac91f2b2a1d6daf data/aether/worldgen/configured_feature/water_lake.json
 07742c52dac96e2e6dff9d8a1385bd2e81dcc4d5 data/aether/worldgen/configured_feature/water_spring.json
 e1e3d136f90240ebee24a9b93dc7a4225f5e35b3 data/aether/worldgen/configured_feature/white_flower_patch.json
 7cc464d75e21863cbb488992c0e6ef3a9005c23e data/aether/worldgen/configured_feature/zanite_ore.json

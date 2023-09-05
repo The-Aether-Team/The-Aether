@@ -1,4 +1,4 @@
-// 1.19.4	2023-08-07T20:03:25.1835164	Loot Tables
+// 1.19.4	2023-08-21T23:01:34.1170563	Loot Tables
 d025471306910ea35dcf85d28fc188182a1b3c8d data/aether/loot_tables/advancements/enter_aether.json
 96aec873b17d2a5aed2a22fe094efa32b8d54645 data/aether/loot_tables/blocks/aerogel.json
 ffdecdc23fdf03314c666c6d8638f7f44bdbcc8b data/aether/loot_tables/blocks/aerogel_slab.json
@@ -132,7 +132,8 @@ c2ba8a63488031f27c7d6bba810e8ffb33b2c8bc data/aether/loot_tables/chests/dungeon/
 894ca08648c03d959954b0691262570bf5d9cb2e data/aether/loot_tables/chests/dungeon/bronze/bronze_dungeon_disc.json
 70d17ec4a529c574c667b24ed557cb32bdf98ffe data/aether/loot_tables/chests/dungeon/bronze/bronze_dungeon_gummies.json
 a11711acd8bc5fd9a9d5d746fc2a337290e121ff data/aether/loot_tables/chests/dungeon/bronze/bronze_dungeon_loot.json
-9d3c9055cea5927b07d187a500985342956cb7dd data/aether/loot_tables/chests/dungeon/bronze/bronze_dungeon_reward.json
+823a34216821e227fda0192e98eeb00e4e34b72d data/aether/loot_tables/chests/dungeon/bronze/bronze_dungeon_neptune.json
+c95b199a94a354377cc8df5b43890892ba5e3bec data/aether/loot_tables/chests/dungeon/bronze/bronze_dungeon_reward.json
 010ac3b3a17532d633586f08d4d8f7385cf8d1a7 data/aether/loot_tables/chests/dungeon/bronze/bronze_dungeon_trash.json
 0ac5b7d128ec858f8f20f15f3c708d642ebb8987 data/aether/loot_tables/chests/dungeon/bronze/bronze_dungeon_treasure.json
 fe74c493e64c6895a815c12813dd4c91d71259c7 data/aether/loot_tables/chests/dungeon/gold/gold_dungeon_reward.json
@@ -143,10 +144,9 @@ c1dabc90d155741838b84fb983a11d2d7e0974fd data/aether/loot_tables/chests/dungeon/
 bb910804a40268edfd9084d596e35bc7d9001b83 data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_gravitite.json
 f3e111a054362e2c739860793f35094b6f909806 data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_gummies.json
 f6b71f3cc3d0413017eb3f72d397df28207cb526 data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_loot.json
-823a34216821e227fda0192e98eeb00e4e34b72d data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_neptune.json
-2f4f79caf5e7cbe13ae4e6fe36e09d141a90d51f data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_reward.json
+b1371b8b9502081e328598828693168ee9d3a4b1 data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_reward.json
 509fcc4c3ed95d67346dad14ed6bfecc9c13386a data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_trash.json
-53c430f39062c47df3fe46046a073b4a73df163e data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_treasure.json
+3079e254072e05046d8c4883e6a803fc6c3c0779 data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_treasure.json
 1d9641db1436b4e086312ce1e517fd39316d7b44 data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_valkyrie.json
 df0825811c297a2490f3108da95334235f829324 data/aether/loot_tables/entities/aechor_plant.json
 8d9ec859066d8908362d317ef37e9d2bdbfc9cce data/aether/loot_tables/entities/aerbunny.json
