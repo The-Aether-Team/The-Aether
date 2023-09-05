@@ -1,0 +1,12 @@
+{
+  "type": "aether:gloves_loot",
+  "armor_material": "diamond",
+  "conditions": [],
+  "gloves": {
+    "Count": 1,
+    "id": "aether:diamond_gloves",
+    "tag": {
+      "Damage": 0
+    }
+  }
+}

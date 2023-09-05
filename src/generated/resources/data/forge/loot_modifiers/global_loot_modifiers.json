@@ -2,8 +2,14 @@
   "entries": [
     "aether:remove_seeds",
     "aether:pig_drops",
+    "aether:gloves_loot_gold",
+    "aether:gloves_loot_chain",
     "aether:enchanted_grass_berry_bush",
-    "aether:double_drops"
+    "aether:gloves_loot_diamond",
+    "aether:gloves_loot_leather",
+    "aether:gloves_loot_iron",
+    "aether:double_drops",
+    "aether:gloves_loot_netherite"
   ],
   "replace": false
 }
