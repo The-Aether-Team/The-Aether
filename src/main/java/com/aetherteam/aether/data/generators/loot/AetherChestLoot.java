@@ -367,7 +367,7 @@ public class AetherChestLoot implements LootTableSubProvider {
         builder.accept(AetherLoot.RUINED_PORTAL, LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(4.0F, 8.0F))
                         .add(LootItem.lootTableItem(Items.GLOWSTONE_DUST).setWeight(40).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
-                        .add(LootItem.lootTableItem(Items.FEATHER).setWeight(40).apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 6.0F))))
+                        .add(LootItem.lootTableItem(Items.FEATHER).setWeight(40).apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 8.0F))))
                         .add(LootItem.lootTableItem(Items.BUCKET).setWeight(40))
                         .add(LootItem.lootTableItem(Items.WATER_BUCKET).setWeight(40))
                         .add(LootItem.lootTableItem(AetherItems.BLUE_BERRY.get()).setWeight(15).apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0F, 12.0F))))
