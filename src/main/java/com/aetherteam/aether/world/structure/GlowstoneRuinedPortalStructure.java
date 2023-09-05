@@ -23,6 +23,7 @@ import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
+import net.minecraft.world.level.levelgen.structure.structures.RuinedPortalPiece;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import java.util.List;
@@ -32,20 +33,19 @@ public class GlowstoneRuinedPortalStructure extends Structure {
     private static final String[] STRUCTURE_LOCATION_PORTALS = new String[]{"ruined_portal/portal_1", "ruined_portal/portal_2", "ruined_portal/portal_3", "ruined_portal/portal_4", "ruined_portal/portal_5", "ruined_portal/portal_6", "ruined_portal/portal_7", "ruined_portal/portal_8", "ruined_portal/portal_9", "ruined_portal/portal_10"};
     private static final String[] STRUCTURE_LOCATION_GIANT_PORTALS = new String[]{"ruined_portal/giant_portal_1", "ruined_portal/giant_portal_2", "ruined_portal/giant_portal_3"};
 
-    private final List<GlowstoneRuinedPortalStructure.Setup> setups;
+    private final List<Setup> setups;
     public static final Codec<GlowstoneRuinedPortalStructure> CODEC = RecordCodecBuilder.create((codec) -> codec.group(settingsCodec(codec),
-                    ExtraCodecs.nonEmptyList(GlowstoneRuinedPortalStructure.Setup.CODEC.listOf()).fieldOf("setups").forGetter((structure) -> structure.setups))
+                    ExtraCodecs.nonEmptyList(Setup.CODEC.listOf()).fieldOf("setups").forGetter((structure) -> structure.setups))
             .apply(codec, GlowstoneRuinedPortalStructure::new));
 
-    public GlowstoneRuinedPortalStructure(Structure.StructureSettings settings, List<GlowstoneRuinedPortalStructure.Setup> setups) {
+    public GlowstoneRuinedPortalStructure(Structure.StructureSettings settings, List<Setup> setups) {
         super(settings);
         this.setups = setups;
     }
 
-    public GlowstoneRuinedPortalStructure(Structure.StructureSettings settings, GlowstoneRuinedPortalStructure.Setup setup) {
-        this(settings, List.of(setup));
-    }
-
+    /**
+     * [CODE COPY] - {@link net.minecraft.world.level.levelgen.structure.structures.RuinedPortalStructure#findGenerationPoint(GenerationContext)}.
+     */
     @Override
     protected Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
         GlowstoneRuinedPortalPiece.Properties pieceProperties = new GlowstoneRuinedPortalPiece.Properties();
@@ -102,13 +102,16 @@ public class GlowstoneRuinedPortalStructure extends Structure {
             int j = findSuitableY(worldGenRandom, chunkGenerator, setup3.placement(), i, boundingbox.getYSpan(), boundingbox, levelheightaccessor, randomstate);
             BlockPos spawnPos = new BlockPos(blockPosChunk.getX(), j, blockPosChunk.getZ());
             if (spawnPos.getY() > levelheightaccessor.getMinBuildHeight()) {
-                return Optional.of(new GenerationStub(spawnPos, (builder) -> builder.addPiece(new GlowstoneRuinedPortalPiece(context.structureTemplateManager(), spawnPos, setup3.placement(), pieceProperties, location, template, rotation, mirror, blockPos))));
+                return Optional.of(new GenerationStub(spawnPos, (builder) -> builder.addPiece(new GlowstoneRuinedPortalPiece(context.structureTemplateManager(), spawnPos, setup3.placement(), pieceProperties, location, rotation, mirror, blockPos))));
             } else {
                 return Optional.empty();
             }
         }
     }
 
+    /**
+     * [CODE COPY] - {@link net.minecraft.world.level.levelgen.structure.structures.RuinedPortalStructure#sample(WorldgenRandom, float)}.
+     */
     private static boolean sample(WorldgenRandom random, float threshold) {
         if (threshold == 0.0F) {
             return false;
@@ -119,8 +122,11 @@ public class GlowstoneRuinedPortalStructure extends Structure {
         }
     }
 
-    private static int findSuitableY(RandomSource random, ChunkGenerator chunkGenerator, GlowstoneRuinedPortalPiece.VerticalPlacement verticalPlacement, int height, int blockCountY, BoundingBox box, LevelHeightAccessor p_229274_, RandomState p_229275_) {
-        int j = p_229274_.getMinBuildHeight() + 15;
+    /**
+     * [CODE COPY] - {@link net.minecraft.world.level.levelgen.structure.structures.RuinedPortalStructure#findSuitableY(RandomSource, ChunkGenerator, RuinedPortalPiece.VerticalPlacement, boolean, int, int, BoundingBox, LevelHeightAccessor, RandomState)}.
+     */
+    private static int findSuitableY(RandomSource random, ChunkGenerator chunkGenerator, GlowstoneRuinedPortalPiece.VerticalPlacement verticalPlacement, int height, int blockCountY, BoundingBox box, LevelHeightAccessor heightAccessor, RandomState randomState) {
+        int j = heightAccessor.getMinBuildHeight() + 15;
         int i;
         if (verticalPlacement == GlowstoneRuinedPortalPiece.VerticalPlacement.PARTLY_BURIED) {
             i = height - blockCountY + Mth.randomBetweenInclusive(random, 2, 8);
@@ -129,7 +135,7 @@ public class GlowstoneRuinedPortalStructure extends Structure {
         }
 
         List<BlockPos> positions = ImmutableList.of(new BlockPos(box.minX(), 0, box.minZ()), new BlockPos(box.maxX(), 0, box.minZ()), new BlockPos(box.minX(), 0, box.maxZ()), new BlockPos(box.maxX(), 0, box.maxZ()));
-        List<NoiseColumn> noiseColumns = positions.stream().map((p_229280_) -> chunkGenerator.getBaseColumn(p_229280_.getX(), p_229280_.getZ(), p_229274_, p_229275_)).toList();
+        List<NoiseColumn> noiseColumns = positions.stream().map((pos) -> chunkGenerator.getBaseColumn(pos.getX(), pos.getZ(), heightAccessor, randomState)).toList();
         Heightmap.Types heightmap$types = verticalPlacement == GlowstoneRuinedPortalPiece.VerticalPlacement.ON_OCEAN_FLOOR ? Heightmap.Types.OCEAN_FLOOR : Heightmap.Types.WORLD_SURFACE;
 
         int l;
@@ -146,7 +152,6 @@ public class GlowstoneRuinedPortalStructure extends Structure {
                 }
             }
         }
-
         return l;
     }
 
@@ -156,13 +161,13 @@ public class GlowstoneRuinedPortalStructure extends Structure {
     }
 
     public record Setup(GlowstoneRuinedPortalPiece.VerticalPlacement placement, float airPocketProbability, float mossiness, boolean overgrown, boolean vines, boolean replaceWithHolystone, float weight) {
-        public static final Codec<GlowstoneRuinedPortalStructure.Setup> CODEC = RecordCodecBuilder.create((codec) -> codec.group(
-                GlowstoneRuinedPortalPiece.VerticalPlacement.CODEC.fieldOf("placement").forGetter(GlowstoneRuinedPortalStructure.Setup::placement),
-                Codec.floatRange(0.0F, 1.0F).fieldOf("air_pocket_probability").forGetter(GlowstoneRuinedPortalStructure.Setup::airPocketProbability),
-                Codec.floatRange(0.0F, 1.0F).fieldOf("mossiness").forGetter(GlowstoneRuinedPortalStructure.Setup::mossiness),
-                Codec.BOOL.fieldOf("overgrown").forGetter(GlowstoneRuinedPortalStructure.Setup::overgrown),
-                Codec.BOOL.fieldOf("vines").forGetter(GlowstoneRuinedPortalStructure.Setup::vines),
-                Codec.BOOL.fieldOf("replace_with_holystone").forGetter(GlowstoneRuinedPortalStructure.Setup::replaceWithHolystone),
-                ExtraCodecs.POSITIVE_FLOAT.fieldOf("weight").forGetter(GlowstoneRuinedPortalStructure.Setup::weight)).apply(codec, GlowstoneRuinedPortalStructure.Setup::new));
+        public static final Codec<Setup> CODEC = RecordCodecBuilder.create((codec) -> codec.group(
+                GlowstoneRuinedPortalPiece.VerticalPlacement.CODEC.fieldOf("placement").forGetter(Setup::placement),
+                Codec.floatRange(0.0F, 1.0F).fieldOf("air_pocket_probability").forGetter(Setup::airPocketProbability),
+                Codec.floatRange(0.0F, 1.0F).fieldOf("mossiness").forGetter(Setup::mossiness),
+                Codec.BOOL.fieldOf("overgrown").forGetter(Setup::overgrown),
+                Codec.BOOL.fieldOf("vines").forGetter(Setup::vines),
+                Codec.BOOL.fieldOf("replace_with_holystone").forGetter(Setup::replaceWithHolystone),
+                ExtraCodecs.POSITIVE_FLOAT.fieldOf("weight").forGetter(Setup::weight)).apply(codec, Setup::new));
     }
 }

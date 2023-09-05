@@ -28,15 +28,16 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
+import net.minecraft.world.level.levelgen.structure.structures.RuinedPortalPiece;
 import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 
 import java.util.List;
 
 public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
-    private final GlowstoneRuinedPortalPiece.VerticalPlacement verticalPlacement;
-    private final GlowstoneRuinedPortalPiece.Properties properties;
+    private final VerticalPlacement verticalPlacement;
+    private final Properties properties;
 
-    public GlowstoneRuinedPortalPiece(StructureTemplateManager structureTemplateManager, BlockPos templatePosition, GlowstoneRuinedPortalPiece.VerticalPlacement verticalPlacement, GlowstoneRuinedPortalPiece.Properties properties, ResourceLocation location, StructureTemplate template, Rotation rotation, Mirror mirror, BlockPos pivotPos) {
+    public GlowstoneRuinedPortalPiece(StructureTemplateManager structureTemplateManager, BlockPos templatePosition, VerticalPlacement verticalPlacement, Properties properties, ResourceLocation location, Rotation rotation, Mirror mirror, BlockPos pivotPos) {
         super(AetherStructurePieceTypes.RUINED_PORTAL.get(), 0, structureTemplateManager, location, location.toString(), makeSettings(mirror, rotation, pivotPos, properties), templatePosition);
         this.verticalPlacement = verticalPlacement;
         this.properties = properties;
@@ -44,30 +45,40 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
 
     public GlowstoneRuinedPortalPiece(StructureTemplateManager structureTemplateManager, CompoundTag tag) {
         super(AetherStructurePieceTypes.RUINED_PORTAL.get(), tag, structureTemplateManager, (location) -> makeSettings(structureTemplateManager, tag, location));
-        this.verticalPlacement = GlowstoneRuinedPortalPiece.VerticalPlacement.byName(tag.getString("VerticalPlacement"));
-        this.properties = GlowstoneRuinedPortalPiece.Properties.CODEC.parse(new Dynamic<>(NbtOps.INSTANCE, tag.get("Properties"))).getOrThrow(true, Aether.LOGGER::error);
+        this.verticalPlacement = VerticalPlacement.byName(tag.getString("VerticalPlacement"));
+        this.properties = Properties.CODEC.parse(new Dynamic<>(NbtOps.INSTANCE, tag.get("Properties"))).getOrThrow(true, Aether.LOGGER::error);
     }
 
     public GlowstoneRuinedPortalPiece(StructurePieceSerializationContext context, CompoundTag tag) {
         this(context.structureTemplateManager(), tag);
     }
 
+    /**
+     * [CODE COPY] - {@link net.minecraft.world.level.levelgen.structure.structures.RuinedPortalPiece#addAdditionalSaveData(StructurePieceSerializationContext, CompoundTag)}.
+     */
     @Override
     protected void addAdditionalSaveData(StructurePieceSerializationContext context, CompoundTag tag) {
         super.addAdditionalSaveData(context, tag);
         tag.putString("Rotation", this.placeSettings.getRotation().name());
         tag.putString("Mirror", this.placeSettings.getMirror().name());
         tag.putString("VerticalPlacement", this.verticalPlacement.getName());
-        GlowstoneRuinedPortalPiece.Properties.CODEC.encodeStart(NbtOps.INSTANCE, this.properties).resultOrPartial(Aether.LOGGER::error).ifPresent((propertiesTag) -> tag.put("Properties", propertiesTag));
+        Properties.CODEC.encodeStart(NbtOps.INSTANCE, this.properties).resultOrPartial(Aether.LOGGER::error).ifPresent((propertiesTag) -> tag.put("Properties", propertiesTag));
     }
 
+    /**
+     * [CODE COPY] - {@link net.minecraft.world.level.levelgen.structure.structures.RuinedPortalPiece#makeSettings(StructureTemplateManager, CompoundTag, ResourceLocation)}.
+     */
     private static StructurePlaceSettings makeSettings(StructureTemplateManager structureTemplateManager, CompoundTag tag, ResourceLocation location) {
         StructureTemplate structuretemplate = structureTemplateManager.getOrCreate(location);
         BlockPos blockpos = new BlockPos(structuretemplate.getSize().getX() / 2, 0, structuretemplate.getSize().getZ() / 2);
-        return makeSettings(Mirror.valueOf(tag.getString("Mirror")), Rotation.valueOf(tag.getString("Rotation")), blockpos, GlowstoneRuinedPortalPiece.Properties.CODEC.parse(new Dynamic<>(NbtOps.INSTANCE, tag.get("Properties"))).getOrThrow(true, Aether.LOGGER::error));
+        return makeSettings(Mirror.valueOf(tag.getString("Mirror")), Rotation.valueOf(tag.getString("Rotation")), blockpos, Properties.CODEC.parse(new Dynamic<>(NbtOps.INSTANCE, tag.get("Properties"))).getOrThrow(true, Aether.LOGGER::error));
     }
 
-    private static StructurePlaceSettings makeSettings(Mirror mirror, Rotation rotation, BlockPos pos, GlowstoneRuinedPortalPiece.Properties properties) {
+    /**
+     * [CODE COPY] - {@link net.minecraft.world.level.levelgen.structure.structures.RuinedPortalPiece#makeSettings(Mirror, Rotation, RuinedPortalPiece.VerticalPlacement, BlockPos, RuinedPortalPiece.Properties)}.<br><br>
+     * Modified for ruined Aether portals, including replacement for Cobblestone and Holystone Bricks, and applying the double drops property.
+     */
+    private static StructurePlaceSettings makeSettings(Mirror mirror, Rotation rotation, BlockPos pos, Properties properties) {
         BlockIgnoreProcessor blockIgnoreProcessor = properties.airPocket ? BlockIgnoreProcessor.STRUCTURE_BLOCK : BlockIgnoreProcessor.STRUCTURE_AND_AIR;
         List<ProcessorRule> list = Lists.newArrayList();
         StructurePlaceSettings structurePlaceSettings = new StructurePlaceSettings().setRotation(rotation).setMirror(mirror).setRotationPivot(pos)
@@ -82,6 +93,11 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
         return structurePlaceSettings;
     }
 
+    /**
+     * [CODE COPY] - {@link net.minecraft.world.level.levelgen.structure.structures.RuinedPortalPiece#postProcess(WorldGenLevel, StructureManager, ChunkGenerator, RandomSource, BoundingBox, ChunkPos, BlockPos)}.<br><br>
+     * Warning for "deprecation" is suppressed because the method is fine to call.
+     */
+    @SuppressWarnings("deprecation")
     @Override
     public void postProcess(WorldGenLevel level, StructureManager structureManager, ChunkGenerator generator, RandomSource random, BoundingBox box, ChunkPos chunkPos, BlockPos pos) {
         BoundingBox boundingbox = this.template.getBoundingBox(this.placeSettings, this.templatePosition);
@@ -106,6 +122,9 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
     @Override
     protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox box) { }
 
+    /**
+     * [CODE COPY] - {@link net.minecraft.world.level.levelgen.structure.structures.RuinedPortalPiece#maybeAddVines(RandomSource, LevelAccessor, BlockPos)}.
+     */
     private void maybeAddVines(RandomSource random, LevelAccessor level, BlockPos pos) {
         BlockState blockState = level.getBlockState(pos);
         if (!blockState.isAir() && !blockState.is(Blocks.VINE)) {
@@ -121,12 +140,19 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
         }
     }
 
+    /**
+     * [CODE COPY] - {@link net.minecraft.world.level.levelgen.structure.structures.RuinedPortalPiece#maybeAddLeavesAbove(RandomSource, LevelAccessor, BlockPos)}.
+     */
     private void maybeAddLeavesAbove(RandomSource random, LevelAccessor level, BlockPos pos) {
         if (random.nextFloat() < 0.5F && level.getBlockState(pos).is(AetherBlocks.AETHER_GRASS_BLOCK.get()) && level.getBlockState(pos.above()).isAir()) {
             level.setBlock(pos.above(), Blocks.JUNGLE_LEAVES.defaultBlockState().setValue(LeavesBlock.PERSISTENT, true), 3);
         }
     }
 
+    /**
+     * [CODE COPY] - {@link net.minecraft.world.level.levelgen.structure.structures.RuinedPortalPiece#addNetherrackDripColumnsBelowPortal(RandomSource, LevelAccessor)}.<br><br>
+     * Modified to add Aether Grass Blocks instead of Netherrack.
+     */
     private void addDirtBuryingBelowPortal(RandomSource random, LevelAccessor level) {
         for (int i = this.boundingBox.minX() + 1; i < this.boundingBox.maxX(); ++i) {
             for (int j = this.boundingBox.minZ() + 1; j < this.boundingBox.maxZ(); ++j) {
@@ -138,6 +164,10 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
         }
     }
 
+    /**
+     * [CODE COPY] - {@link net.minecraft.world.level.levelgen.structure.structures.RuinedPortalPiece#addNetherrackDripColumn(RandomSource, LevelAccessor, BlockPos)}.<br><br>
+     * Modified to add Aether Grass Blocks instead of Netherrack.
+     */
     private void addDirtBuryingColumn(RandomSource random, LevelAccessor level, BlockPos pos) {
         BlockPos.MutableBlockPos mutableBlockPos = pos.mutable();
         this.placeAetherDirtOrGrass(random, level, mutableBlockPos);
@@ -149,8 +179,12 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
         }
     }
 
+    /**
+     * [CODE COPY] - {@link net.minecraft.world.level.levelgen.structure.structures.RuinedPortalPiece#spreadNetherrack(RandomSource, LevelAccessor)}.<br><br>
+     * Modified to add Aether Grass Blocks instead of Netherrack.
+     */
     private void spreadAetherGrass(RandomSource random, LevelAccessor level) {
-        boolean flag = this.verticalPlacement == GlowstoneRuinedPortalPiece.VerticalPlacement.ON_LAND_SURFACE || this.verticalPlacement == GlowstoneRuinedPortalPiece.VerticalPlacement.ON_OCEAN_FLOOR;
+        boolean flag = this.verticalPlacement == VerticalPlacement.ON_LAND_SURFACE || this.verticalPlacement == VerticalPlacement.ON_OCEAN_FLOOR;
         BlockPos blockPos = this.boundingBox.getCenter();
         int i = blockPos.getX();
         int j = blockPos.getZ();
@@ -183,6 +217,11 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
         }
     }
 
+    /**
+     * @param level The {@link Level} that the block is in.
+     * @param pos The {@link BlockPos} to check.
+     * @return Whether the {@link BlockState} at the given position can be replaced by Aether Grass or Aether Dirt.
+     */
     private boolean canBlockBeReplacedByAetherGrass(LevelAccessor level, BlockPos pos) {
         BlockState blockstate = level.getBlockState(pos);
         return !blockstate.is(Blocks.AIR) && !blockstate.is(Blocks.GLOWSTONE) && !blockstate.is(BlockTags.FEATURES_CANNOT_REPLACE) && !blockstate.is(Blocks.WATER)
@@ -196,6 +235,12 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
                 && !blockstate.is(AetherBlocks.HOLYSTONE_BRICK_WALL.get());
     }
 
+    /**
+     * Places Aether Grass Blocks below air (i.e. on the surface), and Aether Dirt blocks anywhere else.
+     * @param random The {@link RandomSource} for the structure piece.
+     * @param level The {@link Level} to place in.
+     * @param pos The {@link BlockPos} to place at.
+     */
     private void placeAetherDirtOrGrass(RandomSource random, LevelAccessor level, BlockPos pos) {
         if (level.isEmptyBlock(pos.above())) {
             level.setBlock(pos, AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true), 3);
@@ -205,14 +250,23 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
         }
     }
 
-    private void growGrassAndFlowers(RandomSource randomSource, LevelAccessor level, BlockPos pos) {
-        int featureType = randomSource.nextInt(50);
-        if (randomSource.nextInt(100) < 20 && level.isEmptyBlock(pos)) {
+    /**
+     * Places grass or flowers from the Aether with a 1/5 chance.<br>
+     * Flowers are chosen with a 1/10 chance, while grass has a 9/10 chance.<br>
+     * Choosing between a Purple Flower or a White Flower is 50/50 chance.<br>
+     * Choosing Tall Grass is a 1/10 chance, while Grass is a 9/10 chance.
+     * @param random The {@link RandomSource} for the structure piece.
+     * @param level The {@link Level} to place in.
+     * @param pos The {@link BlockPos} to place at.
+     */
+    private void growGrassAndFlowers(RandomSource random, LevelAccessor level, BlockPos pos) {
+        int featureType = random.nextInt(50);
+        if (random.nextInt(100) < 20 && level.isEmptyBlock(pos)) {
             if (featureType < 5 && level.getBlockState(pos.below()).is(AetherTags.Blocks.AETHER_DIRT)) {
-                Block flower = randomSource.nextBoolean() ? AetherBlocks.PURPLE_FLOWER.get() : AetherBlocks.WHITE_FLOWER.get();
+                Block flower = random.nextBoolean() ? AetherBlocks.PURPLE_FLOWER.get() : AetherBlocks.WHITE_FLOWER.get();
                 level.setBlock(pos, flower.defaultBlockState(), 2);
             } else {
-                if (randomSource.nextInt(50) > 5) {
+                if (random.nextInt(50) > 5) {
                     level.setBlock(pos, Blocks.GRASS.defaultBlockState(), 2);
                 } else {
                     DoublePlantBlock.placeAt(level, Blocks.TALL_GRASS.defaultBlockState(), pos, 2);
@@ -221,23 +275,29 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
         }
     }
 
-    private static int getSurfaceY(LevelAccessor level, int x, int z, GlowstoneRuinedPortalPiece.VerticalPlacement verticalPlacement) {
+    /**
+     * [CODE COPY] - {@link net.minecraft.world.level.levelgen.structure.structures.RuinedPortalPiece#getSurfaceY(LevelAccessor, int, int, RuinedPortalPiece.VerticalPlacement)}.
+     */
+    private static int getSurfaceY(LevelAccessor level, int x, int z, VerticalPlacement verticalPlacement) {
         return level.getHeight(getHeightMapType(verticalPlacement), x, z) - 1;
     }
 
-    public static Heightmap.Types getHeightMapType(GlowstoneRuinedPortalPiece.VerticalPlacement verticalPlacement) {
-        return verticalPlacement == GlowstoneRuinedPortalPiece.VerticalPlacement.ON_OCEAN_FLOOR ? Heightmap.Types.OCEAN_FLOOR : Heightmap.Types.WORLD_SURFACE;
+    /**
+     * [CODE COPY] - {@link net.minecraft.world.level.levelgen.structure.structures.RuinedPortalPiece#getHeightMapType(RuinedPortalPiece.VerticalPlacement)}.
+     */
+    public static Heightmap.Types getHeightMapType(VerticalPlacement verticalPlacement) {
+        return verticalPlacement == VerticalPlacement.ON_OCEAN_FLOOR ? Heightmap.Types.OCEAN_FLOOR : Heightmap.Types.WORLD_SURFACE;
     }
 
     public static class Properties {
-        public static final Codec<GlowstoneRuinedPortalPiece.Properties> CODEC = RecordCodecBuilder.create((codec) ->
+        public static final Codec<Properties> CODEC = RecordCodecBuilder.create((codec) ->
                 codec.group(
-                        Codec.FLOAT.fieldOf("mossiness").forGetter((p_229224_) -> p_229224_.mossiness),
-                        Codec.BOOL.fieldOf("air_pocket").forGetter((p_229222_) -> p_229222_.airPocket),
-                        Codec.BOOL.fieldOf("overgrown").forGetter((p_229220_) -> p_229220_.overgrown),
-                        Codec.BOOL.fieldOf("vines").forGetter((p_229218_) -> p_229218_.vines),
-                        Codec.BOOL.fieldOf("replace_with_holystone").forGetter((p_229216_) -> p_229216_.replaceWithHolystone)
-                ).apply(codec, GlowstoneRuinedPortalPiece.Properties::new));
+                        Codec.FLOAT.fieldOf("mossiness").forGetter((properties) -> properties.mossiness),
+                        Codec.BOOL.fieldOf("air_pocket").forGetter((properties) -> properties.airPocket),
+                        Codec.BOOL.fieldOf("overgrown").forGetter((properties) -> properties.overgrown),
+                        Codec.BOOL.fieldOf("vines").forGetter((properties) -> properties.vines),
+                        Codec.BOOL.fieldOf("replace_with_holystone").forGetter((properties) -> properties.replaceWithHolystone)
+                ).apply(codec, Properties::new));
         public float mossiness;
         public boolean airPocket;
         public boolean overgrown;
@@ -260,7 +320,11 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
         PARTLY_BURIED("partly_buried"),
         ON_OCEAN_FLOOR("on_ocean_floor");
 
-        public static final StringRepresentable.EnumCodec<GlowstoneRuinedPortalPiece.VerticalPlacement> CODEC = StringRepresentable.fromEnum(GlowstoneRuinedPortalPiece.VerticalPlacement::values);
+        /**
+         * Warning for "deprecation" is suppressed because using {@link StringRepresentable.EnumCodec} is necessary.
+         */
+        @SuppressWarnings("deprecation")
+        public static final StringRepresentable.EnumCodec<VerticalPlacement> CODEC = StringRepresentable.fromEnum(VerticalPlacement::values);
         private final String name;
 
         VerticalPlacement(String name) {
@@ -271,7 +335,7 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
             return this.name;
         }
 
-        public static GlowstoneRuinedPortalPiece.VerticalPlacement byName(String name) {
+        public static VerticalPlacement byName(String name) {
             return CODEC.byName(name);
         }
 

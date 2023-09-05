@@ -13,6 +13,9 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 
 import javax.annotation.Nullable;
 
+/**
+ * This processor replaces Cobblestone blocks with Mossy Cobblestone blocks.
+ */
 public class GlowstonePortalAgeProcessor extends StructureProcessor {
     public static final Codec<GlowstonePortalAgeProcessor> CODEC = Codec.FLOAT.fieldOf("mossiness").xmap(GlowstonePortalAgeProcessor::new, (codec) -> codec.mossiness).codec();
     private final float mossiness;
@@ -23,7 +26,7 @@ public class GlowstonePortalAgeProcessor extends StructureProcessor {
 
     @Nullable
     @Override
-    public StructureTemplate.StructureBlockInfo processBlock(LevelReader level, BlockPos otherPos, BlockPos pos, StructureTemplate.StructureBlockInfo blockInfo, StructureTemplate.StructureBlockInfo relativeBlockInfo, StructurePlaceSettings settings) {
+    public StructureTemplate.StructureBlockInfo process(LevelReader level, BlockPos otherPos, BlockPos pos, StructureTemplate.StructureBlockInfo blockInfo, StructureTemplate.StructureBlockInfo relativeBlockInfo, StructurePlaceSettings settings, @Nullable StructureTemplate template) {
         RandomSource random = settings.getRandom(relativeBlockInfo.pos);
         BlockState originalState = relativeBlockInfo.state;
         BlockPos blockPos = relativeBlockInfo.pos;

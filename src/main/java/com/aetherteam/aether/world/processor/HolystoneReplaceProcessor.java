@@ -15,9 +15,13 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
+/**
+ * This processor replaces Cobblestone blocks Holystone Brick blocks.
+ */
 public class HolystoneReplaceProcessor extends StructureProcessor {
     public static final Codec<HolystoneReplaceProcessor> CODEC = Codec.unit(() -> HolystoneReplaceProcessor.INSTANCE);
     public static final HolystoneReplaceProcessor INSTANCE = new HolystoneReplaceProcessor();
@@ -34,7 +38,9 @@ public class HolystoneReplaceProcessor extends StructureProcessor {
 
     private HolystoneReplaceProcessor() { }
 
-    public StructureTemplate.StructureBlockInfo processBlock(LevelReader level, BlockPos otherPos, BlockPos pos, StructureTemplate.StructureBlockInfo blockInfo, StructureTemplate.StructureBlockInfo relativeBlockInfo, StructurePlaceSettings settings) {
+    @Nullable
+    @Override
+    public StructureTemplate.StructureBlockInfo process(LevelReader level, BlockPos otherPos, BlockPos pos, StructureTemplate.StructureBlockInfo blockInfo, StructureTemplate.StructureBlockInfo relativeBlockInfo, StructurePlaceSettings settings, @Nullable StructureTemplate template) {
         Block block = this.replacements.get(relativeBlockInfo.state.getBlock());
         if (block == null) {
             return relativeBlockInfo;
