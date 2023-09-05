@@ -148,6 +148,9 @@ public class AetherConfig {
         public final ConfigValue<Boolean> repeat_sun_spirit_dialogue;
         public final ConfigValue<Boolean> show_patreon_message;
 
+        public final ConfigValue<Boolean> add_temporary_freezing_automatically;
+        public final ConfigValue<Boolean> add_ruined_portal_automatically;
+
         public Common(ForgeConfigSpec.Builder builder) {
             builder.push("Gameplay");
             use_curios_menu = builder
@@ -171,6 +174,19 @@ public class AetherConfig {
                     .comment("Determines if a message that links The Aether mod's Patreon should show")
                     .translation("config.aether.common.gameplay.show_patreon_message")
                     .define("Show Patreon message", true);
+            builder.pop();
+
+            builder.push("Data Pack");
+            add_temporary_freezing_automatically = builder
+                    .worldRestart()
+                    .comment("Sets the Aether Temporary Freezing data pack to be added to new worlds automatically")
+                    .translation("config.aether.common.data_pack.add_temporary_freezing_automatically")
+                    .define("Add Temporary Freezing automatically", false);
+            add_ruined_portal_automatically = builder
+                    .worldRestart()
+                    .comment("Sets the Aether Ruined Portals data pack to be added to new worlds automatically")
+                    .translation("config.aether.common.data_pack.add_ruined_portal_automatically")
+                    .define("Add Ruined Portals automatically", false);
             builder.pop();
         }
     }

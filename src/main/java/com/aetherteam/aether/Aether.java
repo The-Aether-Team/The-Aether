@@ -385,7 +385,7 @@ public class Aether {
                     PackType.SERVER_DATA,
                     Pack.Position.TOP,
                     false,
-                    create(decorateWithSource("pack.source.builtin"), false))
+                    create(decorateWithSource("pack.source.builtin"), AetherConfig.COMMON.add_temporary_freezing_automatically.get()))
                 )
             );
         }
@@ -409,7 +409,7 @@ public class Aether {
                             PackType.SERVER_DATA,
                             Pack.Position.TOP,
                             false,
-                            create(decorateWithSource("pack.source.builtin"), false))
+                            create(decorateWithSource("pack.source.builtin"), AetherConfig.COMMON.add_ruined_portal_automatically.get()))
                     )
             );
         }
