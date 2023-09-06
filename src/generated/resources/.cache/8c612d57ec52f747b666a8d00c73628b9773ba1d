@@ -1,10 +1,10 @@
-// 1.19.4	2023-09-05T16:36:45.7036351	Global Loot Modifiers : aether
+// 1.19.4	2023-09-05T17:42:48.0317532	Global Loot Modifiers : aether
 09b253d9321c1d9f192a40b16483f85c39b96b75 data/aether/loot_modifiers/double_drops.json
 285e0ac500bdf69974bfac3b7c0a1a33a430ed15 data/aether/loot_modifiers/enchanted_grass_berry_bush.json
 47b182d37eede49bd687595bad8acb8f17238519 data/aether/loot_modifiers/gloves_loot_chain.json
 af6988ed2ffbaf5b9c7847b70fd06942ca22eb39 data/aether/loot_modifiers/gloves_loot_diamond.json
 c91f1f3dab4241ff03930b59a70c5ae0d20103a0 data/aether/loot_modifiers/gloves_loot_gold.json
-57483a802f90e7d13ce68e94e29c924548bba642 data/aether/loot_modifiers/gloves_loot_iron.json
+59e9005c875a595806a16f7e82a19fd1dab1e363 data/aether/loot_modifiers/gloves_loot_iron.json
 d37a4a85084a210c08946033b23eea2a8e148b79 data/aether/loot_modifiers/gloves_loot_leather.json
 1d0f3d8f0000113acd76843a59c8ec127b654d25 data/aether/loot_modifiers/gloves_loot_netherite.json
 bef2c642d1e9edfcac4f9d3301e51bf6cab20e4c data/aether/loot_modifiers/pig_drops.json

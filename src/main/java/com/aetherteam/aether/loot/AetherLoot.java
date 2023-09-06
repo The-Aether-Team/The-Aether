@@ -51,7 +51,7 @@ public class AetherLoot {
 	public static final ResourceLocation GOLD_DUNGEON_REWARD = register("chests/dungeon/gold/gold_dungeon_reward");
 	public static final ResourceLocation GOLD_DUNGEON_TREASURE = register("chests/dungeon/gold/gold_dungeon_treasure");
 
-	public static final ResourceLocation RUINED_PORTAL = register("chests/ruined_portal/");
+	public static final ResourceLocation RUINED_PORTAL = register("chests/ruined_portal");
 
 	public static final ResourceLocation ENTER_AETHER = register("advancements/enter_aether");
 

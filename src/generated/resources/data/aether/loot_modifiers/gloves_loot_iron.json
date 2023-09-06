@@ -6,7 +6,7 @@
       "condition": "minecraft:inverted",
       "term": {
         "condition": "forge:loot_table_id",
-        "loot_table_id": "aether:chests/ruined_portal/"
+        "loot_table_id": "aether:chests/ruined_portal"
       }
     }
   ],
