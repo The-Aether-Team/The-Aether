@@ -1,6 +1,7 @@
 package com.aetherteam.aether.world.structure;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.world.structurepiece.GlowstoneRuinedPortalPiece;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
@@ -11,6 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.block.Mirror;
@@ -50,9 +52,10 @@ public class GlowstoneRuinedPortalStructure extends Structure {
     protected Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
         GlowstoneRuinedPortalPiece.Properties pieceProperties = new GlowstoneRuinedPortalPiece.Properties();
         WorldgenRandom worldGenRandom = context.random();
+        ChunkPos chunkPos = context.chunkPos();
         ChunkGenerator chunkGenerator = context.chunkGenerator();
-        LevelHeightAccessor levelheightaccessor = context.heightAccessor();
-        RandomState randomstate = context.randomState();
+        LevelHeightAccessor levelHeightAccessor = context.heightAccessor();
+        RandomState randomState = context.randomState();
         BlockPos blockPosChunk = context.chunkPos().getWorldPosition();
 
         Setup portalSetup = null;
@@ -98,10 +101,11 @@ public class GlowstoneRuinedPortalStructure extends Structure {
             BlockPos blockPos = new BlockPos(template.getSize().getX() / 2, 0, template.getSize().getZ() / 2);
             BoundingBox boundingbox = template.getBoundingBox(blockPosChunk, rotation, blockPos, mirror);
             BlockPos centerPos = boundingbox.getCenter();
-            int i = chunkGenerator.getBaseHeight(centerPos.getX(), centerPos.getZ(), GlowstoneRuinedPortalPiece.getHeightMapType(setup3.placement()), levelheightaccessor, randomstate) - 1;
-            int j = findSuitableY(worldGenRandom, chunkGenerator, setup3.placement(), i, boundingbox.getYSpan(), boundingbox, levelheightaccessor, randomstate);
+            int i = chunkGenerator.getBaseHeight(centerPos.getX(), centerPos.getZ(), GlowstoneRuinedPortalPiece.getHeightMapType(setup3.placement()), levelHeightAccessor, randomState) - 1;
+            int j = findSuitableY(worldGenRandom, chunkGenerator, setup3.placement(), i, boundingbox.getYSpan(), boundingbox, levelHeightAccessor, randomState);
             BlockPos spawnPos = new BlockPos(blockPosChunk.getX(), j, blockPosChunk.getZ());
-            if (spawnPos.getY() > levelheightaccessor.getMinBuildHeight()) {
+
+            if (validCorners(chunkGenerator, levelHeightAccessor, chunkPos, randomState, spawnPos.getY())) {
                 return Optional.of(new GenerationStub(spawnPos, (builder) -> builder.addPiece(new GlowstoneRuinedPortalPiece(context.structureTemplateManager(), spawnPos, setup3.placement(), pieceProperties, location, rotation, mirror, blockPos))));
             } else {
                 return Optional.empty();
@@ -153,6 +157,25 @@ public class GlowstoneRuinedPortalStructure extends Structure {
             }
         }
         return l;
+    }
+
+    private static boolean validCorners(ChunkGenerator generator, LevelHeightAccessor heightAccessor, ChunkPos chunkPos, RandomState random, int spawnY) {
+        int minX = chunkPos.getMinBlockX() - 1;
+        int minZ = chunkPos.getMinBlockZ() - 1;
+        int maxX = chunkPos.getMaxBlockX() + 1;
+        int maxZ = chunkPos.getMaxBlockZ() + 1;
+        NoiseColumn[] columns = {
+                generator.getBaseColumn(minX, minZ, heightAccessor, random),
+                generator.getBaseColumn(minX, maxZ, heightAccessor, random),
+                generator.getBaseColumn(maxX, minZ, heightAccessor, random),
+                generator.getBaseColumn(maxX, maxZ, heightAccessor, random)
+        };
+        for (NoiseColumn column : columns) { //todo  need a y-range, not just one y, for a bit a bove and a bit below the portal.
+            if (column.getBlock(spawnY).isAir()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

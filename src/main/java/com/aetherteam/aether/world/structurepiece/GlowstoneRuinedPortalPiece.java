@@ -224,15 +224,7 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
      */
     private boolean canBlockBeReplacedByAetherGrass(LevelAccessor level, BlockPos pos) {
         BlockState blockstate = level.getBlockState(pos);
-        return !blockstate.is(Blocks.AIR) && !blockstate.is(Blocks.GLOWSTONE) && !blockstate.is(BlockTags.FEATURES_CANNOT_REPLACE) && !blockstate.is(Blocks.WATER)
-                && !blockstate.is(Blocks.COBBLESTONE) && !blockstate.is(Blocks.MOSSY_COBBLESTONE)
-                && !blockstate.is(Blocks.COBBLESTONE_STAIRS) && !blockstate.is(Blocks.MOSSY_COBBLESTONE_STAIRS)
-                && !blockstate.is(Blocks.COBBLESTONE_SLAB) && !blockstate.is(Blocks.MOSSY_COBBLESTONE_SLAB)
-                && !blockstate.is(Blocks.COBBLESTONE_WALL) && !blockstate.is(Blocks.MOSSY_COBBLESTONE_WALL)
-                && !blockstate.is(AetherBlocks.HOLYSTONE_BRICKS.get())
-                && !blockstate.is(AetherBlocks.HOLYSTONE_BRICK_STAIRS.get())
-                && !blockstate.is(AetherBlocks.HOLYSTONE_BRICK_SLAB.get())
-                && !blockstate.is(AetherBlocks.HOLYSTONE_BRICK_WALL.get());
+        return blockstate.is(BlockTags.DIRT) || blockstate.is(BlockTags.SAND);
     }
 
     /**
