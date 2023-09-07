@@ -2,7 +2,7 @@ package com.aetherteam.aether.client.renderer.entity.layers;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.renderer.entity.model.SliderModel;
-import com.aetherteam.aether.entity.monster.dungeon.boss.slider.Slider;
+import com.aetherteam.aether.entity.monster.dungeon.boss.Slider;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -12,8 +12,6 @@ import net.minecraft.client.renderer.entity.layers.EyesLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
-import javax.annotation.Nonnull;
-
 public class SliderGlowLayer extends EyesLayer<Slider, SliderModel> {
     private static final RenderType SLIDER_AWAKE_GLOW = RenderType.eyes(new ResourceLocation(Aether.MODID, "textures/entity/mobs/slider/slider_awake_glow.png"));
     private static final RenderType SLIDER_AWAKE_CRITICAL_GLOW = RenderType.eyes(new ResourceLocation(Aether.MODID, "textures/entity/mobs/slider/slider_awake_critical_glow.png"));
@@ -22,15 +20,32 @@ public class SliderGlowLayer extends EyesLayer<Slider, SliderModel> {
         super(pRenderer);
     }
 
+    /**
+     * Renders the glowing eye layer for the Slider when it is awake.
+     * @param poseStack The rendering {@link PoseStack}.
+     * @param buffer The rendering {@link MultiBufferSource}.
+     * @param packedLight The {@link Integer} for the packed lighting for rendering.
+     * @param slider The {@link Slider} entity.
+     * @param limbSwing The {@link Float} for the limb swing rotation.
+     * @param limbSwingAmount The {@link Float} for the limb swing amount.
+     * @param partialTicks The {@link Float} for the game's partial ticks.
+     * @param ageInTicks The {@link Float} for the entity's age in ticks.
+     * @param netHeadYaw The {@link Float} for the head yaw rotation.
+     * @param headPitch The {@link Float} for the head pitch rotation.
+     */
     @Override
-    public void render(@Nonnull PoseStack poseStack, MultiBufferSource buffer, int packedLight, @Nonnull Slider slider, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Slider slider, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         VertexConsumer consumer = buffer.getBuffer(this.renderType(slider));
         if (slider.isAwake()) {
             this.getParentModel().renderToBuffer(poseStack, consumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         }
     }
 
-    @Nonnull
+    /**
+     * Selects the red glow render if the Slider is critical, and otherwise selects the default blue glow render.
+     * @param slider The {@link Slider}.
+     * @return The {@link RenderType}.
+     */
     public RenderType renderType(Slider slider) {
         if (slider.isCritical()) {
             return SLIDER_AWAKE_CRITICAL_GLOW;
@@ -38,7 +53,6 @@ public class SliderGlowLayer extends EyesLayer<Slider, SliderModel> {
         return this.renderType();
     }
 
-    @Nonnull
     @Override
     public RenderType renderType() {
         return SLIDER_AWAKE_GLOW;

@@ -1,5 +1,5 @@
 {
-  "parent": "aether:block/template_translucent_wall_post_side",
+  "parent": "nitrogen_internals:block/template_translucent_wall_post_side",
   "textures": {
     "wall": "aether:block/construction/aerogel"
   }

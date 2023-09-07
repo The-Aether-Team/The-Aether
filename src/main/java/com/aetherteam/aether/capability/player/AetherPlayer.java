@@ -1,15 +1,17 @@
 package com.aetherteam.aether.capability.player;
 
+import com.aetherteam.aether.capability.AetherCapabilities;
 import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
 import com.aetherteam.aether.entity.passive.Aerbunny;
-import com.aetherteam.aether.capability.AetherCapabilities;
-import com.aetherteam.aether.capability.INBTSynchable;
+import com.aetherteam.nitrogen.capability.INBTSynchable;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.LazyOptional;
 
+import javax.annotation.Nullable;
 import java.util.List;
+import java.util.UUID;
 
 public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 	Player getPlayer();
@@ -21,9 +23,14 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 	void onLogout();
 	void onLogin();
 
+	void onJoinLevel();
+
 	void copyFrom(AetherPlayer other, boolean isWasDeath);
 
 	void onUpdate();
+
+	void setCanSpawnInAether(boolean canSpawnInAether);
+	boolean canSpawnInAether();
 
 	void givePortalItem();
 	void setCanGetPortal(boolean canGetPortal);
@@ -32,7 +39,6 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 	void setInPortal(boolean inPortal);
 	boolean isInPortal();
 
-	void addPortalTime(int time);
 	void setPortalTimer(int timer);
 	int getPortalTimer();
 
@@ -61,10 +67,8 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 	void setEnchantedDartCount(int count);
 	int getEnchantedDartCount();
 
-	void setRemedyMaximum(int max);
-	int getRemedyMaximum();
-	void setRemedyTimer(int timer);
-	int getRemedyTimer();
+	void setRemedyStartDuration(int duration);
+	int getRemedyStartDuration();
 
 	void setProjectileImpactedMaximum(int max);
 	int getProjectileImpactedMaximum();
@@ -74,10 +78,16 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 	void setVampireHealing(boolean performVampireHealing);
 	boolean performVampireHealing();
 
-	void setMountedAerbunny(Aerbunny mountedAerbunny);
+	void setMountedAerbunny(@Nullable Aerbunny mountedAerbunny);
+	@Nullable
 	Aerbunny getMountedAerbunny();
-	void setMountedAerbunnyTag(CompoundTag mountedAerbunny);
+	void setMountedAerbunnyTag(@Nullable CompoundTag mountedAerbunny);
+	@Nullable
 	CompoundTag getMountedAerbunnyTag();
+
+	void setLastRiddenMoa(@Nullable UUID lastRiddenMoa);
+	@Nullable
+	UUID getLastRiddenMoa();
 
 	void setCloudMinions(CloudMinion cloudMinionRight, CloudMinion cloudMinionLeft);
 	List<CloudMinion> getCloudMinions();
@@ -118,7 +128,6 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 	void setObsidianConversionTime(int time);
 	int getObsidianConversionTime();
 
-	void addToLifeShardCount(int amountToAdd);
 	void setLifeShardCount(int amount);
 	int getLifeShardCount();
 	int getLifeShardLimit();

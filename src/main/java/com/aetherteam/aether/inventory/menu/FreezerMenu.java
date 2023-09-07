@@ -3,11 +3,10 @@ package com.aetherteam.aether.inventory.menu;
 import com.aetherteam.aether.blockentity.FreezerBlockEntity;
 import com.aetherteam.aether.inventory.AetherRecipeBookTypes;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
-
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.Container;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.ItemStack;
 
 public class FreezerMenu extends AbstractAetherFurnaceMenu {
 	public FreezerMenu(int containerId, Inventory playerInventory) {

@@ -2,7 +2,7 @@ package com.aetherteam.aether.item.combat.abilities.armor;
 
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.item.AetherItems;
-import com.aetherteam.aether.util.EquipmentUtil;
+import com.aetherteam.aether.item.EquipmentUtil;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -51,10 +51,10 @@ public interface PhoenixArmor {
             }
             if (entity.getLevel() instanceof ServerLevel level) {
                 level.sendParticles(ParticleTypes.FLAME,
-                        entity.getX() + (level.getRandom().nextGaussian() / 5.0D),
-                        entity.getY() + (level.getRandom().nextGaussian() / 3.0D),
-                        entity.getZ() + (level.getRandom().nextGaussian() / 5.0D),
-                        1, 0.0D, 0.0D, 0.0D, 0.0F);
+                        entity.getX() + (level.getRandom().nextGaussian() / 5.0),
+                        entity.getY() + (level.getRandom().nextGaussian() / 3.0),
+                        entity.getZ() + (level.getRandom().nextGaussian() / 5.0),
+                        1, 0.0, 0.0, 0.0, 0.0F);
             }
         }
         if (!EquipmentUtil.hasFullPhoenixSet(entity) || !entity.isInLava()) {

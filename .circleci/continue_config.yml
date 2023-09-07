@@ -6,10 +6,10 @@ orbs:
 parameters:
   artifact-name:
     type: string
-    default: aether-1.19.4-1.0.0-beta.5.1-forge.jar
+    default: aether-1.19.4-1.0.0-beta.6-forge.jar
   deploy-branch:
     type: string
-    default: feat/bconlon/patreon-gui
+    default: 1.19.4-develop
   allow-deploy-and-discord-publish:
     type: boolean
     default: false
@@ -37,7 +37,7 @@ jobs:
           name: Publish artifact link to Discord
           command: |
             if [ ${CIRCLE_BRANCH} = << pipeline.parameters.deploy-branch >> ] && << pipeline.parameters.allow-deploy-and-discord-publish >>; then
-              artifact_path=$(curl --request GET --url https://circleci.com/api/v2/project/gh/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM/artifacts -H "Accept: application/json" | jq -r '.items[1].path')
+              artifact_path=$(curl --request GET --url https://circleci.com/api/v2/project/gh/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM/artifacts -H "Accept: application/json" | jq -r '.items[2].path')
               if [ -z "${WEBHOOK_URL}" ]; then
                 echo "NO DISCORD WEBHOOK SET"
                 echo "Please input your DISCORD_WEBHOOK value either in the settings for this project, or as a parameter for this orb."
@@ -146,9 +146,12 @@ commands:
     steps:
       - checkout
       - gradle/with_cache:
-          cache_key: 'v8'
+          cache_key: 'v9'
           steps:
-            - run: gradle build --parallel --build-cache --console=plain
+            - run:
+                name: chmod permissions
+                command: chmod +x ./gradlew
+            - run: ./gradlew build --parallel --console=plain
       - store_artifacts:
           path: ~/project/build/libs
 

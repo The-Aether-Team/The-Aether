@@ -21,14 +21,15 @@ public class AetherPlacedFeatureBuilders {
     }
 
     /**
-     * Copy of {@link net.minecraft.data.worldgen.placement.VegetationPlacements#treePlacement(PlacementModifier)}
+     * [CODE COPY] - {@link net.minecraft.data.worldgen.placement.VegetationPlacements#treePlacement(PlacementModifier)}
      */
     public static List<PlacementModifier> treePlacement(PlacementModifier count) {
         return treePlacementBase(count).build();
     }
 
     /**
-     * Based on {@link net.minecraft.data.worldgen.placement.VegetationPlacements#treePlacementBase(PlacementModifier)}
+     * [CODE COPY] - {@link net.minecraft.data.worldgen.placement.VegetationPlacements#treePlacementBase(PlacementModifier)}.<br><br>
+     * Add {@link ImprovedLayerPlacementModifier} and {@link DungeonBlacklistFilter}.
      */
     private static ImmutableList.Builder<PlacementModifier> treePlacementBase(PlacementModifier count) {
         return ImmutableList.<PlacementModifier>builder()
@@ -37,19 +38,5 @@ public class AetherPlacedFeatureBuilders {
                 .add(ImprovedLayerPlacementModifier.of(Heightmap.Types.OCEAN_FLOOR, UniformInt.of(0, 1), 4))
                 .add(BiomeFilter.biome())
                 .add(new DungeonBlacklistFilter());
-    }
-
-    /**
-     * Copy of {@link net.minecraft.data.worldgen.placement.OrePlacements#commonOrePlacement(int, PlacementModifier)}.
-     */
-    public static List<PlacementModifier> commonOrePlacement(int count, PlacementModifier heightRange) {
-        return orePlacement(CountPlacement.of(count), heightRange);
-    }
-
-    /**
-     * Copy of {@link net.minecraft.data.worldgen.placement.OrePlacements#orePlacement(PlacementModifier, PlacementModifier)}.
-     */
-    private static List<PlacementModifier> orePlacement(PlacementModifier count, PlacementModifier heightRange) {
-        return List.of(count, InSquarePlacement.spread(), heightRange, BiomeFilter.biome());
     }
 }

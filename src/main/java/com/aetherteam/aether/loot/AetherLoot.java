@@ -1,12 +1,11 @@
 package com.aetherteam.aether.loot;
 
+import com.aetherteam.aether.Aether;
+import net.minecraft.resources.ResourceLocation;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-
-import com.aetherteam.aether.Aether;
-
-import net.minecraft.resources.ResourceLocation;
 
 public class AetherLoot {
 	private static final Set<ResourceLocation> LOOT_TABLES = new HashSet<>();
@@ -35,6 +34,7 @@ public class AetherLoot {
 	public static final ResourceLocation BRONZE_DUNGEON_DISC = register("chests/dungeon/bronze/bronze_dungeon_disc");
 	public static final ResourceLocation BRONZE_DUNGEON_REWARD = register("chests/dungeon/bronze/bronze_dungeon_reward");
 	public static final ResourceLocation BRONZE_DUNGEON_TREASURE = register("chests/dungeon/bronze/bronze_dungeon_treasure");
+	public static final ResourceLocation BRONZE_DUNGEON_NEPTUNE = register("chests/dungeon/bronze/bronze_dungeon_neptune");
 	public static final ResourceLocation BRONZE_DUNGEON_GUMMIES = register("chests/dungeon/bronze/bronze_dungeon_gummies");
 
 	public static final ResourceLocation SILVER_DUNGEON = register("chests/dungeon/silver/silver_dungeon");
@@ -42,15 +42,16 @@ public class AetherLoot {
 	public static final ResourceLocation SILVER_DUNGEON_TRASH = register("chests/dungeon/silver/silver_dungeon_trash");
 	public static final ResourceLocation SILVER_DUNGEON_DISC = register("chests/dungeon/silver/silver_dungeon_disc");
 	public static final ResourceLocation SILVER_DUNGEON_REWARD = register("chests/dungeon/silver/silver_dungeon_reward");
-	public static final ResourceLocation SILVER_DUNGEON_TREASURE = register("chests/dungeon/bronze/silver_dungeon_treasure");
-	public static final ResourceLocation SILVER_DUNGEON_VALKYRIE = register("chests/dungeon/bronze/silver_dungeon_valkyrie");
-	public static final ResourceLocation SILVER_DUNGEON_NEPTUNE = register("chests/dungeon/bronze/silver_dungeon_neptune");
-	public static final ResourceLocation SILVER_DUNGEON_GRAVITITE = register("chests/dungeon/bronze/silver_dungeon_gravitite");
-	public static final ResourceLocation SILVER_DUNGEON_CAPE_CONFIG = register("chests/dungeon/bronze/silver_dungeon_cape_config");
-	public static final ResourceLocation SILVER_DUNGEON_GUMMIES = register("chests/dungeon/bronze/silver_dungeon_gummies");
+	public static final ResourceLocation SILVER_DUNGEON_TREASURE = register("chests/dungeon/silver/silver_dungeon_treasure");
+	public static final ResourceLocation SILVER_DUNGEON_VALKYRIE = register("chests/dungeon/silver/silver_dungeon_valkyrie");
+	public static final ResourceLocation SILVER_DUNGEON_GRAVITITE = register("chests/dungeon/silver/silver_dungeon_gravitite");
+	public static final ResourceLocation SILVER_DUNGEON_CAPE_CONFIG = register("chests/dungeon/silver/silver_dungeon_cape_config");
+	public static final ResourceLocation SILVER_DUNGEON_GUMMIES = register("chests/dungeon/silver/silver_dungeon_gummies");
 
 	public static final ResourceLocation GOLD_DUNGEON_REWARD = register("chests/dungeon/gold/gold_dungeon_reward");
 	public static final ResourceLocation GOLD_DUNGEON_TREASURE = register("chests/dungeon/gold/gold_dungeon_treasure");
+
+	public static final ResourceLocation RUINED_PORTAL = register("chests/ruined_portal");
 
 	public static final ResourceLocation ENTER_AETHER = register("advancements/enter_aether");
 

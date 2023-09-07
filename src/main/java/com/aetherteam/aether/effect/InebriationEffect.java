@@ -1,18 +1,13 @@
 package com.aetherteam.aether.effect;
 
 import com.aetherteam.aether.data.resources.AetherDamageTypes;
-import com.aetherteam.aether.item.AetherItems;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class InebriationEffect extends MobEffect {
     private int effectDuration;
@@ -63,22 +58,5 @@ public class InebriationEffect extends MobEffect {
     public boolean isDurationEffectTick(int duration, int amplifier) {
         this.effectDuration = duration;
         return true;
-    }
-
-    @Override
-    public boolean isInstantenous() {
-        return false;
-    }
-
-    /**
-     * Sets up Skyroot Remedy Buckets and White Apples as able to cure Inebriation.
-     * @return A {@link List} of {@link ItemStack}s that are allowed to cure this effect.
-     */
-    @Override
-    public List<ItemStack> getCurativeItems() {
-        ArrayList<ItemStack> curatives = new ArrayList<>();
-        curatives.add(new ItemStack(AetherItems.SKYROOT_REMEDY_BUCKET.get()));
-        curatives.add(new ItemStack(AetherItems.WHITE_APPLE.get()));
-        return curatives;
     }
 }

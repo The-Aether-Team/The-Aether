@@ -1,92 +1,46 @@
 package com.aetherteam.aether.data.providers;
 
-import com.aetherteam.aether.block.construction.AetherFarmBlock;
 import com.aetherteam.aether.block.AetherBlockStateProperties;
+import com.aetherteam.aether.block.construction.AetherFarmBlock;
 import com.aetherteam.aether.block.dungeon.DoorwayBlock;
-import com.aetherteam.aether.block.miscellaneous.FacingPillarBlock;
 import com.aetherteam.aether.block.miscellaneous.AetherFrostedIceBlock;
+import com.aetherteam.aether.block.miscellaneous.FacingPillarBlock;
 import com.aetherteam.aether.block.miscellaneous.UnstableObsidianBlock;
+import com.aetherteam.nitrogen.data.providers.NitrogenBlockStateProvider;
+import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.level.block.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.BedBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SnowyDirtBlock;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.state.properties.SlabType;
-import net.minecraftforge.client.model.generators.*;
+import net.minecraftforge.client.model.generators.BlockModelBuilder;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
 
-public abstract class AetherBlockStateProvider extends BlockStateProvider {
+public abstract class AetherBlockStateProvider extends NitrogenBlockStateProvider {
     public AetherBlockStateProvider(PackOutput output, String id, ExistingFileHelper helper) {
         super(output, id, helper);
     }
 
-    public String name(Block block) {
-        ResourceLocation location = ForgeRegistries.BLOCKS.getKey(block);
-        if (location != null) {
-            return location.getPath();
-        } else {
-            throw new IllegalStateException("Unknown block: " + block.toString());
-        }
-    }
-
-    public ResourceLocation texture(String name) {
-        return this.modLoc("block/" + name);
-    }
-
-    public ResourceLocation texture(String name, String location) {
-        return this.modLoc("block/" + location + name);
-    }
-
-    public ResourceLocation texture(String name, String location, String suffix) {
-        return this.modLoc("block/" + location + name + suffix);
-    }
-
-    public ResourceLocation extend(ResourceLocation location, String suffix) {
-        return new ResourceLocation(location.getNamespace(), location.getPath() + suffix);
-    }
-
-    public void block(Block block, String location) {
-        this.simpleBlock(block, this.cubeAll(block, location));
-    }
-
-    public void portal(Block block) {
-        ModelFile portal_ew = this.models().withExistingParent(this.name(block) + "_ew", this.mcLoc("block/nether_portal_ew"))
-                .texture("particle", this.modLoc("block/miscellaneous/" + this.name(block)))
-                .texture("portal", this.modLoc("block/miscellaneous/" + this.name(block)))
-                .renderType(new ResourceLocation("translucent"));
-        ModelFile portal_ns = this.models().withExistingParent(this.name(block) + "_ns", this.mcLoc("block/nether_portal_ns"))
-                .texture("particle", this.modLoc("block/miscellaneous/" + this.name(block)))
-                .texture("portal", this.modLoc("block/miscellaneous/" + this.name(block)))
-                .renderType(new ResourceLocation("translucent"));
-        this.getVariantBuilder(block).forAllStates(state -> {
-            Direction.Axis axis = state.getValue(NetherPortalBlock.AXIS);
-            return ConfiguredModel.builder()
-                    .modelFile(axis == Direction.Axis.Z ? portal_ew : portal_ns)
-                    .build();
-        });
-    }
-
     public void grass(Block block, Block dirtBlock) {
-        ModelFile grass = this.grassBlock(block, dirtBlock);
-        ModelFile grassSnowed = this.cubeBottomTop(this.name(block) + "_snow",
-                this.extend(this.texture(this.name(block), "natural/"), "_snow"),
-                this.texture(this.name(dirtBlock), "natural/"),
-                this.extend(this.texture(this.name(block), "natural/"), "_top"));
-        this.getVariantBuilder(block).forAllStatesExcept(state -> {
-            boolean snowy = state.getValue(SnowyDirtBlock.SNOWY);
-            return ConfiguredModel.allYRotations(snowy ? grassSnowed : grass, 0, false);
-        }, AetherBlockStateProperties.DOUBLE_DROPS);
+        this.grassBlock(block, block, dirtBlock);
     }
 
     public void enchantedGrass(Block block, Block grassBlock, Block dirtBlock) {
-        ModelFile grass = this.grassBlock(block, dirtBlock);
-        ModelFile grassSnowed = this.cubeBottomTop(this.name(grassBlock) + "_snow",
-                this.extend(this.texture(this.name(grassBlock), "natural/"), "_snow"),
-                this.texture(this.name(dirtBlock), "natural/"),
-                this.extend(this.texture(this.name(block), "natural/"), "_top"));
-        this.getVariantBuilder(block).forAllStatesExcept(state -> {
+        this.grassBlock(block, grassBlock, dirtBlock);
+    }
+
+    public void grassBlock(Block baseBlock, Block blockForSnow, Block blockForDirt) {
+        ModelFile grass = this.grassBlock(baseBlock, blockForDirt);
+        ModelFile grassSnowed = this.cubeBottomTop(this.name(blockForSnow) + "_snow",
+                this.extend(this.texture(this.name(blockForSnow), "natural/"), "_snow"),
+                this.texture(this.name(blockForDirt), "natural/"),
+                this.extend(this.texture(this.name(baseBlock), "natural/"), "_top"));
+        this.getVariantBuilder(baseBlock).forAllStatesExcept(state -> {
             boolean snowy = state.getValue(SnowyDirtBlock.SNOWY);
             return ConfiguredModel.allYRotations(snowy ? grassSnowed : grass, 0, false);
         }, AetherBlockStateProperties.DOUBLE_DROPS);
@@ -131,24 +85,8 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
         this.getVariantBuilder(block).forAllStatesExcept(state -> ConfiguredModel.builder().modelFile(this.cubeAll(block, location)).build(), AetherBlockStateProperties.DOUBLE_DROPS);
     }
 
-    public void translucentBlock(Block block, String location) {
-        this.simpleBlock(block, this.cubeAllTranslucent(block, location));
-    }
-
-    public void log(RotatedPillarBlock block) {
-        this.axisBlock(block, this.texture(this.name(block), "natural/"), this.extend(this.texture(this.name(block), "natural/"), "_top"));
-    }
-
     public void enchantedLog(RotatedPillarBlock block, RotatedPillarBlock baseBlock) {
         this.axisBlock(block, this.texture(this.name(block), "natural/"), this.extend(this.texture(this.name(baseBlock), "natural/"), "_top"));
-    }
-
-    public void wood(RotatedPillarBlock block, RotatedPillarBlock baseBlock) {
-        this.axisBlock(block, this.texture(this.name(baseBlock), "natural/"), this.texture(this.name(baseBlock), "natural/"));
-    }
-
-    public void pane(IronBarsBlock block, GlassBlock glass, String location) {
-        this.paneBlockWithRenderType(block, this.texture(this.name(glass), location), this.extend(this.texture(this.name(block), location), "_top"), ResourceLocation.tryParse("translucent"));
     }
 
     public void altar(Block block) {
@@ -174,30 +112,6 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
                 this.extend(this.texture(this.name(block), "utility/"), "_side"),
                 this.extend(this.texture("altar", "utility/"), "_bottom"),
                 this.extend(this.texture(this.name(block), "utility/"), "_top"));
-    }
-
-    public void torchBlock(Block block, Block wall) {
-        ModelFile torch = this.models().torch(this.name(block), this.texture(this.name(block), "utility/")).renderType(new ResourceLocation("cutout"));
-        ModelFile wallTorch = this.models().torchWall(this.name(wall), this.texture(this.name(block), "utility/")).renderType(new ResourceLocation("cutout"));
-        this.simpleBlock(block, torch);
-        getVariantBuilder(wall).forAllStates(state ->
-                ConfiguredModel.builder()
-                        .modelFile(wallTorch)
-                        .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 90) % 360)
-                        .build());
-    }
-
-    public void signBlock(StandingSignBlock signBlock, WallSignBlock wallSignBlock, ResourceLocation texture) {
-        ModelFile sign = this.models().sign(this.name(signBlock), texture);
-        this.signBlock(signBlock, wallSignBlock, sign);
-    }
-
-    public void crossBlock(Block block, String location) {
-        this.crossBlock(block, models().cross(this.name(block), this.texture(this.name(block), location)).renderType(new ResourceLocation("cutout")));
-    }
-
-    public void crossBlock(Block block, ModelFile model) {
-        this.getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder().modelFile(model).build());
     }
 
     public void berryBush(Block block, Block stem) {
@@ -270,16 +184,6 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
         this.getVariantBuilder(bush).partialState().addModels(new ConfiguredModel(pot));
     }
 
-    public void pottedPlant(Block block, Block flower, String location) {
-        ModelFile pot = this.models().withExistingParent(this.name(block), this.mcLoc("block/flower_pot_cross")).texture("plant", this.modLoc("block/" + location + this.name(flower))).renderType(new ResourceLocation("cutout"));
-        this.getVariantBuilder(block).partialState().addModels(new ConfiguredModel(pot));
-    }
-
-    public void saplingBlock(Block block, String location) {
-        ModelFile sapling = models().cross(this.name(block), this.texture(this.name(block), location)).renderType(new ResourceLocation("cutout"));
-        this.getVariantBuilder(block).forAllStatesExcept(state -> ConfiguredModel.builder().modelFile(sapling).build(), SaplingBlock.STAGE);
-    }
-
     public void dungeonBlock(Block block, Block baseBlock) {
         ConfiguredModel dungeonBlock = new ConfiguredModel(this.models().cubeAll(this.name(baseBlock), this.texture(this.name(baseBlock), "dungeon/")));
         this.getVariantBuilder(block).partialState().setModels(dungeonBlock);
@@ -305,11 +209,6 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
     public void treasureChest(Block block, Block dummyBlock) {
         ModelFile chest = this.models().cubeAll(this.name(block), this.texture(this.name(dummyBlock), "dungeon/"));
         this.chest(block, chest);
-    }
-
-    public void chest(Block block, ModelFile chest) {
-        this.getVariantBuilder(block).forAllStatesExcept(state -> ConfiguredModel.builder().modelFile(chest).build(),
-                ChestBlock.TYPE, ChestBlock.WATERLOGGED);
     }
 
     public void pillar(RotatedPillarBlock block) {
@@ -338,92 +237,11 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
         this.getVariantBuilder(block).partialState().addModels(new ConfiguredModel(present));
     }
 
-    public void fence(FenceBlock block, Block baseBlock, String location) {
-        this.fenceBlock(block, this.texture(this.name(baseBlock), location));
-        this.fenceColumn(block, this.name(baseBlock), location);
-    }
-
-    public void fenceColumn(CrossCollisionBlock block, String side, String location) {
-        String baseName = this.name(block);
-        this.fourWayBlock(block,
-                this.models().fencePost(baseName + "_post", this.texture(side, location)),
-                this.models().fenceSide(baseName + "_side", this.texture(side, location)));
-    }
-
-    public void fenceGateBlock(FenceGateBlock block, Block baseBlock, String location) {
-        this.fenceGateBlockInternal(block, this.name(block), this.texture(this.name(baseBlock), location));
-    }
-
-    public void fenceGateBlockInternal(FenceGateBlock block, String baseName, ResourceLocation texture) {
-        ModelFile gate = this.models().fenceGate(baseName, texture);
-        ModelFile gateOpen = this.models().fenceGateOpen(baseName + "_open", texture);
-        ModelFile gateWall = this.models().fenceGateWall(baseName + "_wall", texture);
-        ModelFile gateWallOpen = this.models().fenceGateWallOpen(baseName + "_wall_open", texture);
-        this.fenceGateBlock(block, gate, gateOpen, gateWall, gateWallOpen);
-    }
-
-    public void doorBlock(DoorBlock block, ResourceLocation bottom, ResourceLocation top) {
-        this.doorBlockWithRenderType(block, bottom, top, "cutout");
-    }
-
-    public void trapdoorBlock(TrapDoorBlock block, ResourceLocation texture, boolean orientable) {
-        this.trapdoorBlockWithRenderType(block, texture, orientable, "cutout");
-    }
-
-    public void buttonBlock(ButtonBlock block, ResourceLocation texture) {
-        ModelFile button = this.models().button(this.name(block), texture);
-        ModelFile buttonPressed = this.models().buttonPressed(this.name(block) + "_pressed", texture);
-        this.buttonBlock(block, button, buttonPressed);
-    }
-
-    public void pressurePlateBlock(PressurePlateBlock block, ResourceLocation texture) {
-        ModelFile pressurePlate = this.models().pressurePlate(this.name(block), texture);
-        ModelFile pressurePlateDown = this.models().pressurePlateDown(this.name(block) + "_down", texture);
-        this.pressurePlateBlock(block, pressurePlate, pressurePlateDown);
-    }
-
-    public void wallBlock(WallBlock block, Block baseBlock, String location) {
-        this.wallBlockInternal(block, this.name(block), this.texture(this.name(baseBlock), location));
-    }
-
-    public void wallBlockInternal(WallBlock block, String baseName, ResourceLocation texture) {
-        this.wallBlock(block, this.models().wallPost(baseName + "_post", texture),
-                this.models().wallSide(baseName + "_side", texture),
-                this.models().wallSideTall(baseName + "_side_tall", texture));
-    }
-
-    public void stairs(StairBlock block, Block baseBlock, String location) {
-        this.stairsBlock(block, this.texture(this.name(baseBlock), location));
-    }
-
-    public void slab(SlabBlock block, Block baseBlock, String location) {
-        this.slabBlock(block, this.texture(this.name(baseBlock)), this.texture(this.name(baseBlock), location));
-    }
-
-    public void translucentSlab(Block block, Block baseBlock, String location) {
-        ResourceLocation texture = this.texture(this.name(baseBlock), location);
-        this.translucentSlabBlock(block, models().slab(this.name(block), texture, texture, texture).renderType(new ResourceLocation("translucent")),
-                this.models().slabTop(this.name(block) + "_top", texture, texture, texture).renderType(new ResourceLocation("translucent")),
-                this.models().getExistingFile(this.texture(this.name(baseBlock))));
-    }
-
-    public void translucentSlabBlock(Block block, ModelFile bottom, ModelFile top, ModelFile doubleSlab) {
-        this.getVariantBuilder(block)
-                .partialState().with(SlabBlock.TYPE, SlabType.BOTTOM).addModels(new ConfiguredModel(bottom))
-                .partialState().with(SlabBlock.TYPE, SlabType.TOP).addModels(new ConfiguredModel(top))
-                .partialState().with(SlabBlock.TYPE, SlabType.DOUBLE).addModels(new ConfiguredModel(doubleSlab));
-    }
-
     public void sunAltar(Block block) {
         ModelFile sunAltar = this.cubeBottomTop(name(block),
                 this.extend(this.texture(this.name(block), "utility/"), "_side"), this.texture("hellfire_stone", "dungeon/"),
                 this.extend(this.texture(this.name(block), "utility/"), "_top"));
         this.getVariantBuilder(block).partialState().addModels(new ConfiguredModel(sunAltar));
-    }
-
-    public void bookshelf(Block block, Block endBlock) {
-        ModelFile bookshelf = this.models().cubeColumn(this.name(block), this.texture(this.name(block), "construction/"), this.texture(this.name(endBlock), "construction/"));
-        this.getVariantBuilder(block).partialState().addModels(new ConfiguredModel(bookshelf));
     }
 
     public void bed(Block block, Block dummyBlock) {
@@ -451,17 +269,5 @@ public abstract class AetherBlockStateProvider extends BlockStateProvider {
             int age = state.getValue(UnstableObsidianBlock.AGE);
             return ConfiguredModel.builder().modelFile(this.models().cubeAll(this.name(block) + "_" + age, this.texture(this.name(block) + "_" + age, "miscellaneous/"))).build();
         });
-    }
-
-    public ModelFile cubeAll(Block block, String location) {
-        return this.models().cubeAll(this.name(block), this.texture(this.name(block), location));
-    }
-
-    public ModelFile cubeAllTranslucent(Block block, String location) {
-        return this.models().cubeAll(this.name(block), this.texture(this.name(block), location)).renderType(new ResourceLocation("translucent"));
-    }
-
-    public ModelFile cubeBottomTop(String block, ResourceLocation side, ResourceLocation bottom, ResourceLocation top) {
-        return this.models().cubeBottomTop(block, side, bottom, top);
     }
 }

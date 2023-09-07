@@ -4,7 +4,6 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.entity.projectile.weapon.HammerProjectile;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -15,8 +14,6 @@ import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
-import javax.annotation.Nonnull;
-
 public class HammerProjectileRenderer extends EntityRenderer<HammerProjectile> {
     public static final ResourceLocation KINGBDOGZ_WAVE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/kingbdogz_wave.png");
     public static final ResourceLocation JEB_WAVE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/jeb_wave.png");
@@ -26,8 +23,11 @@ public class HammerProjectileRenderer extends EntityRenderer<HammerProjectile> {
         this.shadowRadius = 0.0F;
     }
 
+    /**
+     * [VANILLA COPY] - {@link net.minecraft.client.renderer.entity.DragonFireballRenderer}.
+     */
     @Override
-    public void render(@Nonnull HammerProjectile hammer, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+    public void render(HammerProjectile hammer, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
         poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
@@ -47,9 +47,13 @@ public class HammerProjectileRenderer extends EntityRenderer<HammerProjectile> {
         consumer.vertex(matrix, offsetX - 0.5F, offsetY - 0.25F, 0.0F).color(255, 255, 255, 255).uv(textureX, textureY).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(packedLight).normal(normals, 0.0F, 1.0F, 0.0F).endVertex();
     }
 
-    @Nonnull
+    /**
+     * Checks whether the projectile should use the Kingbdogz or Jeb hammer texture.
+     * @param hammer The {@link HammerProjectile} entity.
+     * @return The texture {@link ResourceLocation}.
+     */
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull HammerProjectile hammer) {
+    public ResourceLocation getTextureLocation(HammerProjectile hammer) {
         return !hammer.getIsJeb() ? KINGBDOGZ_WAVE_TEXTURE : JEB_WAVE_TEXTURE;
     }
 }

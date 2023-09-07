@@ -1,37 +1,39 @@
 package com.aetherteam.aether.client.renderer.blockentity;
 
-import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.block.dungeon.ChestMimicBlock;
+import com.aetherteam.aether.blockentity.ChestMimicBlockEntity;
+import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.world.level.block.state.properties.ChestType;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.level.block.ChestBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.ChestType;
 import net.minecraftforge.fml.ModList;
 
-import javax.annotation.Nonnull;
 import java.util.Calendar;
 
-public class ChestMimicRenderer<T extends BlockEntity> implements BlockEntityRenderer<T>
-{
+/**
+ * [CODE COPY] - {@link net.minecraft.client.renderer.blockentity.ChestRenderer}.<br><br>
+ * Stripped down to only use what is necessary.
+ */
+public class ChestMimicRenderer implements BlockEntityRenderer<ChestMimicBlockEntity> {
+	private static final Material LOOTR_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, new ResourceLocation("lootr", "chest"));
 	private final ModelPart lid;
 	private final ModelPart bottom;
 	private final ModelPart lock;
 	private boolean xmasTextures = false;
-	public static final Material LOOTR_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, new ResourceLocation("lootr", "chest"));
 
 	public ChestMimicRenderer(BlockEntityRendererProvider.Context context) {
 		Calendar calendar = Calendar.getInstance();
@@ -45,14 +47,14 @@ public class ChestMimicRenderer<T extends BlockEntity> implements BlockEntityRen
 	}
 
 	@Override
-	public void render(T blockEntity, float partialTicks, @Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, int packedOverlay) {
+	public void render(ChestMimicBlockEntity blockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
 		BlockState blockState = blockEntity.getLevel() != null ? blockEntity.getBlockState() : AetherBlocks.CHEST_MIMIC.get().defaultBlockState().setValue(ChestBlock.FACING, Direction.SOUTH);
 		if (blockState.getBlock() instanceof ChestMimicBlock) {
 			poseStack.pushPose();
 			float f = blockState.getValue(ChestBlock.FACING).toYRot();
-			poseStack.translate(0.5D, 0.5D, 0.5D);
+			poseStack.translate(0.5, 0.5, 0.5);
 			poseStack.mulPose(Axis.YP.rotationDegrees(-f));
-			poseStack.translate(-0.5D, -0.5D, -0.5D);
+			poseStack.translate(-0.5, -0.5, -0.5);
 			Material material = this.getMaterial(blockEntity);
 			VertexConsumer vertexconsumer = material.buffer(buffer, RenderType::entityCutout);
 			this.render(poseStack, vertexconsumer, this.lid, this.lock, this.bottom, packedLight, packedOverlay);
@@ -66,7 +68,7 @@ public class ChestMimicRenderer<T extends BlockEntity> implements BlockEntityRen
 		chestBottom.render(poseStack, consumer, packedLight, packedOverlay);
 	}
 
-	protected Material getMaterial(T blockEntity) {
+	private Material getMaterial(ChestMimicBlockEntity blockEntity) {
 		if (ModList.get().isLoaded("lootr")) {
 			return LOOTR_MATERIAL;
 		}

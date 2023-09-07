@@ -6,8 +6,6 @@ import net.minecraft.world.level.storage.DerivedLevelData;
 import net.minecraft.world.level.storage.ServerLevelData;
 import net.minecraft.world.level.storage.WorldData;
 
-import javax.annotation.Nonnull;
-
 /**
  * A wrapper for ServerLevelData. This is used to detach the day cycle from the Overworld and to allow the weather to be
  * set from the Aether. It gets applied to any dimension where the effects are equal to the Aether's dimension type ID.
@@ -26,52 +24,73 @@ public class AetherLevelData extends DerivedLevelData {
         this.dayTime = dayTime;
     }
 
+    /**
+     * @return The world time in ticks.
+     */
     @Override
     public long getDayTime() {
         return this.dayTime;
     }
 
+    /**
+     * Sets the world time.
+     * @param time The {@link Integer} for the time in ticks.
+     */
     @Override
-    public void setDayTime(long pTime) {
-        this.dayTime = pTime;
+    public void setDayTime(long time) {
+        this.dayTime = time;
     }
 
+    /**
+     * Sets the number of ticks the weather will be clear for.
+     * @param time The {@link Integer} for the time in ticks.
+     */
     @Override
-    public void setClearWeatherTime(int pTime) {
-        this.wrapped.setClearWeatherTime(pTime);
+    public void setClearWeatherTime(int time) {
+        this.wrapped.setClearWeatherTime(time);
     }
 
+    /**
+     * Sets whether it is raining.
+     * @param raining The {@link Boolean} value.
+     */
     @Override
-    public void setRaining(boolean pRaining) {
-        this.wrapped.setRaining(pRaining);
+    public void setRaining(boolean raining) {
+        this.wrapped.setRaining(raining);
     }
 
     /**
      * Sets the number of ticks until rain.
+     * @param time The {@link Integer} for the time in ticks.
      */
     @Override
-    public void setRainTime(int pTime) {
-        this.wrapped.setRainTime(pTime);
-    }
-
-    @Override
-    public void setThundering(boolean pThundering) {
-        this.wrapped.setThundering(pThundering);
+    public void setRainTime(int time) {
+        this.wrapped.setRainTime(time);
     }
 
     /**
-     * Defines the number of ticks until next thunderbolt.
+     * Sets whether it is thundering.
+     * @param thundering The {@link Boolean} value.
      */
     @Override
-    public void setThunderTime(int pTime) {
-        this.wrapped.setThunderTime(pTime);
+    public void setThundering(boolean thundering) {
+        this.wrapped.setThundering(thundering);
     }
 
     /**
-     * Gets the GameRules class Instance.
+     * Defines the number of ticks until next lightning bolt.
+     * @param time The {@link Integer} for the time in ticks.
      */
     @Override
-    @Nonnull
+    public void setThunderTime(int time) {
+        this.wrapped.setThunderTime(time);
+    }
+
+    /**
+     * Gets the game rules class instance.
+     * @return The {@link WrappedGameRules} instance.
+     */
+    @Override
     public WrappedGameRules getGameRules() {
         return this.gameRules;
     }

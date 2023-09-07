@@ -1,12 +1,14 @@
 modLoader = "javafml"
 loaderVersion = "[45,)"
 license = "Assets: All Rights Reserved; Code: LGPL-3.0"
+issueTrackerURL = "https://github.com/The-Aether-Team/The-Aether/issues"
 
 [[mods]]
 modId = "aether"
 version = "${file.jarVersion}"
 displayName = "The Aether"
-displayURL = "https://www.curseforge.com/minecraft/mc-mods/aether"
+updateJSONURL = "https://github.com/The-Aether-Team/The-Aether/raw/1.19.4-develop/update.json"
+displayURL = "https://modrinth.com/mod/aether"
 logoFile = "aether.png"
 credits = "The Aether Team, former Aether Team Collaborators for their prior work on The Aether Mod, Modding Legacy for their work on Aether Legacy, GitHub contributors for their additional help, and C4 for Curios API, the source code of which can be found at https://github.com/TheIllusiveC4/Curios"
 authors = "bconlon, Burning Cactus, Drullkus, Hugo Payn, Jaryt, Oscar Payn, quek, Raptor, reetam, RENREN"
@@ -17,7 +19,7 @@ description = '''
 [[dependencies.aether]]
     modId = "forge"
     mandatory = true
-    versionRange = "[45.0.47,)"
+    versionRange = "[45.1.0,)"
     ordering = "NONE"
     side = "BOTH"
 [[dependencies.aether]]

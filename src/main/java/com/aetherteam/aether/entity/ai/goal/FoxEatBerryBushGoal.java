@@ -13,6 +13,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.ForgeEventFactory;
 
+/**
+ * [CODE COPY] - {@link Fox.FoxEatBerriesGoal}.<br><br>
+ * Modified to only work for Berry Bushes.
+ */
 public class FoxEatBerryBushGoal extends MoveToBlockGoal {
     private final Fox fox;
     private int ticksWaited;

@@ -3,19 +3,19 @@ package com.aetherteam.aether.item.combat.loot;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.projectile.weapon.HammerProjectile;
-import com.aetherteam.aether.item.combat.AetherItemTiers;
 import com.aetherteam.aether.item.AetherItems;
-import com.aetherteam.aether.item.combat.AetherSwordItem;
+import com.aetherteam.aether.item.combat.AetherItemTiers;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.stats.Stats;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.level.Level;
 
-public class HammerOfKingbdogzItem extends AetherSwordItem {
+public class HammerOfKingbdogzItem extends SwordItem {
     public HammerOfKingbdogzItem() {
         super(AetherItemTiers.HAMMER_OF_KINGBDOGZ, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
     }
@@ -36,7 +36,7 @@ public class HammerOfKingbdogzItem extends AetherSwordItem {
                 heldStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
             }
             HammerProjectile hammerProjectile = new HammerProjectile(player, level);
-            hammerProjectile.shoot(player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1.0F);
+            hammerProjectile.shoot(player.getXRot(), player.getYRot(), 3.0F, 1.0F);
             if (heldStack.getHoverName().getString().equalsIgnoreCase("hammer of jeb")) {
                 hammerProjectile.setIsJeb(true); // Handles Hammer of Jeb texture for the projectile.
             }

@@ -1,8 +1,8 @@
 package com.aetherteam.aether.recipe.builder;
 
-import com.aetherteam.aether.recipe.BlockStateIngredient;
 import com.aetherteam.aether.recipe.recipes.ban.ItemBanRecipe;
 import com.aetherteam.aether.recipe.serializer.PlacementBanRecipeSerializer;
+import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import com.google.gson.JsonObject;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceKey;

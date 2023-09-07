@@ -1,10 +1,10 @@
 package com.aetherteam.aether.client.renderer.player.layer;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.aetherteam.aether.client.renderer.entity.model.ValkyrieWingsModel;
-import com.aetherteam.aether.capability.player.AetherPlayer;
-import com.aetherteam.aether.util.EquipmentUtil;
+import com.aetherteam.aether.item.EquipmentUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.PlayerModel;
@@ -18,8 +18,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 
-import javax.annotation.Nonnull;
-
 public class PlayerWingsLayer<T extends Player, M extends PlayerModel<T>> extends RenderLayer<T, M> {
     private static final ResourceLocation VALKYRIE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/valkyrie/valkyrie.png");
     private final ValkyrieWingsModel<Player> wings;
@@ -29,8 +27,21 @@ public class PlayerWingsLayer<T extends Player, M extends PlayerModel<T>> extend
         this.wings = new ValkyrieWingsModel<>(modelSet.bakeLayer(AetherModelLayers.VALKYRIE_ARMOR_WINGS));
     }
 
+    /**
+     * Renders wings for the player when wearing Valkyrie Armor.
+     * @param poseStack The rendering {@link PoseStack}.
+     * @param buffer The rendering {@link MultiBufferSource}.
+     * @param packedLight The {@link Integer} for the packed lighting for rendering.
+     * @param entity The entity.
+     * @param limbSwing The {@link Float} for the limb swing rotation.
+     * @param limbSwingAmount The {@link Float} for the limb swing amount.
+     * @param partialTicks The {@link Float} for the game's partial ticks.
+     * @param ageInTicks The {@link Float} for the entity's age in ticks.
+     * @param netHeadYaw The {@link Float} for the head yaw rotation.
+     * @param headPitch The {@link Float} for the head pitch rotation.
+     */
     @Override
-    public void render(@Nonnull PoseStack poseStack, @Nonnull MultiBufferSource buffer, int packedLight, @Nonnull T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (EquipmentUtil.hasFullValkyrieSet(entity)) {
             AetherPlayer.get(entity).ifPresent((aetherPlayer) -> {
                 this.setupWingRotation(entity, Mth.lerp(partialTicks, aetherPlayer.getWingRotationO(), aetherPlayer.getWingRotation()));
@@ -40,7 +51,12 @@ public class PlayerWingsLayer<T extends Player, M extends PlayerModel<T>> extend
         }
     }
 
-    public void setupWingRotation(@Nonnull T entity, float sinage) {
+    /**
+     * Handles the wings' rotation.
+     * @param entity The entity.
+     * @param sinage The {@link Float} for the rotation value.
+     */
+    public void setupWingRotation(T entity, float sinage) {
         if (!entity.isOnGround() && !entity.isInFluidType() && (entity.getVehicle() != null && !entity.getVehicle().isOnGround())) {
             sinage *= 1.5F;
         } else {
@@ -64,9 +80,9 @@ public class PlayerWingsLayer<T extends Player, M extends PlayerModel<T>> extend
             this.wings.leftWing.xRot = 0.0F;
         }
 
-        this.wings.rightWing.yRot -= (float) Math.sin(sinage) / 6.0F;
-        this.wings.rightWing.zRot -= (float) Math.cos(sinage) / (entity.isOnGround() || entity.isInFluidType() ? 8.0F : 3.0F);
-        this.wings.leftWing.yRot += (float) Math.sin(sinage) / 6.0F;
-        this.wings.leftWing.zRot += (float) Math.cos(sinage) / (entity.isOnGround() || entity.isInFluidType() ? 8.0F : 3.0F);
+        this.wings.rightWing.yRot -= Mth.sin(sinage) / 6.0F;
+        this.wings.rightWing.zRot -= Mth.cos(sinage) / (entity.isOnGround() || entity.isInFluidType() ? 8.0F : 3.0F);
+        this.wings.leftWing.yRot += Mth.sin(sinage) / 6.0F;
+        this.wings.leftWing.zRot += Mth.cos(sinage) / (entity.isOnGround() || entity.isInFluidType() ? 8.0F : 3.0F);
     }
 }

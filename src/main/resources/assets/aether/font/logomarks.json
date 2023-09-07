@@ -1,0 +1,18 @@
+{
+  "providers": [
+    {
+      "type": "space",
+      "advances": {
+        " ":  3
+      }
+    },
+    {
+      "type": "bitmap",
+      "file": "aether:font/logomarks.png",
+      "ascent": 7,
+      "chars": [
+        "\u0021\u002C"
+      ]
+    }
+  ]
+}

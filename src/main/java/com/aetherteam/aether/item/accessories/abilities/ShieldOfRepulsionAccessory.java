@@ -1,10 +1,10 @@
 package com.aetherteam.aether.item.accessories.abilities;
 
-import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.capability.player.AetherPlayer;
-import com.aetherteam.aether.util.ConstantsUtil;
-import com.aetherteam.aether.util.EquipmentUtil;
+import com.aetherteam.aether.item.AetherItems;
+import com.aetherteam.aether.item.EquipmentUtil;
+import com.aetherteam.nitrogen.ConstantsUtil;
 import net.minecraft.client.player.Input;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -37,11 +37,11 @@ public interface ShieldOfRepulsionAccessory {
                         if (impactedLiving instanceof Player player) {
                             AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                                 if (!aetherPlayer.isMoving()) {
-                                    if (player.getLevel().isClientSide()) { // Values used by the Shield of Repulsion screen overlay vignette.
+                                    if (aetherPlayer.getPlayer().getLevel().isClientSide()) { // Values used by the Shield of Repulsion screen overlay vignette.
                                         aetherPlayer.setProjectileImpactedMaximum(150);
                                         aetherPlayer.setProjectileImpactedTimer(150);
                                     }
-                                    handleDeflection(event, projectile, impactedLiving, slotResult);
+                                    handleDeflection(event, projectile, aetherPlayer.getPlayer(), slotResult);
                                 }
                             });
                         } else {
@@ -65,11 +65,11 @@ public interface ShieldOfRepulsionAccessory {
     private static void handleDeflection(ProjectileImpactEvent event, Projectile projectile, LivingEntity impactedLiving, SlotResult slotResult) {
         event.setCanceled(true);
         if (!impactedLiving.equals(projectile.getOwner())) {
-            projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-0.25D));
+            projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-0.25));
             if (projectile instanceof AbstractHurtingProjectile damagingProjectileEntity) {
-                damagingProjectileEntity.xPower *= -0.25D;
-                damagingProjectileEntity.yPower *= -0.25D;
-                damagingProjectileEntity.zPower *= -0.25D;
+                damagingProjectileEntity.xPower *= -0.25;
+                damagingProjectileEntity.yPower *= -0.25;
+                damagingProjectileEntity.zPower *= -0.25;
             }
             slotResult.stack().hurtAndBreak(1, impactedLiving, (entity) -> CuriosApi.getCuriosHelper().onBrokenCurio(slotResult.slotContext()));
         }

@@ -1,40 +1,30 @@
 package com.aetherteam.aether.entity.monster.dungeon;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.block.AetherBlocks;
-
-import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.client.SentryExplosionParticlePacket;
-import net.minecraft.resources.ResourceLocation;
+import com.aetherteam.aether.client.AetherSoundEvents;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.core.particles.BlockParticleOption;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.gameevent.GameEvent;
 
 public class Sentry extends Slime {
-	public static final EntityDataAccessor<Boolean> DATA_AWAKE_ID = SynchedEntityData.defineId(Sentry.class, EntityDataSerializers.BOOLEAN);
-	
-	public float timeSpotted = 0.0F;
+	private static final EntityDataAccessor<Boolean> DATA_AWAKE_ID = SynchedEntityData.defineId(Sentry.class, EntityDataSerializers.BOOLEAN);
+
+	private float timeSpotted = 0.0F;
 	
 	public Sentry(EntityType<? extends Sentry> type, Level level) {
 		super(type, level);
@@ -42,14 +32,13 @@ public class Sentry extends Slime {
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(1, new Sentry.FloatGoal(this));
-		this.goalSelector.addGoal(2, new Sentry.AttackGoal(this));
-		this.goalSelector.addGoal(3, new Sentry.RandomDirectionGoal(this));
-		this.goalSelector.addGoal(5, new Sentry.KeepOnJumpingGoal(this));
+		this.goalSelector.addGoal(1, new SentryFloatGoal(this));
+		this.goalSelector.addGoal(2, new SentryAttackGoal(this));
+		this.goalSelector.addGoal(3, new SentryRandomDirectionGoal(this));
+		this.goalSelector.addGoal(5, new SentryKeepOnJumpingGoal(this));
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, (entity) -> Math.abs(entity.getY() - this.getY()) <= 4.0));
 	}
 
-	@Nonnull
 	public static AttributeSupplier.Builder createMobAttributes() {
 		return Mob.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 10.0)
@@ -60,19 +49,15 @@ public class Sentry extends Slime {
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
-		this.entityData.define(DATA_AWAKE_ID, false);
+		this.getEntityData().define(DATA_AWAKE_ID, false);
 	}
 
-	@Override
-	public @Nullable SpawnGroupData finalizeSpawn(@Nonnull ServerLevelAccessor level, @Nonnull DifficultyInstance difficulty, @Nonnull MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
-		this.setSize(1, true);
-		this.setLeftHanded(false);
-		return spawnData;
-	}
-	
+	/**
+	 * Handles waking the Sentry up if a target is spotted for long enough.
+	 */
 	@Override
 	public void tick() {
-		if (this.level.getNearestPlayer(this.getX(), this.getY(), this.getZ(), 8.0, EntitySelector.NO_SPECTATORS) != null) {
+		if (this.getLevel().getNearestPlayer(this.getX(), this.getY(), this.getZ(), 8.0, EntitySelector.NO_SPECTATORS) != null) {
 			if (!this.isAwake()) {
 				if (this.timeSpotted >= 24) {
 					this.setAwake(true);
@@ -85,6 +70,9 @@ public class Sentry extends Slime {
 		super.tick();
 	}
 
+	/**
+	 * Only allows jumping when the Sentry is awake.
+	 */
 	@Override
 	protected void jumpFromGround() {
 		if (this.isAwake()) {
@@ -92,76 +80,86 @@ public class Sentry extends Slime {
 		}
 	}
 
+	/**
+	 * When this entity is pushed.
+	 * @param entity The pushing {@link Entity}.
+	 */
 	@Override
-	public void push(@Nonnull Entity entity) {
+	public void push(Entity entity) {
 		super.push(entity);
 		if (entity instanceof LivingEntity livingEntity && !(entity instanceof Sentry)) {
 			this.explodeAt(livingEntity);
 		}
 	}
 
+	/**
+	 * Handles exploding when a player touches the Sentry.
+	 * @param player The {@link Player}.
+	 */
 	@Override
-	public void playerTouch(@Nonnull Player player) {
+	public void playerTouch(Player player) {
 		if (EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(player)) {
 			this.explodeAt(player);
 		}
 	}
 
-	protected void explodeAt(LivingEntity livingEntity) {
-		if (this.distanceToSqr(livingEntity) < 1.5D && this.isAwake() && this.hasLineOfSight(livingEntity) && livingEntity.hurt(this.damageSources().mobAttack(this), 1.0F) && this.tickCount > 20 && this.isAlive()) {
-			livingEntity.push(0.3, 0.4, 0.3);
-			this.level.explode(this, this.getX(), this.getY(), this.getZ(), 1.0F, Level.ExplosionInteraction.MOB);
-			this.playSound(SoundEvents.GENERIC_EXPLODE, 1.0F, 0.2F * (this.random.nextFloat() - this.random.nextFloat()) + 1);
-			if (this.level instanceof ServerLevel level) {
-				AetherPacketHandler.sendToNear(new SentryExplosionParticlePacket(this.getId()), this.getX(), this.getY(), this.getZ(), 10.0, level.dimension());
+	/**
+	 * Handles explosion behavior if the Sentry is close enough to an entity.
+	 * @param entity The colliding {@link Entity}.
+	 */
+	protected void explodeAt(LivingEntity entity) {
+		if (this.distanceToSqr(entity) < 1.5 && this.isAwake() && this.hasLineOfSight(entity) && entity.hurt(this.damageSources().mobAttack(this), 1.0F) && this.tickCount > 20 && this.isAlive()) {
+			entity.push(0.3, 0.4, 0.3);
+			this.getLevel().explode(this, this.getX(), this.getY(), this.getZ(), 1.0F, Level.ExplosionInteraction.MOB);
+			this.playSound(SoundEvents.GENERIC_EXPLODE, 1.0F, 0.2F * (this.getRandom().nextFloat() - this.getRandom().nextFloat()) + 1);
+			if (this.getLevel() instanceof ServerLevel level) {
+				level.broadcastEntityEvent(this, (byte) 70);
 				level.sendParticles(ParticleTypes.EXPLOSION_EMITTER, this.getX(), this.getY(), this.getZ(), 1, 0.0, 0.0, 0.0, 0.5);
 			}
-			this.doEnchantDamageEffects(this, livingEntity);
+			this.doEnchantDamageEffects(this, entity);
 			this.discard();
 		}
 	}
 
+	/**
+	 * [CODE COPY] - {@link Entity#remove(RemovalReason)}.
+	 */
 	@Override
-	public void remove(@Nonnull Entity.RemovalReason reason) {
-		this.setRemoved(reason);
-		if (reason == Entity.RemovalReason.KILLED) {
-			this.gameEvent(GameEvent.ENTITY_DIE);
-		}
+	public void remove(Entity.RemovalReason pReason) {
+		this.setRemoved(pReason);
 		this.invalidateCaps();
 	}
 
+	/**
+	 * @return Whether the Sentry is awake, as a {@link Boolean}.
+	 */
 	public boolean isAwake() {
-		return this.entityData.get(DATA_AWAKE_ID);
+		return this.getEntityData().get(DATA_AWAKE_ID);
 	}
-	
+
+	/**
+	 * Sets whether the Sentry is awake.
+	 * @param awake The {@link Boolean} value.
+	 */
 	public void setAwake(boolean awake) {
-		this.entityData.set(DATA_AWAKE_ID, awake);
+		this.getEntityData().set(DATA_AWAKE_ID, awake);
 	}
 
+	/**
+	 * This method is overridden to be empty to remove the behavior from {@link Slime#setSize(int, boolean)}.
+	 * @param size The size {@link Integer}.
+	 * @param resetHealth Whether to reset the entity's health, as a {@link Boolean}.
+	 */
 	@Override
-	public void setSize(int size, boolean resetHealth) {}
+	public void setSize(int size, boolean resetHealth) { }
 
-	@Nonnull
 	@Override
 	protected ParticleOptions getParticleType() {
 		return new BlockParticleOption(ParticleTypes.BLOCK, AetherBlocks.SENTRY_STONE.get().defaultBlockState());
 	}
 
-	@Nonnull
 	@Override
-	protected ResourceLocation getDefaultLootTable() {
-		return this.getType().getDefaultLootTable();
-	}
-
-	@SuppressWarnings("unchecked")
-	@Nonnull
-	@Override
-	public EntityType<? extends Sentry> getType() {
-		return (EntityType<? extends Sentry>) super.getType();
-	}
-
-	@Override
-	protected SoundEvent getHurtSound(@Nonnull DamageSource damageSource) {
+	protected SoundEvent getHurtSound(DamageSource damageSource) {
 		return AetherSoundEvents.ENTITY_SENTRY_HURT.get();
 	}
 
@@ -170,22 +168,19 @@ public class Sentry extends Slime {
 		return AetherSoundEvents.ENTITY_SENTRY_DEATH.get();
 	}
 
-	@Nonnull
 	@Override
 	protected SoundEvent getSquishSound() {
 		return AetherSoundEvents.ENTITY_SENTRY_JUMP.get();
 	}
 
-	@Nonnull
 	@Override
 	protected SoundEvent getJumpSound() {
 		return AetherSoundEvents.ENTITY_SENTRY_JUMP.get();
 	}
 
-	@Nonnull
 	@Override
 	public EntityDimensions getDimensions(Pose pose) {
-		return super.getDimensions(pose).scale(2*0.879F);
+		return super.getDimensions(pose).scale(1.76F);
 	}
 
 	@Override
@@ -193,12 +188,27 @@ public class Sentry extends Slime {
 		return true;
 	}
 
-	public static class AttackGoal extends SlimeAttackGoal {
+	@Override
+	public void handleEntityEvent(byte id) {
+		if (id == 70) {
+			for (int i = 0; i < 40; i++) {
+				double x = this.getX() + (this.getRandom().nextFloat() * 0.25);
+				double y = this.getY() + 0.5;
+				double z = this.getZ() + (this.getRandom().nextFloat() * 0.25);
+				float f1 = this.getRandom().nextFloat() * 360.0F;
+				this.getLevel().addParticle(ParticleTypes.POOF, x, y, z, -Math.sin(Mth.DEG_TO_RAD * f1) * 0.75, 0.125, Math.cos(Mth.DEG_TO_RAD * f1) * 0.75);
+			}
+		} else {
+			super.handleEntityEvent(id);
+		}
+	}
+
+	static class SentryAttackGoal extends SlimeAttackGoal {
 		private final Sentry sentry;
 
-		public AttackGoal(Sentry sentryIn) {
-			super(sentryIn);
-			this.sentry = sentryIn;
+		public SentryAttackGoal(Sentry sentry) {
+			super(sentry);
+			this.sentry = sentry;
 		}
 
 		@Override
@@ -212,12 +222,12 @@ public class Sentry extends Slime {
 		}
 	}
 
-	public static class FloatGoal extends SlimeFloatGoal {
+	static class SentryFloatGoal extends SlimeFloatGoal {
 		private final Sentry sentry;
 
-		public FloatGoal(Sentry sentryIn) {
-			super(sentryIn);
-			this.sentry = sentryIn;
+		public SentryFloatGoal(Sentry sentry) {
+			super(sentry);
+			this.sentry = sentry;
 		}
 
 		@Override
@@ -231,12 +241,12 @@ public class Sentry extends Slime {
 		}
 	}
 
-	public static class KeepOnJumpingGoal extends SlimeKeepOnJumpingGoal {
+	static class SentryKeepOnJumpingGoal extends SlimeKeepOnJumpingGoal {
 		private final Sentry sentry;
 
-		public KeepOnJumpingGoal(Sentry sentryIn) {
-			super(sentryIn);
-			this.sentry = sentryIn;
+		public SentryKeepOnJumpingGoal(Sentry sentry) {
+			super(sentry);
+			this.sentry = sentry;
 		}
 
 		@Override
@@ -250,12 +260,12 @@ public class Sentry extends Slime {
 		}
 	}
 
-	public static class RandomDirectionGoal extends SlimeRandomDirectionGoal {
+	static class SentryRandomDirectionGoal extends SlimeRandomDirectionGoal {
 		private final Sentry sentry;
 
-		public RandomDirectionGoal(Sentry sentryIn) {
-			super(sentryIn);
-			this.sentry = sentryIn;
+		public SentryRandomDirectionGoal(Sentry sentry) {
+			super(sentry);
+			this.sentry = sentry;
 		}
 
 		@Override

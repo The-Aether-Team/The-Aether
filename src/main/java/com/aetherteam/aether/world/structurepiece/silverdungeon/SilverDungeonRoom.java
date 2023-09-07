@@ -21,25 +21,30 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
+/**
+ * Different types of rooms in the Silver Dungeon.
+ */
 public class SilverDungeonRoom extends SilverDungeonPiece {
-
     public SilverDungeonRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
-        super(AetherStructurePieceTypes.SILVER_DUNGEON_ROOM.get(), manager, name, makeSettings(manager, rotation, new ResourceLocation(Aether.MODID, "silver_dungeon/" + name)), pos);
+        super(AetherStructurePieceTypes.SILVER_DUNGEON_ROOM.get(), manager, name, SilverDungeonRoom.makeSettings(manager, rotation, new ResourceLocation(Aether.MODID, "silver_dungeon/" + name)), pos);
         this.setOrientation(rotation.rotate(Direction.SOUTH));
     }
 
     public SilverDungeonRoom(StructurePieceSerializationContext context, CompoundTag tag) {
-        super(AetherStructurePieceTypes.SILVER_DUNGEON_ROOM.get(), tag, context.structureTemplateManager(), id -> makeSettings(context.structureTemplateManager(), id));
+        super(AetherStructurePieceTypes.SILVER_DUNGEON_ROOM.get(), tag, context.structureTemplateManager(), id -> SilverDungeonRoom.makeSettings(context.structureTemplateManager(), id));
     }
 
     private static StructurePlaceSettings makeSettings(StructureTemplateManager manager, Rotation rotation, ResourceLocation id) {
-        return makeSettings(manager, id).setRotation(rotation);
+        return SilverDungeonRoom.makeSettings(manager, id).setRotation(rotation);
     }
 
     private static StructurePlaceSettings makeSettings(StructureTemplateManager manager, ResourceLocation id) {
         StructureTemplate template = manager.getOrCreate(id);
         BlockPos pivot = new BlockPos(template.getSize().getX() / 2 - 4, 0, template.getSize().getZ() / 2 - 4);
-        return new StructurePlaceSettings().setRotationPivot(pivot).addProcessor(LOCKED_ANGELIC_STONE).addProcessor(DoubleDropsProcessor.INSTANCE);
+        return new StructurePlaceSettings()
+                .setRotationPivot(pivot)
+                .addProcessor(SilverDungeonPiece.LOCKED_ANGELIC_STONE)
+                .addProcessor(DoubleDropsProcessor.INSTANCE);
     }
 
     @Override
@@ -48,7 +53,7 @@ public class SilverDungeonRoom extends SilverDungeonPiece {
             level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
             BlockPos.MutableBlockPos chestPos = pos.mutable();
             chestPos.set(this.boundingBox.minX() + random.nextInt(this.boundingBox.getXSpan()), pos.getY(), this.boundingBox.minZ() + random.nextInt(this.boundingBox.getZSpan()));
-            // If the random position is outside of the chunk, bring it back to the starting spot.
+            // If the random position is outside the chunk, bring it back to the starting spot.
             this.placeChestOrMimic(level, box, random, box.isInside(chestPos) ? chestPos : pos);
         }
     }

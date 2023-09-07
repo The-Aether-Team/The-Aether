@@ -58,11 +58,9 @@ public class AetherModelLayers {
     public static final ModelLayerLocation GLOVES = register("gloves");
     public static final ModelLayerLocation GLOVES_SLIM = register("gloves_slim");
     public static final ModelLayerLocation GLOVES_FIRST_PERSON = register("gloves_first_person");
-    public static final ModelLayerLocation CAPE = register("cape");
     public static final ModelLayerLocation SHIELD_OF_REPULSION = register("shield_of_repulsion");
     public static final ModelLayerLocation SHIELD_OF_REPULSION_SLIM = register("shield_of_repulsion_slim");
     public static final ModelLayerLocation SHIELD_OF_REPULSION_ARM = register("shield_of_repulsion_arm");
-    public static final ModelLayerLocation SHIELD_OF_REPULSION_ARM_SLIM = register("shield_of_repulsion_arm_slim");
 
     public static final ModelLayerLocation PLAYER_HALO = register("player_halo");
 
@@ -74,7 +72,7 @@ public class AetherModelLayers {
         return register(new ResourceLocation(Aether.MODID, name), type);
     }
 
-    private static ModelLayerLocation register(ResourceLocation identifier, String type) {
-        return new ModelLayerLocation(identifier, type);
+    private static ModelLayerLocation register(ResourceLocation location, String type) {
+        return new ModelLayerLocation(location, type);
     }
 }

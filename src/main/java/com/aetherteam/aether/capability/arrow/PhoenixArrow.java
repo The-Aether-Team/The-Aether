@@ -1,12 +1,12 @@
 package com.aetherteam.aether.capability.arrow;
 
 import com.aetherteam.aether.capability.AetherCapabilities;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import com.aetherteam.nitrogen.capability.INBTSynchable;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraftforge.common.util.LazyOptional;
 
-public interface PhoenixArrow extends INBTSerializable<CompoundTag> {
+public interface PhoenixArrow extends INBTSynchable<CompoundTag> {
     AbstractArrow getArrow();
 
     static LazyOptional<PhoenixArrow> get(AbstractArrow arrow) {

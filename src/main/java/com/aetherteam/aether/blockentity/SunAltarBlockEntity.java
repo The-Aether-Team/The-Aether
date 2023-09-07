@@ -15,12 +15,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 
 public class SunAltarBlockEntity extends BlockEntity implements Nameable {
+    @Nullable
     private Component name;
 
     public SunAltarBlockEntity(BlockPos pos, BlockState blockState) {
         super(AetherBlockEntityTypes.SUN_ALTAR.get(), pos, blockState);
     }
 
+    @Nullable
     @Override
     public Component getName() {
         return this.name != null ? this.name : Component.translatable("menu." + Aether.MODID + ".sun_altar");

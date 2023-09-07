@@ -7,7 +7,6 @@ import com.google.common.collect.Multimap;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -19,13 +18,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nullable;
-import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -40,22 +36,8 @@ public class ValkyrieHoeItem extends HoeItem implements ValkyrieTool {
     }
 
     /**
-     * When in a creative tab, this adds a tooltip to an item indicating what dungeon it can be found in.
-     * @param stack The {@link ItemStack} with the tooltip.
-     * @param level The {@link Level} the item is rendered in.
-     * @param components A {@link List} of {@link Component}s making up this item's tooltip.
-     * @param flag A {@link TooltipFlag} for the tooltip type.
-     */
-    @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
-        super.appendHoverText(stack, level, components, flag);
-        if (flag.isCreative()) {
-            components.add(AetherItems.SILVER_DUNGEON_TOOLTIP);
-        }
-    }
-
-    /**
-     * Based on {@link HoeItem#useOn(UseOnContext)}.
+     * [CODE COPY] - {@link HoeItem#useOn(UseOnContext)}.<br><br>
+     * Triggers {@link CriteriaTriggers#ITEM_USED_ON_BLOCK} for advancements.
      */
     @Override
     public InteractionResult useOn(UseOnContext context) {

@@ -12,9 +12,13 @@ import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.stream.Stream;
 
+/**
+ * [CODE COPY] - {@link net.minecraft.world.level.levelgen.placement.CountOnEveryLayerPlacement}.<br><br>
+ * Improved to support custom parameters for the heightmap type and the vertical space necessary for the feature to place.
+ */
 public class ImprovedLayerPlacementModifier extends PlacementModifier {
     public static final Codec<ImprovedLayerPlacementModifier> CODEC = RecordCodecBuilder.create((codec) -> codec.group(
             Heightmap.Types.CODEC.fieldOf("heightmap").forGetter((modifier) -> modifier.heightmap),
@@ -35,9 +39,8 @@ public class ImprovedLayerPlacementModifier extends PlacementModifier {
         return new ImprovedLayerPlacementModifier(heightmap, count, verticalBounds);
     }
 
-    @Nonnull
     @Override
-    public Stream<BlockPos> getPositions(@Nonnull PlacementContext context, @Nonnull RandomSource random, @Nonnull BlockPos pos) {
+    public Stream<BlockPos> getPositions(PlacementContext context, RandomSource random, BlockPos pos) {
         Stream.Builder<BlockPos> builder = Stream.builder();
         int i = 0;
         boolean flag;
@@ -58,12 +61,12 @@ public class ImprovedLayerPlacementModifier extends PlacementModifier {
         return builder.build();
     }
 
-    @Nonnull
     @Override
     public PlacementModifierType<?> type() {
         return AetherPlacementModifiers.IMPROVED_LAYER_PLACEMENT;
     }
 
+    @Nullable
     private BlockPos findOnGroundPosition(PlacementContext context, BlockPos pos, int count) {
         int i = 0;
         int x = pos.getX();
@@ -72,8 +75,8 @@ public class ImprovedLayerPlacementModifier extends PlacementModifier {
         for (int j = y; j >= context.getMinBuildHeight() + 1; --j) {
             BlockPos blockPos = new BlockPos(x, j, z);
             BlockState blockState = context.getBlockState(blockPos);
-            BlockState blockState1 = context.getBlockState(blockPos.below());
-            if (blockState.isAir() && this.isSolid(blockState1) && !blockState1.is(Blocks.BEDROCK) && checkVerticalBounds(context, blockPos)) {
+            BlockState belowState = context.getBlockState(blockPos.below());
+            if (blockState.isAir() && this.isSolid(belowState) && !belowState.is(Blocks.BEDROCK) && this.checkVerticalBounds(context, blockPos)) {
                 if (i == count) {
                     return blockPos;
                 }

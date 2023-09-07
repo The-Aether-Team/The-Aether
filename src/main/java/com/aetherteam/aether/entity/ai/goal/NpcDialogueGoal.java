@@ -13,6 +13,7 @@ import java.util.EnumSet;
  */
 public class NpcDialogueGoal<T extends Mob & NpcDialogue> extends LookAtPlayerGoal {
     private final T npc;
+
     public NpcDialogueGoal(T npc) {
         super(npc, Player.class, 8.0F);
         this.npc = npc;
@@ -21,8 +22,8 @@ public class NpcDialogueGoal<T extends Mob & NpcDialogue> extends LookAtPlayerGo
 
     @Override
     public boolean canUse() {
-        if (this.npc.isTrading() && this.npc.getTradingPlayer().isAlive() && !this.npc.hurtMarked && this.npc.distanceToSqr(this.npc.getTradingPlayer()) <= 64.0F) {
-            this.lookAt = this.npc.getTradingPlayer();
+        if (this.npc.getConversingPlayer() != null && this.npc.getConversingPlayer().isAlive() && !this.npc.hurtMarked && this.npc.distanceToSqr(this.npc.getConversingPlayer()) <= 64.0F) {
+            this.lookAt = this.npc.getConversingPlayer();
             return true;
         }
         return false;
@@ -34,7 +35,7 @@ public class NpcDialogueGoal<T extends Mob & NpcDialogue> extends LookAtPlayerGo
     }
 
     /**
-     * Stops the npc from moving
+     * Stops the NPC from moving.
      */
     @Override
     public void start() {
@@ -43,11 +44,11 @@ public class NpcDialogueGoal<T extends Mob & NpcDialogue> extends LookAtPlayerGo
     }
 
     /**
-     * Makes the npc stop talking to the player.
+     * Makes the NPC stop talking to the player.
      */
     @Override
     public void stop() {
         super.stop();
-        this.npc.setTradingPlayer(null);
+        this.npc.setConversingPlayer(null);
     }
 }

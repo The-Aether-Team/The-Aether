@@ -1,5 +1,6 @@
 package com.aetherteam.aether.client.event.listeners;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.event.hooks.DimensionClientHooks;
 import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.FogRenderer;
@@ -10,8 +11,12 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.commons.lang3.tuple.Triple;
 
-@Mod.EventBusSubscriber(Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT)
 public class DimensionClientListener {
+    /**
+     * @see DimensionClientHooks#renderNearFog(Camera, FogRenderer.FogMode, float)
+     * @see DimensionClientHooks#reduceLavaFog(Camera, float)
+     */
     @SubscribeEvent
     public static void onRenderFog(ViewportEvent.RenderFog event) {
         Camera camera = event.getCamera();
@@ -30,20 +35,20 @@ public class DimensionClientListener {
     }
 
     /**
-     * The purpose of this event handler is to prevent the fog from turning black near the void in the Aether.
-     * This works with any dimension using the Aether's dimension effects.
+     * @see DimensionClientHooks#renderFogColors(Camera, float, float, float)
+     * @see DimensionClientHooks#adjustWeatherFogColors(Camera, float, float, float)
      */
     @SubscribeEvent
     public static void onRenderFogColor(ViewportEvent.ComputeFogColor event) {
         Camera camera = event.getCamera();
         Triple<Float, Float, Float> renderFogColors = DimensionClientHooks.renderFogColors(camera, event.getRed(), event.getGreen(), event.getBlue());
-        if (renderFogColors.getLeft() != null && renderFogColors.getMiddle() != null && renderFogColors.getRight() != null) {
+        if (renderFogColors != null) {
             event.setRed(renderFogColors.getLeft());
             event.setGreen(renderFogColors.getMiddle());
             event.setBlue(renderFogColors.getRight());
         }
         Triple<Float, Float, Float> adjustWeatherFogColors = DimensionClientHooks.adjustWeatherFogColors(camera, event.getRed(), event.getGreen(), event.getBlue());
-        if (adjustWeatherFogColors.getLeft() != null && adjustWeatherFogColors.getMiddle() != null && adjustWeatherFogColors.getRight() != null) {
+        if (adjustWeatherFogColors != null) {
             event.setRed(adjustWeatherFogColors.getLeft());
             event.setGreen(adjustWeatherFogColors.getMiddle());
             event.setBlue(adjustWeatherFogColors.getRight());
@@ -51,7 +56,7 @@ public class DimensionClientListener {
     }
 
     /**
-     * Ticks time in clientside Aether levels.
+     * @see DimensionClientHooks#tickTime()
      */
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {

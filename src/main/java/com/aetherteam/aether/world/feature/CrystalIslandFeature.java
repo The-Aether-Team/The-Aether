@@ -1,7 +1,7 @@
 package com.aetherteam.aether.world.feature;
 
-import com.aetherteam.aether.data.resources.registries.AetherConfiguredFeatures;
 import com.aetherteam.aether.data.resources.AetherFeatureStates;
+import com.aetherteam.aether.data.resources.registries.AetherConfiguredFeatures;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
@@ -19,6 +19,11 @@ public class CrystalIslandFeature extends Feature<NoneFeatureConfiguration> {
         super(codec);
     }
 
+    /**
+     * Places a Crystal Tree, then creates a small island around it if the placement was successful.
+     * @param context The {@link FeaturePlaceContext} with a {@link NoneFeatureConfiguration}.
+     * @return Whether the placement was successful, as a {@link Boolean}.
+     */
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         PlacedFeature feature = PlacementUtils.inlinePlaced(context.level().registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).getHolderOrThrow(AetherConfiguredFeatures.CRYSTAL_TREE_CONFIGURATION)).get();

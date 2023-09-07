@@ -12,14 +12,12 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Set;
 
-public class AetherPoi
-{
+public class AetherPoi {
     public static final DeferredRegister<PoiType> POI = DeferredRegister.create(ForgeRegistries.POI_TYPES, Aether.MODID);
 
-    public static final RegistryObject<PoiType> AETHER_PORTAL = POI.register("aether_portal",
-            () -> new PoiType(getBlockStates(AetherBlocks.AETHER_PORTAL.get()), 0, 1));
+    public static final RegistryObject<PoiType> AETHER_PORTAL = POI.register("aether_portal", () -> new PoiType(getBlockStates(AetherBlocks.AETHER_PORTAL.get()), 0, 1));
 
-    private static Set<BlockState> getBlockStates(Block p_218074_) {
-        return ImmutableSet.copyOf(p_218074_.getStateDefinition().getPossibleStates());
+    private static Set<BlockState> getBlockStates(Block block) {
+        return ImmutableSet.copyOf(block.getStateDefinition().getPossibleStates());
     }
 }

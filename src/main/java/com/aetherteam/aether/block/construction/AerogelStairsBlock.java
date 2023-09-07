@@ -1,32 +1,15 @@
 package com.aetherteam.aether.block.construction;
 
-import java.util.function.Supplier;
-
-import it.unimi.dsi.fastutil.objects.Object2ByteLinkedOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.BooleanOp;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class AerogelStairsBlock extends StairBlock {
-    /**
-     * Copy of {@link Block#OCCLUSION_CACHE}.
-     */
-    private static final ThreadLocal<Object2ByteLinkedOpenHashMap<BlockStatePairKey>> OCCLUSION_CACHE = ThreadLocal.withInitial(() -> {
-        Object2ByteLinkedOpenHashMap<Block.BlockStatePairKey> occlusionCache = new Object2ByteLinkedOpenHashMap<>() {
-            @Override
-            protected void rehash(int value) { }
-        };
-        occlusionCache.defaultReturnValue((byte) 127);
-        return occlusionCache;
-    });
+import java.util.function.Supplier;
 
+public class AerogelStairsBlock extends StairBlock implements AerogelCulling {
     public AerogelStairsBlock(Supplier<BlockState> state, Properties properties) {
         super(state, properties);
     }
@@ -64,29 +47,16 @@ public class AerogelStairsBlock extends StairBlock {
     }
 
     /**
-     * Based on {@link Block#hidesNeighborFace(BlockGetter, BlockPos, BlockState, BlockState, Direction)}.
+     * Skips rendering for Aerogel blocks that are neighboring this block, using {@link AerogelCulling#shouldHideNeighboringAerogelFace(BlockGetter, BlockPos, BlockState, BlockState, Direction)}.
+     * @param level The {@link Level} that the block is in.
+     * @param pos The {@link BlockPos} of this block.
+     * @param state The {@link BlockState} of the block.
+     * @param neighborState The {@link BlockState} of the neighboring block.
+     * @param dir The {@link Direction} to the neighboring state.
+     * @return Whether the neighbor block should skip rendering the neighboring face, as a {@link Boolean}.
      */
     @Override
-    public boolean hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState, Direction direction) {
-        if (neighborState.is(this)) {
-            Block.BlockStatePairKey blockStatePairKey = new BlockStatePairKey(neighborState, state, direction.getOpposite());
-            Object2ByteLinkedOpenHashMap<Block.BlockStatePairKey> occlusionCache = OCCLUSION_CACHE.get();
-            byte cacheByte = occlusionCache.getAndMoveToFirst(blockStatePairKey);
-            if (cacheByte != 127) {
-                return cacheByte != 0;
-            }
-            VoxelShape neighborShape = neighborState.getFaceOcclusionShape(level, pos.relative(direction), direction.getOpposite());
-            if (neighborShape.isEmpty()) {
-                return false;
-            }
-            VoxelShape shape = state.getFaceOcclusionShape(level, pos, direction);
-            boolean differing = !Shapes.joinIsNotEmpty(neighborShape, shape, BooleanOp.ONLY_FIRST);
-            if (occlusionCache.size() == 2048) {
-                occlusionCache.removeLastByte();
-            }
-            occlusionCache.putAndMoveToFirst(blockStatePairKey, (byte) (differing ? 1 : 0));
-            return differing;
-        }
-        return super.hidesNeighborFace(level, pos, state, neighborState, direction);
+    public boolean hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState, Direction dir) {
+        return AerogelCulling.super.shouldHideNeighboringAerogelFace(level, pos, state, neighborState, dir);
     }
 }

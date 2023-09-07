@@ -1,23 +1,24 @@
 package com.aetherteam.aether.block.utility;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.blockentity.SunAltarBlockEntity;
 import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.blockentity.SunAltarBlockEntity;
 import com.aetherteam.aether.capability.AetherCapabilities;
 import com.aetherteam.aether.capability.time.AetherTime;
-import com.aetherteam.aether.api.SunAltarWhitelist;
+import com.aetherteam.aether.command.SunAltarWhitelist;
 import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.network.packet.client.OpenSunAltarPacket;
+import com.aetherteam.aether.network.packet.clientbound.OpenSunAltarPacket;
+import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.*;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
-
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -72,7 +73,7 @@ public class SunAltarBlock extends BaseEntityBlock {
 		if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
 			BlockEntity blockEntity = level.getBlockEntity(pos);
 			if (blockEntity instanceof SunAltarBlockEntity sunAltar) {
-				AetherPacketHandler.sendToPlayer(new OpenSunAltarPacket(sunAltar.getName()), serverPlayer);
+				PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE,new OpenSunAltarPacket(sunAltar.getName()), serverPlayer);
 			}
 		}
 	}

@@ -9,8 +9,9 @@ import org.apache.commons.lang3.tuple.Pair;
 public class AetherConfig {
     public static class Server {
         public final ConfigValue<Boolean> enable_bed_explosions;
-        public final ConfigValue<Boolean> edible_ambrosium;
         public final ConfigValue<Boolean> tools_debuff;
+        public final ConfigValue<Boolean> edible_ambrosium;
+        public final ConfigValue<Boolean> berry_bush_consistency;
         public final ConfigValue<Boolean> healing_gummy_swets;
         public final ConfigValue<Integer> hammer_of_kingbdogz_cooldown;
         public final ConfigValue<Integer> cloud_staff_cooldown;
@@ -27,6 +28,7 @@ public class AetherConfig {
         public final ConfigValue<Integer> invisibility_visibility_time;
         public final ConfigValue<Boolean> sun_altar_whitelist;
 
+        public final ConfigValue<Boolean> spawn_in_aether;
         public final ConfigValue<Boolean> disable_aether_portal;
         public final ConfigValue<Boolean> disable_falling_to_overworld;
         public final ConfigValue<Boolean> disable_eternal_day;
@@ -47,6 +49,10 @@ public class AetherConfig {
                     .comment("Ambrosium Shards can be eaten to restore a half heart of health")
                     .translation("config.aether.server.gameplay.edible_ambrosium")
                     .define("Ambrosium Shards are edible", true);
+            berry_bush_consistency = builder
+                    .comment("Makes Berry Bushes and Bush Stems behave consistently with Sweet Berry Bushes")
+                    .translation("config.aether.server.gameplay.berry_bush_consistency")
+                    .define("Berry Bush consistency", false);
             healing_gummy_swets = builder
                     .comment("Gummy Swets when eaten restore full health instead of full hunger")
                     .translation("config.aether.server.gameplay.healing_gummy_swets")
@@ -58,7 +64,7 @@ public class AetherConfig {
             hammer_of_kingbdogz_cooldown = builder
                     .comment("Determines the cooldown in ticks for the Hammer of Kingbdogz's ability")
                     .translation("config.aether.server.gameplay.hammer_of_kingbdogz_cooldown")
-                    .define("Cooldown for the Hammer of Kingbdogz", 75);
+                    .define("Cooldown for the Hammer of Kingbdogz projectile", 50);
             cloud_staff_cooldown = builder
                     .comment("Determines the cooldown in ticks for the Cloud Staff's ability")
                     .translation("config.aether.server.gameplay.cloud_staff_cooldown")
@@ -107,6 +113,10 @@ public class AetherConfig {
             builder.pop();
 
             builder.push("Modpack");
+            spawn_in_aether = builder
+                    .comment("Spawns the player in the Aether dimension; this is best enabled alongside other modpack configuration to avoid issues")
+                    .translation("config.aether.server.modpack.spawn_in_aether")
+                    .define("Spawns the player in the Aether", false);
             disable_aether_portal = builder
                     .comment("Prevents the Aether Portal from being created normally in the mod")
                     .translation("config.aether.server.modpack.disable_aether_portal")
@@ -136,6 +146,10 @@ public class AetherConfig {
         public final ConfigValue<Boolean> start_with_portal;
         public final ConfigValue<Boolean> enable_startup_loot;
         public final ConfigValue<Boolean> repeat_sun_spirit_dialogue;
+        public final ConfigValue<Boolean> show_patreon_message;
+
+        public final ConfigValue<Boolean> add_temporary_freezing_automatically;
+        public final ConfigValue<Boolean> add_ruined_portal_automatically;
 
         public Common(ForgeConfigSpec.Builder builder) {
             builder.push("Gameplay");
@@ -156,6 +170,23 @@ public class AetherConfig {
                     .comment("Determines whether the Sun Spirit's dialogue when meeting him should play through every time you meet him")
                     .translation("config.aether.common.gameplay.repeat_sun_spirit_dialogue")
                     .define("Repeat Sun Spirit's battle dialogue", true);
+            show_patreon_message = builder
+                    .comment("Determines if a message that links The Aether mod's Patreon should show")
+                    .translation("config.aether.common.gameplay.show_patreon_message")
+                    .define("Show Patreon message", true);
+            builder.pop();
+
+            builder.push("Data Pack");
+            add_temporary_freezing_automatically = builder
+                    .worldRestart()
+                    .comment("Sets the Aether Temporary Freezing data pack to be added to new worlds automatically")
+                    .translation("config.aether.common.data_pack.add_temporary_freezing_automatically")
+                    .define("Add Temporary Freezing automatically", false);
+            add_ruined_portal_automatically = builder
+                    .worldRestart()
+                    .comment("Sets the Aether Ruined Portals data pack to be added to new worlds automatically")
+                    .translation("config.aether.common.data_pack.add_ruined_portal_automatically")
+                    .define("Add Ruined Portals automatically", false);
             builder.pop();
         }
     }
@@ -166,14 +197,13 @@ public class AetherConfig {
         public final ConfigValue<Boolean> colder_lightmap;
         public final ConfigValue<Boolean> green_sunset;
 
-        public final ConfigValue<Boolean> enable_aether_menu;
         public final ConfigValue<Boolean> enable_aether_menu_button;
         public final ConfigValue<Boolean> enable_world_preview;
         public final ConfigValue<Boolean> enable_world_preview_button;
         public final ConfigValue<Boolean> enable_quick_load_button;
         public final ConfigValue<Boolean> menu_type_toggles_alignment;
-        public final ConfigValue<Boolean> align_vanilla_menu_elements_left;
-        public final ConfigValue<Boolean> align_aether_menu_elements_left;
+        public final ConfigValue<String> default_aether_menu;
+        public final ConfigValue<String> default_minecraft_menu;
         public final ConfigValue<Boolean> enable_trivia;
         public final ConfigValue<Boolean> enable_silver_hearts;
         public final ConfigValue<Boolean> disable_accessory_button;
@@ -183,6 +213,8 @@ public class AetherConfig {
         public final ConfigValue<Integer> button_creative_y;
         public final ConfigValue<Integer> button_accessories_x;
         public final ConfigValue<Integer> button_accessories_y;
+        public final ConfigValue<Integer> layout_perks_x;
+        public final ConfigValue<Integer> layout_perks_y;
 
         public final ConfigValue<Integer> music_backup_min_delay;
         public final ConfigValue<Integer> music_backup_max_delay;
@@ -190,6 +222,8 @@ public class AetherConfig {
         public final ConfigValue<Boolean> disable_aether_menu_music;
         public final ConfigValue<Boolean> disable_vanilla_world_preview_menu_music;
         public final ConfigValue<Boolean> disable_aether_world_preview_menu_music;
+
+        public final ConfigValue<Boolean> should_disable_cumulus_button;
 
         public Client(ForgeConfigSpec.Builder builder) {
             builder.push("Rendering");
@@ -212,10 +246,6 @@ public class AetherConfig {
             builder.pop();
 
             builder.push("Gui");
-            enable_aether_menu = builder
-                    .comment("Changes the vanilla Minecraft menu into the Aether menu")
-                    .translation("config.aether.client.gui.enable_aether_menu")
-                    .define("Enables Aether menu", false);
             enable_aether_menu_button = builder
                     .comment("Adds a button to the top right of the main menu screen to toggle between the Aether and vanilla menu")
                     .translation("config.aether.client.gui.enable_aether_menu_button")
@@ -236,14 +266,14 @@ public class AetherConfig {
                     .comment("Determines that menu elements will align left if the menu's world preview is active, if true, this overrides 'Align menu elements left'")
                     .translation("config.aether.client.gui.menu_type_toggles_alignment")
                     .define("Align menu elements left with world preview", false);
-            align_vanilla_menu_elements_left = builder
-                    .comment("Aligns the elements of the vanilla menu to the left, only works if 'Align menu left with world preview' is set to false")
-                    .translation("config.aether.client.gui.align_vanilla_menu_elements_left")
-                    .define("Align vanilla menu elements left", false);
-            align_aether_menu_elements_left = builder
-                    .comment("Aligns the elements of the Aether menu to the left, only works if 'Align menu left with world preview' is set to false")
-                    .translation("config.aether.client.gui.align_aether_menu_elements_left")
-                    .define("Align Aether menu elements left", true);
+            default_aether_menu = builder
+                    .comment("Determines the default Aether menu style to switch to with the menu theme button")
+                    .translation("config.aether.client.gui.default_aether_menu")
+                    .define("Default Aether menu style", "aether:the_aether_left");
+            default_minecraft_menu = builder
+                    .comment("Determines the default Minecraft menu style to switch to with the menu theme button")
+                    .translation("config.aether.client.gui.default_minecraft_menu")
+                    .define("Default Minecraft menu style", "cumulus_menus:minecraft");
             enable_trivia = builder
                     .comment("Adds random trivia and tips to the bottom of loading screens")
                     .translation("config.aether.client.gui.enable_trivia")
@@ -275,11 +305,19 @@ public class AetherConfig {
             button_accessories_x = builder
                     .comment("The x-coordinate of the accessories button in the accessories menu")
                     .translation("config.aether.client.gui.button_accessories_x")
-                    .define("Button x-accessories in accessories menu", 9);
+                    .define("Button x-coordinate in accessories menu", 9);
             button_accessories_y = builder
                     .comment("The y-coordinate of the accessories button in the accessories menu")
                     .translation("config.aether.client.gui.button_accessories_y")
-                    .define("Button y-accessories in accessories menu", 68);
+                    .define("Button y-coordinate in accessories menu", 68);
+            layout_perks_x = builder
+                    .comment("The x-coordinate of the perks button layout when in the pause menu")
+                    .translation("config.aether.client.gui.layout_perks_x")
+                    .define("Layout x-coordinate in pause menu", -116);
+            layout_perks_y = builder
+                    .comment("The y-coordinate of the perks button layout when in the pause menu")
+                    .translation("config.aether.client.gui.layout_perks_y")
+                    .define("Layout y-coordinate in pause menu", 0);
             builder.pop();
 
             builder.push("Audio");
@@ -307,6 +345,13 @@ public class AetherConfig {
                     .comment("Disables the menu music on the Aether world preview menu, only works if 'Disables Aether music manager' is false")
                     .translation("config.aether.client.audio.disable_aether_world_preview_menu_music")
                     .define("Disables Aether world preview menu music", false);
+            builder.pop();
+
+            builder.push("Miscellaneous");
+            should_disable_cumulus_button = builder
+                    .comment("Disables the Cumulus menu selection screen button on launch")
+                    .translation("config.aether.server.miscellaneous.should_disable_cumulus_button")
+                    .define("Disable Cumulus button", true);
             builder.pop();
         }
     }

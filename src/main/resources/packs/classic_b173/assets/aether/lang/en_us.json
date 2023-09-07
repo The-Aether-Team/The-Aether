@@ -1,9 +1,11 @@
 {
-  "advancement.aether.altar.desc": "Craft an Enchanter",
+  "advancement.aether.craft_altar.desc": "Craft an Enchanter",
+  "aether.pro_tips.line.aether.altar_repairing": "Enchanters can repair damaged items and enhance existing items.",
+  "aether.pro_tips.line.aether.ambrosium_shard_fuel": "Ambrosium Shards are great for fueling Enchanters.",
   "block.aether.altar": "Enchanter",
-  "container.aether.altar": "Enchanter",
   "lore.aether.blue_berry": "Harvested from Berry Bushes, this is the most common food source in the Aether. It has very weak hunger restoration. You can enchant these in an Enchanter for much better hunger restoration.",
   "lore.aether.enchanted_gravitite": "After putting Gravitite Ore into an Enchanter and enchanting it, you get Enchanted Gravitite. This can be made into Gravitite Tools and Armor. When powered with a Redstone signal, Enchanted Gravitite Blocks will float into the air, similarly to Gravitite Ore.",
   "lore.aether.golden_dart_shooter": "A Dart Shooter which shoots Golden Darts, enchanting it on an Enchanter improves it's attack power!",
+  "menu.aether.altar": "Enchanter",
   "subtitles.aether.block.altar.crackle": "Enchanter crackles"
 }

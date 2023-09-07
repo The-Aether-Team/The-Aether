@@ -1,12 +1,12 @@
 package com.aetherteam.aether.data.generators.tags;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.AetherTags;
+import com.aetherteam.aether.block.AetherBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -41,6 +41,8 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherBlocks.AETHER_GRASS_BLOCK.get(),
                 AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get(),
                 AetherBlocks.AETHER_DIRT.get());
+        this.tag(AetherTags.Blocks.ENCHANTED_GRASS).add(
+                AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get());
         this.tag(AetherTags.Blocks.HOLYSTONE).add(
                 AetherBlocks.HOLYSTONE.get(),
                 AetherBlocks.MOSSY_HOLYSTONE.get());
@@ -58,7 +60,8 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherBlocks.GOLDEN_OAK_WOOD.get());
         this.tag(AetherTags.Blocks.ALLOWED_BUCKET_PICKUP).add(
                 Blocks.POWDER_SNOW);
-        this.tag(AetherTags.Blocks.AEROGEL).add(AetherBlocks.AEROGEL.get(),
+        this.tag(AetherTags.Blocks.AEROGEL).add(
+                AetherBlocks.AEROGEL.get(),
                 AetherBlocks.AEROGEL_WALL.get(),
                 AetherBlocks.AEROGEL_STAIRS.get(),
                 AetherBlocks.AEROGEL_SLAB.get());
@@ -102,6 +105,8 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherBlocks.SENTRY_STONE.get(),
                 AetherBlocks.LOCKED_CARVED_STONE.get(),
                 AetherBlocks.LOCKED_SENTRY_STONE.get(),
+                AetherBlocks.TRAPPED_CARVED_STONE.get(),
+                AetherBlocks.TRAPPED_SENTRY_STONE.get(),
                 AetherBlocks.BOSS_DOORWAY_CARVED_STONE.get(),
                 AetherBlocks.BOSS_DOORWAY_SENTRY_STONE.get(),
                 AetherBlocks.TREASURE_DOORWAY_CARVED_STONE.get(),
@@ -114,6 +119,8 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherBlocks.LIGHT_ANGELIC_STONE.get(),
                 AetherBlocks.LOCKED_ANGELIC_STONE.get(),
                 AetherBlocks.LOCKED_LIGHT_ANGELIC_STONE.get(),
+                AetherBlocks.TRAPPED_ANGELIC_STONE.get(),
+                AetherBlocks.TRAPPED_LIGHT_ANGELIC_STONE.get(),
                 AetherBlocks.BOSS_DOORWAY_ANGELIC_STONE.get(),
                 AetherBlocks.BOSS_DOORWAY_LIGHT_ANGELIC_STONE.get(),
                 AetherBlocks.TREASURE_DOORWAY_ANGELIC_STONE.get(),
@@ -126,6 +133,8 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherBlocks.LIGHT_HELLFIRE_STONE.get(),
                 AetherBlocks.LOCKED_HELLFIRE_STONE.get(),
                 AetherBlocks.LOCKED_LIGHT_HELLFIRE_STONE.get(),
+                AetherBlocks.TRAPPED_HELLFIRE_STONE.get(),
+                AetherBlocks.TRAPPED_LIGHT_HELLFIRE_STONE.get(),
                 AetherBlocks.BOSS_DOORWAY_HELLFIRE_STONE.get(),
                 AetherBlocks.BOSS_DOORWAY_LIGHT_HELLFIRE_STONE.get(),
                 AetherBlocks.TREASURE_DOORWAY_HELLFIRE_STONE.get(),
@@ -171,8 +180,21 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS,
                 AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS,
                 AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS);
+        this.tag(AetherTags.Blocks.NON_RUINED_PORTAL_SPAWNABLE);
+        this.tag(AetherTags.Blocks.RUINED_PORTAL_GROUND_REPLACEABLE)
+                .addTag(BlockTags.BASE_STONE_OVERWORLD)
+                .addTag(BlockTags.DIRT)
+                .addTag(BlockTags.SAND)
+                .add(Blocks.GRAVEL)
+                .add(Blocks.CALCITE)
+                .add(Blocks.SMOOTH_BASALT)
+                .add(Blocks.CLAY)
+                .add(Blocks.DRIPSTONE_BLOCK)
+                .add(Blocks.RED_SANDSTONE)
+                .add(Blocks.SANDSTONE);
         this.tag(AetherTags.Blocks.NON_BRONZE_DUNGEON_REPLACEABLE).add(
                 Blocks.AIR,
+                Blocks.WATER,
                 Blocks.CHEST,
                 AetherBlocks.CHEST_MIMIC.get(),
                 AetherBlocks.TREASURE_CHEST.get()
@@ -180,6 +202,8 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
                 AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS,
                 AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS);
+        this.tag(AetherTags.Blocks.NON_BRONZE_DUNGEON_SPAWNABLE).add(
+                Blocks.WATER);
         this.tag(AetherTags.Blocks.GRAVITITE_ABILITY_BLACKLIST).addTags(
                 BlockTags.BUTTONS,
                 BlockTags.PRESSURE_PLATES,
@@ -198,7 +222,6 @@ public class AetherBlockTagData extends BlockTagsProvider {
         this.tag(AetherTags.Blocks.TREATED_AS_AETHER_BLOCK);
 
         // Vanilla
-        this.tag(BlockTags.STONE_BRICKS).add(AetherBlocks.HOLYSTONE_BRICKS.get()).addTag(AetherTags.Blocks.DUNGEON_BLOCKS);
         this.tag(BlockTags.WOODEN_STAIRS).add(AetherBlocks.SKYROOT_STAIRS.get());
         this.tag(BlockTags.WOODEN_SLABS).add(AetherBlocks.SKYROOT_SLAB.get());
         this.tag(BlockTags.WOODEN_FENCES).add(AetherBlocks.SKYROOT_FENCE.get());
@@ -425,7 +448,7 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherBlocks.AETHER_DIRT.get(),
                 AetherBlocks.QUICKSOIL.get()
         );
-        this.tag(BlockTags.SNAPS_GOAT_HORN).addTag(AetherTags.Blocks.SKYROOT_LOGS).add(
+        this.tag(BlockTags.SNAPS_GOAT_HORN).addTags(AetherTags.Blocks.SKYROOT_LOGS, AetherTags.Blocks.GOLDEN_OAK_LOGS).add(
                 AetherBlocks.HOLYSTONE.get(),
                 AetherBlocks.ICESTONE.get(),
                 AetherBlocks.AMBROSIUM_ORE.get(),

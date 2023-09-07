@@ -2,17 +2,16 @@ package com.aetherteam.aether.block.construction;
 
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.mixin.mixins.common.accessor.BushBlockAccessor;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
-
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -27,7 +26,7 @@ public class AetherFarmBlock extends FarmBlock {
     }
 
     /**
-     * Based on {@link FarmBlock#getStateForPlacement(BlockPlaceContext)}.
+     * [CODE COPY] - {@link FarmBlock#getStateForPlacement(BlockPlaceContext)}.
      */
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
@@ -35,7 +34,7 @@ public class AetherFarmBlock extends FarmBlock {
     }
 
     /**
-     * Copy of {@link FarmBlock#tick(BlockState, ServerLevel, BlockPos, RandomSource)}.
+     * [CODE COPY] - {@link FarmBlock#tick(BlockState, ServerLevel, BlockPos, RandomSource)}.
      */
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
@@ -45,7 +44,7 @@ public class AetherFarmBlock extends FarmBlock {
     }
 
     /**
-     * Copy of {@link FarmBlock#randomTick(BlockState, ServerLevel, BlockPos, RandomSource)}.
+     * [CODE COPY] - {@link FarmBlock#randomTick(BlockState, ServerLevel, BlockPos, RandomSource)}.
      */
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
@@ -62,7 +61,7 @@ public class AetherFarmBlock extends FarmBlock {
     }
 
     /**
-     * Based on {@link FarmBlock#fallOn(Level, BlockState, BlockPos, Entity, float)}.
+     * [CODE COPY] - {@link FarmBlock#fallOn(Level, BlockState, BlockPos, Entity, float)}.
      */
     @Override
     public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
@@ -73,14 +72,14 @@ public class AetherFarmBlock extends FarmBlock {
     }
 
     /**
-     * Based on {@link FarmBlock#turnToDirt(Entity, BlockState, Level, BlockPos)}.
+     * [CODE COPY] - {@link FarmBlock#turnToDirt(Entity, BlockState, Level, BlockPos)}.
      */
     public static void turnToDirt(BlockState state, Level level, BlockPos pos) {
         level.setBlockAndUpdate(pos, pushEntitiesUp(state, AetherBlocks.AETHER_DIRT.get().defaultBlockState(), level, pos));
     }
 
     /**
-     * Copy of {@link FarmBlock#isUnderCrops(BlockGetter, BlockPos)}.
+     * [CODE COPY] - {@link FarmBlock#isUnderCrops(BlockGetter, BlockPos)}.
      */
     private boolean isUnderCrops(BlockGetter level, BlockPos pos) {
         BlockState plant = level.getBlockState(pos.above());
@@ -89,7 +88,7 @@ public class AetherFarmBlock extends FarmBlock {
     }
 
     /**
-     * Copy of {@link FarmBlock#isNearWater(LevelReader, BlockPos)}.
+     * [CODE COPY] - {@link FarmBlock#isNearWater(LevelReader, BlockPos)}.
      */
     private static boolean isNearWater(LevelReader level, BlockPos pos) {
         for (BlockPos blockpos : BlockPos.betweenClosed(pos.offset(-4, 0, -4), pos.offset(4, 1, 4))) {
@@ -110,7 +109,7 @@ public class AetherFarmBlock extends FarmBlock {
     }
 
     /**
-     * Based on {@link net.minecraftforge.common.extensions.IForgeBlock#isFertile(BlockState, BlockGetter, BlockPos)}.
+     * [CODE COPY] - {@link net.minecraftforge.common.extensions.IForgeBlock#isFertile(BlockState, BlockGetter, BlockPos)}.
      */
     @Override
     public boolean isFertile(BlockState state, BlockGetter level, BlockPos pos) {

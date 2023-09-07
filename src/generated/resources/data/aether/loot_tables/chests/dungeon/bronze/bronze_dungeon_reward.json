@@ -6,6 +6,20 @@
       "entries": [
         {
           "type": "minecraft:loot_table",
+          "name": "aether:chests/dungeon/bronze/bronze_dungeon_neptune"
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 1.0,
+        "min": 1.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
           "name": "aether:chests/dungeon/bronze/bronze_dungeon_treasure"
         }
       ],
@@ -122,6 +136,11 @@
         {
           "type": "minecraft:item",
           "name": "aether:hammer_of_kingbdogz"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "name": "aether:chests/dungeon/bronze/bronze_dungeon_neptune",
+          "weight": 8
         },
         {
           "type": "minecraft:item",

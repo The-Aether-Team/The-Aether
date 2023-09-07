@@ -6,13 +6,7 @@
       "entries": [
         {
           "type": "minecraft:loot_table",
-          "name": "aether:chests/dungeon/bronze/silver_dungeon_valkyrie",
-          "weight": 4
-        },
-        {
-          "type": "minecraft:loot_table",
-          "name": "aether:chests/dungeon/bronze/silver_dungeon_neptune",
-          "weight": 3
+          "name": "aether:chests/dungeon/silver/silver_dungeon_valkyrie"
         }
       ],
       "rolls": 1.0
@@ -22,7 +16,7 @@
       "entries": [
         {
           "type": "minecraft:loot_table",
-          "name": "aether:chests/dungeon/bronze/silver_dungeon_treasure"
+          "name": "aether:chests/dungeon/silver/silver_dungeon_treasure"
         }
       ],
       "rolls": {
@@ -36,7 +30,7 @@
       "entries": [
         {
           "type": "minecraft:loot_table",
-          "name": "aether:chests/dungeon/bronze/silver_dungeon_gummies"
+          "name": "aether:chests/dungeon/silver/silver_dungeon_gummies"
         }
       ],
       "rolls": {
@@ -65,7 +59,7 @@
         },
         {
           "type": "minecraft:loot_table",
-          "name": "aether:chests/dungeon/bronze/silver_dungeon_gravitite",
+          "name": "aether:chests/dungeon/silver/silver_dungeon_gravitite",
           "weight": 3
         },
         {
@@ -172,13 +166,8 @@
         },
         {
           "type": "minecraft:loot_table",
-          "name": "aether:chests/dungeon/bronze/silver_dungeon_valkyrie",
-          "weight": 6
-        },
-        {
-          "type": "minecraft:loot_table",
-          "name": "aether:chests/dungeon/bronze/silver_dungeon_neptune",
-          "weight": 6
+          "name": "aether:chests/dungeon/silver/silver_dungeon_valkyrie",
+          "weight": 10
         },
         {
           "type": "minecraft:item",

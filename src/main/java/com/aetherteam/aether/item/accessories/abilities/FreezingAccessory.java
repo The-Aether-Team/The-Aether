@@ -1,8 +1,8 @@
 package com.aetherteam.aether.item.accessories.abilities;
 
 import com.aetherteam.aether.block.FreezingBehavior;
-import com.aetherteam.aether.event.events.FreezeEvent;
-import com.aetherteam.aether.event.dispatch.AetherEventDispatch;
+import com.aetherteam.aether.event.AetherEventDispatch;
+import com.aetherteam.aether.event.FreezeEvent;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.recipes.block.AccessoryFreezableRecipe;
 import net.minecraft.commands.CommandFunction;
@@ -37,12 +37,13 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
      * Freezes blocks from one block to another using the {@link AetherRecipeTypes#ACCESSORY_FREEZABLE} recipe type.
      * @param level The {@link Level} to freeze the blocks in.
      * @param pos The {@link BlockPos} the freezing occurred at.
+     * @param origin The {@link BlockPos} of the source that is causing the freezing.
      * @param source The {@link ItemStack} that was the source of the freezing.
      * @param flag The {@link Integer} representing the block placement flag (see {@link net.minecraft.world.level.LevelWriter#setBlock(BlockPos, BlockState, int)}).
      * @return An {@link Integer} 1 if a block was successfully frozen, or a 0 if it wasn't.
      */
     @Override
-    default int freezeFromRecipe(Level level, BlockPos pos, ItemStack source, int flag) {
+    default int freezeFromRecipe(Level level, BlockPos pos, BlockPos origin, ItemStack source, int flag) {
         if (!level.isClientSide()) {
             BlockState oldBlockState = level.getBlockState(pos);
             FluidState fluidState = level.getFluidState(pos);
@@ -52,7 +53,7 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
                         if (freezableRecipe.matches(level, pos, oldBlockState)) {
                             BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
                             CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
-                            return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, function, source, flag);
+                            return this.freezeBlockAt(level, pos, origin, oldBlockState, newBlockState, function, source, flag);
                         }
                     } else if (!oldBlockState.hasProperty(BlockStateProperties.WATERLOGGED)) { // Breaks a block before freezing if it has a FluidState attached by default (this is different from waterlogging for blocks like Kelp and Seagrass).
                         oldBlockState = fluidState.createLegacyBlock();
@@ -60,7 +61,7 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
                             level.destroyBlock(pos, true);
                             BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
                             CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
-                            return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, function, source, flag);
+                            return this.freezeBlockAt(level, pos, origin, oldBlockState, newBlockState, function, source, flag);
                         }
                     }
                 }
@@ -70,7 +71,7 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
     }
 
     @Override
-    default FreezeEvent onFreeze(LevelAccessor level, BlockPos pos, BlockState oldBlockState, BlockState newBlockState, ItemStack source) {
+    default FreezeEvent onFreeze(LevelAccessor level, BlockPos pos, BlockPos origin, BlockState oldBlockState, BlockState newBlockState, ItemStack source) {
         return AetherEventDispatch.onItemFreezeFluid(level, pos, oldBlockState, newBlockState, source);
     }
 }

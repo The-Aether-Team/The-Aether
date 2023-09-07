@@ -5,24 +5,22 @@ import com.aetherteam.aether.block.construction.*;
 import com.aetherteam.aether.block.dungeon.*;
 import com.aetherteam.aether.block.miscellaneous.AetherFrostedIceBlock;
 import com.aetherteam.aether.block.miscellaneous.FacingPillarBlock;
-import com.aetherteam.aether.block.miscellaneous.UnstableObsidianBlock;
-import com.aetherteam.aether.blockentity.ChestMimicBlockEntity;
-import com.aetherteam.aether.blockentity.SkyrootBedBlockEntity;
-import com.aetherteam.aether.blockentity.TreasureChestBlockEntity;
 import com.aetherteam.aether.block.miscellaneous.FloatingBlock;
+import com.aetherteam.aether.block.miscellaneous.UnstableObsidianBlock;
 import com.aetherteam.aether.block.natural.*;
-import com.aetherteam.aether.block.utility.*;
-import com.aetherteam.aether.client.particle.AetherParticleTypes;
 import com.aetherteam.aether.block.portal.AetherPortalBlock;
+import com.aetherteam.aether.block.utility.*;
+import com.aetherteam.aether.blockentity.*;
+import com.aetherteam.aether.client.particle.AetherParticleTypes;
+import com.aetherteam.aether.effect.AetherEffects;
+import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.block.AmbrosiumBlockItem;
 import com.aetherteam.aether.item.block.BurnableBlockItem;
-import com.aetherteam.aether.item.block.EntityBlockItem;
-import com.aetherteam.aether.effect.AetherEffects;
-import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.mixin.mixins.common.accessor.FireBlockAccessor;
 import com.aetherteam.aether.world.treegrower.GoldenOakTree;
 import com.aetherteam.aether.world.treegrower.SkyrootTree;
+import com.aetherteam.nitrogen.item.block.EntityBlockItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -219,7 +217,7 @@ public class AetherBlocks {
     public static final RegistryObject<SlabBlock> ICESTONE_SLAB = register("icestone_slab",
             () -> new IcestoneSlabBlock(Block.Properties.copy(AetherBlocks.ICESTONE.get()).strength(0.5F, 6.0F)));
     public static final RegistryObject<SlabBlock> HOLYSTONE_BRICK_SLAB = register("holystone_brick_slab",
-            () -> new SlabBlock(Block.Properties.copy(AetherBlocks.HOLYSTONE_BRICKS.get()).strength(0.5F, 6.0F)));
+            () -> new SlabBlock(Block.Properties.copy(AetherBlocks.HOLYSTONE_BRICKS.get()).strength(2.0F, 6.0F)));
     public static final RegistryObject<SlabBlock> AEROGEL_SLAB = register("aerogel_slab",
             () -> new AerogelSlabBlock(Block.Properties.copy(AetherBlocks.AEROGEL.get()).strength(1.0F, 2000.0F).isViewBlocking(AetherBlocks::never)));
 
@@ -232,6 +230,16 @@ public class AetherBlocks {
 
     public static final RegistryObject<Block> FROSTED_ICE = BLOCKS.register("frosted_ice", () -> new AetherFrostedIceBlock(BlockBehaviour.Properties.of(Material.ICE).friction(0.98F).randomTicks().strength(0.5F).sound(SoundType.GLASS).noOcclusion().isValidSpawn((state, level, pos, entityType) -> entityType == EntityType.POLAR_BEAR)));
     public static final RegistryObject<Block> UNSTABLE_OBSIDIAN = BLOCKS.register("unstable_obsidian", () -> new UnstableObsidianBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).randomTicks().requiresCorrectToolForDrops().strength(50.0F, 1200.0F)));
+
+    public static void registerFuels() {
+        AltarBlockEntity.addItemEnchantingTime(AetherItems.AMBROSIUM_SHARD.get(), 250);
+        AltarBlockEntity.addItemEnchantingTime(AetherBlocks.AMBROSIUM_BLOCK.get(), 2500);
+        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE.get(), 400);
+        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE_SLAB.get(), 200);
+        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE_STAIRS.get(), 400);
+        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE_WALL.get(), 400);
+        IncubatorBlockEntity.addItemIncubatingTime(AetherBlocks.AMBROSIUM_TORCH.get(), 500);
+    }
 
     public static void registerPots() {
         FlowerPotBlock pot = (FlowerPotBlock) Blocks.FLOWER_POT;

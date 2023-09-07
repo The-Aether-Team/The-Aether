@@ -4,18 +4,22 @@ import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.capability.item.DroppedItem;
 import com.aetherteam.aether.client.AetherSoundEvents;
+import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.ai.goal.BeeGrowBerryBushGoal;
 import com.aetherteam.aether.entity.ai.goal.FoxEatBerryBushGoal;
-import com.aetherteam.aether.entity.monster.dungeon.boss.slider.Slider;
+import com.aetherteam.aether.entity.monster.Swet;
+import com.aetherteam.aether.entity.monster.dungeon.boss.Slider;
 import com.aetherteam.aether.entity.passive.FlyingCow;
-import com.aetherteam.aether.item.miscellaneous.bucket.SkyrootBucketItem;
+import com.aetherteam.aether.entity.passive.MountableAnimal;
 import com.aetherteam.aether.item.AetherItems;
+import com.aetherteam.aether.item.miscellaneous.bucket.SkyrootBucketItem;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.*;
@@ -27,21 +31,53 @@ import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
+import net.minecraftforge.event.entity.living.ShieldBlockEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 import java.util.Collection;
 import java.util.Optional;
 
 public class EntityHooks {
+    /**
+     * Adds a new goal to an entity.
+     * @param entity The {@link Entity}.
+     * @see com.aetherteam.aether.event.listeners.EntityListener#onEntityJoin(EntityJoinLevelEvent)
+     */
     public static void addGoals(Entity entity) {
         if (entity.getClass() == Bee.class) {
             Bee bee = (Bee) entity;
-            bee.goalSelector.addGoal(7, new BeeGrowBerryBushGoal(bee));
+            bee.getGoalSelector().addGoal(7, new BeeGrowBerryBushGoal(bee));
         } else if (entity.getClass() == Fox.class) {
             Fox fox = (Fox) entity;
             fox.goalSelector.addGoal(10, new FoxEatBerryBushGoal(fox, 1.2F, 12, 1));
         }
     }
 
+    /**
+     * Prevents dismounting Aether mounts in the air, and Swets when consumed.
+     * @param rider The {@link Entity} riding the mount.
+     * @param mount The mounted {@link Entity}.
+     * @param dismounting Whether the rider is trying to dismount, as a {@link Boolean}.
+     * @return Whether to prevent the rider from dismounting, as a {@link Boolean}.
+     */
+    public static boolean dismountPrevention(Entity rider, Entity mount, boolean dismounting) {
+        if (dismounting && rider.isShiftKeyDown()) {
+            return (mount instanceof MountableAnimal && !mount.isOnGround() && !mount.isInFluidType() && !mount.isPassenger()) || (mount instanceof Swet swet && !swet.isFriendly());
+        }
+        return false;
+    }
+
+    /**
+     * Launches a mount when it interacts with a blue aercloud. This is handled as an event to get around a vanilla bug with it not working from the {@link com.aetherteam.aether.block.natural.BlueAercloudBlock} class.
+     * @param player The passenger {@link Player}.
+     * @see com.aetherteam.aether.event.listeners.EntityListener#onRiderTick(TickEvent.PlayerTickEvent)
+     */
     public static void launchMount(Player player) {
         Entity mount = player.getVehicle();
         if (player.isPassenger() && mount != null) {
@@ -53,6 +89,13 @@ public class EntityHooks {
         }
     }
 
+    /**
+     * Handles milking cow entities with Skyroot Buckets.
+     * @param target The target {@link Entity} to milk.
+     * @param player The {@link Player} milking the target.
+     * @param hand The {@link InteractionHand} with the bucket item.
+     * @see com.aetherteam.aether.event.listeners.EntityListener#onInteractWithEntity(PlayerInteractEvent.EntityInteractSpecific)
+     */
     public static void skyrootBucketMilking(Entity target, Player player, InteractionHand hand) {
         if ((target instanceof Cow || target instanceof FlyingCow) && !((Animal) target).isBaby()) {
             ItemStack heldStack = player.getItemInHand(hand);
@@ -69,13 +112,21 @@ public class EntityHooks {
         }
     }
 
+    /**
+     * Handles picking up aquatic entities with a Skyroot Bucket. This is done by checking for the result bucket that contains the entity and replacing it with a Skyroot equivalent.
+     * @param target The target {@link Entity}.
+     * @param player The {@link Player}.
+     * @param hand The {@link InteractionHand} with the bucket item.
+     * @return The {@link Optional} {@link InteractionResult} from this interaction.
+     * @see com.aetherteam.aether.event.listeners.EntityListener#onInteractWithEntity(PlayerInteractEvent.EntityInteractSpecific)
+     */
     public static Optional<InteractionResult> pickupBucketable(Entity target, Player player, InteractionHand hand) {
         ItemStack heldStack = player.getItemInHand(hand);
         Optional<InteractionResult> interactionResult = Optional.empty();
-        if (heldStack.is(AetherItems.SKYROOT_WATER_BUCKET.get())) {
+        if (heldStack.is(AetherItems.SKYROOT_WATER_BUCKET.get())) { // Checks if the player is interacting with an entity with a Skyroot Water Bucket.
             if (target instanceof Bucketable bucketable && target instanceof LivingEntity livingEntity && livingEntity.isAlive()) {
                 ItemStack bucketStack = bucketable.getBucketItemStack();
-                bucketStack = SkyrootBucketItem.swapBucketType(bucketStack);
+                bucketStack = SkyrootBucketItem.swapBucketType(bucketStack); // Swaps the bucket stack that contains an entity with a Skyroot equivalent.
                 if (!bucketStack.isEmpty()) {
                     target.playSound(bucketable.getPickupSound(), 1.0F, 1.0F);
                     bucketable.saveToBucketTag(bucketStack);
@@ -95,6 +146,13 @@ public class EntityHooks {
         return interactionResult;
     }
 
+    /**
+     * Prevents an entity from being hooked with a Fishing Rod.
+     * @param projectileEntity The hook projectile {@link Entity}.
+     * @param rayTraceResult The {@link HitResult} of the projectile.
+     * @return Whether to prevent the hook interaction, as a {@link Boolean}.
+     * @see com.aetherteam.aether.event.listeners.EntityListener#onProjectileHitEntity(ProjectileImpactEvent)
+     */
     public static boolean preventEntityHooked(Entity projectileEntity, HitResult rayTraceResult) {
         if (rayTraceResult instanceof EntityHitResult entityHitResult) {
             return entityHitResult.getEntity().getType().is(AetherTags.Entities.UNHOOKABLE) && projectileEntity instanceof FishingHook;
@@ -102,10 +160,22 @@ public class EntityHooks {
         return false;
     }
 
+    /**
+     * Disallows blocking the Slider with a shield.
+     * @param source The {@link DamageSource} to block.
+     * @return Whether to disallow blocking, as a {@link Boolean}.
+     * @see com.aetherteam.aether.event.listeners.EntityListener#onShieldBlock(ShieldBlockEvent)
+     */
     public static boolean preventSliderShieldBlock(DamageSource source) {
         return source.getEntity() instanceof Slider;
     }
 
+    /**
+     * Prevents lightning from damaging dungeon keys.
+     * @param entity The {@link Entity}.
+     * @return Whether lightning hit a key item, as a {@link Boolean}.
+     * @see com.aetherteam.aether.event.listeners.EntityListener#onLightningStrike(EntityStruckByLightningEvent)
+     */
     public static boolean lightningHitKeys(Entity entity) {
         if (entity instanceof ItemEntity itemEntity) {
             return itemEntity.getItem().is(AetherTags.Items.DUNGEON_KEYS);
@@ -114,9 +184,26 @@ public class EntityHooks {
         }
     }
 
+    /**
+     * Tracks if items were dropped by a player's death.
+     * @param entity The {@link LivingEntity} that dropped the items.
+     * @param itemDrops The {@link Collection} of dropped {@link ItemEntity}s.
+     * @see com.aetherteam.aether.event.listeners.EntityListener#onPlayerDrops(LivingDropsEvent)
+     */
     public static void trackDrops(LivingEntity entity, Collection<ItemEntity> itemDrops) {
         if (entity instanceof Player player) {
             itemDrops.forEach(itemEntity -> DroppedItem.get(itemEntity).ifPresent(droppedItem -> droppedItem.setOwner(player)));
         }
+    }
+
+    /**
+     * Prevents an entity from being inflicted with {@link AetherEffects#INEBRIATION} if it has {@link AetherEffects#REMEDY} applied.
+     * @param livingEntity The {@link LivingEntity} that the effect is being applied to.
+     * @param appliedInstance The {@link MobEffectInstance}.
+     * @return Whether Inebriation application can be prevented.
+     * @see com.aetherteam.aether.event.listeners.EntityListener#onEffectApply(MobEffectEvent.Applicable)
+     */
+    public static boolean preventInebriation(LivingEntity livingEntity, MobEffectInstance appliedInstance) {
+        return livingEntity.hasEffect(AetherEffects.REMEDY.get()) && appliedInstance.getEffect() == AetherEffects.INEBRIATION.get();
     }
 }

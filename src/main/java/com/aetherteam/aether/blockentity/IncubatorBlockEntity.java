@@ -1,28 +1,36 @@
 package com.aetherteam.aether.blockentity;
 
-import javax.annotation.Nullable;
-
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.advancement.IncubationTrigger;
 import com.aetherteam.aether.inventory.menu.IncubatorMenu;
-
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.recipes.item.IncubationRecipe;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import net.minecraft.core.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.RecipeHolder;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -30,17 +38,8 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.WorldlyContainer;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
@@ -49,11 +48,14 @@ import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.tags.ITagManager;
 
+import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
- * Based on {@link AbstractFurnaceBlockEntity}.
+ * [CODE COPY] - {@link AbstractFurnaceBlockEntity}.<br><br>
+ * Has heavy modifications for Incubator-specific behavior.
  */
 public class IncubatorBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, RecipeHolder, StackedContentsCompatible {
 	private static final int[] SLOTS_NS = {0};
@@ -64,7 +66,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 	private int litDuration; // Total time it takes a fuel item to burn.
 	private int incubationProgress; // The current incubation progress time.
 	private int incubationTotalTime; // Total time a recipe takes to incubate.
-    private int x; // The x position of the block entity.
+	private int x; // The x position of the block entity.
 	private int y; // The y position of the block entity.
 	private int z; // The z position of the block entity.
 	protected final ContainerData dataAccess = new ContainerData() {
@@ -75,7 +77,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 				case 1 -> IncubatorBlockEntity.this.litDuration;
 				case 2 -> IncubatorBlockEntity.this.incubationProgress;
 				case 3 -> IncubatorBlockEntity.this.incubationTotalTime;
-                case 4 -> IncubatorBlockEntity.this.x;
+				case 4 -> IncubatorBlockEntity.this.x;
 				case 5 -> IncubatorBlockEntity.this.y;
 				case 6 -> IncubatorBlockEntity.this.z;
 				default -> 0;
@@ -278,16 +280,36 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 		return incubatingMap;
 	}
 
-	private static void addItemTagIncubatingTime(TagKey<Item> itemTag, int burnTime) {
+	public static void addItemIncubatingTime(ItemLike itemProvider, int burnTime) {
+		Item item = itemProvider.asItem();
+		getIncubatingMap().put(item, burnTime);
+	}
+
+	public static void addItemsIncubatingTime(ItemLike[] itemProviders, int burnTime) {
+		Stream.of(itemProviders).map(ItemLike::asItem).forEach((item) -> getIncubatingMap().put(item, burnTime));
+	}
+
+	public static void addItemTagIncubatingTime(TagKey<Item> itemTag, int burnTime) {
 		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
 		if (tags != null) {
 			tags.getTag(itemTag).stream().forEach((item) -> getIncubatingMap().put(item, burnTime));
 		}
 	}
 
-	public static void addItemIncubatingTime(ItemLike itemProvider, int burnTime) {
+	public static void removeItemIncubatingTime(ItemLike itemProvider) {
 		Item item = itemProvider.asItem();
-		getIncubatingMap().put(item, burnTime);
+		getIncubatingMap().remove(item);
+	}
+
+	public static void removeItemsIncubatingTime(ItemLike[] itemProviders) {
+		Stream.of(itemProviders).map(ItemLike::asItem).forEach((item) -> getIncubatingMap().remove(item));
+	}
+
+	public static void removeItemTagIncubatingTime(TagKey<Item> itemTag) {
+		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
+		if (tags != null) {
+			tags.getTag(itemTag).stream().forEach((item) -> getIncubatingMap().remove(item));
+		}
 	}
 
 	public void setPlayer(ServerPlayer player) {

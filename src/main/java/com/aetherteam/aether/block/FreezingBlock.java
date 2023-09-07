@@ -1,13 +1,14 @@
 package com.aetherteam.aether.block;
 
-import com.aetherteam.aether.event.events.FreezeEvent;
-import com.aetherteam.aether.event.dispatch.AetherEventDispatch;
+import com.aetherteam.aether.event.AetherEventDispatch;
+import com.aetherteam.aether.event.FreezeEvent;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
-import com.aetherteam.aether.recipe.BlockPropertyPair;
 import com.aetherteam.aether.recipe.recipes.block.IcestoneFreezableRecipe;
+import com.aetherteam.nitrogen.recipe.BlockPropertyPair;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import net.minecraft.commands.CommandFunction;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -15,11 +16,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
 
-import java.util.*;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public interface FreezingBlock extends FreezingBehavior<BlockState> {
     /**
@@ -31,17 +35,19 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
      * Table of cached {@link AetherRecipeTypes#ICESTONE_FREEZABLE} recipes, searchable with associated {@link Block}s and {@link BlockPropertyPair}s.
      */
     Table<Block, BlockPropertyPair, IcestoneFreezableRecipe> cachedBlocks = HashBasedTable.create();
+    List<Block> cachedResults = new ArrayList<>();
 
     /**
      * Freezes blocks from one block to another using the {@link AetherRecipeTypes#ICESTONE_FREEZABLE} recipe type.
      * @param level The {@link Level} to freeze the blocks in.
      * @param pos The {@link BlockPos} the freezing occurred at.
+     * @param origin The {@link BlockPos} of the source that is causing the freezing.
      * @param source The {@link ItemStack} that was the source of the freezing.
      * @param flag The {@link Integer} representing the block placement flag (see {@link net.minecraft.world.level.LevelWriter#setBlock(BlockPos, BlockState, int)}).
      * @return An {@link Integer} 1 if a block was successfully frozen, or a 0 if it wasn't.
      */
     @Override
-    default int freezeFromRecipe(Level level, BlockPos pos, BlockState source, int flag) {
+    default int freezeFromRecipe(Level level, BlockPos pos, BlockPos origin, BlockState source, int flag) {
         if (!level.isClientSide()) {
             BlockState oldBlockState = level.getBlockState(pos);
             Block oldBlock = oldBlockState.getBlock();
@@ -53,11 +59,12 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
                     if (freezableRecipe != null) {
                         BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
                         CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
-                        return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, function, source, flag);
+                        return this.freezeBlockAt(level, pos, origin, oldBlockState, newBlockState, function, source, flag);
                     }
                 }
             } else if (!oldBlockState.hasProperty(BlockStateProperties.WATERLOGGED)) { // Breaks a block before freezing if it has a FluidState attached by default (this is different from waterlogging for blocks like Kelp and Seagrass).
                 oldBlockState = fluidState.createLegacyBlock();
+                oldBlock = fluidState.createLegacyBlock().getBlock();
                 BlockPropertyPair pair = matchesCache(oldBlock, oldBlockState);
                 if (pair != null) {
                     IcestoneFreezableRecipe freezableRecipe = cachedBlocks.get(oldBlock, pair);
@@ -65,7 +72,7 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
                         level.destroyBlock(pos, true);
                         BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
                         CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
-                        return this.freezeBlockAt(level, pos, oldBlockState, newBlockState, function, source, flag);
+                        return this.freezeBlockAt(level, pos, origin, oldBlockState, newBlockState, function, source, flag);
                     }
                 }
             }
@@ -74,8 +81,8 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
     }
 
     @Override
-    default FreezeEvent onFreeze(LevelAccessor level, BlockPos pos, BlockState oldBlockState, BlockState newBlockState, BlockState source) {
-        return AetherEventDispatch.onBlockFreezeFluid(level, pos, oldBlockState, newBlockState, source);
+    default FreezeEvent onFreeze(LevelAccessor level, BlockPos pos, BlockPos origin, BlockState oldBlockState, BlockState newBlockState, BlockState source) {
+        return AetherEventDispatch.onBlockFreezeFluid(level, pos, origin, oldBlockState, newBlockState, source);
     }
 
     /**
@@ -90,6 +97,7 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
                     if (pairs != null) {
                         Arrays.stream(pairs).forEach(pair -> cachedBlocks.put(pair.block(), pair, freezableRecipe));
                     }
+                    cachedResults.add(freezableRecipe.getResult().block());
                 }
             }
         }
@@ -101,6 +109,7 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
      * @param blockState The {@link BlockState} to check.
      * @return A cached {@link BlockPropertyPair}, or null if there was no matching pair.
      */
+    @Nullable
     static BlockPropertyPair matchesCache(Block block, BlockState blockState) {
         if (cachedBlocks.containsRow(block)) {
             BlockPropertyPair pair = null;

@@ -4,17 +4,17 @@ import com.aetherteam.aether.entity.block.TntPresent;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.server.level.ServerLevel;
 
 public class SpawnTNT extends LootItemConditionalFunction {
     protected SpawnTNT(LootItemCondition[] conditions) {
@@ -32,7 +32,7 @@ public class SpawnTNT extends LootItemConditionalFunction {
         ServerLevel serverLevel = context.getLevel();
         Vec3 originVec = context.getParamOrNull(LootContextParams.ORIGIN);
         if (originVec != null) {
-            TntPresent tnt = new TntPresent(serverLevel, originVec.x(), originVec.y(), originVec.z());
+            TntPresent tnt = new TntPresent(serverLevel, originVec.x(), originVec.y(), originVec.z(), null);
             serverLevel.addFreshEntity(tnt);
             serverLevel.playSound(null, BlockPos.containing(originVec), SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F);
         }

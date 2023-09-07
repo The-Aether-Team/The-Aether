@@ -18,6 +18,9 @@ baguchan:
 - Fixes to the Dart layer renderers.
 - Fixes to Whirlwinds getting stuck vertically.
 
+carl-vbn:
+- Fixes to a rare Moa crash.
+
 CartoonishVillain:
 - Fixes to the Sentry.
 - Fixes to the Aechor Plant.
@@ -27,6 +30,7 @@ CDAGaming:
 
 darksonic300
 - Implementation of the is_cold damage type tag.
+- Changing aetherSurfaceRules() method to be public.
 
 FlashFyreMods
 - Implementation of more beta-accurate terrain generation for the Aether dimension.
@@ -51,6 +55,8 @@ Jonathing
 - Fixes to the Sun Altar GUI slider moving out of the interface.
 - Fixes to a null error with block entities.
 - Fixes to jarJar-built file not reobfuscating.
+- Fixes to Jade compatibility with boss bars.
+- Cleanup of mixin and event code relating to Valkyrie Tools' reach.
 
 Kelvin285
 - Implementation of the world preview feature for the Aether's main menu.

@@ -15,16 +15,18 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
  * The tunnel leading from the side of the island to the boss room.
  */
 public class GoldTunnel extends GoldDungeonPiece {
-
     public GoldTunnel(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
-        super(AetherStructurePieceTypes.GOLD_TUNNEL.get(), manager, name, makeSettings().setRotation(rotation), pos);
+        super(AetherStructurePieceTypes.GOLD_TUNNEL.get(), manager, name, GoldTunnel.makeSettings().setRotation(rotation), pos);
     }
 
     public GoldTunnel(StructurePieceSerializationContext context, CompoundTag tag) {
-        super(AetherStructurePieceTypes.GOLD_TUNNEL.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
+        super(AetherStructurePieceTypes.GOLD_TUNNEL.get(), tag, context.structureTemplateManager(), resourceLocation -> GoldTunnel.makeSettings());
     }
 
     private static StructurePlaceSettings makeSettings() {
-        return new StructurePlaceSettings().addProcessor(MOSSY_HOLYSTONE).addProcessor(NoReplaceProcessor.AIR).addProcessor(DoubleDropsProcessor.INSTANCE);
+        return new StructurePlaceSettings()
+                .addProcessor(MOSSY_HOLYSTONE)
+                .addProcessor(NoReplaceProcessor.AIR)
+                .addProcessor(DoubleDropsProcessor.INSTANCE);
     }
 }

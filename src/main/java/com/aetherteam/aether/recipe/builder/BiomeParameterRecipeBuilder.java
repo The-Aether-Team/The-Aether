@@ -1,10 +1,11 @@
 package com.aetherteam.aether.recipe.builder;
 
-import com.aetherteam.aether.recipe.BlockPropertyPair;
-import com.aetherteam.aether.recipe.BlockStateIngredient;
-import com.aetherteam.aether.recipe.recipes.block.AbstractBlockStateRecipe;
-import com.aetherteam.aether.recipe.serializer.BlockStateRecipeSerializer;
-import com.aetherteam.aether.util.BlockStateRecipeUtil;
+import com.aetherteam.nitrogen.recipe.BlockPropertyPair;
+import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
+import com.aetherteam.nitrogen.recipe.BlockStateRecipeUtil;
+import com.aetherteam.nitrogen.recipe.builder.BlockStateRecipeBuilder;
+import com.aetherteam.nitrogen.recipe.recipes.AbstractBlockStateRecipe;
+import com.aetherteam.nitrogen.recipe.serializer.BlockStateRecipeSerializer;
 import com.google.gson.JsonObject;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceKey;
@@ -20,7 +21,9 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class BiomeParameterRecipeBuilder extends BlockStateRecipeBuilder {
+    @Nullable
     private final ResourceKey<Biome> biomeKey;
+    @Nullable
     private final TagKey<Biome> biomeTag;
 
     public BiomeParameterRecipeBuilder(BlockPropertyPair result, BlockStateIngredient ingredient, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateRecipeSerializer<?> serializer) {
@@ -63,7 +66,9 @@ public class BiomeParameterRecipeBuilder extends BlockStateRecipeBuilder {
     }
 
     public static class Result extends BlockStateRecipeBuilder.Result {
+        @Nullable
         private final ResourceKey<Biome> biomeKey;
+        @Nullable
         private final TagKey<Biome> biomeTag;
 
         public Result(ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, RecipeSerializer<? extends AbstractBlockStateRecipe> serializer) {

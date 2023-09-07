@@ -1,6 +1,6 @@
 package com.aetherteam.aether.recipe.recipes.ban;
 
-import com.aetherteam.aether.recipe.BlockStateIngredient;
+import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
@@ -20,7 +20,9 @@ import java.util.function.Predicate;
 public abstract class AbstractPlacementBanRecipe<T, S extends Predicate<T>> implements Recipe<Container> {
     protected final RecipeType<?> type;
     protected final ResourceLocation id;
+    @Nullable
     private final ResourceKey<Biome> biomeKey;
+    @Nullable
     private final TagKey<Biome> biomeTag;
     protected final BlockStateIngredient bypassBlock;
     protected final S ingredient;

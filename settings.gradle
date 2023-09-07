@@ -3,10 +3,9 @@ pluginManagement {
         eachPlugin {
             var plugin = requested.id.toString()
 
-            switch (plugin) {
-                case 'org.spongepowered.mixin':
-                    useModule "org.spongepowered:mixingradle:${requested.version}"
-                    break
+            // ModGradle
+            if (plugin.startsWith('org.moddingx.modgradle.')) {
+                useModule "org.moddingx:ModGradle:${requested.version}"
             }
         }
     }
@@ -15,5 +14,10 @@ pluginManagement {
         maven { url = 'https://maven.minecraftforge.net/' }
         maven { url = 'https://repo.spongepowered.org/maven' }
         maven { url = 'https://maven.parchmentmc.org' }
+        maven { url = 'https://maven.moddingx.org' }
     }
+}
+
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
 }

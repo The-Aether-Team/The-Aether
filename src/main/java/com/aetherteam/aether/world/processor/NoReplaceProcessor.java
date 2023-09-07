@@ -16,27 +16,29 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * Use this processor for structure pieces that shouldn't replace certain blocks in the world.
- * An example of this being used is the bronze dungeon's tunnel not replacing air to blend in with the landscape.
+ * An example of this being used is the Bronze Dungeon's tunnel not replacing air to blend in with the landscape.
  */
 public class NoReplaceProcessor extends StructureProcessor {
     public static final NoReplaceProcessor AIR = new NoReplaceProcessor(Blocks.AIR);
-    public static final Codec<NoReplaceProcessor> CODEC = RecordCodecBuilder.create(builder ->
-        builder.group(ForgeRegistries.BLOCKS.getCodec().fieldOf("baseblock").forGetter(o -> o.baseBlock)
-        ).apply(builder, NoReplaceProcessor::new));
+
+    public static final Codec<NoReplaceProcessor> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            ForgeRegistries.BLOCKS.getCodec().fieldOf("baseblock").forGetter(o -> o.baseBlock)
+    ).apply(instance, NoReplaceProcessor::new));
 
     private final Block baseBlock;
+
     public NoReplaceProcessor(Block baseBlock) {
         this.baseBlock = baseBlock;
     }
 
     @Nullable
     @Override
-    public StructureTemplate.StructureBlockInfo process(LevelReader level, BlockPos pos, BlockPos pPos, StructureTemplate.StructureBlockInfo pBlockInfo, StructureTemplate.StructureBlockInfo pRelativeBlockInfo, StructurePlaceSettings pSettings, @Nullable StructureTemplate template) {
-        BlockState state = level.getBlockState(pRelativeBlockInfo.pos);
-        if (state.is(baseBlock)) {
-            return new StructureTemplate.StructureBlockInfo(pRelativeBlockInfo.pos, state, null);
+    public StructureTemplate.StructureBlockInfo process(LevelReader level, BlockPos origin, BlockPos centerBottom, StructureTemplate.StructureBlockInfo originalBlockInfo, StructureTemplate.StructureBlockInfo modifiedBlockInfo, StructurePlaceSettings settings, @Nullable StructureTemplate template) {
+        BlockState state = level.getBlockState(modifiedBlockInfo.pos);
+        if (state.is(this.baseBlock)) {
+            return new StructureTemplate.StructureBlockInfo(modifiedBlockInfo.pos, state, null);
         }
-        return pRelativeBlockInfo;
+        return modifiedBlockInfo;
     }
 
     @Override

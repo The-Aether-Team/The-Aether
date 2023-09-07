@@ -1,15 +1,16 @@
 package com.aetherteam.aether.block.construction;
 
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.HalfTransparentBlock;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.HalfTransparentBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class AerogelBlock extends HalfTransparentBlock {
+public class AerogelBlock extends HalfTransparentBlock implements AerogelCulling {
 	public AerogelBlock(Properties properties) {
 		super(properties);
 	}
@@ -41,12 +42,26 @@ public class AerogelBlock extends HalfTransparentBlock {
 	}
 
 	/**
-	 * Based on {@link net.minecraft.world.level.block.AbstractGlassBlock#getVisualShape(BlockState, BlockGetter, BlockPos, CollisionContext)}.<br><br>
+	 * [CODE COPY] - {@link net.minecraft.world.level.block.AbstractGlassBlock#getVisualShape(BlockState, BlockGetter, BlockPos, CollisionContext)}.<br><br>
 	 * Warning for "deprecation" is suppressed because the method is fine to override.
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getVisualShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return Shapes.empty();
+	}
+
+	/**
+	 * Skips rendering for Aerogel blocks that are neighboring this block, using {@link AerogelCulling#shouldHideNeighboringAerogelFace(BlockGetter, BlockPos, BlockState, BlockState, Direction)}.
+	 * @param level The {@link Level} that the block is in.
+	 * @param pos The {@link BlockPos} of this block.
+	 * @param state The {@link BlockState} of the block.
+	 * @param neighborState The {@link BlockState} of the neighboring block.
+	 * @param dir The {@link Direction} to the neighboring state.
+	 * @return Whether the neighbor block should skip rendering the neighboring face, as a {@link Boolean}.
+	 */
+	@Override
+	public boolean hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState, Direction dir) {
+		return AerogelCulling.super.shouldHideNeighboringAerogelFace(level, pos, state, neighborState, dir);
 	}
 }

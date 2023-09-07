@@ -1,17 +1,13 @@
 package com.aetherteam.aether.data.providers;
 
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.loot.functions.DoubleDrops;
 import com.aetherteam.aether.loot.functions.SpawnTNT;
 import com.aetherteam.aether.loot.functions.SpawnXP;
 import com.aetherteam.aether.mixin.mixins.common.accessor.BlockLootAccessor;
-import net.minecraft.advancements.critereon.BlockPredicate;
+import com.aetherteam.nitrogen.data.providers.NitrogenBlockLootSubProvider;
 import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.advancements.critereon.LocationPredicate;
-import net.minecraft.core.BlockPos;
-import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -27,21 +23,19 @@ import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.CopyNameFunction;
 import net.minecraft.world.level.storage.loot.functions.CopyNbtFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-import net.minecraft.world.level.storage.loot.predicates.*;
+import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.minecraftforge.common.Tags;
 
 import java.util.Set;
 
-public abstract class AetherBlockLootSubProvider extends BlockLootSubProvider {
+public abstract class AetherBlockLootSubProvider extends NitrogenBlockLootSubProvider {
     public AetherBlockLootSubProvider(Set<Item> items, FeatureFlagSet flags) {
         super(items, flags);
-    }
-
-    public void dropNone(Block block) {
-        this.add(block, noDrop());
     }
 
     public void dropDoubleWithSilk(Block block, ItemLike drop) {
@@ -54,10 +48,6 @@ public abstract class AetherBlockLootSubProvider extends BlockLootSubProvider {
 
     public void dropDoubleWithFortune(Block block, Item drop) {
         this.add(block, (result) -> this.droppingDoubleItemsWithFortune(result, drop));
-    }
-
-    public void dropWithFortune(Block block, Item drop) {
-        this.add(block, (result) -> this.createOreDrop(result, drop));
     }
 
     public LootTable.Builder droppingDoubleWithSilkTouch(Block block, ItemLike noSilkTouch) {
@@ -133,26 +123,10 @@ public abstract class AetherBlockLootSubProvider extends BlockLootSubProvider {
                 .apply(DoubleDrops.builder());
     }
 
-    public LootTable.Builder droppingNameableBlockEntityTable(Block block) {
-        return LootTable.lootTable().withPool(this.applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                .add(LootItem.lootTableItem(block)
-                        .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))))
-        );
-    }
-
     public LootTable.Builder droppingBerryBush(Block block, Block stem, Item drop) {
         return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                 .add(this.applyExplosionDecay(block, LootItem.lootTableItem(drop)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))
-                                .when(LocationCheck.checkLocation(
-                                        LocationPredicate.Builder.location().setBlock(
-                                                BlockPredicate.Builder.block().of(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get()).build()),
-                                        new BlockPos(0, -1, 0)).invert()))
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 4.0F))
-                                .when(LocationCheck.checkLocation(
-                                        LocationPredicate.Builder.location().setBlock(
-                                                BlockPredicate.Builder.block().of(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get()).build()),
-                                        new BlockPos(0, -1, 0)))))
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
                         .apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE)))
                 .when(BlockLootAccessor.aether$hasSilkTouch().invert())
                 .apply(DoubleDrops.builder())
@@ -189,9 +163,5 @@ public abstract class AetherBlockLootSubProvider extends BlockLootSubProvider {
                 .add(LootItem.lootTableItem(block))
                 .when(BlockLootAccessor.aether$hasSilkTouch())
         );
-    }
-
-    protected static LootTable.Builder createForgeSilkTouchOrShearsDispatchTable(Block pBlock, LootPoolEntryContainer.Builder<?> pBuilder) {
-        return createSelfDropDispatchTable(pBlock, MatchTool.toolMatches(ItemPredicate.Builder.item().of(Tags.Items.SHEARS)).or(HAS_SILK_TOUCH), pBuilder);
     }
 }

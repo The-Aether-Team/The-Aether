@@ -10,28 +10,29 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
-import net.minecraft.world.level.levelgen.structure.templatesystem.*;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 /**
- * A normal bronze dungeon room or hallway.
+ * A normal Bronze Dungeon room or hallway.
  */
 public class BronzeDungeonRoom extends BronzeDungeonPiece {
     public BronzeDungeonRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation) {
-        super(AetherStructurePieceTypes.BRONZE_DUNGEON_ROOM.get(), manager, name, makeSettings().setRotation(rotation), pos);
+        super(AetherStructurePieceTypes.BRONZE_DUNGEON_ROOM.get(), manager, name, BronzeDungeonRoom.makeSettings().setRotation(rotation), pos);
     }
 
     public BronzeDungeonRoom(StructurePieceSerializationContext context, CompoundTag tag) {
-        super(AetherStructurePieceTypes.BRONZE_DUNGEON_ROOM.get(), tag, context.structureTemplateManager(), resourceLocation -> makeSettings());
+        super(AetherStructurePieceTypes.BRONZE_DUNGEON_ROOM.get(), tag, context.structureTemplateManager(), resourceLocation -> BronzeDungeonRoom.makeSettings());
     }
 
     static StructurePlaceSettings makeSettings() {
         return new StructurePlaceSettings()
-                .addProcessor(BRONZE_DUNGEON_STONE)
-                .addProcessor(TRAPPED_CARVED_STONE)
-                .addProcessor(AVOID_DUNGEONS)
+                .addProcessor(BronzeDungeonPiece.BRONZE_DUNGEON_STONE)
+                .addProcessor(BronzeDungeonPiece.TRAPPED_CARVED_STONE)
+                .addProcessor(BronzeDungeonPiece.AVOID_DUNGEONS)
                 .addProcessor(DoubleDropsProcessor.INSTANCE);
     }
 
@@ -39,14 +40,8 @@ public class BronzeDungeonRoom extends BronzeDungeonPiece {
     protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox box) {
         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
         if (name.equals("Chest")) {
-            if (random.nextInt(5) > 1) {
-                level.setBlock(pos, Blocks.CHEST.defaultBlockState(), 2);
-                if (level.getBlockEntity(pos) instanceof ChestBlockEntity chest) {
-                    chest.setLootTable(AetherLoot.BRONZE_DUNGEON, random.nextLong());
-                }
-            } else {
-                level.setBlock(pos, AetherBlocks.CHEST_MIMIC.get().defaultBlockState(), 1 | 2);
-            }
+            BlockState state = (random.nextInt(5) > 1 ? Blocks.CHEST : AetherBlocks.CHEST_MIMIC.get()).defaultBlockState();
+            this.createChest(level, box, random, pos, AetherLoot.BRONZE_DUNGEON, state);
         }
     }
 }

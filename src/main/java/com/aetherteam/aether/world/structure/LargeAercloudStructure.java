@@ -1,6 +1,6 @@
 package com.aetherteam.aether.world.structure;
 
-import com.aetherteam.aether.world.structurepiece.LegacyCloudBed;
+import com.aetherteam.aether.world.structurepiece.LargeAercloudChunk;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
@@ -14,42 +14,45 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 
-import javax.annotation.Nonnull;
 import java.util.*;
 
 public class LargeAercloudStructure extends Structure {
     public static final Codec<LargeAercloudStructure> CODEC = RecordCodecBuilder.create((p_229075_) -> p_229075_.group(settingsCodec(p_229075_),
             BlockStateProvider.CODEC.fieldOf("blocks").forGetter(structure -> structure.blocks),
-            Codec.INT.fieldOf("size").forGetter(structure -> structure.size)
+            Codec.INT.fieldOf("size").forGetter(structure -> structure.size),
+            Codec.INT.fieldOf("rangeY").forGetter(o -> o.rangeY)
     ).apply(p_229075_, LargeAercloudStructure::new));
+
     private final BlockStateProvider blocks;
     private final int size;
+    private final int rangeY;
 
-    public LargeAercloudStructure(Structure.StructureSettings settings, BlockStateProvider blocks, int size) {
+    public LargeAercloudStructure(StructureSettings settings, BlockStateProvider blocks, int size, int rangeY) {
         super(settings);
         this.blocks = blocks;
         this.size = size;
+        this.rangeY = rangeY;
     }
 
-    @Nonnull
     @Override
-    public Optional<GenerationStub> findGenerationPoint(@Nonnull Structure.GenerationContext context) {
-        return onTopOfChunkCenter(context, Heightmap.Types.WORLD_SURFACE_WG, (builder) -> generatePieces(builder, context, this.blocks, this.size));
+    public Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
+        return Structure.onTopOfChunkCenter(context, Heightmap.Types.WORLD_SURFACE_WG, (builder) -> generatePieces(builder, context, this.blocks, this.size, this.rangeY));
     }
 
-    private static void generatePieces(StructurePiecesBuilder builder, Structure.GenerationContext context, BlockStateProvider blocks, int size) {
+    private static void generatePieces(StructurePiecesBuilder builder, GenerationContext context, BlockStateProvider blocks, int size, int rangeY) {
         Map<ChunkPos, Set<BlockPos>> chunks = new LinkedHashMap<>();
         Set<BlockPos> positions = new LinkedHashSet<>();
 
         WorldgenRandom random = context.random();
         boolean direction = random.nextBoolean();
-        int initialY = context.heightAccessor().getMinBuildHeight() + context.random().nextInt(32);
+        int initialY = context.heightAccessor().getMinBuildHeight() + context.random().nextInt(rangeY);
         int x = context.chunkPos().getMinBlockX();
         int y = initialY;
         int z = context.chunkPos().getMinBlockZ();
         int xTendency = random.nextInt(3) - 1;
         int zTendency = random.nextInt(3) - 1;
 
+        // Sets up what positions cloud blocks should be able to be placed. The code is taken from older versions.
         for (int amount = 0; amount < 64; ++amount) {
             x += random.nextInt(3) - 1 + xTendency;
             y += random.nextInt(10) == 0 ? random.nextInt(3) - 1 : 0;
@@ -68,21 +71,22 @@ public class LargeAercloudStructure extends Structure {
             }
         }
 
+        // Checks if positions are within their chunk.
         chunks.forEach(((chunkPos, blockPosSet) -> {
             Set<BlockPos> withinChunk = new LinkedHashSet<>(positions);
             withinChunk.removeIf(pos -> !(new ChunkPos(pos).equals(chunkPos)));
             blockPosSet.addAll(withinChunk);
         }));
 
+        // Creates a LargeAercloudChunk piece for each chunk that there are blocks in. The pieces handle the actual Aercloud block placement.
         int finalY = y;
         Direction orientation = Direction.Plane.HORIZONTAL.getRandomDirection(context.random());
         chunks.forEach((chunkPos, blockPosSet) -> {
             BoundingBox boundingBox = new BoundingBox(chunkPos.getMinBlockX(), Math.max(initialY - 16, 0), chunkPos.getMinBlockZ(), chunkPos.getMaxBlockX(), finalY + 16, chunkPos.getMaxBlockZ());
-            builder.addPiece(new LegacyCloudBed(blockPosSet, blocks, boundingBox, orientation));
+            builder.addPiece(new LargeAercloudChunk(blockPosSet, blocks, boundingBox, orientation));
         });
     }
 
-    @Nonnull
     @Override
     public StructureType<?> type() {
         return AetherStructureTypes.LARGE_AERCLOUD.get();

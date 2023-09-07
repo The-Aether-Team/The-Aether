@@ -5,14 +5,15 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.world.entity.Entity;
 
-import javax.annotation.Nonnull;
-
 public class ValkyrieWingsModel<T extends Entity> extends EntityModel<T> {
-    public ModelPart rightWing;
-    public ModelPart leftWing;
+    public final ModelPart rightWing;
+    public final ModelPart leftWing;
 
     public ValkyrieWingsModel(ModelPart root) {
         this.rightWing = root.getChild("right_wing");
@@ -28,10 +29,10 @@ public class ValkyrieWingsModel<T extends Entity> extends EntityModel<T> {
     }
 
     @Override
-    public void setupAnim(@Nonnull T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) { }
+    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) { }
 
     @Override
-    public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         this.rightWing.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
         this.leftWing.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
     }

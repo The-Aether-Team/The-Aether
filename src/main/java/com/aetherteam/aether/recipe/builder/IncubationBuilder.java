@@ -78,6 +78,7 @@ public class IncubationBuilder implements RecipeBuilder {
         private final String group;
         private final Ingredient ingredient;
         private final EntityType<?> entity;
+        @Nullable
         private final CompoundTag tag;
         private final int incubationTime;
         private final Advancement.Builder advancement;

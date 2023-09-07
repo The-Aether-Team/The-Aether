@@ -11,20 +11,18 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 
-import javax.annotation.Nonnull;
-
 public abstract class BipedBirdModel<T extends Entity & WingedBird & NotGrounded> extends EntityModel<T> {
-    public ModelPart head;
-    public ModelPart jaw;
-    public ModelPart neck;
-    public ModelPart body;
-    public ModelPart rightLeg;
-    public ModelPart leftLeg;
-    public ModelPart rightWing;
-    public ModelPart leftWing;
-    public ModelPart rightTailFeather;
-    public ModelPart middleTailFeather;
-    public ModelPart leftTailFeather;
+    public final ModelPart head;
+    public final ModelPart jaw;
+    public final ModelPart neck;
+    public final ModelPart body;
+    public final ModelPart rightLeg;
+    public final ModelPart leftLeg;
+    public final ModelPart rightWing;
+    public final ModelPart leftWing;
+    public final ModelPart rightTailFeather;
+    public final ModelPart middleTailFeather;
+    public final ModelPart leftTailFeather;
 
     public BipedBirdModel(ModelPart root) {
         this.head = root.getChild("head");
@@ -46,7 +44,7 @@ public abstract class BipedBirdModel<T extends Entity & WingedBird & NotGrounded
         PartDefinition head = partDefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 13).addBox(-2.0F, -4.0F, -6.0F, 4.0F, 4.0F, 8.0F, CubeDeformation.NONE, 0.5F, 0.5F), PartPose.offset(0.0F, 8.0F, -4.0F));
         head.addOrReplaceChild("jaw", CubeListBuilder.create().texOffs(24, 13).addBox(-2.0F, -1.0F, -6.0F, 4.0F, 1.0F, 8.0F, new CubeDeformation(-0.1F), 0.5F, 0.5F), PartPose.ZERO);
         head.addOrReplaceChild("neck", CubeListBuilder.create().texOffs( 44, 0).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 6.0F, 2.0F, CubeDeformation.NONE, 0.5F, 0.5F), PartPose.ZERO);
-        PartDefinition body = partDefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -3.0F, 0.0F, 6.0F, 8.0F, 5.0F, cube, 0.5F, 0.5F), PartPose.offsetAndRotation(0.0F, 16.0F, 0.0F, (float) (Math.PI / 2.0F), 0.0F, 0.0F));
+        PartDefinition body = partDefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -3.0F, 0.0F, 6.0F, 8.0F, 5.0F, cube, 0.5F, 0.5F), PartPose.offsetAndRotation(0.0F, 16.0F, 0.0F, Mth.HALF_PI, 0.0F, 0.0F));
         partDefinition.addOrReplaceChild("right_leg", CubeListBuilder.create().texOffs(22, 0).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 9.0F, 2.0F, CubeDeformation.NONE, 0.5F, 0.5F), PartPose.offset(-2.0F, 16.0F, 1.0F));
         partDefinition.addOrReplaceChild("left_leg", CubeListBuilder.create().texOffs(22, 0).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 9.0F, 2.0F, CubeDeformation.NONE, 0.5F, 0.5F), PartPose.offset(2.0F, 16.0F, 1.0F));
         body.addOrReplaceChild("right_wing", CubeListBuilder.create().texOffs(52, 0).addBox(-1.0F, 0.0F, -2.0F, 1.0F, 8.0F, 4.0F, CubeDeformation.NONE, 0.5F, 0.5F), PartPose.offset(-3.001F, -3.0F, 3.0F));
@@ -58,15 +56,15 @@ public abstract class BipedBirdModel<T extends Entity & WingedBird & NotGrounded
     }
 
     @Override
-    public void setupAnim(@Nonnull T bipedBird, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.head.xRot = headPitch * (float) (Math.PI / 180.0F);
-        this.head.yRot = netHeadYaw * (float) (Math.PI / 180.0F);
+    public void setupAnim(T bipedBird, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        this.head.xRot = headPitch * Mth.DEG_TO_RAD;
+        this.head.yRot = netHeadYaw * Mth.DEG_TO_RAD;
         this.neck.xRot = -this.head.xRot;
 
         if (!bipedBird.isEntityOnGround()) {
             this.rightWing.setPos(-3.001F, 0.0F, 4.0F);
             this.leftWing.setPos(3.001F, 0.0F, 4.0F);
-            this.rightWing.xRot = (float) -(Math.PI / 2.0F);
+            this.rightWing.xRot = -Mth.HALF_PI;
             this.leftWing.xRot = this.rightWing.xRot;
             this.rightLeg.xRot = 0.6F;
             this.leftLeg.xRot = this.rightLeg.xRot;
@@ -77,7 +75,7 @@ public abstract class BipedBirdModel<T extends Entity & WingedBird & NotGrounded
             this.rightWing.xRot = 0.0F;
             this.leftWing.xRot = 0.0F;
             this.rightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-            this.leftLeg.xRot = Mth.cos((float) (limbSwing * 0.6662F + Math.PI)) * 1.4F * limbSwingAmount;
+            this.leftLeg.xRot = Mth.cos(limbSwing * 0.6662F + Mth.PI) * 1.4F * limbSwingAmount;
             this.rightWing.yRot = 0.0F;
         }
 
@@ -86,12 +84,12 @@ public abstract class BipedBirdModel<T extends Entity & WingedBird & NotGrounded
 
     public float setupWingsAnimation(T bipedBird, float partialTicks) {
         float rotVal = Mth.lerp(partialTicks, bipedBird.getPrevWingRotation(), bipedBird.getWingRotation());
-        float destVal = Mth.lerp(partialTicks, bipedBird.getPrevDestPos(), bipedBird.getDestPos());
+        float destVal = Mth.lerp(partialTicks, bipedBird.getPrevWingDestPos(), bipedBird.getWingDestPos());
         return (Mth.sin(rotVal * 0.225F) + 1.0F) * destVal;
     }
 
     @Override
-    public void renderToBuffer(@Nonnull PoseStack poseStack, @Nonnull VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         this.head.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
         this.body.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);
         this.rightTailFeather.render(poseStack, consumer, packedLight, packedOverlay, red, green, blue, alpha);

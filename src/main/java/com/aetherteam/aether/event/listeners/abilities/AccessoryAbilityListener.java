@@ -12,7 +12,6 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -54,6 +53,8 @@ public class AccessoryAbilityListener {
 
     /**
      * Makes the wearer invisible to other mobs' targeting if wearing an Invisibility Cloak.
+     * @see com.aetherteam.aether.event.hooks.AbilityHooks.AccessoryHooks#preventTargeting(LivingEntity, Entity)
+     * @see com.aetherteam.aether.event.hooks.AbilityHooks.AccessoryHooks#recentlyAttackedWithInvisibility(LivingEntity, Entity)
      */
     @SubscribeEvent
     public static void onTargetSet(LivingEvent.LivingVisibilityEvent event) {
@@ -63,7 +64,7 @@ public class AccessoryAbilityListener {
             event.modifyVisibility(0.0);
         }
         if (AbilityHooks.AccessoryHooks.recentlyAttackedWithInvisibility(livingEntity, lookingEntity)) {
-            event.modifyVisibility(50);
+            event.modifyVisibility(1.0);
         }
     }
 
@@ -88,11 +89,5 @@ public class AccessoryAbilityListener {
         if (AbilityHooks.AccessoryHooks.preventMagmaDamage(livingEntity, damageSource)) {
             event.setCanceled(true);
         }
-    }
-
-    @SubscribeEvent
-    public static void onProjectileShoot(EntityJoinLevelEvent event) {
-        Entity entity = event.getEntity();
-        AbilityHooks.AccessoryHooks.setShoot(entity);
     }
 }

@@ -3,20 +3,15 @@ package com.aetherteam.aether.client.particle;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-
-import javax.annotation.Nonnull;
 
 public class DungeonBlockOverlayParticle extends TextureSheetParticle {
-    protected DungeonBlockOverlayParticle(ClientLevel worldIn, double xCoordIn, double yCoordIn, double zCoordIn) {
-        super(worldIn, xCoordIn, yCoordIn, zCoordIn);
+    public DungeonBlockOverlayParticle(ClientLevel level, double xCoord, double yCoord, double zCoord) {
+        super(level, xCoord, yCoord, zCoord);
         this.gravity = 0.0F;
         this.lifetime = 80;
         this.hasPhysics = false;
     }
 
-    @Nonnull
     @Override
     public ParticleRenderType getRenderType() {
         return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
@@ -27,18 +22,11 @@ public class DungeonBlockOverlayParticle extends TextureSheetParticle {
         return 0.5F;
     }
 
-    @OnlyIn(Dist.CLIENT)
-    public static class Factory implements ParticleProvider<SimpleParticleType> {
-        private final SpriteSet spriteSet;
-
-        public Factory(SpriteSet spriteSetIn) {
-            this.spriteSet = spriteSetIn;
-        }
-
+    public record Factory(SpriteSet spriteSet) implements ParticleProvider<SimpleParticleType> {
         @Override
-        public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            DungeonBlockOverlayParticle particle = new DungeonBlockOverlayParticle(worldIn, x, y, z);
-            particle.pickSprite(this.spriteSet);
+        public Particle createParticle(SimpleParticleType particleType, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+            DungeonBlockOverlayParticle particle = new DungeonBlockOverlayParticle(level, x, y, z);
+            particle.pickSprite(this.spriteSet());
             return particle;
         }
     }

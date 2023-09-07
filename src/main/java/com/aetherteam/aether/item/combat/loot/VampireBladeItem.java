@@ -2,17 +2,16 @@ package com.aetherteam.aether.item.combat.loot;
 
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.capability.player.AetherPlayerCapability;
-import com.aetherteam.aether.item.combat.AetherItemTiers;
 import com.aetherteam.aether.item.AetherItems;
-import com.aetherteam.aether.item.combat.AetherSwordItem;
-import com.aetherteam.aether.util.EquipmentUtil;
+import com.aetherteam.aether.item.EquipmentUtil;
+import com.aetherteam.aether.item.combat.AetherItemTiers;
 import net.minecraft.world.entity.LivingEntity;
-
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
 
-public class VampireBladeItem extends AetherSwordItem {
+public class VampireBladeItem extends SwordItem {
     public VampireBladeItem() {
         super(AetherItemTiers.VAMPIRE, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
     }

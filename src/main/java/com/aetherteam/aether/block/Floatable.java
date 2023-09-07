@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.function.Predicate;
 
 /**
- * Copy of {@link net.minecraft.world.level.block.Fallable}.
+ * [CODE COPY] - {@link net.minecraft.world.level.block.Fallable}.
  */
 public interface Floatable {
     default void onCollide(Level level, BlockPos pos, BlockState state, BlockState oldState, FloatingBlockEntity floatingBlock) { }

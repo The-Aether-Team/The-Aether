@@ -1,18 +1,19 @@
 package com.aetherteam.aether;
 
 import com.aetherteam.aether.advancement.AetherAdvancementTriggers;
+import com.aetherteam.aether.api.AetherMenus;
 import com.aetherteam.aether.api.AetherMoaTypes;
-import com.aetherteam.aether.block.dispenser.DispenseUsableItemBehavior;
-import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.block.AetherCauldronInteractions;
 import com.aetherteam.aether.block.dispenser.AetherDispenseBehaviors;
-import com.aetherteam.aether.client.particle.AetherParticleTypes;
-import com.aetherteam.aether.client.AetherSoundEvents;
-import com.aetherteam.aether.blockentity.IncubatorBlockEntity;
 import com.aetherteam.aether.block.dispenser.DispenseDartBehavior;
-import com.aetherteam.aether.blockentity.AltarBlockEntity;
-import com.aetherteam.aether.blockentity.FreezerBlockEntity;
+import com.aetherteam.aether.block.dispenser.DispenseUsableItemBehavior;
+import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
+import com.aetherteam.aether.client.AetherSoundEvents;
+import com.aetherteam.aether.client.CombinedPackResources;
+import com.aetherteam.aether.client.TriviaGenerator;
+import com.aetherteam.aether.client.particle.AetherParticleTypes;
+import com.aetherteam.aether.command.SunAltarWhitelist;
 import com.aetherteam.aether.data.generators.*;
 import com.aetherteam.aether.data.generators.tags.*;
 import com.aetherteam.aether.data.resources.AetherMobCategory;
@@ -21,23 +22,20 @@ import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.ai.AetherBlockPathTypes;
 import com.aetherteam.aether.entity.ai.brain.memory.AetherMemoryModuleTypes;
 import com.aetherteam.aether.entity.ai.brain.sensing.AetherSensorTypes;
-import com.aetherteam.aether.event.AetherGameEvents;
-import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
 import com.aetherteam.aether.inventory.AetherRecipeBookTypes;
+import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.loot.conditions.AetherLootConditions;
 import com.aetherteam.aether.loot.functions.AetherLootFunctions;
 import com.aetherteam.aether.loot.modifiers.AetherLootModifiers;
+import com.aetherteam.aether.network.AetherPacketHandler;
+import com.aetherteam.aether.perk.types.MoaSkins;
 import com.aetherteam.aether.recipe.AetherRecipeSerializers;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.world.AetherPoi;
-import com.aetherteam.aether.world.foliageplacer.AetherFoliagePlacerTypes;
 import com.aetherteam.aether.world.feature.AetherFeatures;
+import com.aetherteam.aether.world.foliageplacer.AetherFoliagePlacerTypes;
 import com.aetherteam.aether.world.placementmodifier.AetherPlacementModifiers;
-import com.aetherteam.aether.network.AetherPacketHandler;
-import com.aetherteam.aether.client.CombinedPackResources;
-import com.aetherteam.aether.api.SunAltarWhitelist;
-import com.aetherteam.aether.api.TriviaGenerator;
 import com.aetherteam.aether.world.processor.AetherStructureProcessors;
 import com.aetherteam.aether.world.structure.AetherStructureTypes;
 import com.aetherteam.aether.world.structurepiece.AetherStructurePieceTypes;
@@ -45,6 +43,7 @@ import com.aetherteam.aether.world.treedecorator.AetherTreeDecoratorTypes;
 import com.aetherteam.aether.world.trunkplacer.AetherTrunkPlacerTypes;
 import com.google.common.reflect.Reflection;
 import com.mojang.logging.LogUtils;
+import net.minecraft.ChatFormatting;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.cauldron.CauldronInteraction;
@@ -59,18 +58,22 @@ import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.ComposterBlock;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.*;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.resource.PathPackResources;
 import org.slf4j.Logger;
@@ -80,9 +83,9 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.UnaryOperator;
 
 @Mod(Aether.MODID)
-@Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Aether {
     public static final String MODID = "aether";
     public static final Logger LOGGER = LogUtils.getLogger();
@@ -130,6 +133,11 @@ public class Aether {
             register.register(modEventBus);
         }
 
+        DistExecutor.unsafeRunForDist(() -> () -> {
+            AetherMenus.MENUS.register(modEventBus);
+            return true;
+        }, () -> () -> false);
+
         AetherBlocks.registerWoodTypes(); // Registered this early to avoid bugs with WoodTypes and signs.
 
         DIRECTORY.toFile().mkdirs(); // Ensures the Aether's config folder is generated.
@@ -149,9 +157,10 @@ public class Aether {
 
         AetherAdvancementTriggers.init();
 
-        this.registerFuels();
+        MoaSkins.registerMoaSkins();
 
         event.enqueueWork(() -> {
+            AetherBlocks.registerFuels();
             AetherBlocks.registerPots();
             AetherBlocks.registerFlammability();
             AetherBlocks.registerFluidInteractions();
@@ -228,6 +237,8 @@ public class Aether {
 
         // Data Packs
         this.setupCuriosTagsPack(event);
+        this.setupTemporaryFreezingPack(event);
+        this.setupRuinedPortalPack(event);
     }
 
     /**
@@ -268,17 +279,17 @@ public class Aether {
         Pack.Info info = Pack.readPackInfo(name, resourcesSupplier);
         if (info != null) {
             event.addRepositorySource((source) ->
-                    source.accept(Pack.create(
-                            name,
-                            Component.translatable(title),
-                            false,
-                            resourcesSupplier,
-                            info,
-                            PackType.CLIENT_RESOURCES,
-                            Pack.Position.TOP,
-                            false,
-                            PackSource.BUILT_IN)
-                    ));
+                source.accept(Pack.create(
+                    name,
+                    Component.translatable(title),
+                    false,
+                    resourcesSupplier,
+                    info,
+                    PackType.CLIENT_RESOURCES,
+                    Pack.Position.TOP,
+                    false,
+                    PackSource.BUILT_IN)
+                ));
         }
     }
 
@@ -292,17 +303,42 @@ public class Aether {
             PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
             PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.ctm.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
             event.addRepositorySource((source) ->
-                    source.accept(Pack.create(
-                        "builtin/aether_ctm_fix",
-                            Component.translatable("pack.aether.ctm.title"),
-                            true,
-                            (string) -> pack,
-                            new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
-                            PackType.CLIENT_RESOURCES,
-                            Pack.Position.TOP,
-                            false,
-                            PackSource.BUILT_IN)
-                ));
+                source.accept(Pack.create(
+                "builtin/aether_ctm_fix",
+                    Component.translatable("pack.aether.ctm.title"),
+                    true,
+                    (string) -> pack,
+                    new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
+                    PackType.CLIENT_RESOURCES,
+                    Pack.Position.TOP,
+                    false,
+                    PackSource.BUILT_IN)
+                )
+            );
+        }
+    }
+
+    /**
+     * A built-in resource pack to change textures for color blindness accessibility.
+     */
+    private void setupColorblindPack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.CLIENT_RESOURCES) {
+            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/colorblind");
+            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
+            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.colorblind.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
+            event.addRepositorySource((source) ->
+                source.accept(Pack.create(
+                    "builtin/aether_colorblind",
+                    Component.translatable("pack.aether.colorblind.title"),
+                    false,
+                    (string) -> pack,
+                    new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
+                    PackType.CLIENT_RESOURCES,
+                    Pack.Position.TOP,
+                    false,
+                    PackSource.BUILT_IN)
+                )
+            );
         }
     }
 
@@ -316,41 +352,90 @@ public class Aether {
             PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
             PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.curios.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
             event.addRepositorySource((source) ->
+                source.accept(Pack.create(
+                    "builtin/aether_curios_tags",
+                    Component.translatable("pack.aether.curios.title"),
+                    true,
+                    (string) -> pack,
+                    new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
+                    PackType.SERVER_DATA,
+                    Pack.Position.TOP,
+                    false,
+                    PackSource.BUILT_IN)
+                )
+            );
+        }
+    }
+
+    /**
+     * A built-in data pack to make ice accessories create temporary blocks instead of permanent blocks when freezing liquids.
+     */
+    private void setupTemporaryFreezingPack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.SERVER_DATA) {
+            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/temporary_freezing");
+            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
+            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.freezing.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
+            event.addRepositorySource((source) ->
+                source.accept(Pack.create(
+                    "builtin/aether_temporary_freezing",
+                    Component.translatable("pack.aether.freezing.title"),
+                    false,
+                    (string) -> pack,
+                    new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
+                    PackType.SERVER_DATA,
+                    Pack.Position.TOP,
+                    false,
+                    create(decorateWithSource("pack.source.builtin"), AetherConfig.COMMON.add_temporary_freezing_automatically.get()))
+                )
+            );
+        }
+    }
+
+    /**
+     * A built-in data pack for generating ruined Aether Portals.
+     */
+    private void setupRuinedPortalPack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.SERVER_DATA) {
+            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/ruined_portal");
+            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
+            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.ruined_portal.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
+            event.addRepositorySource((source) ->
                     source.accept(Pack.create(
-                            "builtin/aether_curios_tags",
-                            Component.translatable("pack.aether.curios.title"),
-                            true,
+                            "builtin/aether_ruined_portal",
+                            Component.translatable("pack.aether.ruined_portal.title"),
+                            false,
                             (string) -> pack,
                             new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
                             PackType.SERVER_DATA,
                             Pack.Position.TOP,
                             false,
-                            PackSource.BUILT_IN)
-                    ));
+                            create(decorateWithSource("pack.source.builtin"), AetherConfig.COMMON.add_ruined_portal_automatically.get()))
+                    )
+            );
         }
     }
 
     /**
-     * A built-in resource pack to change textures for color blindness accessibility.
+     * [CODE COPY] - {@link PackSource#create(UnaryOperator, boolean)}.
      */
-    private void setupColorblindPack(AddPackFindersEvent event) {
-        if (event.getPackType() == PackType.CLIENT_RESOURCES) {
-            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/colorblind");
-            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
-            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.colorblind.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
-            event.addRepositorySource((source) ->
-                    source.accept(Pack.create(
-                            "builtin/aether_colorblind",
-                            Component.translatable("pack.aether.colorblind.title"),
-                            false,
-                            (string) -> pack,
-                            new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
-                            PackType.CLIENT_RESOURCES,
-                            Pack.Position.TOP,
-                            false,
-                            PackSource.BUILT_IN)
-                    ));
-        }
+    static PackSource create(final UnaryOperator<Component> decorator, final boolean shouldAddAutomatically) {
+        return new PackSource() {
+            public Component decorate(Component component) {
+                return decorator.apply(component);
+            }
+
+            public boolean shouldAddAutomatically() {
+                return shouldAddAutomatically;
+            }
+        };
+    }
+
+    /**
+     * [CODE COPY] - {@link PackSource#decorateWithSource(String)}.
+     */
+    private static UnaryOperator<Component> decorateWithSource(String translationKey) {
+        Component component = Component.translatable(translationKey);
+        return (name) -> Component.translatable("pack.nameAndSource", name, component).withStyle(ChatFormatting.GRAY);
     }
 
     private void registerDispenserBehaviors() {
@@ -401,21 +486,11 @@ public class Aether {
     }
 
     /**
-     * Copy of {@link ComposterBlock#add(float, ItemLike)}.
+     * [CODE COPY] - {@link ComposterBlock#add(float, ItemLike)}.
      * @param chance Chance (as a {@link Float}) to fill a compost layer.
      * @param item The {@link ItemLike} that can be composted.
      */
     private void addCompost(float chance, ItemLike item) {
         ComposterBlock.COMPOSTABLES.put(item.asItem(), chance);
-    }
-
-    private void registerFuels() {
-        AltarBlockEntity.addItemEnchantingTime(AetherItems.AMBROSIUM_SHARD.get(), 250);
-        AltarBlockEntity.addItemEnchantingTime(AetherBlocks.AMBROSIUM_BLOCK.get(), 2500);
-        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE.get(), 400);
-        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE_SLAB.get(), 200);
-        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE_STAIRS.get(), 400);
-        FreezerBlockEntity.addItemFreezingTime(AetherBlocks.ICESTONE_WALL.get(), 400);
-        IncubatorBlockEntity.addItemIncubatingTime(AetherBlocks.AMBROSIUM_TORCH.get(), 500);
     }
 }

@@ -1,30 +1,27 @@
 package com.aetherteam.aether.entity.monster.dungeon;
 
 import com.aetherteam.aether.client.AetherSoundEvents;
-
+import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.ai.goal.ContinuousMeleeAttackGoal;
-import com.aetherteam.aether.util.EntityUtil;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.core.particles.BlockParticleOption;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
-
-import javax.annotation.Nonnull;
+import net.minecraft.world.level.block.Blocks;
 
 public class Mimic extends Monster {
 	public Mimic(EntityType<? extends Mimic> type, Level level) {
@@ -41,7 +38,6 @@ public class Mimic extends Monster {
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	}
 
-	@Nonnull
 	public static AttributeSupplier.Builder createMobAttributes() {
 		return Monster.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 40.0)
@@ -49,30 +45,41 @@ public class Mimic extends Monster {
 				.add(Attributes.MOVEMENT_SPEED, 0.28)
 				.add(Attributes.FOLLOW_RANGE, 8.0);
 	}
-	
+
+	/**
+	 * Prevents Mimics from hurting each other and spawns particles when one is hurt by any other entity, and sets the entity as a target.
+	 * @param source The {@link DamageSource}.
+	 * @param amount The {@link Float} amount of damage.
+	 * @return Whether the entity was hurt, as a {@link Boolean}.
+	 */
 	@Override
-	public boolean hurt(DamageSource damageSource, float amount) {
-		if (!(damageSource.getDirectEntity() instanceof Mimic)) {
-			if (damageSource.getDirectEntity() instanceof LivingEntity livingEntity && this.hurtTime == 0) {
-				if (this.level instanceof ServerLevel level) {
+	public boolean hurt(DamageSource source, float amount) {
+		if (!(source.getDirectEntity() instanceof Mimic)) {
+			if (source.getDirectEntity() instanceof LivingEntity livingEntity && this.hurtTime == 0) {
+				if (this.getLevel() instanceof ServerLevel serverLevel) {
 					for (int i = 0; i < 20; i++) {
-						level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.CHEST.defaultBlockState()), this.getX(), this.getY() + this.getBbHeight() / 1.5, this.getZ(), 1, this.getBbWidth() / 4.0, this.getBbHeight() / 4.0, this.getBbWidth() / 4.0, 0.05F);
+						serverLevel.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.CHEST.defaultBlockState()), this.getX(), this.getY() + this.getBbHeight() / 1.5, this.getZ(), 1, this.getBbWidth() / 4.0, this.getBbHeight() / 4.0, this.getBbWidth() / 4.0, 0.05F);
 					}
 				}
 				if (!(livingEntity instanceof Player player) || !player.isCreative()) {
 					this.setTarget(livingEntity);
 				}
 			}
-			return super.hurt(damageSource, amount);
+			return super.hurt(source, amount);
 		} else {
 			return false;
 		}
 	}
-	
+
+	/**
+	 * Handle sounds when a target is hurt.
+	 * @param entity The hurt {@link Entity}.
+	 * @return Whether the entity was hurt, as a {@link Boolean}.
+	 */
 	@Override
-	public boolean doHurtTarget(@Nonnull Entity entity) {
+	public boolean doHurtTarget(Entity entity) {
 		boolean result = super.doHurtTarget(entity);
-		if (entity instanceof LivingEntity livingEntity) {
+		if (entity instanceof LivingEntity livingEntity) { // Choose between attack or kill sound depending on remaining target health.
 			SoundEvent sound = livingEntity.getHealth() <= 0.0 ? AetherSoundEvents.ENTITY_MIMIC_KILL.get() : AetherSoundEvents.ENTITY_MIMIC_ATTACK.get();
 			this.playSound(sound, 1.0F, this.getVoicePitch());
 		}
@@ -81,15 +88,15 @@ public class Mimic extends Monster {
 
 	@Override
 	public void spawnAnim() {
-		if (this.level.isClientSide) {
+		if (this.getLevel().isClientSide()) {
 			EntityUtil.spawnSummoningExplosionParticles(this);
 		} else {
-			this.level.broadcastEntityEvent(this, (byte) 20);
+			this.getLevel().broadcastEntityEvent(this, (byte) 70);
 		}
 	}
 
 	@Override
-	protected SoundEvent getHurtSound(@Nonnull DamageSource damageSource) {
+	protected SoundEvent getHurtSound(DamageSource damageSource) {
 		return AetherSoundEvents.ENTITY_MIMIC_HURT.get();
 	}
 
@@ -101,5 +108,14 @@ public class Mimic extends Monster {
 	@Override
 	protected boolean shouldDespawnInPeaceful() {
 		return true;
+	}
+
+	@Override
+	public void handleEntityEvent(byte id) {
+		if (id == 70) {
+			EntityUtil.spawnSummoningExplosionParticles(this);
+		} else {
+			super.handleEntityEvent(id);
+		}
 	}
 }

@@ -9,8 +9,8 @@ import java.util.Set;
  * Any gamerules in the blacklist will always return false in an Aether dimension.
  */
 public class WrappedGameRules extends GameRules {
-    public final GameRules gameRules;
-    public final Set<Key<BooleanValue>> blacklist;
+    private final GameRules gameRules;
+    private final Set<Key<BooleanValue>> blacklist;
 
     public WrappedGameRules(GameRules gameRules, Set<GameRules.Key<GameRules.BooleanValue>> keys) {
         this.gameRules = gameRules;
@@ -18,12 +18,12 @@ public class WrappedGameRules extends GameRules {
     }
 
     @Override
-    public <T extends Value<T>> T getRule(Key<T> pKey) {
-        return this.gameRules.getRule(pKey);
+    public <T extends Value<T>> T getRule(Key<T> key) {
+        return this.gameRules.getRule(key);
     }
 
     @Override
-    public boolean getBoolean(Key<GameRules.BooleanValue> pKey) {
-        return !blacklist.contains(pKey) && this.getRule(pKey).get();
+    public boolean getBoolean(Key<GameRules.BooleanValue> key) {
+        return !this.blacklist.contains(key) && this.getRule(key).get();
     }
 }

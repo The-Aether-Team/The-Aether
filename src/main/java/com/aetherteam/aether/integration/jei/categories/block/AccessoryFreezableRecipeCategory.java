@@ -10,7 +10,7 @@ import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
-public class AccessoryFreezableRecipeCategory extends AbstractBlockStateRecipeCategory<AccessoryFreezableRecipe> {
+public class AccessoryFreezableRecipeCategory extends AbstractAetherBlockStateRecipeCategory<AccessoryFreezableRecipe> {
     public static final ResourceLocation UID = new ResourceLocation(Aether.MODID, "accessory_freezable");
     public static final ResourceLocation TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/menu/jei_render.png");
     public static final RecipeType<AccessoryFreezableRecipe> RECIPE_TYPE = RecipeType.create(Aether.MODID, "accessory_freezable", AccessoryFreezableRecipe.class);

@@ -1,27 +1,22 @@
 package com.aetherteam.aether.item.combat.loot;
 
 import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.capability.player.AetherPlayerCapability;
+import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
 import com.aetherteam.aether.item.AetherItems;
-import com.aetherteam.aether.capability.player.AetherPlayer;
-import com.aetherteam.aether.util.EntityUtil;
-import net.minecraft.network.chat.Component;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.HumanoidArm;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-
-import javax.annotation.Nullable;
-import java.util.List;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class CloudStaffItem extends Item {
     public CloudStaffItem() {
@@ -41,21 +36,23 @@ public class CloudStaffItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack heldItem = player.getItemInHand(hand);
         AetherPlayer.get(player).ifPresent(aetherPlayer -> {
+            Player innerPlayer = aetherPlayer.getPlayer();
+            Level innerLevel = innerPlayer.getLevel();
             if (aetherPlayer.getCloudMinions().isEmpty()) {
-                player.swing(hand);
-                if (!level.isClientSide()) {
-                    if (!player.getAbilities().instabuild) {
-                        heldItem.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
+                innerPlayer.swing(hand);
+                if (!innerLevel.isClientSide()) {
+                    if (!innerPlayer.getAbilities().instabuild) {
+                        heldItem.hurtAndBreak(1, innerPlayer, (p) -> p.broadcastBreakEvent(hand));
                     }
-                    CloudMinion cloudMinionRight = new CloudMinion(level, player, HumanoidArm.RIGHT);
-                    CloudMinion cloudMinionLeft = new CloudMinion(level, player, HumanoidArm.LEFT);
-                    level.addFreshEntity(cloudMinionRight);
-                    level.addFreshEntity(cloudMinionLeft);
+                    CloudMinion cloudMinionRight = new CloudMinion(innerLevel, innerPlayer, HumanoidArm.RIGHT);
+                    CloudMinion cloudMinionLeft = new CloudMinion(innerLevel, innerPlayer, HumanoidArm.LEFT);
+                    innerLevel.addFreshEntity(cloudMinionRight);
+                    innerLevel.addFreshEntity(cloudMinionLeft);
                     aetherPlayer.setCloudMinions(cloudMinionRight, cloudMinionLeft);
                 }
-                this.spawnExplosionParticles(player);
-            } else if (player.isShiftKeyDown()) {
-                player.swing(hand);
+                this.spawnExplosionParticles(innerPlayer);
+            } else if (innerPlayer.isShiftKeyDown()) {
+                innerPlayer.swing(hand);
                 for (CloudMinion cloudMinion : aetherPlayer.getCloudMinions()) {
                     cloudMinion.setLifeSpan(0);
                 }
@@ -105,20 +102,5 @@ public class CloudStaffItem extends Item {
     @Override
     public boolean canAttackBlock(BlockState state, Level level, BlockPos pos, Player player) {
         return !player.isCreative();
-    }
-
-    /**
-     * When in a creative tab, this adds a tooltip to an item indicating what dungeon it can be found in.
-     * @param stack The {@link ItemStack} with the tooltip.
-     * @param level The {@link Level} the item is rendered in.
-     * @param components A {@link List} of {@link Component}s making up this item's tooltip.
-     * @param flag A {@link TooltipFlag} for the tooltip type.
-     */
-    @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
-        super.appendHoverText(stack, level, components, flag);
-        if (flag.isCreative()) {
-            components.add(AetherItems.BRONZE_DUNGEON_TOOLTIP);
-        }
     }
 }
