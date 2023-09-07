@@ -4,6 +4,7 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlockStateProperties;
 import com.aetherteam.aether.block.AetherBlocks;
+import com.aetherteam.aether.mixin.mixins.common.accessor.SpreadingSnowyDirtBlockAccessor;
 import com.aetherteam.aether.world.processor.DoubleDropsProcessor;
 import com.aetherteam.aether.world.processor.GlowstonePortalAgeProcessor;
 import com.aetherteam.aether.world.processor.HolystoneReplaceProcessor;
@@ -224,7 +225,7 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
      */
     private boolean canBlockBeReplacedByAetherGrass(LevelAccessor level, BlockPos pos) {
         BlockState blockstate = level.getBlockState(pos);
-        return blockstate.is(BlockTags.DIRT) || blockstate.is(BlockTags.SAND);
+        return blockstate.is(AetherTags.Blocks.RUINED_PORTAL_GROUND_REPLACEABLE);
     }
 
     /**
@@ -234,7 +235,7 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
      * @param pos The {@link BlockPos} to place at.
      */
     private void placeAetherDirtOrGrass(RandomSource random, LevelAccessor level, BlockPos pos) {
-        if (level.isEmptyBlock(pos.above())) {
+        if (SpreadingSnowyDirtBlockAccessor.callCanBeGrass(AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState(), level, pos)) {
             level.setBlock(pos, AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true), 3);
             this.growGrassAndFlowers(random, level, pos.above());
         } else {

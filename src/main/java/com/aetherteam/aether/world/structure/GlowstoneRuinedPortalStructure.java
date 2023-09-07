@@ -159,6 +159,15 @@ public class GlowstoneRuinedPortalStructure extends Structure {
         return l;
     }
 
+    /**
+     * Checks whether a chunk corner isn't empty, to determine whether a ruined portal can generate at the location it has chosen.
+     * @param generator The {@link ChunkGenerator} for the world.
+     * @param heightAccessor The {@link LevelHeightAccessor} for the world.
+     * @param chunkPos The {@link ChunkPos} for the structure generation.
+     * @param random The {@link RandomState} from the world.
+     * @param spawnY The {@link Integer} for the y-position where the structure tries to generate.
+     * @return Whether a chunk corner is valid for the structure to generate from.
+     */
     private static boolean validCorners(ChunkGenerator generator, LevelHeightAccessor heightAccessor, ChunkPos chunkPos, RandomState random, int spawnY) {
         int minX = chunkPos.getMinBlockX() - 1;
         int minZ = chunkPos.getMinBlockZ() - 1;
@@ -170,12 +179,12 @@ public class GlowstoneRuinedPortalStructure extends Structure {
                 generator.getBaseColumn(maxX, minZ, heightAccessor, random),
                 generator.getBaseColumn(maxX, maxZ, heightAccessor, random)
         };
-        for (NoiseColumn column : columns) { //todo  need a y-range, not just one y, for a bit a bove and a bit below the portal.
-            if (column.getBlock(spawnY).isAir()) {
-                return false;
+        for (NoiseColumn column : columns) {
+            if (!column.getBlock(spawnY).isAir() && !column.getBlock(spawnY).is(AetherTags.Blocks.NON_RUINED_PORTAL_SPAWNABLE)) {
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     @Override
