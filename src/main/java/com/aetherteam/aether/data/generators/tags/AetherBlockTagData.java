@@ -180,6 +180,18 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS,
                 AetherTags.Blocks.BOSS_DOORWAY_DUNGEON_BLOCKS,
                 AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS);
+        this.tag(AetherTags.Blocks.NON_RUINED_PORTAL_SPAWNABLE);
+        this.tag(AetherTags.Blocks.RUINED_PORTAL_GROUND_REPLACEABLE)
+                .addTag(BlockTags.BASE_STONE_OVERWORLD)
+                .addTag(BlockTags.DIRT)
+                .addTag(BlockTags.SAND)
+                .add(Blocks.GRAVEL)
+                .add(Blocks.CALCITE)
+                .add(Blocks.SMOOTH_BASALT)
+                .add(Blocks.CLAY)
+                .add(Blocks.DRIPSTONE_BLOCK)
+                .add(Blocks.RED_SANDSTONE)
+                .add(Blocks.SANDSTONE);
         this.tag(AetherTags.Blocks.NON_BRONZE_DUNGEON_REPLACEABLE).add(
                 Blocks.AIR,
                 Blocks.WATER,

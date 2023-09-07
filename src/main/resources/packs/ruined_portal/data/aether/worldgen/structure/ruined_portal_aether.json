@@ -1,0 +1,17 @@
+{
+  "type": "aether:ruined_portal",
+  "biomes": "#aether:has_ruined_portal_aether",
+  "setups": [
+    {
+      "air_pocket_probability": 0.5,
+      "mossiness": 0.4,
+      "overgrown": false,
+      "placement": "on_land_surface",
+      "replace_with_holystone": true,
+      "vines": false,
+      "weight": 1.0
+    }
+  ],
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

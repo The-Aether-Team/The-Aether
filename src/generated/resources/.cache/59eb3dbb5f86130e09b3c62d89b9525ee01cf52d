@@ -1,4 +1,4 @@
-// 1.19.4	2023-08-21T23:01:34.1170563	Loot Tables
+// 1.19.4	2023-09-05T17:42:48.0227514	Loot Tables
 d025471306910ea35dcf85d28fc188182a1b3c8d data/aether/loot_tables/advancements/enter_aether.json
 96aec873b17d2a5aed2a22fe094efa32b8d54645 data/aether/loot_tables/blocks/aerogel.json
 ffdecdc23fdf03314c666c6d8638f7f44bdbcc8b data/aether/loot_tables/blocks/aerogel_slab.json
@@ -148,6 +148,7 @@ b1371b8b9502081e328598828693168ee9d3a4b1 data/aether/loot_tables/chests/dungeon/
 509fcc4c3ed95d67346dad14ed6bfecc9c13386a data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_trash.json
 3079e254072e05046d8c4883e6a803fc6c3c0779 data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_treasure.json
 1d9641db1436b4e086312ce1e517fd39316d7b44 data/aether/loot_tables/chests/dungeon/silver/silver_dungeon_valkyrie.json
+1defa43797c412e010e74dc72660cb433b80a2c4 data/aether/loot_tables/chests/ruined_portal.json
 df0825811c297a2490f3108da95334235f829324 data/aether/loot_tables/entities/aechor_plant.json
 8d9ec859066d8908362d317ef37e9d2bdbfc9cce data/aether/loot_tables/entities/aerbunny.json
 ef017fe8afbc1e704a7cfb4818ece7ba018f9c91 data/aether/loot_tables/entities/aerwhale.json

@@ -12,7 +12,7 @@ import java.util.List;
 public class AetherLootTableData {
     public static LootTableProvider create(PackOutput output) {
         return new LootTableProvider(output, AetherLoot.IMMUTABLE_LOOT_TABLES, List.of(
-                new LootTableProvider.SubProviderEntry(AetherDungeonLoot::new, LootContextParamSets.CHEST),
+                new LootTableProvider.SubProviderEntry(AetherChestLoot::new, LootContextParamSets.CHEST),
                 new LootTableProvider.SubProviderEntry(AetherEntityLoot::new, LootContextParamSets.ENTITY),
                 new LootTableProvider.SubProviderEntry(AetherBlockLoot::new, LootContextParamSets.BLOCK),
                 new LootTableProvider.SubProviderEntry(AetherAdvancementLoot::new, LootContextParamSets.ADVANCEMENT_REWARD),

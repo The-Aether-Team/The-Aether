@@ -1205,6 +1205,9 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addCommonConfig("gameplay", "repeat_sun_spirit_dialogue", "Determines whether the Sun Spirit's dialogue when meeting him should play through every time you meet him");
         this.addCommonConfig("gameplay", "show_patreon_message", "Determines if a message that links The Aether mod's Patreon should show");
 
+        this.addCommonConfig("data_pack", "add_temporary_freezing_automatically", "Sets the Aether Temporary Freezing data pack to be added to new worlds automatically");
+        this.addCommonConfig("data_pack", "add_ruined_portal_automatically", "Sets the Aether Ruined Portals data pack to be added to new worlds automatically");
+
 
         this.addClientConfig("rendering", "legacy_models", "Changes Zephyr and Aerwhale rendering to use their old models from the b1.7.3 version of the mod");
         this.addClientConfig("rendering", "disable_aether_skybox", "Disables the Aether's custom skybox in case you have a shader that is incompatible with custom skyboxes");
@@ -1249,6 +1252,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addPackTitle("colorblind", "Aether Colorblind Textures");
         this.addPackTitle("curios", "Aether Curios Override");
         this.addPackTitle("freezing", "Aether Temporary Freezing");
+        this.addPackTitle("ruined_portal", "Aether Ruined Portals");
 
         this.addPackDescription("mod", "Aether Resources");
         this.addPackDescription("125", "The classic look of the Aether from 1.2.5");
@@ -1257,6 +1261,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addPackDescription("colorblind", "Changes textures for color blindness accessibility");
         this.addPackDescription("curios", "Replace Accessories Menu with Curios' menu");
         this.addPackDescription("freezing", "Ice Accessories create temporary blocks");
+        this.addPackDescription("ruined_portal", "Generate ruined glowstone portals");
 
         this.addMenuTitle("minecraft_left", "Minecraft (Left)");
         this.addMenuTitle("the_aether", "The Aether");
