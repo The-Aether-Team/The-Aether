@@ -24,15 +24,15 @@ jobs:
         
           ./gradlew build
         
-          cd /home/runner/work/The-Aether/The-Aether/build/libs
+          cd ~/work/The-Aether/The-Aether/build/libs
           find . ! -name "aether-1.19.4-1.0.0-beta.6-forge.jar" -type f -exec rm -f {} +
-          cd /home/runner
+          cd ~
           echo *
-          cd ~/work
+          cd ./work
           echo *
-          cd ~/The-Aether
+          cd ./The-Aether
           echo *
-          cd ~/The-Aether
+          cd ./The-Aether
           echo *
         
           ./gradlew modrinth
