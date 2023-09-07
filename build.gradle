@@ -218,7 +218,7 @@ modrinth {
     changelog = new File("$rootDir/docs/CHANGELOG.md").text
     uploadFile = tasks.jarJar
     gameVersions = ["${project.mc_version}"]
-    loaders = ["forge"]
+    loaders = ["neoforge"]
     dependencies {
         embedded.version "curios", "${project.curios_version}"
 //        embedded.version "cumulus", "${project.cumulus_version}"
