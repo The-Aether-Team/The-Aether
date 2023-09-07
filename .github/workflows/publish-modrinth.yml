@@ -22,6 +22,4 @@ jobs:
         if [ "${{ github.event.sender.login }}" = "OscarPayn" ] || [ "${{ github.event.sender.login }}" = "bconlon1" ]; then
           chmod +x ./gradlew
           ./gradlew modrinth
-          cd ~/work/The-Aether/The-Aether/build/libs
-          echo *
         fi
