@@ -25,6 +25,7 @@ jobs:
           ./gradlew build
 
           cd ~/work/The-Aether/The-Aether/build/libs
+          echo *
           find . ! -name "aether-1.19.4-1.0.0-beta.6-forge.jar" -type f -exec rm -f {} +
           echo *
           cd ~/work/The-Aether/The-Aether
