@@ -1,4 +1,4 @@
-// 1.19.4	2023-08-21T12:12:13.6640042	Tags for minecraft:block mod id aether
+// 1.19.4	2023-09-06T17:50:18.4392757	Tags for minecraft:block mod id aether
 fc9b66cee900f1b4f341fcec6da19eb45d575f43 data/aether/tags/blocks/aechor_plant_spawnable_on.json
 7f0ca5740d7eeb3d83a96088ad6c30a672b55609 data/aether/tags/blocks/aerclouds.json
 16a15f0767946dfa61ee9dfb544a3aeb3439340c data/aether/tags/blocks/aerogel.json
@@ -20,7 +20,9 @@ f88e31ba010e8b41d4256635de26d1cf8a0aa221 data/aether/tags/blocks/enchanted_grass
 b39b9a730fa6d6ce0d57bcbb88a249b6617d6822 data/aether/tags/blocks/infiniburn.json
 022a06d2a296e488a68e47fe0cebd62c586c55ea data/aether/tags/blocks/locked_dungeon_blocks.json
 cf3608bd187922aeb48c566c19e8482b0dca34c7 data/aether/tags/blocks/non_bronze_dungeon_spawnable.json
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/blocks/non_ruined_portal_spawnable.json
 f044320c552d2490be4d416f191e85aff1a934e6 data/aether/tags/blocks/non_tunnel_replaceable.json
+866fa462d31ceebc7a01a7520e22c673b2391a30 data/aether/tags/blocks/ruined_portal_ground_replaceable.json
 66891bf965b86e92235cc816a4a0c898ada827e6 data/aether/tags/blocks/sentry_blocks.json
 df16ed8f5964fbb722ae2040903fb88c95ad2b99 data/aether/tags/blocks/skyroot_logs.json
 31c6217cf1ecdd680f867d440f3dca420bbf9b99 data/aether/tags/blocks/slider_unbreakable.json

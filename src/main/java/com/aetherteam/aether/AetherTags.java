@@ -36,6 +36,8 @@ public class AetherTags {
 		public static final TagKey<Block> HELLFIRE_BLOCKS = tag("hellfire_blocks");
 		public static final TagKey<Block> SLIDER_UNBREAKABLE = tag("slider_unbreakable");
 		public static final TagKey<Block> VALKYRIE_QUEEN_UNBREAKABLE = tag("valkyrie_queen_unbreakable");
+		public static final TagKey<Block> NON_RUINED_PORTAL_SPAWNABLE = tag("non_ruined_portal_spawnable");
+		public static final TagKey<Block> RUINED_PORTAL_GROUND_REPLACEABLE = tag("ruined_portal_ground_replaceable");
 		public static final TagKey<Block> NON_BRONZE_DUNGEON_SPAWNABLE = tag("non_bronze_dungeon_spawnable");
 		public static final TagKey<Block> NON_BRONZE_DUNGEON_REPLACEABLE = tag("non_tunnel_replaceable");
 		public static final TagKey<Block> GRAVITITE_ABILITY_BLACKLIST = tag("gravitite_ability_blacklist");
@@ -192,6 +194,12 @@ public class AetherTags {
 		public static final TagKey<Biome> HAS_BRONZE_DUNGEON = tag("has_bronze_dungeon");
 		public static final TagKey<Biome> HAS_SILVER_DUNGEON = tag("has_silver_dungeon");
 		public static final TagKey<Biome> HAS_GOLD_DUNGEON = tag("has_gold_dungeon");
+		public static final TagKey<Biome> HAS_RUINED_PORTAL_STANDARD = tag("has_ruined_portal_standard");
+		public static final TagKey<Biome> HAS_RUINED_PORTAL_DESERT = tag("has_ruined_portal_desert");
+		public static final TagKey<Biome> HAS_RUINED_PORTAL_JUNGLE = tag("has_ruined_portal_jungle");
+		public static final TagKey<Biome> HAS_RUINED_PORTAL_SWAMP = tag("has_ruined_portal_swamp");
+		public static final TagKey<Biome> HAS_RUINED_PORTAL_MOUNTAIN = tag("has_ruined_portal_mountain");
+		public static final TagKey<Biome> HAS_RUINED_PORTAL_AETHER = tag("has_ruined_portal_aether");
 
 		public static final TagKey<Biome> MYCELIUM_CONVERSION = tag("mycelium_conversion");
 		public static final TagKey<Biome> PODZOL_CONVERSION = tag("podzol_conversion");

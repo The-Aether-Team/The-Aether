@@ -238,6 +238,7 @@ public class Aether {
         // Data Packs
         this.setupCuriosTagsPack(event);
         this.setupTemporaryFreezingPack(event);
+        this.setupRuinedPortalPack(event);
     }
 
     /**
@@ -384,8 +385,32 @@ public class Aether {
                     PackType.SERVER_DATA,
                     Pack.Position.TOP,
                     false,
-                    create(decorateWithSource("pack.source.builtin"), false))
+                    create(decorateWithSource("pack.source.builtin"), AetherConfig.COMMON.add_temporary_freezing_automatically.get()))
                 )
+            );
+        }
+    }
+
+    /**
+     * A built-in data pack for generating ruined Aether Portals.
+     */
+    private void setupRuinedPortalPack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.SERVER_DATA) {
+            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/ruined_portal");
+            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
+            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.ruined_portal.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
+            event.addRepositorySource((source) ->
+                    source.accept(Pack.create(
+                            "builtin/aether_ruined_portal",
+                            Component.translatable("pack.aether.ruined_portal.title"),
+                            false,
+                            (string) -> pack,
+                            new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
+                            PackType.SERVER_DATA,
+                            Pack.Position.TOP,
+                            false,
+                            create(decorateWithSource("pack.source.builtin"), AetherConfig.COMMON.add_ruined_portal_automatically.get()))
+                    )
             );
         }
     }

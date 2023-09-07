@@ -1,4 +1,4 @@
-// 1.19.4	2023-05-03T18:57:25.7609469	Tags for minecraft:worldgen/biome mod id aether
+// 1.19.4	2023-09-04T16:18:04.8492482	Tags for minecraft:worldgen/biome mod id aether
 6425e7e0a57a451843094090fa1e31c9fbd4c5e0 data/aether/tags/worldgen/biome/aether_music.json
 b95f2e5677841946d287305b14c97c69f59b6db1 data/aether/tags/worldgen/biome/crimson_nylium_conversion.json
 70073d71d36e3d050e21bd0d44e3dc94f4ec4890 data/aether/tags/worldgen/biome/display_travel_text.json
@@ -6,6 +6,12 @@ b95f2e5677841946d287305b14c97c69f59b6db1 data/aether/tags/worldgen/biome/crimson
 6425e7e0a57a451843094090fa1e31c9fbd4c5e0 data/aether/tags/worldgen/biome/has_bronze_dungeon.json
 6425e7e0a57a451843094090fa1e31c9fbd4c5e0 data/aether/tags/worldgen/biome/has_gold_dungeon.json
 6425e7e0a57a451843094090fa1e31c9fbd4c5e0 data/aether/tags/worldgen/biome/has_large_aercloud.json
+6425e7e0a57a451843094090fa1e31c9fbd4c5e0 data/aether/tags/worldgen/biome/has_ruined_portal_aether.json
+f3ef2895c49e29111297e950661e5bc71a79989e data/aether/tags/worldgen/biome/has_ruined_portal_desert.json
+3c740d9510266b6cc83216aec627ab0f410d7037 data/aether/tags/worldgen/biome/has_ruined_portal_jungle.json
+e5ce904ba75c73ce6cb7a3a875d727606810f58f data/aether/tags/worldgen/biome/has_ruined_portal_mountain.json
+37b270bdf167729b207950b30569a2753d25e2b2 data/aether/tags/worldgen/biome/has_ruined_portal_standard.json
+a2c17e9189d16e11b26ac0a0c170a0bc41bf1093 data/aether/tags/worldgen/biome/has_ruined_portal_swamp.json
 6425e7e0a57a451843094090fa1e31c9fbd4c5e0 data/aether/tags/worldgen/biome/has_silver_dungeon.json
 eac2563fac02b414960c17890187c8575606ca3f data/aether/tags/worldgen/biome/is_aether.json
 e230510c9f5c1188c61cd1ad728a3d9a6bd3125f data/aether/tags/worldgen/biome/mycelium_conversion.json

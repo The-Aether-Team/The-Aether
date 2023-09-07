@@ -1,0 +1,38 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "exclusion_zone": {
+      "chunk_count": 16,
+      "other_set": "minecraft:ruined_portals"
+    },
+    "salt": 14252125,
+    "separation": 25,
+    "spacing": 60
+  },
+  "structures": [
+    {
+      "structure": "aether:ruined_portal",
+      "weight": 1
+    },
+    {
+      "structure": "aether:ruined_portal_desert",
+      "weight": 1
+    },
+    {
+      "structure": "aether:ruined_portal_jungle",
+      "weight": 1
+    },
+    {
+      "structure": "aether:ruined_portal_swamp",
+      "weight": 1
+    },
+    {
+      "structure": "aether:ruined_portal_mountain",
+      "weight": 1
+    },
+    {
+      "structure": "aether:ruined_portal_aether",
+      "weight": 1
+    }
+  ]
+}
