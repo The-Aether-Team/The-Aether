@@ -23,6 +23,9 @@ jobs:
           chmod +x ./gradlew
         
           ./gradlew build
+        
+          echo *
+        
           cd ~/project/build/libs
           find . ! -name "aether-1.19.4-1.0.0-beta.6-forge.jar" -type f -exec rm -f {} +
         
