@@ -1,3 +1,106 @@
+# The Aether - Forge - 1.19.4-1.0.0-beta.6
+
+***This beta contains breaking changes; addons will have to update accordingly to be compatible.***
+
+Additions
+
+- Add a new Moa Skins GUI accessible from a button with a crown icon in the Aether's accessories menu. This is where donator skins for Moas can be applied.
+  - Although the GUI is implemented, the linking for donator accounts is not fully implemented yet and may not function for some players. It will be fully functional by release.
+- Add a Patreon and Discord link message. This will only show up once per all worlds within a game instance (e.g. a Prism Launcher instance, the Minecraft Launcher instance tied to `.minecraft`, etc.) to minimize intrusiveness.
+- Add Ruined Aether Portals, which can be enabled by selecting the "Aether Ruined Portals" data pack on world creation.
+- Add a new Remedy status effect, which functions the same as how using remedy items like White Apples worked previously, except the player will be immune to Inebriation while the effect is active on top of being cured of it when the item is used.
+- Add gloves to vanilla loot tables with a random chance to replace armor items.
+- Add a recipe for crafting a Lectern with a Skyroot Bookshelf.
+- Add the "Aether Temporary Freezing" data pack as an option when creating a world.
+- Add a config option to allow for spawning in the Aether dimension upon world creation.
+- Add a config option to make Berry Bushes function like Sweet Berry Bushes.
+- Add a new block tag `non_bronze_dungeon_spawnable` for data pack or addon developers to prevent Bronze Dungeons from generating in certain blocks.
+- Add support for modifying the fuel for Altars, Freezers, and Incubators using CraftTweaker scripting.
+- Add support for extinguishing Supplementaries' Copper Lanterns in the Aether dimension.
+- Add a custom menu API, which will also be released as a separate mod in the future.
+- Add numerous JavaDocs throughout the source code for developers.
+- Update uk_ua translation.
+- Update tok translation.
+
+Changes
+
+- Finish a codebase cleanup that was started before beta.1. This has introduced breaking changes.
+- Make joining and exiting worlds loaded by the world preview feature much faster.
+- Change the distribution of Gravitite Ore to be triangular as opposed to uniform, matching ore distribution changes to vanilla in 1.18. This makes Gravitite Ore slightly more common and also be able to generate with slightly larger veins (2-4 blocks instead of 1-2 blocks).
+- Move Neptune Armor from the Silver Dungeon treasure loot table into the Bronze Dungeon treasure loot table for better accuracy to b1.7.3 implementation. The armor has been rebalanced accordingly to be between iron and diamond tier.
+- Rebalance the vanilla tool debuff in the Aether to be less harsh. Tools efficiency will only be decreased to the same speed as mining by hand at minimum.
+- Rebalance the Hammer of Kingbdogz' projectile to have a shorter cooldown, increased damage, and greater speed.
+- Rebalance dart projectiles to have a greater speed.
+- Change Icestone to have a delay for refreezing blocks that are broken by the player.
+- Make neighboring Aerogel-type blocks fully see-through, similar to Glass blocks.
+- Increase the opacity of Blue and Golden Aerclouds in the b1.7.3 resource pack.
+- Change the Nature Staff item name from green to white.
+- Change the Invisibility Cloak's attack detection for projectiles to be based on projectile hit instead of projectile shoot.
+- Increase the follow speed of Cloud Minions proportional to the speed of the player.
+- Make Cloud Crystals damage Fire Minions.
+- Disallow players from mounting Swets that are partially dissolved.
+- Allow Aechor Plants to be mounted in Boats and Minecarts.
+- Destroy Fire Crystals once the Sun Spirit dies.
+- Prevent Bronze Dungeons from generating in water.
+- Make the drop bonuses from Enchanted Aether Grass data-driven using Forge's global loot modifier system.
+- Make the Gold Dungeon island's grass dependent on the biome, for addons and data packs that use different surface grass.
+- Allow height ranges for dungeon generation to be modified with data packs.
+- Allow the creative menu tooltips for what dungeon a loot item can be found in to be data-driven using tags.
+- Change boss names to be generated using the entity's RNG instead of a unique RNG.
+- Change protection of `AetherNoiseBuilders#aetherSurfaceRules` from `private` to `public`.
+- Change protection of methods in `HandRenderHooks` from `private` to `public`.
+- Remove mixin config.
+
+Fixes
+
+- Fix the Aether logo in the mod's title screen being resized improperly by GUI scaling.
+- Fix the "Minecraft (Left)" title screen not shifting the logo to the left.
+- Fix world corruption issues when loading the same world using world preview from two Minecraft instances at the same time.
+- Fix the world preview panorama being tied to framerate.
+- Fix the world preview panorama not being adjustable with the accessibility option for panorama scroll speed.
+- Fix the world preview panorama not having the correct camera position.
+- Fix the world preview attempting to reload the world when it shouldn't.
+- Fix the world preview sometimes not displaying when it should.
+- Fix aether5.ogg not playing.
+- Fix high and chinchilla not playing.
+- Fix the mining speed for Holystone Brick Slabs being incorrect.
+- Fix placing too many Aerogel Stairs causing world loading issues.
+- Fix obtaining Holystone Bricks and dungeon blocks unlocking Stone Brick-related recipes.
+- Fix the overlays for special dungeon blocks sometimes breaking after swapping resource packs.
+- Fix dungeon keys being consumed even when opening Treasure Chests in creative.
+- Fix mobs targeting the player from much farther distances than they should be.
+- Fix rare boss despawning.
+- Fix a crash caused by bosses trying to break blocks without a dungeon.
+- Fix an exploit with trapdoors allowing the player to not be reachable by the Slider.
+- Fix an exploit with the Slider getting stuck in a corner in multiplayer after a player dies.
+- Fix Aerwhales not being affected by Leads.
+- Fix Swets becoming too small without dying when dissolving in water.
+- Fix Swets sometimes jittering when first mounting.
+- Fix Swets jittering too fast when on a Slime Block.
+- Fix rare crashes from Moas.
+- Fix Moas only playing their wing flap noise when mounted.
+- Fix Aerbunnies' pathfinding getting them stuck on blocks and unable able to land.
+- FIx Aerbunnies being afraid of the player for too long.
+- Fix Aechor Plant eye height not scaling with size.
+- Fix the multiplayer mount desync issue, again, maybe.
+- Fix clipping exploit using parachutes.
+- Fix the Hammer of Kingbdogz' projectiles not always damaging mobs.
+- Fix TNT not properly launching from Blue Aerclouds if moving too fast.
+- Fix projectiles sliding across Aerclouds instead of sticking like they should.
+- Fix Firework Rockets disabling the Invisibility Cloak.
+- Fix crystal projectiles not being properly centered to their hitbox.
+- Fix Aether Grass Blocks created by lake features not having double drops.
+- Fix Aerwhales animation for pitch rotation not being smooth.
+- Fix the Zephyr's animation for shooting Snowballs not being synced with when the Snowball is shot.
+- Fix the Slider's damage tilt speed being too slow.
+- Fix the default hand model not being properly positioned in first-person when wearing the Shield of Repulsion.
+- Fix capitalization inconsistencies for trivia and lore entries.
+- Fix locked dungeon blocks not being in dungeon block tags.
+- Fix the Silver Dungeon loot tables being in the Bronze Dungeon data path.
+- Fix the `aether:moa_type` registry not appearing in `registryAccess`.
+- Fix indicators added by Jade overlapping with the Aether's boss bars.
+- Fix Chest Mimics showing up as Chests instead of Loot Chests in Jade indicators when Lootr is installed.
+
 # The Aether - Forge - 1.19.4-1.0.0-beta.5.1
 
 Fixes
