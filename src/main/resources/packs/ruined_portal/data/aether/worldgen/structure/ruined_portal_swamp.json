@@ -1,0 +1,17 @@
+{
+  "type": "aether:ruined_portal",
+  "biomes": "#aether:has_ruined_portal_swamp",
+  "setups": [
+    {
+      "air_pocket_probability": 0.0,
+      "mossiness": 0.65,
+      "overgrown": false,
+      "placement": "on_ocean_floor",
+      "replace_with_holystone": false,
+      "vines": true,
+      "weight": 1.0
+    }
+  ],
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

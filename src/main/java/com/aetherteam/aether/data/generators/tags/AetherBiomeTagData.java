@@ -30,6 +30,19 @@ public class AetherBiomeTagData extends BiomeTagsProvider {
         this.tag(AetherTags.Biomes.HAS_BRONZE_DUNGEON).addTag(AetherTags.Biomes.IS_AETHER);
         this.tag(AetherTags.Biomes.HAS_SILVER_DUNGEON).addTag(AetherTags.Biomes.IS_AETHER);
         this.tag(AetherTags.Biomes.HAS_GOLD_DUNGEON).addTag(AetherTags.Biomes.IS_AETHER);
+        this.tag(AetherTags.Biomes.HAS_RUINED_PORTAL_STANDARD).add(
+                Biomes.FOREST,
+                Biomes.SNOWY_TAIGA,
+                Biomes.MUSHROOM_FIELDS,
+                Biomes.SNOWY_PLAINS,
+                Biomes.PLAINS);
+        this.tag(AetherTags.Biomes.HAS_RUINED_PORTAL_DESERT).add(Biomes.DESERT);
+        this.tag(AetherTags.Biomes.HAS_RUINED_PORTAL_JUNGLE).add(Biomes.JUNGLE);
+        this.tag(AetherTags.Biomes.HAS_RUINED_PORTAL_SWAMP).add(Biomes.SWAMP);
+        this.tag(AetherTags.Biomes.HAS_RUINED_PORTAL_MOUNTAIN).add(
+                Biomes.WINDSWEPT_HILLS,
+                Biomes.STONY_PEAKS);
+        this.tag(AetherTags.Biomes.HAS_RUINED_PORTAL_AETHER).addTag(AetherTags.Biomes.IS_AETHER);
 
         this.tag(AetherTags.Biomes.MYCELIUM_CONVERSION).add(Biomes.MUSHROOM_FIELDS);
         this.tag(AetherTags.Biomes.PODZOL_CONVERSION).add(

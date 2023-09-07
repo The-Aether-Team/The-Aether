@@ -13,13 +13,14 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootTableReference;
+import net.minecraft.world.level.storage.loot.functions.EnchantRandomlyFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 import java.util.function.BiConsumer;
 
-public class AetherDungeonLoot implements LootTableSubProvider {
+public class AetherChestLoot implements LootTableSubProvider {
     @Override
     public void generate(BiConsumer<ResourceLocation, LootTable.Builder> builder) {
         builder.accept(AetherLoot.BRONZE_DUNGEON, LootTable.lootTable()
@@ -363,5 +364,30 @@ public class AetherDungeonLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(AetherItems.LIFE_SHARD.get()).setWeight(1))
                 )
         );
+        builder.accept(AetherLoot.RUINED_PORTAL, LootTable.lootTable()
+                .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(4.0F, 8.0F))
+                        .add(LootItem.lootTableItem(Items.GLOWSTONE_DUST).setWeight(40).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
+                        .add(LootItem.lootTableItem(Items.FEATHER).setWeight(40).apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 8.0F))))
+                        .add(LootItem.lootTableItem(Items.BUCKET).setWeight(40))
+                        .add(LootItem.lootTableItem(Items.WATER_BUCKET).setWeight(40))
+                        .add(LootItem.lootTableItem(AetherItems.BLUE_BERRY.get()).setWeight(15).apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0F, 12.0F))))
+                        .add(LootItem.lootTableItem(Items.IRON_NUGGET).setWeight(15).apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0F, 24.0F))))
+                        .add(LootItem.lootTableItem(Items.IRON_SWORD).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+                        .add(LootItem.lootTableItem(Items.IRON_AXE).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+                        .add(LootItem.lootTableItem(Items.IRON_HOE).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+                        .add(LootItem.lootTableItem(Items.IRON_SHOVEL).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+                        .add(LootItem.lootTableItem(Items.IRON_PICKAXE).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+                        .add(LootItem.lootTableItem(Items.IRON_BOOTS).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+                        .add(LootItem.lootTableItem(Items.IRON_CHESTPLATE).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+                        .add(LootItem.lootTableItem(Items.IRON_HELMET).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+                        .add(LootItem.lootTableItem(Items.IRON_LEGGINGS).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+                        .add(LootItem.lootTableItem(AetherItems.IRON_GLOVES.get()).setWeight(15).apply(EnchantRandomlyFunction.randomApplicableEnchantment()))
+                        .add(LootItem.lootTableItem(Items.IRON_HORSE_ARMOR).setWeight(5))
+                        .add(LootItem.lootTableItem(Items.HEAVY_WEIGHTED_PRESSURE_PLATE).setWeight(5))
+                        .add(LootItem.lootTableItem(AetherItems.ENCHANTED_BERRY.get()).setWeight(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 6.0F))))
+                        .add(LootItem.lootTableItem(Items.COMPASS).setWeight(5))
+                        .add(LootItem.lootTableItem(AetherItems.BOOK_OF_LORE.get()).setWeight(5))
+                        .add(LootItem.lootTableItem(Items.IRON_INGOT).setWeight(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 8.0F))))
+                        .add(LootItem.lootTableItem(Items.IRON_BLOCK).setWeight(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))));
     }
 }

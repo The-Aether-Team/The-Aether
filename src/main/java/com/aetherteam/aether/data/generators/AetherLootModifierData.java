@@ -38,7 +38,9 @@ public class AetherLootModifierData extends GlobalLootModifierProvider {
         this.add("gloves_loot_chain", new GlovesLootModifier(new LootItemCondition[]{
                 InvertedLootItemCondition.invert(LootTableIdCondition.builder(AetherLoot.GOLD_DUNGEON_REWARD)).build()
         }, new ItemStack(AetherItems.CHAINMAIL_GLOVES.get()), ArmorMaterials.CHAIN));
-        this.add("gloves_loot_iron", new GlovesLootModifier(new LootItemCondition[]{ }, new ItemStack(AetherItems.IRON_GLOVES.get()), ArmorMaterials.IRON));
+        this.add("gloves_loot_iron", new GlovesLootModifier(new LootItemCondition[]{
+                InvertedLootItemCondition.invert(LootTableIdCondition.builder(AetherLoot.RUINED_PORTAL)).build()
+        }, new ItemStack(AetherItems.IRON_GLOVES.get()), ArmorMaterials.IRON));
         this.add("gloves_loot_gold", new GlovesLootModifier(new LootItemCondition[]{ }, new ItemStack(AetherItems.GOLDEN_GLOVES.get()), ArmorMaterials.GOLD));
         this.add("gloves_loot_diamond", new GlovesLootModifier(new LootItemCondition[]{ }, new ItemStack(AetherItems.DIAMOND_GLOVES.get()), ArmorMaterials.DIAMOND));
         this.add("gloves_loot_netherite", new GlovesLootModifier(new LootItemCondition[]{ }, new ItemStack(AetherItems.NETHERITE_GLOVES.get()), ArmorMaterials.NETHERITE));
