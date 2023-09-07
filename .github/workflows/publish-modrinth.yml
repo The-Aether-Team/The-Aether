@@ -31,4 +31,6 @@ jobs:
           cd ~/work/The-Aether/The-Aether
         
           ./gradlew modrinth
+          cd ~/work/The-Aether/The-Aether/build/libs
+          echo *
         fi
