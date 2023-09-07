@@ -26,14 +26,7 @@ jobs:
         
           cd ~/work/The-Aether/The-Aether/build/libs
           find . ! -name "aether-1.19.4-1.0.0-beta.6-forge.jar" -type f -exec rm -f {} +
-          cd ~
-          echo *
-          cd ./work
-          echo *
-          cd ./The-Aether
-          echo *
-          cd ./The-Aether
-          echo *
+          cd ~/work/The-Aether/The-Aether
         
           ./gradlew modrinth
         fi
