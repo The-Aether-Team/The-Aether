@@ -224,6 +224,7 @@ modrinth {
 //        embedded.version "cumulus", "${project.cumulus_version}"
         optional.project "starlight-forge"
     }
+    debugMode = true
 }
 
 mixin {
