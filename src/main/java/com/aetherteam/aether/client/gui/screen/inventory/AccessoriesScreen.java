@@ -6,6 +6,7 @@ import com.aetherteam.aether.client.AetherKeys;
 import com.aetherteam.aether.client.gui.screen.perks.AetherCustomizationsScreen;
 import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
 import com.aetherteam.aether.inventory.menu.AccessoriesMenu;
+import com.aetherteam.aether.mixin.mixins.client.accessor.AbstractWidgetAccessor;
 import com.aetherteam.aether.mixin.mixins.client.accessor.ScreenAccessor;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.ClearItemPacket;
@@ -19,8 +20,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.ImageButton;
-import net.minecraft.client.gui.components.Renderable;
-import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
@@ -103,7 +103,8 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
         this.addRenderableWidget(new ImageButton(this.getGuiLeft() + 142, this.height / 2 - 22, 20, 18, 0, 0, 19, RECIPE_BUTTON_LOCATION, (pressed) -> {
             this.getRecipeBookComponent().toggleVisibility();
             this.updateScreenPosition();
-            pressed.setPosition(this.getGuiLeft() + 142, this.height / 2 - 22);
+            pressed.x = this.getGuiLeft() + 142;
+            pressed.y = this.height / 2 - 22;
             this.buttonClicked = true;
         }));
 
@@ -141,23 +142,22 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
      * @return The {@link ImageButton}.
      */
     private ImageButton createSkinsButton() {
-        ImageButton skinsButton = new ImageButton(this.getGuiLeft() - 22, this.getGuiTop() + 2, 20, 20, 0, 0, 20, SKINS_BUTTON, 20, 40,
-                (pressed) -> this.getMinecraft().setScreen(new MoaSkinsScreen(this)),
+        return new ImageButton(AccessoriesScreen.this.getGuiLeft() - 22, AccessoriesScreen.this.getGuiTop() + 2, 20, 20, 0, 0, 20, SKINS_BUTTON, 20, 40,
+                (pressed) -> AccessoriesScreen.this.getMinecraft().setScreen(new MoaSkinsScreen(AccessoriesScreen.this)),
+                (button, poseStack, mouseX, mouseY) -> AccessoriesScreen.this.renderTooltip(poseStack, Component.translatable("gui.aether.accessories.skins_button"), mouseX + 4, mouseY + 12),
                 Component.translatable("gui.aether.accessories.skins_button")) {
             @Override
             public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
                 super.render(poseStack, mouseX, mouseY, partialTick);
                 if (!AccessoriesScreen.this.getRecipeBookComponent().isVisible()) {
-                    this.setX(AccessoriesScreen.this.getGuiLeft() - 22);
-                    this.setY(AccessoriesScreen.this.getGuiTop() + 2);
+                    this.x = AccessoriesScreen.this.getGuiLeft() - 22;
+                    this.y = AccessoriesScreen.this.getGuiTop() + 2;
                 } else {
-                    this.setX(AccessoriesScreen.this.getGuiLeft() + 2);
-                    this.setY(AccessoriesScreen.this.getGuiTop() - 22);
+                    this.x = AccessoriesScreen.this.getGuiLeft() + 2;
+                    this.y = AccessoriesScreen.this.getGuiTop() - 22;
                 }
             }
         };
-        skinsButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.skins_button")));
-        return skinsButton;
     }
 
     /**
@@ -165,23 +165,22 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
      * @return The {@link ImageButton}.
      */
     private ImageButton createCustomizationButton() {
-        ImageButton customizationButton = new ImageButton(this.getGuiLeft() - 22, this.getGuiTop() + 24, 20, 20, 0, 0, 20, CUSTOMIZATION_BUTTON, 20, 40,
-                (pressed) -> this.getMinecraft().setScreen(new AetherCustomizationsScreen(this)),
+        return new ImageButton(AccessoriesScreen.this.getGuiLeft() - 22, AccessoriesScreen.this.getGuiTop() + 24, 20, 20, 0, 0, 20, CUSTOMIZATION_BUTTON, 20, 40,
+                (pressed) -> AccessoriesScreen.this.getMinecraft().setScreen(new AetherCustomizationsScreen(AccessoriesScreen.this)),
+                (button, poseStack, mouseX, mouseY) -> AccessoriesScreen.this.renderTooltip(poseStack, Component.translatable("gui.aether.accessories.customization_button"), mouseX + 4, mouseY + 12),
                 Component.translatable("gui.aether.accessories.customization_button")) {
             @Override
             public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
                 super.render(poseStack, mouseX, mouseY, partialTick);
                 if (!AccessoriesScreen.this.getRecipeBookComponent().isVisible()) {
-                    this.setX(AccessoriesScreen.this.getGuiLeft() - 22);
-                    this.setY(AccessoriesScreen.this.getGuiTop() + 24);
+                    this.x = AccessoriesScreen.this.getGuiLeft() - 22;
+                    this.y = AccessoriesScreen.this.getGuiTop() + 24;
                 } else {
-                    this.setX(AccessoriesScreen.this.getGuiLeft() + 24);
-                    this.setY(AccessoriesScreen.this.getGuiTop() - 22);
+                    this.x = AccessoriesScreen.this.getGuiLeft() + 24;
+                    this.y = AccessoriesScreen.this.getGuiTop() - 22;
                 }
             }
         };
-        customizationButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.customization_button")));
-        return customizationButton;
     }
 
     private void updateRenderButtons() {
@@ -195,8 +194,8 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
                         (button) -> NetworkHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(), new CPacketToggleRender(curioSlot.getIdentifier(), inventorySlot.getSlotIndex()))) {
                     @Override
                     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-                        this.setX(AccessoriesScreen.this.getGuiLeft() + inventorySlot.x + 11);
-                        this.setY(AccessoriesScreen.this.getGuiTop() + inventorySlot.y - 3);
+                        this.x = AccessoriesScreen.this.getGuiLeft() + inventorySlot.x + 11;
+                        this.y = AccessoriesScreen.this.getGuiTop() + inventorySlot.y - 3;
                     }
                 });
             }
@@ -215,10 +214,10 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
             this.getRecipeBookComponent().renderGhostRecipe(poseStack, this.getGuiLeft(), this.getGuiTop(), false, partialTicks);
 
             boolean isButtonHovered = false;
-            for (Renderable renderable : this.renderables) {
+            for (Widget renderable : this.renderables) {
                 if (renderable instanceof RenderButton renderButton) {
                     renderButton.renderButtonOverlay(poseStack, mouseX, mouseY, partialTicks);
-                    if (renderButton.isHovered()) {
+                    if (((AbstractWidgetAccessor) renderButton).aether$isIsHovered()) {
                         isButtonHovered = true;
                     }
                 }
@@ -262,8 +261,8 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
             RenderSystem.setShaderTexture(0, this.getMinecraft().player.isCreative() ? ACCESSORIES_INVENTORY_CREATIVE : ACCESSORIES_INVENTORY);
             int i = this.getGuiLeft();
             int j = this.getGuiTop();
-            GuiComponent.blit(poseStack, i, j, 0, 0, this.getXSize() + this.creativeXOffset(), this.getYSize());
-            InventoryScreen.renderEntityInInventoryFollowsMouse(poseStack, i + 33, j + 75, 30, (float) (i + 31) - mouseX, (float) (j + 75 - 50) - mouseY, this.getMinecraft().player);
+            this.blit(poseStack, i, j, 0, 0, this.getXSize() + this.creativeXOffset(), this.getYSize());
+            InventoryScreen.renderEntityInInventory(i + 33, j + 75, 30, (float) (i + 31) - mouseX, (float) (j + 75 - 50) - mouseY, this.getMinecraft().player);
         }
     }
 

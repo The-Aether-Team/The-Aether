@@ -15,7 +15,6 @@ import com.aetherteam.nitrogen.network.PacketRelay;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.CommonComponents;
@@ -80,7 +79,7 @@ public class AetherCustomizationsScreen extends Screen {
                 this.setupDeveloperGlowOptions(xPos, yPos, i);
             }
         }
-        this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, (pressed) -> this.onClose()).bounds(this.width / 2 - 100, this.height - 30, 200, 20).build());
+        this.addRenderableWidget(new Button(this.width / 2 - 100, this.height - 30, 200, 20, CommonComponents.GUI_DONE, (pressed) -> this.onClose()));
     }
 
     /**
@@ -90,11 +89,11 @@ public class AetherCustomizationsScreen extends Screen {
      * @param i The {@link Integer} offset multiplier for widgets.
      */
     private void setupHaloOptions(int xPos, int yPos, int i) {
-        this.haloToggleButton = this.addRenderableWidget(Button.builder(Component.translatable(this.haloEnabled ? "gui.aether.customization.halo.on" : "gui.aether.customization.halo.off"),
+        this.haloToggleButton = this.addRenderableWidget(new Button(xPos, yPos + (25 * i), 150, 20, Component.translatable(this.haloEnabled ? "gui.aether.customization.halo.on" : "gui.aether.customization.halo.off"),
             (pressed) -> {
                 this.haloEnabled = !this.haloEnabled;
                 pressed.setMessage(Component.translatable(this.haloEnabled ? "gui.aether.customization.halo.on" : "gui.aether.customization.halo.off"));
-            }).pos(xPos, yPos + (25 * i)).build());
+            }));
 
         this.haloColorBox = this.addRenderableWidget(new HaloColorBox(this, this.getMinecraft().font, xPos + 155, yPos + (25 * i), 60, 20, Component.translatable("gui.aether.customization.halo.color")));
         if (this.haloColor != null && !this.haloColor.isEmpty()) {
@@ -116,9 +115,8 @@ public class AetherCustomizationsScreen extends Screen {
                     }
                     this.customizations.load();
                 }
-            }, undoText
+            }, (button, poseStack, mouseX, mouseY) -> this.renderTooltip(poseStack, undoText, mouseX + 4, mouseY + 12), undoText
         );
-        undoButton.setTooltip(Tooltip.create(undoText));
         this.addRenderableWidget(undoButton);
 
         // Saves and stores settings to the game.
@@ -147,9 +145,8 @@ public class AetherCustomizationsScreen extends Screen {
                     this.customizations.save();
                     this.customizations.load();
                 }
-            }, saveText
+            }, (button, poseStack, mouseX, mouseY) -> this.renderTooltip(poseStack, saveText, mouseX + 4, mouseY + 12), saveText
         );
-        saveButton.setTooltip(Tooltip.create(saveText));
         this.addRenderableWidget(saveButton);
     }
 
@@ -160,11 +157,11 @@ public class AetherCustomizationsScreen extends Screen {
      * @param i The {@link Integer} offset multiplier for widgets.
      */
     private void setupDeveloperGlowOptions(int xPos, int yPos, int i) {
-        this.developerGlowToggleButton = this.addRenderableWidget(Button.builder(Component.translatable(this.developerGlowEnabled ? "gui.aether.customization.developer_glow.on" : "gui.aether.customization.developer_glow.off"),
+        this.developerGlowToggleButton = this.addRenderableWidget(new Button(xPos, yPos + (25 * i), 150, 20, Component.translatable(this.developerGlowEnabled ? "gui.aether.customization.developer_glow.on" : "gui.aether.customization.developer_glow.off"),
             (pressed) -> {
                 this.developerGlowEnabled = !this.developerGlowEnabled;
                 pressed.setMessage(Component.translatable(this.developerGlowEnabled ? "gui.aether.customization.developer_glow.on" : "gui.aether.customization.developer_glow.off"));
-            }).pos(xPos, yPos + (25 * i)).build());
+            }));
 
         this.developerGlowColorBox = this.addRenderableWidget(new DeveloperGlowColorBox(this, this.getMinecraft().font, xPos + 155, yPos + (25 * i), 60, 20, Component.translatable("gui.aether.customization.developer_glow.color")));
         if (this.developerGlowColor != null && !this.developerGlowColor.isEmpty()) {
@@ -186,9 +183,8 @@ public class AetherCustomizationsScreen extends Screen {
                     }
                     this.customizations.load();
                 }
-            }, undoText
+            }, (button, poseStack, mouseX, mouseY) -> this.renderTooltip(poseStack, undoText, mouseX + 4, mouseY + 12), undoText
         );
-        undoButton.setTooltip(Tooltip.create(undoText));
         this.addRenderableWidget(undoButton);
 
         // Saves and stores settings to the game.
@@ -217,9 +213,8 @@ public class AetherCustomizationsScreen extends Screen {
                     this.customizations.save();
                     this.customizations.load();
                 }
-            }, saveText
+            }, (button, poseStack, mouseX, mouseY) -> this.renderTooltip(poseStack, saveText, mouseX + 4, mouseY + 12), saveText
         );
-        saveButton.setTooltip(Tooltip.create(saveText));
         this.addRenderableWidget(saveButton);
     }
 
@@ -231,7 +226,7 @@ public class AetherCustomizationsScreen extends Screen {
         if (this.getMinecraft().player != null) {
             int x = (this.width / 2) - 175;
             int y = (this.height / 2) + 50;
-            InventoryScreen.renderEntityInInventoryFollowsMouse(poseStack, x + 33, y, 60, (float) (x + 33 - mouseX), (float) (y - 100 - mouseY), this.getMinecraft().player);
+            InventoryScreen.renderEntityInInventory(x + 33, y, 60, (float) (x + 33 - mouseX), (float) (y - 100 - mouseY), this.getMinecraft().player);
         }
         // Resets color values if they're invalid.
         if (this.haloColorBox != null && !this.haloColorBox.getValue().equals(this.haloColor)) {

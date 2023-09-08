@@ -33,7 +33,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.DifficultyInstance;
@@ -533,13 +532,13 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     }
 
     /**
-     * Makes the Sun Spirit immune to all damage except cold damage from Ice Crystals, as determined by {@link AetherTags.DamageTypes#IS_COLD}.
+     * Makes the Sun Spirit immune to all damage except cold damage from Ice Crystals, as determined by AetherTags.DamageTypes#IS_COLD.
      * @param source The {@link DamageSource}.
      * @return Whether the Sun Spirit is invulnerable to the damage, as a {@link Boolean}.
      */
     @Override
     public boolean isInvulnerableTo(DamageSource source) {
-        return this.isRemoved() || !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) && !source.is(AetherTags.DamageTypes.IS_COLD);
+        return this.isRemoved() || !source.isBypassInvul() && !source.getMsgId().equals("aether.ice_crystal");
     }
 
     protected SoundEvent getShootSound() {
@@ -629,7 +628,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     }
 
     @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
@@ -792,7 +791,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
 
         @Override
         public void start() {
-            BlockPos pos = BlockPos.containing(this.sunSpirit.getX(), this.sunSpirit.getY(), this.sunSpirit.getZ());
+            BlockPos pos = new BlockPos(this.sunSpirit.getX(), this.sunSpirit.getY(), this.sunSpirit.getZ());
             for (int i = 0; i <= 3; i++) {
                 if (this.sunSpirit.getLevel().isEmptyBlock(pos) && !this.sunSpirit.getLevel().isEmptyBlock(pos.below())) {
                     this.sunSpirit.getLevel().setBlock(pos, Blocks.FIRE.defaultBlockState(), 1 | 2 | 8);

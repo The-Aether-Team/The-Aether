@@ -35,7 +35,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.*;
 import net.minecraft.world.damagesource.DamageSource;
@@ -172,7 +171,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                 if (ForgeEventFactory.getMobGriefingEvent(this.getLevel(), this)) {
                     for (int i = 0; i < 2; i++) {
                         Vec3i vector = i == 0 ? this.getMotionDirection().getNormal() : Vec3i.ZERO;
-                        BlockPos upperPosition = BlockPos.containing(this.getEyePosition()).offset(vector);
+                        BlockPos upperPosition = new BlockPos(this.getEyePosition()).offset(vector);
                         BlockPos lowerPosition = this.blockPosition().offset(vector);
                         BlockState upperState = this.getLevel().getBlockState(upperPosition);
                         BlockState lowerState = this.getLevel().getBlockState(lowerPosition);
@@ -363,7 +362,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      */
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
+        if (source.isBypassInvul()) {
             return super.hurt(source, amount);
         }
         if (this.isReady()) {

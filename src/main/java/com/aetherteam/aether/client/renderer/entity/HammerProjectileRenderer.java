@@ -4,14 +4,15 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.entity.projectile.weapon.HammerProjectile;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Matrix3f;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
-import org.joml.Matrix3f;
-import org.joml.Matrix4f;
 
 public class HammerProjectileRenderer extends EntityRenderer<HammerProjectile> {
     public static final ResourceLocation KINGBDOGZ_WAVE_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/projectile/kingbdogz_wave.png");
@@ -29,7 +30,7 @@ public class HammerProjectileRenderer extends EntityRenderer<HammerProjectile> {
     public void render(HammerProjectile hammer, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
         poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
-        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
+        poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
         VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutout(this.getTextureLocation(hammer)));
         PoseStack.Pose pose = poseStack.last();
         Matrix4f matrix4f = pose.pose();

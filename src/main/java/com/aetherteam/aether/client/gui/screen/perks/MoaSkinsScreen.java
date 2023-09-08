@@ -3,6 +3,7 @@ package com.aetherteam.aether.client.gui.screen.perks;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.capability.player.AetherPlayer;
+import com.aetherteam.aether.client.gui.component.Builder;
 import com.aetherteam.aether.client.gui.component.skins.ChangeSkinButton;
 import com.aetherteam.aether.client.gui.component.skins.PatreonButton;
 import com.aetherteam.aether.client.gui.component.skins.RefreshButton;
@@ -28,8 +29,6 @@ import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
-import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.ConfirmLinkScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -113,7 +112,7 @@ public class MoaSkinsScreen extends Screen {
             }
 
             // Button for saving a selected skin as the one that will be applied to the player's Moa.
-            this.applyButton = this.addRenderableWidget(new ChangeSkinButton(ChangeSkinButton.ButtonType.APPLY, Button.builder(Component.translatable("gui.aether.moa_skins.button.apply"),
+            this.applyButton = this.addRenderableWidget(new ChangeSkinButton(ChangeSkinButton.ButtonType.APPLY, new Builder(Component.translatable("gui.aether.moa_skins.button.apply"),
                 (pressed) -> AetherPlayer.get(this.getMinecraft().player).ifPresent((aetherPlayer) -> {
                     PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Apply(this.getMinecraft().player.getUUID(), new MoaData(aetherPlayer.getLastRiddenMoa(), this.getSelectedSkin())));
                     this.customizations.setMoaSkin(this.getSelectedSkin().getId());
@@ -123,7 +122,7 @@ public class MoaSkinsScreen extends Screen {
             ).bounds((this.leftPos + this.imageWidth) - 20, this.topPos + 13, 7, 7)));
 
             // Button for removing the player's currently applied Moa Skin.
-            this.removeButton = this.addRenderableWidget(new ChangeSkinButton(ChangeSkinButton.ButtonType.REMOVE, Button.builder(Component.translatable("gui.aether.moa_skins.button.remove"),
+            this.removeButton = this.addRenderableWidget(new ChangeSkinButton(ChangeSkinButton.ButtonType.REMOVE, new Builder(Component.translatable("gui.aether.moa_skins.button.remove"),
                 (pressed) -> {
                     PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Remove(this.getMinecraft().player.getUUID()));
                     this.customizations.setMoaSkin("");
@@ -133,7 +132,7 @@ public class MoaSkinsScreen extends Screen {
             ).bounds((this.leftPos + this.imageWidth) - 20, this.topPos + 22, 7, 7)));
 
             // Button that opens a screen with a redirect to Patreon.
-            this.addRenderableWidget(new PatreonButton(Button.builder(Component.translatable("gui.aether.moa_skins.button.donate"),
+            this.addRenderableWidget(new PatreonButton(new Builder(Component.translatable("gui.aether.moa_skins.button.donate"),
                 (pressed) -> this.getMinecraft().setScreen(new ConfirmLinkScreen((callback) -> {
                     if (callback) {
                         Util.getPlatform().openUri(PATREON_LINK);
@@ -144,7 +143,7 @@ public class MoaSkinsScreen extends Screen {
 
             // Button that opens a verification link so this player can tie their UUID to their Patreon account through the Patreon login API.
             String link = "https://www.aether-mod.net/verify?uuid=" + uuid;
-            this.addRenderableWidget(new PatreonButton(Button.builder(Component.translatable("gui.aether.moa_skins.button.connect"),
+            this.addRenderableWidget(new PatreonButton(new Builder(Component.translatable("gui.aether.moa_skins.button.connect"),
                 (pressed) -> this.getMinecraft().setScreen(new ConfirmLinkScreen((callback) -> {
                     if (callback) {
                         Util.getPlatform().openUri(link);
@@ -154,14 +153,14 @@ public class MoaSkinsScreen extends Screen {
             ).bounds(this.leftPos + (this.imageWidth / 2) - 5, this.topPos + this.imageHeight - 25, 54, 18)));
 
             // Button that forces the server to re-check the status of the player's user info and Patreon connection.
-            this.addRenderableWidget(new RefreshButton(Button.builder(Component.literal(""),
+            this.addRenderableWidget(new RefreshButton(new Builder(Component.literal(""),
                 (pressed) -> {
                     if (RefreshButton.reboundTimer == 0) {
                         PacketRelay.sendToServer(NitrogenPacketHandler.INSTANCE, new TriggerUpdateInfoPacket(this.getMinecraft().player.getId()));
                         RefreshButton.reboundTimer = RefreshButton.reboundMax;
                     }
                 }
-            ).bounds(this.leftPos + (this.imageWidth / 2) + 49, this.topPos + this.imageHeight - 25, 18, 18).tooltip(Tooltip.create(Component.translatable("gui.aether.moa_skins.button.refresh")))));
+            ).bounds(this.leftPos + (this.imageWidth / 2) + 49, this.topPos + this.imageHeight - 25, 18, 18).tooltip((button, poseStack, mouseX, mouseY) -> this.renderTooltip(poseStack, Component.translatable("gui.aether.moa_skins.button.refresh"), mouseX + 4, mouseY + 12))));
         }
     }
 
@@ -186,7 +185,7 @@ public class MoaSkinsScreen extends Screen {
         Font font = this.getMinecraft().font;
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, MOA_SKINS_GUI);
-        GuiComponent.blit(poseStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        this.blit(poseStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
 
         Component component = user == null ? Component.translatable("gui.aether.moa_skins.text.donate") : Component.translatable("gui.aether.moa_skins.text.reward");
         int y = (this.topPos + this.imageHeight - 69) + font.wordWrapHeight(component, this.imageWidth - 20);
@@ -224,14 +223,14 @@ public class MoaSkinsScreen extends Screen {
                     int u = skin == this.getSelectedSkin() || this.getSlotIndex(mouseX, mouseY) == slotIndex ? 18 : 0; // Highlighted slot vs. Darkened slot.
                     RenderSystem.setShader(GameRenderer::getPositionTexShader);
                     RenderSystem.setShaderTexture(0, MOA_SKINS_GUI);
-                    GuiComponent.blit(poseStack, x, y, u, 191, 18, 18); // Render slot.
+                    this.blit(poseStack, x, y, u, 191, 18, 18); // Render slot.
                 }
 
                 // Renders an outline for the player's currently active Moa Skin.
                 if (userSkinsData.containsKey(uuid) && userSkinsData.get(uuid).moaSkin() == skin) {
                     RenderSystem.setShader(GameRenderer::getPositionTexShader);
                     RenderSystem.setShaderTexture(0, MOA_SKINS_GUI);
-                    GuiComponent.blit(poseStack, x, y, 36, 191, 18, 18); // Render golden slot outline.
+                    this.blit(poseStack, x, y, 36, 191, 18, 18); // Render golden slot outline.
                 }
 
                 RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -256,7 +255,7 @@ public class MoaSkinsScreen extends Screen {
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, MOA_SKINS_GUI);
-        GuiComponent.blit(poseStack, (int) (scrollbarLeft + this.scrollX), scrollbarTop, scrollbarU, 209, 13, 6); // Render scrollbar.
+        this.blit(poseStack, (int) (scrollbarLeft + this.scrollX), scrollbarTop, scrollbarU, 209, 13, 6); // Render scrollbar.
     }
 
     /**
@@ -308,7 +307,7 @@ public class MoaSkinsScreen extends Screen {
 
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderTexture(0, MOA_SKINS_GUI);
-            GuiComponent.blit(poseStack, this.leftPos + 13, this.topPos + 13, 54, 191, 10, 14); // Lock Icon
+            this.blit(poseStack, this.leftPos + 13, this.topPos + 13, 54, 191, 10, 14); // Lock Icon
 
             if (this.getSelectedSkin().getInfo().lifetime()) {
                 boolean mouseOver = this.isMouseOverIcon(mouseX, mouseY, 8);
@@ -339,7 +338,7 @@ public class MoaSkinsScreen extends Screen {
     private void renderLifetimeIcon(PoseStack poseStack, boolean mouseOver) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, MOA_SKINS_GUI);
-        GuiComponent.blit(poseStack, this.leftPos + 13, (this.topPos + (this.imageHeight / 2)) - 9, mouseOver ? 63 : 55, 184, 8, 7); // Lifetime Icon
+        this.blit(poseStack, this.leftPos + 13, (this.topPos + (this.imageHeight / 2)) - 9, mouseOver ? 63 : 55, 184, 8, 7); // Lifetime Icon
     }
 
     /**
@@ -350,7 +349,7 @@ public class MoaSkinsScreen extends Screen {
     private void renderPledgingIcon(PoseStack poseStack, boolean mouseOver) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, MOA_SKINS_GUI);
-        GuiComponent.blit(poseStack, this.leftPos + 13, (this.topPos + (this.imageHeight / 2)) - 9, mouseOver ? 49 : 42, 184, 7, 7);
+        this.blit(poseStack, this.leftPos + 13, (this.topPos + (this.imageHeight / 2)) - 9, mouseOver ? 49 : 42, 184, 7, 7);
     }
 
     private boolean isMouseOverIcon(int mouseX, int mouseY, int width) {
@@ -398,8 +397,8 @@ public class MoaSkinsScreen extends Screen {
     }
 
     /**
-     * [CODE COPY] - {@link net.minecraft.client.gui.screens.inventory.InventoryScreen#renderEntityInInventoryFollowsAngle(PoseStack, int, int, int, float, float, LivingEntity)}.<br>
-     * [CODE COPY] - {@link net.minecraft.client.gui.screens.inventory.InventoryScreen#renderEntityInInventory(PoseStack, int, int, int, Quaternionf, Quaternionf, LivingEntity)}.<br><br>
+     * [CODE COPY] - net.minecraft.client.gui.screens.inventory.InventoryScreen#renderEntityInInventoryFollowsAngle(PoseStack, int, int, int, float, float, LivingEntity).<br>
+     * [CODE COPY] - net.minecraft.client.gui.screens.inventory.InventoryScreen#renderEntityInInventory(PoseStack, int, int, int, Quaternionf, Quaternionf, LivingEntity).<br><br>
      * Merged code from the two methods, and modified so that the head rotation follows the body rotation and doesn't rotate separately.<br><br>
      * Warning for "deprecation" is suppressed because this is copied code.
      */
@@ -427,7 +426,7 @@ public class MoaSkinsScreen extends Screen {
         livingEntity.yHeadRotO = livingEntity.getYRot();
         Lighting.setupForEntityInInventory();
         EntityRenderDispatcher entityRenderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
-        zQuaternion.conjugate();
+        zQuaternion.conj();
         entityRenderDispatcher.overrideCameraOrientation(zQuaternion);
         entityRenderDispatcher.setRenderShadow(false);
         MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();

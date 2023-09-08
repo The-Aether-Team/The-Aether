@@ -7,12 +7,13 @@ import com.aetherteam.aether.client.gui.component.menu.DynamicMenuButton;
 import com.aetherteam.aether.mixin.mixins.client.accessor.TitleScreenAccessor;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.Renderable;
+import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.screens.TitleScreen;
@@ -27,7 +28,7 @@ import net.minecraftforge.internal.BrandingControl;
 public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavior {
 	private static final ResourceLocation PANORAMA_OVERLAY = new ResourceLocation("textures/gui/title/background/panorama_overlay.png");
 	private static final ResourceLocation AETHER_LOGO = new ResourceLocation(Aether.MODID, "textures/gui/title/aether.png");
-	public static final Music MENU = new Music(AetherSoundEvents.MUSIC_MENU.getHolder().orElseThrow(), 20, 600, true);
+	public static final Music MENU = new Music(AetherSoundEvents.MUSIC_MENU.get(), 20, 600, true);
 	private final PanoramaRenderer panorama = new PanoramaRenderer(new CubeMap(new ResourceLocation(Aether.MODID, "textures/gui/title/panorama/panorama")));
 	private AetherModUpdateIndicator modUpdateNotification;
 	private boolean alignedLeft;
@@ -53,7 +54,7 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 	public void setupButtons() {
 		int buttonRows = 0;
 		int lastY = 0;
-		for (Renderable renderable : this.renderables) {
+		for (Widget renderable : this.renderables) {
 			if (renderable instanceof AbstractWidget abstractWidget) {
 				if (TitleScreenBehavior.isImageButton(abstractWidget.getMessage())) {
 					abstractWidget.visible = false; // The visibility handling is necessary here to avoid a bug where the buttons will render in the center of the screen before they have a specified offset.
@@ -88,7 +89,7 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 				float splashY = this.alignedLeft ? 100.0F / scale : (int) (20 + (76 / scale));
 				poseStack.pushPose();
 				poseStack.translate(splashX, splashY, 0.0F);
-				poseStack.mulPose(Axis.ZP.rotationDegrees(-20.0F));
+				poseStack.mulPose(Vector3f.ZP.rotationDegrees(-20.0F));
 				float textSize = 1.8F - Mth.abs(Mth.sin((float) (Util.getMillis() % 1000L) / 1000.0F * Mth.TWO_PI) * 0.1F);
 				String splash = titleScreenAccessor.aether$getSplash();
 				textSize = textSize * (200.0F / scale) / (this.font.width(splash) + (64 / scale));
@@ -110,7 +111,7 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 		}
 
 		int xOffset = TitleScreenBehavior.super.handleButtonVisibility(this, fadeAmount);
-		for (Renderable renderable : this.renderables) {
+		for (Widget renderable : this.renderables) {
 			renderable.render(poseStack, mouseX, mouseY, partialTicks);
 			if (renderable instanceof AetherMenuButton aetherButton) { // Smoothly shifts the Aether-styled buttons to the right slightly when hovered over.
 				if (aetherButton.isMouseOver(mouseX, mouseY)) {
@@ -191,7 +192,7 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	protected <T extends GuiEventListener & Renderable & NarratableEntry> T addRenderableWidget(T renderable) {
+	protected <T extends GuiEventListener & Widget & NarratableEntry> T addRenderableWidget(T renderable) {
 		if (renderable instanceof Button button) {
 			if (TitleScreenBehavior.isMainButton(button.getMessage())) {
 				AetherMenuButton aetherButton = new AetherMenuButton(this, button);

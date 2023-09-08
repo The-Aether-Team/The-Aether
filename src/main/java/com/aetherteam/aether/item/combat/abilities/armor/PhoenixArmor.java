@@ -7,7 +7,6 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -201,6 +200,6 @@ public interface PhoenixArmor {
      * @see com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener#onEntityAttack(LivingAttackEvent)
      */
     static boolean extinguishUser(LivingEntity entity, DamageSource source) {
-        return EquipmentUtil.hasFullPhoenixSet(entity) && source.is(DamageTypeTags.IS_FIRE);
+        return EquipmentUtil.hasFullPhoenixSet(entity) && source.isFire();
     }
 }

@@ -9,8 +9,8 @@ public class CustomizationButton extends InactiveImageButton {
     protected final ColorBox colorBox;
     protected final ButtonType buttonType;
 
-    public CustomizationButton(AetherCustomizationsScreen screen, ButtonType buttonType, ColorBox colorBox, int x, int y, int width, int height, int xTexStart, int yTexStart, int yDiffTex, ResourceLocation texture, int textureWidth, int textureHeight, OnPress onPress, Component message) {
-        super(x, y, width, height, xTexStart, yTexStart, yDiffTex, texture, textureWidth, textureHeight, onPress, message);
+    public CustomizationButton(AetherCustomizationsScreen screen, ButtonType buttonType, ColorBox colorBox, int x, int y, int width, int height, int xTexStart, int yTexStart, int yDiffTex, ResourceLocation texture, int textureWidth, int textureHeight, OnPress onPress, OnTooltip tooltip, Component message) {
+        super(x, y, width, height, xTexStart, yTexStart, yDiffTex, texture, textureWidth, textureHeight, onPress, tooltip, message);
         this.screen = screen;
         this.colorBox = colorBox;
         this.buttonType = buttonType;

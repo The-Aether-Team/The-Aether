@@ -24,14 +24,14 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.LerpingBossEvent;
-import net.minecraft.client.gui.components.Tooltip;
-import net.minecraft.client.gui.layouts.FrameLayout;
-import net.minecraft.client.gui.layouts.GridLayout;
+//import net.minecraft.client.gui.components.Tooltip;
+//import net.minecraft.client.gui.layouts.FrameLayout;
+//import net.minecraft.client.gui.layouts.GridLayout;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -81,7 +81,7 @@ public class GuiHooks {
         for (String string : AccessoriesMenu.AETHER_IDENTIFIERS) {
             ITagManager<Item> itemTags = ForgeRegistries.ITEMS.tags();
             if (itemTags != null) {
-                if (itemTags.getTag(TagKey.create(Registries.ITEM, new ResourceLocation("curios", string))).isEmpty()) {
+                if (itemTags.getTag(TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("curios", string))).isEmpty()) {
                     flag = false;
                 }
             }
@@ -165,8 +165,8 @@ public class GuiHooks {
     private static void createSkinsButton(Screen screen, GridLayout gridLayout, GridLayout.RowHelper rowHelper) {
         ImageButton skinsButton = new ImageButton(0, 0, 20, 20, 0, 0, 20, AccessoriesScreen.SKINS_BUTTON, 20, 40,
                 (pressed) -> Minecraft.getInstance().setScreen(new MoaSkinsScreen(screen)),
+                (button, poseStack, mouseX, mouseY) -> screen.renderTooltip(poseStack, Component.translatable("gui.aether.accessories.skins_button"), mouseX + 4, mouseY + 12),
                 Component.translatable("gui.aether.accessories.skins_button"));
-        skinsButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.skins_button")));
         rowHelper.addChild(skinsButton, gridLayout.newCellSettings().paddingTop(58));
     }
 
@@ -178,8 +178,8 @@ public class GuiHooks {
     private static void createCustomizationsButton(Screen screen, GridLayout.RowHelper rowHelper) {
         ImageButton customizationButton = new ImageButton(0, 0, 20, 20, 0, 0, 20, AccessoriesScreen.CUSTOMIZATION_BUTTON, 20, 40,
                 (pressed) -> Minecraft.getInstance().setScreen(new AetherCustomizationsScreen(screen)),
+                (button, poseStack, mouseX, mouseY) -> screen.renderTooltip(poseStack, Component.translatable("gui.aether.accessories.customization_button"), mouseX + 4, mouseY + 12),
                 Component.translatable("gui.aether.accessories.customization_button"));
-        customizationButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.customization_button")));
         rowHelper.addChild(customizationButton);
     }
 

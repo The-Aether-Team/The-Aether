@@ -9,7 +9,6 @@ import com.aetherteam.aether.item.combat.AetherItemTiers;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ZombifiedPiglinAccessor;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.ZombifiedPiglin;
@@ -46,7 +45,7 @@ public class PigSlayerItem extends SwordItem {
 						zombifiedPiglinAccessor.callAlertOthers();
 					}
 				}
-				DamageSource damageSource = AetherDamageTypes.entityDamageSource(attacker.level, AetherDamageTypes.ARMOR_PIERCING_ATTACK, attacker);
+				DamageSource damageSource = AetherDamageTypes.armorPiercingAttack(attacker);
 				target.hurt(damageSource, 26); // This doesn't deal 26 hearts of damage, it deals 20.
 				if (target.getLevel() instanceof ServerLevel level) {
 					for (int i = 0; i < 20; i++) {
@@ -72,7 +71,7 @@ public class PigSlayerItem extends SwordItem {
 	public static void onPigSlayerHurt(LivingHurtEvent event) {
 		LivingEntity livingEntity = event.getEntity();
 		DamageSource damageSource = event.getSource();
-		if (canPerformAbility(livingEntity, damageSource) && !damageSource.is(DamageTypeTags.BYPASSES_ARMOR)) {
+		if (canPerformAbility(livingEntity, damageSource) && !damageSource.isBypassArmor()) {
 			event.setAmount(0);
 		}
 	}

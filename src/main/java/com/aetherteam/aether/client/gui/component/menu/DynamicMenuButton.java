@@ -1,5 +1,6 @@
 package com.aetherteam.aether.client.gui.component.menu;
 
+import com.aetherteam.aether.client.gui.component.Builder;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.Button;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -17,15 +18,15 @@ public class DynamicMenuButton extends Button {
     public boolean enabled = true;
 
     public DynamicMenuButton(Builder builder) {
-        super(builder.createNarration(DEFAULT_NARRATION));
-        this.originX = this.getX();
+        super(builder.x, builder.y, builder.width, builder.height, builder.message, builder.onPress, builder.tooltip);
+        this.originX = this.x;
     }
 
     @Override
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
         if (this.shouldRender()) {
             this.enabled = true;
-            this.setX(this.getOriginX() + gatherOffsets(this.offsetConfigs));
+            this.x = this.getOriginX() + gatherOffsets(this.offsetConfigs);
             super.render(poseStack, mouseX, mouseY, partialTicks);
         } else {
             this.enabled = false;

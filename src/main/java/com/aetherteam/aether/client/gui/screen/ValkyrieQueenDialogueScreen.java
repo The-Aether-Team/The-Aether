@@ -10,7 +10,7 @@ import com.aetherteam.nitrogen.network.PacketRelay;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.Renderable;
+import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -70,10 +70,10 @@ public class ValkyrieQueenDialogueScreen extends Screen {
         this.dialogueAnswer.reposition(this.width, this.height);
         // Dialogue choices.
         int lineNumber = this.dialogueAnswer.height / 12 + 1;
-        for (Renderable renderable : this.renderables) {
+        for (Widget renderable : this.renderables) {
             if (renderable instanceof DialogueChoiceComponent option) {
-                option.setX(this.width / 2 - option.getWidth() / 2);
-                option.setY(this.height / 2 + 12 * lineNumber);
+                option.x = this.width / 2 - option.getWidth() / 2;
+                option.y = this.height / 2 + 12 * lineNumber;
                 lineNumber++;
             }
         }

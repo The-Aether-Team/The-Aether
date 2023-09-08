@@ -9,7 +9,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.Renderable;
+import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.renderer.PanoramaRenderer;
@@ -78,18 +78,18 @@ public interface TitleScreenBehavior {
      * @param xOffset The {@link Integer} x-offset for the buttons.
      */
     default void handleImageButtons(TitleScreen titleScreen, int xOffset) {
-        for (Renderable renderable : titleScreen.renderables) {
+        for (Widget renderable : titleScreen.renderables) {
             if (renderable instanceof Button button) {
                 Component buttonText = button.getMessage();
                 if (TitleScreenBehavior.isImageButton(buttonText)) {
                     button.visible = true;
                 }
                 if (buttonText.equals(Component.translatable("narrator.button.accessibility"))) {
-                    button.setX(titleScreen.width - 48 + xOffset);
-                    button.setY(4);
+                    button.x = titleScreen.width - 48 + xOffset;
+                    button.y = 4;
                 } else if (buttonText.equals(Component.translatable("narrator.button.language"))) {
-                    button.setX(titleScreen.width - 24 + xOffset);
-                    button.setY(4);
+                    button.x = titleScreen.width - 24 + xOffset;
+                    button.y = 4;
                 }
             }
         }

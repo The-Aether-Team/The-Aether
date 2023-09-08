@@ -43,7 +43,7 @@ public class Collide extends Behavior<Slider> {
         Vec3 max = new Vec3(slider.getBoundingBox().maxX + 0.1, slider.getBoundingBox().maxY + 0.1, slider.getBoundingBox().maxZ + 0.1);
         AABB collisionBounds = new AABB(min, max);
         for (Entity entity : level.getEntities(slider, collisionBounds)) {
-            if (entity instanceof LivingEntity livingEntity && entity.hurt(AetherDamageTypes.entityDamageSource(slider.getLevel(), AetherDamageTypes.CRUSH, slider), 6)) {
+            if (entity instanceof LivingEntity livingEntity && entity.hurt(AetherDamageTypes.crush(slider), 6)) {
                 if (livingEntity instanceof Player player && player.getUseItem().is(Items.SHIELD) && player.isBlocking()) { // Disables the player's Shield if one is being used.
                     player.getCooldowns().addCooldown(Items.SHIELD, 100);
                     player.stopUsingItem();
