@@ -6,7 +6,6 @@ import com.aetherteam.aether.client.gui.component.inventory.AccessoryButton;
 import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.LerpingBossEvent;
-import net.minecraft.client.gui.layouts.GridLayout;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.api.distmarker.Dist;
@@ -24,7 +23,7 @@ public class GuiListener {
 	/**
 	 * @see AccessoriesScreen#getButtonOffset(Screen)
 	 * @see GuiHooks#setupAccessoryButton(Screen, Tuple)
-	 * @see GuiHooks#setupPerksButtons(Screen)
+//	 * @see GuiHooks#setupPerksButtons(Screen)
 	 */
 	@SubscribeEvent
 	public static void onGuiInitialize(ScreenEvent.Init.Post event) {
@@ -36,10 +35,10 @@ public class GuiListener {
 				event.addListener(inventoryAccessoryButton);
 			}
 		} else {
-			GridLayout layout = GuiHooks.setupPerksButtons(screen);
-			if (layout != null) {
-				layout.visitWidgets(event::addListener);
-			}
+//			GridLayout layout = GuiHooks.setupPerksButtons(screen);
+//			if (layout != null) {
+//				layout.visitWidgets(event::addListener);
+//			}
 		}
 	}
 
