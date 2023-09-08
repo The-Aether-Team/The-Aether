@@ -203,7 +203,6 @@ curseforge {
             relations {
                 embeddedLibrary "curios"
 //                embeddedLibrary "cumulus"
-                optionalDependency "starlight-forge"
             }
         }
     }
@@ -222,7 +221,6 @@ modrinth {
     dependencies {
         embedded.version "curios", "${project.curios_version}"
 //        embedded.version "cumulus", "${project.cumulus_version}"
-        optional.project "starlight-forge"
     }
 }
 
