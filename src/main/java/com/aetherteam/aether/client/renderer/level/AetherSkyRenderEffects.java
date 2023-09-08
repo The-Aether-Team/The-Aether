@@ -6,7 +6,8 @@ import com.aetherteam.aether.mixin.mixins.client.accessor.LevelRendererAccessor;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Axis;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.Camera;
 import net.minecraft.client.CloudStatus;
 import net.minecraft.client.Minecraft;
@@ -17,8 +18,6 @@ import net.minecraft.util.CubicSampler;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.biome.BiomeManager;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
 
 import javax.annotation.Nullable;
 
@@ -47,7 +46,8 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects {
     @Override
     public void adjustLightmapColors(ClientLevel level, float partialTicks, float skyDarken, float skyLight, float blockLight, int pixelX, int pixelY, Vector3f colors) {
         if (AetherConfig.CLIENT.colder_lightmap.get()) {
-            Vector3f vector3f = (new Vector3f(skyDarken, skyDarken, 1.0F)).lerp(new Vector3f(1.0F, 1.0F, 1.0F), 0.35F);
+            Vector3f vector3f = new Vector3f(skyDarken, skyDarken, 1.0F);
+            vector3f.lerp(new Vector3f(1.0F, 1.0F, 1.0F), 0.35F);
             Vector3f vector3f1 = new Vector3f();
             float f9 = LightTexture.getBrightness(level.dimensionType(), pixelX) * skyLight;
             float f10 = f9 * (f9 * f9 * 0.6F + 0.4F);
@@ -57,21 +57,24 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects {
                 vector3f1.lerp(new Vector3f(0.99F, 1.12F, 1.0F), 0.25F);
                 AetherSkyRenderEffects.clampColor(vector3f1);
             } else {
-                Vector3f vector3f2 = (new Vector3f(vector3f)).mul(blockLight);
+                Vector3f vector3f2 = vector3f.copy();
+                vector3f.mul(blockLight);
                 vector3f1.add(vector3f2);
                 vector3f1.lerp(new Vector3f(0.75F, 0.75F, 0.75F), 0.04F);
                 if (Minecraft.getInstance().gameRenderer.getDarkenWorldAmount(partialTicks) > 0.0F) {
                     float darken = Minecraft.getInstance().gameRenderer.getDarkenWorldAmount(partialTicks);
-                    Vector3f vector3f3 = (new Vector3f(vector3f1)).mul(0.7F, 0.6F, 0.6F);
+                    Vector3f vector3f3 = vector3f1.copy();
+                    vector3f3.mul(0.7F, 0.6F, 0.6F);
                     vector3f1.lerp(vector3f3, darken);
                 }
             }
-            colors.set(vector3f1);
+            float[] finalColors = { vector3f1.x(), vector3f1.y(), vector3f1.z() };
+            colors.set(finalColors);
         }
     }
 
     /**
-     * [CODE COPY] - {@link LightTexture#clampColor(Vector3f)}.
+     * [CODE COPY] - LightTexture#clampColor(Vector3f).
      */
     private static void clampColor(Vector3f vector) {
         vector.set(Mth.clamp(vector.x(), 0.0F, 1.0F), Mth.clamp(vector.y(), 0.0F, 1.0F), Mth.clamp(vector.z(), 0.0F, 1.0F));
@@ -267,10 +270,10 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects {
                 RenderSystem.setShader(GameRenderer::getPositionColorShader);
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
                 poseStack.pushPose();
-                poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
+                poseStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
                 float f3 = Mth.sin(level.getSunAngle(partialTick)) < 0.0F ? 180.0F : 0.0F;
-                poseStack.mulPose(Axis.ZP.rotationDegrees(f3));
-                poseStack.mulPose(Axis.ZP.rotationDegrees(90.0F));
+                poseStack.mulPose(Vector3f.ZP.rotationDegrees(f3));
+                poseStack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
                 float f4 = sunRiseRGBA[0];
                 float f5 = sunRiseRGBA[1];
                 float f6 = sunRiseRGBA[2];
@@ -387,8 +390,8 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects {
         moonOpacity -= level.getRainLevel(partialTick);
 
         // Render celestial bodies.
-        poseStack.mulPose(Axis.YP.rotationDegrees(-90.0F));
-        poseStack.mulPose(Axis.XP.rotationDegrees(level.getTimeOfDay(partialTick) * 360.0F));
+        poseStack.mulPose(Vector3f.YP.rotationDegrees(-90.0F));
+        poseStack.mulPose(Vector3f.XP.rotationDegrees(level.getTimeOfDay(partialTick) * 360.0F));
         Matrix4f matrix4f1 = poseStack.last().pose();
         float celestialOffset = 30.0F;
 

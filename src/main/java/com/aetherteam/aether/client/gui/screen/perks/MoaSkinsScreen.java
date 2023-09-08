@@ -22,6 +22,7 @@ import com.aetherteam.nitrogen.network.packet.serverbound.TriggerUpdateInfoPacke
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Quaternion;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -42,7 +43,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
-import org.joml.Quaternionf;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -413,8 +413,8 @@ public class MoaSkinsScreen extends Screen {
         PoseStack poseStack = new PoseStack();
         poseStack.translate(0.0F, 0.0F, 1000.0F);
         poseStack.scale((float) scale, (float) scale, (float) scale);
-        Quaternionf xQuaternion = new Quaternionf().rotateZ(Mth.PI);
-        Quaternionf zQuaternion = new Quaternionf().rotateX(angleYComponent * Mth.DEG_TO_RAD);
+        Quaternion xQuaternion = new Quaternion(0, 0, 0, 0).toXYZ().rotation(Mth.PI);
+        Quaternion zQuaternion = new Quaternion(0, 0, 0, 0).toXYZ().rotation(angleYComponent * Mth.DEG_TO_RAD);
         xQuaternion.mul(zQuaternion);
         poseStack.mulPose(xQuaternion);
         float yBodyRot = livingEntity.yBodyRot;

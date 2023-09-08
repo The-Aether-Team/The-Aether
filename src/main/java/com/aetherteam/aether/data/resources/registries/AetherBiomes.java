@@ -1,15 +1,16 @@
 package com.aetherteam.aether.data.resources.registries;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.data.resources.builders.AetherBiomeBuilders;
-import net.minecraft.core.HolderGetter;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+//import com.aetherteam.aether.data.resources.builders.AetherBiomeBuilders;
+//import net.minecraft.core.HolderGetter;
+import net.minecraft.core.Registry;
+//import net.minecraft.core.registries.Registries;
+//import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
-import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+//import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
+//import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class AetherBiomes {
     public static final ResourceKey<Biome> SKYROOT_MEADOW = createKey("skyroot_meadow");
@@ -18,15 +19,15 @@ public class AetherBiomes {
     public static final ResourceKey<Biome> SKYROOT_FOREST = createKey("skyroot_forest");
 
     private static ResourceKey<Biome> createKey(String name) {
-        return ResourceKey.create(Registries.BIOME, new ResourceLocation(Aether.MODID, name));
+        return ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Aether.MODID, name));
     }
 
-    public static void bootstrap(BootstapContext<Biome> context) {
-        HolderGetter<PlacedFeature> placedFeatures = context.lookup(Registries.PLACED_FEATURE);
-        HolderGetter<ConfiguredWorldCarver<?>> vanillaConfiguredCarvers = context.lookup(Registries.CONFIGURED_CARVER);
-        context.register(SKYROOT_MEADOW, AetherBiomeBuilders.skyrootMeadowBiome(placedFeatures, vanillaConfiguredCarvers));
-        context.register(SKYROOT_GROVE, AetherBiomeBuilders.skyrootGroveBiome(placedFeatures, vanillaConfiguredCarvers));
-        context.register(SKYROOT_WOODLAND, AetherBiomeBuilders.skyrootWoodlandBiome(placedFeatures, vanillaConfiguredCarvers));
-        context.register(SKYROOT_FOREST, AetherBiomeBuilders.skyrootForestBiome(placedFeatures, vanillaConfiguredCarvers));
-    }
+//    public static void bootstrap(BootstapContext<Biome> context) {
+//        HolderGetter<PlacedFeature> placedFeatures = context.lookup(Registries.PLACED_FEATURE);
+//        HolderGetter<ConfiguredWorldCarver<?>> vanillaConfiguredCarvers = context.lookup(Registries.CONFIGURED_CARVER);
+//        context.register(SKYROOT_MEADOW, AetherBiomeBuilders.skyrootMeadowBiome(placedFeatures, vanillaConfiguredCarvers));
+//        context.register(SKYROOT_GROVE, AetherBiomeBuilders.skyrootGroveBiome(placedFeatures, vanillaConfiguredCarvers));
+//        context.register(SKYROOT_WOODLAND, AetherBiomeBuilders.skyrootWoodlandBiome(placedFeatures, vanillaConfiguredCarvers));
+//        context.register(SKYROOT_FOREST, AetherBiomeBuilders.skyrootForestBiome(placedFeatures, vanillaConfiguredCarvers));
+//    }
 }

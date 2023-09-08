@@ -10,6 +10,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -18,7 +19,7 @@ import javax.annotation.Nullable;
 /**
  * [CODE COPY] - {@link net.minecraft.world.entity.item.PrimedTnt}.
  */
-public class TntPresent extends Entity implements TraceableEntity {
+public class TntPresent extends Entity {
     private static final EntityDataAccessor<Integer> DATA_FUSE_ID = SynchedEntityData.defineId(TntPresent.class, EntityDataSerializers.INT);
     @Nullable
     private LivingEntity owner;
@@ -62,7 +63,7 @@ public class TntPresent extends Entity implements TraceableEntity {
         if (i <= 0) {
             this.discard();
             if (!this.getLevel().isClientSide()) {
-                this.getLevel().explode(this, null, null, this.getX(), this.getY(0.0625), this.getZ(), 1.0F, false, Level.ExplosionInteraction.TNT);
+                this.getLevel().explode(this, null, null, this.getX(), this.getY(0.0625), this.getZ(), 1.0F, false, Explosion.BlockInteraction.BREAK);
             }
         } else {
             this.updateInWaterStateAndDoFluidPushing();
@@ -81,7 +82,6 @@ public class TntPresent extends Entity implements TraceableEntity {
     }
 
     @Nullable
-    @Override
     public Entity getOwner() {
         return this.owner;
     }
@@ -114,7 +114,7 @@ public class TntPresent extends Entity implements TraceableEntity {
     }
    
     @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

@@ -1,7 +1,6 @@
 package com.aetherteam.aether.inventory.menu;
 
 import com.aetherteam.aether.Aether;
-import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.registries.DeferredRegister;
@@ -18,6 +17,6 @@ public class AetherMenuTypes {
 	public static final RegistryObject<MenuType<IncubatorMenu>> INCUBATOR = register("incubator", IncubatorMenu::new);
 
 	private static<T extends AbstractContainerMenu> RegistryObject<MenuType<T>> register(String name, MenuType.MenuSupplier<T> menu) {
-		return MENU_TYPES.register(name, () -> new MenuType<>(menu, FeatureFlags.VANILLA_SET));
+		return MENU_TYPES.register(name, () -> new MenuType<>(menu));
 	}
 }

@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import javax.annotation.Nullable;
 
 public class AetherArmorItem extends ArmorItem {
-    public AetherArmorItem(ArmorMaterial material, ArmorItem.Type type, Properties properties) {
+    public AetherArmorItem(ArmorMaterial material, EquipmentSlot type, Properties properties) {
         super(material, type, properties);
     }
 

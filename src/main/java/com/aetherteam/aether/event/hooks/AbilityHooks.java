@@ -7,7 +7,6 @@ import com.aetherteam.aether.capability.arrow.PhoenixArrow;
 import com.aetherteam.aether.capability.lightning.LightningTracker;
 import com.aetherteam.aether.capability.lightning.LightningTrackerCapability;
 import com.aetherteam.aether.capability.player.AetherPlayer;
-import com.aetherteam.aether.data.generators.loot.AetherStrippingLoot;
 import com.aetherteam.aether.entity.projectile.PoisonNeedle;
 import com.aetherteam.aether.entity.projectile.dart.EnchantedDart;
 import com.aetherteam.aether.entity.projectile.dart.GoldenDart;
@@ -315,7 +314,7 @@ public class AbilityHooks {
 
         /**
          * Spawns Golden Amber at the user's click position when stripping Golden Oak Logs ({@link AetherTags.Blocks#GOLDEN_OAK_LOGS}), as long as the tool in usage can harvest Golden Amber ({@link AetherTags.Items#GOLDEN_AMBER_HARVESTERS}).<br><br>
-         * The drops are handled using a special loot context type {@link AetherLootContexts#STRIPPING}, used for a loot table found in {@link AetherStrippingLoot}.
+         * The drops are handled using a special loot context type {@link AetherLootContexts#STRIPPING}, used for a loot table found in AetherStrippingLoot.
          * @param accessor The {@link LevelAccessor} of the level.
          * @param state The {@link BlockState} an action is being performed on.
          * @param stack The {@link ItemStack} performing an action.

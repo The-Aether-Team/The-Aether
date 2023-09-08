@@ -2,7 +2,7 @@ package com.aetherteam.aether.integration.jei.categories;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
@@ -24,7 +24,7 @@ public interface BiomeTooltip {
                     tooltip.add(Component.literal("#" + biomeTag.location()).withStyle(ChatFormatting.DARK_GRAY));
 
                     tooltip.add(Component.translatable("gui.aether.jei.biome.tooltip.biomes").withStyle(ChatFormatting.DARK_GRAY));
-                    Minecraft.getInstance().level.registryAccess().registryOrThrow(Registries.BIOME).getTagOrEmpty(biomeTag).forEach((biomeHolder) -> biomeHolder.unwrapKey().ifPresent((key) -> tooltip.add(Component.literal(key.location().toString()).withStyle(ChatFormatting.DARK_GRAY))));
+                    Minecraft.getInstance().level.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY).getTagOrEmpty(biomeTag).forEach((biomeHolder) -> biomeHolder.unwrapKey().ifPresent((key) -> tooltip.add(Component.literal(key.location().toString()).withStyle(ChatFormatting.DARK_GRAY))));
                 }
             }
         }

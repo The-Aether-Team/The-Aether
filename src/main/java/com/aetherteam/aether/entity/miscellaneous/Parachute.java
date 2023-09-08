@@ -202,7 +202,7 @@ public class Parachute extends Entity {
     protected void readAdditionalSaveData(CompoundTag tag) { }
    
     @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

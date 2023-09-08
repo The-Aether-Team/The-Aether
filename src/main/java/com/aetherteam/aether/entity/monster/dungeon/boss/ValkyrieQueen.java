@@ -21,8 +21,8 @@ import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
+import net.minecraft.core.Vec3i;;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -113,7 +113,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
         // Set the bounds for the whole dungeon.
         if (tag != null && tag.contains("Dungeon")) {
             StructureManager manager = level.getLevel().structureManager();
-            manager.registryAccess().registry(Registries.STRUCTURE).ifPresent(registry -> {
+            manager.registryAccess().registry(Registry.STRUCTURE_REGISTRY).ifPresent(registry -> {
                     Structure temple = registry.get(AetherStructures.SILVER_DUNGEON);
                     if (temple != null) {
                         StructureStart start = manager.getStructureAt(this.blockPosition(), temple);

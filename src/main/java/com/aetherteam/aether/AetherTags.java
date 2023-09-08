@@ -1,9 +1,10 @@
 package com.aetherteam.aether;
 
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
+//import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.damagesource.DamageType;
+//import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.Biome;
@@ -51,7 +52,7 @@ public class AetherTags {
 		public static final TagKey<Block> TREATED_AS_AETHER_BLOCK = tag("treated_as_aether_block");
 
 		private static TagKey<Block> tag(String name) {
-			return TagKey.create(Registries.BLOCK, new ResourceLocation(Aether.MODID, name));
+			return TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Aether.MODID, name));
 		}
 	}
 
@@ -148,15 +149,15 @@ public class AetherTags {
 		public static final TagKey<Item> RANDOMIUM_BLACKLIST = moddedTag("randomium", "blacklist");
 
 		private static TagKey<Item> tag(String name) {
-			return TagKey.create(Registries.ITEM, new ResourceLocation(Aether.MODID, name));
+			return TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Aether.MODID, name));
 		}
 
 		private static TagKey<Item> curio(String name) {
-			return TagKey.create(Registries.ITEM, new ResourceLocation(CuriosApi.MODID, name));
+			return TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(CuriosApi.MODID, name));
 		}
 
 		private static TagKey<Item> moddedTag(String modid, String name) {
-			return TagKey.create(Registries.ITEM, new ResourceLocation(modid, name));
+			return TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(modid, name));
 		}
 	}
 
@@ -176,7 +177,7 @@ public class AetherTags {
 		public static final TagKey<EntityType<?>> TREATED_AS_VANILLA_ENTITY = tag("treated_as_vanilla_entity");
 
 		private static TagKey<EntityType<?>> tag(String name) {
-			return TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Aether.MODID, name));
+			return TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Aether.MODID, name));
 		}
 	}
 
@@ -184,7 +185,7 @@ public class AetherTags {
 		public static final TagKey<Fluid> ALLOWED_BUCKET_PICKUP = tag("allowed_bucket_pickup");
 
 		private static TagKey<Fluid> tag(String name) {
-			return TagKey.create(Registries.FLUID, new ResourceLocation(Aether.MODID, name));
+			return TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation(Aether.MODID, name));
 		}
 	}
 
@@ -213,7 +214,7 @@ public class AetherTags {
 		public static final TagKey<Biome> AETHER_MUSIC = tag("aether_music");
 
 		private static TagKey<Biome> tag(String name) {
-			return TagKey.create(Registries.BIOME, new ResourceLocation(Aether.MODID, name));
+			return TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Aether.MODID, name));
 		}
 	}
 
@@ -221,15 +222,15 @@ public class AetherTags {
 		public static final TagKey<Structure> DUNGEONS = tag("dungeons");
 
 		private static TagKey<Structure> tag(String name) {
-			return TagKey.create(Registries.STRUCTURE, new ResourceLocation(Aether.MODID, name));
+			return TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(Aether.MODID, name));
 		}
 	}
 
-	public static class DamageTypes {
-		public static final TagKey<DamageType> IS_COLD = tag("is_cold");
-
-		private static TagKey<DamageType> tag(String name) {
-			return TagKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(Aether.MODID, name));
-		}
-	}
+//	public static class DamageTypes {
+//		public static final TagKey<DamageType> IS_COLD = tag("is_cold");
+//
+//		private static TagKey<DamageType> tag(String name) {
+//			return TagKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(Aether.MODID, name));
+//		}
+//	}
 }

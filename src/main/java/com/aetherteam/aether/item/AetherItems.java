@@ -62,6 +62,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Blocks;
@@ -71,7 +72,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-public class AetherItems {
+public class AetherItems { //todo creative tabs
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Aether.MODID);
 
 	public static final Rarity AETHER_LOOT = Rarity.create("AETHER_LOOT", ChatFormatting.GREEN);
@@ -136,37 +137,37 @@ public class AetherItems {
 	public static final RegistryObject<BowItem> PHOENIX_BOW = ITEMS.register("phoenix_bow", PhoenixBowItem::new);
 
 	// Armor
-	public static final RegistryObject<Item> ZANITE_HELMET = ITEMS.register("zanite_helmet", () -> new AetherArmorItem(AetherArmorMaterials.ZANITE, ArmorItem.Type.HELMET, new Item.Properties()));
-	public static final RegistryObject<Item> ZANITE_CHESTPLATE = ITEMS.register("zanite_chestplate", () -> new AetherArmorItem(AetherArmorMaterials.ZANITE, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
-	public static final RegistryObject<Item> ZANITE_LEGGINGS = ITEMS.register("zanite_leggings", () -> new AetherArmorItem(AetherArmorMaterials.ZANITE, ArmorItem.Type.LEGGINGS, new Item.Properties()));
-	public static final RegistryObject<Item> ZANITE_BOOTS = ITEMS.register("zanite_boots", () -> new AetherArmorItem(AetherArmorMaterials.ZANITE, ArmorItem.Type.BOOTS, new Item.Properties()));
+	public static final RegistryObject<Item> ZANITE_HELMET = ITEMS.register("zanite_helmet", () -> new AetherArmorItem(AetherArmorMaterials.ZANITE, EquipmentSlot.HEAD, new Item.Properties()));
+	public static final RegistryObject<Item> ZANITE_CHESTPLATE = ITEMS.register("zanite_chestplate", () -> new AetherArmorItem(AetherArmorMaterials.ZANITE, EquipmentSlot.CHEST, new Item.Properties()));
+	public static final RegistryObject<Item> ZANITE_LEGGINGS = ITEMS.register("zanite_leggings", () -> new AetherArmorItem(AetherArmorMaterials.ZANITE, EquipmentSlot.LEGS, new Item.Properties()));
+	public static final RegistryObject<Item> ZANITE_BOOTS = ITEMS.register("zanite_boots", () -> new AetherArmorItem(AetherArmorMaterials.ZANITE, EquipmentSlot.FEET, new Item.Properties()));
 
-	public static final RegistryObject<Item> GRAVITITE_HELMET = ITEMS.register("gravitite_helmet", () -> new AetherArmorItem(AetherArmorMaterials.GRAVITITE, ArmorItem.Type.HELMET, new Item.Properties()));
-	public static final RegistryObject<Item> GRAVITITE_CHESTPLATE = ITEMS.register("gravitite_chestplate", () -> new AetherArmorItem(AetherArmorMaterials.GRAVITITE, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
-	public static final RegistryObject<Item> GRAVITITE_LEGGINGS = ITEMS.register("gravitite_leggings", () -> new AetherArmorItem(AetherArmorMaterials.GRAVITITE, ArmorItem.Type.LEGGINGS, new Item.Properties()));
-	public static final RegistryObject<Item> GRAVITITE_BOOTS = ITEMS.register("gravitite_boots", () -> new AetherArmorItem(AetherArmorMaterials.GRAVITITE, ArmorItem.Type.BOOTS, new Item.Properties()));
+	public static final RegistryObject<Item> GRAVITITE_HELMET = ITEMS.register("gravitite_helmet", () -> new AetherArmorItem(AetherArmorMaterials.GRAVITITE, EquipmentSlot.HEAD, new Item.Properties()));
+	public static final RegistryObject<Item> GRAVITITE_CHESTPLATE = ITEMS.register("gravitite_chestplate", () -> new AetherArmorItem(AetherArmorMaterials.GRAVITITE, EquipmentSlot.CHEST, new Item.Properties()));
+	public static final RegistryObject<Item> GRAVITITE_LEGGINGS = ITEMS.register("gravitite_leggings", () -> new AetherArmorItem(AetherArmorMaterials.GRAVITITE, EquipmentSlot.LEGS, new Item.Properties()));
+	public static final RegistryObject<Item> GRAVITITE_BOOTS = ITEMS.register("gravitite_boots", () -> new AetherArmorItem(AetherArmorMaterials.GRAVITITE, EquipmentSlot.FEET, new Item.Properties()));
 
-	public static final RegistryObject<Item> VALKYRIE_HELMET = ITEMS.register("valkyrie_helmet", () -> new AetherArmorItem(AetherArmorMaterials.VALKYRIE, ArmorItem.Type.HELMET, new Item.Properties().rarity(AETHER_LOOT)));
-	public static final RegistryObject<Item> VALKYRIE_CHESTPLATE = ITEMS.register("valkyrie_chestplate", () -> new AetherArmorItem(AetherArmorMaterials.VALKYRIE, ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(AETHER_LOOT)));
-	public static final RegistryObject<Item> VALKYRIE_LEGGINGS = ITEMS.register("valkyrie_leggings", () -> new AetherArmorItem(AetherArmorMaterials.VALKYRIE, ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(AETHER_LOOT)));
-	public static final RegistryObject<Item> VALKYRIE_BOOTS = ITEMS.register("valkyrie_boots", () -> new AetherArmorItem(AetherArmorMaterials.VALKYRIE, ArmorItem.Type.BOOTS, new Item.Properties().rarity(AETHER_LOOT)));
+	public static final RegistryObject<Item> VALKYRIE_HELMET = ITEMS.register("valkyrie_helmet", () -> new AetherArmorItem(AetherArmorMaterials.VALKYRIE, EquipmentSlot.HEAD, new Item.Properties().rarity(AETHER_LOOT)));
+	public static final RegistryObject<Item> VALKYRIE_CHESTPLATE = ITEMS.register("valkyrie_chestplate", () -> new AetherArmorItem(AetherArmorMaterials.VALKYRIE, EquipmentSlot.CHEST, new Item.Properties().rarity(AETHER_LOOT)));
+	public static final RegistryObject<Item> VALKYRIE_LEGGINGS = ITEMS.register("valkyrie_leggings", () -> new AetherArmorItem(AetherArmorMaterials.VALKYRIE, EquipmentSlot.LEGS, new Item.Properties().rarity(AETHER_LOOT)));
+	public static final RegistryObject<Item> VALKYRIE_BOOTS = ITEMS.register("valkyrie_boots", () -> new AetherArmorItem(AetherArmorMaterials.VALKYRIE, EquipmentSlot.FEET, new Item.Properties().rarity(AETHER_LOOT)));
 
-	public static final RegistryObject<Item> NEPTUNE_HELMET = ITEMS.register("neptune_helmet", () -> new AetherArmorItem(AetherArmorMaterials.NEPTUNE, ArmorItem.Type.HELMET, new Item.Properties().rarity(AETHER_LOOT)));
-	public static final RegistryObject<Item> NEPTUNE_CHESTPLATE = ITEMS.register("neptune_chestplate", () -> new AetherArmorItem(AetherArmorMaterials.NEPTUNE, ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(AETHER_LOOT)));
-	public static final RegistryObject<Item> NEPTUNE_LEGGINGS = ITEMS.register("neptune_leggings", () -> new AetherArmorItem(AetherArmorMaterials.NEPTUNE, ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(AETHER_LOOT)));
-	public static final RegistryObject<Item> NEPTUNE_BOOTS = ITEMS.register("neptune_boots", () -> new AetherArmorItem(AetherArmorMaterials.NEPTUNE, ArmorItem.Type.BOOTS, new Item.Properties().rarity(AETHER_LOOT)));
+	public static final RegistryObject<Item> NEPTUNE_HELMET = ITEMS.register("neptune_helmet", () -> new AetherArmorItem(AetherArmorMaterials.NEPTUNE, EquipmentSlot.HEAD, new Item.Properties().rarity(AETHER_LOOT)));
+	public static final RegistryObject<Item> NEPTUNE_CHESTPLATE = ITEMS.register("neptune_chestplate", () -> new AetherArmorItem(AetherArmorMaterials.NEPTUNE, EquipmentSlot.CHEST, new Item.Properties().rarity(AETHER_LOOT)));
+	public static final RegistryObject<Item> NEPTUNE_LEGGINGS = ITEMS.register("neptune_leggings", () -> new AetherArmorItem(AetherArmorMaterials.NEPTUNE, EquipmentSlot.LEGS, new Item.Properties().rarity(AETHER_LOOT)));
+	public static final RegistryObject<Item> NEPTUNE_BOOTS = ITEMS.register("neptune_boots", () -> new AetherArmorItem(AetherArmorMaterials.NEPTUNE, EquipmentSlot.FEET, new Item.Properties().rarity(AETHER_LOOT)));
 
-	public static final RegistryObject<Item> PHOENIX_HELMET = ITEMS.register("phoenix_helmet", () -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, ArmorItem.Type.HELMET, new Item.Properties().rarity(AETHER_LOOT).fireResistant()));
-	public static final RegistryObject<Item> PHOENIX_CHESTPLATE = ITEMS.register("phoenix_chestplate", () -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(AETHER_LOOT).fireResistant()));
-	public static final RegistryObject<Item> PHOENIX_LEGGINGS = ITEMS.register("phoenix_leggings", () -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(AETHER_LOOT).fireResistant()));
-	public static final RegistryObject<Item> PHOENIX_BOOTS = ITEMS.register("phoenix_boots", () -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, ArmorItem.Type.BOOTS, new Item.Properties().rarity(AETHER_LOOT).fireResistant()));
+	public static final RegistryObject<Item> PHOENIX_HELMET = ITEMS.register("phoenix_helmet", () -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, EquipmentSlot.HEAD, new Item.Properties().rarity(AETHER_LOOT).fireResistant()));
+	public static final RegistryObject<Item> PHOENIX_CHESTPLATE = ITEMS.register("phoenix_chestplate", () -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, EquipmentSlot.CHEST, new Item.Properties().rarity(AETHER_LOOT).fireResistant()));
+	public static final RegistryObject<Item> PHOENIX_LEGGINGS = ITEMS.register("phoenix_leggings", () -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, EquipmentSlot.LEGS, new Item.Properties().rarity(AETHER_LOOT).fireResistant()));
+	public static final RegistryObject<Item> PHOENIX_BOOTS = ITEMS.register("phoenix_boots", () -> new AetherArmorItem(AetherArmorMaterials.PHOENIX, EquipmentSlot.FEET, new Item.Properties().rarity(AETHER_LOOT).fireResistant()));
 
-	public static final RegistryObject<Item> OBSIDIAN_HELMET = ITEMS.register("obsidian_helmet", () -> new AetherArmorItem(AetherArmorMaterials.OBSIDIAN, ArmorItem.Type.HELMET, new Item.Properties().rarity(AETHER_LOOT)));
-	public static final RegistryObject<Item> OBSIDIAN_CHESTPLATE = ITEMS.register("obsidian_chestplate", () -> new AetherArmorItem(AetherArmorMaterials.OBSIDIAN, ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(AETHER_LOOT)));
-	public static final RegistryObject<Item> OBSIDIAN_LEGGINGS = ITEMS.register("obsidian_leggings", () -> new AetherArmorItem(AetherArmorMaterials.OBSIDIAN, ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(AETHER_LOOT)));
-	public static final RegistryObject<Item> OBSIDIAN_BOOTS = ITEMS.register("obsidian_boots", () -> new AetherArmorItem(AetherArmorMaterials.OBSIDIAN, ArmorItem.Type.BOOTS, new Item.Properties().rarity(AETHER_LOOT)));
+	public static final RegistryObject<Item> OBSIDIAN_HELMET = ITEMS.register("obsidian_helmet", () -> new AetherArmorItem(AetherArmorMaterials.OBSIDIAN, EquipmentSlot.HEAD, new Item.Properties().rarity(AETHER_LOOT)));
+	public static final RegistryObject<Item> OBSIDIAN_CHESTPLATE = ITEMS.register("obsidian_chestplate", () -> new AetherArmorItem(AetherArmorMaterials.OBSIDIAN, EquipmentSlot.CHEST, new Item.Properties().rarity(AETHER_LOOT)));
+	public static final RegistryObject<Item> OBSIDIAN_LEGGINGS = ITEMS.register("obsidian_leggings", () -> new AetherArmorItem(AetherArmorMaterials.OBSIDIAN, EquipmentSlot.LEGS, new Item.Properties().rarity(AETHER_LOOT)));
+	public static final RegistryObject<Item> OBSIDIAN_BOOTS = ITEMS.register("obsidian_boots", () -> new AetherArmorItem(AetherArmorMaterials.OBSIDIAN, EquipmentSlot.FEET, new Item.Properties().rarity(AETHER_LOOT)));
 
-	public static final RegistryObject<Item> SENTRY_BOOTS = ITEMS.register("sentry_boots", () -> new AetherArmorItem(AetherArmorMaterials.SENTRY, ArmorItem.Type.BOOTS, new Item.Properties().rarity(AETHER_LOOT)));
+	public static final RegistryObject<Item> SENTRY_BOOTS = ITEMS.register("sentry_boots", () -> new AetherArmorItem(AetherArmorMaterials.SENTRY, EquipmentSlot.FEET, new Item.Properties().rarity(AETHER_LOOT)));
 
 	// Food
 	public static final RegistryObject<Item> BLUE_BERRY = ITEMS.register("blue_berry", () -> new Item(new Item.Properties().food(AetherFoods.BLUE_BERRY)));

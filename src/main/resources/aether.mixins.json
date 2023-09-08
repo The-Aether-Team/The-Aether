@@ -15,7 +15,6 @@
     "common.accessor.AbstractFurnaceBlockEntityAccessor",
     "common.accessor.BaseSpawnerAccessor",
     "common.accessor.BeeAccessor",
-    "common.accessor.BlockLootAccessor",
     "common.accessor.BoatAccessor",
     "common.accessor.BushBlockAccessor",
     "common.accessor.ChunkAccessAccessor",

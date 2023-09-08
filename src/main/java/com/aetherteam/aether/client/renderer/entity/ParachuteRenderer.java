@@ -2,7 +2,6 @@ package com.aetherteam.aether.client.renderer.entity;
 
 import com.aetherteam.aether.entity.miscellaneous.Parachute;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;

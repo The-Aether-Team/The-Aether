@@ -42,7 +42,7 @@ public class HolidayFoliagePlacer extends FoliagePlacer {
      * @param offset The {@link Integer} for the foliage offset.
      */
     @Override
-    protected void createFoliage(LevelSimulatedReader level, FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, int maxFreeTreeHeight, FoliagePlacer.FoliageAttachment attachment, int foliageHeight, int foliageRadius, int offset) {
+    protected void createFoliage(LevelSimulatedReader level, BiConsumer<BlockPos, BlockState> foliageSetter, RandomSource random, TreeConfiguration config, int maxFreeTreeHeight, FoliagePlacer.FoliageAttachment attachment, int foliageHeight, int foliageRadius, int offset) {
         BlockPos blockPos = attachment.pos();
         int i = 0;
         for (int l = offset; l >= offset - 7; --l) {
@@ -88,7 +88,7 @@ public class HolidayFoliagePlacer extends FoliagePlacer {
      * @param distance The {@link Integer} distance for offsetting the position.
      * @param range The {@link Integer} range for placement.
      */
-    private void disk360(LevelSimulatedReader level, FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, boolean doubleTrunk, BlockPos blockPos, int height, int distance, int range) {
+    private void disk360(LevelSimulatedReader level, BiConsumer<BlockPos, BlockState> foliageSetter, RandomSource random, TreeConfiguration config, boolean doubleTrunk, BlockPos blockPos, int height, int distance, int range) {
         this.placeLeavesRow(level, foliageSetter, random, config, blockPos.east(distance), range, height, doubleTrunk);
         this.placeLeavesRow(level, foliageSetter, random, config, blockPos.south(distance), range, height, doubleTrunk);
         this.placeLeavesRow(level, foliageSetter, random, config, blockPos.west(distance), range, height, doubleTrunk);

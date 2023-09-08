@@ -2,13 +2,15 @@ package com.aetherteam.aether.client;
 
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
-import net.minecraft.server.packs.resources.IoSupplier;
 import net.minecraftforge.resource.DelegatingPackResources;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 /**
@@ -17,8 +19,8 @@ import java.util.List;
 public class CombinedPackResources extends DelegatingPackResources {
     private final Path source;
 
-    public CombinedPackResources(String id, PackMetadataSection packInfo, List<? extends PackResources> packs, Path sourcePack) {
-        super(id, true, packInfo, packs);
+    public CombinedPackResources(String id, String name, PackMetadataSection packInfo, List<? extends PackResources> packs, Path sourcePack) {
+        super(id, name, packInfo, packs);
         this.source = sourcePack;
     }
 
@@ -26,30 +28,38 @@ public class CombinedPackResources extends DelegatingPackResources {
         return this.source;
     }
 
-    /**
-     * [CODE COPY] - {@link net.minecraftforge.resource.PathPackResources#resolve(String...)}.
-     */
     protected Path resolve(String... paths) {
         Path path = getSource();
-        for (String name : paths) {
+        for (String name : paths)
             path = path.resolve(name);
-        }
         return path;
     }
 
-    /**
-     * [CODE COPY] - {@link net.minecraftforge.resource.PathPackResources#getRootResource(String...)}.
-     */
-    @Nullable
     @Override
-    public IoSupplier<InputStream> getRootResource(String... paths) {
-        final Path path = resolve(paths);
-        if (!Files.exists(path)) {
-            return null;
+    public InputStream getRootResource(String pFileName) throws IOException {
+        if (!pFileName.contains("/") && !pFileName.contains("\\")) {
+            return this.getResource(pFileName);
+        } else {
+            throw new IllegalArgumentException("Root resources can only be filenames, not paths (no / allowed!)");
         }
-        return IoSupplier.create(path);
     }
 
+    @Override
+    protected boolean hasResource(@Nonnull String name) {
+        final Path path = resolve(name);
+        return Files.exists(path);
+    }
+
+    @Nonnull
+    @Override
+    protected InputStream getResource(@Nonnull String name) throws IOException {
+        final Path path = resolve(name);
+        if(!Files.exists(path))
+            throw new FileNotFoundException("Can't find resource " + name + " at " + getSource());
+        return Files.newInputStream(path, StandardOpenOption.READ);
+    }
+
+    @Nonnull
     @Override
     public String toString() {
         return String.format("%s: %s", getClass().getName(), getSource());

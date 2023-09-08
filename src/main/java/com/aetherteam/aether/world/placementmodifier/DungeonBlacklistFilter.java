@@ -6,7 +6,6 @@ import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.StructureManager;
@@ -27,7 +26,7 @@ public class DungeonBlacklistFilter extends PlacementFilter {
             return false;
         }
         StructureManager structureManager = ((WorldGenRegionAccessor)context.getLevel()).aether$getStructureManager();
-        Registry<Structure> configuredStructureFeatureRegistry = context.getLevel().registryAccess().registryOrThrow(Registries.STRUCTURE);
+        Registry<Structure> configuredStructureFeatureRegistry = context.getLevel().registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY);
         for (Holder<Structure> structure : configuredStructureFeatureRegistry.getOrCreateTag(AetherTags.Structures.DUNGEONS)) {
             if (structureManager.getStructureAt(pos, structure.value()).isValid()) {
                 return false;
