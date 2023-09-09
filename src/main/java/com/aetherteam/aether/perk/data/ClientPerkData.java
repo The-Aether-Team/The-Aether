@@ -40,7 +40,7 @@ public abstract class ClientPerkData<T> {
      * @return The result of the check, as a {@link Boolean}.
      */
     public boolean canSync(Player player) {
-        return UserData.Client.getClientUser() != null && player.getLevel().isClientSide() && Minecraft.getInstance().player != null && player.getUUID().equals(Minecraft.getInstance().player.getUUID());
+        return UserData.Client.getClientUser() != null && player.level().isClientSide() && Minecraft.getInstance().player != null && player.getUUID().equals(Minecraft.getInstance().player.getUUID());
     }
 
     public abstract void syncFromClient(Player player);

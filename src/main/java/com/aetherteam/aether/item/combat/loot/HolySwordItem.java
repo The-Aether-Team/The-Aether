@@ -30,7 +30,7 @@ public class HolySwordItem extends SwordItem {
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (EquipmentUtil.isFullStrength(attacker)) {
             if (target.getMobType() == MobType.UNDEAD || target.isInvertedHealAndHarm()) {
-                DamageSource damageSource = AetherDamageTypes.entityDamageSource(attacker.level, AetherDamageTypes.ARMOR_PIERCING_ATTACK, attacker);
+                DamageSource damageSource = AetherDamageTypes.entityDamageSource(attacker.level(), AetherDamageTypes.ARMOR_PIERCING_ATTACK, attacker);
                 float damageAmount = 15.0F;
                 int smiteModifier = stack.getEnchantmentLevel(Enchantments.SMITE);
                 if (smiteModifier > 0) {

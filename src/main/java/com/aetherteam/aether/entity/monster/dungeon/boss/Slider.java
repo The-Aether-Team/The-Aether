@@ -150,7 +150,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         super.customServerAiStep();
         this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
         this.trackDungeon();
-        if (this.getLevel() instanceof ServerLevel serverLevel) {
+        if (this.level() instanceof ServerLevel serverLevel) {
             Brain<Slider> brain = (Brain<Slider>) this.getBrain();
             brain.tick(serverLevel, this);
             SliderAi.updateActivity(this);
@@ -168,7 +168,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     public boolean hurt(DamageSource source, float amount) {
         if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             super.hurt(source, amount);
-        } else if (source.getDirectEntity() instanceof LivingEntity attacker && this.getLevel().getDifficulty() != Difficulty.PEACEFUL) {
+        } else if (source.getDirectEntity() instanceof LivingEntity attacker && this.level().getDifficulty() != Difficulty.PEACEFUL) {
             if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoomInterior(attacker)) { // Only allow damage within the boss room.
                 if (attacker.getMainHandItem().is(AetherTags.Items.SLIDER_DAMAGING_ITEMS)) { // Check for correct tool.
                     if (super.hurt(source, amount) && this.getHealth() > 0) {
@@ -200,7 +200,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
                         return true;
                     }
                 } else {
-                    if (!this.getLevel().isClientSide() && attacker instanceof Player player) {
+                    if (!this.level().isClientSide() && attacker instanceof Player player) {
                         if (this.getChatCooldown() <= 0) {
                             player.sendSystemMessage(Component.translatable("gui.aether.slider.message.attack.invalid")); // Invalid tool.
                             this.setChatCooldown(15);
@@ -209,7 +209,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
                     }
                 }
             } else {
-                if (!this.getLevel().isClientSide() && attacker instanceof Player player) {
+                if (!this.level().isClientSide() && attacker instanceof Player player) {
                     if (this.getChatCooldown() <= 0) {
                         this.displayTooFarMessage(player); // Too far from Slider
                         this.setChatCooldown(15);
@@ -258,7 +258,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     public void die(DamageSource source) {
         this.setDeltaMovement(Vec3.ZERO);
         this.explode();
-        if (this.getLevel() instanceof ServerLevel) {
+        if (this.level() instanceof ServerLevel) {
             this.bossFight.setProgress(this.getHealth() / this.getMaxHealth()); // Forces an update to the boss health meter.
             if (this.getDungeon() != null) {
                 this.getDungeon().grantAdvancements(source);
@@ -276,7 +276,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
             double x = this.position().x() + (double) (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 1.5;
             double y = this.getBoundingBox().minY + 1.75 + (double) (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 1.5;
             double z = this.position().z() + (double) (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 1.5;
-            this.getLevel().addParticle(ParticleTypes.POOF, x, y, z, 0.0, 0.0, 0.0);
+            this.level().addParticle(ParticleTypes.POOF, x, y, z, 0.0, 0.0, 0.0);
         }
     }
 

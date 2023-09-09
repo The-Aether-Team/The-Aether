@@ -33,7 +33,6 @@ import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
-import top.theillusivec4.curios.api.type.util.ICuriosHelper;
 
 import java.util.List;
 import java.util.Map;
@@ -64,8 +63,7 @@ public class AetherDispenseBehaviors {
         } else {
             LivingEntity livingEntity = list.get(0);
             ItemStack itemStack = stack.split(1);
-            ICuriosHelper curiosHelper = CuriosApi.getCuriosHelper();
-            curiosHelper.getCurio(itemStack).ifPresent(curio -> curiosHelper.getCuriosHandler(livingEntity).ifPresent(handler -> {
+            CuriosApi.getCurio(itemStack).ifPresent(curio -> CuriosApi.getCuriosInventory(livingEntity).ifPresent(handler -> {
                 Map<String, ICurioStacksHandler> curios = handler.getCurios();
                 for (Map.Entry<String, ICurioStacksHandler> entry : curios.entrySet()) { // Curios entries.
                     if (List.of(AccessoriesMenu.AETHER_IDENTIFIERS).contains(entry.getKey())) { // Check if Curios entries match the ones in the Aether accessories menu.
@@ -73,12 +71,13 @@ public class AetherDispenseBehaviors {
                         for (int i = 0; i < stackHandler.getSlots(); i++) {
                             String id = entry.getKey();
                             SlotContext slotContext = new SlotContext(id, livingEntity, i, false, true); // Get slot that a Curio entry has.
-                            if (curiosHelper.isStackValid(slotContext, itemStack) && curio.canEquip(slotContext) && curio.canEquipFromUse(slotContext)) {
+                            if (CuriosApi.isStackValid(slotContext, itemStack) && curio.canEquip(slotContext) && curio.canEquipFromUse(slotContext)) {
                                 ItemStack slotStack = stackHandler.getStackInSlot(i);
                                 if (slotStack.isEmpty()) { // Check if Curio slot is empty.
                                     stackHandler.setStackInSlot(i, itemStack.copy()); // Put copy of stack from dispenser into slot.
                                     int count = itemStack.getCount();
                                     itemStack.shrink(count); // Shrink stack in dispenser.
+                                    //todo mob check for setting accessory drop chance.
                                 }
                             }
                         }

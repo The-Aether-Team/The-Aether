@@ -29,7 +29,7 @@ public record RemountAerbunnyPacket(int vehicleID, int aerbunnyID) implements Ba
     @Override
     public void execute(Player playerEntity) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
-            Level world = Minecraft.getInstance().player.getLevel();
+            Level world = Minecraft.getInstance().player.level();
             if (world.getEntity(this.vehicleID()) instanceof Player player && world.getEntity(this.aerbunnyID()) instanceof Aerbunny aerbunny) {
                 aerbunny.startRiding(player);
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setMountedAerbunny(aerbunny));

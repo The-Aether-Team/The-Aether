@@ -30,5 +30,6 @@
     "recipes": [
       "aether:crystal_leaves_freezing"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

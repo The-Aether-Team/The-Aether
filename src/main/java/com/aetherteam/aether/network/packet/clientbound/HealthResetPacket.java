@@ -27,7 +27,7 @@ public record HealthResetPacket(int entityID, int value) implements BasePacket {
 
     @Override
     public void execute(Player playerEntity) {
-        if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null && Minecraft.getInstance().player.getLevel().getEntity(this.entityID()) instanceof Player player) {
+        if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null && Minecraft.getInstance().player.level().getEntity(this.entityID()) instanceof Player player) {
             AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                 aetherPlayer.setSynched(INBTSynchable.Direction.SERVER, "setLifeShardCount", this.value());
                 AttributeInstance attribute = aetherPlayer.getPlayer().getAttribute(Attributes.MAX_HEALTH);

@@ -30,5 +30,6 @@
     "recipes": [
       "aether:cold_parachute"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

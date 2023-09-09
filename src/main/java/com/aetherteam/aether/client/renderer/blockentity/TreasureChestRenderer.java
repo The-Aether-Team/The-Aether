@@ -13,7 +13,7 @@ public class TreasureChestRenderer extends ChestRenderer<TreasureChestBlockEntit
 	}
 
 	@Override
-	protected Material getMaterial(TreasureChestBlockEntity blockEntity, ChestType chestType) {
+	protected Material getMaterial(TreasureChestBlockEntity blockEntity, ChestType chestType) { //todo lootr support
 		return switch (chestType) {
 			case LEFT -> AetherAtlases.TREASURE_CHEST_LEFT_MATERIAL;
 			case RIGHT -> AetherAtlases.TREASURE_CHEST_RIGHT_MATERIAL;

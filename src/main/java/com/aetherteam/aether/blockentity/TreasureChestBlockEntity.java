@@ -30,16 +30,18 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nullable;
+import java.util.UUID;
 
 /**
  * [CODE COPY] - {@link ChestBlockEntity}.<br><br>
  * Has additional locking behavior.
  */
-public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity implements LidBlockEntity {
+public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity implements LidBlockEntity { //todo can you extract loot with hoppers??
     private NonNullList<ItemStack> items = NonNullList.withSize(27, ItemStack.EMPTY);
     private final ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
         protected void onOpen(Level level, BlockPos pos, BlockState state) {
@@ -68,6 +70,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     private ResourceLocation kind;
     @Nullable
     private LazyOptional<IItemHandlerModifiable> chestHandler;
+    private UUID blockEntityUuid = null;
 
     public TreasureChestBlockEntity() {
         this(AetherBlockEntityTypes.TREASURE_CHEST.get(), BlockPos.ZERO, AetherBlocks.TREASURE_CHEST.get().defaultBlockState());
@@ -91,10 +94,10 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     public boolean tryUnlock(Player player) {
         ItemStack stack = player.getMainHandItem();
         boolean keyMatches = stack.getItem() instanceof DungeonKeyItem dungeonKeyItem && this.getKind().equals(dungeonKeyItem.getDungeonType());
-        if (this.getLocked() && keyMatches && this.getLevel() != null) {
+        if (this.getLocked() && keyMatches && this.level != null) {
             this.setLocked(false);
             this.setChanged();
-            this.getLevel().markAndNotifyBlock(this.worldPosition, this.getLevel().getChunkAt(this.worldPosition), this.getBlockState(), this.getBlockState(), 2, 512);
+            this.level.markAndNotifyBlock(this.worldPosition, this.level.getChunkAt(this.worldPosition), this.getBlockState(), this.getBlockState(), 2, 512);
             return true;
         } else {
             player.displayClientMessage(Component.translatable(this.getKind().getNamespace() + "." + this.getKind().getPath() + "_treasure_chest_locked"), true);
@@ -117,7 +120,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
         if (!(blockState.getBlock() instanceof ChestBlock)) {
             return new InvWrapper(this);
         }
-        Container inv = ChestBlock.getContainer((ChestBlock) blockState.getBlock(), blockState, this.getLevel(), getBlockPos(), true);
+        Container inv = ChestBlock.getContainer((ChestBlock) blockState.getBlock(), blockState, this.level, getBlockPos(), true);
         return new InvWrapper(inv == null ? this : inv);
     }
 
@@ -151,12 +154,17 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
 
     @Override
     protected NonNullList<ItemStack> getItems() {
+        if (this.useLootrLoot()) {
+            return NonNullList.create();
+        }
         return this.items;
     }
 
     @Override
     protected void setItems(NonNullList<ItemStack> stacks) {
-        this.items = stacks;
+        if (!this.useLootrLoot()) {
+            this.items = stacks;
+        }
     }
 
     @Override
@@ -192,23 +200,50 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
         return this.locked;
     }
 
+    public UUID getBlockEntityUuid() {
+        if (this.blockEntityUuid == null) {
+            this.blockEntityUuid = UUID.randomUUID();
+        }
+        return this.blockEntityUuid;
+    }
+
+    @Nullable
+    public ResourceLocation getLootTable() {
+        return this.lootTable;
+    }
+
+    public long getLootSeed() {
+        return this.lootTableSeed;
+    }
+
+    @Override
+    public void unpackLootTable(Player player) {
+        if (!ModList.get().isLoaded("lootr")) {
+            super.unpackLootTable(player);
+        }
+    }
+
+    private boolean useLootrLoot() {
+        return this.getLootTable() != null && ModList.get().isLoaded("lootr");
+    }
+
     @Override
     public void startOpen(Player player) {
         if (!this.remove && !player.isSpectator()) {
-            this.openersCounter.incrementOpeners(player, this.getLevel(), this.getBlockPos(), this.getBlockState());
+            this.openersCounter.incrementOpeners(player, this.level, this.getBlockPos(), this.getBlockState());
         }
     }
 
     @Override
     public void stopOpen(Player player) {
         if (!this.remove && !player.isSpectator()) {
-            this.openersCounter.decrementOpeners(player, this.getLevel(), this.getBlockPos(), this.getBlockState());
+            this.openersCounter.decrementOpeners(player, this.level, this.getBlockPos(), this.getBlockState());
         }
     }
 
     public void recheckOpen() {
         if (!this.remove) {
-            this.openersCounter.recheckOpeners(this.getLevel(), this.getBlockPos(), this.getBlockState());
+            this.openersCounter.recheckOpeners(this.level, this.getBlockPos(), this.getBlockState());
         }
     }
 
@@ -260,6 +295,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
         if (!this.trySaveLootTable(tag)) {
             ContainerHelper.saveAllItems(tag, this.items);
         }
+        tag.putUUID("blockEntityUuid", this.getBlockEntityUuid());
     }
 
     @Override
@@ -270,6 +306,9 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         if (!this.tryLoadLootTable(tag)) {
             ContainerHelper.loadAllItems(tag, this.items);
+        }
+        if (tag.hasUUID("blockEntityUuid")) {
+            this.blockEntityUuid = tag.getUUID("blockEntityUuid");
         }
     }
 

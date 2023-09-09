@@ -27,14 +27,14 @@ public class EternalDayCommand {
         AetherTime.get(level).ifPresent(aetherTime -> {
             aetherTime.setEternalDay(value);
             aetherTime.updateEternalDay(); // Syncs to client.
-            source.sendSuccess(Component.translatable("commands.aether.capability.time.eternal_day.set", value), true);
+            source.sendSuccess(() -> Component.translatable("commands.aether.capability.time.eternal_day.set", value), true);
         });
         return 1;
     }
 
     private static int queryEternalDay(CommandSourceStack source) {
         ServerLevel level = source.getLevel();
-        AetherTime.get(level).ifPresent(aetherTime -> source.sendSuccess(Component.translatable("commands.aether.capability.time.eternal_day.query", aetherTime.getEternalDay()), true));
+        AetherTime.get(level).ifPresent(aetherTime -> source.sendSuccess(() -> Component.translatable("commands.aether.capability.time.eternal_day.query", aetherTime.getEternalDay()), true));
         return 1;
     }
 }

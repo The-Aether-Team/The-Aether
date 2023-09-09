@@ -287,7 +287,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                             Component.translatable("advancement.aether.valkyrie_hoe.desc"),
                             null,
                             FrameType.CHALLENGE, true, true, true)
-                    .addCriterion("valkyrie_hoe", ItemInteractWithBlockTrigger.TriggerInstance.itemUsedOnBlock(LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().of(AbilityHooks.ToolHooks.TILLABLES.keySet()).build()), ItemPredicate.Builder.item().of(AetherItems.VALKYRIE_HOE.get())))
+                    .addCriterion("valkyrie_hoe", ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().of(AbilityHooks.ToolHooks.TILLABLES.keySet()).build()), ItemPredicate.Builder.item().of(AetherItems.VALKYRIE_HOE.get())))
                     .save(consumer, new ResourceLocation(Aether.MODID, "valkyrie_hoe"), existingFileHelper);
 
             Advancement regenStone = Advancement.Builder.advancement()
@@ -347,8 +347,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                             null,
                             FrameType.CHALLENGE, true, true, true)
                     .addCriterion("aether_sleep", new PlayerTrigger.TriggerInstance(CriteriaTriggers.SLEPT_IN_BED.getId(),
-                            EntityPredicate.Composite.wrap(EntityPredicate.Builder.entity().located(LocationPredicate.inDimension(AetherDimensions.AETHER_LEVEL)).build()
-                            )))
+                            EntityPredicate.wrap(EntityPredicate.Builder.entity().located(LocationPredicate.inDimension(AetherDimensions.AETHER_LEVEL)).build())))
                     .save(consumer, new ResourceLocation(Aether.MODID, "aether_sleep"), existingFileHelper);
         }
     }

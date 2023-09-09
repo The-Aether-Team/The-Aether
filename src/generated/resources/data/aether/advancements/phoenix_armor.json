@@ -86,5 +86,6 @@
       "phoenix_boots",
       "phoenix_gloves"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

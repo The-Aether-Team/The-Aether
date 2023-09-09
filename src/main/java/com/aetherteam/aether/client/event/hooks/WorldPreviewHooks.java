@@ -33,7 +33,7 @@ public class WorldPreviewHooks {
      * doesn't show up briefly during the loading screen process when the world preview is being set up.
      * @param screen The currently rendered {@link Screen}.
      * @return Whether to hide the screen, as a {@link Boolean}.
-     * @see com.aetherteam.aether.client.event.listeners.WorldPreviewListener#onScreenRender(ScreenEvent.Render)
+     * @see com.aetherteam.aether.client.event.listeners.WorldPreviewListener#onScreenRender(ScreenEvent.Render.Pre)
      */
     public static boolean hideScreen(Screen screen) {
         return screen instanceof TitleScreen && AetherConfig.CLIENT.enable_world_preview.get() && Minecraft.getInstance().level == null;

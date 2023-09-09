@@ -30,7 +30,7 @@ public class DimensionClientHooks {
      */
     @Nullable
     public static Float renderNearFog(Camera camera, FogRenderer.FogMode mode, float farDistance) {
-        if (camera.getEntity().getLevel() instanceof ClientLevel clientLevel) {
+        if (camera.getEntity().level() instanceof ClientLevel clientLevel) {
             if (clientLevel.effects() instanceof AetherSkyRenderEffects) {
                 FogType fluidState = camera.getFluidInCamera();
                 if (mode == FogRenderer.FogMode.FOG_TERRAIN && fluidState == FogType.NONE) {
@@ -50,7 +50,7 @@ public class DimensionClientHooks {
      */
     @Nullable
     public static Float reduceLavaFog(Camera camera, float nearDistance) {
-        if (camera.getEntity().getLevel() instanceof ClientLevel) {
+        if (camera.getEntity().level() instanceof ClientLevel) {
             if (camera.getEntity() instanceof LivingEntity livingEntity && EquipmentUtil.hasFullPhoenixSet(livingEntity)) {
                 FogType fluidState = camera.getFluidInCamera();
                 if (fluidState == FogType.LAVA) {
@@ -73,7 +73,7 @@ public class DimensionClientHooks {
      */
     @Nullable
     public static Triple<Float, Float, Float> renderFogColors(Camera camera, float red, float green, float blue) {
-        if (camera.getEntity().getLevel() instanceof ClientLevel clientLevel) {
+        if (camera.getEntity().level() instanceof ClientLevel clientLevel) {
             if (clientLevel.effects() instanceof AetherSkyRenderEffects) {
                 ClientLevel.ClientLevelData worldInfo = clientLevel.getLevelData();
                 double d0 = (camera.getPosition().y() - (double) clientLevel.getMinBuildHeight()) * worldInfo.getClearColorScale();
@@ -103,7 +103,7 @@ public class DimensionClientHooks {
      */
     @Nullable
     public static Triple<Float, Float, Float> adjustWeatherFogColors(Camera camera, float red, float green, float blue) {
-        if (camera.getEntity().getLevel() instanceof ClientLevel clientLevel) {
+        if (camera.getEntity().level() instanceof ClientLevel clientLevel) {
             if (clientLevel.effects() instanceof AetherSkyRenderEffects) {
                 FogType fluidState = camera.getFluidInCamera();
                 if (fluidState == FogType.NONE) {

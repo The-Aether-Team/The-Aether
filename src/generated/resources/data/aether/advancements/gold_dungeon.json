@@ -35,5 +35,6 @@
     [
       "kill_sun_spirit"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

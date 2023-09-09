@@ -30,7 +30,7 @@ public class WorldPreviewListener {
      * @see WorldPreviewHooks#hideScreen(Screen)
      */
     @SubscribeEvent
-    public static void onScreenRender(ScreenEvent.Render event) {
+    public static void onScreenRender(ScreenEvent.Render.Pre event) {
         Screen screen = event.getScreen();
         if (WorldPreviewHooks.hideScreen(screen)) {
             event.setCanceled(true);

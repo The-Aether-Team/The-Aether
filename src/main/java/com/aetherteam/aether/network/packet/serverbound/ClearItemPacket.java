@@ -24,7 +24,7 @@ public record ClearItemPacket(int playerID) implements BasePacket {
 
     @Override
     public void execute(@Nullable Player playerEntity) {
-        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.getLevel().getEntity(this.playerID()) instanceof ServerPlayer serverPlayer) {
+        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level().getEntity(this.playerID()) instanceof ServerPlayer serverPlayer) {
             serverPlayer.containerMenu.setCarried(ItemStack.EMPTY);
         }
     }

@@ -29,7 +29,7 @@ public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity> {
 	public void render(FloatingBlockEntity floatingBlock, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLightIn) {
 		BlockState blockState = floatingBlock.getBlockState();
 		if (blockState.getRenderShape() == RenderShape.MODEL) {
-			Level world = floatingBlock.getLevel();
+			Level world = floatingBlock.level();
 			if (blockState != world.getBlockState(floatingBlock.blockPosition()) && blockState.getRenderShape() != RenderShape.INVISIBLE) {
 				poseStack.pushPose();
 				BlockPos blockPos = BlockPos.containing(floatingBlock.getX(), floatingBlock.getBoundingBox().maxY, floatingBlock.getZ());

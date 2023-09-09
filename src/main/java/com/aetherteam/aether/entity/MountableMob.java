@@ -55,7 +55,7 @@ public interface MountableMob {
                     vehicle.setMountJumping(true);
                     vehicle.setPlayerJumped(false);
                 }
-                if (vehicle.isOnGround()) {
+                if (vehicle.onGround()) {
                     vehicle.setPlayerJumped(false);
                     vehicle.setMountJumping(false);
                 }
@@ -109,7 +109,7 @@ public interface MountableMob {
                 if (!stepHeight.hasModifier(vehicle.getMountStepHeightModifier())) {
                     stepHeight.addTransientModifier(vehicle.getMountStepHeightModifier());
                 }
-                if (vehicle.getLevel().isClientSide()) {
+                if (vehicle.level().isClientSide()) {
                     PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new StepHeightPacket(vehicle.getId()));
                 }
             }

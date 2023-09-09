@@ -40,5 +40,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "aether:blocks/enchanted_aether_grass_block"
 }

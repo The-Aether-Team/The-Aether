@@ -45,11 +45,11 @@ public abstract class AbstractDart extends AbstractArrow {
     @Override
     public void tick() {
         super.tick();
-        if (!this.isOnGround()) {
+        if (!this.onGround()) {
             ++this.ticksInAir;
         }
         if (this.ticksInAir > 500) {
-            if (!this.getLevel().isClientSide()) {
+            if (!this.level().isClientSide()) {
                 this.discard();
             }
         }
@@ -101,7 +101,7 @@ public abstract class AbstractDart extends AbstractArrow {
                     }
                 }
 
-                if (!this.getLevel().isClientSide() && owner instanceof LivingEntity) {
+                if (!this.level().isClientSide() && owner instanceof LivingEntity) {
                     EnchantmentHelper.doPostHurtEffects(livingentity, owner);
                     EnchantmentHelper.doPostDamageEffects((LivingEntity)owner, livingentity);
                 }
@@ -119,7 +119,7 @@ public abstract class AbstractDart extends AbstractArrow {
             this.setDeltaMovement(this.getDeltaMovement().scale(-0.1));
             this.setYRot(this.getYRot() + 180.0F);
             this.yRotO += 180.0F;
-            if (!this.getLevel().isClientSide() && this.getDeltaMovement().lengthSqr() < 1.0E-7) {
+            if (!this.level().isClientSide() && this.getDeltaMovement().lengthSqr() < 1.0E-7) {
                 if (this.pickup == AbstractArrow.Pickup.ALLOWED) {
                     this.spawnAtLocation(this.getPickupItem(), 0.1F);
                 }

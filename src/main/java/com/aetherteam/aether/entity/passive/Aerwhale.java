@@ -126,7 +126,7 @@ public class Aerwhale extends FlyingMob {
                         );
                     }
 
-                    if (!this.getLevel().isClientSide()) {
+                    if (!this.level().isClientSide()) {
                         super.travel(vector);
                     }
 
@@ -155,11 +155,11 @@ public class Aerwhale extends FlyingMob {
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (player.getUUID().equals(UUID.fromString("031025bd-0a15-439b-9c55-06a20d0de76f"))) { // SerenityLowes
             player.startRiding(this);
-            if (!this.getLevel().isClientSide()) {
+            if (!this.level().isClientSide()) {
                 MutableComponent msg = Component.literal("Serenity is the queen of W(h)ales!!");
-                player.getLevel().players().forEach(p -> p.sendSystemMessage(msg));
+                player.level().players().forEach(p -> p.sendSystemMessage(msg));
             }
-            return InteractionResult.sidedSuccess(this.getLevel().isClientSide());
+            return InteractionResult.sidedSuccess(this.level().isClientSide());
         }
         return super.mobInteract(player, hand);
     }
@@ -242,7 +242,7 @@ public class Aerwhale extends FlyingMob {
      */
     @Override
     public int getExperienceReward() {
-        return 1 + this.getLevel().getRandom().nextInt(3);
+        return 1 + this.level().getRandom().nextInt(3);
     }
 
     /**
@@ -324,7 +324,7 @@ public class Aerwhale extends FlyingMob {
             z += this.mob.getZ();
 
             // Make sure the mob doesn't fly out of the world.
-            y = Mth.clamp(y, this.mob.getLevel().getMinBuildHeight(), this.mob.getLevel().getMaxBuildHeight());
+            y = Mth.clamp(y, this.mob.level().getMinBuildHeight(), this.mob.level().getMaxBuildHeight());
 
             this.mob.getMoveControl().setWantedPosition(x, y, z, 1.0);
         }
@@ -377,7 +377,7 @@ public class Aerwhale extends FlyingMob {
 
             // [CODE COPY] - PathfinderMob#tickLeash()
             Entity entity = this.mob.getLeashHolder();
-            if (entity != null && entity.getLevel() == this.mob.getLevel()) {
+            if (entity != null && entity.level() == this.mob.level()) {
                 this.mob.restrictTo(entity.blockPosition(), 5);
                 float f = this.mob.distanceTo(entity);
                 if (f > 10.0F) {
@@ -405,7 +405,7 @@ public class Aerwhale extends FlyingMob {
 
             for (int i = 1; i < 7; ++i) {
                 axisalignedbb = axisalignedbb.move(pos);
-                if (!this.mob.getLevel().noCollision(this.mob, axisalignedbb)) {
+                if (!this.mob.level().noCollision(this.mob, axisalignedbb)) {
                     return true;
                 }
             }

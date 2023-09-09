@@ -30,5 +30,6 @@
     "recipes": [
       "aether:holystone_stairs_from_holystone_stonecutting"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

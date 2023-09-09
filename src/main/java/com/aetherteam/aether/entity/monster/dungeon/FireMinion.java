@@ -48,7 +48,7 @@ public class FireMinion extends Monster {
     @Override
     public void tick() {
         super.tick();
-        if (this.getLevel().isClientSide()) {
+        if (this.level().isClientSide()) {
             ParticleOptions particle = ParticleTypes.FLAME;
             if (this.hasCustomName()) {
                 String name = this.getName().getString();
@@ -63,7 +63,7 @@ public class FireMinion extends Monster {
                 double x = this.getX() + d * d1;
                 double y = this.getBoundingBox().minY + d1 + 0.5;
                 double z = this.getZ() + d2 * d1;
-                this.getLevel().addParticle(particle, x, y, z, 0.0, -0.075, 0.0);
+                this.level().addParticle(particle, x, y, z, 0.0, -0.075, 0.0);
             }
         }
     }

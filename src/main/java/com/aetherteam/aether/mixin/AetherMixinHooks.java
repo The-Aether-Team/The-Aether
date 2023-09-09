@@ -1,6 +1,7 @@
 package com.aetherteam.aether.mixin;
 
 import com.aetherteam.aether.client.WorldDisplayHelper;
+import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.item.accessories.cape.CapeItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
@@ -22,11 +23,11 @@ public class AetherMixinHooks {
      * @see com.aetherteam.aether.mixin.mixins.client.AbstractClientPlayerMixin
      */
     public static boolean isCapeVisible(AbstractClientPlayer player) {
-        Optional<SlotResult> slotResult = CuriosApi.getCuriosHelper().findFirstCurio(player, (item) -> item.getItem() instanceof CapeItem);
+        Optional<SlotResult> slotResult = EquipmentUtil.findFirstCurio(player, (item) -> item.getItem() instanceof CapeItem);
         if (slotResult.isPresent()) {
             String identifier = slotResult.get().slotContext().identifier();
             int id = slotResult.get().slotContext().index();
-            LazyOptional<ICuriosItemHandler> itemHandler = CuriosApi.getCuriosHelper().getCuriosHandler(player);
+            LazyOptional<ICuriosItemHandler> itemHandler = CuriosApi.getCuriosInventory(player);
             if (itemHandler.resolve().isPresent()) {
                 Optional<ICurioStacksHandler> stacksHandler = itemHandler.resolve().get().getStacksHandler(identifier);
                 if (stacksHandler.isPresent()) {

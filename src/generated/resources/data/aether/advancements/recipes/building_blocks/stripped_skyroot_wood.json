@@ -30,5 +30,6 @@
     "recipes": [
       "aether:stripped_skyroot_wood"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

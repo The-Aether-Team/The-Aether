@@ -30,5 +30,6 @@
     "recipes": [
       "aether:icestone_wall"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

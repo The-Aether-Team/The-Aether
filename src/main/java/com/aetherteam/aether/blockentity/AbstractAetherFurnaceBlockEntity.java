@@ -181,7 +181,7 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
     @Override
     public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
         AbstractFurnaceBlockEntityAccessor abstractFurnaceBlockEntityAccessor = (AbstractFurnaceBlockEntityAccessor) this;
-        Optional<NonNullList<Ingredient>> ingredient = abstractFurnaceBlockEntityAccessor.aether$getQuickCheck().getRecipeFor(this, this.getLevel()).map(AbstractCookingRecipe::getIngredients);
+        Optional<NonNullList<Ingredient>> ingredient = abstractFurnaceBlockEntityAccessor.aether$getQuickCheck().getRecipeFor(this, this.level).map(AbstractCookingRecipe::getIngredients);
         if (this.remainderItem.isEmpty()) {
             ingredient.ifPresent(ing -> this.remainderItem = stack.getCraftingRemainingItem()); // Stores the correlating crafting remainder item.
         }

@@ -30,5 +30,6 @@
     "recipes": [
       "aether:book_of_lore"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

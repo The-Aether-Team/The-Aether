@@ -26,12 +26,11 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.ConfirmLinkScreen;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.network.chat.Component;
@@ -42,6 +41,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import org.joml.Quaternionf;
 
 import javax.annotation.Nullable;
@@ -166,12 +166,12 @@ public class MoaSkinsScreen extends Screen {
     }
 
     @Override
-    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(poseStack);
-        this.renderWindow(poseStack);
-        this.renderSlots(poseStack, mouseX, mouseY);
-        this.renderInterface(poseStack, mouseX, mouseY, partialTicks);
-        super.render(poseStack, mouseX, mouseY, partialTicks);
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(guiGraphics);
+        this.renderWindow(guiGraphics);
+        this.renderSlots(guiGraphics, mouseX, mouseY);
+        this.renderInterface(guiGraphics, mouseX, mouseY, partialTicks);
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
         this.checkUserConnectionStatus();
     }
 
@@ -179,30 +179,28 @@ public class MoaSkinsScreen extends Screen {
      * Displays the main window GUI. Depending on the player's donation status, the text
      * "Donate to the project to get Moa Skins!" or "Thank you for donating to the project!"
      * will also be displayed.
-     * @param poseStack The rendering {@link PoseStack}.
+     * @param guiGraphics The rendering {@link GuiGraphics}.
      */
-    private void renderWindow(PoseStack poseStack) {
+    private void renderWindow(GuiGraphics guiGraphics) {
         User user = UserData.Client.getClientUser();
         Font font = this.getMinecraft().font;
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, MOA_SKINS_GUI);
-        GuiComponent.blit(poseStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(MOA_SKINS_GUI, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
 
         Component component = user == null ? Component.translatable("gui.aether.moa_skins.text.donate") : Component.translatable("gui.aether.moa_skins.text.reward");
         int y = (this.topPos + this.imageHeight - 69) + font.wordWrapHeight(component, this.imageWidth - 20);
         for (FormattedCharSequence sequence : font.split(component, this.imageWidth - 20)) {
-            GuiComponent.drawCenteredString(poseStack, font, sequence, this.leftPos + (this.imageWidth / 2), y, 16777215);
+            guiGraphics.drawCenteredString(font, sequence, this.leftPos + (this.imageWidth / 2), y, 16777215);
             y += 12;
         }
     }
 
     /**
      * Renders the slots for selecting different Moa Skins from.
-     * @param poseStack The rendering {@link PoseStack}.
+     * @param guiGraphics The rendering {@link GuiGraphics}.
      * @param mouseX The {@link Integer} for the mouse's x-position.
      * @param mouseY The {@link Integer} for the mouse's y-position.
      */
-    private void renderSlots(PoseStack poseStack, int mouseX, int mouseY) {
+    private void renderSlots(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         if (this.getMinecraft().player != null) {
             UUID uuid = this.getMinecraft().player.getUUID();
             Map<UUID, MoaData> userSkinsData = ClientMoaSkinPerkData.INSTANCE.getClientPerkData();
@@ -222,66 +220,58 @@ public class MoaSkinsScreen extends Screen {
                 // If a skin slot is not selected, then it will display as darkened only if the user does not have access to that skin.
                 if (user == null || !skin.getUserPredicate().test(user) || skin == this.getSelectedSkin() || this.getSlotIndex(mouseX, mouseY) == slotIndex) {
                     int u = skin == this.getSelectedSkin() || this.getSlotIndex(mouseX, mouseY) == slotIndex ? 18 : 0; // Highlighted slot vs. Darkened slot.
-                    RenderSystem.setShader(GameRenderer::getPositionTexShader);
-                    RenderSystem.setShaderTexture(0, MOA_SKINS_GUI);
-                    GuiComponent.blit(poseStack, x, y, u, 191, 18, 18); // Render slot.
+                    guiGraphics.blit(MOA_SKINS_GUI, x, y, u, 191, 18, 18); // Render slot.
                 }
 
                 // Renders an outline for the player's currently active Moa Skin.
                 if (userSkinsData.containsKey(uuid) && userSkinsData.get(uuid).moaSkin() == skin) {
-                    RenderSystem.setShader(GameRenderer::getPositionTexShader);
-                    RenderSystem.setShaderTexture(0, MOA_SKINS_GUI);
-                    GuiComponent.blit(poseStack, x, y, 36, 191, 18, 18); // Render golden slot outline.
+                    guiGraphics.blit(MOA_SKINS_GUI, x, y, 36, 191, 18, 18); // Render golden slot outline.
                 }
 
-                RenderSystem.setShader(GameRenderer::getPositionTexShader);
-                RenderSystem.setShaderTexture(0, skin.getIconLocation());
-                GuiComponent.blit(poseStack, x + 1, y + 1, 0, 0, 16, 16, 16, 16); // Render Moa skin icon.
+                guiGraphics.blit(skin.getIconLocation(), x + 1, y + 1, 0, 0, 16, 16, 16, 16); // Render Moa skin icon.
 
                 slotIndex++;
             }
         }
-        this.renderScrollbar(poseStack);
-        this.renderSlotTooltips(poseStack, mouseX, mouseY);
+        this.renderScrollbar(guiGraphics);
+        this.renderSlotTooltips(guiGraphics, mouseX, mouseY);
     }
 
     /**
      * Renders the scrollbar based on the leftmost position for it and the current x-offset as determined by {@link MoaSkinsScreen#scrollX}.
-     * @param poseStack The rendering {@link PoseStack}.
+     * @param guiGraphics The rendering {@link GuiGraphics}.
      */
-    private void renderScrollbar(PoseStack poseStack) {
+    private void renderScrollbar(GuiGraphics guiGraphics) {
         int scrollbarTop = (this.topPos + (this.imageHeight / 2)) + 29;
         int scrollbarLeft = this.leftPos + 8;
         int scrollbarU = this.moaSkins.size() > this.maxSlots() ? 0 : 13;
 
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, MOA_SKINS_GUI);
-        GuiComponent.blit(poseStack, (int) (scrollbarLeft + this.scrollX), scrollbarTop, scrollbarU, 209, 13, 6); // Render scrollbar.
+        guiGraphics.blit(MOA_SKINS_GUI, (int) (scrollbarLeft + this.scrollX), scrollbarTop, scrollbarU, 209, 13, 6); // Render scrollbar.
     }
 
     /**
      * Using {@link MoaSkinsScreen#getSkinFromSlot(double, double)}, this checks if the mouse is currently hovered over a Moa Skin slot,
      * and if so, then it will display a tooltip with the name of the Moa Skin.
-     * @param poseStack The rendering {@link PoseStack}.
+     * @param guiGraphics The rendering {@link GuiGraphics}.
      * @param mouseX The {@link Integer} for the mouse's x-position.
      * @param mouseY The {@link Integer} for the mouse's y-position.
      */
-    private void renderSlotTooltips(PoseStack poseStack, double mouseX, double mouseY) {
+    private void renderSlotTooltips(GuiGraphics guiGraphics, double mouseX, double mouseY) {
         MoaSkins.MoaSkin skin = this.getSkinFromSlot(mouseX, mouseY);
         if (skin != null) {
             Component name = skin.getDisplayName();
-            this.renderTooltip(poseStack, name, (int) mouseX, (int) mouseY);
+            guiGraphics.renderTooltip(this.getMinecraft().font, name, (int) mouseX, (int) mouseY);
         }
     }
 
     /**
      * Renders elements of the interface over the black section of the GUI.
-     * @param poseStack The rendering {@link PoseStack}.
+     * @param guiGraphics The rendering {@link GuiGraphics}.
      * @param mouseX The {@link Integer} for the mouse's x-position.
      * @param mouseY The {@link Integer} for the mouse's y-position.
      * @param partialTicks The {@link Float} for the game's partial ticks.
      */
-    private void renderInterface(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+    private void renderInterface(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         User user = UserData.Client.getClientUser();
         if (user != null && this.getSelectedSkin().getUserPredicate().test(user)) { // If the player has access to the selected skin.
             this.applyButton.active = true;
@@ -289,68 +279,62 @@ public class MoaSkinsScreen extends Screen {
 
             if (this.getSelectedSkin().getInfo().lifetime() || user.getCurrentTier() == null || user.getCurrentTierLevel() < this.getSelectedSkin().getInfo().tier().getLevel()) {
                 boolean mouseOver = this.isMouseOverIcon(mouseX, mouseY, 8);
-                this.renderLifetimeIcon(poseStack, mouseOver);
+                this.renderLifetimeIcon(guiGraphics, mouseOver);
                 if (mouseOver) { // Display a tooltip saying that the player has lifetime access to the skin.
                     this.renderTooltip(Component.translatable("gui.aether.moa_skins.tooltip.title.access.lifetime"),
-                            Component.translatable("gui.aether.moa_skins.tooltip.lifetime"), poseStack, mouseX, mouseY);
+                            Component.translatable("gui.aether.moa_skins.tooltip.lifetime"), guiGraphics, mouseX, mouseY);
                 }
             } else if (user.getCurrentTier() != null) {
                 boolean mouseOver = this.isMouseOverIcon(mouseX, mouseY, 7);
-                this.renderPledgingIcon(poseStack, mouseOver);
+                this.renderPledgingIcon(guiGraphics, mouseOver);
                 if (mouseOver) { // Display a tooltip saying that the player has access to the skin when pledging to the specified tier.
                     this.renderTooltip(Component.translatable("gui.aether.moa_skins.tooltip.title.access.pledging"),
-                            Component.translatable("gui.aether.moa_skins.tooltip.pledging", user.getCurrentTier().getDisplayName()), poseStack, mouseX, mouseY);
+                            Component.translatable("gui.aether.moa_skins.tooltip.pledging", user.getCurrentTier().getDisplayName()), guiGraphics, mouseX, mouseY);
                 }
             }
         } else { // If the player does not have access to the selected skin.
             this.applyButton.active = false;
             this.removeButton.active = false;
 
-            RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            RenderSystem.setShaderTexture(0, MOA_SKINS_GUI);
-            GuiComponent.blit(poseStack, this.leftPos + 13, this.topPos + 13, 54, 191, 10, 14); // Lock Icon
+            guiGraphics.blit(MOA_SKINS_GUI, this.leftPos + 13, this.topPos + 13, 54, 191, 10, 14); // Lock Icon
 
             if (this.getSelectedSkin().getInfo().lifetime()) {
                 boolean mouseOver = this.isMouseOverIcon(mouseX, mouseY, 8);
-                this.renderLifetimeIcon(poseStack, mouseOver);
+                this.renderLifetimeIcon(guiGraphics, mouseOver);
                 if (mouseOver) { // Display a tooltip saying that the skin comes with lifetime access when pledging to the given tier.
                     this.renderTooltip(Component.translatable("gui.aether.moa_skins.tooltip.title.access.lifetime"),
-                            Component.translatable("gui.aether.moa_skins.tooltip.access.lifetime", this.getSelectedSkin().getInfo().tier().getDisplayName()), poseStack, mouseX, mouseY);
+                            Component.translatable("gui.aether.moa_skins.tooltip.access.lifetime", this.getSelectedSkin().getInfo().tier().getDisplayName()), guiGraphics, mouseX, mouseY);
                 }
             } else {
                 boolean mouseOver = this.isMouseOverIcon(mouseX, mouseY, 7);
-                this.renderPledgingIcon(poseStack, mouseOver);
+                this.renderPledgingIcon(guiGraphics, mouseOver);
                 if (mouseOver) { // Display a tooltip saying that the skin comes with access only when pledging to the given tier.
                     this.renderTooltip(Component.translatable("gui.aether.moa_skins.tooltip.title.access.pledging"),
-                            Component.translatable("gui.aether.moa_skins.tooltip.access.pledging", this.getSelectedSkin().getInfo().tier().getDisplayName()), poseStack, mouseX, mouseY);
+                            Component.translatable("gui.aether.moa_skins.tooltip.access.pledging", this.getSelectedSkin().getInfo().tier().getDisplayName()), guiGraphics, mouseX, mouseY);
                 }
             }
         }
         this.renderMoa(partialTicks); // Renders the spinning Moa with the selected skin.
-        GuiComponent.drawCenteredString(poseStack, this.getMinecraft().font, this.getSelectedSkin().getDisplayName(), this.leftPos + (this.imageWidth / 2), this.topPos + 12, 16777215); // Skin Name
-        GuiComponent.drawCenteredString(poseStack, this.getMinecraft().font, this.getTitle(), this.leftPos + (this.imageWidth / 2), this.topPos - 15, 16777215); // Title
+        guiGraphics.drawCenteredString(this.getMinecraft().font, this.getSelectedSkin().getDisplayName(), this.leftPos + (this.imageWidth / 2), this.topPos + 12, 16777215); // Skin Name
+        guiGraphics.drawCenteredString(this.getMinecraft().font, this.getTitle(), this.leftPos + (this.imageWidth / 2), this.topPos - 15, 16777215); // Title
     }
 
     /**
      * Displays an infinity sign icon in the bottom left corner of the black GUI interface.
-     * @param poseStack The rendering {@link PoseStack}.
+     * @param guiGraphics The rendering {@link GuiGraphics}.
      * @param mouseOver Whether the mouse is hovering over this icon, as a {@link Boolean}.
      */
-    private void renderLifetimeIcon(PoseStack poseStack, boolean mouseOver) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, MOA_SKINS_GUI);
-        GuiComponent.blit(poseStack, this.leftPos + 13, (this.topPos + (this.imageHeight / 2)) - 9, mouseOver ? 63 : 55, 184, 8, 7); // Lifetime Icon
+    private void renderLifetimeIcon(GuiGraphics guiGraphics, boolean mouseOver) {
+        guiGraphics.blit(MOA_SKINS_GUI, this.leftPos + 13, (this.topPos + (this.imageHeight / 2)) - 9, mouseOver ? 63 : 55, 184, 8, 7); // Lifetime Icon
     }
 
     /**
      * Displays an hourglass icon in the bottom left corner of the black GUI interface.
-     * @param poseStack The rendering {@link PoseStack}.
+     * @param guiGraphics The rendering {@link GuiGraphics}.
      * @param mouseOver Whether the mouse is hovering over this icon, as a {@link Boolean}.
      */
-    private void renderPledgingIcon(PoseStack poseStack, boolean mouseOver) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, MOA_SKINS_GUI);
-        GuiComponent.blit(poseStack, this.leftPos + 13, (this.topPos + (this.imageHeight / 2)) - 9, mouseOver ? 49 : 42, 184, 7, 7);
+    private void renderPledgingIcon(GuiGraphics guiGraphics, boolean mouseOver) {
+        guiGraphics.blit(MOA_SKINS_GUI, this.leftPos + 13, (this.topPos + (this.imageHeight / 2)) - 9, mouseOver ? 49 : 42, 184, 7, 7);
     }
 
     private boolean isMouseOverIcon(int mouseX, int mouseY, int width) {
@@ -365,15 +349,15 @@ public class MoaSkinsScreen extends Screen {
      * Displays a formatted tooltip with a title and a description.
      * @param title The title {@link MutableComponent} for the tooltip.
      * @param description The description {@link Component} for the tooltip.
-     * @param poseStack The rendering {@link PoseStack}.
+     * @param guiGraphics The rendering {@link GuiGraphics}.
      * @param mouseX The {@link Integer} for the mouse's x-position.
      * @param mouseY The {@link Integer} for the mouse's y-position.
      */
-    private void renderTooltip(MutableComponent title, Component description, PoseStack poseStack, int mouseX, int mouseY) {
+    private void renderTooltip(MutableComponent title, Component description, GuiGraphics guiGraphics, int mouseX, int mouseY) {
         List<FormattedText> formattedTextList = new ArrayList<>();
         formattedTextList.add(title.withStyle(ChatFormatting.GOLD));
         formattedTextList.addAll(this.getMinecraft().font.getSplitter().splitLines(description, this.width / 3, Style.EMPTY));
-        this.renderComponentTooltip(poseStack, formattedTextList, mouseX, mouseY, this.getMinecraft().font);
+        guiGraphics.renderComponentTooltip(this.getMinecraft().font, formattedTextList, mouseX, mouseY, ItemStack.EMPTY);
     }
 
     /**
@@ -398,8 +382,8 @@ public class MoaSkinsScreen extends Screen {
     }
 
     /**
-     * [CODE COPY] - {@link net.minecraft.client.gui.screens.inventory.InventoryScreen#renderEntityInInventoryFollowsAngle(PoseStack, int, int, int, float, float, LivingEntity)}.<br>
-     * [CODE COPY] - {@link net.minecraft.client.gui.screens.inventory.InventoryScreen#renderEntityInInventory(PoseStack, int, int, int, Quaternionf, Quaternionf, LivingEntity)}.<br><br>
+     * [CODE COPY] - {@link net.minecraft.client.gui.screens.inventory.InventoryScreen#renderEntityInInventoryFollowsAngle(GuiGraphics, int, int, int, float, float, LivingEntity)}.<br>
+     * [CODE COPY] - {@link net.minecraft.client.gui.screens.inventory.InventoryScreen#renderEntityInInventory(GuiGraphics, int, int, int, Quaternionf, Quaternionf, LivingEntity)}.<br><br>
      * Merged code from the two methods, and modified so that the head rotation follows the body rotation and doesn't rotate separately.<br><br>
      * Warning for "deprecation" is suppressed because this is copied code.
      */

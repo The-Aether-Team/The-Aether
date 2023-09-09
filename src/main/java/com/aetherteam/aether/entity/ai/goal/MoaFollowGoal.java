@@ -35,7 +35,7 @@ public class MoaFollowGoal extends TemptGoal {
             --this.calmDown;
             return false;
         } else {
-            this.player = this.moa.level.getNearestPlayer(this.targetingConditions, this.moa);
+            this.player = this.moa.level().getNearestPlayer(this.targetingConditions, this.moa);
             return this.player != null;
         }
     }

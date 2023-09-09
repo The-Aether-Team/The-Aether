@@ -41,7 +41,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.EntityHitResult;
@@ -76,7 +76,7 @@ public class AbilityHooks {
         public static void damageGloves(Player player) {
             SlotResult slotResult = EquipmentUtil.getGloves(player);
             if (slotResult != null) {
-                slotResult.stack().hurtAndBreak(1, player, wearer -> CuriosApi.getCuriosHelper().onBrokenCurio(slotResult.slotContext()));
+                slotResult.stack().hurtAndBreak(1, player, wearer -> CuriosApi.broadcastCurioBreakEvent(slotResult.slotContext()));
             }
         }
 
@@ -89,7 +89,7 @@ public class AbilityHooks {
             for (SlotResult slotResult : slotResults) {
                 if (slotResult != null) {
                     if (state.getDestroySpeed(level, pos) > 0 && entity.getRandom().nextInt(6) == 0) {
-                        slotResult.stack().hurtAndBreak(1, entity, wearer -> CuriosApi.getCuriosHelper().onBrokenCurio(slotResult.slotContext()));
+                        slotResult.stack().hurtAndBreak(1, entity, wearer -> CuriosApi.broadcastCurioBreakEvent(slotResult.slotContext()));
                     }
                 }
             }
@@ -103,7 +103,7 @@ public class AbilityHooks {
             SlotResult slotResult = EquipmentUtil.getZanitePendant(entity);
             if (slotResult != null) {
                 if (state.getDestroySpeed(level, pos) > 0 && entity.getRandom().nextInt(6) == 0) {
-                    slotResult.stack().hurtAndBreak(1, entity, wearer -> CuriosApi.getCuriosHelper().onBrokenCurio(slotResult.slotContext()));
+                    slotResult.stack().hurtAndBreak(1, entity, wearer -> CuriosApi.broadcastCurioBreakEvent(slotResult.slotContext()));
                 }
             }
         }
@@ -185,7 +185,7 @@ public class AbilityHooks {
          * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onEntityHurt(net.minecraftforge.event.entity.living.LivingAttackEvent)
          */
         public static boolean preventMagmaDamage(LivingEntity entity, DamageSource source) {
-            return source == entity.getLevel().damageSources().hotFloor() && EquipmentUtil.hasFreezingAccessory(entity);
+            return source == entity.level().damageSources().hotFloor() && EquipmentUtil.hasFreezingAccessory(entity);
         }
     }
 
@@ -297,9 +297,9 @@ public class AbilityHooks {
          */
         public static float reduceToolEffectiveness(Player player, BlockState state, ItemStack stack, float speed) {
             if (AetherConfig.SERVER.tools_debuff.get()) {
-                if (!player.getLevel().isClientSide()) {
+                if (!player.level().isClientSide()) {
                     debuffTools = true;
-                    PacketRelay.sendToNear(AetherPacketHandler.INSTANCE, new ToolDebuffPacket(true), player.getX(), player.getY(), player.getZ(), 10, player.getLevel().dimension());
+                    PacketRelay.sendToNear(AetherPacketHandler.INSTANCE, new ToolDebuffPacket(true), player.getX(), player.getY(), player.getZ(), 10, player.level().dimension());
                 }
             }
             if (debuffTools) {
@@ -329,9 +329,9 @@ public class AbilityHooks {
                     if (state.is(AetherTags.Blocks.GOLDEN_OAK_LOGS) && stack.is(AetherTags.Items.GOLDEN_AMBER_HARVESTERS)) {
                         if (level.getServer() != null && level instanceof ServerLevel serverLevel) {
                             Vec3 vector = context.getClickLocation();
-                            LootContext.Builder lootContext = new LootContext.Builder(serverLevel).withParameter(LootContextParams.TOOL, stack);
-                            LootTable lootTable = level.getServer().getLootTables().get(AetherLoot.STRIP_GOLDEN_OAK);
-                            List<ItemStack> list = lootTable.getRandomItems(lootContext.create(AetherLootContexts.STRIPPING));
+                            LootParams parameters = new LootParams.Builder(serverLevel).withParameter(LootContextParams.TOOL, stack).create(AetherLootContexts.STRIPPING);
+                            LootTable lootTable = level.getServer().getLootData().getLootTable(AetherLoot.STRIP_GOLDEN_OAK);
+                            List<ItemStack> list = lootTable.getRandomItems(parameters);
                             for (ItemStack itemStack : list) {
                                 ItemEntity itemEntity = new ItemEntity(level, vector.x(), vector.y(), vector.z(), itemStack);
                                 itemEntity.setDefaultPickUpDelay();
@@ -364,7 +364,7 @@ public class AbilityHooks {
          * @see com.aetherteam.aether.event.listeners.abilities.WeaponAbilityListener#onDartHurt(LivingHurtEvent)
          */
         public static void stickDart(LivingEntity entity, DamageSource source) {
-            if (entity instanceof Player player && !player.getLevel().isClientSide()) {
+            if (entity instanceof Player player && !player.level().isClientSide()) {
                 Entity sourceEntity = source.getDirectEntity();
                 if (sourceEntity instanceof GoldenDart) {
                     AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setGoldenDartCount", aetherPlayer.getGoldenDartCount() + 1));
@@ -425,7 +425,7 @@ public class AbilityHooks {
          * @see com.aetherteam.aether.event.listeners.abilities.WeaponAbilityListener#onEntityDamage(LivingDamageEvent)
          */
         public static float reduceWeaponEffectiveness(LivingEntity target, Entity source, float damage) {
-            if (AetherConfig.SERVER.tools_debuff.get() && !target.getLevel().isClientSide()) { // Checks if tool debuffs are enabled and if the level is on the server side.
+            if (AetherConfig.SERVER.tools_debuff.get() && !target.level().isClientSide()) { // Checks if tool debuffs are enabled and if the level is on the server side.
                 double pow = Math.max(Math.pow(damage, damage > 1.0 ? 0.6 : 1.6), 1.0);
                 if (source instanceof LivingEntity livingEntity) {
                     ItemStack stack = livingEntity.getMainHandItem();

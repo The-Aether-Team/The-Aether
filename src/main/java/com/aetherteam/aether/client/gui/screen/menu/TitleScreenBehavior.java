@@ -3,10 +3,9 @@ package com.aetherteam.aether.client.gui.screen.menu;
 import com.aetherteam.aether.mixin.mixins.client.accessor.TitleScreenAccessor;
 import com.aetherteam.cumulus.CumulusConfig;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.Util;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Renderable;
@@ -20,38 +19,37 @@ import net.minecraftforge.internal.BrandingControl;
 
 public interface TitleScreenBehavior {
     /**
-     * [CODE COPY] - {@link TitleScreen#render(PoseStack, int, int, float)}.<br><br>
+     * [CODE COPY] - {@link TitleScreen#render(GuiGraphics, int, int, float)}.<br><br>
      * Copied fading behavior segment from render code, with use of {@link TitleScreenAccessor}.
      */
-    default float handleFading(PoseStack poseStack, TitleScreen titleScreen, TitleScreenAccessor titleScreenAccessor, PanoramaRenderer panorama, ResourceLocation panoramaOverlay, float partialTicks) {
+    default float handleFading(GuiGraphics guiGraphics, TitleScreen titleScreen, TitleScreenAccessor titleScreenAccessor, PanoramaRenderer panorama, ResourceLocation panoramaOverlay, float partialTicks) {
         if (titleScreenAccessor.aether$getFadeInStart() == 0L && titleScreenAccessor.aether$isFading()) {
             titleScreenAccessor.aether$setFadeInStart(Util.getMillis());
         }
         float fadeAmount = titleScreenAccessor.aether$isFading() ? (float) (Util.getMillis() - titleScreenAccessor.aether$getFadeInStart()) / 1000.0F : 1.0F;
         panorama.render(partialTicks, Mth.clamp(fadeAmount, 0.0F, 1.0F));
-        RenderSystem.setShaderTexture(0, panoramaOverlay);
         RenderSystem.enableBlend();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, titleScreenAccessor.aether$isFading() ? (float) Mth.ceil(Mth.clamp(fadeAmount, 0.0F, 1.0F)) : 1.0F);
-        GuiComponent.blit(poseStack, 0, 0, titleScreen.width, titleScreen.height, 0.0F, 0.0F, 16, 128, 16, 128);
+        guiGraphics.blit(panoramaOverlay, 0, 0, titleScreen.width, titleScreen.height, 0.0F, 0.0F, 16, 128, 16, 128);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         return titleScreenAccessor.aether$isFading() ? Mth.clamp(fadeAmount - 1.0F, 0.0F, 1.0F) : 1.0F;
     }
 
     /**
-     * [CODE COPY] - {@link TitleScreen#render(PoseStack, int, int, float)}.<br><br>
+     * [CODE COPY] - {@link TitleScreen#render(GuiGraphics, int, int, float)}.<br><br>
      * Copied branding render segment from render code, but aligned it right.
      */
-    default void renderRightBranding(PoseStack poseStack, TitleScreen titleScreen, Font font, int roundedFadeAmount) {
+    default void renderRightBranding(GuiGraphics guiGraphics, TitleScreen titleScreen, Font font, int roundedFadeAmount) {
         BrandingControl.forEachLine(true, true, (brandingLine, branding) ->
-                GuiComponent.drawString(poseStack, font, branding, titleScreen.width - font.width(branding) - 1, titleScreen.height - (10 + (brandingLine + 1) * (font.lineHeight + 1)), 16777215 | roundedFadeAmount)
+                guiGraphics.drawString(font, branding, titleScreen.width - font.width(branding) - 1, titleScreen.height - (10 + (brandingLine + 1) * (font.lineHeight + 1)), 16777215 | roundedFadeAmount)
         );
         BrandingControl.forEachAboveCopyrightLine((brandingLine, branding) ->
-                GuiComponent.drawString(poseStack, font, branding, 1, titleScreen.height - (brandingLine + 1) * (font.lineHeight + 1), 16777215 | roundedFadeAmount)
+                guiGraphics.drawString(font, branding, 1, titleScreen.height - (brandingLine + 1) * (font.lineHeight + 1), 16777215 | roundedFadeAmount)
         );
     }
 
     /**
-     * [CODE COPY] - {@link TitleScreen#render(PoseStack, int, int, float)}.<br><br>
+     * [CODE COPY] - {@link TitleScreen#render(GuiGraphics, int, int, float)}.<br><br>
      * Copied render segment for determining button transparency from screen fade-in.
      * Also modified the code to change the button visibility, and also set a button offset at the end from configs.
      */

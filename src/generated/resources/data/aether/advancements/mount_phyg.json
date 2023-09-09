@@ -37,5 +37,6 @@
     [
       "mount_phyg"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

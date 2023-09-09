@@ -3,7 +3,6 @@ package com.aetherteam.aether.integration.jei.categories.item;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.recipe.recipes.item.FreezingRecipe;
-import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
@@ -13,6 +12,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -42,10 +42,10 @@ public class FreezingRecipeCategory extends AbstractAetherCookingRecipeCategory<
     }
 
     @Override
-    public void draw(FreezingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-        this.animatedProgressArrow.draw(stack, 24, 18);
-        this.fuelIndicator.draw(stack, 1, 20);
-        this.drawExperience(recipe, stack, 1, this.background);
-        this.drawCookingTime(stack, 45, recipe.getCookingTime(), this.background);
+    public void draw(FreezingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        this.animatedProgressArrow.draw(guiGraphics, 24, 18);
+        this.fuelIndicator.draw(guiGraphics, 1, 20);
+        this.drawExperience(recipe, guiGraphics, 1, this.background);
+        this.drawCookingTime(guiGraphics, 45, recipe.getCookingTime(), this.background);
     }
 }

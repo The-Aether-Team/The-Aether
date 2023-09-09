@@ -2,6 +2,7 @@ package com.aetherteam.aether.block.dungeon;
 
 import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
 import com.aetherteam.aether.blockentity.TreasureChestBlockEntity;
+import com.aetherteam.aether.integration.lootr.AetherLootrPlugin;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -37,6 +38,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.fml.ModList;
 
 import java.util.function.Supplier;
 
@@ -46,6 +48,7 @@ import java.util.function.Supplier;
 public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEntity> implements SimpleWaterloggedBlock {
 	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+	public static final BooleanProperty IS_LOOT_CONTAINER = BooleanProperty.create("is_loot");
 	protected static final VoxelShape SHAPE = Block.box(1.0, 0.0, 1.0, 15.0, 14.0, 15.0);
 
 	public TreasureChestBlock(Properties properties) {
@@ -54,12 +57,12 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
 
 	public TreasureChestBlock(Properties properties, Supplier<BlockEntityType<? extends TreasureChestBlockEntity>> blockEntityTypeSupplier) {
 		super(properties, blockEntityTypeSupplier);
-		this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
+		this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false).setValue(IS_LOOT_CONTAINER, false));
 	}
 
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		builder.add(FACING, WATERLOGGED);
+		builder.add(FACING, WATERLOGGED, IS_LOOT_CONTAINER);
 	}
 
 	/**
@@ -118,6 +121,11 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
 			BlockEntity blockEntity = level.getBlockEntity(pos);
 			if (blockEntity instanceof TreasureChestBlockEntity treasureChestBlockEntity) {
 				MenuProvider menuProvider = this.getMenuProvider(state, level, pos);
+				if (ModList.get().isLoaded("lootr") && state.getValue(IS_LOOT_CONTAINER)) {
+					if (treasureChestBlockEntity.getLootTable() != null) {
+						menuProvider = AetherLootrPlugin.getTreasureMenu((ServerPlayer) player, treasureChestBlockEntity);
+					}
+				}
 				if (treasureChestBlockEntity.getLocked()) {
 					ItemStack stack = player.getMainHandItem();
 					if (treasureChestBlockEntity.tryUnlock(player)) {

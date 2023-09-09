@@ -29,7 +29,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -98,7 +98,7 @@ public abstract class AbstractWhirlwind extends Mob {
     public void tick() {
         super.tick();
         this.lifeLeft--;
-        if (!this.getLevel().isClientSide()) {
+        if (!this.level().isClientSide()) {
             if (this.lifeLeft <= 0 || this.isInFluidType()) {
                 this.discard();
             }
@@ -110,7 +110,7 @@ public abstract class AbstractWhirlwind extends Mob {
      */
     @Override
     public void aiStep() {
-        if (!this.getLevel().isClientSide()) {
+        if (!this.level().isClientSide()) {
             if (this.verticalCollision && !this.verticalCollisionBelow) { // Marks the Whirlwind as stuck if it is colliding with a ceiling.
                 this.stuckTick += 4;
             } else if (this.stuckTick > 0) {
@@ -131,7 +131,7 @@ public abstract class AbstractWhirlwind extends Mob {
         super.aiStep();
 
         // This code is used to move other entities around the Whirlwind.
-        List<Entity> entityList = this.getLevel().getEntities(this, this.getBoundingBox().expandTowards(2.5, 2.5, 2.5))
+        List<Entity> entityList = this.level().getEntities(this, this.getBoundingBox().expandTowards(2.5, 2.5, 2.5))
                 .stream().filter((entity -> !entity.getType().is(AetherTags.Entities.WHIRLWIND_UNAFFECTED))).toList();
         for (Entity entity : entityList) {
             double x = (float) entity.getX();
@@ -163,7 +163,7 @@ public abstract class AbstractWhirlwind extends Mob {
                 entity.setDeltaMovement(entity.getDeltaMovement().add(Math.sin(0.0175 * d3) * 0.01, entity.getDeltaMovement().y, Math.cos(0.0175 * d3) * 0.01));
             }
 
-            if (!this.getLevel().isEmptyBlock(this.blockPosition())) {
+            if (!this.level().isEmptyBlock(this.blockPosition())) {
                 this.lifeLeft -= 50;
             }
         }
@@ -176,13 +176,11 @@ public abstract class AbstractWhirlwind extends Mob {
      * This method is called in aiStep to handle the item drop behavior of the Whirlwind.
      */
     protected void spawnDrops() {
-        if (this.getLevel() instanceof ServerLevel serverLevel) {
+        if (this.level() instanceof ServerLevel serverLevel) {
             if (this.getRandom().nextInt(4) == 0) {
-                LootContext.Builder builder = new LootContext.Builder(serverLevel)
-                        .withParameter(LootContextParams.ORIGIN, this.position())
-                        .withParameter(LootContextParams.THIS_ENTITY, this);
-                LootTable lootTable = serverLevel.getServer().getLootTables().get(this.getLootLocation());
-                List<ItemStack> list = lootTable.getRandomItems(builder.create(LootContextParamSets.SELECTOR));
+                LootParams parameters = new LootParams.Builder(serverLevel).withParameter(LootContextParams.ORIGIN, this.position()).withParameter(LootContextParams.THIS_ENTITY, this).create(LootContextParamSets.SELECTOR);
+                LootTable lootTable = serverLevel.getServer().getLootData().getLootTable(this.getLootLocation());
+                List<ItemStack> list = lootTable.getRandomItems(parameters);
                 for (ItemStack itemstack : list) {
                     serverLevel.playSound(null, this.blockPosition(), AetherSoundEvents.ENTITY_WHIRLWIND_DROP.get(), SoundSource.HOSTILE, 0.5F, 1.0F);
                     this.spawnAtLocation(itemstack, 1);
@@ -331,7 +329,7 @@ public abstract class AbstractWhirlwind extends Mob {
             }
             if (!this.whirlwind.isEvil || this.whirlwind.getTarget() == null) {
                 BlockPos offset = BlockPos.containing(this.whirlwind.position().add(this.whirlwind.getDeltaMovement()));
-                if (this.whirlwind.getLevel().getHeight(Heightmap.Types.WORLD_SURFACE, offset.getX(), offset.getZ()) < offset.getY() - this.whirlwind.getMaxFallDistance()) {
+                if (this.whirlwind.level().getHeight(Heightmap.Types.WORLD_SURFACE, offset.getX(), offset.getZ()) < offset.getY() - this.whirlwind.getMaxFallDistance()) {
                     this.movementAngle += 180;
                 } else {
                     this.movementAngle += this.movementCurve;

@@ -7,12 +7,15 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.util.LazyOptional;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
+import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public final class EquipmentUtil {
     /**
@@ -42,7 +45,7 @@ public final class EquipmentUtil {
      */
     @Nullable
     public static SlotResult getGloves(LivingEntity entity) {
-        Optional<SlotResult> slotResultOptional = CuriosApi.getCuriosHelper().findFirstCurio(entity, (stack) -> stack.getItem() instanceof GlovesItem);
+        Optional<SlotResult> slotResultOptional = EquipmentUtil.findFirstCurio(entity, (stack) -> stack.getItem() instanceof GlovesItem);
         return slotResultOptional.orElse(null);
     }
 
@@ -98,7 +101,7 @@ public final class EquipmentUtil {
      * @return The result of the check, as a {@link Boolean}.
      */
     public static boolean hasCape(LivingEntity entity) {
-        return CuriosApi.getCuriosHelper().findFirstCurio(entity, stack -> stack.getItem() instanceof CapeItem).isPresent();
+        return findFirstCurio(entity, stack -> stack.getItem() instanceof CapeItem).isPresent();
     }
 
     /**
@@ -108,7 +111,7 @@ public final class EquipmentUtil {
      */
     @Nullable
     public static SlotResult getCape(LivingEntity entity) {
-        return CuriosApi.getCuriosHelper().findFirstCurio(entity, stack -> stack.getItem() instanceof CapeItem).orElse(null);
+        return findFirstCurio(entity, stack -> stack.getItem() instanceof CapeItem).orElse(null);
     }
 
     /**
@@ -118,7 +121,7 @@ public final class EquipmentUtil {
      * @return The result of the check, as a {@link Boolean}.
      */
     public static boolean hasCurio(LivingEntity entity, Item item) {
-        return CuriosApi.getCuriosHelper().findFirstCurio(entity, item).isPresent();
+        return findFirstCurio(entity, item).isPresent();
     }
 
     /**
@@ -129,7 +132,7 @@ public final class EquipmentUtil {
      */
     @Nullable
     public static SlotResult getCurio(LivingEntity entity, Item item) {
-        return CuriosApi.getCuriosHelper().findFirstCurio(entity, item).orElse(null);
+        return findFirstCurio(entity, item).orElse(null);
     }
 
     /**
@@ -139,7 +142,12 @@ public final class EquipmentUtil {
      * @return The {@link List} of {@link SlotResult}s for the curio items.
      */
     public static List<SlotResult> getCurios(LivingEntity entity, Item item) {
-        return CuriosApi.getCuriosHelper().findCurios(entity, item);
+        LazyOptional<ICuriosItemHandler> inventoryOptional = CuriosApi.getCuriosInventory(entity);
+        if (inventoryOptional.isPresent() && inventoryOptional.resolve().isPresent()) {
+            ICuriosItemHandler inventory = inventoryOptional.resolve().get();
+            return inventory.findCurios(item);
+        }
+        return List.of();
     }
 
     /**
@@ -211,7 +219,7 @@ public final class EquipmentUtil {
                 && entity.getItemBySlot(EquipmentSlot.CHEST).is(chestplate)
                 && entity.getItemBySlot(EquipmentSlot.LEGS).is(leggings)
                 && entity.getItemBySlot(EquipmentSlot.FEET).is(boots)
-                && CuriosApi.getCuriosHelper().findFirstCurio(entity, gloves).isPresent();
+                && findFirstCurio(entity, gloves).isPresent();
     }
 
     /**
@@ -229,6 +237,25 @@ public final class EquipmentUtil {
                 || entity.getItemBySlot(EquipmentSlot.CHEST).is(chestplate)
                 || entity.getItemBySlot(EquipmentSlot.LEGS).is(leggings)
                 || entity.getItemBySlot(EquipmentSlot.FEET).is(boots)
-                || CuriosApi.getCuriosHelper().findFirstCurio(entity, gloves).isPresent();
+                || findFirstCurio(entity, gloves).isPresent();
+    }
+
+    /**
+     * @see ICuriosItemHandler#findFirstCurio(Item)
+     */
+    public static Optional<SlotResult> findFirstCurio(LivingEntity entity, Item item) {
+        return findFirstCurio(entity, (itemStack) -> itemStack.is(item));
+    }
+
+    /**
+     * @see ICuriosItemHandler#findFirstCurio(Predicate)
+     */
+    public static Optional<SlotResult> findFirstCurio(LivingEntity entity, Predicate<ItemStack> predicate) {
+        LazyOptional<ICuriosItemHandler> inventoryOptional = CuriosApi.getCuriosInventory(entity);
+        if (inventoryOptional.isPresent() && inventoryOptional.resolve().isPresent()) {
+            ICuriosItemHandler inventory = inventoryOptional.resolve().get();
+            return inventory.findFirstCurio(predicate);
+        }
+        return Optional.empty();
     }
 }

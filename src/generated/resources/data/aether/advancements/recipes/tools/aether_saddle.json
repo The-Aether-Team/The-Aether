@@ -30,5 +30,6 @@
     "recipes": [
       "aether:aether_saddle"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

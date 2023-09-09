@@ -25,7 +25,7 @@ public record StepHeightPacket(int entityID) implements BasePacket {
 
     @Override
     public void execute(@Nullable Player playerEntity) {
-        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.getLevel().getEntity(this.entityID()) instanceof MountableAnimal mountableAnimal) {
+        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level().getEntity(this.entityID()) instanceof MountableAnimal mountableAnimal) {
             AttributeInstance stepHeight = mountableAnimal.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
             if (stepHeight != null) {
                 if (stepHeight.hasModifier(mountableAnimal.getDefaultStepHeightModifier())) {

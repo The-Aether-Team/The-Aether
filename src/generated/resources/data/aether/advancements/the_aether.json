@@ -27,5 +27,6 @@
     [
       "the_aether"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

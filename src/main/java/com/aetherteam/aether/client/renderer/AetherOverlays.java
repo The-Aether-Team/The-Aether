@@ -15,10 +15,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -107,11 +106,12 @@ public class AetherOverlays {
     }
 
     /**
-     * [CODE COPY] - {@link Gui#renderPortalOverlay(PoseStack, float)}.<br><br>
+     * [CODE COPY] - {@link Gui#renderPortalOverlay(GuiGraphics, float)}.<br><br>
      * Warning for "deprecation" is suppressed because vanilla calls {@link net.minecraft.client.renderer.block.BlockModelShaper#getParticleIcon(BlockState)} just fine.
      */
     @SuppressWarnings("deprecation")
-    private static void renderAetherPortalOverlay(PoseStack poseStack, Minecraft minecraft, Window window, AetherPlayer handler, float partialTicks) {
+    private static void renderAetherPortalOverlay(GuiGraphics guiGraphics, Minecraft minecraft, Window window, AetherPlayer handler, float partialTicks) {
+        PoseStack poseStack = guiGraphics.pose();
         float timeInPortal = handler.getPrevPortalAnimTime() + (handler.getPortalAnimTime() - handler.getPrevPortalAnimTime()) * partialTicks;
         if (timeInPortal > 0.0F) {
             if (timeInPortal < 1.0F) {
@@ -125,9 +125,8 @@ public class AetherOverlays {
             RenderSystem.disableDepthTest();
             RenderSystem.depthMask(false);
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, timeInPortal);
-            RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
             TextureAtlasSprite textureAtlasSprite = minecraft.getBlockRenderer().getBlockModelShaper().getParticleIcon(AetherBlocks.AETHER_PORTAL.get().defaultBlockState());
-            GuiComponent.blit(poseStack, 0, 0, -90, window.getGuiScaledWidth(), window.getGuiScaledHeight(), textureAtlasSprite);
+            guiGraphics.blit(0, 0, -90, window.getGuiScaledWidth(), window.getGuiScaledHeight(), textureAtlasSprite);
             RenderSystem.depthMask(true);
             RenderSystem.enableDepthTest();
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
@@ -138,30 +137,30 @@ public class AetherOverlays {
 
     /**
      * Renders a purple vignette with pulsing opacity.
-     * @param poseStack The {@link PoseStack} for rendering.
+     * @param guiGraphics The {@link GuiGraphics} for rendering.
      * @param minecraft The {@link Minecraft} instance.
      * @param window The game {@link Window}.
      * @param handler The {@link AetherPlayer} capability for the player.
      */
-    private static void renderInebriationOverlay(PoseStack poseStack, Minecraft minecraft, Window window, AetherPlayer handler) {
+    private static void renderInebriationOverlay(GuiGraphics guiGraphics, Minecraft minecraft, Window window, AetherPlayer handler) {
         Player player = handler.getPlayer();
         MobEffectInstance inebriation = player.getEffect(AetherEffects.INEBRIATION.get());
         double effectScale = minecraft.options.screenEffectScale().get();
         if (inebriation != null) {
             float inebriationDuration = (float) (inebriation.getDuration() % 50) / 50;
             float alpha = (inebriationDuration * inebriationDuration) / 5.0F + 0.4F;
-            renderVignette(poseStack, window, effectScale, alpha, TEXTURE_INEBRIATION_VIGNETTE);
+            renderVignette(guiGraphics, window, effectScale, alpha, TEXTURE_INEBRIATION_VIGNETTE);
         }
     }
 
     /**
      * Renders a green vignette with a gradually fading opacity.
-     * @param poseStack The {@link PoseStack} for rendering.
+     * @param guiGraphics The {@link GuiGraphics} for rendering.
      * @param minecraft The {@link Minecraft} instance.
      * @param window The game {@link Window}.
      * @param handler The {@link AetherPlayer} capability for the player.
      */
-    private static void renderRemedyOverlay(PoseStack poseStack, Minecraft minecraft, Window window, AetherPlayer handler) {
+    private static void renderRemedyOverlay(GuiGraphics guiGraphics, Minecraft minecraft, Window window, AetherPlayer handler) {
         Player player = handler.getPlayer();
         MobEffectInstance remedy = player.getEffect(AetherEffects.REMEDY.get());
         double effectScale = minecraft.options.screenEffectScale().get();
@@ -170,38 +169,37 @@ public class AetherOverlays {
             int remedyDuration = remedy.getDuration();
             if (remedyStartDuration > 0 && remedyDuration > 0) {
                 float alpha = ((float) remedyDuration / remedyStartDuration) / 1.5F;
-                renderVignette(poseStack, window, effectScale, alpha, TEXTURE_REMEDY_VIGNETTE);
+                renderVignette(guiGraphics, window, effectScale, alpha, TEXTURE_REMEDY_VIGNETTE);
             }
         }
     }
 
     /**
      * Renders a blue vignette with a gradually fading opacity.
-     * @param poseStack The {@link PoseStack} for rendering.
+     * @param guiGraphics The {@link GuiGraphics} for rendering.
      * @param minecraft The {@link Minecraft} instance.
      * @param window The game {@link Window}.
      * @param handler The {@link AetherPlayer} capability for the player.
      */
-    private static void renderRepulsionOverlay(PoseStack poseStack, Minecraft minecraft, Window window, AetherPlayer handler) {
+    private static void renderRepulsionOverlay(GuiGraphics guiGraphics, Minecraft minecraft, Window window, AetherPlayer handler) {
         int projectileImpactedMaximum = handler.getProjectileImpactedMaximum();
         int projectileImpactedTimer = handler.getProjectileImpactedTimer();
         double effectScale = minecraft.options.screenEffectScale().get();
         if (projectileImpactedTimer > 0) {
             float alpha = (float) projectileImpactedTimer / projectileImpactedMaximum;
-            renderVignette(poseStack, window, effectScale, alpha, TEXTURE_SHIELD_OF_REPULSION_VIGNETTE);
+            renderVignette(guiGraphics, window, effectScale, alpha, TEXTURE_SHIELD_OF_REPULSION_VIGNETTE);
         }
     }
 
-    private static void renderVignette(PoseStack poseStack, Window window, double effectScale, float alpha, ResourceLocation resource) {
+    private static void renderVignette(GuiGraphics guiGraphics, Window window, double effectScale, float alpha, ResourceLocation resource) {
+        PoseStack poseStack = guiGraphics.pose();
         poseStack.pushPose();
         alpha *= Math.sqrt(effectScale);
         RenderSystem.disableDepthTest();
         RenderSystem.depthMask(false);
         RenderSystem.enableBlend();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, resource);
-        GuiComponent.blit(poseStack, 0, 0, -90, 0.0F, 0.0F, window.getGuiScaledWidth(), window.getGuiScaledHeight(), window.getGuiScaledWidth(), window.getGuiScaledHeight());
+        guiGraphics.blit(resource, 0, 0, -90, 0.0F, 0.0F, window.getGuiScaledWidth(), window.getGuiScaledHeight(), window.getGuiScaledWidth(), window.getGuiScaledHeight());
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.disableBlend();
         RenderSystem.depthMask(true);
@@ -211,12 +209,12 @@ public class AetherOverlays {
 
     /**
      * Renders a boss-esque bar at the top of the screen for the Hammer of Kingbdogz' item cooldown.
-     * @param poseStack The {@link PoseStack} for rendering.
+     * @param guiGraphics The {@link GuiGraphics} for rendering.
      * @param minecraft The {@link Minecraft} instance.
      * @param window The game {@link Window}.
      * @param player The {@link LocalPlayer}.
      */
-    private static void renderHammerCooldownOverlay(PoseStack poseStack, Minecraft minecraft, Window window, LocalPlayer player) {
+    private static void renderHammerCooldownOverlay(GuiGraphics guiGraphics, Minecraft minecraft, Window window, LocalPlayer player) {
         Inventory inventory = player.getInventory();
         if (inventory.hasAnyMatching((itemStack) -> itemStack.is(AetherItems.HAMMER_OF_KINGBDOGZ.get()))) {
             for (ItemStack itemStack : inventory.items) {
@@ -230,11 +228,9 @@ public class AetherOverlays {
                             itemStack = player.getOffhandItem();
                         }
                         String text = itemStack.getHoverName().getString().concat(" ").concat(Component.translatable("aether.hammer_of_kingbdogz_cooldown").getString());
-                        minecraft.font.drawShadow(poseStack, text, (window.getGuiScaledWidth() / 2.0F) - (minecraft.font.width(text) / 2.0F), 32, 16777215);
-                        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-                        RenderSystem.setShaderTexture(0, TEXTURE_COOLDOWN_BAR);
-                        GuiComponent.blit(poseStack, window.getGuiScaledWidth() / 2 - 64, 42, 0, 8, 128, 8, 256, 256);
-                        GuiComponent.blit(poseStack, window.getGuiScaledWidth() / 2 - 64, 42, 0, 0, (int) (cooldownPercent * 128), 8, 256, 256);
+                        guiGraphics.drawString(minecraft.font, text, (int) ((window.getGuiScaledWidth() / 2.0F) - (minecraft.font.width(text) / 2.0F)), 32, 16777215);
+                        guiGraphics.blit(TEXTURE_COOLDOWN_BAR, window.getGuiScaledWidth() / 2 - 64, 42, 0, 8, 128, 8, 256, 256);
+                        guiGraphics.blit(TEXTURE_COOLDOWN_BAR, window.getGuiScaledWidth() / 2 - 64, 42, 0, 0, (int) (cooldownPercent * 128), 8, 256, 256);
                         break;
                     }
                 }
@@ -244,37 +240,35 @@ public class AetherOverlays {
 
     /**
      * Renders feathers at the top of the screen corresponding to the amount of jumps the currently mounted Moa has.
-     * @param poseStack The {@link PoseStack} for rendering.
+     * @param guiGraphics The {@link GuiGraphics} for rendering.
      * @param window The game {@link Window}.
      * @param player The {@link LocalPlayer}.
      */
-    private static void renderMoaJumps(PoseStack poseStack, Window window, LocalPlayer player) {
+    private static void renderMoaJumps(GuiGraphics guiGraphics, Window window, LocalPlayer player) {
         if (player.getVehicle() instanceof Moa moa) {
-            RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            RenderSystem.setShaderTexture(0, TEXTURE_JUMPS);
             for (int jumpCount = 0; jumpCount < moa.getMaxJumps(); jumpCount++) {
                 int xPos = ((window.getGuiScaledWidth() / 2) + (jumpCount * 8)) - (moa.getMaxJumps() * 8) / 2;
                 int yPos = 18;
                 if (jumpCount < moa.getRemainingJumps()) {
-                    GuiComponent.blit(poseStack, xPos, yPos, 0, 0, 9, 11, 256, 256);
+                    guiGraphics.blit(TEXTURE_JUMPS, xPos, yPos, 0, 0, 9, 11, 256, 256);
                 } else {
-                    GuiComponent.blit(poseStack, xPos, yPos, 10, 0, 9, 11, 256, 256);
+                    guiGraphics.blit(TEXTURE_JUMPS, xPos, yPos, 10, 0, 9, 11, 256, 256);
                 }
             }
         }
     }
 
     /**
-     * [CODE COPY] - {@link Gui#renderPlayerHealth(PoseStack)}.<br><br>
+     * [CODE COPY] - {@link Gui#renderPlayerHealth(GuiGraphics)}.<br><br>
      * Stripped down to only use what is necessary.<br>
      * Renders silver heart textures over the extra hearts given by Life Shards.
-     * @param poseStack The {@link PoseStack} for rendering.
+     * @param guiGraphics The {@link GuiGraphics} for rendering.
      * @param gui The {@link ForgeGui} included in rendering.
      * @param player The {@link LocalPlayer}.
      * @param width The {@link Integer} for the screen width.
      * @param height The {@link Integer} for the screen height.
      */
-    private static void renderSilverLifeShardHearts(PoseStack poseStack, ForgeGui gui, LocalPlayer player, int width, int height) {
+    private static void renderSilverLifeShardHearts(GuiGraphics guiGraphics, ForgeGui gui, LocalPlayer player, int width, int height) {
         GuiAccessor guiAccessor = (GuiAccessor) gui;
         if (AetherConfig.CLIENT.enable_silver_hearts.get() && gui.shouldDrawSurvivalElements()) {
             AetherPlayer.get(player).ifPresent(aetherPlayer -> {
@@ -318,7 +312,7 @@ public class AetherOverlays {
                             regen = gui.getGuiTicks() % Mth.ceil(displayOverallHealth + 5.0F);
                         }
 
-                        renderHearts(poseStack, innerPlayer, gui, left, top, regen, displayOverallHealth, displayLifeShardHealth, maxDefaultHealth, currentLifeShardHealth, rowHeight, absorption, highlight);
+                        renderHearts(guiGraphics, innerPlayer, gui, left, top, regen, displayOverallHealth, displayLifeShardHealth, maxDefaultHealth, currentLifeShardHealth, rowHeight, absorption, highlight);
 
                         RenderSystem.disableBlend();
                     }
@@ -328,10 +322,10 @@ public class AetherOverlays {
     }
 
     /**
-     * [CODE COPY] - {@link Gui#renderHearts(PoseStack, Player, int, int, int, int, float, int, int, int, boolean)}.<br><br>
+     * [CODE COPY] - {@link Gui#renderHearts(GuiGraphics, Player, int, int, int, int, float, int, int, int, boolean)}.<br><br>
      * Stripped down to only use what is necessary.
      */
-    private static void renderHearts(PoseStack poseStack, Player player, ForgeGui gui, int left, int top, int regen, float displayOverallHealth, float displayLifeShardHealth, int maxDefaultHealth, int lifeShardHealth, int rowHeight, int absorption, boolean highlight) {
+    private static void renderHearts(GuiGraphics guiGraphics, Player player, ForgeGui gui, int left, int top, int regen, float displayOverallHealth, float displayLifeShardHealth, int maxDefaultHealth, int lifeShardHealth, int rowHeight, int absorption, boolean highlight) {
         GuiAccessor guiAccessor = (GuiAccessor) gui;
         Gui.HeartType heartType = HeartTypeAccessor.callForPlayer(player);
         int overallHearts = Mth.ceil((double) displayOverallHealth / 2.0);
@@ -352,11 +346,11 @@ public class AetherOverlays {
             int selectedContainer = currentHeart * 2;
             if (highlight && selectedContainer < displayLifeShardHealth) {
                 boolean halfHeart = selectedContainer + 1 == displayLifeShardHealth;
-                guiAccessor.callRenderHeart(poseStack, heartType, x, y, 0, true, halfHeart);
+                guiAccessor.callRenderHeart(guiGraphics, heartType, x, y, 0, true, halfHeart);
             }
             if (selectedContainer < lifeShardHealth) {
                 boolean halfHeart = selectedContainer + 1 == lifeShardHealth;
-                guiAccessor.callRenderHeart(poseStack, heartType, x, y, 0, false, halfHeart);
+                guiAccessor.callRenderHeart(guiGraphics, heartType, x, y, 0, false, halfHeart);
             }
         }
     }

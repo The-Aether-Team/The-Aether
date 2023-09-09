@@ -29,11 +29,11 @@ public class VerticalGradientProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo process(LevelReader level, BlockPos origin, BlockPos centerBottom, StructureTemplate.StructureBlockInfo originalBlockInfo, StructureTemplate.StructureBlockInfo modifiedBlockInfo, StructurePlaceSettings settings, @Nullable StructureTemplate template) {
         if (level instanceof WorldGenLevel worldGenLevel) {
             // If the processor is running outside the center chunk, return immediately.
-            if (worldGenLevel instanceof WorldGenRegion region && BlockLogicUtil.isOutOfBounds(modifiedBlockInfo.pos, region.getCenter())) {
+            if (worldGenLevel instanceof WorldGenRegion region && BlockLogicUtil.isOutOfBounds(modifiedBlockInfo.pos(), region.getCenter())) {
                 return modifiedBlockInfo;
             }
-            if (modifiedBlockInfo.state.is(AetherBlocks.AETHER_DIRT.get())) {
-                BlockPos below = modifiedBlockInfo.pos.below();
+            if (modifiedBlockInfo.state().is(AetherBlocks.AETHER_DIRT.get())) {
+                BlockPos below = modifiedBlockInfo.pos().below();
                 if (worldGenLevel.getBlockState(below).is(AetherTags.Blocks.HOLYSTONE)) {
                     RandomSource random = settings.getRandom(below);
                     if (random.nextBoolean()) {

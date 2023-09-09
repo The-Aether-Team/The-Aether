@@ -52,7 +52,7 @@ public class AetherFarmBlock extends FarmBlock {
         if (!isNearWater(level, pos) && !level.isRainingAt(pos.above())) {
             if (i > 0) {
                 level.setBlock(pos, state.setValue(MOISTURE, i - 1), 2);
-            } else if (!isUnderCrops(level, pos)) {
+            } else if (!shouldMaintainFarmland(level, pos)) {
                 turnToDirt(state, level, pos);
             }
         } else if (i < 7) {
@@ -79,9 +79,9 @@ public class AetherFarmBlock extends FarmBlock {
     }
 
     /**
-     * [CODE COPY] - {@link FarmBlock#isUnderCrops(BlockGetter, BlockPos)}.
+     * [CODE COPY] - {@link FarmBlock#shouldMaintainFarmland(BlockGetter, BlockPos)}.
      */
-    private boolean isUnderCrops(BlockGetter level, BlockPos pos) {
+    private static boolean shouldMaintainFarmland(BlockGetter level, BlockPos pos) {
         BlockState plant = level.getBlockState(pos.above());
         BlockState state = level.getBlockState(pos);
         return plant.getBlock() instanceof IPlantable plantable && state.canSustainPlant(level, pos, Direction.UP, plantable);

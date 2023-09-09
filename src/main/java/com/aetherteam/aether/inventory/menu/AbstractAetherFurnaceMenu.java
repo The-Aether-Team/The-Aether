@@ -36,7 +36,7 @@ public abstract class AbstractAetherFurnaceMenu extends RecipeBookMenu<Container
         checkContainerDataCount(data, 4);
         this.container = container;
         this.data = data;
-        this.level = playerInventory.player.getLevel();
+        this.level = playerInventory.player.level();
         this.addSlot(new Slot(container, 0, 56, 17));
         this.addSlot(new AetherFurnaceFuelSlot(this, container, 1, 56, 53)); // Used instead of FurnaceFuelSlot to get around buckets being allowed as fuel.
         this.addSlot(new FurnaceResultSlot(playerInventory.player, container, 2, 116, 35));

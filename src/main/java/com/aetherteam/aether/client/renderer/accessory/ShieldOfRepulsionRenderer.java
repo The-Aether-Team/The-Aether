@@ -3,6 +3,7 @@ package com.aetherteam.aether.client.renderer.accessory;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.aetherteam.aether.item.AetherItems;
+import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.item.accessories.miscellaneous.ShieldOfRepulsionItem;
 import com.aetherteam.aether.mixin.mixins.client.accessor.PlayerModelAccessor;
 import com.aetherteam.nitrogen.ConstantsUtil;
@@ -65,7 +66,7 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
     @Override
     public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack poseStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource buffer, int packedLight, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         LivingEntity livingEntity = slotContext.entity();
-        CuriosApi.getCuriosHelper().findFirstCurio(livingEntity, AetherItems.SHIELD_OF_REPULSION.get()).ifPresent((slotResult) -> CuriosApi.getCuriosHelper().getCuriosHandler(livingEntity).ifPresent(handler ->
+        EquipmentUtil.findFirstCurio(livingEntity, AetherItems.SHIELD_OF_REPULSION.get()).ifPresent((slotResult) -> CuriosApi.getCuriosInventory(livingEntity).ifPresent(handler ->
                 handler.getStacksHandler(slotResult.slotContext().identifier()).ifPresent(stacksHandler -> {
                     ShieldOfRepulsionItem shield = (ShieldOfRepulsionItem) slotResult.stack().getItem();
                     if (stacksHandler.getRenders().get(slotResult.slotContext().index())) {

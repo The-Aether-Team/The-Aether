@@ -16,7 +16,7 @@ public class BossHealthOverlayMixin {
      * @param event The original {@link net.minecraftforge.client.event.CustomizeGuiOverlayEvent.BossEventProgress} parameter value.
      * @return The modified {@link net.minecraftforge.client.event.CustomizeGuiOverlayEvent.BossEventProgress} parameter value.
      */
-    @ModifyVariable(at = @At(value = "STORE"), method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;)V", index = 7)
+    @ModifyVariable(at = @At(value = "STORE"), method = "render(Lnet/minecraft/client/gui/GuiGraphics;)V", index = 7)
     private CustomizeGuiOverlayEvent.BossEventProgress event(CustomizeGuiOverlayEvent.BossEventProgress event) {
         event.setCanceled(GuiHooks.BOSS_EVENTS.contains(event.getBossEvent().getId()));
         return event;

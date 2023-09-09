@@ -30,5 +30,6 @@
     "recipes": [
       "aether:golden_aercloud_enchanting"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

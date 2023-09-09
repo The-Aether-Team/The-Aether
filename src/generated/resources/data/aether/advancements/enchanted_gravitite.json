@@ -33,5 +33,6 @@
     [
       "enchanted_gravitite"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

@@ -31,7 +31,7 @@ public class IncubatorMenu extends RecipeBookMenu<Container> {
 		checkContainerDataCount(data, 7);
 		this.container = container;
 		this.data = data;
-		this.level = playerInventory.player.getLevel();
+		this.level = playerInventory.player.level();
 		this.addSlot(new IncubatorItemSlot(this, container, 0, 73, 17, playerInventory.player));
 		this.addSlot(new IncubatorFuelSlot(this, container, 1, 73, 53));
 		for (int i = 0; i < 3; ++i) {

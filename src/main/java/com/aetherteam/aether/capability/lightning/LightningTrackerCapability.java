@@ -40,7 +40,7 @@ public class LightningTrackerCapability implements LightningTracker {
     @Override
     public void deserializeNBT(CompoundTag tag) {
         if (tag.contains("Owner")) {
-            this.setOwner(this.getLightningBolt().level.getEntity(tag.getInt("Owner")));
+            this.setOwner(this.getLightningBolt().level().getEntity(tag.getInt("Owner")));
         }
     }
 

@@ -59,5 +59,6 @@
       "white_moa_egg",
       "black_moa_egg"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

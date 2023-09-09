@@ -3,21 +3,29 @@
   "criteria": {
     "valkyrie_hoe": {
       "conditions": {
-        "item": {
-          "items": [
-            "aether:valkyrie_hoe"
-          ]
-        },
-        "location": {
-          "block": {
-            "blocks": [
-              "aether:aether_dirt",
-              "aether:aether_grass_block",
-              "aether:enchanted_aether_grass_block",
-              "aether:aether_dirt_path"
-            ]
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "blocks": [
+                  "aether:aether_dirt",
+                  "aether:aether_grass_block",
+                  "aether:enchanted_aether_grass_block",
+                  "aether:aether_dirt_path"
+                ]
+              }
+            }
+          },
+          {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "items": [
+                "aether:valkyrie_hoe"
+              ]
+            }
           }
-        }
+        ]
       },
       "trigger": "minecraft:item_used_on_block"
     }
@@ -41,5 +49,6 @@
     [
       "valkyrie_hoe"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

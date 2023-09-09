@@ -53,7 +53,7 @@ public class TntPresent extends Entity implements TraceableEntity {
 
         this.move(MoverType.SELF, this.getDeltaMovement());
         this.setDeltaMovement(this.getDeltaMovement().scale(0.98));
-        if (this.isOnGround()) {
+        if (this.onGround()) {
             this.setDeltaMovement(this.getDeltaMovement().multiply(0.7, -0.5, 0.7));
         }
 
@@ -61,13 +61,13 @@ public class TntPresent extends Entity implements TraceableEntity {
         this.setFuse(i);
         if (i <= 0) {
             this.discard();
-            if (!this.getLevel().isClientSide()) {
-                this.getLevel().explode(this, null, null, this.getX(), this.getY(0.0625), this.getZ(), 1.0F, false, Level.ExplosionInteraction.TNT);
+            if (!this.level().isClientSide()) {
+                this.level().explode(this, null, null, this.getX(), this.getY(0.0625), this.getZ(), 1.0F, false, Level.ExplosionInteraction.TNT);
             }
         } else {
             this.updateInWaterStateAndDoFluidPushing();
-            if (this.getLevel().isClientSide()) {
-                this.getLevel().addParticle(ParticleTypes.SMOKE, this.getX(), this.getY() + 0.5, this.getZ(), 0.0, 0.0, 0.0);
+            if (this.level().isClientSide()) {
+                this.level().addParticle(ParticleTypes.SMOKE, this.getX(), this.getY() + 0.5, this.getZ(), 0.0, 0.0, 0.0);
             }
         }
     }

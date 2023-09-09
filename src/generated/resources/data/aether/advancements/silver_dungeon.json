@@ -35,5 +35,6 @@
     [
       "kill_valkyrie_queen"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

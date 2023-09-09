@@ -27,7 +27,7 @@ public class IncubatorItemSlot extends Slot {
     public void set(ItemStack stack) {
         if (!stack.isEmpty() && !this.getItem().is(stack.getItem())) {
             if (this.player instanceof ServerPlayer serverPlayer) {
-                BlockEntity blockEntity = this.player.getLevel().getBlockEntity(this.menu.getIncubatorPos());
+                BlockEntity blockEntity = this.player.level().getBlockEntity(this.menu.getIncubatorPos());
                 if (blockEntity instanceof IncubatorBlockEntity incubator) {
                     incubator.setPlayer(serverPlayer);
                 }

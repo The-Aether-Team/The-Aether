@@ -4,7 +4,7 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.event.hooks.GuiHooks;
 import com.aetherteam.aether.client.gui.component.inventory.AccessoryButton;
 import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.LerpingBossEvent;
 import net.minecraft.client.gui.layouts.GridLayout;
 import net.minecraft.client.gui.screens.Screen;
@@ -44,15 +44,15 @@ public class GuiListener {
 	}
 
 	/**
-	 * @see GuiHooks#drawTrivia(Screen, PoseStack)
-	 * @see GuiHooks#drawAetherTravelMessage(Screen, PoseStack)
+	 * @see GuiHooks#drawTrivia(Screen, GuiGraphics)
+	 * @see GuiHooks#drawAetherTravelMessage(Screen, GuiGraphics)
 	 */
 	@SubscribeEvent
-	public static void onGuiDraw(ScreenEvent.Render event) {
+	public static void onGuiDraw(ScreenEvent.Render.Post event) {
 		Screen screen = event.getScreen();
-		PoseStack poseStack = event.getPoseStack();
-		GuiHooks.drawTrivia(screen, poseStack);
-		GuiHooks.drawAetherTravelMessage(screen, poseStack);
+		GuiGraphics guiGraphics = event.getGuiGraphics();
+		GuiHooks.drawTrivia(screen, guiGraphics);
+		GuiHooks.drawAetherTravelMessage(screen, guiGraphics);
 	}
 
 	/**
@@ -78,14 +78,15 @@ public class GuiListener {
 	/**
 	 * This event is cancelled in BossHealthOverlayMixin. See it for more info.
 	 * @see com.aetherteam.aether.mixin.mixins.client.BossHealthOverlayMixin#event(CustomizeGuiOverlayEvent.BossEventProgress)
-	 * @see GuiHooks#drawBossHealthBar(PoseStack, int, int, LerpingBossEvent)
+	 * @see GuiHooks#drawBossHealthBar(GuiGraphics, int, int, LerpingBossEvent)
 	 */
 	@SubscribeEvent
 	public static void onRenderBossBar(CustomizeGuiOverlayEvent.BossEventProgress event) {
+		GuiGraphics guiGraphics = event.getGuiGraphics();
 		LerpingBossEvent bossEvent = event.getBossEvent();
 		UUID bossUUID = bossEvent.getId();
 		if (GuiHooks.isAetherBossBar(bossUUID)) {
-			GuiHooks.drawBossHealthBar(event.getPoseStack(), event.getX(), event.getY(), bossEvent);
+			GuiHooks.drawBossHealthBar(guiGraphics, event.getX(), event.getY(), bossEvent);
 			event.setIncrement(event.getIncrement() + 13);
 		}
 	}

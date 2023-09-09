@@ -33,5 +33,6 @@
     [
       "aechor_petal"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

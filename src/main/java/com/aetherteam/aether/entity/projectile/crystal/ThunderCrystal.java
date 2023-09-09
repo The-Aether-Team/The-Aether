@@ -47,7 +47,7 @@ public class ThunderCrystal extends AbstractCrystal {
     @Override
     protected void onHitEntity(EntityHitResult result) {
         if (result.getEntity() instanceof LivingEntity target && target != this.getOwner()) {
-            target.hurt(AetherDamageTypes.indirectEntityDamageSource(this.getLevel(), AetherDamageTypes.THUNDER_CRYSTAL, this, this.getOwner()), 5.0F);
+            target.hurt(AetherDamageTypes.indirectEntityDamageSource(this.level(), AetherDamageTypes.THUNDER_CRYSTAL, this, this.getOwner()), 5.0F);
             this.knockback(0.1, this.position().subtract(target.position())); // Apply knockback to the projectile from the distance difference between the projectile and hit entity.
             target.knockback(0.25, this.getX() - target.getX(), this.getZ() - target.getZ());
         }
@@ -58,7 +58,7 @@ public class ThunderCrystal extends AbstractCrystal {
      */
     @Override
     public void tickMovement() {
-        if (!this.getLevel().isClientSide()) {
+        if (!this.level().isClientSide()) {
             if (this.target == null || !this.target.isAlive() || this.getOwner() == null || !this.getOwner().isAlive()) {
                 if (this.getImpactExplosionSoundEvent() != null) {
                     this.playSound(this.getImpactExplosionSoundEvent(), 1.0F, 1.0F);
@@ -89,7 +89,7 @@ public class ThunderCrystal extends AbstractCrystal {
      */
     @Override
     public boolean hurt(DamageSource source, float pAmount) {
-        if (!this.getLevel().isClientSide() && source.getSourcePosition() != null && this.getLevel() instanceof ServerLevel serverLevel) {
+        if (!this.level().isClientSide() && source.getSourcePosition() != null && this.level() instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(ParticleTypes.CRIT, this.getX(), this.getY(), this.getZ(), 15, 0.2, 0.2, 0.2, 0.0);
             this.knockback(0.15 + pAmount / 8, this.position().subtract(source.getSourcePosition())); // Sets knockback movement in the direction of the damage.
         }
@@ -114,7 +114,7 @@ public class ThunderCrystal extends AbstractCrystal {
      */
     @Override
     public void checkDespawn() {
-        if (this.getLevel().getDifficulty() == Difficulty.PEACEFUL) {
+        if (this.level().getDifficulty() == Difficulty.PEACEFUL) {
             this.discard();
         }
     }
@@ -142,7 +142,7 @@ public class ThunderCrystal extends AbstractCrystal {
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         if (tag.contains("Target")) {
-            this.target = this.level.getEntity(tag.getInt("Target"));
+            this.target = this.level().getEntity(tag.getInt("Target"));
         }
     }
 }
