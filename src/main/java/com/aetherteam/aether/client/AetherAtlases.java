@@ -14,19 +14,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherAtlases {
-	public static Material TREASURE_CHEST_MATERIAL;
-	public static Material TREASURE_CHEST_LEFT_MATERIAL;
-	public static Material TREASURE_CHEST_RIGHT_MATERIAL;
-
-	/**
-	 * Need to register these static values here from {@link AetherClient#clientSetup(FMLClientSetupEvent)},
-	 * otherwise they'll be loaded too early from static initialization in the field.
-	 */
-	public static void registerTreasureChestAtlases() {
-		TREASURE_CHEST_MATERIAL = getChestMaterial("treasure_chest");
-		TREASURE_CHEST_LEFT_MATERIAL = getChestMaterial("treasure_chest_left");
-		TREASURE_CHEST_RIGHT_MATERIAL = getChestMaterial("treasure_chest_right");
-	}
+	public static Material TREASURE_CHEST_MATERIAL = getChestMaterial("treasure_chest");
+	public static Material TREASURE_CHEST_LEFT_MATERIAL = getChestMaterial("treasure_chest_left");
+	public static Material TREASURE_CHEST_RIGHT_MATERIAL = getChestMaterial("treasure_chest_right");
 
 	public static void registerWoodTypeAtlases() {
 		Sheets.addWoodType(AetherWoodTypes.SKYROOT);

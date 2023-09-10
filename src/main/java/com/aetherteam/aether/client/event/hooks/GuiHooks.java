@@ -6,10 +6,15 @@ import com.aetherteam.aether.client.AetherKeys;
 import com.aetherteam.aether.client.gui.component.inventory.AccessoryButton;
 import com.aetherteam.aether.client.gui.component.skins.RefreshButton;
 import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
+import com.aetherteam.aether.client.gui.screen.perks.AetherCustomizationsScreen;
+import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
 import com.aetherteam.aether.event.hooks.DimensionHooks;
 import com.aetherteam.aether.inventory.menu.AccessoriesMenu;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.OpenAccessoriesPacket;
+import com.aetherteam.aether.perk.PerkUtil;
+import com.aetherteam.nitrogen.api.users.User;
+import com.aetherteam.nitrogen.api.users.UserData;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -17,6 +22,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.LerpingBossEvent;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -112,67 +118,35 @@ public class GuiHooks { //todo without GridLayout, some gui elements need to be 
         return null;
     }
 
-//    /**
-//     * Sets up the buttons for the {@link MoaSkinsScreen} and the {@link AetherCustomizationsScreen} in a {@link GridLayout}.
-//     * @param screen The parent {@link Screen}.
-//     * @return The {@link GridLayout} holding the buttons.
-//     * @see com.aetherteam.aether.client.event.listeners.GuiListener#onGuiInitialize(ScreenEvent.Init.Post)
-//     */
-//    @Nullable
-//    public static GridLayout setupPerksButtons(Screen screen) {
-//        if (screen instanceof PauseScreen) {
-//            int x = AetherConfig.CLIENT.layout_perks_x.get();
-//            int y = AetherConfig.CLIENT.layout_perks_y.get();
-//
-//            // Sets up the GridLayout.
-//            GridLayout gridLayout = new GridLayout();
-//            gridLayout.defaultCellSetting().padding(4, 4, 4, 0);
-//            GridLayout.RowHelper rowHelper = gridLayout.createRowHelper(1);
-//
-//            createSkinsButton(screen, gridLayout, rowHelper); // Skins button.
-//
-//            User user = UserData.Client.getClientUser();
-//            if (user != null && (PerkUtil.hasDeveloperGlow().test(user) || PerkUtil.hasHalo().test(user))) { // Only add the customizations button if the User has perks.
-//                createCustomizationsButton(screen, rowHelper); // Customizations button.
-//            } else {
-//                y -= 6;
-//            }
-//
-//            // Arranges and aligns the GridLayout.
-//            gridLayout.arrangeElements();
-//            FrameLayout.alignInRectangle(gridLayout, x, y, screen.width, screen.height, 0.5F, 0.25F);
-//
-//            return gridLayout;
-//        }
-//        return null;
-//    }
+    /**
+     * Creates the button for the {@link MoaSkinsScreen}.
+     * @param screen The parent {@link Screen}.
+     */
+    public static ImageButton createSkinsButton(Screen screen) {
+        int x = AetherConfig.CLIENT.layout_perks_x.get();
+        int y = AetherConfig.CLIENT.layout_perks_y.get();
+        return new ImageButton((screen.width / 2) + x, (screen.height / 4 + 48 - 16) + y, 20, 20, 0, 0, 20, AccessoriesScreen.SKINS_BUTTON, 20, 40,
+                (pressed) -> Minecraft.getInstance().setScreen(new MoaSkinsScreen(screen)),
+                (button, poseStack, mouseX, mouseY) -> screen.renderTooltip(poseStack, Component.translatable("gui.aether.accessories.skins_button"), mouseX + 4, mouseY + 12),
+                Component.translatable("gui.aether.accessories.skins_button"));
+    }
 
-//    /**
-//     * Creates the button for the {@link MoaSkinsScreen}.
-//     * @param screen The parent {@link Screen}.
-//     * @param gridLayout The {@link GridLayout} for the button.
-//     * @param rowHelper The {@link net.minecraft.client.gui.layouts.GridLayout.RowHelper} to add the button to.
-//     */
-//    private static void createSkinsButton(Screen screen, GridLayout gridLayout, GridLayout.RowHelper rowHelper) {
-//        ImageButton skinsButton = new ImageButton(0, 0, 20, 20, 0, 0, 20, AccessoriesScreen.SKINS_BUTTON, 20, 40,
-//                (pressed) -> Minecraft.getInstance().setScreen(new MoaSkinsScreen(screen)),
-//                (button, poseStack, mouseX, mouseY) -> screen.renderTooltip(poseStack, Component.translatable("gui.aether.accessories.skins_button"), mouseX + 4, mouseY + 12),
-//                Component.translatable("gui.aether.accessories.skins_button"));
-//        rowHelper.addChild(skinsButton, gridLayout.newCellSettings().paddingTop(58));
-//    }
-
-//    /**
-//     * Creates the button for the {@link AetherCustomizationsScreen}.
-//     * @param screen The parent {@link Screen}.
-//     * @param rowHelper The {@link net.minecraft.client.gui.layouts.GridLayout.RowHelper} to add the button to.
-//     */
-//    private static void createCustomizationsButton(Screen screen, GridLayout.RowHelper rowHelper) {
-//        ImageButton customizationButton = new ImageButton(0, 0, 20, 20, 0, 0, 20, AccessoriesScreen.CUSTOMIZATION_BUTTON, 20, 40,
-//                (pressed) -> Minecraft.getInstance().setScreen(new AetherCustomizationsScreen(screen)),
-//                (button, poseStack, mouseX, mouseY) -> screen.renderTooltip(poseStack, Component.translatable("gui.aether.accessories.customization_button"), mouseX + 4, mouseY + 12),
-//                Component.translatable("gui.aether.accessories.customization_button"));
-//        rowHelper.addChild(customizationButton);
-//    }
+    /**
+     * Creates the button for the {@link AetherCustomizationsScreen}.
+     * @param screen The parent {@link Screen}.
+     */
+    public static ImageButton createCustomizationsButton(Screen screen) {
+        User user = UserData.Client.getClientUser();
+        if (user != null && (PerkUtil.hasDeveloperGlow().test(user) || PerkUtil.hasHalo().test(user))) { // Only add the customizations button if the User has perks.
+            int x = AetherConfig.CLIENT.layout_perks_x.get();
+            int y = AetherConfig.CLIENT.layout_perks_y.get();
+            return new ImageButton((screen.width / 2) + x, (screen.height / 4 + 72 - 16) + y, 20, 20, 0, 0, 20, AccessoriesScreen.CUSTOMIZATION_BUTTON, 20, 40,
+                    (pressed) -> Minecraft.getInstance().setScreen(new AetherCustomizationsScreen(screen)),
+                    (button, poseStack, mouseX, mouseY) -> screen.renderTooltip(poseStack, Component.translatable("gui.aether.accessories.customization_button"), mouseX + 4, mouseY + 12),
+                    Component.translatable("gui.aether.accessories.customization_button"));
+        }
+        return null;
+    }
 
     /**
      * Generates and draws the Aether's trivia lines in various loading screens.

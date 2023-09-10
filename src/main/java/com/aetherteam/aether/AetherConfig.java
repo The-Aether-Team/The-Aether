@@ -313,7 +313,7 @@ public class AetherConfig {
             layout_perks_x = builder
                     .comment("The x-coordinate of the perks button layout when in the pause menu")
                     .translation("config.aether.client.gui.layout_perks_x")
-                    .define("Layout x-coordinate in pause menu", -116);
+                    .define("Layout x-coordinate in pause menu", -126);
             layout_perks_y = builder
                     .comment("The y-coordinate of the perks button layout when in the pause menu")
                     .translation("config.aether.client.gui.layout_perks_y")
