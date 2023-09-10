@@ -117,4 +117,9 @@ public abstract class WingedAnimal extends MountableAnimal {
     public int getMaxFallDistance() {
         return this.isOnGround() ? super.getMaxFallDistance() : 14;
     }
+
+    @Override
+    protected int calculateFallDamage(float distance, float damageMultiplier) {
+        return 0;
+    }
 }

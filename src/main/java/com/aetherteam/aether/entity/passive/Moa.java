@@ -790,6 +790,11 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	@Override
+	protected int calculateFallDamage(float distance, float damageMultiplier) {
+		return 0;
+	}
+
+	@Override
 	public double getPassengersRidingOffset() {
 		return this.isSitting() ? 0.25 : 1.25;
 	}

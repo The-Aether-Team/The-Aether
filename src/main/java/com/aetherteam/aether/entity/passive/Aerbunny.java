@@ -356,6 +356,11 @@ public class Aerbunny extends AetherAnimal {
     }
 
     @Override
+    protected int calculateFallDamage(float distance, float damageMultiplier) {
+        return 0;
+    }
+
+    @Override
     public boolean canRiderInteract() {
         return true;
     }
