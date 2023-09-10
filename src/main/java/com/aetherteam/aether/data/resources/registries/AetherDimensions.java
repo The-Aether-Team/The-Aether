@@ -1,18 +1,10 @@
 package com.aetherteam.aether.data.resources.registries;
 
 import com.aetherteam.aether.Aether;
-//import com.aetherteam.aether.data.resources.builders.AetherBiomeBuilders;
-//import net.minecraft.core.HolderGetter;
 import net.minecraft.core.Registry;
-//import net.minecraft.core.registries.Registries;
-//import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-//import net.minecraft.tags.BlockTags;
-//import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.Level;
-//import net.minecraft.world.level.biome.Biome;
-//import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.dimension.LevelStem;
 //import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;

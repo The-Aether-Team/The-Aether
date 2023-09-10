@@ -5,6 +5,7 @@ import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.capability.player.AetherPlayerCapability;
 import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
+import com.aetherteam.aether.item.AetherCreativeTabs;
 import com.aetherteam.aether.item.AetherItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -20,7 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class CloudStaffItem extends Item {
     public CloudStaffItem() {
-        super(new Item.Properties().durability(60).rarity(AetherItems.AETHER_LOOT));
+        super(new Item.Properties().durability(60).rarity(AetherItems.AETHER_LOOT).tab(AetherCreativeTabs.AETHER_EQUIPMENT_AND_UTILITIES));
     }
 
     /**

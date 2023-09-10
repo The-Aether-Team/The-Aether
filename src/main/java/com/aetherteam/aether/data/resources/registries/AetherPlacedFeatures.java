@@ -1,27 +1,10 @@
 package com.aetherteam.aether.data.resources.registries;
 
 import com.aetherteam.aether.Aether;
-//import com.aetherteam.aether.AetherConfig;
-//import com.aetherteam.aether.block.AetherBlocks;
-//import com.aetherteam.aether.data.resources.builders.AetherPlacedFeatureBuilders;
-//import com.aetherteam.aether.world.placementmodifier.ConfigFilter;
-//import com.aetherteam.aether.world.placementmodifier.DungeonBlacklistFilter;
-//import com.aetherteam.aether.world.placementmodifier.HolidayFilter;
-//import com.aetherteam.aether.world.placementmodifier.ImprovedLayerPlacementModifier;
-//import com.aetherteam.nitrogen.data.resources.builders.NitrogenPlacedFeatureBuilders;
-//import net.minecraft.core.Holder;
-//import net.minecraft.core.HolderGetter;
 import net.minecraft.core.Registry;
-//import net.minecraft.core.registries.Registries;
-//import net.minecraft.data.worldgen.BootstapContext;
-//import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-//import net.minecraft.util.valueproviders.UniformInt;
-//import net.minecraft.world.level.levelgen.Heightmap;
-//import net.minecraft.world.level.levelgen.VerticalAnchor;
-//import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.levelgen.placement.*;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 //import java.util.List;
 

@@ -2,6 +2,7 @@ package com.aetherteam.aether.item.combat.loot;
 
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.projectile.weapon.ThrownLightningKnife;
+import com.aetherteam.aether.item.AetherCreativeTabs;
 import com.aetherteam.aether.item.AetherItems;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -16,7 +17,7 @@ import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 
 public class LightningKnifeItem extends Item {
 	public LightningKnifeItem() {
-		super(new Item.Properties().rarity(AetherItems.AETHER_LOOT).stacksTo(16));
+		super(new Item.Properties().rarity(AetherItems.AETHER_LOOT).stacksTo(16).tab(AetherCreativeTabs.AETHER_EQUIPMENT_AND_UTILITIES));
 	}
 
 	/**

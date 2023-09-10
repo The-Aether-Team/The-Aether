@@ -1,14 +1,7 @@
 package com.aetherteam.aether.mixin.mixins.client;
 
-import com.aetherteam.aether.AetherConfig;
-import com.aetherteam.aether.client.WorldDisplayHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.PauseScreen;
-import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PauseScreen.class)
 public class PauseScreenMixin { //todo need to figure out how to mixin into the disconnect button lambda. examine bytecode

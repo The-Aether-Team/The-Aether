@@ -1,25 +1,9 @@
 package com.aetherteam.aether.data.resources.registries;
 
 import com.aetherteam.aether.Aether;
-//import com.aetherteam.aether.AetherTags;
-//import com.aetherteam.aether.block.AetherBlockStateProperties;
-//import com.aetherteam.aether.block.AetherBlocks;
-//import com.aetherteam.aether.data.resources.builders.AetherStructureBuilders;
-//import com.aetherteam.aether.world.structure.BronzeDungeonStructure;
-//import com.aetherteam.aether.world.structure.GoldDungeonStructure;
-//import com.aetherteam.aether.world.structure.LargeAercloudStructure;
-//import com.aetherteam.aether.world.structure.SilverDungeonStructure;
-//import net.minecraft.core.HolderGetter;
 import net.minecraft.core.Registry;
-//import net.minecraft.core.registries.Registries;
-//import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-//import net.minecraft.util.random.WeightedRandomList;
-//import net.minecraft.world.entity.MobCategory;
-//import net.minecraft.world.level.biome.Biome;
-//import net.minecraft.world.level.levelgen.GenerationStep;
-//import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.structure.Structure;
 //import net.minecraft.world.level.levelgen.structure.StructureSpawnOverride;
 //import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;

@@ -6,7 +6,6 @@ import com.aetherteam.aether.client.renderer.entity.layers.SliderGlowLayer;
 import com.aetherteam.aether.client.renderer.entity.model.SliderModel;
 import com.aetherteam.aether.entity.monster.dungeon.boss.Slider;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;

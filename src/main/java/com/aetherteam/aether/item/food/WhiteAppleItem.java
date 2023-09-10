@@ -1,6 +1,7 @@
 package com.aetherteam.aether.item.food;
 
 import com.aetherteam.aether.effect.AetherEffects;
+import com.aetherteam.aether.item.AetherCreativeTabs;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -13,7 +14,7 @@ import net.minecraft.world.level.Level;
 
 public class WhiteAppleItem extends Item {
     public WhiteAppleItem() {
-        super(new Item.Properties().food(AetherFoods.WHITE_APPLE));
+        super(new Item.Properties().food(AetherFoods.WHITE_APPLE).tab(AetherCreativeTabs.AETHER_FOOD_AND_DRINKS));
     }
 
     /**

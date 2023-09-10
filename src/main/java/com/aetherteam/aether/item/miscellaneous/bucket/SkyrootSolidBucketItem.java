@@ -1,10 +1,12 @@
 package com.aetherteam.aether.item.miscellaneous.bucket;
 
 import com.aetherteam.aether.item.AetherItems;
+import net.minecraft.core.NonNullList;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SolidBucketItem;
@@ -32,6 +34,20 @@ public class SkyrootSolidBucketItem extends SolidBucketItem {
             player.setItemInHand(interactionHand, new ItemStack(AetherItems.SKYROOT_BUCKET.get()));
         }
         return interactionResult;
+    }
+
+    /**
+     * Normally, anything extending {@link net.minecraft.world.item.BlockItem} calls {@link Block#fillItemCategory(CreativeModeTab, NonNullList)} for this,
+     * meaning in the creative tab it'll fill whatever item corresponds to the block in the registry, and not this item itself. So, we override that and instead perform the
+     * default behavior for adding an item to a creative tab (as seen in {@link Item#fillItemCategory(CreativeModeTab, NonNullList)}) so that it doesn't conflict with vanilla solid bucket items (like the Powder Snow Bucket).
+     * @param category The {@link CreativeModeTab} the item is trying to be added to.
+     * @param items The {@link NonNullList} for all the items that have been added to the tabs.
+     */
+    @Override
+    public void fillItemCategory(CreativeModeTab category, NonNullList<ItemStack> items) {
+        if (this.allowedIn(category)) {
+            items.add(new ItemStack(this));
+        }
     }
 
     /**

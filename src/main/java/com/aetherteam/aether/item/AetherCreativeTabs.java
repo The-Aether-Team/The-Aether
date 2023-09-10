@@ -1,5 +1,9 @@
 package com.aetherteam.aether.item;
 
+import com.aetherteam.aether.block.AetherBlocks;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+
 //import com.aetherteam.aether.Aether;
 //import com.aetherteam.aether.AetherConfig;
 //import com.aetherteam.aether.block.AetherBlocks;
@@ -16,7 +20,44 @@ package com.aetherteam.aether.item;
 //import java.util.List;
 //
 //@Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-//public class AetherCreativeTabs {
+public class AetherCreativeTabs {
+    public static final CreativeModeTab AETHER_BLOCKS = new CreativeModeTab("aether.blocks") {
+        @Override
+        public ItemStack makeIcon() {
+            return new ItemStack(AetherBlocks.AETHER_GRASS_BLOCK.get());
+        }
+    };
+    public static final CreativeModeTab AETHER_EQUIPMENT_AND_UTILITIES = new CreativeModeTab("aether.equipment_and_utilities") {
+        @Override
+        public ItemStack makeIcon() {
+            return new ItemStack(AetherItems.GRAVITITE_PICKAXE.get());
+        }
+    };
+    public static final CreativeModeTab AETHER_ARMOR_AND_ACCESSORIES = new CreativeModeTab("aether.armor_and_accessories") {
+        @Override
+        public ItemStack makeIcon() {
+            return new ItemStack(AetherItems.VALKYRIE_CHESTPLATE.get());
+        }
+    };
+    public static final CreativeModeTab AETHER_FOOD_AND_DRINKS = new CreativeModeTab("aether.food_and_drinks") {
+        @Override
+        public ItemStack makeIcon() {
+            return new ItemStack(AetherItems.BLUE_GUMMY_SWET.get());
+        }
+    };
+    public static final CreativeModeTab AETHER_INGREDIENTS = new CreativeModeTab("aether.ingredients") {
+        @Override
+        public ItemStack makeIcon() {
+            return new ItemStack(AetherItems.AMBROSIUM_SHARD.get());
+        }
+    };
+    public static final CreativeModeTab AETHER_SPAWN_EGGS = new CreativeModeTab("aether.spawn_eggs") {
+        @Override
+        public ItemStack makeIcon() {
+            return new ItemStack(AetherItems.AERBUNNY_SPAWN_EGG.get());
+        }
+    };
+
 //    public static CreativeModeTab AETHER_BUILDING_BLOCKS;
 //    public static CreativeModeTab AETHER_DUNGEON_BLOCKS;
 //    public static CreativeModeTab AETHER_NATURAL_BLOCKS;
@@ -432,4 +473,4 @@ package com.aetherteam.aether.item;
 //            event.getEntries().putAfter(new ItemStack(Items.NETHERITE_BOOTS), new ItemStack(AetherItems.NETHERITE_GLOVES.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
 //        }
 //    }
-//}
+}

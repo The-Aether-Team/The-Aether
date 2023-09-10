@@ -1,6 +1,7 @@
 package com.aetherteam.aether.item.combat.loot;
 
 import com.aetherteam.aether.capability.arrow.PhoenixArrow;
+import com.aetherteam.aether.item.AetherCreativeTabs;
 import com.aetherteam.aether.item.AetherItems;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -11,7 +12,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 
 public class PhoenixBowItem extends BowItem {
     public PhoenixBowItem() {
-        super(new Item.Properties().durability(384).rarity(AetherItems.AETHER_LOOT));
+        super(new Item.Properties().durability(384).rarity(AetherItems.AETHER_LOOT).tab(AetherCreativeTabs.AETHER_EQUIPMENT_AND_UTILITIES));
     }
 
     /**

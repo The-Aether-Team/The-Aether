@@ -5,7 +5,6 @@ import com.aetherteam.aether.client.gui.screen.inventory.recipebook.IncubatorRec
 import com.aetherteam.aether.inventory.menu.IncubatorMenu;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

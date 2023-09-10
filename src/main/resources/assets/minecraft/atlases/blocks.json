@@ -1,9 +1,0 @@
-{
-  "sources": [
-    {
-      "type": "directory",
-      "source": "gui/slots",
-      "prefix": "gui/slots/"
-    }
-  ]
-}

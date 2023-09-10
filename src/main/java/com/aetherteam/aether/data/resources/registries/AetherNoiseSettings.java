@@ -1,14 +1,9 @@
 package com.aetherteam.aether.data.resources.registries;
 
 import com.aetherteam.aether.Aether;
-//import com.aetherteam.aether.data.resources.builders.AetherNoiseBuilders;
-//import net.minecraft.core.HolderGetter;
 import net.minecraft.core.Registry;
-//import net.minecraft.core.registries.Registries;
-//import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-//import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 //import net.minecraft.world.level.levelgen.synth.NormalNoise;
 

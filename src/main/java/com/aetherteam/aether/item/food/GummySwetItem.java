@@ -1,6 +1,7 @@
 package com.aetherteam.aether.item.food;
 
 import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.item.AetherCreativeTabs;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.miscellaneous.ConsumableItem;
 import net.minecraft.world.InteractionHand;
@@ -15,7 +16,7 @@ import net.minecraft.world.level.Level;
 
 public class GummySwetItem extends Item implements ConsumableItem {
 	public GummySwetItem() {
-		super(new Item.Properties().rarity(AetherItems.AETHER_LOOT).food(AetherFoods.GUMMY_SWET));
+		super(new Item.Properties().rarity(AetherItems.AETHER_LOOT).food(AetherFoods.GUMMY_SWET).tab(AetherCreativeTabs.AETHER_FOOD_AND_DRINKS));
 	}
 
 	/**

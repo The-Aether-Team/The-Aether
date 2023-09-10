@@ -1,5 +1,6 @@
 package com.aetherteam.aether.item.tools.zanite;
 
+import com.aetherteam.aether.item.AetherCreativeTabs;
 import com.aetherteam.aether.item.combat.AetherItemTiers;
 import com.aetherteam.aether.item.tools.abilities.ZaniteTool;
 import net.minecraft.world.item.Item;
@@ -11,6 +12,6 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
  */
 public class ZanitePickaxeItem extends PickaxeItem implements ZaniteTool {
     public ZanitePickaxeItem() {
-        super(AetherItemTiers.ZANITE, 1, -2.8F, new Item.Properties());
+        super(AetherItemTiers.ZANITE, 1, -2.8F, new Item.Properties().tab(AetherCreativeTabs.AETHER_EQUIPMENT_AND_UTILITIES));
     }
 }

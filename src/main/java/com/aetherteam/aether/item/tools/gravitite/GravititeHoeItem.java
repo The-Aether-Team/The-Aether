@@ -1,5 +1,6 @@
 package com.aetherteam.aether.item.tools.gravitite;
 
+import com.aetherteam.aether.item.AetherCreativeTabs;
 import com.aetherteam.aether.item.combat.AetherItemTiers;
 import com.aetherteam.aether.item.tools.abilities.GravititeTool;
 import net.minecraft.world.InteractionResult;
@@ -9,7 +10,7 @@ import net.minecraft.world.item.context.UseOnContext;
 
 public class GravititeHoeItem extends HoeItem implements GravititeTool {
     public GravititeHoeItem() {
-        super(AetherItemTiers.GRAVITITE, -3, 0, new Item.Properties());
+        super(AetherItemTiers.GRAVITITE, -3, 0, new Item.Properties().tab(AetherCreativeTabs.AETHER_EQUIPMENT_AND_UTILITIES));
     }
 
     /**

@@ -2,7 +2,6 @@ package com.aetherteam.aether.recipe.recipes.ban;
 
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;

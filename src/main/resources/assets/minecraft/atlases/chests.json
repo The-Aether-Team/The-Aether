@@ -1,9 +1,0 @@
-{
-  "sources": [
-    {
-      "type": "directory",
-      "source": "entity/tiles/chest",
-      "prefix": "entity/tiles/chest/"
-    }
-  ]
-}

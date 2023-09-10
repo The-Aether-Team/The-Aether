@@ -1,5 +1,6 @@
 package com.aetherteam.aether.item.tools.valkyrie;
 
+import com.aetherteam.aether.item.AetherCreativeTabs;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.combat.AetherItemTiers;
 import com.aetherteam.aether.item.tools.abilities.ValkyrieTool;
@@ -13,7 +14,7 @@ import net.minecraft.world.item.PickaxeItem;
 
 public class ValkyriePickaxeItem extends PickaxeItem implements ValkyrieTool {
     public ValkyriePickaxeItem() {
-        super(AetherItemTiers.VALKYRIE, 1, -3.1F, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
+        super(AetherItemTiers.VALKYRIE, 1, -3.1F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherCreativeTabs.AETHER_EQUIPMENT_AND_UTILITIES));
     }
 
     @Override

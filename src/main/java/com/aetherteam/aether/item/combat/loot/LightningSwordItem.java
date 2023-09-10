@@ -1,6 +1,7 @@
 package com.aetherteam.aether.item.combat.loot;
 
 import com.aetherteam.aether.capability.lightning.LightningTracker;
+import com.aetherteam.aether.item.AetherCreativeTabs;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.item.combat.AetherItemTiers;
@@ -14,7 +15,7 @@ import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 
 public class LightningSwordItem extends SwordItem {
     public LightningSwordItem() {
-        super(AetherItemTiers.LIGHTNING, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
+        super(AetherItemTiers.LIGHTNING, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherCreativeTabs.AETHER_EQUIPMENT_AND_UTILITIES));
     }
 
     /**

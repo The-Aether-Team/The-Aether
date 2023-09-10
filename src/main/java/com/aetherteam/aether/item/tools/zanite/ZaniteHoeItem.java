@@ -1,5 +1,6 @@
 package com.aetherteam.aether.item.tools.zanite;
 
+import com.aetherteam.aether.item.AetherCreativeTabs;
 import com.aetherteam.aether.item.combat.AetherItemTiers;
 import com.aetherteam.aether.item.tools.abilities.ZaniteTool;
 import net.minecraft.world.item.HoeItem;
@@ -11,6 +12,6 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
  */
 public class ZaniteHoeItem extends HoeItem implements ZaniteTool {
     public ZaniteHoeItem() {
-        super(AetherItemTiers.ZANITE, -2, -1.0F, new Item.Properties());
+        super(AetherItemTiers.ZANITE, -2, -1.0F, new Item.Properties().tab(AetherCreativeTabs.AETHER_EQUIPMENT_AND_UTILITIES));
     }
 }

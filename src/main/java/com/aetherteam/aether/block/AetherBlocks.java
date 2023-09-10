@@ -14,6 +14,7 @@ import com.aetherteam.aether.blockentity.*;
 import com.aetherteam.aether.client.particle.AetherParticleTypes;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.AetherEntityTypes;
+import com.aetherteam.aether.item.AetherCreativeTabs;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.block.AmbrosiumBlockItem;
 import com.aetherteam.aether.item.block.BurnableBlockItem;
@@ -22,9 +23,7 @@ import com.aetherteam.aether.world.treegrower.GoldenOakTree;
 import com.aetherteam.aether.world.treegrower.SkyrootTree;
 import com.aetherteam.nitrogen.item.block.EntityBlockItem;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -46,7 +45,7 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class AetherBlocks { //todo creative tabs
+public class AetherBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Aether.MODID);
 
     public static final RegistryObject<AetherPortalBlock> AETHER_PORTAL = BLOCKS.register("aether_portal", () -> new AetherPortalBlock(Block.Properties.copy(Blocks.NETHER_PORTAL)));
@@ -306,33 +305,33 @@ public class AetherBlocks { //todo creative tabs
                     || block == QUICKSOIL_GLASS.get()
                     || block == QUICKSOIL_GLASS_PANE.get()
                     || block == ENCHANTED_GRAVITITE.get()) {
-                return new BlockItem(block, new Item.Properties().rarity(Rarity.RARE));
+                return new BlockItem(block, new Item.Properties().rarity(Rarity.RARE).tab(AetherCreativeTabs.AETHER_BLOCKS));
             } else if (block == AMBROSIUM_BLOCK.get()) {
-                return new AmbrosiumBlockItem(block, new Item.Properties());
+                return new AmbrosiumBlockItem(block, new Item.Properties().tab(AetherCreativeTabs.AETHER_BLOCKS));
             } else if (block == AEROGEL.get()
                     || block == AEROGEL_WALL.get()
                     || block == AEROGEL_STAIRS.get()
                     || block == AEROGEL_SLAB.get()) {
-                return new BlockItem(block, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
+                return new BlockItem(block, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherCreativeTabs.AETHER_BLOCKS));
             } else if (block == AMBROSIUM_TORCH.get()) {
-                return new StandingAndWallBlockItem(AMBROSIUM_TORCH.get(), AMBROSIUM_WALL_TORCH.get(), new Item.Properties());
+                return new StandingAndWallBlockItem(AMBROSIUM_TORCH.get(), AMBROSIUM_WALL_TORCH.get(), new Item.Properties().tab(AetherCreativeTabs.AETHER_BLOCKS));
             } else if (block == SKYROOT_SIGN.get()) {
-                return new SignItem((new Item.Properties()).stacksTo(16), SKYROOT_SIGN.get(), SKYROOT_WALL_SIGN.get());
+                return new SignItem((new Item.Properties().tab(AetherCreativeTabs.AETHER_BLOCKS)).stacksTo(16), SKYROOT_SIGN.get(), SKYROOT_WALL_SIGN.get());
             } else if (block == CHEST_MIMIC.get()) {
-                return new EntityBlockItem(block, ChestMimicBlockEntity::new, new Item.Properties());
+                return new EntityBlockItem(block, ChestMimicBlockEntity::new, new Item.Properties().tab(AetherCreativeTabs.AETHER_BLOCKS));
             } else if (block == TREASURE_CHEST.get()) {
-                return new EntityBlockItem(block, TreasureChestBlockEntity::new, new Item.Properties());
+                return new EntityBlockItem(block, TreasureChestBlockEntity::new, new Item.Properties().tab(AetherCreativeTabs.AETHER_BLOCKS));
             } else if (block == SKYROOT_PLANKS.get()
                     || block == SKYROOT_FENCE_GATE.get()
                     || block == SKYROOT_FENCE.get()
                     || block == SKYROOT_BOOKSHELF.get()) {
-                return new BurnableBlockItem(block, new Item.Properties());
+                return new BurnableBlockItem(block, new Item.Properties().tab(AetherCreativeTabs.AETHER_BLOCKS));
             } else if (block == SUN_ALTAR.get()) {
-                return new BlockItem(block, new Item.Properties().fireResistant());
+                return new BlockItem(block, new Item.Properties().fireResistant().tab(AetherCreativeTabs.AETHER_BLOCKS));
             } else if (block == SKYROOT_BED.get()) {
-                return new EntityBlockItem(block, SkyrootBedBlockEntity::new, new Item.Properties().stacksTo(1));
+                return new EntityBlockItem(block, SkyrootBedBlockEntity::new, new Item.Properties().stacksTo(1).tab(AetherCreativeTabs.AETHER_BLOCKS));
             } else {
-                return new BlockItem(block, new Item.Properties());
+                return new BlockItem(block, new Item.Properties().tab(AetherCreativeTabs.AETHER_BLOCKS));
             }
         };
     }

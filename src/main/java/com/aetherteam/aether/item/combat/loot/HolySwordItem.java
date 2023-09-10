@@ -1,6 +1,7 @@
 package com.aetherteam.aether.item.combat.loot;
 
 import com.aetherteam.aether.data.resources.AetherDamageTypes;
+import com.aetherteam.aether.item.AetherCreativeTabs;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.item.combat.AetherItemTiers;
@@ -15,7 +16,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 
 public class HolySwordItem extends SwordItem {
     public HolySwordItem() {
-        super(AetherItemTiers.HOLY, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
+        super(AetherItemTiers.HOLY, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherCreativeTabs.AETHER_EQUIPMENT_AND_UTILITIES));
     }
 
     /**

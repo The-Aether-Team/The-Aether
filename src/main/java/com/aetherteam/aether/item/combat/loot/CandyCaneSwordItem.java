@@ -1,6 +1,7 @@
 package com.aetherteam.aether.item.combat.loot;
 
 import com.aetherteam.aether.AetherTags;
+import com.aetherteam.aether.item.AetherCreativeTabs;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.item.combat.AetherItemTiers;
@@ -11,7 +12,7 @@ import net.minecraft.world.item.SwordItem;
 
 public class CandyCaneSwordItem extends SwordItem {
     public CandyCaneSwordItem() {
-        super(AetherItemTiers.CANDY_CANE, 3, -2.4F, new Item.Properties());
+        super(AetherItemTiers.CANDY_CANE, 3, -2.4F, new Item.Properties().tab(AetherCreativeTabs.AETHER_EQUIPMENT_AND_UTILITIES));
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.aetherteam.aether.item.combat.loot;
 
+import com.aetherteam.aether.item.AetherCreativeTabs;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.combat.AetherItemTiers;
 import com.aetherteam.aether.item.tools.abilities.ValkyrieTool;
@@ -17,7 +18,7 @@ import net.minecraftforge.common.ToolActions;
 
 public class ValkyrieLanceItem extends SwordItem implements ValkyrieTool {
     public ValkyrieLanceItem() {
-        super(AetherItemTiers.VALKYRIE, 3, -2.7F, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
+        super(AetherItemTiers.VALKYRIE, 3, -2.7F, new Item.Properties().rarity(AetherItems.AETHER_LOOT).tab(AetherCreativeTabs.AETHER_EQUIPMENT_AND_UTILITIES));
     }
 
     @Override

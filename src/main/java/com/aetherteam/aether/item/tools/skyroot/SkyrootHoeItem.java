@@ -1,5 +1,6 @@
 package com.aetherteam.aether.item.tools.skyroot;
 
+import com.aetherteam.aether.item.AetherCreativeTabs;
 import com.aetherteam.aether.item.combat.AetherItemTiers;
 import com.aetherteam.aether.item.tools.abilities.SkyrootTool;
 import net.minecraft.world.item.HoeItem;
@@ -14,7 +15,7 @@ import javax.annotation.Nullable;
  */
 public class SkyrootHoeItem extends HoeItem implements SkyrootTool {
     public SkyrootHoeItem() {
-        super(AetherItemTiers.SKYROOT, 0, -3.0F, new Item.Properties());
+        super(AetherItemTiers.SKYROOT, 0, -3.0F, new Item.Properties().tab(AetherCreativeTabs.AETHER_EQUIPMENT_AND_UTILITIES));
     }
 
     @Override

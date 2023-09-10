@@ -1,15 +1,9 @@
 package com.aetherteam.aether.data.resources.registries;
 
 import com.aetherteam.aether.Aether;
-//import net.minecraft.core.Holder;
-//import net.minecraft.core.HolderGetter;
 import net.minecraft.core.Registry;
-//import net.minecraft.core.Vec3i;
-//import net.minecraft.core.registries.Registries;
-//import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-//import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureSet;
 //import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
 //import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
