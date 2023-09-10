@@ -42,7 +42,7 @@ public class Crush extends Behavior<Slider> {
         if (ForgeEventFactory.getMobGriefingEvent(level, slider)) {
             AABB crushBox = slider.getBoundingBox().inflate(0.2);
             for (BlockPos pos : BlockPos.betweenClosed(Mth.floor(crushBox.minX), Mth.floor(crushBox.minY), Mth.floor(crushBox.minZ), Mth.floor(crushBox.maxX), Mth.floor(crushBox.maxY), Mth.floor(crushBox.maxZ))) {
-                if (slider.getDungeon() == null || slider.getDungeon().roomBounds().contains(pos.getCenter())) {
+                if (slider.getDungeon() == null || slider.getDungeon().roomBounds().contains(Vec3.atCenterOf(pos))) {
                     BlockState blockState = slider.getLevel().getBlockState(pos);
                     if (this.isBreakable(blockState)) {
                         crushed = slider.getLevel().destroyBlock(pos, true, slider) || crushed;

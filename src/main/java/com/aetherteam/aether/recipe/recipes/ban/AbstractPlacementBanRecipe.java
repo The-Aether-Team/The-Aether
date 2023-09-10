@@ -99,12 +99,12 @@ public abstract class AbstractPlacementBanRecipe<T, S extends Predicate<T>> impl
 
 
     @Override
-    public ItemStack assemble(Container container, RegistryAccess registryAccess) {
+    public ItemStack assemble(Container container) {
         return ItemStack.EMPTY;
     }
 
     @Override
-    public ItemStack getResultItem(RegistryAccess registryAccess) {
+    public ItemStack getResultItem() {
         return ItemStack.EMPTY;
     }
 }

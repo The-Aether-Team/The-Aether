@@ -241,7 +241,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 			if (this.getLevel() != null && !this.getLevel().isClientSide() && this.getLevel() instanceof ServerLevel serverLevel) {
 				CompoundTag tag = recipe.getTag();
 				Component customName = itemStack.hasCustomHoverName() ? itemStack.getHoverName() : null;
-				Entity entity = entityType.spawn(serverLevel, tag, null, spawnPos, MobSpawnType.TRIGGERED, true, false);
+				Entity entity = entityType.spawn(serverLevel, tag, customName, null, spawnPos, MobSpawnType.TRIGGERED, true, false);
 				if (entity != null) {
 					entity.setCustomName(customName);
 					if (this.player != null) {

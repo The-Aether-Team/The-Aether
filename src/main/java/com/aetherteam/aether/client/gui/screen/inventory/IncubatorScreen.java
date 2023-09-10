@@ -31,12 +31,12 @@ public class IncubatorScreen extends AbstractRecipeBookScreen<IncubatorMenu, Inc
 		RenderSystem.setShaderTexture(0, INCUBATOR_GUI_TEXTURES);
 		int left = this.getGuiLeft();
 		int top = this.getGuiTop();
-		GuiComponent.blit(poseStack, left, top, 0, 0, this.getXSize(), this.getYSize());
+		this.blit(poseStack, left, top, 0, 0, this.getXSize(), this.getYSize());
 		if (this.getMenu().isIncubating()) {
 			int incubationTimeRemaining = this.getMenu().getIncubationTimeRemaining();
-			GuiComponent.blit(poseStack, left + 74, (top + 48) - incubationTimeRemaining, 176, 13 - incubationTimeRemaining, 14, incubationTimeRemaining + 1);
+			this.blit(poseStack, left + 74, (top + 48) - incubationTimeRemaining, 176, 13 - incubationTimeRemaining, 14, incubationTimeRemaining + 1);
 		}
 		int incubationProgressScaled = this.getMenu().getIncubationProgressScaled();
-		GuiComponent.blit(poseStack, left + 103, top + 70 - incubationProgressScaled, 179, 70 - incubationProgressScaled, 10, incubationProgressScaled);
+		this.blit(poseStack, left + 103, top + 70 - incubationProgressScaled, 179, 70 - incubationProgressScaled, 10, incubationProgressScaled);
 	}
 }

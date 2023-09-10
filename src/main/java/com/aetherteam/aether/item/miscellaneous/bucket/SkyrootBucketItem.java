@@ -87,7 +87,7 @@ public class SkyrootBucketItem extends BucketItem {
                 } else {
                     BlockState blockState = level.getBlockState(blockPos);
                     BlockPos newPos = canBlockContainFluid(level, blockPos, blockState) ? blockPos : relativePos;
-                    if (this.emptyContents(player, level, newPos, blockhitResult, heldStack)) {
+                    if (this.emptyContents(player, level, newPos, blockhitResult)) {
                         this.checkExtraContent(player, level, heldStack, newPos);
                         if (player instanceof ServerPlayer serverPlayer) {
                             CriteriaTriggers.PLACED_BLOCK.trigger(serverPlayer, newPos, heldStack);

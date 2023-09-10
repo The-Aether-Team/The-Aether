@@ -30,7 +30,7 @@ public class AltarRepairRecipe extends AbstractAetherCookingRecipe {
      * @return The original {@link ItemStack} ingredient, because repairing always outputs the same item as the input.
      */
     @Override
-    public ItemStack assemble(Container inventory, RegistryAccess registryAccess) {
+    public ItemStack assemble(Container inventory) {
         return this.ingredient.getItems()[0];
     }
 
@@ -38,7 +38,7 @@ public class AltarRepairRecipe extends AbstractAetherCookingRecipe {
      * @return The original {@link ItemStack} ingredient for Recipe Book display, because repairing always outputs the same item as the input.
      */
     @Override
-    public ItemStack getResultItem(RegistryAccess registryAccess) {
+    public ItemStack getResultItem() {
         return this.ingredient.getItems()[0];
     }
 
@@ -61,7 +61,7 @@ public class AltarRepairRecipe extends AbstractAetherCookingRecipe {
         @Override
         public AltarRepairRecipe fromJson(ResourceLocation id, JsonObject json) {
             String group = GsonHelper.getAsString(json, "group", "");
-            AetherBookCategory aetherBookCategory = AetherBookCategory.CODEC.byName(GsonHelper.getAsString(json, "category", null), AetherBookCategory.UNKNOWN);
+            AetherBookCategory aetherBookCategory = AetherBookCategory.CODEC.byName(GsonHelper.getAsString(json, "category", AetherBookCategory.UNKNOWN.name()));
             Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "ingredient"));
             int cookingTime = GsonHelper.getAsInt(json, "repairTime", 500);
             return new AltarRepairRecipe(id, group, aetherBookCategory, ingredient, cookingTime);

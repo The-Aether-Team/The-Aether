@@ -5,6 +5,7 @@ import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.aetherteam.aether.client.renderer.entity.model.AerbunnyModel;
 import com.aetherteam.aether.entity.passive.Aerbunny;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -44,13 +45,13 @@ public class AerbunnyRenderer extends MobRenderer<Aerbunny, AerbunnyModel> {
         super.setupRotations(aerbunny, poseStack, ageInTicks, rotationYaw, partialTicks);
         if (!aerbunny.isOnGround()) {
             if (aerbunny.getDeltaMovement().y() > 0.5) {
-                poseStack.mulPose(Axis.XN.rotationDegrees(Mth.rotLerp(partialTicks, 0.0F, 15.0F)));
+                poseStack.mulPose(Vector3f.XN.rotationDegrees(Mth.rotLerp(partialTicks, 0.0F, 15.0F)));
             }
             else if (aerbunny.getDeltaMovement().y() < -0.5) {
-                poseStack.mulPose(Axis.XN.rotationDegrees(Mth.rotLerp(partialTicks, 0.0F, -15.0F)));
+                poseStack.mulPose(Vector3f.XN.rotationDegrees(Mth.rotLerp(partialTicks, 0.0F, -15.0F)));
             }
             else {
-                poseStack.mulPose(Axis.XN.rotationDegrees((float) (aerbunny.getDeltaMovement().y() * 30.0)));
+                poseStack.mulPose(Vector3f.XN.rotationDegrees((float) (aerbunny.getDeltaMovement().y() * 30.0)));
             }
         }
     }

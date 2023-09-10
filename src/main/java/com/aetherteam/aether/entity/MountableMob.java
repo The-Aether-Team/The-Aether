@@ -120,7 +120,7 @@ public interface MountableMob {
             } else if (passenger instanceof Player)  {
                 vehicle.setDeltaMovement(Vec3.ZERO);
             }
-            vehicle.calculateEntityAnimation(false);
+            vehicle.calculateEntityAnimation(vehicle, false);
         } else {
             // Handles step height.
             AttributeInstance stepHeight = vehicle.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());

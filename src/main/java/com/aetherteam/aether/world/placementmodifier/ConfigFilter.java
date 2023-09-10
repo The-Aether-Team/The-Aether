@@ -40,6 +40,6 @@ public class ConfigFilter extends PlacementFilter {
         if (configEntry instanceof ForgeConfigSpec.BooleanValue booleanConfigEntry) {
             return DataResult.success(new ConfigFilter(booleanConfigEntry));
         }
-        return DataResult.error(() -> "Config entry " + configId + " does not provide a boolean! Must be boolean (true/false), to be valid for ConfigFilter.");
+        return DataResult.error("Config entry " + configId + " does not provide a boolean! Must be boolean (true/false), to be valid for ConfigFilter.");
     }
 }

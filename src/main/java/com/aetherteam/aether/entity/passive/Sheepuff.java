@@ -417,7 +417,7 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
         DyeColor dyeColor2 = ((Sheepuff) parent2).getColor();
         CraftingContainer craftingInventory = makeContainer(dyeColor1, dyeColor2);
         return this.getLevel().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, craftingInventory, this.getLevel())
-                .map((p_213614_1_) -> p_213614_1_.assemble(craftingInventory, this.getLevel().registryAccess()))
+                .map((p_213614_1_) -> p_213614_1_.assemble(craftingInventory))
                 .map(ItemStack::getItem).filter(DyeItem.class::isInstance).map(DyeItem.class::cast).map(DyeItem::getDyeColor).orElseGet(() -> this.getLevel().getRandom().nextBoolean() ? dyeColor1 : dyeColor2);
     }
 

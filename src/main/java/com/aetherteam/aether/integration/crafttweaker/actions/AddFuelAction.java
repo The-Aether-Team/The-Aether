@@ -14,9 +14,4 @@ public record AddFuelAction<T>(BiConsumer<T, Integer> applyFunction, T item, int
     public String describe() {
         return String.format("Adding fuel: %s with duration: %s", this.item().toString(), this.burnTime());
     }
-
-    @Override
-    public String systemName() {
-        return "The Aether";
-    }
 }

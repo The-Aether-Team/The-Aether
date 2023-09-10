@@ -41,7 +41,7 @@ public class AetherMusicManager {
         Music music = getSituationalMusic();
         if (music != null) {
             if (currentMusic != null) {
-                if (!music.getEvent().get().getLocation().equals(currentMusic.getLocation()) && music.replaceCurrentMusic()) {
+                if (!music.getEvent().getLocation().equals(currentMusic.getLocation()) && music.replaceCurrentMusic()) {
                     minecraft.getSoundManager().stop(currentMusic); // Non-copy, cancels vanilla music if Aether music starts
                     nextSongDelay = Mth.nextInt(random, 0, music.getMinDelay() / 2);
                 }
@@ -67,9 +67,9 @@ public class AetherMusicManager {
     /**
      * [CODE COPY] - {@link MusicManager#startPlaying(Music)}.
      */
-    public static void startPlaying(Music pSelector) {
+    public static void startPlaying(Music selector) {
         musicManager.stopPlaying(); // Non-copy, cancels vanilla music if Aether music starts
-        currentMusic = SimpleSoundInstance.forMusic(pSelector.getEvent().get());
+        currentMusic = SimpleSoundInstance.forMusic(selector.getEvent());
         if (currentMusic.getSound() != SoundManager.EMPTY_SOUND) {
             minecraft.getSoundManager().play(currentMusic);
         }

@@ -7,6 +7,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -68,11 +69,11 @@ public class AetherFarmBlock extends FarmBlock {
         if (!level.isClientSide() && ForgeHooks.onFarmlandTrample(level, pos, AetherBlocks.AETHER_DIRT.get().defaultBlockState(), fallDistance, entity)) { // Forge: Move logic to Entity#canTrample
             turnToDirt(state, level, pos);
         }
-        entity.causeFallDamage(fallDistance, 1.0F, entity.damageSources().fall());
+        entity.causeFallDamage(fallDistance, 1.0F, DamageSource.FALL);
     }
 
     /**
-     * [CODE COPY] - {@link FarmBlock#turnToDirt(Entity, BlockState, Level, BlockPos)}.
+     * [CODE COPY] - {@link FarmBlock#turnToDirt(BlockState, Level, BlockPos)}.
      */
     public static void turnToDirt(BlockState state, Level level, BlockPos pos) {
         level.setBlockAndUpdate(pos, pushEntitiesUp(state, AetherBlocks.AETHER_DIRT.get().defaultBlockState(), level, pos));

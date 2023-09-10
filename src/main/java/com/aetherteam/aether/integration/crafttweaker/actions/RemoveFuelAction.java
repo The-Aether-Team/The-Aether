@@ -14,9 +14,4 @@ public record RemoveFuelAction<T>(Consumer<T> applyFunction, T item) implements 
     public String describe() {
         return String.format("Removing fuel: %s", this.item().toString());
     }
-
-    @Override
-    public String systemName() {
-        return "The Aether";
-    }
 }

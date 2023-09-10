@@ -56,6 +56,7 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec2;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -177,12 +178,12 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                         BlockState lowerState = this.getLevel().getBlockState(lowerPosition);
                         if (!upperState.isAir() && !upperState.is(AetherTags.Blocks.VALKYRIE_QUEEN_UNBREAKABLE) // Check upper block at player height.
                                 && (upperState.getShape(this.getLevel(), upperPosition).equals(Shapes.block()) || !upperState.getCollisionShape(this.getLevel(), upperPosition).isEmpty())
-                                && (this.getDungeon() == null || this.getDungeon().roomBounds().contains(upperPosition.getCenter()))) {
+                                && (this.getDungeon() == null || this.getDungeon().roomBounds().contains(Vec3.atCenterOf(upperPosition)))) {
                             this.getLevel().destroyBlock(upperPosition, true, this);
                             this.swing(InteractionHand.MAIN_HAND);
                         } else if (!lowerState.isAir() && !lowerState.is(AetherTags.Blocks.VALKYRIE_QUEEN_UNBREAKABLE) // Check lower block at player height.
                                 && (lowerState.getShape(this.getLevel(), lowerPosition).equals(Shapes.block()) || !lowerState.getCollisionShape(this.getLevel(), lowerPosition).isEmpty())
-                                && (this.getDungeon() == null || this.getDungeon().roomBounds().contains(lowerPosition.getCenter()))) {
+                                && (this.getDungeon() == null || this.getDungeon().roomBounds().contains(Vec3.atCenterOf(lowerPosition)))) {
                             this.getLevel().destroyBlock(lowerPosition, true, this);
                             this.swing(InteractionHand.MAIN_HAND);
                         }
@@ -723,7 +724,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     }
 
     @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 

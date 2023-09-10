@@ -30,7 +30,7 @@ public class RemoveSeedsModifier extends LootModifier {
     @Override
     public ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> lootStacks, LootContext context) {
         Vec3 originVec = context.getParamOrNull(LootContextParams.ORIGIN);
-        if (originVec != null && context.getLevel().getBiome(BlockPos.containing(originVec)).is(AetherTags.Biomes.NO_WHEAT_SEEDS)) {
+        if (originVec != null && context.getLevel().getBiome(new BlockPos(originVec)).is(AetherTags.Biomes.NO_WHEAT_SEEDS)) {
             lootStacks.removeIf((itemStack) -> itemStack.is(Items.WHEAT_SEEDS));
         }
         return lootStacks;

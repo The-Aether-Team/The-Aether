@@ -789,7 +789,7 @@ public class Swet extends Slime implements MountableMob {
             SwetMoveControl moveHelperController = (SwetMoveControl) this.swet.getMoveControl();
             float rot = moveHelperController.yRot;
             Vec3 offset = new Vec3(-Math.sin(rot * Mth.DEG_TO_RAD) * 2, 0.0, Math.cos(rot * Mth.DEG_TO_RAD) * 2);
-            BlockPos offsetPos = BlockPos.containing(this.swet.position().add(offset));
+            BlockPos offsetPos = new BlockPos(this.swet.position().add(offset));
             // Rotate the Swet if the next position in the direction it is facing is beyond its fall distance to jump to.
             if (this.swet.getLevel().getHeight(Heightmap.Types.WORLD_SURFACE, offsetPos.getX(), offsetPos.getZ()) < offsetPos.getY() - this.swet.getMaxFallDistance()) {
                 this.nextRandomizeTime = this.adjustedTickDelay(40 + this.swet.getRandom().nextInt(60));

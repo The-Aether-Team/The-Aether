@@ -163,8 +163,8 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
      */
     private void evaporate() {
         AABB boundingBox = this.getBoundingBox();
-        BlockPos min = BlockPos.containing(boundingBox.minX - this.xMax, boundingBox.minY - 3, boundingBox.minZ - this.zMax);
-        BlockPos max = BlockPos.containing(Math.ceil(boundingBox.maxX - 1) + this.xMax, Math.ceil(boundingBox.maxY - 1) + 4, Math.ceil(boundingBox.maxZ - 1) + this.zMax);
+        BlockPos min = new BlockPos(boundingBox.minX - this.xMax, boundingBox.minY - 3, boundingBox.minZ - this.zMax);
+        BlockPos max = new BlockPos(Math.ceil(boundingBox.maxX - 1) + this.xMax, Math.ceil(boundingBox.maxY - 1) + 4, Math.ceil(boundingBox.maxZ - 1) + this.zMax);
         AetherBossMob.super.evaporate(this, min, max, (blockState) -> true);
     }
 
@@ -175,7 +175,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         List<Entity> entities = this.getLevel().getEntities(this, this.getBoundingBox().expandTowards(0, -2, 0).contract(-0.75, 0, -0.75).contract(0.75, 0, 0.75));
         for (Entity target : entities) {
             if (target instanceof LivingEntity) {
-                target.hurt(AetherDamageTypes.entityDamageSource(this.getLevel(), AetherDamageTypes.INCINERATION, this), 20);
+                target.hurt(AetherDamageTypes.incineration(this), 20);
                 target.setSecondsOnFire(8);
             }
         }

@@ -37,7 +37,7 @@ public class EnchantedGrassModifier extends LootModifier {
     @Override
     public ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> lootStacks, LootContext context) {
         Vec3 originVec = context.getParamOrNull(LootContextParams.ORIGIN);
-        if (originVec != null && context.getLevel().getBlockState(BlockPos.containing(originVec).below()).is(AetherTags.Blocks.ENCHANTED_GRASS)) {
+        if (originVec != null && context.getLevel().getBlockState(new BlockPos(originVec).below()).is(AetherTags.Blocks.ENCHANTED_GRASS)) {
             if (context.getRandom().nextBoolean()) {
                 Optional<ItemStack> itemStack = lootStacks.stream().filter((stack) -> stack.is(this.item.getItem())).findFirst();
                 itemStack.ifPresent(stack -> lootStacks.add(new ItemStack(stack.getItem(), 1)));

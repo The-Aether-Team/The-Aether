@@ -19,7 +19,7 @@ public class AudioHooks {
         if (!AetherConfig.CLIENT.disable_music_manager.get()) {
             if (sound.getSource() == SoundSource.MUSIC) {
                 // Check whether there is Aether music and the sound that attempts to play does not match it.
-                return AetherMusicManager.getSituationalMusic() != null && !sound.getLocation().equals(SimpleSoundInstance.forMusic(AetherMusicManager.getSituationalMusic().getEvent().get()).getLocation())
+                return AetherMusicManager.getSituationalMusic() != null && !sound.getLocation().equals(SimpleSoundInstance.forMusic(AetherMusicManager.getSituationalMusic().getEvent()).getLocation())
                         || (AetherMusicManager.getCurrentMusic() != null && !sound.getLocation().equals(AetherMusicManager.getCurrentMusic().getLocation()));
             }
         }

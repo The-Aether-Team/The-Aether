@@ -29,16 +29,7 @@ public class AetherMenus {
 
     // Backgrounds
     private static final ResourceLocation THE_AETHER_REGULAR_BACKGROUND = new ResourceLocation(Aether.MODID, "textures/gui/title/options_background.png");
-    private static final ResourceLocation THE_AETHER_DARK_BACKGROUND = new ResourceLocation(Aether.MODID, "textures/gui/title/light_sentry_background.png");
-    private static final ResourceLocation THE_AETHER_HEADER_SEPARATOR = new ResourceLocation(Aether.MODID, "textures/gui/title/header_separator.png");
-    private static final ResourceLocation THE_AETHER_FOOTER_SEPARATOR = new ResourceLocation(Aether.MODID, "textures/gui/title/footer_separator.png");
-    private static final ResourceLocation THE_AETHER_TAB_BUTTON = new ResourceLocation(Aether.MODID, "textures/gui/title/tab_button.png");
-    private static final Menu.Background THE_AETHER_BACKGROUND = new Menu.Background()
-            .regularBackground(THE_AETHER_REGULAR_BACKGROUND)
-            .darkBackground(THE_AETHER_DARK_BACKGROUND)
-            .headerSeparator(THE_AETHER_HEADER_SEPARATOR)
-            .footerSeparator(THE_AETHER_FOOTER_SEPARATOR)
-            .tabButton(THE_AETHER_TAB_BUTTON);
+    private static final Menu.Background THE_AETHER_BACKGROUND = new Menu.Background().regularBackground(THE_AETHER_REGULAR_BACKGROUND);
 
     // Behavior
     private static final BooleanSupplier MINECRAFT_LEFT_CONDITION = () -> CumulusConfig.CLIENT.active_menu.get().equals("aether:minecraft_left") || (CumulusConfig.CLIENT.active_menu.get().equals("cumulus_menus:minecraft") && AetherConfig.CLIENT.menu_type_toggles_alignment.get() && WorldDisplayHelper.isActive());

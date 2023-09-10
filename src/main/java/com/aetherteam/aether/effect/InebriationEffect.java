@@ -25,7 +25,7 @@ public class InebriationEffect extends MobEffect {
     @Override
     public void applyEffectTick(LivingEntity livingEntity, int amplifier) {
         if (this.effectDuration % 50 == 0) {
-            livingEntity.hurt(AetherDamageTypes.damageSource(livingEntity.level, AetherDamageTypes.INEBRIATION), 1.0F);
+            livingEntity.hurt(AetherDamageTypes.inebriation(), 1.0F);
         }
         this.distractEntity(livingEntity);
     }

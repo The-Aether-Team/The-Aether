@@ -54,7 +54,7 @@ public class TrappedBlock extends Block {
 				if (hitResult.getType() == HitResult.Type.BLOCK) {
 					spawnPos = spawnPos.relative(hitResult.getDirection());
 				}
-				this.spawnableEntityTypeSupplier.get().spawn(serverLevel, spawnPos, MobSpawnType.TRIGGERED);
+				this.spawnableEntityTypeSupplier.get().spawn(serverLevel, null, null, spawnPos, MobSpawnType.TRIGGERED, false, false);
 				serverLevel.playSound(null, pos, AetherSoundEvents.BLOCK_DUNGEON_TRAP_TRIGGER.get(), SoundSource.BLOCKS, 0.5F, level.getRandom().nextFloat() * 0.1F + 0.9F);
 			}
 		}

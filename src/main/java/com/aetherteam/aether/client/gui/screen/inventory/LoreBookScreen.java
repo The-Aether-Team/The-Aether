@@ -1,6 +1,7 @@
 package com.aetherteam.aether.client.gui.screen.inventory;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.client.gui.component.Builder;
 import com.aetherteam.aether.client.gui.component.inventory.LorePageButton;
 import com.aetherteam.aether.inventory.menu.LoreBookMenu;
 import com.google.common.collect.Lists;
@@ -44,12 +45,12 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
         super.init();
         int xPos = (this.width - this.getXSize()) / 2;
         int yPos = (this.height - (this.getYSize())) / 2;
-        this.previousButton = this.addRenderableWidget(new LorePageButton(new Button.Builder(Component.literal("<"), (button) -> {
+        this.previousButton = this.addRenderableWidget(new LorePageButton(new Builder(Component.literal("<"), (button) -> {
             if (this.currentPageNumber > 0) {
                 this.currentPageNumber--;
             }
         }).bounds(xPos + 14, yPos + 169, 20, 20)));
-        this.nextButton = this.addRenderableWidget(new LorePageButton(new Button.Builder(Component.literal(">"), (button) -> {
+        this.nextButton = this.addRenderableWidget(new LorePageButton(new Builder(Component.literal(">"), (button) -> {
             if (this.currentPageNumber < this.pages.size() - 1) {
                 this.currentPageNumber++;
             }

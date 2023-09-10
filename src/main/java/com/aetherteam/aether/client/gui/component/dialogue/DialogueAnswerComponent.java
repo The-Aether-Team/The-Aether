@@ -65,7 +65,7 @@ public class DialogueAnswerComponent extends GuiComponent {
         }
 
         public void render(PoseStack poseStack) {
-            GuiComponent.fillGradient(poseStack, this.x, this.y, this.x + width, this.y + 12, 0x66000000, 0x66000000);
+            GuiComponent.fillGradient(poseStack, this.x, this.y, this.x + this.width, this.y + 12, 0x66000000, 0x66000000, 0);
             GuiComponent.drawString(poseStack, Minecraft.getInstance().font, this.text, this.x + 1, this.y + 1, 0xFFFFFF);
         }
     }

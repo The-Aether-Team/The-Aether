@@ -104,7 +104,7 @@ public class IceCrystal extends AbstractCrystal implements WeaknessDamage {
     public void doDamage(Entity entity) {
         if (this.getOwner() != entity) {
             if (entity instanceof LivingEntity livingEntity) {
-                if (livingEntity.hurt(AetherDamageTypes.indirectEntityDamageSource(this.getLevel(), AetherDamageTypes.ICE_CRYSTAL, this, this.getOwner()), 7.0F)) {
+                if (livingEntity.hurt(AetherDamageTypes.iceCrystal(this, this.getOwner()), 7.0F)) {
                     WeaknessDamage.super.damageWithWeakness(this, livingEntity, this.random);
                 }
             }

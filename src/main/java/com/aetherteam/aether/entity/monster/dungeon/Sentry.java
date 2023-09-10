@@ -19,6 +19,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 
 public class Sentry extends Slime {
@@ -108,9 +109,9 @@ public class Sentry extends Slime {
 	 * @param entity The colliding {@link Entity}.
 	 */
 	protected void explodeAt(LivingEntity entity) {
-		if (this.distanceToSqr(entity) < 1.5 && this.isAwake() && this.hasLineOfSight(entity) && entity.hurt(this.damageSources().mobAttack(this), 1.0F) && this.tickCount > 20 && this.isAlive()) {
+		if (this.distanceToSqr(entity) < 1.5 && this.isAwake() && this.hasLineOfSight(entity) && entity.hurt(DamageSource.mobAttack(this), 1.0F) && this.tickCount > 20 && this.isAlive()) {
 			entity.push(0.3, 0.4, 0.3);
-			this.getLevel().explode(this, this.getX(), this.getY(), this.getZ(), 1.0F, Level.ExplosionInteraction.MOB);
+			this.getLevel().explode(this, this.getX(), this.getY(), this.getZ(), 1.0F, Explosion.BlockInteraction.NONE);
 			this.playSound(SoundEvents.GENERIC_EXPLODE, 1.0F, 0.2F * (this.getRandom().nextFloat() - this.getRandom().nextFloat()) + 1);
 			if (this.getLevel() instanceof ServerLevel level) {
 				level.broadcastEntityEvent(this, (byte) 70);

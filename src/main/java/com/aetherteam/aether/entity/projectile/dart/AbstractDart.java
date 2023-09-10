@@ -73,9 +73,9 @@ public abstract class AbstractDart extends AbstractArrow {
         Entity owner = this.getOwner();
         DamageSource damageSource;
         if (owner == null) {
-            damageSource = this.damageSources().arrow(this, this);
+            damageSource = DamageSource.arrow(this, this);
         } else {
-            damageSource = this.damageSources().arrow(this, owner);
+            damageSource = DamageSource.arrow(this, owner);
             if (owner instanceof LivingEntity livingEntity) {
                 livingEntity.setLastHurtMob(entity);
             }
@@ -164,7 +164,7 @@ public abstract class AbstractDart extends AbstractArrow {
     }
    
     @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

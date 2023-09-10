@@ -28,14 +28,14 @@ public class AetherParticleTypes {
 
 	@SubscribeEvent
 	public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
-		event.registerSpriteSet(AETHER_PORTAL.get(), AetherPortalParticle.Factory::new);
-		event.registerSpriteSet(CRYSTAL_LEAVES.get(), CrystalLeavesParticle.Factory::new);
-		event.registerSpriteSet(BOSS_DOORWAY_BLOCK.get(), DungeonBlockOverlayParticle.Factory::new);
-		event.registerSpriteSet(EVIL_WHIRLWIND.get(), EvilWhirlwindParticle.Factory::new);
-		event.registerSpriteSet(FROZEN.get(), FrozenParticle.Factory::new);
-		event.registerSpriteSet(GOLDEN_OAK_LEAVES.get(), GoldenOakLeavesParticle.Factory::new);
-		event.registerSpriteSet(HOLIDAY_LEAVES.get(), HolidayLeavesParticle.Factory::new);
-		event.registerSpriteSet(PASSIVE_WHIRLWIND.get(), PassiveWhirlwindParticle.Factory::new);
-		event.registerSpriteSet(ZEPHYR_SNOWFLAKE.get(), SnowflakeParticle.Provider::new);
+		event.register(AETHER_PORTAL.get(), AetherPortalParticle.Factory::new);
+		event.register(CRYSTAL_LEAVES.get(), CrystalLeavesParticle.Factory::new);
+		event.register(BOSS_DOORWAY_BLOCK.get(), DungeonBlockOverlayParticle.Factory::new);
+		event.register(EVIL_WHIRLWIND.get(), EvilWhirlwindParticle.Factory::new);
+		event.register(FROZEN.get(), FrozenParticle.Factory::new);
+		event.register(GOLDEN_OAK_LEAVES.get(), GoldenOakLeavesParticle.Factory::new);
+		event.register(HOLIDAY_LEAVES.get(), HolidayLeavesParticle.Factory::new);
+		event.register(PASSIVE_WHIRLWIND.get(), PassiveWhirlwindParticle.Factory::new);
+		event.register(ZEPHYR_SNOWFLAKE.get(), SnowflakeParticle.Provider::new);
 	}
 }

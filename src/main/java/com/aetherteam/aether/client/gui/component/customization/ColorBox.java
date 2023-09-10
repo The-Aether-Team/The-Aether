@@ -17,7 +17,7 @@ public abstract class ColorBox extends EditBox {
     }
 
     @Override
-    public void renderWidget(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+    public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
         if (this.getValue().length() == 6) {
             try { // Attempt to parse the input as a valid hex code and convert it to decimal.
                 int decimal = Integer.parseInt(this.getValue(), 16);
@@ -34,7 +34,7 @@ public abstract class ColorBox extends EditBox {
             this.setTextColor(14737632);
             this.hasValidColor = false;
         }
-        super.renderWidget(poseStack, mouseX, mouseY, partialTicks);
+        super.renderButton(poseStack, mouseX, mouseY, partialTicks);
     }
 
     public boolean hasValidColor() {

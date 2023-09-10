@@ -330,7 +330,7 @@ public abstract class AbstractWhirlwind extends Mob {
                 this.movementCurve = this.whirlwind.movementCurve;
             }
             if (!this.whirlwind.isEvil || this.whirlwind.getTarget() == null) {
-                BlockPos offset = BlockPos.containing(this.whirlwind.position().add(this.whirlwind.getDeltaMovement()));
+                BlockPos offset = new BlockPos(this.whirlwind.position().add(this.whirlwind.getDeltaMovement()));
                 if (this.whirlwind.getLevel().getHeight(Heightmap.Types.WORLD_SURFACE, offset.getX(), offset.getZ()) < offset.getY() - this.whirlwind.getMaxFallDistance()) {
                     this.movementAngle += 180;
                 } else {

@@ -6,6 +6,7 @@ import com.aetherteam.aether.client.renderer.entity.model.AerwhaleModel;
 import com.aetherteam.aether.client.renderer.entity.model.ClassicAerwhaleModel;
 import com.aetherteam.aether.entity.passive.Aerwhale;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -40,7 +41,7 @@ public class AerwhaleRenderer extends MultiModelRenderer<Aerwhale, EntityModel<A
     @Override
     protected void setupRotations(Aerwhale aerwhale, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
         super.setupRotations(aerwhale, poseStack, ageInTicks, rotationYaw, partialTicks);
-        poseStack.mulPose(Axis.XP.rotationDegrees(Mth.lerp(partialTicks, aerwhale.getXRotOData(), aerwhale.getXRotData())));
+        poseStack.mulPose(Vector3f.XP.rotationDegrees(Mth.lerp(partialTicks, aerwhale.getXRotOData(), aerwhale.getXRotData())));
     }
 
     @Override

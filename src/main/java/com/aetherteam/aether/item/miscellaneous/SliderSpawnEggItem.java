@@ -9,6 +9,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -46,7 +47,7 @@ public class SliderSpawnEggItem extends ForgeSpawnEggItem {
                 BlockEntity blockEntity = level.getBlockEntity(blockPos);
                 if (blockEntity instanceof SpawnerBlockEntity spawnerBlockEntity) {
                     EntityType<?> entityType = this.getType(itemStack.getTag());
-                    spawnerBlockEntity.setEntityId(entityType, level.getRandom());
+                    spawnerBlockEntity.getSpawner().setEntityId(entityType);
                     blockEntity.setChanged();
                     level.sendBlockUpdated(blockPos, blockState, blockState, 3);
                     level.gameEvent(context.getPlayer(), GameEvent.BLOCK_CHANGE, blockPos);

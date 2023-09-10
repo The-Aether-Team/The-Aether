@@ -51,7 +51,7 @@ public class IncubationRecipe implements Recipe<Container> {
      * @return An empty {@link ItemStack}, as there is no item output.
      */
     @Override
-    public ItemStack assemble(Container menu, RegistryAccess registryAccess) {
+    public ItemStack assemble(Container menu) {
         return ItemStack.EMPTY;
     }
 
@@ -59,7 +59,7 @@ public class IncubationRecipe implements Recipe<Container> {
      * @return The original {@link ItemStack} ingredient for Recipe Book display.
      */
     @Override
-    public ItemStack getResultItem(RegistryAccess registryAccess) {
+    public ItemStack getResultItem() {
         return this.ingredient.getItems()[0];
     }
 

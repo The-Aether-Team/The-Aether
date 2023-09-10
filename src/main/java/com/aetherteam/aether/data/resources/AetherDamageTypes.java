@@ -2,6 +2,7 @@ package com.aetherteam.aether.data.resources;
 
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.entity.Entity;
 
 //import com.aetherteam.aether.Aether;
@@ -53,6 +54,34 @@ public class AetherDamageTypes {
 
     public static DamageSource crush(Entity source) {
         return new EntityDamageSource("aether.crush", source);
+    }
+
+    public static DamageSource floatingBlock(Entity source) {
+        return new EntityDamageSource("aether.floating_block", source).damageHelmet();
+    }
+
+    public static DamageSource inebriation() {
+        return new DamageSource("aether.inebriation").bypassArmor();
+    }
+
+    public static DamageSource incineration(Entity source) {
+        return new EntityDamageSource("aether.incineration", source).setIsFire();
+    }
+
+    public static DamageSource fireCrystal(Entity source, Entity indirectSource) {
+        return new IndirectEntityDamageSource("aether.fire_crystal", source, indirectSource).setProjectile().setIsFire();
+    }
+
+    public static DamageSource thunderCrystal(Entity source, Entity indirectSource) {
+        return new IndirectEntityDamageSource("aether.thunder_crystal", source, indirectSource).setProjectile();
+    }
+
+    public static DamageSource cloudCrystal(Entity source, Entity indirectSource) {
+        return new IndirectEntityDamageSource("aether.cloud_crystal", source, indirectSource).setProjectile();
+    }
+
+    public static DamageSource iceCrystal(Entity source, Entity indirectSource) {
+        return new IndirectEntityDamageSource("aether.ice_crystal", source, indirectSource).setProjectile();
     }
 
 //    public static DamageSource damageSource(Level level, ResourceKey<DamageType> key) {

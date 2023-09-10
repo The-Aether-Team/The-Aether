@@ -5,6 +5,7 @@ import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.mixin.mixins.common.accessor.BoatAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.state.BlockState;
@@ -27,7 +28,7 @@ public interface SkyrootBoatBehavior {
                         boat.resetFallDistance();
                         return;
                     }
-                    boat.causeFallDamage(boat.fallDistance, 1.0F, boat.damageSources().fall());
+                    boat.causeFallDamage(boat.fallDistance, 1.0F, DamageSource.FALL);
                     if (!boat.getLevel().isClientSide() && !boat.isRemoved()) {
                         boat.kill();
                         if (boat.getLevel().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {

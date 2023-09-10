@@ -225,7 +225,7 @@ public class AccessoriesMenu extends InventoryMenu {
             if (recipe.isPresent()) {
                 CraftingRecipe craftingRecipe = recipe.get();
                 if (this.craftResult.setRecipeUsed(this.player.getLevel(), playerMP, craftingRecipe)) {
-                    itemStack = craftingRecipe.assemble(this.craftMatrix, this.player.getLevel().registryAccess());
+                    itemStack = craftingRecipe.assemble(this.craftMatrix);
                 }
             }
             this.craftResult.setItem(0, itemStack);

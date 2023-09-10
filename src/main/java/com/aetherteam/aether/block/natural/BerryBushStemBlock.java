@@ -96,7 +96,7 @@ public class BerryBushStemBlock extends AetherBushBlock implements BonemealableB
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isValidBonemealTarget(BlockGetter level, BlockPos pos, BlockState state, boolean isClient) {
 		return true;
 	}
 

@@ -75,14 +75,17 @@ public class IcestoneBlockEntity extends BlockEntity implements FreezingBlock {
         }
 
         @Override
-        public boolean handleGameEvent(ServerLevel level, GameEvent event, GameEvent.Context context, Vec3 pos) {
+        public boolean handleGameEvent(ServerLevel level, GameEvent.Message eventMessage) {
+            GameEvent event = eventMessage.gameEvent();
+            GameEvent.Context context = eventMessage.context();
+            Vec3 pos = eventMessage.source();
             if (event == AetherGameEvents.ICESTONE_FREEZABLE_UPDATE.get() || event == GameEvent.BLOCK_PLACE || event == GameEvent.FLUID_PLACE || event == GameEvent.ENTITY_PLACE) {
                 IcestoneBlockEntity.this.freezeBlocks(level, IcestoneBlockEntity.this.getBlockPos(), IcestoneBlockEntity.this.getBlockState(), FreezingBlock.SQRT_8);
                 return true;
             } else if (event == GameEvent.BLOCK_DESTROY) {
                 BlockState state = context.affectedState();
                 if (state != null && FreezingBlock.cachedResults.contains(state.getBlock())) {
-                    BlockPos blockPos = BlockPos.containing(pos);
+                    BlockPos blockPos = new BlockPos(pos);
                     IcestoneBlockEntity.this.lastBrokenPositions.put(blockPos, (int) (state.getBlock().defaultDestroyTime() * 200));
                     return true;
                 }

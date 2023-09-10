@@ -6,6 +6,7 @@ import com.aetherteam.aether.blockentity.ChestMimicBlockEntity;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -52,7 +53,7 @@ public class ChestMimicRenderer implements BlockEntityRenderer<ChestMimicBlockEn
 			poseStack.pushPose();
 			float f = blockState.getValue(ChestBlock.FACING).toYRot();
 			poseStack.translate(0.5, 0.5, 0.5);
-			poseStack.mulPose(Axis.YP.rotationDegrees(-f));
+			poseStack.mulPose(Vector3f.YP.rotationDegrees(-f));
 			poseStack.translate(-0.5, -0.5, -0.5);
 			Material material = this.getMaterial(blockEntity);
 			VertexConsumer vertexconsumer = material.buffer(buffer, RenderType::entityCutout);

@@ -36,7 +36,7 @@ public class SunAltarScreen extends Screen {
         int ySize = 79;
         int x = (this.width - xSize) / 2;
         int y = (this.height - ySize) / 2;
-        GuiComponent.blit(poseStack, x, y, 0, 0, xSize, ySize);
+        this.blit(poseStack, x, y, 0, 0, xSize, ySize);
 
         FormattedCharSequence sequence = this.title.getVisualOrderText();
         this.font.draw(poseStack, this.title, (this.width - this.font.width(sequence)) / 2F, y + 20, 0x404040);

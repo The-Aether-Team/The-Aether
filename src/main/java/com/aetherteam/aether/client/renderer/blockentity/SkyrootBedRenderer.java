@@ -7,6 +7,7 @@ import com.aetherteam.aether.blockentity.SkyrootBedBlockEntity;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -52,9 +53,9 @@ public class SkyrootBedRenderer implements BlockEntityRenderer<SkyrootBedBlockEn
     private void renderPiece(PoseStack poseStack, MultiBufferSource buffer, ModelPart model, Direction direction, int packedLight, int packedOverlay, boolean foot) {
         poseStack.pushPose();
         poseStack.translate(0.0, 0.5625, foot ? -1.0 : 0.0);
-        poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
+        poseStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
         poseStack.translate(0.5, 0.5, 0.5);
-        poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F + direction.toYRot()));
+        poseStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F + direction.toYRot()));
         poseStack.translate(-0.5, -0.5, -0.5);
         VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entitySolid(BED_LOCATION));
         model.render(poseStack, vertexconsumer, packedLight, packedOverlay);

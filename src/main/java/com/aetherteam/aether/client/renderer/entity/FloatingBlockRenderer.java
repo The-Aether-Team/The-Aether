@@ -32,7 +32,7 @@ public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity> {
 			Level world = floatingBlock.getLevel();
 			if (blockState != world.getBlockState(floatingBlock.blockPosition()) && blockState.getRenderShape() != RenderShape.INVISIBLE) {
 				poseStack.pushPose();
-				BlockPos blockPos = BlockPos.containing(floatingBlock.getX(), floatingBlock.getBoundingBox().maxY, floatingBlock.getZ());
+				BlockPos blockPos = new BlockPos(floatingBlock.getX(), floatingBlock.getBoundingBox().maxY, floatingBlock.getZ());
 				poseStack.translate(-0.5, 0.0, -0.5);
 				BlockRenderDispatcher blockRenderDispatcher = Minecraft.getInstance().getBlockRenderer();
 				BakedModel model = blockRenderDispatcher.getBlockModel(blockState);

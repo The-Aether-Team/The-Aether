@@ -265,7 +265,7 @@ public class CloudMinion extends FlyingMob {
     }
    
     @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

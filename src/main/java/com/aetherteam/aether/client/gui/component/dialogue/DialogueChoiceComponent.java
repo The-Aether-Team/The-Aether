@@ -12,14 +12,14 @@ import net.minecraft.network.chat.MutableComponent;
  */
 public class DialogueChoiceComponent extends Button {
     public DialogueChoiceComponent(MutableComponent message, Button.OnPress onPress) {
-        super(Button.builder(appendBrackets(message), onPress).pos(0, 0).size(0, 12).createNarration(DEFAULT_NARRATION));
+        super(0, 0, 0, 12, appendBrackets(message), onPress);
         this.width = Minecraft.getInstance().font.width(this.getMessage()) + 2;
     }
 
     @Override
-    public void renderWidget(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
-        GuiComponent.fillGradient(poseStack, this.getX(), this.getY(), this.getX() + this.width, this.getY() + this.height, 0x66000000, 0x66000000);
-        GuiComponent.drawString(poseStack, Minecraft.getInstance().font, this.getMessage(), this.getX() + 1, this.getY() + 1, this.isHovered() ? 0xFFFF55: 0xFFFFFF);
+    public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+        GuiComponent.fillGradient(poseStack, this.x, this.y, this.x + this.width, this.y + this.height, 0x66000000, 0x66000000, 0);
+        GuiComponent.drawString(poseStack, Minecraft.getInstance().font, this.getMessage(), this.x + 1, this.y + 1, this.isHovered ? 0xFFFF55: 0xFFFFFF);
     }
 
     public static MutableComponent appendBrackets(MutableComponent component) {

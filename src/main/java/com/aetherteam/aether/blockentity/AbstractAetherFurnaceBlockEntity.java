@@ -5,7 +5,6 @@ import com.aetherteam.aether.mixin.mixins.common.accessor.AbstractFurnaceBlockEn
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.util.Mth;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.item.ItemStack;
@@ -58,7 +57,7 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
             }
 
             int i = blockEntity.getMaxStackSize();
-            if (!abstractFurnaceBlockEntityAccessor.callIsLit() && abstractFurnaceBlockEntityAccessor.callCanBurn(level.registryAccess(), recipe, abstractFurnaceBlockEntityAccessor.aether$getItems(), i)) {
+            if (!abstractFurnaceBlockEntityAccessor.callIsLit() && abstractFurnaceBlockEntityAccessor.callCanBurn(recipe, abstractFurnaceBlockEntityAccessor.aether$getItems(), i)) {
                 abstractFurnaceBlockEntityAccessor.aether$setLitTime(abstractFurnaceBlockEntityAccessor.callGetBurnDuration(itemstack));
                 abstractFurnaceBlockEntityAccessor.aether$setLitDuration(abstractFurnaceBlockEntityAccessor.aether$getLitTime());
                 if (abstractFurnaceBlockEntityAccessor.callIsLit()) {
@@ -75,12 +74,12 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
                 }
             }
 
-            if (abstractFurnaceBlockEntityAccessor.callIsLit() && abstractFurnaceBlockEntityAccessor.callCanBurn(level.registryAccess(), recipe, abstractFurnaceBlockEntityAccessor.aether$getItems(), i)) {
+            if (abstractFurnaceBlockEntityAccessor.callIsLit() && abstractFurnaceBlockEntityAccessor.callCanBurn(recipe, abstractFurnaceBlockEntityAccessor.aether$getItems(), i)) {
                 abstractFurnaceBlockEntityAccessor.aether$setCookingProgress(abstractFurnaceBlockEntityAccessor.aether$getCookingProgress() + 1);
                 if (abstractFurnaceBlockEntityAccessor.aether$getCookingProgress() == abstractFurnaceBlockEntityAccessor.aether$getCookingTotalTime()) {
                     abstractFurnaceBlockEntityAccessor.aether$setCookingProgress(0);
                     abstractFurnaceBlockEntityAccessor.aether$setCookingTotalTime(AbstractFurnaceBlockEntityAccessor.callGetTotalCookTime(level, blockEntity));
-                    if (blockEntity.burn(level.registryAccess(), recipe, blockEntity.items, i)) {
+                    if (blockEntity.burn(recipe, blockEntity.items, i)) {
                         blockEntity.setRecipeUsed(recipe);
                     }
 
@@ -117,11 +116,11 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
      * @return A {@link Boolean} for whether the item successfully burnt.
      */
     @SuppressWarnings("unchecked")
-    private boolean burn(RegistryAccess registryAccess, @Nullable Recipe<?> recipe, NonNullList<ItemStack> stacks, int stackSize) {
+    private boolean burn(@Nullable Recipe<?> recipe, NonNullList<ItemStack> stacks, int stackSize) {
         AbstractFurnaceBlockEntityAccessor abstractFurnaceBlockEntityAccessor = (AbstractFurnaceBlockEntityAccessor) this;
-        if (recipe != null && abstractFurnaceBlockEntityAccessor.callCanBurn(registryAccess, recipe, stacks, stackSize)) {
+        if (recipe != null && abstractFurnaceBlockEntityAccessor.callCanBurn(recipe, stacks, stackSize)) {
             ItemStack inputSlotStack = stacks.get(0);
-            ItemStack resultStack = ((Recipe<WorldlyContainer>) recipe).assemble(this, registryAccess);
+            ItemStack resultStack = ((Recipe<WorldlyContainer>) recipe).assemble(this);
             ItemStack resultSlotStack = stacks.get(2);
 
             if (inputSlotStack.is(resultStack.getItem()) || resultStack.is(AetherTags.Items.SAVE_NBT_IN_RECIPE)) {

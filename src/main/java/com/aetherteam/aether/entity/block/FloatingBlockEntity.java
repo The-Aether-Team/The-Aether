@@ -240,7 +240,7 @@ public class FloatingBlockEntity extends Entity {
                 damageSource = floatable.getFallDamageSource(this);
             } else {
                 predicate = EntitySelector.NO_SPECTATORS;
-                damageSource = AetherDamageTypes.entityDamageSource(this.getLevel(), AetherDamageTypes.FLOATING_BLOCK, this);
+                damageSource = AetherDamageTypes.floatingBlock(this);
             }
 
             float f = (float) Math.min(Mth.floor((float) this.floatDistance * this.fallDamagePerDistance), this.fallDamageMax);

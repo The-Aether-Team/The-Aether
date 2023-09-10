@@ -34,7 +34,8 @@ public abstract class AbstractRecipeBookScreen<T extends RecipeBookMenu<Containe
         this.addRenderableWidget(new ImageButton(this.getGuiLeft() + leftOffset, this.height / 2 - 49, 20, 18, 0, 0, 19, RECIPE_BUTTON_LOCATION, (button) -> {
             this.getRecipeBookComponent().toggleVisibility();
             this.leftPos = this.getRecipeBookComponent().updateScreenPosition(this.width, this.getXSize());
-            button.setPosition(this.getGuiLeft() + leftOffset, this.height / 2 - 49);
+            button.x = this.getGuiLeft() + leftOffset;
+            button.y = this.height / 2 - 49;
         }));
         this.titleLabelX = (this.getXSize() - this.font.width(this.getTitle())) / 2;
     }

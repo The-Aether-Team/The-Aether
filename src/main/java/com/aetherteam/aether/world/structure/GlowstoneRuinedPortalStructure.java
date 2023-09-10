@@ -49,7 +49,7 @@ public class GlowstoneRuinedPortalStructure extends Structure {
      * [CODE COPY] - {@link net.minecraft.world.level.levelgen.structure.structures.RuinedPortalStructure#findGenerationPoint(GenerationContext)}.
      */
     @Override
-    protected Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
+    public Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
         GlowstoneRuinedPortalPiece.Properties pieceProperties = new GlowstoneRuinedPortalPiece.Properties();
         WorldgenRandom worldGenRandom = context.random();
         ChunkPos chunkPos = context.chunkPos();

@@ -50,7 +50,7 @@ public class GlovesLootModifier extends LootModifier {
         RandomSource randomSource = context.getRandom();
         Vec3 vec3 = context.getParamOrNull(LootContextParams.ORIGIN);
         if (vec3 != null) {
-            BlockPos pos = BlockPos.containing(vec3);
+            BlockPos pos = new BlockPos(vec3);
             BlockEntity blockEntity = context.getLevel().getBlockEntity(pos);
             if (blockEntity instanceof BaseContainerBlockEntity) {
                 List<ItemStack> armorItems = lootStacks.stream().filter((itemStack) -> itemStack.getItem() instanceof ArmorItem armorItem && armorItem.getMaterial().equals(this.armorMaterial)).toList();

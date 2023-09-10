@@ -3,7 +3,6 @@ package com.aetherteam.aether.client.gui.screen.inventory;
 import com.aetherteam.aether.inventory.menu.AbstractAetherFurnaceMenu;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.screens.recipebook.AbstractFurnaceRecipeBookComponent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -31,12 +30,12 @@ public abstract class AbstractAetherFurnaceScreen<T extends AbstractAetherFurnac
         RenderSystem.setShaderTexture(0, this.texture);
         int left = this.getGuiLeft();
         int top = this.getGuiTop();
-        GuiComponent.blit(poseStack, left, top, 0, 0, this.getXSize(), this.getYSize());
+        this.blit(poseStack, left, top, 0, 0, this.getXSize(), this.getYSize());
         if (this.getMenu().isLit()) {
             int litProgress = this.getMenu().getLitProgress();
-            GuiComponent.blit(poseStack, left + 56, top + 36 + 12 - litProgress, 176, 12 - litProgress, 14, litProgress + 1);
+            this.blit(poseStack, left + 56, top + 36 + 12 - litProgress, 176, 12 - litProgress, 14, litProgress + 1);
         }
         int burnProgress = this.getMenu().getBurnProgress();
-        GuiComponent.blit(poseStack, left + 79, top + 34, 176, 14, burnProgress + 1, 16);
+        this.blit(poseStack, left + 79, top + 34, 176, 14, burnProgress + 1, 16);
     }
 }

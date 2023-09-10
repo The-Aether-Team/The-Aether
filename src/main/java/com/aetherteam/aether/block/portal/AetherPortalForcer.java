@@ -73,7 +73,7 @@ public class AetherPortalForcer implements ITeleporter {
         if (entity.getLevel().dimension() != LevelUtil.destinationDimension() && !isAether) {
             return null;
         } else if (this.isStartup) {
-            return new PortalInfo(this.checkPositionsForInitialSpawn(destinationLevel, entity.blockPosition()).getCenter(), Vec3.ZERO, entity.getYRot(), entity.getXRot());
+            return new PortalInfo(Vec3.atCenterOf(this.checkPositionsForInitialSpawn(destinationLevel, entity.blockPosition())), Vec3.ZERO, entity.getYRot(), entity.getXRot());
         } else if (!this.hasFrame) { // For falling out of the Aether.
             return new PortalInfo(new Vec3(entity.getX(), destinationLevel.getMaxBuildHeight(), entity.getZ()), Vec3.ZERO, entity.getYRot(), entity.getXRot());
         } else {
@@ -92,7 +92,7 @@ public class AetherPortalForcer implements ITeleporter {
                     axis = Direction.Axis.X;
                     vec3 = new Vec3(0.5, 0.0, 0.0);
                 }
-                return PortalShape.createPortalInfo(destinationLevel, rectangle, axis, vec3, entity, entity.getDeltaMovement(), entity.getYRot(), entity.getXRot());
+                return PortalShape.createPortalInfo(destinationLevel, rectangle, axis, vec3, entity.getDimensions(entity.getPose()), entity.getDeltaMovement(), entity.getYRot(), entity.getXRot());
             }).orElse(null);
         }
     }

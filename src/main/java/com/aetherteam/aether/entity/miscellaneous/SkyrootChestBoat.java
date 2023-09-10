@@ -40,7 +40,7 @@ public class SkyrootChestBoat extends ChestBoat implements SkyrootBoatBehavior {
     }
 
     @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

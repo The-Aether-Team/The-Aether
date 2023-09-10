@@ -54,7 +54,7 @@ public class SliderAi {
      */
     private static void initFightActivity(Brain<Slider> brain) {
         brain.addActivity(Activity.FIGHT, 10, ImmutableList.of(
-                StartAttacking.create(SliderAi::findNearestValidAttackTarget),
+                new StartAttacking<>(SliderAi::findNearestValidAttackTarget),
                 new Collide(),
                 new Crush(),
                 new BackOffAfterAttack(),

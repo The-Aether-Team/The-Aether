@@ -2,6 +2,7 @@ package com.aetherteam.aether.client.renderer.entity;
 
 import com.aetherteam.aether.entity.miscellaneous.Parachute;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -45,9 +46,9 @@ public class ParachuteRenderer extends EntityRenderer<Parachute> {
         Entity passenger = parachute.getControllingPassenger();
         if (passenger != null) {
             if (passenger instanceof Player player) {
-                poseStack.mulPose(Axis.YP.rotationDegrees(-Mth.lerp(partialTicks, player.yHeadRotO, player.getYHeadRot())));
+                poseStack.mulPose(Vector3f.YP.rotationDegrees(-Mth.lerp(partialTicks, player.yHeadRotO, player.getYHeadRot())));
             } else {
-                poseStack.mulPose(Axis.YP.rotationDegrees(-Mth.lerp(partialTicks, passenger.yRotO, passenger.getYRot())));
+                poseStack.mulPose(Vector3f.YP.rotationDegrees(-Mth.lerp(partialTicks, passenger.yRotO, passenger.getYRot())));
             }
         }
         poseStack.translate(-0.5, 0.0, -0.5);
