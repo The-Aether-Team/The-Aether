@@ -31,8 +31,8 @@ public interface ValkyrieTool {
         if (slot == EquipmentSlot.MAINHAND) {
             ImmutableMultimap.Builder<Attribute, AttributeModifier> attributeBuilder = ImmutableMultimap.builder();
             attributeBuilder.putAll(map);
-            attributeBuilder.put(ForgeMod.BLOCK_REACH.get(), new AttributeModifier(REACH_DISTANCE_MODIFIER_UUID, "Reach distance modifier", this.getModifier(), AttributeModifier.Operation.ADDITION));
-            attributeBuilder.put(ForgeMod.ENTITY_REACH.get(), new AttributeModifier(ATTACK_RANGE_MODIFIER_UUID, "Attack range modifier", this.getModifier(), AttributeModifier.Operation.ADDITION));
+            attributeBuilder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(REACH_DISTANCE_MODIFIER_UUID, "Reach distance modifier", this.getModifier(), AttributeModifier.Operation.ADDITION));
+            attributeBuilder.put(ForgeMod.ATTACK_RANGE.get(), new AttributeModifier(ATTACK_RANGE_MODIFIER_UUID, "Attack range modifier", this.getModifier(), AttributeModifier.Operation.ADDITION));
             map = attributeBuilder.build();
         }
         return map;

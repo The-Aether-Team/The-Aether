@@ -14,6 +14,7 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -51,7 +52,7 @@ public class AccessoryButton extends ImageButton {
         this.x = this.parentScreen.getGuiLeft() + offsets.getA();
         this.y = this.parentScreen.getGuiTop() + offsets.getB();
         if (this.parentScreen instanceof CreativeModeInventoryScreen screen) {
-            boolean isInventoryTab = screen.isInventoryOpen();
+            boolean isInventoryTab = screen.getSelectedTab() == CreativeModeTab.TAB_INVENTORY.getId();
             this.active = isInventoryTab;
             if (isInventoryTab) {
                 super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);

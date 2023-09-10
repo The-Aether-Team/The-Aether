@@ -119,6 +119,12 @@ public class Aerbunny extends AetherAnimal {
         }
     }
 
+    @Override
+    public void travel(Vec3 travelVector) {
+        this.flyingSpeed = this.getSpeed() * 0.216F;
+        super.travel(travelVector);
+    }
+
     /**
      * Makes this entity fall slowly.
      */
@@ -342,14 +348,6 @@ public class Aerbunny extends AetherAnimal {
     @Override
     protected SoundEvent getDeathSound() {
         return AetherSoundEvents.ENTITY_AERBUNNY_DEATH.get();
-    }
-
-    /**
-     * @return A {@link Float} for the midair speed of this entity.
-     */
-    @Override
-    protected float getFlyingSpeed() {
-        return this.getSpeed() * 0.216F;
     }
 
     @Override

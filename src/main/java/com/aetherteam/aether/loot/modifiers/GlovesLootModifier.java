@@ -5,7 +5,9 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -25,13 +27,13 @@ import java.util.Map;
 public class GlovesLootModifier extends LootModifier {
     public static final Codec<GlovesLootModifier> CODEC = RecordCodecBuilder.create(instance -> codecStart(instance)
             .and(ItemStack.CODEC.fieldOf("gloves").forGetter(modifier -> modifier.glovesStack))
-            .and(ArmorMaterials.CODEC.fieldOf("armor_material").forGetter(modifier -> modifier.armorMaterial))
+            .and(Codec.STRING.fieldOf("armor_material").forGetter(modifier -> modifier.armorMaterial))
             .apply(instance, GlovesLootModifier::new));
 
     public final ItemStack glovesStack;
-    public final ArmorMaterials armorMaterial;
+    public final String armorMaterial;
 
-    public GlovesLootModifier(LootItemCondition[] conditionsIn, ItemStack glovesStack, ArmorMaterials armorMaterial) {
+    public GlovesLootModifier(LootItemCondition[] conditionsIn, ItemStack glovesStack, String armorMaterial) {
         super(conditionsIn);
         this.glovesStack = glovesStack;
         this.armorMaterial = armorMaterial;
@@ -53,7 +55,8 @@ public class GlovesLootModifier extends LootModifier {
             BlockPos pos = new BlockPos(vec3);
             BlockEntity blockEntity = context.getLevel().getBlockEntity(pos);
             if (blockEntity instanceof BaseContainerBlockEntity) {
-                List<ItemStack> armorItems = lootStacks.stream().filter((itemStack) -> itemStack.getItem() instanceof ArmorItem armorItem && armorItem.getMaterial().equals(this.armorMaterial)).toList();
+                ArmorMaterial armorMaterial = ArmorMaterials.valueOf(this.armorMaterial);
+                List<ItemStack> armorItems = lootStacks.stream().filter((itemStack) -> itemStack.getItem() instanceof ArmorItem armorItem && armorItem.getMaterial().equals(armorMaterial)).toList();
                 for (ItemStack armorStack : armorItems) {
                     if (randomSource.nextInt(4) < 1) {
                         ItemStack gloves = this.glovesStack.copy();

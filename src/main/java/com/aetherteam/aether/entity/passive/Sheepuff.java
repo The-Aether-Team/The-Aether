@@ -3,6 +3,7 @@ package com.aetherteam.aether.entity.passive;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.AetherEntityTypes;
+import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.ai.controller.FallingMoveControl;
 import com.aetherteam.aether.entity.ai.goal.EatAetherGrassGoal;
 import com.aetherteam.aether.entity.ai.goal.FallingRandomStrollGoal;
@@ -163,7 +164,7 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
     public void tick() {
         super.tick();
         if (this.getPuffed()) {
-            this.checkSlowFallDistance();
+            EntityUtil.checkSlowFallDistance(this);
             AttributeInstance gravity = this.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
             if (gravity != null) {
                 double fallSpeed = Math.max(gravity.getValue() * -0.625, -0.05);

@@ -40,7 +40,7 @@ public class LivingEntityMixin {
     @ModifyExpressionValue(at = @At(value = "INVOKE", target = "net/minecraft/world/entity/ai/attributes/AttributeMap.getValue(Lnet/minecraft/world/entity/ai/attributes/Attribute;)D"), method = "getAttributeValue(Lnet/minecraft/world/entity/ai/attributes/Attribute;)D")
     private double modifyReachAttribute(double reach, Attribute attribute) {
         LivingEntity livingEntity = (LivingEntity) (Object) this;
-        if (livingEntity instanceof Player player && (attribute == ForgeMod.ENTITY_REACH.get() || attribute == ForgeMod.BLOCK_REACH.get())) {
+        if (livingEntity instanceof Player player && (attribute == ForgeMod.ATTACK_RANGE.get() || attribute == ForgeMod.REACH_DISTANCE.get())) {
             InteractionHand hand = ToolAbilityListener.INTERACTION_HAND;
             if (hand == InteractionHand.OFF_HAND && AbilityHooks.ToolHooks.hasValkyrieItemInMainHandOnly(player)) {
                 AttributeInstance reachDistance = player.getAttribute(attribute);

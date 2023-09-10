@@ -1,5 +1,6 @@
 package com.aetherteam.aether.item.accessories.abilities;
 
+import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
@@ -19,7 +20,7 @@ public interface SlowFallAccessory {
                 livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().multiply(1.0, 0.6, 1.0));
             }
         }
-        livingEntity.checkSlowFallDistance();
+        EntityUtil.checkSlowFallDistance(livingEntity);
         if (livingEntity instanceof ServerPlayer serverPlayer) { // Prevents the player from being kicked for flying.
             ServerGamePacketListenerImplAccessor serverGamePacketListenerImplAccessor = (ServerGamePacketListenerImplAccessor) serverPlayer.connection;
             serverGamePacketListenerImplAccessor.aether$setAboveGroundTickCount(0);

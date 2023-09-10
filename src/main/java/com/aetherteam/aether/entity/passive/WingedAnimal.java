@@ -1,5 +1,6 @@
 package com.aetherteam.aether.entity.passive;
 
+import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.ai.navigator.FallPathNavigation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -55,7 +56,7 @@ public abstract class WingedAnimal extends MountableAnimal {
     public void riderTick() {
         super.riderTick();
         if (this.getControllingPassenger() instanceof Player) {
-            this.checkSlowFallDistance();
+            EntityUtil.checkSlowFallDistance(this);
         }
     }
 

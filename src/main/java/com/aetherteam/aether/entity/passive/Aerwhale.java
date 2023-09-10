@@ -2,6 +2,8 @@ package com.aetherteam.aether.entity.passive;
 
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.AetherSoundEvents;
+import com.aetherteam.aether.entity.EntityUtil;
+import com.aetherteam.aether.item.EquipmentUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -127,9 +129,11 @@ public class Aerwhale extends FlyingMob {
                     }
 
                     if (!this.getLevel().isClientSide()) {
+                        this.flyingSpeed = this.getSpeed() * 0.6F;
                         super.travel(vector);
                     }
 
+                    this.animationSpeedOld = this.animationSpeed;
                     double d0 = this.getX() - this.xo;
                     double d1 = this.getZ() - this.zo;
                     float f4 = 4.0F * Mth.sqrt((float) (d0*d0 + d1*d1));
@@ -137,7 +141,9 @@ public class Aerwhale extends FlyingMob {
                     if (f4 > 1.0F) {
                         f4 = 1.0F;
                     }
-                    this.walkAnimation.update(f4, 0.4F);
+
+                    this.animationSpeed += 0.4F * (f4 - this.animationSpeed);
+                    this.animationPosition += this.animationSpeed;
                 }
             } else {
                 super.travel(vector);
@@ -227,14 +233,6 @@ public class Aerwhale extends FlyingMob {
     @Override
     protected float getSoundVolume() {
         return 2.0F;
-    }
-
-    /**
-     * @return A {@link Float} for the midair speed of this entity.
-     */
-    @Override
-    protected float getFlyingSpeed() {
-        return this.isVehicle() ? this.getSpeed() * 0.6F : 0.02F;
     }
 
     /**
@@ -388,7 +386,7 @@ public class Aerwhale extends FlyingMob {
                     double d1 = (entity.getY() - this.mob.getY()) / (double)f;
                     double d2 = (entity.getZ() - this.mob.getZ()) / (double)f;
                     this.mob.setDeltaMovement(this.mob.getDeltaMovement().add(Math.copySign(d0 * d0 * 0.4, d0), Math.copySign(d1 * d1 * 0.4, d1), Math.copySign(d2 * d2 * 0.4, d2)));
-                    this.mob.checkSlowFallDistance();
+                    EntityUtil.checkSlowFallDistance(this.mob);
                 } else if (this.mob.shouldStayCloseToLeashHolder()) {
                     this.mob.goalSelector.enableControlFlag(Goal.Flag.MOVE);
                     Vec3 vec3 = (new Vec3(entity.getX() - this.mob.getX(), entity.getY() - this.mob.getY(), entity.getZ() - this.mob.getZ())).normalize().scale(Math.max(f - 2.0F, 0.0F));

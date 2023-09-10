@@ -85,4 +85,10 @@ public final class EntityUtil {
             projectile.getLevel().addFreshEntity(lightningBolt);
         }
     }
+
+    public static void checkSlowFallDistance(Entity entity) {
+        if (entity.getDeltaMovement().y() > -0.5D && entity.fallDistance > 1.0F) {
+            entity.fallDistance = 1.0F;
+        }
+    }
 }

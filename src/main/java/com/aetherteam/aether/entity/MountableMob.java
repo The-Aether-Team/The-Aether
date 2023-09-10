@@ -83,6 +83,7 @@ public interface MountableMob {
             vehicle.setYBodyRot(vehicle.getYRot());
             vehicle.setYHeadRot(vehicle.yBodyRot);
             // Handles movement.
+            vehicle.flyingSpeed = this.getFlyingSpeed();
             float f = passenger.xxa * 0.5F;
             float f1 = passenger.zza;
             if (f1 <= 0.0F) {
@@ -178,6 +179,11 @@ public interface MountableMob {
      * @return A {@link Float} for the steering speed of the mount.
      */
     float getSteeringSpeed();
+
+    /**
+     * @return A {@link Float} for the midair speed of this entity.
+     */
+    float getFlyingSpeed();
 
     /**
      * @return A {@link Double} for the mount's jump factor, accounting for movement-affecting blocks.

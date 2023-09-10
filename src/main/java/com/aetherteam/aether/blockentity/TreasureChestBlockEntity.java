@@ -17,6 +17,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.CompoundContainer;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -34,12 +35,13 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nullable;
+import java.util.stream.IntStream;
 
 /**
  * [CODE COPY] - {@link ChestBlockEntity}.<br><br>
  * Has additional locking behavior.
  */
-public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity implements LidBlockEntity {
+public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity implements LidBlockEntity, WorldlyContainer {
     private NonNullList<ItemStack> items = NonNullList.withSize(27, ItemStack.EMPTY);
     private final ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
         protected void onOpen(Level level, BlockPos pos, BlockState state) {
@@ -105,8 +107,9 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
         if (!this.remove && capability == ForgeCapabilities.ITEM_HANDLER) {
-            if (this.chestHandler == null)
+            if (this.chestHandler == null) {
                 this.chestHandler = LazyOptional.of(this::createHandler);
+            }
             return this.chestHandler.cast();
         }
         return super.getCapability(capability, side);
@@ -115,7 +118,15 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     private IItemHandlerModifiable createHandler() {
         BlockState blockState = this.getBlockState();
         if (!(blockState.getBlock() instanceof ChestBlock)) {
-            return new InvWrapper(this);
+            return new InvWrapper(this) {
+                @Override
+                public ItemStack extractItem(int slot, int amount, boolean simulate) {
+                    if (TreasureChestBlockEntity.this.getLocked()) {
+                        return ItemStack.EMPTY;
+                    }
+                    return super.extractItem(slot, amount, simulate);
+                }
+            };
         }
         Container inv = ChestBlock.getContainer((ChestBlock) blockState.getBlock(), blockState, this.getLevel(), getBlockPos(), true);
         return new InvWrapper(inv == null ? this : inv);
@@ -138,7 +149,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     public void setBlockState(BlockState state) {
         super.setBlockState(state);
         if (this.chestHandler != null) {
-            net.minecraftforge.common.util.LazyOptional<?> oldHandler = this.chestHandler;
+            LazyOptional<?> oldHandler = this.chestHandler;
             this.chestHandler = null;
             oldHandler.invalidate();
         }
@@ -147,6 +158,35 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     @Override
     protected AbstractContainerMenu createMenu(int id, Inventory inventory) {
         return ChestMenu.threeRows(id, inventory, this);
+    }
+
+    @Override
+    public int[] getSlotsForFace(Direction direction) {
+        return IntStream.range(0, this.getContainerSize()).toArray();
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int index, ItemStack stack, Direction direction) {
+        if (direction != Direction.DOWN && stack.getItem().canFitInsideContainerItems()) {
+            return this.canPlaceItem(index, stack);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
+        if (direction == Direction.DOWN) {
+            return !this.getLocked();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean canPlaceItem(int index, ItemStack stack) {
+        if (this.getLocked()) {
+            return false;
+        }
+        return super.canPlaceItem(index, stack);
     }
 
     @Override

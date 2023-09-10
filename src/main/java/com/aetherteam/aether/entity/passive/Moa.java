@@ -285,7 +285,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 				this.setFlapCooldown(15);
 			}
 		}
-		this.checkSlowFallDistance(); // Resets the Moa's fall distance.
+		EntityUtil.checkSlowFallDistance(this); // Resets the Moa's fall distance.
 	}
 
 	/**
