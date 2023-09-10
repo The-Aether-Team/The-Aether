@@ -61,6 +61,7 @@ public class FireCrystal extends AbstractCrystal {
                 this.discard();
             }
         }
+        super.tickMovement();
     }
 
     /**
