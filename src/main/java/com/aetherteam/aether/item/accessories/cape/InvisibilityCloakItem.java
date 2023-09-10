@@ -1,5 +1,6 @@
 package com.aetherteam.aether.item.accessories.cape;
 
+import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.AetherKeys;
 import com.aetherteam.aether.item.accessories.AccessoryItem;
@@ -35,10 +36,14 @@ public class InvisibilityCloakItem extends AccessoryItem {
         if (!livingEntity.level().isClientSide() && livingEntity instanceof Player player) {
             AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
                 if (aetherPlayer.isInvisibilityEnabled()) {
-                    if (!aetherPlayer.isWearingInvisibilityCloak() && !aetherPlayer.attackedWithInvisibility()) {
+                    if (!AetherConfig.SERVER.balance_invisibility_cloak.get()) {
                         aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setWearingInvisibilityCloak", true);
-                    } else if (aetherPlayer.isWearingInvisibilityCloak() && aetherPlayer.attackedWithInvisibility()) {
-                        aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setWearingInvisibilityCloak", false);
+                    } else {
+                        if (!aetherPlayer.attackedWithInvisibility() && !aetherPlayer.isWearingInvisibilityCloak()) {
+                            aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setWearingInvisibilityCloak", true);
+                        } else if (aetherPlayer.attackedWithInvisibility() && aetherPlayer.isWearingInvisibilityCloak()) {
+                            aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setWearingInvisibilityCloak", false);
+                        }
                     }
                 } else {
                     aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setWearingInvisibilityCloak", false);
@@ -48,7 +53,7 @@ public class InvisibilityCloakItem extends AccessoryItem {
         if (!livingEntity.isInvisible()) {
             if (livingEntity instanceof Player player) {
                 AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
-                    if (aetherPlayer.isInvisibilityEnabled()) {
+                    if (aetherPlayer.isWearingInvisibilityCloak()) {
                         aetherPlayer.getPlayer().setInvisible(true);
                     }
                 });
@@ -58,7 +63,7 @@ public class InvisibilityCloakItem extends AccessoryItem {
         } else {
             if (livingEntity instanceof Player player) {
                 AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
-                    if (!aetherPlayer.isInvisibilityEnabled()) {
+                    if (!aetherPlayer.isWearingInvisibilityCloak()) {
                         aetherPlayer.getPlayer().setInvisible(false);
                     }
                 });
