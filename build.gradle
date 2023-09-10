@@ -85,7 +85,7 @@ dependencies {
     implementation fg.deobf("com.aetherteam.nitrogen:nitrogen_internals:${project.nitrogen_version}")
     implementation fg.deobf("com.aetherteam.cumulus:cumulus_menus:${project.cumulus_version}")
 
-    implementation fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}")
+    implementation fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}+${project.mc_version}")
 
     compileOnly fg.deobf("top.theillusivec4.caelus:caelus-forge:${project.caelus_version}")
 
@@ -106,9 +106,9 @@ dependencies {
         jarJar.pin(it, "${project.cumulus_version}")
     }
 
-    jarJar fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}") {
+    jarJar fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}+${project.mc_version}") {
         jarJar.ranged(it, "[${project.curios_version},)")
-        jarJar.pin(it, "${project.curios_version}")
+        jarJar.pin(it, "${project.curios_version}+${project.mc_version}")
     }
 
     compileOnly "mezz.jei:jei-${project.mc_version}-common:${project.jei_version}"
@@ -219,7 +219,7 @@ modrinth {
     gameVersions = ["${project.mc_version}"]
     loaders = ["neoforge"]
     dependencies {
-        embedded.version "curios", "${project.curios_version}"
+        embedded.version "curios", "${project.curios_version}+${project.mc_version}"
 //        embedded.version "cumulus", "${project.cumulus_version}"
     }
 }
