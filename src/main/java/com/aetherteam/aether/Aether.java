@@ -228,7 +228,7 @@ public class Aether {
 //        generator.addProvider(true, packMeta);
 //    }
 
-    public void packSetup(AddPackFindersEvent event) { //todo test
+    public void packSetup(AddPackFindersEvent event) {
         // Resource Packs
         this.setupReleasePack(event);
         this.setupBetaPack(event);
@@ -275,14 +275,17 @@ public class Aether {
         Path baseResourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_base");
         PathPackResources basePack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + baseResourcePath, baseResourcePath);
         List<PathPackResources> mergedPacks = List.of(pack, basePack);
+        PackMetadataSection metadata = new PackMetadataSection(Component.translatable(description), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion()));
         event.addRepositorySource((packConsumer, packConstructor) ->
-            packConsumer.accept(Pack.create(
+            packConsumer.accept(packConstructor.create(
                 name,
+                Component.translatable(title),
                 false,
-                () -> new CombinedPackResources(name, title, new PackMetadataSection(Component.translatable(description), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion())), mergedPacks, sourcePath),
-                packConstructor,
+                () -> new CombinedPackResources(name, title, metadata, mergedPacks, sourcePath),
+                metadata,
                 Pack.Position.TOP,
-                PackSource.BUILT_IN)
+                PackSource.BUILT_IN,
+                false)
             ));
     }
 
