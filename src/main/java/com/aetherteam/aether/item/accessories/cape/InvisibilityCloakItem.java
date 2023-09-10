@@ -48,7 +48,7 @@ public class InvisibilityCloakItem extends AccessoryItem {
         if (!livingEntity.isInvisible()) {
             if (livingEntity instanceof Player player) {
                 AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
-                    if (aetherPlayer.isInvisibilityEnabled()) {
+                    if (aetherPlayer.isWearingInvisibilityCloak()) {
                         aetherPlayer.getPlayer().setInvisible(true);
                     }
                 });
@@ -58,7 +58,7 @@ public class InvisibilityCloakItem extends AccessoryItem {
         } else {
             if (livingEntity instanceof Player player) {
                 AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
-                    if (!aetherPlayer.isInvisibilityEnabled()) {
+                    if (!aetherPlayer.isWearingInvisibilityCloak()) {
                         aetherPlayer.getPlayer().setInvisible(false);
                     }
                 });
