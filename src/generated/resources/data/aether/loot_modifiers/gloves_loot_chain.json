@@ -1,6 +1,6 @@
 {
   "type": "aether:gloves_loot",
-  "armor_material": "chainmail",
+  "armor_material": "chain",
   "conditions": [
     {
       "condition": "minecraft:inverted",
