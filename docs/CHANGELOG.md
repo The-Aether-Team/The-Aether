@@ -1,3 +1,15 @@
+# The Aether - Forge - 1.19.4-1.0.0-beta.6.1
+
+Changes
+
+- Reordered Neptune Armor in the creative menu to be listed before Valkyrie Armor.
+
+Fixes
+
+- Fix Fire Crystals not moving when spawned by the Sun Spirit.
+- Fix the Invisibility Cloak PVP config not properly disabling invisibility during attacks.
+- Fix Hoppers being able to extract items from locked Treasure Chests.
+
 # The Aether - Forge - 1.19.4-1.0.0-beta.6
 
 ***This beta contains breaking changes; addons will have to update accordingly to be compatible.***
