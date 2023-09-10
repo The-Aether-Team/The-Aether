@@ -174,6 +174,6 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
     }
 
     private void drawBookText(GuiGraphics guiGraphics, Font fontRenderer, FormattedCharSequence sequence, int x, int y) {
-        guiGraphics.drawString(fontRenderer, sequence, x, y, 4210752);
+        guiGraphics.drawString(fontRenderer, sequence, x, y, 4210752, false);
     }
 }
