@@ -137,6 +137,11 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
 						}
 					}
 				} else if (!ChestBlock.isChestBlockedAt(level, pos) && menuProvider != null) {
+					if (treasureChestBlockEntity.getOpeners().add(player.getUUID())) {
+						treasureChestBlockEntity.setChanged();
+					}
+
+
 					player.openMenu(menuProvider);
 					player.awardStat(Stats.CUSTOM.get(Stats.OPEN_CHEST));
 					PiglinAi.angerNearbyPiglins(player, true);

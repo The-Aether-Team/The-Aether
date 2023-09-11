@@ -7,6 +7,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -36,6 +39,9 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nullable;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
@@ -43,7 +49,7 @@ import java.util.stream.IntStream;
  * [CODE COPY] - {@link ChestBlockEntity}.<br><br>
  * Has additional locking behavior.
  */
-public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity implements LidBlockEntity, WorldlyContainer { //todo can you extract loot with hoppers??
+public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity implements LidBlockEntity, WorldlyContainer {
     private NonNullList<ItemStack> items = NonNullList.withSize(27, ItemStack.EMPTY);
     private final ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
         protected void onOpen(Level level, BlockPos pos, BlockState state) {
@@ -73,6 +79,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     @Nullable
     private LazyOptional<IItemHandlerModifiable> chestHandler;
     private UUID blockEntityUuid = null;
+    private Set<UUID> openers;
 
     public TreasureChestBlockEntity() {
         this(AetherBlockEntityTypes.TREASURE_CHEST.get(), BlockPos.ZERO, AetherBlocks.TREASURE_CHEST.get().defaultBlockState());
@@ -86,6 +93,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
         super(tileEntityType, pos, state);
         this.kind = new ResourceLocation(Aether.MODID, "bronze");
         this.locked = true;
+        this.openers = new HashSet<>();
     }
 
     /**
@@ -264,6 +272,10 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
         return this.lootTableSeed;
     }
 
+    public Set<UUID> getOpeners() {
+        return this.openers;
+    }
+
     @Override
     public void unpackLootTable(Player player) {
         if (!ModList.get().isLoaded("lootr")) {
@@ -271,7 +283,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
         }
     }
 
-    private boolean useLootrLoot() {
+    public boolean useLootrLoot() {
         return this.getLootTable() != null && ModList.get().isLoaded("lootr");
     }
 
@@ -344,6 +356,11 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
             ContainerHelper.saveAllItems(tag, this.items);
         }
         tag.putUUID("blockEntityUuid", this.getBlockEntityUuid());
+        ListTag openers = new ListTag();
+        for (UUID opener : this.openers) {
+            openers.add(NbtUtils.createUUID(opener));
+        }
+        tag.put("LootrOpeners", openers);
     }
 
     @Override
@@ -357,6 +374,13 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
         }
         if (tag.hasUUID("blockEntityUuid")) {
             this.blockEntityUuid = tag.getUUID("blockEntityUuid");
+        }
+        if (tag.contains("LootrOpeners")) {
+            ListTag openers = tag.getList("LootrOpeners", 11);
+            this.openers.clear();
+            for (Tag item : openers) {
+                this.openers.add(NbtUtils.loadUUID(item));
+            }
         }
     }
 
