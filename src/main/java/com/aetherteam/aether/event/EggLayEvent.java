@@ -3,6 +3,7 @@ package com.aetherteam.aether.event;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.eventbus.api.Cancelable;
@@ -27,7 +28,7 @@ import javax.annotation.Nullable;
 @Cancelable
 public class EggLayEvent extends EntityEvent {
     @Nullable
-    private Item item;
+    private ItemStack stack;
     @Nullable
     private SoundEvent sound;
     private float volume;
@@ -38,31 +39,31 @@ public class EggLayEvent extends EntityEvent {
      * @param sound The original {@link SoundEvent} played by laying the egg.
      * @param volume The original volume of the sound as a {@link Float}.
      * @param pitch The original pitch of the sound as a {@link Float}.
-     * @param item The original egg {@link Item} to be laid.
+     * @param stack The original egg {@link ItemStack} to be laid.
      */
-    public EggLayEvent(Entity entity, @Nullable SoundEvent sound, float volume, float pitch, @Nullable Item item) {
+    public EggLayEvent(Entity entity, @Nullable SoundEvent sound, float volume, float pitch, @Nullable ItemStack stack) {
         super(entity);
         this.sound = sound;
         this.volume = volume;
         this.pitch = pitch;
-        this.item = item;
+        this.stack = stack;
     }
 
     /**
      * This method is {@link Nullable}. If null, no egg item will be laid.
-     * @return The egg {@link Item} to be laid.
+     * @return The egg {@link ItemStack} to be laid.
      */
     @Nullable
-    public Item getItem() {
-        return this.item;
+    public ItemStack getStack() {
+        return this.stack;
     }
 
     /**
-     * Sets a new egg item to be laid.
-     * @param item The egg {@link Item}.
+     * Sets a new egg item stack to be laid.
+     * @param item The egg {@link ItemStack}.
      */
-    public void setItem(@Nullable Item item) {
-        this.item = item;
+    public void setStack(@Nullable ItemStack stack) {
+        this.stack = stack;
     }
 
     /**
