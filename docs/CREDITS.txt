@@ -76,5 +76,9 @@ StonedCoal:
 - Implementation of the Aether's main menu.
 - Fixes to the Aerbunny.
 
+Toranktto
+- Fixes to missing recipe categories breaking servers on 1.19.2.
+
 Zepalesque
 - Fixes to the Slider.
+- Changes to EggLayEvent to use ItemStack.
