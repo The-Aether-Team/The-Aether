@@ -23,8 +23,10 @@ import java.util.Map;
 
 @Mixin(Mob.class)
 public class MobMixin {
-    @Unique
-    public final Map<String, Float> accessoryDropChances = new HashMap<>();
+//    @Unique
+//    public final Map<String, Float> accessoryDropChances = new HashMap<>() {
+//        new Map.Entry<>("hands", 0.085F),
+//    };
 
     @Inject(at = @At(value = "HEAD"), method = "canTakeItem(Lnet/minecraft/world/item/ItemStack;)Z", cancellable = true)
     private void canTakeItem(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
@@ -62,4 +64,6 @@ public class MobMixin {
     //todo canReplaceCurrentItem
 
     //todo equipItemIfPossible
+
+    //todo getExperienceReward, addAddditionalSaveData, readAdditionalSaveData, setGuaranteedDrop, getEquipmentDropChance, setDropChance
 }
