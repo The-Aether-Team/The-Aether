@@ -39,7 +39,7 @@ public class EggLayEvent extends EntityEvent {
      * @param sound The original {@link SoundEvent} played by laying the egg.
      * @param volume The original volume of the sound as a {@link Float}.
      * @param pitch The original pitch of the sound as a {@link Float}.
-     * @param item The original egg {@link Item} to be laid.
+     * @param stack The original egg {@link ItemStack} to be laid.
      */
     public EggLayEvent(Entity entity, @Nullable SoundEvent sound, float volume, float pitch, @Nullable ItemStack stack) {
         super(entity);
@@ -51,7 +51,7 @@ public class EggLayEvent extends EntityEvent {
 
     /**
      * This method is {@link Nullable}. If null, no egg item will be laid.
-     * @return The egg {@link Item} to be laid.
+     * @return The egg {@link ItemStack} to be laid.
      */
     @Nullable
     public ItemStack getStack() {
@@ -59,8 +59,8 @@ public class EggLayEvent extends EntityEvent {
     }
 
     /**
-     * Sets a new egg item to be laid.
-     * @param item The egg {@link Item}.
+     * Sets a new egg item stack to be laid.
+     * @param item The egg {@link ItemStack}.
      */
     public void setStack(@Nullable ItemStack stack) {
         this.stack = stack;
