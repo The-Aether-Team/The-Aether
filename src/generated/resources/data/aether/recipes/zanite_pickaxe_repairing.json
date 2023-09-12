@@ -1,5 +1,6 @@
 {
   "type": "aether:repairing",
+  "category": "enchanting_repair",
   "group": "altar_pickaxe_repair",
   "ingredient": {
     "item": "aether:zanite_pickaxe"

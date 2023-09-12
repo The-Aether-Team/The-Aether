@@ -1,5 +1,6 @@
 {
   "type": "aether:repairing",
+  "category": "enchanting_repair",
   "group": "altar_chestplate_repair",
   "ingredient": {
     "item": "aether:zanite_chestplate"
