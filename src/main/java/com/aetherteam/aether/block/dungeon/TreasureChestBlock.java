@@ -2,7 +2,6 @@ package com.aetherteam.aether.block.dungeon;
 
 import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
 import com.aetherteam.aether.blockentity.TreasureChestBlockEntity;
-import com.aetherteam.aether.integration.lootr.AetherLootrPlugin;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -38,7 +37,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.fml.ModList;
 
 import java.util.function.Supplier;
 
@@ -48,7 +46,6 @@ import java.util.function.Supplier;
 public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEntity> implements SimpleWaterloggedBlock {
 	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	public static final BooleanProperty IS_LOOT_CONTAINER = BooleanProperty.create("is_loot");
 	protected static final VoxelShape SHAPE = Block.box(1.0, 0.0, 1.0, 15.0, 14.0, 15.0);
 
 	public TreasureChestBlock(Properties properties) {
@@ -57,12 +54,12 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
 
 	public TreasureChestBlock(Properties properties, Supplier<BlockEntityType<? extends TreasureChestBlockEntity>> blockEntityTypeSupplier) {
 		super(properties, blockEntityTypeSupplier);
-		this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false).setValue(IS_LOOT_CONTAINER, false));
+		this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
 	}
 
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		builder.add(FACING, WATERLOGGED, IS_LOOT_CONTAINER);
+		builder.add(FACING, WATERLOGGED);
 	}
 
 	/**
@@ -85,9 +82,7 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
 
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-		return level.isClientSide()
-				? createTickerHelper(blockEntityType, this.blockEntityType(), TreasureChestBlockEntity::lidAnimateTick)
-				: createTickerHelper(blockEntityType, this.blockEntityType(), TreasureChestBlockEntity::serverTick);
+		return level.isClientSide() ? createTickerHelper(blockEntityType, this.blockEntityType(), TreasureChestBlockEntity::lidAnimateTick) : null;
 	}
 
 	/**
@@ -123,11 +118,6 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
 			BlockEntity blockEntity = level.getBlockEntity(pos);
 			if (blockEntity instanceof TreasureChestBlockEntity treasureChestBlockEntity) {
 				MenuProvider menuProvider = this.getMenuProvider(state, level, pos);
-				if (ModList.get().isLoaded("lootr") && state.getValue(IS_LOOT_CONTAINER)) {
-					if (treasureChestBlockEntity.getLootTable() != null) {
-						menuProvider = AetherLootrPlugin.getTreasureMenu((ServerPlayer) player, treasureChestBlockEntity);
-					}
-				}
 				if (treasureChestBlockEntity.getLocked()) {
 					ItemStack stack = player.getMainHandItem();
 					if (treasureChestBlockEntity.tryUnlock(player)) {
@@ -139,9 +129,6 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
 						}
 					}
 				} else if (!ChestBlock.isChestBlockedAt(level, pos) && menuProvider != null) {
-					if (treasureChestBlockEntity.getOpeners().add(player.getUUID())) {
-//						treasureChestBlockEntity.setChanged();
-					}
 					player.openMenu(menuProvider);
 					player.awardStat(Stats.CUSTOM.get(Stats.OPEN_CHEST));
 					PiglinAi.angerNearbyPiglins(player, true);
@@ -196,10 +183,8 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
 		if (!state.is(stateOther.getBlock())) {
 			BlockEntity blockEntity = level.getBlockEntity(pos);
 			if (blockEntity instanceof Container container) {
-				if (!(ModList.get().isLoaded("lootr") && container instanceof TreasureChestBlockEntity treasureChestBlockEntity && treasureChestBlockEntity.getLootTable() != null)) {
-					Containers.dropContents(level, pos, container);
-					level.updateNeighbourForOutputSignal(pos, this);
-				}
+				Containers.dropContents(level, pos, container);
+				level.updateNeighbourForOutputSignal(pos, this);
 			}
 			super.onRemove(state, level, pos, stateOther, flag);
 		}

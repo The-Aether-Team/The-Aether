@@ -2,20 +2,15 @@ package com.aetherteam.aether.blockentity;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.block.AetherBlocks;
-import com.aetherteam.aether.block.dungeon.TreasureChestBlock;
 import com.aetherteam.aether.item.miscellaneous.DungeonKeyItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.NbtUtils;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -36,15 +31,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nullable;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.UUID;
 import java.util.stream.IntStream;
 
 /**
@@ -80,8 +70,6 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     private ResourceLocation kind;
     @Nullable
     private LazyOptional<IItemHandlerModifiable> chestHandler;
-    private UUID blockEntityUuid = null;
-    private Set<UUID> openers;
 
     public TreasureChestBlockEntity() {
         this(AetherBlockEntityTypes.TREASURE_CHEST.get(), BlockPos.ZERO, AetherBlocks.TREASURE_CHEST.get().defaultBlockState());
@@ -93,7 +81,6 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
 
     protected TreasureChestBlockEntity(BlockEntityType<?> tileEntityType, BlockPos pos, BlockState state) {
         super(tileEntityType, pos, state);
-        this.openers = new HashSet<>();
         this.kind = new ResourceLocation(Aether.MODID, "bronze");
         this.locked = true;
     }
@@ -180,7 +167,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
 
     @Override
     public boolean canPlaceItemThroughFace(int index, ItemStack stack, Direction direction) {
-        if (!this.useLootrLoot() && direction != Direction.DOWN && stack.getItem().canFitInsideContainerItems()) {
+        if (direction != Direction.DOWN && stack.getItem().canFitInsideContainerItems()) {
             return this.canPlaceItem(index, stack);
         }
         return false;
@@ -188,7 +175,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
 
     @Override
     public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-        if (!this.useLootrLoot() && direction == Direction.DOWN) {
+        if (direction == Direction.DOWN) {
             return this.canTakeItem(this, index, stack);
         }
         return false;
@@ -212,17 +199,12 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
 
     @Override
     protected NonNullList<ItemStack> getItems() {
-        if (this.useLootrLoot()) {
-            return NonNullList.create();
-        }
         return this.items;
     }
 
     @Override
     protected void setItems(NonNullList<ItemStack> stacks) {
-        if (!this.useLootrLoot()) {
-            this.items = stacks;
-        }
+        this.items = stacks;
     }
 
     @Override
@@ -256,37 +238,6 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
 
     public boolean getLocked() {
         return this.locked;
-    }
-
-    public UUID getBlockEntityUuid() {
-        if (this.blockEntityUuid == null) {
-            this.blockEntityUuid = UUID.randomUUID();
-        }
-        return this.blockEntityUuid;
-    }
-
-    @Nullable
-    public ResourceLocation getLootTable() {
-        return this.lootTable;
-    }
-
-    public long getLootSeed() {
-        return this.lootTableSeed;
-    }
-
-    public Set<UUID> getOpeners() {
-        return this.openers;
-    }
-
-    @Override
-    public void unpackLootTable(Player player) {
-        if (!ModList.get().isLoaded("lootr")) {
-            super.unpackLootTable(player);
-        }
-    }
-
-    public boolean useLootrLoot() {
-        return this.getLootTable() != null && ModList.get().isLoaded("lootr");
     }
 
     @Override
@@ -327,14 +278,6 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
         blockEntity.chestLidController.tickLid();
     }
 
-    public static void serverTick(Level level, BlockPos pos, BlockState state, TreasureChestBlockEntity blockEntity) {
-        if (level instanceof ServerLevel serverLevel) {
-            if (blockEntity.getLootTable() != null && state.getValue(TreasureChestBlock.IS_LOOT_CONTAINER) != ModList.get().isLoaded("lootr")) {
-                serverLevel.setBlock(pos, state.setValue(TreasureChestBlock.IS_LOOT_CONTAINER, ModList.get().isLoaded("lootr")), 2);
-            }
-        }
-    }
-
     @Override
     public float getOpenNess(float partialTicks) {
         return this.chestLidController.getOpenness(partialTicks);
@@ -365,12 +308,6 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
         if (!this.trySaveLootTable(tag)) {
             ContainerHelper.saveAllItems(tag, this.items);
         }
-        tag.putUUID("blockEntityUuid", this.getBlockEntityUuid());
-        ListTag openers = new ListTag();
-        for (UUID opener : this.openers) {
-            openers.add(NbtUtils.createUUID(opener));
-        }
-        tag.put("lootrOpeners", openers);
     }
 
     @Override
@@ -381,16 +318,6 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         if (!this.tryLoadLootTable(tag)) {
             ContainerHelper.loadAllItems(tag, this.items);
-        }
-        if (tag.hasUUID("blockEntityUuid")) {
-            this.blockEntityUuid = tag.getUUID("blockEntityUuid");
-        }
-        if (tag.contains("lootrOpeners")) {
-            ListTag openers = tag.getList("lootrOpeners", 11);
-            this.openers.clear();
-            for (Tag item : openers) {
-                this.openers.add(NbtUtils.loadUUID(item));
-            }
         }
     }
 

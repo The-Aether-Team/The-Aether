@@ -5,15 +5,12 @@ import com.aetherteam.aether.block.AetherWoodTypes;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class AetherAtlases {
 	public static Material TREASURE_CHEST_MATERIAL;
 	public static Material TREASURE_CHEST_LEFT_MATERIAL;
 	public static Material TREASURE_CHEST_RIGHT_MATERIAL;
-	public static Material LOOTR_TREASURE_CHEST_UNOPENED;
-	public static Material LOOTR_TREASURE_CHEST_OPENED;
 
 	/**
 	 * Need to register these static values here from {@link AetherClient#clientSetup(FMLClientSetupEvent)},
@@ -23,10 +20,6 @@ public class AetherAtlases {
 		TREASURE_CHEST_MATERIAL = getChestMaterial("treasure_chest");
 		TREASURE_CHEST_LEFT_MATERIAL = getChestMaterial("treasure_chest_left");
 		TREASURE_CHEST_RIGHT_MATERIAL = getChestMaterial("treasure_chest_right");
-		if (ModList.get().isLoaded("lootr")) {
-			LOOTR_TREASURE_CHEST_UNOPENED = getChestMaterial("lootr/treasure_chest_unopened");
-			LOOTR_TREASURE_CHEST_OPENED = getChestMaterial("lootr/treasure_chest_opened");
-		}
 	}
 
 	public static void registerWoodTypeAtlases() {
