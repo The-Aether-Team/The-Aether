@@ -1,5 +1,6 @@
 {
   "type": "aether:repairing",
+  "category": "enchanting_repair",
   "group": "altar_axe_repair",
   "ingredient": {
     "item": "aether:gravitite_axe"

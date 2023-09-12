@@ -1,5 +1,6 @@
 {
   "type": "aether:repairing",
+  "category": "enchanting_repair",
   "group": "altar_gloves_repair",
   "ingredient": {
     "item": "aether:chainmail_gloves"
