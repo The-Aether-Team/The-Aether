@@ -12,7 +12,7 @@ import noobanidus.mods.lootr.util.Getter;
 import java.util.UUID;
 
 public class TreasureChestRenderer extends ChestRenderer<TreasureChestBlockEntity> {
-	private UUID playerId = null;
+	private UUID player = null;
 
 	public TreasureChestRenderer(BlockEntityRendererProvider.Context context) {
 		super(context);
@@ -21,16 +21,15 @@ public class TreasureChestRenderer extends ChestRenderer<TreasureChestBlockEntit
 	@Override
 	protected Material getMaterial(TreasureChestBlockEntity blockEntity, ChestType chestType) {
 		if (blockEntity.useLootrLoot()) {
-			if (this.playerId == null) {
+			if (this.player == null) {
 				Player player = Getter.getPlayer();
 				if (player == null) {
 					return AetherAtlases.LOOTR_TREASURE_CHEST_UNOPENED;
 				}
-				this.playerId = player.getUUID();
+				this.player = player.getUUID();
 			}
-			return blockEntity.getOpeners().contains(this.playerId) ? AetherAtlases.LOOTR_TREASURE_CHEST_OPENED : AetherAtlases.LOOTR_TREASURE_CHEST_UNOPENED;
+			return blockEntity.getOpeners().contains(this.player) ? AetherAtlases.LOOTR_TREASURE_CHEST_OPENED : AetherAtlases.LOOTR_TREASURE_CHEST_UNOPENED;
 		} else {
-
 			return switch (chestType) {
 				case LEFT -> AetherAtlases.TREASURE_CHEST_LEFT_MATERIAL;
 				case RIGHT -> AetherAtlases.TREASURE_CHEST_RIGHT_MATERIAL;

@@ -2,6 +2,7 @@ package com.aetherteam.aether.blockentity;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.block.AetherBlocks;
+import com.aetherteam.aether.block.dungeon.TreasureChestBlock;
 import com.aetherteam.aether.item.miscellaneous.DungeonKeyItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -14,6 +15,7 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -91,9 +93,9 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
 
     protected TreasureChestBlockEntity(BlockEntityType<?> tileEntityType, BlockPos pos, BlockState state) {
         super(tileEntityType, pos, state);
+        this.openers = new HashSet<>();
         this.kind = new ResourceLocation(Aether.MODID, "bronze");
         this.locked = true;
-        this.openers = new HashSet<>();
     }
 
     /**
@@ -178,7 +180,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
 
     @Override
     public boolean canPlaceItemThroughFace(int index, ItemStack stack, Direction direction) {
-        if (direction != Direction.DOWN && stack.getItem().canFitInsideContainerItems()) {
+        if (!this.useLootrLoot() && direction != Direction.DOWN && stack.getItem().canFitInsideContainerItems()) {
             return this.canPlaceItem(index, stack);
         }
         return false;
@@ -186,7 +188,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
 
     @Override
     public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-        if (direction == Direction.DOWN) {
+        if (!this.useLootrLoot() && direction == Direction.DOWN) {
             return this.canTakeItem(this, index, stack);
         }
         return false;
@@ -325,6 +327,14 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
         blockEntity.chestLidController.tickLid();
     }
 
+    public static void serverTick(Level level, BlockPos pos, BlockState state, TreasureChestBlockEntity blockEntity) {
+        if (level instanceof ServerLevel serverLevel) {
+            if (blockEntity.getLootTable() != null && state.getValue(TreasureChestBlock.IS_LOOT_CONTAINER) != ModList.get().isLoaded("lootr")) {
+                serverLevel.setBlock(pos, state.setValue(TreasureChestBlock.IS_LOOT_CONTAINER, ModList.get().isLoaded("lootr")), 2);
+            }
+        }
+    }
+
     @Override
     public float getOpenNess(float partialTicks) {
         return this.chestLidController.getOpenness(partialTicks);
@@ -360,7 +370,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
         for (UUID opener : this.openers) {
             openers.add(NbtUtils.createUUID(opener));
         }
-        tag.put("LootrOpeners", openers);
+        tag.put("lootrOpeners", openers);
     }
 
     @Override
@@ -375,8 +385,8 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
         if (tag.hasUUID("blockEntityUuid")) {
             this.blockEntityUuid = tag.getUUID("blockEntityUuid");
         }
-        if (tag.contains("LootrOpeners")) {
-            ListTag openers = tag.getList("LootrOpeners", 11);
+        if (tag.contains("lootrOpeners")) {
+            ListTag openers = tag.getList("lootrOpeners", 11);
             this.openers.clear();
             for (Tag item : openers) {
                 this.openers.add(NbtUtils.loadUUID(item));

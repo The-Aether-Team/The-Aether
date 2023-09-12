@@ -85,7 +85,9 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
 
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-		return level.isClientSide() ? createTickerHelper(blockEntityType, this.blockEntityType(), TreasureChestBlockEntity::lidAnimateTick) : null;
+		return level.isClientSide()
+				? createTickerHelper(blockEntityType, this.blockEntityType(), TreasureChestBlockEntity::lidAnimateTick)
+				: createTickerHelper(blockEntityType, this.blockEntityType(), TreasureChestBlockEntity::serverTick);
 	}
 
 	/**
@@ -138,10 +140,8 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
 					}
 				} else if (!ChestBlock.isChestBlockedAt(level, pos) && menuProvider != null) {
 					if (treasureChestBlockEntity.getOpeners().add(player.getUUID())) {
-						treasureChestBlockEntity.setChanged();
+//						treasureChestBlockEntity.setChanged();
 					}
-
-
 					player.openMenu(menuProvider);
 					player.awardStat(Stats.CUSTOM.get(Stats.OPEN_CHEST));
 					PiglinAi.angerNearbyPiglins(player, true);
@@ -196,8 +196,10 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
 		if (!state.is(stateOther.getBlock())) {
 			BlockEntity blockEntity = level.getBlockEntity(pos);
 			if (blockEntity instanceof Container container) {
-				Containers.dropContents(level, pos, container);
-				level.updateNeighbourForOutputSignal(pos, this);
+				if (!(ModList.get().isLoaded("lootr") && container instanceof TreasureChestBlockEntity treasureChestBlockEntity && treasureChestBlockEntity.getLootTable() != null)) {
+					Containers.dropContents(level, pos, container);
+					level.updateNeighbourForOutputSignal(pos, this);
+				}
 			}
 			super.onRemove(state, level, pos, stateOther, flag);
 		}
