@@ -1,4 +1,4 @@
-// 1.19.4	2023-08-16T20:37:27.3417428	Advancements
+// 1.19.4	2023-09-14T14:09:56.5016602	Advancements
 06e4eff332e36648b2a1bc237e738ec2a5584897 data/aether/advancements/aether_sleep.json
 63a80813c0c6f54bf16c23f6ac28c91836bdf5db data/aether/advancements/black_moa.json
 a6a7ec78b783342af08b1021cf32a7f5cf76d6a7 data/aether/advancements/blue_aercloud.json
@@ -16,7 +16,7 @@ d594332609b0f1ee53c12c9a34314267dd4f7713 data/aether/advancements/lance_loot.jso
 f3947e7b1d2a2ffcfef94ec59dfbf422fe7a7f00 data/aether/advancements/loreception.json
 f7555059c9b97f02d6a1340f93ecf1db1182792e data/aether/advancements/mount_phyg.json
 139f907ee80d2e276f63052baf710a25f1fbf05c data/aether/advancements/obsidian_armor.json
-5398c215ec9e00e77f188173e70db81d1a29fa9a data/aether/advancements/obtain_egg.json
+b5add5fe558202680c681b0e438bcba7c018722d data/aether/advancements/obtain_egg.json
 6a663ffdb90f9440ce1a186a8fa50a1bf9541be6 data/aether/advancements/obtain_petal.json
 a4f61ee818e77c68a1b9c851f6a62c97291f4c2a data/aether/advancements/phoenix_armor.json
 d33843f197963009639ff064068cf88b2a55df9b data/aether/advancements/read_lore.json
