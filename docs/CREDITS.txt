@@ -64,6 +64,9 @@ Kelvin285
 kodadacod
 - Implementation of the Skyroot Chest Boat programmer art.
 
+MehVahdJukaar
+- Updated the support for extinguishing Copper Lanterns.
+
 saintselect
 - Integration for JEI.
 - Converting entity audio files from stereo to mono.
