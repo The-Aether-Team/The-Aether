@@ -2,19 +2,19 @@
   "conditions": [
     {
       "type": "forge:mod_loaded",
-      "modid": "supplementaries"
+      "modid": "suppsquared"
     }
   ],
   "type": "aether:placement_conversion",
   "biome": "#aether:ultracold",
   "ingredient": {
-    "block": "supplementaries:copper_lantern",
+    "block": "suppsquared:copper_lantern",
     "properties": {
       "lit": "true"
     }
   },
   "result": {
-    "block": "supplementaries:copper_lantern",
+    "block": "suppsquared:copper_lantern",
     "properties": {
       "lit": "false"
     }
