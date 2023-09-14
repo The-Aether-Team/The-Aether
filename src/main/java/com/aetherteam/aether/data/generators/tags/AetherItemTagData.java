@@ -328,6 +328,7 @@ public class AetherItemTagData extends ItemTagsProvider {
         this.tag(ItemTags.WOODEN_DOORS).add(AetherBlocks.SKYROOT_DOOR.get().asItem());
         this.tag(ItemTags.WOODEN_TRAPDOORS).add(AetherBlocks.SKYROOT_TRAPDOOR.get().asItem());
         this.tag(ItemTags.WOODEN_BUTTONS).add(AetherBlocks.SKYROOT_BUTTON.get().asItem());
+        this.tag(ItemTags.STONE_BUTTONS).add(AetherBlocks.HOLYSTONE_BUTTON.get().asItem());
         this.tag(ItemTags.WOODEN_PRESSURE_PLATES).add(AetherBlocks.SKYROOT_PRESSURE_PLATE.get().asItem());
         this.tag(ItemTags.SAPLINGS).add(
                 AetherBlocks.SKYROOT_SAPLING.get().asItem(),

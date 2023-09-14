@@ -1,4 +1,4 @@
-// 1.20.1	2023-09-14T16:03:14.448733	Tags for minecraft:item mod id aether
+// 1.20.1	2023-09-14T16:50:26.0826451	Tags for minecraft:item mod id aether
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/items/accepted_music_discs.json
 b1ab124000a7da5fa5e186c46b51223391f132d9 data/aether/tags/items/accessories.json
 99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/aether/tags/items/accessories_capes.json
@@ -118,6 +118,7 @@ ef0249e5296febb809f365800a45d4fb24f13322 data/minecraft/tags/items/signs.json
 b830e607f8f1f40961d24f70f71b34ede14bfb3e data/minecraft/tags/items/slabs.json
 6b8be3d5114ac4f45dbfff26c82216c0b54ed097 data/minecraft/tags/items/small_flowers.json
 457cae0b6a74abc669c26ef099149e7149ff70bb data/minecraft/tags/items/stairs.json
+4d7b80f2ef2b39b61d876d350bd10e8291ddbe0e data/minecraft/tags/items/stone_buttons.json
 336a5cf28e3a807615f25965e0a90c7bf33dd3ac data/minecraft/tags/items/stone_crafting_materials.json
 5d4a9617f9199aa91aa4d20684b2c262120a033d data/minecraft/tags/items/swords.json
 873a3be032d33acb18dfdb43b7dc60f8c1fed2da data/minecraft/tags/items/trimmable_armor.json

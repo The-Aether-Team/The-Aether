@@ -232,6 +232,7 @@ public class AetherBlockTagData extends BlockTagsProvider {
         this.tag(BlockTags.BUTTONS).add(
                 AetherBlocks.SKYROOT_BUTTON.get(),
                 AetherBlocks.HOLYSTONE_BUTTON.get());
+        this.tag(BlockTags.STONE_BUTTONS).add(AetherBlocks.HOLYSTONE_BUTTON.get());
         this.tag(BlockTags.PRESSURE_PLATES).add(
                 AetherBlocks.SKYROOT_PRESSURE_PLATE.get(),
                 AetherBlocks.HOLYSTONE_PRESSURE_PLATE.get());
@@ -414,6 +415,9 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherBlocks.HOLIDAY_LEAVES.get(),
                 AetherBlocks.DECORATED_HOLIDAY_LEAVES.get(),
                 AetherBlocks.BERRY_BUSH.get());
+        this.tag(BlockTags.SWORD_EFFICIENT).add(
+                AetherBlocks.BERRY_BUSH.get(),
+                AetherBlocks.BERRY_BUSH_STEM.get());
         this.tag(BlockTags.NEEDS_STONE_TOOL).add(
                 AetherBlocks.ICESTONE.get(),
                 AetherBlocks.ICESTONE_STAIRS.get(),
@@ -460,6 +464,11 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherBlocks.GRAVITITE_ORE.get()
         );
         this.tag(BlockTags.SNOW_LAYER_CANNOT_SURVIVE_ON).add(AetherBlocks.ICESTONE.get());
+        this.tag(BlockTags.ENCHANTMENT_POWER_PROVIDER).add(AetherBlocks.SKYROOT_BOOKSHELF.get());
+        this.tag(BlockTags.SNIFFER_DIGGABLE_BLOCK).add(
+                AetherBlocks.AETHER_GRASS_BLOCK.get(),
+                AetherBlocks.AETHER_DIRT.get(),
+                AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get());
 
         // Forge
         this.tag(Tags.Blocks.BOOKSHELVES).add(AetherBlocks.SKYROOT_BOOKSHELF.get());
