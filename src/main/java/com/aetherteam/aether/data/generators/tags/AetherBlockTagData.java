@@ -301,6 +301,8 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherBlocks.SKYROOT_WALL_SIGN.get());
         this.tag(BlockTags.STANDING_SIGNS).add(AetherBlocks.SKYROOT_SIGN.get());
         this.tag(BlockTags.WALL_SIGNS).add(AetherBlocks.SKYROOT_WALL_SIGN.get());
+        this.tag(BlockTags.CEILING_HANGING_SIGNS).add(AetherBlocks.SKYROOT_HANGING_SIGN.get());
+        this.tag(BlockTags.WALL_HANGING_SIGNS).add(AetherBlocks.SKYROOT_WALL_HANGING_SIGN.get());
         this.tag(BlockTags.DRAGON_IMMUNE).addTags(
                 AetherTags.Blocks.LOCKED_DUNGEON_BLOCKS,
                 AetherTags.Blocks.TRAPPED_DUNGEON_BLOCKS,
@@ -380,6 +382,8 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherBlocks.SKYROOT_PLANKS.get(),
                 AetherBlocks.SKYROOT_SIGN.get(),
                 AetherBlocks.SKYROOT_WALL_SIGN.get(),
+                AetherBlocks.SKYROOT_HANGING_SIGN.get(),
+                AetherBlocks.SKYROOT_WALL_HANGING_SIGN.get(),
                 AetherBlocks.BERRY_BUSH_STEM.get(),
                 AetherBlocks.CHEST_MIMIC.get(),
                 AetherBlocks.SKYROOT_FENCE.get(),

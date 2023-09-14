@@ -1,4 +1,4 @@
-// 1.20.1	2023-09-08T18:52:14.55814	Loot Tables
+// 1.20.1	2023-09-14T15:11:25.2268751	Loot Tables
 6fd07ff3ea848d0b3b26cbf2b2d5c37dd5dc8b9a data/aether/loot_tables/advancements/enter_aether.json
 a2337d3e3c05d3efabc3f907351bfe480fd09caa data/aether/loot_tables/blocks/aerogel.json
 cb18a05b606bd3951085b27c35172c0e9867f0b0 data/aether/loot_tables/blocks/aerogel_slab.json
@@ -98,6 +98,7 @@ d9af0aaa1dfa628229bb94ffd68e7cbe4c25bf07 data/aether/loot_tables/blocks/skyroot_
 453a652b13faf915b1f2628e35cab12cefdb9477 data/aether/loot_tables/blocks/skyroot_door.json
 639f35e4f95497627bce3e30ceb2ecf8f2aa9004 data/aether/loot_tables/blocks/skyroot_fence.json
 5c463a846d8a3ac1baf067d7ca75aad5879fa41d data/aether/loot_tables/blocks/skyroot_fence_gate.json
+4496d7681a918396cb46b9d030d06918a31a6c6c data/aether/loot_tables/blocks/skyroot_hanging_sign.json
 5a5916a5628f138a18441a9c2a1c20ef48092e24 data/aether/loot_tables/blocks/skyroot_leaves.json
 bae7317ea3619908a85059d9f4672ec7ec8b362b data/aether/loot_tables/blocks/skyroot_log.json
 68b540975cca577d45fbbb2894d0d4b2e676c0a9 data/aether/loot_tables/blocks/skyroot_planks.json
@@ -107,6 +108,7 @@ bae7317ea3619908a85059d9f4672ec7ec8b362b data/aether/loot_tables/blocks/skyroot_
 42c687a49597629a46abf2b88ede9b86ab08ac47 data/aether/loot_tables/blocks/skyroot_slab.json
 4bac4a5179eb8874aa72df19c6b09896dfbf0d06 data/aether/loot_tables/blocks/skyroot_stairs.json
 c08b5149b95b5a98eff4438eda97c29350c0c112 data/aether/loot_tables/blocks/skyroot_trapdoor.json
+5a18637d40ecdd9c80eeabebba12b96fe4c2afcd data/aether/loot_tables/blocks/skyroot_wall_hanging_sign.json
 65d5b9396757d08c4c4ca8c157e0927d339623da data/aether/loot_tables/blocks/skyroot_wood.json
 0d6d6f4dc5359edad99af4e22a9d040bb2097d75 data/aether/loot_tables/blocks/stripped_skyroot_log.json
 93ca175c433ccd83045ce5483f6dc09a1b0f014e data/aether/loot_tables/blocks/stripped_skyroot_wood.json

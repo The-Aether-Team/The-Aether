@@ -265,6 +265,7 @@ public class AetherItemModelData extends AetherItemModelProvider {
 
         this.itemBlockFlat(AetherBlocks.AMBROSIUM_TORCH.get(), "utility/");
         this.item(AetherBlocks.SKYROOT_SIGN.get().asItem(), "miscellaneous/");
+        this.item(AetherBlocks.SKYROOT_HANGING_SIGN.get().asItem(), "miscellaneous/");
 
         this.itemBlock(AetherBlocks.BERRY_BUSH.get());
         this.itemBlockFlat(AetherBlocks.BERRY_BUSH_STEM.get(), "natural/");

@@ -1,4 +1,4 @@
-// 1.20.1	2023-09-13T21:52:16.6199322	Tags for minecraft:item mod id aether
+// 1.20.1	2023-09-14T16:03:14.448733	Tags for minecraft:item mod id aether
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/items/accepted_music_discs.json
 b1ab124000a7da5fa5e186c46b51223391f132d9 data/aether/tags/items/accessories.json
 99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/aether/tags/items/accessories_capes.json
@@ -105,6 +105,7 @@ a838c2bd53ede04f2a9ee61012c93d721871dce4 data/minecraft/tags/items/beds.json
 041c4417a18df60eb724a8acde8db524fa8bfba5 data/minecraft/tags/items/chest_boats.json
 33397c0e49ca28fad45a2f4fc1a5ceb3a01edfbd data/minecraft/tags/items/cluster_max_harvestables.json
 252219f81f3abde4bdebe512332bb483fefab9da data/minecraft/tags/items/fox_food.json
+7b309889aa4e92af4df62936f4a36677e23c52d3 data/minecraft/tags/items/hanging_signs.json
 475cdcff955b16a53107d126242e25d0e2e6babb data/minecraft/tags/items/hoes.json
 c158a789ed632738e5986dfbd21ff2bba9511d9b data/minecraft/tags/items/leaves.json
 c365c56c9363907f546b5d4778b8608912fa27c9 data/minecraft/tags/items/logs_that_burn.json

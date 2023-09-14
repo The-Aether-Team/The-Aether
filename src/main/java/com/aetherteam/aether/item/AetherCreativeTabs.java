@@ -170,6 +170,7 @@ public class AetherCreativeTabs {
                 output.accept(AetherBlocks.SUN_ALTAR.get());
                 output.accept(AetherBlocks.SKYROOT_BOOKSHELF.get());
                 output.accept(AetherBlocks.SKYROOT_SIGN.get());
+                output.accept(AetherBlocks.SKYROOT_HANGING_SIGN.get());
                 output.accept(AetherBlocks.SKYROOT_BED.get());
                 output.accept(AetherBlocks.TREASURE_CHEST.get());
                 output.accept(AetherBlocks.CHEST_MIMIC.get());

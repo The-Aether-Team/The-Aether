@@ -65,6 +65,7 @@ public class AetherBlockStateData extends AetherBlockStateProvider {
         this.torchBlock(AetherBlocks.AMBROSIUM_TORCH.get(), AetherBlocks.AMBROSIUM_WALL_TORCH.get());
 
         this.signBlock(AetherBlocks.SKYROOT_SIGN.get(), AetherBlocks.SKYROOT_WALL_SIGN.get(), this.texture(this.name(AetherBlocks.SKYROOT_PLANKS.get()), "construction/"));
+        this.hangingSignBlock(AetherBlocks.SKYROOT_HANGING_SIGN.get(), AetherBlocks.SKYROOT_WALL_HANGING_SIGN.get(), this.texture(this.name(AetherBlocks.STRIPPED_SKYROOT_LOG.get()), "natural/"));
 
         this.crossBlock(AetherBlocks.BERRY_BUSH_STEM.get(), "natural/");
         this.berryBush(AetherBlocks.BERRY_BUSH.get(), AetherBlocks.BERRY_BUSH_STEM.get());

@@ -383,6 +383,7 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherItems.BLUE_BERRY.get(),
                 AetherItems.ENCHANTED_BERRY.get());
         this.tag(ItemTags.SIGNS).add(AetherBlocks.SKYROOT_SIGN.get().asItem());
+        this.tag(ItemTags.HANGING_SIGNS).add(AetherBlocks.SKYROOT_HANGING_SIGN.get().asItem());
         this.tag(ItemTags.MUSIC_DISCS).add(
                 AetherItems.MUSIC_DISC_AETHER_TUNE.get(),
                 AetherItems.MUSIC_DISC_ASCENDING_DAWN.get(),

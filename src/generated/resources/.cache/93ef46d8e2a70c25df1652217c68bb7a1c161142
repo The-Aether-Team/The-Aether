@@ -1,4 +1,4 @@
-// 1.20.1	2023-09-13T22:55:21.4320086	Item Models: aether
+// 1.20.1	2023-09-14T15:11:25.2348762	Item Models: aether
 88dbeab79e0017737773db746d2e719a21fdb198 assets/aether/models/item/aechor_petal.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/aechor_plant_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/aether/models/item/aerbunny_spawn_egg.json
@@ -364,6 +364,7 @@ d43dd220611d687e8e75711facfb724a9f96b58a assets/aether/models/item/skyroot_books
 922db224252274e33f400a91f4daa19dba514505 assets/aether/models/item/skyroot_door.json
 fa63e68bff32423f90ec4f5eb03dce5c84b7f3fc assets/aether/models/item/skyroot_fence.json
 5b3eb4ea3b697e05d6c2d4a003c7539c558fb521 assets/aether/models/item/skyroot_fence_gate.json
+f3b3f4fc5d12ecc89a77098e65de2df723110a47 assets/aether/models/item/skyroot_hanging_sign.json
 4b6f6dcb6f2ab01a1c947fc4e4dc53e92f0be3b3 assets/aether/models/item/skyroot_hoe.json
 cd28104dcabc2aa805069da25b32414b5d5530cc assets/aether/models/item/skyroot_leaves.json
 aca9c2a9b6b108de19eefa1ce704e627151fb335 assets/aether/models/item/skyroot_log.json

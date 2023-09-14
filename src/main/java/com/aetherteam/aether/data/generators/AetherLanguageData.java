@@ -68,6 +68,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addBlock(AetherBlocks.AMBROSIUM_TORCH, "Ambrosium Torch");
 
         this.addBlock(AetherBlocks.SKYROOT_SIGN, "Skyroot Sign");
+        this.addBlock(AetherBlocks.SKYROOT_HANGING_SIGN, "Skyroot Hanging Sign");
 
         this.addBlock(AetherBlocks.BERRY_BUSH_STEM, "Bush Stem");
         this.addBlock(AetherBlocks.BERRY_BUSH, "Berry Bush");

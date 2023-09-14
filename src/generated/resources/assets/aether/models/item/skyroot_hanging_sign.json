@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "aether:item/miscellaneous/skyroot_hanging_sign"
+  }
+}
