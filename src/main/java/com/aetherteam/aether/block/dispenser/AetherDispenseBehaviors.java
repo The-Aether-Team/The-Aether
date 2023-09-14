@@ -1,7 +1,9 @@
 package com.aetherteam.aether.block.dispenser;
 
+import com.aetherteam.aether.capability.accessory.MobAccessory;
 import com.aetherteam.aether.entity.projectile.weapon.HammerProjectile;
 import com.aetherteam.aether.entity.projectile.weapon.ThrownLightningKnife;
+import com.aetherteam.aether.event.hooks.EntityHooks;
 import com.aetherteam.aether.inventory.menu.AccessoriesMenu;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.miscellaneous.bucket.SkyrootBucketItem;
@@ -15,6 +17,7 @@ import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.DispensibleContainerItem;
 import net.minecraft.world.item.Item;
@@ -71,13 +74,18 @@ public class AetherDispenseBehaviors {
                         for (int i = 0; i < stackHandler.getSlots(); i++) {
                             String id = entry.getKey();
                             SlotContext slotContext = new SlotContext(id, livingEntity, i, false, true); // Get slot that a Curio entry has.
-                            if (CuriosApi.isStackValid(slotContext, itemStack) && curio.canEquip(slotContext) && curio.canEquipFromUse(slotContext)) {
+                            if (curio.canEquip(slotContext) && curio.canEquipFromUse(slotContext)) {
                                 ItemStack slotStack = stackHandler.getStackInSlot(i);
                                 if (slotStack.isEmpty()) { // Check if Curio slot is empty.
                                     stackHandler.setStackInSlot(i, itemStack.copy()); // Put copy of stack from dispenser into slot.
                                     int count = itemStack.getCount();
                                     itemStack.shrink(count); // Shrink stack in dispenser.
-                                    //todo mob check for setting accessory drop chance.
+                                    if (livingEntity instanceof Mob mob && EntityHooks.canMobSpawnWithAccessories(mob)) {
+                                        MobAccessory.get(mob).ifPresent((accessoryMob) -> {
+                                            accessoryMob.setGuaranteedDrop(id);
+                                            accessoryMob.getMob().setPersistenceRequired();
+                                        });
+                                    }
                                 }
                             }
                         }

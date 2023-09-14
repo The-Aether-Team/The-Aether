@@ -1,6 +1,8 @@
 package com.aetherteam.aether.capability;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.capability.accessory.MobAccessory;
+import com.aetherteam.aether.capability.accessory.MobAccessoryCapability;
 import com.aetherteam.aether.capability.arrow.PhoenixArrow;
 import com.aetherteam.aether.capability.arrow.PhoenixArrowCapability;
 import com.aetherteam.aether.capability.item.DroppedItem;
@@ -17,6 +19,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -33,6 +36,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 @Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherCapabilities {
 	public static final Capability<AetherPlayer> AETHER_PLAYER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
+	public static final Capability<MobAccessory> MOB_ACCESSORY_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
 	public static final Capability<PhoenixArrow> PHOENIX_ARROW_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
 	public static final Capability<LightningTracker> LIGHTNING_TRACKER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
 	public static final Capability<DroppedItem> DROPPED_ITEM_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
@@ -41,6 +45,7 @@ public class AetherCapabilities {
 	@SubscribeEvent
 	public static void register(RegisterCapabilitiesEvent event) {
 		event.register(AetherPlayer.class);
+		event.register(MobAccessory.class);
 		event.register(PhoenixArrow.class);
 		event.register(LightningTracker.class);
 		event.register(DroppedItem.class);
@@ -54,6 +59,8 @@ public class AetherCapabilities {
 			if (event.getObject() instanceof LivingEntity livingEntity) {
 				if (livingEntity instanceof Player player) {
 					event.addCapability(new ResourceLocation(Aether.MODID, "aether_player"), new CapabilityProvider(AetherCapabilities.AETHER_PLAYER_CAPABILITY, new AetherPlayerCapability(player)));
+				} else if (livingEntity instanceof Mob mob) {
+					event.addCapability(new ResourceLocation(Aether.MODID, "mob_accessory"), new CapabilityProvider(AetherCapabilities.MOB_ACCESSORY_CAPABILITY, new MobAccessoryCapability(mob)));
 				}
 			}
 			if (event.getObject() instanceof AbstractArrow abstractArrow) {

@@ -45,6 +45,10 @@ public class GlovesItem extends AccessoryItem {
         return attributes;
     }
 
+    public double getDamage() {
+        return this.damage;
+    }
+
     @Override
     public ICurio.SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
         return new ICurio.SoundInfo(this.equipSound.get(), 1.0F, 1.0F);

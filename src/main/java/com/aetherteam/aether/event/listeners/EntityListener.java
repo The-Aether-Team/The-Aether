@@ -17,6 +17,7 @@ import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -24,8 +25,8 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import top.theillusivec4.curios.api.event.CurioDropsEvent;
-import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -120,17 +121,25 @@ public class EntityListener {
     }
 
     /**
-     * @see EntityHooks#handleEntityCurioDrops(LivingEntity, Collection, ICuriosItemHandler, boolean, int)
+     * @see EntityHooks#handleEntityCurioDrops(LivingEntity, Collection, boolean, int)
      */
     @SubscribeEvent
     public static void onCurioDrops(CurioDropsEvent event) {
         LivingEntity entity = event.getEntity();
         Collection<ItemEntity> itemDrops = event.getDrops();
-        ICuriosItemHandler handler = event.getCurioHandler();
+        Collection<ItemEntity> itemDropsCopy = new ArrayList<>(itemDrops);
         boolean recentlyHit = event.isRecentlyHit();
         int looting = event.getLootingLevel();
         itemDrops.clear();
-        itemDrops.addAll(EntityHooks.handleEntityCurioDrops(entity, itemDrops, handler, recentlyHit, looting));
+        itemDrops.addAll(EntityHooks.handleEntityCurioDrops(entity, itemDropsCopy, recentlyHit, looting));
+    }
+
+    @SubscribeEvent
+    public static void onDropExperience(LivingExperienceDropEvent event) {
+        LivingEntity livingEntity = event.getEntity();
+        int experience = event.getDroppedExperience();
+        int newExperience = EntityHooks.modifyExperience(livingEntity, experience);
+        event.setDroppedExperience(newExperience);
     }
 
     /**

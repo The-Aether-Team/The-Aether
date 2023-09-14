@@ -3,6 +3,7 @@ package com.aetherteam.aether.event.hooks;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlocks;
+import com.aetherteam.aether.capability.accessory.MobAccessory;
 import com.aetherteam.aether.capability.item.DroppedItem;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.effect.AetherEffects;
@@ -14,6 +15,7 @@ import com.aetherteam.aether.entity.passive.FlyingCow;
 import com.aetherteam.aether.entity.passive.MountableAnimal;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.miscellaneous.bucket.SkyrootBucketItem;
+import com.aetherteam.aether.mixin.AetherMixinHooks;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -35,6 +37,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
@@ -49,6 +52,7 @@ import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 public class EntityHooks {
@@ -99,7 +103,7 @@ public class EntityHooks {
                         }
                     }
                 }
-                if (fullyArmored) {
+                if (fullyArmored && random.nextInt(4) == 1) {
                     if (mob.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof ArmorItem armorItem) {
                         if (armorItem.getMaterial() instanceof ArmorMaterials armorMaterials) {
                             for (String identifier : gloveSlots) {
@@ -167,14 +171,12 @@ public class EntityHooks {
         RandomSource random = mob.level().getRandom();
         float chanceMultiplier = difficulty.getSpecialMultiplier();
         for (String identifier : allowedSlots) {
-            CuriosApi.getCuriosInventory(mob).ifPresent((handler) -> {
-                handler.findCurio(identifier, 0).ifPresent((slotResult) -> {
-                    ItemStack itemStack = slotResult.stack();
-                    if (!itemStack.isEmpty() && random.nextFloat() < 0.5F * chanceMultiplier) {
-                        handler.setEquippedCurio(identifier, 0, EnchantmentHelper.enchantItem(random, itemStack, (int) (5.0F + chanceMultiplier * (float) random.nextInt(18)), false));
-                    }
-                });
-            });
+            CuriosApi.getCuriosInventory(mob).ifPresent((handler) -> handler.findCurio(identifier, 0).ifPresent((slotResult) -> {
+                ItemStack itemStack = slotResult.stack();
+                if (!itemStack.isEmpty() && random.nextFloat() < 0.5F * chanceMultiplier) {
+                    handler.setEquippedCurio(identifier, 0, EnchantmentHelper.enchantItem(random, itemStack, (int) (5.0F + chanceMultiplier * (float) random.nextInt(18)), false));
+                }
+            }));
         }
     }
 
@@ -315,32 +317,58 @@ public class EntityHooks {
         }
     }
 
-    public static Collection<ItemEntity> handleEntityCurioDrops(LivingEntity entity, Collection<ItemEntity> itemDrops, ICuriosItemHandler handler, boolean recentlyHit, int looting) {
+    public static Collection<ItemEntity> handleEntityCurioDrops(LivingEntity entity, Collection<ItemEntity> itemDrops, boolean recentlyHit, int looting) {
         if (entity instanceof Mob mob) {
-            String[] allSlots = {"hands", "necklace", "aether_gloves", "aether_pendant"};
-            for (String identifier : allSlots) {
-                Optional<SlotResult> optionalSlotResult = handler.findCurio(identifier, 0);
-                if (optionalSlotResult.isPresent()) {
-                    ItemStack itemStack = optionalSlotResult.get().stack();
-
-
-                    float f = 0.085F; //todo once issue with this is i need to be able to check for armor that drops and shouldnt be damaged. make a unique field in mobmixin.
-                    boolean flag = false;
-                    if (!itemStack.isEmpty()) {
-                        itemDrops.removeIf((itemEntity) -> ItemStack.isSameItemSameTags(itemEntity.getItem(), itemStack));
-                    }
-                    if (!itemStack.isEmpty() && !EnchantmentHelper.hasVanishingCurse(itemStack) && recentlyHit && Math.max(mob.getRandom().nextFloat() - (float) looting * 0.01F, 0.0F) < f) {
-                        if (!flag && itemStack.isDamageableItem()) {
-                            itemStack.setDamageValue(itemStack.getMaxDamage() - mob.getRandom().nextInt(1 + mob.getRandom().nextInt(Math.max(itemStack.getMaxDamage() - 3, 1))));
+            MobAccessory.get(mob).ifPresent((accessoryMob) -> {
+                String[] allSlots = {"hands", "necklace", "aether_gloves", "aether_pendant"};
+                for (String identifier : allSlots) {
+                    List<ItemStack> itemStacks = itemDrops.stream().map(ItemEntity::getItem).filter((stack) -> AetherMixinHooks.getIdentifierForItem(accessoryMob.getMob(), stack).equals(identifier)).toList();
+                    if (!itemStacks.isEmpty()) {
+                        ItemStack itemStack = itemStacks.get(0);
+                        float f = accessoryMob.getEquipmentDropChance(identifier);
+                        boolean flag = f > 1.0F;
+                        if (!itemStack.isEmpty()) {
+                            itemDrops.removeIf((itemEntity) -> ItemStack.isSameItemSameTags(itemEntity.getItem(), itemStack));
                         }
-                        ItemEntity itemEntity = new ItemEntity(mob.level(), mob.getX(), mob.getY(), mob.getZ(), itemStack);
-                        itemEntity.setDefaultPickUpDelay();
-                        itemDrops.add(itemEntity);
+                        if (!itemStack.isEmpty() && !EnchantmentHelper.hasVanishingCurse(itemStack) && recentlyHit && Math.max(mob.getRandom().nextFloat() - (float) looting * 0.01F, 0.0F) < f) {
+                            if (!flag && itemStack.isDamageableItem()) {
+                                itemStack.setDamageValue(itemStack.getMaxDamage() - accessoryMob.getMob().getRandom().nextInt(1 + accessoryMob.getMob().getRandom().nextInt(Math.max(itemStack.getMaxDamage() - 3, 1))));
+                            }
+                            ItemEntity itemEntity = new ItemEntity(accessoryMob.getMob().level(), accessoryMob.getMob().getX(), accessoryMob.getMob().getY(), accessoryMob.getMob().getZ(), itemStack);
+                            itemEntity.setDefaultPickUpDelay();
+                            itemDrops.add(itemEntity);
+                        }
+                    }
+                }
+            });
+        }
+        return itemDrops;
+    }
+
+    public static int modifyExperience(LivingEntity entity, int experience) {
+        if (entity instanceof Mob mob) {
+            LazyOptional<MobAccessory> accessoryMobLazy = MobAccessory.get(mob);
+            if (accessoryMobLazy.isPresent() && accessoryMobLazy.resolve().isPresent()) {
+                MobAccessory accessoryMob = accessoryMobLazy.resolve().get();
+                LazyOptional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(mob);
+                if (lazyHandler.isPresent() && lazyHandler.resolve().isPresent()) {
+                    ICuriosItemHandler handler = lazyHandler.resolve().get();
+                    if (experience > 0) {
+                        String[] allSlots = {"hands", "necklace", "aether_gloves", "aether_pendant"};
+                        for (String identifier : allSlots) {
+                            Optional<SlotResult> optionalSlotResult = handler.findCurio(identifier, 0);
+                            if (optionalSlotResult.isPresent()) {
+                                ItemStack stack = optionalSlotResult.get().stack();
+                                if (!stack.isEmpty() && accessoryMob.getEquipmentDropChance(identifier) <= 1.0F) {
+                                    experience += 1 + mob.getRandom().nextInt(3);
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
-        return itemDrops;
+        return experience;
     }
 
     /**
