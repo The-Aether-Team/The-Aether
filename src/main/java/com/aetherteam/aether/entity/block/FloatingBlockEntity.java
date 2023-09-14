@@ -3,7 +3,7 @@ package com.aetherteam.aether.entity.block;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.block.Floatable;
 import com.aetherteam.aether.block.miscellaneous.FloatingBlock;
-import com.aetherteam.aether.data.resources.AetherDamageTypes;
+import com.aetherteam.aether.data.resources.registries.AetherDamageTypes;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ConcretePowderBlockAccessor;
 import net.minecraft.CrashReportCategory;

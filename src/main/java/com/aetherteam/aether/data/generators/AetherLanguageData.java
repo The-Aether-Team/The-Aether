@@ -313,13 +313,13 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addItem(AetherItems.GOLD_DUNGEON_KEY, "Gold Key");
 
         this.addItem(AetherItems.MUSIC_DISC_AETHER_TUNE, "Blue Music Disc");
-        addDiscDesc(AetherItems.MUSIC_DISC_AETHER_TUNE, "Noisestorm - Aether Tune");
+        this.addDiscDesc(AetherItems.MUSIC_DISC_AETHER_TUNE, "Noisestorm - Aether Tune");
         this.addItem(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "Valkyrie Music Disc");
-        addDiscDesc(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "Emile van Krieken - Ascending Dawn");
+        this.addDiscDesc(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "Emile van Krieken - Ascending Dawn");
         this.addItem(AetherItems.MUSIC_DISC_CHINCHILLA, "Sepia Music Disc");
-        addDiscDesc(AetherItems.MUSIC_DISC_CHINCHILLA, "RENREN - chinchilla");
+        this.addDiscDesc(AetherItems.MUSIC_DISC_CHINCHILLA, "RENREN - chinchilla");
         this.addItem(AetherItems.MUSIC_DISC_HIGH, "Super Music Disc");
-        addDiscDesc(AetherItems.MUSIC_DISC_HIGH, "RENREN - high");
+        this.addDiscDesc(AetherItems.MUSIC_DISC_HIGH, "RENREN - high");
 
         this.addItem(AetherItems.SKYROOT_BUCKET, "Skyroot Bucket");
         this.addItem(AetherItems.SKYROOT_WATER_BUCKET, "Skyroot Water Bucket");
@@ -373,6 +373,10 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addItem(AetherItems.SLIDER_SPAWN_EGG, "Slider Spawn Egg");
         this.addItem(AetherItems.SUN_SPIRIT_SPAWN_EGG, "Sun Spirit Spawn Egg");
         this.addItem(AetherItems.ZEPHYR_SPAWN_EGG, "Zephyr Spawn Egg");
+
+
+        this.addTrim("zanite", "Zanite");
+        this.addTrim("gravitite", "Gravitite");
 
 
         this.addEntityType(AetherEntityTypes.PHYG, "Phyg");

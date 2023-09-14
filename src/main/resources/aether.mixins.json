@@ -11,6 +11,7 @@
     "common.FeatureMixin",
     "common.LivingEntityMixin",
     "common.MobMixin",
+    "common.ModelBuilderMixin",
     "common.PlayerMixin",
     "common.accessor.AbstractContainerMenuAccessor",
     "common.accessor.AbstractFurnaceBlockEntityAccessor",

@@ -1,6 +1,6 @@
 package com.aetherteam.aether.block;
 
-import com.aetherteam.aether.data.resources.AetherDamageTypes;
+import com.aetherteam.aether.data.resources.registries.AetherDamageTypes;
 import com.aetherteam.aether.entity.block.FloatingBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;

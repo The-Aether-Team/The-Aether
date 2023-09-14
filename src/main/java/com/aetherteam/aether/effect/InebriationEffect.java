@@ -1,6 +1,6 @@
 package com.aetherteam.aether.effect;
 
-import com.aetherteam.aether.data.resources.AetherDamageTypes;
+import com.aetherteam.aether.data.resources.registries.AetherDamageTypes;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;

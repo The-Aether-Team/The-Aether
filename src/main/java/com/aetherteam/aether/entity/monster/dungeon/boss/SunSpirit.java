@@ -6,7 +6,7 @@ import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.capability.AetherCapabilities;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.AetherSoundEvents;
-import com.aetherteam.aether.data.resources.AetherDamageTypes;
+import com.aetherteam.aether.data.resources.registries.AetherDamageTypes;
 import com.aetherteam.aether.entity.AetherBossMob;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.ai.controller.BlankMoveControl;

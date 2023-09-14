@@ -434,5 +434,29 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherItems.ZANITE_HOE.get(),
                 AetherItems.GRAVITITE_HOE.get(),
                 AetherItems.VALKYRIE_HOE.get());
+        this.tag(ItemTags.TRIMMABLE_ARMOR).add(
+                AetherItems.ZANITE_HELMET.get(),
+                AetherItems.ZANITE_CHESTPLATE.get(),
+                AetherItems.ZANITE_LEGGINGS.get(),
+                AetherItems.ZANITE_BOOTS.get(),
+                AetherItems.GRAVITITE_HELMET.get(),
+                AetherItems.GRAVITITE_CHESTPLATE.get(),
+                AetherItems.GRAVITITE_LEGGINGS.get(),
+                AetherItems.GRAVITITE_BOOTS.get(),
+                AetherItems.NEPTUNE_HELMET.get(),
+                AetherItems.NEPTUNE_CHESTPLATE.get(),
+                AetherItems.NEPTUNE_LEGGINGS.get(),
+                AetherItems.NEPTUNE_BOOTS.get(),
+                AetherItems.PHOENIX_HELMET.get(),
+                AetherItems.PHOENIX_CHESTPLATE.get(),
+                AetherItems.PHOENIX_LEGGINGS.get(),
+                AetherItems.PHOENIX_BOOTS.get(),
+                AetherItems.OBSIDIAN_HELMET.get(),
+                AetherItems.OBSIDIAN_CHESTPLATE.get(),
+                AetherItems.OBSIDIAN_LEGGINGS.get(),
+                AetherItems.OBSIDIAN_BOOTS.get());
+        this.tag(ItemTags.TRIM_MATERIALS).add(
+                AetherItems.ZANITE_GEMSTONE.get(),
+                AetherBlocks.ENCHANTED_GRAVITITE.get().asItem());
     }
 }

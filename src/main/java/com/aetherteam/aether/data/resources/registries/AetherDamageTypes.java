@@ -1,4 +1,4 @@
-package com.aetherteam.aether.data.resources;
+package com.aetherteam.aether.data.resources.registries;
 
 import com.aetherteam.aether.Aether;
 import net.minecraft.core.registries.Registries;
@@ -17,15 +17,15 @@ import javax.annotation.Nullable;
  * Custom damage types are used for death messages and different damage calculations through tags.
  */
 public class AetherDamageTypes {
-    public static final ResourceKey<DamageType> ARMOR_PIERCING_ATTACK = getKey("armor_piercing_attack");
-    public static final ResourceKey<DamageType> CLOUD_CRYSTAL = getKey("cloud_crystal");
-    public static final ResourceKey<DamageType> CRUSH = getKey("crush");
-    public static final ResourceKey<DamageType> FIRE_CRYSTAL = getKey("fire_crystal");
-    public static final ResourceKey<DamageType> FLOATING_BLOCK = getKey("floating_block");
-    public static final ResourceKey<DamageType> ICE_CRYSTAL = getKey("ice_crystal");
-    public static final ResourceKey<DamageType> INCINERATION = getKey("incineration");
-    public static final ResourceKey<DamageType> INEBRIATION = getKey("inebriation");
-    public static final ResourceKey<DamageType> THUNDER_CRYSTAL = getKey("thunder_crystal");
+    public static final ResourceKey<DamageType> ARMOR_PIERCING_ATTACK = createKey("armor_piercing_attack");
+    public static final ResourceKey<DamageType> CLOUD_CRYSTAL = createKey("cloud_crystal");
+    public static final ResourceKey<DamageType> CRUSH = createKey("crush");
+    public static final ResourceKey<DamageType> FIRE_CRYSTAL = createKey("fire_crystal");
+    public static final ResourceKey<DamageType> FLOATING_BLOCK = createKey("floating_block");
+    public static final ResourceKey<DamageType> ICE_CRYSTAL = createKey("ice_crystal");
+    public static final ResourceKey<DamageType> INCINERATION = createKey("incineration");
+    public static final ResourceKey<DamageType> INEBRIATION = createKey("inebriation");
+    public static final ResourceKey<DamageType> THUNDER_CRYSTAL = createKey("thunder_crystal");
 
     public static void bootstrap(BootstapContext<DamageType> context) {
         context.register(ARMOR_PIERCING_ATTACK, new DamageType("mob", 0.1F));
@@ -39,7 +39,7 @@ public class AetherDamageTypes {
         context.register(THUNDER_CRYSTAL, new DamageType("aether.thunder_crystal", 0.1F));
     }
 
-    private static ResourceKey<DamageType> getKey(String name) {
+    private static ResourceKey<DamageType> createKey(String name) {
         return ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(Aether.MODID, name));
     }
 

@@ -2,7 +2,7 @@ package com.aetherteam.aether.data.generators.tags;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.data.resources.AetherDamageTypes;
+import com.aetherteam.aether.data.resources.registries.AetherDamageTypes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;

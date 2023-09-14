@@ -11,6 +11,10 @@ public abstract class AetherLanguageProvider extends NitrogenLanguageProvider {
         super(output, id);
     }
 
+    public void addTrim(String key, String name) { //todo move to nitrogen.
+        this.add("trim_material." + this.id + "." + key, name + " Material");
+    }
+
     public void addMoaSkinsText(String key, String name) {
         this.addGuiText("moa_skins." + key, name);
     }

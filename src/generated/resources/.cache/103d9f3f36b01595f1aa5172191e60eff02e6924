@@ -1,4 +1,4 @@
-// 1.20.1	2023-09-08T18:52:14.5901413	Registries
+// 1.20.1	2023-09-13T22:38:55.7260259	Registries
 25d924fdac4392adb88fe3b6aa2c23420f6fb4f9 data/aether/damage_type/armor_piercing_attack.json
 03d6a63bae7e4458c11da22471bf0f8b5051023c data/aether/damage_type/cloud_crystal.json
 024fc58ce3f33e1542dfe59582a4da47cc178764 data/aether/damage_type/crush.json
@@ -10,6 +10,8 @@ cd680f6ec731971e2aefe28c7fb4c793a2923fa8 data/aether/damage_type/ice_crystal.jso
 5ccd8e14aae581e4975827ff44b4e37760211a39 data/aether/damage_type/thunder_crystal.json
 f5deced101d2299e370ac067f29b5b355f28e634 data/aether/dimension/the_aether.json
 5655d4cd818dbc73a0baa2590d80dd274f85927d data/aether/dimension_type/the_aether.json
+68202c4f994624d4f02991a97d8aafaccc3aaf7a data/aether/trim_material/gravitite.json
+191264061b6e368ec29ad4c90a7cc0dd748d8e24 data/aether/trim_material/zanite.json
 8a9aa7a2e0f167dc02e52cb3b5a7233015af53e3 data/aether/worldgen/biome/skyroot_forest.json
 0e1e4e3b5ec8215f23178baf66e4d28e4e948ab8 data/aether/worldgen/biome/skyroot_grove.json
 8f28fbf7233bd64f8615eb48f497412447091e84 data/aether/worldgen/biome/skyroot_meadow.json

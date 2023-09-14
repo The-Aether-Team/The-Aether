@@ -1,7 +1,7 @@
 package com.aetherteam.aether.entity.projectile.crystal;
 
 import com.aetherteam.aether.client.AetherSoundEvents;
-import com.aetherteam.aether.data.resources.AetherDamageTypes;
+import com.aetherteam.aether.data.resources.registries.AetherDamageTypes;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.monster.dungeon.boss.SunSpirit;
 import net.minecraft.core.particles.ParticleOptions;
