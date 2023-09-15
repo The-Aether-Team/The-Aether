@@ -24,6 +24,12 @@
     "aether:obsidian_chestplate",
     "aether:obsidian_leggings",
     "aether:obsidian_boots",
-    "aether:obsidian_gloves"
+    "aether:obsidian_gloves",
+    "aether:leather_gloves",
+    "aether:iron_gloves",
+    "aether:golden_gloves",
+    "aether:diamond_gloves",
+    "aether:netherite_gloves",
+    "aether:chainmail_gloves"
   ]
 }

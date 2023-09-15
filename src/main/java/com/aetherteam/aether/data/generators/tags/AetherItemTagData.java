@@ -461,7 +461,13 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherItems.OBSIDIAN_CHESTPLATE.get(),
                 AetherItems.OBSIDIAN_LEGGINGS.get(),
                 AetherItems.OBSIDIAN_BOOTS.get(),
-                AetherItems.OBSIDIAN_GLOVES.get());
+                AetherItems.OBSIDIAN_GLOVES.get(),
+                AetherItems.LEATHER_GLOVES.get(),
+                AetherItems.IRON_GLOVES.get(),
+                AetherItems.GOLDEN_GLOVES.get(),
+                AetherItems.DIAMOND_GLOVES.get(),
+                AetherItems.NETHERITE_GLOVES.get(),
+                AetherItems.CHAINMAIL_GLOVES.get());
         this.tag(ItemTags.TRIM_MATERIALS).add(
                 AetherItems.ZANITE_GEMSTONE.get(),
                 AetherBlocks.ENCHANTED_GRAVITITE.get().asItem());
