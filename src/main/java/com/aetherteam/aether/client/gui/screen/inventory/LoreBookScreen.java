@@ -4,7 +4,6 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.gui.component.inventory.LorePageButton;
 import com.aetherteam.aether.inventory.menu.LoreBookMenu;
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -151,7 +150,6 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         int xPos = (this.width - this.getXSize()) / 2;
         int yPos = (this.height - (this.getYSize())) / 2;
         guiGraphics.blit(TEXTURE_LORE_BACKING, xPos, yPos - 4, 0, 0, this.getXSize(), this.getYSize() + 56, 256, 256); // Draws the grey GUI backing.

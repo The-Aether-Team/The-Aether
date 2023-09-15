@@ -64,13 +64,9 @@ public class AetherMenuButton extends Button {
 		}
 		this.setHeight((int) (BUTTON_HEIGHT / scale));
 
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
 		RenderSystem.enableBlend();
-		RenderSystem.defaultBlendFunc();
-		RenderSystem.enableDepthTest();
+		guiGraphics.setColor(1.0F, 1.0F, 1.0F, this.alpha);
 		guiGraphics.blit(AETHER_WIDGETS, this.getX() + this.hoverOffset, this.getY(), 0, Mth.ceil(i / scale), this.getWidth(), this.getHeight(), (int) (TEXTURE_SIZE / scale), (int) (TEXTURE_SIZE / scale));
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		RenderSystem.disableDepthTest();
 		RenderSystem.disableBlend();
 
 		poseStack.pushPose();

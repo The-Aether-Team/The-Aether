@@ -3,7 +3,6 @@ package com.aetherteam.aether.client.gui.screen.inventory;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.gui.screen.inventory.recipebook.IncubatorRecipeBookComponent;
 import com.aetherteam.aether.inventory.menu.IncubatorMenu;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -24,7 +23,6 @@ public class IncubatorScreen extends AbstractRecipeBookScreen<IncubatorMenu, Inc
 
 	@Override
 	protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
-		RenderSystem.clearColor(1.0F, 1.0F, 1.0F, 1.0F);
 		int left = this.getGuiLeft();
 		int top = this.getGuiTop();
 		guiGraphics.blit(INCUBATOR_GUI_TEXTURES, left, top, 0, 0, this.getXSize(), this.getYSize());

@@ -7,7 +7,6 @@ import com.aetherteam.aether.client.gui.component.menu.AetherMenuButton;
 import com.aetherteam.aether.client.gui.component.menu.DynamicMenuButton;
 import com.aetherteam.aether.mixin.mixins.client.accessor.TitleScreenAccessor;
 import com.aetherteam.cumulus.mixin.mixins.client.accessor.SplashRendererAccessor;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.Util;
@@ -153,13 +152,12 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 	 * @param scale The {@link Float} for the scaling of the logo relative to the true screen scale.
 	 */
 	private void setupLogo(GuiGraphics guiGraphics, float transparency, float scale) {
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, transparency);
 		int width = (int) (350 / scale);
 		int height = (int) (76 / scale);
 		int logoX = this.alignedLeft ? (int) (10 + (18 / scale)) : (int) ((this.width / 2 - 175 / scale));
 		int logoY = this.alignedLeft ? (int) (15 + (10 / scale)) : (int) (25 + (10 / scale));
+		guiGraphics.setColor(1.0F, 1.0F, 1.0F, transparency);
 		guiGraphics.blit(AETHER_LOGO, logoX, logoY, 0, 0, width, height, width, height);
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 	}
 
 	/**

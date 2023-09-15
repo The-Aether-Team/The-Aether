@@ -1,6 +1,5 @@
 package com.aetherteam.aether.client.gui.component.customization;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.network.chat.Component;
@@ -23,7 +22,6 @@ public class InactiveImageButton extends ImageButton {
         } else if (this.isHoveredOrFocused()) {
             v += this.yDiffTex;
         }
-        RenderSystem.enableDepthTest();
         guiGraphics.blit(this.resourceLocation, this.getX(), this.getY(), (float) this.xTexStart, (float) v, this.width, this.height, this.textureWidth, this.textureHeight);
     }
 }

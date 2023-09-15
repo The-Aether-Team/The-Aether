@@ -14,7 +14,6 @@ import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import com.mojang.blaze3d.platform.InputConstants;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
@@ -254,7 +253,6 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
         if (this.getMinecraft().player != null) {
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             int i = this.getGuiLeft();
             int j = this.getGuiTop();
             guiGraphics.blit(this.getMinecraft().player.isCreative() ? ACCESSORIES_INVENTORY_CREATIVE : ACCESSORIES_INVENTORY, i, j, 0, 0, this.getXSize() + this.creativeXOffset(), this.getYSize());

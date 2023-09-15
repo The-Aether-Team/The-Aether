@@ -17,7 +17,6 @@ import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import com.mojang.blaze3d.platform.InputConstants;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -302,7 +301,6 @@ public class GuiHooks {
      * @see com.aetherteam.aether.client.event.listeners.GuiListener#onRenderBossBar(CustomizeGuiOverlayEvent.BossEventProgress)
      */
     public static void drawBossHealthBar(GuiGraphics guiGraphics, int x, int y, LerpingBossEvent bossEvent) {
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         drawBar(guiGraphics, x + 2, y + 2, bossEvent);
         Component component = bossEvent.getName();
         int nameLength = Minecraft.getInstance().font.width(component);
