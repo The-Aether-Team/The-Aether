@@ -1,6 +1,5 @@
 package com.aetherteam.aether.client.renderer.entity.layers;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherTags;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.EntityModel;
@@ -30,7 +29,6 @@ public class EntityAccessoryLayer extends CuriosLayer<LivingEntity, EntityModel<
     public void render(PoseStack poseStack, MultiBufferSource buffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         poseStack.pushPose();
         CuriosApi.getCuriosInventory(livingEntity).ifPresent(handler -> {
-//            Aether.LOGGER.info(String.valueOf(handler.getCurios()));
             handler.getCurios().forEach((id, stacksHandler) -> {
                 IDynamicStackHandler stackHandler = stacksHandler.getStacks();
                 IDynamicStackHandler cosmeticStacksHandler = stacksHandler.getCosmeticStacks();
