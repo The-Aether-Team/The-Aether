@@ -64,6 +64,37 @@ public abstract class AetherItemModelProvider extends NitrogenItemModelProvider 
         this.armorItem(item, location, "boots");
     }
 
+    public void glovesItem(Item item, String location) {
+        ItemModelBuilder builder = this.withExistingParent(this.itemName(item), this.mcLoc("item/generated")).texture("layer0", this.modLoc("item/" + location + this.itemName(item)));
+        double index = 0.1;
+        for (ResourceKey<TrimMaterial> trimMaterial : VANILLA_TRIM_MATERIALS) {
+            String material = trimMaterial.location().getPath();
+            String name = this.itemName(item) + "_" + material + "_trim";
+            this.withExistingParent(name, this.mcLoc("item/generated"))
+                    .texture("layer0", this.modLoc("item/" + location + this.itemName(item)))
+                    .texture("layer1", this.modLoc("trims/items/gloves_trim_" + material));
+            builder.override().predicate(new ResourceLocation("trim_type"), (float) index).model(this.getExistingFile(this.modLoc("item/" + name))).end();
+            index += 0.1;
+        }
+    }
+
+    public void dyedGlovesItem(Item item, String location) {
+        ItemModelBuilder builder = this.withExistingParent(this.itemName(item), this.mcLoc("item/generated"))
+                .texture("layer0", this.modLoc("item/" + location + this.itemName(item)))
+                .texture("layer1", this.modLoc("item/" + location + this.itemName(item) + "_overlay"));
+        double index = 0.1;
+        for (ResourceKey<TrimMaterial> trimMaterial : VANILLA_TRIM_MATERIALS) {
+            String material = trimMaterial.location().getPath();
+            String name = this.itemName(item) + "_" + material + "_trim";
+            this.withExistingParent(name, this.mcLoc("item/generated"))
+                    .texture("layer0", this.modLoc("item/" + location + this.itemName(item)))
+                    .texture("layer1", this.modLoc("item/" + location + this.itemName(item) + "_overlay"))
+                    .texture("layer2", this.modLoc("trims/items/gloves_trim_" + material));
+            builder.override().predicate(new ResourceLocation("trim_type"), (float) index).model(this.getExistingFile(this.modLoc("item/" + name))).end();
+            index += 0.1;
+        }
+    }
+
     public void armorItem(Item item, String location, String type) {
         ItemModelBuilder builder = this.withExistingParent(this.itemName(item), this.mcLoc("item/generated")).texture("layer0", this.modLoc("item/" + location + this.itemName(item)));
         double index = 0.1;

@@ -118,18 +118,18 @@ public class AetherItemModelData extends AetherItemModelProvider {
         this.item(AetherItems.ZANITE_PENDANT.get(), "accessories/");
         this.item(AetherItems.ICE_PENDANT.get(), "accessories/");
 
-        this.dyedItem(AetherItems.LEATHER_GLOVES.get(), "accessories/");
-        this.item(AetherItems.CHAINMAIL_GLOVES.get(), "accessories/");
-        this.item(AetherItems.IRON_GLOVES.get(), "accessories/");
-        this.item(AetherItems.GOLDEN_GLOVES.get(), "accessories/");
-        this.item(AetherItems.DIAMOND_GLOVES.get(), "accessories/");
-        this.item(AetherItems.NETHERITE_GLOVES.get(), "accessories/");
-        this.item(AetherItems.ZANITE_GLOVES.get(), "accessories/");
-        this.item(AetherItems.GRAVITITE_GLOVES.get(), "accessories/");
-        this.item(AetherItems.NEPTUNE_GLOVES.get(), "accessories/");
-        this.item(AetherItems.PHOENIX_GLOVES.get(), "accessories/");
-        this.item(AetherItems.OBSIDIAN_GLOVES.get(), "accessories/");
-        this.item(AetherItems.VALKYRIE_GLOVES.get(), "accessories/");
+        this.dyedGlovesItem(AetherItems.LEATHER_GLOVES.get(), "accessories/");
+        this.glovesItem(AetherItems.CHAINMAIL_GLOVES.get(), "accessories/");
+        this.glovesItem(AetherItems.IRON_GLOVES.get(), "accessories/");
+        this.glovesItem(AetherItems.GOLDEN_GLOVES.get(), "accessories/");
+        this.glovesItem(AetherItems.DIAMOND_GLOVES.get(), "accessories/");
+        this.glovesItem(AetherItems.NETHERITE_GLOVES.get(), "accessories/");
+        this.glovesItem(AetherItems.ZANITE_GLOVES.get(), "accessories/");
+        this.glovesItem(AetherItems.GRAVITITE_GLOVES.get(), "accessories/");
+        this.glovesItem(AetherItems.NEPTUNE_GLOVES.get(), "accessories/");
+        this.glovesItem(AetherItems.PHOENIX_GLOVES.get(), "accessories/");
+        this.glovesItem(AetherItems.OBSIDIAN_GLOVES.get(), "accessories/");
+        this.glovesItem(AetherItems.VALKYRIE_GLOVES.get(), "accessories/");
 
         this.item(AetherItems.RED_CAPE.get(), "accessories/");
         this.item(AetherItems.BLUE_CAPE.get(), "accessories/");
