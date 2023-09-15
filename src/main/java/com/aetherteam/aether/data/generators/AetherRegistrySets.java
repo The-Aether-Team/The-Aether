@@ -1,7 +1,6 @@
 package com.aetherteam.aether.data.generators;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.data.resources.registries.AetherDamageTypes;
 import com.aetherteam.aether.data.resources.registries.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;

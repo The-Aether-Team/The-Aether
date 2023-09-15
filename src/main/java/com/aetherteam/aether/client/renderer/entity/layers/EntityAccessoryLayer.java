@@ -1,5 +1,6 @@
 package com.aetherteam.aether.client.renderer.entity.layers;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherTags;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.EntityModel;
@@ -28,28 +29,31 @@ public class EntityAccessoryLayer extends CuriosLayer<LivingEntity, EntityModel<
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         poseStack.pushPose();
-        CuriosApi.getCuriosInventory(livingEntity).ifPresent(handler -> handler.getCurios().forEach((id, stacksHandler) -> {
-            IDynamicStackHandler stackHandler = stacksHandler.getStacks();
-            IDynamicStackHandler cosmeticStacksHandler = stacksHandler.getCosmeticStacks();
+        CuriosApi.getCuriosInventory(livingEntity).ifPresent(handler -> {
+//            Aether.LOGGER.info(String.valueOf(handler.getCurios()));
+            handler.getCurios().forEach((id, stacksHandler) -> {
+                IDynamicStackHandler stackHandler = stacksHandler.getStacks();
+                IDynamicStackHandler cosmeticStacksHandler = stacksHandler.getCosmeticStacks();
 
-            for (int i = 0; i < stackHandler.getSlots(); i++) {
-                ItemStack stack = cosmeticStacksHandler.getStackInSlot(i);
-                boolean cosmetic = true;
-                NonNullList<Boolean> renderStates = stacksHandler.getRenders();
-                boolean renderable = renderStates.size() > i && renderStates.get(i);
+                for (int i = 0; i < stackHandler.getSlots(); i++) {
+                    ItemStack stack = cosmeticStacksHandler.getStackInSlot(i);
+                    boolean cosmetic = true;
+                    NonNullList<Boolean> renderStates = stacksHandler.getRenders();
+                    boolean renderable = renderStates.size() > i && renderStates.get(i);
 
-                if (stack.isEmpty() && renderable) {
-                    stack = stackHandler.getStackInSlot(i);
-                    cosmetic = false;
+                    if (stack.isEmpty() && renderable) {
+                        stack = stackHandler.getStackInSlot(i);
+                        cosmetic = false;
+                    }
+
+                    if (!stack.isEmpty() && stack.is(AetherTags.Items.ACCESSORIES)) { // Check if the Curio is an Aether accessory using the tag.
+                        SlotContext slotContext = new SlotContext(id, livingEntity, i, cosmetic, renderable);
+                        ItemStack finalStack = stack;
+                        CuriosRendererRegistry.getRenderer(stack.getItem()).ifPresent(renderer -> renderer.render(finalStack, slotContext, poseStack, this.renderLayerParent, buffer, light, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch));
+                    }
                 }
-
-                if (!stack.isEmpty() && stack.is(AetherTags.Items.ACCESSORIES)) { // Check if the Curio is an Aether accessory using the tag.
-                    SlotContext slotContext = new SlotContext(id, livingEntity, i, cosmetic, renderable);
-                    ItemStack finalStack = stack;
-                    CuriosRendererRegistry.getRenderer(stack.getItem()).ifPresent(renderer -> renderer.render(finalStack, slotContext, poseStack, this.renderLayerParent, buffer, light, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch));
-                }
-            }
-        }));
+            });
+        });
         poseStack.popPose();
     }
 }

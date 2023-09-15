@@ -13,11 +13,11 @@ import java.util.Map;
 
 @Mixin(ModelBuilder.class)
 public abstract class ModelBuilderMixin<T extends ModelBuilder<T>> {
-    @Shadow
+    @Shadow(remap = false)
     @Final
     protected Map<String, String> textures;
 
-    @Shadow
+    @Shadow(remap = false)
     protected abstract T self();
 
     @Inject(at = @At(value = "HEAD"), method = "texture(Ljava/lang/String;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraftforge/client/model/generators/ModelBuilder;", cancellable = true, remap = false)

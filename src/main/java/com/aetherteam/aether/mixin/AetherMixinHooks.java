@@ -14,6 +14,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -108,8 +109,8 @@ public class AetherMixinHooks {
         return "";
     }
 
-    public static ItemStack getItemByIdentifier(Mob mob, String identifier) {
-        LazyOptional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(mob);
+    public static ItemStack getItemByIdentifier(LivingEntity livingEntity, String identifier) {
+        LazyOptional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(livingEntity);
         if (lazyHandler.isPresent() && lazyHandler.resolve().isPresent()) {
             ICuriosItemHandler handler = lazyHandler.resolve().get();
             Optional<SlotResult> optionalResult = handler.findCurio(identifier, 0);
@@ -120,8 +121,8 @@ public class AetherMixinHooks {
         return ItemStack.EMPTY;
     }
 
-    public static void setItemByIdentifier(Mob mob, ItemStack itemStack, String identifier) {
-        LazyOptional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(mob);
+    public static void setItemByIdentifier(LivingEntity livingEntity, ItemStack itemStack, String identifier) {
+        LazyOptional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(livingEntity);
         if (lazyHandler.isPresent() && lazyHandler.resolve().isPresent()) {
             ICuriosItemHandler handler = lazyHandler.resolve().get();
             handler.setEquippedCurio(identifier, 0, itemStack);

@@ -44,6 +44,7 @@
     "client.CreateWorldScreenMixin",
     "client.PanoramaRendererMixin",
     "client.PauseScreenMixin",
+    "client.SmithingScreenMixin",
     "client.TippableArrowRendererMixin",
     "client.TitleScreenMixin",
     "client.WorldListEntryMixin",

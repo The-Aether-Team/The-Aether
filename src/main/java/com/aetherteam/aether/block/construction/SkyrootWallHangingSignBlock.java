@@ -1,7 +1,6 @@
 package com.aetherteam.aether.block.construction;
 
 import com.aetherteam.aether.blockentity.SkyrootHangingSignBlockEntity;
-import com.aetherteam.aether.blockentity.SkyrootSignBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.WallHangingSignBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
