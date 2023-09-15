@@ -9,6 +9,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -20,19 +21,22 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 public class GlovesItem extends AccessoryItem {
+    protected final ArmorMaterial material;
     protected final double damage;
     protected ResourceLocation GLOVES_TEXTURE;
     protected final Supplier<? extends SoundEvent> equipSound;
 
-    public GlovesItem(double punchDamage, String glovesName, Supplier<? extends SoundEvent> glovesSound, Properties properties) {
+    public GlovesItem(ArmorMaterial material, double punchDamage, String glovesName, Supplier<? extends SoundEvent> glovesSound, Properties properties) {
         super(properties);
+        this.material = material;
         this.damage = punchDamage;
         this.setRenderTexture(Aether.MODID, glovesName);
         this.equipSound = glovesSound;
     }
 
-    public GlovesItem(double punchDamage, ResourceLocation glovesName, Supplier<? extends SoundEvent> glovesSound, Properties properties) {
+    public GlovesItem(ArmorMaterial material, double punchDamage, ResourceLocation glovesName, Supplier<? extends SoundEvent> glovesSound, Properties properties) {
         super(properties);
+        this.material = material;
         this.damage = punchDamage;
         this.setRenderTexture(glovesName.getNamespace(), glovesName.getPath());
         this.equipSound = glovesSound;
@@ -45,13 +49,31 @@ public class GlovesItem extends AccessoryItem {
         return attributes;
     }
 
-    public double getDamage() {
-        return this.damage;
-    }
-
     @Override
     public ICurio.SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
         return new ICurio.SoundInfo(this.equipSound.get(), 1.0F, 1.0F);
+    }
+
+    /**
+     * Warning for "deprecation" is suppressed because the method is fine to override.
+     */
+    @SuppressWarnings("deprecation")
+    @Override
+    public int getEnchantmentValue() {
+        return this.material.getEnchantmentValue();
+    }
+
+    @Override
+    public boolean isValidRepairItem(ItemStack item, ItemStack material) {
+        return this.material.getRepairIngredient().test(material) || super.isValidRepairItem(item, material);
+    }
+
+    public ArmorMaterial getMaterial() {
+        return this.material;
+    }
+
+    public double getDamage() {
+        return this.damage;
     }
 
     public void setRenderTexture(String modId, String registryName) {
