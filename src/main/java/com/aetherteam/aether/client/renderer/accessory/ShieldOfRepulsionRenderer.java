@@ -2,8 +2,6 @@ package com.aetherteam.aether.client.renderer.accessory;
 
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
-import com.aetherteam.aether.item.AetherItems;
-import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.item.accessories.miscellaneous.ShieldOfRepulsionItem;
 import com.aetherteam.aether.mixin.mixins.client.accessor.PlayerModelAccessor;
 import com.aetherteam.nitrogen.ConstantsUtil;
@@ -27,7 +25,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.client.ICurioRenderer;
 
@@ -66,43 +63,37 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
     @Override
     public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack poseStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource buffer, int packedLight, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         LivingEntity livingEntity = slotContext.entity();
-        EquipmentUtil.findFirstCurio(livingEntity, AetherItems.SHIELD_OF_REPULSION.get()).ifPresent((slotResult) -> CuriosApi.getCuriosInventory(livingEntity).ifPresent(handler ->
-                handler.getStacksHandler(slotResult.slotContext().identifier()).ifPresent(stacksHandler -> {
-                    ShieldOfRepulsionItem shield = (ShieldOfRepulsionItem) slotResult.stack().getItem();
-                    if (stacksHandler.getRenders().get(slotResult.slotContext().index())) {
-                        ResourceLocation texture;
-                        HumanoidModel<LivingEntity> model;
+        ShieldOfRepulsionItem shield = (ShieldOfRepulsionItem) stack.getItem();
+        ResourceLocation texture;
+        HumanoidModel<LivingEntity> model;
 
-                        if (livingEntity instanceof Player player && renderLayerParent.getModel() instanceof PlayerModel<?> playerModel) {
-                            PlayerModelAccessor playerModelAccessor = (PlayerModelAccessor) playerModel;
-                            model = playerModelAccessor.aether$getSlim() ? this.shieldModelSlim : this.shieldModel;
-                            Optional<AetherPlayer> aetherPlayerOptional = AetherPlayer.get(player).resolve();
-                            if (aetherPlayerOptional.isPresent()) {
-                                if (!aetherPlayerOptional.get().isMoving()) {
-                                    texture = playerModelAccessor.aether$getSlim() ? shield.getShieldOfRepulsionSlimTexture() : shield.getShieldOfRepulsionTexture();
-                                } else {
-                                    texture = playerModelAccessor.aether$getSlim() ? shield.getShieldOfRepulsionSlimInactiveTexture() : shield.getShieldOfRepulsionInactiveTexture();
-                                }
-                            } else {
-                                texture = playerModelAccessor.aether$getSlim() ? shield.getShieldOfRepulsionSlimInactiveTexture() : shield.getShieldOfRepulsionInactiveTexture();
-                            }
-                        } else {
-                            model = this.shieldModel;
-                            Vec3 motion = livingEntity.getDeltaMovement();
-                            if (motion.x() == 0.0 && (motion.y() == ConstantsUtil.DEFAULT_DELTA_MOVEMENT_Y || motion.y() == 0.0) && motion.z() == 0.0) {
-                                texture = shield.getShieldOfRepulsionTexture();
-                            } else {
-                                texture = shield.getShieldOfRepulsionInactiveTexture();
-                            }
-                        }
+        if (livingEntity instanceof Player player && renderLayerParent.getModel() instanceof PlayerModel<?> playerModel) {
+            PlayerModelAccessor playerModelAccessor = (PlayerModelAccessor) playerModel;
+            model = playerModelAccessor.aether$getSlim() ? this.shieldModelSlim : this.shieldModel;
+            Optional<AetherPlayer> aetherPlayerOptional = AetherPlayer.get(player).resolve();
+            if (aetherPlayerOptional.isPresent()) {
+                if (!aetherPlayerOptional.get().isMoving()) {
+                    texture = playerModelAccessor.aether$getSlim() ? shield.getShieldOfRepulsionSlimTexture() : shield.getShieldOfRepulsionTexture();
+                } else {
+                    texture = playerModelAccessor.aether$getSlim() ? shield.getShieldOfRepulsionSlimInactiveTexture() : shield.getShieldOfRepulsionInactiveTexture();
+                }
+            } else {
+                texture = playerModelAccessor.aether$getSlim() ? shield.getShieldOfRepulsionSlimInactiveTexture() : shield.getShieldOfRepulsionInactiveTexture();
+            }
+        } else {
+            model = this.shieldModel;
+            Vec3 motion = livingEntity.getDeltaMovement();
+            if (motion.x() == 0.0 && (motion.y() == ConstantsUtil.DEFAULT_DELTA_MOVEMENT_Y || motion.y() == 0.0) && motion.z() == 0.0) {
+                texture = shield.getShieldOfRepulsionTexture();
+            } else {
+                texture = shield.getShieldOfRepulsionInactiveTexture();
+            }
+        }
 
-                        ICurioRenderer.followHeadRotations(slotContext.entity(), model.head);
-                        ICurioRenderer.followBodyRotations(slotContext.entity(), model);
-                        VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.entityTranslucent(texture), false, false);
-                        model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-                    }
-                })
-        ));
+        ICurioRenderer.followHeadRotations(slotContext.entity(), model.head);
+        ICurioRenderer.followBodyRotations(slotContext.entity(), model);
+        VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.entityTranslucent(texture), false, false);
+        model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
     }
 
     /**

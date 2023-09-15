@@ -1,4 +1,4 @@
-package com.aetherteam.aether.client.renderer.entity.layers;
+package com.aetherteam.aether.client.renderer.accessory.layer;
 
 import com.aetherteam.aether.AetherTags;
 import com.mojang.blaze3d.vertex.PoseStack;

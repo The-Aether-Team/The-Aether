@@ -7,13 +7,15 @@ import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.renderer.accessory.GlovesRenderer;
 import com.aetherteam.aether.client.renderer.accessory.PendantRenderer;
 import com.aetherteam.aether.client.renderer.accessory.ShieldOfRepulsionRenderer;
+import com.aetherteam.aether.client.renderer.accessory.layer.ArmorStandCapeLayer;
+import com.aetherteam.aether.client.renderer.accessory.layer.EntityAccessoryLayer;
+import com.aetherteam.aether.client.renderer.accessory.model.CapeModel;
 import com.aetherteam.aether.client.renderer.accessory.model.GlovesModel;
 import com.aetherteam.aether.client.renderer.accessory.model.PendantModel;
 import com.aetherteam.aether.client.renderer.blockentity.ChestMimicRenderer;
 import com.aetherteam.aether.client.renderer.blockentity.SkyrootBedRenderer;
 import com.aetherteam.aether.client.renderer.blockentity.TreasureChestRenderer;
 import com.aetherteam.aether.client.renderer.entity.*;
-import com.aetherteam.aether.client.renderer.entity.layers.EntityAccessoryLayer;
 import com.aetherteam.aether.client.renderer.entity.model.*;
 import com.aetherteam.aether.client.renderer.player.layer.DartLayer;
 import com.aetherteam.aether.client.renderer.player.layer.DeveloperGlowLayer;
@@ -38,6 +40,7 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -163,6 +166,7 @@ public class AetherRenderers {
         event.registerLayerDefinition(AetherModelLayers.SHIELD_OF_REPULSION, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(1.1F), false), 64, 64));
         event.registerLayerDefinition(AetherModelLayers.SHIELD_OF_REPULSION_SLIM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(1.15F), true), 64, 64));
         event.registerLayerDefinition(AetherModelLayers.SHIELD_OF_REPULSION_ARM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(0.4F), false), 64, 64));
+        event.registerLayerDefinition(AetherModelLayers.CAPE, CapeModel::createLayer);
 
         event.registerLayerDefinition(AetherModelLayers.PLAYER_HALO, () -> HaloModel.createLayer(0.0F, 0.0F, 0.0F, 0.0F));
     }
@@ -213,6 +217,10 @@ public class AetherRenderers {
             if (renderer != null) {
                 renderer.addLayer(new EntityAccessoryLayer(renderer));
             }
+        }
+        LivingEntityRenderer<ArmorStand, ArmorStandModel> renderer = event.getRenderer(EntityType.ARMOR_STAND);
+        if (renderer != null) {
+            renderer.addLayer(new ArmorStandCapeLayer(renderer));
         }
     }
 }

@@ -1,13 +1,10 @@
 package com.aetherteam.aether.mixin.mixins.client;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.item.EquipmentUtil;
-import com.aetherteam.aether.item.accessories.cape.CapeItem;
 import com.aetherteam.aether.mixin.AetherMixinHooks;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -15,9 +12,6 @@ import top.theillusivec4.curios.api.SlotResult;
 
 @Mixin(AbstractClientPlayer.class)
 public class AbstractClientPlayerMixin {
-    @Unique
-    private static final ResourceLocation SWUFF_CAPE_LOCATION = new ResourceLocation(Aether.MODID, "textures/models/accessory/capes/swuff_accessory.png");
-
     /**
      * Sets the player as having a loaded cape if they have a cape accessory equipped and visible.
      * @param cir The {@link Boolean} {@link CallbackInfoReturnable} used for the method's return value.
@@ -38,11 +32,10 @@ public class AbstractClientPlayerMixin {
     private void getCloakTextureLocation(CallbackInfoReturnable<ResourceLocation> cir) {
         AbstractClientPlayer player = (AbstractClientPlayer) (Object) this;
         SlotResult result = EquipmentUtil.getCape(player);
-        if (AetherMixinHooks.isCapeVisible(player) && result != null && result.stack().getItem() instanceof CapeItem capeItem) {
-            if (result.stack().getHoverName().getString().equalsIgnoreCase("swuff_'s cape")) { // Easter Egg cape texture.
-                cir.setReturnValue(SWUFF_CAPE_LOCATION);
-            } else {
-                cir.setReturnValue(capeItem.getCapeTexture());
+        if (result != null && AetherMixinHooks.isCapeVisible(player)) {
+            ResourceLocation texture = AetherMixinHooks.getCapeTexture(result.stack());
+            if (texture != null) {
+                cir.setReturnValue(texture);
             }
         }
     }

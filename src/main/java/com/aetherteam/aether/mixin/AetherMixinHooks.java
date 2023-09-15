@@ -1,5 +1,6 @@
 package com.aetherteam.aether.mixin;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.client.WorldDisplayHelper;
@@ -9,7 +10,6 @@ import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
 import com.aetherteam.aether.item.accessories.pendant.PendantItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -30,18 +30,20 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 public class AetherMixinHooks {
+    private static final ResourceLocation SWUFF_CAPE_LOCATION = new ResourceLocation(Aether.MODID, "textures/models/accessory/capes/swuff_accessory.png");
+
     /**
      * Checks whether a cape accessory is visible.
-     * @param player The {@link AbstractClientPlayer} wearing the cape.
+     * @param livingEntity The {@link LivingEntity} wearing the cape.
      * @return Whether the cape is visible, as a {@link Boolean}.
      * @see com.aetherteam.aether.mixin.mixins.client.AbstractClientPlayerMixin
      */
-    public static boolean isCapeVisible(AbstractClientPlayer player) {
-        Optional<SlotResult> slotResult = EquipmentUtil.findFirstCurio(player, (item) -> item.getItem() instanceof CapeItem);
+    public static boolean isCapeVisible(LivingEntity livingEntity) {
+        Optional<SlotResult> slotResult = EquipmentUtil.findFirstCurio(livingEntity, (item) -> item.getItem() instanceof CapeItem);
         if (slotResult.isPresent()) {
             String identifier = slotResult.get().slotContext().identifier();
             int id = slotResult.get().slotContext().index();
-            LazyOptional<ICuriosItemHandler> itemHandler = CuriosApi.getCuriosInventory(player);
+            LazyOptional<ICuriosItemHandler> itemHandler = CuriosApi.getCuriosInventory(livingEntity);
             if (itemHandler.resolve().isPresent()) {
                 Optional<ICurioStacksHandler> stacksHandler = itemHandler.resolve().get().getStacksHandler(identifier);
                 if (stacksHandler.isPresent()) {
@@ -50,6 +52,17 @@ public class AetherMixinHooks {
             }
         }
         return false;
+    }
+
+    public static ResourceLocation getCapeTexture(ItemStack stack) {
+        if (stack.getItem() instanceof CapeItem capeItem) {
+            if (stack.getHoverName().getString().equalsIgnoreCase("swuff_'s cape")) { // Easter Egg cape texture.
+                return SWUFF_CAPE_LOCATION;
+            } else {
+                return capeItem.getCapeTexture();
+            }
+        }
+        return null;
     }
 
     /**

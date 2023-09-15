@@ -1,5 +1,6 @@
 package com.aetherteam.aether.event.hooks;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlocks;
@@ -14,9 +15,15 @@ import com.aetherteam.aether.entity.monster.dungeon.boss.Slider;
 import com.aetherteam.aether.entity.passive.FlyingCow;
 import com.aetherteam.aether.entity.passive.MountableAnimal;
 import com.aetherteam.aether.item.AetherItems;
+import com.aetherteam.aether.item.accessories.AccessoryItem;
+import com.aetherteam.aether.item.accessories.cape.CapeItem;
+import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
+import com.aetherteam.aether.item.accessories.miscellaneous.ShieldOfRepulsionItem;
+import com.aetherteam.aether.item.accessories.pendant.PendantItem;
 import com.aetherteam.aether.item.miscellaneous.bucket.SkyrootBucketItem;
 import com.aetherteam.aether.mixin.AetherMixinHooks;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -28,6 +35,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.*;
+import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
 import net.minecraft.world.entity.player.Player;
@@ -37,6 +45,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -47,8 +56,11 @@ import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.SlotResult;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
+import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
+import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -265,6 +277,132 @@ public class EntityHooks {
             }
         }
         return interactionResult;
+    }
+
+    public static Optional<InteractionResult> interactWithArmorStand(Entity target, Player player, ItemStack stack, Vec3 pos, InteractionHand hand) {
+        if (target instanceof ArmorStand armorStand) {
+            if (armorStand.level().isClientSide()) {
+                return Optional.of(InteractionResult.SUCCESS);
+            }
+            if (!stack.isEmpty()) {
+                if (stack.is(AetherTags.Items.ACCESSORIES)) {
+                    String identifier = "";
+                    if (stack.getItem() instanceof GlovesItem) {
+                        identifier = AetherConfig.COMMON.use_curios_menu.get() ? "hands" : "aether_gloves";
+                    } else if (stack.getItem() instanceof PendantItem) {
+                        identifier = AetherConfig.COMMON.use_curios_menu.get() ? "necklace" : "aether_pendant";
+                    } else if (stack.getItem() instanceof CapeItem) {
+                        identifier = AetherConfig.COMMON.use_curios_menu.get() ? "back" : "aether_cape";
+                    } else if (stack.getItem() instanceof ShieldOfRepulsionItem) {
+                        identifier = AetherConfig.COMMON.use_curios_menu.get() ? "body" : "aether_shield";
+                    }
+                    LazyOptional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(armorStand);
+                    if (lazyHandler.isPresent() && lazyHandler.resolve().isPresent()) {
+                        ICuriosItemHandler handler = lazyHandler.resolve().get();
+                        Optional<ICurioStacksHandler> stacksHandler = handler.getStacksHandler(identifier);
+                        if (stacksHandler.isPresent()) {
+                            IDynamicStackHandler stackHandler = stacksHandler.get().getCosmeticStacks();
+                            if (0 < stackHandler.getSlots()) {
+                                ItemStack itemStack = stackHandler.getStackInSlot(0);
+                                if (stack.getItem() instanceof AccessoryItem accessoryItem) {
+                                    SlotContext slotContext = new SlotContext(identifier, armorStand, 0, true, true);
+                                    if (accessoryItem.canEquip(slotContext, stack)) {
+                                        stackHandler.setStackInSlot(0, stack.copy());
+                                        if (accessoryItem instanceof GlovesItem glovesItem) {
+                                            armorStand.level().playSound(null, armorStand.blockPosition(), glovesItem.getEquipSound(slotContext, stack).soundEvent(), armorStand.getSoundSource(), 1, 1);
+                                        } else if (accessoryItem instanceof PendantItem pendantItem) {
+                                            armorStand.level().playSound(null, armorStand.blockPosition(), pendantItem.getEquipSound(slotContext, stack).soundEvent(), armorStand.getSoundSource(), 1, 1);
+                                        } else {
+                                            armorStand.level().playSound(null, armorStand.blockPosition(), SoundEvents.ARMOR_EQUIP_GENERIC, armorStand.getSoundSource(), 1, 1);
+                                        }
+                                        if (identifier.equals("hands") || identifier.equals("aether_gloves")) {
+                                            armorStand.setShowArms(true);
+                                        }
+                                        if (!player.isCreative()) {
+                                            int count = stack.getCount();
+                                            stack.shrink(count);
+                                        }
+                                        if (!itemStack.isEmpty()) {
+                                            player.setItemInHand(hand, itemStack);
+                                        }
+                                        return Optional.of(InteractionResult.SUCCESS);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                String identifier = slotToUnequip(armorStand, pos);
+                if (!identifier.isEmpty()) {
+                    LazyOptional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(armorStand);
+                    if (lazyHandler.isPresent() && lazyHandler.resolve().isPresent()) {
+                        ICuriosItemHandler handler = lazyHandler.resolve().get();
+                        Optional<ICurioStacksHandler> stacksHandler = handler.getStacksHandler(identifier);
+                        if (stacksHandler.isPresent()) {
+                            IDynamicStackHandler stackHandler = stacksHandler.get().getCosmeticStacks();
+                            if (0 < stackHandler.getSlots()) {
+                                ItemStack itemStack = stackHandler.getStackInSlot(0);
+                                if (!itemStack.isEmpty()) {
+                                    player.setItemInHand(hand, itemStack);
+                                    stackHandler.setStackInSlot(0, ItemStack.EMPTY);
+                                    return Optional.of(InteractionResult.SUCCESS);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return Optional.empty();
+    }
+
+    private static String slotToUnequip(ArmorStand armorStand, Vec3 pos) {
+        boolean isSmall = armorStand.isSmall();
+        Direction.Axis axis = armorStand.getDirection().getAxis();
+        double x = isSmall ? pos.x * 2.0 : pos.x;
+        double z = isSmall ? pos.z * 2.0 : pos.z;
+        double front = axis == Direction.Axis.X ? z : x;
+        double vertical = isSmall ? pos.y * 2.0 : pos.y;
+        String glovesIdentifier = AetherConfig.COMMON.use_curios_menu.get() ? "hands" : "aether_gloves";
+        String pendantIdentifier = AetherConfig.COMMON.use_curios_menu.get() ? "necklace" : "aether_pendant";
+        String capeIdentifier = AetherConfig.COMMON.use_curios_menu.get() ? "back" : "aether_cape";
+        String shieldIdentifier = AetherConfig.COMMON.use_curios_menu.get() ? "body" : "aether_shield";
+        Aether.LOGGER.info(String.valueOf(pos));
+        if (!getItemByIdentifier(armorStand, glovesIdentifier).isEmpty()
+                && Math.abs(front) >= (isSmall ? 0.15 : 0.2)
+                && vertical >= (isSmall ? 0.65 : 0.75)
+                && vertical < 1.15) {
+            return glovesIdentifier;
+        } else if (!getItemByIdentifier(armorStand, pendantIdentifier).isEmpty()
+                && vertical >= (isSmall ? 1.2 : 1.3)
+                && vertical < 0.9 + (isSmall ? 0.8 : 0.6)) {
+            return pendantIdentifier;
+        } else if (!getItemByIdentifier(armorStand, capeIdentifier).isEmpty()
+                && vertical >= (isSmall ? 1.0 : 1.1)
+                && vertical < (isSmall ? 1.7 : 1.4)) {
+            return capeIdentifier;
+        } else if (!getItemByIdentifier(armorStand, shieldIdentifier).isEmpty()
+                && vertical >= (isSmall ? 0.9 : 1.0)
+                && vertical < (isSmall ? 1.5 : 1.2)) {
+            return shieldIdentifier;
+        }
+        return "";
+    }
+
+    private static ItemStack getItemByIdentifier(ArmorStand armorStand, String identifier) {
+        LazyOptional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(armorStand);
+        if (lazyHandler.isPresent() && lazyHandler.resolve().isPresent()) {
+            ICuriosItemHandler handler = lazyHandler.resolve().get();
+            Optional<ICurioStacksHandler> stacksHandler = handler.getStacksHandler(identifier);
+            if (stacksHandler.isPresent()) {
+                IDynamicStackHandler stackHandler = stacksHandler.get().getCosmeticStacks();
+                if (0 < stackHandler.getSlots()) {
+                    return stackHandler.getStackInSlot(0);
+                }
+            }
+        }
+        return ItemStack.EMPTY;
     }
 
     /**

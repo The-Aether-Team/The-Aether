@@ -1,4 +1,4 @@
 {
   "entities": ["armor_stand"],
-  "slots": ["aether_gloves", "aether_pendant", "aether_shield"]
+  "slots": ["aether_gloves", "aether_pendant", "aether_cape", "aether_shield"]
 }
