@@ -139,9 +139,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                             null,
                             FrameType.TASK, true, true, false)
                     .requirements(RequirementsStrategy.OR)
-                    .addCriterion( "blue_moa_egg", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.BLUE_MOA_EGG.get()))
-                    .addCriterion( "white_moa_egg", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.WHITE_MOA_EGG.get()))
-                    .addCriterion( "black_moa_egg", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.BLACK_MOA_EGG.get()))
+                    .addCriterion( "moa_egg", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(AetherTags.Items.MOA_EGGS).build()))
                     .save(consumer, new ResourceLocation(Aether.MODID, "obtain_egg"), existingFileHelper);
 
             Advancement obtainPetal = Advancement.Builder.advancement()

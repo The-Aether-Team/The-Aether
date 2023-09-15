@@ -1,37 +1,11 @@
 {
   "parent": "aether:blue_aercloud",
   "criteria": {
-    "black_moa_egg": {
+    "moa_egg": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "aether:black_moa_egg"
-            ]
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "blue_moa_egg": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "aether:blue_moa_egg"
-            ]
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "white_moa_egg": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "aether:white_moa_egg"
-            ]
+            "tag": "aether:moa_eggs"
           }
         ]
       },
@@ -55,9 +29,7 @@
   },
   "requirements": [
     [
-      "blue_moa_egg",
-      "white_moa_egg",
-      "black_moa_egg"
+      "moa_egg"
     ]
   ],
   "sends_telemetry_event": true

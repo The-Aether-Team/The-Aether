@@ -1,4 +1,4 @@
-// 1.20.1	2023-09-14T15:11:25.3368753	Recipes
+// 1.20.1	2023-09-14T18:08:26.7298555	Recipes
 ce9ab2e043b1d5d8747a22324584f0bcf4c2b3b1 data/aether/advancements/recipes/building_blocks/aerogel_slab.json
 90208eb708709fa9badd0fc606e5daf5ad91b03b data/aether/advancements/recipes/building_blocks/aerogel_slab_from_aerogel_stonecutting.json
 6845688223f47a89fd0d51f6e6d1de155f983710 data/aether/advancements/recipes/building_blocks/aerogel_stairs.json
@@ -568,7 +568,7 @@ eb763c8d8f5a907549b7c15c6c8de3527290c72c data/aether/recipes/shield_repairing.js
 6ddbb67cd07c7f2673613f179c71e1cd436bf9a8 data/aether/recipes/skyroot_axe.json
 d19edd46c1828a6b649ef802bb43ec77afbd2fd9 data/aether/recipes/skyroot_axe_repairing.json
 e467a506e67ee68a7d86187995ddb6218f6ba790 data/aether/recipes/skyroot_barrel.json
-ecc1e7f8f5c72d2684e0a4ebb1394a338639d84a data/aether/recipes/skyroot_bed.json
+46124fab81b820d1b56d70e5cda2dd303b603edd data/aether/recipes/skyroot_bed.json
 e5f9ee455b03813a8b1eda0a995a7a84a70bf6d8 data/aether/recipes/skyroot_beehive.json
 a2cb1545c07a8941e0341ab35ab44965230ef9a0 data/aether/recipes/skyroot_boat.json
 ee9eaa593dbe57822929dd6092b11a97e51171d5 data/aether/recipes/skyroot_bookshelf.json

@@ -167,7 +167,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, AetherBlocks.SKYROOT_BED.get(), 1)
                 .define('W', ItemTags.WOOL)
-                .define('P', AetherBlocks.SKYROOT_PLANKS.get())
+                .define('P', AetherTags.Items.PLANKS_CRAFTING)
                 .pattern("WWW")
                 .pattern("PPP")
                 .unlockedBy("has_wool", has(ItemTags.WOOL))
