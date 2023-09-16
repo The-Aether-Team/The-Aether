@@ -71,6 +71,7 @@ public class EntityListener {
     /**
      * @see EntityHooks#skyrootBucketMilking(Entity, Player, InteractionHand)
      * @see EntityHooks#pickupBucketable(Entity, Player, InteractionHand)
+     * @see EntityHooks#interactWithArmorStand(Entity, Player, ItemStack, Vec3, InteractionHand)
      */
     @SubscribeEvent
     public static void onInteractWithEntity(PlayerInteractEvent.EntityInteractSpecific event) {
@@ -141,6 +142,9 @@ public class EntityListener {
         itemDrops.addAll(EntityHooks.handleEntityCurioDrops(entity, itemDropsCopy, recentlyHit, looting));
     }
 
+    /**
+     * @see EntityHooks#modifyExperience(LivingEntity, int)
+     */
     @SubscribeEvent
     public static void onDropExperience(LivingExperienceDropEvent event) {
         LivingEntity livingEntity = event.getEntity();
