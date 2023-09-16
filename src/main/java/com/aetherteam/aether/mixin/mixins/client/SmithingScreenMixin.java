@@ -30,7 +30,11 @@ public class SmithingScreenMixin {
     @Nullable
     private ArmorStand armorStandPreview;
 
-    @SuppressWarnings("deprecated")
+    /**
+     * Renders gloves on the armor stand in the smithing screen when applying armor trims to them.
+     * @param stack The {@link ItemStack} to try to render on the armor stand.
+     * @param ci The {@link CallbackInfo} for the void method return.
+     */
     @Inject(at = @At("HEAD"), method = "updateArmorStandPreview(Lnet/minecraft/world/item/ItemStack;)V", cancellable = true)
     private void updateArmorStandPreview(ItemStack stack, CallbackInfo ci) {
         if (this.armorStandPreview != null) {
@@ -38,7 +42,7 @@ public class SmithingScreenMixin {
             LazyOptional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(this.armorStandPreview);
             if (lazyHandler.isPresent() && lazyHandler.resolve().isPresent()) {
                 ICuriosItemHandler handler = lazyHandler.resolve().get();
-                ISlotType slot = CuriosApi.getEntitySlots(this.armorStandPreview.getType()).get(identifier);
+                ISlotType slot = CuriosApi.getEntitySlots(this.armorStandPreview.getType()).get(identifier); // Temporary workaround to Curios not registering slots for client-only entities.
                 handler.setCurios(new HashMap<>(Map.of(identifier, new CurioStacksHandler(handler, slot.getIdentifier(), slot.getSize(), slot.useNativeGui(), slot.hasCosmetic(), slot.canToggleRendering(), slot.getDropRule()))));
                 Optional<ICurioStacksHandler> stacksHandler = handler.getStacksHandler(identifier);
                 if (stacksHandler.isPresent()) {

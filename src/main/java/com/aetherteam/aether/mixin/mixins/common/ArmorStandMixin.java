@@ -6,6 +6,7 @@ import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
 import com.aetherteam.aether.item.accessories.miscellaneous.ShieldOfRepulsionItem;
 import com.aetherteam.aether.item.accessories.pendant.PendantItem;
 import com.aetherteam.aether.mixin.AetherMixinHooks;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,6 +16,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ArmorStand.class)
 public class ArmorStandMixin {
+    /**
+     * Allows {@link ArmorStand}s to accept accessories from {@link net.minecraft.world.entity.EntitySelector.MobCanWearArmorEntitySelector}.
+     * @param stack The {@link ItemStack}.
+     * @param cir The {@link Boolean} {@link CallbackInfoReturnable} used for the method's return value.
+     */
     @Inject(at = @At(value = "HEAD"), method = "canTakeItem(Lnet/minecraft/world/item/ItemStack;)Z", cancellable = true)
     private void canTakeItem(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
         ArmorStand armorStand = (ArmorStand) (Object) this;

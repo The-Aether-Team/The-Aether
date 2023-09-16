@@ -21,6 +21,12 @@ import java.util.Optional;
 
 @Mixin(ElytraLayer.class)
 public class ElytraLayerMixin<T extends LivingEntity> {
+    /**
+     * Used to change the elytra texture on an armor stand based on the equipped cape.
+     * @param stack The elytra {@link ItemStack}.
+     * @param entity The entity wearing the elytra.
+     * @param cir The {@link ResourceLocation} {@link CallbackInfoReturnable} used for the method's return value.
+     */
     @Inject(at = @At("HEAD"), method = "getElytraTexture(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/resources/ResourceLocation;", cancellable = true, remap = false)
     private void getElytraTexture(ItemStack stack, T entity, CallbackInfoReturnable<ResourceLocation> cir) {
         if (entity instanceof ArmorStand armorStand) {

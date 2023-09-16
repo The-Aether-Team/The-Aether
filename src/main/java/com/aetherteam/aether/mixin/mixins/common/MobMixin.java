@@ -12,6 +12,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Mob.class)
 public class MobMixin {
+    /**
+     * Allows {@link Mob}s to accept accessories from {@link net.minecraft.world.entity.EntitySelector.MobCanWearArmorEntitySelector}.
+     * @param stack The {@link ItemStack}.
+     * @param cir The {@link Boolean} {@link CallbackInfoReturnable} used for the method's return value.
+     */
     @Inject(at = @At(value = "HEAD"), method = "canTakeItem(Lnet/minecraft/world/item/ItemStack;)Z", cancellable = true)
     private void canTakeItem(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
         Mob mob = (Mob) (Object) this;
@@ -26,6 +31,11 @@ public class MobMixin {
         }
     }
 
+    /**
+     * Handles equipping accessories for {@link Mob}s.
+     * @param stack The {@link ItemStack}.
+     * @param cir The {@link Boolean} {@link CallbackInfoReturnable} used for the method's return value.
+     */
     @Inject(at = @At(value = "HEAD"), method = "equipItemIfPossible(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/ItemStack;", cancellable = true)
     private void equipItemIfPossible(ItemStack stack, CallbackInfoReturnable<ItemStack> cir) {
         Mob mob = (Mob) (Object) this;
