@@ -54,6 +54,11 @@ public class AetherMixinHooks {
         return false;
     }
 
+    /**
+     * Gets the cape texture from a {@link CapeItem}.
+     * @param stack The {@link ItemStack}.
+     * @return The {@link ResourceLocation} texture from the cape.
+     */
     public static ResourceLocation getCapeTexture(ItemStack stack) {
         if (stack.getItem() instanceof CapeItem capeItem) {
             if (stack.getHoverName().getString().equalsIgnoreCase("swuff_'s cape")) { // Easter Egg cape texture.
@@ -78,6 +83,13 @@ public class AetherMixinHooks {
         return false;
     }
 
+    /**
+     * Whether an accessory can be equipped or replace an already equipped accessory.
+     * @param mob The {@link Mob} to equip the accessory to.
+     * @param candidate The {@link ItemStack} to try to equip.
+     * @param existing The {@link ItemStack} already equipped.
+     * @return Whether the accessory can be equipped or replaced, as a {@link Boolean}.
+     */
     public static boolean canReplaceCurrentAccessory(Mob mob, ItemStack candidate, ItemStack existing) {
         if (EnchantmentHelper.hasBindingCurse(existing)) {
             return false;
@@ -103,6 +115,12 @@ public class AetherMixinHooks {
         return false;
     }
 
+    /**
+     * Gets the corresponding slot identifier for an accessory item.
+     * @param livingEntity The {@link LivingEntity} to get the accessory from.
+     * @param stack The accessory {@link ItemStack}.
+     * @return The slot identifier {@link String}.
+     */
     public static String getIdentifierForItem(LivingEntity livingEntity, ItemStack stack) {
         if (AetherConfig.COMMON.use_curios_menu.get()) {
             TagKey<Item> glovesTag = TagKey.create(Registries.ITEM, new ResourceLocation(Curios.MODID, "hands"));
@@ -122,6 +140,12 @@ public class AetherMixinHooks {
         return "";
     }
 
+    /**
+     * Gets an accessory from an entity.
+     * @param livingEntity The {@link LivingEntity} to get the accessory from.
+     * @param identifier The {@link String} for the slot identifier.
+     * @return The accessory {@link ItemStack} gotten from the entity.
+     */
     public static ItemStack getItemByIdentifier(LivingEntity livingEntity, String identifier) {
         LazyOptional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(livingEntity);
         if (lazyHandler.isPresent() && lazyHandler.resolve().isPresent()) {
@@ -134,6 +158,12 @@ public class AetherMixinHooks {
         return ItemStack.EMPTY;
     }
 
+    /**
+     * Equips an accessory to an entity.
+     * @param livingEntity The {@link LivingEntity} to equip to.
+     * @param itemStack The {@link ItemStack} to equip.
+     * @param identifier The {@link String} for the slot identifier.
+     */
     public static void setItemByIdentifier(LivingEntity livingEntity, ItemStack itemStack, String identifier) {
         LazyOptional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(livingEntity);
         if (lazyHandler.isPresent() && lazyHandler.resolve().isPresent()) {
