@@ -27,6 +27,10 @@ import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
 
 import java.util.Optional;
 
+/**
+ * [CODE COPY] - {@link net.minecraft.client.renderer.entity.layers.CapeLayer}.<br><br>
+ * Modified to check for capes in the Armor Stand's slots, as well as remove rotational fields and instead keep rotations constant.
+ */
 public class ArmorStandCapeLayer extends RenderLayer<ArmorStand, ArmorStandModel> {
     private final CapeModel cape;
 
@@ -54,9 +58,9 @@ public class ArmorStandCapeLayer extends RenderLayer<ArmorStand, ArmorStandModel
                                 if (!itemstack.is(Items.ELYTRA)) {
                                     poseStack.pushPose();
                                     poseStack.translate(0.0F, 0.0F, 0.0925F);
-                                    poseStack.mulPose(Axis.XP.rotationDegrees(6.0F + 0 / 2.0F + 0));
-                                    poseStack.mulPose(Axis.ZP.rotationDegrees(0 / 2.0F));
-                                    poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - 0 / 2.0F));
+                                    poseStack.mulPose(Axis.XP.rotationDegrees(3.0F));
+                                    poseStack.mulPose(Axis.ZP.rotationDegrees(0.0F));
+                                    poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
                                     VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entitySolid(texture));
                                     this.cape.renderToBuffer(poseStack, vertexconsumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
                                     poseStack.popPose();

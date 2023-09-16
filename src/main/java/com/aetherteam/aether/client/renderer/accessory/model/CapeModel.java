@@ -9,6 +9,10 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 
+/**
+ * [CODE COPY] - {@link net.minecraft.client.model.PlayerModel}.<br><br>
+ * Only copied parts related to capes.
+ */
 public class CapeModel extends HumanoidModel<LivingEntity> {
     private final ModelPart cloak;
 
