@@ -6,6 +6,7 @@
   "refmap": "aether.refmap.json",
   "mixins": [
     "common.AbstractArrowMixin",
+    "common.ArmorStandMixin",
     "common.DimensionTypeMixin",
     "common.DirectoryLockMixin",
     "common.FeatureMixin",
