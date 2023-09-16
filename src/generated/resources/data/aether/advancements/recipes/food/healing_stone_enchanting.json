@@ -30,5 +30,6 @@
     "recipes": [
       "aether:healing_stone_enchanting"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

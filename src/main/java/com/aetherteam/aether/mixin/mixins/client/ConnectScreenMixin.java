@@ -22,12 +22,13 @@ public class ConnectScreenMixin {
      * @param minecraft The {@link Minecraft} instance.
      * @param serverAddress The {@link ServerAddress} of the server being connected to.
      * @param serverData The {@link ServerData} of the server being connected to.
+     * @param isQuickPlay A {@link Boolean} for whether quick play is used from the launcher.
      * @param ci The {@link CallbackInfo} for the void method return.
      * @see WorldDisplayHelper#isActive()
      * @see WorldDisplayHelper#stopLevel(Screen)
      */
-    @Inject(at = @At(value = "HEAD"), method = "startConnecting(Lnet/minecraft/client/gui/screens/Screen;Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/multiplayer/resolver/ServerAddress;Lnet/minecraft/client/multiplayer/ServerData;)V")
-    private static void startConnecting(Screen screen, Minecraft minecraft, ServerAddress serverAddress, ServerData serverData, CallbackInfo ci) {
+    @Inject(at = @At(value = "HEAD"), method = "startConnecting(Lnet/minecraft/client/gui/screens/Screen;Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/multiplayer/resolver/ServerAddress;Lnet/minecraft/client/multiplayer/ServerData;Z)V")
+    private static void startConnecting(Screen screen, Minecraft minecraft, ServerAddress serverAddress, ServerData serverData, boolean isQuickPlay, CallbackInfo ci) {
         if (WorldDisplayHelper.isActive()) {
             WorldDisplayHelper.stopLevel(new GenericDirtMessageScreen(Component.literal("")));
         }

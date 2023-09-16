@@ -1,4 +1,4 @@
-// 1.19.4	2023-09-06T17:50:18.4392757	Tags for minecraft:block mod id aether
+// 1.20.1	2023-09-14T16:50:26.0516459	Tags for minecraft:block mod id aether
 fc9b66cee900f1b4f341fcec6da19eb45d575f43 data/aether/tags/blocks/aechor_plant_spawnable_on.json
 7f0ca5740d7eeb3d83a96088ad6c30a672b55609 data/aether/tags/blocks/aerclouds.json
 16a15f0767946dfa61ee9dfb544a3aeb3439340c data/aether/tags/blocks/aerogel.json
@@ -47,16 +47,18 @@ fd01915c57cee8effe17fe38cbedcefa19a98fb3 data/forge/tags/blocks/stone.json
 a838c2bd53ede04f2a9ee61012c93d721871dce4 data/minecraft/tags/blocks/beds.json
 e0ba7d52232d1fe3b13741279e0a983fd3a2d816 data/minecraft/tags/blocks/bee_growables.json
 06c36eccc17ac624e3be0a84e7eb42a94eb9c4ec data/minecraft/tags/blocks/buttons.json
+7b309889aa4e92af4df62936f4a36677e23c52d3 data/minecraft/tags/blocks/ceiling_hanging_signs.json
 e7909d515ff024fd14d135aeb5e292dc775903d7 data/minecraft/tags/blocks/convertable_to_mud.json
 2d0b4f3c1574160c79cacf5e6b7cb64b056908b8 data/minecraft/tags/blocks/dirt.json
 a00b76037fde7105059470ed988f4651c8b25a2c data/minecraft/tags/blocks/dragon_immune.json
+01f606af3f58ae6c9742c9c6e927e787256e6274 data/minecraft/tags/blocks/enchantment_power_provider.json
 ee6af189f3abd5cc155e83023432af66f8abf538 data/minecraft/tags/blocks/enderman_holdable.json
 0bba5a874905f77d759a35126765746aff21acf2 data/minecraft/tags/blocks/fence_gates.json
 0117fd9b7b40b0e02aa3498f00e7b329ecbe6d40 data/minecraft/tags/blocks/flower_pots.json
 3549a6c0791821524c9419a608b6af0de62b3530 data/minecraft/tags/blocks/impermeable.json
 c158a789ed632738e5986dfbd21ff2bba9511d9b data/minecraft/tags/blocks/leaves.json
 c365c56c9363907f546b5d4778b8608912fa27c9 data/minecraft/tags/blocks/logs_that_burn.json
-eb7be1f416f5bb92b93b5e42d2f34e3235aedf49 data/minecraft/tags/blocks/mineable/axe.json
+cbdf3c7a0ffd01a973135b741156c4fc58d72ed4 data/minecraft/tags/blocks/mineable/axe.json
 ad19c87e369a437df6d6d6950246efb6ad8c99c4 data/minecraft/tags/blocks/mineable/hoe.json
 7f367b779cfc58b29b82b07b1e767cb06994c22e data/minecraft/tags/blocks/mineable/pickaxe.json
 cebe2140981a986c200ca3dbd83933ff732046a2 data/minecraft/tags/blocks/mineable/shovel.json
@@ -71,11 +73,15 @@ af3c295b85cf6b6b265eacda66de70b6f5ac09dc data/minecraft/tags/blocks/needs_iron_t
 b830e607f8f1f40961d24f70f71b34ede14bfb3e data/minecraft/tags/blocks/slabs.json
 6b8be3d5114ac4f45dbfff26c82216c0b54ed097 data/minecraft/tags/blocks/small_flowers.json
 d3af8c97e70c279b7712d20a4391e1829f2a660c data/minecraft/tags/blocks/snaps_goat_horn.json
+5cb681c7db44272f3d64870f460636e25b231e26 data/minecraft/tags/blocks/sniffer_diggable_block.json
 193ad729a0f9ff9a88afc7626cec0c4a2d12c73c data/minecraft/tags/blocks/snow_layer_cannot_survive_on.json
 457cae0b6a74abc669c26ef099149e7149ff70bb data/minecraft/tags/blocks/stairs.json
 ef0249e5296febb809f365800a45d4fb24f13322 data/minecraft/tags/blocks/standing_signs.json
+4d7b80f2ef2b39b61d876d350bd10e8291ddbe0e data/minecraft/tags/blocks/stone_buttons.json
+ccf625a058ff363066ce123e9421fdd37414c296 data/minecraft/tags/blocks/sword_efficient.json
 2d0b4f3c1574160c79cacf5e6b7cb64b056908b8 data/minecraft/tags/blocks/valid_spawn.json
 8a35a44c0a25f20d1ebd014a96d33cf7359a7555 data/minecraft/tags/blocks/walls.json
+55ca07d0275a47a4ae006193d82b2025a0b7b378 data/minecraft/tags/blocks/wall_hanging_signs.json
 db8a532d4765955ab920abfa56fa18b7bad5900b data/minecraft/tags/blocks/wall_post_override.json
 ac91036fd2f5f2e4ca494586ad538b2fb467f56a data/minecraft/tags/blocks/wall_signs.json
 a8998a288a879cb5ffe96f3d45cbd69d9d50d863 data/minecraft/tags/blocks/wither_immune.json

@@ -120,8 +120,8 @@ public class Swet extends Slime implements MountableMob {
                 this.setWaterDamageScale(this.getWaterDamageScale() + 0.02F);
             }
         }
-        if (this.getWaterDamageScale() >= 0.9F && !this.getLevel().isClientSide()) {
-            this.getLevel().broadcastEntityEvent(this, (byte) 60);
+        if (this.getWaterDamageScale() >= 0.9F && !this.level().isClientSide()) {
+            this.level().broadcastEntityEvent(this, (byte) 60);
             this.remove(Entity.RemovalReason.KILLED);
         }
 
@@ -131,18 +131,18 @@ public class Swet extends Slime implements MountableMob {
 
         // Spawn particles when no target is captured.
         if (!this.hasPrey() && this.canSpawnSplashParticles()) {
-            if (this.getLevel().isClientSide()) {
+            if (this.level().isClientSide()) {
                 double d = (float) this.getX() + (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.3F;
                 double d1 = (float) this.getY() + this.getBbHeight();
                 double d2 = (float) this.getZ() + (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.3F;
-                this.getLevel().addParticle(ParticleTypes.SPLASH, d, d1 - 0.25, d2, 0.0, 0.0, 0.0);
+                this.level().addParticle(ParticleTypes.SPLASH, d, d1 - 0.25, d2, 0.0, 0.0, 0.0);
             }
         }
 
         // Handle jump behavior and animation.
         if (!this.isNoAi()) {
-            this.setMidJump(!this.isOnGround());
-            if (this.getLevel().isClientSide()) {
+            this.setMidJump(!this.onGround());
+            if (this.level().isClientSide()) {
                 this.swetHeightO = this.swetHeight;
                 this.swetWidthO = this.swetWidth;
                 if (this.getMidJump()) {
@@ -164,7 +164,7 @@ public class Swet extends Slime implements MountableMob {
                     this.swetWidth = this.swetWidth > 1.0F ? this.swetWidth - 0.25F : 1.0F;
                 }
             }
-            this.wasOnGround = this.isOnGround();
+            this.wasOnGround = this.onGround();
         }
         if (this.isFriendly()) { // Handle fall damage immunity when mounted.
             this.resetFallDistance();
@@ -194,7 +194,7 @@ public class Swet extends Slime implements MountableMob {
         if (this.isAlive()) {
             LivingEntity entity = this.getControllingPassenger();
             if (this.isVehicle() && entity != null) {
-                if (this.isOnGround() && !this.getPlayerJumped() && (this.getDeltaMovement().x() != 0 || this.getDeltaMovement().z() != 0)) {
+                if (this.onGround() && !this.getPlayerJumped() && (this.getDeltaMovement().x() != 0 || this.getDeltaMovement().z() != 0)) {
                     this.setDeltaMovement(this.getDeltaMovement().x(), 0.42F, this.getDeltaMovement().z());
                 }
                 this.resetFallDistance();
@@ -215,7 +215,7 @@ public class Swet extends Slime implements MountableMob {
      */
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
-        if (!this.getLevel().isClientSide()) {
+        if (!this.level().isClientSide()) {
             if (!this.hasPrey() && this.isFriendlyTowardEntity(player)) {
                 if (this.getScale() >= super.getScale()) {
                     this.consumePassenger(player);
@@ -240,7 +240,7 @@ public class Swet extends Slime implements MountableMob {
      * Spawn dissolve particles in {@link Swet#handleEntityEvent(byte)}.
      */
     public void spawnDissolveParticles() {
-        if (this.getLevel() instanceof ServerLevel level) {
+        if (this.level() instanceof ServerLevel level) {
             level.broadcastEntityEvent(this, (byte) 70);
         }
     }
@@ -422,7 +422,7 @@ public class Swet extends Slime implements MountableMob {
 
     @Override
     public boolean canJump() {
-        return this.isOnGround() && this.isFriendly();
+        return this.onGround() && this.isFriendly();
     }
 
     /**
@@ -533,7 +533,7 @@ public class Swet extends Slime implements MountableMob {
                 double f2 = (this.getRandom().nextFloat() * this.swetHeight) - (this.getRandom().nextGaussian() * 0.02 * 10.0);
                 double f3 = Mth.sin((float) f) * f1;
                 double f4 = Mth.cos((float) f) * f1;
-                this.getLevel().addParticle(ParticleTypes.SPLASH, this.getX() + f3, this.getY() + f2, this.getZ() + f4, f3 * 1.5 + this.getDeltaMovement().x(), 4.0, f4 * 1.5 + this.getDeltaMovement().z());
+                this.level().addParticle(ParticleTypes.SPLASH, this.getX() + f3, this.getY() + f2, this.getZ() + f4, f3 * 1.5 + this.getDeltaMovement().x(), 4.0, f4 * 1.5 + this.getDeltaMovement().z());
             }
         } else if (id == 71) {
             this.absMoveTo(this.getX(), this.getY(), this.getZ());
@@ -580,8 +580,8 @@ public class Swet extends Slime implements MountableMob {
         @Override
         public void tick() {
             if (this.jumps <= 3) {
-                if (this.swet.isOnGround()) {
-                    this.swet.getLevel().broadcastEntityEvent(this.swet, (byte) 71); // This is to make sure the Swet actually touches the ground on the client.
+                if (this.swet.onGround()) {
+                    this.swet.level().broadcastEntityEvent(this.swet, (byte) 71); // This is to make sure the Swet actually touches the ground on the client.
                     this.swet.playSound(AetherSoundEvents.ENTITY_SWET_JUMP.get(), 1.0F, ((this.swet.getRandom().nextFloat() - this.swet.getRandom().nextFloat()) * 0.2F + 1.0F) * 0.8F);
 
                     this.chosenDegrees = (float) this.swet.getRandom().nextInt(360);
@@ -746,7 +746,7 @@ public class Swet extends Slime implements MountableMob {
                 this.swet.setZza(0.0F);
             } else {
                 this.operation = Operation.WAIT;
-                if (this.swet.isOnGround()) {
+                if (this.swet.onGround()) {
                     this.swet.setSpeed((float) (this.speedModifier * this.swet.getAttributeValue(Attributes.MOVEMENT_SPEED)));
                     if (this.jumpDelay-- <= 0) {
                         this.jumpDelay = this.swet.getJumpDelay();
@@ -782,7 +782,7 @@ public class Swet extends Slime implements MountableMob {
         }
 
         public boolean canUse() {
-            return this.swet.getTarget() == null && (this.swet.isOnGround() || this.swet.isInFluidType() || this.swet.hasEffect(MobEffects.LEVITATION)) && this.swet.getMoveControl() instanceof SwetMoveControl;
+            return this.swet.getTarget() == null && (this.swet.onGround() || this.swet.isInFluidType() || this.swet.hasEffect(MobEffects.LEVITATION)) && this.swet.getMoveControl() instanceof SwetMoveControl;
         }
 
         public void tick() {
@@ -791,7 +791,7 @@ public class Swet extends Slime implements MountableMob {
             Vec3 offset = new Vec3(-Math.sin(rot * Mth.DEG_TO_RAD) * 2, 0.0, Math.cos(rot * Mth.DEG_TO_RAD) * 2);
             BlockPos offsetPos = BlockPos.containing(this.swet.position().add(offset));
             // Rotate the Swet if the next position in the direction it is facing is beyond its fall distance to jump to.
-            if (this.swet.getLevel().getHeight(Heightmap.Types.WORLD_SURFACE, offsetPos.getX(), offsetPos.getZ()) < offsetPos.getY() - this.swet.getMaxFallDistance()) {
+            if (this.swet.level().getHeight(Heightmap.Types.WORLD_SURFACE, offsetPos.getX(), offsetPos.getZ()) < offsetPos.getY() - this.swet.getMaxFallDistance()) {
                 this.nextRandomizeTime = this.adjustedTickDelay(40 + this.swet.getRandom().nextInt(60));
                 this.chosenDegrees += 180;
                 moveHelperController.setCanJump(false);

@@ -28,5 +28,6 @@
     "recipes": [
       "aether:swet_slime_block"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

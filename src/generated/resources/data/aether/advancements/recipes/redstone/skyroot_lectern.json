@@ -30,5 +30,6 @@
     "recipes": [
       "aether:skyroot_lectern"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

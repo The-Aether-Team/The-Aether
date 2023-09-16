@@ -22,7 +22,7 @@ public class WorldPreviewFixCommand {
      */
     private static int fix(CommandSourceStack source) {
         WorldDisplayHelper.resetStates();
-        source.sendSuccess(Component.translatable("commands.aether.menu.fix"), true);
+        source.sendSuccess(() -> Component.translatable("commands.aether.menu.fix"), true);
         return 1;
     }
 }

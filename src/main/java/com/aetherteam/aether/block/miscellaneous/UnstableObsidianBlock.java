@@ -76,10 +76,6 @@ public class UnstableObsidianBlock extends Block implements MeltingBehavior {
         return ItemStack.EMPTY;
     }
 
-    /**
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     */
-    @SuppressWarnings("deprecation")
     @Override
     public PushReaction getPistonPushReaction(BlockState state) {
         return PushReaction.NORMAL;

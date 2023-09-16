@@ -30,5 +30,6 @@
     "recipes": [
       "aether:leather_gloves_repairing"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

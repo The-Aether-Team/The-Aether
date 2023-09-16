@@ -216,7 +216,7 @@ public class SilverDungeonStructure extends Structure {
     @Override
     public void afterPlace(WorldGenLevel level, StructureManager structureManager, ChunkGenerator generator, RandomSource random, BoundingBox chunkBox, ChunkPos chunkPos, PiecesContainer pieces) {
         AABB chunkBounds = new AABB(chunkBox.minX(), chunkBox.minY(), chunkBox.minZ(), chunkBox.maxX(), chunkBox.maxY(), chunkBox.maxZ());
-        level.getLevel().getEntitiesOfClass(ValkyrieQueen.class, chunkBounds).forEach(queen -> {
+        level.getEntitiesOfClass(ValkyrieQueen.class, chunkBounds).forEach(queen -> {
             BoundingBox box = pieces.calculateBoundingBox();
             AABB dungeonBounds = new AABB(box.minX(), box.minY(), box.minZ(), box.maxX() + 1, box.maxY() + 1, box.maxZ() + 1);
             queen.setDungeonBounds(dungeonBounds);

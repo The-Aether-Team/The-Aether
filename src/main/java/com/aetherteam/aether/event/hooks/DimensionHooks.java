@@ -66,9 +66,9 @@ public class DimensionHooks {
             if (AetherConfig.SERVER.spawn_in_aether.get()) {
                 if (aetherPlayer.canSpawnInAether()) { // Checks if the player has been set to spawn in the Aether.
                     if (aetherPlayer.getPlayer() instanceof ServerPlayer serverPlayer) {
-                        MinecraftServer server = serverPlayer.getLevel().getServer();
+                        MinecraftServer server = serverPlayer.level().getServer();
                         ServerLevel aetherLevel = server.getLevel(AetherDimensions.AETHER_LEVEL);
-                        if (aetherLevel != null && serverPlayer.getLevel().dimension() != AetherDimensions.AETHER_LEVEL) {
+                        if (aetherLevel != null && serverPlayer.level().dimension() != AetherDimensions.AETHER_LEVEL) {
                             if (aetherPlayer.getPlayer().changeDimension(aetherLevel, new AetherPortalForcer(aetherLevel, false, true)) != null) {
                                 serverPlayer.setRespawnPosition(AetherDimensions.AETHER_LEVEL, serverPlayer.blockPosition(), serverPlayer.getYRot(), true, false);
                                 aetherPlayer.setCanSpawnInAether(false); // Sets that the player has already spawned in the Aether.
@@ -197,7 +197,7 @@ public class DimensionHooks {
      */
     @Nullable
     private static Entity entityFell(Entity entity) {
-        Level serverLevel = entity.getLevel();
+        Level serverLevel = entity.level();
         MinecraftServer minecraftserver = serverLevel.getServer();
         if (minecraftserver != null) {
             ServerLevel destination = minecraftserver.getLevel(LevelUtil.returnDimension());
@@ -256,13 +256,13 @@ public class DimensionHooks {
         if (entity instanceof Player player) {
             AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                 if (!AetherConfig.SERVER.spawn_in_aether.get() || !aetherPlayer.canSpawnInAether()) {
-                    if (entity.getLevel().getBiome(entity.blockPosition()).is(AetherTags.Biomes.DISPLAY_TRAVEL_TEXT)) {
-                        if (entity.level.dimension() == LevelUtil.destinationDimension() && dimension == LevelUtil.returnDimension()) { // We display the Descending GUI text to the player if they're about to return to the Overworld.
+                    if (entity.level().getBiome(entity.blockPosition()).is(AetherTags.Biomes.DISPLAY_TRAVEL_TEXT)) {
+                        if (entity.level().dimension() == LevelUtil.destinationDimension() && dimension == LevelUtil.returnDimension()) { // We display the Descending GUI text to the player if they're about to return to the Overworld.
                             displayAetherTravel = true;
                             playerLeavingAether = true;
                             PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new AetherTravelPacket(true));
                             PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new LeavingAetherPacket(true));
-                        } else if (entity.level.dimension() == LevelUtil.returnDimension() && dimension == LevelUtil.destinationDimension()) { // We display the Ascending GUI text to the player if they're about to enter the Aether.
+                        } else if (entity.level().dimension() == LevelUtil.returnDimension() && dimension == LevelUtil.destinationDimension()) { // We display the Ascending GUI text to the player if they're about to enter the Aether.
                             displayAetherTravel = true;
                             playerLeavingAether = false;
                             PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new AetherTravelPacket(true));
@@ -342,8 +342,8 @@ public class DimensionHooks {
      * @see com.aetherteam.aether.event.listeners.DimensionListener#onTriedToSleep(SleepingTimeCheckEvent)
      */
     public static boolean isEternalDay(Player player) {
-        if (player.getLevel().dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
-            LazyOptional<AetherTime> aetherTimeLazy = AetherTime.get(player.getLevel());
+        if (player.level().dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
+            LazyOptional<AetherTime> aetherTimeLazy = AetherTime.get(player.level());
             if (aetherTimeLazy.isPresent()) {
                 Optional<AetherTime> aetherTimeOptional = aetherTimeLazy.resolve();
                 if (aetherTimeOptional.isPresent()) {

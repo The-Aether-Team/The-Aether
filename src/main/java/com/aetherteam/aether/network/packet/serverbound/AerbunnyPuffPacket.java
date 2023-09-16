@@ -23,7 +23,7 @@ public record AerbunnyPuffPacket(int entityID) implements BasePacket {
 
     @Override
     public void execute(@Nullable Player playerEntity) {
-        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.getLevel().getEntity(this.entityID()) instanceof Aerbunny aerbunny) {
+        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level().getEntity(this.entityID()) instanceof Aerbunny aerbunny) {
             aerbunny.puff();
         }
     }

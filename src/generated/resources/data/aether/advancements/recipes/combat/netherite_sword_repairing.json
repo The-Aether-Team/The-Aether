@@ -30,5 +30,6 @@
     "recipes": [
       "aether:netherite_sword_repairing"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

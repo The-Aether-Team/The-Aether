@@ -138,5 +138,6 @@
       "valkyrie_boots",
       "valkyrie_gloves"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

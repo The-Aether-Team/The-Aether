@@ -56,7 +56,7 @@ public class Mimic extends Monster {
 	public boolean hurt(DamageSource source, float amount) {
 		if (!(source.getDirectEntity() instanceof Mimic)) {
 			if (source.getDirectEntity() instanceof LivingEntity livingEntity && this.hurtTime == 0) {
-				if (this.getLevel() instanceof ServerLevel serverLevel) {
+				if (this.level() instanceof ServerLevel serverLevel) {
 					for (int i = 0; i < 20; i++) {
 						serverLevel.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.CHEST.defaultBlockState()), this.getX(), this.getY() + this.getBbHeight() / 1.5, this.getZ(), 1, this.getBbWidth() / 4.0, this.getBbHeight() / 4.0, this.getBbWidth() / 4.0, 0.05F);
 					}
@@ -88,10 +88,10 @@ public class Mimic extends Monster {
 
 	@Override
 	public void spawnAnim() {
-		if (this.getLevel().isClientSide()) {
+		if (this.level().isClientSide()) {
 			EntityUtil.spawnSummoningExplosionParticles(this);
 		} else {
-			this.getLevel().broadcastEntityEvent(this, (byte) 70);
+			this.level().broadcastEntityEvent(this, (byte) 70);
 		}
 	}
 

@@ -1,6 +1,6 @@
 package com.aetherteam.aether.block;
 
-import com.aetherteam.aether.data.resources.AetherDamageTypes;
+import com.aetherteam.aether.data.resources.registries.AetherDamageTypes;
 import com.aetherteam.aether.entity.block.FloatingBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;
@@ -20,7 +20,7 @@ public interface Floatable {
     default void onBrokenAfterCollide(Level level, BlockPos pos, FloatingBlockEntity floatingBlock) { }
 
     default DamageSource getFallDamageSource(Entity entity) {
-        return AetherDamageTypes.damageSource(entity.level, AetherDamageTypes.FLOATING_BLOCK);
+        return AetherDamageTypes.damageSource(entity.level(), AetherDamageTypes.FLOATING_BLOCK);
     }
 
     default Predicate<Entity> getHurtsEntitySelector() {

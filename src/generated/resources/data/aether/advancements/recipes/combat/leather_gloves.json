@@ -28,5 +28,6 @@
     "recipes": [
       "aether:leather_gloves"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

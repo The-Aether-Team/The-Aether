@@ -49,7 +49,7 @@ public interface PhoenixArmor {
                     entity.moveRelative(0.04F * defaultBoost, new Vec3(entity.xxa, entity.yya, entity.zza));
                 }
             }
-            if (entity.getLevel() instanceof ServerLevel level) {
+            if (entity.level() instanceof ServerLevel level) {
                 level.sendParticles(ParticleTypes.FLAME,
                         entity.getX() + (level.getRandom().nextGaussian() / 5.0),
                         entity.getY() + (level.getRandom().nextGaussian() / 3.0),
@@ -120,9 +120,9 @@ public interface PhoenixArmor {
         if (entity instanceof Player player) {
             AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
                 if (EquipmentUtil.hasAnyPhoenixArmor(entity) && entity.isInWaterRainOrBubble()) {
-                    if (entity.getLevel().getGameTime() % 15 == 0) {
+                    if (entity.level().getGameTime() % 15 == 0) {
                         aetherPlayer.setObsidianConversionTime(aetherPlayer.getObsidianConversionTime() + 1);
-                        entity.getLevel().levelEvent(1501, entity.blockPosition(), 0);
+                        entity.level().levelEvent(1501, entity.blockPosition(), 0);
                     }
                 } else {
                     aetherPlayer.setObsidianConversionTime(0);
@@ -180,7 +180,7 @@ public interface PhoenixArmor {
         if (slotResult.stack().hasTag()) {
             outcomeStack.setTag(slotResult.stack().getTag());
         }
-        CuriosApi.getCuriosHelper().getCuriosHandler(entity).ifPresent(iCuriosItemHandler -> {
+        CuriosApi.getCuriosInventory(entity).ifPresent(iCuriosItemHandler -> {
             Map<String, ICurioStacksHandler> curios = iCuriosItemHandler.getCurios(); // Map of Curio slot names -> slot stack handlers.
             ICurioStacksHandler inv = curios.get(slotResult.slotContext().identifier()); // Stack handler for the Curio slot, gotten using the identifier through slotResult.
             if (inv != null) {

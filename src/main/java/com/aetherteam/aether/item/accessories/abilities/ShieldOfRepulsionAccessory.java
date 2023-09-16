@@ -37,7 +37,7 @@ public interface ShieldOfRepulsionAccessory {
                         if (impactedLiving instanceof Player player) {
                             AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                                 if (!aetherPlayer.isMoving()) {
-                                    if (aetherPlayer.getPlayer().getLevel().isClientSide()) { // Values used by the Shield of Repulsion screen overlay vignette.
+                                    if (aetherPlayer.getPlayer().level().isClientSide()) { // Values used by the Shield of Repulsion screen overlay vignette.
                                         aetherPlayer.setProjectileImpactedMaximum(150);
                                         aetherPlayer.setProjectileImpactedTimer(150);
                                     }
@@ -71,7 +71,7 @@ public interface ShieldOfRepulsionAccessory {
                 damagingProjectileEntity.yPower *= -0.25;
                 damagingProjectileEntity.zPower *= -0.25;
             }
-            slotResult.stack().hurtAndBreak(1, impactedLiving, (entity) -> CuriosApi.getCuriosHelper().onBrokenCurio(slotResult.slotContext()));
+            slotResult.stack().hurtAndBreak(1, impactedLiving, (entity) -> CuriosApi.broadcastCurioBreakEvent(slotResult.slotContext()));
         }
     }
 }

@@ -3,9 +3,7 @@ package com.aetherteam.aether.client.gui.screen.inventory;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.gui.component.inventory.SunAltarSlider;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -28,20 +26,18 @@ public class SunAltarScreen extends Screen {
     }
 
     @Override
-    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(poseStack);
-        RenderSystem.setShaderTexture(0, TEXTURE);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(guiGraphics);
         int xSize = 176;
         int ySize = 79;
         int x = (this.width - xSize) / 2;
         int y = (this.height - ySize) / 2;
-        GuiComponent.blit(poseStack, x, y, 0, 0, xSize, ySize);
+        guiGraphics.blit(TEXTURE, x, y, 0, 0, xSize, ySize);
 
         FormattedCharSequence sequence = this.title.getVisualOrderText();
-        this.font.draw(poseStack, this.title, (this.width - this.font.width(sequence)) / 2F, y + 20, 0x404040);
+        guiGraphics.drawString(this.font, this.title, (int) ((this.width - this.font.width(sequence)) / 2.0F), y + 20, 0x404040, false);
 
-        super.render(poseStack, mouseX, mouseY, partialTicks);
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
 
     @Override

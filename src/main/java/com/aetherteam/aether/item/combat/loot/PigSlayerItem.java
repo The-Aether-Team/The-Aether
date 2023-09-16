@@ -2,7 +2,7 @@ package com.aetherteam.aether.item.combat.loot;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.data.resources.AetherDamageTypes;
+import com.aetherteam.aether.data.resources.registries.AetherDamageTypes;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.item.combat.AetherItemTiers;
@@ -46,9 +46,9 @@ public class PigSlayerItem extends SwordItem {
 						zombifiedPiglinAccessor.callAlertOthers();
 					}
 				}
-				DamageSource damageSource = AetherDamageTypes.entityDamageSource(attacker.level, AetherDamageTypes.ARMOR_PIERCING_ATTACK, attacker);
+				DamageSource damageSource = AetherDamageTypes.entityDamageSource(attacker.level(), AetherDamageTypes.ARMOR_PIERCING_ATTACK, attacker);
 				target.hurt(damageSource, 26); // This doesn't deal 26 hearts of damage, it deals 20.
-				if (target.getLevel() instanceof ServerLevel level) {
+				if (target.level() instanceof ServerLevel level) {
 					for (int i = 0; i < 20; i++) {
 						double d0 = level.getRandom().nextGaussian() * 0.02;
 						double d1 = level.getRandom().nextGaussian() * 0.02;

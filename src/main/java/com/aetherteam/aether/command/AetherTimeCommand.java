@@ -39,14 +39,14 @@ public class AetherTimeCommand {
     }
 
     private static int queryTime(CommandSourceStack source, int time) {
-        source.sendSuccess(Component.translatable("commands.time.query", time), false);
+        source.sendSuccess(() -> Component.translatable("commands.time.query", time), false);
         return time;
     }
 
     private static int setTime(CommandSourceStack source, int time) {
         ServerLevel level = source.getLevel();
         level.setDayTime(time);
-        source.sendSuccess(Component.translatable("commands.time.set", time), true);
+        source.sendSuccess(() -> Component.translatable("commands.time.set", time), true);
         return getDayTime(source.getLevel());
     }
 
@@ -54,7 +54,7 @@ public class AetherTimeCommand {
         ServerLevel level = source.getLevel();
         level.setDayTime(level.getDayTime() + amount);
         int i = getDayTime(source.getLevel());
-        source.sendSuccess(Component.translatable("commands.time.set", i), true);
+        source.sendSuccess(() -> Component.translatable("commands.time.set", i), true);
         return i;
     }
 }

@@ -28,5 +28,6 @@
     "recipes": [
       "aether:moa_egg_cake"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

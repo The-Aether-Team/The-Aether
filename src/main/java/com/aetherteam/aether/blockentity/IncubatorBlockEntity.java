@@ -50,6 +50,7 @@ import net.minecraftforge.registries.tags.ITagManager;
 
 import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -238,7 +239,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 			ItemStack itemStack = stacks.get(0);
 			EntityType<?> entityType = recipe.getEntity();
 			BlockPos spawnPos = this.getBlockPos().above();
-			if (this.getLevel() != null && !this.getLevel().isClientSide() && this.getLevel() instanceof ServerLevel serverLevel) {
+			if (this.level != null && !this.level.isClientSide() && this.level instanceof ServerLevel serverLevel) {
 				CompoundTag tag = recipe.getTag();
 				Component customName = itemStack.hasCustomHoverName() ? itemStack.getHoverName() : null;
 				Entity entity = entityType.spawn(serverLevel, tag, null, spawnPos, MobSpawnType.TRIGGERED, true, false);
@@ -349,7 +350,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 	@Override
 	public void setItem(int index, ItemStack stack) {
 		ItemStack itemstack = this.items.get(index);
-		boolean flag = !stack.isEmpty() && stack.sameItem(itemstack) && ItemStack.tagMatches(stack, itemstack);
+		boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(itemstack, stack);
 		this.items.set(index, stack);
 		if (stack.getCount() > this.getMaxStackSize()) {
 			stack.setCount(this.getMaxStackSize());
@@ -416,11 +417,11 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 	}
 
 	@Override
-	public void awardUsedRecipes(Player player) { }
+	public void awardUsedRecipes(Player player, List<ItemStack> items) { }
 
 	@Override
 	public boolean stillValid(Player player) {
-		if (this.getLevel().getBlockEntity(this.getBlockPos()) != this) {
+		if (this.level.getBlockEntity(this.getBlockPos()) != this) {
 			return false;
 		} else {
 			return player.distanceToSqr(this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5) <= 64.0;

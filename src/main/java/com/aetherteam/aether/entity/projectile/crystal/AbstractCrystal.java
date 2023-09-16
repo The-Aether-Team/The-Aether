@@ -44,26 +44,26 @@ public abstract class AbstractCrystal extends Projectile {
     @Override
     public void tick() {
         super.tick();
-        if (!this.isOnGround()) {
+        if (!this.onGround()) {
             ++this.ticksInAir;
         }
         if (this.ticksInAir > this.getLifeSpan()) {
-            if (!this.getLevel().isClientSide()) {
+            if (!this.level().isClientSide()) {
                 this.discard();
             }
         }
-        HitResult result = ProjectileUtil.getHitResult(this, this::canHitEntity);
+        HitResult result = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
         boolean flag = false;
         if (result.getType() == HitResult.Type.BLOCK) {
             BlockPos blockPos = ((BlockHitResult) result).getBlockPos();
-            BlockState blockState = this.getLevel().getBlockState(blockPos);
+            BlockState blockState = this.level().getBlockState(blockPos);
             if (blockState.is(Blocks.NETHER_PORTAL)) {
                 this.handleInsidePortal(blockPos);
                 flag = true;
             } else if (blockState.is(Blocks.END_GATEWAY)) {
-                BlockEntity blockEntity = this.getLevel().getBlockEntity(blockPos);
+                BlockEntity blockEntity = this.level().getBlockEntity(blockPos);
                 if (blockEntity instanceof TheEndGatewayBlockEntity endGatewayBlockEntity && TheEndGatewayBlockEntity.canEntityTeleport(this)) {
-                    TheEndGatewayBlockEntity.teleportEntity(this.getLevel(), blockPos, blockState, this, endGatewayBlockEntity);
+                    TheEndGatewayBlockEntity.teleportEntity(this.level(), blockPos, blockState, this, endGatewayBlockEntity);
                 }
                 flag = true;
             }
@@ -101,7 +101,7 @@ public abstract class AbstractCrystal extends Projectile {
      * Creates the crystal's explosion particles.
      */
     public void spawnExplosionParticles() {
-        if (this.getLevel() instanceof ServerLevel level) {
+        if (this.level() instanceof ServerLevel level) {
             for (int i = 0; i < 20; i++) {
                 double x = (this.random.nextFloat() - 0.5F) * 0.5;
                 double y = (this.random.nextFloat() - 0.5F) * 0.5;

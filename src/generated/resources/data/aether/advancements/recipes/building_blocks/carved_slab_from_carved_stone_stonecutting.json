@@ -30,5 +30,6 @@
     "recipes": [
       "aether:carved_slab_from_carved_stone_stonecutting"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

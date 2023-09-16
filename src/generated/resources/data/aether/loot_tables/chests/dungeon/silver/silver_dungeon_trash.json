@@ -109,5 +109,6 @@
         "min": 5.0
       }
     }
-  ]
+  ],
+  "random_sequence": "aether:chests/dungeon/silver/silver_dungeon_trash"
 }

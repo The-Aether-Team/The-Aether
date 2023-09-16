@@ -124,5 +124,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "aether:blocks/golden_oak_log"
 }

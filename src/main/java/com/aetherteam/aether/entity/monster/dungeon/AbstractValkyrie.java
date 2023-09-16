@@ -83,11 +83,11 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     @Override
     public void tick() {
         super.tick();
-        if (this.isOnGround()) {
+        if (this.onGround()) {
             this.setEntityOnGround(true);
         }
         double motionY = this.getDeltaMovement().y();
-        if (!this.isOnGround() && Math.abs(motionY - this.lastMotionY) > 0.07 && Math.abs(motionY - this.lastMotionY) < 0.09) {
+        if (!this.onGround() && Math.abs(motionY - this.lastMotionY) > 0.07 && Math.abs(motionY - this.lastMotionY) < 0.09) {
             this.setDeltaMovement(this.getDeltaMovement().add(0, 0.055, 0));
         }
     }
@@ -116,27 +116,29 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     @Override
     public boolean hurt(DamageSource source, float amount) {
         boolean result = super.hurt(source, amount);
-        if (!this.getLevel().isClientSide() && result && source.getEntity() instanceof LivingEntity living) {
+        if (!this.level().isClientSide() && result && source.getEntity() instanceof LivingEntity living) {
             this.mostDamageTargetGoal.addAggro(living, amount);
         }
         return result;
     }
 
     /**
-     * Teleports near a target outside a specified radius.
+     * Teleports near a target outside a specified radius.<br><br>
+     * Warning for "deprecation" is suppressed because {@link BlockState#blocksMotion()} is necessary to call.
      * @return Whether the teleportation succeeded, as a {@link Boolean}.
      */
+    @SuppressWarnings("deprecation")
     protected boolean teleportAroundTarget(Entity target) {
         Vec2 targetVec = new Vec2(this.getRandom().nextFloat() - 0.5F, this.getRandom().nextFloat() - 0.5F).normalized();
         double x = target.getX() + targetVec.x * 7;
         double y = target.getY();
         double z = target.getZ() + targetVec.y * 7;
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos(x, y, z);
-        while (mutableBlockPos.getY() > this.getLevel().getMinBuildHeight() && !this.getLevel().getBlockState(mutableBlockPos).getMaterial().blocksMotion()) {
+        while (mutableBlockPos.getY() > this.level().getMinBuildHeight() && !this.level().getBlockState(mutableBlockPos).blocksMotion()) {
             mutableBlockPos.move(Direction.DOWN);
         }
 
-        BlockState blockState = this.getLevel().getBlockState(mutableBlockPos);
+        BlockState blockState = this.level().getBlockState(mutableBlockPos);
         boolean isValidSpot = blockState.is(AetherTags.Blocks.VALKYRIE_TELEPORTABLE_ON); // Valkyries can only teleport within the Silver Dungeon.
         return isValidSpot && this.teleport(x, y, z);
     }
@@ -161,8 +163,8 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
      * Spawn explosion particles in {@link AbstractValkyrie#handleEntityEvent(byte)}.
      */
     public void spawnExplosionParticles() {
-        if (!this.getLevel().isClientSide()) {
-            this.getLevel().broadcastEntityEvent(this, (byte) 70);
+        if (!this.level().isClientSide()) {
+            this.level().broadcastEntityEvent(this, (byte) 70);
         }
     }
 
@@ -272,7 +274,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
 
         @Override
         public boolean canUse() {
-            return !this.valkyrie.isOnGround();
+            return !this.valkyrie.onGround();
         }
 
         @Override

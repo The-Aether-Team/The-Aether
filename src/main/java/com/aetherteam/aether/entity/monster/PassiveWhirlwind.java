@@ -50,7 +50,7 @@ public class PassiveWhirlwind extends AbstractWhirlwind {
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
         if (itemStack.getItem() instanceof DyeItem dyeItem && player.isCreative()) {
-            this.setColorData(dyeItem.getDyeColor().getMaterialColor().col);
+            this.setColorData(dyeItem.getDyeColor().getMapColor().col);
             return InteractionResult.SUCCESS;
         }
         return super.mobInteract(player, hand);
@@ -63,7 +63,7 @@ public class PassiveWhirlwind extends AbstractWhirlwind {
             double d4 = getY() + getBbHeight() + 0.125;
             double d7 = this.getZ() + this.getRandom().nextDouble() * 0.25;
             float f = this.getRandom().nextFloat() * 360;
-            this.getLevel().addParticle(AetherParticleTypes.PASSIVE_WHIRLWIND.get(), d1, d4 - 0.25, d7, -Math.sin(0.0175F * f) * 0.75, 0.125, Math.cos(0.0175F * f) * 0.75);
+            this.level().addParticle(AetherParticleTypes.PASSIVE_WHIRLWIND.get(), d1, d4 - 0.25, d7, -Math.sin(0.0175F * f) * 0.75, 0.125, Math.cos(0.0175F * f) * 0.75);
         }
     }
 

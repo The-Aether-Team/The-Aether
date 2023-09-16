@@ -128,10 +128,10 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     @Override
     public void tick() {
         super.tick();
-        if (!this.getLevel().getBlockState(this.blockPosition().below()).is(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_ON) && !this.isPassenger()) {
+        if (!this.level().getBlockState(this.blockPosition().below()).is(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_ON) && !this.isPassenger()) {
             this.kill();
         }
-        if (!this.getLevel().isClientSide()) {
+        if (!this.level().isClientSide()) {
             if (this.getTarget() != null) {
                 this.setTargetingEntity(true);
             } else if (this.getTarget() == null && this.getTargetingEntity()) {
@@ -146,7 +146,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     @Override
     public void aiStep() {
         super.aiStep();
-        if (this.getLevel().isClientSide()) {
+        if (this.level().isClientSide()) {
             this.sinage += this.sinageAdd;
             if (this.hurtTime > 0) {
                 this.sinageAdd = 0.45F;
@@ -174,7 +174,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
             this.setPoisonRemaining(this.getPoisonRemaining() - 1);
             ItemStack itemStack1 = ItemUtils.createFilledResult(itemStack, player, AetherItems.SKYROOT_POISON_BUCKET.get().getDefaultInstance());
             player.setItemInHand(hand, itemStack1);
-            return InteractionResult.sidedSuccess(this.getLevel().isClientSide());
+            return InteractionResult.sidedSuccess(this.level().isClientSide());
         } else {
             return super.mobInteract(player, hand);
         }
@@ -210,7 +210,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
                 double d3 = this.getZ() + (double) (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.5;
                 double d4 = (double) (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.5;
                 double d5 = (double) (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.5;
-                this.getLevel().addParticle(ParticleTypes.PORTAL, d1, d2, d3, d4, 0.25, d5);
+                this.level().addParticle(ParticleTypes.PORTAL, d1, d2, d3, d4, 0.25, d5);
             }
         }
         return super.hurt(source, amount);
@@ -223,7 +223,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
      */
     @Override
     public void performRangedAttack(LivingEntity target, float distanceFactor) {
-        PoisonNeedle needle = new PoisonNeedle(this.getLevel(), this);
+        PoisonNeedle needle = new PoisonNeedle(this.level(), this);
         double x = target.getX() - this.getX();
         double z = target.getZ() - this.getZ();
         double sqrt = Math.sqrt(x * x + z * z + 0.1);
@@ -233,7 +233,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
         z *= distance;
         needle.shoot(x, y + 0.5F, z, 0.285F + (float) y * 0.08F, 1.0F);
         this.playSound(AetherSoundEvents.ENTITY_AECHOR_PLANT_SHOOT.get(), 2.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
-        this.getLevel().addFreshEntity(needle);
+        this.level().addFreshEntity(needle);
     }
 
     /**

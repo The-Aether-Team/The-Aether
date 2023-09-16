@@ -1,4 +1,4 @@
-// 1.19.4	2023-06-09T21:46:48.3356012	Block States: aether
+// 1.20.1	2023-09-14T15:32:59.2589219	Block States: aether
 79cb0c0ea34a92e86b03080a209cb60f268cb31e assets/aether/blockstates/aerogel.json
 28f7eea22b621bda459b2328c2252cdebe0bcdb9 assets/aether/blockstates/aerogel_slab.json
 0866f96b2339b894ff4c8a01aebb3d87103eb0fb assets/aether/blockstates/aether_dirt.json
@@ -95,6 +95,7 @@ e8539f9de046e03c644e1d5213185507155aab81 assets/aether/blockstates/skyroot_butto
 3d4fc85f12a399f3d53e5f672b10d7cd41738ecf assets/aether/blockstates/skyroot_door.json
 f001b8c8d046c742f5cd37f226b28c3b87e481e8 assets/aether/blockstates/skyroot_fence.json
 8c307e5b3c469d3a57ce0cc64d27b8f9716159f7 assets/aether/blockstates/skyroot_fence_gate.json
+f6c7650dbfdb4583feae074bdfc113697f4e3b54 assets/aether/blockstates/skyroot_hanging_sign.json
 55451162e1954ca09b0c98b7b77d95de7b63d52a assets/aether/blockstates/skyroot_leaves.json
 a1b4f23a041e5ef10872a6f43755bf43adbd2a2f assets/aether/blockstates/skyroot_log.json
 543e38493b28057483702ecc046a5768d26d2aec assets/aether/blockstates/skyroot_planks.json
@@ -104,6 +105,7 @@ e16faf6e1c145d0e897bc87da29af25746e9dfe2 assets/aether/blockstates/skyroot_sign.
 82f313bdf9780bfb0abddc886d8a1d9a3b8fd1cc assets/aether/blockstates/skyroot_slab.json
 b6429904de100e77c282abda12d7c0b76478ec4a assets/aether/blockstates/skyroot_stairs.json
 75272138798ef82d34cc56fa30de06b383df5658 assets/aether/blockstates/skyroot_trapdoor.json
+f6c7650dbfdb4583feae074bdfc113697f4e3b54 assets/aether/blockstates/skyroot_wall_hanging_sign.json
 e16faf6e1c145d0e897bc87da29af25746e9dfe2 assets/aether/blockstates/skyroot_wall_sign.json
 19ef02f3c8414c03febf96eba63ea952f0795ca9 assets/aether/blockstates/skyroot_wood.json
 78d3f2b583bd6d28078544b47ed7e351aa763325 assets/aether/blockstates/stripped_skyroot_log.json
@@ -281,6 +283,7 @@ d1d80c9cdc15dbf85a3caa64e9ec5bc9dce7c49d assets/aether/models/block/skyroot_fenc
 e403b1e469d9f1d3d0d2e8cc8df156af3fe90003 assets/aether/models/block/skyroot_fence_gate_wall_open.json
 4ea0326bb82b8b3cb4e834e02f777636c4e22bb9 assets/aether/models/block/skyroot_fence_post.json
 de7d79f81cd7938fc64427e7cb6237af805f6999 assets/aether/models/block/skyroot_fence_side.json
+7c26d16c8f0c960d395c4ee9e5919990bbc491db assets/aether/models/block/skyroot_hanging_sign.json
 ece47b7e40279e0e8d0c7f738073c1ff4f79aaed assets/aether/models/block/skyroot_leaves.json
 ef844674183755ce829053eecb73a33f7e85fc88 assets/aether/models/block/skyroot_log.json
 359271fe5377cc3edbeefe2efe8e1a3535ebc1ce assets/aether/models/block/skyroot_log_horizontal.json

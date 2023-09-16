@@ -33,7 +33,7 @@ public class LoreInventory extends SimpleContainer {
     @Override
     public void setItem(int index, ItemStack stack) {
         if (!stack.isEmpty()) {
-            if (this.player.getLevel().isClientSide() && this.player instanceof LocalPlayer) {
+            if (this.player.level().isClientSide() && this.player instanceof LocalPlayer) {
                 if (this.menu.loreEntryKeyExists(stack)) {
                     PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new LoreExistsPacket(this.player.getId(), stack, true));
                 } else {

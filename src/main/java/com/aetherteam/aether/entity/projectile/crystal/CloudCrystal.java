@@ -3,7 +3,7 @@ package com.aetherteam.aether.entity.projectile.crystal;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.particle.AetherParticleTypes;
-import com.aetherteam.aether.data.resources.AetherDamageTypes;
+import com.aetherteam.aether.data.resources.registries.AetherDamageTypes;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.sounds.SoundEvent;
@@ -37,7 +37,7 @@ public class CloudCrystal extends AbstractCrystal implements WeaknessDamage {
         Entity entity = result.getEntity();
         if (entity instanceof LivingEntity livingEntity) {
             float bonus = entity.getType().is(AetherTags.Entities.FIRE_MOB) ? 3.0F : 0.0F;
-            if (livingEntity.hurt(AetherDamageTypes.indirectEntityDamageSource(this.getLevel(), AetherDamageTypes.CLOUD_CRYSTAL, this, this.getOwner()), 5.0F + bonus)) {
+            if (livingEntity.hurt(AetherDamageTypes.indirectEntityDamageSource(this.level(), AetherDamageTypes.CLOUD_CRYSTAL, this, this.getOwner()), 5.0F + bonus)) {
                 WeaknessDamage.super.damageWithWeakness(this, livingEntity, this.random);
             }
         }
@@ -46,7 +46,7 @@ public class CloudCrystal extends AbstractCrystal implements WeaknessDamage {
     @Override
     protected void onHitBlock(BlockHitResult result) {
         super.onHitBlock(result);
-        if (!this.getLevel().isClientSide()) {
+        if (!this.level().isClientSide()) {
             this.discard();
         }
     }

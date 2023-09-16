@@ -30,7 +30,7 @@ public class PlayerMixin {
     @Inject(at = @At(value = "HEAD"), method = "rideTick()V")
     private void rideTick(CallbackInfo ci) {
         Player player = (Player) (Object) this;
-        if (!player.getLevel().isClientSide()) {
+        if (!player.level().isClientSide()) {
             if (player.isPassenger() && player.getVehicle() instanceof MountableAnimal mountableAnimal) {
                 mountableAnimal.setPlayerTriedToCrouch(player.isShiftKeyDown());
             }

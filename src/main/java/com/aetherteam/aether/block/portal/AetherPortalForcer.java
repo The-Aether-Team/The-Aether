@@ -70,7 +70,7 @@ public class AetherPortalForcer implements ITeleporter {
     public PortalInfo getPortalInfo(Entity entity, ServerLevel destinationLevel, Function<ServerLevel, PortalInfo> defaultPortalInfo) {
         EntityAccessor entityAccessor = (EntityAccessor) entity;
         boolean isAether = destinationLevel.dimension() == LevelUtil.destinationDimension();
-        if (entity.getLevel().dimension() != LevelUtil.destinationDimension() && !isAether) {
+        if (entity.level().dimension() != LevelUtil.destinationDimension() && !isAether) {
             return null;
         } else if (this.isStartup) {
             return new PortalInfo(this.checkPositionsForInitialSpawn(destinationLevel, entity.blockPosition()).getCenter(), Vec3.ZERO, entity.getYRot(), entity.getXRot());
@@ -233,15 +233,17 @@ public class AetherPortalForcer implements ITeleporter {
     }
 
     /**
-     * Based on {@link net.minecraft.world.level.portal.PortalForcer#canHostFrame(BlockPos, BlockPos.MutableBlockPos, Direction, int)}.
+     * Based on {@link net.minecraft.world.level.portal.PortalForcer#canHostFrame(BlockPos, BlockPos.MutableBlockPos, Direction, int)}.<br><br>
+     * Warning for "deprecation" is suppressed because {@link BlockState#isSolid()} is necessary to call.
      */
+    @SuppressWarnings("deprecation")
     private boolean canHostFrame(BlockPos originalPos, BlockPos.MutableBlockPos offsetPos, Direction direction, int offsetScale) {
         Direction clockWiseDirection = direction.getClockWise();
         for (int i = -1; i < 3; ++i) {
             for (int j = -1; j < 4; ++j) {
                 offsetPos.setWithOffset(originalPos, direction.getStepX() * i + clockWiseDirection.getStepX() * offsetScale, j, direction.getStepZ() * i + clockWiseDirection.getStepZ() * offsetScale);
                 BlockState blockState = this.level.getBlockState(offsetPos);
-                if (j < 0 && (!blockState.getMaterial().isSolid()
+                if (j < 0 && (!blockState.isSolid()
                         || blockState.is(AetherTags.Blocks.AETHER_PORTAL_BLACKLIST))) {
                     return false;
                 }

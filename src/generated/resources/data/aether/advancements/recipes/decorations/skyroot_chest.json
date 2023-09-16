@@ -28,5 +28,6 @@
     "recipes": [
       "aether:skyroot_chest"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

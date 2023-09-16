@@ -28,9 +28,9 @@ public interface SkyrootBoatBehavior {
                         return;
                     }
                     boat.causeFallDamage(boat.fallDistance, 1.0F, boat.damageSources().fall());
-                    if (!boat.getLevel().isClientSide() && !boat.isRemoved()) {
+                    if (!boat.level().isClientSide() && !boat.isRemoved()) {
                         boat.kill();
-                        if (boat.getLevel().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+                        if (boat.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                             for(int i = 0; i < 3; ++i) {
                                 boat.spawnAtLocation(AetherBlocks.SKYROOT_PLANKS.get());
                             }
@@ -42,7 +42,7 @@ public interface SkyrootBoatBehavior {
                     }
                 }
                 boat.resetFallDistance();
-            } else if (!boat.getLevel().getFluidState(boat.blockPosition().below()).is(FluidTags.WATER) && y < 0.0) {
+            } else if (!boat.level().getFluidState(boat.blockPosition().below()).is(FluidTags.WATER) && y < 0.0) {
                 boat.fallDistance -= (float) y;
             }
         }

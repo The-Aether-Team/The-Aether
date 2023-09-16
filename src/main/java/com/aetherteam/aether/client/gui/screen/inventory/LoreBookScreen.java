@@ -4,13 +4,10 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.gui.component.inventory.LorePageButton;
 import com.aetherteam.aether.inventory.menu.LoreBookMenu;
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -57,30 +54,30 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
     }
 
     @Override
-    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(poseStack);
-        this.renderBg(poseStack, partialTicks, mouseX, mouseY);
-        super.render(poseStack, mouseX, mouseY, partialTicks);
-        this.renderTooltip(poseStack, mouseX, mouseY);
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(guiGraphics);
+        this.renderBg(guiGraphics, partialTicks, mouseX, mouseY);
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+        this.renderTooltip(guiGraphics, mouseX, mouseY);
     }
 
     @Override
-    protected void renderLabels(PoseStack poseStack, int x, int y) {
+    protected void renderLabels(GuiGraphics guiGraphics, int x, int y) {
         // Draws text for the page switching buttons.
         Component previous = Component.translatable("gui.aether.book_of_lore.previous");
         Component next = Component.translatable("gui.aether.book_of_lore.next");
-        this.drawNormalBookText(poseStack, this.font, previous, 13, 158);
-        this.drawNormalBookText(poseStack, this.font, next, 221, 158);
+        this.drawNormalBookText(guiGraphics, this.font, previous, 13, 158);
+        this.drawNormalBookText(guiGraphics, this.font, next, 221, 158);
 
         // Draws "Book of Lore" text.
         Component book = Component.translatable("gui.aether.book_of_lore.book");
         Component ofLore = Component.translatable("gui.aether.book_of_lore.of_lore");
-        this.drawCenteredBookText(poseStack, this.font, book, 75, 20);
-        this.drawCenteredBookText(poseStack, this.font, ofLore, 75, 20 + 10);
+        this.drawCenteredBookText(guiGraphics, this.font, book, 75, 20);
+        this.drawCenteredBookText(guiGraphics, this.font, ofLore, 75, 20 + 10);
 
         // Draws "Item:" text.
         Component item = Component.translatable("gui.aether.book_of_lore.item");
-        this.drawRightBookText(poseStack, this.font, item, 78, 67);
+        this.drawRightBookText(guiGraphics, this.font, item, 78, 67);
 
         ItemStack itemStack = this.getMenu().slots.get(0).getItem();
         if (!itemStack.isEmpty()) { // Checks if there is an item placed in the book.
@@ -92,11 +89,11 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
 
                 if (this.currentPageNumber == 0) { // Behavior for first page.
                     Component title = itemStack.getHoverName();
-                    this.createText(poseStack, this.font.split(title, 98), 136, 10); // Draw text for the item name.
+                    this.createText(guiGraphics, this.font.split(title, 98), 136, 10); // Draw text for the item name.
 
-                    this.createText(poseStack, this.pages.get(0), 136, 32); // Draw lines for first page.
+                    this.createText(guiGraphics, this.pages.get(0), 136, 32); // Draw lines for first page.
                 } else { // Behavior for subsequent pages.
-                    this.createText(poseStack, this.pages.get(this.currentPageNumber), 136, 10); // Draw lines for the given page.
+                    this.createText(guiGraphics, this.pages.get(this.currentPageNumber), 136, 10); // Draw lines for the given page.
                 }
             }
         }
@@ -138,50 +135,43 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
 
     /**
      * Draws the given lines of text on a book page.
-     * @param poseStack The rendering {@link PoseStack}.
+     * @param guiGraphics The rendering {@link GuiGraphics}.
      * @param reorderingProcessors The {@link List} of {@link FormattedCharSequence} to render text with.
      * @param x The {@link Integer} for the text x-position.
      * @param y The {@link Integer} for the text y-position.
      */
-    private void createText(PoseStack poseStack, List<FormattedCharSequence> reorderingProcessors, int x, int y) {
+    private void createText(GuiGraphics guiGraphics, List<FormattedCharSequence> reorderingProcessors, int x, int y) {
         int length = 0;
         for (FormattedCharSequence line : reorderingProcessors) {
-            this.drawBookText(poseStack, this.font, line, x, y + (length * 10));
+            this.drawBookText(guiGraphics, this.font, line, x, y + (length * 10));
             length++;
         }
     }
 
     @Override
-    protected void renderBg(PoseStack poseStack, float partialTicks, int x, int y) {
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+    protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
         int xPos = (this.width - this.getXSize()) / 2;
         int yPos = (this.height - (this.getYSize())) / 2;
-
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, TEXTURE_LORE_BACKING); // Draws the grey GUI backing.
-        GuiComponent.blit(poseStack, xPos, yPos - 4, 0, 0, this.getXSize(), this.getYSize() + 56, 256, 256);
-
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, TEXTURE_LORE_BOOK); // Draws the book GUI on top of backing.
-        GuiComponent.blit(poseStack, xPos + 12, yPos + 2, 0, 0, this.getXSize(), this.getYSize() + 56, 256, 256);
+        guiGraphics.blit(TEXTURE_LORE_BACKING, xPos, yPos - 4, 0, 0, this.getXSize(), this.getYSize() + 56, 256, 256); // Draws the grey GUI backing.
+        guiGraphics.blit(TEXTURE_LORE_BOOK, xPos + 12, yPos + 2, 0, 0, this.getXSize(), this.getYSize() + 56, 256, 256); // Draws the book GUI on top of backing.
     }
 
-    private void drawNormalBookText(PoseStack poseStack, Font fontRenderer, Component component, int x, int y) {
+    private void drawNormalBookText(GuiGraphics guiGraphics, Font fontRenderer, Component component, int x, int y) {
         FormattedCharSequence sequence = component.getVisualOrderText();
-        this.drawBookText(poseStack, fontRenderer, sequence, x, y);
+        this.drawBookText(guiGraphics, fontRenderer, sequence, x, y);
     }
 
-    private void drawRightBookText(PoseStack poseStack, Font fontRenderer, Component component, int x, int y) {
+    private void drawRightBookText(GuiGraphics guiGraphics, Font fontRenderer, Component component, int x, int y) {
         FormattedCharSequence sequence = component.getVisualOrderText();
-        this.drawBookText(poseStack, fontRenderer, sequence, x - fontRenderer.width(sequence), y);
+        this.drawBookText(guiGraphics, fontRenderer, sequence, x - fontRenderer.width(sequence), y);
     }
 
-    private void drawCenteredBookText(PoseStack poseStack, Font fontRenderer, Component component, int x, int y) {
+    private void drawCenteredBookText(GuiGraphics guiGraphics, Font fontRenderer, Component component, int x, int y) {
         FormattedCharSequence sequence = component.getVisualOrderText();
-        this.drawBookText(poseStack, fontRenderer, sequence, x - fontRenderer.width(sequence) / 2, y);
+        this.drawBookText(guiGraphics, fontRenderer, sequence, x - fontRenderer.width(sequence) / 2, y);
     }
 
-    private void drawBookText(PoseStack poseStack, Font fontRenderer, FormattedCharSequence sequence, int x, int y) {
-        fontRenderer.draw(poseStack, sequence, (float) x, (float) y, 4210752);
+    private void drawBookText(GuiGraphics guiGraphics, Font fontRenderer, FormattedCharSequence sequence, int x, int y) {
+        guiGraphics.drawString(fontRenderer, sequence, x, y, 4210752, false);
     }
 }

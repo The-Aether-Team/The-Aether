@@ -59,7 +59,7 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
 		this.tick(this);
 		this.riderTick();
 		super.tick();
-		if (this.isOnGround()) {
+		if (this.onGround()) {
 			this.setEntityOnGround(true);
 		}
 		if (this.getPlayerJumped()) {
@@ -97,10 +97,10 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
 	public InteractionResult mobInteract(Player playerEntity, InteractionHand hand) {
 		boolean flag = this.isFood(playerEntity.getItemInHand(hand));
 		if (!flag && this.isSaddled() && !this.isVehicle() && !playerEntity.isSecondaryUseActive()) {
-			if (!this.getLevel().isClientSide()) {
+			if (!this.level().isClientSide()) {
 				playerEntity.startRiding(this);
 			}
-			return InteractionResult.sidedSuccess(this.getLevel().isClientSide());
+			return InteractionResult.sidedSuccess(this.level().isClientSide());
 		} else {
 			InteractionResult interactionResult = super.mobInteract(playerEntity, hand);
 			if (!interactionResult.consumesAction()) {
@@ -123,10 +123,10 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
 				AABB bounds = livingEntity.getLocalBoundsForPose(pose);
 				for (int[] offset : offsets) {
 					mutableBlockPos.set(blockPos.getX() + offset[0], blockPos.getY(), blockPos.getZ() + offset[1]);
-					double d0 = this.getLevel().getBlockFloorHeight(mutableBlockPos);
+					double d0 = this.level().getBlockFloorHeight(mutableBlockPos);
 					if (DismountHelper.isBlockFloorValid(d0)) {
 						Vec3 vector3d = Vec3.upFromBottomCenterOf(mutableBlockPos, d0);
-						if (DismountHelper.canDismountTo(this.getLevel(), livingEntity, bounds.move(vector3d))) {
+						if (DismountHelper.canDismountTo(this.level(), livingEntity, bounds.move(vector3d))) {
 							livingEntity.setPose(pose);
 							return vector3d;
 						}
@@ -163,7 +163,7 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
 	public void equipSaddle(@Nullable SoundSource soundCategory) {
 		this.setSaddled(true);
 		if (soundCategory != null && this.getSaddledSound() != null) {
-			this.getLevel().playSound(null, this, this.getSaddledSound(), soundCategory, 0.5F, 1.0F);
+			this.level().playSound(null, this, this.getSaddledSound(), soundCategory, 0.5F, 1.0F);
 		}
 	}
 
@@ -255,7 +255,7 @@ public abstract class MountableAnimal extends AetherAnimal implements MountableM
 	 */
 	@Override
 	public boolean canJump() {
-		return this.isSaddled() && this.isOnGround();
+		return this.isSaddled() && this.onGround();
 	}
 
 	/**

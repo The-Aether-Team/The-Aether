@@ -6,7 +6,7 @@ import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.capability.AetherCapabilities;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.AetherSoundEvents;
-import com.aetherteam.aether.data.resources.AetherDamageTypes;
+import com.aetherteam.aether.data.resources.registries.AetherDamageTypes;
 import com.aetherteam.aether.entity.AetherBossMob;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.ai.controller.BlankMoveControl;
@@ -152,7 +152,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
             double x = this.getX() + (this.getRandom().nextFloat() - 0.5F) * this.getRandom().nextFloat();
             double y = this.getBoundingBox().minY + this.getRandom().nextFloat() - 0.5;
             double z = this.getZ() + (this.getRandom().nextFloat() - 0.5F) * this.getRandom().nextFloat();
-            this.getLevel().addParticle(ParticleTypes.FLAME, x, y, z, 0, -0.075, 0);
+            this.level().addParticle(ParticleTypes.FLAME, x, y, z, 0, -0.075, 0);
             this.burnEntities();
         }
         this.setYRot(Mth.rotateIfNecessary(this.getYRot(), this.getYHeadRot(), 20));
@@ -173,10 +173,10 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
      * Burns all entities directly under the Sun Spirit.
      */
     public void burnEntities() {
-        List<Entity> entities = this.getLevel().getEntities(this, this.getBoundingBox().expandTowards(0, -2, 0).contract(-0.75, 0, -0.75).contract(0.75, 0, 0.75));
+        List<Entity> entities = this.level().getEntities(this, this.getBoundingBox().expandTowards(0, -2, 0).contract(-0.75, 0, -0.75).contract(0.75, 0, 0.75));
         for (Entity target : entities) {
             if (target instanceof LivingEntity) {
-                target.hurt(AetherDamageTypes.entityDamageSource(this.getLevel(), AetherDamageTypes.INCINERATION, this), 20);
+                target.hurt(AetherDamageTypes.entityDamageSource(this.level(), AetherDamageTypes.INCINERATION, this), 20);
                 target.setSecondsOnFire(8);
             }
         }
@@ -198,7 +198,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
      * Extra checks for seeing if an Ice Crystal is close enough to the Sun Spirit to damage it.
      */
     private void checkIceCrystals() {
-        for (IceCrystal iceCrystal : this.getLevel().getEntitiesOfClass(IceCrystal.class, this.getBoundingBox().inflate(0.1))) {
+        for (IceCrystal iceCrystal : this.level().getEntitiesOfClass(IceCrystal.class, this.getBoundingBox().inflate(0.1))) {
             iceCrystal.doDamage(this);
         }
     }
@@ -211,7 +211,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
      */
     @Override
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
-        if (!this.getLevel().isClientSide() && !this.isBossFight()) {
+        if (!this.level().isClientSide() && !this.isBossFight()) {
             if (this.getChatCooldown() <= 0) {
                 this.setChatCooldown(14);
                 if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoomInterior(player)) {
@@ -269,7 +269,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
      */
     protected void chatWithNearby(Component message) {
         AABB room = this.getDungeon() == null ? this.getBoundingBox().inflate(16) : this.getDungeon().roomBounds();
-        this.getLevel().getNearbyPlayers(NON_COMBAT, this, room).forEach(player -> player.sendSystemMessage(message));
+        this.level().getNearbyPlayers(NON_COMBAT, this, room).forEach(player -> player.sendSystemMessage(message));
     }
 
     /**
@@ -281,11 +281,11 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     @Override
     public boolean hurt(DamageSource source, float amount) {
         boolean flag = super.hurt(source, amount);
-        if (!this.getLevel().isClientSide() && flag && this.getHealth() > 0 && source.getEntity() instanceof LivingEntity entity) {
-            FireMinion minion = new FireMinion(AetherEntityTypes.FIRE_MINION.get(), this.getLevel());
+        if (!this.level().isClientSide() && flag && this.getHealth() > 0 && source.getEntity() instanceof LivingEntity entity) {
+            FireMinion minion = new FireMinion(AetherEntityTypes.FIRE_MINION.get(), this.level());
             minion.setPos(this.position());
             minion.setTarget(entity);
-            this.getLevel().addFreshEntity(minion);
+            this.level().addFreshEntity(minion);
         }
         this.velocity = 1 - this.getHealth() / 700;
         return flag;
@@ -310,7 +310,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
      */
     @Override
     public void die(DamageSource source) {
-        if (!this.getLevel().isClientSide()) {
+        if (!this.level().isClientSide()) {
             this.setFrozen(true);
             this.bossFight.setProgress(this.getHealth() / this.getMaxHealth()); // Forces an update to the boss health meter.
             this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.dead").withStyle(ChatFormatting.AQUA));
@@ -318,7 +318,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
                 this.getDungeon().grantAdvancements(source);
                 this.tearDownRoom();
             }
-            this.getLevel().getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).ifPresent((aetherTime) -> {
+            this.level().getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).ifPresent((aetherTime) -> {
                 aetherTime.setEternalDay(false);
                 aetherTime.updateEternalDay();
             });
@@ -757,13 +757,13 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         public void start() {
             AbstractCrystal crystal;
             if (--this.crystalCount <= 0) {
-                crystal = new IceCrystal(this.sunSpirit.getLevel(), this.sunSpirit);
+                crystal = new IceCrystal(this.sunSpirit.level(), this.sunSpirit);
                 this.crystalCount = 4 + this.sunSpirit.getRandom().nextInt(4);
             } else {
-                crystal = new FireCrystal(this.sunSpirit.getLevel(), this.sunSpirit);
+                crystal = new FireCrystal(this.sunSpirit.level(), this.sunSpirit);
             }
-            this.sunSpirit.playSound(this.sunSpirit.getShootSound(), 1.0F, this.sunSpirit.getLevel().getRandom().nextFloat() - this.sunSpirit.getLevel().getRandom().nextFloat() * 0.2F + 1.2F);
-            this.sunSpirit.getLevel().addFreshEntity(crystal);
+            this.sunSpirit.playSound(this.sunSpirit.getShootSound(), 1.0F, this.sunSpirit.level().getRandom().nextFloat() - this.sunSpirit.level().getRandom().nextFloat() * 0.2F + 1.2F);
+            this.sunSpirit.level().addFreshEntity(crystal);
             this.shootInterval = (int) (15 + this.sunSpirit.getHealth() / 2);
         }
 
@@ -794,8 +794,8 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         public void start() {
             BlockPos pos = BlockPos.containing(this.sunSpirit.getX(), this.sunSpirit.getY(), this.sunSpirit.getZ());
             for (int i = 0; i <= 3; i++) {
-                if (this.sunSpirit.getLevel().isEmptyBlock(pos) && !this.sunSpirit.getLevel().isEmptyBlock(pos.below())) {
-                    this.sunSpirit.getLevel().setBlock(pos, Blocks.FIRE.defaultBlockState(), 1 | 2 | 8);
+                if (this.sunSpirit.level().isEmptyBlock(pos) && !this.sunSpirit.level().isEmptyBlock(pos.below())) {
+                    this.sunSpirit.level().setBlock(pos, Blocks.FIRE.defaultBlockState(), 1 | 2 | 8);
                     break;
                 }
                 pos = pos.below();

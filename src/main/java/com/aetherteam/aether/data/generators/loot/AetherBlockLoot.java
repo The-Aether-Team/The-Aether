@@ -88,6 +88,9 @@ public class AetherBlockLoot extends AetherBlockLootSubProvider {
         this.dropOther(AetherBlocks.SKYROOT_WALL_SIGN.get(), AetherBlocks.SKYROOT_SIGN.get());
         this.dropSelf(AetherBlocks.SKYROOT_SIGN.get());
 
+        this.dropOther(AetherBlocks.SKYROOT_WALL_HANGING_SIGN.get(), AetherBlocks.SKYROOT_HANGING_SIGN.get());
+        this.dropSelf(AetherBlocks.SKYROOT_HANGING_SIGN.get());
+
         this.add(AetherBlocks.BERRY_BUSH.get(), (bush) -> droppingBerryBush(bush, AetherBlocks.BERRY_BUSH_STEM.get(), AetherItems.BLUE_BERRY.get()));
         this.dropSelfDouble(AetherBlocks.BERRY_BUSH_STEM.get());
         this.dropPottedContents(AetherBlocks.POTTED_BERRY_BUSH.get());

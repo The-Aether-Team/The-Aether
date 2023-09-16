@@ -82,7 +82,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
         if (hand == InteractionHand.MAIN_HAND) {
             if (this.getTarget() == null) {
                 this.lookAt(player, 180.0F, 180.0F); // Look at player.
-                if (!this.getLevel().isClientSide() && this.chatTimer <= 0) {
+                if (!this.level().isClientSide() && this.chatTimer <= 0) {
                     String translationId;
                     if (item.getItem() == AetherItems.VICTORY_MEDAL.get()) { // Change what message is displayed depending on how many medals a player shows a Valkyrie.
                         if (item.getCount() >= 10) {
@@ -112,8 +112,8 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
     @Override
     public boolean hurt(DamageSource source, float amount) {
         boolean result = super.hurt(source, amount);
-        if (!this.getLevel().isClientSide() && source.getEntity() instanceof Player player) {
-            if (this.getTarget() == null && this.getLevel().getDifficulty() != Difficulty.PEACEFUL && this.getHealth() > 0) {
+        if (!this.level().isClientSide() && source.getEntity() instanceof Player player) {
+            if (this.getTarget() == null && this.level().getDifficulty() != Difficulty.PEACEFUL && this.getHealth() > 0) {
                 this.chat(player, Component.translatable("gui.aether.valkyrie.dialog.attack." + (char) (this.getRandom().nextInt(3) + '1')));
             }
         }

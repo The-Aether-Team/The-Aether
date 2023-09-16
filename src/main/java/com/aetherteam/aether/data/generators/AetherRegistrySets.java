@@ -1,7 +1,6 @@
 package com.aetherteam.aether.data.generators;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.data.resources.AetherDamageTypes;
 import com.aetherteam.aether.data.resources.registries.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
@@ -27,7 +26,8 @@ public class AetherRegistrySets extends DatapackBuiltinEntriesProvider {
             .add(Registries.LEVEL_STEM, AetherDimensions::bootstrapLevelStem)
             .add(Registries.STRUCTURE, AetherStructures::bootstrap)
             .add(Registries.STRUCTURE_SET, AetherStructureSets::bootstrap)
-            .add(Registries.DAMAGE_TYPE, AetherDamageTypes::bootstrap);
+            .add(Registries.DAMAGE_TYPE, AetherDamageTypes::bootstrap)
+            .add(Registries.TRIM_MATERIAL, AetherTrimMaterials::bootstrap);
 
     public AetherRegistrySets(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, BUILDER, Collections.singleton(Aether.MODID));

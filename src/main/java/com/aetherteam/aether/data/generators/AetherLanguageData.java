@@ -68,6 +68,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addBlock(AetherBlocks.AMBROSIUM_TORCH, "Ambrosium Torch");
 
         this.addBlock(AetherBlocks.SKYROOT_SIGN, "Skyroot Sign");
+        this.addBlock(AetherBlocks.SKYROOT_HANGING_SIGN, "Skyroot Hanging Sign");
 
         this.addBlock(AetherBlocks.BERRY_BUSH_STEM, "Bush Stem");
         this.addBlock(AetherBlocks.BERRY_BUSH, "Berry Bush");
@@ -313,13 +314,13 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addItem(AetherItems.GOLD_DUNGEON_KEY, "Gold Key");
 
         this.addItem(AetherItems.MUSIC_DISC_AETHER_TUNE, "Blue Music Disc");
-        addDiscDesc(AetherItems.MUSIC_DISC_AETHER_TUNE, "Noisestorm - Aether Tune");
+        this.addDiscDesc(AetherItems.MUSIC_DISC_AETHER_TUNE, "Noisestorm - Aether Tune");
         this.addItem(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "Valkyrie Music Disc");
-        addDiscDesc(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "Emile van Krieken - Ascending Dawn");
+        this.addDiscDesc(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "Emile van Krieken - Ascending Dawn");
         this.addItem(AetherItems.MUSIC_DISC_CHINCHILLA, "Sepia Music Disc");
-        addDiscDesc(AetherItems.MUSIC_DISC_CHINCHILLA, "RENREN - chinchilla");
+        this.addDiscDesc(AetherItems.MUSIC_DISC_CHINCHILLA, "RENREN - chinchilla");
         this.addItem(AetherItems.MUSIC_DISC_HIGH, "Super Music Disc");
-        addDiscDesc(AetherItems.MUSIC_DISC_HIGH, "RENREN - high");
+        this.addDiscDesc(AetherItems.MUSIC_DISC_HIGH, "RENREN - high");
 
         this.addItem(AetherItems.SKYROOT_BUCKET, "Skyroot Bucket");
         this.addItem(AetherItems.SKYROOT_WATER_BUCKET, "Skyroot Water Bucket");
@@ -373,6 +374,10 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addItem(AetherItems.SLIDER_SPAWN_EGG, "Slider Spawn Egg");
         this.addItem(AetherItems.SUN_SPIRIT_SPAWN_EGG, "Sun Spirit Spawn Egg");
         this.addItem(AetherItems.ZEPHYR_SPAWN_EGG, "Zephyr Spawn Egg");
+
+
+        this.addTrim("zanite", "Zanite");
+        this.addTrim("gravitite", "Gravitite");
 
 
         this.addEntityType(AetherEntityTypes.PHYG, "Phyg");
@@ -440,16 +445,16 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addContainerType("sun_altar", "Sun Altar");
 
 
-        this.addCreativeTab(AetherCreativeTabs.AETHER_BUILDING_BLOCKS, "Aether Building Blocks");
-        this.addCreativeTab(AetherCreativeTabs.AETHER_DUNGEON_BLOCKS, "Aether Dungeon Blocks");
-        this.addCreativeTab(AetherCreativeTabs.AETHER_NATURAL_BLOCKS, "Aether Natural Blocks");
-        this.addCreativeTab(AetherCreativeTabs.AETHER_FUNCTIONAL_BLOCKS, "Aether Functional Blocks");
-        this.addCreativeTab(AetherCreativeTabs.AETHER_REDSTONE_BLOCKS, "Aether Redstone Blocks");
-        this.addCreativeTab(AetherCreativeTabs.AETHER_EQUIPMENT_AND_UTILITIES, "Aether Equipment & Utilities");
-        this.addCreativeTab(AetherCreativeTabs.AETHER_ARMOR_AND_ACCESSORIES, "Aether Armor & Accessories");
-        this.addCreativeTab(AetherCreativeTabs.AETHER_FOOD_AND_DRINKS, "Aether Food & Drinks");
-        this.addCreativeTab(AetherCreativeTabs.AETHER_INGREDIENTS, "Aether Ingredients");
-        this.addCreativeTab(AetherCreativeTabs.AETHER_SPAWN_EGGS, "Aether Spawn Eggs");
+        this.addCreativeTab(AetherCreativeTabs.AETHER_BUILDING_BLOCKS.get(), "Aether Building Blocks");
+        this.addCreativeTab(AetherCreativeTabs.AETHER_DUNGEON_BLOCKS.get(), "Aether Dungeon Blocks");
+        this.addCreativeTab(AetherCreativeTabs.AETHER_NATURAL_BLOCKS.get(), "Aether Natural Blocks");
+        this.addCreativeTab(AetherCreativeTabs.AETHER_FUNCTIONAL_BLOCKS.get(), "Aether Functional Blocks");
+        this.addCreativeTab(AetherCreativeTabs.AETHER_REDSTONE_BLOCKS.get(), "Aether Redstone Blocks");
+        this.addCreativeTab(AetherCreativeTabs.AETHER_EQUIPMENT_AND_UTILITIES.get(), "Aether Equipment & Utilities");
+        this.addCreativeTab(AetherCreativeTabs.AETHER_ARMOR_AND_ACCESSORIES.get(), "Aether Armor & Accessories");
+        this.addCreativeTab(AetherCreativeTabs.AETHER_FOOD_AND_DRINKS.get(), "Aether Food & Drinks");
+        this.addCreativeTab(AetherCreativeTabs.AETHER_INGREDIENTS.get(), "Aether Ingredients");
+        this.addCreativeTab(AetherCreativeTabs.AETHER_SPAWN_EGGS.get(), "Aether Spawn Eggs");
 
 
         this.addAdvancement("the_aether", "The Aether");
@@ -1250,6 +1255,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addPackTitle("b173", "Aether b1.7.3 Textures");
         this.addPackTitle("ctm", "Aether CTM Fix");
         this.addPackTitle("colorblind", "Aether Colorblind Textures");
+        this.addPackTitle("accessories", "Aether Accessories");
         this.addPackTitle("curios", "Aether Curios Override");
         this.addPackTitle("freezing", "Aether Temporary Freezing");
         this.addPackTitle("ruined_portal", "Aether Ruined Portals");
@@ -1259,6 +1265,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addPackDescription("b173", "The original look of the Aether from b1.7.3");
         this.addPackDescription("ctm", "Fixes Quicksoil Glass Panes when using CTM");
         this.addPackDescription("colorblind", "Changes textures for color blindness accessibility");
+        this.addPackDescription("accessories", "Register default accessories");
         this.addPackDescription("curios", "Replace Accessories Menu with Curios' menu");
         this.addPackDescription("freezing", "Ice Accessories create temporary blocks");
         this.addPackDescription("ruined_portal", "Generate ruined glowstone portals");

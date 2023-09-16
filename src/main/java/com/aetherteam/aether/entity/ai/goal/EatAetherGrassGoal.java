@@ -33,10 +33,10 @@ public class EatAetherGrassGoal extends Goal {
             return false;
         } else {
             BlockPos blockpos = this.mob.blockPosition();
-            if (IS_TALL_GRASS.test(this.mob.getLevel().getBlockState(blockpos))) {
+            if (IS_TALL_GRASS.test(this.mob.level().getBlockState(blockpos))) {
                 return true;
             } else {
-                return this.mob.getLevel().getBlockState(blockpos.below()).is(AetherBlocks.AETHER_GRASS_BLOCK.get());
+                return this.mob.level().getBlockState(blockpos.below()).is(AetherBlocks.AETHER_GRASS_BLOCK.get());
             }
         }
     }
@@ -44,7 +44,7 @@ public class EatAetherGrassGoal extends Goal {
     @Override
     public void start() {
         this.eatAnimationTick = this.adjustedTickDelay(40);
-        this.mob.getLevel().broadcastEntityEvent(this.mob, (byte) 10);
+        this.mob.level().broadcastEntityEvent(this.mob, (byte) 10);
         this.mob.getNavigation().stop();
     }
 
@@ -67,17 +67,17 @@ public class EatAetherGrassGoal extends Goal {
         this.eatAnimationTick = Math.max(0, this.eatAnimationTick - 1);
         if (this.eatAnimationTick == this.adjustedTickDelay(4)) {
             BlockPos blockPos = this.mob.blockPosition();
-            if (IS_TALL_GRASS.test(this.mob.getLevel().getBlockState(blockPos))) {
-                if (net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.mob.getLevel(), this.mob)) {
-                    this.mob.getLevel().destroyBlock(blockPos, false);
+            if (IS_TALL_GRASS.test(this.mob.level().getBlockState(blockPos))) {
+                if (net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.mob.level(), this.mob)) {
+                    this.mob.level().destroyBlock(blockPos, false);
                 }
                 this.mob.ate();
             } else {
                 BlockPos blockPos1 = blockPos.below();
-                if (this.mob.getLevel().getBlockState(blockPos1).is(AetherBlocks.AETHER_GRASS_BLOCK.get())) {
-                    if (net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.mob.getLevel(), this.mob)) {
-                        this.mob.getLevel().levelEvent(2001, blockPos1, Block.getId(AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState()));
-                        this.mob.getLevel().setBlock(blockPos1, AetherBlocks.AETHER_DIRT.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, this.mob.getLevel().getBlockState(blockPos1).getValue(AetherBlockStateProperties.DOUBLE_DROPS)), 2);
+                if (this.mob.level().getBlockState(blockPos1).is(AetherBlocks.AETHER_GRASS_BLOCK.get())) {
+                    if (net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.mob.level(), this.mob)) {
+                        this.mob.level().levelEvent(2001, blockPos1, Block.getId(AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState()));
+                        this.mob.level().setBlock(blockPos1, AetherBlocks.AETHER_DIRT.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, this.mob.level().getBlockState(blockPos1).getValue(AetherBlockStateProperties.DOUBLE_DROPS)), 2);
                     }
                     this.mob.ate();
                 }

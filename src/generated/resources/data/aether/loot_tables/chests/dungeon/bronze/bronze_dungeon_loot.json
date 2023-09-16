@@ -274,5 +274,6 @@
         "min": 1.0
       }
     }
-  ]
+  ],
+  "random_sequence": "aether:chests/dungeon/bronze/bronze_dungeon_loot"
 }

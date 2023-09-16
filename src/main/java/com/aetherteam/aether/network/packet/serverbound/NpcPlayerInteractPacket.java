@@ -23,7 +23,7 @@ public record NpcPlayerInteractPacket(int entityID, byte interactionID) implemen
 
     @Override
     public void execute(@Nullable Player playerEntity) {
-        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.getLevel().getEntity(this.entityID()) instanceof NpcDialogue npc) {
+        if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level().getEntity(this.entityID()) instanceof NpcDialogue npc) {
             npc.handleNpcInteraction(playerEntity, this.interactionID());
         }
     }

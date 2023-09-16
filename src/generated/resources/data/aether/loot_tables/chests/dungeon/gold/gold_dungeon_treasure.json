@@ -40,5 +40,6 @@
         "min": 2.0
       }
     }
-  ]
+  ],
+  "random_sequence": "aether:chests/dungeon/gold/gold_dungeon_treasure"
 }

@@ -69,7 +69,7 @@ public class CapabilityHooks {
          * @see com.aetherteam.aether.event.listeners.capability.AetherPlayerListener#onPlayerChangeDimension(PlayerEvent.PlayerChangedDimensionEvent)
          */
         public static void changeDimension(Player player) {
-            if (!player.getLevel().isClientSide()) {
+            if (!player.level().isClientSide()) {
                 AetherPlayer.get(player).ifPresent(aetherPlayer -> {
                     if (aetherPlayer instanceof AetherPlayerCapability capability) {
                         capability.forceSync(INBTSynchable.Direction.CLIENT);
@@ -109,8 +109,8 @@ public class CapabilityHooks {
          */
         private static void syncAetherTime(Player player) {
             if (player instanceof ServerPlayer serverPlayer) {
-                if (player.getLevel().dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
-                    AetherTime.get(serverPlayer.getLevel()).ifPresent((aetherTime) -> aetherTime.updateEternalDay(serverPlayer));
+                if (player.level().dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
+                    AetherTime.get(serverPlayer.level()).ifPresent((aetherTime) -> aetherTime.updateEternalDay(serverPlayer));
                 }
             }
         }

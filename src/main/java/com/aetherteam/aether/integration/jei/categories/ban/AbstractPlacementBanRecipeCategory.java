@@ -8,7 +8,6 @@ import com.aetherteam.nitrogen.integration.jei.categories.AbstractRecipeCategory
 import com.aetherteam.nitrogen.recipe.BlockPropertyPair;
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import com.aetherteam.nitrogen.recipe.BlockStateRecipeUtil;
-import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -22,6 +21,7 @@ import mezz.jei.common.platform.Services;
 import mezz.jei.common.util.Translator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -89,15 +89,15 @@ public abstract class AbstractPlacementBanRecipeCategory<T, S extends Predicate<
     }
 
     @Override
-    public void draw(R recipe, IRecipeSlotsView recipeSlotsView, PoseStack poseStack, double mouseX, double mouseY) {
+    public void draw(R recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         if (recipe.getBypassBlock() == null || recipe.getBypassBlock().isEmpty()) {
-            this.slot.draw(poseStack, 49, 0);
+            this.slot.draw(guiGraphics, 49, 0);
         } else {
-            this.slot.draw(poseStack);
-            this.slot.draw(poseStack, 98, 0);
+            this.slot.draw(guiGraphics);
+            this.slot.draw(guiGraphics, 98, 0);
             String text = Translator.translateToLocalFormatted("gui.aether.jei.bypass");
             Font font = Minecraft.getInstance().font;
-            font.draw(poseStack, text, 24, 5, 0xFF808080);
+            guiGraphics.drawString(font, text, 24, 5, 0xFF808080);
         }
     }
 

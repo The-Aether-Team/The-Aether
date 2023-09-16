@@ -45,7 +45,7 @@ public class DroppedItemCapability implements DroppedItem {
     @Override
     public void deserializeNBT(CompoundTag tag) {
         if (tag.contains("Owner")) {
-            this.setOwner(this.getItemEntity().level.getEntity(tag.getInt("Owner")));
+            this.setOwner(this.getItemEntity().level().getEntity(tag.getInt("Owner")));
         }
     }
 

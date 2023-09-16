@@ -3,6 +3,7 @@ package com.aetherteam.aether.client.event.hooks;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.renderer.accessory.GlovesRenderer;
 import com.aetherteam.aether.client.renderer.accessory.ShieldOfRepulsionRenderer;
+import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
 import com.aetherteam.aether.item.accessories.miscellaneous.ShieldOfRepulsionItem;
 import com.aetherteam.aether.mixin.mixins.client.accessor.ItemInHandRendererAccessor;
@@ -41,11 +42,11 @@ public class HandRenderHooks {
         if (player != null) {
             AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
                 if (!aetherPlayer.isWearingInvisibilityCloak()) { // Check for Invisibility Cloak.
-                    CuriosApi.getCuriosHelper().findFirstCurio(player, (item) -> item.getItem() instanceof GlovesItem).ifPresent((slotResult) -> {
+                    EquipmentUtil.findFirstCurio(player, (item) -> item.getItem() instanceof GlovesItem).ifPresent((slotResult) -> {
                         String identifier = slotResult.slotContext().identifier();
                         int id = slotResult.slotContext().index();
                         ItemStack itemStack = slotResult.stack();
-                        CuriosApi.getCuriosHelper().getCuriosHandler(player).ifPresent(handler -> handler.getStacksHandler(identifier).ifPresent(stacksHandler -> {
+                        CuriosApi.getCuriosInventory(player).ifPresent(handler -> handler.getStacksHandler(identifier).ifPresent(stacksHandler -> {
                             if (stacksHandler.getRenders().get(id)) { // Check if Gloves are visible.
                                 CuriosRendererRegistry.getRenderer(itemStack.getItem()).ifPresent((renderer) -> {
                                     if (renderer instanceof GlovesRenderer glovesRenderer) {
@@ -78,11 +79,11 @@ public class HandRenderHooks {
         if (player != null) {
             AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
                 if (!aetherPlayer.isWearingInvisibilityCloak()) { // Check for Invisibility Cloak.
-                    CuriosApi.getCuriosHelper().findFirstCurio(player, (item) -> item.getItem() instanceof ShieldOfRepulsionItem).ifPresent((slotResult) -> {
+                    EquipmentUtil.findFirstCurio(player, (item) -> item.getItem() instanceof ShieldOfRepulsionItem).ifPresent((slotResult) -> {
                         String identifier = slotResult.slotContext().identifier();
                         int id = slotResult.slotContext().index();
                         ItemStack itemStack = slotResult.stack();
-                        CuriosApi.getCuriosHelper().getCuriosHandler(player).ifPresent(handler -> handler.getStacksHandler(identifier).ifPresent(stacksHandler -> {
+                        CuriosApi.getCuriosInventory(player).ifPresent(handler -> handler.getStacksHandler(identifier).ifPresent(stacksHandler -> {
                             if (stacksHandler.getRenders().get(id)) { // Check if Shield of Repulsion is visible.
                                 CuriosRendererRegistry.getRenderer(itemStack.getItem()).ifPresent((renderer) -> {
                                     if (renderer instanceof ShieldOfRepulsionRenderer shieldRenderer) {

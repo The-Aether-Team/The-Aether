@@ -28,5 +28,6 @@
     "recipes": [
       "aether:skyroot_piston"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

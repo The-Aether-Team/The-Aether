@@ -10,9 +10,9 @@ public interface WeaknessDamage {
     default void damageWithWeakness(AbstractCrystal crystal, LivingEntity livingEntity, RandomSource random) {
         livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 10));
         if (crystal.getImpactExplosionSoundEvent() != null) {
-            crystal.getLevel().playSound(null, crystal.getX(), crystal.getY(), crystal.getZ(), crystal.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, random.nextFloat() - random.nextFloat() * 0.2F + 1.2F);
+            crystal.level().playSound(null, crystal.getX(), crystal.getY(), crystal.getZ(), crystal.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, random.nextFloat() - random.nextFloat() * 0.2F + 1.2F);
         }
-        if (!crystal.getLevel().isClientSide()) {
+        if (!crystal.level().isClientSide()) {
             crystal.discard();
         }
     }

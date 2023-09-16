@@ -1,0 +1,9 @@
+{
+  "asset_name": "zanite",
+  "description": {
+    "color": "#7A36E0",
+    "translate": "trim_material.aether.zanite"
+  },
+  "ingredient": "aether:zanite_gemstone",
+  "item_model_index": 1.0
+}

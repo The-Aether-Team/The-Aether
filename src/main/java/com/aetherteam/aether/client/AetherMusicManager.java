@@ -104,7 +104,7 @@ public class AetherMusicManager {
             } else if (isVanillaWorldPreviewEnabled()) { // Play Minecraft menu music when the Minecraft menu world preview is enabled.
                 return Menus.MINECRAFT.get().getMusic();
             } else if (minecraft.player != null) { // Otherwise replace creative music with biome music in the Aether.
-                Holder<Biome> holder = minecraft.player.getLevel().getBiome(minecraft.player.blockPosition());
+                Holder<Biome> holder = minecraft.player.level().getBiome(minecraft.player.blockPosition());
                 if (isCreative(holder, minecraft.player)) {
                     return (holder.value().getBackgroundMusic().orElse(Musics.GAME));
                 }
@@ -139,7 +139,7 @@ public class AetherMusicManager {
      * Based on vanilla creative music checks, but also checks if the biome plays Aether music.
      */
     public static boolean isCreative(Holder<Biome> holder, Player player) {
-        return player.getLevel().dimension() != Level.END && player.getLevel().dimension() != Level.NETHER && holder.is(AetherTags.Biomes.AETHER_MUSIC)
+        return player.level().dimension() != Level.END && player.level().dimension() != Level.NETHER && holder.is(AetherTags.Biomes.AETHER_MUSIC)
                 && !musicManager.isPlayingMusic(Musics.UNDER_WATER) && (!player.isUnderWater() || !holder.is(BiomeTags.PLAYS_UNDERWATER_MUSIC))
                 && player.getAbilities().instabuild && player.getAbilities().mayfly;
     }

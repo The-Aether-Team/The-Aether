@@ -34,6 +34,9 @@ public class AetherBlockEntityTypes {
 	public static final RegistryObject<BlockEntityType<SkyrootSignBlockEntity>> SKYROOT_SIGN = BLOCK_ENTITY_TYPES.register("skyroot_sign", () ->
 			BlockEntityType.Builder.of(SkyrootSignBlockEntity::new, AetherBlocks.SKYROOT_WALL_SIGN.get(), AetherBlocks.SKYROOT_SIGN.get()).build(null));
 
+	public static final RegistryObject<BlockEntityType<SkyrootHangingSignBlockEntity>> SKYROOT_HANGING_SIGN = BLOCK_ENTITY_TYPES.register("skyroot_hanging_sign", () ->
+			BlockEntityType.Builder.of(SkyrootHangingSignBlockEntity::new, AetherBlocks.SKYROOT_WALL_HANGING_SIGN.get(), AetherBlocks.SKYROOT_HANGING_SIGN.get()).build(null));
+
 	public static final RegistryObject<BlockEntityType<SunAltarBlockEntity>> SUN_ALTAR = BLOCK_ENTITY_TYPES.register("sun_altar", () ->
 			BlockEntityType.Builder.of(SunAltarBlockEntity::new, AetherBlocks.SUN_ALTAR.get()).build(null));
 }

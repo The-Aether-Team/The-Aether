@@ -44,7 +44,7 @@ public class Parachute extends Entity {
             this.checkSlowFallDistance(); // Resets the Parachute's fall distance.
             this.moveParachute(passenger);
             this.spawnExplosionParticle();
-            if (this.isOnGround() || this.isInFluidType()) { // The parachute breaks when it collides with something.
+            if (this.onGround() || this.isInFluidType()) { // The parachute breaks when it collides with something.
                 this.ejectPassengers();
                 this.die();
             }
@@ -107,7 +107,7 @@ public class Parachute extends Entity {
      */
     public void die() {
         this.spawnExplosionParticle();
-        if (!this.getLevel().isClientSide()) {
+        if (!this.level().isClientSide()) {
             this.kill();
         }
     }
@@ -116,8 +116,8 @@ public class Parachute extends Entity {
      * Spawn explosion particles in {@link Parachute#handleEntityEvent(byte)}.
      */
     public void spawnExplosionParticle() {
-        if (!this.getLevel().isClientSide()) {
-            this.getLevel().broadcastEntityEvent(this, (byte) 70);
+        if (!this.level().isClientSide()) {
+            this.level().broadcastEntityEvent(this, (byte) 70);
         }
     }
 
@@ -154,7 +154,7 @@ public class Parachute extends Entity {
         } else {
             Vec3 dismountLocation = this.position().add(0.0, 0.5, 0.0);
             // Fixes a block clipping exploit by pushing the player away from a block if it tries to dismount to an unsafe spot (like inside a block).
-            if (!DismountHelper.canDismountTo(this.getLevel(), passenger, passenger.getType().getDimensions().makeBoundingBox(dismountLocation))) {
+            if (!DismountHelper.canDismountTo(this.level(), passenger, passenger.getType().getDimensions().makeBoundingBox(dismountLocation))) {
                 return this.position().add(0.0, 1.0, 0.0).add(new Vec3(direction.getStepX(), direction.getStepY(), direction.getStepZ()).scale(0.5).reverse());
             }
             return dismountLocation;

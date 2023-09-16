@@ -28,5 +28,6 @@
     "recipes": [
       "aether:skyroot_jukebox"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

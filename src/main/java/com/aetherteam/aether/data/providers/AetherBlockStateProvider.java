@@ -10,10 +10,7 @@ import com.aetherteam.nitrogen.data.providers.NitrogenBlockStateProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.BedBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.level.block.SnowyDirtBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
@@ -114,6 +111,12 @@ public abstract class AetherBlockStateProvider extends NitrogenBlockStateProvide
                 this.extend(this.texture(this.name(block), "utility/"), "_top"));
     }
 
+    public void hangingSignBlock(CeilingHangingSignBlock signBlock, WallHangingSignBlock wallSignBlock, ResourceLocation texture) {
+        ModelFile sign = models().sign(name(signBlock), texture);
+        simpleBlock(signBlock, sign);
+        simpleBlock(wallSignBlock, sign);
+    }
+
     public void berryBush(Block block, Block stem) {
         this.getVariantBuilder(block).partialState().addModels(new ConfiguredModel(this.bush(block, stem)));
     }
@@ -192,7 +195,7 @@ public abstract class AetherBlockStateProvider extends NitrogenBlockStateProvide
     public void invisibleBlock(Block block, Block baseBlock) {
         ModelFile visible = this.models().cubeAll(this.name(baseBlock), this.texture(this.name(baseBlock), "dungeon/"));
         ModelFile invisible = this.models().getBuilder(this.name(block));
-        getVariantBuilder(block).forAllStatesExcept(state -> {
+        this.getVariantBuilder(block).forAllStatesExcept(state -> {
             if (!state.getValue(DoorwayBlock.INVISIBLE)) {
                 return ConfiguredModel.builder().modelFile(visible).build();
             } else {

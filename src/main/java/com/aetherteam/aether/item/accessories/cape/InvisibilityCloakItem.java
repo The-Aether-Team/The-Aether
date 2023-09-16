@@ -26,14 +26,14 @@ public class InvisibilityCloakItem extends AccessoryItem {
     @Override
     public void curioTick(SlotContext slotContext, ItemStack stack) {
         LivingEntity livingEntity = slotContext.entity();
-        if (livingEntity.getLevel().isClientSide() && livingEntity instanceof Player player) {
+        if (livingEntity.level().isClientSide() && livingEntity instanceof Player player) {
             AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
                 if (AetherKeys.INVISIBILITY_TOGGLE.consumeClick()) {
                     aetherPlayer.setSynched(INBTSynchable.Direction.SERVER, "setInvisibilityEnabled", !aetherPlayer.isInvisibilityEnabled());
                 }
             });
         }
-        if (!livingEntity.getLevel().isClientSide() && livingEntity instanceof Player player) {
+        if (!livingEntity.level().isClientSide() && livingEntity instanceof Player player) {
             AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
                 if (aetherPlayer.isInvisibilityEnabled()) {
                     if (!AetherConfig.SERVER.balance_invisibility_cloak.get()) {
@@ -74,7 +74,7 @@ public class InvisibilityCloakItem extends AccessoryItem {
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
         LivingEntity livingEntity = slotContext.entity();
-        if (!livingEntity.getLevel().isClientSide() && livingEntity instanceof Player player) {
+        if (!livingEntity.level().isClientSide() && livingEntity instanceof Player player) {
             AetherPlayer.get(player).ifPresent((aetherPlayer) -> aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setWearingInvisibilityCloak", false));
         }
         livingEntity.setInvisible(false);

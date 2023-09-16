@@ -1,6 +1,7 @@
 package com.aetherteam.aether.item.accessories.gloves;
 
 import com.aetherteam.aether.client.AetherSoundEvents;
+import com.aetherteam.aether.item.combat.AetherArmorMaterials;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -13,7 +14,7 @@ import java.util.UUID;
 
 public class ZaniteGlovesItem extends GlovesItem {
     public ZaniteGlovesItem(double punchDamage, Properties properties) {
-        super(punchDamage, "zanite_gloves", AetherSoundEvents.ITEM_ARMOR_EQUIP_ZANITE, properties);
+        super(AetherArmorMaterials.ZANITE, punchDamage, "zanite_gloves", AetherSoundEvents.ITEM_ARMOR_EQUIP_ZANITE, properties);
     }
 
     @Override

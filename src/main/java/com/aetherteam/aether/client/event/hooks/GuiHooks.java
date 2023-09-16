@@ -17,11 +17,9 @@ import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import com.mojang.blaze3d.platform.InputConstants;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.LerpingBossEvent;
 import net.minecraft.client.gui.components.Tooltip;
@@ -186,10 +184,10 @@ public class GuiHooks {
     /**
      * Generates and draws the Aether's trivia lines in various loading screens.
      * @param screen The current {@link Screen}.
-     * @param poseStack The link rendering {@link PoseStack}.
-     * @see com.aetherteam.aether.client.event.listeners.GuiListener#onGuiDraw(ScreenEvent.Render)
+     * @param guiGraphics The rendering {@link GuiGraphics}.
+     * @see com.aetherteam.aether.client.event.listeners.GuiListener#onGuiDraw(ScreenEvent.Render.Post)
      */
-    public static void drawTrivia(Screen screen, PoseStack poseStack) {
+    public static void drawTrivia(Screen screen, GuiGraphics guiGraphics) {
         generateTrivia(screen);
         if (screen instanceof GenericDirtMessageScreen || screen instanceof LevelLoadingScreen || screen instanceof ReceivingLevelScreen) {
             Component triviaLine = Aether.TRIVIA_READER.getTriviaLine(); // Get the current trivia line to display.
@@ -197,7 +195,7 @@ public class GuiHooks {
                 Font font = Minecraft.getInstance().font;
                 int y = (screen.height - 7) - font.wordWrapHeight(triviaLine, screen.width);
                 for (FormattedCharSequence sequence : font.split(triviaLine, screen.width)) {
-                    Screen.drawCenteredString(poseStack, font, sequence, screen.width / 2, y, 16777113);
+                    guiGraphics.drawCenteredString(font, sequence, screen.width / 2, y, 16777113);
                     y += 9;
                 }
             }
@@ -236,17 +234,17 @@ public class GuiHooks {
      * Draws text for leaving and entering the Aether.
      * Checks for when to display different text are handled by {@link DimensionHooks}.
      * @param screen The current {@link Screen}.
-     * @param poseStack The link rendering {@link PoseStack}.
-     * @see com.aetherteam.aether.client.event.listeners.GuiListener#onGuiDraw(ScreenEvent.Render)
+     * @param guiGraphics The rendering {@link GuiGraphics}.
+     * @see com.aetherteam.aether.client.event.listeners.GuiListener#onGuiDraw(ScreenEvent.Render.Post)
      */
-    public static void drawAetherTravelMessage(Screen screen, PoseStack poseStack) {
+    public static void drawAetherTravelMessage(Screen screen, GuiGraphics guiGraphics) {
         if (screen instanceof ReceivingLevelScreen || screen instanceof ProgressScreen) {
             if (Minecraft.getInstance().player != null) {
                 if (DimensionHooks.displayAetherTravel) {
                     if (DimensionHooks.playerLeavingAether) {
-                        Screen.drawCenteredString(poseStack, screen.getMinecraft().font, Component.translatable("gui.aether.descending"), screen.width / 2, 50, 16777215);
+                        guiGraphics.drawCenteredString(screen.getMinecraft().font, Component.translatable("gui.aether.descending"), screen.width / 2, 50, 16777215);
                     } else {
-                        Screen.drawCenteredString(poseStack, screen.getMinecraft().font, Component.translatable("gui.aether.ascending"), screen.width / 2, 50, 16777215);
+                        guiGraphics.drawCenteredString(screen.getMinecraft().font, Component.translatable("gui.aether.ascending"), screen.width / 2, 50, 16777215);
                     }
                 }
             }
@@ -274,7 +272,7 @@ public class GuiHooks {
      */
     public static void openAccessoryMenu() {
         Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft.player != null && minecraft.getOverlay() == null && (minecraft.screen == null || minecraft.screen.passEvents)) {
+        if (minecraft.player != null && minecraft.getOverlay() == null && minecraft.screen == null) {
             if (!AetherConfig.CLIENT.disable_accessory_button.get() && AetherKeys.OPEN_ACCESSORY_INVENTORY.consumeClick()) {
                 PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new OpenAccessoriesPacket(ItemStack.EMPTY));
                 shouldAddButton = false; // The AccessoryButton is not added to menus opened with the key.
@@ -290,7 +288,7 @@ public class GuiHooks {
      */
     public static void closeContainerMenu(int key, int action) {
         Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft.screen instanceof AbstractContainerScreen abstractContainerScreen && !abstractContainerScreen.passEvents) {
+        if (minecraft.screen instanceof AbstractContainerScreen abstractContainerScreen) {
             if (!AetherConfig.CLIENT.disable_accessory_button.get() && AetherKeys.OPEN_ACCESSORY_INVENTORY.getKey().getValue() == key && (action == InputConstants.PRESS || action == InputConstants.REPEAT)) {
                 abstractContainerScreen.onClose();
             }
@@ -298,31 +296,29 @@ public class GuiHooks {
     }
 
     /**
-     * [CODE COPY] - {@link net.minecraft.client.gui.components.BossHealthOverlay#render(PoseStack)}
+     * [CODE COPY] - {@link net.minecraft.client.gui.components.BossHealthOverlay#render(GuiGraphics)}
      * Modified to draw the Aether's custom boss health bars.
      * @see com.aetherteam.aether.client.event.listeners.GuiListener#onRenderBossBar(CustomizeGuiOverlayEvent.BossEventProgress)
      */
-    public static void drawBossHealthBar(PoseStack poseStack, int x, int y, LerpingBossEvent bossEvent) {
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, AETHER_BARS_LOCATION);
-        drawBar(poseStack, x + 2, y + 2, bossEvent);
+    public static void drawBossHealthBar(GuiGraphics guiGraphics, int x, int y, LerpingBossEvent bossEvent) {
+        drawBar(guiGraphics, x + 2, y + 2, bossEvent);
         Component component = bossEvent.getName();
         int nameLength = Minecraft.getInstance().font.width(component);
         int nameX = Minecraft.getInstance().getWindow().getGuiScaledWidth() / 2 - nameLength / 2;
         int nameY = y - 9;
-        Minecraft.getInstance().font.drawShadow(poseStack, component, (float) nameX, (float) nameY, 16777215);
+        guiGraphics.drawString(Minecraft.getInstance().font, component, nameX, nameY, 16777215);
     }
 
     /**
-     * [CODE COPY] - {@link net.minecraft.client.gui.components.BossHealthOverlay#drawBar(PoseStack, int, int, BossEvent)}
+     * [CODE COPY] - {@link net.minecraft.client.gui.components.BossHealthOverlay#drawBar(GuiGraphics, int, int, BossEvent)}
      * This version of the method doesn't account for other types of boss bars because the Aether only has one.
      */
-    public static void drawBar(PoseStack poseStack, int x, int y, BossEvent pBossEvent) {
+    public static void drawBar(GuiGraphics guiGraphics, int x, int y, BossEvent pBossEvent) {
         x -= 37; // The default boss health bar is offset by -91. We need -128.
-        GuiComponent.blit(poseStack, x, y, -90, 0, 16, 256, 16, 256, 256);
+        guiGraphics.blit(AETHER_BARS_LOCATION, x, y, -90, 0, 16, 256, 16, 256, 256);
         int health = (int) (pBossEvent.getProgress() * 256.0F);
         if (health > 0) {
-            GuiComponent.blit(poseStack, x, y, -90, 0, 0, health, 16, 256, 256);
+            guiGraphics.blit(AETHER_BARS_LOCATION, x, y, -90, 0, 0, health, 16, 256, 256);
         }
     }
 

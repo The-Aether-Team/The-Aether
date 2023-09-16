@@ -167,7 +167,7 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects {
                 if (((LevelRendererAccessor) levelRenderer).aether$getCloudBuffer() != null) {
                     ((LevelRendererAccessor) levelRenderer).aether$getCloudBuffer().close();
                 }
-                ((LevelRendererAccessor) levelRenderer).aether$setCloudBuffer(new VertexBuffer());
+                ((LevelRendererAccessor) levelRenderer).aether$setCloudBuffer(new VertexBuffer(VertexBuffer.Usage.STATIC));
                 BufferBuilder.RenderedBuffer renderedBuffer = ((LevelRendererAccessor) levelRenderer).callBuildClouds(bufferbuilder, d2, d3, d4, vec3);
                 ((LevelRendererAccessor) levelRenderer).aether$getCloudBuffer().bind();
                 ((LevelRendererAccessor) levelRenderer).aether$getCloudBuffer().upload(renderedBuffer);

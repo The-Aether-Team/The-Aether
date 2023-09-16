@@ -32,5 +32,6 @@
     "loot": [
       "aether:advancements/enter_aether"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

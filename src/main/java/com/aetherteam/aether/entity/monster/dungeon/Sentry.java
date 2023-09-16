@@ -57,7 +57,7 @@ public class Sentry extends Slime {
 	 */
 	@Override
 	public void tick() {
-		if (this.getLevel().getNearestPlayer(this.getX(), this.getY(), this.getZ(), 8.0, EntitySelector.NO_SPECTATORS) != null) {
+		if (this.level().getNearestPlayer(this.getX(), this.getY(), this.getZ(), 8.0, EntitySelector.NO_SPECTATORS) != null) {
 			if (!this.isAwake()) {
 				if (this.timeSpotted >= 24) {
 					this.setAwake(true);
@@ -110,9 +110,9 @@ public class Sentry extends Slime {
 	protected void explodeAt(LivingEntity entity) {
 		if (this.distanceToSqr(entity) < 1.5 && this.isAwake() && this.hasLineOfSight(entity) && entity.hurt(this.damageSources().mobAttack(this), 1.0F) && this.tickCount > 20 && this.isAlive()) {
 			entity.push(0.3, 0.4, 0.3);
-			this.getLevel().explode(this, this.getX(), this.getY(), this.getZ(), 1.0F, Level.ExplosionInteraction.MOB);
+			this.level().explode(this, this.getX(), this.getY(), this.getZ(), 1.0F, Level.ExplosionInteraction.MOB);
 			this.playSound(SoundEvents.GENERIC_EXPLODE, 1.0F, 0.2F * (this.getRandom().nextFloat() - this.getRandom().nextFloat()) + 1);
-			if (this.getLevel() instanceof ServerLevel level) {
+			if (this.level() instanceof ServerLevel level) {
 				level.broadcastEntityEvent(this, (byte) 70);
 				level.sendParticles(ParticleTypes.EXPLOSION_EMITTER, this.getX(), this.getY(), this.getZ(), 1, 0.0, 0.0, 0.0, 0.5);
 			}
@@ -196,7 +196,7 @@ public class Sentry extends Slime {
 				double y = this.getY() + 0.5;
 				double z = this.getZ() + (this.getRandom().nextFloat() * 0.25);
 				float f1 = this.getRandom().nextFloat() * 360.0F;
-				this.getLevel().addParticle(ParticleTypes.POOF, x, y, z, -Math.sin(Mth.DEG_TO_RAD * f1) * 0.75, 0.125, Math.cos(Mth.DEG_TO_RAD * f1) * 0.75);
+				this.level().addParticle(ParticleTypes.POOF, x, y, z, -Math.sin(Mth.DEG_TO_RAD * f1) * 0.75, 0.125, Math.cos(Mth.DEG_TO_RAD * f1) * 0.75);
 			}
 		} else {
 			super.handleEntityEvent(id);

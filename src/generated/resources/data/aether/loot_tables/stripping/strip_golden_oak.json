@@ -27,5 +27,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "aether:stripping/strip_golden_oak"
 }

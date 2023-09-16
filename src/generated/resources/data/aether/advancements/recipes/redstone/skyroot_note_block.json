@@ -28,5 +28,6 @@
     "recipes": [
       "aether:skyroot_note_block"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

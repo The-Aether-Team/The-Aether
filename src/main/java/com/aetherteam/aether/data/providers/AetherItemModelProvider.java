@@ -4,10 +4,13 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.nitrogen.data.providers.NitrogenItemModelProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 public abstract class AetherItemModelProvider extends NitrogenItemModelProvider {
@@ -38,6 +41,37 @@ public abstract class AetherItemModelProvider extends NitrogenItemModelProvider 
                 .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(0.0F, -90.0F, 45.0F).translation(0.0F, 1.5F, -1.0F).scale(0.85F, 0.85F, 0.85F).end()
                 .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND).rotation(0.0F, 90.0F, -45.0F).translation(0.0F, 1.5F, -1.0F).scale(0.85F, 0.85F, 0.85F).end()
                 .end();
+    }
+
+    public void glovesItem(Item item, String location) {
+        ItemModelBuilder builder = this.withExistingParent(this.itemName(item), this.mcLoc("item/generated")).texture("layer0", this.modLoc("item/" + location + this.itemName(item)));
+        double index = 0.1;
+        for (ResourceKey<TrimMaterial> trimMaterial : NitrogenItemModelProvider.VANILLA_TRIM_MATERIALS) {
+            String material = trimMaterial.location().getPath();
+            String name = this.itemName(item) + "_" + material + "_trim";
+            this.withExistingParent(name, this.mcLoc("item/generated"))
+                    .texture("layer0", this.modLoc("item/" + location + this.itemName(item)))
+                    .texture("layer1", this.modLoc("trims/items/gloves_trim_" + material));
+            builder.override().predicate(new ResourceLocation("trim_type"), (float) index).model(this.getExistingFile(this.modLoc("item/" + name))).end();
+            index += 0.1;
+        }
+    }
+
+    public void dyedGlovesItem(Item item, String location) {
+        ItemModelBuilder builder = this.withExistingParent(this.itemName(item), this.mcLoc("item/generated"))
+                .texture("layer0", this.modLoc("item/" + location + this.itemName(item)))
+                .texture("layer1", this.modLoc("item/" + location + this.itemName(item) + "_overlay"));
+        double index = 0.1;
+        for (ResourceKey<TrimMaterial> trimMaterial : NitrogenItemModelProvider.VANILLA_TRIM_MATERIALS) {
+            String material = trimMaterial.location().getPath();
+            String name = this.itemName(item) + "_" + material + "_trim";
+            this.withExistingParent(name, this.mcLoc("item/generated"))
+                    .texture("layer0", this.modLoc("item/" + location + this.itemName(item)))
+                    .texture("layer1", this.modLoc("item/" + location + this.itemName(item) + "_overlay"))
+                    .texture("layer2", this.modLoc("trims/items/gloves_trim_" + material));
+            builder.override().predicate(new ResourceLocation("trim_type"), (float) index).model(this.getExistingFile(this.modLoc("item/" + name))).end();
+            index += 0.1;
+        }
     }
 
     public void rotatedItem(Item item, String location) {

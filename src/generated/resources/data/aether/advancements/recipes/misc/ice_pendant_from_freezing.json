@@ -28,5 +28,6 @@
     "recipes": [
       "aether:ice_pendant_from_freezing"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

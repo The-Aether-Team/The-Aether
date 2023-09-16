@@ -48,7 +48,7 @@ public class AvoidObstacles extends Behavior<Slider> {
 
         boolean isTouchingWall = false;
         for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
-            if (slider.getLevel().getBlockState(pos).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
+            if (slider.level().getBlockState(pos).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
                 isTouchingWall = true;
                 break;
             }
@@ -61,7 +61,7 @@ public class AvoidObstacles extends Behavior<Slider> {
                 isTouchingWall = false;
                 for (int x = Mth.floor(collisionBox.minX); x < collisionBox.maxX; x++) {
                     for (int z = Mth.floor(collisionBox.minZ); z < collisionBox.maxZ; z++) {
-                        if (slider.getLevel().getBlockState(pos.set(x, y, z)).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
+                        if (slider.level().getBlockState(pos.set(x, y, z)).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
                             isTouchingWall = true;
                         }
                     }

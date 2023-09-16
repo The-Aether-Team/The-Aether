@@ -67,30 +67,30 @@ public class AetherItemModelData extends AetherItemModelProvider {
 
         this.bowItem(AetherItems.PHOENIX_BOW.get(), "weapons/");
 
-        this.item(AetherItems.ZANITE_HELMET.get(), "armor/");
-        this.item(AetherItems.ZANITE_CHESTPLATE.get(), "armor/");
-        this.item(AetherItems.ZANITE_LEGGINGS.get(), "armor/");
-        this.item(AetherItems.ZANITE_BOOTS.get(), "armor/");
+        this.helmetItem(AetherItems.ZANITE_HELMET.get(), "armor/");
+        this.chestplateItem(AetherItems.ZANITE_CHESTPLATE.get(), "armor/");
+        this.leggingsItem(AetherItems.ZANITE_LEGGINGS.get(), "armor/");
+        this.bootsItem(AetherItems.ZANITE_BOOTS.get(), "armor/");
 
-        this.item(AetherItems.GRAVITITE_HELMET.get(), "armor/");
-        this.item(AetherItems.GRAVITITE_CHESTPLATE.get(), "armor/");
-        this.item(AetherItems.GRAVITITE_LEGGINGS.get(), "armor/");
-        this.item(AetherItems.GRAVITITE_BOOTS.get(), "armor/");
+        this.helmetItem(AetherItems.GRAVITITE_HELMET.get(), "armor/");
+        this.chestplateItem(AetherItems.GRAVITITE_CHESTPLATE.get(), "armor/");
+        this.leggingsItem(AetherItems.GRAVITITE_LEGGINGS.get(), "armor/");
+        this.bootsItem(AetherItems.GRAVITITE_BOOTS.get(), "armor/");
 
-        this.item(AetherItems.NEPTUNE_HELMET.get(), "armor/");
-        this.item(AetherItems.NEPTUNE_CHESTPLATE.get(), "armor/");
-        this.item(AetherItems.NEPTUNE_LEGGINGS.get(), "armor/");
-        this.item(AetherItems.NEPTUNE_BOOTS.get(), "armor/");
+        this.helmetItem(AetherItems.NEPTUNE_HELMET.get(), "armor/");
+        this.chestplateItem(AetherItems.NEPTUNE_CHESTPLATE.get(), "armor/");
+        this.leggingsItem(AetherItems.NEPTUNE_LEGGINGS.get(), "armor/");
+        this.bootsItem(AetherItems.NEPTUNE_BOOTS.get(), "armor/");
 
-        this.item(AetherItems.PHOENIX_HELMET.get(), "armor/");
-        this.item(AetherItems.PHOENIX_CHESTPLATE.get(), "armor/");
-        this.item(AetherItems.PHOENIX_LEGGINGS.get(), "armor/");
-        this.item(AetherItems.PHOENIX_BOOTS.get(), "armor/");
+        this.helmetItem(AetherItems.PHOENIX_HELMET.get(), "armor/");
+        this.chestplateItem(AetherItems.PHOENIX_CHESTPLATE.get(), "armor/");
+        this.leggingsItem(AetherItems.PHOENIX_LEGGINGS.get(), "armor/");
+        this.bootsItem(AetherItems.PHOENIX_BOOTS.get(), "armor/");
 
-        this.item(AetherItems.OBSIDIAN_HELMET.get(), "armor/");
-        this.item(AetherItems.OBSIDIAN_CHESTPLATE.get(), "armor/");
-        this.item(AetherItems.OBSIDIAN_LEGGINGS.get(), "armor/");
-        this.item(AetherItems.OBSIDIAN_BOOTS.get(), "armor/");
+        this.helmetItem(AetherItems.OBSIDIAN_HELMET.get(), "armor/");
+        this.chestplateItem(AetherItems.OBSIDIAN_CHESTPLATE.get(), "armor/");
+        this.leggingsItem(AetherItems.OBSIDIAN_LEGGINGS.get(), "armor/");
+        this.bootsItem(AetherItems.OBSIDIAN_BOOTS.get(), "armor/");
 
         this.item(AetherItems.VALKYRIE_HELMET.get(), "armor/");
         this.item(AetherItems.VALKYRIE_CHESTPLATE.get(), "armor/");
@@ -118,18 +118,18 @@ public class AetherItemModelData extends AetherItemModelProvider {
         this.item(AetherItems.ZANITE_PENDANT.get(), "accessories/");
         this.item(AetherItems.ICE_PENDANT.get(), "accessories/");
 
-        this.dyedItem(AetherItems.LEATHER_GLOVES.get(), "accessories/");
-        this.item(AetherItems.CHAINMAIL_GLOVES.get(), "accessories/");
-        this.item(AetherItems.IRON_GLOVES.get(), "accessories/");
-        this.item(AetherItems.GOLDEN_GLOVES.get(), "accessories/");
-        this.item(AetherItems.DIAMOND_GLOVES.get(), "accessories/");
-        this.item(AetherItems.NETHERITE_GLOVES.get(), "accessories/");
-        this.item(AetherItems.ZANITE_GLOVES.get(), "accessories/");
-        this.item(AetherItems.GRAVITITE_GLOVES.get(), "accessories/");
-        this.item(AetherItems.NEPTUNE_GLOVES.get(), "accessories/");
-        this.item(AetherItems.PHOENIX_GLOVES.get(), "accessories/");
-        this.item(AetherItems.OBSIDIAN_GLOVES.get(), "accessories/");
-        this.item(AetherItems.VALKYRIE_GLOVES.get(), "accessories/");
+        this.dyedGlovesItem(AetherItems.LEATHER_GLOVES.get(), "accessories/");
+        this.glovesItem(AetherItems.CHAINMAIL_GLOVES.get(), "accessories/");
+        this.glovesItem(AetherItems.IRON_GLOVES.get(), "accessories/");
+        this.glovesItem(AetherItems.GOLDEN_GLOVES.get(), "accessories/");
+        this.glovesItem(AetherItems.DIAMOND_GLOVES.get(), "accessories/");
+        this.glovesItem(AetherItems.NETHERITE_GLOVES.get(), "accessories/");
+        this.glovesItem(AetherItems.ZANITE_GLOVES.get(), "accessories/");
+        this.glovesItem(AetherItems.GRAVITITE_GLOVES.get(), "accessories/");
+        this.glovesItem(AetherItems.NEPTUNE_GLOVES.get(), "accessories/");
+        this.glovesItem(AetherItems.PHOENIX_GLOVES.get(), "accessories/");
+        this.glovesItem(AetherItems.OBSIDIAN_GLOVES.get(), "accessories/");
+        this.glovesItem(AetherItems.VALKYRIE_GLOVES.get(), "accessories/");
 
         this.item(AetherItems.RED_CAPE.get(), "accessories/");
         this.item(AetherItems.BLUE_CAPE.get(), "accessories/");
@@ -265,6 +265,7 @@ public class AetherItemModelData extends AetherItemModelProvider {
 
         this.itemBlockFlat(AetherBlocks.AMBROSIUM_TORCH.get(), "utility/");
         this.item(AetherBlocks.SKYROOT_SIGN.get().asItem(), "miscellaneous/");
+        this.item(AetherBlocks.SKYROOT_HANGING_SIGN.get().asItem(), "miscellaneous/");
 
         this.itemBlock(AetherBlocks.BERRY_BUSH.get());
         this.itemBlockFlat(AetherBlocks.BERRY_BUSH_STEM.get(), "natural/");

@@ -30,5 +30,6 @@
     "recipes": [
       "aether:wood_zanite_vanilla_shield"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

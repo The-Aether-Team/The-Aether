@@ -30,5 +30,6 @@
     "recipes": [
       "aether:gravitite_axe"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

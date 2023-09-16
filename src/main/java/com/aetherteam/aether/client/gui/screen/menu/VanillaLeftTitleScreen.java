@@ -2,11 +2,11 @@ package com.aetherteam.aether.client.gui.screen.menu;
 
 import com.aetherteam.aether.client.gui.component.menu.DynamicMenuButton;
 import com.aetherteam.aether.mixin.mixins.client.accessor.TitleScreenAccessor;
-import com.mojang.blaze3d.systems.RenderSystem;
+import com.aetherteam.cumulus.mixin.mixins.client.accessor.SplashRendererAccessor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.Util;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.LogoRenderer;
@@ -66,35 +66,42 @@ public class VanillaLeftTitleScreen extends TitleScreen implements TitleScreenBe
     }
 
     /**
-     * [CODE COPY] - {@link TitleScreen#render(PoseStack, int, int, float)}.<br><br>
+     * [CODE COPY] - {@link TitleScreen#render(GuiGraphics, int, int, float)}.<br><br>
      * Modified and abstracted using {@link TitleScreenBehavior}.
      */
     @Override
-    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         TitleScreenAccessor titleScreenAccessor = (TitleScreenAccessor) this;
-        float fadeAmount = TitleScreenBehavior.super.handleFading(poseStack, this, titleScreenAccessor, this.panorama, PANORAMA_OVERLAY, partialTicks);
-        this.renderLogo(poseStack, fadeAmount);
+        if (this.minecraft != null && titleScreenAccessor.aether$getSplash() == null) {
+            titleScreenAccessor.aether$setSplash(this.minecraft.getSplashManager().getSplash());
+        }
+        float fadeAmount = TitleScreenBehavior.super.handleFading(guiGraphics, this, titleScreenAccessor, this.panorama, PANORAMA_OVERLAY, partialTicks);
+        this.renderLogo(guiGraphics, fadeAmount);
         int roundedFadeAmount = Mth.ceil(fadeAmount * 255.0F) << 24;
         if ((roundedFadeAmount & -67108864) != 0) {
             if (titleScreenAccessor.getWarningLabel() != null) {
-                titleScreenAccessor.getWarningLabel().render(poseStack, roundedFadeAmount);
+                titleScreenAccessor.getWarningLabel().render(guiGraphics, roundedFadeAmount);
             }
-            ForgeHooksClient.renderMainMenu(this, poseStack, this.font, this.width, this.height, roundedFadeAmount);
+            ForgeHooksClient.renderMainMenu(this, guiGraphics, this.font, this.width, this.height, roundedFadeAmount);
             if (titleScreenAccessor.aether$getSplash() != null) {
-                poseStack.pushPose();
-                poseStack.translate(250.0F, 50.0F, 0.0F);
-                poseStack.mulPose(Axis.ZP.rotationDegrees(-20.0F));
-                float textSize = 1.8F - Mth.abs(Mth.sin((float) (Util.getMillis() % 1000L) / 1000.0F * Mth.TWO_PI) * 0.1F);
-                textSize = textSize * 100.0F / (float) (this.font.width(titleScreenAccessor.aether$getSplash()) + 32); poseStack.scale(textSize, textSize, textSize);
-                GuiComponent.drawCenteredString(poseStack, this.font, titleScreenAccessor.aether$getSplash(), 0, -8, 16776960 | roundedFadeAmount);
-                poseStack.popPose();
+                SplashRendererAccessor splashRendererAccessor = (SplashRendererAccessor) titleScreenAccessor.aether$getSplash();
+                if (splashRendererAccessor.cumulus$getSplash() != null && !splashRendererAccessor.cumulus$getSplash().isEmpty()) {
+                    PoseStack poseStack = guiGraphics.pose();
+                    poseStack.pushPose();
+                    poseStack.translate(250.0F, 50.0F, 0.0F);
+                    poseStack.mulPose(Axis.ZP.rotationDegrees(-20.0F));
+                    float textSize = 1.8F - Mth.abs(Mth.sin((float) (Util.getMillis() % 1000L) / 1000.0F * Mth.TWO_PI) * 0.1F);
+                    textSize = textSize * 100.0F / (float) (VanillaLeftTitleScreen.this.font.width(splashRendererAccessor.cumulus$getSplash()) + 32); poseStack.scale(textSize, textSize, textSize);
+                    guiGraphics.drawCenteredString(VanillaLeftTitleScreen.this.font, splashRendererAccessor.cumulus$getSplash(), 0, -8, 16776960 | roundedFadeAmount);
+                    poseStack.popPose();
+                }
             }
-            TitleScreenBehavior.super.renderRightBranding(poseStack, this, this.font, roundedFadeAmount);
+            TitleScreenBehavior.super.renderRightBranding(guiGraphics, this, this.font, roundedFadeAmount);
         }
 
         int xOffset = TitleScreenBehavior.super.handleButtonVisibility(this, fadeAmount);
         for (Renderable renderable : this.renderables) { // Increases the x-offset to the left for image buttons if there are menu buttons on the screen.
-            renderable.render(poseStack, mouseX, mouseY, partialTicks);
+            renderable.render(guiGraphics, mouseX, mouseY, partialTicks);
             if (renderable instanceof DynamicMenuButton dynamicMenuButton) {
                 if (dynamicMenuButton.enabled) {
                     xOffset -= 24;
@@ -104,42 +111,27 @@ public class VanillaLeftTitleScreen extends TitleScreen implements TitleScreenBe
         TitleScreenBehavior.super.handleImageButtons(this, xOffset);
 
         if (fadeAmount >= 1.0F) {
-            this.modUpdateNotification.render(poseStack, mouseX, mouseY, partialTicks);
+            this.modUpdateNotification.render(guiGraphics, mouseX, mouseY, partialTicks);
         }
     }
 
     /**
-     * [CODE COPY] - {@link LogoRenderer#renderLogo(PoseStack, int, float)}.
+     * [CODE COPY] - {@link LogoRenderer#renderLogo(GuiGraphics, int, float)}.
      */
-    public void renderLogo(PoseStack poseStack, float transparency) {
-        this.renderLogo(poseStack, transparency, 30);
+    public void renderLogo(GuiGraphics guiGraphics, float transparency) {
+        this.renderLogo(guiGraphics, transparency, 30);
     }
 
     /**
-     * [CODE COPY] - {@link LogoRenderer#renderLogo(PoseStack, int, float, int)}.<br><br>
+     * [CODE COPY] - {@link LogoRenderer#renderLogo(GuiGraphics, int, float, int)}.<br><br>
      * Modified to align the logo to the left instead of the center.
      */
-    public void renderLogo(PoseStack poseStack, float transparency, int height) {
-        RenderSystem.setShaderTexture(0, LogoRenderer.MINECRAFT_LOGO);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, transparency);
-        int xOffset = 11;
+    public void renderLogo(GuiGraphics guiGraphics, float transparency, int height) {
+        int xOffset = 16;
         int yOffset = -11;
-        if (this.showMinceraftEasterEgg) {
-            GuiComponent.blitOutlineBlack(xOffset, height, (x, y) -> {
-                GuiComponent.blit(poseStack, x, y + yOffset, 0, 0, 99, 44);
-                GuiComponent.blit(poseStack, x + 99, y + yOffset, 129, 0, 27, 44);
-                GuiComponent.blit(poseStack, x + 99 + 26, y + yOffset, 126, 0, 3, 44);
-                GuiComponent.blit(poseStack, x + 99 + 26 + 3, y + yOffset, 99, 0, 26, 44);
-                GuiComponent.blit(poseStack, x + 155, y + yOffset, 0, 45, 155, 44);
-            });
-        } else {
-            GuiComponent.blitOutlineBlack(xOffset, height, (x, y) -> {
-                GuiComponent.blit(poseStack, x, y + yOffset, 0, 0, 155, 44);
-                GuiComponent.blit(poseStack, x + 155, y + yOffset, 0, 45, 155, 44);
-            });
-        }
-        RenderSystem.setShaderTexture(0, LogoRenderer.MINECRAFT_EDITION);
-        GuiComponent.blit(poseStack, xOffset + 88, height + 37 + yOffset, 0.0F, 0.0F, 98, 14, 128, 16);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        guiGraphics.setColor(1.0F, 1.0F, 1.0F, transparency);
+        guiGraphics.blit(this.showMinceraftEasterEgg ? LogoRenderer.EASTER_EGG_LOGO : LogoRenderer.MINECRAFT_LOGO, xOffset, yOffset + 22, 0.0F, 0.0F, 256, 44, 256, 64);
+        guiGraphics.blit(LogoRenderer.MINECRAFT_EDITION, xOffset + 67, height + 37 + yOffset, 0.0F, 0.0F, 128, 14, 128, 16);
+        guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
     }
 }

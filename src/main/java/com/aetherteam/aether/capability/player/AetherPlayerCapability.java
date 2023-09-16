@@ -248,7 +248,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	 */
 	@Override
 	public void onJoinLevel() {
-		if (this.getPlayer().getLevel().isClientSide()) {
+		if (this.getPlayer().level().isClientSide()) {
 			CustomizationsOptions.INSTANCE.load();
 		}
 	}
@@ -330,7 +330,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	 * On the client, this will also help to set the portal overlay.
 	 */
 	private void handleAetherPortal() {
-		if (this.getPlayer().getLevel().isClientSide()) {
+		if (this.getPlayer().level().isClientSide()) {
 			this.prevPortalAnimTime = this.portalAnimTime;
 			Minecraft minecraft = Minecraft.getInstance();
 			if (this.isInAetherPortal) {
@@ -349,7 +349,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 
 		if (this.isInPortal()) {
 			++this.aetherPortalTimer;
-			if (this.getPlayer().getLevel().isClientSide()) {
+			if (this.getPlayer().level().isClientSide()) {
 				this.portalAnimTime += 0.0125F;
 				if (this.getPortalAnimTime() > 1.0F) {
 					this.portalAnimTime = 1.0F;
@@ -358,7 +358,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 			this.isInAetherPortal = false;
 		}
 		else {
-			if (this.getPlayer().getLevel().isClientSide()) {
+			if (this.getPlayer().level().isClientSide()) {
 				if (this.getPortalAnimTime() > 0.0F) {
 					this.portalAnimTime -= 0.05F;
 				}
@@ -388,7 +388,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	private void activateParachute() {
 		Player player = this.getPlayer();
 		Inventory inventory = this.getPlayer().getInventory();
-		Level level = player.getLevel();
+		Level level = player.level();
 		if (!player.isCreative() && !player.isShiftKeyDown() && !player.isFallFlying() && !player.isPassenger()) {
 			if (player.getDeltaMovement().y() < -1.5) {
 				if (inventory.contains(AetherTags.Items.DEPLOYABLE_PARACHUTES)) {
@@ -417,7 +417,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	 * Slowly removes darts that are rendered as stuck on the player by {@link com.aetherteam.aether.client.renderer.player.layer.DartLayer}.
 	 */
 	private void handleRemoveDarts() {
-		if (!this.getPlayer().getLevel().isClientSide()) {
+		if (!this.getPlayer().level().isClientSide()) {
 			if (this.getGoldenDartCount() > 0) {
 				if (this.removeGoldenDartTime <= 0) {
 					this.removeGoldenDartTime = 20 * (30 - this.getGoldenDartCount());
@@ -463,7 +463,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	 * Decreases the opacity of the Shield of Repulsion overlay vignette.
 	 */
 	private void tickDownProjectileImpact() {
-		if (this.getPlayer().getLevel().isClientSide()) {
+		if (this.getPlayer().level().isClientSide()) {
 			if (this.getProjectileImpactedTimer() > 0) {
 				this.setProjectileImpactedTimer(this.getProjectileImpactedTimer() - 1);
 			} else {
@@ -477,7 +477,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	 * Handles the rotation for the Valkyrie Armor wings layer renderer at {@link com.aetherteam.aether.client.renderer.player.layer.PlayerWingsLayer}.
 	 */
 	private void handleWingRotation() {
-		if (this.getPlayer().getLevel().isClientSide()) {
+		if (this.getPlayer().level().isClientSide()) {
 			this.wingRotationO = this.getWingRotation();
 			if (EquipmentUtil.hasFullValkyrieSet(this.getPlayer())) {
 				this.wingRotation = this.getPlayer().tickCount;
@@ -491,7 +491,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	 * Decreases the attack cooldown after a player has attacked. This is used for when the player has attacked while wearing an Invisibility Cloak.
 	 */
 	private void handleAttackCooldown() {
-		if (!this.getPlayer().getLevel().isClientSide()) {
+		if (!this.getPlayer().level().isClientSide()) {
 			if (this.attackedWithInvisibility()) {
 				--this.invisibilityAttackCooldown;
 				if (this.invisibilityAttackCooldown <= 0) {
@@ -507,7 +507,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	 * Used for healing the player with a Vampire Blade. This method exists to get around a bug with heart rendering.
 	 */
 	private void handleVampireHealing() {
-		if (!this.getPlayer().getLevel().isClientSide() && this.performVampireHealing()) {
+		if (!this.getPlayer().level().isClientSide() && this.performVampireHealing()) {
 			this.getPlayer().heal(1.0F);
 			this.setVampireHealing(false);
 		}
@@ -541,10 +541,10 @@ public class AetherPlayerCapability implements AetherPlayer {
 	 */
 	private void remountAerbunny() {
 		if (this.getMountedAerbunnyTag() != null) {
-			if (!this.getPlayer().getLevel().isClientSide()) {
-				Aerbunny aerbunny = new Aerbunny(AetherEntityTypes.AERBUNNY.get(), this.getPlayer().getLevel());
+			if (!this.getPlayer().level().isClientSide()) {
+				Aerbunny aerbunny = new Aerbunny(AetherEntityTypes.AERBUNNY.get(), this.getPlayer().level());
 				aerbunny.load(this.getMountedAerbunnyTag());
-				this.getPlayer().getLevel().addFreshEntity(aerbunny);
+				this.getPlayer().level().addFreshEntity(aerbunny);
 				aerbunny.startRiding(this.getPlayer());
 				this.setMountedAerbunny(aerbunny);
 				if (this.getPlayer() instanceof ServerPlayer serverPlayer) {
@@ -583,7 +583,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	 * Sets up the attribute modifier for extra Life Shard hearts.
 	 */
 	private void handleLifeShardModifier() {
-		if (!this.getPlayer().getLevel().isClientSide()) {
+		if (!this.getPlayer().level().isClientSide()) {
 			AttributeInstance health = this.getPlayer().getAttribute(Attributes.MAX_HEALTH);
 			AttributeModifier lifeShardHealth = this.getLifeShardHealthAttributeModifier();
 			if (health != null) {
@@ -624,7 +624,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 		if (this.getPlayer() instanceof ServerPlayer serverPlayer) {
 			if (AetherConfig.COMMON.show_patreon_message.get() && this.canShowPatreonMessage) {
 				if (this.loginsUntilPatreonMessage < 0) {
-					if (serverPlayer.getLevel().dimension() == AetherDimensions.AETHER_LEVEL
+					if (serverPlayer.level().dimension() == AetherDimensions.AETHER_LEVEL
 							&& (serverPlayer.getStats().getValue(Stats.ENTITY_KILLED.get(AetherEntityTypes.SLIDER.get())) > 0
 							|| serverPlayer.getStats().getValue(Stats.ENTITY_KILLED.get(AetherEntityTypes.VALKYRIE_QUEEN.get())) > 0
 							|| serverPlayer.getStats().getValue(Stats.ENTITY_KILLED.get(AetherEntityTypes.SUN_SPIRIT.get())) > 0)) {
@@ -1140,7 +1140,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	 * @param cloudMinionLeft The left {@link CloudMinion}.
 	 */
 	private void sendCloudMinionPacket(CloudMinion cloudMinionRight, CloudMinion cloudMinionLeft) {
-		if (this.getPlayer() instanceof ServerPlayer serverPlayer && !this.getPlayer().level.isClientSide) {
+		if (this.getPlayer() instanceof ServerPlayer serverPlayer && !this.getPlayer().level().isClientSide) {
 			PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new CloudMinionPacket(this.getPlayer().getId(), cloudMinionRight.getId(), cloudMinionLeft.getId()), serverPlayer);
 		}
 	}

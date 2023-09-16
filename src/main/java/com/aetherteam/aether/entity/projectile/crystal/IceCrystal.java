@@ -2,7 +2,7 @@ package com.aetherteam.aether.entity.projectile.crystal;
 
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.particle.AetherParticleTypes;
-import com.aetherteam.aether.data.resources.AetherDamageTypes;
+import com.aetherteam.aether.data.resources.registries.AetherDamageTypes;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
@@ -57,8 +57,8 @@ public class IceCrystal extends AbstractCrystal implements WeaknessDamage {
     @Override
     protected void onHitBlock(BlockHitResult result) {
         if (this.attacked) { // Destroy the projectile if it has hit a wall after an attack.
-            this.getLevel().playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
-            if (!this.getLevel().isClientSide()) {
+            this.level().playSound(null, this.getX(), this.getY(), this.getZ(), this.getImpactExplosionSoundEvent(), SoundSource.HOSTILE, 2.0F, this.random.nextFloat() - this.random.nextFloat() * 0.2F + 1.2F);
+            if (!this.level().isClientSide()) {
                 this.discard();
             }
         } else {
@@ -82,7 +82,7 @@ public class IceCrystal extends AbstractCrystal implements WeaknessDamage {
             this.markHurt();
             Entity entity = source.getEntity();
             if (entity != null) {
-                if (!this.getLevel().isClientSide()) {
+                if (!this.level().isClientSide()) {
                     Vec3 vec3 = entity.getLookAngle();
                     this.xPower = vec3.x() * 2.5;
                     this.zPower = vec3.z() * 2.5;
@@ -104,7 +104,7 @@ public class IceCrystal extends AbstractCrystal implements WeaknessDamage {
     public void doDamage(Entity entity) {
         if (this.getOwner() != entity) {
             if (entity instanceof LivingEntity livingEntity) {
-                if (livingEntity.hurt(AetherDamageTypes.indirectEntityDamageSource(this.getLevel(), AetherDamageTypes.ICE_CRYSTAL, this, this.getOwner()), 7.0F)) {
+                if (livingEntity.hurt(AetherDamageTypes.indirectEntityDamageSource(this.level(), AetherDamageTypes.ICE_CRYSTAL, this, this.getOwner()), 7.0F)) {
                     WeaknessDamage.super.damageWithWeakness(this, livingEntity, this.random);
                 }
             }

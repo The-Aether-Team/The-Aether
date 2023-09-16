@@ -28,11 +28,11 @@ public class LightningSwordItem extends SwordItem {
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (EquipmentUtil.isFullStrength(attacker)) {
-            LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(attacker.getLevel());
+            LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(attacker.level());
             if (lightningBolt != null) {
                 LightningTracker.get(lightningBolt).ifPresent(lightningTracker -> lightningTracker.setOwner(attacker));
                 lightningBolt.setPos(target.getX(), target.getY(), target.getZ());
-                attacker.getLevel().addFreshEntity(lightningBolt);
+                attacker.level().addFreshEntity(lightningBolt);
             }
         }
         return super.hurtEnemy(stack, target, attacker);

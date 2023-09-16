@@ -22,7 +22,7 @@ public class RemedyEffect extends MobEffect {
     @Override
     public void applyEffectTick(LivingEntity livingEntity, int amplifier) {
         if (livingEntity instanceof Player player) {
-            if (player.getLevel().isClientSide()) {
+            if (player.level().isClientSide()) {
                 AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
                     if (aetherPlayer.getRemedyStartDuration() <= 0) {
                         aetherPlayer.setSynched(INBTSynchable.Direction.SERVER, "setRemedyStartDuration", this.effectDuration);
