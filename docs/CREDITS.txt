@@ -18,6 +18,9 @@ baguchan:
 - Fixes to the Dart layer renderers.
 - Fixes to Whirlwinds getting stuck vertically.
 
+Camotoy
+- Help with porting to 1.20.1.
+
 carl-vbn:
 - Fixes to a rare Moa crash.
 

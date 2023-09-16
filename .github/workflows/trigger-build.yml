@@ -16,7 +16,7 @@ on:
       remote_branch:
         description: 'GitHub branch that the pull request is merging from'
         required: true
-        default: '1.19.4-develop'
+        default: '1.20.1-develop'
         type: string
   
 jobs:
