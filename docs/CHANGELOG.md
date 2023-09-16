@@ -1,0 +1,22 @@
+# The Aether - NeoForge - 1.20.1-1.0.0-beta.1
+
+**This beta is a full port of 1.19.4-1.0.0-beta.6.1 to 1.20.1!**
+
+Additions
+
+- Add Skyroot Hanging Signs.
+- Add Zanite Gemstones and Enchanted Gravitite as valid armor trim materials.
+- Add the ability to trimming Zanite Armor, Gravitite Armor, Neptune Armor, Phoenix Armor, and Obsidian Armor.
+- Add the ability to trim gloves.
+- Add accessory slots to Armor Stands, allowing them to be equipped with all visually displaying accessories.
+- Add accessory slots to Zombies, Zombie Villagers, Husks, Skeletons, and Strays. All these mobs now have a chance to spawn with gloves alongside spawning with armor.
+- Add accessory slots to Piglins and Zombified Piglins. Piglins can have a chance to spawn with Golden Gloves or Golden Pendants. These are also retained through zombification in the Overworld.
+- Add Skyroot Bookshelf to `#enchantment_power_provider`.
+- Add Aether Grass Block, Aether Dirt, and Aether Enchanted Grass Block to `#sniffer_diggable_block`.
+- Add Holystone Button to `#stone_buttons`.
+- Add Berry Bush and Bush Stem to `#sword_efficient`.
+
+Changes
+
+- Remove Starlight as a listed recommended dependency on mod distribution platforms. It is no longer needed for performance enhancements.
+- Change mod compatibility for extinguishing Copper Lanterns from being for Supplementaries to Supplementaries Squared.
