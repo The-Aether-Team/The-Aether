@@ -17,7 +17,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -274,8 +273,6 @@ public class AetherOverlays {
                         int lastLifeShardHealth = 0;
                         int lastOverallHealth = 0;
 
-                        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-                        RenderSystem.setShaderTexture(0, TEXTURE_LIFE_SHARD_HEARTS);
                         RenderSystem.enableBlend();
 
                         double overallHealth = attributeInstance.getValue();
@@ -341,11 +338,11 @@ public class AetherOverlays {
             int selectedContainer = currentHeart * 2;
             if (highlight && selectedContainer < displayLifeShardHealth) {
                 boolean halfHeart = selectedContainer + 1 == displayLifeShardHealth;
-                guiAccessor.callRenderHeart(guiGraphics, heartType, x, y, 0, true, halfHeart);
+                guiGraphics.blit(TEXTURE_LIFE_SHARD_HEARTS, x, y, heartType.getX(halfHeart, false), 0, 9, 9);
             }
             if (selectedContainer < lifeShardHealth) {
                 boolean halfHeart = selectedContainer + 1 == lifeShardHealth;
-                guiAccessor.callRenderHeart(guiGraphics, heartType, x, y, 0, false, halfHeart);
+                guiGraphics.blit(TEXTURE_LIFE_SHARD_HEARTS, x, y, heartType.getX(halfHeart, false), 0, 9, 9);
             }
         }
     }
