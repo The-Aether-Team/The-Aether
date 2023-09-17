@@ -242,9 +242,9 @@ public class GuiHooks {
             if (Minecraft.getInstance().player != null) {
                 if (DimensionHooks.displayAetherTravel) {
                     if (DimensionHooks.playerLeavingAether) {
-                        guiGraphics.drawCenteredString(screen.getMinecraft().font, Component.translatable("gui.aether.descending"), screen.width / 2, 50, 16777215);
+                        guiGraphics.drawCenteredString(screen.getMinecraft().font, Component.translatable("gui.aether.descending"), screen.width / 2, AetherConfig.CLIENT.portal_text_y.get(), 16777215);
                     } else {
-                        guiGraphics.drawCenteredString(screen.getMinecraft().font, Component.translatable("gui.aether.ascending"), screen.width / 2, 50, 16777215);
+                        guiGraphics.drawCenteredString(screen.getMinecraft().font, Component.translatable("gui.aether.ascending"), screen.width / 2, AetherConfig.CLIENT.portal_text_y.get(), 16777215);
                     }
                 }
             }
