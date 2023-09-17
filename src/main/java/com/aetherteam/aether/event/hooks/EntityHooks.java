@@ -146,7 +146,7 @@ public class EntityHooks {
      * @param mob The {@link Mob} to equip to.
      * @param identifier The {@link String} identifier for the slot.
      * @param armorMaterials The {@link ArmorMaterials} to get an item from.
-     * @see EntityHooks#spawnWithAccessories(Entity)
+     * @see EntityHooks#spawnWithAccessories(Entity, DifficultyInstance)
      */
     private static void equipAccessory(Mob mob, String identifier, ArmorMaterials armorMaterials) {
         CuriosApi.getCuriosInventory(mob).ifPresent((handler) -> {
