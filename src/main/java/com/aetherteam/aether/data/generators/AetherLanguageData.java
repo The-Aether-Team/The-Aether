@@ -1227,6 +1227,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addClientConfig("gui", "enable_trivia", "Adds random trivia and tips to the bottom of loading screens");
         this.addClientConfig("gui", "enable_silver_hearts", "Makes the extra hearts given by life shards display as silver colored");
         this.addClientConfig("gui", "disable_accessory_button", "Disables the Aether's accessories button from appearing in GUIs");
+        this.addClientConfig("gui", "portal_text_y", "The y-coordinate of the Ascending to the Aether and Descending from the Aether text in loading screens");
         this.addClientConfig("gui", "button_inventory_x", "The x-coordinate of the accessories button in the inventory and curios menus");
         this.addClientConfig("gui", "button_inventory_y", "The y-coordinate of the accessories button in the inventory and curios menus");
         this.addClientConfig("gui", "button_creative_x", "The x-coordinate of the accessories button in the creative menu");
