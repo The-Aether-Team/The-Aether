@@ -211,10 +211,4 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 	public boolean isAlignedLeft() {
 		return this.alignedLeft;
 	}
-
-	@Nullable
-	@Override
-	public Music getBackgroundMusic() {
-		return !this.isAlignedLeft() ? AetherMenus.THE_AETHER.get().getMusic() : AetherMenus.THE_AETHER_LEFT.get().getMusic();
-	}
 }
