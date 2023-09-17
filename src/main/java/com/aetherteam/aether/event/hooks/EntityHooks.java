@@ -103,8 +103,8 @@ public class EntityHooks {
      * @see com.aetherteam.aether.mixin.mixins.common.ForgeEventFactoryMixin
      */
     public static void spawnWithAccessories(Entity entity, DifficultyInstance difficulty) {
-        if (entity instanceof Mob mob && mob.level() instanceof ServerLevel serverLevel) {
-            RandomSource random = serverLevel.getRandom();
+        if (entity instanceof Mob mob && mob.level() instanceof ServerLevel) {
+            RandomSource random = mob.getRandom();
             EntityType<?> entityType = mob.getType();
             String[] allSlots = {"hands", "necklace", "aether_gloves", "aether_pendant"};
             String[] gloveSlots = {"hands", "aether_gloves"};
@@ -213,7 +213,7 @@ public class EntityHooks {
      * @see EntityHooks#spawnWithAccessories(Entity)
      */
     private static void enchantAccessories(Mob mob, DifficultyInstance difficulty, String[] allowedSlots) {
-        RandomSource random = mob.level().getRandom();
+        RandomSource random = mob.getRandom();
         float chanceMultiplier = difficulty.getSpecialMultiplier();
         for (String identifier : allowedSlots) {
             CuriosApi.getCuriosInventory(mob).ifPresent((handler) -> handler.findCurio(identifier, 0).ifPresent((slotResult) -> {
