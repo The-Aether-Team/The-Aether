@@ -39,7 +39,8 @@
       "palette_key": "trims/color_palettes/trim_palette",
       "permutations": {
         "zanite": "aether:trims/color_palettes/zanite",
-        "gravitite": "aether:trims/color_palettes/gravitite"
+        "gravitite": "aether:trims/color_palettes/gravitite",
+        "golden_amber": "aether:trims/color_palettes/golden_amber"
       }
     }
   ]

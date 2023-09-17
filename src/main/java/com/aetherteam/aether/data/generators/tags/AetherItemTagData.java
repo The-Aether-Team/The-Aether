@@ -470,6 +470,7 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherItems.CHAINMAIL_GLOVES.get());
         this.tag(ItemTags.TRIM_MATERIALS).add(
                 AetherItems.ZANITE_GEMSTONE.get(),
-                AetherBlocks.ENCHANTED_GRAVITITE.get().asItem());
+                AetherBlocks.ENCHANTED_GRAVITITE.get().asItem(),
+                AetherItems.GOLDEN_AMBER.get());
     }
 }
