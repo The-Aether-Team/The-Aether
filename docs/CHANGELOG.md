@@ -1,3 +1,17 @@
+# The Aether - NeoForge - 1.20.1-1.0.0-beta.1.1
+
+Additions
+
+- Add Golden Amber as a valid armor trim material.
+- Add a "Portal text y-coordinate in loading screens" config option to change the position of the "Ascending to the Aether" and "Descending from the Aether" text.
+
+Fixes
+
+- Fix servers randomly stalling out and crashing when trying to spawn an entity with an accessory.
+- Fix the tooltips in the Moa Skins GUI rendering in the corner of the screen.
+- Fix the Aether's title screen music not carrying over to options menus.
+- Fix the Valkyrie Queen's dialogue screen showing up for all players in the vicinity.
+
 # The Aether - NeoForge - 1.20.1-1.0.0-beta.1
 
 **This beta is a full port of 1.19.4-1.0.0-beta.6.1 to 1.20.1!**
