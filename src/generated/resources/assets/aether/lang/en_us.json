@@ -293,6 +293,7 @@
   "config.aether.client.gui.layout_perks_x": "The x-coordinate of the perks button layout when in the pause menu",
   "config.aether.client.gui.layout_perks_y": "The y-coordinate of the perks button layout when in the pause menu",
   "config.aether.client.gui.menu_type_toggles_alignment": "Determines that menu elements will align left if the menu's world preview is active, if true, this overrides 'Align menu elements left'",
+  "config.aether.client.gui.portal_text_y": "The y-coordinate of the Ascending to the Aether and Descending from the Aether text in loading screens",
   "config.aether.client.miscellaneous.should_disable_cumulus_button": "Disables the Cumulus menu selection screen button on launch",
   "config.aether.client.rendering.colder_lightmap": "Removes warm-tinting of the lightmap in the Aether, giving the lighting a colder feel",
   "config.aether.client.rendering.disable_aether_skybox": "Disables the Aether's custom skybox in case you have a shader that is incompatible with custom skyboxes",
