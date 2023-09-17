@@ -19,20 +19,15 @@ import com.aetherteam.nitrogen.api.users.UserData;
 import com.aetherteam.nitrogen.network.NitrogenPacketHandler;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import com.aetherteam.nitrogen.network.packet.serverbound.TriggerUpdateInfoPacket;
-import com.mojang.blaze3d.platform.Lighting;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.ConfirmLinkScreen;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
@@ -314,7 +309,7 @@ public class MoaSkinsScreen extends Screen {
                 }
             }
         }
-        this.renderMoa(partialTicks); // Renders the spinning Moa with the selected skin.
+        this.renderMoa(guiGraphics, partialTicks); // Renders the spinning Moa with the selected skin.
         guiGraphics.drawCenteredString(this.getMinecraft().font, this.getSelectedSkin().getDisplayName(), this.leftPos + (this.imageWidth / 2), this.topPos + 12, 16777215); // Skin Name
         guiGraphics.drawCenteredString(this.getMinecraft().font, this.getTitle(), this.leftPos + (this.imageWidth / 2), this.topPos - 15, 16777215); // Title
     }
@@ -364,7 +359,7 @@ public class MoaSkinsScreen extends Screen {
      * Sets up a Moa entity for rendering in the GUI.
      * @param partialTicks The {@link Float} for the game's partial ticks.
      */
-    private void renderMoa(float partialTicks) {
+    private void renderMoa(GuiGraphics guiGraphics, float partialTicks) {
         if (this.getMinecraft().level != null) {
             if (this.getPreviewMoa() == null) { // Set up preview Moa if it doesn't exist.
                 Moa moa = AetherEntityTypes.MOA.get().create(this.getMinecraft().level);
@@ -376,31 +371,19 @@ public class MoaSkinsScreen extends Screen {
                 }
             } else { // Render and rotate preview Moa once it does exist.
                 this.moaRotation = Mth.wrapDegrees(Mth.lerp(partialTicks, this.moaRotation, this.moaRotation + 2.5F));
-                renderRotatingEntity(this.leftPos + (this.imageWidth / 2), this.topPos + (this.imageHeight / 2) - 4, 27, this.moaRotation, -20.0F, this.getPreviewMoa());
+                renderRotatingEntity(guiGraphics, this.leftPos + (this.imageWidth / 2), this.topPos + (this.imageHeight / 2) - 4, 27, this.moaRotation, -20.0F, this.getPreviewMoa());
             }
         }
     }
 
     /**
-     * [CODE COPY] - {@link net.minecraft.client.gui.screens.inventory.InventoryScreen#renderEntityInInventoryFollowsAngle(GuiGraphics, int, int, int, float, float, LivingEntity)}.<br>
-     * [CODE COPY] - {@link net.minecraft.client.gui.screens.inventory.InventoryScreen#renderEntityInInventory(GuiGraphics, int, int, int, Quaternionf, Quaternionf, LivingEntity)}.<br><br>
-     * Merged code from the two methods, and modified so that the head rotation follows the body rotation and doesn't rotate separately.<br><br>
-     * Warning for "deprecation" is suppressed because this is copied code.
+     * [CODE COPY] - {@link net.minecraft.client.gui.screens.inventory.InventoryScreen#renderEntityInInventoryFollowsAngle(GuiGraphics, int, int, int, float, float, LivingEntity)}.<br><br>
+     * Code Modified so that the head rotation follows the body rotation and doesn't rotate separately.<br><br>
      */
-    @SuppressWarnings("deprecation")
-    public static void renderRotatingEntity(int posX, int posY, int scale, float angleXComponent, float angleYComponent, LivingEntity livingEntity) {
-        PoseStack viewStack = RenderSystem.getModelViewStack();
-        viewStack.pushPose();
-        viewStack.translate((float) posX, (float) posY, 1050.0F);
-        viewStack.scale(1.0F, 1.0F, -1.0F);
-        RenderSystem.applyModelViewMatrix();
-        PoseStack poseStack = new PoseStack();
-        poseStack.translate(0.0F, 0.0F, 1000.0F);
-        poseStack.scale((float) scale, (float) scale, (float) scale);
+    public static void renderRotatingEntity(GuiGraphics guiGraphics, int posX, int posY, int scale, float angleXComponent, float angleYComponent, LivingEntity livingEntity) {
         Quaternionf xQuaternion = new Quaternionf().rotateZ(Mth.PI);
         Quaternionf zQuaternion = new Quaternionf().rotateX(angleYComponent * Mth.DEG_TO_RAD);
         xQuaternion.mul(zQuaternion);
-        poseStack.mulPose(xQuaternion);
         float yBodyRot = livingEntity.yBodyRot;
         float yRot = livingEntity.getYRot();
         float xRot = livingEntity.getXRot();
@@ -409,21 +392,10 @@ public class MoaSkinsScreen extends Screen {
         livingEntity.setXRot(-angleYComponent);
         livingEntity.setYHeadRot(livingEntity.getYRot());
         livingEntity.yHeadRotO = livingEntity.getYRot();
-        Lighting.setupForEntityInInventory();
-        EntityRenderDispatcher entityRenderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
-        zQuaternion.conjugate();
-        entityRenderDispatcher.overrideCameraOrientation(zQuaternion);
-        entityRenderDispatcher.setRenderShadow(false);
-        MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
-        RenderSystem.runAsFancy(() -> entityRenderDispatcher.render(livingEntity, 0.0, 0.0, 0.0, 0.0F, 1.0F, poseStack, bufferSource, 15728880));
-        bufferSource.endBatch();
-        entityRenderDispatcher.setRenderShadow(true);
+        InventoryScreen.renderEntityInInventory(guiGraphics, posX, posY, scale, xQuaternion, zQuaternion, livingEntity);
         livingEntity.setYBodyRot(yBodyRot);
         livingEntity.setYRot(yRot);
         livingEntity.setXRot(xRot);
-        viewStack.popPose();
-        RenderSystem.applyModelViewMatrix();
-        Lighting.setupFor3DItems();
     }
 
     /**
