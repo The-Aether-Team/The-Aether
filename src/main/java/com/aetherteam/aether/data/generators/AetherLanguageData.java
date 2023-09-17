@@ -378,6 +378,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
 
         this.addTrim("zanite", "Zanite");
         this.addTrim("gravitite", "Gravitite");
+        this.addTrim("golden_amber", "Golden Amber");
 
 
         this.addEntityType(AetherEntityTypes.PHYG, "Phyg");
