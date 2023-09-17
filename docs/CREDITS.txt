@@ -45,6 +45,7 @@ GizmoTheMoonPig
 - Fixes to Netherite Gloves being uncraftable with 1.20 datapack.
 - Fixes to the Life Shard silver heart overlay rendering.
 - Fixes to aether1 and aether2 music naming.
+- FIxes to Moa Skins GUI issues.
 
 InsomniaKitten
 - Providing the accessory inventory texture.
