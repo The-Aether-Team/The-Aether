@@ -14,6 +14,7 @@ import com.aetherteam.aether.entity.monster.dungeon.AbstractValkyrie;
 import com.aetherteam.aether.entity.projectile.crystal.ThunderCrystal;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.network.AetherPacketHandler;
+import com.aetherteam.aether.network.packet.clientbound.QueenDialoguePacket;
 import com.aetherteam.aether.network.packet.serverbound.BossInfoPacket;
 import com.aetherteam.aether.network.packet.serverbound.NpcPlayerInteractPacket;
 import com.aetherteam.nitrogen.entity.BossRoomTracker;
@@ -255,7 +256,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                     this.lookAt(player, 180.0F, 180.0F);
                     if (player instanceof ServerPlayer serverPlayer) {
                         if (this.getConversingPlayer() == null) {
-                            this.getLevel().broadcastEntityEvent(this, (byte) 71);
+                            PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new QueenDialoguePacket(this.getId()), serverPlayer);
                             this.setConversingPlayer(serverPlayer);
                         }
                     }
@@ -653,15 +654,6 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     @Override
     protected boolean isAffectedByFluids() {
         return this.jumping;
-    }
-
-    @Override
-    public void handleEntityEvent(byte id) {
-        if (id == 71) {
-            this.openDialogueScreen();
-        } else {
-            super.handleEntityEvent(id);
-        }
     }
 
     /**
