@@ -89,7 +89,7 @@ public class EntityHooks {
      * Used to check whether an entity can spawn with accessories based on their {@link EntityType}.
      * @param entity The {@link Entity} that is spawning.
      * @return Whether the entity can spawn in the world with accessories, as a {@link Boolean}.
-     * @see com.aetherteam.aether.event.listeners.EntityListener#onEntityJoin(EntityJoinLevelEvent)
+     * @see com.aetherteam.aether.mixin.mixins.common.ForgeEventFactoryMixin
      */
     public static boolean canMobSpawnWithAccessories(Entity entity) {
         EntityType<?> entityType = entity.getType();
@@ -100,11 +100,10 @@ public class EntityHooks {
     /**
      * Equips entities with accessories during spawning.
      * @param entity The {@link Entity} to equip accessories to.
-     * @see com.aetherteam.aether.event.listeners.EntityListener#onEntityJoin(EntityJoinLevelEvent)
+     * @see com.aetherteam.aether.mixin.mixins.common.ForgeEventFactoryMixin
      */
-    public static void spawnWithAccessories(Entity entity) {
+    public static void spawnWithAccessories(Entity entity, DifficultyInstance difficulty) {
         if (entity instanceof Mob mob && mob.level() instanceof ServerLevel serverLevel) {
-            DifficultyInstance difficulty = serverLevel.getCurrentDifficultyAt(entity.blockPosition());
             RandomSource random = serverLevel.getRandom();
             EntityType<?> entityType = mob.getType();
             String[] allSlots = {"hands", "necklace", "aether_gloves", "aether_pendant"};

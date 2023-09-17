@@ -10,6 +10,7 @@
     "common.DimensionTypeMixin",
     "common.DirectoryLockMixin",
     "common.FeatureMixin",
+    "common.ForgeEventFactoryMixin",
     "common.LivingEntityMixin",
     "common.MobMixin",
     "common.ModelBuilderMixin",

@@ -37,15 +37,11 @@ public class EntityListener {
     /**
      * @see EntityHooks#addGoals(Entity)
      * @see EntityHooks#canMobSpawnWithAccessories(Entity)
-     * @see EntityHooks#spawnWithAccessories(Entity)
      */
     @SubscribeEvent
     public static void onEntityJoin(EntityJoinLevelEvent event) {
         Entity entity = event.getEntity();
         EntityHooks.addGoals(entity);
-        if (EntityHooks.canMobSpawnWithAccessories(entity)) {
-            EntityHooks.spawnWithAccessories(entity);
-        }
     }
 
     /**
