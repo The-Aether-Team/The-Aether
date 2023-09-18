@@ -6,7 +6,7 @@ orbs:
 parameters:
   artifact-name:
     type: string
-    default: aether-1.20.1-1.0.0-beta.1.1-neoforge.jar
+    default: aether-1.20.1-1.0.0-beta.1.2-neoforge.jar
   deploy-branch:
     type: string
     default: 1.19.4-develop

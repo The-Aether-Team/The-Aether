@@ -1,3 +1,14 @@
+# The Aether - NeoForge - 1.20.1-1.0.0-beta.1.2
+
+Fixes
+
+- Fix a mod incompatibility crash on servers.
+- Fix custom GUIs from mods like Catalogue and Controlling not working with the Aether.
+- Fix the Invisibility Cloak not appearing to apply visibility to players who have joined the game after the user equipped the accessory.
+- Fix a rare overlap with the Aether's music when switching from creative mode to survival mode.
+- Fix Moa textures being broken in the programmer art resource packs.
+- Fix text in the JEI recipe menus having shadows when it shouldn't.
+
 # The Aether - NeoForge - 1.20.1-1.0.0-beta.1.1
 
 Additions
