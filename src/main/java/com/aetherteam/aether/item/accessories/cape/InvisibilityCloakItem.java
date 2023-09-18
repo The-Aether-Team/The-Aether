@@ -1,11 +1,15 @@
 package com.aetherteam.aether.item.accessories.cape;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.AetherKeys;
 import com.aetherteam.aether.item.accessories.AccessoryItem;
 import com.aetherteam.aether.mixin.mixins.common.accessor.LivingEntityAccessor;
+import com.aetherteam.aether.network.AetherPacketHandler;
+import com.aetherteam.aether.network.packet.clientbound.SetInvisibilityPacket;
 import com.aetherteam.nitrogen.capability.INBTSynchable;
+import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -26,6 +30,7 @@ public class InvisibilityCloakItem extends AccessoryItem {
     @Override
     public void curioTick(SlotContext slotContext, ItemStack stack) {
         LivingEntity livingEntity = slotContext.entity();
+        Aether.LOGGER.info(String.valueOf(livingEntity));
         if (livingEntity.getLevel().isClientSide() && livingEntity instanceof Player player) {
             AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
                 if (AetherKeys.INVISIBILITY_TOGGLE.consumeClick()) {
@@ -50,23 +55,27 @@ public class InvisibilityCloakItem extends AccessoryItem {
                 }
             });
         }
-        if (!livingEntity.isInvisible()) {
-            if (livingEntity instanceof Player player) {
-                AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
-                    if (aetherPlayer.isWearingInvisibilityCloak()) {
-                        aetherPlayer.getPlayer().setInvisible(true);
-                    }
-                });
+        if (!livingEntity.getLevel().isClientSide()) {
+            if (!livingEntity.isInvisible()) {
+                if (livingEntity instanceof Player player) {
+                    AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
+                        if (aetherPlayer.isWearingInvisibilityCloak()) {
+                            aetherPlayer.getPlayer().setInvisible(true);
+                            PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new SetInvisibilityPacket(aetherPlayer.getPlayer().getId(), true));
+                        }
+                    });
+                } else {
+                    livingEntity.setInvisible(true);
+                }
             } else {
-                livingEntity.setInvisible(true);
-            }
-        } else {
-            if (livingEntity instanceof Player player) {
-                AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
-                    if (!aetherPlayer.isWearingInvisibilityCloak()) {
-                        aetherPlayer.getPlayer().setInvisible(false);
-                    }
-                });
+                if (livingEntity instanceof Player player) {
+                    AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
+                        if (!aetherPlayer.isWearingInvisibilityCloak()) {
+                            aetherPlayer.getPlayer().setInvisible(false);
+                            PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new SetInvisibilityPacket(aetherPlayer.getPlayer().getId(), false));
+                        }
+                    });
+                }
             }
         }
     }
