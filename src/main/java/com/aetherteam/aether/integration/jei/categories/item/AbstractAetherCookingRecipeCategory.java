@@ -32,7 +32,7 @@ public abstract class AbstractAetherCookingRecipeCategory<T> extends AbstractRec
             Component experienceString = Component.translatable("gui.jei.category.smelting.experience", experience);
             Font fontRenderer = Minecraft.getInstance().font;
             int stringWidth = fontRenderer.width(experienceString);
-            guiGraphics.drawString(fontRenderer, experienceString, background.getWidth() - stringWidth, y, 0xFF808080);
+            guiGraphics.drawString(fontRenderer, experienceString, background.getWidth() - stringWidth, y, 0xFF808080, false);
         }
     }
 
@@ -42,7 +42,7 @@ public abstract class AbstractAetherCookingRecipeCategory<T> extends AbstractRec
             Component timeString = Component.translatable("gui.jei.category.smelting.time.seconds", cookTimeSeconds);
             Font fontRenderer = Minecraft.getInstance().font;
             int stringWidth = fontRenderer.width(timeString);
-            guiGraphics.drawString(fontRenderer, timeString, background.getWidth() - stringWidth, y, 0xFF808080);
+            guiGraphics.drawString(fontRenderer, timeString, background.getWidth() - stringWidth, y, 0xFF808080, false);
         }
     }
 }
