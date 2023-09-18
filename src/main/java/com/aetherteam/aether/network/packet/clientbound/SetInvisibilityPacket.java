@@ -5,6 +5,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 
+/**
+ * Sets a player's invisibility on the client side from the server side.
+ */
 public record SetInvisibilityPacket(int playerID, boolean invisible) implements BasePacket {
     @Override
     public void encode(FriendlyByteBuf buf) {
