@@ -55,10 +55,10 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects {
             boolean flag = level.effects().forceBrightLightmap();
             if (flag) {
                 vector3f1.lerp(new Vector3f(0.99F, 1.12F, 1.0F), 0.25F);
-                AetherSkyRenderEffects.clampColor(vector3f1);
+                vector3f1.clamp(0.0F, 1.0F);
             } else {
                 Vector3f vector3f2 = vector3f.copy();
-                vector3f.mul(blockLight);
+                vector3f2.mul(blockLight);
                 vector3f1.add(vector3f2);
                 vector3f1.lerp(new Vector3f(0.75F, 0.75F, 0.75F), 0.04F);
                 if (Minecraft.getInstance().gameRenderer.getDarkenWorldAmount(partialTicks) > 0.0F) {
@@ -73,12 +73,12 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects {
         }
     }
 
-    /**
-     * [CODE COPY] - LightTexture#clampColor(Vector3f).
-     */
-    private static void clampColor(Vector3f vector) {
-        vector.set(Mth.clamp(vector.x(), 0.0F, 1.0F), Mth.clamp(vector.y(), 0.0F, 1.0F), Mth.clamp(vector.z(), 0.0F, 1.0F));
-    }
+//    /**
+//     * [CODE COPY] - LightTexture#clampColor(Vector3f).
+//     */
+//    private static void clampColor(Vector3f vector) {
+//        vector.set(Mth.clamp(vector.x(), 0.0F, 1.0F), Mth.clamp(vector.y(), 0.0F, 1.0F), Mth.clamp(vector.z(), 0.0F, 1.0F));
+//    }
 
     /**
      * [CODE COPY] - {@link DimensionSpecialEffects#getSunriseColor(float, float)}.<br><br>
