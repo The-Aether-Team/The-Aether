@@ -16,12 +16,12 @@ import net.minecraft.world.phys.HitResult;
 public class PoisonNeedle extends AbstractDart {
     public PoisonNeedle(EntityType<? extends PoisonNeedle> type, Level level) {
         super(type, level, null);
-        this.setBaseDamage(1.0);
+        this.setBaseDamage(0.25);
     }
 
     public PoisonNeedle(Level level, LivingEntity shooter) {
         super(AetherEntityTypes.POISON_NEEDLE.get(), level, shooter, null);
-        this.setBaseDamage(1.0);
+        this.setBaseDamage(0.25);
     }
 
     /**

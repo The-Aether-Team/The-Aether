@@ -125,7 +125,7 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
      */
     @Override
     public int getUseDuration(ItemStack stack) {
-        return 8;
+        return 10;
     }
 
     @Override

@@ -11,12 +11,12 @@ import net.minecraft.world.level.Level;
 public class PoisonDart extends AbstractDart {
     public PoisonDart(EntityType<? extends PoisonDart> type, Level level) {
         super(type, level, AetherItems.POISON_DART);
-        this.setBaseDamage(0.5);
+        this.setBaseDamage(0.25);
     }
 
     public PoisonDart(Level level) {
         super(AetherEntityTypes.POISON_DART.get(), level, AetherItems.POISON_DART);
-        this.setBaseDamage(0.5);
+        this.setBaseDamage(0.25);
     }
 
     /**
