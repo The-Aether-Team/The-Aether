@@ -18,10 +18,10 @@ import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
-import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.ConnectScreen;
 import net.minecraft.client.gui.screens.TitleScreen;
-import net.minecraft.client.gui.screens.multiplayer.JoinMultiplayerScreen;
-import net.minecraft.client.gui.screens.multiplayer.SafetyScreen;
+import net.minecraft.client.multiplayer.ServerData;
+import net.minecraft.client.multiplayer.resolver.ServerAddress;
 import net.minecraft.client.renderer.CubeMap;
 import net.minecraft.client.renderer.PanoramaRenderer;
 import net.minecraft.network.chat.Component;
@@ -65,18 +65,11 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 			boolean flag = component == null;
 			Tooltip tooltip = component != null ? Tooltip.create(component) : null;
 			Button serverButton = this.addRenderableWidget(Button.builder(Component.translatable("gui.aether.menu.server"), (button) -> {
-				Screen screen = this.minecraft.options.skipMultiplayerWarning ? new JoinMultiplayerScreen(this) : new SafetyScreen(this);
-				this.minecraft.setScreen(screen);
+				ServerData serverData = new ServerData("OATS", "oats.aether-mod.net", false);
+				ConnectScreen.startConnecting(this, this.minecraft, ServerAddress.parseString(serverData.ip), serverData, false);
 			}).bounds(this.width / 2 - 100, (this.height / 4 + 48) + 24 * 3, 200, 20).tooltip(tooltip).build());
 			serverButton.active = flag;
-			this.renderables.removeIf(button -> {
-				if (button instanceof AbstractWidget abstractWidget) {
-					Component message = abstractWidget.getMessage();
-					return message.equals(Component.translatable("menu.multiplayer")) || message.equals(Component.translatable("menu.online"));
-				} else {
-					return false;
-				}
-			});
+			this.renderables.removeIf(button -> button instanceof AbstractWidget abstractWidget && (abstractWidget.getMessage().equals(Component.translatable("menu.multiplayer")) || abstractWidget.getMessage().equals(Component.translatable("menu.online"))));
 		}
 		for (Renderable renderable : this.renderables) {
 			if (renderable instanceof AbstractWidget abstractWidget) {
@@ -94,6 +87,7 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 						}
 					}
 					if (buttonText.equals(Component.translatable("gui.aether.menu.server"))) {
+						aetherMenuButton.serverButton = true;
 						aetherMenuButton.buttonCountOffset = 2;
 					} else {
 						aetherMenuButton.buttonCountOffset = buttonRows;
@@ -232,9 +226,6 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 		if (renderable instanceof Button button) {
 			if (TitleScreenBehavior.isMainButton(button.getMessage())) {
 				AetherMenuButton aetherButton = new AetherMenuButton(this, button);
-				if (button.getMessage().equals(Component.translatable("gui.aether.menu.server"))) {
-					aetherButton.serverButton = true;
-				}
 				return (T) super.addRenderableWidget(aetherButton);
 			}
 		}
