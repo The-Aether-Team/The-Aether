@@ -2,13 +2,11 @@ package com.aetherteam.aether.client.gui.screen.menu;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
-import com.aetherteam.aether.api.AetherMenus;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.gui.component.menu.AetherMenuButton;
 import com.aetherteam.aether.client.gui.component.menu.DynamicMenuButton;
 import com.aetherteam.aether.mixin.mixins.client.accessor.TitleScreenAccessor;
 import com.aetherteam.cumulus.mixin.mixins.client.accessor.SplashRendererAccessor;
-import com.mojang.authlib.minecraft.BanDetails;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.Util;
@@ -32,7 +30,6 @@ import net.minecraft.sounds.Music;
 import net.minecraft.util.Mth;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.internal.BrandingControl;
-import org.jetbrains.annotations.Nullable;
 
 public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavior {
 	private static final ResourceLocation PANORAMA_OVERLAY = new ResourceLocation("textures/gui/title/background/panorama_overlay.png");
@@ -63,9 +60,28 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 	public void setupButtons() {
 		int buttonRows = 0;
 		int lastY = 0;
+		if (AetherConfig.CLIENT.enable_server_button.get()) {
+			Component component = ((TitleScreenAccessor) this).callGetMultiplayerDisabledReason();
+			boolean flag = component == null;
+			Tooltip tooltip = component != null ? Tooltip.create(component) : null;
+			Button serverButton = this.addRenderableWidget(Button.builder(Component.translatable("gui.aether.menu.server"), (button) -> {
+				Screen screen = this.minecraft.options.skipMultiplayerWarning ? new JoinMultiplayerScreen(this) : new SafetyScreen(this);
+				this.minecraft.setScreen(screen);
+			}).bounds(this.width / 2 - 100, (this.height / 4 + 48) + 24 * 3, 200, 20).tooltip(tooltip).build());
+			serverButton.active = flag;
+			this.renderables.removeIf(button -> {
+				if (button instanceof AbstractWidget abstractWidget) {
+					Component message = abstractWidget.getMessage();
+					return message.equals(Component.translatable("menu.multiplayer")) || message.equals(Component.translatable("menu.online"));
+				} else {
+					return false;
+				}
+			});
+		}
 		for (Renderable renderable : this.renderables) {
 			if (renderable instanceof AbstractWidget abstractWidget) {
-				if (TitleScreenBehavior.isImageButton(abstractWidget.getMessage())) {
+				Component buttonText = abstractWidget.getMessage();
+				if (TitleScreenBehavior.isImageButton(buttonText)) {
 					abstractWidget.visible = false; // The visibility handling is necessary here to avoid a bug where the buttons will render in the center of the screen before they have a specified offset.
 				}
 				if (abstractWidget instanceof AetherMenuButton aetherMenuButton) { // Sets button values that determine their positioning on the screen.
@@ -77,34 +93,18 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 							buttonRows++;
 						}
 					}
-					if (abstractWidget.getMessage().equals(Component.translatable("menu.multiplayer")) && AetherConfig.CLIENT.enable_server_button.get()) {
-//						Component component = this.getMultiplayerDisabledReason();
-//						boolean flag = component == null;
-//						Tooltip tooltip = component != null ? Tooltip.create(component) : null;
-//						(this.addRenderableWidget(Button.builder(Component.translatable("menu.multiplayer"), (button) -> {
-//							Screen screen = this.minecraft.options.skipMultiplayerWarning ? new JoinMultiplayerScreen(this) : new SafetyScreen(this);
-//							this.minecraft.setScreen(screen);
-//						}).bounds(aetherMenuButton.originalX, aetherMenuButton.originalY + 24 * 3, 200, 20).tooltip(tooltip).build())).active = flag;
+					if (buttonText.equals(Component.translatable("gui.aether.menu.server"))) {
+						aetherMenuButton.buttonCountOffset = 2;
+					} else {
+						aetherMenuButton.buttonCountOffset = buttonRows;
+					}
+					if (buttonText.equals(Component.translatable("menu.singleplayer"))) {
 						buttonRows++;
 					}
-					aetherMenuButton.buttonCountOffset = buttonRows;
 				}
 			}
 		}
 		this.rows = this.alignedLeft ? buttonRows : buttonRows - 1;
-	}
-
-	private Component getMultiplayerDisabledReason() {
-		if (this.minecraft.allowsMultiplayer()) {
-			return null;
-		} else {
-			BanDetails bandetails = this.minecraft.multiplayerBan();
-			if (bandetails != null) {
-				return bandetails.expires() != null ? Component.translatable("title.multiplayer.disabled.banned.temporary") : Component.translatable("title.multiplayer.disabled.banned.permanent");
-			} else {
-				return Component.translatable("title.multiplayer.disabled");
-			}
-		}
 	}
 
 	@Override
@@ -231,8 +231,10 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 	protected <T extends GuiEventListener & Renderable & NarratableEntry> T addRenderableWidget(T renderable) {
 		if (renderable instanceof Button button) {
 			if (TitleScreenBehavior.isMainButton(button.getMessage())) {
-				//todo increase y if it is a button lower than the menu button.
 				AetherMenuButton aetherButton = new AetherMenuButton(this, button);
+				if (button.getMessage().equals(Component.translatable("gui.aether.menu.server"))) {
+					aetherButton.serverButton = true;
+				}
 				return (T) super.addRenderableWidget(aetherButton);
 			}
 		}

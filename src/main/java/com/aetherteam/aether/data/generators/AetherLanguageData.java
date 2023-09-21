@@ -659,6 +659,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addMenuText("aether", "Aether Theme");
         this.addMenuText("preview", "Toggle World");
         this.addMenuText("load", "Quick Load");
+        this.addMenuText("server", "Official Aether Testing Server");
 
         this.addGuiText("pro_tip", "Pro Tip:");
         this.addGuiText("ascending", "Ascending to the Aether");
@@ -1252,7 +1253,6 @@ public class AetherLanguageData extends AetherLanguageProvider {
 
         this.addClientConfig("miscellaneous", "should_disable_cumulus_button", "Disables the Cumulus menu selection screen button on launch");
         this.addClientConfig("miscellaneous", "enable_server_button", "Enables a direct join button for the official server");
-        this.addClientConfig("miscellaneous", "server_ip", "The IP of the official server");
 
 
         this.addPackTitle("125", "Aether 1.2.5 Textures");

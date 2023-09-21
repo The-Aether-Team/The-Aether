@@ -28,6 +28,7 @@ public class AetherMenuButton extends Button {
 	public final int originalHeight;
 	public int hoverOffset;
 	public int buttonCountOffset;
+	public boolean serverButton;
 
 	public AetherMenuButton(AetherTitleScreen screen, Builder builder) {
 		super(builder);
@@ -117,7 +118,12 @@ public class AetherMenuButton extends Button {
 	 * @return The decimal {@link Integer} for the color.
 	 */
 	public int getTextColor(int mouseX, int mouseY) {
-		return this.isMouseOver(mouseX, mouseY) ? 11842776 : 13948116;
+		if (!this.serverButton) {
+			return this.isMouseOver(mouseX, mouseY) ? 11842776 : 13948116;
+		} else {
+//			return this.isMouseOver(mouseX, mouseY) ? 13746759 : 15457113;
+			return this.isMouseOver(mouseX, mouseY) ? 7189449 : 8181234;
+		}
 	}
 
 	public static int totalHeightRange(int buttonCount, float scale) {

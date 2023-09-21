@@ -226,7 +226,6 @@ public class AetherConfig {
 
         public final ConfigValue<Boolean> should_disable_cumulus_button;
         public final ConfigValue<Boolean> enable_server_button;
-        public final ConfigValue<String> server_ip;
 
         public Client(ForgeConfigSpec.Builder builder) {
             builder.push("Rendering");
@@ -363,10 +362,6 @@ public class AetherConfig {
                     .comment("Enables a direct join button for the official server")
                     .translation("config.aether.client.miscellaneous.enable_server_button")
                     .define("Enables server button", false);
-            server_ip = builder
-                    .comment("The IP of the official server")
-                    .translation("config.aether.client.miscellaneous.server_ip")
-                    .define("Server IP", "oats.aether-mod.net");
             builder.pop();
         }
     }
