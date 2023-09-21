@@ -121,8 +121,7 @@ public class AetherMenuButton extends Button {
 		if (!this.serverButton) {
 			return this.isMouseOver(mouseX, mouseY) ? 11842776 : 13948116;
 		} else {
-//			return this.isMouseOver(mouseX, mouseY) ? 13746759 : 15457113;
-			return this.isMouseOver(mouseX, mouseY) ? 7189449 : 8181234;
+			return this.isMouseOver(mouseX, mouseY) ? 13746759 : 15457113;
 		}
 	}
 
