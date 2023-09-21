@@ -1,6 +1,7 @@
 package com.aetherteam.aether.entity.projectile.dart;
 
 import com.aetherteam.aether.client.AetherSoundEvents;
+import com.aetherteam.aether.mixin.mixins.common.accessor.PlayerAccessor;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
@@ -20,6 +21,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -50,6 +52,22 @@ public abstract class AbstractDart extends AbstractArrow {
         if (this.ticksInAir > 500) {
             if (!this.getLevel().isClientSide()) {
                 this.discard();
+            }
+        }
+    }
+
+    /**
+     * Handles shield damaging when this projectile hits an entity.
+     * @param result The {@link HitResult} of the projectile.
+     */
+    @Override
+    protected void onHit(HitResult result) {
+        super.onHit(result);
+        if (result.getType() == HitResult.Type.ENTITY) {
+            Entity entity = ((EntityHitResult) result).getEntity();
+            if (entity instanceof Player player && player.isBlocking()) {
+                PlayerAccessor playerAccessor = (PlayerAccessor) player;
+                playerAccessor.callHurtCurrentlyUsedShield(3.0F);
             }
         }
     }

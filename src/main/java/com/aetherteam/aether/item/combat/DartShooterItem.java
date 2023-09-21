@@ -82,12 +82,12 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
                     AbstractDart dart = dartItem.createDart(level, player);
                     if (dart != null) {
                         dart = this.customDart(dart);
-                        dart.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 3.25F, 1.0F);
+                        dart.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 3.1F, 1.2F);
                         dart.setNoGravity(true); // Darts have no gravity.
 
                         int powerModifier = stack.getEnchantmentLevel(Enchantments.POWER_ARROWS);
                         if (powerModifier > 0) {
-                            dart.setBaseDamage(dart.getBaseDamage() + powerModifier * 0.5 + 0.5);
+                            dart.setBaseDamage(dart.getBaseDamage() + powerModifier * 0.1 + 0.1);
                         }
 
                         int punchModifier = stack.getEnchantmentLevel(Enchantments.PUNCH_ARROWS);
@@ -125,7 +125,7 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
      */
     @Override
     public int getUseDuration(ItemStack stack) {
-        return 4;
+        return 10;
     }
 
     @Override
