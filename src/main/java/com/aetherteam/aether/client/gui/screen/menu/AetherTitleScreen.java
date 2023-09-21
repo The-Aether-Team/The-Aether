@@ -92,7 +92,7 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 					} else {
 						aetherMenuButton.buttonCountOffset = buttonRows;
 					}
-					if (buttonText.equals(Component.translatable("menu.singleplayer"))) {
+					if (AetherConfig.CLIENT.enable_server_button.get() && buttonText.equals(Component.translatable("menu.singleplayer"))) {
 						buttonRows++;
 					}
 				}
