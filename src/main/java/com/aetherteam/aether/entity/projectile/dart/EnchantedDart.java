@@ -8,11 +8,11 @@ import net.minecraft.world.level.Level;
 public class EnchantedDart extends AbstractDart {
     public EnchantedDart(EntityType<? extends EnchantedDart> type, Level level) {
         super(type, level, AetherItems.ENCHANTED_DART);
-        this.setBaseDamage(6.0);
+        this.setBaseDamage(1.5);
     }
 
     public EnchantedDart(Level level) {
         super(AetherEntityTypes.ENCHANTED_DART.get(), level, AetherItems.ENCHANTED_DART);
-        this.setBaseDamage(6.0);
+        this.setBaseDamage(1.5);
     }
 }
