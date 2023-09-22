@@ -41,7 +41,7 @@ To install this mod through GitHub Packages in Gradle for development, you will 
 <details>
 <summary> Buildscript Code</summary>
 
-settings.gradle
+`settings.gradle`
 ```
 pluginManagement {
     repositories {
@@ -50,7 +50,7 @@ pluginManagement {
 }
 ```
 
-build.gradle
+`build.gradle`
 ```
 plugins {
     id 'io.github.0ffz.github-packages' version '[1,2)'
