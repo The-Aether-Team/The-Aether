@@ -1,7 +1,7 @@
 package com.aetherteam.aether.client.gui.screen.menu;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.api.AetherMenus;
+import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.gui.component.menu.AetherMenuButton;
 import com.aetherteam.aether.client.gui.component.menu.DynamicMenuButton;
@@ -15,17 +15,21 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Renderable;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
+import net.minecraft.client.gui.screens.ConnectScreen;
 import net.minecraft.client.gui.screens.TitleScreen;
+import net.minecraft.client.multiplayer.ServerData;
+import net.minecraft.client.multiplayer.resolver.ServerAddress;
 import net.minecraft.client.renderer.CubeMap;
 import net.minecraft.client.renderer.PanoramaRenderer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.Music;
 import net.minecraft.util.Mth;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.internal.BrandingControl;
-import org.jetbrains.annotations.Nullable;
 
 public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavior {
 	private static final ResourceLocation PANORAMA_OVERLAY = new ResourceLocation("textures/gui/title/background/panorama_overlay.png");
@@ -56,9 +60,21 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 	public void setupButtons() {
 		int buttonRows = 0;
 		int lastY = 0;
+		if (AetherConfig.CLIENT.enable_server_button.get()) {
+			Component component = ((TitleScreenAccessor) this).callGetMultiplayerDisabledReason();
+			boolean flag = component == null;
+			Tooltip tooltip = component != null ? Tooltip.create(component) : null;
+			Button serverButton = this.addRenderableWidget(Button.builder(Component.translatable("gui.aether.menu.server"), (button) -> {
+				ServerData serverData = new ServerData("OATS", "oats.aether-mod.net", false);
+				ConnectScreen.startConnecting(this, this.minecraft, ServerAddress.parseString(serverData.ip), serverData, false);
+			}).bounds(this.width / 2 - 100, (this.height / 4 + 48) + 24 * 3, 200, 20).tooltip(tooltip).build());
+			serverButton.active = flag;
+			this.renderables.removeIf(button -> button instanceof AbstractWidget abstractWidget && (abstractWidget.getMessage().equals(Component.translatable("menu.multiplayer")) || abstractWidget.getMessage().equals(Component.translatable("menu.online"))));
+		}
 		for (Renderable renderable : this.renderables) {
 			if (renderable instanceof AbstractWidget abstractWidget) {
-				if (TitleScreenBehavior.isImageButton(abstractWidget.getMessage())) {
+				Component buttonText = abstractWidget.getMessage();
+				if (TitleScreenBehavior.isImageButton(buttonText)) {
 					abstractWidget.visible = false; // The visibility handling is necessary here to avoid a bug where the buttons will render in the center of the screen before they have a specified offset.
 				}
 				if (abstractWidget instanceof AetherMenuButton aetherMenuButton) { // Sets button values that determine their positioning on the screen.
@@ -70,7 +86,15 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 							buttonRows++;
 						}
 					}
-					aetherMenuButton.buttonCountOffset = buttonRows;
+					if (buttonText.equals(Component.translatable("gui.aether.menu.server"))) {
+						aetherMenuButton.serverButton = true;
+						aetherMenuButton.buttonCountOffset = 2;
+					} else {
+						aetherMenuButton.buttonCountOffset = buttonRows;
+					}
+					if (AetherConfig.CLIENT.enable_server_button.get() && buttonText.equals(Component.translatable("menu.singleplayer"))) {
+						buttonRows++;
+					}
 				}
 			}
 		}

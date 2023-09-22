@@ -225,6 +225,7 @@ public class AetherConfig {
         public final ConfigValue<Boolean> disable_aether_world_preview_menu_music;
 
         public final ConfigValue<Boolean> should_disable_cumulus_button;
+        public final ConfigValue<Boolean> enable_server_button;
 
         public Client(ForgeConfigSpec.Builder builder) {
             builder.push("Rendering");
@@ -355,8 +356,12 @@ public class AetherConfig {
             builder.push("Miscellaneous");
             should_disable_cumulus_button = builder
                     .comment("Disables the Cumulus menu selection screen button on launch")
-                    .translation("config.aether.server.miscellaneous.should_disable_cumulus_button")
+                    .translation("config.aether.client.miscellaneous.should_disable_cumulus_button")
                     .define("Disable Cumulus button", true);
+            enable_server_button = builder
+                    .comment("Enables a direct join button for the official server")
+                    .translation("config.aether.client.miscellaneous.enable_server_button")
+                    .define("Enables server button", false);
             builder.pop();
         }
     }
