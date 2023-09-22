@@ -41,22 +41,20 @@ To install this mod through GitHub Packages in Gradle for development, you will 
 <details>
 <summary> Buildscript Code</summary>
 
+`settings.gradle`
 ```
-buildscript {
-  repositories {
-    ...
-    maven {
-        name 'Gradle'
-        url "https://plugins.gradle.org/m2/"
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
     }
-  }
-  dependencies {
-    ...
-    classpath group: 'io.github.0ffz', name: 'gpr-for-gradle', version: '1.+', changing: true
-  }
 }
-...
-apply plugin: 'io.github.0ffz.github-packages'
+```
+
+`build.gradle`
+```
+plugins {
+    id 'io.github.0ffz.github-packages' version '[1,2)'
+}
 ```
 
 </details>
