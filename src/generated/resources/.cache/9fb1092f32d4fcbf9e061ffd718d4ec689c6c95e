@@ -1,4 +1,4 @@
-// 1.19.4	2023-09-14T14:09:56.4256602	Recipes
+// 1.19.4	2023-09-23T16:12:18.0929572	Recipes
 1d7abc4c8c4e7132f31bd563a8dd82a8f3285d0d data/aether/advancements/recipes/building_blocks/aerogel_slab.json
 8c9f4fe6b61d89eb72b141ff6dfb92764a5dc5a9 data/aether/advancements/recipes/building_blocks/aerogel_slab_from_aerogel_stonecutting.json
 6e53af7c3f7e89910ad337753c6d70a4cdcf0440 data/aether/advancements/recipes/building_blocks/aerogel_stairs.json
@@ -194,6 +194,7 @@ cde85bbe922a40223ea0077bc26e72e88267d6e4 data/aether/advancements/recipes/decora
 b0761c59461170a379777b1de93e0889d0cd4da3 data/aether/advancements/recipes/decorations/skyroot_fletching_table.json
 e693a36762a7e3927337d704df16779efe40c01a data/aether/advancements/recipes/decorations/skyroot_gravitite_jukebox.json
 66d99b0c34be92ed61f93fc90b896f0a2ec713aa data/aether/advancements/recipes/decorations/skyroot_grindstone.json
+631206218817aa1eaf43accecb3d2cdc5603f706 data/aether/advancements/recipes/decorations/skyroot_grindstone_holystone_slab.json
 4e9bed0add48c319ff65522de022faeaafaaca1e data/aether/advancements/recipes/decorations/skyroot_jukebox.json
 62bffdaf05318b9519f82fd41f1f3935d9247585 data/aether/advancements/recipes/decorations/skyroot_loom.json
 94d3530cfd21d5add3779689e6962cc7090d707e data/aether/advancements/recipes/decorations/skyroot_sign.json
@@ -585,6 +586,7 @@ a7456721445feef6dc053f4743cec611f1b0f356 data/aether/recipes/skyroot_fence_gate.
 1ecbae288fe53b716c0b703deeff51889082b4c7 data/aether/recipes/skyroot_fletching_table.json
 c2199b2a5e51078c1f7b5c9f7a7c105e029715d8 data/aether/recipes/skyroot_gravitite_jukebox.json
 bcda821c30b7775bc6c81ede624db052930d3e7d data/aether/recipes/skyroot_grindstone.json
+4ac53162e693c2ab4d9b60b2c50228e3853babe9 data/aether/recipes/skyroot_grindstone_holystone_slab.json
 5b2d1298c795a29b74dbca22629a6f781b06c692 data/aether/recipes/skyroot_hoe.json
 6d431208d34acc5ee132d5ad1b5d78ecf970623b data/aether/recipes/skyroot_hoe_repairing.json
 c740eb0ad5b2f6d82f27a7e50eaf705da53c4a56 data/aether/recipes/skyroot_iron_vanilla_shield.json
