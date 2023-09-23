@@ -461,8 +461,8 @@ public class AbilityHooks {
                 if ((source.getType().getDescriptionId().startsWith("entity.aether") || source.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY) && !source.getType().is(AetherTags.Entities.TREATED_AS_VANILLA_ENTITY))) { // Checks if the attacker is an Aether entity.
                     for (ItemStack stack : target.getArmorSlots()) {
                         if (stack.getItem() instanceof ArmorItem armorItem && !stack.getItem().getDescriptionId().startsWith("item.aether.") && !stack.is(AetherTags.Items.TREATED_AS_AETHER_ITEM)) { // Checks if the armor is non-Aether.
-                            if (!stack.getAttributeModifiers(armorItem.getEquipmentSlot(stack)).isEmpty() && !stack.getAttributeModifiers(armorItem.getEquipmentSlot(stack)).get(Attributes.ARMOR).isEmpty()) { // Checks if the armor has an armor modifier attribute.
-                                double value = stack.getAttributeModifiers(armorItem.getEquipmentSlot(stack)).get(Attributes.ARMOR).stream().mapToDouble((attributeModifier) -> attributeModifier.getAmount() / 15).sum();
+                            if (!stack.getAttributeModifiers(armorItem.getSlot()).isEmpty() && !stack.getAttributeModifiers(armorItem.getSlot()).get(Attributes.ARMOR).isEmpty()) { // Checks if the armor has an armor modifier attribute.
+                                double value = stack.getAttributeModifiers(armorItem.getSlot()).get(Attributes.ARMOR).stream().mapToDouble((attributeModifier) -> attributeModifier.getAmount() / 15).sum();
                                 damage += value;
                             }
                         }
