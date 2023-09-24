@@ -202,7 +202,7 @@ curseforge {
             displayName = "${project.mod_name} - ${version}"
             relations {
                 embeddedLibrary "curios"
-//                embeddedLibrary "cumulus"
+                embeddedLibrary "cumulus"
                 optionalDependency "starlight-forge"
             }
         }
@@ -221,7 +221,7 @@ modrinth {
     loaders = ["forge"]
     dependencies {
         embedded.version "curios", "${project.curios_version}"
-//        embedded.version "cumulus", "${project.cumulus_version}"
+        embedded.version "cumulus", "${project.cumulus_version}"
         optional.project "starlight-forge"
     }
 }
