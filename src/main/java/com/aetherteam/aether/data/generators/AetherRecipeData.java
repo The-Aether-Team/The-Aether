@@ -435,6 +435,16 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .unlockedBy(getHasName(Blocks.STONE_SLAB), has(Blocks.STONE_SLAB))
                 .save(consumer, this.name("skyroot_grindstone"));
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.GRINDSTONE, 1)
+                .group("minecraft:grindstone")
+                .define('/', Tags.Items.RODS_WOODEN)
+                .define('H', AetherBlocks.HOLYSTONE_SLAB.get())
+                .define('P', AetherTags.Items.PLANKS_CRAFTING)
+                .pattern("/H/")
+                .pattern("P P")
+                .unlockedBy(getHasName(AetherBlocks.HOLYSTONE_SLAB.get()), has(AetherBlocks.HOLYSTONE_SLAB.get()))
+                .save(consumer, this.name("skyroot_grindstone_holystone_slab"));
+
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.JUKEBOX, 1)
                 .group("minecraft:jukebox")
                 .define('P', AetherTags.Items.PLANKS_CRAFTING)

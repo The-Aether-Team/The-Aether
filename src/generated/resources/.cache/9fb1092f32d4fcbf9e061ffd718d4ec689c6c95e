@@ -1,4 +1,4 @@
-// 1.20.1	2023-09-14T18:08:26.7298555	Recipes
+// 1.20.1	2023-09-23T17:42:43.3879209	Recipes
 ce9ab2e043b1d5d8747a22324584f0bcf4c2b3b1 data/aether/advancements/recipes/building_blocks/aerogel_slab.json
 90208eb708709fa9badd0fc606e5daf5ad91b03b data/aether/advancements/recipes/building_blocks/aerogel_slab_from_aerogel_stonecutting.json
 6845688223f47a89fd0d51f6e6d1de155f983710 data/aether/advancements/recipes/building_blocks/aerogel_stairs.json
@@ -193,6 +193,7 @@ fc3288299488d5a7b6078c25d203ce87e6d4cac9 data/aether/advancements/recipes/decora
 452d6e6845c18e6e2624c6bf838056988caef826 data/aether/advancements/recipes/decorations/skyroot_fletching_table.json
 d34f6f5faf59073c80f4352bea3f0e64b8c13911 data/aether/advancements/recipes/decorations/skyroot_gravitite_jukebox.json
 82e851f1ba1763d7c182613ec3b3e4f0079513d9 data/aether/advancements/recipes/decorations/skyroot_grindstone.json
+e106646453c447852568720bf577feda2f636f09 data/aether/advancements/recipes/decorations/skyroot_grindstone_holystone_slab.json
 4efa2bcea5adb87016f76887d6da4c17984b41a3 data/aether/advancements/recipes/decorations/skyroot_hanging_sign.json
 daa78171b812b1b43ee4e7cf563ec8c947830696 data/aether/advancements/recipes/decorations/skyroot_jukebox.json
 72ab11943db2b8c0634a92e5bc40c20734ee4be0 data/aether/advancements/recipes/decorations/skyroot_loom.json
@@ -584,6 +585,7 @@ a7456721445feef6dc053f4743cec611f1b0f356 data/aether/recipes/skyroot_fence_gate.
 1ecbae288fe53b716c0b703deeff51889082b4c7 data/aether/recipes/skyroot_fletching_table.json
 c2199b2a5e51078c1f7b5c9f7a7c105e029715d8 data/aether/recipes/skyroot_gravitite_jukebox.json
 bcda821c30b7775bc6c81ede624db052930d3e7d data/aether/recipes/skyroot_grindstone.json
+4ac53162e693c2ab4d9b60b2c50228e3853babe9 data/aether/recipes/skyroot_grindstone_holystone_slab.json
 cfa059e65301abd9d61fefa56cf4341bb89def5e data/aether/recipes/skyroot_hanging_sign.json
 5b2d1298c795a29b74dbca22629a6f781b06c692 data/aether/recipes/skyroot_hoe.json
 6d431208d34acc5ee132d5ad1b5d78ecf970623b data/aether/recipes/skyroot_hoe_repairing.json
