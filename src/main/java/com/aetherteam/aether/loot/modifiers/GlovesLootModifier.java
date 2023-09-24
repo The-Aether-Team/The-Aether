@@ -21,6 +21,7 @@ import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class GlovesLootModifier extends LootModifier {
@@ -54,7 +55,7 @@ public class GlovesLootModifier extends LootModifier {
             BlockPos pos = new BlockPos(vec3);
             BlockEntity blockEntity = context.getLevel().getBlockEntity(pos);
             if (blockEntity instanceof BaseContainerBlockEntity) {
-                ArmorMaterial armorMaterial = ArmorMaterials.valueOf(this.armorMaterial.toUpperCase());
+                ArmorMaterial armorMaterial = ArmorMaterials.valueOf(this.armorMaterial.toUpperCase(Locale.ENGLISH));
                 List<ItemStack> armorItems = lootStacks.stream().filter((itemStack) -> itemStack.getItem() instanceof ArmorItem armorItem && armorItem.getMaterial().equals(armorMaterial)).toList();
                 for (ItemStack armorStack : armorItems) {
                     if (randomSource.nextInt(4) < 1) {
