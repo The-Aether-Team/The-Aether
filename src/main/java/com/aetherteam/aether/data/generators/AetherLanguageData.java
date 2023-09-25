@@ -957,7 +957,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addLore(AetherItems.GRAVITITE_PICKAXE, "Part of the Aether's best tool tier. When mining with this powerful tool, you can right-click on any stone block, and it will levitate into the air! You can mine any ore with this Pickaxe.");
         this.addLore(AetherItems.GRAVITITE_SHOVEL, "Part of the Aether's best tool tier. This Shovel has the special ability to make dirt blocks or sand levitate! When combined with enchantments such as Efficiency, it will instantly break Aether Dirt!");
         this.addLore(AetherItems.GRAVITITE_SWORD, "Part of the Aether's best tool tier. When attacking with this powerful weapon, anything you hit will be flung into the air, causing lots of damage!");
-        this.addLore(AetherItems.GRAVITITE_HOE, "Part of the Aether's best tool tier. This Hoe not only can make weirdly specific blocks float, but it can also till dirt, which totally justifies its existence.");
+        this.addLore(AetherItems.GRAVITITE_HOE, "Part of the Aether's best tool tier. It can be used to harvest many plant based or organic blocks and can also make them float.");
         this.addLore(AetherItems.HEALING_STONE, "Obtained from enchanting Holystone, it can be used as a reliable healing source, providing Regeneration. It has a surprisingly juicy flavor.");
         this.addLore(AetherBlocks.HELLFIRE_SLAB, "Crafted from Hellfire Stone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building's roofing!");
         this.addLore(AetherBlocks.HELLFIRE_STONE, "A warm, red stone that makes up 90% of the Gold Dungeon's interior. It cannot be destroyed until the Sun Spirit is defeated.");
@@ -972,7 +972,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addLore(AetherBlocks.HOLYSTONE_BRICK_STAIRS, "Crafted from Holystone Bricks. Stairs are useful for adding verticality to builds and are often used for decoration too!");
         this.addLore(AetherBlocks.HOLYSTONE_BRICK_WALL, "Crafted from Holystone Bricks. Can be used for decorative enclosures and defenses. Great for keeping nasty intruders away!");
         this.addLore(AetherBlocks.HOLYSTONE_BUTTON, "Crafted from Holystone, a Button used to activate mechanisms and redstone.");
-        this.addLore(AetherItems.HOLYSTONE_HOE, "One of the Aether's stone tools. It has more durability than the Skyroot Hoe, as well as dropping random Ambrosium Shards. Which makes it more useful than most Hoes.");
+        this.addLore(AetherItems.HOLYSTONE_HOE, "One of the Aether's stone tools. It can be used to harvest many plant based or organic blocks, and till dirt blocks into farmable land. It will randomly drop Ambrosium Shards during use.");
         this.addLore(AetherItems.HOLYSTONE_PICKAXE, "One of the Aether's stone tools. It can mine Zanite Ore and will randomly drop Ambrosium Shards while mining.");
         this.addLore(AetherBlocks.HOLYSTONE_PRESSURE_PLATE, "Crafted from Holystone, a Pressure Plate used to activate mechanisms and redstone.");
         this.addLore(AetherItems.HOLYSTONE_SHOVEL, "One of the Aether's stone tools. It can mine Quicksoil and all other blocks a Stone Shovel can mine, except it drops random Ambrosium Shards.");
@@ -1003,11 +1003,11 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addLore(AetherBlocks.MOSSY_HOLYSTONE_STAIRS, "Crafted from Mossy Holystone. Stairs are useful for adding verticality to builds and are often used for decoration too!");
         this.addLore(AetherBlocks.MOSSY_HOLYSTONE_WALL, "Crafted from Mossy Holystone. Can be used for decorative enclosures and defenses. Great for keeping nasty intruders away!");
         this.addLore(AetherItems.NATURE_STAFF, "A staff that can allow for commanding tamed Moas. It can allow them to sit on the ground.");
-        this.addLore(AetherItems.NEPTUNE_BOOTS, "Found in Silver Dungeons, this armor allows for faster swimming in water. The full set is a much better replacement for the Depth Strider enchantment.");
-        this.addLore(AetherItems.NEPTUNE_CHESTPLATE, "Found in Silver Dungeons, this armor allows for faster swimming in water. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
-        this.addLore(AetherItems.NEPTUNE_GLOVES, "Found in Silver Dungeons, these gloves are required to complete the Neptune armor set, which allows for underwater walking.");
-        this.addLore(AetherItems.NEPTUNE_HELMET, "Found in Silver Dungeons, this armor allows faster swimming in water. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
-        this.addLore(AetherItems.NEPTUNE_LEGGINGS, "Found in Silver Dungeons, this armor allows faster swimming in water. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
+        this.addLore(AetherItems.NEPTUNE_BOOTS, "Found in Bronze Dungeons, this armor allows for faster swimming in water. The full set is a much better replacement for the Depth Strider enchantment.");
+        this.addLore(AetherItems.NEPTUNE_CHESTPLATE, "Found in Bronze Dungeons, this armor allows for faster swimming in water. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
+        this.addLore(AetherItems.NEPTUNE_GLOVES, "Found in Bronze Dungeons, these gloves are required to complete the Neptune armor set, which allows for underwater walking.");
+        this.addLore(AetherItems.NEPTUNE_HELMET, "Found in Bronze Dungeons, this armor allows faster swimming in water. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
+        this.addLore(AetherItems.NEPTUNE_LEGGINGS, "Found in Bronze Dungeons, this armor allows faster swimming in water. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.");
         this.addLore(AetherItems.NETHERITE_GLOVES, "A pair of Gloves, needed to complete the Netherite armor set.");
         this.addLore(AetherItems.HAMMER_OF_KINGBDOGZ, "A mighty hammer that shoots heavy projectiles at mobs. It's said that Kingbdogz actually held this hammer.");
         this.addLore(AetherItems.OBSIDIAN_BOOTS, "A super powerful piece of armor, more powerful than diamond. This armor is only obtainable by standing in water while wearing Phoenix armor, converting it to obsidian.");
@@ -1049,7 +1049,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addLore(AetherBlocks.SKYROOT_DOOR, "Crafted from Skyroot Planks, an ornate Door helpful for keeping an enclosed and safe space without worry of monsters wandering in.");
         this.addLore(AetherBlocks.SKYROOT_FENCE, "Crafted from Skyroot Planks and Sticks. Great for keeping your livestock safe from wandering predators!");
         this.addLore(AetherBlocks.SKYROOT_FENCE_GATE, "Crafted from Sticks and Skyroot Planks. Gives a homely entrance and exit to your precious enclosures.");
-        this.addLore(AetherItems.SKYROOT_HOE, "One of the Aether's wooden tools, used to till dirt to allow for the planting of crops. Famously underappreciated.");
+        this.addLore(AetherBlocks.SKYROOT_HANGING_SIGN, "Crafted from Stripped Skyroot Logs and Chains. A helpful sign perfect for writing messages and directions on.");
+        this.addLore(AetherItems.SKYROOT_HOE, "One of the Aether's wooden tools, used to till dirt to allow for the planting of crops. It can also double the drops of many plant based or organic blocks.");
         this.addLore(AetherBlocks.SKYROOT_LEAVES, "These leaves generate with Skyroot Trees. They can drop Skyroot Saplings when decaying.");
         this.addLore(AetherBlocks.SKYROOT_LOG, "These spawn with Skyroot Trees. They can be double-dropped with Skyroot Axes. When put in a Crafting Table, they will provide 4 Skyroot Planks.");
         this.addLore(AetherBlocks.SKYROOT_WOOD, "Skyroot Logs crafted to be smooth on all sides. When put in a Crafting Table, they will provide 4 Skyroot Planks.");
@@ -1103,7 +1104,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addLore(AetherItems.ZANITE_CHESTPLATE, "Part of the zanite armor set, equivalent in protection to iron.");
         this.addLore(AetherItems.ZANITE_GEMSTONE, "The Aether's version of iron. These shiny purple gems can be made into tools and armor that increase in strength when used.");
         this.addLore(AetherItems.ZANITE_GLOVES, "A pair of Gloves, needed to complete the zanite armor set.");
-        this.addLore(AetherItems.ZANITE_HOE, "One of the Aether's mid-tier tools, it has more durability than the Holystone Hoe, and it will get even faster at mining very oddly specific blocks as the tool is worn down.");
+        this.addLore(AetherItems.ZANITE_HOE, "One of the Aether's mid-tier tools, It can be used to harvest many plant based or organic blocks. It will get even faster at harvesting as the tool is worn down.");
         this.addLore(AetherItems.ZANITE_HELMET, "Part of the zanite armor set, equivalent in protection to iron.");
         this.addLore(AetherItems.ZANITE_LEGGINGS, "Part of the zanite armor set, equivalent in protection to iron.");
         this.addLore(AetherBlocks.ZANITE_ORE, "A slightly rare ore that drops Zanite Gemstones when broken with stone tools.");
