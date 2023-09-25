@@ -9,7 +9,7 @@ parameters:
     default: aether-1.19.4-1.0.0-beta.6.2-forge.jar
   deploy-branch:
     type: string
-    default: 1.19.4-develop
+    default: 1.20.1-develop
   allow-deploy-and-discord-publish:
     type: boolean
     default: false
