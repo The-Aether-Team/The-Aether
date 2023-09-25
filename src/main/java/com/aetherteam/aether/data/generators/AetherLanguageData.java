@@ -921,7 +921,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addLore(AetherBlocks.COLD_AERCLOUD, "A cold cloud found in the skies of the Aether. It can be used to make Cold Parachutes, and break drops that would otherwise be very dangerous.");
         this.addLore(AetherItems.COLD_PARACHUTE, "A quickly made Parachute. It's fluffy to the touch and is made from Cold Aerclouds. It has one use.");
         this.addLore(AetherBlocks.CRYSTAL_FRUIT_LEAVES, "Crystal Leaves that are home to White Apples.");
-        this.addLore(AetherBlocks.CRYSTAL_LEAVES, "Leaves that come from Crystal Trees, they generate on floating islands. Sometimes they have fruit on them, which can cure Inebriation.");
+        this.addLore(AetherBlocks.CRYSTAL_LEAVES, "Leaves that come from Crystal Trees, which generate on floating islands. Sometimes they have fruit on them that can cure Inebriation.");
         this.addLore(AetherBlocks.DECORATED_HOLIDAY_LEAVES, "Holiday Leaves that have been decorated with lovely little baubles for extra holiday cheer!");
         this.addLore(AetherItems.DIAMOND_GLOVES, "A pair of Gloves, needed to complete the diamond armor set.");
         this.addLore(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK, "An Aether Grass Block that has been enchanted to allow for increasing harvest rates of Blue Berries.");
@@ -940,7 +940,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addLore(AetherItems.GOLDEN_DART_SHOOTER, "A Dart Shooter that shoots Golden Darts; enchanting it on an Altar improves its attack power!");
         this.addLore(AetherItems.GOLDEN_FEATHER, "A fluffy feather found in Silver Dungeons. When worn, the wearer becomes lighter than air and can descend slowly.");
         this.addLore(AetherItems.GOLDEN_GLOVES, "A pair of Gloves, needed to complete the golden armor set.");
-        this.addLore(AetherBlocks.GOLDEN_OAK_LEAVES, "These golden leaves generate with Golden Oak Trees. They spawn golden particles in a radius of 5 blocks. They yield Golden Oak Saplings when decayed.");
+        this.addLore(AetherBlocks.GOLDEN_OAK_LEAVES, "These golden leaves generate with Golden Oak Trees. They spawn golden particles in a radius of 5 blocks. They yield Golden Oak Saplings and Skyroot Sticks when decayed.");
         this.addLore(AetherBlocks.GOLDEN_OAK_LOG, "A Skyroot Log which contains Golden Amber inside. When broken with an Axe, they drop Skyroot Logs, and if the Axe is Zanite or Gravitite, they will drop Golden Amber.");
         this.addLore(AetherBlocks.GOLDEN_OAK_SAPLING, "These large saplings, when planted, will grow into huge Golden Oak Trees! You can use Bone Meal to speed up the process.");
         this.addLore(AetherBlocks.GOLDEN_OAK_WOOD, "A Skyroot Log which contains Golden Amber Inside. When broken with an Axe, they drop Skyroot Logs, and if the Axe is Zanite or Gravitite, they will drop Golden Amber. Crafted to have bark on all sides.");
@@ -1051,7 +1051,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addLore(AetherBlocks.SKYROOT_FENCE_GATE, "Crafted from Sticks and Skyroot Planks. Gives a homely entrance and exit to your precious enclosures.");
         this.addLore(AetherBlocks.SKYROOT_HANGING_SIGN, "Crafted from Stripped Skyroot Logs and Chains. A helpful sign perfect for writing messages and directions on.");
         this.addLore(AetherItems.SKYROOT_HOE, "One of the Aether's wooden tools, used to till dirt to allow for the planting of crops. It can also double the drops of many plant based or organic blocks.");
-        this.addLore(AetherBlocks.SKYROOT_LEAVES, "These leaves generate with Skyroot Trees. They can drop Skyroot Saplings when decaying.");
+        this.addLore(AetherBlocks.SKYROOT_LEAVES, "These leaves generate with Skyroot Trees. They can drop Skyroot Saplings and Skyroot Sticks when decaying.");
         this.addLore(AetherBlocks.SKYROOT_LOG, "These spawn with Skyroot Trees. They can be double-dropped with Skyroot Axes. When put in a Crafting Table, they will provide 4 Skyroot Planks.");
         this.addLore(AetherBlocks.SKYROOT_WOOD, "Skyroot Logs crafted to be smooth on all sides. When put in a Crafting Table, they will provide 4 Skyroot Planks.");
         this.addLore(AetherItems.SKYROOT_MILK_BUCKET, "A bucket full of fresh milk; drink it to heal potion effects.");
