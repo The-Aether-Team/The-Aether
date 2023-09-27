@@ -8,6 +8,7 @@ Changes
 
 - Nerfed dart shooter damage and usage speed.
 - Resized all body parts of the Moa's saddle model.
+- Updated some lore entries to be more accurate to modern gameplay.
 
 Fixes
 
