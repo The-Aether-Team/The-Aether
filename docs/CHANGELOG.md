@@ -1,3 +1,21 @@
+# The Aether - Forge - 1.19.2-1.0.0-beta.1.2
+
+Additions
+
+- Add recipe for crafting the Grindstone with a Holystone Slab.
+
+Changes
+
+- Nerfed dart shooter damage and usage speed.
+- Resized all body parts of the Moa's saddle model.
+
+Fixes
+
+- Fix crash with Creatures and Beasts and Mining Master
+- Fix incorrect lighting with cold lightmap config.
+- Fix missing Mimic sound warning.
+- Fix missing chest loot with Turkish system language.
+
 # The Aether - Forge - 1.19.2-1.0.0-beta.1.1
 
 Changes
