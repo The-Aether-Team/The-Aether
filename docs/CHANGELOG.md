@@ -1,3 +1,15 @@
+# The Aether - Forge - 1.19.4-1.0.0-beta.6.3
+
+Additions
+
+- Add recipe for crafting the Grindstone with a Holystone Slab.
+
+Changes
+
+- Nerfed dart shooter damage and usage speed.
+- Resized all body parts of the Moa's saddle model.
+- Updated some lore entries to be more accurate to modern gameplay.
+
 # The Aether - Forge - 1.19.4-1.0.0-beta.6.2
 
 Changes
