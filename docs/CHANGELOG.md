@@ -1,3 +1,17 @@
+# The Aether - NeoForge - 1.20.1-1.0.0-beta.1.3
+
+Additions
+
+- Add recipe for crafting the Grindstone with a Holystone Slab.
+- Configurable official server button (off by default).
+
+Changes
+
+- Nerfed dart shooter damage and usage speed.
+- Resized all body parts of the Moa's saddle model.
+- Updated some lore entries to be more accurate to modern gameplay.
+- Clean up `SmithingScreenMixin` after Curios update.
+
 # The Aether - NeoForge - 1.20.1-1.0.0-beta.1.2
 
 Fixes
