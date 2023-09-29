@@ -852,8 +852,12 @@ public class Moa extends MountableAnimal implements WingedBird {
 	@Nullable
 	@Override
 	public ItemStack getPickResult() {
-		MoaEggItem moaEggItem = MoaEggItem.byId(this.getMoaType());
-		return moaEggItem == null ? null : new ItemStack(moaEggItem);
+		if (this.getMoaType() != null) {
+			MoaEggItem moaEggItem = MoaEggItem.byId(this.getMoaType());
+			return moaEggItem == null ? null : new ItemStack(moaEggItem);
+		} else {
+			return null;
+		}
 	}
 
 	@Override
