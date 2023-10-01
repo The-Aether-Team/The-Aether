@@ -1,0 +1,11 @@
+{
+  "tip": {
+    "translate": "aether.pro_tips.line.aether.ambrosium_shard_fuel"
+  },
+  "title": {
+    "bold": true,
+    "color": "yellow",
+    "translate": "gui.aether.pro_tip",
+    "underlined": true
+  }
+}
