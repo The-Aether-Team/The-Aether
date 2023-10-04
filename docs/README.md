@@ -137,6 +137,7 @@ The Aether is available in these languages thanks to the following contributors:
 | Romanian                    | (ro_ro) | lucatatar321, gigelciobanu205                                                                              |
 | Russian                     | (ru_ru) | LeyxorCheysen, andreyalex1236, LunarP1, zombi1944, Foxgreat, lonespeaker, davekart0n, paskanius            |
 | Slovak                      | (sk_sk) | GaucovyAero                                                                                                |
+| Spanish                     | (es_es) | cabaneter                                                                                                  |
 | Swedish                     | (sv_se) | magicus, 2lay                                                                                              |
 | Thai                        | (th_th) | txwfyxa                                                                                                    |
 | Toki Pona                   | (tok)   | leko soko Wijapipapa                                                                                       |
