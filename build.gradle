@@ -115,8 +115,10 @@ dependencies {
     compileOnly "mezz.jei:jei-${project.mc_version}-forge:${project.jei_version}"
 
     compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-${project.crafttweaker_version}")
-
 //    compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-${project.crafttweaker_version}")
+
+//    runtimeOnly fg.deobf("net.darkhax.bookshelf:Bookshelf-Forge-1.20.1:20.0.5")
+//    runtimeOnly fg.deobf("net.darkhax.tips:Tips-Forge-1.20.1:12.0.3")
 
 //    compileOnly fg.deobf("curse.maven:colytra-280200:${project.colytra_version}")
 //    compileOnly fg.deobf("curse.maven:curious-elytra-317716:${project.curiouselytra_version}")
