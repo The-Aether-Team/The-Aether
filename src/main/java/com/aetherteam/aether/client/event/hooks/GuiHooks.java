@@ -8,6 +8,7 @@ import com.aetherteam.aether.client.gui.component.skins.RefreshButton;
 import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.aetherteam.aether.client.gui.screen.perks.AetherCustomizationsScreen;
 import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
+import com.aetherteam.aether.entity.AetherBossMob;
 import com.aetherteam.aether.event.hooks.DimensionHooks;
 import com.aetherteam.aether.inventory.menu.AccessoriesMenu;
 import com.aetherteam.aether.network.AetherPacketHandler;
@@ -49,16 +50,13 @@ import net.minecraftforge.registries.tags.ITagManager;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
 
 import javax.annotation.Nullable;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class GuiHooks {
-    private static final ResourceLocation AETHER_BARS_LOCATION = new ResourceLocation(Aether.MODID, "textures/gui/boss_bar.png");
     /**
      * Set of UUIDs of boss bars that belong to Aether bosses.
      */
-    public static final Set<UUID> BOSS_EVENTS = new HashSet<>();
+    public static final Map<UUID, Integer> BOSS_EVENTS = new HashMap<>();
     private static boolean shouldAddButton = true;
     private static boolean generateTrivia = true;
     @Nullable
@@ -303,14 +301,17 @@ public class GuiHooks {
      * @see com.aetherteam.aether.client.event.listeners.GuiListener#onRenderBossBar(CustomizeGuiOverlayEvent.BossEventProgress)
      */
     public static void drawBossHealthBar(PoseStack poseStack, int x, int y, LerpingBossEvent bossEvent) {
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, AETHER_BARS_LOCATION);
-        drawBar(poseStack, x + 2, y + 2, bossEvent);
-        Component component = bossEvent.getName();
-        int nameLength = Minecraft.getInstance().font.width(component);
-        int nameX = Minecraft.getInstance().getWindow().getGuiScaledWidth() / 2 - nameLength / 2;
-        int nameY = y - 9;
-        Minecraft.getInstance().font.drawShadow(poseStack, component, (float) nameX, (float) nameY, 16777215);
+        int entityID = BOSS_EVENTS.get(bossEvent.getId());
+        if (Minecraft.getInstance().level != null && Minecraft.getInstance().level.getEntity(entityID) instanceof AetherBossMob<?> aetherBossMob && aetherBossMob.getBossBarTexture() != null) {
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            RenderSystem.setShaderTexture(0, aetherBossMob.getBossBarTexture());
+            drawBar(poseStack, x + 2, y + 2, bossEvent);
+            Component component = bossEvent.getName();
+            int nameLength = Minecraft.getInstance().font.width(component);
+            int nameX = Minecraft.getInstance().getWindow().getGuiScaledWidth() / 2 - nameLength / 2;
+            int nameY = y - 9;
+            Minecraft.getInstance().font.drawShadow(poseStack, component, (float) nameX, (float) nameY, 16777215);
+        }
     }
 
     /**
@@ -332,6 +333,6 @@ public class GuiHooks {
      * @return The {@link Boolean} value.
      */
     public static boolean isAetherBossBar(UUID uuid) {
-        return BOSS_EVENTS.contains(uuid);
+        return BOSS_EVENTS.containsKey(uuid);
     }
 }

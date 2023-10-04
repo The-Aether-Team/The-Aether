@@ -18,7 +18,7 @@ public class BossHealthOverlayMixin {
      */
     @ModifyVariable(at = @At(value = "STORE"), method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;)V", index = 7)
     private CustomizeGuiOverlayEvent.BossEventProgress event(CustomizeGuiOverlayEvent.BossEventProgress event) {
-        event.setCanceled(GuiHooks.BOSS_EVENTS.contains(event.getBossEvent().getId()));
+        event.setCanceled(GuiHooks.BOSS_EVENTS.containsKey(event.getBossEvent().getId()));
         return event;
     }
 }

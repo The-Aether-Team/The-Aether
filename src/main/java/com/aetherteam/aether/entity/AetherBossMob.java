@@ -4,6 +4,7 @@ import com.aetherteam.aether.block.dungeon.DoorwayBlock;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.nitrogen.entity.BossMob;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.block.Blocks;
@@ -14,6 +15,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.ForgeEventFactory;
 import org.apache.commons.lang3.tuple.Pair;
 
+import javax.annotation.Nullable;
 import java.util.function.Predicate;
 
 /**
@@ -89,4 +91,10 @@ public interface AetherBossMob<T extends Mob & AetherBossMob<T>> extends BossMob
         BlockPos max = BlockPos.containing(Math.ceil(boundingBox.maxX - 1) + 1, Math.ceil(boundingBox.maxY - 1) + 1, Math.ceil(boundingBox.maxZ - 1) + 1);
         return Pair.of(min, max);
     }
+
+    /**
+     * @return The {@link ResourceLocation} for this boss's health bar.
+     */
+    @Nullable
+    ResourceLocation getBossBarTexture();
 }
