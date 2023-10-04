@@ -8,6 +8,7 @@ import com.aetherteam.aether.client.gui.component.skins.RefreshButton;
 import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
 import com.aetherteam.aether.client.gui.screen.perks.AetherCustomizationsScreen;
 import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
+import com.aetherteam.aether.entity.AetherBossMob;
 import com.aetherteam.aether.event.hooks.DimensionHooks;
 import com.aetherteam.aether.inventory.menu.AccessoriesMenu;
 import com.aetherteam.aether.network.AetherPacketHandler;
@@ -47,16 +48,15 @@ import net.minecraftforge.registries.tags.ITagManager;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
 
 import javax.annotation.Nullable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class GuiHooks {
-    private static final ResourceLocation AETHER_BARS_LOCATION = new ResourceLocation(Aether.MODID, "textures/gui/boss_bar.png");
     /**
      * Set of UUIDs of boss bars that belong to Aether bosses.
      */
-    public static final Set<UUID> BOSS_EVENTS = new HashSet<>();
+    public static final Map<UUID, Integer> BOSS_EVENTS = new HashMap<>();
     private static boolean shouldAddButton = true;
     private static boolean generateTrivia = true;
     @Nullable
@@ -313,12 +313,15 @@ public class GuiHooks {
      * [CODE COPY] - {@link net.minecraft.client.gui.components.BossHealthOverlay#drawBar(GuiGraphics, int, int, BossEvent)}
      * This version of the method doesn't account for other types of boss bars because the Aether only has one.
      */
-    public static void drawBar(GuiGraphics guiGraphics, int x, int y, BossEvent pBossEvent) {
-        x -= 37; // The default boss health bar is offset by -91. We need -128.
-        guiGraphics.blit(AETHER_BARS_LOCATION, x, y, -90, 0, 16, 256, 16, 256, 256);
-        int health = (int) (pBossEvent.getProgress() * 256.0F);
-        if (health > 0) {
-            guiGraphics.blit(AETHER_BARS_LOCATION, x, y, -90, 0, 0, health, 16, 256, 256);
+    public static void drawBar(GuiGraphics guiGraphics, int x, int y, BossEvent bossEvent) {
+        int entityID = BOSS_EVENTS.get(bossEvent.getId());
+        if (Minecraft.getInstance().level != null && Minecraft.getInstance().level.getEntity(entityID) instanceof AetherBossMob<?> aetherBossMob && aetherBossMob.getBossBarTexture() != null) {
+            x -= 37; // The default boss health bar is offset by -91. We need -128.
+            guiGraphics.blit(aetherBossMob.getBossBarTexture(), x, y, -90, 0, 16, 256, 16, 256, 256);
+            int health = (int) (bossEvent.getProgress() * 256.0F);
+            if (health > 0) {
+                guiGraphics.blit(aetherBossMob.getBossBarTexture(), x, y, -90, 0, 0, health, 16, 256, 256);
+            }
         }
     }
 
@@ -328,6 +331,6 @@ public class GuiHooks {
      * @return The {@link Boolean} value.
      */
     public static boolean isAetherBossBar(UUID uuid) {
-        return BOSS_EVENTS.contains(uuid);
+        return BOSS_EVENTS.containsKey(uuid);
     }
 }

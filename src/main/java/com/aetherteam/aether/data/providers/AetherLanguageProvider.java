@@ -1,6 +1,5 @@
 package com.aetherteam.aether.data.providers;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.nitrogen.data.providers.NitrogenLanguageProvider;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
@@ -11,7 +10,6 @@ import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
 
 import java.util.HashMap;
