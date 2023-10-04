@@ -1,5 +1,6 @@
 package com.aetherteam.aether.client.renderer.accessory.layer;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.aetherteam.aether.client.renderer.accessory.model.CapeModel;
@@ -32,6 +33,8 @@ import java.util.Optional;
  * Modified to check for capes in the Armor Stand's slots, as well as remove rotational fields and instead keep rotations constant.
  */
 public class ArmorStandCapeLayer extends RenderLayer<ArmorStand, ArmorStandModel> {
+    private static final ResourceLocation SWUFF_CAPE_LOCATION = new ResourceLocation(Aether.MODID, "textures/models/accessory/capes/swuff_accessory.png");
+
     private final CapeModel cape;
 
     public ArmorStandCapeLayer(RenderLayerParent<ArmorStand, ArmorStandModel> renderer) {
@@ -53,6 +56,9 @@ public class ArmorStandCapeLayer extends RenderLayer<ArmorStand, ArmorStandModel
                     if (!itemStack.isEmpty()) {
                         if (itemStack.getItem() instanceof CapeItem capeItem) {
                             ResourceLocation texture = capeItem.getCapeTexture();
+                            if (itemStack.getHoverName().getString().equalsIgnoreCase("swuff_'s cape")) { // Easter Egg cape texture.
+                                texture = SWUFF_CAPE_LOCATION;
+                            }
                             if (!livingEntity.isInvisible() && texture != null) {
                                 ItemStack itemstack = livingEntity.getItemBySlot(EquipmentSlot.CHEST);
                                 if (!itemstack.is(Items.ELYTRA)) {
