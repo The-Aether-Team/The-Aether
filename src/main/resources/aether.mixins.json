@@ -11,6 +11,7 @@
     "common.DirectoryLockMixin",
     "common.FeatureMixin",
     "common.ForgeEventFactoryMixin",
+    "common.ItemMixin",
     "common.LivingEntityMixin",
     "common.MobMixin",
     "common.ModelBuilderMixin",
