@@ -1,0 +1,11 @@
+{
+  "tip": {
+    "translate": "aether.pro_tips.line.aether.enchant_blue_disk"
+  },
+  "title": {
+    "bold": true,
+    "color": "yellow",
+    "translate": "gui.aether.pro_tip",
+    "underlined": true
+  }
+}

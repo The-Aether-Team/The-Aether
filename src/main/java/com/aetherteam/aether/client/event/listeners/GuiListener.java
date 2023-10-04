@@ -15,6 +15,7 @@ import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.UUID;
@@ -51,7 +52,9 @@ public class GuiListener {
 	public static void onGuiDraw(ScreenEvent.Render event) {
 		Screen screen = event.getScreen();
 		PoseStack poseStack = event.getPoseStack();
-		GuiHooks.drawTrivia(screen, poseStack);
+        if (!ModList.get().isLoaded("tipsmod")) {
+            GuiHooks.drawTrivia(screen, poseStack);
+        }
 		GuiHooks.drawAetherTravelMessage(screen, poseStack);
 	}
 
