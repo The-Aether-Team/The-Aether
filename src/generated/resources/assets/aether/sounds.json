@@ -253,7 +253,7 @@
   },
   "entity.mimic.death": {
     "sounds": [
-      "block/chest/close1",
+      "block/chest/close",
       "block/chest/close2",
       "block/chest/close3"
     ],
@@ -713,6 +713,12 @@
     ],
     "subtitle": "subtitles.aether.item.accessory.equip_zanite_ring"
   },
+  "item.ambrosium_shard.use": {
+    "sounds": [
+      "block/amethyst/shimmer"
+    ],
+    "subtitle": "subtitles.aether.item.ambrosium_shard.use"
+  },
   "item.armor.equip_gravitite": {
     "sounds": [
       "item/armor/equip_gold1",
@@ -835,6 +841,15 @@
         "stream": true
       }
     ]
+  },
+  "item.swet_ball.use": {
+    "sounds": [
+      "mob/slime/big1",
+      "mob/slime/big2",
+      "mob/slime/big3",
+      "mob/slime/big4"
+    ],
+    "subtitle": "subtitles.aether.item.swet_ball.use"
   },
   "music.aether": {
     "sounds": [
