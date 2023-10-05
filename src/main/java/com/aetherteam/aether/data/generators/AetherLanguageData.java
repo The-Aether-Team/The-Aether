@@ -520,6 +520,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addSubtitle("block", "dungeon_trap.trigger", "Dungeon Trap activated");
         this.addSubtitle("block", "water.evaporate", "Water evaporated");
 
+        this.addSubtitle("item", "ambrosium_shard.use", "Ambrosium Shard used");
+        this.addSubtitle("item", "swet_ball.use", "Swet Ball used");
         this.addSubtitle("item", "dart_shooter.shoot", "Dart Shooter fired");
         this.addSubtitle("item", "lightning_knife.shoot", "Lightning Knife flies");
         this.addSubtitle("item", "hammer_of_kingbdogz.shoot", "Hammer fired");

@@ -73,6 +73,18 @@ public class AetherSoundData extends SoundDefinitionsProvider {
 
 
         //Items
+        this.add(AetherSoundEvents.ITEM_AMBROSIUM_SHARD,
+                definition().with(sound("minecraft:block/amethyst/shimmer"))
+                        .subtitle("subtitles.aether.item.ambrosium_shard.use")
+        );
+        this.add(AetherSoundEvents.ITEM_SWET_BALL_USE,
+                definition().with(
+                        sound("minecraft:mob/slime/big1"),
+                        sound("minecraft:mob/slime/big2"),
+                        sound("minecraft:mob/slime/big3"),
+                        sound("minecraft:mob/slime/big4")
+                ).subtitle("subtitles.aether.item.swet_ball.use")
+        );
         this.add(AetherSoundEvents.ITEM_DART_SHOOTER_SHOOT,
                 definition().with(sound("minecraft:random/bow"))
                 .subtitle("subtitles.aether.item.dart_shooter.shoot")
