@@ -23,6 +23,9 @@ public class AetherSoundEvents {
 
 	public static final RegistryObject<SoundEvent> WATER_EVAPORATE = register("block.water.evaporate");
 
+	public static final RegistryObject<SoundEvent> ITEM_AMBROSIUM_SHARD = register("item.ambrosium_shard.use");
+	public static final RegistryObject<SoundEvent> ITEM_SWET_BALL_USE = register("item.swet_ball.use");
+
 	public static final RegistryObject<SoundEvent> ITEM_DART_SHOOTER_SHOOT = register("item.dart_shooter.shoot");
 	public static final RegistryObject<SoundEvent> ITEM_LIGHTNING_KNIFE_SHOOT = register("item.lightning_knife.shoot");
 	public static final RegistryObject<SoundEvent> ITEM_HAMMER_OF_KINGBDOGZ_SHOOT = register("item.hammer_of_kingbdogz.shoot");
