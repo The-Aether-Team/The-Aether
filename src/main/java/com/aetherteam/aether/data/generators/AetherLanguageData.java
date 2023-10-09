@@ -791,11 +791,21 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addMoaSkinsText("skin.gharrix_red", "Gharrix Red");
         this.addMoaSkinsText("skin.halcian_pink", "Halcian Pink");
         this.addMoaSkinsText("skin.tivalier_green", "Tivalier Green");
+        this.addMoaSkinsText("skin.gilded_gharrix", "Gilded Gharrix");
+        this.addMoaSkinsText("skin.gargoyle_moa", "Gargoyle Moa");
+        this.addMoaSkinsText("skin.construction_bot", "Construction Bot");
+        this.addMoaSkinsText("skin.mossy_statue_moa", "Mossy Statue Moa");
+        this.addMoaSkinsText("skin.chicken_moa", "Chicken Moa");
         this.addMoaSkinsText("skin.arctic_moa", "Arctic Moa");
         this.addMoaSkinsText("skin.cockatrice_moa", "Cockatrice");
         this.addMoaSkinsText("skin.phoenix_moa", "Phoenix Moa");
         this.addMoaSkinsText("skin.sentry_moa", "Sentry Moa");
         this.addMoaSkinsText("skin.valkyrie_moa", "Valkyrie Moa");
+        this.addMoaSkinsText("skin.battle_sentry_moa", "Battle Sentry Moa");
+        this.addMoaSkinsText("skin.frozen_phoenix", "Frozen Phoenix");
+        this.addMoaSkinsText("skin.molten_moa", "Molten Moa");
+        this.addMoaSkinsText("skin.undead_moa", "Undead Moa");
+        this.addMoaSkinsText("skin.stratus", "Stratus");
 
         this.addMoaSkinsText("tooltip.title.access.pledging", "Pledge Access");
         this.addMoaSkinsText("tooltip.title.access.lifetime", "Lifetime Access");
