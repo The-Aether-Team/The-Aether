@@ -69,7 +69,7 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 				ConnectScreen.startConnecting(this, this.minecraft, ServerAddress.parseString(serverData.ip), serverData, false);
 			}).bounds(this.width / 2 - 100, (this.height / 4 + 48) + 24 * 3, 200, 20).tooltip(tooltip).build());
 			serverButton.active = flag;
-			this.renderables.removeIf(button -> button instanceof AbstractWidget abstractWidget && (abstractWidget.getMessage().equals(Component.translatable("menu.multiplayer")) || abstractWidget.getMessage().equals(Component.translatable("menu.online"))));
+			this.children().removeIf(button -> button instanceof AbstractWidget abstractWidget && (abstractWidget.getMessage().equals(Component.translatable("menu.multiplayer")) || abstractWidget.getMessage().equals(Component.translatable("menu.online"))));
 		}
 		for (Renderable renderable : this.renderables) {
 			if (renderable instanceof AbstractWidget abstractWidget) {
