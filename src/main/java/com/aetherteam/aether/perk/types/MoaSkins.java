@@ -171,6 +171,7 @@ public class MoaSkins {
                 .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/battle_sentry_moa/battle_sentry_moa.png"))
                 .emissiveLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/battle_sentry_moa/battle_sentry_moa_emissive.png"))
                 .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/battle_sentry_moa/battle_sentry_moa_saddle.png"))
+                .saddleEmissiveLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/battle_sentry_moa/battle_sentry_moa_saddle_emissive.png"))
                 .info(new MoaSkin.Info(User.Tier.VALKYRIE, false))
         ));
         register("frozen_phoenix", new MoaSkin("frozen_phoenix", new MoaSkin.Properties()
@@ -227,13 +228,15 @@ public class MoaSkins {
         @Nullable
         private final ResourceLocation emissiveLocation;
         private final ResourceLocation saddleLocation;
+        @Nullable
+        private final ResourceLocation saddleEmissiveLocation;
         private final Info info;
 
         protected MoaSkin(String id, Properties properties) {
-            this(id, properties.displayName, properties.userPredicate, properties.iconLocation, properties.skinLocation, properties.emissiveLocation, properties.saddleLocation, properties.info);
+            this(id, properties.displayName, properties.userPredicate, properties.iconLocation, properties.skinLocation, properties.emissiveLocation, properties.saddleLocation, properties.saddleEmissiveLocation, properties.info);
         }
 
-        protected MoaSkin(String id, Component displayName, Predicate<User> userPredicate, ResourceLocation iconLocation, ResourceLocation skinLocation, ResourceLocation emissiveLocation, ResourceLocation saddleLocation, Info info) {
+        protected MoaSkin(String id, Component displayName, Predicate<User> userPredicate, ResourceLocation iconLocation, ResourceLocation skinLocation, ResourceLocation emissiveLocation, ResourceLocation saddleLocation, ResourceLocation saddleEmissiveLocation, Info info) {
             this.id = id;
             this.displayName = displayName;
             this.userPredicate = userPredicate;
@@ -241,6 +244,7 @@ public class MoaSkins {
             this.skinLocation = skinLocation;
             this.emissiveLocation = emissiveLocation;
             this.saddleLocation = saddleLocation;
+            this.saddleEmissiveLocation = saddleEmissiveLocation;
             this.info = info;
         }
 
@@ -295,6 +299,14 @@ public class MoaSkins {
         }
 
         /**
+         * @return The {@link ResourceLocation} of the {@link MoaSkin}'s saddle emissive overlay texture.
+         */
+        @Nullable
+        public ResourceLocation getSaddleEmissiveLocation() {
+            return this.saddleEmissiveLocation;
+        }
+
+        /**
          * @return The Patreon {@link com.aetherteam.nitrogen.api.users.User.Tier} and lifetime {@link Boolean} {@link Info} of the {@link MoaSkin}.
          */
         public Info getInfo() {
@@ -328,6 +340,8 @@ public class MoaSkins {
             @Nullable
             private ResourceLocation emissiveLocation = null;
             private ResourceLocation saddleLocation;
+            @Nullable
+            private ResourceLocation saddleEmissiveLocation = null;
             private Info info;
 
             /**
@@ -375,6 +389,14 @@ public class MoaSkins {
              */
             public Properties saddleLocation(ResourceLocation saddleLocation) {
                 this.saddleLocation = saddleLocation;
+                return this;
+            }
+
+            /**
+             * @see MoaSkin#getSaddleEmissiveLocation()
+             */
+            public Properties saddleEmissiveLocation(ResourceLocation saddleEmissiveLocation) {
+                this.saddleEmissiveLocation = saddleEmissiveLocation;
                 return this;
             }
 
