@@ -31,6 +31,8 @@ import net.minecraft.util.Mth;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.internal.BrandingControl;
 
+import java.util.function.Predicate;
+
 public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavior {
 	private static final ResourceLocation PANORAMA_OVERLAY = new ResourceLocation("textures/gui/title/background/panorama_overlay.png");
 	private static final ResourceLocation AETHER_LOGO = new ResourceLocation(Aether.MODID, "textures/gui/title/aether.png");
@@ -69,7 +71,9 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 				ConnectScreen.startConnecting(this, this.minecraft, ServerAddress.parseString(serverData.ip), serverData, false);
 			}).bounds(this.width / 2 - 100, (this.height / 4 + 48) + 24 * 3, 200, 20).tooltip(tooltip).build());
 			serverButton.active = flag;
-			this.renderables.removeIf(button -> button instanceof AbstractWidget abstractWidget && (abstractWidget.getMessage().equals(Component.translatable("menu.multiplayer")) || abstractWidget.getMessage().equals(Component.translatable("menu.online"))));
+			Predicate<AbstractWidget> predicate = (abstractWidget) -> (abstractWidget.getMessage().equals(Component.translatable("menu.multiplayer")) || abstractWidget.getMessage().equals(Component.translatable("menu.online")));
+			this.children().removeIf(button -> button instanceof AbstractWidget abstractWidget && predicate.test(abstractWidget));
+			this.renderables.removeIf(button -> button instanceof AbstractWidget abstractWidget && predicate.test(abstractWidget));
 		}
 		for (Renderable renderable : this.renderables) {
 			if (renderable instanceof AbstractWidget abstractWidget) {
@@ -182,6 +186,7 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 		int logoY = this.alignedLeft ? (int) (15 + (10 / scale)) : (int) (25 + (10 / scale));
 		guiGraphics.setColor(1.0F, 1.0F, 1.0F, transparency);
 		guiGraphics.blit(AETHER_LOGO, logoX, logoY, 0, 0, width, height, width, height);
+		guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
 	}
 
 	/**
