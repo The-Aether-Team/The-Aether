@@ -186,6 +186,7 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 		int logoY = this.alignedLeft ? (int) (15 + (10 / scale)) : (int) (25 + (10 / scale));
 		guiGraphics.setColor(1.0F, 1.0F, 1.0F, transparency);
 		guiGraphics.blit(AETHER_LOGO, logoX, logoY, 0, 0, width, height, width, height);
+		guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
 	}
 
 	/**
