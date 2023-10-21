@@ -3,6 +3,7 @@ package com.aetherteam.aether.mixin.mixins.client;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
 import net.minecraft.client.gui.screens.inventory.SmithingScreen;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -36,6 +37,9 @@ public class SmithingScreenMixin {
             if (lazyHandler.isPresent() && lazyHandler.resolve().isPresent()) {
                 ICuriosItemHandler handler = lazyHandler.resolve().get();
                 handler.setEquippedCurio(identifier, 0, ItemStack.EMPTY);
+                for (EquipmentSlot slot : EquipmentSlot.values()) {
+                    this.armorStandPreview.setItemSlot(slot, ItemStack.EMPTY);
+                }
                 if (!stack.isEmpty()) {
                     ItemStack itemStack = stack.copy();
                     Item item = stack.getItem();
