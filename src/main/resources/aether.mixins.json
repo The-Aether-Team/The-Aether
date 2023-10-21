@@ -58,7 +58,6 @@
     "client.accessor.PlayerModelAccessor",
     "client.accessor.QuadrupedModelAccessor",
     "client.accessor.ScreenAccessor",
-    "client.accessor.TitleScreenAccessor"
     "client.accessor.TitleScreenAccessor",
     "client.optifine.BossHealthOverlayMixin"
   ],
