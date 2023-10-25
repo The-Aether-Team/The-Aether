@@ -63,6 +63,9 @@ Jonathing
 - Fixes to Jade compatibility with boss bars.
 - Cleanup of mixin and event code relating to Valkyrie Tools' reach.
 
+KaiAF
+- Fixes to Optifine incompatibility.
+
 Kelvin285
 - Implementation of the world preview feature for the Aether's main menu.
 

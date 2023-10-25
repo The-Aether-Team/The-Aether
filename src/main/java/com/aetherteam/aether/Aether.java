@@ -7,6 +7,7 @@ import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.block.AetherCauldronInteractions;
 import com.aetherteam.aether.block.dispenser.AetherDispenseBehaviors;
 import com.aetherteam.aether.block.dispenser.DispenseDartBehavior;
+import com.aetherteam.aether.block.dispenser.DispenseSkyrootBoatBehavior;
 import com.aetherteam.aether.block.dispenser.DispenseUsableItemBehavior;
 import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
 import com.aetherteam.aether.client.AetherSoundEvents;
@@ -452,6 +453,8 @@ public class Aether {
 		DispenserBlock.registerBehavior(AetherItems.SKYROOT_BUCKET.get(), AetherDispenseBehaviors.SKYROOT_BUCKET_PICKUP_BEHAVIOR);
         DispenserBlock.registerBehavior(AetherItems.AMBROSIUM_SHARD.get(), new DispenseUsableItemBehavior<>(AetherRecipeTypes.AMBROSIUM_ENCHANTING.get()));
         DispenserBlock.registerBehavior(AetherItems.SWET_BALL.get(), new DispenseUsableItemBehavior<>(AetherRecipeTypes.SWET_BALL_CONVERSION.get()));
+        DispenserBlock.registerBehavior(AetherItems.SKYROOT_BOAT.get(), new DispenseSkyrootBoatBehavior());
+        DispenserBlock.registerBehavior(AetherItems.SKYROOT_CHEST_BOAT.get(), new DispenseSkyrootBoatBehavior(true));
     }
 
     private void registerCauldronInteractions() {
