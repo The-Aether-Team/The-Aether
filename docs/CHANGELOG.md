@@ -1,3 +1,24 @@
+# The Aether - NeoForge - 1.20.1-1.0.0-beta.1.4
+
+Additions
+
+- Add new Moa Skins (still work-in-progress).
+- Remove Pro Tips when the Tips mod is installed, and include all Pro Tips in Tips' selection instead.
+- Update es_es translation.
+- Update sk_sk translation.
+
+Changes
+
+- Split boss bar textures into separate files.
+
+Fixes
+
+- Fix crash with Optifine installed.
+- Fix extended reach breaking when interacting using the offhand.
+- Fix Skyroot Boats and Skyroot Chest Boats not being dispensable. 
+- Fix armor renders not disappearing when switching out gloves in the Smithing Table.
+- Fix an invisible multiplayer button still existing when the server button config is enabled.
+
 # The Aether - NeoForge - 1.20.1-1.0.0-beta.1.3
 
 Additions
