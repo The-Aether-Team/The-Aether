@@ -24,6 +24,7 @@ import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Quaternion;
+import com.mojang.math.Vector3f;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -412,8 +413,8 @@ public class MoaSkinsScreen extends Screen {
         PoseStack poseStack = new PoseStack();
         poseStack.translate(0.0F, 0.0F, 1000.0F);
         poseStack.scale((float) scale, (float) scale, (float) scale);
-        Quaternion xQuaternion = new Quaternion(0, 0, 0, 0).toXYZ().rotation(Mth.PI);
-        Quaternion zQuaternion = new Quaternion(0, 0, 0, 0).toXYZ().rotation(angleYComponent * Mth.DEG_TO_RAD);
+        Quaternion xQuaternion = Vector3f.ZP.rotationDegrees(180.0F);
+        Quaternion zQuaternion = Vector3f.XP.rotationDegrees(angleYComponent);
         xQuaternion.mul(zQuaternion);
         poseStack.mulPose(xQuaternion);
         float yBodyRot = livingEntity.yBodyRot;

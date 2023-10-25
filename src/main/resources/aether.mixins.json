@@ -1,6 +1,7 @@
 {
   "required": true,
   "package": "com.aetherteam.aether.mixin.mixins",
+  "plugin": "com.aetherteam.aether.mixin.AetherMixinPlugin",
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_17",
   "refmap": "aether.refmap.json",
@@ -9,6 +10,7 @@
     "common.DimensionTypeMixin",
     "common.DirectoryLockMixin",
     "common.FeatureMixin",
+    "common.ItemMixin",
     "common.LivingEntityMixin",
     "common.PlayerMixin",
     "common.accessor.AbstractContainerMenuAccessor",
@@ -56,7 +58,8 @@
     "client.accessor.PlayerModelAccessor",
     "client.accessor.QuadrupedModelAccessor",
     "client.accessor.ScreenAccessor",
-    "client.accessor.TitleScreenAccessor"
+    "client.accessor.TitleScreenAccessor",
+    "client.optifine.BossHealthOverlayMixin"
   ],
   "injectors": {
     "defaultRequire": 1

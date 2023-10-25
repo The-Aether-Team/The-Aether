@@ -42,6 +42,7 @@ GizmoTheMoonPig
 - Implementation of Jade compatibility.
 - Implementation of Lootr compatibility.
 - Implementation of Randomium compatibility.
+- Implementation of Tips compatibility.
 - Fixes to Netherite Gloves being uncraftable with 1.20 datapack.
 - Fixes to the Life Shard silver heart overlay rendering.
 - Fixes to aether1 and aether2 music naming.
@@ -61,6 +62,9 @@ Jonathing
 - Fixes to jarJar-built file not reobfuscating.
 - Fixes to Jade compatibility with boss bars.
 - Cleanup of mixin and event code relating to Valkyrie Tools' reach.
+
+KaiAF
+- Fixes to Optifine incompatibility.
 
 Kelvin285
 - Implementation of the world preview feature for the Aether's main menu.

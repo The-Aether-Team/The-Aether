@@ -12,32 +12,36 @@ import java.util.UUID;
  */
 public abstract class BossInfoPacket implements BasePacket {
     protected final UUID bossEvent;
+    protected final int entityID;
 
-    public BossInfoPacket(UUID bossEvent) {
+    public BossInfoPacket(UUID bossEvent, int entityID) {
         this.bossEvent = bossEvent;
+        this.entityID = entityID;
     }
 
     @Override
     public void encode(FriendlyByteBuf buf) {
         buf.writeUUID(this.bossEvent);
+        buf.writeInt(this.entityID);
     }
 
     /**
      * Adds a boss bar for the client.
      */
     public static class Display extends BossInfoPacket {
-        public Display(UUID bossEvent) {
-            super(bossEvent);
+        public Display(UUID bossEvent, int entityID) {
+            super(bossEvent, entityID);
         }
 
         public static Display decode(FriendlyByteBuf buf) {
             UUID bossEvent = buf.readUUID();
-            return new Display(bossEvent);
+            int entityID = buf.readInt();
+            return new Display(bossEvent, entityID);
         }
 
         @Override
         public void execute(Player playerEntity) {
-            GuiHooks.BOSS_EVENTS.add(this.bossEvent);
+            GuiHooks.BOSS_EVENTS.put(this.bossEvent, this.entityID);
         }
     }
 
@@ -45,13 +49,14 @@ public abstract class BossInfoPacket implements BasePacket {
      * Removes a boss bar for the client.
      */
     public static class Remove extends BossInfoPacket {
-        public Remove(UUID bossEvent) {
-            super(bossEvent);
+        public Remove(UUID bossEvent, int entityID) {
+            super(bossEvent, entityID);
         }
 
         public static Remove decode(FriendlyByteBuf buf) {
             UUID bossEvent = buf.readUUID();
-            return new Remove(bossEvent);
+            int entityID = buf.readInt();
+            return new Remove(bossEvent, entityID);
         }
 
         @Override

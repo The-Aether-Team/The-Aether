@@ -1,10 +1,12 @@
 package com.aetherteam.aether.item.materials;
 
 import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.item.materials.behavior.ItemUseConversion;
 import com.aetherteam.aether.item.miscellaneous.ConsumableItem;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.recipes.block.AmbrosiumRecipe;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -25,7 +27,11 @@ public class AmbrosiumShardItem extends Item implements ItemUseConversion<Ambros
 
 	@Override
 	public InteractionResult useOn(UseOnContext context) {
-		return this.convertBlock(AetherRecipeTypes.AMBROSIUM_ENCHANTING.get(), context);
+		InteractionResult result = this.convertBlock(AetherRecipeTypes.AMBROSIUM_ENCHANTING.get(), context);
+		if (context.getLevel().isClientSide() && result == InteractionResult.SUCCESS) {
+			context.getLevel().playSound(context.getPlayer(), context.getClickedPos(), AetherSoundEvents.ITEM_AMBROSIUM_SHARD.get(), SoundSource.BLOCKS, 1.0F, 3.0F + (context.getLevel().getRandom().nextFloat() - context.getLevel().getRandom().nextFloat()) * 0.8F);
+		}
+		return result;
 	}
 
 	/**
