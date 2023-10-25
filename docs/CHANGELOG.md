@@ -3,6 +3,7 @@
 Additions
 
 - Add new Moa Skins (still work-in-progress).
+- Add sounds for interacting using Swet Balls and Ambrosium Shards.
 - Remove Pro Tips when the Tips mod is installed, and include all Pro Tips in Tips' selection instead.
 - Update es_es translation.
 - Update sk_sk translation.
