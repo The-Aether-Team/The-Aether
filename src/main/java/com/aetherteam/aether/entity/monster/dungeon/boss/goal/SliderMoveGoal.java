@@ -10,6 +10,7 @@ import java.util.EnumSet;
 public class SliderMoveGoal extends Goal {
 
     private final Slider slider;
+    private Vec3 targetPoint;
     private float velocity;
     public SliderMoveGoal(Slider slider) {
         this.slider = slider;
@@ -18,7 +19,11 @@ public class SliderMoveGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return slider.isAwake() && !slider.isDeadOrDying() && slider.getMoveDelay() <= 0;
+        if (slider.isAwake() && !slider.isDeadOrDying() && slider.getMoveDelay() <= 0) {
+            targetPoint = slider.findTargetPoint();
+            return targetPoint != null;
+        }
+        return false;
     }
 
     @Override
@@ -40,7 +45,6 @@ public class SliderMoveGoal extends Goal {
 
     @Override
     public void tick() {
-        Vec3 targetPoint = slider.findTargetPoint();
         // Move along the calculated path.
         if (targetPoint == null) {
             this.stop();
@@ -61,7 +65,8 @@ public class SliderMoveGoal extends Goal {
     public void stop() {
         slider.setMoveDelay(slider.calculateMoveDelay());
         slider.setTargetPoint(null);
-        this.velocity = 0;
+        targetPoint = null;
+        velocity = 0;
         slider.setDeltaMovement(Vec3.ZERO);
     }
 
