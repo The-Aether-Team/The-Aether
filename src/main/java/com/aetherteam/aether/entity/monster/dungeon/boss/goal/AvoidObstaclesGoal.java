@@ -1,48 +1,46 @@
-package com.aetherteam.aether.entity.monster.dungeon.boss.ai;
+package com.aetherteam.aether.entity.monster.dungeon.boss.goal;
 
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.entity.ai.brain.memory.AetherMemoryModuleTypes;
 import com.aetherteam.aether.entity.monster.dungeon.boss.Slider;
-import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.ai.Brain;
-import net.minecraft.world.entity.ai.behavior.Behavior;
-import net.minecraft.world.entity.ai.memory.MemoryStatus;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 /**
  * Set the path up to avoid an unbreakable block.
  */
-public class AvoidObstacles extends Behavior<Slider> {
-    public AvoidObstacles() {
-        super(ImmutableMap.of(AetherMemoryModuleTypes.MOVE_DIRECTION.get(),
-                MemoryStatus.REGISTERED));
+public class AvoidObstaclesGoal extends Goal {
+    private final Slider slider;
+    public AvoidObstaclesGoal(Slider slider) {
+        this.slider = slider;
     }
 
     @Override
-    protected boolean checkExtraStartConditions(ServerLevel level, Slider slider) {
-        if (!slider.isAwake() || slider.isDeadOrDying() || slider.getBrain().getTimeUntilExpiry(AetherMemoryModuleTypes.MOVE_DELAY.get()) != 1) {
+    public boolean canUse() {
+        if (!slider.isAwake() || slider.isDeadOrDying() || slider.getMoveDelay() != 1) {
             return false;
         }
 
-        Brain<?> brain = slider.getBrain();
-        Direction direction = brain.getMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get()).orElse(Direction.UP);
-        return direction.getAxis() != Direction.Axis.Y;
+        Direction direction = slider.getMoveDirection();
+        return direction != null && direction.getAxis() != Direction.Axis.Y;
     }
 
     @Override
-    protected void start(ServerLevel level, Slider slider, long gameTime) {
-        Brain<?> brain = slider.getBrain();
-        Vec3 targetPos = SliderAi.getTargetPoint(brain);
+    public boolean canContinueToUse() {
+        return false;
+    }
+
+    @Override
+    public void start() {
+        Vec3 targetPos = slider.findTargetPoint();
         if (targetPos == null) {
             return;
         }
-        Direction direction = SliderAi.calculateDirection(targetPos.x() - slider.getX(), targetPos.y() - slider.getY(), targetPos.z() - slider.getZ());
-        AABB collisionBox = SliderAi.calculateAdjacentBox(slider.getBoundingBox(), direction);
+        Direction direction = Slider.calculateDirection(targetPos.x() - slider.getX(), targetPos.y() - slider.getY(), targetPos.z() - slider.getZ());
+        AABB collisionBox = Slider.calculateAdjacentBox(slider.getBoundingBox(), direction);
         BlockPos min = new BlockPos(Mth.floor(collisionBox.minX), Mth.floor(collisionBox.minY), Mth.floor(collisionBox.minZ));
         BlockPos max = new BlockPos(Mth.ceil(collisionBox.maxX - 1), Mth.ceil(collisionBox.maxY - 1), Mth.ceil(collisionBox.maxZ - 1));
 
@@ -68,8 +66,13 @@ public class AvoidObstacles extends Behavior<Slider> {
                 }
             }
             Vec3 currentPos = slider.position();
-            brain.setMemory(AetherMemoryModuleTypes.TARGET_POSITION.get(), new Vec3(currentPos.x(), y, currentPos.z()));
-            brain.setMemory(AetherMemoryModuleTypes.MOVE_DIRECTION.get(), Direction.UP);
+            slider.setTargetPoint(new Vec3(currentPos.x(), y, currentPos.z()));
+            slider.setMoveDirection(Direction.UP);
         }
+    }
+
+    @Override
+    public boolean requiresUpdateEveryTick() {
+        return true;
     }
 }

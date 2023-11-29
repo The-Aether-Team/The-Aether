@@ -21,8 +21,6 @@ import com.aetherteam.aether.data.resources.AetherMobCategory;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.ai.AetherBlockPathTypes;
-import com.aetherteam.aether.entity.ai.brain.memory.AetherMemoryModuleTypes;
-import com.aetherteam.aether.entity.ai.brain.sensing.AetherSensorTypes;
 import com.aetherteam.aether.inventory.AetherRecipeBookTypes;
 import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
 import com.aetherteam.aether.item.AetherCreativeTabs;
@@ -122,8 +120,6 @@ public class Aether {
                 AetherSoundEvents.SOUNDS,
                 AetherGameEvents.GAME_EVENTS,
                 AetherMoaTypes.MOA_TYPES,
-                AetherSensorTypes.SENSOR_TYPES,
-                AetherMemoryModuleTypes.MEMORY_TYPES,
                 AetherCreativeTabs.CREATIVE_MODE_TABS
         };
 
