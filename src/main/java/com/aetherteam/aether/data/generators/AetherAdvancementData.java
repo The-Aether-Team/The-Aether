@@ -11,6 +11,7 @@ import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.event.hooks.AbilityHooks;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.loot.AetherLoot;
+import com.aetherteam.aether.mixin.mixins.common.accessor.HoeItemAccessor;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.commands.CommandFunction;
@@ -28,6 +29,7 @@ import net.minecraftforge.common.data.ForgeAdvancementProvider;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 public class AetherAdvancementData extends ForgeAdvancementProvider {
     public AetherAdvancementData(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, ExistingFileHelper helper) {
@@ -284,7 +286,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                             Component.translatable("advancement.aether.valkyrie_hoe.desc"),
                             null,
                             FrameType.CHALLENGE, true, true, true)
-                    .addCriterion("valkyrie_hoe", ItemInteractWithBlockTrigger.TriggerInstance.itemUsedOnBlock(LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().of(AbilityHooks.ToolHooks.TILLABLES.keySet()).build()), ItemPredicate.Builder.item().of(AetherItems.VALKYRIE_HOE.get())))
+                    .addCriterion("valkyrie_hoe", ItemInteractWithBlockTrigger.TriggerInstance.itemUsedOnBlock(LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().of(Stream.concat(AbilityHooks.ToolHooks.TILLABLES.keySet().stream(), HoeItemAccessor.aether$getTillables().keySet().stream()).toList()).build()), ItemPredicate.Builder.item().of(AetherItems.VALKYRIE_HOE.get())))
                     .save(consumer, new ResourceLocation(Aether.MODID, "valkyrie_hoe"), existingFileHelper);
 
             Advancement regenStone = Advancement.Builder.advancement()
