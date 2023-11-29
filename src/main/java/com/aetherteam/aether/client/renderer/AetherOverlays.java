@@ -281,13 +281,17 @@ public class AetherOverlays {
                         int maxDefaultHealth = Mth.ceil(overallHealth - maxLifeShardHealth);
 
                         int currentOverallHealth = Mth.ceil(innerPlayer.getHealth());
-                        int currentLifeShardHealth = Mth.ceil(maxDefaultHealth > 20 ? Mth.clamp(currentOverallHealth - 20, 0, maxLifeShardHealth) : currentOverallHealth - maxDefaultHealth);
+                        int currentLifeShardHealth = Mth.ceil(maxDefaultHealth > 20 ? Mth.clamp(currentOverallHealth - 20, 0, maxLifeShardHealth) : Math.min(player.getHealth(), currentOverallHealth - maxDefaultHealth));
 
                         boolean highlight = guiAccessor.aether$getHealthBlinkTime() > (long) gui.getGuiTicks() && (guiAccessor.aether$getHealthBlinkTime() - (long) gui.getGuiTicks()) / 3L % 2L == 1L;
                         if (Util.getMillis() - guiAccessor.aether$getLastHealthTime() > 1000L) {
                             lastOverallHealth = currentOverallHealth;
                             lastLifeShardHealth = currentLifeShardHealth;
                         }
+
+                        //do NOT cast this to long. This is the only way the hearts will properly shake when health is low
+                        //the only time the shaking will be off is if the player's max health attribute base is below 0. This probably can't be fixed.
+                        guiAccessor.aether$getRandom().setSeed(gui.getGuiTicks() * 312871);
 
                         float displayOverallHealth = Math.max((float) overallHealth, Math.max(lastOverallHealth, currentOverallHealth));
                         float displayLifeShardHealth = Math.max((float) maxLifeShardHealth, Math.max(lastLifeShardHealth, currentLifeShardHealth));
@@ -299,7 +303,7 @@ public class AetherOverlays {
                         int left = width / 2 - 91;
                         int top = height - 39;
 
-                        int regen = -1;
+                        int regen = Integer.MIN_VALUE;
                         if (innerPlayer.hasEffect(MobEffects.REGENERATION)) {
                             regen = gui.getGuiTicks() % Mth.ceil(displayOverallHealth + 5.0F);
                         }
@@ -324,12 +328,12 @@ public class AetherOverlays {
         int lifeShardHearts = Mth.ceil((double) displayLifeShardHealth / 2.0);
         int maxDefaultHearts = Mth.ceil((double) maxDefaultHealth / 2.0);
         boolean tooManyHearts = overallHearts > 50;
-        boolean tooLittleHearts = maxDefaultHearts < 10;
-        for (int currentHeart = lifeShardHearts - 1; currentHeart >= 0; --currentHeart) {
+        boolean tooLittleHearts = maxDefaultHearts < 10 && maxDefaultHearts > 0;
+        for (int currentHeart = Math.min(overallHearts, lifeShardHearts - 1); currentHeart >= 0; --currentHeart) {
             int x = left + (currentHeart + (tooLittleHearts ? overallHearts - lifeShardHearts : 0)) % 10 * 8;
             int y = top - (currentHeart + (tooManyHearts ? 0 : maxDefaultHearts + currentHeart < 10 ? 0 : 10)) / 10 * rowHeight;
 
-            if (displayOverallHealth + absorption <= 4) {
+            if (Mth.ceil(player.getHealth()) + absorption <= 4) {
                 y += guiAccessor.aether$getRandom().nextInt(2);
             }
             if (currentHeart + (maxDefaultHearts > 10 ? overallHearts - 10 : maxDefaultHearts) < overallHearts && currentHeart + Math.min(maxDefaultHearts, 10) - (tooManyHearts ? overallHearts : 0) == regen) {
