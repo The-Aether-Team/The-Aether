@@ -6,13 +6,14 @@ import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.AetherBossMob;
 import com.aetherteam.aether.entity.ai.controller.BlankMoveControl;
-import com.aetherteam.aether.entity.monster.dungeon.boss.ai.SliderAi;
+import com.aetherteam.aether.entity.ai.goal.MostDamageTargetGoal;
+import com.aetherteam.aether.entity.monster.dungeon.boss.goal.*;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.BossInfoPacket;
 import com.aetherteam.nitrogen.entity.BossRoomTracker;
 import com.aetherteam.nitrogen.network.PacketRelay;
-import com.mojang.serialization.Dynamic;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -35,9 +36,9 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -45,6 +46,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.network.NetworkHooks;
@@ -61,6 +63,10 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     private static final EntityDataAccessor<Float> DATA_HURT_ANGLE_Z_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.FLOAT);
 
     /**
+     * Goal for targeting in groups of entities
+     */
+    private MostDamageTargetGoal mostDamageTargetGoal;
+    /**
      * Boss health bar manager
      */
     private final ServerBossEvent bossFight;
@@ -68,6 +74,11 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     private BossRoomTracker<Slider> bronzeDungeon;
 
     private int chatCooldown;
+
+    private Direction moveDirection = null;
+    private int moveDelay = this.calculateMoveDelay();
+    private Vec3 targetPoint = null;
+    private int attackCooldown = 0;
 
     public Slider(EntityType<? extends Slider> type, Level level) {
         super(type, level);
@@ -77,11 +88,6 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         this.xpReward = XP_REWARD_BOSS;
         this.setRot(0, 0);
         this.setPersistenceRequired();
-    }
-
-    @Override
-    protected Brain<?> makeBrain(Dynamic<?> dynamic) {
-        return SliderAi.makeBrain(dynamic);
     }
 
     /**
@@ -106,6 +112,20 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 400.0)
                 .add(Attributes.FOLLOW_RANGE, 64.0);
+    }
+
+    @Override
+    protected void registerGoals() {
+        this.goalSelector.addGoal(1, new CollideGoal(this));
+        this.goalSelector.addGoal(2, new CrushGoal(this));
+        this.goalSelector.addGoal(3, new BackOffAfterAttackGoal(this));
+        this.goalSelector.addGoal(4, new SetPathUpOrDownGoal(this));
+        this.goalSelector.addGoal(5, new AvoidObstaclesGoal(this));
+        this.goalSelector.addGoal(6, new SliderMoveGoal(this));
+
+        this.mostDamageTargetGoal = new MostDamageTargetGoal(this);
+        this.targetSelector.addGoal(1, mostDamageTargetGoal);
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, false));
     }
 
     @Override
@@ -143,7 +163,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     }
 
     /**
-     * Handles boss fight and health tracking, dungeon tracking, and brain ticking.<br><br>
+     * Handles boss fight tracking and dungeon tracking<br><br>
      * Warning for "unchecked" is suppressed because the brain is always a Slider brain.
      */
     @Override
@@ -152,11 +172,11 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         super.customServerAiStep();
         this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
         this.trackDungeon();
-        if (this.getLevel() instanceof ServerLevel serverLevel) {
-            Brain<Slider> brain = (Brain<Slider>) this.getBrain();
-            brain.tick(serverLevel, this);
-            SliderAi.updateActivity(this);
-            SliderAi.tick(this);
+        if (this.moveDelay > 0) {
+            --this.moveDelay;
+        }
+        if (this.attackCooldown > 0) {
+            --this.attackCooldown;
         }
     }
 
@@ -170,6 +190,9 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     public boolean hurt(DamageSource source, float amount) {
         if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             super.hurt(source, amount);
+            if (!this.getLevel().isClientSide() && source.getEntity() instanceof LivingEntity living) {
+                this.mostDamageTargetGoal.addAggro(living, amount); // AI goal for being hurt.
+            }
         } else if (source.getDirectEntity() instanceof LivingEntity attacker && this.getLevel().getDifficulty() != Difficulty.PEACEFUL) {
             if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoomInterior(attacker)) { // Only allow damage within the boss room.
                 if (attacker.getMainHandItem().is(AetherTags.Items.SLIDER_DAMAGING_ITEMS)) { // Check for correct tool.
@@ -197,7 +220,9 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
                         }
                         this.setHurtAngle(0.7F - (this.getHealth() / 875.0F));
 
-                        SliderAi.wasHurtBy(this, attacker, amount); // AI behavior for being hurt.
+                        if (!this.getLevel().isClientSide() && source.getEntity() instanceof LivingEntity living) {
+                            this.mostDamageTargetGoal.addAggro(living, amount); // AI goal for being hurt.
+                        }
 
                         return true;
                     }
@@ -520,12 +545,105 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         return this.deathScore;
     }
 
+    @Nullable
+    public Direction getMoveDirection() {
+        return this.moveDirection;
+    }
+
+    public void setMoveDirection(@Nullable Direction moveDirection) {
+        this.moveDirection = moveDirection;
+    }
+
+    public int getMoveDelay() {
+        return this.moveDelay;
+    }
+
+    public void setMoveDelay(int moveDelay) {
+        this.moveDelay = moveDelay;
+    }
+
+    @Nullable
+    public Vec3 findTargetPoint() {
+        Vec3 pos = this.targetPoint;
+        if (pos != null) {
+            return pos;
+        } else {
+            LivingEntity target = getTarget();
+            return target == null ? null : target.position();
+        }
+    }
+
+    @Nullable
+    public Vec3 getTargetPoint() {
+        return this.targetPoint;
+    }
+
+    public void setTargetPoint(@Nullable Vec3 targetPoint) {
+        this.targetPoint = targetPoint;
+    }
+
+    public int attackCooldown() {
+        return this.attackCooldown;
+    }
+
+    public void setAttackCooldown(int attackCooldown) {
+        this.attackCooldown = attackCooldown;
+    }
+
     /**
      * @return The {@link Integer} cooldown for when the Slider can move again.
      * Slightly randomized and dependent on whether the Slider is in critical mode.
      */
     public int calculateMoveDelay() {
         return this.isCritical() ? 1 + this.getRandom().nextInt(10) : 2 + this.getRandom().nextInt(14);
+    }
+
+    public static Direction calculateDirection(double x, double y, double z) {
+        double absX = Math.abs(x);
+        double absY = Math.abs(y);
+        double absZ = Math.abs(z);
+        if (absY > absX && absY > absZ) {
+            return y > 0 ? Direction.UP : Direction.DOWN;
+        } else if (absX > absZ) {
+            return x > 0 ? Direction.EAST : Direction.WEST;
+        } else {
+            return z > 0 ? Direction.SOUTH : Direction.NORTH;
+        }
+    }
+
+    /**
+     * Calculates a box adjacent to the original, with equal dimensions except for the axis it's translated along.
+     * @param box The {@link AABB} bounding box.
+     * @param direction The movement {@link Direction}.
+     * @return The adjacent {@link AABB} bounding box.
+     */
+    public static AABB calculateAdjacentBox(AABB box, Direction direction) {
+        double minX = box.minX;
+        double minY = box.minY;
+        double minZ = box.minZ;
+        double maxX = box.maxX;
+        double maxY = box.maxY;
+        double maxZ = box.maxZ;
+        if (direction == Direction.UP) {
+            minY = maxY;
+            maxY += 1;
+        } else if (direction == Direction.DOWN) {
+            maxY = minY;
+            minY -= 1;
+        } else if (direction == Direction.NORTH) {
+            maxZ = minZ;
+            minZ -= 1;
+        } else if (direction == Direction.SOUTH) {
+            minZ = maxZ;
+            maxZ += 1;
+        } else if (direction == Direction.EAST) {
+            minX = maxX;
+            maxX += 1;
+        } else { // West
+            maxX = minX;
+            minX -= 1;
+        }
+        return new AABB(minX, minY, minZ, maxX, maxY, maxZ);
     }
 
     /**
