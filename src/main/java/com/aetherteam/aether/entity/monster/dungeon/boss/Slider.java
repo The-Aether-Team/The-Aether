@@ -167,7 +167,6 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
      * Warning for "unchecked" is suppressed because the brain is always a Slider brain.
      */
     @Override
-    @SuppressWarnings("unchecked")
     public void customServerAiStep() {
         super.customServerAiStep();
         this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());

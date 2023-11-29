@@ -28,7 +28,7 @@ public class SliderMoveGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        if (!canUse()) {
+        if (!this.canUse()) {
             return false;
         }
         if (this.slider.getMoveDelay() > 0) {

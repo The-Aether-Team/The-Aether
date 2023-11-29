@@ -21,6 +21,7 @@ public class CrushGoal extends Goal {
     public CrushGoal(Slider slider) {
         this.slider = slider;
     }
+
     @Override
     public boolean canUse() {
         return this.slider.isAwake() && !this.slider.isDeadOrDying() && (this.slider.horizontalCollision || this.slider.verticalCollision || this.blocksBetween(this.slider));
