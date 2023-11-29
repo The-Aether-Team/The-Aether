@@ -179,12 +179,12 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                         BlockPos lowerPosition = this.blockPosition().offset(vector);
                         BlockState upperState = this.level().getBlockState(upperPosition);
                         BlockState lowerState = this.level().getBlockState(lowerPosition);
-                        if (!upperState.isAir() && !upperState.is(AetherTags.Blocks.VALKYRIE_QUEEN_UNBREAKABLE) // Check upper block at player height.
+                        if (this.isBreakable(upperState) // Check upper block at player height.
                                 && (upperState.getShape(this.level(), upperPosition).equals(Shapes.block()) || !upperState.getCollisionShape(this.level(), upperPosition).isEmpty())
                                 && (this.getDungeon() == null || this.getDungeon().roomBounds().contains(upperPosition.getCenter()))) {
                             this.level().destroyBlock(upperPosition, true, this);
                             this.swing(InteractionHand.MAIN_HAND);
-                        } else if (!lowerState.isAir() && !lowerState.is(AetherTags.Blocks.VALKYRIE_QUEEN_UNBREAKABLE) // Check lower block at player height.
+                        } else if (this.isBreakable(lowerState) // Check lower block at player height.
                                 && (lowerState.getShape(this.level(), lowerPosition).equals(Shapes.block()) || !lowerState.getCollisionShape(this.level(), lowerPosition).isEmpty())
                                 && (this.getDungeon() == null || this.getDungeon().roomBounds().contains(lowerPosition.getCenter()))) {
                             this.level().destroyBlock(lowerPosition, true, this);
@@ -194,6 +194,10 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                 }
             }
         }
+    }
+
+    private boolean isBreakable(BlockState blockState) {
+        return !blockState.isAir() && !blockState.is(AetherTags.Blocks.VALKYRIE_QUEEN_UNBREAKABLE) && blockState.getBlock().defaultDestroyTime() >= 0.0F && blockState.getBlock().defaultDestroyTime() < 100.0F;
     }
 
     /**
