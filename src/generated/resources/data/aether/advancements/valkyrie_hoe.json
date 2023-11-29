@@ -14,7 +14,12 @@
               "aether:aether_dirt",
               "aether:aether_grass_block",
               "aether:enchanted_aether_grass_block",
-              "aether:aether_dirt_path"
+              "aether:aether_dirt_path",
+              "minecraft:dirt_path",
+              "minecraft:rooted_dirt",
+              "minecraft:coarse_dirt",
+              "minecraft:grass_block",
+              "minecraft:dirt"
             ]
           }
         }
