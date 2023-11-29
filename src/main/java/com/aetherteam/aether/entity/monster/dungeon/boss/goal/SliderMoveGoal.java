@@ -8,10 +8,10 @@ import net.minecraft.world.phys.Vec3;
 import java.util.EnumSet;
 
 public class SliderMoveGoal extends Goal {
-
     private final Slider slider;
     private Vec3 targetPoint;
     private float velocity;
+
     public SliderMoveGoal(Slider slider) {
         this.slider = slider;
         this.setFlags(EnumSet.of(Flag.MOVE));
@@ -19,8 +19,8 @@ public class SliderMoveGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (slider.isAwake() && !slider.isDeadOrDying() && slider.getMoveDelay() <= 0) {
-            targetPoint = slider.findTargetPoint();
+        if (this.slider.isAwake() && !this.slider.isDeadOrDying() && this.slider.getMoveDelay() <= 0) {
+            targetPoint = this.slider.findTargetPoint();
             return targetPoint != null;
         }
         return false;
@@ -28,46 +28,46 @@ public class SliderMoveGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        if (!canUse()) {
+        if (!this.canUse()) {
             return false;
         }
-        if (slider.getMoveDelay() > 0) {
+        if (this.slider.getMoveDelay() > 0) {
             return false;
         }
-        return !slider.horizontalCollision && !slider.verticalCollision;
+        return !this.slider.horizontalCollision && !this.slider.verticalCollision;
     }
 
     @Override
     public void start() {
-        slider.setMoveDirection(null);
-        slider.playSound(slider.getMoveSound(), 2.5F, 1.0F / (slider.getRandom().nextFloat() * 0.2F + 0.9F));
+        this.slider.setMoveDirection(null);
+        this.slider.playSound(this.slider.getMoveSound(), 2.5F, 1.0F / (this.slider.getRandom().nextFloat() * 0.2F + 0.9F));
     }
 
     @Override
     public void tick() {
         // Move along the calculated path.
-        if (targetPoint == null) {
+        if (this.targetPoint == null) {
             this.stop();
             return;
         }
-        Direction moveDir = getMoveDirection(slider, targetPoint);
-        if (axisDistance(targetPoint, slider.position(), moveDir) <= 0) {
+        Direction moveDir = getMoveDirection(this.slider, this.targetPoint);
+        if (axisDistance(this.targetPoint, this.slider.position(), moveDir) <= 0) {
             this.stop();
             return;
         }
-        if (this.velocity < slider.getMaxVelocity()) { // The Slider increases its speed based on the speed it has saved.
-            this.velocity = Math.min(slider.getMaxVelocity(), this.velocity + slider.getVelocityIncrease());
+        if (this.velocity < this.slider.getMaxVelocity()) { // The Slider increases its speed based on the speed it has saved.
+            this.velocity = Math.min(this.slider.getMaxVelocity(), this.velocity + this.slider.getVelocityIncrease());
         }
-        slider.setDeltaMovement(new Vec3(moveDir.getStepX() * this.velocity, moveDir.getStepY() * this.velocity, moveDir.getStepZ() * this.velocity));
+        this.slider.setDeltaMovement(new Vec3(moveDir.getStepX() * this.velocity, moveDir.getStepY() * this.velocity, moveDir.getStepZ() * this.velocity));
     }
 
     @Override
     public void stop() {
-        slider.setMoveDelay(slider.calculateMoveDelay());
-        slider.setTargetPoint(null);
-        targetPoint = null;
-        velocity = 0;
-        slider.setDeltaMovement(Vec3.ZERO);
+        this.slider.setMoveDelay(this.slider.calculateMoveDelay());
+        this.slider.setTargetPoint(null);
+        this.targetPoint = null;
+        this.velocity = 0;
+        this.slider.setDeltaMovement(Vec3.ZERO);
     }
 
     @Override

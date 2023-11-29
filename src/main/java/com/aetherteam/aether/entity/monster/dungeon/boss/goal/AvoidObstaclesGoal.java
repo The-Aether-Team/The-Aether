@@ -14,17 +14,18 @@ import net.minecraft.world.phys.Vec3;
  */
 public class AvoidObstaclesGoal extends Goal {
     private final Slider slider;
+
     public AvoidObstaclesGoal(Slider slider) {
         this.slider = slider;
     }
 
     @Override
     public boolean canUse() {
-        if (!slider.isAwake() || slider.isDeadOrDying() || slider.getMoveDelay() != 1) {
+        if (!this.slider.isAwake() || this.slider.isDeadOrDying() || this.slider.getMoveDelay() != 1) {
             return false;
         }
 
-        Direction direction = slider.getMoveDirection();
+        Direction direction = this.slider.getMoveDirection();
         return direction != null && direction.getAxis() != Direction.Axis.Y;
     }
 
@@ -35,18 +36,18 @@ public class AvoidObstaclesGoal extends Goal {
 
     @Override
     public void start() {
-        Vec3 targetPos = slider.findTargetPoint();
+        Vec3 targetPos = this.slider.findTargetPoint();
         if (targetPos == null) {
             return;
         }
-        Direction direction = Slider.calculateDirection(targetPos.x() - slider.getX(), targetPos.y() - slider.getY(), targetPos.z() - slider.getZ());
-        AABB collisionBox = Slider.calculateAdjacentBox(slider.getBoundingBox(), direction);
+        Direction direction = Slider.calculateDirection(targetPos.x() - this.slider.getX(), targetPos.y() - this.slider.getY(), targetPos.z() - this.slider.getZ());
+        AABB collisionBox = Slider.calculateAdjacentBox(this.slider.getBoundingBox(), direction);
         BlockPos min = new BlockPos(Mth.floor(collisionBox.minX), Mth.floor(collisionBox.minY), Mth.floor(collisionBox.minZ));
         BlockPos max = new BlockPos(Mth.ceil(collisionBox.maxX - 1), Mth.ceil(collisionBox.maxY - 1), Mth.ceil(collisionBox.maxZ - 1));
 
         boolean isTouchingWall = false;
         for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
-            if (slider.level().getBlockState(pos).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
+            if (this.slider.level().getBlockState(pos).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
                 isTouchingWall = true;
                 break;
             }
@@ -59,15 +60,15 @@ public class AvoidObstaclesGoal extends Goal {
                 isTouchingWall = false;
                 for (int x = Mth.floor(collisionBox.minX); x < collisionBox.maxX; x++) {
                     for (int z = Mth.floor(collisionBox.minZ); z < collisionBox.maxZ; z++) {
-                        if (slider.level().getBlockState(pos.set(x, y, z)).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
+                        if (this.slider.level().getBlockState(pos.set(x, y, z)).is(AetherTags.Blocks.SLIDER_UNBREAKABLE)) {
                             isTouchingWall = true;
                         }
                     }
                 }
             }
-            Vec3 currentPos = slider.position();
-            slider.setTargetPoint(new Vec3(currentPos.x(), y, currentPos.z()));
-            slider.setMoveDirection(Direction.UP);
+            Vec3 currentPos = this.slider.position();
+            this.slider.setTargetPoint(new Vec3(currentPos.x(), y, currentPos.z()));
+            this.slider.setMoveDirection(Direction.UP);
         }
     }
 

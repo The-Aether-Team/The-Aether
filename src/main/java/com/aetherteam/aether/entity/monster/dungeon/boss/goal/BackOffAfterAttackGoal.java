@@ -17,7 +17,7 @@ public class BackOffAfterAttackGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return slider.getMoveDelay() == 1 && slider.attackCooldown() > 0;
+        return this.slider.getMoveDelay() == 1 && this.slider.attackCooldown() > 0;
     }
 
     public boolean canContinueToUse() {
@@ -26,11 +26,11 @@ public class BackOffAfterAttackGoal extends Goal {
 
     @Override
     public void start() {
-        LivingEntity target = slider.getTarget();
-        if (target != null && slider.getBoundingBox().inflate(1.5).contains(target.position())) {
+        LivingEntity target = this.slider.getTarget();
+        if (target != null && this.slider.getBoundingBox().inflate(1.5).contains(target.position())) {
             // Move one block in the opposite direction of the target.
-            Direction direction = Slider.calculateDirection(slider.getX() - target.getX(), 0, slider.getZ() - target.getZ());
-            slider.setTargetPoint(slider.position().relative(direction, 2));
+            Direction direction = Slider.calculateDirection(this.slider.getX() - target.getX(), 0, this.slider.getZ() - target.getZ());
+            this.slider.setTargetPoint(this.slider.position().relative(direction, 2));
         }
     }
 

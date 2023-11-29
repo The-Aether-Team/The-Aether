@@ -125,7 +125,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         this.goalSelector.addGoal(6, new SliderMoveGoal(this));
 
         this.mostDamageTargetGoal = new MostDamageTargetGoal(this);
-        this.targetSelector.addGoal(1, mostDamageTargetGoal);
+        this.targetSelector.addGoal(1, this.mostDamageTargetGoal);
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, false));
     }
 
@@ -172,7 +172,6 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         super.customServerAiStep();
         this.bossFight.setProgress(this.getHealth() / this.getMaxHealth());
         this.trackDungeon();
-
         if (this.moveDelay > 0) {
             --this.moveDelay;
         }
@@ -513,6 +512,9 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         this.bossFight.setVisible(isFighting);
     }
 
+    /**
+     * @return The {@link ResourceLocation} for this boss's health bar.
+     */
     @Nullable
     @Override
     public ResourceLocation getBossBarTexture() {
@@ -544,7 +546,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
 
     @Nullable
     public Direction getMoveDirection() {
-        return moveDirection;
+        return this.moveDirection;
     }
 
     public void setMoveDirection(@Nullable Direction moveDirection) {
@@ -552,7 +554,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     }
 
     public int getMoveDelay() {
-        return moveDelay;
+        return this.moveDelay;
     }
 
     public void setMoveDelay(int moveDelay) {
@@ -561,7 +563,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
 
     @Nullable
     public Vec3 findTargetPoint() {
-        Vec3 pos = targetPoint;
+        Vec3 pos = this.targetPoint;
         if (pos != null) {
             return pos;
         } else {
@@ -572,7 +574,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
 
     @Nullable
     public Vec3 getTargetPoint() {
-        return targetPoint;
+        return this.targetPoint;
     }
 
     public void setTargetPoint(@Nullable Vec3 targetPoint) {
@@ -580,7 +582,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     }
 
     public int attackCooldown() {
-        return attackCooldown;
+        return this.attackCooldown;
     }
 
     public void setAttackCooldown(int attackCooldown) {
