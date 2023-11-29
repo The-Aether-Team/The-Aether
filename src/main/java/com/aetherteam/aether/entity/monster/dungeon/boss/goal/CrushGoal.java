@@ -71,7 +71,7 @@ public class CrushGoal extends Goal {
     }
 
     private boolean isBreakable(BlockState blockState) {
-        return !blockState.isAir() && !blockState.is(AetherTags.Blocks.SLIDER_UNBREAKABLE);
+        return !blockState.isAir() && !blockState.is(AetherTags.Blocks.SLIDER_UNBREAKABLE) && blockState.getBlock().defaultDestroyTime() >= 0.0F && blockState.getBlock().defaultDestroyTime() < 100.0F;
     }
 
     @Override
