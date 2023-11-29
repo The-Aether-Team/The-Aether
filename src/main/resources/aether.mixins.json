@@ -28,6 +28,7 @@
     "common.accessor.ConcretePowderBlockAccessor",
     "common.accessor.EntityAccessor",
     "common.accessor.FireBlockAccessor",
+    "common.accessor.HoeItemAccessor",
     "common.accessor.LevelAccessor",
     "common.accessor.LivingEntityAccessor",
     "common.accessor.LookAtPlayerGoalAccessor",

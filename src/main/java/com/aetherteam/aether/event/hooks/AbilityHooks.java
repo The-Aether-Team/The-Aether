@@ -42,7 +42,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -233,10 +232,6 @@ public class AbilityHooks {
                 .put(AetherBlocks.AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_FARMLAND.get())
                 .put(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get(), AetherBlocks.AETHER_FARMLAND.get())
                 .put(AetherBlocks.AETHER_DIRT_PATH.get(), AetherBlocks.AETHER_FARMLAND.get())
-                .put(Blocks.DIRT, Blocks.FARMLAND)
-                .put(Blocks.ROOTED_DIRT, Blocks.FARMLAND)
-                .put(Blocks.COARSE_DIRT, Blocks.FARMLAND)
-                .put(Blocks.DIRT_PATH, Blocks.FARMLAND)
                 .build();
 
         public static boolean debuffTools;
