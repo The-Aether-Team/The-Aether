@@ -31,7 +31,9 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.players.PlayerList;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -234,6 +236,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	 */
 	@Override
 	public void onLogin() {
+		this.syncAllClients();
 		this.handleGivePortal();
 		this.remountAerbunny();
 		this.handlePatreonMessage();
@@ -292,6 +295,24 @@ public class AetherPlayerCapability implements AetherPlayer {
 		ClientMoaSkinPerkData.INSTANCE.syncFromClient(this.getPlayer());
 		ClientHaloPerkData.INSTANCE.syncFromClient(this.getPlayer());
 		ClientDeveloperGlowPerkData.INSTANCE.syncFromClient(this.getPlayer());
+	}
+
+	private void syncAllClients() {
+		if (!this.getPlayer().level().isClientSide()) {
+			MinecraftServer server = this.getPlayer().level().getServer();
+			if (server != null) {
+				PlayerList playerList = server.getPlayerList();
+				for (ServerPlayer serverPlayer : playerList.getPlayers()) {
+					if (!serverPlayer.getUUID().equals(this.getPlayer().getUUID())) {
+						AetherPlayer.get(serverPlayer).ifPresent(aetherPlayer -> {
+							if (aetherPlayer instanceof AetherPlayerCapability capability) {
+								capability.forceSync(INBTSynchable.Direction.CLIENT);
+							}
+						});
+					}
+				}
+			}
+		}
 	}
 
 	private void syncAfterJoin() {
