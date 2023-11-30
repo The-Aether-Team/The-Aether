@@ -1200,6 +1200,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addServerConfig("gameplay", "maximum_life_shards", "Determines the limit of the amount of Life Shards a player can consume to increase their health");
         this.addServerConfig("gameplay", "hammer_of_kingbdogz_cooldown", "Determines the cooldown in ticks for the Hammer of Kingbdogz's ability");
         this.addServerConfig("gameplay", "cloud_staff_cooldown", "Determines the cooldown in ticks for the Cloud Staff's ability");
+        this.addServerConfig("gameplay", "require_gloves", "Makes armor abilities depend on wearing the respective gloves belonging to an armor set");
 
         this.addServerConfig("loot", "spawn_golden_feather", "Allows the Golden Feather to spawn in the Silver Dungeon loot table");
         this.addServerConfig("loot", "spawn_valkyrie_cape", "Allows the Valkyrie Cape to spawn in the Silver Dungeon loot table");
