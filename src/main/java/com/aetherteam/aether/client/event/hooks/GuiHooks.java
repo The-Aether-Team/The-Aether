@@ -301,21 +301,23 @@ public class GuiHooks {
      * @see com.aetherteam.aether.client.event.listeners.GuiListener#onRenderBossBar(CustomizeGuiOverlayEvent.BossEventProgress)
      */
     public static void drawBossHealthBar(GuiGraphics guiGraphics, int x, int y, LerpingBossEvent bossEvent) {
-        drawBar(guiGraphics, x + 2, y + 2, bossEvent);
-        Component component = bossEvent.getName();
-        int nameLength = Minecraft.getInstance().font.width(component);
-        int nameX = Minecraft.getInstance().getWindow().getGuiScaledWidth() / 2 - nameLength / 2;
-        int nameY = y - 9;
-        guiGraphics.drawString(Minecraft.getInstance().font, component, nameX, nameY, 16777215);
+        int entityID = BOSS_EVENTS.get(bossEvent.getId());
+        if (Minecraft.getInstance().level != null && Minecraft.getInstance().level.getEntity(entityID) instanceof AetherBossMob<?> aetherBossMob) {
+            drawBar(guiGraphics, x + 2, y + 2, bossEvent, aetherBossMob);
+            Component component = bossEvent.getName();
+            int nameLength = Minecraft.getInstance().font.width(component);
+            int nameX = Minecraft.getInstance().getWindow().getGuiScaledWidth() / 2 - nameLength / 2;
+            int nameY = y - 9;
+            guiGraphics.drawString(Minecraft.getInstance().font, component, nameX, nameY, 16777215);
+        }
     }
 
     /**
      * [CODE COPY] - {@link net.minecraft.client.gui.components.BossHealthOverlay#drawBar(GuiGraphics, int, int, BossEvent)}
      * This version of the method doesn't account for other types of boss bars because the Aether only has one.
      */
-    public static void drawBar(GuiGraphics guiGraphics, int x, int y, BossEvent bossEvent) {
-        int entityID = BOSS_EVENTS.get(bossEvent.getId());
-        if (Minecraft.getInstance().level != null && Minecraft.getInstance().level.getEntity(entityID) instanceof AetherBossMob<?> aetherBossMob && aetherBossMob.getBossBarTexture() != null) {
+    public static void drawBar(GuiGraphics guiGraphics, int x, int y, BossEvent bossEvent, AetherBossMob<?> aetherBossMob) {
+        if (aetherBossMob.getBossBarTexture() != null) {
             x -= 37; // The default boss health bar is offset by -91. We need -128.
             guiGraphics.blit(aetherBossMob.getBossBarTexture(), x, y, -90, 0, 16, 256, 16, 256, 256);
             int health = (int) (bossEvent.getProgress() * 256.0F);
