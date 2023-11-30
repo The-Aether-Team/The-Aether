@@ -1,5 +1,6 @@
 package com.aetherteam.aether.item;
 
+import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.item.accessories.cape.CapeItem;
 import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -219,7 +220,7 @@ public final class EquipmentUtil {
                 && entity.getItemBySlot(EquipmentSlot.CHEST).is(chestplate)
                 && entity.getItemBySlot(EquipmentSlot.LEGS).is(leggings)
                 && entity.getItemBySlot(EquipmentSlot.FEET).is(boots)
-                && findFirstCurio(entity, gloves).isPresent();
+                && (findFirstCurio(entity, gloves).isPresent() && AetherConfig.SERVER.require_gloves.get());
     }
 
     /**
