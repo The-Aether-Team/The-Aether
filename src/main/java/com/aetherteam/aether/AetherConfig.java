@@ -12,6 +12,7 @@ public class AetherConfig {
         public final ConfigValue<Boolean> tools_debuff;
         public final ConfigValue<Boolean> edible_ambrosium;
         public final ConfigValue<Boolean> berry_bush_consistency;
+        public final ConfigValue<Boolean> crystal_leaves_consistency;
         public final ConfigValue<Boolean> healing_gummy_swets;
         public final ConfigValue<Integer> hammer_of_kingbdogz_cooldown;
         public final ConfigValue<Integer> cloud_staff_cooldown;
@@ -54,6 +55,10 @@ public class AetherConfig {
                     .comment("Makes Berry Bushes and Bush Stems behave consistently with Sweet Berry Bushes")
                     .translation("config.aether.server.gameplay.berry_bush_consistency")
                     .define("Berry Bush consistency", false);
+            crystal_leaves_consistency = builder
+                    .comment("Makes Crystal Fruit Leaves behave consistently with Sweet Berry Bushes")
+                    .translation("config.aether.server.gameplay.crystal_leaves_consistency")
+                    .define("Crystal Fruit Leaves consistency", false);
             healing_gummy_swets = builder
                     .comment("Gummy Swets when eaten restore full health instead of full hunger")
                     .translation("config.aether.server.gameplay.healing_gummy_swets")

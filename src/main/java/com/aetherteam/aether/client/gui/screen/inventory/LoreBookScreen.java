@@ -88,7 +88,7 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
                 this.createPages(entry); // Sets up pages.
 
                 if (this.currentPageNumber == 0) { // Behavior for first page.
-                    Component title = itemStack.getHoverName();
+                    Component title = itemStack.getHoverName().plainCopy();
                     this.createText(guiGraphics, this.font.split(title, 98), 136, 10); // Draw text for the item name.
 
                     this.createText(guiGraphics, this.pages.get(0), 136, 32); // Draw lines for first page.
