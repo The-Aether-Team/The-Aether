@@ -171,17 +171,15 @@ public class DimensionHooks {
     public static void fallFromAether(Level level) {
         if (level instanceof ServerLevel serverLevel) {
             if (!AetherConfig.SERVER.disable_falling_to_overworld.get()) {
-                for (Entity entity : serverLevel.getEntities(EntityTypeTest.forClass(Entity.class), Objects::nonNull)) {
-                    if (level.getBiome(entity.blockPosition()).is(AetherTags.Biomes.FALL_TO_OVERWORLD) && level.dimension() == LevelUtil.destinationDimension()) {
-                        if (entity.getY() <= serverLevel.getMinBuildHeight() && !entity.isPassenger()) {
-                            if (entity instanceof Player || entity.isVehicle() || (entity instanceof Saddleable) && ((Saddleable) entity).isSaddled()) { // Checks if an entity is a player or a vehicle of a player.
-                                entityFell(entity);
-                            } else if (entity instanceof ItemEntity itemEntity) {
-                                LazyOptional<DroppedItem> droppedItem = DroppedItem.get(itemEntity);
-                                if (droppedItem.isPresent() && droppedItem.resolve().isPresent()) {
-                                    if ((itemEntity.getOwner() != null && itemEntity.getLevel().getPlayerByUUID(itemEntity.getUUID()) != null) || droppedItem.resolve().get().getOwner() instanceof Player) { // Checks if an entity is an item that was dropped by a player.
-                                        entityFell(entity);
-                                    }
+                if (level.dimension() == LevelUtil.destinationDimension()) {
+                    for (Entity entity : serverLevel.getEntities(EntityTypeTest.forClass(Entity.class), (entity) -> level.getBiome(entity.blockPosition()).is(AetherTags.Biomes.FALL_TO_OVERWORLD) && entity.getY() <= serverLevel.getMinBuildHeight() && !entity.isPassenger())) {
+                        if (entity instanceof Player || entity.isVehicle() || (entity instanceof Saddleable) && ((Saddleable) entity).isSaddled()) { // Checks if an entity is a player or a vehicle of a player.
+                            entityFell(entity);
+                        } else if (entity instanceof ItemEntity itemEntity) {
+                            LazyOptional<DroppedItem> droppedItem = DroppedItem.get(itemEntity);
+                            if (droppedItem.isPresent() && droppedItem.resolve().isPresent()) {
+                                if ((itemEntity.getOwner() != null && itemEntity.getLevel().getPlayerByUUID(itemEntity.getUUID()) != null) || droppedItem.resolve().get().getOwner() instanceof Player) { // Checks if an entity is an item that was dropped by a player.
+                                    entityFell(entity);
                                 }
                             }
                         }
