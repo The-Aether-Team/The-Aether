@@ -17,6 +17,7 @@ public class AetherConfig {
         public final ConfigValue<Integer> hammer_of_kingbdogz_cooldown;
         public final ConfigValue<Integer> cloud_staff_cooldown;
         public final ConfigValue<Integer> maximum_life_shards;
+        public final ConfigValue<Boolean> require_gloves;
 
         public final ConfigValue<Boolean> spawn_golden_feather;
         public final ConfigValue<Boolean> spawn_valkyrie_cape;
@@ -74,6 +75,10 @@ public class AetherConfig {
                     .comment("Determines the cooldown in ticks for the Cloud Staff's ability")
                     .translation("config.aether.server.gameplay.cloud_staff_cooldown")
                     .define("Cooldown for the Cloud Staff", 40);
+            require_gloves = builder
+                    .comment("Makes armor abilities depend on wearing the respective gloves belonging to an armor set")
+                    .translation("config.aether.server.gameplay.require_gloves")
+                    .define("Require gloves for set abilities", true);
             builder.pop();
 
             builder.push("Loot");
