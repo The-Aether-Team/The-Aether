@@ -318,10 +318,10 @@ public class GuiHooks {
      * [CODE COPY] - {@link net.minecraft.client.gui.components.BossHealthOverlay#drawBar(PoseStack, int, int, BossEvent)}
      * This version of the method doesn't account for other types of boss bars because the Aether only has one.
      */
-    public static void drawBar(PoseStack poseStack, int x, int y, BossEvent pBossEvent) {
+    public static void drawBar(PoseStack poseStack, int x, int y, BossEvent bossEvent) {
         x -= 37; // The default boss health bar is offset by -91. We need -128.
         GuiComponent.blit(poseStack, x, y, -90, 0, 16, 256, 16, 256, 256);
-        int health = (int) (pBossEvent.getProgress() * 256.0F);
+        int health = (int) (bossEvent.getProgress() * 256.0F);
         if (health > 0) {
             GuiComponent.blit(poseStack, x, y, -90, 0, 0, health, 16, 256, 256);
         }
