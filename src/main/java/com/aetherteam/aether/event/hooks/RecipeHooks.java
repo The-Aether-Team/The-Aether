@@ -16,6 +16,7 @@ import com.aetherteam.aether.recipe.recipes.block.PlacementConversionRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -53,6 +54,7 @@ public class RecipeHooks {
      */
     public static boolean checkInteractionBanned(Player player, Level level, BlockPos pos, Direction face, ItemStack stack, BlockState state, boolean spawnParticles) {
         if (isItemPlacementBanned(level, pos, face, stack, spawnParticles)) {
+            player.displayClientMessage(Component.translatable("aether.banned_item", stack.getItem().getName(stack)), true);
             return true;
         }
         if (level.getBiome(pos).is(AetherTags.Biomes.ULTRACOLD) && AetherConfig.SERVER.enable_bed_explosions.get()) { // Explodes beds in the Aether if the config for it is enabled.
