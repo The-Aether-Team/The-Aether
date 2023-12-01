@@ -838,6 +838,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
 
         this.addGeneric("hammer_of_kingbdogz_cooldown", "Cooldown");
 
+        this.addGeneric("banned_item", "Your %s cannot be used in this environment.");
         this.addGeneric("life_shard_limit", "You can only use a total of %s Life Shards.");
         this.addGeneric("bronze_treasure_chest_locked", "This Treasure Chest must be unlocked with a Bronze Key.");
         this.addGeneric("silver_treasure_chest_locked", "This Treasure Chest must be unlocked with a Silver Key.");
