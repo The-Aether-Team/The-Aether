@@ -178,7 +178,7 @@ public class DimensionHooks {
                         } else if (entity instanceof ItemEntity itemEntity) {
                             LazyOptional<DroppedItem> droppedItem = DroppedItem.get(itemEntity);
                             if (droppedItem.isPresent() && droppedItem.resolve().isPresent()) {
-                                if ((itemEntity.getOwner() != null && itemEntity.getLevel().getPlayerByUUID(itemEntity.getUUID()) != null) || droppedItem.resolve().get().getOwner() instanceof Player) { // Checks if an entity is an item that was dropped by a player.
+                                if ((itemEntity.getOwner() != null && itemEntity.getLevel().getPlayerByUUID(itemEntity.getOwner()) != null) || droppedItem.resolve().get().getOwner() instanceof Player) { // Checks if an entity is an item that was dropped by a player.
                                     entityFell(entity);
                                 }
                             }
