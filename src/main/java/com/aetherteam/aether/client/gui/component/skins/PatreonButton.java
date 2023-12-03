@@ -9,8 +9,15 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.GameRenderer;
 
 public class PatreonButton extends Button {
+    private final boolean small;
+
     public PatreonButton(Builder builder) {
+        this(builder, false);
+    }
+
+    public PatreonButton(Builder builder, boolean small) {
         super(builder);
+        this.small = small;
     }
 
     @Override
@@ -19,7 +26,7 @@ public class PatreonButton extends Button {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, MoaSkinsScreen.MOA_SKINS_GUI);
         int u = 0;
-        int v = 215;
+        int v = !this.small ? 215 : 233;
         if (this.isHovered()) {
             u = 54;
         }
