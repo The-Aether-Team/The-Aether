@@ -443,6 +443,7 @@
   "gui.aether.menu.server": "Офіційний тестовий сервер Етеру",
   "gui.aether.moa_skins.button.apply": "Застосувати",
   "gui.aether.moa_skins.button.donate": "Підтримати",
+  "gui.aether.moa_skins.button.help": "Допомога",
   "gui.aether.moa_skins.button.refresh": "Оновити",
   "gui.aether.moa_skins.button.remove": "Прибрати",
   "gui.aether.moa_skins.pack.lifetime_angel_moa_skins": "Довічні скіни ангельского моа",
