@@ -13,6 +13,7 @@ import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.Map;
+import java.util.function.Predicate;
 
 /**
  * Used by powerful dungeon mobs.
@@ -22,6 +23,7 @@ import java.util.Map;
  */
 public class MostDamageTargetGoal extends TargetGoal {
     private static final TargetingConditions HURT_BY_TARGETING = TargetingConditions.forCombat().ignoreLineOfSight().ignoreInvisibilityTesting();
+    private final Predicate<LivingEntity> targetPredicate;
     /** Holds the aggro values from all recent attackers. */
     public final Object2DoubleMap<LivingEntity> attackers = new Object2DoubleOpenHashMap<>();
     /** Store the previous revengeTimer value. */
@@ -34,13 +36,18 @@ public class MostDamageTargetGoal extends TargetGoal {
     private int aiTicks;
 
     public MostDamageTargetGoal(Mob mob) {
-        this(mob, 1.0F);
+        this(mob, 1.0F, (target) -> true);
     }
 
-    public MostDamageTargetGoal(Mob mob, float calmDownRate) {
+    public MostDamageTargetGoal(Mob mob, Predicate<LivingEntity> targetPredicate) {
+        this(mob, 1.0F, targetPredicate);
+    }
+
+    public MostDamageTargetGoal(Mob mob, float calmDownRate, Predicate<LivingEntity> targetPredicate) {
         super(mob, true);
         this.setFlags(EnumSet.of(Flag.TARGET));
         this.calmDownRate = calmDownRate;
+        this.targetPredicate = targetPredicate;
     }
 
     /**
@@ -90,14 +97,13 @@ public class MostDamageTargetGoal extends TargetGoal {
      * Decreases aggro toward all mobs every second. This removes mobs that are dead or have no aggro and are dead.
      */
     private void tickAggro() {
-        Aether.LOGGER.info("1");
         if (++this.aiTicks >= 10) {
             Aether.LOGGER.info("2");
             this.aiTicks = 0;
             this.attackers.forEach((livingEntity, oldAggro) -> {
                 Aether.LOGGER.info("3");
                 double aggro = oldAggro - this.calmDownRate;
-                if (livingEntity.isDeadOrDying() || (aggro <= 0 && !this.canAttack(livingEntity, HURT_BY_TARGETING)) || (livingEntity instanceof Player player && (player.isCreative() || player.isSpectator()))) {
+                if (livingEntity.isDeadOrDying() || (aggro <= 0 && !this.canAttack(livingEntity, HURT_BY_TARGETING.selector(this.targetPredicate))) || (livingEntity instanceof Player player && (player.isCreative() || player.isSpectator()))) {
                     Aether.LOGGER.info("4");
                     this.attackers.removeDouble(livingEntity);
                 } else {

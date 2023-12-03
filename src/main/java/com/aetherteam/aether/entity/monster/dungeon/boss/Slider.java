@@ -124,7 +124,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         this.goalSelector.addGoal(5, new AvoidObstaclesGoal(this));
         this.goalSelector.addGoal(6, new SliderMoveGoal(this));
 
-        this.mostDamageTargetGoal = new MostDamageTargetGoal(this);
+        this.mostDamageTargetGoal = new MostDamageTargetGoal(this, (target) -> (!(target instanceof Player player) || this.getDungeon() == null || this.getDungeon().isPlayerTracked(player)));
         this.targetSelector.addGoal(1, this.mostDamageTargetGoal);
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, false));
     }
