@@ -443,6 +443,7 @@
   "gui.aether.menu.server": "Official Aether Testing Server",
   "gui.aether.moa_skins.button.apply": "Apply",
   "gui.aether.moa_skins.button.donate": "Donate",
+  "gui.aether.moa_skins.button.help": "Help",
   "gui.aether.moa_skins.button.refresh": "Refresh",
   "gui.aether.moa_skins.button.remove": "Remove",
   "gui.aether.moa_skins.pack.lifetime_angel_moa_skins": "Lifetime Angel Moa Skins",
