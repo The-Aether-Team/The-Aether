@@ -12,7 +12,6 @@ import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.Map;
-import java.util.function.Predicate;
 
 /**
  * Used by powerful dungeon mobs.
@@ -22,7 +21,6 @@ import java.util.function.Predicate;
  */
 public class MostDamageTargetGoal extends TargetGoal {
     private static final TargetingConditions HURT_BY_TARGETING = TargetingConditions.forCombat().ignoreLineOfSight().ignoreInvisibilityTesting();
-    private final Predicate<LivingEntity> targetPredicate;
     /** Holds the aggro values from all recent attackers. */
     private final Object2DoubleMap<LivingEntity> attackers = new Object2DoubleOpenHashMap<>();
     /** Store the previous revengeTimer value. */
@@ -35,18 +33,13 @@ public class MostDamageTargetGoal extends TargetGoal {
     private int aiTicks;
 
     public MostDamageTargetGoal(Mob mob) {
-        this(mob, 1.0F, (target) -> true);
+        this(mob, 1.0F);
     }
 
-    public MostDamageTargetGoal(Mob mob, Predicate<LivingEntity> targetPredicate) {
-        this(mob, 1.0F, targetPredicate);
-    }
-
-    public MostDamageTargetGoal(Mob mob, float calmDownRate, Predicate<LivingEntity> targetPredicate) {
+    public MostDamageTargetGoal(Mob mob, float calmDownRate) {
         super(mob, true);
         this.setFlags(EnumSet.of(Flag.TARGET));
         this.calmDownRate = calmDownRate;
-        this.targetPredicate = targetPredicate;
     }
 
     /**
@@ -100,7 +93,7 @@ public class MostDamageTargetGoal extends TargetGoal {
             this.aiTicks = 0;
             this.attackers.forEach((livingEntity, oldAggro) -> {
                 double aggro = oldAggro - this.calmDownRate;
-                if (livingEntity.isDeadOrDying() || (aggro <= 0 && !this.canAttack(livingEntity, HURT_BY_TARGETING.selector(this.targetPredicate))) || (livingEntity instanceof Player player && (player.isCreative() || player.isSpectator()))) {
+                if (!livingEntity.isAlive() || (aggro <= 0 && !this.canAttack(livingEntity, HURT_BY_TARGETING)) || (livingEntity instanceof Player player && (player.isCreative() || player.isSpectator()))) {
                     this.attackers.removeDouble(livingEntity);
                 } else {
                     this.attackers.put(livingEntity, aggro);

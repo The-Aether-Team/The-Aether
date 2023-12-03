@@ -124,7 +124,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         this.goalSelector.addGoal(5, new AvoidObstaclesGoal(this));
         this.goalSelector.addGoal(6, new SliderMoveGoal(this));
 
-        this.mostDamageTargetGoal = new MostDamageTargetGoal(this, (target) -> (!(target instanceof Player player) || this.getDungeon() == null || this.getDungeon().isPlayerTracked(player)));
+        this.mostDamageTargetGoal = new MostDamageTargetGoal(this);
         this.targetSelector.addGoal(1, this.mostDamageTargetGoal);
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, false));
     }
@@ -181,9 +181,6 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         Aether.LOGGER.info("mostDamageTarget: " + this.mostDamageTargetGoal.getPrimaryTarget());
         Aether.LOGGER.info("sliderTarget: " + this.getTarget());
         Aether.LOGGER.info("sliderTargetPoint: " + this.getTargetPoint());
-//        if (this.getTarget() != null && this.getTarget().isDeadOrDying()) {
-//            this.mostDamageTargetGoal.attackers.clear();
-//        }
     }
 
     /**
