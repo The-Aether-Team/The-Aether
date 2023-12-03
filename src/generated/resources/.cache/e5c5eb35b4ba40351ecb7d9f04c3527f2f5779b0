@@ -1,4 +1,4 @@
-// 1.20.1	2023-12-02T15:20:23.5858014	Advancements
+// 1.20.1	2023-12-03T15:49:20.9400457	Advancements
 398a96fa0ca394bc7c0a65a04efb4043da5c9246 data/aether/advancements/aether_sleep.json
 330c4a9d97b1d5a399ff23c8e21cb91088a9db5c data/aether/advancements/black_moa.json
 4a2c9f8e5a9f000b91ce42864768dbe69f26044e data/aether/advancements/blue_aercloud.json
@@ -23,7 +23,7 @@ a995576a777a4fdbae266f290a92779cfd8b590b data/aether/advancements/obtain_petal.j
 f6f08792ddce0582f82d1f7e7e50dbc671b4d6ce data/aether/advancements/regen_stone.json
 a3642bd91e2f4628c95f569ca383508c1b40abb1 data/aether/advancements/silver_dungeon.json
 047c395ede5ce83dfebfe30c630fc27cc848cfe0 data/aether/advancements/the_aether.json
-ab990b252a1205c626b991687ecc12a318be3bf7 data/aether/advancements/valkyrie_hoe.json
+636ecbad9b4922ae7a4776e01eb7ca688140ab08 data/aether/advancements/valkyrie_hoe.json
 f6fc39b2fa0f9ae8e3705979b7bac6311f7a9ea8 data/aether/advancements/valkyrie_loot.json
 2d1b087bdf6bd05b9308be4323ae288c8ee4ffbb data/aether/advancements/zanite.json
 a49db2544172bf2edeb20923b64219f89d4c0133 data/aether/advancements/zephyr_hammer.json

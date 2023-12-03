@@ -169,6 +169,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addBlock(AetherBlocks.UNSTABLE_OBSIDIAN, "Unstable Obsidian");
 
 
+        this.addGeneric("loot", "Aether Loot");
+
         this.addItem(AetherItems.SKYROOT_PICKAXE, "Skyroot Pickaxe");
         this.addItem(AetherItems.SKYROOT_AXE, "Skyroot Axe");
         this.addItem(AetherItems.SKYROOT_SHOVEL, "Skyroot Shovel");
