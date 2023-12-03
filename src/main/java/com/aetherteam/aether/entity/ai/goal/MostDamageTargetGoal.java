@@ -93,7 +93,7 @@ public class MostDamageTargetGoal extends TargetGoal {
             this.aiTicks = 0;
             this.attackers.forEach((livingEntity, oldAggro) -> {
                 double aggro = oldAggro - this.calmDownRate;
-                if (!livingEntity.isAlive() || (aggro <= 0 && !this.canAttack(livingEntity, HURT_BY_TARGETING)) || (livingEntity instanceof Player player && (player.isCreative() || player.isSpectator()))) {
+                if (livingEntity.isDeadOrDying() || (aggro <= 0 && !this.canAttack(livingEntity, HURT_BY_TARGETING)) || (livingEntity instanceof Player player && (player.isCreative() || player.isSpectator()))) {
                     this.attackers.removeDouble(livingEntity);
                 } else {
                     this.attackers.put(livingEntity, aggro);
