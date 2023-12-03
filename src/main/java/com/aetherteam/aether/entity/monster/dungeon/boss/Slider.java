@@ -178,10 +178,6 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         if (this.attackCooldown > 0) {
             --this.attackCooldown;
         }
-        Aether.LOGGER.info(String.valueOf(this));
-        Aether.LOGGER.info("mostDamageTarget: " + this.mostDamageTargetGoal.getPrimaryTarget());
-        Aether.LOGGER.info("sliderTarget: " + this.getTarget());
-        Aether.LOGGER.info("sliderTargetPoint: " + this.getTargetPoint());
     }
 
     /**
