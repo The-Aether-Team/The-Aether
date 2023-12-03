@@ -65,7 +65,7 @@ public class MostDamageTargetGoal extends TargetGoal {
     @Override
     public boolean canContinueToUse() {
         this.tickAggro();
-        return this.mob.getLastHurtByMobTimestamp() == this.lastHurtTimestamp && super.canContinueToUse();
+        return this.mob.getLastHurtByMobTimestamp() == this.lastHurtTimestamp && this.mob.getTarget() != null && !this.mob.getTarget().isDeadOrDying() && super.canContinueToUse();
     }
 
     /**
@@ -76,6 +76,15 @@ public class MostDamageTargetGoal extends TargetGoal {
         this.mob.setTarget(this.primaryTarget);
         this.lastHurtTimestamp = this.mob.getLastHurtByMobTimestamp();
         super.start();
+    }
+
+    /**
+     * Removes the target.
+     */
+    @Override
+    public void stop() {
+        this.primaryTarget = null;
+        super.stop();
     }
 
     /**
