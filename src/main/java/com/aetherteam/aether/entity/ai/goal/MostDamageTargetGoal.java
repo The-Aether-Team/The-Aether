@@ -1,6 +1,5 @@
 package com.aetherteam.aether.entity.ai.goal;
 
-import com.aetherteam.aether.Aether;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleOpenHashMap;
 import net.minecraft.world.entity.LivingEntity;
@@ -25,7 +24,7 @@ public class MostDamageTargetGoal extends TargetGoal {
     private static final TargetingConditions HURT_BY_TARGETING = TargetingConditions.forCombat().ignoreLineOfSight().ignoreInvisibilityTesting();
     private final Predicate<LivingEntity> targetPredicate;
     /** Holds the aggro values from all recent attackers. */
-    public final Object2DoubleMap<LivingEntity> attackers = new Object2DoubleOpenHashMap<>();
+    private final Object2DoubleMap<LivingEntity> attackers = new Object2DoubleOpenHashMap<>();
     /** Store the previous revengeTimer value. */
     private int lastHurtTimestamp;
     /** The current target. */
@@ -98,17 +97,13 @@ public class MostDamageTargetGoal extends TargetGoal {
      */
     private void tickAggro() {
         if (++this.aiTicks >= 10) {
-            Aether.LOGGER.info("2");
             this.aiTicks = 0;
             this.attackers.forEach((livingEntity, oldAggro) -> {
-                Aether.LOGGER.info("3");
                 double aggro = oldAggro - this.calmDownRate;
                 if (livingEntity.isDeadOrDying() || (aggro <= 0 && !this.canAttack(livingEntity, HURT_BY_TARGETING.selector(this.targetPredicate))) || (livingEntity instanceof Player player && (player.isCreative() || player.isSpectator()))) {
-                    Aether.LOGGER.info("4");
                     this.attackers.removeDouble(livingEntity);
                 } else {
                     this.attackers.put(livingEntity, aggro);
-                    Aether.LOGGER.info("5");
                 }
             });
         }
@@ -123,11 +118,14 @@ public class MostDamageTargetGoal extends TargetGoal {
                 .filter((entityEntry) -> this.canAttack(entityEntry.getKey(), HURT_BY_TARGETING))
                 .max(Comparator.comparingDouble(Map.Entry::getValue)).orElse(null);
         if (entry == null) {
-            Aether.LOGGER.info("6");
             return null;
         } else {
-            Aether.LOGGER.info("7" + " " + entry.getKey());
             return entry.getKey();
         }
+    }
+
+    @Nullable
+    public LivingEntity getPrimaryTarget() {
+        return this.primaryTarget;
     }
 }
