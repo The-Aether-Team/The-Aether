@@ -46,6 +46,7 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.network.NetworkHooks;
 import org.apache.commons.lang3.tuple.Pair;
@@ -197,7 +198,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
             }
         } else if (source.getDirectEntity() instanceof LivingEntity attacker && this.getLevel().getDifficulty() != Difficulty.PEACEFUL) {
             if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoomInterior(attacker)) { // Only allow damage within the boss room.
-                if (attacker.getMainHandItem().is(AetherTags.Items.SLIDER_DAMAGING_ITEMS)) { // Check for correct tool.
+                if (attacker.getMainHandItem().canPerformAction(ToolActions.PICKAXE_DIG) || attacker.getMainHandItem().is(AetherTags.Items.SLIDER_DAMAGING_ITEMS)) { // Check for correct tool.
                     if (super.hurt(source, amount) && this.getHealth() > 0) {
                         if (!this.isBossFight()) {
                             this.start();
