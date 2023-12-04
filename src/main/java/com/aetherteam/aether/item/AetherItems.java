@@ -75,7 +75,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class AetherItems {
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Aether.MODID);
 
-	public static final Rarity AETHER_LOOT = Rarity.create("AETHER_LOOT", ChatFormatting.GREEN);
+	public static final Rarity AETHER_LOOT = Rarity.create("aether.loot", ChatFormatting.GREEN);
 
 	public static final Component BRONZE_DUNGEON_TOOLTIP = Component.translatable("aether.dungeon.bronze_dungeon").withStyle(Style.EMPTY.withItalic(true).withColor(TextColor.parseColor("#D9AB7E")));
 	public static final Component SILVER_DUNGEON_TOOLTIP = Component.translatable("aether.dungeon.silver_dungeon").withStyle(Style.EMPTY.withItalic(true).withColor(TextColor.parseColor("#E0E0E0")));
