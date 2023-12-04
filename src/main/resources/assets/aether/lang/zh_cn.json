@@ -458,6 +458,7 @@
   "gui.aether.moa_skins.text.reward": "感谢您对项目的捐赠！",
   "gui.aether.moa_skins.title": "恐鸟外观",
   "gui.aether.moa_skins.tooltip.access.lifetime": "承诺捐赠到 %s 层级将使您终身拥有此外观的权限！",
+  "gui.aether.patreon.note": "此消息将只显示一次。",
   "gui.aether.player.dialog.challenge": "我想要挑战你！",
   "gui.aether.player.dialog.deny_fight": "等一下，我还有些事情要办。",
   "gui.aether.player.dialog.have_medals": "我准备好了！凭证在这里！",
