@@ -103,6 +103,7 @@
   "entity.aether.zephyr_snowball": "Wind Box Ball",
   "gui.aether.ascending": "heer we go 2 da aefer",
   "gui.aether.descending": "falling from da aefer",
+  "gui.aether.moa_skins.skin.cockatrice_moa": "bird that is dangerous",
   "gui.aether.player.dialog.deny_fight": "see ya lol",
   "gui.aether.player.dialog.have_medals": "yo bro i gots those shiny tings",
   "gui.aether.player.dialog.no_medals": "srry i need moar",
@@ -273,5 +274,9 @@
   "item.aether.zanite_ring": "Zanit Ring",
   "item.aether.zanite_shovel": "Zanit Spoon",
   "item.aether.zanite_sword": "Zanit sowd",
-  "key.aether.category": "Ether"
+  "key.aether.category": "Ether",
+  "menu.aether.book_of_lore": "Book ov Story",
+  "menu.aether.freezer": "Freezing masheen",
+  "menu.aether.incubator": "Bird maker",
+  "menu.aether.sun_altar": "Sun Alter"
 }
