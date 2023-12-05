@@ -407,7 +407,7 @@ public class MoaSkinsScreen extends Screen {
             if (user == null && this.userConnectionExists) { // Remove skin data if the user no longer exists.
                 PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Remove(this.getMinecraft().player.getUUID()));
                 this.userConnectionExists = false;
-            } else if (user != null && !this.userConnectionExists) { // Add skin data if the user has started existing.
+            } else if (user != null && !this.userConnectionExists && MoaSkins.getMoaSkins().get(this.customizations.getMoaSkin()) != null) { // Add skin data if the user has started existing.
                 AetherPlayer.get(this.getMinecraft().player).ifPresent((aetherPlayer) ->
                         PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Apply(this.getMinecraft().player.getUUID(), new MoaData(aetherPlayer.getLastRiddenMoa(), MoaSkins.getMoaSkins().get(this.customizations.getMoaSkin())))));
                 this.userConnectionExists = true;
