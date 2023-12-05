@@ -66,7 +66,7 @@ public abstract class AetherLanguageProvider extends NitrogenLanguageProvider {
 
         for (Map.Entry<String, String> entry : PRO_TIPS.entrySet()) {
             JsonObject object = new JsonObject();
-            object.add("title", Component.Serializer.toJsonTree(Component.translatable("gui.aether.pro_tip").withStyle(ChatFormatting.BOLD, ChatFormatting.UNDERLINE, ChatFormatting.YELLOW)));
+            object.add("title", Component.Serializer.toJsonTree(Component.translatable("tipsmod.title.default").withStyle(ChatFormatting.BOLD, ChatFormatting.UNDERLINE, ChatFormatting.YELLOW)));
             object.add("tip", Component.Serializer.toJsonTree(Component.translatable(entry.getKey())));
             futuresBuilder.add(DataProvider.saveStable(cache, GSON.toJsonTree(object), this.output.getOutputFolder().resolve("assets/aether/tips/" + entry.getValue() + ".json")));
         }
