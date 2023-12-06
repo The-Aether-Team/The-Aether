@@ -306,8 +306,8 @@ public class Aether {
             PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.tips.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
             event.addRepositorySource((source) ->
                     source.accept(Pack.create(
-                            "builtin/aether_ctm_fix",
-                            Component.translatable("pack.aether.ctm.title"),
+                            "builtin/aether_tips",
+                            Component.translatable("pack.aether.tips.title"),
                             true,
                             (string) -> pack,
                             new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
