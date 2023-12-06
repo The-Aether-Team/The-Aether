@@ -208,6 +208,7 @@ public class Aether {
         this.setupReleasePack(event);
         this.setupBetaPack(event);
         this.setupCTMFixPack(event);
+        this.setupTipsPack(event);
         this.setupColorblindPack(event);
 
         // Data Packs
@@ -290,6 +291,31 @@ public class Aether {
                     false,
                     PackSource.BUILT_IN)
                 )
+            );
+        }
+    }
+
+    /**
+     * A built-in resource pack to include Pro Tips messages in Tips' UI, but only if the {@link AetherConfig.Client#enable_trivia} config is enabled.<br><br>
+     * The pack is loaded and automatically applied if Tips is installed.
+     */
+    private void setupTipsPack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.CLIENT_RESOURCES && ModList.get().isLoaded("tips") && AetherConfig.CLIENT.enable_trivia.get()) {
+            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/tips");
+            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
+            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.tips.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
+            event.addRepositorySource((source) ->
+                    source.accept(Pack.create(
+                            "builtin/aether_ctm_fix",
+                            Component.translatable("pack.aether.ctm.title"),
+                            true,
+                            (string) -> pack,
+                            new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
+                            PackType.CLIENT_RESOURCES,
+                            Pack.Position.TOP,
+                            false,
+                            PackSource.BUILT_IN)
+                    )
             );
         }
     }
