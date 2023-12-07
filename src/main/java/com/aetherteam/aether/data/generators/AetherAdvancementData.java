@@ -22,12 +22,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeAdvancementProvider;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
@@ -289,7 +287,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                             Component.translatable("advancement.aether.valkyrie_hoe.desc"),
                             null,
                             FrameType.CHALLENGE, true, true, true)
-                    .addCriterion("valkyrie_hoe", ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().of(Stream.concat(AbilityHooks.ToolHooks.TILLABLES.keySet().stream(), HoeItemAccessor.aether$getTillables().keySet().stream().sorted(Comparator.comparing(Block::getDescriptionId))).toList()).build()), ItemPredicate.Builder.item().of(AetherItems.VALKYRIE_HOE.get())))
+                    .addCriterion("valkyrie_hoe", ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().of(Stream.concat(AbilityHooks.ToolHooks.TILLABLES.keySet().stream(), HoeItemAccessor.aether$getTillables().keySet().stream()).toList()).build()), ItemPredicate.Builder.item().of(AetherItems.VALKYRIE_HOE.get())))
                     .save(consumer, new ResourceLocation(Aether.MODID, "valkyrie_hoe"), existingFileHelper);
 
             Advancement regenStone = Advancement.Builder.advancement()

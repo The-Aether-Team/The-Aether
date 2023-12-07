@@ -1,4 +1,4 @@
-// 1.20.1	2023-12-07T12:09:23.530915608	Advancements
+// 1.20.1	2023-12-05T15:25:00.92841	Advancements
 398a96fa0ca394bc7c0a65a04efb4043da5c9246 data/aether/advancements/aether_sleep.json
 330c4a9d97b1d5a399ff23c8e21cb91088a9db5c data/aether/advancements/black_moa.json
 4a2c9f8e5a9f000b91ce42864768dbe69f26044e data/aether/advancements/blue_aercloud.json
@@ -9,8 +9,8 @@ b23fb5a464d49e1bf657d0abf9a7eec946b6554c data/aether/advancements/craft_altar.js
 578969d977c4e79eb9324ac5aafc536535d3edd0 data/aether/advancements/gold_dungeon.json
 c9700a239914cd4e53f5ebb003ab84d0c7d30bca data/aether/advancements/gravitite_armor.json
 3764818a63e6d2ab845fc848321d3caa82c67dab data/aether/advancements/hammer_loot.json
-d46db2002af3486fe8c7d489a6af1ef868e209ce data/aether/advancements/ice_accessory.json
 972f4e2a0034b0fa32e7abd7c2d63aa3c3fd1986 data/aether/advancements/icestone.json
+d46db2002af3486fe8c7d489a6af1ef868e209ce data/aether/advancements/ice_accessory.json
 4883a514502aabc889255fd95cfd2268fc719143 data/aether/advancements/incubate_moa.json
 45850ed4b02f76d3671bfe265a5756266eb1eac4 data/aether/advancements/lance_loot.json
 8e37deba2bb6656eeea0e816b25ca1a85ff9e109 data/aether/advancements/loreception.json
@@ -23,7 +23,7 @@ a995576a777a4fdbae266f290a92779cfd8b590b data/aether/advancements/obtain_petal.j
 f6f08792ddce0582f82d1f7e7e50dbc671b4d6ce data/aether/advancements/regen_stone.json
 a3642bd91e2f4628c95f569ca383508c1b40abb1 data/aether/advancements/silver_dungeon.json
 047c395ede5ce83dfebfe30c630fc27cc848cfe0 data/aether/advancements/the_aether.json
-86ba6d249230937de27d7e358d5c271ec1b29027 data/aether/advancements/valkyrie_hoe.json
+b9d33a00cfd80bffcb5806a5a87ab376fc087db4 data/aether/advancements/valkyrie_hoe.json
 f6fc39b2fa0f9ae8e3705979b7bac6311f7a9ea8 data/aether/advancements/valkyrie_loot.json
 2d1b087bdf6bd05b9308be4323ae288c8ee4ffbb data/aether/advancements/zanite.json
 a49db2544172bf2edeb20923b64219f89d4c0133 data/aether/advancements/zephyr_hammer.json
