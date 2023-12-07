@@ -300,7 +300,7 @@ public class Aether {
      * The pack is loaded and automatically applied if Tips is installed.
      */
     private void setupTipsPack(AddPackFindersEvent event) {
-        if (event.getPackType() == PackType.CLIENT_RESOURCES && ModList.get().isLoaded("tipsmod") && AetherConfig.CLIENT.enable_trivia.get()) {
+        if (event.getPackType() == PackType.CLIENT_RESOURCES && ModList.get().isLoaded("tipsmod")) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/tips");
             PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
             PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.tips.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
@@ -308,7 +308,7 @@ public class Aether {
                     source.accept(Pack.create(
                             "builtin/aether_tips",
                             Component.translatable("pack.aether.tips.title"),
-                            true,
+                            false,
                             (string) -> pack,
                             new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
                             PackType.CLIENT_RESOURCES,
