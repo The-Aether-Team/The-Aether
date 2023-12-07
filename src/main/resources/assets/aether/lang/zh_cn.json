@@ -304,6 +304,7 @@
   "config.aether.common.gameplay.use_curios_menu": "使用默认的Curios菜单，而不是天境的配饰菜单。警告：在清空已配备的配饰之前，请不要启用此选项",
   "config.aether.server.gameplay.berry_bush_consistency": "使蓝莓灌木和未成熟蓝莓灌木与甜浆果丛的行为一致",
   "config.aether.server.gameplay.cloud_staff_cooldown": "设定迷你云护卫攻击间隔的冷却时间",
+  "config.aether.server.gameplay.crystal_leaves_consistency": "使水晶树叶表现与甜浆果丛的行为一致",
   "config.aether.server.gameplay.edible_ambrosium": "可食用的神能晶片",
   "config.aether.server.gameplay.enable_bed_explosions": "原木床将在天境维度爆炸",
   "config.aether.server.gameplay.hammer_of_kingbdogz_cooldown": "设定创世者飞锤攻击间隔的冷却时间",
