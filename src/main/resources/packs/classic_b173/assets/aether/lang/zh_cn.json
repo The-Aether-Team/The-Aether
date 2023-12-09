@@ -1,6 +1,7 @@
 {
   "advancement.aether.craft_altar.desc": "制作一台附神器",
   "aether.pro_tips.line.aether.altar_repairing": "附神器可以修复损坏的物品并增强现有物品。",
+  "aether.pro_tips.line.aether.ambrosium_shard_fuel": "以神能晶片为燃料助力附神器是个不错的选择。",
   "block.aether.altar": "附神器",
   "lore.aether.blue_berry": "从浆果灌木丛中收获它们，这是天境中最常见的食物来源。虽然味道不错，但它并不能很快地填饱你的肚子。你可以在附神器中对其进行加工，以更好地提升它的口感……哦不，我是说，恢复饥饿感。",
   "lore.aether.enchanted_gravitite": "将重力矿石放入附神器进行提炼，可以获得这种神炼重力晶矿。它们可以制作成重力工具和护甲。当使用红石信号充能时，它们将反重力径直向上飞入天空。",
