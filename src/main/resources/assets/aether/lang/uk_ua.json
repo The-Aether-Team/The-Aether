@@ -55,7 +55,7 @@
   "advancement.aether.zanite.desc": "Дістаньте занітовий самоцвіт",
   "advancement.aether.zephyr_hammer": "Ультимативний молот бану",
   "advancement.aether.zephyr_hammer.desc": "Убийте зефіра молотом Kingbdogz. Солодка помста!",
-  "aether.banned_item": "%s неможливо використовувати в цьому середовищі.",
+  "aether.banned_item": "«%s» неможливо використовувати в цьому середовищі.",
   "aether.bronze_treasure_chest_locked": "Цю скриню зі скарбами треба відперти бронзовим ключем.",
   "aether.dungeon.bronze_dungeon": "Бронзове підземелля",
   "aether.dungeon.gold_dungeon": "Золоте підземелля",
