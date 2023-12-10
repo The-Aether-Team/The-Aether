@@ -19,11 +19,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterEntitySpectatorShadersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherClient {
+    private static boolean refreshPacks = false;
+
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
         disableCumulusButton();
@@ -36,6 +40,7 @@ public class AetherClient {
             registerItemModelProperties();
         });
         registerLoreOverrides();
+        autoApplyPacks();
     }
 
     /**
@@ -79,11 +84,36 @@ public class AetherClient {
     }
 
     /**
+     * Auto applies resource packs on load.
+     */
+    public static void autoApplyPacks() {
+        if (ModList.get().isLoaded("tipsmod")) {
+            if (AetherConfig.CLIENT.enable_trivia.get()) {
+                Minecraft.getInstance().getResourcePackRepository().addPack("builtin/aether_tips");
+            } else {
+                Minecraft.getInstance().getResourcePackRepository().removePack("builtin/aether_tips");
+            }
+            refreshPacks = true;
+        }
+    }
+
+    /**
      * Registers a unique shader for spectating the Sun Spirit, which tints the screen red.
      */
     @SubscribeEvent
     public static void registerSpectatorShaders(RegisterEntitySpectatorShadersEvent event) {
         event.register(AetherEntityTypes.SUN_SPIRIT.get(), new ResourceLocation(Aether.MODID, "shaders/post/sun_spirit.json"));
+    }
+
+    /**
+     * Refreshes resource packs at the end of loading, so that auto-applied packs in {@link AetherClient#autoApplyPacks()} get processed.
+     */
+    @SubscribeEvent
+    public void loadComplete(FMLLoadCompleteEvent event) {
+        if (refreshPacks) {
+            Minecraft.getInstance().reloadResourcePacks();
+            refreshPacks = false;
+        }
     }
 
     /**

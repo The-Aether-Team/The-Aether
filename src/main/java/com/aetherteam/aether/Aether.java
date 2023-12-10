@@ -10,6 +10,7 @@ import com.aetherteam.aether.block.dispenser.DispenseDartBehavior;
 import com.aetherteam.aether.block.dispenser.DispenseSkyrootBoatBehavior;
 import com.aetherteam.aether.block.dispenser.DispenseUsableItemBehavior;
 import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
+import com.aetherteam.aether.client.AetherClient;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.CombinedPackResources;
 import com.aetherteam.aether.client.TriviaGenerator;
@@ -296,8 +297,8 @@ public class Aether {
     }
 
     /**
-     * A built-in resource pack to include Pro Tips messages in Tips' UI, but only if the {@link AetherConfig.Client#enable_trivia} config is enabled.<br><br>
-     * The pack is loaded and automatically applied if Tips is installed.
+     * A built-in resource pack to include Pro Tips messages in Tips' UI.<br><br>
+     * The pack is loaded and automatically applied if Tips is installed through {@link AetherClient#autoApplyPacks()}.
      */
     private void setupTipsPack(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.CLIENT_RESOURCES && ModList.get().isLoaded("tipsmod")) {
