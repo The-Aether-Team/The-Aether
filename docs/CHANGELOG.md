@@ -1,3 +1,14 @@
+# The Aether - Forge - 1.19.4-1.0.0-beta.7.1
+
+Changes
+
+- Made Tips compatibility more consistent and compatible with the trivia config.
+
+Fixes
+
+- Fix crash from null Moa Skin selection when refreshing selection screen.
+- Fix config for disabling gloves requirement for armor abilities not working.
+
 # The Aether - Forge - 1.19.4-1.0.0-beta.7
 
 Additions
