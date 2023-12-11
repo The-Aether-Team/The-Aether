@@ -1267,6 +1267,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addPackTitle("125", "Aether 1.2.5 Textures");
         this.addPackTitle("b173", "Aether b1.7.3 Textures");
         this.addPackTitle("ctm", "Aether CTM Fix");
+        this.addPackTitle("tips", "Aether Tips");
         this.addPackTitle("colorblind", "Aether Colorblind Textures");
         this.addPackTitle("curios", "Aether Curios Override");
         this.addPackTitle("freezing", "Aether Temporary Freezing");
@@ -1276,6 +1277,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addPackDescription("125", "The classic look of the Aether from 1.2.5");
         this.addPackDescription("b173", "The original look of the Aether from b1.7.3");
         this.addPackDescription("ctm", "Fixes Quicksoil Glass Panes when using CTM");
+        this.addPackDescription("tips", "Moves Pro Tips to Tips' UI");
         this.addPackDescription("colorblind", "Changes textures for color blindness accessibility");
         this.addPackDescription("curios", "Replace Accessories Menu with Curios' menu");
         this.addPackDescription("freezing", "Ice Accessories create temporary blocks");

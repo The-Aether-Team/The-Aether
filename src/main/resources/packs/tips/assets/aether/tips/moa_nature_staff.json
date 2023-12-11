@@ -1,0 +1,11 @@
+{
+  "tip": {
+    "translate": "aether.pro_tips.line.aether.moa_nature_staff"
+  },
+  "title": {
+    "bold": true,
+    "color": "yellow",
+    "translate": "tipsmod.title.default",
+    "underlined": true
+  }
+}

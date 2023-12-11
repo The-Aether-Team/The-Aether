@@ -1,0 +1,11 @@
+{
+  "tip": {
+    "translate": "aether.pro_tips.line.aether.enchanted_gravitite_floating"
+  },
+  "title": {
+    "bold": true,
+    "color": "yellow",
+    "translate": "tipsmod.title.default",
+    "underlined": true
+  }
+}

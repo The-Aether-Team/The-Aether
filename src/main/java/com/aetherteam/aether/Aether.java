@@ -230,6 +230,7 @@ public class Aether {
         this.setupReleasePack(event);
         this.setupBetaPack(event);
         this.setupCTMFixPack(event);
+        this.setupTipsPack(event);
         this.setupColorblindPack(event);
 
         // Data Packs
@@ -311,6 +312,31 @@ public class Aether {
                     false,
                     PackSource.BUILT_IN)
                 )
+            );
+        }
+    }
+
+    /**
+     * A built-in resource pack to include Pro Tips messages in Tips' UI.<br><br>
+     * The pack is loaded and automatically applied if Tips is installed through {@link AetherClient#autoApplyPacks()}.
+     */
+    private void setupTipsPack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.CLIENT_RESOURCES && ModList.get().isLoaded("tipsmod")) {
+            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/tips");
+            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
+            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.tips.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
+            event.addRepositorySource((source) ->
+                    source.accept(Pack.create(
+                            "builtin/aether_tips",
+                            Component.translatable("pack.aether.tips.title"),
+                            false,
+                            (string) -> pack,
+                            new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
+                            PackType.CLIENT_RESOURCES,
+                            Pack.Position.TOP,
+                            false,
+                            PackSource.BUILT_IN)
+                    )
             );
         }
     }
