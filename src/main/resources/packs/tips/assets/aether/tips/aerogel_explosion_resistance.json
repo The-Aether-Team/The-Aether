@@ -1,0 +1,11 @@
+{
+  "tip": {
+    "translate": "aether.pro_tips.line.aether.aerogel_explosion_resistance"
+  },
+  "title": {
+    "bold": true,
+    "color": "yellow",
+    "translate": "tipsmod.title.default",
+    "underlined": true
+  }
+}

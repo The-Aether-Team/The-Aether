@@ -1,0 +1,11 @@
+{
+  "tip": {
+    "translate": "aether.pro_tips.line.aether.white_aerclouds"
+  },
+  "title": {
+    "bold": true,
+    "color": "yellow",
+    "translate": "tipsmod.title.default",
+    "underlined": true
+  }
+}
