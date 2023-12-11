@@ -10,20 +10,32 @@ import com.aetherteam.aether.inventory.menu.LoreBookMenu;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.perk.CustomizationsOptions;
 import com.aetherteam.cumulus.CumulusConfig;
+import com.google.common.base.Functions;
 import com.google.common.reflect.Reflection;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackRepository;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterEntitySpectatorShadersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherClient {
+    private static boolean refreshPacks = false;
+
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
         disableCumulusButton();
@@ -35,6 +47,7 @@ public class AetherClient {
             registerItemModelProperties();
         });
         registerLoreOverrides();
+        autoApplyPacks();
     }
 
     /**
@@ -78,11 +91,41 @@ public class AetherClient {
     }
 
     /**
+     * Auto applies resource packs on load.
+     */
+    public static void autoApplyPacks() {
+        PackRepository packRepository = Minecraft.getInstance().getResourcePackRepository();
+        if (ModList.get().isLoaded("tipsmod")) {
+            if (AetherConfig.CLIENT.enable_trivia.get()) {
+                List<String> selected = new ArrayList<>(packRepository.getSelectedIds());
+                selected.add("builtin/aether_tips");
+                packRepository.setSelected(selected);
+            } else {
+                List<String> selected = new ArrayList<>(packRepository.getSelectedIds());
+                selected.remove("builtin/aether_tips");
+                packRepository.setSelected(selected);
+            }
+            refreshPacks = true;
+        }
+    }
+
+    /**
      * Registers a unique shader for spectating the Sun Spirit, which tints the screen red.
      */
     @SubscribeEvent
     public static void registerSpectatorShaders(RegisterEntitySpectatorShadersEvent event) {
         event.register(AetherEntityTypes.SUN_SPIRIT.get(), new ResourceLocation(Aether.MODID, "shaders/post/sun_spirit.json"));
+    }
+
+    /**
+     * Refreshes resource packs at the end of loading, so that auto-applied packs in {@link AetherClient#autoApplyPacks()} get processed.
+     */
+    @SubscribeEvent
+    public void loadComplete(FMLLoadCompleteEvent event) {
+        if (refreshPacks) {
+            Minecraft.getInstance().reloadResourcePacks();
+            refreshPacks = false;
+        }
     }
 
     /**

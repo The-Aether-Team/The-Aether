@@ -10,6 +10,7 @@ import com.aetherteam.aether.block.dispenser.DispenseDartBehavior;
 import com.aetherteam.aether.block.dispenser.DispenseSkyrootBoatBehavior;
 import com.aetherteam.aether.block.dispenser.DispenseUsableItemBehavior;
 import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
+import com.aetherteam.aether.client.AetherClient;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.CombinedPackResources;
 import com.aetherteam.aether.client.TriviaGenerator;
@@ -217,6 +218,7 @@ public class Aether {
         this.setupReleasePack(event);
         this.setupBetaPack(event);
         this.setupCTMFixPack(event);
+        this.setupTipsPack(event);
         this.setupColorblindPack(event);
 
         // Data Packs
@@ -293,6 +295,29 @@ public class Aether {
                     PackSource.BUILT_IN,
                     false)
                 ));
+        }
+    }
+
+    /**
+     * A built-in resource pack to include Pro Tips messages in Tips' UI.<br><br>
+     * The pack is loaded and automatically applied if Tips is installed through {@link AetherClient#autoApplyPacks()}.
+     */
+    private void setupTipsPack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.CLIENT_RESOURCES && ModList.get().isLoaded("tipsmod")) {
+            Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/tips");
+            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, resourcePath);
+            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.tips.description"), PackType.CLIENT_RESOURCES.getVersion(SharedConstants.getCurrentVersion()));
+            event.addRepositorySource((packConsumer, packConstructor) ->
+                    packConsumer.accept(packConstructor.create(
+                            "builtin/aether_tips",
+                            Component.translatable("pack.aether.tips.title"),
+                            false,
+                            () -> pack,
+                            metadata,
+                            Pack.Position.TOP,
+                            PackSource.BUILT_IN,
+                            false)
+                    ));
         }
     }
 
