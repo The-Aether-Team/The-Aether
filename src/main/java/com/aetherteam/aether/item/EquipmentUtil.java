@@ -220,7 +220,7 @@ public final class EquipmentUtil {
                 && entity.getItemBySlot(EquipmentSlot.CHEST).is(chestplate)
                 && entity.getItemBySlot(EquipmentSlot.LEGS).is(leggings)
                 && entity.getItemBySlot(EquipmentSlot.FEET).is(boots)
-                && (findFirstCurio(entity, gloves).isPresent() && AetherConfig.SERVER.require_gloves.get());
+                && (!AetherConfig.SERVER.require_gloves.get() || findFirstCurio(entity, gloves).isPresent());
     }
 
     /**
