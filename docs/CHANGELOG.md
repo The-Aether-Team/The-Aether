@@ -1,3 +1,31 @@
+# The Aether - NeoForge - 1.20.1-1.0.0-beta.2.1
+
+Additions
+
+- Update de_at translation.
+- Update en_ud translation.
+- Update es_es translation.
+- Update es_mx translation.
+- Update it_it translation.
+- Update ja_jp translation.
+- Update lol_us translation.
+- Update ms_my translation.
+- Update pl_pl translation.
+- Update ru_ru translation.
+- Update sk_sk translation.
+- Update tok translation.
+- Update uk_ua translation.
+- Update zh_cn translation.
+
+Changes
+
+- Made Tips compatibility more consistent and compatible with the trivia config.
+
+Fixes
+
+- Fix crash from null Moa Skin selection when refreshing selection screen.
+- Fix config for disabling gloves requirement for armor abilities not working.
+
 # The Aether - NeoForge - 1.20.1-1.0.0-beta.2
 
 Additions
