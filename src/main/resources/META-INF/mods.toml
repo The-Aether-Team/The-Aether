@@ -11,7 +11,7 @@ updateJSONURL = "https://github.com/The-Aether-Team/The-Aether/raw/1.19.2-develo
 displayURL = "https://modrinth.com/mod/aether"
 logoFile = "aether.png"
 credits = "The Aether Team, former Aether Team Collaborators for their prior work on The Aether Mod, Modding Legacy for their work on Aether Legacy, GitHub contributors for their additional help, and C4 for Curios API, the source code of which can be found at https://github.com/TheIllusiveC4/Curios"
-authors = "bconlon, Burning Cactus, Drullkus, Hugo Payn, Jaryt, Oscar Payn, quek, Raptor, reetam, RENREN"
+authors = "AlphaMode, bconlon, Burning Cactus, Drullkus, Hugo Payn, Jaryt, Oscar Payn, quek, Raptor, reetam, RENREN, sunsette"
 description = '''
     The Aether Team presents the original Aether mod! Up to date for modern Minecraft versions and fully compatible with multiplayer. The Aether is a dimension of floating islands high in the sky. Ascend through a Glowstone portal and begin a new survival adventure packed with new ores, mythical creatures and perilous Dungeons!
 '''
