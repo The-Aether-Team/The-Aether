@@ -987,6 +987,8 @@
   "pack.aether.mod.description": "Ресурси Етеру",
   "pack.aether.ruined_portal.description": "Генерує зруйновані портали зі світлокаменю",
   "pack.aether.ruined_portal.title": "Зруйновані портали Етеру",
+  "pack.aether.tips.description": "Переносить «Поради проф.» до інтерфейсу Tips",
+  "pack.aether.tips.title": "Поради Етеру",
   "subtitles.aether.block.aether_portal.ambient": "Портал Етеру завивається",
   "subtitles.aether.block.aether_portal.trigger": "Шум порталу в Етер посилюється",
   "subtitles.aether.block.altar.crackle": "Вівтар потріскує",
