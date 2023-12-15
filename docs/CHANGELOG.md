@@ -1,3 +1,19 @@
+# The Aether - Forge - 1.19.4-1.0.0-beta.7.2
+
+Additions
+
+- Update ms_my translation.
+- Update uk_ua translation.
+
+Changes
+
+- Update Patreon logomark.
+
+Fixes
+
+- Fix server timeout from trying to access supporter data.
+- Fix missing pixels on Stratus supporter skin texture.
+
 # The Aether - Forge - 1.19.4-1.0.0-beta.7.1
 
 Changes
