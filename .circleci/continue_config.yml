@@ -6,7 +6,7 @@ orbs:
 parameters:
   artifact-name:
     type: string
-    default: aether-1.19.2-1.0.0-beta.2.1-forge.jar
+    default: aether-1.19.2-1.0.0-beta.2.2-forge.jar
   deploy-branch:
     type: string
     default: 1.19.4-develop
