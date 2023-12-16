@@ -1,1 +1,11 @@
-{}
+{
+  "advancement.aether.craft_altar.desc": "Vyrob si zaklínač",
+  "aether.pro_tips.line.aether.altar_repairing": "Zaklínače vedia opraviť poškodené a vylepšovať existujúce predmety.",
+  "aether.pro_tips.line.aether.ambrosium_shard_fuel": "Úlomky ambrózia sú skvelé na poháňanie zaklínačov.",
+  "block.aether.altar": "Zaklínač",
+  "lore.aether.blue_berry": "Zozbierané z bobuľových kríkov, toto je najbežnejší zdroj potravy v Aetheri. Má veľmi slabé obnovenie hladu. Môžete ich začarovať v zaklínači pre oveľa lepšiu obnovu hladu.",
+  "lore.aether.enchanted_gravitite": "Po vložení gravititovej rudy do zaklínača a jej očarovaní získate očarovaný gravitit. Z neho sa dajú vyrobiť gravitové nástroje a brnenia. Po napájaní redstonovým signálom sa očarované gravititové bloky vznášajú vo vzduchu podobne ako gravititová ruda.",
+  "lore.aether.golden_dart_shooter": "Fúkačka, ktorá strieľa zlaté šípky, očarovaním na zaklínači sa zvýši jej útočná sila!",
+  "menu.aether.altar": "Zaklínač",
+  "subtitles.aether.block.altar.crackle": "Zaklínač praská"
+}
