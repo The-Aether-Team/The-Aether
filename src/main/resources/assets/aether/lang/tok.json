@@ -96,7 +96,6 @@
   "block.aether.skyroot_door": "lupa pi kasi sewi",
   "block.aether.skyroot_fence": "sinpin palisa pi kasi sewi",
   "block.aether.skyroot_fence_gate": "sinpin tawa pi kasi sewi",
-  "block.aether.skyroot_hanging_sign": "lipu sitelen sewi pi kasi sewi",
   "block.aether.skyroot_leaves": "lipu pi kasi sewi",
   "block.aether.skyroot_log": "sijelo pi kasi sewi",
   "block.aether.skyroot_planks": "kiwen kipisi pi kasi sewi",
@@ -164,7 +163,7 @@
   "item.aether.cockatrice_spawn_egg": "sike mama pi waso sewi ike",
   "item.aether.diamond_gloves": "len luka laso",
   "item.aether.enchanted_berry": "kili lili mani",
-  "item.aether.gingerbread_man": "pan jan",
+  "item.aether.gingerbread_man": "suwi jan",
   "item.aether.gold_dungeon_key": "ilo open pi tomo wawa seli",
   "item.aether.golden_gloves": "len luka jelo",
   "item.aether.gravitite_axe": "ilo kipisi pi kiwen pi tawa sewi",
@@ -261,7 +260,6 @@
   "subtitles.aether.block.incubator.crackle": "poki seli pi sike mama li kalama",
   "subtitles.aether.entity.aechor_plant.death": "kasi monsuta li moli",
   "subtitles.aether.entity.cockatrice.ambient": "waso sewi ike li mu",
-  "subtitles.aether.entity.moa.step": "kalama noka",
   "subtitles.aether.entity.sheepuff.ambient": "soweli len kon li mu",
   "subtitles.aether.entity.swet.attack": "monsuta ko sewi li utala"
 }

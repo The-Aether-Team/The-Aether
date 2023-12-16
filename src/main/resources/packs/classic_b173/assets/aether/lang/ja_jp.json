@@ -1,7 +1,11 @@
 {
+  "advancement.aether.craft_altar.desc": "エンチャンターをクラフトする",
+  "aether.pro_tips.line.aether.altar_repairing": "エンチャンターはアイテムを修理し、既存のアイテムの能力を高められる。",
+  "aether.pro_tips.line.aether.ambrosium_shard_fuel": "アンブロシアの欠片は祭壇の燃料として使える。",
   "block.aether.altar": "エンチャンター",
   "lore.aether.blue_berry": "ベリーの低木から収穫される、エーテルで最もよく見られる食料源。満腹度の回復量は非常に低い。エンチャンターでエンチャントすることでより高い満腹度の回復を期待できる。",
   "lore.aether.enchanted_gravitite": "グラビタイト鉱石をエンチャンターに入れることで、エンチャントされたグラビタイトを入手できる。グラビタイトのツールや防具は、これで作れる。レッドストーン信号を受けると、エンチャントされたグラビタイトのブロックは、グラビタイト鉱石のように宙に浮き上がる。",
   "lore.aether.golden_dart_shooter": "金の吹き矢を撃つ吹き筒。エンチャンターでエンチャントすると攻撃力が強化されるぞ！",
+  "menu.aether.altar": "エンチャンター",
   "subtitles.aether.block.altar.crackle": "エンチャンターが稼働する"
 }
