@@ -63,7 +63,7 @@
   "aether.hammer_of_kingbdogz_cooldown": "Memperlahan",
   "aether.life_shard_limit": "Kamu boleh guna seberapa %s Serpihan Hidup sahaja.",
   "aether.menu_title.minecraft_left": "Minecraft (Kiri)",
-  "aether.menu_title.the_aether": "Inilah Aether",
+  "aether.menu_title.the_aether": "Aether",
   "aether.menu_title.the_aether_left": "Aether (Kiri)",
   "aether.pro_tips.line.aether.aerogel_explosion_resistance": "Aerogel bertindak sebagai sebuah blok lut sinar yang boleh tahan atas pelbagai keletupan.",
   "aether.pro_tips.line.aether.aether_day_length": "Hari-harian di dalam Dunia Aether kekal selama 3 kali lebih daripada dunia biasa.",
@@ -88,9 +88,11 @@
   "aether.pro_tips.line.aether.enchanted_gravitite_floating": "Gravitite Terpesona boleh terapung apabila dikuasakan.",
   "block.aether.freezer": "Peti Beku",
   "config.aether.common.gameplay.enable_startup_loot": "Ketika pemain masuk ke dalam dunia Aether, Buku Sejarah dan Payung Terjun Emas akan diberikan sebagai peralatan permulaan",
-  "gui.aether.queen.dialog.peaceful": "Mohon maaf, patik takkan melawan dengan orang yang lembap.",
+  "gui.aether.queen.dialog.peaceful": "Mohon maaf, beta takkan melawan dengan orang yang lembap.",
   "gui.aether.queen.dialog.playerdeath": "Dijangka daripada seorang manusia.",
   "gui.aether.queen.dialog.ready": "Kalau engkau hendak bertanding terhadap beta, memukul beta bila masa.",
+  "lore.item.aether.golden_pendant": "Sebuah aksesori astetik diperbuat daripada emas.",
+  "lore.item.aether.golden_ring": "Sebuah aksesori astetik diperbuat daripada emas.",
   "menu.aether.freezer": "Peti Beku",
   "subtitles.aether.block.freezer.crackle": "Peti Beku berderak"
 }
