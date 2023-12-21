@@ -1,4 +1,4 @@
-// 1.20.1	2023-09-16T18:01:52.2723583	Tags for minecraft:item mod id aether
+// 1.20.1	2023-12-21T08:15:08.739497	Tags for minecraft:item mod id aether
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/items/accepted_music_discs.json
 b1ab124000a7da5fa5e186c46b51223391f132d9 data/aether/tags/items/accessories.json
 99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/aether/tags/items/accessories_capes.json
@@ -111,7 +111,7 @@ c158a789ed632738e5986dfbd21ff2bba9511d9b data/minecraft/tags/items/leaves.json
 c365c56c9363907f546b5d4778b8608912fa27c9 data/minecraft/tags/items/logs_that_burn.json
 d967eaa6502ab50a7217048ce538406c94a66d78 data/minecraft/tags/items/music_discs.json
 33397c0e49ca28fad45a2f4fc1a5ceb3a01edfbd data/minecraft/tags/items/pickaxes.json
-6bf206af289bcb7f5222a63d5d2cac78dad17bc5 data/minecraft/tags/items/piglin_loved.json
+27f7b6d6102ecf3b0fafa98ae805897f6bfc66ca data/minecraft/tags/items/piglin_loved.json
 6ef8dd4fc2ca5da0387fa62e3cd710a53a035b3d data/minecraft/tags/items/saplings.json
 031761cc00cfae6e84a03afe0f83c9288ddcf76b data/minecraft/tags/items/shovels.json
 ef0249e5296febb809f365800a45d4fb24f13322 data/minecraft/tags/items/signs.json
