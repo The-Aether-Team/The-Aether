@@ -376,6 +376,7 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherBlocks.WHITE_FLOWER.get().asItem());
         this.tag(ItemTags.BEDS).add(AetherBlocks.SKYROOT_BED.get().asItem());
         this.tag(ItemTags.PIGLIN_LOVED).add(
+                AetherItems.VICTORY_MEDAL.get(),
                 AetherItems.GOLDEN_RING.get(),
                 AetherItems.GOLDEN_PENDANT.get(),
                 AetherItems.GOLDEN_GLOVES.get());
