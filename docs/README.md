@@ -33,7 +33,7 @@ If you're interested in sponsoring the Aether project or The Aether Team, please
 [![CurseForge Version](http://cf.way2muchnoise.eu/versions/255308_latest.svg)](https://www.curseforge.com/minecraft/mc-mods/aether)
 [![CircleCI](https://circleci.com/gh/The-Aether-Team/The-Aether/tree/1.19.4-develop.svg?style=shield)](https://app.circleci.com/pipelines/github/The-Aether-Team/The-Aether?branch=1.19.4-develop)
 ### Release builds
-The Aether has relatively stable beta builds available for release for 1.19.2, 1.19.4, and 1.20.1 on [Modrinth](https://modrinth.com/mod/aether) and [CurseForge](https://www.curseforge.com/minecraft/mc-mods/aether). A full 1.0.0 release will be coming soon.
+The Aether has stable release builds available for 1.19.2, 1.19.4, and 1.20.1 on [Modrinth](https://modrinth.com/mod/aether) and [CurseForge](https://www.curseforge.com/minecraft/mc-mods/aether).
 
 ### Bleeding edge builds
 If you’re feeling a bit more adventurous or wish to help test the in-development versions, we provide **bleeding edge builds** which are produced on [CircleCI](https://app.circleci.com/pipelines/github/The-Aether-Team/The-Aether). These builds are created for every new commit and contain the latest available code. We do not recommend users treat these builds as releases, as they are unfinished and may contain serious issues. If you wish to download these builds, check out [this guide](https://github.com/The-Aether-Team/The-Aether/wiki/CircleCI-Guide).
