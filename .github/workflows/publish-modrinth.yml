@@ -20,6 +20,5 @@ jobs:
         MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
       run: |
         if [ "${{ github.event.sender.login }}" = "OscarPayn" ] || [ "${{ github.event.sender.login }}" = "bconlon1" ]; then
-          chmod +x ./gradlew
-          ./gradlew modrinth
+          gradle modrinth
         fi

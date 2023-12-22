@@ -20,6 +20,5 @@ jobs:
         CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
       run: |
         if [ "${{ github.event.sender.login }}" = "OscarPayn" ] || [ "${{ github.event.sender.login }}" = "bconlon1" ]; then
-          chmod +x ./gradlew
-          ./gradlew curseforge
+          gradle curseforge
         fi
