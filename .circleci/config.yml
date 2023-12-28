@@ -35,6 +35,14 @@ commands:
           path: ~/project/build/libs
 
 workflows:
+  start:
+    jobs:
+      - path-filtering/filter:
+          name: filter
+          mapping: |
+            src/.* allow-deploy-and-discord-publish false
+          base-revision: << pipeline.git.branch >>
+          config-path: .circleci/continue_config.yml
   publish:
     jobs:
       - publish:
