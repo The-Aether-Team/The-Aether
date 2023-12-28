@@ -172,7 +172,7 @@ public class DimensionHooks {
         if (level instanceof ServerLevel serverLevel) {
             if (!AetherConfig.SERVER.disable_falling_to_overworld.get()) {
                 if (level.dimension() == LevelUtil.destinationDimension()) {
-                    for (Entity entity : serverLevel.getEntities(EntityTypeTest.forClass(Entity.class), (entity) -> level.getBiome(entity.blockPosition()).is(AetherTags.Biomes.FALL_TO_OVERWORLD) && entity.getY() <= serverLevel.getMinBuildHeight() && !entity.isPassenger())) {
+                    for (Entity entity : serverLevel.getEntities(EntityTypeTest.forClass(Entity.class), (entity) -> entity.getY() <= serverLevel.getMinBuildHeight() && !entity.isPassenger() && level.getBiome(entity.blockPosition()).is(AetherTags.Biomes.FALL_TO_OVERWORLD))) {
                         if (entity instanceof Player || entity.isVehicle() || (entity instanceof Saddleable) && ((Saddleable) entity).isSaddled()) { // Checks if an entity is a player or a vehicle of a player.
                             entityFell(entity);
                         } else if (entity instanceof ItemEntity itemEntity) {
