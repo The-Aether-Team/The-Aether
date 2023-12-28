@@ -9,7 +9,6 @@ import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.world.item.DyeableLeatherItem;
-import net.minecraft.world.level.ColorResolver;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
@@ -25,14 +24,8 @@ import java.util.Map;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherColorResolvers {
-    private static final ColorResolver AETHER_GRASS = (biome, x, z) -> 0xB1FFCB;
-    private static final ColorResolver ENCHANTED_GRASS = (biome, x, z) -> 0xFCEA64;
-
-    @SubscribeEvent
-    static void registerColorResolver(RegisterColorHandlersEvent.ColorResolvers event) {
-        event.register(AETHER_GRASS);
-        event.register(ENCHANTED_GRASS);
-    }
+    private static final int AETHER_GRASS_COLOR = 0xB1FFCB;
+    private static final int ENCHANTED_GRASS_COLOR = 0xFCEA64;
 
     @SubscribeEvent
     static void registerBlockColor(RegisterColorHandlersEvent.Block event) {
@@ -47,10 +40,11 @@ public class AetherColorResolvers {
             event.register(((state, level, pos, tintIndex) -> {
                 if (level != null && pos != null) {
                     BlockPos newPos = state.hasProperty(DoublePlantBlock.HALF) ? (state.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.UPPER ? pos.below() : pos) : pos;
-                    if (level.getBlockState(newPos.below()).is(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get())) {
-                        return level.getBlockTint(newPos, ENCHANTED_GRASS);
-                    } else if (level.getBlockState(newPos.below()).is(AetherBlocks.AETHER_GRASS_BLOCK.get())) {
-                        return level.getBlockTint(newPos, AETHER_GRASS);
+                    BlockPos baseBlock = newPos.below();
+                    if (level.getBlockState(baseBlock).is(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get())) {
+                        return ENCHANTED_GRASS_COLOR;
+                    } else if (level.getBlockState(baseBlock).is(AetherBlocks.AETHER_GRASS_BLOCK.get())) {
+                        return AETHER_GRASS_COLOR;
                     }
                 }
                 return entry.getValue().getColor(state, level, pos, tintIndex);
