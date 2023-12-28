@@ -79,6 +79,9 @@ kodadacod
 MehVahdJukaar
 - Updated the support for extinguishing Copper Lanterns.
 
+muzikbike
+- Contribution of the reference JSON for an improved Aercloud block model.
+
 saintselect
 - Integration for JEI.
 - Converting entity audio files from stereo to mono.
