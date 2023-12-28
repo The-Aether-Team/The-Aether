@@ -35,6 +35,10 @@ darksonic300
 - Implementation of the is_cold damage type tag.
 - Changing aetherSurfaceRules() method to be public.
 
+embeddedt
+- Fixes to make entity dimension falling checks more performant.
+- Fixes to make plant coloring more performant.
+
 FlashFyreMods
 - Implementation of more beta-accurate terrain generation for the Aether dimension.
 
