@@ -17,6 +17,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -28,8 +30,7 @@ public class PigSlayerItem extends SwordItem {
 	}
 
 	/**
-	 * Deals 20 hearts of damage to the target if they're a Pig-type entity and if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.<br><br>
-	 * Flame particles are also spawned around the target when hit.
+	 * Spawns flame particles around the target when hit and alerts Zombified Piglins.
 	 * @param stack The {@link ItemStack} used to hurt the target
 	 * @param target The hurt {@link LivingEntity}.
 	 * @param attacker The attacking {@link LivingEntity}.
@@ -46,8 +47,6 @@ public class PigSlayerItem extends SwordItem {
 						zombifiedPiglinAccessor.callAlertOthers();
 					}
 				}
-				DamageSource damageSource = AetherDamageTypes.entityDamageSource(attacker.level(), AetherDamageTypes.ARMOR_PIERCING_ATTACK, attacker);
-				target.hurt(damageSource, 26); // This doesn't deal 26 hearts of damage, it deals 20.
 				if (target.level() instanceof ServerLevel level) {
 					for (int i = 0; i < 20; i++) {
 						double d0 = level.getRandom().nextGaussian() * 0.02;
@@ -66,14 +65,15 @@ public class PigSlayerItem extends SwordItem {
 	}
 
 	/**
-	 * Sets the normal weapon damage from the Pig Slayer to 0 if a Pig-type entity is being attacked. This allows for more consistent damage handling in {@link PigSlayerItem#hurtEnemy(ItemStack, LivingEntity, LivingEntity)}.
+	 *  Deals 20-22 hearts of damage to the target if they're a Pig-type entity and if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.<br><br>
 	 */
 	@SubscribeEvent
-	public static void onPigSlayerHurt(LivingHurtEvent event) {
-		LivingEntity livingEntity = event.getEntity();
+	public static void onLivingDamage(LivingDamageEvent event) {
+		LivingEntity target = event.getEntity();
 		DamageSource damageSource = event.getSource();
-		if (canPerformAbility(livingEntity, damageSource) && !damageSource.is(DamageTypeTags.BYPASSES_ARMOR)) {
-			event.setAmount(0);
+		float damage = event.getAmount();
+		if (canPerformAbility(target, damageSource)) {
+			event.setAmount(damage + 16.0F);
 		}
 	}
 
