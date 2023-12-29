@@ -378,7 +378,13 @@ public class Moa extends MountableAnimal implements WingedBird {
 				itemStack.shrink(1);
 			}
 			this.setAmountFed(this.getAmountFed() + 1);
-			if (this.getAmountFed() >= 3) {
+			switch(this.getAmountFed()) {
+				case 0 -> this.setAge(-24000);
+				case 1 -> this.setAge(-16000);
+				case 2 -> this.setAge(-8000);
+				case 3 -> this.setBaby(false);
+			}
+			if (this.getAmountFed() > 3 && !this.isBaby()) {
 				this.setBaby(false);
 			}
 			this.setHungry(false);
@@ -836,7 +842,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 	 */
     @Override
     public void setAge(int age) {
-		if (age == -24000 || (age == 0 && this.getAmountFed() >= 3)) {
+		if (age % -8000 == 0 || (age == 0 && this.getAmountFed() >= 3)) {
             super.setAge(age);
         }
     }
