@@ -987,6 +987,8 @@
   "pack.aether.mod.description": "Zdroje Aetheru",
   "pack.aether.ruined_portal.description": "Generate ruined glowstone portals",
   "pack.aether.ruined_portal.title": "Aether Ruined Portals",
+  "pack.aether.tips.description": "Presúva pro tipy do používateľského rozhrania tipov",
+  "pack.aether.tips.title": "Aether tipy",
   "subtitles.aether.block.aether_portal.ambient": "Portál do Aetheru hučí",
   "subtitles.aether.block.aether_portal.trigger": "Hluk z portálu do Aetheru sa zosilňuje",
   "subtitles.aether.block.altar.crackle": "Oltár praská",
