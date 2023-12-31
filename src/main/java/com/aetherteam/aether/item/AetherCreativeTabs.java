@@ -21,7 +21,7 @@ import net.minecraft.world.item.ItemStack;
 //
 //@Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherCreativeTabs {
-    public static final CreativeModeTab AETHER_BLOCKS = new CreativeModeTab("aether.blocks") {
+    public static final CreativeModeTab AETHER_BLOCKS = new CreativeModeTab("aether.building_blocks") {
         @Override
         public ItemStack makeIcon() {
             return new ItemStack(AetherBlocks.AETHER_GRASS_BLOCK.get());
