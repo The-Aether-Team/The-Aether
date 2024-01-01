@@ -1,3 +1,7 @@
 {
-  "parent": "aether:block/cold_aercloud"
+  "parent": "minecraft:block/cube_all",
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "all": "aether:block/natural/cold_aercloud"
+  }
 }

@@ -25,9 +25,9 @@ public class AetherBlockStateData extends AetherBlockStateProvider {
         this.farmland(AetherBlocks.AETHER_FARMLAND.get(), AetherBlocks.AETHER_DIRT.get());
         this.dirtPath(AetherBlocks.AETHER_DIRT_PATH.get(), AetherBlocks.AETHER_DIRT.get());
 
-        this.translucentBlock(AetherBlocks.COLD_AERCLOUD.get(), "natural/");
-        this.translucentBlock(AetherBlocks.BLUE_AERCLOUD.get(), "natural/");
-        this.translucentBlock(AetherBlocks.GOLDEN_AERCLOUD.get(), "natural/");
+        this.aercloudAll(AetherBlocks.COLD_AERCLOUD.get(), "natural/");
+        this.aercloudAll(AetherBlocks.BLUE_AERCLOUD.get(), "natural/");
+        this.aercloudAll(AetherBlocks.GOLDEN_AERCLOUD.get(), "natural/");
 
         this.block(AetherBlocks.ICESTONE.get(), "natural/");
         this.block(AetherBlocks.AMBROSIUM_ORE.get(), "natural/");

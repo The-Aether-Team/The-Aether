@@ -20,7 +20,7 @@ public class AetherLevelData extends DerivedLevelData {
     public AetherLevelData(WorldData worldData, ServerLevelData overworldData, long dayTime) {
         super(worldData, overworldData);
         this.wrapped = overworldData;
-        this.gameRules = new WrappedGameRules(worldData.getGameRules(), ImmutableSet.of(GameRules.RULE_WEATHER_CYCLE));
+        this.gameRules = new WrappedGameRules(worldData.getGameRules(), ImmutableSet.of(GameRules.RULE_WEATHER_CYCLE, GameRules.RULE_DOFIRETICK));
         this.dayTime = dayTime;
     }
 

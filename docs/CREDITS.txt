@@ -79,6 +79,9 @@ kodadacod
 MehVahdJukaar
 - Updated the support for extinguishing Copper Lanterns.
 
+muzikbike
+- Contribution of the reference JSON for an improved Aercloud block model.
+
 parasdice
 - Contribution of the beta Lootr Mimic texture.
 
@@ -96,6 +99,9 @@ StonedCoal:
 
 Toranktto
 - Fixes to missing recipe categories breaking servers on 1.19.2.
+
+YvanCywan
+- Made Skyroot Buckets work as fuel.
 
 Zepalesque
 - Fixes to the Slider.
