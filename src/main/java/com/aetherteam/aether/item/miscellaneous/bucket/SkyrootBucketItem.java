@@ -139,6 +139,11 @@ public class SkyrootBucketItem extends BucketItem {
         return null;
     }
 
+    @Override
+    public int getBurnTime(ItemStack itemStack, RecipeType<?> recipeType) {
+        return 200;
+    }
+
     /**
      *[CODE COPY] - {@link BucketItem#canBlockContainFluid(Level, BlockPos, BlockState)}.
      */

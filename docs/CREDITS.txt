@@ -94,6 +94,9 @@ StonedCoal:
 Toranktto
 - Fixes to missing recipe categories breaking servers on 1.19.2.
 
+YvanCywan
+- Made Skyroot Buckets work as fuel.
+
 Zepalesque
 - Fixes to the Slider.
 - Changes to EggLayEvent to use ItemStack.
