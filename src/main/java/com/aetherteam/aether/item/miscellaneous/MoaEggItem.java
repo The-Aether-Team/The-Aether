@@ -3,6 +3,7 @@ package com.aetherteam.aether.item.miscellaneous;
 import com.aetherteam.aether.api.registers.MoaType;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.passive.Moa;
+import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.mixin.mixins.common.accessor.BaseSpawnerAccessor;
 import com.google.common.collect.Iterables;
 import net.minecraft.core.BlockPos;
@@ -193,7 +194,7 @@ public class MoaEggItem extends Item {
                 return BY_ID.get(holder);
             }
         }
-        return null;
+        return (MoaEggItem) AetherItems.BLUE_MOA_EGG.get();
     }
 
     /**
