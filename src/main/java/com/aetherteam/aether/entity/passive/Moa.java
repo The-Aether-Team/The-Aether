@@ -837,7 +837,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	/**
-	 * Only allow modifying the Moa's age if its being set as a baby (-24000) or as grown up (0).
+	 * Only allow modifying the Moa's age if its being set to one of the manually specified baby values (% -8000) or as grown up (0).
 	 * @param age The {@link Integer} value for the age.
 	 */
     @Override
