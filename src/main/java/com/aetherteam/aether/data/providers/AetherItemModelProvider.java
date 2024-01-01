@@ -61,6 +61,10 @@ public abstract class AetherItemModelProvider extends NitrogenItemModelProvider 
                 .texture("layer1", this.modLoc("item/" + location + this.itemName(item) + "_inside"));
     }
 
+    public void aercloudItem(Block block) {
+        this.withExistingParent(this.blockName(block), this.mcLoc("block/cube_all")).texture("all", this.texture(this.blockName(block), "natural/")).renderType(new ResourceLocation("translucent"));
+    }
+
     public void itemLockedDungeonBlock(Block block, Block baseBlock) {
         this.itemOverlayDungeonBlock(block, baseBlock, "lock");
     }

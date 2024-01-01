@@ -1,7 +1,189 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/block",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "cullface": "up",
+          "texture": "#up_inside",
+          "uv": [
+            0.0,
+            16.0,
+            16.0,
+            0.0
+          ]
+        },
+        "up": {
+          "cullface": "up",
+          "texture": "#up_outside"
+        }
+      },
+      "from": [
+        0,
+        15.998,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#down_outside"
+        },
+        "up": {
+          "cullface": "down",
+          "texture": "#down_inside",
+          "uv": [
+            0.0,
+            16.0,
+            16.0,
+            0.0
+          ]
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        0.002,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "north": {
+          "cullface": "north",
+          "texture": "#north_outside"
+        },
+        "south": {
+          "cullface": "north",
+          "texture": "#north_inside",
+          "uv": [
+            16.0,
+            0.0,
+            0.0,
+            16.0
+          ]
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        0.002
+      ]
+    },
+    {
+      "faces": {
+        "north": {
+          "cullface": "south",
+          "texture": "#south_inside",
+          "uv": [
+            16.0,
+            0.0,
+            0.0,
+            16.0
+          ]
+        },
+        "south": {
+          "cullface": "south",
+          "texture": "#south_outside"
+        }
+      },
+      "from": [
+        0,
+        0,
+        15.998
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "east": {
+          "cullface": "west",
+          "texture": "#west_inside",
+          "uv": [
+            16.0,
+            0.0,
+            0.0,
+            16.0
+          ]
+        },
+        "west": {
+          "cullface": "west",
+          "texture": "#west_outside"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        0.002,
+        16,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "east": {
+          "cullface": "east",
+          "texture": "#east_outside"
+        },
+        "west": {
+          "cullface": "east",
+          "texture": "#east_inside",
+          "uv": [
+            16.0,
+            0.0,
+            0.0,
+            16.0
+          ]
+        }
+      },
+      "from": [
+        15.998,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    }
+  ],
   "render_type": "minecraft:translucent",
   "textures": {
-    "all": "aether:block/natural/golden_aercloud"
+    "down_inside": "aether:block/natural/golden_aercloud",
+    "down_outside": "aether:block/natural/golden_aercloud",
+    "east_inside": "aether:block/natural/golden_aercloud",
+    "east_outside": "aether:block/natural/golden_aercloud",
+    "north_inside": "aether:block/natural/golden_aercloud",
+    "north_outside": "aether:block/natural/golden_aercloud",
+    "particle": "aether:block/natural/golden_aercloud",
+    "south_inside": "aether:block/natural/golden_aercloud",
+    "south_outside": "aether:block/natural/golden_aercloud",
+    "up_inside": "aether:block/natural/golden_aercloud",
+    "up_outside": "aether:block/natural/golden_aercloud",
+    "west_inside": "aether:block/natural/golden_aercloud",
+    "west_outside": "aether:block/natural/golden_aercloud"
   }
 }
