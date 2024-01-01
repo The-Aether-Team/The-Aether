@@ -1,4 +1,4 @@
-package com.aetherteam.aether;
+package com.aetherteam.aether.data;
 
 import com.aetherteam.aether.data.generators.*;
 import com.aetherteam.aether.data.generators.tags.*;
