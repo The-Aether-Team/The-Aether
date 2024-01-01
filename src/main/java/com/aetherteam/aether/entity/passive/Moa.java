@@ -378,7 +378,13 @@ public class Moa extends MountableAnimal implements WingedBird {
 				itemStack.shrink(1);
 			}
 			this.setAmountFed(this.getAmountFed() + 1);
-			if (this.getAmountFed() >= 3) {
+			switch(this.getAmountFed()) {
+				case 0 -> this.setAge(-24000);
+				case 1 -> this.setAge(-16000);
+				case 2 -> this.setAge(-8000);
+				case 3 -> this.setBaby(false);
+			}
+			if (this.getAmountFed() > 3 && !this.isBaby()) {
 				this.setBaby(false);
 			}
 			this.setHungry(false);
@@ -836,15 +842,15 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	/**
-	 * Only allow modifying the Moa's age if its being set as a baby (-24000) or as grown up (0).
+	 * Only allow modifying the Moa's age if its being set to one of the manually specified baby values (% -8000) or as grown up (0).
 	 * @param age The {@link Integer} value for the age.
 	 */
-    @Override
-    public void setAge(int age) {
-		if (age == -24000 || (age == 0 && this.getAmountFed() >= 3)) {
-            super.setAge(age);
-        }
-    }
+	@Override
+	public void setAge(int age) {
+		if (age % -8000 == 0 || (age == 0 && this.getAmountFed() >= 3)) {
+			super.setAge(age);
+		}
+	}
 
 	/**
 	 * @return A Moa Egg {@link ItemStack} corresponding to the Moa's {@link MoaType}.
