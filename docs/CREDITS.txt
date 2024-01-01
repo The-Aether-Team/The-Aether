@@ -79,6 +79,9 @@ kodadacod
 MehVahdJukaar
 - Updated the support for extinguishing Copper Lanterns.
 
+muzikbike
+- Contribution of the reference JSON for an improved Aercloud block model.
+
 parasdice
 - Contribution of the beta Lootr Mimic texture.
 
