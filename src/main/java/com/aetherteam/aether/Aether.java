@@ -83,9 +83,9 @@ public class Aether {
     public Aether() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+//        modEventBus.addListener(AetherData::dataSetup);
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::curiosSetup);
-//        modEventBus.addListener(this::dataSetup);
         modEventBus.addListener(this::packSetup);
 
         DeferredRegister<?>[] registers = {
@@ -176,42 +176,6 @@ public class Aether {
             InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("charm").size(2).build());
         }
     }
-
-//    public void dataSetup(GatherDataEvent event) {
-//        DataGenerator generator = event.getGenerator();
-//        ExistingFileHelper fileHelper = event.getExistingFileHelper();
-//        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
-//        PackOutput packOutput = generator.getPackOutput();
-//
-//        Reflection.initialize(AetherMobCategory.class);
-//
-//        // Client Data
-//        generator.addProvider(event.includeClient(), new AetherBlockStateData(packOutput, fileHelper));
-//        generator.addProvider(event.includeClient(), new AetherItemModelData(packOutput, fileHelper));
-//        generator.addProvider(event.includeClient(), new AetherLanguageData(packOutput));
-//        generator.addProvider(event.includeClient(), new AetherSoundData(packOutput, fileHelper));
-//
-//        // Server Data
-//        generator.addProvider(event.includeServer(), new AetherRegistrySets(packOutput, lookupProvider));
-//        generator.addProvider(event.includeServer(), new AetherRecipeData(packOutput));
-//        generator.addProvider(event.includeServer(), AetherLootTableData.create(packOutput));
-//        generator.addProvider(event.includeServer(), new AetherLootModifierData(packOutput));
-//        generator.addProvider(event.includeServer(), new AetherAdvancementData(packOutput, lookupProvider, fileHelper));
-//        AetherBlockTagData blockTags = new AetherBlockTagData(packOutput, lookupProvider, fileHelper);
-//        generator.addProvider(event.includeServer(), blockTags);
-//        generator.addProvider(event.includeServer(), new AetherItemTagData(packOutput, lookupProvider, blockTags.contentsGetter(), fileHelper));
-//        generator.addProvider(event.includeServer(), new AetherEntityTagData(packOutput, lookupProvider, fileHelper));
-//        generator.addProvider(event.includeServer(), new AetherFluidTagData(packOutput, lookupProvider, fileHelper));
-//        generator.addProvider(event.includeServer(), new AetherBiomeTagData(packOutput, lookupProvider, fileHelper));
-//        generator.addProvider(event.includeServer(), new AetherStructureTagData(packOutput, lookupProvider, fileHelper));
-//        generator.addProvider(event.includeServer(), new AetherDamageTypeTagData(packOutput, lookupProvider, fileHelper));
-//
-//        // pack.mcmeta
-//        PackMetadataGenerator packMeta = new PackMetadataGenerator(packOutput);
-//        Map<PackType, Integer> packTypes = Map.of(PackType.SERVER_DATA, SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
-//        packMeta.add(PackMetadataSection.TYPE, new PackMetadataSection(Component.translatable("pack.aether.mod.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES), packTypes));
-//        generator.addProvider(true, packMeta);
-//    }
 
     public void packSetup(AddPackFindersEvent event) {
         // Resource Packs
