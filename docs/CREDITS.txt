@@ -79,6 +79,9 @@ kodadacod
 MehVahdJukaar
 - Updated the support for extinguishing Copper Lanterns.
 
+parasdice
+- Contribution of the beta Lootr Mimic texture.
+
 saintselect
 - Integration for JEI.
 - Converting entity audio files from stereo to mono.
