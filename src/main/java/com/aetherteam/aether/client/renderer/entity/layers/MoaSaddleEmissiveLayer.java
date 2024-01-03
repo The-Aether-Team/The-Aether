@@ -42,7 +42,7 @@ public class MoaSaddleEmissiveLayer extends RenderLayer<Moa, MoaModel> {
      */
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Moa moa, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (moa.isSaddled()) {
+        if (moa.isSaddled() && !moa.isInvisible()) {
             ResourceLocation moaSkin = this.getMoaSkinLocation(moa);
             if (moaSkin != null) {
                 RenderType renderType = RenderType.eyes(moaSkin);
