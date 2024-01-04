@@ -79,6 +79,9 @@ kodadacod
 MehVahdJukaar
 - Updated the support for extinguishing Copper Lanterns.
 
+Mike-U5
+- Fixes to some Curios default slot icons being incorrect.
+
 muzikbike
 - Contribution of the reference JSON for an improved Aercloud block model.
 
