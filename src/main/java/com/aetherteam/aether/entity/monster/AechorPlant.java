@@ -196,6 +196,14 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     protected void jumpFromGround() { }
 
     /**
+     * Disallows Aechor Plants from being leashed.
+     */
+    @Override
+    public boolean canBeLeashed(Player player) {
+        return false;
+    }
+
+    /**
      * Spawns particles when the Aechor Plant's hurt animation is complete.
      * @param source The {@link DamageSource}.
      * @param amount The {@link Float} amount of damage.

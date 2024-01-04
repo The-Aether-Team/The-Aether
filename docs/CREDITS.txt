@@ -100,6 +100,9 @@ StonedCoal:
 Toranktto
 - Fixes to missing recipe categories breaking servers on 1.19.2.
 
+Trico-Everfire
+- Fixes to Aechor Plants being able to be leashed.
+
 YvanCywan
 - Made Skyroot Buckets work as fuel.
 
