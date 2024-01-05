@@ -37,12 +37,14 @@ public class QuadrupedWingsLayer<T extends WingedAnimal, M extends QuadrupedMode
      */
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (entity.isBaby()) {
-            poseStack.scale(0.5F, 0.5F, 0.5F);
-            poseStack.translate(0.0F, 1.5F, 0.0F);
+        if (!entity.isInvisible()) {
+            if (entity.isBaby()) {
+                poseStack.scale(0.5F, 0.5F, 0.5F);
+                poseStack.translate(0.0F, 1.5F, 0.0F);
+            }
+            this.wings.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+            VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutoutNoCull(this.resourceLocation));
+            this.wings.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         }
-        this.wings.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-        VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutoutNoCull(this.resourceLocation));
-        this.wings.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
     }
 }
