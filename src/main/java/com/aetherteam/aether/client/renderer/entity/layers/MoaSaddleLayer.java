@@ -44,7 +44,7 @@ public class MoaSaddleLayer extends RenderLayer<Moa, MoaModel> {
 	 */
 	@Override
 	public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Moa moa, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-		if (moa.isSaddled()) {
+		if (moa.isSaddled() && !moa.isInvisible()) {
 			ResourceLocation texture = moa.getMoaType() != null ? moa.getMoaType().getSaddleTexture() : AetherMoaTypes.BLUE.get().getSaddleTexture();
 			ResourceLocation moaSkin = this.getMoaSkinLocation(moa);
 			if (moaSkin != null) {

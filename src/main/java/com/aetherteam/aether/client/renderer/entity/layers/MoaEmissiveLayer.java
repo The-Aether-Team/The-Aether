@@ -40,7 +40,7 @@ public class MoaEmissiveLayer extends RenderLayer<Moa, MoaModel> {
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Moa moa, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         ResourceLocation moaSkin = this.getMoaSkinLocation(moa);
-        if (moaSkin != null) {
+        if (moaSkin != null && !moa.isInvisible()) {
             RenderType renderType = RenderType.eyes(moaSkin);
             VertexConsumer vertexConsumer = buffer.getBuffer(renderType);
             this.getParentModel().renderToBuffer(poseStack, vertexConsumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
