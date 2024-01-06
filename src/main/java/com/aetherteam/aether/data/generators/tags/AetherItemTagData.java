@@ -108,6 +108,7 @@ public class AetherItemTagData extends ItemTagsProvider {
                 Items.MUSIC_DISC_WAIT,
                 Items.MUSIC_DISC_WARD,
                 Items.MUSIC_DISC_OTHERSIDE);
+        this.tag(ItemTags.BOOKSHELF_BOOKS).add(AetherItems.BOOK_OF_LORE.get());
         this.tag(AetherTags.Items.SAVE_NBT_IN_RECIPE).add(
                 AetherItems.ENCHANTED_DART_SHOOTER.get(),
                 AetherItems.ICE_RING.get(),

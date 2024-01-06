@@ -1,4 +1,4 @@
-// 1.19.4	2023-12-21T08:51:25.0649133	Tags for minecraft:item mod id aether
+// 1.19.4	2024-01-05T19:58:24.7715792	Tags for minecraft:item mod id aether
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/items/accepted_music_discs.json
 b1ab124000a7da5fa5e186c46b51223391f132d9 data/aether/tags/items/accessories.json
 99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/aether/tags/items/accessories_capes.json
@@ -102,6 +102,7 @@ addb62cbd712e3f83c6bbadcbfdf309dc0ee3cc3 data/forge/tags/items/tools.json
 62f7c5ff85d3739e0a50b0a194fb5f1dc443c6a9 data/minecraft/tags/items/beacon_payment_items.json
 a838c2bd53ede04f2a9ee61012c93d721871dce4 data/minecraft/tags/items/beds.json
 0c1961b1c5f09cab301732e8774014cd3619a762 data/minecraft/tags/items/boats.json
+5949ab30b34afb31b9057402c2be0a0731422d02 data/minecraft/tags/items/bookshelf_books.json
 041c4417a18df60eb724a8acde8db524fa8bfba5 data/minecraft/tags/items/chest_boats.json
 33397c0e49ca28fad45a2f4fc1a5ceb3a01edfbd data/minecraft/tags/items/cluster_max_harvestables.json
 252219f81f3abde4bdebe512332bb483fefab9da data/minecraft/tags/items/fox_food.json
