@@ -52,7 +52,7 @@ public class PlayerHaloLayer<T extends Player, M extends PlayerModel<T>> extends
      */
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (entity instanceof AbstractClientPlayer abstractClientPlayer) {
+        if (entity instanceof AbstractClientPlayer abstractClientPlayer && !abstractClientPlayer.isInvisible()) {
             User user = UserData.Client.getClientUser();
             UUID playerUUID = abstractClientPlayer.getUUID();
             Map<UUID, Halo> halos = ClientHaloPerkData.INSTANCE.getClientPerkData();
