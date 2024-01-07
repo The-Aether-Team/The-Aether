@@ -1,6 +1,8 @@
 package com.aetherteam.aether.client;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.cumulus.client.CumulusClient;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
@@ -12,6 +14,8 @@ import net.minecraft.world.level.storage.LevelStorageSource;
 import net.minecraft.world.level.storage.LevelSummary;
 
 import javax.annotation.Nullable;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -54,14 +58,18 @@ public class WorldDisplayHelper {
     public static void loadLevel() {
         Minecraft minecraft = Minecraft.getInstance();
         LevelSummary summary = getLevelSummary();
-        if (summary != null && minecraft.getLevelSource().levelExists(summary.getLevelId())) {
-            setActive();
-            minecraft.forceSetScreen(new GenericDirtMessageScreen(Component.translatable("selectWorld.data_read")));
-            minecraft.createWorldOpenFlows().loadLevel(minecraft.screen, summary.getLevelId());
-        } else {
-            resetActive();
-            resetConfig();
+        try {
+            if (summary != null && minecraft.getLevelSource().levelExists(summary.getLevelId()) && Files.exists(minecraft.getLevelSource().createAccess(summary.getLevelId()).getDimensionPath(AetherDimensions.AETHER_LEVEL))) {
+                setActive();
+                minecraft.forceSetScreen(new GenericDirtMessageScreen(Component.translatable("selectWorld.data_read")));
+                minecraft.createWorldOpenFlows().loadLevel(minecraft.screen, summary.getLevelId());
+                return;
+            }
+        } catch (IOException e) {
+            Aether.LOGGER.warn("Failed to load world preview with exception: " + e);
         }
+        resetActive();
+        resetConfig();
     }
 
     /**
@@ -72,9 +80,13 @@ public class WorldDisplayHelper {
     public static void enterLoadedLevel() {
         Minecraft minecraft = Minecraft.getInstance();
         LevelSummary summary = getLevelSummary();
-        if (summary != null && minecraft.getLevelSource().levelExists(summary.getLevelId()) && minecraft.getSingleplayerServer() != null) {
-            resetStates();
-            minecraft.forceSetScreen(null);
+        try {
+            if (summary != null && minecraft.getLevelSource().levelExists(summary.getLevelId()) && Files.exists(minecraft.getLevelSource().createAccess(summary.getLevelId()).getDimensionPath(AetherDimensions.AETHER_LEVEL)) && minecraft.getSingleplayerServer() != null) {
+                resetStates();
+                minecraft.forceSetScreen(null);
+            }
+        } catch (IOException e) {
+            Aether.LOGGER.warn("Failed to enter world preview with exception: " + e);
         }
     }
 
