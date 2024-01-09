@@ -276,6 +276,7 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherBlocks.ZANITE_ORE.get().asItem(),
                 AetherBlocks.GRAVITITE_ORE.get().asItem());
         this.tag(Tags.Items.RODS_WOODEN).add(AetherItems.SKYROOT_STICK.get());
+        this.tag(Tags.Items.SLIMEBALLS).addTag(AetherTags.Items.SWET_BALLS);
         this.tag(Tags.Items.STORAGE_BLOCKS).add(
                 AetherBlocks.AMBROSIUM_BLOCK.get().asItem(),
                 AetherBlocks.ZANITE_BLOCK.get().asItem());
