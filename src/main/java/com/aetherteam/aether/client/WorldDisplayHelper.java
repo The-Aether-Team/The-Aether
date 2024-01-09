@@ -1,6 +1,7 @@
 package com.aetherteam.aether.client;
 
 import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.cumulus.client.CumulusClient;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
@@ -12,6 +13,8 @@ import net.minecraft.world.level.storage.LevelStorageSource;
 import net.minecraft.world.level.storage.LevelSummary;
 
 import javax.annotation.Nullable;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -148,7 +151,11 @@ public class WorldDisplayHelper {
                 for (int i = summaryList.size() - 1; i >= 0; i--) { // Looks for the most recent LevelSummary that isn't locked or disabled.
                     LevelSummary s = summaryList.get(i);
                     if (!s.isLocked() && !s.isDisabled()) {
-                        summary = s;
+                        LevelStorageSource.LevelStorageAccess access = source.createAccess(s.getLevelId());
+                        if (Files.exists(access.getDimensionPath(AetherDimensions.AETHER_LEVEL))) {
+                            summary = s;
+                        }
+                        access.close();
                     }
                 }
 
@@ -156,7 +163,7 @@ public class WorldDisplayHelper {
                     loadedSummary = summary;
                 }
             }
-        } catch (ExecutionException | InterruptedException | UnsupportedOperationException e) { // If a LevelSummary can't be found, then reset the helper back to the default states.
+        } catch (ExecutionException | InterruptedException | UnsupportedOperationException | IOException e) { // If a LevelSummary can't be found, then reset the helper back to the default states.
             resetActive();
             resetConfig();
             e.printStackTrace();
