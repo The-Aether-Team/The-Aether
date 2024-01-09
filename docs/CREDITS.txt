@@ -105,6 +105,7 @@ Toranktto
 
 Trico-Everfire
 - Fixes to Aechor Plants being able to be leashed.
+- Fixes to unintentional jumping on Blue Aerclouds.
 
 YvanCywan
 - Made Skyroot Buckets work as fuel.
