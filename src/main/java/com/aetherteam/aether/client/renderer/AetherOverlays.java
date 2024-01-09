@@ -195,6 +195,7 @@ public class AetherOverlays {
         RenderSystem.enableBlend();
         guiGraphics.setColor(1.0F, 1.0F, 1.0F, alpha);
         guiGraphics.blit(resource, 0, 0, -90, 0.0F, 0.0F, window.getGuiScaledWidth(), window.getGuiScaledHeight(), window.getGuiScaledWidth(), window.getGuiScaledHeight());
+        guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.disableBlend();
         RenderSystem.depthMask(true);
         RenderSystem.enableDepthTest();
