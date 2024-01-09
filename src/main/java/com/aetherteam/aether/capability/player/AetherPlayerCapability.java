@@ -633,7 +633,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 		if (!isWasDeath) {
 			this.setSavedHealth(other.getPlayer().getHealth());
 		} else {
-			this.setSavedHealth(1024.0F); // Max health.
+            if (this.getPlayer().getHealth() == this.getPlayer().getMaxHealth()) {
+                this.setSavedHealth(1024.0F); // Max health.
+            }
 		}
 	}
 
