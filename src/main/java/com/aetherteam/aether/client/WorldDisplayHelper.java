@@ -1,6 +1,5 @@
 package com.aetherteam.aether.client;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.cumulus.client.CumulusClient;
@@ -58,18 +57,14 @@ public class WorldDisplayHelper {
     public static void loadLevel() {
         Minecraft minecraft = Minecraft.getInstance();
         LevelSummary summary = getLevelSummary();
-        try {
-            if (summary != null && minecraft.getLevelSource().levelExists(summary.getLevelId()) && Files.exists(minecraft.getLevelSource().createAccess(summary.getLevelId()).getDimensionPath(AetherDimensions.AETHER_LEVEL))) {
-                setActive();
-                minecraft.forceSetScreen(new GenericDirtMessageScreen(Component.translatable("selectWorld.data_read")));
-                minecraft.createWorldOpenFlows().loadLevel(minecraft.screen, summary.getLevelId());
-                return;
-            }
-        } catch (IOException e) {
-            Aether.LOGGER.warn("Failed to load world preview with exception: " + e);
+        if (summary != null && minecraft.getLevelSource().levelExists(summary.getLevelId())) {
+            setActive();
+            minecraft.forceSetScreen(new GenericDirtMessageScreen(Component.translatable("selectWorld.data_read")));
+            minecraft.createWorldOpenFlows().loadLevel(minecraft.screen, summary.getLevelId());
+        } else {
+            resetActive();
+            resetConfig();
         }
-        resetActive();
-        resetConfig();
     }
 
     /**
@@ -80,13 +75,9 @@ public class WorldDisplayHelper {
     public static void enterLoadedLevel() {
         Minecraft minecraft = Minecraft.getInstance();
         LevelSummary summary = getLevelSummary();
-        try {
-            if (summary != null && minecraft.getLevelSource().levelExists(summary.getLevelId()) && Files.exists(minecraft.getLevelSource().createAccess(summary.getLevelId()).getDimensionPath(AetherDimensions.AETHER_LEVEL)) && minecraft.getSingleplayerServer() != null) {
-                resetStates();
-                minecraft.forceSetScreen(null);
-            }
-        } catch (IOException e) {
-            Aether.LOGGER.warn("Failed to enter world preview with exception: " + e);
+        if (summary != null && minecraft.getLevelSource().levelExists(summary.getLevelId()) && minecraft.getSingleplayerServer() != null) {
+            resetStates();
+            minecraft.forceSetScreen(null);
         }
     }
 
@@ -160,7 +151,11 @@ public class WorldDisplayHelper {
                 for (int i = summaryList.size() - 1; i >= 0; i--) { // Looks for the most recent LevelSummary that isn't locked or disabled.
                     LevelSummary s = summaryList.get(i);
                     if (!s.isLocked() && !s.isDisabled()) {
-                        summary = s;
+                        LevelStorageSource.LevelStorageAccess access = source.createAccess(s.getLevelId());
+                        if (Files.exists(access.getDimensionPath(AetherDimensions.AETHER_LEVEL))) {
+                            summary = s;
+                        }
+                        access.close();
                     }
                 }
 
@@ -168,7 +163,7 @@ public class WorldDisplayHelper {
                     loadedSummary = summary;
                 }
             }
-        } catch (ExecutionException | InterruptedException | UnsupportedOperationException e) { // If a LevelSummary can't be found, then reset the helper back to the default states.
+        } catch (ExecutionException | InterruptedException | UnsupportedOperationException | IOException e) { // If a LevelSummary can't be found, then reset the helper back to the default states.
             resetActive();
             resetConfig();
             e.printStackTrace();
