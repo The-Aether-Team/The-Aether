@@ -39,9 +39,9 @@ public abstract class AbstractBiomeParameterRecipe extends AbstractBlockStateRec
     @Override
     public boolean matches(Level level, BlockPos pos, BlockState state) {
         if (this.biomeKey != null) {
-            return level.getBiome(pos).is(this.biomeKey) && super.matches(level, pos, state);
+            return super.matches(level, pos, state) && level.getBiome(pos).is(this.biomeKey);
         } else if (this.biomeTag != null) {
-            return level.getBiome(pos).is(this.biomeTag) && super.matches(level, pos, state);
+            return super.matches(level, pos, state) && level.getBiome(pos).is(this.biomeTag);
         } else {
             return super.matches(level, pos, state);
         }
