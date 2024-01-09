@@ -48,9 +48,9 @@ public abstract class AbstractPlacementBanRecipe<T, S extends Predicate<T>> impl
     public boolean matches(Level level, BlockPos pos, T object) {
         if (this.bypassBlock.isEmpty() || !this.bypassBlock.test(level.getBlockState(pos))) {
             if (this.biomeKey != null) {
-                return level.getBiome(pos).is(this.biomeKey) && this.getIngredient().test(object);
+                return this.getIngredient().test(object) && level.getBiome(pos).is(this.biomeKey);
             } else if (this.biomeTag != null) {
-                return level.getBiome(pos).is(this.biomeTag) && this.getIngredient().test(object);
+                return this.getIngredient().test(object) && level.getBiome(pos).is(this.biomeTag);
             } else {
                 return this.getIngredient().test(object);
             }
