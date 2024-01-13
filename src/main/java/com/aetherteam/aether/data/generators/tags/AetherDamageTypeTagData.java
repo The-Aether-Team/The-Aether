@@ -29,8 +29,7 @@ public class AetherDamageTypeTagData extends TagsProvider<DamageType> {
         );
         this.tag(DamageTypeTags.DAMAGES_HELMET).add(AetherDamageTypes.FLOATING_BLOCK);
         this.tag(DamageTypeTags.IS_FIRE).add(
-                AetherDamageTypes.INCINERATION,
-                AetherDamageTypes.FIRE_CRYSTAL
+                AetherDamageTypes.INCINERATION
         );
         this.tag(DamageTypeTags.IS_PROJECTILE).add(
                 AetherDamageTypes.CLOUD_CRYSTAL,

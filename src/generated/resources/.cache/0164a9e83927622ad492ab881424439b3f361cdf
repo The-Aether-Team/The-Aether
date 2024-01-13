@@ -1,6 +1,6 @@
-// 1.20.1	2023-09-08T18:52:14.5081418	Tags for minecraft:damage_type mod id aether
+// 1.20.1	2024-01-10T15:58:14.4285673	Tags for minecraft:damage_type mod id aether
 349770fa7a71d7f6c642e562b1052607ed17b73d data/aether/tags/damage_type/is_cold.json
 476b0d58a4b22583f5e50634bea23b5679f23bc6 data/minecraft/tags/damage_type/bypasses_armor.json
 c1433810244ba27b66a343ff3535634d43410c04 data/minecraft/tags/damage_type/damages_helmet.json
-755ea6dcc4c62717e53bf07308ad7e3b6df4a30a data/minecraft/tags/damage_type/is_fire.json
+e5b3be3e4ca2c622f38266bc7d9ac5ac1b597489 data/minecraft/tags/damage_type/is_fire.json
 671be5168f1374b4c7ed5908c48a3a99e33545a5 data/minecraft/tags/damage_type/is_projectile.json
