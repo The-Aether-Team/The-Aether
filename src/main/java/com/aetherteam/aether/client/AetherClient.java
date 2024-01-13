@@ -87,7 +87,7 @@ public class AetherClient {
      * Applies a unique lore entry in the Book of Lore for the Hammer of Jeb Easter Egg item texture.
      */
     public static void registerLoreOverrides() {
-        LoreBookMenu.addLoreEntryOverride(stack -> stack.getHoverName().getString().equalsIgnoreCase("hammer of jeb"), "lore.item.aether.hammer_of_jeb");
+        LoreBookMenu.addLoreEntryOverride(stack -> stack.is(AetherItems.HAMMER_OF_KINGBDOGZ.get()) && stack.getHoverName().getString().equalsIgnoreCase("hammer of jeb"), "lore.item.aether.hammer_of_jeb");
     }
 
     /**
