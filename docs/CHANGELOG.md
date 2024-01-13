@@ -1,3 +1,37 @@
+# The Aether - NeoForge - 1.20.1-1.1.0
+
+Additions
+
+- Allow the Book of Lore to be placed in Chiseled Bookshelves.
+- Add a beta resource pack texture for the Lootr variant of Mimics.
+- Add Swet Balls to the Forge tag for Slimeballs.
+
+Changes
+
+- Disable fire tick within the Aether dimension.
+- Change how Moa age is internally tracked to make aging able to be displayed by mods that show mob age info.
+- Allow Skyroot Buckets to be used as Furnace fuel.
+- Change the model of Aerclouds to make their interior appear hollow.
+- Disallow worlds from being opened by the world preview system if they have never been opened with the Aether mod.
+- Disallow Fire Crystal damage from being negated by Fire Resistance.
+
+Fixes
+
+- Fix performance overhead from biome checks for entities falling out of the Aether.
+- Fix performance overhead from biome checks for converting block placements.
+- Fix performance overhead from custom Tall Grass coloring.
+- Fix inconsistent handling of damage modifiers with Holy Sword and Pig Slayer.
+- Fix Aechor Plants being able to be leashed.
+- Fix texture z-fighting on Phyg and Flying Cow wings at joints.
+- Fix generic slot textures being used for Curios slots instead of charm and ring slot textures.
+- Fix various mob and player layers not turning invisible when they should.
+- Fix Parachutes not detecting block collision in all situations.
+- Fix being able to jump on Blue Aerclouds before their effect is activated.
+- Fix overlay vignette transparency bleeding into the transparency of the Hammer of Kingbdogz cooldown text.
+- Fix health refilling to full on respawn even when other mods modify the respawn health amount.
+- Fix all items being able to be renamed to an easter egg in the Book of Lore.
+- Fix null log spam about Moa Eggs from JER.
+
 # The Aether - NeoForge - 1.20.1-1.0.0
 
 View the full changelog here: https://gist.github.com/bconlon1/6576351ad7ea45b7e3fcb57e9ebed69a
