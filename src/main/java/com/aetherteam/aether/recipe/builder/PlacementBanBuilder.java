@@ -14,7 +14,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.biome.Biome;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class PlacementBanBuilder implements RecipeBuilder {
     private final BlockStateIngredient bypassBlock;

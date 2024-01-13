@@ -2,19 +2,21 @@ package com.aetherteam.aether.capability.time;
 
 import com.aetherteam.aether.capability.AetherCapabilities;
 import com.aetherteam.nitrogen.capability.INBTSynchable;
+import dev.onyxstudios.cca.api.v3.component.Component;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.util.LazyOptional;
+
+import java.util.Optional;
 
 /**
  * Capability interface to handle the Aether's day/night cycle.
  */
-public interface AetherTime extends INBTSynchable<CompoundTag> {
+public interface AetherTime extends INBTSynchable<CompoundTag>, Component {
     Level getLevel();
 
-    static LazyOptional<AetherTime> get(Level world) {
-        return world.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY);
+    static Optional<AetherTime> get(Level world) {
+        return AetherCapabilities.AETHER_TIME_CAPABILITY.maybeGet(world);
     }
 
     long tickTime(Level level);

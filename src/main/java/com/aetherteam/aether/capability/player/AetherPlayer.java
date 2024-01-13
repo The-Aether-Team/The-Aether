@@ -4,20 +4,22 @@ import com.aetherteam.aether.capability.AetherCapabilities;
 import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
 import com.aetherteam.aether.entity.passive.Aerbunny;
 import com.aetherteam.nitrogen.capability.INBTSynchable;
+import dev.onyxstudios.cca.api.v3.component.Component;
+import dev.onyxstudios.cca.api.v3.entity.PlayerComponent;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.common.util.LazyOptional;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
-public interface AetherPlayer extends INBTSynchable<CompoundTag> {
+public interface AetherPlayer extends INBTSynchable<CompoundTag>, PlayerComponent<AetherPlayer> {
 	Player getPlayer();
 
-	static LazyOptional<AetherPlayer> get(Player player) {
-		return player.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
+	static Optional<AetherPlayer> get(Player player) {
+		return AetherCapabilities.AETHER_PLAYER_CAPABILITY.maybeGet(player);
 	}
 
 	void onLogout();

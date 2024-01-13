@@ -2,13 +2,13 @@ package com.aetherteam.aether.blockentity;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.block.AetherBlocks;
+import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar;
+import io.github.fabricators_of_create.porting_lib.util.RegistryObject;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
 public class AetherBlockEntityTypes {
-	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Aether.MODID);
+	public static final LazyRegistrar<BlockEntityType<?>> BLOCK_ENTITY_TYPES = LazyRegistrar.create(Registries.BLOCK_ENTITY_TYPE, Aether.MODID);
 
 	public static final RegistryObject<BlockEntityType<IcestoneBlockEntity>> ICESTONE = BLOCK_ENTITY_TYPES.register("icestone", () ->
 			BlockEntityType.Builder.of(IcestoneBlockEntity::new, AetherBlocks.ICESTONE.get()).build(null));

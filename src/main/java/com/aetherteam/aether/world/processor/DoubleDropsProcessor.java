@@ -20,11 +20,11 @@ public class DoubleDropsProcessor extends StructureProcessor {
 
     @Nullable
     @Override
-    public StructureTemplate.StructureBlockInfo process(LevelReader level, BlockPos origin, BlockPos centerBottom, StructureTemplate.StructureBlockInfo originalBlockInfo, StructureTemplate.StructureBlockInfo modifiedBlockInfo, StructurePlaceSettings settings, @Nullable StructureTemplate template) {
+    public StructureTemplate.StructureBlockInfo processBlock(LevelReader level, BlockPos origin, BlockPos centerBottom, StructureTemplate.StructureBlockInfo originalBlockInfo, StructureTemplate.StructureBlockInfo modifiedBlockInfo, StructurePlaceSettings settings) {
         if (modifiedBlockInfo.state().hasProperty(AetherBlockStateProperties.DOUBLE_DROPS)) {
             return new StructureTemplate.StructureBlockInfo(modifiedBlockInfo.pos(), modifiedBlockInfo.state().setValue(AetherBlockStateProperties.DOUBLE_DROPS, true), modifiedBlockInfo.nbt());
         }
-        return super.process(level, origin, centerBottom, originalBlockInfo, modifiedBlockInfo, settings, template);
+        return super.processBlock(level, origin, centerBottom, originalBlockInfo, modifiedBlockInfo, settings);
     }
 
     @Override

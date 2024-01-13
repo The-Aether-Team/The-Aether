@@ -64,12 +64,12 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
                 if (abstractFurnaceBlockEntityAccessor.callIsLit()) {
                     flag1 = true;
                     if (itemstack.hasCraftingRemainingItem())
-                        abstractFurnaceBlockEntityAccessor.aether$getItems().set(1, itemstack.getCraftingRemainingItem());
+                        abstractFurnaceBlockEntityAccessor.aether$getItems().set(1, itemstack.getRecipeRemainder());
                     else
                     if (flag3) {
                         itemstack.shrink(1);
                         if (itemstack.isEmpty()) {
-                            abstractFurnaceBlockEntityAccessor.aether$getItems().set(1, itemstack.getCraftingRemainingItem());
+                            abstractFurnaceBlockEntityAccessor.aether$getItems().set(1, itemstack.getRecipeRemainder());
                         }
                     }
                 }
@@ -140,8 +140,8 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
                 resultSlotStack.grow(resultStack.getCount());
             }
 
-            if (inputSlotStack.hasCraftingRemainingItem() && !inputSlotStack.getCraftingRemainingItem().is(resultStack.getCraftingRemainingItem().getItem())) {
-                stacks.set(0, inputSlotStack.getCraftingRemainingItem());
+            if (!inputSlotStack.getRecipeRemainder().is(resultStack.getRecipeRemainder().getItem())) {
+                stacks.set(0, inputSlotStack.getRecipeRemainder());
             } else {
                 inputSlotStack.shrink(1);
             }
@@ -183,7 +183,7 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
         AbstractFurnaceBlockEntityAccessor abstractFurnaceBlockEntityAccessor = (AbstractFurnaceBlockEntityAccessor) this;
         Optional<NonNullList<Ingredient>> ingredient = abstractFurnaceBlockEntityAccessor.aether$getQuickCheck().getRecipeFor(this, this.level).map(AbstractCookingRecipe::getIngredients);
         if (this.remainderItem.isEmpty()) {
-            ingredient.ifPresent(ing -> this.remainderItem = stack.getCraftingRemainingItem()); // Stores the correlating crafting remainder item.
+            ingredient.ifPresent(ing -> this.remainderItem = stack.getRecipeRemainder()); // Stores the correlating crafting remainder item.
         }
         if (direction == Direction.DOWN && index == 0) {
             if (!this.remainderItem.isEmpty()) {

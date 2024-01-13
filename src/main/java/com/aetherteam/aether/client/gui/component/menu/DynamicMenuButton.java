@@ -1,10 +1,11 @@
 package com.aetherteam.aether.client.gui.component.menu;
 
+import io.github.fabricators_of_create.porting_lib.config.ModConfigSpec;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraftforge.common.ForgeConfigSpec;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /**
@@ -12,8 +13,8 @@ import java.util.List;
  */
 public class DynamicMenuButton extends Button {
     private final int originX;
-    private List<ForgeConfigSpec.ConfigValue<Boolean>> displayConfigs;
-    private List<ForgeConfigSpec.ConfigValue<Boolean>> offsetConfigs;
+    private List<ModConfigSpec.ConfigValue<Boolean>> displayConfigs;
+    private List<ModConfigSpec.ConfigValue<Boolean>> offsetConfigs;
     public boolean enabled = true;
 
     public DynamicMenuButton(Builder builder) {
@@ -33,7 +34,7 @@ public class DynamicMenuButton extends Button {
     }
 
     private boolean shouldRender() {
-        for (ForgeConfigSpec.ConfigValue<Boolean> value : this.displayConfigs) {
+        for (ModConfigSpec.ConfigValue<Boolean> value : this.displayConfigs) {
             if (!value.get()) {
                 return false;
             }
@@ -41,10 +42,10 @@ public class DynamicMenuButton extends Button {
         return true;
     }
 
-    private int gatherOffsets(@Nullable List<ForgeConfigSpec.ConfigValue<Boolean>> configs) {
+    private int gatherOffsets(@Nullable List<ModConfigSpec.ConfigValue<Boolean>> configs) {
         int offset = 0;
         if (configs != null) {
-            for (ForgeConfigSpec.ConfigValue<Boolean> value : configs) {
+            for (ModConfigSpec.ConfigValue<Boolean> value : configs) {
                 if (value.get()) {
                     offset -= 24;
                 }
@@ -61,12 +62,12 @@ public class DynamicMenuButton extends Button {
     }
 
     @SafeVarargs
-    public final void setDisplayConfigs(ForgeConfigSpec.ConfigValue<Boolean>... displayConfigs) {
+    public final void setDisplayConfigs(ModConfigSpec.ConfigValue<Boolean>... displayConfigs) {
         this.displayConfigs = List.of(displayConfigs);
     }
 
     @SafeVarargs
-    public final void setOffsetConfigs(ForgeConfigSpec.ConfigValue<Boolean>... offsetConfigs) {
+    public final void setOffsetConfigs(ModConfigSpec.ConfigValue<Boolean>... offsetConfigs) {
         this.offsetConfigs = List.of(offsetConfigs);
     }
 

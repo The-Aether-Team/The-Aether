@@ -5,7 +5,7 @@ import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.resources.IoSupplier;
 import net.minecraftforge.resource.DelegatingPackResources;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;

@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 @Mixin(SmithingScreen.class)
 public class SmithingScreenMixin {

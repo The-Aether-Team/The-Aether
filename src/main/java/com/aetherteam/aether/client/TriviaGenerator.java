@@ -4,7 +4,7 @@ import com.aetherteam.aether.mixin.mixins.client.accessor.I18nAccessor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.RandomSource;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -46,7 +46,7 @@ import net.minecraftforge.event.entity.player.SleepingTimeCheckEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.level.SleepFinishedTimeEvent;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -297,13 +297,13 @@ public class DimensionHooks {
     /**
      * Initializes the Aether level data for time separate from the overworld.
      * serverLevelData and levelData are access transformed.
-     * @param level The {@link LevelAccessor}.
+     * @param serverLevel The {@link ServerLevel}.
      * @see com.aetherteam.aether.event.listeners.DimensionListener#onPlayerTraveling(TickEvent.PlayerTickEvent)
      */
-    public static void initializeLevelData(LevelAccessor level) {
-        if (level instanceof ServerLevel serverLevel && serverLevel.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
+    public static void initializeLevelData(MinecraftServer server, ServerLevel serverLevel) {
+        if (serverLevel.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
             AetherTime.get(serverLevel).ifPresent(cap -> {
-                AetherLevelData levelData = new AetherLevelData(serverLevel.getServer().getWorldData(), serverLevel.getServer().getWorldData().overworldData(), cap.getDayTime());
+                AetherLevelData levelData = new AetherLevelData(server.getWorldData(), server.getWorldData().overworldData(), cap.getDayTime());
                 ServerLevelAccessor serverLevelAccessor = (ServerLevelAccessor) serverLevel;
                 com.aetherteam.aether.mixin.mixins.common.accessor.LevelAccessor levelAccessor = (com.aetherteam.aether.mixin.mixins.common.accessor.LevelAccessor) level;
                 serverLevelAccessor.aether$setServerLevelData(levelData);

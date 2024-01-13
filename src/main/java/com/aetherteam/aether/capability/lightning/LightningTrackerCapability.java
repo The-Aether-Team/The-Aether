@@ -26,19 +26,17 @@ public class LightningTrackerCapability implements LightningTracker {
      * Saves data on world close.
      */
     @Override
-    public CompoundTag serializeNBT() {
-        CompoundTag tag = new CompoundTag();
+    public void writeToNbt(CompoundTag tag) {
         if (this.getOwner() != null) {
             tag.putInt("Owner", this.getOwner().getId());
         }
-        return tag;
     }
 
     /**
      * Restores data from world on open.
      */
     @Override
-    public void deserializeNBT(CompoundTag tag) {
+    public void readFromNbt(CompoundTag tag) {
         if (tag.contains("Owner")) {
             this.setOwner(this.getLightningBolt().level().getEntity(tag.getInt("Owner")));
         }

@@ -26,18 +26,16 @@ public class MobAccessoryCapability implements MobAccessory {
     }
 
     @Override
-    public CompoundTag serializeNBT() {
-        CompoundTag tag = new CompoundTag();
+    public void writeToNbt(CompoundTag tag) {
         CompoundTag entryTag = new CompoundTag();
         for (Map.Entry<String, Float> entry : this.getAccessoryDropChances().entrySet()) {
             entryTag.putFloat(entry.getKey(), entry.getValue());
         }
         tag.put("DropChances", entryTag);
-        return tag;
     }
 
     @Override
-    public void deserializeNBT(CompoundTag tag) {
+    public void readFromNbt(CompoundTag tag) {
         if (tag.contains("DropChances")) {
             CompoundTag entryTag = tag.getCompound("DropChances");
             for (String key : entryTag.getAllKeys()) {

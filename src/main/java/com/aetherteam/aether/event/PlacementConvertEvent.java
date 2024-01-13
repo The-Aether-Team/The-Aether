@@ -1,5 +1,8 @@
 package com.aetherteam.aether.event;
 
+import io.github.fabricators_of_create.porting_lib.core.event.BaseEvent;
+import net.fabricmc.fabric.api.event.Event;
+import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,8 +25,11 @@ import net.minecraftforge.fml.LogicalSide;
  * <br>
  * If this event is canceled, block conversion will not happen.
  */
-@Cancelable
-public class PlacementConvertEvent extends Event {
+public class PlacementConvertEvent extends BaseEvent {
+    public static final Event<PlacementConvert> EVENT = EventFactory.createArrayBacked(PlacementConvert.class, callbacks -> event -> {
+        for (PlacementConvert callback : callbacks)
+            callback.onPlacementConvert(event);
+    });
     private final LevelAccessor level;
     private final BlockPos pos;
     private final BlockState oldBlockState;
@@ -76,5 +82,15 @@ public class PlacementConvertEvent extends Event {
      */
     public void setNewBlockState(BlockState newBlockState) {
         this.newBlockState = newBlockState;
+    }
+
+    @Override
+    public void sendEvent() {
+        EVENT.invoker().onPlacementConvert(this);
+    }
+
+    @FunctionalInterface
+    public interface PlacementConvert {
+        void onPlacementConvert(PlacementConvertEvent event);
     }
 }

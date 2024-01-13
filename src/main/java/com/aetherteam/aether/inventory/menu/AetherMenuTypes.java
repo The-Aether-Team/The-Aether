@@ -1,15 +1,15 @@
 package com.aetherteam.aether.inventory.menu;
 
 import com.aetherteam.aether.Aether;
+import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar;
+import io.github.fabricators_of_create.porting_lib.util.RegistryObject;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
 public class AetherMenuTypes {
-	public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, Aether.MODID);
+	public static final LazyRegistrar<MenuType<?>> MENU_TYPES = LazyRegistrar.create(Registries.MENU, Aether.MODID);
 
 	public static final RegistryObject<MenuType<AccessoriesMenu>> ACCESSORIES = register("accessories", AccessoriesMenu::new);
 	public static final RegistryObject<MenuType<LoreBookMenu>> BOOK_OF_LORE = register("book_of_lore",LoreBookMenu::new);

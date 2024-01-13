@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.function.Supplier;
 
 public class AerogelStairsBlock extends StairBlock implements AerogelCulling {
-    public AerogelStairsBlock(Supplier<BlockState> state, Properties properties) {
+    public AerogelStairsBlock(BlockState state, Properties properties) {
         super(state, properties);
     }
 
@@ -39,7 +39,7 @@ public class AerogelStairsBlock extends StairBlock implements AerogelCulling {
     }
 
     /**
-     * @see net.minecraftforge.common.extensions.IForgeBlock#supportsExternalFaceHiding(BlockState)
+     * @see io.github.fabricators_of_create.porting_lib.extensions.extensions.BlockExtensions#supportsExternalFaceHiding(BlockState)
      */
     @Override
     public boolean supportsExternalFaceHiding(BlockState state) {

@@ -11,7 +11,7 @@ import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.fml.LogicalSide;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * PlacementBanEvent is fired when an event involving placement banning occurs.<br>

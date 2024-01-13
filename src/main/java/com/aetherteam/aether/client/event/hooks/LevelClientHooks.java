@@ -26,7 +26,7 @@ import net.minecraftforge.client.event.RenderLevelStageEvent;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

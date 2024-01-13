@@ -5,6 +5,7 @@ import com.aetherteam.aether.recipe.recipes.item.AbstractAetherCookingRecipe;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -15,7 +16,7 @@ import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.SimpleCookingSerializer;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * [CODE COPY] - {@link SimpleCookingSerializer}.<br><br>
@@ -46,7 +47,7 @@ public class AetherCookingSerializer<T extends AbstractAetherCookingRecipe> impl
         } else {
             String resultString = GsonHelper.getAsString(json, "result");
             ResourceLocation resultLocation = new ResourceLocation(resultString);
-            result = new ItemStack(ForgeRegistries.ITEMS.getValue(resultLocation));
+            result = new ItemStack(BuiltInRegistries.ITEM.get(resultLocation));
             if (result.isEmpty()) {
                 throw new IllegalStateException("Item: " + resultString + " does not exist");
             }

@@ -1,17 +1,17 @@
 package com.aetherteam.aether.capability.item;
 
 import com.aetherteam.aether.capability.AetherCapabilities;
-import net.minecraft.nbt.CompoundTag;
+import dev.onyxstudios.cca.api.v3.component.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraftforge.common.util.INBTSerializable;
-import net.minecraftforge.common.util.LazyOptional;
 
-public interface DroppedItem extends INBTSerializable<CompoundTag> {
+import java.util.Optional;
+
+public interface DroppedItem extends Component {
     ItemEntity getItemEntity();
 
-    static LazyOptional<DroppedItem> get(ItemEntity item) {
-        return item.getCapability(AetherCapabilities.DROPPED_ITEM_CAPABILITY);
+    static Optional<DroppedItem> get(ItemEntity item) {
+        return AetherCapabilities.DROPPED_ITEM_CAPABILITY.maybeGet(item);
     }
 
     void setOwner(Entity owner);

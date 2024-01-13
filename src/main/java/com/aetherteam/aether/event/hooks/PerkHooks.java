@@ -4,13 +4,12 @@ import com.aetherteam.aether.perk.data.ServerPerkData;
 import com.aetherteam.nitrogen.api.users.UserData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 
 public class PerkHooks {
     /**
      * Removes perks from the player if they don't have a User stored with the server.
      * @param player The {@link Player}.
-     * @see com.aetherteam.aether.event.listeners.PerkListener#playerLoggedIn(PlayerEvent.PlayerLoggedInEvent)
+     * @see com.aetherteam.aether.event.listeners.PerkListener#playerLoggedIn(Player)
      */
     public static void refreshPerks(Player player) {
         if (player instanceof ServerPlayer serverPlayer) {

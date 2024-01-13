@@ -9,7 +9,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.phys.AABB;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class AbstractWhirlwindParticle<T extends AbstractWhirlwind> extends TextureSheetParticle {
     private static final TargetingConditions TARGET_CONDITION = TargetingConditions.forNonCombat();

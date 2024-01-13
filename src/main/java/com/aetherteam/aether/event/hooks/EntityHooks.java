@@ -21,6 +21,8 @@ import com.aetherteam.aether.item.accessories.miscellaneous.ShieldOfRepulsionIte
 import com.aetherteam.aether.item.accessories.pendant.PendantItem;
 import com.aetherteam.aether.item.miscellaneous.bucket.SkyrootBucketItem;
 import com.aetherteam.aether.mixin.AetherMixinHooks;
+import io.github.fabricators_of_create.porting_lib.entity.events.EntityStruckByLightningEvent;
+import io.github.fabricators_of_create.porting_lib.entity.events.ProjectileImpactEvent;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -47,10 +49,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.EntityMountEvent;
-import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
@@ -64,7 +62,7 @@ import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -504,7 +502,7 @@ public class EntityHooks {
      * Tracks if items were dropped by a player's death.
      * @param entity The {@link LivingEntity} that dropped the items.
      * @param itemDrops The {@link Collection} of dropped {@link ItemEntity}s.
-     * @see com.aetherteam.aether.event.listeners.EntityListener#onPlayerDrops(LivingDropsEvent)
+     * @see com.aetherteam.aether.event.listeners.EntityListener#onPlayerDrops(LivingEntity, DamageSource, Collection, int, boolean)
      */
     public static void trackDrops(LivingEntity entity, Collection<ItemEntity> itemDrops) {
         if (entity instanceof Player player) {
@@ -554,7 +552,7 @@ public class EntityHooks {
      * @param entity The {@link LivingEntity} dropping the experience.
      * @param experience The original {@link Integer} amount of experience.
      * @return The new {@link Integer} amount of experience.
-     * @see com.aetherteam.aether.event.listeners.EntityListener#onDropExperience(LivingExperienceDropEvent)
+     * @see com.aetherteam.aether.event.listeners.EntityListener#onDropExperience(int, Player, LivingEntity)
      */
     public static int modifyExperience(LivingEntity entity, int experience) {
         if (entity instanceof Mob mob) {

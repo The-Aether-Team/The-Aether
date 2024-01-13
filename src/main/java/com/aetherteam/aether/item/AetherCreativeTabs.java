@@ -3,6 +3,9 @@ package com.aetherteam.aether.item;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.block.AetherBlocks;
+import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar;
+import io.github.fabricators_of_create.porting_lib.util.RegistryObject;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -11,18 +14,12 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherCreativeTabs {
-    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Aether.MODID);
+    public static final LazyRegistrar<CreativeModeTab> CREATIVE_MODE_TABS = LazyRegistrar.create(Registries.CREATIVE_MODE_TAB, Aether.MODID);
 
-    public static RegistryObject<CreativeModeTab> AETHER_BUILDING_BLOCKS = CREATIVE_MODE_TABS.register("building_blocks", () -> CreativeModeTab.builder()
-            .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
+    public static RegistryObject<CreativeModeTab> AETHER_BUILDING_BLOCKS = CREATIVE_MODE_TABS.register("building_blocks", () -> FabricItemGroup.builder()
             .withTabsAfter(new ResourceLocation(Aether.MODID, "dungeon_blocks"))
             .icon(() -> new ItemStack(AetherBlocks.HOLYSTONE_BRICKS.get()))
             .title(Component.translatable("itemGroup." + Aether.MODID + ".building_blocks"))

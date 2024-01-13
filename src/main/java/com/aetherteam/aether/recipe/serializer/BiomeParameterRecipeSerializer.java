@@ -14,7 +14,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 import org.apache.commons.lang3.tuple.Pair;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class BiomeParameterRecipeSerializer<T extends AbstractBiomeParameterRecipe> extends BlockStateRecipeSerializer<T> {
     private final BiomeParameterRecipeSerializer.CookieBaker<T> factory;

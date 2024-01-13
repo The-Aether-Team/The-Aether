@@ -13,7 +13,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * [CODE COPY] - {@link net.minecraft.world.entity.item.PrimedTnt}.

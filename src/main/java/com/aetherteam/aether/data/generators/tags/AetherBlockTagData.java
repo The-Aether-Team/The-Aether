@@ -11,7 +11,7 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.CompletableFuture;
 
 public class AetherBlockTagData extends BlockTagsProvider {

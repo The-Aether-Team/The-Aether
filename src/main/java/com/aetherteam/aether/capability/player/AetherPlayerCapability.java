@@ -25,6 +25,8 @@ import com.aetherteam.aether.perk.data.ServerPerkData;
 import com.aetherteam.nitrogen.capability.INBTSynchable;
 import com.aetherteam.nitrogen.network.BasePacket;
 import com.aetherteam.nitrogen.network.PacketRelay;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -49,7 +51,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.simple.SimpleChannel;
 import org.apache.commons.lang3.tuple.Triple;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -397,7 +399,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	/**
 	 * Plays the portal entry sound on the client.
 	 */
-	@OnlyIn(Dist.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private void playPortalSound(Minecraft minecraft) {
 		minecraft.getSoundManager().play(SimpleSoundInstance.forLocalAmbience(AetherSoundEvents.BLOCK_AETHER_PORTAL_TRIGGER.get(), this.getPlayer().getRandom().nextFloat() * 0.4F + 0.8F, 0.25F));
 	}

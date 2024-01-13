@@ -21,7 +21,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class IncubationRecipe implements Recipe<Container> {
     protected final RecipeType<?> type;

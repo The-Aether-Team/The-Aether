@@ -24,7 +24,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class Phyg extends WingedAnimal {
     public Phyg(EntityType<? extends Phyg> type, Level level) {

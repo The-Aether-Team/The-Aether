@@ -2,6 +2,11 @@ package com.aetherteam.aether.event.listeners;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.event.hooks.EntityHooks;
+import dev.emi.trinkets.api.event.TrinketDropCallback;
+import io.github.fabricators_of_create.porting_lib.entity.events.EntityStruckByLightningEvent;
+import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.ProjectileImpactEvent;
+import io.github.fabricators_of_create.porting_lib.entity.events.ShieldBlockEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -13,19 +18,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.EntityMountEvent;
-import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
-import net.minecraftforge.event.entity.living.MobEffectEvent;
-import net.minecraftforge.event.entity.living.ShieldBlockEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import top.theillusivec4.curios.api.event.CurioDropsEvent;
 
 import java.util.ArrayList;
@@ -88,7 +80,6 @@ public class EntityListener {
     /**
      * @see EntityHooks#preventEntityHooked(Entity, HitResult)
      */
-    @SubscribeEvent
     public static void onProjectileHitEntity(ProjectileImpactEvent event) {
         Entity projectileEntity = event.getEntity();
         HitResult rayTraceResult = event.getRayTraceResult();
@@ -98,7 +89,6 @@ public class EntityListener {
     /**
      * @see EntityHooks#preventSliderShieldBlock(DamageSource)
      */
-    @SubscribeEvent
     public static void onShieldBlock(ShieldBlockEvent event) {
         if (!event.isCanceled()) {
             event.setCanceled(EntityHooks.preventSliderShieldBlock(event.getDamageSource()));
@@ -108,7 +98,6 @@ public class EntityListener {
     /**
      * @see EntityHooks#lightningHitKeys(Entity)
      */
-    @SubscribeEvent
     public static void onLightningStrike(EntityStruckByLightningEvent event) {
         Entity entity = event.getEntity();
         event.setCanceled(EntityHooks.lightningHitKeys(entity));
@@ -117,11 +106,9 @@ public class EntityListener {
     /**
      * @see EntityHooks#trackDrops(LivingEntity, Collection)
      */
-    @SubscribeEvent
-    public static void onPlayerDrops(LivingDropsEvent event) {
-        LivingEntity entity = event.getEntity();
-        Collection<ItemEntity> itemDrops = event.getDrops();
+    public static boolean onPlayerDrops(LivingEntity entity, DamageSource source, Collection<ItemEntity> itemDrops, int lootingLevel, boolean recentlyHit) {
         EntityHooks.trackDrops(entity, itemDrops);
+        return false;
     }
 
     /**
@@ -141,12 +128,9 @@ public class EntityListener {
     /**
      * @see EntityHooks#modifyExperience(LivingEntity, int)
      */
-    @SubscribeEvent
-    public static void onDropExperience(LivingExperienceDropEvent event) {
-        LivingEntity livingEntity = event.getEntity();
-        int experience = event.getDroppedExperience();
+    public static int onDropExperience(int experience, Player attackingPlayer, LivingEntity livingEntity) {
         int newExperience = EntityHooks.modifyExperience(livingEntity, experience);
-        event.setDroppedExperience(newExperience);
+        return newExperience;
     }
 
     /**
@@ -159,5 +143,14 @@ public class EntityListener {
         if (EntityHooks.preventInebriation(livingEntity, effectInstance)) {
             event.setResult(Event.Result.DENY);
         }
+    }
+
+    public static void init() {
+        ProjectileImpactEvent.PROJECTILE_IMPACT.register(EntityListener::onProjectileHitEntity);
+        ShieldBlockEvent.EVENT.register(EntityListener::onShieldBlock);
+        EntityStruckByLightningEvent.ENTITY_STRUCK_BY_LIGHTING.register(EntityListener::onLightningStrike);
+        LivingEntityEvents.DROPS.register(EntityListener::onPlayerDrops);
+        TrinketDropCallback.EVENT.register();
+        LivingEntityEvents.EXPERIENCE_DROP.register(EntityListener::onDropExperience);
     }
 }

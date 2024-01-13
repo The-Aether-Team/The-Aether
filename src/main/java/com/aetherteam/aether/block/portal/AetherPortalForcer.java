@@ -9,6 +9,7 @@ import com.aetherteam.aether.network.packet.clientbound.PortalTravelSoundPacket;
 import com.aetherteam.aether.world.AetherPoi;
 import com.aetherteam.aether.world.LevelUtil;
 import com.aetherteam.nitrogen.network.PacketRelay;
+import io.github.fabricators_of_create.porting_lib.entity.ITeleporter;
 import net.minecraft.BlockUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -30,9 +31,8 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.level.portal.PortalShape;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.ITeleporter;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.Comparator;
 import java.util.Optional;
 import java.util.function.Function;

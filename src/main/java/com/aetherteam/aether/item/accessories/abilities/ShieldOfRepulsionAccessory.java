@@ -5,6 +5,7 @@ import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.nitrogen.ConstantsUtil;
+import io.github.fabricators_of_create.porting_lib.entity.events.ProjectileImpactEvent;
 import net.minecraft.client.player.Input;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -13,7 +14,6 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 

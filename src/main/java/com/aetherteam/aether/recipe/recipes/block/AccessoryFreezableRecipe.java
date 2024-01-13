@@ -10,7 +10,7 @@ import net.minecraft.commands.CommandFunction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class AccessoryFreezableRecipe extends AbstractBlockStateRecipe {
     public AccessoryFreezableRecipe(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result, @Nullable CommandFunction.CacheableFunction function) {

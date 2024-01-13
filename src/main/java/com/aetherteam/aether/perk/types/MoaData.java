@@ -2,7 +2,7 @@ package com.aetherteam.aether.perk.types;
 
 import net.minecraft.network.FriendlyByteBuf;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.UUID;
 
 /**

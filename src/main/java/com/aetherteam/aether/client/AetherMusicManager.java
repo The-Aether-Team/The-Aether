@@ -20,7 +20,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * This class is used to replace the menu screen music when applicable, and replace the creative mode music when in an Aether biome.

@@ -4,6 +4,7 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.inventory.menu.AltarMenu;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Inventory;
@@ -12,8 +13,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.tags.ITagManager;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -59,10 +58,7 @@ public class AltarBlockEntity extends AbstractAetherFurnaceBlockEntity {
 	}
 
 	public static void addItemTagEnchantingTime(TagKey<Item> itemTag, int burnTime) {
-		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
-		if (tags != null) {
-			tags.getTag(itemTag).stream().forEach((item) -> getEnchantingMap().put(item, burnTime));
-		}
+		BuiltInRegistries.ITEM.getTag(itemTag).ifPresent(holders -> holders.forEach((item) -> getEnchantingMap().put(item.value(), burnTime)));
 	}
 
 	public static void removeItemEnchantingTime(ItemLike itemProvider) {
@@ -75,9 +71,6 @@ public class AltarBlockEntity extends AbstractAetherFurnaceBlockEntity {
 	}
 
 	public static void removeItemTagEnchantingTime(TagKey<Item> itemTag) {
-		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
-		if (tags != null) {
-			tags.getTag(itemTag).stream().forEach((item) -> getEnchantingMap().remove(item));
-		}
+		BuiltInRegistries.ITEM.getTag(itemTag).ifPresent(holders -> holders.forEach((item) -> getEnchantingMap().remove(item.value())));
 	}
 }

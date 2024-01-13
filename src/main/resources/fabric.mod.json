@@ -1,0 +1,19 @@
+{
+  "id": "aether",
+  "schemaVersion": 1,
+  "version": "",
+  "authors": [
+
+  ],
+  "entrypoints": {
+    "main": [
+      "com.aetherteam.aether.Aether"
+    ],
+    "client": [
+      "com.aetherteam.aether.client.AetherClient"
+    ],
+    "mm_shedaniel:early_risers": [
+      "com.aetherteam.aether.AetherASM"
+    ]
+  }
+}

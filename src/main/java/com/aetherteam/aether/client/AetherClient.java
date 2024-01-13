@@ -11,36 +11,30 @@ import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.perk.CustomizationsOptions;
 import com.aetherteam.cumulus.CumulusConfig;
 import com.google.common.reflect.Reflection;
+import io.github.fabricators_of_create.porting_lib.client_events.event.client.RegisterEntitySpectatorShadersCallback;
+import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterEntitySpectatorShadersEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class AetherClient {
+public class AetherClient implements ClientModInitializer {
     private static boolean refreshPacks = false;
 
-    @SubscribeEvent
-    public static void clientSetup(FMLClientSetupEvent event) {
+    @Override
+    public void onInitializeClient() {
         disableCumulusButton();
         Reflection.initialize(CustomizationsOptions.class);
         AetherRenderers.registerCuriosRenderers();
-        event.enqueueWork(() -> {
-            AetherAtlases.registerTreasureChestAtlases();
-            AetherAtlases.registerWoodTypeAtlases();
-            registerGuiFactories();
-            registerItemModelProperties();
-        });
+        AetherAtlases.registerTreasureChestAtlases();
+        AetherAtlases.registerWoodTypeAtlases();
+        registerGuiFactories();
+        registerItemModelProperties();
         registerLoreOverrides();
         autoApplyPacks();
+
+        RegisterEntitySpectatorShadersCallback.EVENT.register(AetherClient::registerSpectatorShaders);
     }
 
     /**
@@ -100,9 +94,8 @@ public class AetherClient {
     /**
      * Registers a unique shader for spectating the Sun Spirit, which tints the screen red.
      */
-    @SubscribeEvent
-    public static void registerSpectatorShaders(RegisterEntitySpectatorShadersEvent event) {
-        event.register(AetherEntityTypes.SUN_SPIRIT.get(), new ResourceLocation(Aether.MODID, "shaders/post/sun_spirit.json"));
+    public static void registerSpectatorShaders(Map<EntityType<?>, ResourceLocation> shaders) {
+        shaders.put(AetherEntityTypes.SUN_SPIRIT.get(), new ResourceLocation(Aether.MODID, "shaders/post/sun_spirit.json"));
     }
 
     /**

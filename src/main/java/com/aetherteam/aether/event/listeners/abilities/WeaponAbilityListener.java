@@ -2,6 +2,10 @@ package com.aetherteam.aether.event.listeners.abilities;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.event.hooks.AbilityHooks;
+import io.github.fabricators_of_create.porting_lib.entity.events.EntityEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.EntityStruckByLightningEvent;
+import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.ProjectileImpactCallback;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LightningBolt;
@@ -20,13 +24,9 @@ public class WeaponAbilityListener {
     /**
      * @see AbilityHooks.WeaponHooks#stickDart(LivingEntity, DamageSource)
      */
-    @SubscribeEvent
-    public static void onDartHurt(LivingHurtEvent event) {
-        LivingEntity livingEntity = event.getEntity();
-        DamageSource damageSource = event.getSource();
-        if (!event.isCanceled()) {
-            AbilityHooks.WeaponHooks.stickDart(livingEntity, damageSource);
-        }
+    public static float onDartHurt(DamageSource damageSource, LivingEntity livingEntity, float amount) {
+        AbilityHooks.WeaponHooks.stickDart(livingEntity, damageSource);
+        return amount;
     }
 
     /**
@@ -44,7 +44,6 @@ public class WeaponAbilityListener {
     /**
      * @see AbilityHooks.WeaponHooks#lightningTracking(Entity, LightningBolt)
      */
-    @SubscribeEvent
     public static void onLightningStrike(EntityStruckByLightningEvent event) {
         Entity entity = event.getEntity();
         LightningBolt lightningBolt = event.getLightning();
@@ -64,5 +63,11 @@ public class WeaponAbilityListener {
         Entity sourceEntity = damageSource.getDirectEntity();
         event.setAmount(AbilityHooks.WeaponHooks.reduceWeaponEffectiveness(targetEntity, sourceEntity, event.getAmount()));
         event.setAmount(AbilityHooks.WeaponHooks.reduceArmorEffectiveness(targetEntity, sourceEntity, event.getAmount()));
+    }
+
+    public static void init() {
+        LivingEntityEvents.HURT.register(WeaponAbilityListener::onDartHurt);
+        EntityEvents.ENTITY_STRUCK_BY_LIGHTING.register(WeaponAbilityListener::onLightningStrike);
+        ProjectileImpactCallback.EVENT.register();
     }
 }

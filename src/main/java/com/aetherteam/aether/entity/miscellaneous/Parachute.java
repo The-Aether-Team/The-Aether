@@ -18,7 +18,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class Parachute extends Entity {
     public Parachute(EntityType<? extends Parachute> type, Level level) {

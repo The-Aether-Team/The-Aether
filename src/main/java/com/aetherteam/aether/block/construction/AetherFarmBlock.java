@@ -2,6 +2,8 @@ package com.aetherteam.aether.block.construction;
 
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.mixin.mixins.common.accessor.BushBlockAccessor;
+import io.github.fabricators_of_create.porting_lib.common.util.IPlantable;
+import io.github.fabricators_of_create.porting_lib.common.util.PlantType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -15,10 +17,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.FarmlandWaterManager;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.common.PlantType;
 
 public class AetherFarmBlock extends FarmBlock {
     public AetherFarmBlock(Properties properties) {
