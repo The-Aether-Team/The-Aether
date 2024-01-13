@@ -1,8 +1,8 @@
 {
   "homepage": "https://modrinth.com/mod/aether",
   "promos": {
-    "1.19.2-recommended": "1.19.2-1.0.0-forge",
-    "1.19.4-recommended": "1.19.4-1.0.0-forge",
-    "1.20.1-recommended": "1.20.1-1.0.0-neoforge"
+    "1.19.2-recommended": "1.19.2-1.1.0-forge",
+    "1.19.4-recommended": "1.19.4-1.1.0-forge",
+    "1.20.1-recommended": "1.20.1-1.1.0-neoforge"
   }
 }
