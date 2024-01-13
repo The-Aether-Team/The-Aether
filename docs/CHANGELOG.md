@@ -5,6 +5,8 @@ Additions
 - Allow the Book of Lore to be placed in Chiseled Bookshelves.
 - Add a beta resource pack texture for the Lootr variant of Mimics.
 - Add Swet Balls to the Forge tag for Slimeballs.
+- Update sk_sk.
+- Update uk_ua.
 
 Changes
 
