@@ -200,6 +200,8 @@ curseforge {
         changelog = file("$rootDir/docs/CHANGELOG.md")
         changelogType = "markdown"
         addGameVersion("${project.mc_version}")
+        addGameVersion("Forge")
+        addGameVersion("NeoForge")
         mainArtifact(tasks.jarJar) {
             displayName = "${project.mod_name} - ${version}"
             relations {
