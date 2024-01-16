@@ -3,6 +3,7 @@ package com.aetherteam.aether.mixin.mixins.common;
 import com.aetherteam.aether.event.hooks.AbilityHooks;
 import com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener;
 import com.aetherteam.aether.item.tools.abilities.ValkyrieTool;
+import io.github.fabricators_of_create.porting_lib.attributes.PortingLibAttributes;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -13,7 +14,6 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeMod;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -49,11 +49,11 @@ public class ItemMixin {
      */
     private static BlockHitResult interactionTooFar(Level level, Player player, InteractionHand hand, ClipContext.Fluid fluidMode) {
         if (hand == InteractionHand.OFF_HAND && AbilityHooks.ToolHooks.hasValkyrieItemInMainHandOnly(player)) {
-            AttributeInstance reachDistance = player.getAttribute(ForgeMod.BLOCK_REACH.get());
+            AttributeInstance reachDistance = player.getAttribute(PortingLibAttributes.BLOCK_REACH);
             if (reachDistance != null) {
                 AttributeModifier valkyrieModifier = reachDistance.getModifier(ValkyrieTool.REACH_DISTANCE_MODIFIER_UUID);
                 if (valkyrieModifier != null) {
-                    double reach = player.getAttributeValue(ForgeMod.BLOCK_REACH.get()) - valkyrieModifier.getAmount();
+                    double reach = player.getAttributeValue(PortingLibAttributes.BLOCK_REACH) - valkyrieModifier.getAmount();
                     double trueReach = reach == 0 ? 0 : reach + (player.isCreative() ? 0.5 : 0); // [CODE COPY] - IForgePlayer#getReachDistance().
                     return getPlayerPOVHitResultForReach(level, player, trueReach, fluidMode);
                 }

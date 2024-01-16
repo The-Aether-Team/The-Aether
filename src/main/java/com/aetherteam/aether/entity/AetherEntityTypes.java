@@ -28,6 +28,9 @@ import com.aetherteam.aether.entity.projectile.dart.GoldenDart;
 import com.aetherteam.aether.entity.projectile.dart.PoisonDart;
 import com.aetherteam.aether.entity.projectile.weapon.HammerProjectile;
 import com.aetherteam.aether.entity.projectile.weapon.ThrownLightningKnife;
+import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar;
+import io.github.fabricators_of_create.porting_lib.util.RegistryObject;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
@@ -42,7 +45,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherEntityTypes {
-    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, Aether.MODID);
+    public static final LazyRegistrar<EntityType<?>> ENTITY_TYPES = LazyRegistrar.create(Registries.ENTITY_TYPE, Aether.MODID);
 
     // Passive Mobs
     public static final RegistryObject<EntityType<Phyg>> PHYG = ENTITY_TYPES.register("phyg",

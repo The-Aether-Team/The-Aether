@@ -1,9 +1,9 @@
 package com.aetherteam.aether;
 
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
+import io.github.fabricators_of_create.porting_lib.config.ModConfigSpec;
+import io.github.fabricators_of_create.porting_lib.config.ModConfigSpec.ConfigValue;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class AetherConfig {
@@ -37,7 +37,7 @@ public class AetherConfig {
         public final ConfigValue<String> portal_destination_dimension_ID;
         public final ConfigValue<String> portal_return_dimension_ID;
 
-        public Server(ForgeConfigSpec.Builder builder) {
+        public Server(ModConfigSpec.Builder builder) {
             builder.push("Gameplay");
             enable_bed_explosions = builder
                     .comment("Vanilla's beds will explode in the Aether")
@@ -161,7 +161,7 @@ public class AetherConfig {
         public final ConfigValue<Boolean> add_temporary_freezing_automatically;
         public final ConfigValue<Boolean> add_ruined_portal_automatically;
 
-        public Common(ForgeConfigSpec.Builder builder) {
+        public Common(ModConfigSpec.Builder builder) {
             builder.push("Gameplay");
             use_curios_menu = builder
                     .worldRestart()
@@ -237,7 +237,7 @@ public class AetherConfig {
         public final ConfigValue<Boolean> should_disable_cumulus_button;
         public final ConfigValue<Boolean> enable_server_button;
 
-        public Client(ForgeConfigSpec.Builder builder) {
+        public Client(ModConfigSpec.Builder builder) {
             builder.push("Rendering");
             legacy_models = builder
                     .comment("Changes Zephyr and Aerwhale rendering to use their old models from the b1.7.3 version of the mod")
@@ -376,25 +376,25 @@ public class AetherConfig {
         }
     }
 
-    public static final ForgeConfigSpec SERVER_SPEC;
+    public static final ModConfigSpec SERVER_SPEC;
     public static final Server SERVER;
 
-    public static final ForgeConfigSpec COMMON_SPEC;
+    public static final ModConfigSpec COMMON_SPEC;
     public static final Common COMMON;
 
-    public static final ForgeConfigSpec CLIENT_SPEC;
+    public static final ModConfigSpec CLIENT_SPEC;
     public static final Client CLIENT;
 
     static {
-        final Pair<Server, ForgeConfigSpec> serverSpecPair = new ForgeConfigSpec.Builder().configure(Server::new);
+        final Pair<Server, ModConfigSpec> serverSpecPair = new ModConfigSpec.Builder().configure(Server::new);
         SERVER_SPEC = serverSpecPair.getRight();
         SERVER = serverSpecPair.getLeft();
 
-        final Pair<Common, ForgeConfigSpec> commonSpecPair = new ForgeConfigSpec.Builder().configure(Common::new);
+        final Pair<Common, ModConfigSpec> commonSpecPair = new ModConfigSpec.Builder().configure(Common::new);
         COMMON_SPEC = commonSpecPair.getRight();
         COMMON = commonSpecPair.getLeft();
 
-        final Pair<Client, ForgeConfigSpec> clientSpecPair = new ForgeConfigSpec.Builder().configure(Client::new);
+        final Pair<Client, ModConfigSpec> clientSpecPair = new ModConfigSpec.Builder().configure(Client::new);
         CLIENT_SPEC = clientSpecPair.getRight();
         CLIENT = clientSpecPair.getLeft();
     }

@@ -24,6 +24,7 @@ import com.aetherteam.aether.network.packet.clientbound.ToolDebuffPacket;
 import com.aetherteam.nitrogen.capability.INBTSynchable;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import com.google.common.collect.ImmutableMap;
+import io.github.fabricators_of_create.porting_lib.entity.events.PlayerEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -64,7 +65,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -130,7 +131,7 @@ public class AbilityHooks {
         /**
          * Handles ability for {@link ZaniteAccessory} for the Zanite Pendant.
          * @see ZaniteAccessory#handleMiningSpeed(float, ItemStack)
-         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onMiningSpeed(PlayerEvent.BreakSpeed)
+         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onMiningSpeed(PlayerEvents.BreakSpeed)
          */
         public static float handleZanitePendantAbility(LivingEntity entity, float speed) {
             SlotResult slotResult = EquipmentUtil.getZanitePendant(entity);
@@ -142,7 +143,7 @@ public class AbilityHooks {
 
         /**
          * Checks whether an entity can be targeted while wearing an Invisibility Cloak.
-         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onTargetSet(LivingEvent.LivingVisibilityEvent)
+         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onTargetSet(LivingEntity, Entity, double)
          */
         public static boolean preventTargeting(LivingEntity target, @Nullable Entity lookingEntity) {
             if (target instanceof Player player && AetherPlayer.get(player).isPresent() && AetherPlayer.get(player).resolve().isPresent()) {
@@ -279,7 +280,7 @@ public class AbilityHooks {
         /**
          * Handles ability for {@link com.aetherteam.aether.item.tools.abilities.ZaniteTool}.
          * @see ZaniteTool#increaseSpeed(ItemStack, float)
-         * @see com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener#modifyBreakSpeed(PlayerEvent.BreakSpeed)
+         * @see com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener#modifyBreakSpeed(PlayerEvents.BreakSpeed)
          */
         public static float handleZaniteToolAbility(ItemStack stack, float speed) {
             if (stack.getItem() instanceof ZaniteTool zaniteTool) {
@@ -296,7 +297,7 @@ public class AbilityHooks {
          * @param stack The {@link ItemStack} being used for mining.
          * @param speed The mining speed of the stack, as a {@link Float}.
          * @return The debuffed mining speed, as a {@link Float}.
-         * @see com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener#modifyBreakSpeed(PlayerEvent.BreakSpeed)
+         * @see com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener#modifyBreakSpeed(PlayerEvents.BreakSpeed)
          */
         public static float reduceToolEffectiveness(Player player, BlockState state, ItemStack stack, float speed) {
             if (AetherConfig.SERVER.tools_debuff.get()) {

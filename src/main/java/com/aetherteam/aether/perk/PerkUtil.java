@@ -3,7 +3,7 @@ package com.aetherteam.aether.perk;
 import com.aetherteam.nitrogen.api.users.User;
 import org.apache.commons.lang3.tuple.Triple;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.function.Predicate;
 
 public final class PerkUtil {

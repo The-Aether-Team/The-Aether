@@ -15,6 +15,7 @@ import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.CombinedPackResources;
 import com.aetherteam.aether.client.TriviaGenerator;
 import com.aetherteam.aether.client.particle.AetherParticleTypes;
+import com.aetherteam.aether.command.AetherCommands;
 import com.aetherteam.aether.command.SunAltarWhitelist;
 import com.aetherteam.aether.data.AetherData;
 import com.aetherteam.aether.data.resources.AetherMobCategory;
@@ -43,6 +44,13 @@ import com.aetherteam.aether.world.treedecorator.AetherTreeDecoratorTypes;
 import com.aetherteam.aether.world.trunkplacer.AetherTrunkPlacerTypes;
 import com.google.common.reflect.Reflection;
 import com.mojang.logging.LogUtils;
+import io.github.fabricators_of_create.porting_lib.config.ConfigRegistry;
+import io.github.fabricators_of_create.porting_lib.config.ConfigType;
+import io.github.fabricators_of_create.porting_lib.util.EnvExecutor;
+import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar;
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ChatFormatting;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.cauldron.CauldronInteraction;
@@ -73,22 +81,22 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
-@Mod(Aether.MODID)
-public class Aether {
+public class Aether implements ModInitializer {
     public static final String MODID = "aether";
     public static final Logger LOGGER = LogUtils.getLogger();
-    public static final Path DIRECTORY = FMLPaths.CONFIGDIR.get().resolve(Aether.MODID);
+    public static final Path DIRECTORY = FabricLoader.getInstance().getConfigDir().resolve(Aether.MODID);
 
     public static final TriviaGenerator TRIVIA_READER = new TriviaGenerator();
 
-    public Aether() {
+    @Override
+    public void onInitialize() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         modEventBus.addListener(AetherData::dataSetup);
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::packSetup);
 
-        DeferredRegister<?>[] registers = {
+        LazyRegistrar<?>[] registers = {
                 AetherBlocks.BLOCKS,
                 AetherItems.ITEMS,
                 AetherEntityTypes.ENTITY_TYPES,
@@ -115,21 +123,36 @@ public class Aether {
                 AetherCreativeTabs.CREATIVE_MODE_TABS
         };
 
-        for (DeferredRegister<?> register : registers) {
-            register.register(modEventBus);
+        for (LazyRegistrar<?> register : registers) {
+            register.register();
         }
 
-        DistExecutor.unsafeRunForDist(() -> () -> {
-            AetherMenus.MENUS.register(modEventBus);
+        EnvExecutor.unsafeRunForDist(() -> () -> {
+            AetherMenus.MENUS.register();
             return true;
         }, () -> () -> false);
 
         AetherBlocks.registerWoodTypes(); // Registered this early to avoid bugs with WoodTypes and signs.
 
         DIRECTORY.toFile().mkdirs(); // Ensures the Aether's config folder is generated.
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, AetherConfig.SERVER_SPEC);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
+        ConfigRegistry.registerConfig(MODID, ConfigType.SERVER, AetherConfig.SERVER_SPEC);
+        ConfigRegistry.registerConfig(MODID, ConfigType.COMMON, AetherConfig.COMMON_SPEC);
+        ConfigRegistry.registerConfig(MODID, ConfigType.CLIENT, AetherConfig.CLIENT_SPEC);
+
+        initEvents();
+        AetherRecipeCategories.registerRecipeCategories();
+    }
+
+    public void initEvents() {
+        ItemListener.init();
+        PerkListener.init();
+        EntityListener.init();
+        DimensionListener.init();
+        ToolAbilityListener.init();
+        WeaponAbilityListener.init();
+        AccessoryAbilityListener.init();
+
+        CommandRegistrationCallback.EVENT.register(AetherCommands::registerCommands);
     }
 
     public void commonSetup(FMLCommonSetupEvent event) {

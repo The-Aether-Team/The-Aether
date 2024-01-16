@@ -1,5 +1,8 @@
 package com.aetherteam.aether.event;
 
+import io.github.fabricators_of_create.porting_lib.entity.events.EntityEvents;
+import net.fabricmc.fabric.api.event.Event;
+import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
@@ -22,8 +25,22 @@ import net.minecraftforge.fml.LogicalSide;
  * @see EntityTeleportEvent
  */
 @Cancelable
-public class ValkyrieTeleportEvent extends EntityTeleportEvent {
+public class ValkyrieTeleportEvent extends EntityEvents.Teleport.EntityTeleportEvent {
+    public static final Event<ValkyrieTeleport> EVENT = EventFactory.createArrayBacked(ValkyrieTeleport.class, callbacks -> event -> {
+        for (ValkyrieTeleport callback : callbacks)
+            callback.onValkyrieTeleport(event);
+    });
     public ValkyrieTeleportEvent(Entity entity, double targetX, double targetY, double targetZ) {
         super(entity, targetX, targetY, targetZ);
+    }
+
+    @Override
+    public void sendEvent() {
+        EVENT.invoker().onValkyrieTeleport(this);
+    }
+
+    @FunctionalInterface
+    public interface ValkyrieTeleport {
+        void onValkyrieTeleport(ValkyrieTeleportEvent event);
     }
 }

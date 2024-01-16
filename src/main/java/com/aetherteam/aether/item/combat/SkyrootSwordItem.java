@@ -8,7 +8,7 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.fml.common.Mod;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID)
 public class SkyrootSwordItem extends SwordItem implements SkyrootWeapon {

@@ -2,10 +2,21 @@ package com.aetherteam.aether.event.listeners;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.event.hooks.DimensionHooks;
+import io.github.fabricators_of_create.porting_lib.entity.events.PlayerEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.PlayerTickEvents;
+import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
+import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -31,9 +42,7 @@ public class DimensionListener {
     /**
      * @see DimensionHooks#startInAether(Player)
      */
-    @SubscribeEvent
-    public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
-        Player player = event.getEntity();
+    public static void onPlayerLogin(Player player) {
         DimensionHooks.startInAether(player);
     }
 
@@ -72,42 +81,32 @@ public class DimensionListener {
      * @see DimensionHooks#fallFromAether(Level)
      * @see DimensionHooks#checkEternalDayConfig(Level)
      */
-    @SubscribeEvent
-    public static void onWorldTick(TickEvent.LevelTickEvent event) {
-        Level level = event.level;
-        if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.END) {
-            DimensionHooks.tickTime(level);
-            DimensionHooks.fallFromAether(level);
-            DimensionHooks.checkEternalDayConfig(level);
-        }
+    public static void onWorldTick(ServerLevel level) {
+        DimensionHooks.tickTime(level);
+        DimensionHooks.fallFromAether(level);
+        DimensionHooks.checkEternalDayConfig(level);
     }
 
     /**
      * @see DimensionHooks#dimensionTravel(Entity, ResourceKey)
      */
-    @SubscribeEvent
-    public static void onEntityTravelToDimension(EntityTravelToDimensionEvent event) {
-        Entity entity = event.getEntity();
-        ResourceKey<Level> dimension = event.getDimension();
-        DimensionHooks.dimensionTravel(entity, dimension);
+    public static void onEntityTravelToDimension(ServerPlayer player, ServerLevel origin, ServerLevel destination) {
+        ResourceKey<Level> dimension = destination.dimension();
+        DimensionHooks.dimensionTravel(player, dimension);
     }
 
     /**
      * @see DimensionHooks#travelling(Player)
      */
-    @SubscribeEvent
-    public static void onPlayerTraveling(TickEvent.PlayerTickEvent event) {
-        Player player = event.player;
+    public static void onPlayerTraveling(Player player) {
         DimensionHooks.travelling(player);
     }
 
     /**
-     * @see DimensionHooks#initializeLevelData(LevelAccessor)
+     * @see DimensionHooks#initializeLevelData(MinecraftServer, ServerLevel)
      */
-    @SubscribeEvent
-    public static void onWorldLoad(LevelEvent.Load event) {
-        LevelAccessor level = event.getLevel();
-        DimensionHooks.initializeLevelData(level);
+    public static void onWorldLoad(MinecraftServer server, ServerLevel level) {
+        DimensionHooks.initializeLevelData(server, level);
     }
 
     /**
@@ -125,11 +124,20 @@ public class DimensionListener {
     /**
      * @see DimensionHooks#isEternalDay(Player)
      */
-    @SubscribeEvent
-    public static void onTriedToSleep(SleepingTimeCheckEvent event) {
-        Player player = event.getEntity();
+    public static InteractionResult onTriedToSleep(Player player, BlockPos sleepingPos, boolean vanillaResult) {
         if (DimensionHooks.isEternalDay(player)) {
-            event.setResult(Event.Result.DENY);
+            return InteractionResult.FAIL;
         }
+        return InteractionResult.PASS;
+    }
+
+    public static void init() {
+        PlayerEvents.LOGGED_IN.register(DimensionListener::onPlayerLogin);
+        ServerTickEvents.END_WORLD_TICK.register(DimensionListener::onWorldTick);
+        ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register(DimensionListener::onEntityTravelToDimension);
+        PlayerTickEvents.START.register(DimensionListener::onPlayerTraveling);
+        PlayerTickEvents.END.register(DimensionListener::onPlayerTraveling);
+        ServerWorldEvents.LOAD.register(DimensionListener::onWorldLoad);
+        EntitySleepEvents.ALLOW_SLEEP_TIME.register(DimensionListener::onTriedToSleep);
     }
 }

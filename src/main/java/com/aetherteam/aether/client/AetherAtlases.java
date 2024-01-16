@@ -5,6 +5,7 @@ import com.aetherteam.aether.block.AetherWoodTypes;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class AetherAtlases {
@@ -23,7 +24,22 @@ public class AetherAtlases {
 	}
 
 	public static void registerWoodTypeAtlases() {
-		Sheets.addWoodType(AetherWoodTypes.SKYROOT);
+		addWoodType(AetherWoodTypes.SKYROOT);
+	}
+
+	public static void addWoodType(WoodType woodType) {
+		Sheets.SIGN_MATERIALS.put(woodType, createSignMaterial(woodType));
+		Sheets.HANGING_SIGN_MATERIALS.put(woodType, createHangingSignMaterial(woodType));
+	}
+
+	private static Material createSignMaterial(WoodType woodType) {
+		ResourceLocation location = new ResourceLocation(woodType.name());
+		return new Material(Sheets.SIGN_SHEET, new ResourceLocation(location.getNamespace(), "entity/signs/" + location.getPath()));
+	}
+
+	private static Material createHangingSignMaterial(WoodType woodType) {
+		ResourceLocation location = new ResourceLocation(woodType.name());
+		return new Material(Sheets.SIGN_SHEET, new ResourceLocation(location.getNamespace(), "entity/signs/hanging/" + location.getPath()));
 	}
 
 	public static Material getChestMaterial(String chestName) {

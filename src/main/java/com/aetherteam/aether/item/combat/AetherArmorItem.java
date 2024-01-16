@@ -7,7 +7,7 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class AetherArmorItem extends ArmorItem {
     public AetherArmorItem(ArmorMaterial material, ArmorItem.Type type, Properties properties) {

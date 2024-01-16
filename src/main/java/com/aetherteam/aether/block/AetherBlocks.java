@@ -21,9 +21,12 @@ import com.aetherteam.aether.mixin.mixins.common.accessor.FireBlockAccessor;
 import com.aetherteam.aether.world.treegrower.GoldenOakTree;
 import com.aetherteam.aether.world.treegrower.SkyrootTree;
 import com.aetherteam.nitrogen.item.block.EntityBlockItem;
+import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar;
+import io.github.fabricators_of_create.porting_lib.util.RegistryObject;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -48,7 +51,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class AetherBlocks {
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Aether.MODID);
+    public static final LazyRegistrar<Block> BLOCKS = LazyRegistrar.create(Registries.BLOCK, Aether.MODID);
 
     public static final RegistryObject<AetherPortalBlock> AETHER_PORTAL = BLOCKS.register("aether_portal", () -> new AetherPortalBlock(Block.Properties.copy(Blocks.NETHER_PORTAL)));
 
@@ -187,23 +190,23 @@ public class AetherBlocks {
     public static final RegistryObject<WallBlock> AEROGEL_WALL = register("aerogel_wall", () -> new AerogelWallBlock(Block.Properties.of().mapColor(MapColor.DIAMOND).forceSolidOn().instrument(NoteBlockInstrument.BASEDRUM).strength(1.0F, 2000.0F).sound(SoundType.METAL).requiresCorrectToolForDrops().isViewBlocking(AetherBlocks::never)));
 
     public static final RegistryObject<StairBlock> SKYROOT_STAIRS = register("skyroot_stairs",
-            () -> new StairBlock(() -> SKYROOT_PLANKS.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.SKYROOT_PLANKS.get())));
+            () -> new StairBlock(SKYROOT_PLANKS.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.SKYROOT_PLANKS.get())));
     public static final RegistryObject<StairBlock> CARVED_STAIRS = register("carved_stairs",
-            () -> new StairBlock(() -> CARVED_STONE.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.CARVED_STONE.get())));
+            () -> new StairBlock(CARVED_STONE.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.CARVED_STONE.get())));
     public static final RegistryObject<StairBlock> ANGELIC_STAIRS = register("angelic_stairs",
-            () -> new StairBlock(() -> ANGELIC_STONE.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.ANGELIC_STONE.get())));
+            () -> new StairBlock(ANGELIC_STONE.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.ANGELIC_STONE.get())));
     public static final RegistryObject<StairBlock> HELLFIRE_STAIRS = register("hellfire_stairs",
-            () -> new StairBlock(() -> HELLFIRE_STONE.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.HELLFIRE_STONE.get())));
+            () -> new StairBlock(HELLFIRE_STONE.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.HELLFIRE_STONE.get())));
     public static final RegistryObject<StairBlock> HOLYSTONE_STAIRS = register("holystone_stairs",
-            () -> new StairBlock(() -> HOLYSTONE.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.HOLYSTONE.get())));
+            () -> new StairBlock(HOLYSTONE.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.HOLYSTONE.get())));
     public static final RegistryObject<StairBlock> MOSSY_HOLYSTONE_STAIRS = register("mossy_holystone_stairs",
-            () -> new StairBlock(() -> MOSSY_HOLYSTONE.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.MOSSY_HOLYSTONE.get())));
+            () -> new StairBlock(MOSSY_HOLYSTONE.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.MOSSY_HOLYSTONE.get())));
     public static final RegistryObject<StairBlock> ICESTONE_STAIRS = register("icestone_stairs",
-            () -> new IcestoneStairsBlock(() -> ICESTONE.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.ICESTONE.get())));
+            () -> new IcestoneStairsBlock(ICESTONE.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.ICESTONE.get())));
     public static final RegistryObject<StairBlock> HOLYSTONE_BRICK_STAIRS = register("holystone_brick_stairs",
-            () -> new StairBlock(() -> HOLYSTONE_BRICKS.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.HOLYSTONE_BRICKS.get())));
+            () -> new StairBlock(HOLYSTONE_BRICKS.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.HOLYSTONE_BRICKS.get())));
     public static final RegistryObject<StairBlock> AEROGEL_STAIRS = register("aerogel_stairs",
-            () -> new AerogelStairsBlock(() -> AEROGEL.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.AEROGEL.get()).isViewBlocking(AetherBlocks::never)));
+            () -> new AerogelStairsBlock(AEROGEL.get().defaultBlockState(), Block.Properties.copy(AetherBlocks.AEROGEL.get()).isViewBlocking(AetherBlocks::never)));
 
     public static final RegistryObject<SlabBlock> SKYROOT_SLAB = register("skyroot_slab",
             () -> new SlabBlock(Block.Properties.copy(AetherBlocks.SKYROOT_PLANKS.get()).strength(2.0F, 3.0F)));

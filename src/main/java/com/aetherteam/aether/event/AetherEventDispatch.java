@@ -14,7 +14,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.MinecraftForge;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class AetherEventDispatch {
 	/**
@@ -103,7 +103,7 @@ public class AetherEventDispatch {
 	 */
 	public static ValkyrieTeleportEvent onValkyrieTeleport(LivingEntity entity, double targetX, double targetY, double targetZ) {
 		ValkyrieTeleportEvent event = new ValkyrieTeleportEvent(entity, targetX, targetY, targetZ);
-		MinecraftForge.EVENT_BUS.post(event);
+		event.sendEvent();
 		return event;
 	}
 }

@@ -9,6 +9,7 @@ import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -48,7 +49,7 @@ import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.tags.ITagManager;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -125,36 +126,6 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 		return new IncubatorMenu(id, playerInventory, this, this.dataAccess);
 	}
 
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction direction) {
-		if (!this.remove && direction != null && capability == ForgeCapabilities.ITEM_HANDLER) {
-			if (direction == Direction.NORTH) {
-				return handlers[0].cast();
-			} else if (direction == Direction.SOUTH) {
-				return handlers[1].cast();
-			} else if (direction == Direction.EAST) {
-				return handlers[2].cast();
-			} else {
-				return handlers[3].cast();
-			}
-		}
-		return super.getCapability(capability, direction);
-	}
-
-	@Override
-	public void invalidateCaps() {
-		super.invalidateCaps();
-		for (LazyOptional<? extends IItemHandler> handler : this.handlers) {
-			handler.invalidate();
-		}
-	}
-
-	@Override
-	public void reviveCaps() {
-		super.reviveCaps();
-		this.handlers = SidedInvWrapper.create(this, Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST);
-	}
-
 	public static void serverTick(Level level, BlockPos pos, BlockState state, IncubatorBlockEntity blockEntity) {
 		boolean flag = blockEntity.isLit();
 		boolean flag1 = false;
@@ -180,11 +151,11 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 				if (blockEntity.isLit()) {
 					flag1 = true;
 					if (itemstack.hasCraftingRemainingItem()) {
-						blockEntity.items.set(1, itemstack.getCraftingRemainingItem());
+						blockEntity.items.set(1, itemstack.getRecipeRemainder());
 					} else if (flag3) {
 						itemstack.shrink(1);
 						if (itemstack.isEmpty()) {
-							blockEntity.items.set(1, itemstack.getCraftingRemainingItem());
+							blockEntity.items.set(1, itemstack.getRecipeRemainder());
 						}
 					}
 				}
@@ -291,10 +262,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 	}
 
 	public static void addItemTagIncubatingTime(TagKey<Item> itemTag, int burnTime) {
-		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
-		if (tags != null) {
-			tags.getTag(itemTag).stream().forEach((item) -> getIncubatingMap().put(item, burnTime));
-		}
+		BuiltInRegistries.ITEM.getTag(itemTag).ifPresent(holders -> holders.forEach((item) -> getIncubatingMap().put(item.value(), burnTime)));
 	}
 
 	public static void removeItemIncubatingTime(ItemLike itemProvider) {
@@ -307,10 +275,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 	}
 
 	public static void removeItemTagIncubatingTime(TagKey<Item> itemTag) {
-		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
-		if (tags != null) {
-			tags.getTag(itemTag).stream().forEach((item) -> getIncubatingMap().remove(item));
-		}
+		BuiltInRegistries.ITEM.getTag(itemTag).ifPresent(holders -> holders.stream().forEach((item) -> getIncubatingMap().remove(item.value())));
 	}
 
 	public void setPlayer(ServerPlayer player) {

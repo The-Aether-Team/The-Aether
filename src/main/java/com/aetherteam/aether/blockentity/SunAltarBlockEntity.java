@@ -1,6 +1,8 @@
 package com.aetherteam.aether.blockentity;
 
 import com.aetherteam.aether.Aether;
+import io.github.fabricators_of_create.porting_lib.block.CustomDataPacketHandlingBlockEntity;
+import io.github.fabricators_of_create.porting_lib.block.CustomUpdateTagHandlingBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -12,9 +14,9 @@ import net.minecraft.world.Nameable;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
-public class SunAltarBlockEntity extends BlockEntity implements Nameable {
+public class SunAltarBlockEntity extends BlockEntity implements Nameable, CustomUpdateTagHandlingBlockEntity, CustomDataPacketHandlingBlockEntity {
     @Nullable
     private Component name;
 

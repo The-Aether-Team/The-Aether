@@ -17,7 +17,7 @@ import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.event.TickEvent;
 import org.apache.commons.lang3.tuple.Triple;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class DimensionClientHooks {
     /**

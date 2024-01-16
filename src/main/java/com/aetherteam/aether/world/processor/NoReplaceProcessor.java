@@ -3,6 +3,7 @@ package com.aetherteam.aether.world.processor;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -11,7 +12,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -22,7 +22,7 @@ public class NoReplaceProcessor extends StructureProcessor {
     public static final NoReplaceProcessor AIR = new NoReplaceProcessor(Blocks.AIR);
 
     public static final Codec<NoReplaceProcessor> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            ForgeRegistries.BLOCKS.getCodec().fieldOf("baseblock").forGetter(o -> o.baseBlock)
+            BuiltInRegistries.BLOCK.byNameCodec().fieldOf("baseblock").forGetter(o -> o.baseBlock)
     ).apply(instance, NoReplaceProcessor::new));
 
     private final Block baseBlock;
@@ -33,7 +33,7 @@ public class NoReplaceProcessor extends StructureProcessor {
 
     @Nullable
     @Override
-    public StructureTemplate.StructureBlockInfo process(LevelReader level, BlockPos origin, BlockPos centerBottom, StructureTemplate.StructureBlockInfo originalBlockInfo, StructureTemplate.StructureBlockInfo modifiedBlockInfo, StructurePlaceSettings settings, @Nullable StructureTemplate template) {
+    public StructureTemplate.StructureBlockInfo processBlock(LevelReader level, BlockPos origin, BlockPos centerBottom, StructureTemplate.StructureBlockInfo originalBlockInfo, StructureTemplate.StructureBlockInfo modifiedBlockInfo, StructurePlaceSettings settings) {
         BlockState state = level.getBlockState(modifiedBlockInfo.pos());
         if (state.is(this.baseBlock)) {
             return new StructureTemplate.StructureBlockInfo(modifiedBlockInfo.pos(), state, null);

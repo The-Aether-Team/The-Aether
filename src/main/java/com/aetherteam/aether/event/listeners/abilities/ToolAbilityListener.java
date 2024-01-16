@@ -2,6 +2,8 @@ package com.aetherteam.aether.event.listeners.abilities;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.event.hooks.AbilityHooks;
+import io.github.fabricators_of_create.porting_lib.entity.events.PlayerEvents;
+import io.github.fabricators_of_create.porting_lib.event.common.BlockEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -42,7 +44,7 @@ public class ToolAbilityListener {
      * @see AbilityHooks.ToolHooks#handleHolystoneToolAbility(Player, Level, BlockPos, ItemStack, BlockState)
      */
     @SubscribeEvent
-    public static void doHolystoneAbility(BlockEvent.BreakEvent event) {
+    public static void doHolystoneAbility(BlockEvents.BreakEvent event) {
         Player player = event.getPlayer();
         Level level = player.level();
         BlockPos blockPos = event.getPos();
@@ -57,8 +59,7 @@ public class ToolAbilityListener {
      * @see AbilityHooks.ToolHooks#handleZaniteToolAbility(ItemStack, float)
      * @see AbilityHooks.ToolHooks#reduceToolEffectiveness(Player, BlockState, ItemStack, float)
      */
-    @SubscribeEvent
-    public static void modifyBreakSpeed(PlayerEvent.BreakSpeed event) {
+    public static void modifyBreakSpeed(PlayerEvents.BreakSpeed event) {
         BlockState blockState = event.getState();
         Player player = event.getEntity();
         ItemStack itemStack = player.getMainHandItem();
@@ -129,5 +130,10 @@ public class ToolAbilityListener {
         if (!event.isCanceled() && AbilityHooks.ToolHooks.blockTooFar(player, hand)) {
             event.setCanceled(true);
         }
+    }
+
+    public static void init() {
+        PlayerEvents.BREAK_SPEED.register(ToolAbilityListener::modifyBreakSpeed);
+        BlockEvents.BLOCK_BREAK.register(ToolAbilityListener::doHolystoneAbility);
     }
 }

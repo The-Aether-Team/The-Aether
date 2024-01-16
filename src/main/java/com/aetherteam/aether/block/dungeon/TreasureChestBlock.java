@@ -2,6 +2,8 @@ package com.aetherteam.aether.block.dungeon;
 
 import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
 import com.aetherteam.aether.blockentity.TreasureChestBlockEntity;
+import io.github.fabricators_of_create.porting_lib.block.ExplosionResistanceBlock;
+import io.github.fabricators_of_create.porting_lib.util.PortingHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -43,7 +45,7 @@ import java.util.function.Supplier;
 /**
  * Mostly copied from {@link ChestBlock}.
  */
-public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEntity> implements SimpleWaterloggedBlock {
+public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEntity> implements SimpleWaterloggedBlock, ExplosionResistanceBlock {
 	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	protected static final VoxelShape SHAPE = Block.box(1.0, 0.0, 1.0, 15.0, 14.0, 15.0);
@@ -207,7 +209,7 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
 			if (f < 0.0F) {
 				return 0.0F;
 			} else {
-				int i = ForgeHooks.isCorrectToolForDrops(state, player) ? 30 : 100;
+				int i = PortingHooks.isCorrectToolForDrops(state, player) ? 30 : 100;
 				return player.getDigSpeed(state, pos) / f / (float) i;
 			}
 		}
@@ -226,9 +228,9 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
 	public float getExplosionResistance(BlockState state, BlockGetter level, BlockPos pos, Explosion explosion) {
 		BlockEntity blockEntity = level.getBlockEntity(pos);
 		if (blockEntity instanceof TreasureChestBlockEntity treasureChestBlockEntity) {
-			return treasureChestBlockEntity.getLocked() ? super.getExplosionResistance(state, level, pos, explosion) : 3.0F;
+			return treasureChestBlockEntity.getLocked() ? ExplosionResistanceBlock.super.getExplosionResistance(state, level, pos, explosion) : 3.0F;
 		}
-		return super.getExplosionResistance(state, level, pos, explosion);
+		return ExplosionResistanceBlock.super.getExplosionResistance(state, level, pos, explosion);
 	}
 
 	/**

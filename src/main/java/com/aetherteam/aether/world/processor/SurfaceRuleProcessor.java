@@ -40,7 +40,7 @@ public class SurfaceRuleProcessor extends StructureProcessor {
     @Nullable
     @Override
     @SuppressWarnings("deprecation")
-    public StructureTemplate.StructureBlockInfo process(LevelReader level, BlockPos origin, BlockPos centerBottom, StructureTemplate.StructureBlockInfo originalBlockInfo, StructureTemplate.StructureBlockInfo modifiedBlockInfo, StructurePlaceSettings settings, @Nullable StructureTemplate template) {
+    public StructureTemplate.StructureBlockInfo processBlock(LevelReader level, BlockPos origin, BlockPos centerBottom, StructureTemplate.StructureBlockInfo originalBlockInfo, StructureTemplate.StructureBlockInfo modifiedBlockInfo, StructurePlaceSettings settings) {
         if (level instanceof WorldGenLevel worldGenLevel) {
             // If the processor is running outside the center chunk, return immediately.
             if (worldGenLevel instanceof WorldGenRegion region && BlockLogicUtil.isOutOfBounds(modifiedBlockInfo.pos(), region.getCenter())) {
@@ -48,7 +48,7 @@ public class SurfaceRuleProcessor extends StructureProcessor {
             }
             if (worldGenLevel.getChunkSource() instanceof ServerChunkCache serverChunkCache) {
                 if (serverChunkCache.getGenerator() instanceof NoiseBasedChunkGenerator noiseBasedChunkGenerator) {
-                    NoiseGeneratorSettings settingsHolder = noiseBasedChunkGenerator.generatorSettings().get();
+                    NoiseGeneratorSettings settingsHolder = noiseBasedChunkGenerator.generatorSettings().value();
                     SurfaceRules.RuleSource surfaceRule = settingsHolder.surfaceRule();
                     ChunkAccess chunkAccess = worldGenLevel.getChunk(modifiedBlockInfo.pos());
                     NoiseChunk noisechunk = ((ChunkAccessAccessor) chunkAccess).aether$getNoiseChunk();

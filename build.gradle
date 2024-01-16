@@ -1,13 +1,7 @@
-import net.minecraftforge.gradle.userdev.tasks.JarJar
-
 plugins {
     id 'eclipse'
     id 'maven-publish'
-    id 'net.neoforged.gradle' version '[6.0.13, 6.2)'
-    id 'org.spongepowered.mixin' version '[0.7,0.8)'
-    id 'org.parchmentmc.librarian.forgegradle' version '[1,2)'
-    id 'org.moddingx.modgradle.mapping' version '[4,5)'
-    id 'org.moddingx.modgradle.sourcejar' version '[4,5)' apply false
+    id 'fabric-loom' version '1.4-SNAPSHOT'
     id 'io.github.0ffz.github-packages' version '[1,2)'
     id 'com.matthewprenger.cursegradle' version '[1.4,1.5)'
     id 'com.modrinth.minotaur' version '[2,3)'
@@ -22,52 +16,20 @@ base {
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
-apply plugin: 'org.moddingx.modgradle.sourcejar'
-
-minecraft {
-    mappings channel: 'sugarcane', version: project.mappings
-
+loom {
 //    enableEclipsePrepareRuns = true
 //    enableIdeaPrepareRuns = true
-    copyIdeResources = true
+//    copyIdeResources = true
 //    generateRunFolders = true
 
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+//    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
-        configureEach {
-            workingDirectory project.file('run')
-
-            property "${mod_id}.iside", 'true'
-//            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'info' // info is the default for production
-
-            mods {
-                "${mod_id}" {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        client {
-            property 'forge.enabledGameTestNamespaces', mod_id
-        }
-
-        server {
-            property 'forge.enabledGameTestNamespaces', mod_id
-
-            args '--nogui'
-        }
-
-        gameTestServer {
-            property 'forge.enabledGameTestNamespaces', mod_id
-        }
-
-        data {
-            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing', file('src/generated/resources/'), '--existing-mod', 'nitrogen_internals', '--existing-mod', 'cumulus_menus'
-
-            environment 'target', 'fmluserdevdata'
-        }
+//        datagen {
+//            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing', file('src/generated/resources/'), '--existing-mod', 'nitrogen_internals', '--existing-mod', 'cumulus_menus'
+//
+//            environment 'target', 'fmluserdevdata'
+//        }
     }
 }
 
@@ -76,45 +38,46 @@ sourceSets.main.resources {
 }
 
 dependencies {
-    minecraft "net.neoforged:forge:${project.mc_version}-${project.neoforge_version}"
+    minecraft "com.mojang:minecraft:${project.mc_version}"
+    mappings loom.layered() {
+        officialMojangMappings()
+        parchment("org.parchmentmc.data:parchment-${project.mc_version}:${project.mappings}@zip")
+    }
+    modImplementation "net.fabricmc:fabric-loader:${project.fabric_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-    implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-common:0.2.0-beta.9"))
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-    implementation('com.github.llamalad7.mixinextras:mixinextras-forge:0.2.0-beta.9')
+    modImplementation include("com.aetherteam.nitrogen:nitrogen_internals:${project.nitrogen_version}")
+    modImplementation include("com.aetherteam.cumulus:cumulus_menus:${project.cumulus_version}")
 
-    implementation fg.deobf("com.aetherteam.nitrogen:nitrogen_internals:${project.nitrogen_version}")
-    implementation fg.deobf("com.aetherteam.cumulus:cumulus_menus:${project.cumulus_version}")
+//    implementation fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}+${project.mc_version}")
 
-    implementation fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}+${project.mc_version}")
+    modImplementation("io.github.fabricators_of_create.Porting-Lib:Porting-Lib:${project.porting_lib_version}") {
+        exclude(group: "io.vram")
+    }
 
-    compileOnly fg.deobf("top.theillusivec4.caelus:caelus-forge:${project.caelus_version}")
+    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}"
+    // Adds a dependency on a specific module
+    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-world:${project.cca_version}"
+    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca_version}"
+    // Includes Cardinal Components API as a Jar-in-Jar dependency (optional)
+    include "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}"
+    include "dev.onyxstudios.cardinal-components-api:cardinal-components-world:${project.cca_version}"
+    include "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca_version}"
+
+//    compileOnly fg.deobf("top.theillusivec4.caelus:caelus-forge:${project.caelus_version}")
 
 //    runtimeOnly fg.deobf("io.github.flemmli97:debugutils:${project.mc_version}-${project.debugutils_version}-forge")
 
-    jarJar('com.github.llamalad7.mixinextras:mixinextras-forge:0.2.0-beta.9') {
-        jarJar.ranged(it, "[${project.mixinextras_version},)")
-        jarJar.pin(it, "${project.mixinextras_version}")
-    }
-
-    jarJar fg.deobf("com.aetherteam.nitrogen:nitrogen_internals:${project.nitrogen_version}") {
-        jarJar.ranged(it, "[${project.nitrogen_version},)")
-        jarJar.pin(it, "${project.nitrogen_version}")
-    }
-
-    jarJar fg.deobf("com.aetherteam.cumulus:cumulus_menus:${project.cumulus_version}") {
-        jarJar.ranged(it, "[${project.cumulus_version},)")
-        jarJar.pin(it, "${project.cumulus_version}")
-    }
-
-    jarJar fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}+${project.mc_version}") {
-        jarJar.ranged(it, "[${project.curios_version},)")
-        jarJar.pin(it, "${project.curios_version}+${project.mc_version}")
-    }
+//    jarJar fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}+${project.mc_version}") {
+//        jarJar.ranged(it, "[${project.curios_version},)")
+//        jarJar.pin(it, "${project.curios_version}+${project.mc_version}")
+//    }
+    modImplementation include("dev.emi:trinkets:${project.trinkets_version}")
 
     compileOnly "mezz.jei:jei-${project.mc_version}-common:${project.jei_version}"
-    compileOnly "mezz.jei:jei-${project.mc_version}-forge:${project.jei_version}"
+    compileOnly "mezz.jei:jei-${project.mc_version}-fabric:${project.jei_version}"
 
-    compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-${project.crafttweaker_version}")
+    modCompileOnly("com.blamejared.crafttweaker:CraftTweaker-fabric-${project.crafttweaker_version}")
 //    compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-${project.crafttweaker_version}")
 
 //    runtimeOnly fg.deobf("net.darkhax.bookshelf:Bookshelf-Forge-1.20.1:20.0.5")
@@ -122,8 +85,10 @@ dependencies {
 
 //    compileOnly fg.deobf("curse.maven:colytra-280200:${project.colytra_version}")
 //    compileOnly fg.deobf("curse.maven:curious-elytra-317716:${project.curiouselytra_version}")
-    compileOnly fg.deobf("curse.maven:jade-324717:${project.jade_version}")
-    compileOnly fg.deobf("curse.maven:lootr-361276:${project.lootr_version}")
+    modCompileOnly("curse.maven:jade-324717:${project.jade_version}")
+    modCompileOnly("curse.maven:lootr-615106:${project.lootr_version}")
+
+    modImplementation(include("me.shedaniel:mm:2.4.1"))
 
 //    runtimeOnly fg.deobf("io.github.ultimateboomer:smoothboot-forge:${project.smoothboot_version}")
 
@@ -136,6 +101,17 @@ repositories {
     maven { url = "https://maven.theillusivec4.top/" }
     maven { url = "https://www.cursemaven.com" }
     maven { url = "https://gitlab.com/api/v4/projects/21830712/packages/maven" }
+    maven { url = "https://maven.parchmentmc.org" }
+    maven { url = "https://maven.shedaniel.me/" }
+    maven { url = "https://mvn.devos.one/snapshots/" }
+    maven { url = "https://maven.ladysnake.org/releases" }
+    maven { url = "https://maven.terraformersmc.com/" }
+    maven {
+        url "https://maven.jamieswhiteshirt.com/libs-release"
+        content {
+            includeGroup "com.jamieswhiteshirt"
+        }
+    }
     maven githubPackage.invoke("The-Aether-Team/Nitrogen")
     maven githubPackage.invoke("The-Aether-Team/Cumulus")
 }
@@ -153,19 +129,7 @@ tasks.named('jar', Jar).configure {
         ])
     }
 
-    finalizedBy 'reobfJar'
-
     archiveClassifier = 'no-embeds'
-}
-
-tasks.named('jarJar', JarJar).configure {
-    archiveClassifier = ''
-}
-
-tasks.jarJar.finalizedBy('reobfJarJar')
-
-tasks.named(sourceSets.main.compileJavaTaskName) {
-    outputs.file("${it.temporaryDir}/${it.name}-refmap.json").withPropertyName("mixin refmap")
 }
 
 compileJava {
@@ -176,8 +140,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             artifactId project.archivesBaseName
-            artifact project.tasks.jarJar
-            artifact sourceJar
+            from components.java
         }
     }
     repositories {
@@ -200,9 +163,8 @@ curseforge {
         changelog = file("$rootDir/docs/CHANGELOG.md")
         changelogType = "markdown"
         addGameVersion("${project.mc_version}")
-        addGameVersion("Forge")
-        addGameVersion("NeoForge")
-        mainArtifact(tasks.jarJar) {
+        addGameVersion("Fabric")
+        mainArtifact(tasks.build) {
             displayName = "${project.mod_name} - ${version}"
             relations {
                 embeddedLibrary "curios"
@@ -219,20 +181,11 @@ modrinth {
     versionType = "${project.version_type}"
     versionName = "${project.mod_name} - ${version}"
     changelog = new File("$rootDir/docs/CHANGELOG.md").text
-    uploadFile = tasks.jarJar
+    uploadFile = tasks.build
     gameVersions = ["${project.mc_version}"]
-    loaders = ["forge", "neoforge"]
+    loaders = ["fabric"]
     dependencies {
-        embedded.version "curios", "${project.curios_version}+${project.mc_version}"
+        embedded.version "trinkets", "${project.trinkets_version}+${project.mc_version}"
         embedded.version "cumulus", "${project.cumulus_version}"
     }
-}
-
-mixin {
-    config "${project.mod_id}.mixins.json"
-    add sourceSets.main, "${project.mod_id}.refmap.json"
-}
-
-build {
-    dependsOn 'jarJar'
 }

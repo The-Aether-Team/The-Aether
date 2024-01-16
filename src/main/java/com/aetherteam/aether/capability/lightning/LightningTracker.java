@@ -1,17 +1,17 @@
 package com.aetherteam.aether.capability.lightning;
 
 import com.aetherteam.aether.capability.AetherCapabilities;
-import net.minecraft.nbt.CompoundTag;
+import dev.onyxstudios.cca.api.v3.component.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LightningBolt;
-import net.minecraftforge.common.util.INBTSerializable;
-import net.minecraftforge.common.util.LazyOptional;
 
-public interface LightningTracker extends INBTSerializable<CompoundTag> {
+import java.util.Optional;
+
+public interface LightningTracker extends Component {
     LightningBolt getLightningBolt();
 
-    static LazyOptional<LightningTracker> get(LightningBolt lightningBolt) {
-        return lightningBolt.getCapability(AetherCapabilities.LIGHTNING_TRACKER_CAPABILITY);
+    static Optional<LightningTracker> get(LightningBolt lightningBolt) {
+        return AetherCapabilities.LIGHTNING_TRACKER_CAPABILITY.maybeGet(lightningBolt);
     }
 
     void setOwner(Entity owner);

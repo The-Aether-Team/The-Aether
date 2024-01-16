@@ -10,6 +10,7 @@ import com.aetherteam.aether.recipe.recipes.item.AbstractAetherCookingRecipe;
 import com.aetherteam.aether.recipe.recipes.item.AltarRepairRecipe;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableList;
+import io.github.fabricators_of_create.porting_lib.recipe_book_categories.RecipeBookRegistry;
 import net.minecraft.client.RecipeBookCategories;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -40,12 +41,11 @@ public class AetherRecipeCategories {
      * To add sub-categories to be used by the search, use addAggregateCategories with the
      * search category as the first parameter.
      */
-    @SubscribeEvent
-    public static void registerRecipeCategories(RegisterRecipeBookCategoriesEvent event) {
+    public static void registerRecipeCategories() {
         // Enchanting
-        event.registerBookCategories(AetherRecipeBookTypes.ALTAR, ImmutableList.of(ENCHANTING_SEARCH.get(), ENCHANTING_FOOD.get(), ENCHANTING_BLOCKS.get(), ENCHANTING_MISC.get(), ENCHANTING_REPAIR.get()));
-        event.registerAggregateCategory(ENCHANTING_SEARCH.get(), ImmutableList.of(ENCHANTING_FOOD.get(), ENCHANTING_BLOCKS.get(), ENCHANTING_MISC.get(), ENCHANTING_REPAIR.get()));
-        event.registerRecipeCategoryFinder(AetherRecipeTypes.ENCHANTING.get(), recipe -> {
+        RecipeBookRegistry.registerBookCategories(AetherRecipeBookTypes.ALTAR, ImmutableList.of(ENCHANTING_SEARCH.get(), ENCHANTING_FOOD.get(), ENCHANTING_BLOCKS.get(), ENCHANTING_MISC.get(), ENCHANTING_REPAIR.get()));
+        RecipeBookRegistry.registerAggregateCategory(ENCHANTING_SEARCH.get(), ImmutableList.of(ENCHANTING_FOOD.get(), ENCHANTING_BLOCKS.get(), ENCHANTING_MISC.get(), ENCHANTING_REPAIR.get()));
+        RecipeBookRegistry.registerRecipeCategoryFinder(AetherRecipeTypes.ENCHANTING.get(), recipe -> {
             if (recipe instanceof AltarRepairRecipe || (recipe instanceof AbstractAetherCookingRecipe abstractAetherCookingRecipe && abstractAetherCookingRecipe.aetherCategory() == AetherBookCategory.ENCHANTING_REPAIR)) {
                 return ENCHANTING_REPAIR.get();
             } else if (recipe instanceof AbstractAetherCookingRecipe abstractAetherCookingRecipe) {
@@ -58,9 +58,9 @@ public class AetherRecipeCategories {
             return ENCHANTING_MISC.get();
         });
         // Freezing
-        event.registerBookCategories(AetherRecipeBookTypes.FREEZER, ImmutableList.of(FREEZABLE_SEARCH.get(), FREEZABLE_BLOCKS.get(), FREEZABLE_MISC.get()));
-        event.registerAggregateCategory(FREEZABLE_SEARCH.get(), ImmutableList.of(FREEZABLE_BLOCKS.get(), FREEZABLE_MISC.get()));
-        event.registerRecipeCategoryFinder(AetherRecipeTypes.FREEZING.get(), recipe -> {
+        RecipeBookRegistry.registerBookCategories(AetherRecipeBookTypes.FREEZER, ImmutableList.of(FREEZABLE_SEARCH.get(), FREEZABLE_BLOCKS.get(), FREEZABLE_MISC.get()));
+        RecipeBookRegistry.registerAggregateCategory(FREEZABLE_SEARCH.get(), ImmutableList.of(FREEZABLE_BLOCKS.get(), FREEZABLE_MISC.get()));
+        RecipeBookRegistry.registerRecipeCategoryFinder(AetherRecipeTypes.FREEZING.get(), recipe -> {
             if (recipe instanceof AbstractAetherCookingRecipe abstractAetherCookingRecipe) {
                 if (abstractAetherCookingRecipe.aetherCategory() == AetherBookCategory.FREEZABLE_BLOCKS) {
                     return FREEZABLE_BLOCKS.get();
@@ -69,8 +69,8 @@ public class AetherRecipeCategories {
             return FREEZABLE_MISC.get();
         });
         // Incubation
-        event.registerBookCategories(AetherRecipeBookTypes.INCUBATOR, ImmutableList.of(INCUBATION_SEARCH.get(), INCUBATION_MISC.get()));
-        event.registerAggregateCategory(INCUBATION_SEARCH.get(), ImmutableList.of(INCUBATION_MISC.get()));
-        event.registerRecipeCategoryFinder(AetherRecipeTypes.INCUBATION.get(), recipe -> INCUBATION_MISC.get());
+        RecipeBookRegistry.registerBookCategories(AetherRecipeBookTypes.INCUBATOR, ImmutableList.of(INCUBATION_SEARCH.get(), INCUBATION_MISC.get()));
+        RecipeBookRegistry.registerAggregateCategory(INCUBATION_SEARCH.get(), ImmutableList.of(INCUBATION_MISC.get()));
+        RecipeBookRegistry.registerRecipeCategoryFinder(AetherRecipeTypes.INCUBATION.get(), recipe -> INCUBATION_MISC.get());
     }
 }

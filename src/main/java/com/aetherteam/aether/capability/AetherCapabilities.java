@@ -15,6 +15,9 @@ import com.aetherteam.aether.capability.time.AetherTime;
 import com.aetherteam.aether.capability.time.AetherTimeCapability;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.nitrogen.capability.CapabilityProvider;
+import dev.onyxstudios.cca.api.v3.component.ComponentKey;
+import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
+import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LightningBolt;
@@ -35,12 +38,12 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherCapabilities {
-	public static final Capability<AetherPlayer> AETHER_PLAYER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
-	public static final Capability<MobAccessory> MOB_ACCESSORY_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
-	public static final Capability<PhoenixArrow> PHOENIX_ARROW_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
-	public static final Capability<LightningTracker> LIGHTNING_TRACKER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
-	public static final Capability<DroppedItem> DROPPED_ITEM_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
-	public static final Capability<AetherTime> AETHER_TIME_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
+	public static final ComponentKey<AetherPlayer> AETHER_PLAYER_CAPABILITY = ComponentRegistry.getOrCreate(new ResourceLocation(Aether.MODID, "aether_player"), AetherPlayer.class);
+	public static final ComponentKey<MobAccessory> MOB_ACCESSORY_CAPABILITY = ComponentRegistry.getOrCreate(new ResourceLocation(Aether.MODID, "mob_accessory"), MobAccessory.class);
+	public static final ComponentKey<PhoenixArrow> PHOENIX_ARROW_CAPABILITY = ComponentRegistry.getOrCreate(new ResourceLocation(Aether.MODID, "phoenix_arrow"), PhoenixArrow.class);
+	public static final ComponentKey<LightningTracker> LIGHTNING_TRACKER_CAPABILITY = ComponentRegistry.getOrCreate(new ResourceLocation(Aether.MODID, "lightning_tracker"), LightningTracker.class);
+	public static final ComponentKey<DroppedItem> DROPPED_ITEM_CAPABILITY = ComponentRegistry.getOrCreate(new ResourceLocation(Aether.MODID, "dropped_item"), DroppedItem.class);
+	public static final ComponentKey<AetherTime> AETHER_TIME_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() { });
 
 	@SubscribeEvent
 	public static void register(RegisterCapabilitiesEvent event) {
@@ -55,23 +58,12 @@ public class AetherCapabilities {
 	@EventBusSubscriber(modid = Aether.MODID)
 	public static class Registration {
 		@SubscribeEvent
-		public static void attachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
-			if (event.getObject() instanceof LivingEntity livingEntity) {
-				if (livingEntity instanceof Player player) {
-					event.addCapability(new ResourceLocation(Aether.MODID, "aether_player"), new CapabilityProvider(AetherCapabilities.AETHER_PLAYER_CAPABILITY, new AetherPlayerCapability(player)));
-				} else if (livingEntity instanceof Mob mob) {
-					event.addCapability(new ResourceLocation(Aether.MODID, "mob_accessory"), new CapabilityProvider(AetherCapabilities.MOB_ACCESSORY_CAPABILITY, new MobAccessoryCapability(mob)));
-				}
-			}
-			if (event.getObject() instanceof AbstractArrow abstractArrow) {
-				event.addCapability(new ResourceLocation(Aether.MODID, "phoenix_arrow"), new CapabilityProvider(AetherCapabilities.PHOENIX_ARROW_CAPABILITY, new PhoenixArrowCapability(abstractArrow)));
-			}
-			if (event.getObject() instanceof LightningBolt lightningBolt) {
-				event.addCapability(new ResourceLocation(Aether.MODID, "lightning_tracker"), new CapabilityProvider(AetherCapabilities.LIGHTNING_TRACKER_CAPABILITY, new LightningTrackerCapability(lightningBolt)));
-			}
-			if (event.getObject() instanceof ItemEntity itemEntity) {
-				event.addCapability(new ResourceLocation(Aether.MODID, "dropped_item"), new CapabilityProvider(AetherCapabilities.DROPPED_ITEM_CAPABILITY, new DroppedItemCapability(itemEntity)));
-			}
+		public static void attachEntityCapabilities(EntityComponentFactoryRegistry registry) {
+			registry.registerForPlayers(AetherCapabilities.AETHER_PLAYER_CAPABILITY, AetherPlayerCapability::new);
+			registry.registerFor(Mob.class, AetherCapabilities.MOB_ACCESSORY_CAPABILITY, MobAccessoryCapability::new);
+			registry.registerFor(AbstractArrow.class, AetherCapabilities.PHOENIX_ARROW_CAPABILITY, PhoenixArrowCapability::new);
+			registry.registerFor(LightningBolt.class, AetherCapabilities.LIGHTNING_TRACKER_CAPABILITY, LightningTrackerCapability::new);
+			registry.registerFor(ItemEntity.class, AetherCapabilities.DROPPED_ITEM_CAPABILITY, DroppedItemCapability::new);
 		}
 
 		@SubscribeEvent

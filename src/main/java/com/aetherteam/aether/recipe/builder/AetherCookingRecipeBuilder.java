@@ -8,6 +8,7 @@ import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -17,9 +18,8 @@ import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
 /**
@@ -136,7 +136,7 @@ public class AetherCookingRecipeBuilder implements RecipeBuilder {
             }
             json.addProperty("category", this.category.getSerializedName());
             json.add("ingredient", this.ingredient.toJson());
-            ResourceLocation itemLocation = ForgeRegistries.ITEMS.getKey(this.result);
+            ResourceLocation itemLocation = BuiltInRegistries.ITEM.getKey(this.result);
             if (itemLocation != null) {
                 json.addProperty("result", itemLocation.toString());
             } else {
