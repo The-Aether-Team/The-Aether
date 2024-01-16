@@ -113,10 +113,7 @@ public class EntityListener {
     public static void onLightningStrike(EntityStruckByLightningEvent event) {
         Entity entity = event.getEntity();
         LightningBolt lightningBolt = event.getLightning();
-        if (EntityHooks.lightningHitKeys(entity)) {
-            event.setCanceled(true);
-        }
-        if (EntityHooks.thunderCrystalHitItems(entity, lightningBolt)) {
+        if (EntityHooks.lightningHitKeys(entity) || EntityHooks.thunderCrystalHitItems(entity, lightningBolt)) {
             event.setCanceled(true);
         }
     }
