@@ -189,12 +189,14 @@ public class MoaEggItem extends Item {
      */
     @Nullable
     public static MoaEggItem byId(MoaType moaType) {
-        for (Supplier<? extends MoaType> holder : BY_ID.keySet()) {
-            if (moaType.getId().equals(holder.get().getId())) {
-                return BY_ID.get(holder);
+        if (moaType != null) {
+            for (Supplier<? extends MoaType> holder : BY_ID.keySet()) {
+                if (moaType.getId().equals(holder.get().getId())) {
+                    return BY_ID.get(holder);
+                }
             }
         }
-        return (MoaEggItem) AetherItems.BLUE_MOA_EGG.get();
+        return null;
     }
 
     /**
