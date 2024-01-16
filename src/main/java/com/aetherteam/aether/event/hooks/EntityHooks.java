@@ -3,6 +3,7 @@ package com.aetherteam.aether.event.hooks;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.capability.item.DroppedItem;
+import com.aetherteam.aether.capability.lightning.LightningTracker;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.ai.goal.BeeGrowBerryBushGoal;
@@ -11,6 +12,7 @@ import com.aetherteam.aether.entity.monster.Swet;
 import com.aetherteam.aether.entity.monster.dungeon.boss.Slider;
 import com.aetherteam.aether.entity.passive.FlyingCow;
 import com.aetherteam.aether.entity.passive.MountableAnimal;
+import com.aetherteam.aether.entity.projectile.crystal.ThunderCrystal;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.miscellaneous.bucket.SkyrootBucketItem;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -21,6 +23,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -182,6 +185,23 @@ public class EntityHooks {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Prevents lightning summoned by Thunder Crystals from damaging items.
+     * @param entity The {@link Entity} struck by the lightning bolt.
+     * @param lightning The {@link LightningBolt} that struck the entity.
+     * @return Whether the lightning was from a {@link ThunderCrystal} and hit an item, as a {@link Boolean}.
+     */
+    public static boolean thunderCrystalHitItems(Entity entity, LightningBolt lightning) {
+        if (entity instanceof ItemEntity) {
+            Optional<LightningTracker> lightningTrackerOptional = LightningTracker.get(lightning).resolve();
+            if (lightningTrackerOptional.isPresent()) {
+                LightningTracker lightningTracker = lightningTrackerOptional.get();
+                return lightningTracker.getOwner() instanceof ThunderCrystal;
+            }
+        }
+        return false;
     }
 
     /**
