@@ -7,6 +7,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -111,7 +112,13 @@ public class EntityListener {
     @SubscribeEvent
     public static void onLightningStrike(EntityStruckByLightningEvent event) {
         Entity entity = event.getEntity();
-        event.setCanceled(EntityHooks.lightningHitKeys(entity));
+        LightningBolt lightningBolt = event.getLightning();
+        if (EntityHooks.lightningHitKeys(entity)) {
+            event.setCanceled(true);
+        }
+        if (EntityHooks.thunderCrystalHitItems(entity, lightningBolt)) {
+            event.setCanceled(true);
+        }
     }
 
     /**
