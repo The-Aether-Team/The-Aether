@@ -111,8 +111,13 @@ dependencies {
         jarJar.pin(it, "${project.curios_version}+${project.mc_version}")
     }
 
-    compileOnly "mezz.jei:jei-${project.mc_version}-common:${project.jei_version}"
-    compileOnly "mezz.jei:jei-${project.mc_version}-forge:${project.jei_version}"
+    /*compileOnly "mezz.jei:jei-${project.mc_version}-common:${project.jei_version}"
+    compileOnly "mezz.jei:jei-${project.mc_version}-forge:${project.jei_version}"*/
+
+    compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-common-api:${project.jei_version}"))
+    compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${project.jei_version}"))
+
+    runtimeOnly compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge:${project.jei_version}"))
 
     compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-${project.crafttweaker_version}")
 //    compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-${project.crafttweaker_version}")
@@ -128,6 +133,14 @@ dependencies {
 //    runtimeOnly fg.deobf("io.github.ultimateboomer:smoothboot-forge:${project.smoothboot_version}")
 
 //    compileOnly fileTree(dir: 'libs', include: '*.jar')
+
+    runtimeOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:$rei_version")
+
+    compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-api-forge:$rei_version")
+    compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-default-plugin-forge:$rei_version")
+
+    implementation fg.deobf("me.shedaniel.cloth:cloth-config-forge:$cloth_config_version")
+    implementation fg.deobf("dev.architectury:architectury-forge:$architectury_version")
 }
 
 repositories {
@@ -138,6 +151,9 @@ repositories {
     maven { url = "https://gitlab.com/api/v4/projects/21830712/packages/maven" }
     maven githubPackage.invoke("The-Aether-Team/Nitrogen")
     maven githubPackage.invoke("The-Aether-Team/Cumulus")
+    maven { url "https://maven.shedaniel.me/" }
+    maven { url "https://maven.architectury.dev/" }
+    //mavenLocal()
 }
 
 tasks.named('jar', Jar).configure {
