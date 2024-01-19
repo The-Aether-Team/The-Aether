@@ -1,4 +1,4 @@
-// 1.20.1	2023-09-08T21:57:30.0174912	Tags for minecraft:entity_type mod id aether
+// 1.20.1	2024-01-18T16:07:42.423351	Tags for minecraft:entity_type mod id aether
 b3a379df5d7bd0f9d26800bb985a7acba83143fe data/aether/tags/entity_types/deflectable_projectiles.json
 0830aa859642688f0ce9dbf68ec5710f92d7f5d6 data/aether/tags/entity_types/fire_mob.json
 215c49d40f7275befd0abd1d7d7c0e72c8b2a912 data/aether/tags/entity_types/ignore_invisibility.json
@@ -8,7 +8,7 @@ f7203aae71175bb0e7c7c2df595579e99489b9ab data/aether/tags/entity_types/no_skyroo
 2bd7356d8661b5745b019dfe60733e365ba7de97 data/aether/tags/entity_types/pigs.json
 4fd137c2bce66e14ebca74226b1d16dd47f5b553 data/aether/tags/entity_types/swets.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/entity_types/treated_as_aether_entity.json
-35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/entity_types/treated_as_vanilla_entity.json
+1b6a9ff2a0c19d921d6b0012941d44eeb7c028f6 data/aether/tags/entity_types/treated_as_vanilla_entity.json
 65aa761dcc1ffe07839ad8a0f63c483e787173cb data/aether/tags/entity_types/unhookable.json
 004f3159bc56e4fbb06d127966f8ce5afa733d45 data/aether/tags/entity_types/unlaunchable.json
 6bf172d40b964ab13008f5e9a62d996284dd577e data/aether/tags/entity_types/whirlwind_unaffected.json

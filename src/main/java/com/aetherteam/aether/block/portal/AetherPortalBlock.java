@@ -1,5 +1,6 @@
 package com.aetherteam.aether.block.portal;
 
+import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.capability.AetherCapabilities;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.AetherSoundEvents;
@@ -54,7 +55,7 @@ public class AetherPortalBlock extends Block {
 	@Override
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
 		EntityAccessor entityAccessor = (EntityAccessor) entity;
-		if (!entity.isPassenger() && !entity.isVehicle() && entity.canChangeDimensions()) {
+		if (!entity.isPassenger() && !entity.isVehicle() && entity.canChangeDimensions() && !entity.getType().is(AetherTags.Entities.DUNGEON_ENTITIES)) {
 			if (entity.isOnPortalCooldown()) {
 				entity.setPortalCooldown();
 			} else {
