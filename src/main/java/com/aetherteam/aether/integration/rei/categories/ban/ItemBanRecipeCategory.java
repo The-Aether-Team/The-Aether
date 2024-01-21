@@ -16,7 +16,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import java.util.List;
 
 public class ItemBanRecipeCategory extends AbstractPlacementBanRecipeCategory<ItemStack, Ingredient, ItemBanRecipe> {
-
     public ItemBanRecipeCategory() {
         super("item_placement_ban", AetherREIServerPlugin.ITEM_PLACEMENT_BAN, EntryStack.of(VanillaEntryTypes.ITEM, new ItemStack(Items.FLINT_AND_STEEL)));
     }
@@ -27,7 +26,7 @@ public class ItemBanRecipeCategory extends AbstractPlacementBanRecipeCategory<It
 
         Point startingPoint;
 
-        if(display.getBypassBlock() == null || display.getBypassBlock().isEmpty()){
+        if (display.getBypassBlock() == null || display.getBypassBlock().isEmpty()) {
             startingPoint = new Point(bounds.getCenterX() - 8, bounds.getCenterY() - 8);
         } else {
             startingPoint = startingOffset(bounds);

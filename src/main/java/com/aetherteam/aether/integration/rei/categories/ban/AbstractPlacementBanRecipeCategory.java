@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public abstract class AbstractPlacementBanRecipeCategory<T, S extends Predicate<T>, R extends AbstractPlacementBanRecipe<T, S>> extends AbstractRecipeCategory<PlacementBanRecipeDisplay<R>> implements BiomeTooltip {
-
     public AbstractPlacementBanRecipeCategory(String id, CategoryIdentifier<PlacementBanRecipeDisplay<R>> uid, Renderer icon) {
         super(id, uid, 116, 18, icon);
     }
@@ -61,8 +60,8 @@ public abstract class AbstractPlacementBanRecipeCategory<T, S extends Predicate<
     }
 
     protected void populateTooltip(PlacementBanRecipeDisplay<R> display, Tooltip tooltip) {
-        if (Minecraft.getInstance().level == null) return;
-
-        this.populateBiomeInformation(display.getBiomeKey(), display.getBiomeTag(), tooltip);
+        if (Minecraft.getInstance().level != null) {
+            this.populateBiomeInformation(display.getBiomeKey(), display.getBiomeTag(), tooltip);
+        }
     }
 }
