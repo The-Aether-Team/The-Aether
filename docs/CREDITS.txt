@@ -9,6 +9,9 @@ AerodDev:
 - Fixes to the Aether Dirt Path texture.
 - Fixes to the silver Life Shard hearts texture.
 
+Alexandra-Myers
+- Fixes to Combatify incompatibility.
+
 baguchan:
 - Implementation of allowing saddled entities to fall out of the Aether.
 - Improvements to entity AI to avoid entities falling out of the Aether.
