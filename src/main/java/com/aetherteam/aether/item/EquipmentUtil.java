@@ -22,7 +22,8 @@ public final class EquipmentUtil {
      * @return Whether the attack was full strength, as a {@link Boolean}.
      */
     public static boolean isFullStrength(LivingEntity attacker) {
-        return !(attacker instanceof Player player) || player.getAttackStrengthScale(1.0F) >= 1.0F;
+        boolean combatifyLoaded = ModList.get().isLoaded("combatify");
+        return !(attacker instanceof Player player) || (combatifyLoaded ? player.getAttackStrengthScale(1.0F) >= 1.95F : player.getAttackStrengthScale(1.0F) >= 1.0F);
     }
 
     /**
