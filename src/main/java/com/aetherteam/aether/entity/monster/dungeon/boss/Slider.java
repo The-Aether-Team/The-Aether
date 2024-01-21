@@ -8,6 +8,7 @@ import com.aetherteam.aether.entity.AetherBossMob;
 import com.aetherteam.aether.entity.ai.controller.BlankMoveControl;
 import com.aetherteam.aether.entity.ai.goal.MostDamageTargetGoal;
 import com.aetherteam.aether.entity.monster.dungeon.boss.goal.*;
+import com.aetherteam.aether.event.AetherEventDispatch;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.BossInfoPacket;
 import com.aetherteam.nitrogen.entity.BossRoomTracker;
@@ -260,6 +261,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         if (this.getDungeon() != null) {
             this.closeRoom();
         }
+        AetherEventDispatch.onBossFightStart(this, this.getDungeon());
     }
 
     /**
@@ -275,6 +277,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
             this.setPos(this.getDungeon().originCoordinates());
             this.openRoom();
         }
+        AetherEventDispatch.onBossFightStop(this, this.getDungeon());
     }
 
     /**
