@@ -14,7 +14,6 @@ import com.aetherteam.nitrogen.integration.rei.displays.BlockStateRecipeDisplay;
 import com.aetherteam.nitrogen.integration.rei.displays.FuelDisplay;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.DisplaySerializerRegistry;
-import me.shedaniel.rei.api.common.display.basic.BasicDisplay;
 import me.shedaniel.rei.api.common.plugins.REIServerPlugin;
 import me.shedaniel.rei.forge.REIPluginCommon;
 import net.minecraft.resources.ResourceLocation;
@@ -44,7 +43,5 @@ public class AetherREIServerPlugin implements REIServerPlugin {
         registry.register(ALTAR_ENCHANTING, AetherCookingRecipeDisplay.serializer(ALTAR_ENCHANTING));
         registry.register(FREEZING, AetherCookingRecipeDisplay.serializer(FREEZING));
         registry.register(INCUBATING, AetherCookingRecipeDisplay.serializer(INCUBATING));
-
-        // TODO: Add other displays serializers
     }
 }

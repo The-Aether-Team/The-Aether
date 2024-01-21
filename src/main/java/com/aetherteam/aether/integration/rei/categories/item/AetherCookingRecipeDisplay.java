@@ -1,6 +1,5 @@
 package com.aetherteam.aether.integration.rei.categories.item;
 
-import com.aetherteam.aether.integration.rei.AetherREIServerPlugin;
 import com.aetherteam.aether.recipe.recipes.item.AbstractAetherCookingRecipe;
 import com.aetherteam.aether.recipe.recipes.item.AltarRepairRecipe;
 import com.aetherteam.aether.recipe.recipes.item.IncubationRecipe;
@@ -9,7 +8,6 @@ import me.shedaniel.rei.api.common.display.DisplaySerializer;
 import me.shedaniel.rei.api.common.display.basic.BasicDisplay;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;

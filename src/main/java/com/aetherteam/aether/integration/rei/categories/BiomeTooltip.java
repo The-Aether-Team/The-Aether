@@ -13,18 +13,18 @@ import javax.annotation.Nullable;
 
 public interface BiomeTooltip {
     default void populateBiomeInformation(@Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, Tooltip tooltip) {
-        if (Minecraft.getInstance().level == null || (biomeKey == null && biomeTag == null)) return;
+        if (Minecraft.getInstance().level != null && (biomeKey != null || biomeTag != null)) {
+            tooltip.add(Component.translatable("gui.aether.jei.biome.tooltip").withStyle(ChatFormatting.GRAY));
+            if (biomeKey != null) {
+                tooltip.add(Component.translatable("gui.aether.jei.biome.tooltip.biome").withStyle(ChatFormatting.DARK_GRAY));
+                tooltip.add(Component.literal(biomeKey.location().toString()).withStyle(ChatFormatting.DARK_GRAY));
+            } else {
+                tooltip.add(Component.translatable("gui.aether.jei.biome.tooltip.tag").withStyle(ChatFormatting.DARK_GRAY));
+                tooltip.add(Component.literal("#" + biomeTag.location()).withStyle(ChatFormatting.DARK_GRAY));
 
-        tooltip.add(Component.translatable("gui.aether.jei.biome.tooltip").withStyle(ChatFormatting.GRAY));
-        if (biomeKey != null) {
-            tooltip.add(Component.translatable("gui.aether.jei.biome.tooltip.biome").withStyle(ChatFormatting.DARK_GRAY));
-            tooltip.add(Component.literal(biomeKey.location().toString()).withStyle(ChatFormatting.DARK_GRAY));
-        } else {
-            tooltip.add(Component.translatable("gui.aether.jei.biome.tooltip.tag").withStyle(ChatFormatting.DARK_GRAY));
-            tooltip.add(Component.literal("#" + biomeTag.location()).withStyle(ChatFormatting.DARK_GRAY));
-
-            tooltip.add(Component.translatable("gui.aether.jei.biome.tooltip.biomes").withStyle(ChatFormatting.DARK_GRAY));
-            Minecraft.getInstance().level.registryAccess().registryOrThrow(Registries.BIOME).getTagOrEmpty(biomeTag).forEach((biomeHolder) -> biomeHolder.unwrapKey().ifPresent((key) -> tooltip.add(Component.literal(key.location().toString()).withStyle(ChatFormatting.DARK_GRAY))));
+                tooltip.add(Component.translatable("gui.aether.jei.biome.tooltip.biomes").withStyle(ChatFormatting.DARK_GRAY));
+                Minecraft.getInstance().level.registryAccess().registryOrThrow(Registries.BIOME).getTagOrEmpty(biomeTag).forEach((biomeHolder) -> biomeHolder.unwrapKey().ifPresent((key) -> tooltip.add(Component.literal(key.location().toString()).withStyle(ChatFormatting.DARK_GRAY))));
+            }
         }
     }
 }

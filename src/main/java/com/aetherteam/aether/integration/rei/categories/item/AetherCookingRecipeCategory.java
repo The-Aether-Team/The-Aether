@@ -124,7 +124,9 @@ public class AetherCookingRecipeCategory<R extends Recipe<?>> extends AbstractRe
 
         var labelPoint = new Point(bounds.x + bounds.width - 5, bounds.y + 5);
 
-        if(display.isIncubation()) labelPoint.move(labelPoint.x, bounds.getCenterY() - Minecraft.getInstance().font.lineHeight / 2);
+        if (display.isIncubation()) {
+            labelPoint.move(labelPoint.x, bounds.getCenterY() - Minecraft.getInstance().font.lineHeight / 2);
+        }
 
         widgets.add(Widgets.createLabel(labelPoint, cookInfo).noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
 
