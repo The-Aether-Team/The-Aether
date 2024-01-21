@@ -22,7 +22,6 @@ import java.util.Optional;
 
 // TODO: Implement DisplaySerializer within the future
 public class PlacementBanRecipeDisplay<R extends AbstractPlacementBanRecipe<?, ?>> extends BasicDisplay {
-
     private final CategoryIdentifier<?> categoryIdentifier;
 
     private final BlockStateIngredient bypassBlock;
@@ -51,7 +50,7 @@ public class PlacementBanRecipeDisplay<R extends AbstractPlacementBanRecipe<?, ?
                 Optional.of(recipe.getId()));
     }
 
-    public static PlacementBanRecipeDisplay<ItemBanRecipe> ofItem(ItemBanRecipe recipe){
+    public static PlacementBanRecipeDisplay<ItemBanRecipe> ofItem(ItemBanRecipe recipe) {
         var list = new ArrayList<>(REIUtils.toIngredientList(recipe.getBypassBlock().getPairs()));
 
         list.add(EntryIngredients.ofIngredient(recipe.getIngredient()));
@@ -59,7 +58,7 @@ public class PlacementBanRecipeDisplay<R extends AbstractPlacementBanRecipe<?, ?
         return new PlacementBanRecipeDisplay<>(recipe, AetherREIServerPlugin.ITEM_PLACEMENT_BAN, list);
     }
 
-    public static PlacementBanRecipeDisplay<BlockBanRecipe> ofBlock(BlockBanRecipe recipe){
+    public static PlacementBanRecipeDisplay<BlockBanRecipe> ofBlock(BlockBanRecipe recipe) {
         var list = new ArrayList<>(REIUtils.toIngredientList(recipe.getBypassBlock().getPairs()));
 
         list.addAll(REIUtils.toIngredientList(recipe.getIngredient().getPairs()));
@@ -83,11 +82,11 @@ public class PlacementBanRecipeDisplay<R extends AbstractPlacementBanRecipe<?, ?
 
     @Nullable
     public BlockStateIngredient getBlockStateIngredient() {
-        return blockStateIngredient.orElse(null);
+        return this.blockStateIngredient.orElse(null);
     }
 
     @Override
     public CategoryIdentifier<?> getCategoryIdentifier() {
-        return categoryIdentifier;
+        return this.categoryIdentifier;
     }
 }

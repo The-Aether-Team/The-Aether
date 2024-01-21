@@ -38,7 +38,6 @@ import java.util.List;
 
 @REIPluginClient
 public class AetherREIClientPlugin implements REIClientPlugin {
-
     public static final ResourceLocation ALTAR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/menu/altar.png");
 
     @Override

@@ -31,7 +31,6 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class AetherCookingRecipeCategory<R extends Recipe<?>> extends AbstractRecipeCategory<AetherCookingRecipeDisplay<R>> {
-
     public static final ResourceLocation ALTAR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/menu/altar.png");
     public static final ResourceLocation FREEZER_TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/menu/freezer.png");
     public static final ResourceLocation INCUBATOR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/menu/incubator.png");
@@ -50,23 +49,23 @@ public class AetherCookingRecipeCategory<R extends Recipe<?>> extends AbstractRe
         this.animatedProgressArrow = animatedProgressArrow;
     }
 
-    public static AetherCookingRecipeCategory<AltarRepairRecipe> altarRepair(){
+    public static AetherCookingRecipeCategory<AltarRepairRecipe> altarRepair() {
         return new AetherCookingRecipeCategory<>("altar.repairing", AetherREIServerPlugin.ALTAR_REPAIR, 140, 39, EntryStacks.of(AetherBlocks.ALTAR.get()), ALTAR_TEXTURE);
     }
 
-    public static AetherCookingRecipeCategory<EnchantingRecipe> altarEnchanting(){
+    public static AetherCookingRecipeCategory<EnchantingRecipe> altarEnchanting() {
         return new AetherCookingRecipeCategory<>("altar.enchanting", AetherREIServerPlugin.ALTAR_ENCHANTING, 140, 39, EntryStacks.of(AetherBlocks.ALTAR.get()), ALTAR_TEXTURE);
     }
 
-    public static AetherCookingRecipeCategory<FreezingRecipe> freezing(){
+    public static AetherCookingRecipeCategory<FreezingRecipe> freezing() {
         return new AetherCookingRecipeCategory<>("freezing", AetherREIServerPlugin.FREEZING, 140, 39, EntryStacks.of(AetherBlocks.FREEZER.get()), FREEZER_TEXTURE);
     }
 
-    public static AetherCookingRecipeCategory<IncubationRecipe> incubating(){
+    public static AetherCookingRecipeCategory<IncubationRecipe> incubating() {
         return new AetherCookingRecipeCategory<>("incubating", AetherREIServerPlugin.INCUBATING, 88, 54, EntryStacks.of(AetherBlocks.INCUBATOR.get()), INCUBATOR_TEXTURE, () -> {
             var lastTick = new MutableDouble(0);
 
-            var widgetBound = new Rectangle(8, -13, 10, 54); //new Rectangle(14, 3, 54, 10);
+            var widgetBound = new Rectangle(8, -13, 10, 54);
 
             return Widgets.wrapRenderer(widgetBound, new Renderer() {
                 @Override
@@ -74,7 +73,9 @@ public class AetherCookingRecipeCategory<R extends Recipe<?>> extends AbstractRe
                     RenderSystem.setShaderTexture(0, INCUBATOR_TEXTURE);
                     lastTick.getAndAdd(delta);
 
-                    if(lastTick.getValue() > 5700) lastTick.setValue(0);
+                    if (lastTick.getValue() > 5700) {
+                        lastTick.setValue(0);
+                    }
 
                     var textureLength = 54;
                     var scissorOffset = (int) Math.round(textureLength * (lastTick.getValue() / 5700));
@@ -127,7 +128,9 @@ public class AetherCookingRecipeCategory<R extends Recipe<?>> extends AbstractRe
 
                 lastTick.getAndAdd(delta);
 
-                if(lastTick.getValue() > burnTime) lastTick.setValue(0);
+                if (lastTick.getValue() > burnTime) {
+                    lastTick.setValue(0);
+                }
 
                 var xOffset = 23 - (int) Math.round(23 * (lastTick.getValue() / burnTime));
 
@@ -164,7 +167,7 @@ public class AetherCookingRecipeCategory<R extends Recipe<?>> extends AbstractRe
         int cookingTime = display.getCookingTime();
 
         Component cookInfo;
-        if(experience > 0){
+        if (experience > 0) {
             cookInfo = Component.translatable("category.rei.cooking.time&xp", df.format(experience), df.format(cookingTime / 20d));
         } else {
             cookInfo = Component.translatable("category.rei.campfire.time", df.format(cookingTime / 20d));
@@ -172,7 +175,9 @@ public class AetherCookingRecipeCategory<R extends Recipe<?>> extends AbstractRe
 
         var labelPoint = new Point(bounds.x + bounds.width - 5, bounds.y + 5);
 
-        if(display.isIncubation()) labelPoint.move(labelPoint.x, bounds.getCenterY() - Minecraft.getInstance().font.lineHeight / 2);
+        if (display.isIncubation()) {
+            labelPoint.move(labelPoint.x, bounds.getCenterY() - Minecraft.getInstance().font.lineHeight / 2);
+        }
 
         widgets.add(Widgets.createLabel(labelPoint, cookInfo).noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
 
@@ -182,7 +187,9 @@ public class AetherCookingRecipeCategory<R extends Recipe<?>> extends AbstractRe
         arrowWidget.getBounds().translate(arrowPoint.x, arrowPoint.y);
         widgets.add(arrowWidget);
 
-        if(display.isIncubation()) startPoint.translate(6, 5);
+        if (display.isIncubation()) {
+            startPoint.translate(6, 5);
+        }
 
         var fuelWidget = this.fuelIndicator.get();
         fuelWidget.getBounds().move(startPoint.x + 2, startPoint.y + 20);
@@ -194,7 +201,7 @@ public class AetherCookingRecipeCategory<R extends Recipe<?>> extends AbstractRe
 
         var outputEntries = display.getOutputEntries();
 
-        if(outputEntries.size() > 0) {
+        if (outputEntries.size() > 0) {
             widgets.add(Widgets.createResultSlotBackground(new Point(startPoint.x + 61, startPoint.y + 9)));
 
             widgets.add(Widgets.createSlot(new Point(startPoint.x + 61, startPoint.y + 9))

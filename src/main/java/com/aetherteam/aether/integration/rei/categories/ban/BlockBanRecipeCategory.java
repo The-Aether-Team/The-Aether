@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.List;
 
 public class BlockBanRecipeCategory extends AbstractPlacementBanRecipeCategory<BlockState, BlockStateIngredient, BlockBanRecipe> {
-
     public BlockBanRecipeCategory() {
         super("block_placement_ban", AetherREIServerPlugin.BLOCK_PLACEMENT_BAN, EntryStack.of(VanillaEntryTypes.ITEM, new ItemStack(Blocks.TORCH)));
     }
@@ -28,7 +27,7 @@ public class BlockBanRecipeCategory extends AbstractPlacementBanRecipeCategory<B
 
         Point startingPoint;
 
-        if(display.getBypassBlock() == null || display.getBypassBlock().isEmpty()){
+        if (display.getBypassBlock() == null || display.getBypassBlock().isEmpty()) {
             startingPoint = new Point(bounds.getCenterX() - 8, bounds.getCenterY() - 8);
         } else {
             startingPoint = startingOffset(bounds);
