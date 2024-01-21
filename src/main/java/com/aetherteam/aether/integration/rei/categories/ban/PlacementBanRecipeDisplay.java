@@ -22,7 +22,6 @@ import java.util.Optional;
 
 // TODO: Implement DisplaySerializer within the future
 public class PlacementBanRecipeDisplay<R extends AbstractPlacementBanRecipe<?, ?>> extends BasicDisplay {
-
     private final CategoryIdentifier<?> categoryIdentifier;
 
     private final BlockStateIngredient bypassBlock;
@@ -83,11 +82,11 @@ public class PlacementBanRecipeDisplay<R extends AbstractPlacementBanRecipe<?, ?
 
     @Nullable
     public BlockStateIngredient getBlockStateIngredient() {
-        return blockStateIngredient.orElse(null);
+        return this.blockStateIngredient.orElse(null);
     }
 
     @Override
     public CategoryIdentifier<?> getCategoryIdentifier() {
-        return categoryIdentifier;
+        return this.categoryIdentifier;
     }
 }

@@ -21,7 +21,6 @@ import net.minecraft.resources.ResourceLocation;
 
 @REIPluginCommon
 public class AetherREIServerPlugin implements REIServerPlugin {
-
     public static final CategoryIdentifier<PlacementBanRecipeDisplay<BlockBanRecipe>> BLOCK_PLACEMENT_BAN = CategoryIdentifier.of(new ResourceLocation(Aether.MODID, "block_placement_ban"));
     public static final CategoryIdentifier<PlacementBanRecipeDisplay<ItemBanRecipe>> ITEM_PLACEMENT_BAN = CategoryIdentifier.of(new ResourceLocation(Aether.MODID, "item_placement_ban"));
 
