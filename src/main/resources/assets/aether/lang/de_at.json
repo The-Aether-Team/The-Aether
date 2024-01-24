@@ -536,5 +536,8 @@
   "pack.aether.b173.description": "Des originale Osehen vom b1.7.3 Aether",
   "pack.aether.b173.title": "Aether b1.7.3 Textuan",
   "pack.aether.ctm.description": "Verbessat Gschwinderdglosscheibn wenn CTM bnutzt wiad",
-  "pack.aether.mod.description": "Aether Resourcen"
+  "pack.aether.mod.description": "Aether Resourcen",
+  "structure.aether.bronze_dungeon": "Bronze Dungeon",
+  "structure.aether.gold_dungeon": "Goid Dungeon",
+  "structure.aether.silver_dungeon": "Süba Dungeon"
 }
