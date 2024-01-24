@@ -88,11 +88,15 @@
   "aether.pro_tips.line.aether.enchanted_gravitite_floating": "Gravitite Terpesona boleh terapung apabila dikuasakan.",
   "block.aether.freezer": "Peti Beku",
   "config.aether.common.gameplay.enable_startup_loot": "Ketika pemain masuk ke dalam dunia Aether, Buku Sejarah dan Payung Terjun Emas akan diberikan sebagai peralatan permulaan",
+  "dimension.aether.the_aether": "Inilah Aether",
   "gui.aether.queen.dialog.peaceful": "Mohon maaf, beta takkan melawan dengan orang yang lembap.",
   "gui.aether.queen.dialog.playerdeath": "Dijangka daripada seorang manusia.",
   "gui.aether.queen.dialog.ready": "Kalau engkau hendak bertanding terhadap beta, memukul beta bila masa.",
   "lore.item.aether.golden_pendant": "Sebuah aksesori astetik diperbuat daripada emas.",
   "lore.item.aether.golden_ring": "Sebuah aksesori astetik diperbuat daripada emas.",
   "menu.aether.freezer": "Peti Beku",
+  "structure.aether.bronze_dungeon": "Labirin Gangsa",
+  "structure.aether.gold_dungeon": "Labirin Emas",
+  "structure.aether.silver_dungeon": "Labirin Perak",
   "subtitles.aether.block.freezer.crackle": "Peti Beku berderak"
 }
