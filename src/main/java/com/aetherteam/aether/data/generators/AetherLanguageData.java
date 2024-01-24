@@ -1269,6 +1269,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addClientConfig("gui", "button_accessories_y", "The y-coordinate of the accessories button in the accessories menu");
         this.addClientConfig("gui", "layout_perks_x", "The x-coordinate of the perks button layout when in the pause menu");
         this.addClientConfig("gui", "layout_perks_y", "The y-coordinate of the perks button layout when in the pause menu");
+        this.addClientConfig("gui", "enable_hammer_cooldown_overlay", "Enables the overlay at the top of the screen for the Hammer of Kingbdogz' cooldown");
 
         this.addClientConfig("audio", "music_backup_min_delay", "Sets the minimum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");
         this.addClientConfig("audio", "music_backup_max_delay", "Sets the maximum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");
