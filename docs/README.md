@@ -120,7 +120,7 @@ The Aether is available in these languages thanks to the following contributors:
 | Arabic                      | (ar_sa) | Leopotion                                                                                                  |
 | Austrian German             | (de_at) | Builderdog                                                                                                 |
 | Brazilian Portuguese        | (pt_br) | Wanadi, Metal_knight, ZippetTV, CavaleiroDev, Jay_See, cacovil08, arthurdepaulafreitas, leparkorsz         |
-| Chinese Simplified          | (zh_cn) | ETStareak, Parallel011, Haku98, minecraftXYZ                                                               |
+| Chinese Simplified          | (zh_cn) | ETStareak, Parallel011, Haku98, minecraftXYZ, LuminaHeinsborough                                           |
 | Chinese Traditional         | (zh_tw) | y830705                                                                                                    |
 | Czech                       | (cs_cz) | Aerod, pomi108, bruno.sulc602                                                                              |
 | Dutch                       | (nl_nl) | Critical, Morgan Hofmann, WarpedCarrot                                                                     |
