@@ -1,1 +1,11 @@
-{}
+{
+  "advancement.aether.craft_altar.desc": "Tillverka en förtrollare",
+  "aether.pro_tips.line.aether.altar_repairing": "Förtrollare kan reparera skadade föremål och förtrolla befintliga föremål.",
+  "aether.pro_tips.line.aether.ambrosium_shard_fuel": "Ambrosieskärvor är bra bränsle för förtrollare.",
+  "block.aether.altar": "Förtrollare",
+  "lore.aether.blue_berry": "Skördad från blå bärbuskar, detta är den vanligaste livsmedelskällan i Aether. Den har mycket svag hungeråterhämtning. Du kan förtrolla dessa i en förtrollare för mycket bättre hungeråterhämtning.",
+  "lore.aether.enchanted_gravitite": "Efter att ha lagt gravititmalm i en förtrollare och förtrollat det, får du förtrollad gravitit. Detta kan användas för att tillverka gravititverktyg och rustning. När den drivs med en redstonesignal, kommer det förtrollade gravititblocket att flyta upp i luften, på samma sätt som gravititmalm.",
+  "lore.aether.golden_dart_shooter": "Ett blåsrör som skjuter guldpilar, förtrolla det vid en förtrollare för att förbättra attackstyrkan!",
+  "menu.aether.altar": "Förtrollare",
+  "subtitles.aether.block.altar.crackle": "Förtrollare knastrar"
+}
