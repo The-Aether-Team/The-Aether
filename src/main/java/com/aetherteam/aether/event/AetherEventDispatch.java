@@ -1,5 +1,6 @@
 package com.aetherteam.aether.event;
 
+import com.aetherteam.nitrogen.entity.BossRoomTracker;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
@@ -17,6 +18,24 @@ import net.minecraftforge.common.MinecraftForge;
 import javax.annotation.Nullable;
 
 public class AetherEventDispatch {
+	/**
+	 * @see BossFightEvent.Start
+	 */
+	public static BossFightEvent.Start onBossFightStart(Entity entity, BossRoomTracker<?> dungeon) {
+		BossFightEvent.Start event = new BossFightEvent.Start(entity, dungeon);
+		MinecraftForge.EVENT_BUS.post(event);
+		return event;
+	}
+
+	/**
+	 * @see BossFightEvent.Stop
+	 */
+	public static BossFightEvent.Stop onBossFightStop(Entity entity, BossRoomTracker<?> dungeon) {
+		BossFightEvent.Stop event = new BossFightEvent.Stop(entity, dungeon);
+		MinecraftForge.EVENT_BUS.post(event);
+		return event;
+	}
+
 	/**
 	 * @see EggLayEvent
 	 */
