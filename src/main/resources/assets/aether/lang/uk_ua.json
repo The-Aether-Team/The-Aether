@@ -287,6 +287,7 @@
   "config.aether.client.gui.disable_accessory_button": "Вимикає показування кнопки аксесуарів Етеру в графічних інтерфейсах",
   "config.aether.client.gui.enable_aether_menu": "Змінює ванільне меню Minecraft на меню Етеру",
   "config.aether.client.gui.enable_aether_menu_button": "Додає кнопку у верхньому правому куті екрана головного меню для перемикання між меню Етером і ваніллю",
+  "config.aether.client.gui.enable_hammer_cooldown_overlay": "Вмикає накладання нагорі екрану для відновлення молота Kingbdogz",
   "config.aether.client.gui.enable_quick_load_button": "Додає кнопку у верхньому правому куті екрана головного меню, щоб дозволити швидке завантаження у світ. Тільки якщо ввімкнено попередній перегляд світу",
   "config.aether.client.gui.enable_silver_hearts": "Фарбує срібним кольором додаткові серця отримані від уламків життя",
   "config.aether.client.gui.enable_trivia": "Додає цікавинки та підказки внизу екрану завантаження",
