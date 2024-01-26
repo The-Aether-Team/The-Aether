@@ -14,6 +14,7 @@ import com.aetherteam.aether.entity.monster.dungeon.FireMinion;
 import com.aetherteam.aether.entity.projectile.crystal.AbstractCrystal;
 import com.aetherteam.aether.entity.projectile.crystal.FireCrystal;
 import com.aetherteam.aether.entity.projectile.crystal.IceCrystal;
+import com.aetherteam.aether.event.AetherEventDispatch;
 import com.aetherteam.aether.mixin.mixins.common.accessor.LookAtPlayerGoalAccessor;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.BossInfoPacket;
@@ -247,6 +248,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
                             if (this.getDungeon() != null) {
                                 this.closeRoom();
                             }
+                            AetherEventDispatch.onBossFightStart(this, this.getDungeon());
                             aetherPlayer.ifPresent(cap -> cap.setSeenSunSpiritDialogue(true));
                         }
                         default -> {
@@ -301,6 +303,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         if (this.dungeon != null) {
             this.openRoom();
         }
+        AetherEventDispatch.onBossFightStop(this, this.getDungeon());
     }
 
     /**

@@ -13,6 +13,7 @@ import com.aetherteam.aether.entity.ai.AetherBlockPathTypes;
 import com.aetherteam.aether.entity.ai.goal.NpcDialogueGoal;
 import com.aetherteam.aether.entity.monster.dungeon.AbstractValkyrie;
 import com.aetherteam.aether.entity.projectile.crystal.ThunderCrystal;
+import com.aetherteam.aether.event.AetherEventDispatch;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.clientbound.QueenDialoguePacket;
@@ -384,6 +385,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                             if (this.getDungeon() != null) {
                                 this.closeRoom();
                             }
+                            AetherEventDispatch.onBossFightStart(this, this.getDungeon());
                         }
                         return true;
                     }
@@ -422,6 +424,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
         if (this.getDungeon() != null) {
             this.openRoom();
         }
+        AetherEventDispatch.onBossFightStop(this, this.getDungeon());
     }
 
     /**
