@@ -132,7 +132,4 @@ public interface AetherPlayer extends INBTSynchable<CompoundTag> {
 	int getLifeShardCount();
 	int getLifeShardLimit();
 	AttributeModifier getLifeShardHealthAttributeModifier();
-
-	boolean shouldSyncBetweenClients();
-	void setShouldSyncBetweenClients(boolean shouldSyncBetweenClients);
 }

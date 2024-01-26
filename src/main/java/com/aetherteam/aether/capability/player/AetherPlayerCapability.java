@@ -1177,13 +1177,11 @@ public class AetherPlayerCapability implements AetherPlayer {
 	/**
 	 * @return Whether the capability should sync server values to nearby clients.
 	 */
-	@Override
-	public boolean shouldSyncBetweenClients() {
+	private boolean shouldSyncBetweenClients() {
 		return this.shouldSyncBetweenClients;
 	}
 
-	@Override
-	public void setShouldSyncBetweenClients(boolean shouldSyncBetweenClients) {
+	private void setShouldSyncBetweenClients(boolean shouldSyncBetweenClients) {
 		this.shouldSyncBetweenClients = shouldSyncBetweenClients;
 	}
 
