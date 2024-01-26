@@ -287,6 +287,7 @@
   "config.aether.client.gui.disable_accessory_button": "Disables the Aether's accessories button from appearing in GUIs",
   "config.aether.client.gui.enable_aether_menu": "Changes the vanilla Minecraft menu into the Aether menu",
   "config.aether.client.gui.enable_aether_menu_button": "Adds a button to the top right of the main menu screen to toggle between the Aether and vanilla menu",
+  "config.aether.client.gui.enable_hammer_cooldown_overlay": "Enables the overlay at the top of the screen for the Hammer of Kingbdogz' cooldown",
   "config.aether.client.gui.enable_quick_load_button": "Adds a button to the top right of the main menu screen to allow quick loading into a world if the world preview is enabled",
   "config.aether.client.gui.enable_silver_hearts": "Makes the extra hearts given by life shards display as silver colored",
   "config.aether.client.gui.enable_trivia": "Adds random trivia and tips to the bottom of loading screens",
