@@ -174,6 +174,7 @@ public class AetherTags {
 		public static final TagKey<EntityType<?>> UNHOOKABLE = tag("unhookable");
 		public static final TagKey<EntityType<?>> TREATED_AS_AETHER_ENTITY = tag("treated_as_aether_entity");
 		public static final TagKey<EntityType<?>> TREATED_AS_VANILLA_ENTITY = tag("treated_as_vanilla_entity");
+		public static final TagKey<EntityType<?>> DUNGEON_ENTITIES = tag("dungeon_entities");
 
 		private static TagKey<EntityType<?>> tag(String name) {
 			return TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Aether.MODID, name));
