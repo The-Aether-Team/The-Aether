@@ -144,9 +144,11 @@ public class AetherPlayerCapability implements AetherPlayer {
 			Map.entry("setInvisibilityEnabled", Triple.of(Type.BOOLEAN, (object) -> this.setInvisibilityEnabled((boolean) object), this::isInvisibilityEnabled)),
 			Map.entry("setWearingInvisibilityCloak", Triple.of(Type.BOOLEAN, (object) -> this.setWearingInvisibilityCloak((boolean) object), this::isWearingInvisibilityCloak)),
 			Map.entry("setLifeShardCount", Triple.of(Type.INT, (object) -> this.setLifeShardCount((int) object), this::getLifeShardCount)),
-			Map.entry("setLastRiddenMoa", Triple.of(Type.UUID, (object) -> this.setLastRiddenMoa((UUID) object), this::getLastRiddenMoa))
+			Map.entry("setLastRiddenMoa", Triple.of(Type.UUID, (object) -> this.setLastRiddenMoa((UUID) object), this::getLastRiddenMoa)),
+			Map.entry("setShouldSyncBetweenClients", Triple.of(Type.BOOLEAN, (object) -> this.setShouldSyncBetweenClients((boolean) object), this::shouldSyncBetweenClients))
 	);
 	private boolean shouldSyncAfterJoin;
+	private boolean shouldSyncBetweenClients;
 	
 	public AetherPlayerCapability(Player player) {
 		this.player = player;
@@ -236,7 +238,6 @@ public class AetherPlayerCapability implements AetherPlayer {
 	 */
 	@Override
 	public void onLogin() {
-		this.syncAllClients();
 		this.handleGivePortal();
 		this.remountAerbunny();
 		this.handlePatreonMessage();
@@ -253,6 +254,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	public void onJoinLevel() {
 		if (this.getPlayer().getLevel().isClientSide()) {
 			CustomizationsOptions.INSTANCE.load();
+			this.setSynched(Direction.SERVER, "setShouldSyncBetweenClients", true);
 		}
 	}
 
@@ -280,6 +282,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	@Override
 	public void onUpdate() {
 		this.syncAfterJoin();
+		this.syncClients();
 		this.handleAetherPortal();
 		this.activateParachute();
 		this.handleRemoveDarts();
@@ -297,28 +300,31 @@ public class AetherPlayerCapability implements AetherPlayer {
 		ClientDeveloperGlowPerkData.INSTANCE.syncFromClient(this.getPlayer());
 	}
 
-	private void syncAllClients() {
-		if (!this.getPlayer().getLevel().isClientSide()) {
-			MinecraftServer server = this.getPlayer().getLevel().getServer();
-			if (server != null) {
-				PlayerList playerList = server.getPlayerList();
-				for (ServerPlayer serverPlayer : playerList.getPlayers()) {
-					if (!serverPlayer.getUUID().equals(this.getPlayer().getUUID())) {
-						AetherPlayer.get(serverPlayer).ifPresent(aetherPlayer -> {
-							if (aetherPlayer instanceof AetherPlayerCapability capability) {
-								capability.forceSync(INBTSynchable.Direction.CLIENT);
-							}
-						});
-					}
-				}
-			}
-		}
-	}
-
 	private void syncAfterJoin() {
 		if (this.shouldSyncAfterJoin) {
 			this.forceSync(INBTSynchable.Direction.CLIENT);
 			this.shouldSyncAfterJoin = false;
+		}
+	}
+
+	private void syncClients() {
+		if (this.shouldSyncBetweenClients()) {
+			if (!this.getPlayer().getLevel().isClientSide()) {
+				MinecraftServer server = this.getPlayer().getLevel().getServer();
+				if (server != null) {
+					PlayerList playerList = server.getPlayerList();
+					for (ServerPlayer serverPlayer : playerList.getPlayers()) {
+						if (!serverPlayer.getUUID().equals(this.getPlayer().getUUID())) {
+							AetherPlayer.get(serverPlayer).ifPresent(aetherPlayer -> {
+								if (aetherPlayer instanceof AetherPlayerCapability capability) {
+									capability.forceSync(INBTSynchable.Direction.CLIENT);
+								}
+							});
+						}
+					}
+				}
+			}
+			this.setShouldSyncBetweenClients(false);
 		}
 	}
 
@@ -1166,6 +1172,19 @@ public class AetherPlayerCapability implements AetherPlayer {
 		if (this.getPlayer() instanceof ServerPlayer serverPlayer && !this.getPlayer().level.isClientSide) {
 			PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new CloudMinionPacket(this.getPlayer().getId(), cloudMinionRight.getId(), cloudMinionLeft.getId()), serverPlayer);
 		}
+	}
+
+	/**
+	 * @return Whether the capability should sync server values to nearby clients.
+	 */
+	@Override
+	public boolean shouldSyncBetweenClients() {
+		return this.shouldSyncBetweenClients;
+	}
+
+	@Override
+	public void setShouldSyncBetweenClients(boolean shouldSyncBetweenClients) {
+		this.shouldSyncBetweenClients = shouldSyncBetweenClients;
 	}
 
 	@Override
