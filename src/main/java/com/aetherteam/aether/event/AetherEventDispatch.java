@@ -3,6 +3,7 @@ package com.aetherteam.aether.event;
 import com.aetherteam.nitrogen.entity.BossRoomTracker;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -32,6 +33,24 @@ public class AetherEventDispatch {
 	 */
 	public static BossFightEvent.Stop onBossFightStop(Entity entity, BossRoomTracker<?> dungeon) {
 		BossFightEvent.Stop event = new BossFightEvent.Stop(entity, dungeon);
+		MinecraftForge.EVENT_BUS.post(event);
+		return event;
+	}
+
+	/**
+	 * @see BossFightEvent.AddPlayer
+	 */
+	public static BossFightEvent.AddPlayer onBossFightPlayerAdd(Entity entity, BossRoomTracker<?> dungeon, ServerPlayer player) {
+		BossFightEvent.AddPlayer event = new BossFightEvent.AddPlayer(entity, dungeon, player);
+		MinecraftForge.EVENT_BUS.post(event);
+		return event;
+	}
+
+	/**
+	 * @see BossFightEvent.RemovePlayer
+	 */
+	public static BossFightEvent.RemovePlayer onBossFightPlayerRemove(Entity entity, BossRoomTracker<?> dungeon, ServerPlayer player) {
+		BossFightEvent.RemovePlayer event = new BossFightEvent.RemovePlayer(entity, dungeon, player);
 		MinecraftForge.EVENT_BUS.post(event);
 		return event;
 	}
