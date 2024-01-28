@@ -37,6 +37,24 @@ public class AetherEventDispatch {
 	}
 
 	/**
+	 * @see BossFightEvent.AddPlayer
+	 */
+	public static BossFightEvent.AddPlayer onBossFightPlayerAdd(Entity entity, BossRoomTracker<?> dungeon, ServerPlayer player) {
+		BossFightEvent.AddPlayer event = new BossFightEvent.AddPlayer(entity, dungeon, player);
+		MinecraftForge.EVENT_BUS.post(event);
+		return event;
+	}
+
+	/**
+	 * @see BossFightEvent.RemovePlayer
+	 */
+	public static BossFightEvent.RemovePlayer onBossFightPlayerRemove(Entity entity, BossRoomTracker<?> dungeon, ServerPlayer player) {
+		BossFightEvent.RemovePlayer event = new BossFightEvent.RemovePlayer(entity, dungeon, player);
+		MinecraftForge.EVENT_BUS.post(event);
+		return event;
+	}
+
+	/**
 	 * @see EggLayEvent
 	 */
 	public static EggLayEvent onLayEgg(Entity entity, SoundEvent sound, float volume, float pitch, Item item) {
