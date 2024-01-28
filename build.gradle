@@ -11,6 +11,7 @@ plugins {
     id 'io.github.0ffz.github-packages' version '[1,2)'
     id 'com.matthewprenger.cursegradle' version '[1.4,1.5)'
     id 'com.modrinth.minotaur' version '[2,3)'
+    id 'io.github.p03w.machete' version '2.0.1'
 }
 
 version = "${mc_version}-${mod_version}-neoforge"
@@ -184,6 +185,22 @@ compileJava {
     options.incremental = false
 }
 
+processResources {
+    exclude '.cache/'
+}
+
+machete {
+    additionalTasks.add(tasks.jarJar.name)
+    jij.enabled = true
+    json.enabled = true
+    png.enabled = false
+    sourceFileStriping.enabled = false
+    lvtStriping.enabled = false
+}
+
+tasks.jar.finalizedBy('optimizeOutputsOfJar')
+tasks.jarJar.finalizedBy('optimizeOutputsOfJarJar')
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -207,11 +224,11 @@ publishing {
 curseforge {
     project {
         apiKey = System.getenv("CURSEFORGE_TOKEN")
-        id = "${project.curseforge_id}"
-        releaseType = "${project.version_type}"
+        id = project.curseforge_id
+        releaseType = project.version_type
         changelog = file("$rootDir/docs/CHANGELOG.md")
         changelogType = "markdown"
-        addGameVersion("${project.mc_version}")
+        addGameVersion(project.mc_version)
         addGameVersion("Forge")
         addGameVersion("NeoForge")
         mainArtifact(tasks.jarJar) {
@@ -226,13 +243,13 @@ curseforge {
 
 modrinth {
     token = System.getenv("MODRINTH_TOKEN")
-    projectId = "${project.modrinth_id}"
-    versionNumber = "${version}"
-    versionType = "${project.version_type}"
+    projectId = project.modrinth_id
+    versionNumber = project.version.toString()
+    versionType = project.version_type
     versionName = "${project.mod_name} - ${version}"
     changelog = new File("$rootDir/docs/CHANGELOG.md").text
     uploadFile = tasks.jarJar
-    gameVersions = ["${project.mc_version}"]
+    gameVersions = [project.mc_version]
     loaders = ["forge", "neoforge"]
     dependencies {
         embedded.version "curios", "${project.curios_version}+${project.mc_version}"
