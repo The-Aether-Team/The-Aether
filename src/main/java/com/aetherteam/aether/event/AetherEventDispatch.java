@@ -3,6 +3,7 @@ package com.aetherteam.aether.event;
 import com.aetherteam.nitrogen.entity.BossRoomTracker;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;

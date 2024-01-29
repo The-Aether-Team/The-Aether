@@ -1,6 +1,7 @@
 package com.aetherteam.aether.event;
 
 import com.aetherteam.nitrogen.entity.BossRoomTracker;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.eventbus.api.Cancelable;
