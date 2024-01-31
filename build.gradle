@@ -11,7 +11,6 @@ plugins {
     id 'io.github.0ffz.github-packages' version '[1,2)'
     id 'com.matthewprenger.cursegradle' version '[1.4,1.5)'
     id 'com.modrinth.minotaur' version '[2,3)'
-    id 'io.github.p03w.machete' version '2.0.1'
 }
 
 version = "${mc_version}-${mod_version}-neoforge"
@@ -153,7 +152,7 @@ repositories {
     //mavenLocal()
 }
 
-tasks.named('jar', Jar).configure {
+tasks.named('jar', Jar) {
     manifest {
         attributes([
                 "Specification-Title"     : project.mod_name,
@@ -169,37 +168,27 @@ tasks.named('jar', Jar).configure {
     finalizedBy 'reobfJar'
 
     archiveClassifier = 'no-embeds'
+
+    doLast {
+        minifyJson(it)
+    }
 }
 
-tasks.named('jarJar', JarJar).configure {
+tasks.named('jarJar', JarJar) {
     archiveClassifier = ''
+    doLast {
+        minifyJson(it)
+    }
+    finalizedBy('reobfJarJar')
 }
-
-tasks.jarJar.finalizedBy('reobfJarJar')
 
 tasks.named(sourceSets.main.compileJavaTaskName) {
-    outputs.file("${it.temporaryDir}/${it.name}-refmap.json").withPropertyName("mixin refmap")
+    outputs.file("${it.temporaryDir}/${it.name}.refmap.json").withPropertyName("mixin refmap")
 }
 
 compileJava {
     options.incremental = false
 }
-
-processResources {
-    exclude '.cache/'
-}
-
-machete {
-    additionalTasks.add(tasks.jarJar.name)
-    jij.enabled = true
-    json.enabled = true
-    png.enabled = false
-    sourceFileStriping.enabled = false
-    lvtStriping.enabled = false
-}
-
-tasks.jar.finalizedBy('optimizeOutputsOfJar')
-tasks.jarJar.finalizedBy('optimizeOutputsOfJarJar')
 
 publishing {
     publications {
@@ -264,4 +253,44 @@ mixin {
 
 build {
     dependsOn 'jarJar'
+}
+
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+import java.util.zip.ZipOutputStream
+import java.util.zip.ZipEntry
+import java.util.zip.Deflater
+
+def minifyJson(Jar task) {
+    def temporaryDir = new File(task.temporaryDir, 'minify')
+    temporaryDir.mkdirs()
+    def file = task.archiveFile.get().asFile
+    if(!file.exists()) return
+
+    copy {
+        from zipTree(file)
+        into temporaryDir
+        exclude '.cache/**'
+    }
+    file.delete()
+
+    temporaryDir.eachFileRecurse {
+        if (it.name.endsWith('.json') || it.name.endsWith('.mcmeta')) {
+            it.text = JsonOutput.toJson(new JsonSlurper().parse(it))
+        }
+    }
+
+    new ZipOutputStream(file.newOutputStream()).withCloseable { out ->
+        out.setLevel(Deflater.BEST_COMPRESSION)
+        out.setMethod(ZipOutputStream.DEFLATED)
+        temporaryDir.eachFileRecurse {
+            if (!it.isFile()) return
+            def entryName = temporaryDir.toPath().relativize(it.toPath()).toString()
+            out.putNextEntry(new ZipEntry(entryName))
+            out.write(it.bytes)
+            out.closeEntry()
+        }
+        out.flush()
+        out.finish()
+    }
 }
