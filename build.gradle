@@ -1,5 +1,3 @@
-import net.minecraftforge.gradle.userdev.tasks.JarJar
-
 plugins {
     id 'eclipse'
     id 'maven-publish'
@@ -174,6 +172,10 @@ tasks.named('jar', Jar) {
     }
 }
 
+processResources {
+    exclude '.cache/'
+}
+
 tasks.named('jarJar', JarJar) {
     archiveClassifier = ''
     doLast {
@@ -257,40 +259,36 @@ build {
 
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
+
+import java.util.zip.ZipFile
 import java.util.zip.ZipOutputStream
 import java.util.zip.ZipEntry
 import java.util.zip.Deflater
 
-def minifyJson(Jar task) {
-    def temporaryDir = new File(task.temporaryDir, 'minify')
-    temporaryDir.mkdirs()
+static def minifyJson(Jar task) {
     def file = task.archiveFile.get().asFile
     if(!file.exists()) return
 
-    copy {
-        from zipTree(file)
-        into temporaryDir
-        exclude '.cache/**'
-    }
-    file.delete()
-
-    temporaryDir.eachFileRecurse {
-        if (it.name.endsWith('.json') || it.name.endsWith('.mcmeta')) {
-            it.text = JsonOutput.toJson(new JsonSlurper().parse(it))
+    LinkedHashMap<String, byte[]> fileContents = [:]
+    new ZipFile(file).with { jar ->
+        jar.entries().each {
+            if (!it.directory) {
+                def bytes = jar.getInputStream(it).bytes
+                fileContents[it.name] = bytes
+            }
         }
     }
-
-    new ZipOutputStream(file.newOutputStream()).withCloseable { out ->
-        out.setLevel(Deflater.BEST_COMPRESSION)
-        out.setMethod(ZipOutputStream.DEFLATED)
-        temporaryDir.eachFileRecurse {
-            if (!it.isFile()) return
-            def entryName = temporaryDir.toPath().relativize(it.toPath()).toString()
-            out.putNextEntry(new ZipEntry(entryName))
-            out.write(it.bytes)
-            out.closeEntry()
+    new ZipOutputStream(file.newOutputStream()).withCloseable {
+        it.setLevel(Deflater.BEST_COMPRESSION)
+        fileContents.each { name, bytes ->
+            def newBytes = bytes
+            if(name.endsWith(".json") || name.endsWith(".mcmeta")) {
+                newBytes = JsonOutput.toJson(new JsonSlurper().parse(bytes)).bytes
+            }
+            it.putNextEntry(new ZipEntry(name))
+            it.write(newBytes)
+            it.closeEntry()
         }
-        out.flush()
-        out.finish()
+        it.finish()
     }
 }
