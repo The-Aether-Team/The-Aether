@@ -20,7 +20,7 @@ import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.ChestType;
-import net.minecraftforge.fml.ModList;
+import net.neoforged.neoforge.fml.ModList;
 import noobanidus.mods.lootr.config.ConfigManager;
 
 import java.util.Calendar;

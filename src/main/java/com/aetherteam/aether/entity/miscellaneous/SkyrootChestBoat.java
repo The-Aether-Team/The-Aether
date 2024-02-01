@@ -11,7 +11,7 @@ import net.minecraft.world.entity.vehicle.ChestBoat;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.network.NetworkHooks;
 
 public class SkyrootChestBoat extends ChestBoat implements SkyrootBoatBehavior {
     public SkyrootChestBoat(EntityType<? extends SkyrootChestBoat> entityType, Level level) {

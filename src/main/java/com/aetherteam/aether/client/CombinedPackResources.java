@@ -3,7 +3,7 @@ package com.aetherteam.aether.client;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.resources.IoSupplier;
-import net.minecraftforge.resource.DelegatingPackResources;
+import net.neoforged.neoforge.resource.DelegatingPackResources;
 
 import javax.annotation.Nullable;
 import java.io.InputStream;
@@ -27,7 +27,7 @@ public class CombinedPackResources extends DelegatingPackResources {
     }
 
     /**
-     * [CODE COPY] - {@link net.minecraftforge.resource.PathPackResources#resolve(String...)}.
+     * [CODE COPY] - {@link net.neoforged.neoforge.resource.PathPackResources#resolve(String...)}.
      */
     protected Path resolve(String... paths) {
         Path path = getSource();
@@ -38,7 +38,7 @@ public class CombinedPackResources extends DelegatingPackResources {
     }
 
     /**
-     * [CODE COPY] - {@link net.minecraftforge.resource.PathPackResources#getRootResource(String...)}.
+     * [CODE COPY] - {@link net.neoforged.neoforge.resource.PathPackResources#getRootResource(String...)}.
      */
     @Nullable
     @Override

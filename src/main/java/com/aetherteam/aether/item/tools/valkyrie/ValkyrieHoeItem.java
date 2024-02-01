@@ -43,7 +43,7 @@ public class ValkyrieHoeItem extends HoeItem implements ValkyrieTool {
     public InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
         BlockPos blockPos = context.getClickedPos();
-        BlockState toolModifiedState = level.getBlockState(blockPos).getToolModifiedState(context, net.minecraftforge.common.ToolActions.HOE_TILL, false);
+        BlockState toolModifiedState = level.getBlockState(blockPos).getToolModifiedState(context, net.neoforged.neoforge.common.ToolActions.HOE_TILL, false);
         Pair<Predicate<UseOnContext>, Consumer<UseOnContext>> pair = toolModifiedState == null ? null : Pair.of(ctx -> true, changeIntoState(toolModifiedState));
         if (pair == null) {
             return InteractionResult.PASS;

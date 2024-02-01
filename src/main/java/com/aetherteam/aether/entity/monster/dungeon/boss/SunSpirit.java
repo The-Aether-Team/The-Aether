@@ -58,12 +58,12 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.entity.IEntityAdditionalSpawnData;
-import net.minecraftforge.event.entity.living.MobEffectEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.common.neoforged.neoforge;
+import net.neoforged.neoforge.common.util.LazyOptional;
+import net.neoforged.neoforge.entity.IEntityAdditionalSpawnData;
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
+import net.neoforged.neoforge.eventbus.api.Event;
+import net.neoforged.neoforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
@@ -356,7 +356,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     @Override //code copy
     public boolean canBeAffected(MobEffectInstance pEffectInstance) {
         MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, pEffectInstance);
-        MinecraftForge.EVENT_BUS.post(event);
+        neoforged.neoforge.EVENT_BUS.post(event);
         if (event.getResult() != Event.Result.DEFAULT) {
             return event.getResult() == Event.Result.ALLOW;
         }

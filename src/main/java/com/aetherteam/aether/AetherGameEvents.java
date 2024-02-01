@@ -2,8 +2,8 @@ package com.aetherteam.aether;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.RegistryObject;
 
 public class AetherGameEvents {
     public static final DeferredRegister<GameEvent> GAME_EVENTS = DeferredRegister.create(Registries.GAME_EVENT, Aether.MODID);

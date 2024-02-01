@@ -6,10 +6,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.Cancelable;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.fml.LogicalSide;
+import net.neoforged.neoforge.common.neoforged.neoforge;
+import net.neoforged.neoforge.eventbus.api.Cancelable;
+import net.neoforged.neoforge.eventbus.api.Event;
+import net.neoforged.neoforge.fml.LogicalSide;
 
 import javax.annotation.Nullable;
 
@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
  * PlacementBanEvent is fired when an event involving placement banning occurs.<br>
  * If a method utilizes this {@link Event} as its parameter, the method will receive every child event of this class.<br>
  * <br>
- * All children of this event are fired on the {@link MinecraftForge#EVENT_BUS}.
+ * All children of this event are fired on the {@link neoforged.neoforge#EVENT_BUS}.
  */
 public class PlacementBanEvent extends Event {
 	/**
@@ -152,7 +152,7 @@ public class PlacementBanEvent extends Event {
 	 * This event is {@link Cancelable}.<br>
 	 * If the event is not canceled, the particles will spawn.
 	 * <br>
-	 * This event does not have a result. {@link net.minecraftforge.eventbus.api.Event.HasResult}<br>
+	 * This event does not have a result. {@link net.neoforged.neoforge.eventbus.api.Event.HasResult}<br>
 	 * <br>
 	 * This event is fired on both {@link LogicalSide sides}.<br>
 	 * <br>

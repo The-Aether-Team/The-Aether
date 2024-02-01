@@ -7,7 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.neoforged.neoforge.network.simple.SimpleChannel;
 import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.Map;

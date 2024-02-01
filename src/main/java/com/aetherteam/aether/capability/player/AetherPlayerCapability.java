@@ -44,9 +44,9 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.neoforged.neoforge.api.distmarker.Dist;
+import net.neoforged.neoforge.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.network.simple.SimpleChannel;
 import org.apache.commons.lang3.tuple.Triple;
 
 import javax.annotation.Nullable;
@@ -225,7 +225,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	}
 
 	/**
-	 * Handles functions when the player logs out of a world from {@link net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent}.
+	 * Handles functions when the player logs out of a world from {@link net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent}.
 	 */
 	@Override
 	public void onLogout() {
@@ -234,7 +234,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	}
 
 	/**
-	 * Handles functions when the player logs in to a world from {@link net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent}.
+	 * Handles functions when the player logs in to a world from {@link net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent}.
 	 */
 	@Override
 	public void onLogin() {
@@ -248,7 +248,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	}
 
 	/**
-	 * Handles functions when the player joins a world from {@link net.minecraftforge.event.entity.EntityJoinLevelEvent}.
+	 * Handles functions when the player joins a world from {@link net.neoforged.neoforge.event.entity.EntityJoinLevelEvent}.
 	 */
 	@Override
 	public void onJoinLevel() {
@@ -259,7 +259,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	}
 
 	/**
-	 * Used to copy data between instances of the capability from {@link net.minecraftforge.event.entity.player.PlayerEvent.Clone}.
+	 * Used to copy data between instances of the capability from {@link net.neoforged.neoforge.event.entity.player.PlayerEvent.Clone}.
 	 * @param other The original {@link AetherPlayer} instance.
 	 * @param isWasDeath A {@link Boolean} for whether this copying is from death. If false, the copying is from entering the End Portal.
 	 */
@@ -277,7 +277,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 	}
 
 	/**
-	 * Handles functions when the player ticks from {@link net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent}
+	 * Handles functions when the player ticks from {@link net.neoforged.neoforge.event.entity.living.LivingEvent.LivingTickEvent}
 	 */
 	@Override
 	public void onUpdate() {

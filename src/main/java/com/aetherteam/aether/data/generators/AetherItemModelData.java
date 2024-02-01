@@ -5,7 +5,7 @@ import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.data.providers.AetherItemModelProvider;
 import com.aetherteam.aether.item.AetherItems;
 import net.minecraft.data.PackOutput;
-import net.minecraftforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public class AetherItemModelData extends AetherItemModelProvider {
     public AetherItemModelData(PackOutput output, ExistingFileHelper helper) {

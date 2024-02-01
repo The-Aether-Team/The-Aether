@@ -17,7 +17,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.client.event.RenderHandEvent;
+import net.neoforged.neoforge.client.event.RenderHandEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 import top.theillusivec4.curios.api.client.ICurioRenderer;
@@ -158,7 +158,7 @@ public class HandRenderHooks {
 
     /**
      * [CODE COPY] - {@link ItemInHandRenderer#renderTwoHandedMap(PoseStack, MultiBufferSource, int, float, float, float)}.<br><br>
-     * Remove check for invisibility, as it is not necessary from {@link net.minecraftforge.client.event.RenderHandEvent} in {@link com.aetherteam.aether.client.event.listeners.HandRenderListener#onRenderHand(RenderHandEvent)}.
+     * Remove check for invisibility, as it is not necessary from {@link net.neoforged.neoforge.client.event.RenderHandEvent} in {@link com.aetherteam.aether.client.event.listeners.HandRenderListener#onRenderHand(RenderHandEvent)}.
      */
     public static void renderTwoHandedMap(ItemInHandRenderer itemInHandRenderer, ICurioRenderer renderer, ItemStack glovesStack, AbstractClientPlayer player, ItemStack heldItem, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, float swingProgress, float equippedProgress, float pitch, HandRenderType handRenderType) {
         float f = Mth.sqrt(swingProgress);
@@ -183,7 +183,7 @@ public class HandRenderHooks {
 
     /**
      * [CODE COPY] - {@link ItemInHandRenderer#renderOneHandedMap(PoseStack, MultiBufferSource, int, float, HumanoidArm, float, ItemStack)}.<br><br>
-     * Remove check for invisibility, as it is not necessary from {@link net.minecraftforge.client.event.RenderHandEvent} in {@link com.aetherteam.aether.client.event.listeners.HandRenderListener#onRenderHand(RenderHandEvent)}.
+     * Remove check for invisibility, as it is not necessary from {@link net.neoforged.neoforge.client.event.RenderHandEvent} in {@link com.aetherteam.aether.client.event.listeners.HandRenderListener#onRenderHand(RenderHandEvent)}.
      */
     public static void renderOneHandedMap(ItemInHandRenderer itemInHandRenderer, ICurioRenderer renderer, ItemStack glovesStack, AbstractClientPlayer player, ItemStack heldItem, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, float swingProgress, float equippedProgress, HumanoidArm arm, HandRenderType handRenderType) {
         float f = arm == HumanoidArm.RIGHT ? 1.0F : -1.0F;

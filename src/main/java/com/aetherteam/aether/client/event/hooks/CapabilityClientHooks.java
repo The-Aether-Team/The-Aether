@@ -6,8 +6,8 @@ import com.aetherteam.nitrogen.capability.INBTSynchable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.Input;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.MovementInputUpdateEvent;
+import net.neoforged.neoforge.client.event.InputEvent;
+import net.neoforged.neoforge.client.event.MovementInputUpdateEvent;
 
 public class CapabilityClientHooks {
     public static class AetherPlayerHooks {

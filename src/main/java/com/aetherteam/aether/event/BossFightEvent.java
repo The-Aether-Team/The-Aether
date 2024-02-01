@@ -3,15 +3,15 @@ package com.aetherteam.aether.event;
 import com.aetherteam.nitrogen.entity.BossRoomTracker;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.minecraftforge.event.entity.EntityEvent;
-import net.minecraftforge.eventbus.api.Cancelable;
-import net.minecraftforge.fml.LogicalSide;
+import net.neoforged.neoforge.event.entity.EntityEvent;
+import net.neoforged.neoforge.eventbus.api.Cancelable;
+import net.neoforged.neoforge.fml.LogicalSide;
 
 /**
  * BossFightEvent is fired when an event for a boss fight occurs.<br>
  *  * If a method utilizes this {@link Event} as its parameter, the method will receive every child event of this class.<br>
  *  * <br>
- *  * All children of this event are fired on the {@link MinecraftForge#EVENT_BUS}.
+ *  * All children of this event are fired on the {@link neoforged.neoforge#EVENT_BUS}.
  */
 public class BossFightEvent extends EntityEvent {
     private final BossRoomTracker<?> dungeon;

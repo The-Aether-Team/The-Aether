@@ -5,7 +5,7 @@ import com.aetherteam.aether.block.AetherWoodTypes;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class AetherAtlases {
 	public static Material TREASURE_CHEST_MATERIAL;

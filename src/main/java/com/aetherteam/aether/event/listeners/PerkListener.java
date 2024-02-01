@@ -3,9 +3,9 @@ package com.aetherteam.aether.event.listeners;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.event.hooks.PerkHooks;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.eventbus.api.SubscribeEvent;
+import net.neoforged.neoforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID)
 public class PerkListener {

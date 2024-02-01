@@ -2,7 +2,7 @@ package com.aetherteam.aether.client.gui.component.menu;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ForgeConfigSpec;
 
 import javax.annotation.Nullable;
 import java.util.List;

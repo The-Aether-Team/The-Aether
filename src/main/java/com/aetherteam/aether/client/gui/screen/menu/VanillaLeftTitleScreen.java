@@ -17,8 +17,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraftforge.client.ForgeHooksClient;
-import net.minecraftforge.client.gui.TitleScreenModUpdateIndicator;
+import net.neoforged.neoforge.client.ForgeHooksClient;
+import net.neoforged.neoforge.client.gui.TitleScreenModUpdateIndicator;
 
 /**
  * A left-aligned variant of Minecraft's title screen.

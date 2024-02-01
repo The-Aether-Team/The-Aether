@@ -4,7 +4,7 @@ import com.aetherteam.aether.client.event.hooks.GuiHooks;
 import com.aetherteam.aether.entity.AetherBossMob;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.BossHealthOverlay;
-import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
+import net.neoforged.neoforge.client.event.CustomizeGuiOverlayEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;

@@ -3,8 +3,8 @@ package com.aetherteam.aether.capability.accessory;
 import com.aetherteam.aether.capability.AetherCapabilities;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Mob;
-import net.minecraftforge.common.util.INBTSerializable;
-import net.minecraftforge.common.util.LazyOptional;
+import net.neoforged.neoforge.common.util.INBTSerializable;
+import net.neoforged.neoforge.common.util.LazyOptional;
 
 import java.util.Map;
 

@@ -27,7 +27,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.neoforged.neoforge.common.capabilities.ICapabilityProvider;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -56,7 +56,7 @@ public class SkyrootBucketItem extends BucketItem {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack heldStack = player.getItemInHand(hand);
         BlockHitResult blockhitResult = getPlayerPOVHitResult(level, player, this.getFluid() == Fluids.EMPTY ? ClipContext.Fluid.SOURCE_ONLY : ClipContext.Fluid.NONE);
-        InteractionResultHolder<ItemStack> interactionResult = net.minecraftforge.event.ForgeEventFactory.onBucketUse(player, level, heldStack, blockhitResult);
+        InteractionResultHolder<ItemStack> interactionResult = net.neoforged.neoforge.event.ForgeEventFactory.onBucketUse(player, level, heldStack, blockhitResult);
         if (interactionResult != null) return interactionResult;
         if (blockhitResult.getType() == HitResult.Type.MISS) {
             return InteractionResultHolder.pass(heldStack);
@@ -132,7 +132,7 @@ public class SkyrootBucketItem extends BucketItem {
     }
 
     /**
-     * We don't initialize the Forge {@link net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper} for Skyroot Buckets.
+     * We don't initialize the Forge {@link net.neoforged.neoforge.fluids.capability.wrappers.FluidBucketWrapper} for Skyroot Buckets.
      */
     @Nullable
     @Override

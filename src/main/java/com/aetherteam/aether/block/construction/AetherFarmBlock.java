@@ -15,10 +15,10 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.FarmlandWaterManager;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.common.PlantType;
+import net.neoforged.neoforge.common.FarmlandWaterManager;
+import net.neoforged.neoforge.common.ForgeHooks;
+import net.neoforged.neoforge.common.IPlantable;
+import net.neoforged.neoforge.common.PlantType;
 
 public class AetherFarmBlock extends FarmBlock {
     public AetherFarmBlock(Properties properties) {
@@ -109,7 +109,7 @@ public class AetherFarmBlock extends FarmBlock {
     }
 
     /**
-     * [CODE COPY] - {@link net.minecraftforge.common.extensions.IForgeBlock#isFertile(BlockState, BlockGetter, BlockPos)}.
+     * [CODE COPY] - {@link net.neoforged.neoforge.common.extensions.IForgeBlock#isFertile(BlockState, BlockGetter, BlockPos)}.
      */
     @Override
     public boolean isFertile(BlockState state, BlockGetter level, BlockPos pos) {

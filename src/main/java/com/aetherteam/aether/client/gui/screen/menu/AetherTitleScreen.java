@@ -28,8 +28,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.Music;
 import net.minecraft.util.Mth;
-import net.minecraftforge.client.ForgeHooksClient;
-import net.minecraftforge.internal.BrandingControl;
+import net.neoforged.neoforge.client.ForgeHooksClient;
+import net.neoforged.neoforge.internal.BrandingControl;
 
 import java.util.function.Predicate;
 

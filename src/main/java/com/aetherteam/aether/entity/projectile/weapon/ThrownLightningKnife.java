@@ -12,7 +12,7 @@ import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.network.NetworkHooks;
 
 public class ThrownLightningKnife extends ThrowableItemProjectile {
 	public ThrownLightningKnife(EntityType<? extends ThrownLightningKnife> type, Level level) {

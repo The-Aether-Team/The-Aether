@@ -28,8 +28,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.event.ForgeEventFactory;
+import net.neoforged.neoforge.network.NetworkHooks;
 
 public class ZephyrSnowball extends Fireball implements ItemSupplier {
 	private int ticksInAir;

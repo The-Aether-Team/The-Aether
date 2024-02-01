@@ -11,8 +11,8 @@ import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.client.event.*;
-import net.minecraftforge.event.TickEvent;
+import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.event.TickEvent;
 
 public class WorldPreviewHooks {
     /**
@@ -42,7 +42,7 @@ public class WorldPreviewHooks {
     /**
      * After the level is loaded for the world preview by other events, when it gets rendered then
      * the panorama-style setup with the displayed menu is handled by {@link WorldDisplayHelper#setupLevelForDisplay()}.
-     * @param stage The {@link net.minecraftforge.client.event.RenderLevelStageEvent.Stage} of rendering.
+     * @param stage The {@link net.neoforged.neoforge.client.event.RenderLevelStageEvent.Stage} of rendering.
      * @see com.aetherteam.aether.client.event.listeners.WorldPreviewListener#onRenderLevelLast(RenderLevelStageEvent)
      */
     public static void renderMenuWithWorld(RenderLevelStageEvent.Stage stage) {

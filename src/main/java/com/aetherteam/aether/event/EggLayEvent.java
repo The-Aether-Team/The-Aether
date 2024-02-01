@@ -3,10 +3,10 @@ package com.aetherteam.aether.event;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.EntityEvent;
-import net.minecraftforge.eventbus.api.Cancelable;
-import net.minecraftforge.fml.LogicalSide;
+import net.neoforged.neoforge.common.neoforged.neoforge;
+import net.neoforged.neoforge.event.entity.EntityEvent;
+import net.neoforged.neoforge.eventbus.api.Cancelable;
+import net.neoforged.neoforge.fml.LogicalSide;
 
 import javax.annotation.Nullable;
 
@@ -16,9 +16,9 @@ import javax.annotation.Nullable;
  * This event is {@link Cancelable}.<br>
  * If the event is not canceled, the Moa will lay an egg.
  * <br>
- * This event does not have a result. {@link net.minecraftforge.eventbus.api.Event.HasResult}<br>
+ * This event does not have a result. {@link net.neoforged.neoforge.eventbus.api.Event.HasResult}<br>
  * <br>
- * This event is fired on the {@link MinecraftForge#EVENT_BUS}.<br>
+ * This event is fired on the {@link neoforged.neoforge#EVENT_BUS}.<br>
  * <br>
  * This event is only fired on the {@link LogicalSide#SERVER} side.<br>
  * <br>

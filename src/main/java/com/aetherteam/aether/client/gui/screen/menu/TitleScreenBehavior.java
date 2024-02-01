@@ -15,7 +15,7 @@ import net.minecraft.client.renderer.PanoramaRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraftforge.internal.BrandingControl;
+import net.neoforged.neoforge.internal.BrandingControl;
 
 public interface TitleScreenBehavior {
     /**
