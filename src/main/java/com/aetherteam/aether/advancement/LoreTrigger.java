@@ -1,28 +1,22 @@
 package com.aetherteam.aether.advancement;
 
-import com.aetherteam.aether.Aether;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.critereon.*;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
+
+import java.util.Optional;
 
 /**
  * Criterion trigger used for checking an item placed by a player inside a Book of Lore.
  */
 public class LoreTrigger extends SimpleCriterionTrigger<LoreTrigger.Instance> {
-    private static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "lore_entry");
     public static final LoreTrigger INSTANCE = new LoreTrigger();
 
     @Override
-    public ResourceLocation getId() {
-        return ID;
-    }
-
-    @Override
-    protected Instance createInstance(JsonObject json, ContextAwarePredicate predicate, DeserializationContext context) {
-        ItemPredicate itemPredicate = ItemPredicate.fromJson(json.get("item"));
+    protected Instance createInstance(JsonObject json, Optional<ContextAwarePredicate> predicate, DeserializationContext context) {
+        Optional<ItemPredicate> itemPredicate = ItemPredicate.fromJson(json.get("item"));
         return new LoreTrigger.Instance(predicate, itemPredicate);
     }
 
@@ -31,15 +25,15 @@ public class LoreTrigger extends SimpleCriterionTrigger<LoreTrigger.Instance> {
     }
 
     public static class Instance extends AbstractCriterionTriggerInstance {
-        private final ItemPredicate item;
+        private final Optional<ItemPredicate>  item;
 
-        public Instance(ContextAwarePredicate predicate, ItemPredicate item) {
-            super(LoreTrigger.ID, predicate);
+        public Instance(Optional<ContextAwarePredicate> predicate, Optional<ItemPredicate>  item) {
+            super(predicate);
             this.item = item;
         }
 
         public static LoreTrigger.Instance forItem(ItemPredicate item) {
-            return new LoreTrigger.Instance(ContextAwarePredicate.ANY, item);
+            return new LoreTrigger.Instance(Optional.empty(), Optional.of(item));
         }
 
         public static LoreTrigger.Instance forItem(ItemLike item) {
@@ -47,17 +41,17 @@ public class LoreTrigger extends SimpleCriterionTrigger<LoreTrigger.Instance> {
         }
 
         public static LoreTrigger.Instance forAny() {
-            return forItem(ItemPredicate.ANY);
+            return new LoreTrigger.Instance(Optional.empty(), Optional.empty());
         }
 
         public boolean test(ItemStack stack) {
-            return this.item.matches(stack);
+            return this.item.isEmpty() || this.item.get().matches(stack);
         }
 
         @Override
-        public JsonObject serializeToJson(SerializationContext context) {
-            JsonObject jsonObject = super.serializeToJson(context);
-            jsonObject.add("item", this.item.serializeToJson());
+        public JsonObject serializeToJson() {
+            JsonObject jsonObject = super.serializeToJson();
+            this.item.ifPresent(itemPredicate -> jsonObject.add("item", itemPredicate.serializeToJson()));
             return jsonObject;
         }
     }

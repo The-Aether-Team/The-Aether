@@ -1,27 +1,21 @@
 package com.aetherteam.aether.advancement;
 
-import com.aetherteam.aether.Aether;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.critereon.*;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.Optional;
 
 /**
  * Criterion trigger used for checking when an item has finished incubating.
  */
 public class IncubationTrigger extends SimpleCriterionTrigger<IncubationTrigger.Instance> {
-    private static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "incubation_trigger");
     public static final IncubationTrigger INSTANCE = new IncubationTrigger();
 
     @Override
-    public ResourceLocation getId() {
-        return ID;
-    }
-
-    @Override
-    public IncubationTrigger.Instance createInstance(JsonObject json, ContextAwarePredicate predicate, DeserializationContext context) {
-        ItemPredicate itemPredicate = ItemPredicate.fromJson(json.get("item"));
+    public IncubationTrigger.Instance createInstance(JsonObject json, Optional<ContextAwarePredicate> predicate, DeserializationContext context) {
+        Optional<ItemPredicate> itemPredicate = ItemPredicate.fromJson(json.get("item"));
         return new IncubationTrigger.Instance(predicate, itemPredicate);
     }
 
@@ -30,25 +24,25 @@ public class IncubationTrigger extends SimpleCriterionTrigger<IncubationTrigger.
     }
 
     public static class Instance extends AbstractCriterionTriggerInstance {
-        private final ItemPredicate item;
+        private final Optional<ItemPredicate> item;
 
-        public Instance(ContextAwarePredicate predicate, ItemPredicate item) {
-            super(IncubationTrigger.ID, predicate);
+        public Instance(Optional<ContextAwarePredicate> predicate, Optional<ItemPredicate> item) {
+            super(predicate);
             this.item = item;
         }
 
         public static IncubationTrigger.Instance forItem(ItemPredicate item) {
-            return new IncubationTrigger.Instance(ContextAwarePredicate.ANY, item);
+            return new IncubationTrigger.Instance(Optional.empty(), Optional.of(item));
         }
 
         public boolean test(ItemStack stack) {
-            return this.item.matches(stack);
+            return this.item.isEmpty() || this.item.get().matches(stack);
         }
 
         @Override
-        public JsonObject serializeToJson(SerializationContext context) {
-            JsonObject jsonObject = super.serializeToJson(context);
-            jsonObject.add("item", this.item.serializeToJson());
+        public JsonObject serializeToJson() {
+            JsonObject jsonObject = super.serializeToJson();
+            this.item.ifPresent(itemPredicate -> jsonObject.add("item", itemPredicate.serializeToJson()));
             return jsonObject;
         }
     }
