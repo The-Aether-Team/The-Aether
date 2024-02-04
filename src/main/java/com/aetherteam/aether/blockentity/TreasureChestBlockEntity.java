@@ -28,8 +28,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
 import net.neoforged.neoforge.common.capabilities.Capability;
-import net.neoforged.neoforge.common.capabilities.ForgeCapabilities;
 import net.neoforged.neoforge.common.util.LazyOptional;
 import net.neoforged.neoforge.items.IItemHandlerModifiable;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
@@ -106,7 +106,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
 
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
-        if (!this.remove && capability == ForgeCapabilities.ITEM_HANDLER) {
+        if (!this.remove && capability == Capabilities.ITEM_HANDLER) {
             if (this.chestHandler == null) {
                 this.chestHandler = LazyOptional.of(this::createHandler);
             }

@@ -11,7 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.HitResult;
-import net.neoforged.neoforge.fml.ModList;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.registries.ForgeRegistries;
 import noobanidus.mods.lootr.init.ModBlocks;
 import org.jetbrains.annotations.Nullable;

@@ -5,7 +5,7 @@ import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.common.ForgeMod;
+import net.neoforged.neoforge.common.NeoForgeMod;
 
 import javax.annotation.Nullable;
 
@@ -26,7 +26,7 @@ public record StepHeightPacket(int entityID) implements BasePacket {
     @Override
     public void execute(@Nullable Player playerEntity) {
         if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level().getEntity(this.entityID()) instanceof MountableAnimal mountableAnimal) {
-            AttributeInstance stepHeight = mountableAnimal.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
+            AttributeInstance stepHeight = mountableAnimal.getAttribute(NeoForgeMod.STEP_HEIGHT_ADDITION.get());
             if (stepHeight != null) {
                 if (stepHeight.hasModifier(mountableAnimal.getDefaultStepHeightModifier())) {
                     stepHeight.removeModifier(mountableAnimal.getDefaultStepHeightModifier());

@@ -12,7 +12,6 @@ import com.aetherteam.cumulus.api.Menus;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.RegistryObject;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;

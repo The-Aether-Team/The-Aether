@@ -4,9 +4,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.neoforged.neoforge;
-import net.neoforged.neoforge.eventbus.api.Cancelable;
-import net.neoforged.neoforge.eventbus.api.Event;
-import net.neoforged.neoforge.fml.LogicalSide;
+import net.neoforged.bus.api.Cancelable;
+import net.neoforged.bus.api.Event;
+import net.neoforged.fml.LogicalSide;
 
 /**
  * PlacementConvertEvent is fired after a {@link com.aetherteam.aether.recipe.AetherRecipeTypes#PLACEMENT_CONVERSION} recipe is checked as existing for the placement of a block, but before a converted block is placed from the recipe.
@@ -14,7 +14,7 @@ import net.neoforged.neoforge.fml.LogicalSide;
  * This event is {@link Cancelable}.<br>
  * If the event is not canceled, the block conversion will happen.
  * <br>
- * This event does not have a result. {@link net.neoforged.neoforge.eventbus.api.Event.HasResult}<br>
+ * This event does not have a result. {@linknet.neoforged.bus.api.Event.HasResult}<br>
  * <br>
  * This event is fired on the {@link neoforged.neoforge#EVENT_BUS}.<br>
  * <br>

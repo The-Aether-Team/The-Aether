@@ -5,8 +5,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.common.neoforged.neoforge;
 import net.neoforged.neoforge.event.entity.EntityEvent;
-import net.neoforged.neoforge.eventbus.api.Cancelable;
-import net.neoforged.neoforge.fml.LogicalSide;
+import net.neoforged.bus.api.Cancelable;
+import net.neoforged.fml.LogicalSide;
 
 import javax.annotation.Nullable;
 
@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
  * This event is {@link Cancelable}.<br>
  * If the event is not canceled, the Moa will lay an egg.
  * <br>
- * This event does not have a result. {@link net.neoforged.neoforge.eventbus.api.Event.HasResult}<br>
+ * This event does not have a result. {@linknet.neoforged.bus.api.Event.HasResult}<br>
  * <br>
  * This event is fired on the {@link neoforged.neoforge#EVENT_BUS}.<br>
  * <br>

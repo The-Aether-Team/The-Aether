@@ -5,7 +5,7 @@ import com.google.common.collect.Multimap;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.neoforged.neoforge.common.ForgeMod;
+import net.neoforged.neoforge.common.NeoForgeMod;
 
 import java.util.UUID;
 
@@ -31,8 +31,8 @@ public interface ValkyrieTool {
         if (slot == EquipmentSlot.MAINHAND) {
             ImmutableMultimap.Builder<Attribute, AttributeModifier> attributeBuilder = ImmutableMultimap.builder();
             attributeBuilder.putAll(map);
-            attributeBuilder.put(ForgeMod.BLOCK_REACH.get(), new AttributeModifier(REACH_DISTANCE_MODIFIER_UUID, "Reach distance modifier", this.getModifier(), AttributeModifier.Operation.ADDITION));
-            attributeBuilder.put(ForgeMod.ENTITY_REACH.get(), new AttributeModifier(ATTACK_RANGE_MODIFIER_UUID, "Attack range modifier", this.getModifier(), AttributeModifier.Operation.ADDITION));
+            attributeBuilder.put(NeoForgeMod.BLOCK_REACH.get(), new AttributeModifier(REACH_DISTANCE_MODIFIER_UUID, "Reach distance modifier", this.getModifier(), AttributeModifier.Operation.ADDITION));
+            attributeBuilder.put(NeoForgeMod.ENTITY_REACH.get(), new AttributeModifier(ATTACK_RANGE_MODIFIER_UUID, "Attack range modifier", this.getModifier(), AttributeModifier.Operation.ADDITION));
             map = attributeBuilder.build();
         }
         return map;

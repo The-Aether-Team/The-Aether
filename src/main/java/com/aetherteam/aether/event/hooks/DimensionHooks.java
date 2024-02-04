@@ -37,18 +37,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.SleepingTimeCheckEvent;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.event.level.SleepFinishedTimeEvent;
+import net.neoforged.neoforge.common.util.LazyOptional;
+import net.neoforged.neoforge.event.TickEvent;
+import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.entity.player.SleepingTimeCheckEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.SleepFinishedTimeEvent;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class DimensionHooks {
@@ -67,11 +66,13 @@ public class DimensionHooks {
                 if (aetherPlayer.canSpawnInAether()) { // Checks if the player has been set to spawn in the Aether.
                     if (aetherPlayer.getPlayer() instanceof ServerPlayer serverPlayer) {
                         MinecraftServer server = serverPlayer.level().getServer();
-                        ServerLevel aetherLevel = server.getLevel(AetherDimensions.AETHER_LEVEL);
-                        if (aetherLevel != null && serverPlayer.level().dimension() != AetherDimensions.AETHER_LEVEL) {
-                            if (aetherPlayer.getPlayer().changeDimension(aetherLevel, new AetherPortalForcer(aetherLevel, false, true)) != null) {
-                                serverPlayer.setRespawnPosition(AetherDimensions.AETHER_LEVEL, serverPlayer.blockPosition(), serverPlayer.getYRot(), true, false);
-                                aetherPlayer.setCanSpawnInAether(false); // Sets that the player has already spawned in the Aether.
+                        if (server != null) {
+                            ServerLevel aetherLevel = server.getLevel(AetherDimensions.AETHER_LEVEL);
+                            if (aetherLevel != null && serverPlayer.level().dimension() != AetherDimensions.AETHER_LEVEL) {
+                                if (aetherPlayer.getPlayer().changeDimension(aetherLevel, new AetherPortalForcer(aetherLevel, false, true)) != null) {
+                                    serverPlayer.setRespawnPosition(AetherDimensions.AETHER_LEVEL, serverPlayer.blockPosition(), serverPlayer.getYRot(), true, false);
+                                    aetherPlayer.setCanSpawnInAether(false); // Sets that the player has already spawned in the Aether.
+                                }
                             }
                         }
                     }

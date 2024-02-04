@@ -12,16 +12,17 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
-import net.neoforged.neoforge.eventbus.api.SubscribeEvent;
-import net.neoforged.neoforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.RegistryObject;
+
+import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Aether.MODID);
 
-    public static RegistryObject<CreativeModeTab> AETHER_BUILDING_BLOCKS = CREATIVE_MODE_TABS.register("building_blocks", () -> CreativeModeTab.builder()
+    public static Supplier<CreativeModeTab> AETHER_BUILDING_BLOCKS = CREATIVE_MODE_TABS.register("building_blocks", () -> CreativeModeTab.builder()
             .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
             .withTabsAfter(new ResourceLocation(Aether.MODID, "dungeon_blocks"))
             .icon(() -> new ItemStack(AetherBlocks.HOLYSTONE_BRICKS.get()))
@@ -70,7 +71,7 @@ public class AetherCreativeTabs {
                 output.accept(AetherBlocks.AEROGEL_SLAB.get());
                 output.accept(AetherBlocks.AEROGEL_WALL.get());
             }).build());
-    public static RegistryObject<CreativeModeTab> AETHER_DUNGEON_BLOCKS = CREATIVE_MODE_TABS.register("dungeon_blocks", () -> CreativeModeTab.builder()
+    public static Supplier<CreativeModeTab> AETHER_DUNGEON_BLOCKS = CREATIVE_MODE_TABS.register("dungeon_blocks", () -> CreativeModeTab.builder()
             .withTabsBefore(new ResourceLocation(Aether.MODID, "building_blocks"))
             .withTabsAfter(new ResourceLocation(Aether.MODID, "natural_blocks"))
             .icon(() -> new ItemStack(AetherBlocks.LIGHT_ANGELIC_STONE.get()))
@@ -120,7 +121,7 @@ public class AetherCreativeTabs {
                 output.accept(AetherBlocks.TREASURE_CHEST.get());
                 output.accept(AetherBlocks.CHEST_MIMIC.get());
             }).build());
-    public static RegistryObject<CreativeModeTab> AETHER_NATURAL_BLOCKS = CREATIVE_MODE_TABS.register("natural_blocks", () -> CreativeModeTab.builder()
+    public static Supplier<CreativeModeTab> AETHER_NATURAL_BLOCKS = CREATIVE_MODE_TABS.register("natural_blocks", () -> CreativeModeTab.builder()
             .withTabsBefore(new ResourceLocation(Aether.MODID, "dungeon_blocks"))
             .withTabsAfter(new ResourceLocation(Aether.MODID, "functional_blocks"))
             .icon(() -> new ItemStack(AetherBlocks.AETHER_GRASS_BLOCK.get()))
@@ -157,7 +158,7 @@ public class AetherCreativeTabs {
                 output.accept(AetherBlocks.GOLDEN_AERCLOUD.get());
                 output.accept(AetherBlocks.PRESENT.get());
             }).build());
-    public static RegistryObject<CreativeModeTab> AETHER_FUNCTIONAL_BLOCKS = CREATIVE_MODE_TABS.register("functional_blocks", () -> CreativeModeTab.builder()
+    public static Supplier<CreativeModeTab> AETHER_FUNCTIONAL_BLOCKS = CREATIVE_MODE_TABS.register("functional_blocks", () -> CreativeModeTab.builder()
             .withTabsBefore(new ResourceLocation(Aether.MODID, "natural_blocks"))
             .withTabsAfter(new ResourceLocation(Aether.MODID, "redstone_blocks"))
             .icon(() -> new ItemStack(AetherBlocks.SKYROOT_SIGN.get()))
@@ -176,7 +177,7 @@ public class AetherCreativeTabs {
                 output.accept(AetherBlocks.CHEST_MIMIC.get());
                 output.accept(AetherBlocks.PRESENT.get());
             }).build());
-    public static RegistryObject<CreativeModeTab> AETHER_REDSTONE_BLOCKS = CREATIVE_MODE_TABS.register("redstone_blocks", () -> CreativeModeTab.builder()
+    public static Supplier<CreativeModeTab> AETHER_REDSTONE_BLOCKS = CREATIVE_MODE_TABS.register("redstone_blocks", () -> CreativeModeTab.builder()
             .withTabsBefore(new ResourceLocation(Aether.MODID, "functional_blocks"))
             .withTabsAfter(new ResourceLocation(Aether.MODID, "tools_and_utilities"))
             .icon(() -> new ItemStack(AetherBlocks.SKYROOT_FENCE_GATE.get()))
@@ -196,7 +197,7 @@ public class AetherCreativeTabs {
                 output.accept(AetherBlocks.SKYROOT_TRAPDOOR.get());
                 output.accept(AetherBlocks.ENCHANTED_GRAVITITE.get());
             }).build());
-    public static RegistryObject<CreativeModeTab> AETHER_EQUIPMENT_AND_UTILITIES = CREATIVE_MODE_TABS.register("equipment_and_utilities", () -> CreativeModeTab.builder()
+    public static Supplier<CreativeModeTab> AETHER_EQUIPMENT_AND_UTILITIES = CREATIVE_MODE_TABS.register("equipment_and_utilities", () -> CreativeModeTab.builder()
             .withTabsBefore(new ResourceLocation(Aether.MODID, "redstone_blocks"))
             .withTabsAfter(new ResourceLocation(Aether.MODID, "armor_and_accessories"))
             .icon(() -> new ItemStack(AetherItems.GRAVITITE_PICKAXE.get()))
@@ -274,7 +275,7 @@ public class AetherCreativeTabs {
                 output.accept(AetherItems.MUSIC_DISC_ASCENDING_DAWN.get());
                 output.accept(AetherItems.AETHER_PORTAL_FRAME.get());
             }).build());
-    public static RegistryObject<CreativeModeTab> AETHER_ARMOR_AND_ACCESSORIES = CREATIVE_MODE_TABS.register("armor_and_accessories", () -> CreativeModeTab.builder()
+    public static Supplier<CreativeModeTab> AETHER_ARMOR_AND_ACCESSORIES = CREATIVE_MODE_TABS.register("armor_and_accessories", () -> CreativeModeTab.builder()
             .withTabsBefore(new ResourceLocation(Aether.MODID, "equipment_and_utilities"))
             .withTabsAfter(new ResourceLocation(Aether.MODID, "food_and_drinks"))
             .icon(() -> new ItemStack(AetherItems.VALKYRIE_CHESTPLATE.get()))
@@ -336,7 +337,7 @@ public class AetherCreativeTabs {
                 output.accept(AetherItems.IRON_BUBBLE.get());
                 output.accept(AetherItems.SHIELD_OF_REPULSION.get());
             }).build());
-    public static RegistryObject<CreativeModeTab> AETHER_FOOD_AND_DRINKS = CREATIVE_MODE_TABS.register("food_and_drinks", () -> CreativeModeTab.builder()
+    public static Supplier<CreativeModeTab> AETHER_FOOD_AND_DRINKS = CREATIVE_MODE_TABS.register("food_and_drinks", () -> CreativeModeTab.builder()
             .withTabsBefore(new ResourceLocation(Aether.MODID, "combat"))
             .withTabsAfter(new ResourceLocation(Aether.MODID, "ingredients"))
             .icon(() -> new ItemStack(AetherItems.BLUE_GUMMY_SWET.get()))
@@ -358,7 +359,7 @@ public class AetherCreativeTabs {
                 output.accept(AetherItems.SKYROOT_POISON_BUCKET.get());
                 output.accept(AetherItems.LIFE_SHARD.get());
             }).build());
-    public static RegistryObject<CreativeModeTab> AETHER_INGREDIENTS = CREATIVE_MODE_TABS.register("ingredients", () -> CreativeModeTab.builder()
+    public static Supplier<CreativeModeTab> AETHER_INGREDIENTS = CREATIVE_MODE_TABS.register("ingredients", () -> CreativeModeTab.builder()
             .withTabsBefore(new ResourceLocation(Aether.MODID, "food_and_drinks"))
             .withTabsAfter(new ResourceLocation(Aether.MODID, "spawn_eggs"))
             .icon(() -> new ItemStack(AetherItems.AMBROSIUM_SHARD.get()))
@@ -373,7 +374,7 @@ public class AetherCreativeTabs {
                 output.accept(AetherItems.SKYROOT_POISON_BUCKET.get());
                 output.accept(AetherItems.SWET_BALL.get());
             }).build());
-    public static RegistryObject<CreativeModeTab> AETHER_SPAWN_EGGS = CREATIVE_MODE_TABS.register("spawn_eggs", () -> CreativeModeTab.builder()
+    public static Supplier<CreativeModeTab> AETHER_SPAWN_EGGS = CREATIVE_MODE_TABS.register("spawn_eggs", () -> CreativeModeTab.builder()
             .withTabsBefore(new ResourceLocation(Aether.MODID, "ingredients"))
             .icon(() -> new ItemStack(AetherItems.AERBUNNY_SPAWN_EGG.get()))
             .title(Component.translatable("itemGroup." + Aether.MODID + ".spawn_eggs"))

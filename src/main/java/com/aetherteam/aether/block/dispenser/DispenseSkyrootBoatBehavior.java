@@ -3,8 +3,8 @@ package com.aetherteam.aether.block.dispenser;
 import com.aetherteam.aether.entity.miscellaneous.SkyrootBoat;
 import com.aetherteam.aether.entity.miscellaneous.SkyrootChestBoat;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.BlockSource;
 import net.minecraft.core.Direction;
+import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.BoatDispenseItemBehavior;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.world.entity.EntityType;
@@ -29,13 +29,13 @@ public class DispenseSkyrootBoatBehavior extends DefaultDispenseItemBehavior {
     }
 
     public ItemStack execute(BlockSource source, ItemStack stack) {
-        Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
-        Level level = source.getLevel();
+        Direction direction = source.state().getValue(DispenserBlock.FACING);
+        Level level = source.level();
         double width = 0.5625 + EntityType.BOAT.getWidth() / 2.0;
         double x = source.x() + direction.getStepX() * width;
         double y = source.y() + direction.getStepY() * 1.125F;
         double z = source.z() + direction.getStepZ() * width;
-        BlockPos blockpos = source.getPos().relative(direction);
+        BlockPos blockpos = source.pos().relative(direction);
         Boat boat = (this.isChestBoat ? new SkyrootChestBoat(level, width, x, y) : new SkyrootBoat(level, width, x, y));
         boat.setYRot(direction.toYRot());
         double yOffset;
@@ -54,6 +54,6 @@ public class DispenseSkyrootBoatBehavior extends DefaultDispenseItemBehavior {
     }
 
     protected void playSound(BlockSource source) {
-        source.getLevel().levelEvent(1000, source.getPos(), 0);
+        source.level().levelEvent(1000, source.pos(), 0);
     }
 }

@@ -16,10 +16,10 @@ import com.aetherteam.aether.item.accessories.pendant.PendantItem;
 import com.aetherteam.aether.item.miscellaneous.bucket.SkyrootBucketItem;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.BlockSource;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
+import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.sounds.SoundEvents;
@@ -69,8 +69,8 @@ public class AetherDispenseBehaviors {
      * @return Whether the accessory can be dispensed, as a {@link Boolean}.
      */
     public static boolean dispenseAccessory(BlockSource blockSource, ItemStack stack) {
-        BlockPos pos = blockSource.getPos().relative(blockSource.getBlockState().getValue(DispenserBlock.FACING));
-        List<LivingEntity> list = blockSource.getLevel().getEntitiesOfClass(LivingEntity.class, new AABB(pos), EntitySelector.NO_SPECTATORS.and(new EntitySelector.MobCanWearArmorEntitySelector(stack)));
+        BlockPos pos = blockSource.pos().relative(blockSource.state().getValue(DispenserBlock.FACING));
+        List<LivingEntity> list = blockSource.level().getEntitiesOfClass(LivingEntity.class, new AABB(pos), EntitySelector.NO_SPECTATORS.and(new EntitySelector.MobCanWearArmorEntitySelector(stack)));
         if (list.isEmpty()) {
             return false;
         } else {
@@ -171,7 +171,7 @@ public class AetherDispenseBehaviors {
     public static final DispenseItemBehavior DISPENSE_KINGBDOGZ_HAMMER_BEHAVIOR = new AbstractProjectileDispenseBehavior() {
         @Override
         public ItemStack execute(BlockSource blockSource, ItemStack stack) {
-            Projectile projectile = this.getProjectile(blockSource.getLevel(), DispenserBlock.getDispensePosition(blockSource), stack);
+            Projectile projectile = this.getProjectile(blockSource.level(), DispenserBlock.getDispensePosition(blockSource), stack);
             AetherDispenseBehaviors.spawnProjectile(blockSource, projectile, this.getPower(), this.getUncertainty());
             stack.setDamageValue(stack.getDamageValue() + 1); // Decrease durability by one.
             if (stack.getDamageValue() >= stack.getMaxDamage()) {
@@ -201,8 +201,8 @@ public class AetherDispenseBehaviors {
         @Override
         public ItemStack execute(BlockSource source, ItemStack stack) {
             DispensibleContainerItem dispensibleContainerItem = (DispensibleContainerItem) stack.getItem();
-            BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
-            Level level = source.getLevel();
+            BlockPos blockpos = source.pos().relative(source.state().getValue(DispenserBlock.FACING));
+            Level level = source.level();
             if (dispensibleContainerItem.emptyContents(null, level, blockpos, null, stack)) {
                 dispensibleContainerItem.checkExtraContent(null, level, stack, blockpos);
                 return new ItemStack(AetherItems.SKYROOT_BUCKET.get());
@@ -221,8 +221,8 @@ public class AetherDispenseBehaviors {
 
         @Override
         public ItemStack execute(BlockSource source, ItemStack stack) {
-            LevelAccessor levelAccessor = source.getLevel();
-            BlockPos blockPos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
+            LevelAccessor levelAccessor = source.level();
+            BlockPos blockPos = source.pos().relative(source.state().getValue(DispenserBlock.FACING));
             BlockState blockState = levelAccessor.getBlockState(blockPos);
             Block block = blockState.getBlock();
             if (block instanceof BucketPickup bucketPickup) {
@@ -237,7 +237,7 @@ public class AetherDispenseBehaviors {
                     if (stack.isEmpty()) {
                         return new ItemStack(item);
                     } else {
-                        if (source.<DispenserBlockEntity>getEntity().addItem(new ItemStack(item)) < 0) {
+                        if (source.<DispenserBlockEntity>blockEntity().addItem(new ItemStack(item)) < 0) {
                             this.defaultDispenseItemBehavior.dispense(source, new ItemStack(item));
                         }
                         return stack;
@@ -257,8 +257,8 @@ public class AetherDispenseBehaviors {
      * @param inaccuracy The inaccuracy for the projectile, as a {@link Float}.
      */
     protected static void spawnProjectile(BlockSource source, Projectile projectile, float velocity, float inaccuracy) {
-        Level level = source.getLevel();
-        Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
+        Level level = source.level();
+        Direction direction = source.state().getValue(DispenserBlock.FACING);
         projectile.shoot(direction.getStepX(), direction.getStepY(), direction.getStepZ(), velocity, inaccuracy);
         level.addFreshEntity(projectile);
     }

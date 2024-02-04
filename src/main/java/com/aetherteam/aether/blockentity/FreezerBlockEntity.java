@@ -4,6 +4,7 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.inventory.menu.FreezerMenu;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Inventory;
@@ -12,8 +13,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.registries.ForgeRegistries;
-import net.neoforged.neoforge.registries.tags.ITagManager;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -59,10 +58,7 @@ public class FreezerBlockEntity extends AbstractAetherFurnaceBlockEntity {
 	}
 
 	public static void addItemTagFreezingTime(TagKey<Item> itemTag, int burnTime) {
-		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
-		if (tags != null) {
-			tags.getTag(itemTag).stream().forEach((item) -> getFreezingMap().put(item, burnTime));
-		}
+		BuiltInRegistries.ITEM.getTagOrEmpty(itemTag).forEach((item) -> getFreezingMap().put(item.value(), burnTime));
 	}
 
 	public static void removeItemFreezingTime(ItemLike itemProvider) {
@@ -75,9 +71,6 @@ public class FreezerBlockEntity extends AbstractAetherFurnaceBlockEntity {
 	}
 
 	public static void removeItemTagFreezingTime(TagKey<Item> itemTag) {
-		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
-		if (tags != null) {
-			tags.getTag(itemTag).stream().forEach((item) -> getFreezingMap().remove(item));
-		}
+		BuiltInRegistries.ITEM.getTagOrEmpty(itemTag).forEach((item) -> getFreezingMap().remove(item.value()));
 	}
 }

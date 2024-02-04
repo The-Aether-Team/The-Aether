@@ -4,11 +4,11 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.event.hooks.CapabilityClientHooks;
 import net.minecraft.client.player.Input;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.api.distmarker.Dist;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.MovementInputUpdateEvent;
-import net.neoforged.neoforge.eventbus.api.SubscribeEvent;
-import net.neoforged.neoforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT)
 public class AetherPlayerClientListener {

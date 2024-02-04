@@ -33,7 +33,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.ForgeMod;
+import net.neoforged.neoforge.common.NeoForgeMod;
 
 import java.util.EnumSet;
 
@@ -295,7 +295,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
                 if (this.flyingTicks > 0) {
                     this.flyingTicks--;
                     double fallSpeed;
-                    AttributeInstance gravity = this.valkyrie.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
+                    AttributeInstance gravity = this.valkyrie.getAttribute(NeoForgeMod.ENTITY_GRAVITY.get());
                     if (gravity != null) {
                         fallSpeed = Math.max(gravity.getValue() * -0.625, -0.275);
                     } else {

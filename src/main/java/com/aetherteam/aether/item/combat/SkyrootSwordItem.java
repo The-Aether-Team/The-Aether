@@ -6,7 +6,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.neoforged.neoforge.fml.common.Mod;
+import net.neoforged.fml.common.Mod;
 
 import javax.annotation.Nullable;
 

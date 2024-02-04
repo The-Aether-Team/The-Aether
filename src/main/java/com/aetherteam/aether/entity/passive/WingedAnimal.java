@@ -7,7 +7,7 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.common.ForgeMod;
+import net.neoforged.neoforge.common.NeoForgeMod;
 
 public abstract class WingedAnimal extends MountableAnimal {
     /**
@@ -37,7 +37,7 @@ public abstract class WingedAnimal extends MountableAnimal {
     @Override
     public void tick() {
         super.tick();
-        AttributeInstance gravity = this.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
+        AttributeInstance gravity = this.getAttribute(NeoForgeMod.ENTITY_GRAVITY.get());
         if (gravity != null) {
             double fallSpeed = Math.max(gravity.getValue() * -1.25, -0.1); // Entity isn't allowed to fall too slowly from gravity.
             if (this.getDeltaMovement().y() < fallSpeed && !this.playerTriedToCrouch()) {

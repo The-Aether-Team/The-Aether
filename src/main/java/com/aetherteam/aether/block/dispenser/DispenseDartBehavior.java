@@ -3,9 +3,9 @@ package com.aetherteam.aether.block.dispenser;
 import com.aetherteam.aether.entity.projectile.dart.AbstractDart;
 import com.aetherteam.aether.item.combat.DartItem;
 import net.minecraft.Util;
-import net.minecraft.core.BlockSource;
 import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
+import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
@@ -31,7 +31,7 @@ public class DispenseDartBehavior extends AbstractProjectileDispenseBehavior {
      */
     @Override
     public ItemStack execute(BlockSource blockSource, ItemStack stack) {
-        Projectile projectile = this.getProjectile(blockSource.getLevel(), DispenserBlock.getDispensePosition(blockSource), stack);
+        Projectile projectile = this.getProjectile(blockSource.level(), DispenserBlock.getDispensePosition(blockSource), stack);
         if (projectile != null) {
             AetherDispenseBehaviors.spawnProjectile(blockSource, projectile, this.getPower(), this.getUncertainty());
             stack.shrink(1);

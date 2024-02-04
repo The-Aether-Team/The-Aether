@@ -4,7 +4,7 @@ import com.aetherteam.aether.item.materials.behavior.ItemUseConversion;
 import com.aetherteam.aether.recipe.recipes.block.MatchEventRecipe;
 import com.aetherteam.nitrogen.recipe.recipes.BlockStateRecipe;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.BlockSource;
+import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -24,8 +24,8 @@ public class DispenseUsableItemBehavior<R extends MatchEventRecipe & BlockStateR
     @Override
     protected ItemStack execute(BlockSource source, ItemStack stack) {
         this.setSuccess(true);
-        Level world = source.getLevel();
-        BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
+        Level world = source.level();
+        BlockPos blockpos = source.pos().relative(source.state().getValue(DispenserBlock.FACING));
         if (!this.convertBlockWithoutContext(this.recipeType, world, blockpos, stack)) {
             this.setSuccess(false);
         }

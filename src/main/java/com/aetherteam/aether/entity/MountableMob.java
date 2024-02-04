@@ -15,7 +15,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.ForgeMod;
+import net.neoforged.neoforge.common.NeoForgeMod;
 
 import java.util.UUID;
 
@@ -101,7 +101,7 @@ public interface MountableMob {
                 vehicle.hasImpulse = true;
             }
             // Handles step height.
-            AttributeInstance stepHeight = vehicle.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
+            AttributeInstance stepHeight = vehicle.getAttribute(NeoForgeMod.STEP_HEIGHT_ADDITION.get());
             if (stepHeight != null) {
                 if (stepHeight.hasModifier(vehicle.getDefaultStepHeightModifier())) {
                     stepHeight.removeModifier(vehicle.getDefaultStepHeightModifier());
@@ -123,7 +123,7 @@ public interface MountableMob {
             vehicle.calculateEntityAnimation(false);
         } else {
             // Handles step height.
-            AttributeInstance stepHeight = vehicle.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
+            AttributeInstance stepHeight = vehicle.getAttribute(NeoForgeMod.STEP_HEIGHT_ADDITION.get());
             if (stepHeight != null) {
                 if (stepHeight.hasModifier(vehicle.getMountStepHeightModifier())) {
                     stepHeight.removeModifier(vehicle.getMountStepHeightModifier());

@@ -39,7 +39,7 @@ public class AerogelStairsBlock extends StairBlock implements AerogelCulling {
     }
 
     /**
-     * @see net.neoforged.neoforge.common.extensions.IForgeBlock#supportsExternalFaceHiding(BlockState)
+     * @see net.neoforged.neoforge.common.extensions.IBlockExtension#supportsExternalFaceHiding(BlockState)
      */
     @Override
     public boolean supportsExternalFaceHiding(BlockState state) {

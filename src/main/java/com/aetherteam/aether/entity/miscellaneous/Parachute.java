@@ -15,7 +15,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.vehicle.DismountHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.ForgeMod;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
@@ -69,7 +69,7 @@ public class Parachute extends Entity {
                 z *= 0.25F; // Backwards movement is slowed.
             }
             Vec3 travelVec = new Vec3(x, passenger.yya, z);
-            AttributeInstance gravity = passenger.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
+            AttributeInstance gravity = passenger.getAttribute(NeoForgeMod.ENTITY_GRAVITY.get());
             double gravityModifier = gravity != null ? gravity.getValue() : 0.08;
 
             Vec3 movement = this.calculateMovement(travelVec);

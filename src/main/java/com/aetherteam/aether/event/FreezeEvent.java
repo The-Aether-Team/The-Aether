@@ -4,10 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.neoforged.neoforge;
-import net.neoforged.neoforge.eventbus.api.Cancelable;
-import net.neoforged.neoforge.eventbus.api.Event;
-import net.neoforged.neoforge.fml.LogicalSide;
+import net.neoforged.bus.api.Event;
 
 /**
  * FreezeEvent is fired when an event for a freezing recipe occurs.<br>
@@ -76,7 +73,7 @@ public class FreezeEvent extends Event {
      * This event is {@link Cancelable}.<br>
      * If the event is not canceled, the block will be frozen.
      * <br>
-     * This event does not have a result. {@link net.neoforged.neoforge.eventbus.api.Event.HasResult}<br>
+     * This event does not have a result. {@linknet.neoforged.bus.api.Event.HasResult}<br>
      * <br>
      * This event is only fired on the {@link LogicalSide#SERVER} side.<br>
      * <br>
@@ -122,7 +119,7 @@ public class FreezeEvent extends Event {
      * This event is {@link Cancelable}.<br>
      * If the event is not canceled, the block will be frozen.
      * <br>
-     * This event does not have a result. {@link net.neoforged.neoforge.eventbus.api.Event.HasResult}<br>
+     * This event does not have a result. {@linknet.neoforged.bus.api.Event.HasResult}<br>
      * <br>
      * This event is only fired on the {@link LogicalSide#SERVER} side.<br>
      * <br>

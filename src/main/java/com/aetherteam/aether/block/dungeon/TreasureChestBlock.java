@@ -36,7 +36,7 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.common.ForgeHooks;
+import net.neoforged.neoforge.common.CommonHooks;
 
 import java.util.function.Supplier;
 
@@ -207,7 +207,7 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
 			if (f < 0.0F) {
 				return 0.0F;
 			} else {
-				int i = ForgeHooks.isCorrectToolForDrops(state, player) ? 30 : 100;
+				int i = CommonHooks.isCorrectToolForDrops(state, player) ? 30 : 100;
 				return player.getDigSpeed(state, pos) / f / (float) i;
 			}
 		}

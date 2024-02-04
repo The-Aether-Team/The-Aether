@@ -8,8 +8,8 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.neoforged.neoforge;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-import net.neoforged.neoforge.eventbus.api.Cancelable;
-import net.neoforged.neoforge.fml.LogicalSide;
+import net.neoforged.bus.api.Cancelable;
+import net.neoforged.fml.LogicalSide;
 
 import javax.annotation.Nullable;
 
@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
  * This event is {@link Cancelable}.<br>
  * If the event is not canceled, the block conversion will happen and the item will be consumed.
  * <br>
- * This event does not have a result. {@link net.neoforged.neoforge.eventbus.api.Event.HasResult}<br>
+ * This event does not have a result. {@linknet.neoforged.bus.api.Event.HasResult}<br>
  * <br>
  * This event is fired on the {@link neoforged.neoforge#EVENT_BUS}.<br>
  * <br>

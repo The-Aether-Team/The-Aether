@@ -15,7 +15,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.event.ForgeEventFactory;
+import net.neoforged.neoforge.event.EventHooks;
 
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -41,7 +41,7 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
         ItemStack heldStack = player.getItemInHand(hand);
         boolean hasAmmo = !player.getProjectile(heldStack).isEmpty();
 
-        InteractionResultHolder<ItemStack> result = ForgeEventFactory.onArrowNock(heldStack, level, player, hand, hasAmmo);
+        InteractionResultHolder<ItemStack> result = EventHooks.onArrowNock(heldStack, level, player, hand, hasAmmo);
         if (result == null) {
             if (player.getAbilities().instabuild || hasAmmo) {
                 player.startUsingItem(hand);
@@ -69,7 +69,7 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
             boolean creativeOrShooterIsInfinite = player.getAbilities().instabuild || stack.getEnchantmentLevel(Enchantments.INFINITY_ARROWS) > 0; // Note: Dart shooters can't be enchanted with Infinity in survival, but we still implement the behavior.
             boolean stillHasAmmo = !ammoItem.isEmpty() || creativeOrShooterIsInfinite;
 
-            ForgeEventFactory.onArrowLoose(stack, level, player, 0, stillHasAmmo);
+            EventHooks.onArrowLoose(stack, level, player, 0, stillHasAmmo);
 
             if (stillHasAmmo) { // Seems to be a failsafe check; under normal circumstances this should already be true because of the checks in DartShooterItem#use().
                 if (ammoItem.isEmpty()) {

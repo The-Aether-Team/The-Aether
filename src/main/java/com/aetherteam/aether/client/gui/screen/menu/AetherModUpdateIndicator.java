@@ -6,9 +6,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.gui.TitleScreenModUpdateIndicator;
 import net.neoforged.neoforge.client.loading.ClientModLoader;
 import net.neoforged.neoforge.common.ForgeI18n;
-import net.neoforged.neoforge.fml.ModList;
-import net.neoforged.neoforge.fml.VersionChecker;
-import net.neoforged.neoforge.fml.loading.FMLConfig;
+import net.neoforged.fml.ModList;
+import net.neoforged.fml.VersionChecker;
+import net.neoforged.fml.loading.FMLConfig;
 import net.neoforged.neoforge.versions.forge.ForgeVersion;
 
 import javax.annotation.Nullable;

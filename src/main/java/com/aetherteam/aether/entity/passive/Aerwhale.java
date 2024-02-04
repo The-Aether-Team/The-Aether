@@ -27,7 +27,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.ForgeMod;
+import net.neoforged.neoforge.common.NeoForgeMod;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -53,7 +53,7 @@ public class Aerwhale extends FlyingMob {
         return FlyingMob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0)
                 .add(Attributes.FLYING_SPEED, 0.2)
-                .add(ForgeMod.STEP_HEIGHT_ADDITION.get(), 0.4);
+                .add(NeoForgeMod.STEP_HEIGHT_ADDITION.get(), 0.4);
     }
 
     @Override

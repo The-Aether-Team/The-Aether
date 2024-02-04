@@ -56,7 +56,7 @@ public class SkyrootBucketItem extends BucketItem {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack heldStack = player.getItemInHand(hand);
         BlockHitResult blockhitResult = getPlayerPOVHitResult(level, player, this.getFluid() == Fluids.EMPTY ? ClipContext.Fluid.SOURCE_ONLY : ClipContext.Fluid.NONE);
-        InteractionResultHolder<ItemStack> interactionResult = net.neoforged.neoforge.event.ForgeEventFactory.onBucketUse(player, level, heldStack, blockhitResult);
+        InteractionResultHolder<ItemStack> interactionResult = net.neoforged.neoforge.event.EventHooks.onBucketUse(player, level, heldStack, blockhitResult);
         if (interactionResult != null) return interactionResult;
         if (blockhitResult.getType() == HitResult.Type.MISS) {
             return InteractionResultHolder.pass(heldStack);

@@ -7,7 +7,7 @@ import com.aetherteam.aether.entity.monster.dungeon.Mimic;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.fml.ModList;
+import net.neoforged.fml.ModList;
 
 import java.util.Calendar;
 

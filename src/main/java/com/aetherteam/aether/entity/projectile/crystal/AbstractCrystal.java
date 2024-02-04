@@ -68,7 +68,7 @@ public abstract class AbstractCrystal extends Projectile {
                 flag = true;
             }
         }
-        if (result.getType() != HitResult.Type.MISS && !flag && !net.neoforged.neoforge.event.ForgeEventFactory.onProjectileImpact(this, result)) {
+        if (result.getType() != HitResult.Type.MISS && !flag && !net.neoforged.neoforge.event.EventHooks.onProjectileImpact(this, result)) {
             this.onHit(result);
         }
         this.checkInsideBlocks();

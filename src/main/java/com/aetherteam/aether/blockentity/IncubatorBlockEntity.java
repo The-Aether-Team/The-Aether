@@ -9,6 +9,7 @@ import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -27,11 +28,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.RecipeHolder;
+import net.minecraft.world.inventory.RecipeCraftingHolder;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
@@ -40,13 +42,11 @@ import net.minecraft.world.level.block.AbstractFurnaceBlock;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
 import net.neoforged.neoforge.common.capabilities.Capability;
-import net.neoforged.neoforge.common.capabilities.ForgeCapabilities;
 import net.neoforged.neoforge.common.util.LazyOptional;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
-import net.neoforged.neoforge.registries.ForgeRegistries;
-import net.neoforged.neoforge.registries.tags.ITagManager;
 
 import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
@@ -58,7 +58,7 @@ import java.util.stream.Stream;
  * [CODE COPY] - {@link AbstractFurnaceBlockEntity}.<br><br>
  * Has heavy modifications for Incubator-specific behavior.
  */
-public class IncubatorBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, RecipeHolder, StackedContentsCompatible {
+public class IncubatorBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, RecipeCraftingHolder, StackedContentsCompatible {
 	private static final int[] SLOTS_NS = {0};
 	private static final int[] SLOTS_EW = {1};
 	protected NonNullList<ItemStack> items = NonNullList.withSize(2, ItemStack.EMPTY);
@@ -127,7 +127,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction direction) {
-		if (!this.remove && direction != null && capability == ForgeCapabilities.ITEM_HANDLER) {
+		if (!this.remove && direction != null && capability == Capabilities.ITEM_HANDLER) {
 			if (direction == Direction.NORTH) {
 				return handlers[0].cast();
 			} else if (direction == Direction.SOUTH) {
@@ -291,10 +291,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 	}
 
 	public static void addItemTagIncubatingTime(TagKey<Item> itemTag, int burnTime) {
-		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
-		if (tags != null) {
-			tags.getTag(itemTag).stream().forEach((item) -> getIncubatingMap().put(item, burnTime));
-		}
+		BuiltInRegistries.ITEM.getTagOrEmpty(itemTag).forEach((item) -> getIncubatingMap().put(item.value(), burnTime));
 	}
 
 	public static void removeItemIncubatingTime(ItemLike itemProvider) {
@@ -307,10 +304,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 	}
 
 	public static void removeItemTagIncubatingTime(TagKey<Item> itemTag) {
-		ITagManager<Item> tags = ForgeRegistries.ITEMS.tags();
-		if (tags != null) {
-			tags.getTag(itemTag).stream().forEach((item) -> getIncubatingMap().remove(item));
-		}
+		BuiltInRegistries.ITEM.getTagOrEmpty(itemTag).forEach((item) -> getIncubatingMap().remove(item.value()));
 	}
 
 	public void setPlayer(ServerPlayer player) {
@@ -403,7 +397,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 	}
 
 	@Override
-	public void setRecipeUsed(@Nullable Recipe<?> recipe) {
+	public void setRecipeUsed(@Nullable RecipeHolder<?> recipe) {
 		if (recipe != null) {
 			ResourceLocation resourcelocation = recipe.getId();
 			this.recipesUsed.addTo(resourcelocation, 1);

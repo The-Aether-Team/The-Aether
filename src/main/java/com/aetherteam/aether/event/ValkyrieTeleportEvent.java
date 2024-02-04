@@ -3,8 +3,8 @@ package com.aetherteam.aether.event;
 import net.minecraft.world.entity.Entity;
 import net.neoforged.neoforge.common.neoforged.neoforge;
 import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
-import net.neoforged.neoforge.eventbus.api.Cancelable;
-import net.neoforged.neoforge.fml.LogicalSide;
+import net.neoforged.bus.api.Cancelable;
+import net.neoforged.fml.LogicalSide;
 
 /**
  * ValkyrieTeleportEvent is fired before a Valkyrie teleports.
@@ -12,7 +12,7 @@ import net.neoforged.neoforge.fml.LogicalSide;
  * This event is {@link Cancelable}.<br>
  * If the event is not canceled, the entity will be teleported.
  * <br>
- * This event does not have a result. {@link net.neoforged.neoforge.eventbus.api.Event.HasResult}<br>
+ * This event does not have a result. {@linknet.neoforged.bus.api.Event.HasResult}<br>
  * <br>
  * This event is fired on the {@link neoforged.neoforge#EVENT_BUS}.<br>
  * <br>

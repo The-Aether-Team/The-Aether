@@ -16,7 +16,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.client.event.ScreenEvent;
-import net.neoforged.neoforge.common.neoforged.neoforge;
+import net.neoforged.neoforge.common.NeoForge;
 
 public class ValkyrieQueenDialogueScreen extends Screen {
     private final DialogueAnswerComponent dialogueAnswer;
@@ -134,7 +134,7 @@ public class ValkyrieQueenDialogueScreen extends Screen {
     @Override
     public void renderBackground(GuiGraphics guiGraphics) {
         if (this.getMinecraft().level != null) {
-            neoforged.neoforge.EVENT_BUS.post(new ScreenEvent.BackgroundRendered(this, guiGraphics));
+            NeoForge.EVENT_BUS.post(new ScreenEvent.BackgroundRendered(this, guiGraphics));
         }
     }
 

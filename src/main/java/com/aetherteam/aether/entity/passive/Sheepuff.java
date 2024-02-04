@@ -47,8 +47,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.ForgeMod;
-import net.neoforged.neoforge.common.IForgeShearable;
+import net.neoforged.neoforge.common.IShearable;
+import net.neoforged.neoforge.common.NeoForgeMod;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -60,7 +60,7 @@ import java.util.stream.Collectors;
  * Warning for "deprecation" is suppressed because we still need to use vanilla shearing behavior from {@link Shearable}.
  */
 @SuppressWarnings("deprecation")
-public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable {
+public class Sheepuff extends AetherAnimal implements Shearable, IShearable {
     private static final EntityDataAccessor<Byte> DATA_WOOL_COLOR_ID = SynchedEntityData.defineId(Sheepuff.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> DATA_PUFFED_ID = SynchedEntityData.defineId(Sheepuff.class, EntityDataSerializers.BOOLEAN);
 
@@ -165,7 +165,7 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
         super.tick();
         if (this.getPuffed()) {
             this.checkSlowFallDistance();
-            AttributeInstance gravity = this.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
+            AttributeInstance gravity = this.getAttribute(NeoForgeMod.ENTITY_GRAVITY.value());
             if (gravity != null) {
                 double fallSpeed = Math.max(gravity.getValue() * -0.625, -0.05);
                 if (this.getDeltaMovement().y() < fallSpeed) {
@@ -416,10 +416,16 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
     private DyeColor getOffspringColor(Animal parent1, Animal parent2) {
         DyeColor dyeColor1 = ((Sheepuff) parent1).getColor();
         DyeColor dyeColor2 = ((Sheepuff) parent2).getColor();
-        CraftingContainer craftingInventory = makeContainer(dyeColor1, dyeColor2);
-        return this.level().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, craftingInventory, this.level())
-                .map((p_213614_1_) -> p_213614_1_.assemble(craftingInventory, this.level().registryAccess()))
-                .map(ItemStack::getItem).filter(DyeItem.class::isInstance).map(DyeItem.class::cast).map(DyeItem::getDyeColor).orElseGet(() -> this.level().getRandom().nextBoolean() ? dyeColor1 : dyeColor2);
+        CraftingContainer craftingcontainer = makeContainer(dyeColor1, dyeColor2);
+        return this.level()
+                .getRecipeManager()
+                .getRecipeFor(RecipeType.CRAFTING, craftingcontainer, this.level())
+                .map(recipeHolder -> recipeHolder.value().assemble(craftingcontainer, this.level().registryAccess()))
+                .map(ItemStack::getItem)
+                .filter(DyeItem.class::isInstance)
+                .map(DyeItem.class::cast)
+                .map(DyeItem::getDyeColor)
+                .orElseGet(() -> this.level().random.nextBoolean() ? dyeColor1 : dyeColor2);
     }
 
     private static CraftingContainer makeContainer(DyeColor dyeColor1, DyeColor dyeColor2) {
