@@ -52,6 +52,8 @@ public class AetherItemTagData extends ItemTagsProvider {
         this.tag(AetherTags.Items.WATER_BUCKET_CRAFTING).add(
                 AetherItems.SKYROOT_WATER_BUCKET.get(),
                 Items.WATER_BUCKET);
+        this.tag(AetherTags.Items.ZANITE_SET_CRAFTING_MATERIALS).add(AetherItems.ZANITE_GEMSTONE.get());
+        this.tag(AetherTags.Items.GRAVITITE_SET_CRAFTING_MATERIALS).add(AetherBlocks.ENCHANTED_GRAVITITE.get().asItem());
 
         this.tag(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS);
         this.tag(AetherTags.Items.BOOK_OF_LORE_MATERIALS).addTag(Tags.Items.DUSTS_GLOWSTONE).add(

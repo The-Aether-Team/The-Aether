@@ -77,6 +77,8 @@ public class AetherTags {
 		public static final TagKey<Item> SKYROOT_TOOL_CRAFTING = tag("skyroot_tool_crafting");
 		public static final TagKey<Item> MILK_BUCKET_CRAFTING = tag("milk_bucket_crafting");
 		public static final TagKey<Item> WATER_BUCKET_CRAFTING = tag("water_bucket_crafting");
+		public static final TagKey<Item> ZANITE_SET_CRAFTING_MATERIALS = tag("zanite_set_crafting_materials");
+		public static final TagKey<Item> GRAVITITE_SET_CRAFTING_MATERIALS = tag("gravitite_set_crafting_materials");
 
 		public static final TagKey<Item> AETHER_PORTAL_ACTIVATION_ITEMS = tag("aether_portal_activation_items");
 		public static final TagKey<Item> BOOK_OF_LORE_MATERIALS = tag("book_of_lore_materials");

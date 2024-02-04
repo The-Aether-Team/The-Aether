@@ -99,8 +99,13 @@ public abstract class AetherRecipeProvider extends NitrogenRecipeProvider {
         return this.makeSword(sword, material, Ingredient.of(AetherTags.Items.SKYROOT_STICKS));
     }
 
-    protected ShapedRecipeBuilder makePendant(Supplier<? extends Item> pendant, Item material) {
+    protected ShapedRecipeBuilder makePendantWithTag(Supplier<? extends Item> pendant, Item material) {
         return this.makePendant(pendant, material, Ingredient.of(Tags.Items.STRING));
+    }
+
+
+    protected ShapedRecipeBuilder makePendantWithTag(Supplier<? extends Item> pendant, TagKey<Item> material) {
+        return this.makePendantWithTag(pendant, material, Ingredient.of(Tags.Items.STRING));
     }
 
     protected ShapedRecipeBuilder makeCape(Supplier<? extends Item> cape, Item material) {
@@ -204,5 +209,31 @@ public abstract class AetherRecipeProvider extends NitrogenRecipeProvider {
 
     protected PlacementBanBuilder banBlockPlacementWithBypass(Block ingredient, TagKey<Block> bypass, TagKey<Biome> biome) {
         return BlockBanBuilder.recipe(BlockStateIngredient.of(ingredient), BlockStateIngredient.of(bypass), biome, AetherRecipeSerializers.BLOCK_PLACEMENT_BAN.get());
+    }
+
+    // TODO: Could be moved to nitrogen?
+
+    protected ShapedRecipeBuilder makeRingWithTag(Supplier<? extends Item> ring, TagKey<Item> material) {
+        return ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ring.get()).define('#', material).pattern(" # ").pattern("# #").pattern(" # ").unlockedBy("has_ingredient", has(material));
+    }
+
+    protected ShapedRecipeBuilder makePendantWithTag(Supplier<? extends Item> pendant, TagKey<Item> material, Ingredient string) {
+        return ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, pendant.get()).define('S', string).define('#', material).pattern("SSS").pattern("S S").pattern(" # ").unlockedBy("has_ingredient", has(material));
+    }
+
+    protected ShapedRecipeBuilder makeHelmetWithTag(Supplier<? extends Item> helmet, TagKey<Item> material) {
+        return ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, helmet.get()).define('#', material).pattern("###").pattern("# #").unlockedBy("has_ingredient", has(material));
+    }
+
+    protected ShapedRecipeBuilder makeChestplateWithTag(Supplier<? extends Item> chestplate, TagKey<Item> material) {
+        return ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, chestplate.get()).define('#', material).pattern("# #").pattern("###").pattern("###").unlockedBy("has_ingredient", has(material));
+    }
+
+    protected ShapedRecipeBuilder makeLeggingsWithTag(Supplier<? extends Item> leggings, TagKey<Item> material) {
+        return ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, leggings.get()).define('#', material).pattern("###").pattern("# #").pattern("# #").unlockedBy("has_ingredient", has(material));
+    }
+
+    protected ShapedRecipeBuilder makeBootsWithTag(Supplier<? extends Item> boots, TagKey<Item> material) {
+        return ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, boots.get()).define('#', material).pattern("# #").pattern("# #").unlockedBy("has_ingredient", has(material));
     }
 }
