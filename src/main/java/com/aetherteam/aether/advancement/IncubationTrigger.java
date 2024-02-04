@@ -1,6 +1,7 @@
 package com.aetherteam.aether.advancement;
 
 import com.google.gson.JsonObject;
+import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
@@ -31,8 +32,8 @@ public class IncubationTrigger extends SimpleCriterionTrigger<IncubationTrigger.
             this.item = item;
         }
 
-        public static IncubationTrigger.Instance forItem(ItemPredicate item) {
-            return new IncubationTrigger.Instance(Optional.empty(), Optional.of(item));
+        public static Criterion<Instance> forItem(ItemPredicate item) {
+            return INSTANCE.createCriterion(new IncubationTrigger.Instance(Optional.empty(), Optional.of(item)));
         }
 
         public boolean test(ItemStack stack) {

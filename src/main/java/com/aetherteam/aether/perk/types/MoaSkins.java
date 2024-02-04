@@ -9,7 +9,7 @@ import com.google.common.collect.ImmutableMap;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
@@ -20,7 +20,7 @@ public class MoaSkins {
     private static final Map<String, MoaSkin> MOA_SKINS = new LinkedHashMap<>();
 
     public static void registerMoaSkins() {
-        for (MoaType moaType : AetherMoaTypes.MOA_TYPES.getEntries().stream().map(RegistryObject::get).toList()) {
+        for (MoaType moaType : AetherMoaTypes.MOA_TYPES.getEntries().stream().map(DeferredHolder::get).toList()) {
             String name = (moaType.getId().getNamespace().equals(Aether.MODID) ? moaType.getId().getPath() : moaType.getId().toString().replace(":", ".")) + "_moa";
             register(name, new MoaSkin(name, new MoaSkin.Properties()
                     .displayName(Component.translatable("gui.aether.moa_skins.skin." + name))

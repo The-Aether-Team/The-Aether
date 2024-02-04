@@ -615,7 +615,7 @@ public class AetherPlayerCapability implements AetherPlayer {
 			AttributeModifier lifeShardHealth = this.getLifeShardHealthAttributeModifier();
 			if (health != null) {
 				if (health.hasModifier(lifeShardHealth)) {
-					health.removeModifier(lifeShardHealth);
+					health.removeModifier(lifeShardHealth.getId());
 				}
 				health.addTransientModifier(lifeShardHealth);
 			}

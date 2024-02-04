@@ -24,11 +24,12 @@ import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.resolver.ServerAddress;
 import net.minecraft.client.renderer.CubeMap;
 import net.minecraft.client.renderer.PanoramaRenderer;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.Music;
 import net.minecraft.util.Mth;
-import net.neoforged.neoforge.client.ForgeHooksClient;
+import net.neoforged.neoforge.client.ClientHooks;
 import net.neoforged.neoforge.internal.BrandingControl;
 
 import java.util.function.Predicate;
@@ -36,7 +37,7 @@ import java.util.function.Predicate;
 public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavior {
 	private static final ResourceLocation PANORAMA_OVERLAY = new ResourceLocation("textures/gui/title/background/panorama_overlay.png");
 	private static final ResourceLocation AETHER_LOGO = new ResourceLocation(Aether.MODID, "textures/gui/title/aether.png");
-	public static final Music MENU = new Music(AetherSoundEvents.MUSIC_MENU.getHolder().orElseThrow(), 20, 600, true);
+	public static final Music MENU = new Music(BuiltInRegistries.SOUND_EVENT.createIntrusiveHolder(AetherSoundEvents.MUSIC_MENU.get()), 20, 600, true);
 	private final PanoramaRenderer panorama = new PanoramaRenderer(new CubeMap(new ResourceLocation(Aether.MODID, "textures/gui/title/panorama/panorama")));
 	private AetherModUpdateIndicator modUpdateNotification;
 	private boolean alignedLeft;
@@ -67,7 +68,7 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 			boolean flag = component == null;
 			Tooltip tooltip = component != null ? Tooltip.create(component) : null;
 			Button serverButton = this.addRenderableWidget(Button.builder(Component.translatable("gui.aether.menu.server"), (button) -> {
-				ServerData serverData = new ServerData("OATS", "oats.aether-mod.net", false);
+				ServerData serverData = new ServerData("OATS", "oats.aether-mod.net", ServerData.Type.OTHER);
 				ConnectScreen.startConnecting(this, this.minecraft, ServerAddress.parseString(serverData.ip), serverData, false);
 			}).bounds(this.width / 2 - 100, (this.height / 4 + 48) + 24 * 3, 200, 20).tooltip(tooltip).build());
 			serverButton.active = flag;
@@ -116,7 +117,7 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 		this.setupLogo(guiGraphics, fadeAmount, scale);
 		int roundedFadeAmount = Mth.ceil(fadeAmount * 255.0F) << 24;
 		if ((roundedFadeAmount & -67108864) != 0) {
-			ForgeHooksClient.renderMainMenu(this, guiGraphics, this.font, this.width, this.height, roundedFadeAmount);
+			ClientHooks.renderMainMenu(this, guiGraphics, this.font, this.width, this.height, roundedFadeAmount);
 			if (titleScreenAccessor.aether$getSplash() != null) {
 				SplashRendererAccessor splashRendererAccessor = (SplashRendererAccessor) titleScreenAccessor.aether$getSplash();
 				if (splashRendererAccessor.cumulus$getSplash() != null && !splashRendererAccessor.cumulus$getSplash().isEmpty()) {

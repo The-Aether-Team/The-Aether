@@ -1,6 +1,7 @@
 package com.aetherteam.aether.advancement;
 
 import com.google.gson.JsonObject;
+import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
@@ -32,16 +33,16 @@ public class LoreTrigger extends SimpleCriterionTrigger<LoreTrigger.Instance> {
             this.item = item;
         }
 
-        public static LoreTrigger.Instance forItem(ItemPredicate item) {
-            return new LoreTrigger.Instance(Optional.empty(), Optional.of(item));
+        public static Criterion<Instance> forItem(ItemPredicate item) {
+            return INSTANCE.createCriterion(new LoreTrigger.Instance(Optional.empty(), Optional.of(item)));
         }
 
-        public static LoreTrigger.Instance forItem(ItemLike item) {
+        public static Criterion<Instance> forItem(ItemLike item) {
             return forItem(ItemPredicate.Builder.item().of(item).build());
         }
 
-        public static LoreTrigger.Instance forAny() {
-            return new LoreTrigger.Instance(Optional.empty(), Optional.empty());
+        public static Criterion<Instance> forAny() {
+            return INSTANCE.createCriterion(new LoreTrigger.Instance(Optional.empty(), Optional.empty()));
         }
 
         public boolean test(ItemStack stack) {

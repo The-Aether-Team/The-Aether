@@ -12,10 +12,7 @@ import com.aetherteam.aether.event.hooks.AbilityHooks;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.loot.AetherLoot;
 import com.aetherteam.aether.mixin.mixins.common.accessor.HoeItemAccessor;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementRewards;
-import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.advancements.FrameType;
+import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.commands.CommandFunction;
 import net.minecraft.core.HolderLookup;
@@ -27,8 +24,8 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.common.data.ForgeAdvancementProvider;
 
 import java.util.Comparator;
 import java.util.List;
@@ -36,17 +33,16 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-public class AetherAdvancementData extends ForgeAdvancementProvider {
+public class AetherAdvancementData extends AdvancementProvider {
     public AetherAdvancementData(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, ExistingFileHelper helper) {
         super(output, registries, helper, List.of(new AetherAdvancements()));
     }
 
     public static class AetherAdvancements implements AdvancementGenerator {
-
         @SuppressWarnings("unused")
         @Override
-        public void generate(HolderLookup.Provider provider, Consumer<Advancement> consumer, ExistingFileHelper existingFileHelper) {
-            Advancement theAether = Advancement.Builder.advancement()
+        public void generate(HolderLookup.Provider provider, Consumer<AdvancementHolder> consumer, ExistingFileHelper existingFileHelper) {
+            AdvancementHolder theAether = Advancement.Builder.advancement()
                     .display(AetherItems.AETHER_PORTAL_FRAME.get(),
                             Component.translatable("advancement.aether.the_aether"),
                             Component.translatable("advancement.aether.the_aether.desc"),
@@ -55,7 +51,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("the_aether", ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(AetherDimensions.AETHER_LEVEL))
                     .save(consumer, new ResourceLocation(Aether.MODID, "the_aether"), existingFileHelper);
 
-            Advancement enterAether = Advancement.Builder.advancement()
+            AdvancementHolder enterAether = Advancement.Builder.advancement()
                     .parent(theAether)
                     .display(Blocks.GLOWSTONE,
                             Component.translatable("advancement.aether.enter_aether"),
@@ -66,7 +62,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .rewards(new AdvancementRewards(0, new ResourceLocation[]{AetherLoot.ENTER_AETHER}, new ResourceLocation[0], CommandFunction.CacheableFunction.NONE))
                     .save(consumer, new ResourceLocation(Aether.MODID, "enter_aether"), existingFileHelper);
 
-            Advancement readLore = Advancement.Builder.advancement()
+            AdvancementHolder readLore = Advancement.Builder.advancement()
                     .parent(enterAether)
                     .display(AetherItems.BOOK_OF_LORE.get(),
                             Component.translatable("advancement.aether.read_lore"),
@@ -76,7 +72,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("lore_book_entry", LoreTrigger.Instance.forAny())
                     .save(consumer, new ResourceLocation(Aether.MODID, "read_lore"), existingFileHelper);
 
-            Advancement loreception = Advancement.Builder.advancement()
+            AdvancementHolder loreception = Advancement.Builder.advancement()
                     .parent(readLore)
                     .display(AetherItems.BOOK_OF_LORE.get(),
                             Component.translatable("advancement.aether.loreception"),
@@ -86,7 +82,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("lore_book_entry", LoreTrigger.Instance.forItem(AetherItems.BOOK_OF_LORE.get()))
                     .save(consumer, new ResourceLocation(Aether.MODID, "loreception"), existingFileHelper);
 
-            Advancement zanite = Advancement.Builder.advancement()
+            AdvancementHolder zanite = Advancement.Builder.advancement()
                     .parent(enterAether)
                     .display(AetherItems.ZANITE_GEMSTONE.get(),
                             Component.translatable("advancement.aether.zanite"),
@@ -96,7 +92,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("zanite", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.ZANITE_GEMSTONE.get()))
                     .save(consumer, new ResourceLocation(Aether.MODID, "zanite"), existingFileHelper);
 
-            Advancement craftAltar = Advancement.Builder.advancement()
+            AdvancementHolder craftAltar = Advancement.Builder.advancement()
                     .parent(zanite)
                     .display(AetherBlocks.ALTAR.get(),
                             Component.translatable("advancement.aether.craft_altar"),
@@ -106,7 +102,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("craft_altar", InventoryChangeTrigger.TriggerInstance.hasItems(AetherBlocks.ALTAR.get()))
                     .save(consumer, new ResourceLocation(Aether.MODID, "craft_altar"), existingFileHelper);
 
-            Advancement icestone = Advancement.Builder.advancement()
+            AdvancementHolder icestone = Advancement.Builder.advancement()
                     .parent(craftAltar)
                     .display(AetherBlocks.ICESTONE.get(),
                             Component.translatable("advancement.aether.icestone"),
@@ -116,19 +112,19 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("icestone", InventoryChangeTrigger.TriggerInstance.hasItems(AetherBlocks.ICESTONE.get()))
                     .save(consumer, new ResourceLocation(Aether.MODID, "icestone"), existingFileHelper);
 
-            Advancement iceAccessory = Advancement.Builder.advancement()
+            AdvancementHolder iceAccessory = Advancement.Builder.advancement()
                     .parent(icestone)
                     .display(AetherItems.ICE_PENDANT.get(),
                             Component.translatable("advancement.aether.ice_accessory"),
                             Component.translatable("advancement.aether.ice_accessory.desc"),
                             null,
                             FrameType.TASK, true, true, false)
-                    .requirements(RequirementsStrategy.OR)
+                    .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("ice_pendant", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.ICE_PENDANT.get()))
                     .addCriterion("ice_ring", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.ICE_RING.get()))
                     .save(consumer, new ResourceLocation(Aether.MODID, "ice_accessory"), existingFileHelper);
 
-            Advancement blueAercloud = Advancement.Builder.advancement()
+            AdvancementHolder blueAercloud = Advancement.Builder.advancement()
                     .parent(enterAether)
                     .display(AetherBlocks.BLUE_AERCLOUD.get(),
                             Component.translatable("advancement.aether.blue_aercloud"),
@@ -138,18 +134,18 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("blue_aercloud", EnterBlockTrigger.TriggerInstance.entersBlock(AetherBlocks.BLUE_AERCLOUD.get()))
                     .save(consumer, new ResourceLocation(Aether.MODID, "blue_aercloud"), existingFileHelper);
 
-            Advancement obtainEgg = Advancement.Builder.advancement()
+            AdvancementHolder obtainEgg = Advancement.Builder.advancement()
                     .parent(blueAercloud)
                     .display(AetherItems.BLUE_MOA_EGG.get(),
                             Component.translatable("advancement.aether.obtain_egg"),
                             Component.translatable("advancement.aether.obtain_egg.desc"),
                             null,
                             FrameType.TASK, true, true, false)
-                    .requirements(RequirementsStrategy.OR)
+                    .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion( "moa_egg", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(AetherTags.Items.MOA_EGGS).build()))
                     .save(consumer, new ResourceLocation(Aether.MODID, "obtain_egg"), existingFileHelper);
 
-            Advancement obtainPetal = Advancement.Builder.advancement()
+            AdvancementHolder obtainPetal = Advancement.Builder.advancement()
                     .parent(obtainEgg)
                     .display(AetherItems.AECHOR_PETAL.get(),
                             Component.translatable("advancement.aether.obtain_petal"),
@@ -159,7 +155,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("aechor_petal", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.AECHOR_PETAL.get()))
                     .save(consumer, new ResourceLocation(Aether.MODID,"obtain_petal"), existingFileHelper);
 
-            Advancement incubateMoa = Advancement.Builder.advancement()
+            AdvancementHolder incubateMoa = Advancement.Builder.advancement()
                     .parent(obtainEgg)
                     .display(AetherBlocks.INCUBATOR.get(),
                             Component.translatable("advancement.aether.incubate_moa"),
@@ -172,27 +168,27 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
             CompoundTag moaTag = new CompoundTag();
             moaTag.putString("MoaType", AetherMoaTypes.BLACK.get().getId().toString());
 
-            Advancement blackMoa = Advancement.Builder.advancement()
+            AdvancementHolder blackMoa = Advancement.Builder.advancement()
                     .parent(incubateMoa)
                     .display(Items.FEATHER,
                             Component.translatable("advancement.aether.black_moa"),
                             Component.translatable("advancement.aether.black_moa.desc"),
                             null,
                             FrameType.GOAL, true, true, false)
-                    .addCriterion("black_moa", StartRidingTrigger.TriggerInstance.playerStartsRiding(EntityPredicate.Builder.entity().vehicle(EntityPredicate.Builder.entity().of(AetherEntityTypes.MOA.get()).nbt(new NbtPredicate(moaTag)).build())))
+                    .addCriterion("black_moa", StartRidingTrigger.TriggerInstance.playerStartsRiding(EntityPredicate.Builder.entity().vehicle(EntityPredicate.Builder.entity().of(AetherEntityTypes.MOA.get()).nbt(new NbtPredicate(moaTag)))))
                     .save(consumer, new ResourceLocation(Aether.MODID, "black_moa"), existingFileHelper);
 
-            Advancement mountPhyg = Advancement.Builder.advancement()
+            AdvancementHolder mountPhyg = Advancement.Builder.advancement()
                     .parent(blueAercloud)
                     .display(Items.SADDLE,
                             Component.translatable("advancement.aether.mount_phyg"),
                             Component.translatable("advancement.aether.mount_phyg.desc"),
                             null,
                             FrameType.TASK, true, true, false)
-                    .addCriterion("mount_phyg", StartRidingTrigger.TriggerInstance.playerStartsRiding(EntityPredicate.Builder.entity().vehicle(EntityPredicate.Builder.entity().of(AetherEntityTypes.PHYG.get()).build())))
+                    .addCriterion("mount_phyg", StartRidingTrigger.TriggerInstance.playerStartsRiding(EntityPredicate.Builder.entity().vehicle(EntityPredicate.Builder.entity().of(AetherEntityTypes.PHYG.get()))))
                     .save(consumer, new ResourceLocation(Aether.MODID, "mount_phyg"), existingFileHelper);
 
-            Advancement enchantedGravitite = Advancement.Builder.advancement()
+            AdvancementHolder enchantedGravitite = Advancement.Builder.advancement()
                     .parent(craftAltar)
                     .display(AetherBlocks.ENCHANTED_GRAVITITE.get(),
                             Component.translatable("advancement.aether.enchanted_gravitite"),
@@ -202,7 +198,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("enchanted_gravitite", InventoryChangeTrigger.TriggerInstance.hasItems(AetherBlocks.ENCHANTED_GRAVITITE.get()))
                     .save(consumer, new ResourceLocation(Aether.MODID, "enchanted_gravitite"), existingFileHelper);
 
-            Advancement gravititeArmor = Advancement.Builder.advancement()
+            AdvancementHolder gravititeArmor = Advancement.Builder.advancement()
                     .parent(enchantedGravitite)
                     .display(AetherItems.GRAVITITE_CHESTPLATE.get(),
                             Component.translatable("advancement.aether.gravitite_armor"),
@@ -216,7 +212,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("gravitite_gloves", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.GRAVITITE_GLOVES.get()))
                     .save(consumer, new ResourceLocation(Aether.MODID, "gravitite_armor"), existingFileHelper);
 
-            Advancement bronzeDungeon = Advancement.Builder.advancement()
+            AdvancementHolder bronzeDungeon = Advancement.Builder.advancement()
                     .parent(enchantedGravitite)
                     .display(AetherItems.BRONZE_DUNGEON_KEY.get(),
                             Component.translatable("advancement.aether.bronze_dungeon"),
@@ -226,7 +222,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("kill_slider", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(AetherEntityTypes.SLIDER.get())))
                     .save(consumer, new ResourceLocation(Aether.MODID, "bronze_dungeon"), existingFileHelper);
 
-            Advancement hammerLoot = Advancement.Builder.advancement()
+            AdvancementHolder hammerLoot = Advancement.Builder.advancement()
                     .parent(bronzeDungeon)
                     .display(AetherItems.HAMMER_OF_KINGBDOGZ.get(),
                             Component.translatable("advancement.aether.hammer_loot"),
@@ -236,7 +232,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("hammer_loot", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.HAMMER_OF_KINGBDOGZ.get()))
                     .save(consumer, new ResourceLocation(Aether.MODID, "hammer_loot"), existingFileHelper);
 
-            Advancement zephyrHammer = Advancement.Builder.advancement()
+            AdvancementHolder zephyrHammer = Advancement.Builder.advancement()
                     .parent(hammerLoot)
                     .display(Items.SNOWBALL,
                             Component.translatable("advancement.aether.zephyr_hammer"),
@@ -246,7 +242,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("zephyr_hammer", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(AetherEntityTypes.ZEPHYR.get()), DamageSourcePredicate.Builder.damageType().tag(TagPredicate.is(DamageTypeTags.IS_PROJECTILE)).direct(EntityPredicate.Builder.entity().of(AetherEntityTypes.HAMMER_PROJECTILE.get()))))
                     .save(consumer, new ResourceLocation(Aether.MODID, "zephyr_hammer"), existingFileHelper);
 
-            Advancement lanceLoot = Advancement.Builder.advancement()
+            AdvancementHolder lanceLoot = Advancement.Builder.advancement()
                     .parent(bronzeDungeon)
                     .display(AetherItems.VALKYRIE_LANCE.get(),
                             Component.translatable("advancement.aether.lance_loot"),
@@ -256,7 +252,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("lance_loot", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.VALKYRIE_LANCE.get()))
                     .save(consumer, new ResourceLocation(Aether.MODID, "lance_loot"), existingFileHelper);
 
-            Advancement silverDungeon = Advancement.Builder.advancement()
+            AdvancementHolder silverDungeon = Advancement.Builder.advancement()
                     .parent(lanceLoot)
                     .display(AetherItems.SILVER_DUNGEON_KEY.get(),
                             Component.translatable("advancement.aether.silver_dungeon"),
@@ -266,14 +262,14 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("kill_valkyrie_queen", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(AetherEntityTypes.VALKYRIE_QUEEN.get())))
                     .save(consumer, new ResourceLocation(Aether.MODID, "silver_dungeon"), existingFileHelper);
 
-            Advancement valkyrieLoot = Advancement.Builder.advancement()
+            AdvancementHolder valkyrieLoot = Advancement.Builder.advancement()
                     .parent(silverDungeon)
                     .display(AetherItems.VALKYRIE_HELMET.get(),
                             Component.translatable("advancement.aether.valkyrie_loot"),
                             Component.translatable("advancement.aether.valkyrie_loot.desc"),
                             null,
                             FrameType.GOAL, true, true, false)
-                    .requirements(RequirementsStrategy.OR)
+                    .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("valkyrie_pickaxe", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.VALKYRIE_PICKAXE.get()))
                     .addCriterion("valkyrie_hoe", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.VALKYRIE_HOE.get()))
                     .addCriterion("valkyrie_axe", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.VALKYRIE_AXE.get()))
@@ -285,17 +281,17 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("valkyrie_gloves", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.VALKYRIE_GLOVES.get()))
                     .save(consumer, new ResourceLocation(Aether.MODID, "valkyrie_loot"), existingFileHelper);
 
-            Advancement valkyrieHoe = Advancement.Builder.advancement()
+            AdvancementHolder valkyrieHoe = Advancement.Builder.advancement()
                     .parent(valkyrieLoot)
                     .display(AetherBlocks.AETHER_FARMLAND.get(),
                             Component.translatable("advancement.aether.valkyrie_hoe"),
                             Component.translatable("advancement.aether.valkyrie_hoe.desc"),
                             null,
                             FrameType.CHALLENGE, true, true, true)
-                    .addCriterion("valkyrie_hoe", ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().of(Stream.concat(AbilityHooks.ToolHooks.TILLABLES.keySet().stream(), HoeItemAccessor.aether$getTillables().keySet().stream().sorted(Comparator.comparing(Block::getDescriptionId))).toList()).build()), ItemPredicate.Builder.item().of(AetherItems.VALKYRIE_HOE.get())))
+                    .addCriterion("valkyrie_hoe", ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().of(Stream.concat(AbilityHooks.ToolHooks.TILLABLES.keySet().stream(), HoeItemAccessor.aether$getTillables().keySet().stream().sorted(Comparator.comparing(Block::getDescriptionId))).toList())), ItemPredicate.Builder.item().of(AetherItems.VALKYRIE_HOE.get())))
                     .save(consumer, new ResourceLocation(Aether.MODID, "valkyrie_hoe"), existingFileHelper);
 
-            Advancement regenStone = Advancement.Builder.advancement()
+            AdvancementHolder regenStone = Advancement.Builder.advancement()
                     .parent(silverDungeon)
                     .display(AetherItems.REGENERATION_STONE.get(),
                             Component.translatable("advancement.aether.regen_stone"),
@@ -305,7 +301,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("regen_stone", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.REGENERATION_STONE.get()))
                     .save(consumer, new ResourceLocation(Aether.MODID, "regen_stone"), existingFileHelper);
 
-            Advancement goldDungeon = Advancement.Builder.advancement()
+            AdvancementHolder goldDungeon = Advancement.Builder.advancement()
                     .parent(regenStone)
                     .display(AetherItems.GOLD_DUNGEON_KEY.get(),
                             Component.translatable("advancement.aether.gold_dungeon"),
@@ -315,14 +311,14 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("kill_sun_spirit", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(AetherEntityTypes.SUN_SPIRIT.get())))
                     .save(consumer, new ResourceLocation(Aether.MODID, "gold_dungeon"), existingFileHelper);
 
-            Advancement phoenixArmor = Advancement.Builder.advancement()
+            AdvancementHolder phoenixArmor = Advancement.Builder.advancement()
                     .parent(goldDungeon)
                     .display(AetherItems.PHOENIX_HELMET.get(),
                             Component.translatable("advancement.aether.phoenix_armor"),
                             Component.translatable("advancement.aether.phoenix_armor.desc"),
                             null,
                             FrameType.GOAL, true, true, false)
-                    .requirements(RequirementsStrategy.OR)
+                    .requirements(AdvancementRequirements.Strategy.OR)
                     .addCriterion("phoenix_helmet", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.PHOENIX_HELMET.get()))
                     .addCriterion("phoenix_chestplate", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.PHOENIX_CHESTPLATE.get()))
                     .addCriterion("phoenix_leggings", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.PHOENIX_LEGGINGS.get()))
@@ -330,7 +326,7 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("phoenix_gloves", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.PHOENIX_GLOVES.get()))
                     .save(consumer, new ResourceLocation(Aether.MODID, "phoenix_armor"), existingFileHelper);
 
-            Advancement obsidianArmor = Advancement.Builder.advancement()
+            AdvancementHolder obsidianArmor = Advancement.Builder.advancement()
                     .parent(phoenixArmor)
                     .display(AetherItems.OBSIDIAN_CHESTPLATE.get(),
                             Component.translatable("advancement.aether.obsidian_armor"),
@@ -344,15 +340,14 @@ public class AetherAdvancementData extends ForgeAdvancementProvider {
                     .addCriterion("obsidian_gloves", InventoryChangeTrigger.TriggerInstance.hasItems(AetherItems.OBSIDIAN_GLOVES.get()))
                     .save(consumer, new ResourceLocation(Aether.MODID,"obsidian_armor"), existingFileHelper);
 
-            Advancement aetherSleep = Advancement.Builder.advancement()
+            AdvancementHolder aetherSleep = Advancement.Builder.advancement()
                     .parent(goldDungeon)
                     .display(AetherBlocks.SKYROOT_BED.get(),
                             Component.translatable("advancement.aether.aether_sleep"),
                             Component.translatable("advancement.aether.aether_sleep.desc"),
                             null,
                             FrameType.CHALLENGE, true, true, true)
-                    .addCriterion("aether_sleep", new PlayerTrigger.TriggerInstance(CriteriaTriggers.SLEPT_IN_BED.getId(),
-                            EntityPredicate.wrap(EntityPredicate.Builder.entity().located(LocationPredicate.inDimension(AetherDimensions.AETHER_LEVEL)).build())))
+                    .addCriterion("aether_sleep", PlayerTrigger.TriggerInstance.located(EntityPredicate.Builder.entity().located(LocationPredicate.Builder.inDimension(AetherDimensions.AETHER_LEVEL))))
                     .save(consumer, new ResourceLocation(Aether.MODID, "aether_sleep"), existingFileHelper);
         }
     }

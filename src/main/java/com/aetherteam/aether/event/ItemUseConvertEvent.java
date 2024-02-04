@@ -6,9 +6,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.neoforged.neoforge;
+import net.neoforged.bus.api.ICancellableEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-import net.neoforged.bus.api.Cancelable;
 import net.neoforged.fml.LogicalSide;
 
 import javax.annotation.Nullable;
@@ -16,19 +15,16 @@ import javax.annotation.Nullable;
 /**
  * ItemUseConvertEvent is fired after an item that can convert blocks is used, but before the block is converted by the recipe.
  * <br>
- * This event is {@link Cancelable}.<br>
+ * This event is {@link ICancellableEvent}.<br>
  * If the event is not canceled, the block conversion will happen and the item will be consumed.
  * <br>
- * This event does not have a result. {@linknet.neoforged.bus.api.Event.HasResult}<br>
- * <br>
- * This event is fired on the {@link neoforged.neoforge#EVENT_BUS}.<br>
+ * This event is fired on the {@link net.neoforged.neoforge.common.NeoForge#EVENT_BUS}.<br>
  * <br>
  * This event is fired on both {@link LogicalSide sides}.<br>
  * <br>
  * If this event is canceled, block conversion will not happen and the item will not be consumed.
  */
-@Cancelable
-public class ItemUseConvertEvent extends PlayerEvent {
+public class ItemUseConvertEvent extends PlayerEvent implements ICancellableEvent {
 	private final LevelAccessor level;
 	private final BlockPos pos;
 	@Nullable

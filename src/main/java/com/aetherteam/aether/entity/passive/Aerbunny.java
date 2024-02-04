@@ -24,10 +24,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -123,7 +120,7 @@ public class Aerbunny extends AetherAnimal {
      * Makes this entity fall slowly.
      */
     private void handleFallSpeed() {
-        AttributeInstance gravity = this.getAttribute(NeoForgeMod.ENTITY_GRAVITY.get());
+        AttributeInstance gravity = this.getAttribute(NeoForgeMod.ENTITY_GRAVITY.value());
         if (gravity != null) {
             double fallSpeed = Math.max(gravity.getValue() * -1.25, -0.1); // Entity isn't allowed to fall too slowly from gravity.
             if (this.getDeltaMovement().y() < fallSpeed) {
@@ -145,7 +142,7 @@ public class Aerbunny extends AetherAnimal {
 
             player.resetFallDistance();
             if (!player.onGround() && !player.isFallFlying()) {
-                AttributeInstance playerGravity = player.getAttribute(NeoForgeMod.ENTITY_GRAVITY.get());
+                AttributeInstance playerGravity = player.getAttribute(NeoForgeMod.ENTITY_GRAVITY.value());
                 if (playerGravity != null) {
                     if (!player.getAbilities().flying && !player.isInFluidType() && playerGravity.getValue() > 0.02) {  // Entity isn't allowed to fall too slowly from gravity.
                         player.setDeltaMovement(player.getDeltaMovement().add(0.0, 0.05, 0.0));
@@ -184,7 +181,7 @@ public class Aerbunny extends AetherAnimal {
     @Override
     public void baseTick() {
         super.baseTick();
-        if (this.isAlive() && this.isPassenger() && this.getVehicle() != null && this.getVehicle().isEyeInFluidType(NeoForgeMod.WATER_TYPE.get())
+        if (this.isAlive() && this.isPassenger() && this.getVehicle() != null && this.getVehicle().isEyeInFluidType(NeoForgeMod.WATER_TYPE.value())
                 && !this.level().getBlockState(BlockPos.containing(this.getVehicle().getX(), this.getVehicle().getEyeY(), this.getVehicle().getZ())).is(Blocks.BUBBLE_COLUMN)) {
             this.stopRiding();
         }
@@ -366,8 +363,8 @@ public class Aerbunny extends AetherAnimal {
      * @return The offset {@link Double} for an Aerbunny when riding another entity.
      */
     @Override
-    public double getMyRidingOffset() {
-        return this.getVehicle() != null && this.getVehicle().isCrouching() ? 0.4 : 0.575;
+    public float getMyRidingOffset(Entity entity) {
+        return this.getVehicle() != null && this.getVehicle().isCrouching() ? 0.4F : 0.575F;
     }
 
     /**

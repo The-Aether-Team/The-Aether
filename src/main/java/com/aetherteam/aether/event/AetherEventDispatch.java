@@ -14,7 +14,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.neoforged.neoforge;
+import net.neoforged.neoforge.common.NeoForge;
 
 import javax.annotation.Nullable;
 
@@ -24,7 +24,7 @@ public class AetherEventDispatch {
 	 */
 	public static BossFightEvent.Start onBossFightStart(Entity entity, BossRoomTracker<?> dungeon) {
 		BossFightEvent.Start event = new BossFightEvent.Start(entity, dungeon);
-		neoforged.neoforge.EVENT_BUS.post(event);
+		NeoForge.EVENT_BUS.post(event);
 		return event;
 	}
 
@@ -33,7 +33,7 @@ public class AetherEventDispatch {
 	 */
 	public static BossFightEvent.Stop onBossFightStop(Entity entity, BossRoomTracker<?> dungeon) {
 		BossFightEvent.Stop event = new BossFightEvent.Stop(entity, dungeon);
-		neoforged.neoforge.EVENT_BUS.post(event);
+		NeoForge.EVENT_BUS.post(event);
 		return event;
 	}
 
@@ -42,7 +42,7 @@ public class AetherEventDispatch {
 	 */
 	public static BossFightEvent.AddPlayer onBossFightPlayerAdd(Entity entity, BossRoomTracker<?> dungeon, ServerPlayer player) {
 		BossFightEvent.AddPlayer event = new BossFightEvent.AddPlayer(entity, dungeon, player);
-		neoforged.neoforge.EVENT_BUS.post(event);
+		NeoForge.EVENT_BUS.post(event);
 		return event;
 	}
 
@@ -51,7 +51,7 @@ public class AetherEventDispatch {
 	 */
 	public static BossFightEvent.RemovePlayer onBossFightPlayerRemove(Entity entity, BossRoomTracker<?> dungeon, ServerPlayer player) {
 		BossFightEvent.RemovePlayer event = new BossFightEvent.RemovePlayer(entity, dungeon, player);
-		neoforged.neoforge.EVENT_BUS.post(event);
+		NeoForge.EVENT_BUS.post(event);
 		return event;
 	}
 
@@ -60,7 +60,7 @@ public class AetherEventDispatch {
 	 */
 	public static EggLayEvent onLayEgg(Entity entity, SoundEvent sound, float volume, float pitch, Item item) {
 		EggLayEvent event = new EggLayEvent(entity, sound, volume, pitch, item);
-		neoforged.neoforge.EVENT_BUS.post(event);
+		NeoForge.EVENT_BUS.post(event);
 		return event;
 	}
 
@@ -69,7 +69,7 @@ public class AetherEventDispatch {
 	 */
 	public static PlacementBanEvent.SpawnParticles onPlacementSpawnParticles(LevelAccessor level, BlockPos pos, @Nullable Direction face, @Nullable ItemStack stack, @Nullable BlockState state) {
 		PlacementBanEvent.SpawnParticles event = new PlacementBanEvent.SpawnParticles(level, pos, face, stack, state);
-		neoforged.neoforge.EVENT_BUS.post(event);
+		NeoForge.EVENT_BUS.post(event);
 		return event;
 	}
 
@@ -78,7 +78,7 @@ public class AetherEventDispatch {
 	 */
 	public static boolean isItemPlacementBanned(LevelAccessor level, BlockPos pos, ItemStack stack) {
 		PlacementBanEvent.CheckItem event = new PlacementBanEvent.CheckItem(level, pos, stack.copy());
-		neoforged.neoforge.EVENT_BUS.post(event);
+		NeoForge.EVENT_BUS.post(event);
 		return event.isBanned();
 	}
 
@@ -87,7 +87,7 @@ public class AetherEventDispatch {
 	 */
 	public static boolean isBlockPlacementBanned(LevelAccessor level, BlockPos pos, BlockState state) {
 		PlacementBanEvent.CheckBlock event = new PlacementBanEvent.CheckBlock(level, pos, state);
-		neoforged.neoforge.EVENT_BUS.post(event);
+		NeoForge.EVENT_BUS.post(event);
 		return event.isBanned();
 	}
 
@@ -96,7 +96,7 @@ public class AetherEventDispatch {
 	 */
 	public static PlacementConvertEvent onPlacementConvert(LevelAccessor level, BlockPos pos, BlockState oldState, BlockState newState)  {
 		PlacementConvertEvent event = new PlacementConvertEvent(level, pos, oldState, newState);
-		neoforged.neoforge.EVENT_BUS.post(event);
+		NeoForge.EVENT_BUS.post(event);
 		return event;
 	}
 
@@ -105,7 +105,7 @@ public class AetherEventDispatch {
 	 */
 	public static FreezeEvent.FreezeFromBlock onBlockFreezeFluid(LevelAccessor level, BlockPos pos, BlockPos origin, BlockState fluidState, BlockState blockState, BlockState sourceBlock) {
 		FreezeEvent.FreezeFromBlock event = new FreezeEvent.FreezeFromBlock(level, pos, origin, fluidState, blockState, sourceBlock);
-		neoforged.neoforge.EVENT_BUS.post(event);
+		NeoForge.EVENT_BUS.post(event);
 		return event;
 	}
 
@@ -114,7 +114,7 @@ public class AetherEventDispatch {
 	 */
 	public static FreezeEvent.FreezeFromItem onItemFreezeFluid(LevelAccessor level, BlockPos pos, BlockState fluidState, BlockState blockState, ItemStack sourceItem) {
 		FreezeEvent.FreezeFromItem event = new FreezeEvent.FreezeFromItem(level, pos, fluidState, blockState, sourceItem);
-		neoforged.neoforge.EVENT_BUS.post(event);
+		NeoForge.EVENT_BUS.post(event);
 		return event;
 	}
 
@@ -123,7 +123,7 @@ public class AetherEventDispatch {
 	 */
 	public static ItemUseConvertEvent onItemUseConvert(@Nullable Player player, LevelAccessor level, BlockPos pos, @Nullable ItemStack stack, BlockState oldState, BlockState newState, RecipeType<?> recipeType) {
 		ItemUseConvertEvent event = new ItemUseConvertEvent(player, level, pos, stack, oldState, newState, recipeType);
-		neoforged.neoforge.EVENT_BUS.post(event);
+		NeoForge.EVENT_BUS.post(event);
 		return event;
 	}
 
@@ -132,7 +132,7 @@ public class AetherEventDispatch {
 	 */
 	public static boolean onTriggerTrap(Player player, Level level, BlockPos pos, BlockState state) {
 		TriggerTrapEvent event = new TriggerTrapEvent(player, level, pos, state);
-		neoforged.neoforge.EVENT_BUS.post(event);
+		NeoForge.EVENT_BUS.post(event);
 		return !event.isCanceled();
 	}
 
@@ -141,7 +141,7 @@ public class AetherEventDispatch {
 	 */
 	public static ValkyrieTeleportEvent onValkyrieTeleport(LivingEntity entity, double targetX, double targetY, double targetZ) {
 		ValkyrieTeleportEvent event = new ValkyrieTeleportEvent(entity, targetX, targetY, targetZ);
-		neoforged.neoforge.EVENT_BUS.post(event);
+		NeoForge.EVENT_BUS.post(event);
 		return event;
 	}
 }

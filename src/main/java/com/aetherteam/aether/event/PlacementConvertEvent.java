@@ -3,27 +3,23 @@ package com.aetherteam.aether.event;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.neoforged.neoforge;
-import net.neoforged.bus.api.Cancelable;
+import net.neoforged.bus.api.ICancellableEvent;
 import net.neoforged.bus.api.Event;
 import net.neoforged.fml.LogicalSide;
 
 /**
  * PlacementConvertEvent is fired after a {@link com.aetherteam.aether.recipe.AetherRecipeTypes#PLACEMENT_CONVERSION} recipe is checked as existing for the placement of a block, but before a converted block is placed from the recipe.
  * <br>
- * This event is {@link Cancelable}.<br>
+ * This event is {@link ICancellableEvent}.<br>
  * If the event is not canceled, the block conversion will happen.
  * <br>
- * This event does not have a result. {@linknet.neoforged.bus.api.Event.HasResult}<br>
- * <br>
- * This event is fired on the {@link neoforged.neoforge#EVENT_BUS}.<br>
+ * This event is fired on the {@link net.neoforged.neoforge.common.NeoForge#EVENT_BUS}.<br>
  * <br>
  * This event is only fired on the {@link LogicalSide#SERVER} side.<br>
  * <br>
  * If this event is canceled, block conversion will not happen.
  */
-@Cancelable
-public class PlacementConvertEvent extends Event {
+public class PlacementConvertEvent extends Event implements ICancellableEvent {
     private final LevelAccessor level;
     private final BlockPos pos;
     private final BlockState oldBlockState;

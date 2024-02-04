@@ -1,5 +1,6 @@
 package com.aetherteam.aether.item.miscellaneous;
 
+import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.api.registers.MoaType;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.passive.Moa;
@@ -33,7 +34,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.registries.RegistryObject;
 
 import javax.annotation.Nullable;
 import java.util.IdentityHashMap;
@@ -47,8 +47,8 @@ public class MoaEggItem extends Item {
     private final ResourceLocation moaTypeId;
     private final int color;
 
-    public MoaEggItem(RegistryObject<? extends MoaType> moaType, int shellColor, Properties properties) {
-        this(moaType, moaType.getId(), shellColor, properties);
+    public MoaEggItem(Supplier<? extends MoaType> moaType, int shellColor, Properties properties) {
+        this(moaType, AetherMoaTypes.MOA_TYPE_REGISTRY.getKey(moaType.get()), shellColor, properties);
     }
 
     public MoaEggItem(Supplier<? extends MoaType> moaType, ResourceLocation moaTypeId, int shellColor, Properties properties) {

@@ -5,16 +5,16 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.gui.TitleScreenModUpdateIndicator;
 import net.neoforged.neoforge.client.loading.ClientModLoader;
-import net.neoforged.neoforge.common.ForgeI18n;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.VersionChecker;
 import net.neoforged.fml.loading.FMLConfig;
-import net.neoforged.neoforge.versions.forge.ForgeVersion;
+import net.neoforged.neoforge.common.I18nExtension;
+import net.neoforged.neoforge.internal.versions.neoforge.NeoForgeVersion;
 
 import javax.annotation.Nullable;
 
 public class AetherModUpdateIndicator extends TitleScreenModUpdateIndicator {
-	private static final ResourceLocation VERSION_CHECK_ICONS = new ResourceLocation(ForgeVersion.MOD_ID, "textures/gui/version_check_icons.png");
+	private static final ResourceLocation VERSION_CHECK_ICONS = new ResourceLocation(NeoForgeVersion.MOD_ID, "textures/gui/version_check_icons.png");
 	private final AetherTitleScreen screen;
 	@Nullable
 	private VersionChecker.Status showNotification = null;
@@ -47,7 +47,7 @@ public class AetherModUpdateIndicator extends TitleScreenModUpdateIndicator {
 			this.height = Minecraft.getInstance().screen.height;
 			this.font = Minecraft.getInstance().font;
 			int modCount = ModList.get().size();
-			String modText = ForgeI18n.parseMessage("fml.menu.loadingmods", modCount);
+			String modText = I18nExtension.parseMessage("fml.menu.loadingmods", modCount);
 
 			int x = this.width - this.font.width(modText) - 11;
 			int y = this.height - this.font.lineHeight - 11;

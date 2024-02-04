@@ -4,14 +4,13 @@ import com.aetherteam.nitrogen.entity.BossRoomTracker;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.neoforged.neoforge.event.entity.EntityEvent;
-import net.neoforged.bus.api.Cancelable;
 import net.neoforged.fml.LogicalSide;
 
 /**
  * BossFightEvent is fired when an event for a boss fight occurs.<br>
  *  * If a method utilizes this {@link Event} as its parameter, the method will receive every child event of this class.<br>
  *  * <br>
- *  * All children of this event are fired on the {@link neoforged.neoforge#EVENT_BUS}.
+ *  * All children of this event are fired on the {@link net.neoforged.neoforge.common.NeoForge#EVENT_BUS}.
  */
 public class BossFightEvent extends EntityEvent {
     private final BossRoomTracker<?> dungeon;
@@ -35,7 +34,7 @@ public class BossFightEvent extends EntityEvent {
     /**
      * BossFightEvent.Start is fired when a boss starts a fight.
      * <br>
-     * This event is not {@link Cancelable}. <br>
+     * This event is not {@link ICancellableEvent}. <br>
      * <br>
      * This event does not have a result. {@link HasResult} <br>
      * <br>
@@ -50,7 +49,7 @@ public class BossFightEvent extends EntityEvent {
     /**
      * BossFightEvent.Start is fired when a boss stops a fight.
      * <br>
-     * This event is not {@link Cancelable}. <br>
+     * This event is not {@link ICancellableEvent}. <br>
      * <br>
      * This event does not have a result. {@link HasResult} <br>
      * <br>
@@ -65,7 +64,7 @@ public class BossFightEvent extends EntityEvent {
     /**
      * BossFightEvent.AddPlayer is fired when a player is added to a boss fight.
      * <br>
-     * This event is not {@link Cancelable}. <br>
+     * This event is not {@link ICancellableEvent}. <br>
      * <br>
      * This event does not have a result. {@link HasResult} <br>
      * <br>
@@ -90,7 +89,7 @@ public class BossFightEvent extends EntityEvent {
     /**
      * BossFightEvent.RemovePlayer is fired when a player is removed from a boss fight.
      * <br>
-     * This event is not {@link Cancelable}. <br>
+     * This event is not {@link ICancellableEvent}. <br>
      * <br>
      * This event does not have a result. {@link HasResult} <br>
      * <br>

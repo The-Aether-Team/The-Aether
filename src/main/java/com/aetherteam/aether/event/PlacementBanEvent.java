@@ -6,8 +6,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.neoforged.neoforge;
-import net.neoforged.bus.api.Cancelable;
+import net.neoforged.bus.api.ICancellableEvent;
 import net.neoforged.bus.api.Event;
 import net.neoforged.fml.LogicalSide;
 
@@ -17,15 +16,13 @@ import javax.annotation.Nullable;
  * PlacementBanEvent is fired when an event involving placement banning occurs.<br>
  * If a method utilizes this {@link Event} as its parameter, the method will receive every child event of this class.<br>
  * <br>
- * All children of this event are fired on the {@link neoforged.neoforge#EVENT_BUS}.
+ * All children of this event are fired on the {@link net.neoforged.neoforge.common.NeoForge#EVENT_BUS}.
  */
 public class PlacementBanEvent extends Event {
 	/**
 	 * PlacementBanEvent.CheckItem is fired after an item that can be banned is used, but before its placement has been prevented.
 	 * <br>
-	 * This event is not {@link Cancelable}. <br>
-	 * <br>
-	 * This event does not have a result. {@link HasResult} <br>
+	 * This event is not {@link ICancellableEvent}. <br>
 	 * <br>
 	 * This event is fired on both {@link LogicalSide sides}.
 	 */
@@ -86,9 +83,7 @@ public class PlacementBanEvent extends Event {
 	/**
 	 * PlacementBanEvent.CheckItem is fired after a block that can be banned is placed, but before its placement has been prevented.
 	 * <br>
-	 * This event is not {@link Cancelable}. <br>
-	 * <br>
-	 * This event does not have a result. {@link HasResult} <br>
+	 * This event is not {@link ICancellableEvent}. <br>
 	 * <br>
 	 * This event is only fired on the {@link LogicalSide#SERVER} side.
 	 */
@@ -149,17 +144,14 @@ public class PlacementBanEvent extends Event {
 	/**
 	 * PlacementBanEvent.SpawnParticles is fired after a placement ban has occurred.
 	 * <br>
-	 * This event is {@link Cancelable}.<br>
+	 * This event is {@link ICancellableEvent}.<br>
 	 * If the event is not canceled, the particles will spawn.
-	 * <br>
-	 * This event does not have a result. {@linknet.neoforged.bus.api.Event.HasResult}<br>
 	 * <br>
 	 * This event is fired on both {@link LogicalSide sides}.<br>
 	 * <br>
 	 * If this event is canceled, the particles will not be spawned.
 	 */
-	@Cancelable
-	public static class SpawnParticles extends PlacementBanEvent {
+	public static class SpawnParticles extends PlacementBanEvent implements ICancellableEvent {
 		private final LevelAccessor level;
 		private final BlockPos pos;
 		@Nullable

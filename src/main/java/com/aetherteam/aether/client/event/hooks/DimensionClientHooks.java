@@ -107,7 +107,7 @@ public class DimensionClientHooks {
             if (clientLevel.effects() instanceof AetherSkyRenderEffects) {
                 FogType fluidState = camera.getFluidInCamera();
                 if (fluidState == FogType.NONE) {
-                    Vec3 defaultSky = Vec3.fromRGB24(clientLevel.getBiome(camera.getBlockPosition()).get().getModifiedSpecialEffects().getFogColor());
+                    Vec3 defaultSky = Vec3.fromRGB24(clientLevel.getBiome(camera.getBlockPosition()).value().getModifiedSpecialEffects().getFogColor());
                     if (clientLevel.rainLevel > 0.0) { // Check for rain.
                         float f14 = 1.0F + clientLevel.rainLevel * 0.8F;
                         float f17 = 1.0F + clientLevel.rainLevel * 0.56F;

@@ -77,7 +77,7 @@ public class MoaType {
      * @return The {@link ResourceLocation} of the {@link MoaType}'s full registry ID.
      */
     public ResourceLocation getId() {
-        return AetherMoaTypes.MOA_TYPE_REGISTRY.get().getKey(this);
+        return AetherMoaTypes.MOA_TYPE_REGISTRY.getKey(this);
     }
 
     /**

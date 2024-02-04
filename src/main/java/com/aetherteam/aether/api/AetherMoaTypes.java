@@ -9,7 +9,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.IForgeRegistry;
 import net.neoforged.neoforge.registries.RegistryBuilder;
 
 import javax.annotation.Nullable;
@@ -19,7 +18,7 @@ import java.util.function.Supplier;
 public class AetherMoaTypes {
     public static final ResourceKey<Registry<MoaType>> MOA_TYPE_REGISTRY_KEY = ResourceKey.createRegistryKey(new ResourceLocation(Aether.MODID, "moa_type"));
     public static final DeferredRegister<MoaType> MOA_TYPES = DeferredRegister.create(MOA_TYPE_REGISTRY_KEY, Aether.MODID);
-    public static final Supplier<IForgeRegistry<MoaType>> MOA_TYPE_REGISTRY = MOA_TYPES.makeRegistry(() -> new RegistryBuilder<MoaType>().hasTags());
+    public static final Registry<MoaType> MOA_TYPE_REGISTRY = new RegistryBuilder<>(MOA_TYPE_REGISTRY_KEY).sync(true).create();
 
     public static final Supplier<MoaType> BLUE = MOA_TYPES.register("blue", () -> new MoaType(new MoaType.Properties().egg(AetherItems.BLUE_MOA_EGG).maxJumps(3).speed(0.155F).spawnChance(100).texture("textures/entity/mobs/moa/blue_moa.png")));
     public static final Supplier<MoaType> WHITE = MOA_TYPES.register("white", () -> new MoaType(new MoaType.Properties().egg(AetherItems.WHITE_MOA_EGG).maxJumps(4).speed(0.155F).spawnChance(50).texture("textures/entity/mobs/moa/white_moa.png")));
@@ -27,7 +26,7 @@ public class AetherMoaTypes {
 
     @Nullable
     public static MoaType get(String id) {
-        return MOA_TYPE_REGISTRY.get().getValue(new ResourceLocation(id));
+        return MOA_TYPE_REGISTRY.get(new ResourceLocation(id));
     }
 
     /**
@@ -38,7 +37,7 @@ public class AetherMoaTypes {
      */
     public static MoaType getWeightedChance(RandomSource random) {
         SimpleWeightedRandomList.Builder<MoaType> weightedListBuilder = SimpleWeightedRandomList.builder();
-        MOA_TYPE_REGISTRY.get().getValues().forEach((moaType) -> weightedListBuilder.add(moaType, moaType.getSpawnChance()));
+        MOA_TYPE_REGISTRY.holders().forEach((moaType) -> weightedListBuilder.add(moaType.value(), moaType.value().getSpawnChance()));
         SimpleWeightedRandomList<MoaType> weightedList = weightedListBuilder.build();
         Optional<MoaType> moaType = weightedList.getRandomValue(random);
         return moaType.orElseGet(BLUE);

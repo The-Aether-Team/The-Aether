@@ -5,14 +5,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.Event;
+import net.neoforged.bus.api.ICancellableEvent;
+import net.neoforged.fml.LogicalSide;
 
 /**
  * FreezeEvent is fired when an event for a freezing recipe occurs.<br>
  * If a method utilizes this {@link Event} as its parameter, the method will receive every child event of this class.<br>
  * <br>
- * All children of this event are fired on the {@link neoforged.neoforge#EVENT_BUS}.
+ * All children of this event are fired on the {@link net.neoforged.neoforge.common.NeoForge#EVENT_BUS}.
  */
-public class FreezeEvent extends Event {
+public class FreezeEvent extends Event implements ICancellableEvent {
     private final LevelAccessor level;
     private final BlockPos pos;
     private final BlockState priorBlock;
@@ -70,17 +72,14 @@ public class FreezeEvent extends Event {
     /**
      * FreezeEvent.FreezeFromBlock is fired for freezing recipes triggered by blocks.
      * <br>
-     * This event is {@link Cancelable}.<br>
+     * This event is {@link ICancellableEvent}.<br>
      * If the event is not canceled, the block will be frozen.
-     * <br>
-     * This event does not have a result. {@linknet.neoforged.bus.api.Event.HasResult}<br>
      * <br>
      * This event is only fired on the {@link LogicalSide#SERVER} side.<br>
      * <br>
      * If this event is canceled, the block will not be frozen.
      */
-    @Cancelable
-    public static class FreezeFromBlock extends FreezeEvent {
+    public static class FreezeFromBlock extends FreezeEvent implements ICancellableEvent {
         private final BlockPos sourcePos;
         private final BlockState sourceBlock;
 
@@ -116,17 +115,14 @@ public class FreezeEvent extends Event {
     /**
      * FreezeEvent.FreezeFromItem is fired for freezing recipes triggered by items.
      * <br>
-     * This event is {@link Cancelable}.<br>
+     * This event is {@link ICancellableEvent}.<br>
      * If the event is not canceled, the block will be frozen.
-     * <br>
-     * This event does not have a result. {@linknet.neoforged.bus.api.Event.HasResult}<br>
      * <br>
      * This event is only fired on the {@link LogicalSide#SERVER} side.<br>
      * <br>
      * If this event is canceled, the block will not be frozen.
      */
-    @Cancelable
-    public static class FreezeFromItem extends FreezeEvent {
+    public static class FreezeFromItem extends FreezeEvent implements ICancellableEvent {
         private final ItemStack sourceStack;
 
         /**

@@ -3,9 +3,8 @@ package com.aetherteam.aether.event;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
-import net.neoforged.neoforge.common.neoforged.neoforge;
+import net.neoforged.bus.api.ICancellableEvent;
 import net.neoforged.neoforge.event.entity.EntityEvent;
-import net.neoforged.bus.api.Cancelable;
 import net.neoforged.fml.LogicalSide;
 
 import javax.annotation.Nullable;
@@ -13,19 +12,16 @@ import javax.annotation.Nullable;
 /**
  * EggLayEvent is fired before a Moa lays an egg.
  * <br>
- * This event is {@link Cancelable}.<br>
+ * This event is {@link ICancellableEvent}.<br>
  * If the event is not canceled, the Moa will lay an egg.
  * <br>
- * This event does not have a result. {@linknet.neoforged.bus.api.Event.HasResult}<br>
- * <br>
- * This event is fired on the {@link neoforged.neoforge#EVENT_BUS}.<br>
+ * This event is fired on the {@link net.neoforged.neoforge.common.NeoForge#EVENT_BUS}.<br>
  * <br>
  * This event is only fired on the {@link LogicalSide#SERVER} side.<br>
  * <br>
  * If this event is canceled, the Moa will not lay an egg.
  */
-@Cancelable
-public class EggLayEvent extends EntityEvent {
+public class EggLayEvent extends EntityEvent implements ICancellableEvent {
     @Nullable
     private Item item;
     @Nullable
