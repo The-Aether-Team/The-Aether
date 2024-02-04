@@ -46,9 +46,9 @@ public class AetherRecipeCategories {
         event.registerBookCategories(AetherRecipeBookTypes.ALTAR, ImmutableList.of(ENCHANTING_SEARCH.get(), ENCHANTING_FOOD.get(), ENCHANTING_BLOCKS.get(), ENCHANTING_MISC.get(), ENCHANTING_REPAIR.get()));
         event.registerAggregateCategory(ENCHANTING_SEARCH.get(), ImmutableList.of(ENCHANTING_FOOD.get(), ENCHANTING_BLOCKS.get(), ENCHANTING_MISC.get(), ENCHANTING_REPAIR.get()));
         event.registerRecipeCategoryFinder(AetherRecipeTypes.ENCHANTING.get(), recipe -> {
-            if (recipe instanceof AltarRepairRecipe || (recipe instanceof AbstractAetherCookingRecipe abstractAetherCookingRecipe && abstractAetherCookingRecipe.aetherCategory() == AetherBookCategory.ENCHANTING_REPAIR)) {
+            if (recipe.value() instanceof AltarRepairRecipe || (recipe.value() instanceof AbstractAetherCookingRecipe abstractAetherCookingRecipe && abstractAetherCookingRecipe.aetherCategory() == AetherBookCategory.ENCHANTING_REPAIR)) {
                 return ENCHANTING_REPAIR.get();
-            } else if (recipe instanceof AbstractAetherCookingRecipe abstractAetherCookingRecipe) {
+            } else if (recipe.value() instanceof AbstractAetherCookingRecipe abstractAetherCookingRecipe) {
                 if (abstractAetherCookingRecipe.aetherCategory() == AetherBookCategory.ENCHANTING_FOOD) {
                     return ENCHANTING_FOOD.get();
                 } else if (abstractAetherCookingRecipe.aetherCategory() == AetherBookCategory.ENCHANTING_BLOCKS) {
@@ -61,7 +61,7 @@ public class AetherRecipeCategories {
         event.registerBookCategories(AetherRecipeBookTypes.FREEZER, ImmutableList.of(FREEZABLE_SEARCH.get(), FREEZABLE_BLOCKS.get(), FREEZABLE_MISC.get()));
         event.registerAggregateCategory(FREEZABLE_SEARCH.get(), ImmutableList.of(FREEZABLE_BLOCKS.get(), FREEZABLE_MISC.get()));
         event.registerRecipeCategoryFinder(AetherRecipeTypes.FREEZING.get(), recipe -> {
-            if (recipe instanceof AbstractAetherCookingRecipe abstractAetherCookingRecipe) {
+            if (recipe.value() instanceof AbstractAetherCookingRecipe abstractAetherCookingRecipe) {
                 if (abstractAetherCookingRecipe.aetherCategory() == AetherBookCategory.FREEZABLE_BLOCKS) {
                     return FREEZABLE_BLOCKS.get();
                 }

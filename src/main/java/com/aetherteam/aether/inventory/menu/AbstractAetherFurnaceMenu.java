@@ -10,6 +10,7 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
@@ -65,8 +66,8 @@ public abstract class AbstractAetherFurnaceMenu extends RecipeBookMenu<Container
     }
 
     @Override
-    public boolean recipeMatches(Recipe<? super Container> recipe) {
-        return recipe.matches(this.container, this.level);
+    public boolean recipeMatches(RecipeHolder<? extends Recipe<Container>> recipe) {
+        return recipe.value().matches(this.container, this.level);
     }
 
     @Override

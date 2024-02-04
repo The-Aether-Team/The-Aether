@@ -47,7 +47,7 @@ public abstract class AbstractRecipeBookScreen<T extends RecipeBookMenu<Containe
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(guiGraphics);
+        this.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
         if (this.getRecipeBookComponent().isVisible() && this.widthTooNarrow) {
             this.renderBg(guiGraphics, partialTicks, mouseX, mouseY);
             this.getRecipeBookComponent().render(guiGraphics, mouseX, mouseY, partialTicks);

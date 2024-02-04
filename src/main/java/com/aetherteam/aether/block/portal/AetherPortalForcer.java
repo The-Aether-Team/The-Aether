@@ -12,6 +12,8 @@ import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.BlockUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.TicketType;
@@ -124,17 +126,22 @@ public class AetherPortalForcer implements ITeleporter {
     private Optional<BlockUtil.FoundRectangle> findPortalAround(BlockPos pos, WorldBorder worldBorder) {
         PoiManager poiManager = this.level.getPoiManager();
         poiManager.ensureLoadedAndValid(this.level, pos, 128);
-        Optional<PoiRecord> optionalPoi = poiManager.getInSquare((poiType) -> poiType.is(AetherPoi.AETHER_PORTAL.getKey()), pos, 128, PoiManager.Occupancy.ANY)
-                .filter((poiRecord) -> worldBorder.isWithinBounds(poiRecord.getPos()))
-                .sorted(Comparator.<PoiRecord>comparingDouble((poiRecord) -> poiRecord.getPos().distSqr(pos)).thenComparingInt((poiRecord) -> poiRecord.getPos().getY()))
-                .filter((poiRecord) -> this.level.getBlockState(poiRecord.getPos()).hasProperty(BlockStateProperties.HORIZONTAL_AXIS))
-                .findFirst();
-        return optionalPoi.map((poiRecord) -> {
-            BlockPos poiPos = poiRecord.getPos();
-            this.level.getChunkSource().addRegionTicket(TicketType.PORTAL, new ChunkPos(poiPos), 3, poiPos);
-            BlockState blockstate = this.level.getBlockState(poiPos);
-            return BlockUtil.getLargestRectangleAround(poiPos, blockstate.getValue(BlockStateProperties.HORIZONTAL_AXIS), 21, Direction.Axis.Y, 21, (blockPos) -> this.level.getBlockState(blockPos) == blockstate);
-        });
+        ResourceLocation portal = BuiltInRegistries.POINT_OF_INTEREST_TYPE.getKey(AetherPoi.AETHER_PORTAL.get());
+        if (portal != null) {
+            Optional<PoiRecord> optionalPoi = poiManager.getInSquare((poiType) -> poiType.is(portal), pos, 128, PoiManager.Occupancy.ANY)
+                    .filter((poiRecord) -> worldBorder.isWithinBounds(poiRecord.getPos()))
+                    .sorted(Comparator.<PoiRecord>comparingDouble((poiRecord) -> poiRecord.getPos().distSqr(pos)).thenComparingInt((poiRecord) -> poiRecord.getPos().getY()))
+                    .filter((poiRecord) -> this.level.getBlockState(poiRecord.getPos()).hasProperty(BlockStateProperties.HORIZONTAL_AXIS))
+                    .findFirst();
+            return optionalPoi.map((poiRecord) -> {
+                BlockPos poiPos = poiRecord.getPos();
+                this.level.getChunkSource().addRegionTicket(TicketType.PORTAL, new ChunkPos(poiPos), 3, poiPos);
+                BlockState blockstate = this.level.getBlockState(poiPos);
+                return BlockUtil.getLargestRectangleAround(poiPos, blockstate.getValue(BlockStateProperties.HORIZONTAL_AXIS), 21, Direction.Axis.Y, 21, (blockPos) -> this.level.getBlockState(blockPos) == blockstate);
+            });
+        } else {
+            return Optional.empty();
+        }
     }
 
     /**
