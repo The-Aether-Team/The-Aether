@@ -32,9 +32,9 @@ public class DispenseSkyrootBoatBehavior extends DefaultDispenseItemBehavior {
         Direction direction = source.state().getValue(DispenserBlock.FACING);
         Level level = source.level();
         double width = 0.5625 + EntityType.BOAT.getWidth() / 2.0;
-        double x = source.x() + direction.getStepX() * width;
-        double y = source.y() + direction.getStepY() * 1.125F;
-        double z = source.z() + direction.getStepZ() * width;
+        double x = source.center().x() + direction.getStepX() * width;
+        double y = source.center().y() + direction.getStepY() * 1.125F;
+        double z = source.center().z() + direction.getStepZ() * width;
         BlockPos blockpos = source.pos().relative(direction);
         Boat boat = (this.isChestBoat ? new SkyrootChestBoat(level, width, x, y) : new SkyrootBoat(level, width, x, y));
         boat.setYRot(direction.toYRot());

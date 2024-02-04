@@ -38,6 +38,7 @@ import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -244,12 +245,12 @@ public class AetherBlocks {
 
     public static void registerPots() {
         FlowerPotBlock pot = (FlowerPotBlock) Blocks.FLOWER_POT;
-        pot.addPlant(AetherBlocks.BERRY_BUSH.getId(), AetherBlocks.POTTED_BERRY_BUSH);
-        pot.addPlant(AetherBlocks.BERRY_BUSH_STEM.getId(), AetherBlocks.POTTED_BERRY_BUSH_STEM);
-        pot.addPlant(AetherBlocks.PURPLE_FLOWER.getId(), AetherBlocks.POTTED_PURPLE_FLOWER);
-        pot.addPlant(AetherBlocks.WHITE_FLOWER.getId(), AetherBlocks.POTTED_WHITE_FLOWER);
-        pot.addPlant(AetherBlocks.SKYROOT_SAPLING.getId(), AetherBlocks.POTTED_SKYROOT_SAPLING);
-        pot.addPlant(AetherBlocks.GOLDEN_OAK_SAPLING.getId(), AetherBlocks.POTTED_GOLDEN_OAK_SAPLING);
+        pot.addPlant(BuiltInRegistries.BLOCK.getKey(AetherBlocks.BERRY_BUSH.get()), AetherBlocks.POTTED_BERRY_BUSH);
+        pot.addPlant(BuiltInRegistries.BLOCK.getKey(AetherBlocks.BERRY_BUSH_STEM.get()), AetherBlocks.POTTED_BERRY_BUSH_STEM);
+        pot.addPlant(BuiltInRegistries.BLOCK.getKey(AetherBlocks.PURPLE_FLOWER.get()), AetherBlocks.POTTED_PURPLE_FLOWER);
+        pot.addPlant(BuiltInRegistries.BLOCK.getKey(AetherBlocks.WHITE_FLOWER.get()), AetherBlocks.POTTED_WHITE_FLOWER);
+        pot.addPlant(BuiltInRegistries.BLOCK.getKey(AetherBlocks.SKYROOT_SAPLING.get()), AetherBlocks.POTTED_SKYROOT_SAPLING);
+        pot.addPlant(BuiltInRegistries.BLOCK.getKey(AetherBlocks.GOLDEN_OAK_SAPLING.get()), AetherBlocks.POTTED_GOLDEN_OAK_SAPLING);
     }
 
     public static void registerFlammability() {
@@ -279,7 +280,7 @@ public class AetherBlocks {
     }
 
     public static void registerFluidInteractions() {
-        FluidInteractionRegistry.addInteraction(NeoForgeMod.WATER_TYPE.get(), new FluidInteractionRegistry.InteractionInformation(
+        FluidInteractionRegistry.addInteraction(NeoForgeMod.WATER_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
                 (level, currentPos, relativePos, currentState) -> level.getBlockState(currentPos.below()).is(AetherBlocks.QUICKSOIL.get()) && level.getBlockState(relativePos).is(Blocks.MAGMA_BLOCK),
                 AetherBlocks.HOLYSTONE.get().defaultBlockState()
         ));

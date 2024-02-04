@@ -17,7 +17,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.neoforged.neoforge.client.ForgeHooksClient;
+import net.neoforged.neoforge.client.ClientHooks;
 import net.neoforged.neoforge.client.gui.TitleScreenModUpdateIndicator;
 
 /**
@@ -82,7 +82,7 @@ public class VanillaLeftTitleScreen extends TitleScreen implements TitleScreenBe
             if (titleScreenAccessor.getWarningLabel() != null) {
                 titleScreenAccessor.getWarningLabel().render(guiGraphics, roundedFadeAmount);
             }
-            ForgeHooksClient.renderMainMenu(this, guiGraphics, this.font, this.width, this.height, roundedFadeAmount);
+            ClientHooks.renderMainMenu(this, guiGraphics, this.font, this.width, this.height, roundedFadeAmount);
             if (titleScreenAccessor.aether$getSplash() != null) {
                 SplashRendererAccessor splashRendererAccessor = (SplashRendererAccessor) titleScreenAccessor.aether$getSplash();
                 if (splashRendererAccessor.cumulus$getSplash() != null && !splashRendererAccessor.cumulus$getSplash().isEmpty()) {

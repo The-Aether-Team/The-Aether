@@ -32,9 +32,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.neoforge.client.event.RegisterGuiOverlaysEvent;
-import net.neoforged.neoforge.client.gui.overlay.ForgeGui;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.gui.overlay.ExtendedGui;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherOverlays {
@@ -265,7 +265,7 @@ public class AetherOverlays {
      * @param width The {@link Integer} for the screen width.
      * @param height The {@link Integer} for the screen height.
      */
-    private static void renderSilverLifeShardHearts(GuiGraphics guiGraphics, ForgeGui gui, LocalPlayer player, int width, int height) {
+    private static void renderSilverLifeShardHearts(GuiGraphics guiGraphics, ExtendedGui gui, LocalPlayer player, int width, int height) {
         GuiAccessor guiAccessor = (GuiAccessor) gui;
         if (AetherConfig.CLIENT.enable_silver_hearts.get() && gui.shouldDrawSurvivalElements()) {
             AetherPlayer.get(player).ifPresent(aetherPlayer -> {
@@ -324,7 +324,7 @@ public class AetherOverlays {
      * [CODE COPY] - {@link Gui#renderHearts(GuiGraphics, Player, int, int, int, int, float, int, int, int, boolean)}.<br><br>
      * Stripped down to only use what is necessary.
      */
-    private static void renderHearts(GuiGraphics guiGraphics, Player player, ForgeGui gui, int left, int top, int regen, float displayOverallHealth, float displayLifeShardHealth, int maxDefaultHealth, int lifeShardHealth, int rowHeight, int absorption, boolean highlight) {
+    private static void renderHearts(GuiGraphics guiGraphics, Player player, ExtendedGui gui, int left, int top, int regen, float displayOverallHealth, float displayLifeShardHealth, int maxDefaultHealth, int lifeShardHealth, int rowHeight, int absorption, boolean highlight) {
         GuiAccessor guiAccessor = (GuiAccessor) gui;
         Gui.HeartType heartType = HeartTypeAccessor.callForPlayer(player);
         int overallHearts = Mth.ceil((double) displayOverallHealth / 2.0);
