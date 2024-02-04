@@ -7,7 +7,7 @@
       "tag": "aether:planks_crafting"
     },
     "Z": {
-      "item": "aether:zanite_gemstone"
+      "tag": "aether:zanite_set_crafting_materials"
     }
   },
   "pattern": [

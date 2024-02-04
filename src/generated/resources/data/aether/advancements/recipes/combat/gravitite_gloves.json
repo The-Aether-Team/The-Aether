@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_enchanted_gravitite": {
+    "has_has_enchanted_gravitite": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "aether:enchanted_gravitite"
-            ]
+            "tag": "aether:gravitite_set_crafting_materials"
           }
         ]
       },
@@ -22,7 +20,7 @@
   },
   "requirements": [
     [
-      "has_enchanted_gravitite",
+      "has_has_enchanted_gravitite",
       "has_the_recipe"
     ]
   ],

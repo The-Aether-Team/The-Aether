@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "aether:enchanted_gravitite"
-            ]
+            "tag": "aether:gravitite_set_crafting_materials"
           }
         ]
       },

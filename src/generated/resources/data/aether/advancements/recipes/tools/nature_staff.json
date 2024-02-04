@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "aether:zanite_gemstone"
-            ]
+            "tag": "aether:zanite_set_crafting_materials"
           }
         ]
       },
