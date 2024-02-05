@@ -101,10 +101,10 @@ public interface MountableMob {
                 vehicle.hasImpulse = true;
             }
             // Handles step height.
-            AttributeInstance stepHeight = vehicle.getAttribute(NeoForgeMod.STEP_HEIGHT_ADDITION.get());
+            AttributeInstance stepHeight = vehicle.getAttribute(NeoForgeMod.STEP_HEIGHT.value());
             if (stepHeight != null) {
                 if (stepHeight.hasModifier(vehicle.getDefaultStepHeightModifier())) {
-                    stepHeight.removeModifier(vehicle.getDefaultStepHeightModifier());
+                    stepHeight.removeModifier(vehicle.getDefaultStepHeightModifier().getId());
                 }
                 if (!stepHeight.hasModifier(vehicle.getMountStepHeightModifier())) {
                     stepHeight.addTransientModifier(vehicle.getMountStepHeightModifier());
@@ -123,10 +123,10 @@ public interface MountableMob {
             vehicle.calculateEntityAnimation(false);
         } else {
             // Handles step height.
-            AttributeInstance stepHeight = vehicle.getAttribute(NeoForgeMod.STEP_HEIGHT_ADDITION.get());
+            AttributeInstance stepHeight = vehicle.getAttribute(NeoForgeMod.STEP_HEIGHT.value());
             if (stepHeight != null) {
                 if (stepHeight.hasModifier(vehicle.getMountStepHeightModifier())) {
-                    stepHeight.removeModifier(vehicle.getMountStepHeightModifier());
+                    stepHeight.removeModifier(vehicle.getMountStepHeightModifier().getId());
                 }
                 if (!stepHeight.hasModifier(vehicle.getDefaultStepHeightModifier())) {
                     stepHeight.addTransientModifier(vehicle.getDefaultStepHeightModifier());
@@ -189,7 +189,7 @@ public interface MountableMob {
      * @param vehicle The vehicle {@link Mob}.
      */
     default void onJump(Mob vehicle) {
-        net.neoforged.neoforge.common.ForgeHooks.onLivingJump(vehicle);
+        net.neoforged.neoforge.common.CommonHooks.onLivingJump(vehicle);
     }
 
     default AttributeModifier getMountStepHeightModifier() {

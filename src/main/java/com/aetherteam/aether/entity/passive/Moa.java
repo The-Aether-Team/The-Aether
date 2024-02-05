@@ -205,7 +205,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 	@Override
 	public void tick() {
 		super.tick();
-		AttributeInstance gravity = this.getAttribute(NeoForgeMod.ENTITY_GRAVITY.get());
+		AttributeInstance gravity = this.getAttribute(NeoForgeMod.ENTITY_GRAVITY.value());
 		if (gravity != null) {
 			double max = this.isVehicle() ? -0.5 : -0.1;
 			double fallSpeed = Math.max(gravity.getValue() * -1.25, max); // Entity isn't allowed to fall too slowly from gravity.
@@ -796,8 +796,8 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	@Override
-	public double getPassengersRidingOffset() {
-		return this.isSitting() ? 0.25 : 1.25;
+	public Vec3 getPassengerRidingPosition(Entity entity) {
+		return this.isSitting() ? super.getPassengerRidingPosition(entity).add(0, 0.25, 0) : super.getPassengerRidingPosition(entity).add(0, 1.25, 0);
 	}
 
 	/**

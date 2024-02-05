@@ -450,8 +450,8 @@ public class Swet extends Slime implements MountableMob {
     }
 
     @Override
-    public double getPassengersRidingOffset() {
-        return 1.4;
+    public Vec3 getPassengerRidingPosition(Entity entity) {
+        return super.getPassengerRidingPosition(entity).add(0, 1.4, 0);
     }
 
     @Nullable

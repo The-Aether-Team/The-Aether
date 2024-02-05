@@ -53,7 +53,7 @@ public class Aerwhale extends FlyingMob {
         return FlyingMob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0)
                 .add(Attributes.FLYING_SPEED, 0.2)
-                .add(NeoForgeMod.STEP_HEIGHT_ADDITION.get(), 0.4);
+                .add(NeoForgeMod.STEP_HEIGHT.value(), 0.4);
     }
 
     @Override

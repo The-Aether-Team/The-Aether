@@ -69,7 +69,7 @@ public class Parachute extends Entity {
                 z *= 0.25F; // Backwards movement is slowed.
             }
             Vec3 travelVec = new Vec3(x, passenger.yya, z);
-            AttributeInstance gravity = passenger.getAttribute(NeoForgeMod.ENTITY_GRAVITY.get());
+            AttributeInstance gravity = passenger.getAttribute(NeoForgeMod.ENTITY_GRAVITY.value());
             double gravityModifier = gravity != null ? gravity.getValue() : 0.08;
 
             Vec3 movement = this.calculateMovement(travelVec);
@@ -137,8 +137,8 @@ public class Parachute extends Entity {
     }
 
     @Override
-    public double getPassengersRidingOffset() {
-        return 1.35;
+    public Vec3 getPassengerRidingPosition(Entity entity) {
+        return super.getPassengerRidingPosition(entity).add(0, 1.35, 0);
     }
 
     /**

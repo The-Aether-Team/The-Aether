@@ -128,7 +128,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
     public boolean doHurtTarget(Entity entity) {
         boolean result = super.doHurtTarget(entity);
         if (entity instanceof ServerPlayer player && player.getHealth() <= 0) {
-            this.chat(player, Component.translatable("gui.aether.valkyrie.dialog.playerdeath." + (char) (this.getRandom().nextInt(3) + '1'), ComponentUtils.getDisplayName(player.getGameProfile())));
+            this.chat(player, Component.translatable("gui.aether.valkyrie.dialog.playerdeath." + (char) (this.getRandom().nextInt(3) + '1'), player.getDisplayName()));
         }
         return result;
     }

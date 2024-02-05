@@ -336,8 +336,8 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     }
 
     @Override
-    public double getMyRidingOffset() {
-        return this.getVehicle() != null && this.getVehicle().isCrouching() ? 0.1 : 0.275;
+    public float getMyRidingOffset(Entity entity) {
+        return this.getVehicle() != null && this.getVehicle().isCrouching() ? 0.1F : 0.275F;
     }
 
     @Override

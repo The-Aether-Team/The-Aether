@@ -295,7 +295,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
                 if (this.flyingTicks > 0) {
                     this.flyingTicks--;
                     double fallSpeed;
-                    AttributeInstance gravity = this.valkyrie.getAttribute(NeoForgeMod.ENTITY_GRAVITY.get());
+                    AttributeInstance gravity = this.valkyrie.getAttribute(NeoForgeMod.ENTITY_GRAVITY.value());
                     if (gravity != null) {
                         fallSpeed = Math.max(gravity.getValue() * -0.625, -0.275);
                     } else {
