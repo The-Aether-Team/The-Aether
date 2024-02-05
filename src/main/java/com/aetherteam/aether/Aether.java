@@ -51,19 +51,19 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackCompatibility;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.DispenserBlock;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.DistExecutor;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -81,12 +81,10 @@ public class Aether {
 
     public static final TriviaGenerator TRIVIA_READER = new TriviaGenerator();
 
-    public Aether() {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
-        modEventBus.addListener(AetherData::dataSetup);
-        modEventBus.addListener(this::commonSetup);
-        modEventBus.addListener(this::packSetup);
+    public Aether(IEventBus bus, Dist dist) {
+        bus.addListener(AetherData::dataSetup);
+        bus.addListener(this::commonSetup);
+        bus.addListener(this::packSetup);
 
         DeferredRegister<?>[] registers = {
                 AetherBlocks.BLOCKS,
@@ -116,13 +114,12 @@ public class Aether {
         };
 
         for (DeferredRegister<?> register : registers) {
-            register.register(modEventBus);
+            register.register(bus);
         }
 
-        DistExecutor.unsafeRunForDist(() -> () -> {
-            AetherMenus.MENUS.register(modEventBus);
-            return true;
-        }, () -> () -> false);
+        if (dist == Dist.CLIENT) {
+            AetherMenus.MENUS.register(bus);
+        }
 
         AetherBlocks.registerWoodTypes(); // Registered this early to avoid bugs with WoodTypes and signs.
 
@@ -180,7 +177,7 @@ public class Aether {
     private void setupReleasePack(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.CLIENT_RESOURCES) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_125");
-            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, false, resourcePath);
+            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, resourcePath, false);
             this.createCombinedPack(event, resourcePath, pack, "builtin/aether_125_art", "pack.aether.125.title", "pack.aether.125.description");
         }
     }
@@ -191,7 +188,7 @@ public class Aether {
     private void setupBetaPack(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.CLIENT_RESOURCES) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_b173");
-            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, false, resourcePath);
+            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, resourcePath, false);
             this.createCombinedPack(event, resourcePath, pack, "builtin/aether_b173_art", "pack.aether.b173.title", "pack.aether.b173.description");
         }
     }
@@ -206,10 +203,10 @@ public class Aether {
      */
     private void createCombinedPack(AddPackFindersEvent event, Path sourcePath, PathPackResources pack, String name, String title, String description) {
         Path baseResourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_base");
-        PathPackResources basePack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + baseResourcePath, false, baseResourcePath);
+        PathPackResources basePack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + baseResourcePath, baseResourcePath, false);
         List<PathPackResources> mergedPacks = List.of(pack, basePack);
-        Pack.ResourcesSupplier resourcesSupplier = (string) -> new CombinedPackResources(name, new PackMetadataSection(Component.translatable(description), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES)), mergedPacks, sourcePath);
-        Pack.Info info = Pack.readPackInfo(name, resourcesSupplier);
+        Pack.ResourcesSupplier resourcesSupplier = new CombinedPackResources.CombinedResourcesSupplier(new PackMetadataSection(Component.translatable(description), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES)), mergedPacks, sourcePath);
+        Pack.Info info = Pack.readPackInfo(name, resourcesSupplier, SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
         if (info != null) {
             event.addRepositorySource((source) ->
                 source.accept(Pack.create(
@@ -218,7 +215,6 @@ public class Aether {
                     false,
                     resourcesSupplier,
                     info,
-                    PackType.CLIENT_RESOURCES,
                     Pack.Position.TOP,
                     false,
                     PackSource.BUILT_IN)
@@ -233,16 +229,14 @@ public class Aether {
     private void setupCTMFixPack(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.CLIENT_RESOURCES && ModList.get().isLoaded("ctm")) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/ctm_fix");
-            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
             PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.ctm.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
             event.addRepositorySource((source) ->
                 source.accept(Pack.create(
                 "builtin/aether_ctm_fix",
                     Component.translatable("pack.aether.ctm.title"),
                     true,
-                    (string) -> pack,
-                    new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
-                    PackType.CLIENT_RESOURCES,
+                    new PathPackResources.PathResourcesSupplier(resourcePath, true),
+                    new Pack.Info(metadata.description(), metadata.packFormat(PackType.SERVER_DATA), metadata.packFormat(PackType.CLIENT_RESOURCES), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), true),
                     Pack.Position.TOP,
                     false,
                     PackSource.BUILT_IN)
@@ -258,16 +252,14 @@ public class Aether {
     private void setupTipsPack(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.CLIENT_RESOURCES && ModList.get().isLoaded("tipsmod")) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/tips");
-            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
             PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.tips.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
             event.addRepositorySource((source) ->
                     source.accept(Pack.create(
                             "builtin/aether_tips",
                             Component.translatable("pack.aether.tips.title"),
                             false,
-                            (string) -> pack,
-                            new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
-                            PackType.CLIENT_RESOURCES,
+                            new PathPackResources.PathResourcesSupplier(resourcePath, true),
+                            new Pack.Info(metadata.description(), metadata.packFormat(PackType.SERVER_DATA), metadata.packFormat(PackType.CLIENT_RESOURCES), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), false),
                             Pack.Position.TOP,
                             false,
                             PackSource.BUILT_IN)
@@ -282,16 +274,14 @@ public class Aether {
     private void setupColorblindPack(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.CLIENT_RESOURCES) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/colorblind");
-            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
             PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.colorblind.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES));
             event.addRepositorySource((source) ->
                 source.accept(Pack.create(
                     "builtin/aether_colorblind",
                     Component.translatable("pack.aether.colorblind.title"),
                     false,
-                    (string) -> pack,
-                    new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
-                    PackType.CLIENT_RESOURCES,
+                    new PathPackResources.PathResourcesSupplier(resourcePath, true),
+                    new Pack.Info(metadata.description(), metadata.packFormat(PackType.SERVER_DATA), metadata.packFormat(PackType.CLIENT_RESOURCES), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), false),
                     Pack.Position.TOP,
                     false,
                     PackSource.BUILT_IN)
@@ -307,16 +297,14 @@ public class Aether {
     private void setupAccessoriesPack(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.SERVER_DATA && !AetherConfig.COMMON.use_curios_menu.get()) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/accessories");
-            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
             PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.accessories.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
             event.addRepositorySource((source) ->
                     source.accept(Pack.create(
                             "builtin/aether_accessories",
                             Component.translatable("pack.aether.accessories.title"),
                             true,
-                            (string) -> pack,
-                            new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
-                            PackType.SERVER_DATA,
+                            new PathPackResources.PathResourcesSupplier(resourcePath, true),
+                            new Pack.Info(metadata.description(), metadata.packFormat(PackType.SERVER_DATA), metadata.packFormat(PackType.CLIENT_RESOURCES), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), true),
                             Pack.Position.TOP,
                             false,
                             PackSource.BUILT_IN)
@@ -332,16 +320,14 @@ public class Aether {
     private void setupCuriosOverridePack(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.SERVER_DATA && AetherConfig.COMMON.use_curios_menu.get()) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/curios_override");
-            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
             PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.curios.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
             event.addRepositorySource((source) ->
                 source.accept(Pack.create(
                     "builtin/aether_curios_override",
                     Component.translatable("pack.aether.curios.title"),
                     true,
-                    (string) -> pack,
-                    new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
-                    PackType.SERVER_DATA,
+                    new PathPackResources.PathResourcesSupplier(resourcePath, true),
+                    new Pack.Info(metadata.description(), metadata.packFormat(PackType.SERVER_DATA), metadata.packFormat(PackType.CLIENT_RESOURCES), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), true),
                     Pack.Position.TOP,
                     false,
                     PackSource.BUILT_IN)
@@ -356,16 +342,14 @@ public class Aether {
     private void setupTemporaryFreezingPack(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.SERVER_DATA) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/temporary_freezing");
-            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
             PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.freezing.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
             event.addRepositorySource((source) ->
                 source.accept(Pack.create(
                     "builtin/aether_temporary_freezing",
                     Component.translatable("pack.aether.freezing.title"),
                     false,
-                    (string) -> pack,
-                    new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
-                    PackType.SERVER_DATA,
+                    new PathPackResources.PathResourcesSupplier(resourcePath, true),
+                    new Pack.Info(metadata.description(), metadata.packFormat(PackType.SERVER_DATA), metadata.packFormat(PackType.CLIENT_RESOURCES), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), false),
                     Pack.Position.TOP,
                     false,
                     create(decorateWithSource("pack.source.builtin"), AetherConfig.COMMON.add_temporary_freezing_automatically.get()))
@@ -380,16 +364,14 @@ public class Aether {
     private void setupRuinedPortalPack(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.SERVER_DATA) {
             Path resourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/ruined_portal");
-            PathPackResources pack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + resourcePath, true, resourcePath);
             PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.ruined_portal.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
             event.addRepositorySource((source) ->
                     source.accept(Pack.create(
                             "builtin/aether_ruined_portal",
                             Component.translatable("pack.aether.ruined_portal.title"),
                             false,
-                            (string) -> pack,
-                            new Pack.Info(metadata.getDescription(), metadata.getPackFormat(PackType.SERVER_DATA), metadata.getPackFormat(PackType.CLIENT_RESOURCES), FeatureFlagSet.of(), pack.isHidden()),
-                            PackType.SERVER_DATA,
+                            new PathPackResources.PathResourcesSupplier(resourcePath, true),
+                            new Pack.Info(metadata.description(), metadata.packFormat(PackType.SERVER_DATA), metadata.packFormat(PackType.CLIENT_RESOURCES), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of(), false),
                             Pack.Position.TOP,
                             false,
                             create(decorateWithSource("pack.source.builtin"), AetherConfig.COMMON.add_ruined_portal_automatically.get()))
