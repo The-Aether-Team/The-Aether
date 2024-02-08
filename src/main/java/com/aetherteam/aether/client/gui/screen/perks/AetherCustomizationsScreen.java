@@ -224,13 +224,13 @@ public class AetherCustomizationsScreen extends Screen {
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(guiGraphics);
+        this.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
         guiGraphics.drawCenteredString(this.font, this.getTitle(), this.width / 2, 15, 16777215);
         guiGraphics.drawCenteredString(this.font, Component.translatable("gui.aether.customization.color"), (this.width / 2 - 65) + 184, (this.height / 2 - 10) - 14, 16777215);
         if (this.getMinecraft().player != null) {
             int x = (this.width / 2) - 175;
             int y = (this.height / 2) + 50;
-            InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics, x + 33, y, 60, (float) (x + 33 - mouseX), (float) (y - 100 - mouseY), this.getMinecraft().player);
+            InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics, x + 33, y, x + 82, y + 70, 60, 0.0625F, (float) (x + 33 - mouseX), (float) (y - 100 - mouseY), this.getMinecraft().player);
         }
         // Resets color values if they're invalid.
         if (this.haloColorBox != null && !this.haloColorBox.getValue().equals(this.haloColor)) {

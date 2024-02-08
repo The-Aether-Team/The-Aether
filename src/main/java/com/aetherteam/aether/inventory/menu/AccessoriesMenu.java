@@ -16,6 +16,7 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.neoforged.api.distmarker.Dist;
@@ -187,8 +188,8 @@ public class AccessoriesMenu extends InventoryMenu {
     }
 
     @Override
-    public boolean recipeMatches(Recipe<? super CraftingContainer> recipe) {
-        return recipe.matches(this.craftMatrix, this.player.level());
+    public boolean recipeMatches(RecipeHolder<? extends Recipe<CraftingContainer>> recipe) {
+        return recipe.value().matches(this.craftMatrix, this.player.level());
     }
 
     @Override
@@ -221,12 +222,12 @@ public class AccessoriesMenu extends InventoryMenu {
             if (server == null) {
                 return;
             }
-            Optional<CraftingRecipe> recipe = server.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, this.craftMatrix, this.player.level());
+            Optional<RecipeHolder<CraftingRecipe>> recipe = server.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, this.craftMatrix, this.player.level());
 
             if (recipe.isPresent()) {
-                CraftingRecipe craftingRecipe = recipe.get();
+                RecipeHolder<CraftingRecipe> craftingRecipe = recipe.get();
                 if (this.craftResult.setRecipeUsed(this.player.level(), playerMP, craftingRecipe)) {
-                    itemStack = craftingRecipe.assemble(this.craftMatrix, this.player.level().registryAccess());
+                    itemStack = craftingRecipe.value().assemble(this.craftMatrix, this.player.level().registryAccess());
                 }
             }
             this.craftResult.setItem(0, itemStack);

@@ -67,7 +67,7 @@ public class SunAltarWhitelistCommand {
             if (!sunAltarWhiteList.isWhiteListed(gameProfile)) {
                 UserWhiteListEntry entry = new UserWhiteListEntry(gameProfile);
                 sunAltarWhiteList.add(entry);
-                source.sendSuccess(() -> Component.translatable("commands.aether.sun_altar_whitelist.add.success", ComponentUtils.getDisplayName(gameProfile)), true);
+                source.sendSuccess(() -> Component.translatable("commands.aether.sun_altar_whitelist.add.success", gameProfile.getName()), true);
                 ++i;
             }
         }
@@ -87,7 +87,7 @@ public class SunAltarWhitelistCommand {
             if (sunAltarWhiteList.isWhiteListed(gameProfile)) {
                 UserWhiteListEntry userwhitelistentry = new UserWhiteListEntry(gameProfile);
                 sunAltarWhiteList.remove(userwhitelistentry);
-                source.sendSuccess(() -> Component.translatable("commands.aether.sun_altar_whitelist.remove.success", ComponentUtils.getDisplayName(gameProfile)), true);
+                source.sendSuccess(() -> Component.translatable("commands.aether.sun_altar_whitelist.remove.success", gameProfile.getName()), true);
                 ++i;
             }
         }

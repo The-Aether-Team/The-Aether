@@ -19,6 +19,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
@@ -108,7 +109,7 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
      * @param arm The {@link HumanoidArm} to render on.
      */
     public void renderFirstPerson(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int packedLight, AbstractClientPlayer player, HumanoidArm arm) {
-        boolean isSlim = player.getModelName().equals("slim");
+        boolean isSlim = player.getSkin().model() == PlayerSkin.Model.SLIM;
         if (!player.isInvisible()) {
             this.setupHand(isSlim ? this.dummyArmSlim : this.dummyArm, poseStack, buffer, packedLight, player, arm, isSlim);
         }
@@ -170,7 +171,7 @@ public class ShieldOfRepulsionRenderer implements ICurioRenderer {
         Optional<AetherPlayer> aetherPlayerOptional = AetherPlayer.get(player).resolve();
         if (aetherPlayerOptional.isPresent()) {
             if (!aetherPlayerOptional.get().isMoving()) {
-                VertexConsumer consumer = buffer.getBuffer(RenderType.entityTranslucent(player.getSkinTextureLocation()));
+                VertexConsumer consumer = buffer.getBuffer(RenderType.entityTranslucent(player.getSkin().texture()));
                 if (isSlim) {
                     poseStack.translate((arm != HumanoidArm.LEFT ? 1.0F : -1.0F) * -0.05F, 0.0F, 0.0F);
                 }

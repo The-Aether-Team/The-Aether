@@ -226,7 +226,7 @@ public class AetherDispenseBehaviors {
             BlockState blockState = levelAccessor.getBlockState(blockPos);
             Block block = blockState.getBlock();
             if (block instanceof BucketPickup bucketPickup) {
-                ItemStack bucketStack = bucketPickup.pickupBlock(levelAccessor, blockPos, blockState);
+                ItemStack bucketStack = bucketPickup.pickupBlock(null, levelAccessor, blockPos, blockState);
                 bucketStack = SkyrootBucketItem.swapBucketType(bucketStack);
                 if (bucketStack.isEmpty()) {
                     return super.execute(source, stack);

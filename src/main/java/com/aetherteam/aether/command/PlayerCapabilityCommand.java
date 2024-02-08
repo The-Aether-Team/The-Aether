@@ -58,7 +58,7 @@ public class PlayerCapabilityCommand {
                     aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setLifeShardCount", value);
                     AttributeInstance attribute = innerPlayer.getAttribute(Attributes.MAX_HEALTH);
                     if (attribute != null) {
-                        attribute.removeModifier(aetherPlayer.getLifeShardHealthAttributeModifier());
+                        attribute.removeModifier(aetherPlayer.getLifeShardHealthAttributeModifier().getId());
                     }
                     innerPlayer.setHealth(innerPlayer.getMaxHealth());
                     PacketRelay.sendToNear(AetherPacketHandler.INSTANCE, new HealthResetPacket(innerPlayer.getId(), value), innerPlayer.getX(), innerPlayer.getY(), innerPlayer.getZ(), 5.0, level.dimension()); // Sync to client.

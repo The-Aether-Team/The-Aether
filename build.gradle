@@ -64,7 +64,7 @@ dependencies {
     implementation "com.aetherteam.nitrogen:nitrogen_internals:${project.nitrogen_version}"
     implementation "com.aetherteam.cumulus:cumulus_menus:${project.cumulus_version}"
 
-    implementation "top.theillusivec4.curios:curios-forge:${project.curios_version}+${project.mc_version}"
+    implementation "top.theillusivec4.curios:curios-neoforge:${project.curios_version}+${project.mc_version}"
 
     compileOnly "top.theillusivec4.caelus:caelus-forge:${project.caelus_version}"
 
@@ -80,7 +80,7 @@ dependencies {
         jarJar.pin(it, "${project.cumulus_version}")
     }
 
-    jarJar("top.theillusivec4.curios:curios-forge:${project.curios_version}+${project.mc_version}") {
+    jarJar("top.theillusivec4.curios:curios-neoforge:${project.curios_version}+${project.mc_version}") {
         jarJar.ranged(it, "[${project.curios_version},)")
         jarJar.pin(it, "${project.curios_version}+${project.mc_version}")
     }
@@ -90,7 +90,7 @@ dependencies {
 
 //    runtimeOnly compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge:${project.jei_version}"))
 
-    compileOnly "com.blamejared.crafttweaker:CraftTweaker-forge-${project.crafttweaker_version}"
+    compileOnly "com.blamejared.crafttweaker:CraftTweaker-neoforge-${project.crafttweaker_version}"
 
 //    runtimeOnly fg.deobf("net.darkhax.bookshelf:Bookshelf-Forge-1.20.1:20.0.5")
 //    runtimeOnly fg.deobf("net.darkhax.tips:Tips-Forge-1.20.1:12.0.3")
@@ -106,11 +106,11 @@ dependencies {
 
 //    runtimeOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:$rei_version")
 
-    compileOnly "me.shedaniel:RoughlyEnoughItems-api-forge:$rei_version"
-    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-forge:$rei_version"
+    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:$rei_version"
+    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:$rei_version"
 
-    implementation "me.shedaniel.cloth:cloth-config-forge:$cloth_config_version"
-    implementation "dev.architectury:architectury-forge:$architectury_version"
+    implementation "me.shedaniel.cloth:cloth-config-neoforge:$cloth_config_version"
+    implementation "dev.architectury:architectury-neoforge:$architectury_version"
 }
 
 repositories {

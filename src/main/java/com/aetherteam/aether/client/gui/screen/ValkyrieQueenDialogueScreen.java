@@ -122,17 +122,17 @@ public class ValkyrieQueenDialogueScreen extends Screen {
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(guiGraphics);
+        this.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
         this.dialogueAnswer.render(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
 
     /**
-     * [CODE COPY] - {@link Screen#renderBackground(GuiGraphics)}.<br><br>
+     * [CODE COPY] - {@link Screen#renderBackground(GuiGraphics, int, int, float)}.<br><br>
      * Remove code for dark gradient and dirt background.
      */
     @Override
-    public void renderBackground(GuiGraphics guiGraphics) {
+    public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         if (this.getMinecraft().level != null) {
             NeoForge.EVENT_BUS.post(new ScreenEvent.BackgroundRendered(this, guiGraphics));
         }

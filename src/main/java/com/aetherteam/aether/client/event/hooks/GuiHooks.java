@@ -30,6 +30,7 @@ import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -37,7 +38,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.BossEvent;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.event.CustomizeGuiOverlayEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
@@ -75,11 +75,8 @@ public class GuiHooks {
     private static boolean areAccessoryTagsFilled() {
         boolean flag = true;
         for (String string : AccessoriesMenu.AETHER_IDENTIFIERS) {
-            ITagManager<Item> itemTags = ForgeRegistries.ITEMS.tags();
-            if (itemTags != null) {
-                if (itemTags.getTag(TagKey.create(Registries.ITEM, new ResourceLocation("curios", string))).isEmpty()) {
-                    flag = false;
-                }
+            if (BuiltInRegistries.ITEM.getTagOrEmpty(TagKey.create(Registries.ITEM, new ResourceLocation("curios", string))).spliterator().estimateSize() == 0) {
+                flag = false;
             }
         }
         return flag;

@@ -85,9 +85,9 @@ public class GlovesRenderer implements ICurioRenderer {
         model.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0F);
 
         GlovesModel finalTrimModel = trimModel;
-        ArmorTrim.getTrim(livingEntity.level().registryAccess(), stack).ifPresent((trim) -> {
+        ArmorTrim.getTrim(livingEntity.level().registryAccess(), stack, true).ifPresent((trim) -> {
             TextureAtlasSprite textureAtlasSprite = this.armorTrimAtlas.getSprite(trim.outerTexture(glovesItem.getMaterial()));
-            VertexConsumer trimConsumer = textureAtlasSprite.wrap(buffer.getBuffer(Sheets.armorTrimsSheet()));
+            VertexConsumer trimConsumer = textureAtlasSprite.wrap(buffer.getBuffer(Sheets.armorTrimsSheet(trim.pattern().value().decal())));
             finalTrimModel.renderToBuffer(poseStack, trimConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         });
         if (stack.hasFoil()) {
@@ -126,7 +126,7 @@ public class GlovesRenderer implements ICurioRenderer {
         gloveArm.xRot = 0.0F;
         gloveArm.render(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0F);
 
-        ArmorTrim.getTrim(player.level().registryAccess(), stack).ifPresent((trim) -> {
+        ArmorTrim.getTrim(player.level().registryAccess(), stack, true).ifPresent((trim) -> {
             trimModel.setAllVisible(false);
             trimModel.attackTime = 0.0F;
             trimModel.crouching = false;
@@ -138,7 +138,7 @@ public class GlovesRenderer implements ICurioRenderer {
             gloveTrimArm.xRot = 0.0F;
 
             TextureAtlasSprite textureAtlasSprite = this.armorTrimAtlas.getSprite(trim.outerTexture(glovesItem.getMaterial()));
-            VertexConsumer trimConsumer = textureAtlasSprite.wrap(buffer.getBuffer(Sheets.armorTrimsSheet()));
+            VertexConsumer trimConsumer = textureAtlasSprite.wrap(buffer.getBuffer(Sheets.armorTrimsSheet(trim.pattern().value().decal())));
             gloveTrimArm.render(poseStack, trimConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         });
         if (stack.hasFoil()) {

@@ -48,7 +48,7 @@ public class DeveloperGlowLayer<T extends Player, M extends PlayerModel<T>> exte
             Map<UUID, DeveloperGlow> developerGlows = ClientDeveloperGlowPerkData.INSTANCE.getClientPerkData();
             if ((Minecraft.getInstance().screen instanceof AetherCustomizationsScreen aetherCustomizationsScreen && aetherCustomizationsScreen.developerGlowEnabled && Minecraft.getInstance().player != null && playerUUID.equals(Minecraft.getInstance().player.getUUID()) && user != null && PerkUtil.hasDeveloperGlow().test(user))
                     || (!(Minecraft.getInstance().screen instanceof AetherCustomizationsScreen) && developerGlows.containsKey(playerUUID))) {
-                VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.eyes(abstractClientPlayer.getSkinTextureLocation()));
+                VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.eyes(abstractClientPlayer.getSkin().texture()));
                 Triple<Float, Float, Float> color;
                 if (Minecraft.getInstance().screen instanceof AetherCustomizationsScreen aetherCustomizationsScreen) {
                     color = PerkUtil.getPerkColor(aetherCustomizationsScreen.developerGlowColor);
