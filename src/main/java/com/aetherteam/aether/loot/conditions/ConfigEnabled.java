@@ -1,22 +1,23 @@
 package com.aetherteam.aether.loot.conditions;
 
-import com.aetherteam.aether.data.ConfigSerializationUtil;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
-import net.minecraft.util.GsonHelper;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
-import net.neoforged.neoforge.common.ModConfigSpec;
 
 /**
  * Checks if a config value is true or false for a loot table.
  */
 public class ConfigEnabled implements LootItemCondition {
-    private final ModConfigSpec.ConfigValue<Boolean> config;
+    public static final Codec<ConfigEnabled> CODEC = RecordCodecBuilder.create((p_298496_) -> {
+        return p_298496_.group(Codec.BOOL.fieldOf("config").forGetter(instance -> {
+            return instance.config;
+        })).apply(p_298496_, ConfigEnabled::new);
+    });
+    private final boolean config;
 
-    public ConfigEnabled(ModConfigSpec.ConfigValue<Boolean> config) {
+    public ConfigEnabled(boolean config) {
         this.config = config;
     }
 
@@ -27,22 +28,10 @@ public class ConfigEnabled implements LootItemCondition {
 
     @Override
     public boolean test(LootContext lootContext) {
-        return this.config.get();
+        return this.config;
     }
 
-    public static LootItemCondition.Builder isEnabled(ModConfigSpec.ConfigValue<Boolean> config) {
+    public static LootItemCondition.Builder isEnabled(boolean config) {
         return () -> new ConfigEnabled(config);
-    }
-
-    public static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<ConfigEnabled> {
-        @Override
-        public void serialize(JsonObject json, ConfigEnabled instance, JsonSerializationContext context) {
-            json.addProperty("config", ConfigSerializationUtil.serialize(instance.config));
-        }
-
-        @Override
-        public ConfigEnabled deserialize(JsonObject json, JsonDeserializationContext context) {
-            return new ConfigEnabled(ConfigSerializationUtil.deserialize(GsonHelper.getAsString(json, "config")));
-        }
     }
 }

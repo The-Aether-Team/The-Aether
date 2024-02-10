@@ -2,7 +2,9 @@ package com.aetherteam.aether.integration.rei;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.block.AetherBlocks;
-import com.aetherteam.aether.integration.jei.categories.fuel.AetherFuelRecipeMaker;
+import com.aetherteam.aether.blockentity.AltarBlockEntity;
+import com.aetherteam.aether.blockentity.FreezerBlockEntity;
+import com.aetherteam.aether.blockentity.IncubatorBlockEntity;
 import com.aetherteam.aether.integration.rei.categories.ban.BlockBanRecipeCategory;
 import com.aetherteam.aether.integration.rei.categories.ban.ItemBanRecipeCategory;
 import com.aetherteam.aether.integration.rei.categories.ban.PlacementBanRecipeDisplay;
@@ -33,27 +35,37 @@ import me.shedaniel.rei.api.common.util.EntryStacks;
 import me.shedaniel.rei.forge.REIPluginClient;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @REIPluginClient
 public class AetherREIClientPlugin implements REIClientPlugin {
     public static final ResourceLocation ALTAR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/menu/altar.png");
 
+
+    public static List<FuelRecipe> getFuelRecipes() {
+        List<FuelRecipe> fuelRecipes = new ArrayList<>();
+        AltarBlockEntity.getEnchantingMap().forEach((item, burnTime) -> fuelRecipes.add(new FuelRecipe(List.of(new ItemStack(item)), burnTime, AetherBlocks.ALTAR.get())));
+        FreezerBlockEntity.getFreezingMap().forEach((item, burnTime) -> fuelRecipes.add(new FuelRecipe(List.of(new ItemStack(item)), burnTime, AetherBlocks.FREEZER.get())));
+        IncubatorBlockEntity.getIncubatingMap().forEach((item, burnTime) -> fuelRecipes.add(new FuelRecipe(List.of(new ItemStack(item)), burnTime, AetherBlocks.INCUBATOR.get())));
+        return fuelRecipes;
+    }
     @Override
     public void registerDisplays(DisplayRegistry registry) {
-        registry.registerRecipeFiller(ItemBanRecipe.class, AetherRecipeTypes.ITEM_PLACEMENT_BAN.get(), PlacementBanRecipeDisplay::ofItem);
-        registry.registerRecipeFiller(BlockBanRecipe.class, AetherRecipeTypes.BLOCK_PLACEMENT_BAN.get(), PlacementBanRecipeDisplay::ofBlock);
+        registry.registerRecipeFiller(ItemBanRecipe.class, AetherRecipeTypes.ITEM_PLACEMENT_BAN.get(), recipe -> PlacementBanRecipeDisplay.ofItem(recipe.value()));
+        registry.registerRecipeFiller(BlockBanRecipe.class, AetherRecipeTypes.BLOCK_PLACEMENT_BAN.get(), recipe -> PlacementBanRecipeDisplay.ofBlock(recipe.value()));
 
-        registry.registerRecipeFiller(AccessoryFreezableRecipe.class, AetherRecipeTypes.ACCESSORY_FREEZABLE.get(), recipe -> new BlockStateRecipeDisplay<>(AetherREIServerPlugin.ACCESSORY_FREEZABLE, recipe));
-        registry.registerRecipeFiller(AmbrosiumRecipe.class, AetherRecipeTypes.AMBROSIUM_ENCHANTING.get(), recipe -> new BlockStateRecipeDisplay<>(AetherREIServerPlugin.AMBROSIUM_ENCHANTING, recipe));
-        registry.registerRecipeFiller(IcestoneFreezableRecipe.class, AetherRecipeTypes.ICESTONE_FREEZABLE.get(), recipe -> new BlockStateRecipeDisplay<>(AetherREIServerPlugin.ICESTONE_FREEZABLE, recipe));
+        registry.registerRecipeFiller(AccessoryFreezableRecipe.class, AetherRecipeTypes.ACCESSORY_FREEZABLE.get(), recipe -> new BlockStateRecipeDisplay<>(AetherREIServerPlugin.ACCESSORY_FREEZABLE, recipe.value()));
+        registry.registerRecipeFiller(AmbrosiumRecipe.class, AetherRecipeTypes.AMBROSIUM_ENCHANTING.get(), recipe -> new BlockStateRecipeDisplay<>(AetherREIServerPlugin.AMBROSIUM_ENCHANTING, recipe.value()));
+        registry.registerRecipeFiller(IcestoneFreezableRecipe.class, AetherRecipeTypes.ICESTONE_FREEZABLE.get(), recipe -> new BlockStateRecipeDisplay<>(AetherREIServerPlugin.ICESTONE_FREEZABLE, recipe.value()));
 
-        registry.registerRecipeFiller(PlacementConversionRecipe.class, AetherRecipeTypes.PLACEMENT_CONVERSION.get(), recipe -> new BlockStateRecipeDisplay<>(AetherREIServerPlugin.PLACEMENT_CONVERSION, recipe));
-        registry.registerRecipeFiller(SwetBallRecipe.class, AetherRecipeTypes.SWET_BALL_CONVERSION.get(), recipe -> new BlockStateRecipeDisplay<>(AetherREIServerPlugin.SWET_BALL_CONVERSION, recipe));
+        registry.registerRecipeFiller(PlacementConversionRecipe.class, AetherRecipeTypes.PLACEMENT_CONVERSION.get(), recipe -> new BlockStateRecipeDisplay<>(AetherREIServerPlugin.PLACEMENT_CONVERSION, recipe.value()));
+        registry.registerRecipeFiller(SwetBallRecipe.class, AetherRecipeTypes.SWET_BALL_CONVERSION.get(), recipe -> new BlockStateRecipeDisplay<>(AetherREIServerPlugin.SWET_BALL_CONVERSION, recipe.value()));
 
         // Fuel
-        for (var fuelRecipe : AetherFuelRecipeMaker.getFuelRecipes()) {
+        for (var fuelRecipe : getFuelRecipes()) {
             registry.add(new FuelDisplay(AetherREIServerPlugin.AETHER_FUEL, fuelRecipe.getInput(), fuelRecipe.getBurnTime(), fuelRecipe.getUsage()));
         }
 
@@ -65,8 +77,8 @@ public class AetherREIClientPlugin implements REIClientPlugin {
             }
         }
 
-        registry.registerRecipeFiller(FreezingRecipe.class, AetherRecipeTypes.FREEZING.get(), recipe -> AetherCookingRecipeDisplay.of(AetherREIServerPlugin.FREEZING, recipe));
-        registry.registerRecipeFiller(IncubationRecipe.class, AetherRecipeTypes.INCUBATION.get(), recipe -> AetherCookingRecipeDisplay.of(AetherREIServerPlugin.INCUBATING, recipe));
+        registry.registerRecipeFiller(FreezingRecipe.class, AetherRecipeTypes.FREEZING.get(), recipe -> AetherCookingRecipeDisplay.of(AetherREIServerPlugin.FREEZING, recipe.value()));
+        registry.registerRecipeFiller(IncubationRecipe.class, AetherRecipeTypes.INCUBATION.get(), recipe -> AetherCookingRecipeDisplay.of(AetherREIServerPlugin.INCUBATING, recipe.value()));
     }
 
     @Override

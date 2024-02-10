@@ -7,15 +7,15 @@ import com.aetherteam.aether.blockentity.AltarBlockEntity;
 import com.aetherteam.aether.blockentity.FreezerBlockEntity;
 import com.aetherteam.aether.blockentity.IncubatorBlockEntity;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.minecraft.world.level.storage.loot.Deserializers;
-import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
 
 import java.util.Map;
 
@@ -29,7 +29,7 @@ public class ReloadListeners {
     }
 
     public static class FuelReloadListener extends SimpleJsonResourceReloadListener {
-        public static final Gson GSON_INSTANCE = Deserializers.createFunctionSerializer().create();
+        public static final Gson GSON_INSTANCE = (new GsonBuilder()).create();
 
         public FuelReloadListener() {
             super(GSON_INSTANCE, "fuels");
@@ -48,7 +48,7 @@ public class ReloadListeners {
     }
 
     public static class RecipeReloadListener extends SimpleJsonResourceReloadListener {
-        public static final Gson GSON_INSTANCE = Deserializers.createFunctionSerializer().create();
+        public static final Gson GSON_INSTANCE = (new GsonBuilder()).create();
 
         public RecipeReloadListener() {
             super(GSON_INSTANCE, "recipes");

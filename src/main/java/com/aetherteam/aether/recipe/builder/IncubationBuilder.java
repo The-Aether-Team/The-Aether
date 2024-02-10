@@ -2,13 +2,11 @@ package com.aetherteam.aether.recipe.builder;
 
 import com.aetherteam.aether.recipe.recipes.item.IncubationRecipe;
 import com.google.gson.JsonObject;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementRewards;
-import net.minecraft.advancements.CriterionTriggerInstance;
-import net.minecraft.advancements.RequirementsStrategy;
+import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -18,7 +16,9 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
 import javax.annotation.Nullable;
-import java.util.function.Consumer;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class IncubationBuilder implements RecipeBuilder {
     private final Ingredient ingredient;
@@ -26,7 +26,7 @@ public class IncubationBuilder implements RecipeBuilder {
     @Nullable
     private final CompoundTag tag;
     private final int incubationTime;
-    private final Advancement.Builder advancement = Advancement.Builder.advancement();
+    private final Map<String, Criterion<?>> criteria = new LinkedHashMap();
     @Nullable
     private String group;
     private final RecipeSerializer<IncubationRecipe> serializer;
@@ -55,20 +55,22 @@ public class IncubationBuilder implements RecipeBuilder {
     }
 
     @Override
-    public IncubationBuilder unlockedBy(String criterionName, CriterionTriggerInstance criterionTrigger) {
-        this.advancement.addCriterion(criterionName, criterionTrigger);
+    public IncubationBuilder unlockedBy(String criterionName, Criterion criterionTrigger) {
+        this.criteria.put(criterionName, criterionTrigger);
         return this;
     }
 
     @Override
-    public void save(Consumer<FinishedRecipe> consumer, ResourceLocation id) {
+    public void save(RecipeOutput recipeOutput, ResourceLocation id) {
         this.ensureValid(id);
-        this.advancement.parent(new ResourceLocation("recipes/root")).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(RequirementsStrategy.OR);
-        consumer.accept(new IncubationBuilder.Result(id, this.group == null ? "" : this.group, this.ingredient, this.entity, this.tag, this.incubationTime, this.advancement, new ResourceLocation(id.getNamespace(), "recipes/incubation/" + id.getPath()), this.serializer));
+        Advancement.Builder advancement$builder = recipeOutput.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(AdvancementRequirements.Strategy.OR);
+        Objects.requireNonNull(advancement$builder);
+        this.criteria.forEach(advancement$builder::addCriterion);
+        recipeOutput.accept(new IncubationBuilder.Result(id, this.group == null ? "" : this.group, this.ingredient, this.entity, this.tag, this.incubationTime, advancement$builder.build(new ResourceLocation(id.getNamespace(), "recipes/incubation/" + id.getPath())), this.serializer));
     }
 
     private void ensureValid(ResourceLocation id) {
-        if (this.advancement.getCriteria().isEmpty()) {
+        if (this.criteria.isEmpty()) {
             throw new IllegalStateException("No way of obtaining recipe " + id);
         }
     }
@@ -81,11 +83,10 @@ public class IncubationBuilder implements RecipeBuilder {
         @Nullable
         private final CompoundTag tag;
         private final int incubationTime;
-        private final Advancement.Builder advancement;
-        private final ResourceLocation advancementId;
+        private final AdvancementHolder advancement;
         private final RecipeSerializer<IncubationRecipe> serializer;
 
-        public Result(ResourceLocation id, String group, Ingredient ingredient, EntityType<?> entity, @Nullable CompoundTag tag, int incubationTime, Advancement.Builder advancement, ResourceLocation advancementId, RecipeSerializer<IncubationRecipe> serializer) {
+        public Result(ResourceLocation id, String group, Ingredient ingredient, EntityType<?> entity, @Nullable CompoundTag tag, int incubationTime, AdvancementHolder advancement, RecipeSerializer<IncubationRecipe> serializer) {
             this.id = id;
             this.group = group;
             this.ingredient = ingredient;
@@ -93,7 +94,6 @@ public class IncubationBuilder implements RecipeBuilder {
             this.tag = tag;
             this.incubationTime = incubationTime;
             this.advancement = advancement;
-            this.advancementId = advancementId;
             this.serializer = serializer;
         }
 
@@ -102,7 +102,7 @@ public class IncubationBuilder implements RecipeBuilder {
             if (!this.group.isEmpty()) {
                 json.addProperty("group", this.group);
             }
-            json.add("ingredient", this.ingredient.toJson());
+            json.add("ingredient", this.ingredient.toJson(false));
             json.addProperty("entity", EntityType.getKey(this.entity).toString());
             if (this.tag != null && !this.tag.isEmpty()) {
                 json.addProperty("tag", this.tag.toString());
@@ -111,25 +111,19 @@ public class IncubationBuilder implements RecipeBuilder {
         }
 
         @Override
-        public RecipeSerializer<?> getType() {
-            return this.serializer;
-        }
-
-        @Override
-        public ResourceLocation getId() {
+        public ResourceLocation id() {
             return this.id;
         }
 
-        @Nullable
         @Override
-        public JsonObject serializeAdvancement() {
-            return this.advancement.serializeToJson();
+        public RecipeSerializer<?> type() {
+            return this.serializer;
         }
 
-        @Nullable
+        @org.jetbrains.annotations.Nullable
         @Override
-        public ResourceLocation getAdvancementId() {
-            return this.advancementId;
+        public AdvancementHolder advancement() {
+            return this.advancement;
         }
     }
 }
