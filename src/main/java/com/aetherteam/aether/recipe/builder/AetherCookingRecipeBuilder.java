@@ -3,10 +3,9 @@ package com.aetherteam.aether.recipe.builder;
 import com.aetherteam.aether.recipe.AetherBookCategory;
 import com.aetherteam.aether.recipe.AetherRecipeSerializers;
 import com.google.gson.JsonObject;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementRewards;
-import net.minecraft.advancements.Criterion;
+import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -19,6 +18,9 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 
 import javax.annotation.Nullable;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * [CODE COPY] - {@link net.minecraft.data.recipes.SimpleCookingRecipeBuilder}.<br><br>
@@ -31,7 +33,7 @@ public class AetherCookingRecipeBuilder implements RecipeBuilder {
     private final Ingredient ingredient;
     private final float experience;
     private final int cookingTime;
-    private final Advancement.Builder advancement = Advancement.Builder.advancement();
+    private final Map<String, Criterion<?>> criteria = new LinkedHashMap();
     @Nullable
     private String group;
     private final RecipeSerializer<? extends AbstractCookingRecipe> serializer;
@@ -63,15 +65,18 @@ public class AetherCookingRecipeBuilder implements RecipeBuilder {
 
     @Override
     public AetherCookingRecipeBuilder unlockedBy(String criterionName, Criterion<?> criterionTrigger) {
-        this.advancement.addCriterion(criterionName, criterionTrigger);
+        this.criteria.put(criterionName, criterionTrigger);
         return this;
     }
 
     @Override
-    public void save(RecipeOutput finishedRecipeConsumer, ResourceLocation id) {
+    public void save(RecipeOutput recipeOutput, ResourceLocation id) {
         this.ensureValid(id);
-        this.advancement.parent(ROOT_RECIPE_ADVANCEMENT).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(RequirementsStrategy.OR);
-        finishedRecipeConsumer.accept(new AetherCookingRecipeBuilder.Result(id, this.group == null ? "" : this.group, this.bookCategory, this.ingredient, this.result, this.experience, this.cookingTime, this.advancement, id.withPrefix("recipes/" + this.category.getFolderName() + "/"), this.serializer));
+        Advancement.Builder advancement$builder = recipeOutput.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(AdvancementRequirements.Strategy.OR);
+        Objects.requireNonNull(advancement$builder);
+        this.criteria.forEach(advancement$builder::addCriterion);
+        recipeOutput.accept(new AetherCookingRecipeBuilder.Result(id, this.group == null ? "" : this.group, this.bookCategory, this.ingredient, this.result, this.experience, this.cookingTime, advancement$builder.build(id.withPrefix("recipes/" + this.category.getFolderName() + "/")), this.serializer));
+
     }
 
     private static AetherBookCategory determineRecipeCategory(RecipeSerializer<? extends AbstractCookingRecipe> serializer, RecipeCategory category) {
@@ -97,7 +102,7 @@ public class AetherCookingRecipeBuilder implements RecipeBuilder {
     }
 
     private void ensureValid(ResourceLocation id) {
-        if (this.advancement.getCriteria().isEmpty()) {
+        if (this.criteria.isEmpty()) {
             throw new IllegalStateException("No way of obtaining recipe " + id);
         }
     }
@@ -110,11 +115,10 @@ public class AetherCookingRecipeBuilder implements RecipeBuilder {
         private final Item result;
         private final float experience;
         private final int cookingTime;
-        private final Advancement.Builder advancement;
-        private final ResourceLocation advancementId;
+        private final AdvancementHolder advancement;
         private final RecipeSerializer<? extends AbstractCookingRecipe> serializer;
 
-        public Result(ResourceLocation id, String group, AetherBookCategory category, Ingredient ingredient, Item result, float experience, int cookingTime, Advancement.Builder advancement, ResourceLocation advancementId, RecipeSerializer<? extends AbstractCookingRecipe> serializer) {
+        public Result(ResourceLocation id, String group, AetherBookCategory category, Ingredient ingredient, Item result, float experience, int cookingTime, AdvancementHolder advancement, RecipeSerializer<? extends AbstractCookingRecipe> serializer) {
             this.id = id;
             this.group = group;
             this.category = category;
@@ -123,7 +127,6 @@ public class AetherCookingRecipeBuilder implements RecipeBuilder {
             this.experience = experience;
             this.cookingTime = cookingTime;
             this.advancement = advancement;
-            this.advancementId = advancementId;
             this.serializer = serializer;
         }
 
@@ -133,8 +136,8 @@ public class AetherCookingRecipeBuilder implements RecipeBuilder {
                 json.addProperty("group", this.group);
             }
             json.addProperty("category", this.category.getSerializedName());
-            json.add("ingredient", this.ingredient.toJson());
-            ResourceLocation itemLocation = ForgeRegistries.ITEMS.getKey(this.result);
+            json.add("ingredient", this.ingredient.toJson(false));
+            ResourceLocation itemLocation = BuiltInRegistries.ITEM.getKey(this.result);
             if (itemLocation != null) {
                 json.addProperty("result", itemLocation.toString());
             } else {
@@ -145,25 +148,19 @@ public class AetherCookingRecipeBuilder implements RecipeBuilder {
         }
 
         @Override
-        public RecipeSerializer<?> getType() {
+        public RecipeSerializer<?> type() {
             return this.serializer;
         }
 
+        @org.jetbrains.annotations.Nullable
         @Override
-        public ResourceLocation getId() {
+        public AdvancementHolder advancement() {
+            return this.advancement;
+        }
+
+        @Override
+        public ResourceLocation id() {
             return this.id;
-        }
-
-        @Nullable
-        @Override
-        public JsonObject serializeAdvancement() {
-            return this.advancement.serializeToJson();
-        }
-
-        @Nullable
-        @Override
-        public ResourceLocation getAdvancementId() {
-            return this.advancementId;
         }
     }
 }

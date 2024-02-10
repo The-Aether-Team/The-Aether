@@ -3,14 +3,15 @@ package com.aetherteam.aether.recipe.recipes.item;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.recipe.AetherRecipeSerializers;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
@@ -19,22 +20,19 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.common.crafting.CraftingHelper;
 
 import javax.annotation.Nullable;
 
 public class IncubationRecipe implements Recipe<Container> {
     protected final RecipeType<?> type;
-    protected final ResourceLocation id;
     protected final String group;
     protected final Ingredient ingredient;
     protected final EntityType<?> entity;
     protected final CompoundTag tag;
     protected final int incubationTime;
 
-    public IncubationRecipe(ResourceLocation id, String group, Ingredient ingredient, EntityType<?> entity, CompoundTag tag, int incubationTime) {
+    public IncubationRecipe(String group, Ingredient ingredient, EntityType<?> entity, CompoundTag tag, int incubationTime) {
         this.type = AetherRecipeTypes.INCUBATION.get();
-        this.id = id;
         this.group = group;
         this.ingredient = ingredient;
         this.entity = entity;
@@ -93,11 +91,6 @@ public class IncubationRecipe implements Recipe<Container> {
     }
 
     @Override
-    public ResourceLocation getId() {
-        return this.id;
-    }
-
-    @Override
     public ItemStack getToastSymbol() {
         return new ItemStack(AetherBlocks.INCUBATOR.get());
     }
@@ -113,22 +106,23 @@ public class IncubationRecipe implements Recipe<Container> {
     }
 
     public static class Serializer implements RecipeSerializer<IncubationRecipe> {
-        @Override
-        public IncubationRecipe fromJson(ResourceLocation recipeLocation, JsonObject jsonObject) {
-            String group = GsonHelper.getAsString(jsonObject, "group", "");
-            Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(jsonObject, "ingredient"));
-            EntityType<?> entityType = EntityType.byString(GsonHelper.getAsString(jsonObject, "entity")).orElseThrow(() -> new JsonSyntaxException("Entity type cannot be found"));
-            CompoundTag tag = null;
-            if (jsonObject.has("tag")) {
-                tag = CraftingHelper.getNBT(jsonObject.get("tag"));
-            }
-            int incubationTime = GsonHelper.getAsInt(jsonObject, "incubationtime", 2500);
-            return new IncubationRecipe(recipeLocation, group, ingredient, entityType, tag, incubationTime);
-        }
+        private static final Codec<IncubationRecipe> CODEC = RecordCodecBuilder.create((p_296927_) -> {
+            return p_296927_.group(ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter((p_300832_) -> {
+                return p_300832_.getGroup();
+            }), Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter((p_296923_) -> {
+                return p_296923_.ingredient;
+            }), BuiltInRegistries.ENTITY_TYPE.byNameCodec().fieldOf("entity").forGetter((p_296923_) -> {
+                return p_296923_.entity;
+            }), CompoundTag.CODEC.fieldOf("tag").orElse(null).forGetter((p_296923_) -> {
+                return p_296923_.tag;
+            }), Codec.INT.fieldOf("incubationtime").orElse(500).forGetter((p_296923_) -> {
+                return p_296923_.incubationTime;
+            })).apply(p_296927_, IncubationRecipe::new);
+        });
 
         @Nullable
         @Override
-        public IncubationRecipe fromNetwork(ResourceLocation recipeLocation, FriendlyByteBuf buffer) {
+        public IncubationRecipe fromNetwork(FriendlyByteBuf buffer) {
             String group = buffer.readUtf();
             Ingredient ingredient = Ingredient.fromNetwork(buffer);
             EntityType<?> entityType = EntityType.byString(buffer.readUtf()).orElseThrow(() -> new JsonSyntaxException("Entity type cannot be found"));
@@ -137,7 +131,12 @@ public class IncubationRecipe implements Recipe<Container> {
                 tag = buffer.readNbt();
             }
             int incubationTime = buffer.readVarInt();
-            return new IncubationRecipe(recipeLocation, group, ingredient, entityType, tag, incubationTime);
+            return new IncubationRecipe(group, ingredient, entityType, tag, incubationTime);
+        }
+
+        @Override
+        public Codec<IncubationRecipe> codec() {
+            return CODEC;
         }
 
         @Override

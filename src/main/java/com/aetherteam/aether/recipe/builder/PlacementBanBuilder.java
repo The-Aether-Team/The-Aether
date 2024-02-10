@@ -3,7 +3,8 @@ package com.aetherteam.aether.recipe.builder;
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import com.aetherteam.nitrogen.recipe.BlockStateRecipeUtil;
 import com.google.gson.JsonObject;
-import net.minecraft.advancements.CriterionTriggerInstance;
+import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.Criterion;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.resources.ResourceKey;
@@ -60,7 +61,7 @@ public abstract class PlacementBanBuilder implements RecipeBuilder {
     }
 
     @Override
-    public RecipeBuilder unlockedBy(String criterionName, CriterionTriggerInstance criterionTrigger) {
+    public RecipeBuilder unlockedBy(String s, Criterion<?> criterion) {
         return this;
     }
 
@@ -91,24 +92,18 @@ public abstract class PlacementBanBuilder implements RecipeBuilder {
         }
 
         @Override
-        public RecipeSerializer<?> getType() {
-            return this.serializer;
-        }
-
-        @Override
-        public ResourceLocation getId() {
+        public ResourceLocation id() {
             return this.id;
         }
 
-        @Nullable
         @Override
-        public JsonObject serializeAdvancement() {
-            return null;
+        public RecipeSerializer<?> type() {
+            return this.serializer;
         }
 
-        @Nullable
+        @org.jetbrains.annotations.Nullable
         @Override
-        public ResourceLocation getAdvancementId() {
+        public AdvancementHolder advancement() {
             return null;
         }
     }

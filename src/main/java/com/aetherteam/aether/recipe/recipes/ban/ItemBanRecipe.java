@@ -75,7 +75,7 @@ public class ItemBanRecipe extends AbstractPlacementBanRecipe<ItemStack, Ingredi
                 throw new JsonSyntaxException("Missing ingredient, expected to find an object or array");
             }
             JsonElement jsonElement = GsonHelper.isArrayNode(json, "ingredient") ? GsonHelper.getAsJsonArray(json, "ingredient") : GsonHelper.getAsJsonObject(json, "ingredient");
-            Ingredient ingredient = Ingredient.fromJson(jsonElement);
+            Ingredient ingredient = Ingredient.fromJson(jsonElement, true);
             return new ItemBanRecipe(id, recipe.getBiomeKey(), recipe.getBiomeTag(), recipe.getBypassBlock(), ingredient);
         }
 

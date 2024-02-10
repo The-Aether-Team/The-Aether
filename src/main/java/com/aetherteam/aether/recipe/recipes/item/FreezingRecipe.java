@@ -5,14 +5,13 @@ import com.aetherteam.aether.recipe.AetherBookCategory;
 import com.aetherteam.aether.recipe.AetherRecipeSerializers;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.serializer.AetherCookingSerializer;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
 public class FreezingRecipe extends AbstractAetherCookingRecipe {
-	public FreezingRecipe(ResourceLocation id, String group, AetherBookCategory category, Ingredient ingredient, ItemStack result, float experience, int freezingTime) {
-		super(AetherRecipeTypes.FREEZING.get(), id, group, category, ingredient, result, experience, freezingTime);
+    public FreezingRecipe(String group, AetherBookCategory category, Ingredient ingredient, ItemStack result, float experience, int freezingTime) {
+        super(AetherRecipeTypes.FREEZING.get(), group, category, ingredient, result, experience, freezingTime);
 	}
 
 	@Override

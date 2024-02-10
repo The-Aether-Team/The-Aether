@@ -4,7 +4,7 @@ import com.aetherteam.aether.recipe.recipes.ban.BlockBanRecipe;
 import com.aetherteam.aether.recipe.serializer.PlacementBanRecipeSerializer;
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import com.google.gson.JsonObject;
-import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -13,7 +13,6 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
-import java.util.function.Consumer;
 
 public class BlockBanBuilder extends PlacementBanBuilder {
     private final BlockStateIngredient ingredient;
@@ -44,8 +43,8 @@ public class BlockBanBuilder extends PlacementBanBuilder {
     }
 
     @Override
-    public void save(Consumer<FinishedRecipe> finishedRecipeConsumer, ResourceLocation id) {
-        finishedRecipeConsumer.accept(new BlockBanBuilder.Result(id, this.getBiomeKey(), this.getBiomeTag(), this.getBypassBlock(), this.ingredient, this.getSerializer()));
+    public void save(RecipeOutput recipeOutput, ResourceLocation resourceLocation) {
+        recipeOutput.accept(new BlockBanBuilder.Result(resourceLocation, this.getBiomeKey(), this.getBiomeTag(), this.getBypassBlock(), this.ingredient, this.getSerializer()));
     }
 
     public static class Result extends PlacementBanBuilder.Result {

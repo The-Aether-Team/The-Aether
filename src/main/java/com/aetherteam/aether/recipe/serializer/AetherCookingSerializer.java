@@ -2,19 +2,15 @@ package com.aetherteam.aether.recipe.serializer;
 
 import com.aetherteam.aether.recipe.AetherBookCategory;
 import com.aetherteam.aether.recipe.recipes.item.AbstractAetherCookingRecipe;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.SimpleCookingSerializer;
-
-import javax.annotation.Nullable;
+import net.neoforged.neoforge.common.crafting.CraftingHelper;
 
 /**
  * [CODE COPY] - {@link SimpleCookingSerializer}.<br><br>
@@ -23,50 +19,42 @@ import javax.annotation.Nullable;
 public class AetherCookingSerializer<T extends AbstractAetherCookingRecipe> implements RecipeSerializer<T> {
     private final int defaultCookingTime;
     private final AetherCookingSerializer.CookieBaker<T> factory;
+    private final Codec<T> codec;
 
     public AetherCookingSerializer(AetherCookingSerializer.CookieBaker<T> factory, int defaultCookingTime) {
         this.defaultCookingTime = defaultCookingTime;
         this.factory = factory;
+        this.codec = RecordCodecBuilder.create((p_300831_) -> {
+            return p_300831_.group(ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter((p_300832_) -> {
+                return p_300832_.getGroup();
+            }), AetherBookCategory.CODEC.fieldOf("category").forGetter((p_300828_) -> {
+                return p_300828_.aetherCategory();
+            }), Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter((p_300833_) -> {
+                return p_300833_.getIngredients().get(0);
+            }), CraftingHelper.smeltingResultCodec().fieldOf("result").forGetter((p_300827_) -> {
+                return p_300827_.getResult();
+            }), Codec.FLOAT.fieldOf("experience").orElse(0.0F).forGetter((p_300826_) -> {
+                return p_300826_.getExperience();
+            }), Codec.INT.fieldOf("cookingtime").orElse(defaultCookingTime).forGetter((p_300834_) -> {
+                return p_300834_.getCookingTime();
+            })).apply(p_300831_, factory::create);
+        });
     }
 
     @Override
-    public T fromJson(ResourceLocation id, JsonObject json) {
-        String group = GsonHelper.getAsString(json, "group", "");
-        AetherBookCategory aetherBookCategory = AetherBookCategory.CODEC.byName(GsonHelper.getAsString(json, "category", null), AetherBookCategory.UNKNOWN);
-        JsonElement ingredientJson = GsonHelper.isArrayNode(json, "ingredient") ? GsonHelper.getAsJsonArray(json, "ingredient") : GsonHelper.getAsJsonObject(json, "ingredient");
-        Ingredient ingredient = Ingredient.fromJson(ingredientJson);
-
-        ItemStack result;
-        if (!json.has("result")) {
-            throw new JsonSyntaxException("Missing result, expected to find a string or object");
-        }
-        if (json.get("result").isJsonObject()) {
-            result = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
-        } else {
-            String resultString = GsonHelper.getAsString(json, "result");
-            ResourceLocation resultLocation = new ResourceLocation(resultString);
-            result = new ItemStack(ForgeRegistries.ITEMS.getValue(resultLocation));
-            if (result.isEmpty()) {
-                throw new IllegalStateException("Item: " + resultString + " does not exist");
-            }
-        }
-
-        float experience = GsonHelper.getAsFloat(json, "experience", 0.0F);
-        int cookingTime = GsonHelper.getAsInt(json, "cookingtime", this.defaultCookingTime);
-
-        return this.factory.create(id, group, aetherBookCategory, ingredient, result, experience, cookingTime);
+    public Codec<T> codec() {
+        return this.codec;
     }
 
-    @Nullable
     @Override
-    public T fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
-        String group = buffer.readUtf();
-        AetherBookCategory aetherBookCategory = buffer.readEnum(AetherBookCategory.class);
-        Ingredient ingredient = Ingredient.fromNetwork(buffer);
-        ItemStack result = buffer.readItem();
-        float experience = buffer.readFloat();
-        int cookingTime = buffer.readVarInt();
-        return this.factory.create(id, group, aetherBookCategory, ingredient, result, experience, cookingTime);
+    public T fromNetwork(FriendlyByteBuf friendlyByteBuf) {
+        String group = friendlyByteBuf.readUtf();
+        AetherBookCategory aetherBookCategory = friendlyByteBuf.readEnum(AetherBookCategory.class);
+        Ingredient ingredient = Ingredient.fromNetwork(friendlyByteBuf);
+        ItemStack result = friendlyByteBuf.readItem();
+        float experience = friendlyByteBuf.readFloat();
+        int cookingTime = friendlyByteBuf.readVarInt();
+        return this.factory.create(group, aetherBookCategory, ingredient, result, experience, cookingTime);
     }
 
     @Override
@@ -80,6 +68,6 @@ public class AetherCookingSerializer<T extends AbstractAetherCookingRecipe> impl
     }
 
     public interface CookieBaker<T extends AbstractAetherCookingRecipe> {
-        T create(ResourceLocation id, String group, AetherBookCategory category, Ingredient ingredient, ItemStack result, float experience, int cookingTime);
+        T create(String group, AetherBookCategory category, Ingredient ingredient, ItemStack result, float experience, int cookingTime);
     }
 }

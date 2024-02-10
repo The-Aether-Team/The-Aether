@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 
 public class AmbrosiumRecipe extends AbstractBlockStateRecipe implements MatchEventRecipe {
     public AmbrosiumRecipe(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result, @Nullable CommandFunction.CacheableFunction function) {
-        super(AetherRecipeTypes.AMBROSIUM_ENCHANTING.get(), id, ingredient, result, function);
+        super(AetherRecipeTypes.AMBROSIUM_ENCHANTING.get(), ingredient, result, function);
     }
 
     @Override

@@ -4,11 +4,11 @@ import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.recipe.AetherBookCategory;
 import com.aetherteam.aether.recipe.AetherRecipeSerializers;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -20,8 +20,8 @@ import javax.annotation.Nullable;
 public class AltarRepairRecipe extends AbstractAetherCookingRecipe {
     public final Ingredient ingredient;
 
-    public AltarRepairRecipe(ResourceLocation id, String group, AetherBookCategory category, Ingredient ingredient, int repairTime) {
-        super(AetherRecipeTypes.ENCHANTING.get(), id, group, category, ingredient, ingredient.getItems()[0], 0.0F, repairTime);
+    public AltarRepairRecipe(String group, AetherBookCategory category, Ingredient ingredient, int repairTime) {
+        super(AetherRecipeTypes.ENCHANTING.get(), group, category, ingredient, ingredient.getItems()[0], 0.0F, repairTime);
         this.ingredient = ingredient;
     }
 
@@ -58,23 +58,32 @@ public class AltarRepairRecipe extends AbstractAetherCookingRecipe {
     }
 
     public static class Serializer implements RecipeSerializer<AltarRepairRecipe> {
+        private static final Codec<AltarRepairRecipe> CODEC = RecordCodecBuilder.create((p_296927_) -> {
+            return p_296927_.group(ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter((p_300832_) -> {
+                return p_300832_.getGroup();
+            }), AetherBookCategory.CODEC.fieldOf("category").forGetter((p_296920_) -> {
+                return AetherBookCategory.CODEC.byName(p_296920_.group);
+            }), Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter((p_296923_) -> {
+                return p_296923_.ingredient;
+            }), Codec.INT.fieldOf("repairTime").orElse(500).forGetter((p_296923_) -> {
+                return p_296923_.cookingTime;
+            })).apply(p_296927_, AltarRepairRecipe::new);
+        });
+
         @Override
-        public AltarRepairRecipe fromJson(ResourceLocation id, JsonObject json) {
-            String group = GsonHelper.getAsString(json, "group", "");
-            AetherBookCategory aetherBookCategory = AetherBookCategory.CODEC.byName(GsonHelper.getAsString(json, "category", null), AetherBookCategory.UNKNOWN);
-            Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "ingredient"));
-            int cookingTime = GsonHelper.getAsInt(json, "repairTime", 500);
-            return new AltarRepairRecipe(id, group, aetherBookCategory, ingredient, cookingTime);
+        public Codec<AltarRepairRecipe> codec() {
+            return CODEC;
         }
 
         @Nullable
         @Override
-        public AltarRepairRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
+        public AltarRepairRecipe fromNetwork(FriendlyByteBuf buffer) {
             String group = buffer.readUtf();
+
             AetherBookCategory aetherBookCategory = buffer.readEnum(AetherBookCategory.class);
             Ingredient ingredient = Ingredient.fromNetwork(buffer);
             int cookingTime = buffer.readVarInt();
-            return new AltarRepairRecipe(id, group, aetherBookCategory, ingredient, cookingTime);
+            return new AltarRepairRecipe(group, aetherBookCategory, ingredient, cookingTime);
         }
 
         @Override

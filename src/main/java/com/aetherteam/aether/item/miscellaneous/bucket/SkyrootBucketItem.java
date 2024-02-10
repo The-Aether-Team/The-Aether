@@ -71,7 +71,7 @@ public class SkyrootBucketItem extends BucketItem {
                     BlockState blockState = level.getBlockState(blockPos);
                     FluidState fluidState = level.getFluidState(blockPos);
                     if (blockState.getBlock() instanceof BucketPickup bucketPickup && (blockState.is(AetherTags.Blocks.ALLOWED_BUCKET_PICKUP) || fluidState.is(AetherTags.Fluids.ALLOWED_BUCKET_PICKUP))) {
-                        ItemStack bucketStack = bucketPickup.pickupBlock(level, blockPos, blockState);
+                        ItemStack bucketStack = bucketPickup.pickupBlock(player, level, blockPos, blockState);
                         bucketStack = swapBucketType(bucketStack);
                         if (!bucketStack.isEmpty()) {
                             player.awardStat(Stats.ITEM_USED.get(this));
@@ -87,7 +87,7 @@ public class SkyrootBucketItem extends BucketItem {
                     return InteractionResultHolder.fail(heldStack);
                 } else {
                     BlockState blockState = level.getBlockState(blockPos);
-                    BlockPos newPos = canBlockContainFluid(level, blockPos, blockState) ? blockPos : relativePos;
+                    BlockPos newPos = canBlockContainFluid(player, level, blockPos, blockState) ? blockPos : relativePos;
                     if (this.emptyContents(player, level, newPos, blockhitResult, heldStack)) {
                         this.checkExtraContent(player, level, heldStack, newPos);
                         if (player instanceof ServerPlayer serverPlayer) {
@@ -146,9 +146,9 @@ public class SkyrootBucketItem extends BucketItem {
     }
 
     /**
-     *[CODE COPY] - {@link BucketItem#canBlockContainFluid(Level, BlockPos, BlockState)}.
+     *[CODE COPY] - {@link BucketItem#canBlockContainFluid(Player, Level, BlockPos, BlockState)}.
      */
-    protected boolean canBlockContainFluid(Level level, BlockPos pos, BlockState state) {
-        return state.getBlock() instanceof LiquidBlockContainer liquidBlockContainer && liquidBlockContainer.canPlaceLiquid(level, pos, state, this.getFluid());
+    protected boolean canBlockContainFluid(Player player, Level level, BlockPos pos, BlockState state) {
+        return state.getBlock() instanceof LiquidBlockContainer liquidBlockContainer && liquidBlockContainer.canPlaceLiquid(player, level, pos, state, this.getFluid());
     }
 }

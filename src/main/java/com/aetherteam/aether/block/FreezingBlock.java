@@ -11,7 +11,7 @@ import net.minecraft.commands.CommandFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -91,15 +91,14 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
      */
     static void cacheRecipes(Level level) {
         if (FreezingBlock.cachedBlocks.isEmpty()) {
-            for (Recipe<?> recipe : level.getRecipeManager().getAllRecipesFor(AetherRecipeTypes.ICESTONE_FREEZABLE.get())) {
-                if (recipe instanceof IcestoneFreezableRecipe freezableRecipe) {
+            for (RecipeHolder<IcestoneFreezableRecipe> recipe : level.getRecipeManager().getAllRecipesFor(AetherRecipeTypes.ICESTONE_FREEZABLE.get())) {
+                IcestoneFreezableRecipe freezableRecipe = recipe.value();
                     BlockPropertyPair[] pairs = freezableRecipe.getIngredient().getPairs();
                     if (pairs != null) {
                         Arrays.stream(pairs).forEach(pair -> cachedBlocks.put(pair.block(), pair, freezableRecipe));
                     }
                     cachedResults.add(freezableRecipe.getResult().block());
                 }
-            }
         }
     }
 
