@@ -38,6 +38,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -377,7 +378,7 @@ public class MoaSkinsScreen extends Screen {
     }
 
     /**
-     * [CODE COPY] - {@link net.minecraft.client.gui.screens.inventory.InventoryScreen#renderEntityInInventoryFollowsAngle(GuiGraphics, int, int, int, float, float, LivingEntity)}.<br><br>
+     * [CODE COPY] - {@link net.minecraft.client.gui.screens.inventory.InventoryScreen#renderEntityInInventoryFollowsAngle(GuiGraphics, int, int, int, int, int, float, float, float, LivingEntity)} (GuiGraphics, int, int, int, float, float, LivingEntity)}.<br><br>
      * Code Modified so that the head rotation follows the body rotation and doesn't rotate separately.<br><br>
      */
     public static void renderRotatingEntity(GuiGraphics guiGraphics, int posX, int posY, int scale, float angleXComponent, float angleYComponent, LivingEntity livingEntity) {
@@ -392,7 +393,9 @@ public class MoaSkinsScreen extends Screen {
         livingEntity.setXRot(-angleYComponent);
         livingEntity.setYHeadRot(livingEntity.getYRot());
         livingEntity.yHeadRotO = livingEntity.getYRot();
-        InventoryScreen.renderEntityInInventory(guiGraphics, posX, posY, scale, xQuaternion, zQuaternion, livingEntity);
+        Vector3f vector3f = new Vector3f(0.0F, livingEntity.getBbHeight() / 2.0F + posY, 0.0F);
+
+        InventoryScreen.renderEntityInInventory(guiGraphics, posX, posY, scale, vector3f, xQuaternion, zQuaternion, livingEntity);
         livingEntity.setYBodyRot(yBodyRot);
         livingEntity.setYRot(yRot);
         livingEntity.setXRot(xRot);
@@ -442,21 +445,24 @@ public class MoaSkinsScreen extends Screen {
 
     /**
      * Handles moving the scrollbar to snapping points when using the mouse's scroll wheel.
-     * @param mouseX The {@link Integer} for the mouse's x-position.
-     * @param mouseY The {@link Integer} for the mouse's y-position.
-     * @param delta The {@link Double} for the change in scroll direction.
+     * @param mouseX The {@link Double} for the mouse's x-position.
+     * @param mouseY The {@link Double} for the mouse's y-position.
+     * @param pScrollX The {@link Double} for the mouse's x-scroll.
+     * @param pScrollY The {@link Double} for the mouse's y-scroll.
      * @return Whether the mouse can scroll, as a {@link Boolean}.
      */
+
+
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+    public boolean mouseScrolled(double mouseX, double mouseY, double pScrollX, double pScrollY) {
         int i = 0;
         int index = this.getSlotOffset();
         if (index != -1) {
             i = index;
         }
-        if (delta < 0) { // Scroll to the left.
+        if (pScrollY < 0) { // Scroll to the left.
             i = Math.min(i + 1, this.snapPoints.size() - 1);
-        } else if (delta > 0) { // Scroll to the right.
+        } else if (pScrollY > 0) { // Scroll to the right.
             i = Math.max(i - 1, 0);
         }
         this.scrollX = this.snapPoints.get(i); // Set the scrollbar offset to a specified snapping point position.

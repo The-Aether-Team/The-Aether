@@ -47,6 +47,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
@@ -450,6 +451,10 @@ public class Aether {
         this.addCompost(0.65F, AetherBlocks.WHITE_FLOWER.get());
         this.addCompost(0.65F, AetherBlocks.PURPLE_FLOWER.get());
         this.addCompost(0.65F, AetherItems.WHITE_APPLE.get());
+    }
+
+    public static ResourceLocation prefix(String id) {
+        return new ResourceLocation(Aether.MODID, id);
     }
 
     /**

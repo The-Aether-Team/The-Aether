@@ -31,9 +31,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.neoforge.client.event.RegisterGuiOverlaysEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.event.RegisterGuiOverlaysEvent;
 import net.neoforged.neoforge.client.gui.overlay.ExtendedGui;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -47,7 +47,7 @@ public class AetherOverlays {
 
     @SubscribeEvent
     public static void registerOverlays(RegisterGuiOverlaysEvent event) {
-        event.registerAboveAll("aether_portal_overlay", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll(Aether.prefix("aether_portal_overlay"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -55,7 +55,7 @@ public class AetherOverlays {
                 AetherPlayer.get(player).ifPresent(handler -> renderAetherPortalOverlay(pStack, minecraft, window, handler, partialTicks));
             }
         });
-        event.registerAboveAll("inebriation_vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll(Aether.prefix("inebriation_vignette"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -63,7 +63,7 @@ public class AetherOverlays {
                 AetherPlayer.get(player).ifPresent(handler -> renderInebriationOverlay(pStack, minecraft, window, handler));
             }
         });
-        event.registerAboveAll("remedy_vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll(Aether.prefix("remedy_vignette"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -71,7 +71,7 @@ public class AetherOverlays {
                 AetherPlayer.get(player).ifPresent(handler -> renderRemedyOverlay(pStack, minecraft, window, handler));
             }
         });
-        event.registerAboveAll("shield_of_repulsion_vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll(Aether.prefix("shield_of_repulsion_vignette"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -79,7 +79,7 @@ public class AetherOverlays {
                 AetherPlayer.get(player).ifPresent(handler -> renderRepulsionOverlay(pStack, minecraft, window, handler));
             }
         });
-        event.registerAboveAll("hammer_cooldown", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll(Aether.prefix("hammer_cooldown"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -87,7 +87,7 @@ public class AetherOverlays {
                 renderHammerCooldownOverlay(pStack, minecraft, window, player);
             }
         });
-        event.registerAboveAll("moa_jumps", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll(Aether.prefix("moa_jumps"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -95,7 +95,7 @@ public class AetherOverlays {
                 renderMoaJumps(pStack, window, player);
             }
         });
-        event.registerAbove(new ResourceLocation("player_health"), "silver_life_shard_hearts", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAbove(new ResourceLocation("player_health"), Aether.prefix("silver_life_shard_hearts"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             LocalPlayer player = minecraft.player;
             if (player != null) {
@@ -103,6 +103,7 @@ public class AetherOverlays {
             }
         });
     }
+
 
     /**
      * [CODE COPY] - {@link Gui#renderPortalOverlay(GuiGraphics, float)}.<br><br>
@@ -342,14 +343,27 @@ public class AetherOverlays {
             if (currentHeart + (maxDefaultHearts > 10 ? overallHearts - 10 : maxDefaultHearts) < overallHearts && currentHeart + Math.min(maxDefaultHearts, 10) - (tooManyHearts ? overallHearts : 0) == regen) {
                 y -= 2;
             }
+            boolean isNormal = heartType == Gui.HeartType.NORMAL;
             int selectedContainer = currentHeart * 2;
             if (highlight && selectedContainer < displayLifeShardHealth) {
                 boolean halfHeart = selectedContainer + 1 == displayLifeShardHealth;
-                guiGraphics.blit(TEXTURE_LIFE_SHARD_HEARTS, x, y, heartType.getX(halfHeart, false), 0, 9, 9);
+                if (isNormal) {
+                    int offset = 9 * 4;
+                    guiGraphics.blit(TEXTURE_LIFE_SHARD_HEARTS, x, y, halfHeart ? offset + 9 : offset, 0, 9, 9);
+                } else {
+                    guiGraphics.blitSprite(heartType.getSprite(true, halfHeart, true), x, y, 9, 9);
+                    ;
+                }
             }
             if (selectedContainer < lifeShardHealth) {
                 boolean halfHeart = selectedContainer + 1 == lifeShardHealth;
-                guiGraphics.blit(TEXTURE_LIFE_SHARD_HEARTS, x, y, heartType.getX(halfHeart, false), 0, 9, 9);
+                if (isNormal) {
+                    int offset = 9 * 3;
+                    guiGraphics.blit(TEXTURE_LIFE_SHARD_HEARTS, x, y, halfHeart ? offset + 9 : offset, 0, 9, 9);
+                } else {
+                    guiGraphics.blitSprite(heartType.getSprite(true, halfHeart, false), x, y, 9, 9);
+                    ;
+                }
             }
         }
     }
