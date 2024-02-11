@@ -1,6 +1,7 @@
 package com.aetherteam.aether;
 
 import com.aetherteam.aether.advancement.AetherAdvancementTriggers;
+import com.aetherteam.aether.api.AetherAdvancementSoundOverrides;
 import com.aetherteam.aether.api.AetherMenus;
 import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.block.AetherBlocks;
@@ -112,7 +113,8 @@ public class Aether {
                 AetherSoundEvents.SOUNDS,
                 AetherGameEvents.GAME_EVENTS,
                 AetherMoaTypes.MOA_TYPES,
-                AetherCreativeTabs.CREATIVE_MODE_TABS
+                AetherCreativeTabs.CREATIVE_MODE_TABS,
+                AetherAdvancementSoundOverrides.ADVANCEMENT_SOUND_OVERRIDES
         };
 
         for (DeferredRegister<?> register : registers) {

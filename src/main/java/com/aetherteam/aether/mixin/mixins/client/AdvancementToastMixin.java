@@ -1,6 +1,8 @@
 package com.aetherteam.aether.mixin.mixins.client;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.api.AetherAdvancementSoundOverrides;
+import com.aetherteam.aether.api.registers.AdvancementSoundOverride;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.client.gui.GuiGraphics;
@@ -9,12 +11,17 @@ import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.item.EggItem;
+import net.minecraftforge.registries.RegistryObject;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.function.Supplier;
 
 @Mixin(AdvancementToast.class)
 public class AdvancementToastMixin {
@@ -36,11 +43,14 @@ public class AdvancementToastMixin {
         if (!this.playedSound) { // Checks if a sound hasn't been played yet.
             if (this.checkRoot()) {
                 this.playedSound = true;
-                switch (this.advancement.getId().getPath()) {
-                    case "bronze_dungeon" -> toastComponent.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(AetherSoundEvents.UI_TOAST_AETHER_BRONZE.get(), 1.0F, 1.0F));
-                    case "silver_dungeon" -> toastComponent.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(AetherSoundEvents.UI_TOAST_AETHER_SILVER.get(), 1.0F, 1.0F));
-                    default -> toastComponent.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(AetherSoundEvents.UI_TOAST_AETHER_GENERAL.get(), 1.0F, 1.0F));
+                SoundEvent sound = AetherSoundEvents.UI_TOAST_AETHER_GENERAL.get();
+                // Plays whatever sound matches based on the overrides
+                for (RegistryObject<AdvancementSoundOverride> override : AetherAdvancementSoundOverrides.ADVANCEMENT_SOUND_OVERRIDES.getEntries()) {
+                    if (override.get().matches(this.advancement.getId().getPath())) {
+                        sound = override.get().getSound();
+                    }
                 }
+                toastComponent.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(sound, 1.0F, 1.0F));
             }
         }
     }
