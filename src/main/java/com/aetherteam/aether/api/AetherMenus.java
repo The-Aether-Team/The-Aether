@@ -9,6 +9,7 @@ import com.aetherteam.cumulus.Cumulus;
 import com.aetherteam.cumulus.CumulusConfig;
 import com.aetherteam.cumulus.api.Menu;
 import com.aetherteam.cumulus.api.Menus;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -32,7 +33,11 @@ public class AetherMenus {
     private static final ResourceLocation THE_AETHER_DARK_BACKGROUND = new ResourceLocation(Aether.MODID, "textures/gui/title/light_sentry_background.png");
     private static final ResourceLocation THE_AETHER_HEADER_SEPARATOR = new ResourceLocation(Aether.MODID, "textures/gui/title/header_separator.png");
     private static final ResourceLocation THE_AETHER_FOOTER_SEPARATOR = new ResourceLocation(Aether.MODID, "textures/gui/title/footer_separator.png");
-    private static final ResourceLocation THE_AETHER_TAB_BUTTON = new ResourceLocation(Aether.MODID, "textures/gui/title/tab_button.png");
+    private static final WidgetSprites THE_AETHER_TAB_BUTTON = new WidgetSprites(
+            new ResourceLocation(Aether.MODID, "gui/title/tab_selected"),
+            new ResourceLocation(Aether.MODID, "gui/title/tab"),
+            new ResourceLocation(Aether.MODID, "gui/title/tab_selected_highlighted"),
+            new ResourceLocation(Aether.MODID, "gui/title/tab_highlighted"));
     private static final Menu.Background THE_AETHER_BACKGROUND = new Menu.Background()
             .regularBackground(THE_AETHER_REGULAR_BACKGROUND)
             .darkBackground(THE_AETHER_DARK_BACKGROUND)
