@@ -1,9 +1,8 @@
 package com.aetherteam.aether.loot.functions;
 
 import com.aetherteam.aether.entity.block.TntPresent;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -16,8 +15,12 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.List;
+
 public class SpawnTNT extends LootItemConditionalFunction {
-    protected SpawnTNT(LootItemCondition[] conditions) {
+    public static final Codec<SpawnTNT> CODEC = RecordCodecBuilder.create(instance -> commonFields(instance).apply(instance, SpawnTNT::new));
+
+    protected SpawnTNT(List<LootItemCondition> conditions) {
         super(conditions);
     }
 
@@ -46,17 +49,5 @@ public class SpawnTNT extends LootItemConditionalFunction {
     @Override
     public LootItemFunctionType getType() {
         return AetherLootFunctions.SPAWN_TNT.get();
-    }
-
-    public static class Serializer extends LootItemConditionalFunction.Serializer<SpawnTNT> {
-        @Override
-        public void serialize(JsonObject json, SpawnTNT instance, JsonSerializationContext context) {
-            super.serialize(json, instance, context);
-        }
-
-        @Override
-        public SpawnTNT deserialize(JsonObject json, JsonDeserializationContext context, LootItemCondition[] conditions) {
-            return new SpawnTNT(conditions);
-        }
     }
 }

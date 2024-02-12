@@ -3,11 +3,11 @@ package com.aetherteam.aether.client.gui.screen.menu;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.client.gui.TitleScreenModUpdateIndicator;
-import net.neoforged.neoforge.client.loading.ClientModLoader;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.VersionChecker;
 import net.neoforged.fml.loading.FMLConfig;
+import net.neoforged.neoforge.client.gui.TitleScreenModUpdateIndicator;
+import net.neoforged.neoforge.client.loading.ClientModLoader;
 import net.neoforged.neoforge.common.I18nExtension;
 import net.neoforged.neoforge.internal.versions.neoforge.NeoForgeVersion;
 

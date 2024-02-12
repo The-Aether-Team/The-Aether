@@ -3,9 +3,9 @@ package com.aetherteam.aether.event.listeners.capability;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.event.hooks.CapabilityHooks;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
 /**
  * Listener for Forge events to handle syncing the data for {@link com.aetherteam.aether.capability.time.AetherTimeCapability}.

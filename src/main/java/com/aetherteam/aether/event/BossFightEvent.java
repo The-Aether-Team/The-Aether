@@ -3,8 +3,8 @@ package com.aetherteam.aether.event;
 import com.aetherteam.nitrogen.entity.BossRoomTracker;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.neoforged.neoforge.event.entity.EntityEvent;
 import net.neoforged.fml.LogicalSide;
+import net.neoforged.neoforge.event.entity.EntityEvent;
 
 /**
  * BossFightEvent is fired when an event for a boss fight occurs.<br>

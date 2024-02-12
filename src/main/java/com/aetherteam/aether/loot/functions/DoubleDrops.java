@@ -1,9 +1,8 @@
 package com.aetherteam.aether.loot.functions;
 
 import com.aetherteam.aether.item.tools.abilities.SkyrootTool;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -12,8 +11,12 @@ import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 
+import java.util.List;
+
 public class DoubleDrops extends LootItemConditionalFunction {
-	protected DoubleDrops(LootItemCondition[] conditions) {
+	public static final Codec<DoubleDrops> CODEC = RecordCodecBuilder.create(instance -> commonFields(instance).apply(instance, DoubleDrops::new));
+
+	protected DoubleDrops(List<LootItemCondition> conditions) {
 		super(conditions);
 	}
 
@@ -42,16 +45,4 @@ public class DoubleDrops extends LootItemConditionalFunction {
     public LootItemFunctionType getType() {
         return AetherLootFunctions.DOUBLE_DROPS.get();
     }
-
-    public static class Serializer extends LootItemConditionalFunction.Serializer<DoubleDrops> {
-		@Override
-		public void serialize(JsonObject json, DoubleDrops instance, JsonSerializationContext context) {
-			super.serialize(json, instance, context);
-		}
-
-		@Override
-		public DoubleDrops deserialize(JsonObject json, JsonDeserializationContext context, LootItemCondition[] conditions) {
-			return new DoubleDrops(conditions);
-		}
-	}
 }

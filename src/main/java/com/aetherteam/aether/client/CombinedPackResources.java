@@ -2,7 +2,6 @@ package com.aetherteam.aether.client;
 
 import net.minecraft.server.packs.CompositePackResources;
 import net.minecraft.server.packs.PackResources;
-import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.resources.IoSupplier;

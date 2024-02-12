@@ -125,7 +125,7 @@ public class PerkSavedData extends SavedData {
      * @return The {@link PerkSavedData} corresponding to the data file.
      */
     public static PerkSavedData compute(DimensionDataStorage dataStorage) {
-       return dataStorage.computeIfAbsent(PerkSavedData::load, PerkSavedData::create, FILE_NAME);
+       return dataStorage.computeIfAbsent(new SavedData.Factory<>(PerkSavedData::create, PerkSavedData::load, null), FILE_NAME);
     }
 
     /**

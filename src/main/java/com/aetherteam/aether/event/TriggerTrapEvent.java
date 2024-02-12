@@ -5,8 +5,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.ICancellableEvent;
-import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.fml.LogicalSide;
+import net.neoforged.neoforge.event.level.BlockEvent;
 
 /**
  * TriggerTrapEvent is fired when a player steps on a trapped block.

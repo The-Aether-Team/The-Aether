@@ -1,8 +1,7 @@
 package com.aetherteam.aether.loot.functions;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.item.ItemStack;
@@ -13,8 +12,12 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.List;
+
 public class SpawnXP extends LootItemConditionalFunction {
-    protected SpawnXP(LootItemCondition[] conditions) {
+    public static final Codec<SpawnXP> CODEC = RecordCodecBuilder.create(instance -> commonFields(instance).apply(instance, SpawnXP::new));
+
+    protected SpawnXP(List<LootItemCondition> conditions) {
         super(conditions);
     }
 
@@ -46,17 +49,5 @@ public class SpawnXP extends LootItemConditionalFunction {
     @Override
     public LootItemFunctionType getType() {
         return AetherLootFunctions.SPAWN_XP.get();
-    }
-
-    public static class Serializer extends LootItemConditionalFunction.Serializer<SpawnXP> {
-        @Override
-        public void serialize(JsonObject json, SpawnXP instance, JsonSerializationContext context) {
-            super.serialize(json, instance, context);
-        }
-
-        @Override
-        public SpawnXP deserialize(JsonObject json, JsonDeserializationContext context, LootItemCondition[] conditions) {
-            return new SpawnXP(conditions);
-        }
     }
 }

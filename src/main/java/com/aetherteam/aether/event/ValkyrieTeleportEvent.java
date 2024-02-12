@@ -2,8 +2,8 @@ package com.aetherteam.aether.event;
 
 import net.minecraft.world.entity.Entity;
 import net.neoforged.bus.api.ICancellableEvent;
-import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
 import net.neoforged.fml.LogicalSide;
+import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
 
 /**
  * ValkyrieTeleportEvent is fired before a Valkyrie teleports.
