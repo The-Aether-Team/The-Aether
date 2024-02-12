@@ -68,25 +68,14 @@ public class ItemBanRecipe extends AbstractPlacementBanRecipe<ItemStack, Ingredi
             super(ItemBanRecipe::new);
         }
 
-        @Override
-        public ItemBanRecipe fromJson(ResourceLocation id, JsonObject json) {
-            ItemBanRecipe recipe = super.fromJson(id, json);
-            if (!json.has("ingredient")) {
-                throw new JsonSyntaxException("Missing ingredient, expected to find an object or array");
-            }
-            JsonElement jsonElement = GsonHelper.isArrayNode(json, "ingredient") ? GsonHelper.getAsJsonArray(json, "ingredient") : GsonHelper.getAsJsonObject(json, "ingredient");
-            Ingredient ingredient = Ingredient.fromJson(jsonElement, true);
-            return new ItemBanRecipe(id, recipe.getBiomeKey(), recipe.getBiomeTag(), recipe.getBypassBlock(), ingredient);
-        }
-
         @Nullable
         @Override
-        public ItemBanRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
+        public ItemBanRecipe fromNetwork(FriendlyByteBuf buffer) {
             ResourceKey<Biome> biomeKey = BlockStateRecipeUtil.readBiomeKey(buffer);
             TagKey<Biome> biomeTag = BlockStateRecipeUtil.readBiomeTag(buffer);
             BlockStateIngredient bypassBlock = BlockStateIngredient.fromNetwork(buffer);
             Ingredient ingredient = Ingredient.fromNetwork(buffer);
-            return new ItemBanRecipe(id, biomeKey, biomeTag, bypassBlock, ingredient);
+            return new ItemBanRecipe(biomeKey, biomeTag, bypassBlock, ingredient);
         }
 
         @Override

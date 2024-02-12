@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 
 public class AmbrosiumRecipe extends AbstractBlockStateRecipe implements MatchEventRecipe {
-    public AmbrosiumRecipe(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result, @Nullable CommandFunction.CacheableFunction function) {
+    public AmbrosiumRecipe(BlockStateIngredient ingredient, BlockPropertyPair result, String function) {
         super(AetherRecipeTypes.AMBROSIUM_ENCHANTING.get(), ingredient, result, function);
     }
 
