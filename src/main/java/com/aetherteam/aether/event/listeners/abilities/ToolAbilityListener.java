@@ -115,7 +115,7 @@ public class ToolAbilityListener {
      * Cancels the given event if the targeted entity is too far away.
      * @see AbilityHooks.ToolHooks#entityTooFar(Entity, Player, InteractionHand)
      */
-    private static void checkEntityTooFar(PlayerEvent event, Entity target, Player player, InteractionHand hand) {
+    private static void checkEntityTooFar(PlayerInteractEvent event, Entity target, Player player, InteractionHand hand) {
         if (!event.isCanceled() && AbilityHooks.ToolHooks.entityTooFar(target, player, hand)) {
             event.setCanceled(true);
         }
@@ -125,7 +125,7 @@ public class ToolAbilityListener {
      * Cancels the given event if the targeted block is too far away.
      * @see AbilityHooks.ToolHooks#blockTooFar(Player, InteractionHand)
      */
-    private static void checkBlockTooFar(PlayerEvent event, Player player, InteractionHand hand) {
+    private static void checkBlockTooFar(PlayerInteractEvent event, Player player, InteractionHand hand) {
         if (!event.isCanceled() && AbilityHooks.ToolHooks.blockTooFar(player, hand)) {
             event.setCanceled(true);
         }

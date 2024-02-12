@@ -48,7 +48,7 @@ public class SurfaceRuleProcessor extends StructureProcessor {
             }
             if (worldGenLevel.getChunkSource() instanceof ServerChunkCache serverChunkCache) {
                 if (serverChunkCache.getGenerator() instanceof NoiseBasedChunkGenerator noiseBasedChunkGenerator) {
-                    NoiseGeneratorSettings settingsHolder = noiseBasedChunkGenerator.generatorSettings().get();
+                    NoiseGeneratorSettings settingsHolder = noiseBasedChunkGenerator.generatorSettings().value();
                     SurfaceRules.RuleSource surfaceRule = settingsHolder.surfaceRule();
                     ChunkAccess chunkAccess = worldGenLevel.getChunk(modifiedBlockInfo.pos());
                     NoiseChunk noisechunk = ((ChunkAccessAccessor) chunkAccess).aether$getNoiseChunk();

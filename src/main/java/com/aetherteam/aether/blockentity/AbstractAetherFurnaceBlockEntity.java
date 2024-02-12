@@ -9,10 +9,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.util.Mth;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.AbstractCookingRecipe;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
@@ -50,7 +47,7 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
         boolean flag2 = !abstractFurnaceBlockEntityAccessor.aether$getItems().get(0).isEmpty();
         boolean flag3 = !itemstack.isEmpty();
         if (abstractFurnaceBlockEntityAccessor.callIsLit() || flag3 && flag2) {
-            Recipe<?> recipe;
+            RecipeHolder<? extends AbstractCookingRecipe> recipe;
             if (flag2) {
                 recipe = abstractFurnaceBlockEntityAccessor.aether$getQuickCheck().getRecipeFor(blockEntity, level).orElse(null);
             } else {
@@ -117,11 +114,11 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
      * @return A {@link Boolean} for whether the item successfully burnt.
      */
     @SuppressWarnings("unchecked")
-    private boolean burn(RegistryAccess registryAccess, @Nullable Recipe<?> recipe, NonNullList<ItemStack> stacks, int stackSize) {
+    private boolean burn(RegistryAccess registryAccess, @Nullable RecipeHolder<?> recipe, NonNullList<ItemStack> stacks, int stackSize) {
         AbstractFurnaceBlockEntityAccessor abstractFurnaceBlockEntityAccessor = (AbstractFurnaceBlockEntityAccessor) this;
         if (recipe != null && abstractFurnaceBlockEntityAccessor.callCanBurn(registryAccess, recipe, stacks, stackSize)) {
             ItemStack inputSlotStack = stacks.get(0);
-            ItemStack resultStack = ((Recipe<WorldlyContainer>) recipe).assemble(this, registryAccess);
+            ItemStack resultStack = ((Recipe<WorldlyContainer>) recipe.value()).assemble(this, registryAccess);
             ItemStack resultSlotStack = stacks.get(2);
 
             if (inputSlotStack.is(resultStack.getItem()) || resultStack.is(AetherTags.Items.SAVE_NBT_IN_RECIPE)) {

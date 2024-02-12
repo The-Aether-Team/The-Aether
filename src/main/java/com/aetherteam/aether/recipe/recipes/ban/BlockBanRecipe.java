@@ -26,12 +26,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 
 public class BlockBanRecipe extends AbstractPlacementBanRecipe<BlockState, BlockStateIngredient> {
-    public BlockBanRecipe(ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient bypassBlock, BlockStateIngredient ingredient) {
-        super(AetherRecipeTypes.BLOCK_PLACEMENT_BAN.get(), id, biomeKey, biomeTag, bypassBlock, ingredient);
+    public BlockBanRecipe(@Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient bypassBlock, BlockStateIngredient ingredient) {
+        super(AetherRecipeTypes.BLOCK_PLACEMENT_BAN.get(), biomeKey, biomeTag, bypassBlock, ingredient);
     }
 
-    public BlockBanRecipe(ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient bypassBlock) {
-        this(id, biomeKey, biomeTag, bypassBlock, BlockStateIngredient.EMPTY);
+    public BlockBanRecipe(@Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient bypassBlock) {
+        this(biomeKey, biomeTag, bypassBlock, BlockStateIngredient.EMPTY);
     }
 
     /**

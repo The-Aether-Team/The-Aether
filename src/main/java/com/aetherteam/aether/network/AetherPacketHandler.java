@@ -10,6 +10,7 @@ import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.network.NetworkRegistry;
+import net.neoforged.neoforge.network.simple.MessageFunctions;
 import net.neoforged.neoforge.network.simple.SimpleChannel;
 
 import java.util.function.Function;
@@ -74,7 +75,7 @@ public class AetherPacketHandler {
 		register(PhoenixArrowSyncPacket.class, PhoenixArrowSyncPacket::decode);
 	}
 
-	private static <MSG extends BasePacket> void register(final Class<MSG> packet, Function<FriendlyByteBuf, MSG> decoder) {
+	private static <MSG extends BasePacket> void register(final Class<MSG> packet, MessageFunctions.MessageDecoder<MSG> decoder) {
 		INSTANCE.messageBuilder(packet, index++).encoder(BasePacket::encode).decoder(decoder).consumerMainThread(BasePacket::handle).add();
 	}
 }

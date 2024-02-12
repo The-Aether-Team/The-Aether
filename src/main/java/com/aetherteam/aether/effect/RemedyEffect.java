@@ -36,7 +36,7 @@ public class RemedyEffect extends MobEffect {
     }
 
     @Override
-    public boolean isDurationEffectTick(int duration, int amplifier) {
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
         this.effectDuration = duration;
         return true;
     }

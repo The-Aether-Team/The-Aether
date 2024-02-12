@@ -35,7 +35,7 @@ public class AetherData {
 
         // Server Data
         generator.addProvider(event.includeServer(), new AetherRegistrySets(packOutput, lookupProvider));
-        generator.addProvider(event.includeServer(), new AetherRecipeData(packOutput));
+        generator.addProvider(event.includeServer(), new AetherRecipeData(packOutput, lookupProvider));
         generator.addProvider(event.includeServer(), AetherLootTableData.create(packOutput));
         generator.addProvider(event.includeServer(), new AetherLootModifierData(packOutput));
         generator.addProvider(event.includeServer(), new AetherAdvancementData(packOutput, lookupProvider, fileHelper));

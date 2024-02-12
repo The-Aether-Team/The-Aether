@@ -73,9 +73,9 @@ public class AetherJadePlugin implements IWailaPlugin {
 	@Nullable
 	private Block getLockedDungeonBlock(String name) {
 		if (name.startsWith("boss_doorway_")) {
-			return BuiltInRegistries.BLOCK.getValue(new ResourceLocation(Aether.MODID, "locked_" + name.substring(13)));
+			return BuiltInRegistries.BLOCK.get(new ResourceLocation(Aether.MODID, "locked_" + name.substring(13)));
 		} else if (name.startsWith("treasure_doorway_")) {
-			return BuiltInRegistries.BLOCK.getValue(new ResourceLocation(Aether.MODID, "locked_" + name.substring(17)));
+			return BuiltInRegistries.BLOCK.get(new ResourceLocation(Aether.MODID, "locked_" + name.substring(17)));
 		}
 		return null;
 	}

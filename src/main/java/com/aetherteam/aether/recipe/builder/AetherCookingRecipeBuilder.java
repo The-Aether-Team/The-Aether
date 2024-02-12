@@ -2,6 +2,7 @@ package com.aetherteam.aether.recipe.builder;
 
 import com.aetherteam.aether.recipe.AetherBookCategory;
 import com.aetherteam.aether.recipe.AetherRecipeSerializers;
+import com.aetherteam.aether.recipe.serializer.AetherCookingSerializer;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
@@ -38,7 +39,7 @@ public class AetherCookingRecipeBuilder implements RecipeBuilder {
     private String group;
     private final RecipeSerializer<? extends AbstractCookingRecipe> serializer;
 
-    public AetherCookingRecipeBuilder(RecipeCategory category, AetherBookCategory bookCategory, ItemLike result, Ingredient ingredient, float experience, int cookingTime, RecipeSerializer<? extends AbstractCookingRecipe> serializer) {
+    public AetherCookingRecipeBuilder(RecipeCategory category, AetherBookCategory bookCategory, ItemLike result, Ingredient ingredient, float experience, int cookingTime, AetherCookingSerializer<?> serializer) {
         this.category = category;
         this.bookCategory = bookCategory;
         this.result = result.asItem();
@@ -48,7 +49,7 @@ public class AetherCookingRecipeBuilder implements RecipeBuilder {
         this.serializer = serializer;
     }
 
-    public static AetherCookingRecipeBuilder generic(Ingredient ingredient, RecipeCategory category, ItemLike result, float experience, int cookingTime, RecipeSerializer<? extends AbstractCookingRecipe> serializer) {
+    public static AetherCookingRecipeBuilder generic(Ingredient ingredient, RecipeCategory category, ItemLike result, float experience, int cookingTime, AetherCookingSerializer<?> serializer) {
         return new AetherCookingRecipeBuilder(category, determineRecipeCategory(serializer, category), result, ingredient, experience, cookingTime, serializer);
     }
 

@@ -55,7 +55,7 @@ public class InebriationEffect extends MobEffect {
     }
 
     @Override
-    public boolean isDurationEffectTick(int duration, int amplifier) {
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
         this.effectDuration = duration;
         return true;
     }

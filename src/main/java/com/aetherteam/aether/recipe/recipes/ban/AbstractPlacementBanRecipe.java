@@ -4,7 +4,6 @@ import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -19,7 +18,6 @@ import java.util.function.Predicate;
 
 public abstract class AbstractPlacementBanRecipe<T, S extends Predicate<T>> implements Recipe<Container> {
     protected final RecipeType<?> type;
-    protected final ResourceLocation id;
     @Nullable
     private final ResourceKey<Biome> biomeKey;
     @Nullable
@@ -27,9 +25,8 @@ public abstract class AbstractPlacementBanRecipe<T, S extends Predicate<T>> impl
     protected final BlockStateIngredient bypassBlock;
     protected final S ingredient;
 
-    public AbstractPlacementBanRecipe(RecipeType<?> type, ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient bypassBlock, S ingredient) {
+    public AbstractPlacementBanRecipe(RecipeType<?> type, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient bypassBlock, S ingredient) {
         this.type = type;
-        this.id = id;
         this.biomeKey = biomeKey;
         this.biomeTag = biomeTag;
         this.bypassBlock = bypassBlock;
@@ -80,11 +77,6 @@ public abstract class AbstractPlacementBanRecipe<T, S extends Predicate<T>> impl
     @Override
     public RecipeType<?> getType() {
         return this.type;
-    }
-
-    @Override
-    public ResourceLocation getId() {
-        return this.id;
     }
 
     @Override

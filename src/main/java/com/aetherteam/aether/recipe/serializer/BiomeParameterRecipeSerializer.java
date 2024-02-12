@@ -30,7 +30,7 @@ public class BiomeParameterRecipeSerializer<T extends AbstractBiomeParameterReci
         ResourceKey<Biome> biomeKey = biomeRecipeData.getLeft();
         TagKey<Biome> biomeTag = biomeRecipeData.getRight();
         T recipe = super.fromJson(id, json);
-        return this.factory.create(id, biomeKey, biomeTag, recipe.getIngredient(), recipe.getResult(), recipe.getFunction());
+        return this.factory.create(biomeKey, biomeTag, recipe.getIngredient(), recipe.getResult(), recipe.getFunction());
     }
 
     @Nullable
@@ -41,7 +41,7 @@ public class BiomeParameterRecipeSerializer<T extends AbstractBiomeParameterReci
         BlockStateIngredient ingredient = BlockStateIngredient.fromNetwork(buffer);
         BlockPropertyPair result = BlockStateRecipeUtil.readPair(buffer);
         CommandFunction.CacheableFunction function = BlockStateRecipeUtil.readFunction(buffer);
-        return this.factory.create(id, biomeKey, biomeTag, ingredient, result, function);
+        return this.factory.create(biomeKey, biomeTag, ingredient, result, function);
     }
 
     @Override
@@ -52,6 +52,6 @@ public class BiomeParameterRecipeSerializer<T extends AbstractBiomeParameterReci
     }
 
     public interface CookieBaker<T extends AbstractBiomeParameterRecipe> {
-        T create(ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, @Nullable CommandFunction.CacheableFunction function);
+        T create(@Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, @Nullable CommandFunction.CacheableFunction function);
     }
 }

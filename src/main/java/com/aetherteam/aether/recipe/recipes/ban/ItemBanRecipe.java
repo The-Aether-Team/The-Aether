@@ -27,12 +27,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 
 public class ItemBanRecipe extends AbstractPlacementBanRecipe<ItemStack, Ingredient> {
-    public ItemBanRecipe(ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient bypassBlock, Ingredient ingredient) {
-        super(AetherRecipeTypes.ITEM_PLACEMENT_BAN.get(), id, biomeKey, biomeTag, bypassBlock, ingredient);
+    public ItemBanRecipe(@Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient bypassBlock, Ingredient ingredient) {
+        super(AetherRecipeTypes.ITEM_PLACEMENT_BAN.get(), biomeKey, biomeTag, bypassBlock, ingredient);
     }
 
-    public ItemBanRecipe(ResourceLocation id,  @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient bypassBlock) {
-        this(id, biomeKey, biomeTag, bypassBlock, Ingredient.EMPTY);
+    public ItemBanRecipe(@Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient bypassBlock) {
+        this(biomeKey, biomeTag, bypassBlock, Ingredient.EMPTY);
     }
 
     /**

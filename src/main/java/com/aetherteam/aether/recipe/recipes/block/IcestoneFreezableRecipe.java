@@ -13,8 +13,8 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import javax.annotation.Nullable;
 
 public class IcestoneFreezableRecipe extends AbstractBlockStateRecipe {
-    public IcestoneFreezableRecipe(ResourceLocation id, BlockStateIngredient ingredient, BlockPropertyPair result, @Nullable CommandFunction.CacheableFunction function) {
-        super(AetherRecipeTypes.ICESTONE_FREEZABLE.get(), id, ingredient, result, function);
+    public IcestoneFreezableRecipe(BlockStateIngredient ingredient, BlockPropertyPair result, @Nullable CommandFunction.CacheableFunction function) {
+        super(AetherRecipeTypes.ICESTONE_FREEZABLE.get(), ingredient, result, function);
     }
 
     @Override

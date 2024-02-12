@@ -26,10 +26,10 @@ public record StepHeightPacket(int entityID) implements BasePacket {
     @Override
     public void execute(@Nullable Player playerEntity) {
         if (playerEntity != null && playerEntity.getServer() != null && playerEntity.level().getEntity(this.entityID()) instanceof MountableAnimal mountableAnimal) {
-            AttributeInstance stepHeight = mountableAnimal.getAttribute(NeoForgeMod.STEP_HEIGHT_ADDITION.get());
+            AttributeInstance stepHeight = mountableAnimal.getAttribute(NeoForgeMod.STEP_HEIGHT.value());
             if (stepHeight != null) {
                 if (stepHeight.hasModifier(mountableAnimal.getDefaultStepHeightModifier())) {
-                    stepHeight.removeModifier(mountableAnimal.getDefaultStepHeightModifier());
+                    stepHeight.removeModifier(mountableAnimal.getDefaultStepHeightModifier().getId());
                 }
                 if (!stepHeight.hasModifier(mountableAnimal.getMountStepHeightModifier())) {
                     stepHeight.addTransientModifier(mountableAnimal.getMountStepHeightModifier());

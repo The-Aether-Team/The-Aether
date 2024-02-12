@@ -32,7 +32,6 @@ import net.minecraft.world.inventory.RecipeCraftingHolder;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -167,7 +166,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 		boolean flag2 = !blockEntity.items.get(0).isEmpty();
 		boolean flag3 = !itemstack.isEmpty();
 		if (blockEntity.isLit() || flag3 && flag2) {
-			IncubationRecipe recipe;
+			RecipeHolder<IncubationRecipe> recipe;
 			if (flag2) {
 				recipe = blockEntity.quickCheck.getRecipeFor(blockEntity, level).orElse(null);
 			} else {
@@ -234,13 +233,13 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 	 * @param stacks The {@link NonNullList NonNullList<ItemStack>} of items in the menu.
 	 * @return A {@link Boolean} for whether the item successfully incubated.
 	 */
-	private boolean incubate(@Nullable IncubationRecipe recipe, NonNullList<ItemStack> stacks) {
+	private boolean incubate(@Nullable RecipeHolder<IncubationRecipe> recipe, NonNullList<ItemStack> stacks) {
 		if (recipe != null && this.canIncubate(recipe, stacks)) {
 			ItemStack itemStack = stacks.get(0);
-			EntityType<?> entityType = recipe.getEntity();
+			EntityType<?> entityType = recipe.value().getEntity();
 			BlockPos spawnPos = this.getBlockPos().above();
 			if (this.level != null && !this.level.isClientSide() && this.level instanceof ServerLevel serverLevel) {
-				CompoundTag tag = recipe.getTag();
+				CompoundTag tag = recipe.value().getTag();
 				Component customName = itemStack.hasCustomHoverName() ? itemStack.getHoverName() : null;
 				Entity entity = entityType.spawn(serverLevel, tag, null, spawnPos, MobSpawnType.TRIGGERED, true, false);
 				if (entity != null) {
@@ -257,7 +256,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 		}
 	}
 
-	private boolean canIncubate(@Nullable IncubationRecipe recipe, NonNullList<ItemStack> stacks) {
+	private boolean canIncubate(@Nullable RecipeHolder<IncubationRecipe> recipe, NonNullList<ItemStack> stacks) {
 		return !stacks.get(0).isEmpty() && recipe != null;
 	}
 
@@ -406,7 +405,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 
 	@Nullable
 	@Override
-	public Recipe<?> getRecipeUsed() {
+	public RecipeHolder<?> getRecipeUsed() {
 		return null;
 	}
 

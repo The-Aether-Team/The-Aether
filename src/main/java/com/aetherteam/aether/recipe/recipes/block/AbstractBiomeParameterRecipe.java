@@ -21,8 +21,8 @@ public abstract class AbstractBiomeParameterRecipe extends AbstractBlockStateRec
     @Nullable
     private final TagKey<Biome> biomeTag;
 
-    public AbstractBiomeParameterRecipe(RecipeType<?> type, ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, @Nullable CommandFunction.CacheableFunction function) {
-        super(type, id, ingredient, result, function);
+    public AbstractBiomeParameterRecipe(RecipeType<?> type, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, @Nullable CommandFunction.CacheableFunction function) {
+        super(type, ingredient, result, function);
         this.biomeKey = biomeKey;
         this.biomeTag = biomeTag;
     }

@@ -32,7 +32,7 @@ public record HealthResetPacket(int entityID, int value) implements BasePacket {
                 aetherPlayer.setSynched(INBTSynchable.Direction.SERVER, "setLifeShardCount", this.value());
                 AttributeInstance attribute = aetherPlayer.getPlayer().getAttribute(Attributes.MAX_HEALTH);
                 if (attribute != null) {
-                    attribute.removeModifier(aetherPlayer.getLifeShardHealthAttributeModifier());
+                    attribute.removeModifier(aetherPlayer.getLifeShardHealthAttributeModifier().getId());
                 }
                 aetherPlayer.getPlayer().setHealth(aetherPlayer.getPlayer().getMaxHealth());
             });
