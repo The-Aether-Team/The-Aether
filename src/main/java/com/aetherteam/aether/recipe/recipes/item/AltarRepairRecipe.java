@@ -11,6 +11,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -58,17 +59,12 @@ public class AltarRepairRecipe extends AbstractAetherCookingRecipe {
     }
 
     public static class Serializer implements RecipeSerializer<AltarRepairRecipe> {
-        private static final Codec<AltarRepairRecipe> CODEC = RecordCodecBuilder.create((p_296927_) -> {
-            return p_296927_.group(ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter((p_300832_) -> {
-                return p_300832_.getGroup();
-            }), AetherBookCategory.CODEC.fieldOf("category").forGetter((p_296920_) -> {
-                return AetherBookCategory.CODEC.byName(p_296920_.group);
-            }), Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter((p_296923_) -> {
-                return p_296923_.ingredient;
-            }), Codec.INT.fieldOf("repairTime").orElse(500).forGetter((p_296923_) -> {
-                return p_296923_.cookingTime;
-            })).apply(p_296927_, AltarRepairRecipe::new);
-        });
+        private static final Codec<AltarRepairRecipe> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+                ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(AbstractCookingRecipe::getGroup),
+                AetherBookCategory.CODEC.fieldOf("category").forGetter((recipe) -> AetherBookCategory.CODEC.byName(recipe.group)),
+                Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter((recipe) -> recipe.ingredient),
+                Codec.INT.fieldOf("repairTime").orElse(500).forGetter((recipe) -> recipe.cookingTime)
+        ).apply(instance, AltarRepairRecipe::new));
 
         @Override
         public Codec<AltarRepairRecipe> codec() {

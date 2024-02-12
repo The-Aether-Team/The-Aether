@@ -447,22 +447,22 @@ public class MoaSkinsScreen extends Screen {
      * Handles moving the scrollbar to snapping points when using the mouse's scroll wheel.
      * @param mouseX The {@link Double} for the mouse's x-position.
      * @param mouseY The {@link Double} for the mouse's y-position.
-     * @param pScrollX The {@link Double} for the mouse's x-scroll.
-     * @param pScrollY The {@link Double} for the mouse's y-scroll.
+     * @param scrollX The {@link Double} for the mouse's x-scroll.
+     * @param scrollY The {@link Double} for the mouse's y-scroll.
      * @return Whether the mouse can scroll, as a {@link Boolean}.
      */
 
 
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double pScrollX, double pScrollY) {
+    public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
         int i = 0;
         int index = this.getSlotOffset();
         if (index != -1) {
             i = index;
         }
-        if (pScrollY < 0) { // Scroll to the left.
+        if (scrollY < 0) { // Scroll to the left.
             i = Math.min(i + 1, this.snapPoints.size() - 1);
-        } else if (pScrollY > 0) { // Scroll to the right.
+        } else if (scrollY > 0) { // Scroll to the right.
             i = Math.max(i - 1, 0);
         }
         this.scrollX = this.snapPoints.get(i); // Set the scrollbar offset to a specified snapping point position.

@@ -10,11 +10,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
  * Checks if a config value is true or false for a loot table.
  */
 public class ConfigEnabled implements LootItemCondition {
-    public static final Codec<ConfigEnabled> CODEC = RecordCodecBuilder.create((p_298496_) -> {
-        return p_298496_.group(Codec.BOOL.fieldOf("config").forGetter(instance -> {
-            return instance.config;
-        })).apply(p_298496_, ConfigEnabled::new);
-    });
+    public static final Codec<ConfigEnabled> CODEC = RecordCodecBuilder.create((builder) -> builder.group(Codec.BOOL.fieldOf("config").forGetter(instance -> instance.config)).apply(builder, ConfigEnabled::new));
     private final boolean config;
 
     public ConfigEnabled(boolean config) {

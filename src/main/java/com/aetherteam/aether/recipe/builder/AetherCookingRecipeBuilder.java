@@ -33,7 +33,7 @@ public class AetherCookingRecipeBuilder implements RecipeBuilder {
     private final Ingredient ingredient;
     private final float experience;
     private final int cookingTime;
-    private final Map<String, Criterion<?>> criteria = new LinkedHashMap();
+    private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
     @Nullable
     private String group;
     private final RecipeSerializer<? extends AbstractCookingRecipe> serializer;
@@ -76,7 +76,6 @@ public class AetherCookingRecipeBuilder implements RecipeBuilder {
         Objects.requireNonNull(advancement$builder);
         this.criteria.forEach(advancement$builder::addCriterion);
         recipeOutput.accept(new AetherCookingRecipeBuilder.Result(id, this.group == null ? "" : this.group, this.bookCategory, this.ingredient, this.result, this.experience, this.cookingTime, advancement$builder.build(id.withPrefix("recipes/" + this.category.getFolderName() + "/")), this.serializer));
-
     }
 
     private static AetherBookCategory determineRecipeCategory(RecipeSerializer<? extends AbstractCookingRecipe> serializer, RecipeCategory category) {
@@ -107,29 +106,7 @@ public class AetherCookingRecipeBuilder implements RecipeBuilder {
         }
     }
 
-    static class Result implements FinishedRecipe {
-        private final ResourceLocation id;
-        private final String group;
-        private final AetherBookCategory category;
-        private final Ingredient ingredient;
-        private final Item result;
-        private final float experience;
-        private final int cookingTime;
-        private final AdvancementHolder advancement;
-        private final RecipeSerializer<? extends AbstractCookingRecipe> serializer;
-
-        public Result(ResourceLocation id, String group, AetherBookCategory category, Ingredient ingredient, Item result, float experience, int cookingTime, AdvancementHolder advancement, RecipeSerializer<? extends AbstractCookingRecipe> serializer) {
-            this.id = id;
-            this.group = group;
-            this.category = category;
-            this.ingredient = ingredient;
-            this.result = result;
-            this.experience = experience;
-            this.cookingTime = cookingTime;
-            this.advancement = advancement;
-            this.serializer = serializer;
-        }
-
+    public record Result(ResourceLocation id, String group, AetherBookCategory category, Ingredient ingredient, Item result, float experience, int cookingTime, AdvancementHolder advancement, RecipeSerializer<? extends AbstractCookingRecipe> type) implements FinishedRecipe {
         @Override
         public void serializeRecipeData(JsonObject json) {
             if (!this.group.isEmpty()) {
@@ -137,30 +114,9 @@ public class AetherCookingRecipeBuilder implements RecipeBuilder {
             }
             json.addProperty("category", this.category.getSerializedName());
             json.add("ingredient", this.ingredient.toJson(false));
-            ResourceLocation itemLocation = BuiltInRegistries.ITEM.getKey(this.result);
-            if (itemLocation != null) {
-                json.addProperty("result", itemLocation.toString());
-            } else {
-                throw new IllegalStateException("Item: " + this.result + " does not exist");
-            }
+            json.addProperty("result", BuiltInRegistries.ITEM.getKey(this.result).toString());
             json.addProperty("experience", this.experience);
             json.addProperty("cookingtime", this.cookingTime);
-        }
-
-        @Override
-        public RecipeSerializer<?> type() {
-            return this.serializer;
-        }
-
-        @org.jetbrains.annotations.Nullable
-        @Override
-        public AdvancementHolder advancement() {
-            return this.advancement;
-        }
-
-        @Override
-        public ResourceLocation id() {
-            return this.id;
         }
     }
 }

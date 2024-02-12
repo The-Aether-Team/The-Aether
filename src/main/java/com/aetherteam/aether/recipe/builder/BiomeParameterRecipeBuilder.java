@@ -60,8 +60,8 @@ public class BiomeParameterRecipeBuilder extends BlockStateRecipeBuilder {
     }
 
     @Override
-    public void save(RecipeOutput finishedRecipeConsumer, ResourceLocation id) {
-        finishedRecipeConsumer.accept(new BiomeParameterRecipeBuilder.Result(id, this.biomeKey, this.biomeTag, this.getIngredient(), this.getResultPair(), this.getSerializer()));
+    public void save(RecipeOutput recipeOutput, ResourceLocation id) {
+        recipeOutput.accept(new BiomeParameterRecipeBuilder.Result(id, this.biomeKey, this.biomeTag, this.getIngredient(), this.getResultPair(), this.getSerializer()));
     }
 
     public static class Result extends BlockStateRecipeBuilder.Result {

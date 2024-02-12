@@ -22,7 +22,7 @@ public class AltarRepairBuilder implements RecipeBuilder {
     private final RecipeCategory category;
     private final Ingredient ingredient;
     private final int repairTime;
-    private final Map<String, Criterion<?>> criteria = new LinkedHashMap();
+    private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
     @Nullable
     private String group;
     private final RecipeSerializer<AltarRepairRecipe> serializer;
@@ -71,23 +71,7 @@ public class AltarRepairBuilder implements RecipeBuilder {
         }
     }
 
-    public static class Result implements FinishedRecipe {
-        private final ResourceLocation id;
-        private final String group;
-        private final Ingredient ingredient;
-        private final int repairTime;
-        private final AdvancementHolder advancement;
-        private final RecipeSerializer<AltarRepairRecipe> serializer;
-
-        public Result(ResourceLocation id, String group, Ingredient ingredient, int repairTime, AdvancementHolder advancement, RecipeSerializer<AltarRepairRecipe> serializer) {
-            this.id = id;
-            this.group = group;
-            this.ingredient = ingredient;
-            this.repairTime = repairTime;
-            this.advancement = advancement;
-            this.serializer = serializer;
-        }
-
+    public record Result(ResourceLocation id, String group, Ingredient ingredient, int repairTime, AdvancementHolder advancement, RecipeSerializer<AltarRepairRecipe> type) implements FinishedRecipe {
         @Override
         public void serializeRecipeData(JsonObject json) {
             if (!this.group.isEmpty()) {
@@ -95,22 +79,6 @@ public class AltarRepairBuilder implements RecipeBuilder {
             }
             json.add("ingredient", this.ingredient.toJson(false));
             json.addProperty("repairTime", this.repairTime);
-        }
-
-        @Override
-        public ResourceLocation id() {
-            return this.id;
-        }
-
-        @Override
-        public RecipeSerializer<?> type() {
-            return this.serializer;
-        }
-
-        @org.jetbrains.annotations.Nullable
-        @Override
-        public AdvancementHolder advancement() {
-            return advancement;
         }
     }
 }

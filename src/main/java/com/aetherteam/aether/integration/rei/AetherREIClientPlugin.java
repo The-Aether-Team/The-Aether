@@ -66,7 +66,7 @@ public class AetherREIClientPlugin implements REIClientPlugin {
 
         // Fuel
         for (var fuelRecipe : getFuelRecipes()) {
-            registry.add(new FuelDisplay(AetherREIServerPlugin.AETHER_FUEL, fuelRecipe.getInput(), fuelRecipe.getBurnTime(), fuelRecipe.getUsage()));
+            registry.add(new FuelDisplay(AetherREIServerPlugin.AETHER_FUEL, fuelRecipe.inputItems(), fuelRecipe.burnTime(), fuelRecipe.usageBlock()));
         }
 
         for (var recipe : (List<?>) registry.getRecipeManager().getAllRecipesFor(AetherRecipeTypes.ENCHANTING.get())) {

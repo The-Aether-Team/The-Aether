@@ -47,7 +47,7 @@ public class AetherOverlays {
 
     @SubscribeEvent
     public static void registerOverlays(RegisterGuiOverlaysEvent event) {
-        event.registerAboveAll(Aether.prefix("aether_portal_overlay"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll(new ResourceLocation(Aether.MODID, "aether_portal_overlay"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -55,7 +55,7 @@ public class AetherOverlays {
                 AetherPlayer.get(player).ifPresent(handler -> renderAetherPortalOverlay(pStack, minecraft, window, handler, partialTicks));
             }
         });
-        event.registerAboveAll(Aether.prefix("inebriation_vignette"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll(new ResourceLocation(Aether.MODID, "inebriation_vignette"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -63,7 +63,7 @@ public class AetherOverlays {
                 AetherPlayer.get(player).ifPresent(handler -> renderInebriationOverlay(pStack, minecraft, window, handler));
             }
         });
-        event.registerAboveAll(Aether.prefix("remedy_vignette"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll(new ResourceLocation(Aether.MODID, "remedy_vignette"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -71,7 +71,7 @@ public class AetherOverlays {
                 AetherPlayer.get(player).ifPresent(handler -> renderRemedyOverlay(pStack, minecraft, window, handler));
             }
         });
-        event.registerAboveAll(Aether.prefix("shield_of_repulsion_vignette"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll(new ResourceLocation(Aether.MODID, "shield_of_repulsion_vignette"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -79,7 +79,7 @@ public class AetherOverlays {
                 AetherPlayer.get(player).ifPresent(handler -> renderRepulsionOverlay(pStack, minecraft, window, handler));
             }
         });
-        event.registerAboveAll(Aether.prefix("hammer_cooldown"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll(new ResourceLocation(Aether.MODID, "hammer_cooldown"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -87,7 +87,7 @@ public class AetherOverlays {
                 renderHammerCooldownOverlay(pStack, minecraft, window, player);
             }
         });
-        event.registerAboveAll(Aether.prefix("moa_jumps"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAboveAll(new ResourceLocation(Aether.MODID, "moa_jumps"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
@@ -95,7 +95,7 @@ public class AetherOverlays {
                 renderMoaJumps(pStack, window, player);
             }
         });
-        event.registerAbove(new ResourceLocation("player_health"), Aether.prefix("silver_life_shard_hearts"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAbove(new ResourceLocation("player_health"), new ResourceLocation(Aether.MODID, "silver_life_shard_hearts"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();
             LocalPlayer player = minecraft.player;
             if (player != null) {
@@ -352,7 +352,6 @@ public class AetherOverlays {
                     guiGraphics.blit(TEXTURE_LIFE_SHARD_HEARTS, x, y, halfHeart ? offset + 9 : offset, 0, 9, 9);
                 } else {
                     guiGraphics.blitSprite(heartType.getSprite(true, halfHeart, true), x, y, 9, 9);
-                    ;
                 }
             }
             if (selectedContainer < lifeShardHealth) {
@@ -362,7 +361,6 @@ public class AetherOverlays {
                     guiGraphics.blit(TEXTURE_LIFE_SHARD_HEARTS, x, y, halfHeart ? offset + 9 : offset, 0, 9, 9);
                 } else {
                     guiGraphics.blitSprite(heartType.getSprite(true, halfHeart, false), x, y, 9, 9);
-                    ;
                 }
             }
         }

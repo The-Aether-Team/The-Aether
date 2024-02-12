@@ -26,7 +26,7 @@ public class IncubationBuilder implements RecipeBuilder {
     @Nullable
     private final CompoundTag tag;
     private final int incubationTime;
-    private final Map<String, Criterion<?>> criteria = new LinkedHashMap();
+    private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
     @Nullable
     private String group;
     private final RecipeSerializer<IncubationRecipe> serializer;
@@ -75,28 +75,7 @@ public class IncubationBuilder implements RecipeBuilder {
         }
     }
 
-    public static class Result implements FinishedRecipe {
-        private final ResourceLocation id;
-        private final String group;
-        private final Ingredient ingredient;
-        private final EntityType<?> entity;
-        @Nullable
-        private final CompoundTag tag;
-        private final int incubationTime;
-        private final AdvancementHolder advancement;
-        private final RecipeSerializer<IncubationRecipe> serializer;
-
-        public Result(ResourceLocation id, String group, Ingredient ingredient, EntityType<?> entity, @Nullable CompoundTag tag, int incubationTime, AdvancementHolder advancement, RecipeSerializer<IncubationRecipe> serializer) {
-            this.id = id;
-            this.group = group;
-            this.ingredient = ingredient;
-            this.entity = entity;
-            this.tag = tag;
-            this.incubationTime = incubationTime;
-            this.advancement = advancement;
-            this.serializer = serializer;
-        }
-
+    public record Result(ResourceLocation id, String group, Ingredient ingredient, EntityType<?> entity, @Nullable CompoundTag tag, int incubationTime, AdvancementHolder advancement, RecipeSerializer<IncubationRecipe> type) implements FinishedRecipe {
         @Override
         public void serializeRecipeData(JsonObject json) {
             if (!this.group.isEmpty()) {
@@ -108,22 +87,6 @@ public class IncubationBuilder implements RecipeBuilder {
                 json.addProperty("tag", this.tag.toString());
             }
             json.addProperty("incubationtime", this.incubationTime);
-        }
-
-        @Override
-        public ResourceLocation id() {
-            return this.id;
-        }
-
-        @Override
-        public RecipeSerializer<?> type() {
-            return this.serializer;
-        }
-
-        @org.jetbrains.annotations.Nullable
-        @Override
-        public AdvancementHolder advancement() {
-            return this.advancement;
         }
     }
 }

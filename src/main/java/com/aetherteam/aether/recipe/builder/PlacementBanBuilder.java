@@ -61,7 +61,7 @@ public abstract class PlacementBanBuilder implements RecipeBuilder {
     }
 
     @Override
-    public RecipeBuilder unlockedBy(String s, Criterion<?> criterion) {
+    public RecipeBuilder unlockedBy(String name, Criterion<?> criterion) {
         return this;
     }
 
@@ -101,7 +101,7 @@ public abstract class PlacementBanBuilder implements RecipeBuilder {
             return this.serializer;
         }
 
-        @org.jetbrains.annotations.Nullable
+        @Nullable
         @Override
         public AdvancementHolder advancement() {
             return null;

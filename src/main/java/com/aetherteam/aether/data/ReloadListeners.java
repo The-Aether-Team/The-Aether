@@ -29,7 +29,7 @@ public class ReloadListeners {
     }
 
     public static class FuelReloadListener extends SimpleJsonResourceReloadListener {
-        public static final Gson GSON_INSTANCE = (new GsonBuilder()).create();
+        public static final Gson GSON_INSTANCE = new GsonBuilder().create();
 
         public FuelReloadListener() {
             super(GSON_INSTANCE, "fuels");
@@ -48,7 +48,7 @@ public class ReloadListeners {
     }
 
     public static class RecipeReloadListener extends SimpleJsonResourceReloadListener {
-        public static final Gson GSON_INSTANCE = (new GsonBuilder()).create();
+        public static final Gson GSON_INSTANCE = new GsonBuilder().create();
 
         public RecipeReloadListener() {
             super(GSON_INSTANCE, "recipes");

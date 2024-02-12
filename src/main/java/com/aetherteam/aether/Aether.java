@@ -453,10 +453,6 @@ public class Aether {
         this.addCompost(0.65F, AetherItems.WHITE_APPLE.get());
     }
 
-    public static ResourceLocation prefix(String id) {
-        return new ResourceLocation(Aether.MODID, id);
-    }
-
     /**
      * [CODE COPY] - {@link ComposterBlock#add(float, ItemLike)}.
      * @param chance Chance (as a {@link Float}) to fill a compost layer.

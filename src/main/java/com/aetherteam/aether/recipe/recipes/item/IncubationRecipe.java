@@ -106,19 +106,13 @@ public class IncubationRecipe implements Recipe<Container> {
     }
 
     public static class Serializer implements RecipeSerializer<IncubationRecipe> {
-        private static final Codec<IncubationRecipe> CODEC = RecordCodecBuilder.create((p_296927_) -> {
-            return p_296927_.group(ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter((p_300832_) -> {
-                return p_300832_.getGroup();
-            }), Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter((p_296923_) -> {
-                return p_296923_.ingredient;
-            }), BuiltInRegistries.ENTITY_TYPE.byNameCodec().fieldOf("entity").forGetter((p_296923_) -> {
-                return p_296923_.entity;
-            }), CompoundTag.CODEC.fieldOf("tag").orElse(null).forGetter((p_296923_) -> {
-                return p_296923_.tag;
-            }), Codec.INT.fieldOf("incubationtime").orElse(500).forGetter((p_296923_) -> {
-                return p_296923_.incubationTime;
-            })).apply(p_296927_, IncubationRecipe::new);
-        });
+        private static final Codec<IncubationRecipe> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+                ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(IncubationRecipe::getGroup),
+                Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter((recipe) -> recipe.ingredient),
+                BuiltInRegistries.ENTITY_TYPE.byNameCodec().fieldOf("entity").forGetter((recipe) -> recipe.entity),
+                CompoundTag.CODEC.fieldOf("tag").orElse(null).forGetter((recipe) -> recipe.tag),
+                Codec.INT.fieldOf("incubationtime").orElse(500).forGetter((recipe) -> recipe.incubationTime)
+        ).apply(instance, IncubationRecipe::new));
 
         @Nullable
         @Override
