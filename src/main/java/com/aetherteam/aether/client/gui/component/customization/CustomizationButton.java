@@ -3,7 +3,6 @@ package com.aetherteam.aether.client.gui.component.customization;
 import com.aetherteam.aether.client.gui.screen.perks.AetherCustomizationsScreen;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 
 public class CustomizationButton extends InactiveImageButton {
     protected final AetherCustomizationsScreen screen;

@@ -23,7 +23,7 @@ public abstract class ModelBuilderMixin<T extends ModelBuilder<T>> {
     @Shadow(remap = false)
     protected abstract T self();
 
-    @Inject(at = @At(value = "HEAD"), method = "texture(Ljava/lang/String;Lnet/minecraft/resources/ResourceLocation;)Lnet/neoforged.neoforge/client/model/generators/ModelBuilder;", cancellable = true, remap = false)
+    @Inject(at = @At(value = "HEAD"), method = "texture(Ljava/lang/String;Lnet/minecraft/resources/ResourceLocation;)Lnet/neoforged/neoforge/client/model/generators/ModelBuilder;", cancellable = true, remap = false)
     private void texture(String key, ResourceLocation texture, CallbackInfoReturnable<T> cir) {
         this.textures.put(key, texture.toString());
         cir.setReturnValue(this.self());

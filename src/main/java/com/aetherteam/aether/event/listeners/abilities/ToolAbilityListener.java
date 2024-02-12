@@ -94,22 +94,42 @@ public class ToolAbilityListener {
 
     /**
      * @see ToolAbilityListener#checkEntityTooFar(PlayerEvent, Entity, Player, InteractionHand)
+     */
+    @SubscribeEvent
+    public static void onEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
+        checkEntityTooFar(event, event.getTarget(), event.getEntity(), event.getHand());
+    }
+
+    /**
+     * @see ToolAbilityListener#checkEntityTooFar(PlayerEvent, Entity, Player, InteractionHand)
+     */
+    @SubscribeEvent
+    public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
+        checkEntityTooFar(event, event.getTarget(), event.getEntity(), event.getHand());
+    }
+
+    /**
      * @see ToolAbilityListener#checkBlockTooFar(PlayerEvent, Player, InteractionHand)
+     */
+    @SubscribeEvent
+    public static void onEntityInteractRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+        checkBlockTooFar(event, event.getEntity(), event.getHand());
+    }
+
+    /**
+     * @see ToolAbilityListener#checkBlockTooFar(PlayerEvent, Player, InteractionHand)
+     */
+    @SubscribeEvent
+    public static void onEntityInteractLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
+        checkBlockTooFar(event, event.getEntity(), event.getHand());
+    }
+
+    /**
      * @see com.aetherteam.aether.mixin.mixins.common.ItemMixin#getPlayerPOVHitResult(Level, Player, ClipContext.Fluid, CallbackInfoReturnable)
      */
     @SubscribeEvent
-    public static void onEntityInteract(PlayerInteractEvent event) {
-        if (event instanceof PlayerInteractEvent.EntityInteractSpecific entityInteractSpecific) {
-            checkEntityTooFar(entityInteractSpecific, entityInteractSpecific.getTarget(), entityInteractSpecific.getEntity(), entityInteractSpecific.getHand());
-        } else if (event instanceof PlayerInteractEvent.EntityInteract entityInteract) {
-            checkEntityTooFar(entityInteract, entityInteract.getTarget(), entityInteract.getEntity(), entityInteract.getHand());
-        } else if (event instanceof PlayerInteractEvent.RightClickBlock rightClickBlock) {
-            checkBlockTooFar(event, rightClickBlock.getEntity(), rightClickBlock.getHand());
-        } else if (event instanceof PlayerInteractEvent.LeftClickBlock leftClickBlock) {
-            checkBlockTooFar(event, leftClickBlock.getEntity(), leftClickBlock.getHand());
-        } else if (event instanceof PlayerInteractEvent.RightClickItem rightClickItem) {
-            INTERACTION_HAND = rightClickItem.getHand();
-        }
+    public static void onEntityInteractRightClickItem(PlayerInteractEvent.RightClickItem event) {
+        INTERACTION_HAND = event.getHand();
     }
 
     /**

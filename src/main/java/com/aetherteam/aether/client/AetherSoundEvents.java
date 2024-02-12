@@ -4,6 +4,7 @@ import com.aetherteam.aether.Aether;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
@@ -154,10 +155,14 @@ public class AetherSoundEvents {
 	public static final Supplier<SoundEvent> UI_TOAST_AETHER_BRONZE = register("ui.toast.aether_bronze");
 	public static final Supplier<SoundEvent> UI_TOAST_AETHER_SILVER = register("ui.toast.aether_silver");
 
-	public static final Supplier<SoundEvent> MUSIC_MENU = register("music.menu");
-	public static final Supplier<SoundEvent> MUSIC_AETHER = register("music.aether");
+	public static final DeferredHolder<SoundEvent, SoundEvent> MUSIC_MENU = registerHolder("music.menu");
+	public static final DeferredHolder<SoundEvent, SoundEvent> MUSIC_AETHER = registerHolder("music.aether");
 
 	private static Supplier<SoundEvent> register(String location) {
+		return SOUNDS.register(location, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Aether.MODID, location)));
+	}
+
+	private static DeferredHolder<SoundEvent, SoundEvent> registerHolder(String location) {
 		return SOUNDS.register(location, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Aether.MODID, location)));
 	}
 }

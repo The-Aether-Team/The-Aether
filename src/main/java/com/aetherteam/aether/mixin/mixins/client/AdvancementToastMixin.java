@@ -2,7 +2,6 @@ package com.aetherteam.aether.mixin.mixins.client;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.AetherSoundEvents;
-import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.toasts.AdvancementToast;

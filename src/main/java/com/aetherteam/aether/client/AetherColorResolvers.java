@@ -21,6 +21,7 @@ import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherColorResolvers {
@@ -30,11 +31,11 @@ public class AetherColorResolvers {
     @SubscribeEvent
     static void registerBlockColor(RegisterColorHandlersEvent.Block event) {
         Map<Block, BlockColor> map = new HashMap<>();
-        Map<Holder.Reference<Block>, BlockColor> blockColors = ((BlockColorsAccessor) event.getBlockColors()).aether$getBlockColors();
-        map.put(Blocks.GRASS, blockColors.get(BuiltInRegistries.BLOCK.createIntrusiveHolder(Blocks.GRASS)));
-        map.put(Blocks.FERN, blockColors.get(BuiltInRegistries.BLOCK.createIntrusiveHolder(Blocks.FERN)));
-        map.put(Blocks.TALL_GRASS, blockColors.get(BuiltInRegistries.BLOCK.createIntrusiveHolder(Blocks.TALL_GRASS)));
-        map.put(Blocks.LARGE_FERN, blockColors.get(BuiltInRegistries.BLOCK.createIntrusiveHolder(Blocks.LARGE_FERN)));
+        Map<Block, BlockColor> blockColors = ((BlockColorsAccessor) event.getBlockColors()).aether$getBlockColors();
+        map.put(Blocks.GRASS, blockColors.get(Blocks.GRASS));
+        map.put(Blocks.FERN, blockColors.get(Blocks.FERN));
+        map.put(Blocks.TALL_GRASS, blockColors.get(Blocks.TALL_GRASS));
+        map.put(Blocks.LARGE_FERN, blockColors.get(Blocks.LARGE_FERN));
 
         for (Map.Entry<Block, BlockColor> entry : map.entrySet()) { // Recolors tintable plants when placed on Aether Grass and Enchanted Grass.
             event.register(((state, level, pos, tintIndex) -> {

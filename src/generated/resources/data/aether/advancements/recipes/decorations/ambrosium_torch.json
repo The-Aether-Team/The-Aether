@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_holystone_pickaxe",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_holystone_pickaxe"
     ]
   ],
   "rewards": {

@@ -25,6 +25,6 @@ public class HolidayFilter extends PlacementFilter {
 
     @Override
     public PlacementModifierType<?> type() {
-        return AetherPlacementModifiers.HOLIDAY_FILTER;
+        return AetherPlacementModifiers.HOLIDAY_FILTER.get();
     }
 }

@@ -109,7 +109,7 @@ public class AetherClient {
      * Refreshes resource packs at the end of loading, so that auto-applied packs in {@link AetherClient#autoApplyPacks()} get processed.
      */
     @SubscribeEvent
-    public void loadComplete(FMLLoadCompleteEvent event) {
+    public static void loadComplete(FMLLoadCompleteEvent event) {
         if (refreshPacks) {
             Minecraft.getInstance().reloadResourcePacks();
             refreshPacks = false;

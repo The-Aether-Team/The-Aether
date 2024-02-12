@@ -44,17 +44,11 @@ import java.util.function.Supplier;
 public class MoaEggItem extends Item {
     private static final Map<Supplier<? extends MoaType>, MoaEggItem> BY_ID = new IdentityHashMap<>();
     private final Supplier<? extends MoaType> moaType;
-    private final ResourceLocation moaTypeId;
     private final int color;
 
     public MoaEggItem(Supplier<? extends MoaType> moaType, int shellColor, Properties properties) {
-        this(moaType, AetherMoaTypes.MOA_TYPE_REGISTRY.getKey(moaType.get()), shellColor, properties);
-    }
-
-    public MoaEggItem(Supplier<? extends MoaType> moaType, ResourceLocation moaTypeId, int shellColor, Properties properties) {
         super(properties);
         this.moaType = moaType;
-        this.moaTypeId = moaTypeId;
         this.color = shellColor;
         BY_ID.put(moaType, this);
     }
@@ -178,7 +172,7 @@ public class MoaEggItem extends Item {
     }
 
     public ResourceLocation getMoaTypeId() {
-        return this.moaTypeId;
+        return AetherMoaTypes.MOA_TYPE_REGISTRY.getKey(this.moaType.get());
     }
 
     /**

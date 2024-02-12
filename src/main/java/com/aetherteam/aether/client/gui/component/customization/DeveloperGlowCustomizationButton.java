@@ -4,7 +4,6 @@ import com.aetherteam.aether.client.gui.screen.perks.AetherCustomizationsScreen;
 import com.aetherteam.aether.perk.CustomizationsOptions;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 
 public class DeveloperGlowCustomizationButton extends CustomizationButton {
     public DeveloperGlowCustomizationButton(AetherCustomizationsScreen screen, ButtonType buttonType, ColorBox colorBox, int x, int y, int width, int height, WidgetSprites sprites, OnPress onPress, Component message) {

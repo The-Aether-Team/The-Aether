@@ -47,7 +47,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
@@ -68,6 +67,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.NewRegistryEvent;
 import org.slf4j.Logger;
 
 import java.nio.file.Path;
@@ -86,6 +86,7 @@ public class Aether {
         bus.addListener(AetherData::dataSetup);
         bus.addListener(this::commonSetup);
         bus.addListener(this::packSetup);
+        bus.addListener(NewRegistryEvent.class, event -> event.register(AetherMoaTypes.MOA_TYPE_REGISTRY));
 
         DeferredRegister<?>[] registers = {
                 AetherBlocks.BLOCKS,
@@ -97,6 +98,7 @@ public class Aether {
                 AetherParticleTypes.PARTICLES,
                 AetherFeatures.FEATURES,
                 AetherFoliagePlacerTypes.FOLIAGE_PLACERS,
+                AetherPlacementModifiers.PLACEMENT_MODIFIERS,
                 AetherTrunkPlacerTypes.TRUNK_PLACERS,
                 AetherTreeDecoratorTypes.TREE_DECORATORS,
                 AetherPoi.POI,
@@ -134,7 +136,6 @@ public class Aether {
         AetherPacketHandler.register();
 
         Reflection.initialize(SunAltarWhitelist.class);
-        Reflection.initialize(AetherPlacementModifiers.class);
         Reflection.initialize(AetherRecipeBookTypes.class);
         Reflection.initialize(AetherBlockPathTypes.class);
         Reflection.initialize(AetherMobCategory.class);

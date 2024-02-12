@@ -7,13 +7,10 @@ import com.aetherteam.aether.network.packet.PhoenixArrowSyncPacket;
 import com.aetherteam.aether.network.packet.clientbound.*;
 import com.aetherteam.aether.network.packet.serverbound.*;
 import com.aetherteam.nitrogen.network.BasePacket;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.network.NetworkRegistry;
 import net.neoforged.neoforge.network.simple.MessageFunctions;
 import net.neoforged.neoforge.network.simple.SimpleChannel;
-
-import java.util.function.Function;
 
 public class AetherPacketHandler {
 	private static final String PROTOCOL_VERSION = "1";

@@ -10,7 +10,6 @@ import net.neoforged.fml.common.Mod;
 
 import javax.annotation.Nullable;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID)
 public class SkyrootSwordItem extends SwordItem implements SkyrootWeapon {
     public SkyrootSwordItem() {
         super(AetherItemTiers.SKYROOT, 3, -2.4F, new Item.Properties());

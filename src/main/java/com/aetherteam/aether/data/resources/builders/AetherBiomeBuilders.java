@@ -47,7 +47,7 @@ public class AetherBiomeBuilders {
                         .grassColorOverride(0xb1_ff_cb)
                         .foliageColorOverride(0xb1_ff_cb)
                         .grassColorModifier(BiomeSpecialEffects.GrassColorModifier.NONE)
-                        .backgroundMusic(new Music(BuiltInRegistries.SOUND_EVENT.createIntrusiveHolder(AetherSoundEvents.MUSIC_AETHER.get()), 12000, 24000, true))
+                        .backgroundMusic(new Music(AetherSoundEvents.MUSIC_AETHER, 12000, 24000, true))
                         .build(),
                 new MobSpawnSettings.Builder()
                         .addMobCharge(AetherEntityTypes.COCKATRICE.get(), 0.5, 0.15)

@@ -32,7 +32,7 @@ public class ConfigFilter extends PlacementFilter {
 
     @Override
     public PlacementModifierType<?> type() {
-        return AetherPlacementModifiers.CONFIG_FILTER;
+        return AetherPlacementModifiers.CONFIG_FILTER.get();
     }
 
     private static DataResult<ConfigFilter> buildDeserialization(String configId) {
