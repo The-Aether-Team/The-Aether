@@ -2,12 +2,13 @@ package com.aetherteam.aether.client.gui.component.customization;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 public class InactiveImageButton extends ImageButton {
-    public InactiveImageButton(int x, int y, int width, int height, int xTexStart, int yTexStart, int yDiffTex, ResourceLocation texture, int textureWidth, int textureHeight, OnPress onPress, Component message) {
-        super(x, y, width, height, xTexStart, yTexStart, yDiffTex, texture, textureWidth, textureHeight, onPress, message);
+    public InactiveImageButton(int x, int y, int width, int height, WidgetSprites sprites, OnPress onPress, Component message) {
+        super(x, y, width, height, sprites, onPress, message);
     }
 
     /**
@@ -16,12 +17,8 @@ public class InactiveImageButton extends ImageButton {
      */
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        int v = this.yTexStart;
-        if (!this.isActive()) {
-            v -= this.yDiffTex;
-        } else if (this.isHoveredOrFocused()) {
-            v += this.yDiffTex;
-        }
-        guiGraphics.blit(this.resourceLocation, this.getX(), this.getY(), (float) this.xTexStart, (float) v, this.width, this.height, this.textureWidth, this.textureHeight);
+        //todo
+        ResourceLocation resourcelocation = this.sprites.get(this.isActive(), this.isHoveredOrFocused());
+        guiGraphics.blitSprite(resourcelocation, this.getX(), this.getY(), this.width, this.height);
     }
 }

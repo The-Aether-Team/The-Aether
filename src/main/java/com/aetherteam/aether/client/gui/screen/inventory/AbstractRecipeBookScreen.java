@@ -31,7 +31,7 @@ public abstract class AbstractRecipeBookScreen<T extends RecipeBookMenu<Containe
         this.widthTooNarrow = this.width < 379;
         this.getRecipeBookComponent().init(this.width, this.height, this.getMinecraft(), this.widthTooNarrow, this.getMenu());
         this.leftPos = this.getRecipeBookComponent().updateScreenPosition(this.width, this.getXSize());
-        this.addRenderableWidget(new ImageButton(this.getGuiLeft() + leftOffset, this.height / 2 - 49, 20, 18, 0, 0, 19, RECIPE_BUTTON_LOCATION, (button) -> {
+        this.addRenderableWidget(new ImageButton(this.getGuiLeft() + leftOffset, this.height / 2 - 49, 20, 18, RecipeBookComponent.RECIPE_BUTTON_SPRITES, (button) -> {
             this.getRecipeBookComponent().toggleVisibility();
             this.leftPos = this.getRecipeBookComponent().updateScreenPosition(this.width, this.getXSize());
             button.setPosition(this.getGuiLeft() + leftOffset, this.height / 2 - 49);

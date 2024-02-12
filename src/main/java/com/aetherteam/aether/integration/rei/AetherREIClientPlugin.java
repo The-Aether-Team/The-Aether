@@ -44,7 +44,6 @@ import java.util.List;
 public class AetherREIClientPlugin implements REIClientPlugin {
     public static final ResourceLocation ALTAR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/menu/altar.png");
 
-
     public static List<FuelRecipe> getFuelRecipes() {
         List<FuelRecipe> fuelRecipes = new ArrayList<>();
         AltarBlockEntity.getEnchantingMap().forEach((item, burnTime) -> fuelRecipes.add(new FuelRecipe(List.of(new ItemStack(item)), burnTime, AetherBlocks.ALTAR.get())));
@@ -52,6 +51,7 @@ public class AetherREIClientPlugin implements REIClientPlugin {
         IncubatorBlockEntity.getIncubatingMap().forEach((item, burnTime) -> fuelRecipes.add(new FuelRecipe(List.of(new ItemStack(item)), burnTime, AetherBlocks.INCUBATOR.get())));
         return fuelRecipes;
     }
+
     @Override
     public void registerDisplays(DisplayRegistry registry) {
         registry.registerRecipeFiller(ItemBanRecipe.class, AetherRecipeTypes.ITEM_PLACEMENT_BAN.get(), recipe -> PlacementBanRecipeDisplay.ofItem(recipe.value()));

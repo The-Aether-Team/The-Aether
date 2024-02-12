@@ -3,6 +3,7 @@ package com.aetherteam.aether.mixin.mixins.client;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.toasts.AdvancementToast;
 import net.minecraft.client.gui.components.toasts.Toast;
@@ -20,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class AdvancementToastMixin {
     @Final
     @Shadow
-    private Advancement advancement;
+    private AdvancementHolder advancement;
     @Shadow
     private boolean playedSound;
 
@@ -36,7 +37,7 @@ public class AdvancementToastMixin {
         if (!this.playedSound) { // Checks if a sound hasn't been played yet.
             if (this.checkRoot()) {
                 this.playedSound = true;
-                switch (this.advancement.getId().getPath()) {
+                switch (this.advancement.id().getPath()) {
                     case "bronze_dungeon" -> toastComponent.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(AetherSoundEvents.UI_TOAST_AETHER_BRONZE.get(), 1.0F, 1.0F));
                     case "silver_dungeon" -> toastComponent.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(AetherSoundEvents.UI_TOAST_AETHER_SILVER.get(), 1.0F, 1.0F));
                     default -> toastComponent.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(AetherSoundEvents.UI_TOAST_AETHER_GENERAL.get(), 1.0F, 1.0F));
@@ -50,8 +51,9 @@ public class AdvancementToastMixin {
      */
     private boolean checkRoot() {
         ResourceLocation enterAether = new ResourceLocation(Aether.MODID, "enter_aether");
-        for (Advancement advancement = this.advancement; advancement != null; advancement = advancement.getParent()) {
-            if (advancement.getId().equals(enterAether)) {
+        AdvancementHolder advancement = this.advancement;
+        for (ResourceLocation id = advancement.id(); advancement.value().parent().isPresent(); id = advancement.value().parent().get()) {
+            if (id.equals(enterAether)) {
                 return true;
             }
         }

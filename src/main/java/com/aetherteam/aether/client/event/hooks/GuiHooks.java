@@ -156,7 +156,7 @@ public class GuiHooks {
      * @param rowHelper The {@link net.minecraft.client.gui.layouts.GridLayout.RowHelper} to add the button to.
      */
     private static void createSkinsButton(Screen screen, GridLayout gridLayout, GridLayout.RowHelper rowHelper) {
-        ImageButton skinsButton = new ImageButton(0, 0, 20, 20, 0, 0, 20, AccessoriesScreen.SKINS_BUTTON, 20, 40,
+        ImageButton skinsButton = new ImageButton(0, 0, 20, 20, AccessoriesScreen.SKINS_BUTTON,
                 (pressed) -> Minecraft.getInstance().setScreen(new MoaSkinsScreen(screen)),
                 Component.translatable("gui.aether.accessories.skins_button"));
         skinsButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.skins_button")));
@@ -169,7 +169,7 @@ public class GuiHooks {
      * @param rowHelper The {@link net.minecraft.client.gui.layouts.GridLayout.RowHelper} to add the button to.
      */
     private static void createCustomizationsButton(Screen screen, GridLayout.RowHelper rowHelper) {
-        ImageButton customizationButton = new ImageButton(0, 0, 20, 20, 0, 0, 20, AccessoriesScreen.CUSTOMIZATION_BUTTON, 20, 40,
+        ImageButton customizationButton = new ImageButton(0, 0, 20, 20, AccessoriesScreen.CUSTOMIZATION_BUTTON,
                 (pressed) -> Minecraft.getInstance().setScreen(new AetherCustomizationsScreen(screen)),
                 Component.translatable("gui.aether.accessories.customization_button"));
         customizationButton.setTooltip(Tooltip.create(Component.translatable("gui.aether.accessories.customization_button")));

@@ -8,6 +8,7 @@ import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -23,8 +24,8 @@ import net.minecraft.world.item.ItemStack;
 public class AccessoryButton extends ImageButton {
     private final AbstractContainerScreen<?> parentScreen;
 
-    public AccessoryButton(AbstractContainerScreen<?> parentScreen, int x, int y, ResourceLocation texture) {
-        super(x, y, 12, 8, 0, 0, 8, texture, 12, 16,
+    public AccessoryButton(AbstractContainerScreen<?> parentScreen, int x, int y, WidgetSprites sprites) {
+        super(x, y, 12, 8, sprites,
                 (button) -> {
                     Minecraft minecraft = Minecraft.getInstance();
                     Player player = minecraft.player;

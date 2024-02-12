@@ -43,7 +43,7 @@ public class AetherCookingRecipeDisplay<T extends Recipe<?>> extends BasicDispla
             cookingTime = incubationRecipe.getIncubationTime();
         }
 
-        return new AetherCookingRecipeDisplay<>(categoryIdentifier, getInput(recipe), getOutput(recipe), experience, cookingTime, (recipe instanceof IncubationRecipe), Optional.of(recipe.getId()));
+        return new AetherCookingRecipeDisplay<>(categoryIdentifier, getInput(recipe), getOutput(recipe), experience, cookingTime, (recipe instanceof IncubationRecipe), Optional.empty());
     }
 
     private static List<EntryIngredient> getInput(Recipe<?> recipe) {

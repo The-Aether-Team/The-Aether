@@ -2,12 +2,13 @@ package com.aetherteam.aether.client.gui.component.customization;
 
 import com.aetherteam.aether.client.gui.screen.perks.AetherCustomizationsScreen;
 import com.aetherteam.aether.perk.CustomizationsOptions;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 public class HaloCustomizationButton extends CustomizationButton {
-    public HaloCustomizationButton(AetherCustomizationsScreen screen, ButtonType buttonType, ColorBox colorBox, int x, int y, int width, int height, int xTexStart, int yTexStart, int yDiffTex, ResourceLocation texture, int textureWidth, int textureHeight, OnPress onPress, Component message) {
-        super(screen, buttonType, colorBox, x, y, width, height, xTexStart, yTexStart, yDiffTex, texture, textureWidth, textureHeight, onPress, message);
+    public HaloCustomizationButton(AetherCustomizationsScreen screen, ButtonType buttonType, ColorBox colorBox, int x, int y, int width, int height, WidgetSprites sprites, OnPress onPress, Component message) {
+        super(screen, buttonType, colorBox, x, y, width, height, sprites, onPress, message);
     }
 
     /**

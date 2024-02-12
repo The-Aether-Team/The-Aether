@@ -11,6 +11,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.bus.api.ICancellableEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.ToolAction;
@@ -115,9 +116,9 @@ public class ToolAbilityListener {
      * Cancels the given event if the targeted entity is too far away.
      * @see AbilityHooks.ToolHooks#entityTooFar(Entity, Player, InteractionHand)
      */
-    private static void checkEntityTooFar(PlayerInteractEvent event, Entity target, Player player, InteractionHand hand) {
-        if (!event.isCanceled() && AbilityHooks.ToolHooks.entityTooFar(target, player, hand)) {
-            event.setCanceled(true);
+    private static void checkEntityTooFar(PlayerEvent event, Entity target, Player player, InteractionHand hand) {
+        if (event instanceof ICancellableEvent cancellable && !cancellable.isCanceled() && AbilityHooks.ToolHooks.entityTooFar(target, player, hand)) {
+            cancellable.setCanceled(true);
         }
     }
 
@@ -125,9 +126,9 @@ public class ToolAbilityListener {
      * Cancels the given event if the targeted block is too far away.
      * @see AbilityHooks.ToolHooks#blockTooFar(Player, InteractionHand)
      */
-    private static void checkBlockTooFar(PlayerInteractEvent event, Player player, InteractionHand hand) {
-        if (!event.isCanceled() && AbilityHooks.ToolHooks.blockTooFar(player, hand)) {
-            event.setCanceled(true);
+    private static void checkBlockTooFar(PlayerEvent event, Player player, InteractionHand hand) {
+        if (event instanceof ICancellableEvent cancellable && !cancellable.isCanceled() && AbilityHooks.ToolHooks.blockTooFar(player, hand)) {
+            cancellable.setCanceled(true);
         }
     }
 }

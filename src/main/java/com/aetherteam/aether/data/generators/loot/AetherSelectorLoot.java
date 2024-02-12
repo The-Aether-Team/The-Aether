@@ -2,8 +2,10 @@ package com.aetherteam.aether.data.generators.loot;
 
 import com.aetherteam.aether.loot.AetherLoot;
 import com.aetherteam.aether.loot.functions.WhirlwindSpawnEntity;
+import net.minecraft.advancements.critereon.EntityTypePredicate;
 import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -21,7 +23,7 @@ public class AetherSelectorLoot implements LootTableSubProvider {
                 .withPool(whirlwindLoot())
         );
         builder.accept(AetherLoot.EVIL_WHIRLWIND_JUNK, LootTable.lootTable()
-                .withPool(whirlwindLoot().add(LootItem.lootTableItem(Items.AIR).apply(WhirlwindSpawnEntity.builder(EntityType.CREEPER, 1)).setWeight(60)))
+                .withPool(whirlwindLoot().add(LootItem.lootTableItem(Items.AIR).apply(WhirlwindSpawnEntity.builder(EntityTypePredicate.of(EntityType.CREEPER), ConstantInt.of(1))).setWeight(60)))
         );
     }
 

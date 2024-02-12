@@ -15,6 +15,7 @@ import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.CommonComponents;
@@ -26,8 +27,8 @@ import net.minecraft.resources.ResourceLocation;
  * @see CustomizationsOptions
  */
 public class AetherCustomizationsScreen extends Screen {
-    public static final ResourceLocation SAVE_BUTTON = new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/save_button.png");
-    public static final ResourceLocation UNDO_BUTTON = new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/undo_button.png");
+    public static final WidgetSprites SAVE_BUTTON = new WidgetSprites(new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/save_button.png"), new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/save_button_disabled.png"), new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/save_button_highlighted.png"));
+    public static final WidgetSprites UNDO_BUTTON = new WidgetSprites(new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/undo_button.png"), new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/undo_button_disabled.png"), new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/undo_button_highlighted.png"));
 
     private final Screen lastScreen;
     private final CustomizationsOptions customizations = CustomizationsOptions.INSTANCE;
@@ -102,7 +103,7 @@ public class AetherCustomizationsScreen extends Screen {
 
         // Resets to the currently stored settings in the game.
         Component undoText = Component.translatable("gui.aether.customization.undo");
-        HaloCustomizationButton undoButton = new HaloCustomizationButton(this, CustomizationButton.ButtonType.UNDO, this.haloColorBox, xPos + 220, yPos + (25 * i), 20, 20, 0, 20, 20, UNDO_BUTTON, 20, 60,
+        HaloCustomizationButton undoButton = new HaloCustomizationButton(this, CustomizationButton.ButtonType.UNDO, this.haloColorBox, xPos + 220, yPos + (25 * i), 20, 20, UNDO_BUTTON,
             (pressed) -> {
                 if (pressed.isActive()) {
                     this.haloEnabled = this.customizations.isHaloEnabled();
@@ -122,7 +123,7 @@ public class AetherCustomizationsScreen extends Screen {
 
         // Saves and stores settings to the game.
         Component saveText = Component.translatable("gui.aether.customization.save");
-        HaloCustomizationButton saveButton = new HaloCustomizationButton(this, CustomizationButton.ButtonType.SAVE, this.haloColorBox, xPos + 245, yPos + (25 * i), 20, 20, 0, 20, 20, SAVE_BUTTON, 20, 60,
+        HaloCustomizationButton saveButton = new HaloCustomizationButton(this, CustomizationButton.ButtonType.SAVE, this.haloColorBox, xPos + 245, yPos + (25 * i), 20, 20, SAVE_BUTTON,
             (pressed) -> {
                 if (pressed.isActive()) {
                     if (this.haloColorBox.hasValidColor() && this.haloColorBox.hasTextChanged()) {
@@ -172,7 +173,7 @@ public class AetherCustomizationsScreen extends Screen {
 
         // Resets to the currently stored settings in the game.
         Component undoText = Component.translatable("gui.aether.customization.undo");
-        DeveloperGlowCustomizationButton undoButton = new DeveloperGlowCustomizationButton(this, CustomizationButton.ButtonType.UNDO, this.developerGlowColorBox, xPos + 220, yPos + (25 * i), 20, 20, 0, 20, 20, UNDO_BUTTON, 20, 60,
+        DeveloperGlowCustomizationButton undoButton = new DeveloperGlowCustomizationButton(this, CustomizationButton.ButtonType.UNDO, this.developerGlowColorBox, xPos + 220, yPos + (25 * i), 20, 20, UNDO_BUTTON,
             (pressed) -> {
                 if (pressed.isActive()) {
                     this.developerGlowEnabled = this.customizations.isDeveloperGlowEnabled();
@@ -192,7 +193,7 @@ public class AetherCustomizationsScreen extends Screen {
 
         // Saves and stores settings to the game.
         Component saveText = Component.translatable("gui.aether.customization.save");
-        DeveloperGlowCustomizationButton saveButton = new DeveloperGlowCustomizationButton(this, CustomizationButton.ButtonType.SAVE, this.developerGlowColorBox, xPos + 245, yPos + (25 * i), 20, 20, 0, 20, 20, SAVE_BUTTON, 20, 60,
+        DeveloperGlowCustomizationButton saveButton = new DeveloperGlowCustomizationButton(this, CustomizationButton.ButtonType.SAVE, this.developerGlowColorBox, xPos + 245, yPos + (25 * i), 20, 20, SAVE_BUTTON,
             (pressed) -> {
                 if (pressed.isActive()) {
                     if (this.developerGlowColorBox.hasValidColor() && this.developerGlowColorBox.hasTextChanged()) {

@@ -6,6 +6,7 @@ import com.aetherteam.cumulus.client.CumulusClient;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
+import net.minecraft.client.gui.screens.ProgressScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.server.IntegratedServer;
 import net.minecraft.network.chat.Component;
@@ -18,6 +19,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 public class WorldDisplayHelper {
@@ -106,11 +108,7 @@ public class WorldDisplayHelper {
             if (server != null) {
                 server.halt(false);
             }
-            if (screen != null) {
-                minecraft.clearLevel(screen);
-            } else {
-                minecraft.clearLevel();
-            }
+            minecraft.clearClientLevel(Objects.requireNonNullElseGet(screen, () -> new ProgressScreen(true)));
         }
     }
 

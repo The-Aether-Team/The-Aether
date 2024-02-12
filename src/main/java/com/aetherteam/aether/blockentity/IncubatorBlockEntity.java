@@ -269,7 +269,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 	}
 
 	private static int getTotalIncubationTime(Level level, IncubatorBlockEntity blockEntity) {
-		return blockEntity.quickCheck.getRecipeFor(blockEntity, level).map(IncubationRecipe::getIncubationTime).orElse(5700);
+		return blockEntity.quickCheck.getRecipeFor(blockEntity, level).map((recipe) -> recipe.value().getIncubationTime()).orElse(5700);
 	}
 
 	private boolean isLit() {
@@ -398,7 +398,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 	@Override
 	public void setRecipeUsed(@Nullable RecipeHolder<?> recipe) {
 		if (recipe != null) {
-			ResourceLocation resourcelocation = recipe.getId();
+			ResourceLocation resourcelocation = recipe.id();
 			this.recipesUsed.addTo(resourcelocation, 1);
 		}
 	}

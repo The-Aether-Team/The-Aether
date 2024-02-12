@@ -29,9 +29,4 @@ public class ContinuousMeleeAttackGoal extends MeleeAttackGoal {
         }
         return true;
     }
-
-    @Override
-    protected double getAttackReachSqr(LivingEntity attackTarget) {
-        return 2.0F + attackTarget.getBbWidth();
-    }
 }

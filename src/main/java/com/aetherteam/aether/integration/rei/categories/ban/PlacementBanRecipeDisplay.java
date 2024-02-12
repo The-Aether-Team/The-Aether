@@ -47,7 +47,7 @@ public class PlacementBanRecipeDisplay<R extends AbstractPlacementBanRecipe<?, ?
                 Optional.ofNullable(recipe.getBiomeKey()),
                 Optional.ofNullable(recipe.getBiomeTag()),
                 Optional.ofNullable((recipe.getIngredient() instanceof BlockStateIngredient ingredient) ? ingredient : null),
-                Optional.of(recipe.getId()));
+                Optional.empty());
     }
 
     public static PlacementBanRecipeDisplay<ItemBanRecipe> ofItem(ItemBanRecipe recipe){

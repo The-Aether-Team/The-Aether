@@ -1,6 +1,7 @@
 package com.aetherteam.aether.client.gui.component.customization;
 
 import com.aetherteam.aether.client.gui.screen.perks.AetherCustomizationsScreen;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
@@ -9,8 +10,8 @@ public class CustomizationButton extends InactiveImageButton {
     protected final ColorBox colorBox;
     protected final ButtonType buttonType;
 
-    public CustomizationButton(AetherCustomizationsScreen screen, ButtonType buttonType, ColorBox colorBox, int x, int y, int width, int height, int xTexStart, int yTexStart, int yDiffTex, ResourceLocation texture, int textureWidth, int textureHeight, OnPress onPress, Component message) {
-        super(x, y, width, height, xTexStart, yTexStart, yDiffTex, texture, textureWidth, textureHeight, onPress, message);
+    public CustomizationButton(AetherCustomizationsScreen screen, ButtonType buttonType, ColorBox colorBox, int x, int y, int width, int height, WidgetSprites sprites, OnPress onPress, Component message) {
+        super(x, y, width, height, sprites, onPress, message);
         this.screen = screen;
         this.colorBox = colorBox;
         this.buttonType = buttonType;

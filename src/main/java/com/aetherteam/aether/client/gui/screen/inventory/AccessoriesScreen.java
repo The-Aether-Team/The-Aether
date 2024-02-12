@@ -19,6 +19,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
@@ -52,9 +53,9 @@ import javax.annotation.Nullable;
  * Modified to register slots for Aether accessories only.
  */
 public class AccessoriesScreen extends EffectRenderingInventoryScreen<AccessoriesMenu> implements RecipeUpdateListener, RecipeBookBehavior<AccessoriesMenu, AccessoriesScreen> {
-    public static final ResourceLocation ACCESSORIES_BUTTON = new ResourceLocation(Aether.MODID, "textures/gui/inventory/button/accessories_button.png");
-    public static final ResourceLocation SKINS_BUTTON = new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/skins_button.png");
-    public static final ResourceLocation CUSTOMIZATION_BUTTON = new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/customization_button.png");
+    public static final WidgetSprites ACCESSORIES_BUTTON = new WidgetSprites(new ResourceLocation(Aether.MODID, "textures/gui/inventory/button/accessories_button.png"), new ResourceLocation(Aether.MODID, "textures/gui/inventory/button/accessories_button_highlighted.png"));
+    public static final WidgetSprites SKINS_BUTTON = new WidgetSprites(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/skins_button.png"), new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/skins_button_highlighted.png"));
+    public static final WidgetSprites CUSTOMIZATION_BUTTON = new WidgetSprites(new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/customization_button.png"), new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/customization_button_highlighted.png"));
 
     private static final ResourceLocation ACCESSORIES_INVENTORY = new ResourceLocation(Aether.MODID, "textures/gui/inventory/accessories.png");
     private static final ResourceLocation ACCESSORIES_INVENTORY_CREATIVE = new ResourceLocation(Aether.MODID, "textures/gui/inventory/accessories_creative.png");
@@ -96,7 +97,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
             this.updateScreenPosition();
         }
 
-        this.addRenderableWidget(new ImageButton(this.getGuiLeft() + 142, this.height / 2 - 22, 20, 18, 0, 0, 19, RECIPE_BUTTON_LOCATION, (pressed) -> {
+        this.addRenderableWidget(new ImageButton(this.getGuiLeft() + 142, this.height / 2 - 22, 20, 18, RecipeBookComponent.RECIPE_BUTTON_SPRITES, (pressed) -> {
             this.getRecipeBookComponent().toggleVisibility();
             this.updateScreenPosition();
             pressed.setPosition(this.getGuiLeft() + 142, this.height / 2 - 22);
@@ -137,7 +138,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
      * @return The {@link ImageButton}.
      */
     private ImageButton createSkinsButton() {
-        ImageButton skinsButton = new ImageButton(this.getGuiLeft() - 22, this.getGuiTop() + 2, 20, 20, 0, 0, 20, SKINS_BUTTON, 20, 40,
+        ImageButton skinsButton = new ImageButton(this.getGuiLeft() - 22, this.getGuiTop() + 2, 20, 20, SKINS_BUTTON,
                 (pressed) -> this.getMinecraft().setScreen(new MoaSkinsScreen(this)),
                 Component.translatable("gui.aether.accessories.skins_button")) {
             @Override
@@ -161,7 +162,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
      * @return The {@link ImageButton}.
      */
     private ImageButton createCustomizationButton() {
-        ImageButton customizationButton = new ImageButton(this.getGuiLeft() - 22, this.getGuiTop() + 24, 20, 20, 0, 0, 20, CUSTOMIZATION_BUTTON, 20, 40,
+        ImageButton customizationButton = new ImageButton(this.getGuiLeft() - 22, this.getGuiTop() + 24, 20, 20, CUSTOMIZATION_BUTTON,
                 (pressed) -> this.getMinecraft().setScreen(new AetherCustomizationsScreen(this)),
                 Component.translatable("gui.aether.accessories.customization_button")) {
             @Override
@@ -187,7 +188,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
         this.renderables.removeIf(widget -> widget instanceof RenderButton);
         for (Slot inventorySlot : this.getMenu().slots) {
             if (inventorySlot instanceof CurioSlot curioSlot && !(inventorySlot instanceof CosmeticCurioSlot)) {
-                this.addRenderableWidget(new RenderButton(curioSlot, this.getGuiLeft() + inventorySlot.x + 11, this.getGuiTop() + inventorySlot.y - 3, 8, 8, 75, 0, 8, CURIO_INVENTORY,
+                this.addRenderableWidget(new RenderButton(curioSlot, this.getGuiLeft() + inventorySlot.x + 11, this.getGuiTop() + inventorySlot.y - 3, 8, 8, 75, 0, CURIO_INVENTORY,
                         (button) -> NetworkHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(), new CPacketToggleRender(curioSlot.getIdentifier(), inventorySlot.getSlotIndex()))) {
                     @Override
                     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
