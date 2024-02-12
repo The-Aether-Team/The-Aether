@@ -63,25 +63,14 @@ public class BlockBanRecipe extends AbstractPlacementBanRecipe<BlockState, Block
             super(BlockBanRecipe::new);
         }
 
-        @Override
-        public BlockBanRecipe fromJson(ResourceLocation id, JsonObject json) {
-            BlockBanRecipe recipe = super.fromJson(id, json);
-            if (!json.has("ingredient")) {
-                throw new JsonSyntaxException("Missing ingredient, expected to find an object or array");
-            }
-            JsonElement jsonElement = GsonHelper.isArrayNode(json, "ingredient") ? GsonHelper.getAsJsonArray(json, "ingredient") : GsonHelper.getAsJsonObject(json, "ingredient");
-            BlockStateIngredient ingredient = BlockStateIngredient.fromJson(jsonElement);
-            return new BlockBanRecipe(id, recipe.getBiomeKey(), recipe.getBiomeTag(), recipe.getBypassBlock(), ingredient);
-        }
-
         @Nullable
         @Override
-        public BlockBanRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
+        public BlockBanRecipe fromNetwork(FriendlyByteBuf buffer) {
             ResourceKey<Biome> biomeKey = BlockStateRecipeUtil.readBiomeKey(buffer);
             TagKey<Biome> biomeTag = BlockStateRecipeUtil.readBiomeTag(buffer);
             BlockStateIngredient bypassBlock = BlockStateIngredient.fromNetwork(buffer);
             BlockStateIngredient ingredient = BlockStateIngredient.fromNetwork(buffer);
-            return new BlockBanRecipe(id, biomeKey, biomeTag, bypassBlock, ingredient);
+            return new BlockBanRecipe(biomeKey, biomeTag, bypassBlock, ingredient);
         }
 
         @Override

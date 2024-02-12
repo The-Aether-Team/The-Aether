@@ -5,6 +5,7 @@ import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import com.aetherteam.nitrogen.recipe.BlockStateRecipeUtil;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -24,29 +25,18 @@ public class PlacementBanRecipeSerializer<T, S extends Predicate<T>, F extends A
         this.factory = factory;
     }
 
-    @Override
-    public F fromJson(ResourceLocation id, JsonObject json) {
-        Pair<ResourceKey<Biome>, TagKey<Biome>> biomeRecipeData = BlockStateRecipeUtil.biomeRecipeDataFromJson(json);
-        ResourceKey<Biome> biomeKey = biomeRecipeData.getLeft();
-        TagKey<Biome> biomeTag = biomeRecipeData.getRight();
-
-        BlockStateIngredient bypassBlock = BlockStateIngredient.EMPTY;
-        if (json.has("bypass")) {
-            boolean isBypassArray = GsonHelper.isArrayNode(json, "bypass");
-            JsonElement bypassElement = isBypassArray ? GsonHelper.getAsJsonArray(json, "bypass") : GsonHelper.getAsJsonObject(json, "bypass");
-            bypassBlock = BlockStateIngredient.fromJson(bypassElement);
-        }
-
-        return this.factory.create(id, biomeKey, biomeTag, bypassBlock);
-    }
-
     @Nullable
     @Override
-    public F fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
+    public F fromNetwork(FriendlyByteBuf buffer) {
         ResourceKey<Biome> biomeKey = BlockStateRecipeUtil.readBiomeKey(buffer);
         TagKey<Biome> biomeTag = BlockStateRecipeUtil.readBiomeTag(buffer);
         BlockStateIngredient bypassBlock = BlockStateIngredient.fromNetwork(buffer);
-        return this.factory.create(id, biomeKey, biomeTag, bypassBlock);
+        return this.factory.create(biomeKey, biomeTag, bypassBlock);
+    }
+
+    @Override
+    public Codec<F> codec() {
+        return null;
     }
 
     @Override
@@ -57,6 +47,6 @@ public class PlacementBanRecipeSerializer<T, S extends Predicate<T>, F extends A
     }
 
     public interface CookieBaker<T, S extends Predicate<T>, F extends AbstractPlacementBanRecipe<T, S>> {
-        F create(ResourceLocation id, @Nullable ResourceKey<Biome> dimensionTypeKey, @Nullable TagKey<Biome> dimensionTypeTag, BlockStateIngredient bypassBlock);
+        F create(@Nullable ResourceKey<Biome> dimensionTypeKey, @Nullable TagKey<Biome> dimensionTypeTag, BlockStateIngredient bypassBlock);
     }
 }

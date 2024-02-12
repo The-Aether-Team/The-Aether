@@ -8,7 +8,6 @@ import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import net.minecraft.commands.CommandFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -21,11 +20,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 
 public class SwetBallRecipe extends AbstractBiomeParameterRecipe implements MatchEventRecipe {
-    public SwetBallRecipe(@Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, @Nullable CommandFunction.CacheableFunction function) {
+    public SwetBallRecipe(@Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, String function) {
         super(AetherRecipeTypes.SWET_BALL_CONVERSION.get(), biomeKey, biomeTag, ingredient, result, function);
     }
 
-    public SwetBallRecipe(BlockStateIngredient ingredient, BlockPropertyPair result, @Nullable CommandFunction.CacheableFunction function) {
+    public SwetBallRecipe(BlockStateIngredient ingredient, BlockPropertyPair result, String function) {
         this(null, null, ingredient, result, function);
     }
 
