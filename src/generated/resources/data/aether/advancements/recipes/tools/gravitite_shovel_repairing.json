@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_gravitite_shovel",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_gravitite_shovel"
     ]
   ],
   "rewards": {
@@ -31,5 +31,5 @@
       "aether:gravitite_shovel_repairing"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

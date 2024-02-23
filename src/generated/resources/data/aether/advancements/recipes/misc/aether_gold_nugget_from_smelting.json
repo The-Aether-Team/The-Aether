@@ -46,10 +46,10 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_golden_gloves",
       "has_golden_pendant",
-      "has_golden_ring",
-      "has_the_recipe"
+      "has_golden_ring"
     ]
   ],
   "rewards": {

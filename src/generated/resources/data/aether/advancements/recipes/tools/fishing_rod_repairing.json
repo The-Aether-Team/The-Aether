@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_fishing_rod",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_fishing_rod"
     ]
   ],
   "rewards": {
@@ -31,5 +31,5 @@
       "aether:fishing_rod_repairing"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

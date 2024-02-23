@@ -34,9 +34,9 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_golden_dart_shooter",
-      "has_aechor_petal",
-      "has_the_recipe"
+      "has_aechor_petal"
     ]
   ],
   "rewards": {

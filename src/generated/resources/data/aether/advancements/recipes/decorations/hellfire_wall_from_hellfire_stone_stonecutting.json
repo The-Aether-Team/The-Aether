@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_hellfire_stone",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_hellfire_stone"
     ]
   ],
   "rewards": {

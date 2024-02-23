@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_quicksoil",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_quicksoil"
     ]
   ],
   "rewards": {
@@ -31,5 +31,5 @@
       "aether:quicksoil_glass_enchanting"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

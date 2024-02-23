@@ -2,7 +2,6 @@
   "parent": "aether:enter_aether",
   "criteria": {
     "lore_book_entry": {
-      "conditions": {},
       "trigger": "aether:lore_entry"
     }
   },

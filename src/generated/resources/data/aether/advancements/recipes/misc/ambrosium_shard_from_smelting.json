@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_ambrosium_ore",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_ambrosium_ore"
     ]
   ],
   "rewards": {

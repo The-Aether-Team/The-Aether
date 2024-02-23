@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_golden_gloves",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_golden_gloves"
     ]
   ],
   "rewards": {
@@ -31,5 +31,5 @@
       "aether:golden_gloves_repairing"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

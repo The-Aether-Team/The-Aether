@@ -34,9 +34,9 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_golden_dart",
-      "has_skyroot_poison_bucket",
-      "has_the_recipe"
+      "has_skyroot_poison_bucket"
     ]
   ],
   "rewards": {

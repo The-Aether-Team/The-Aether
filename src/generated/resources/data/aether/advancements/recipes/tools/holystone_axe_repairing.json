@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_holystone_axe",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_holystone_axe"
     ]
   ],
   "rewards": {
@@ -31,5 +31,5 @@
       "aether:holystone_axe_repairing"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

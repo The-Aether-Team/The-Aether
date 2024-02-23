@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_diamond_sword",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_diamond_sword"
     ]
   ],
   "rewards": {
@@ -31,5 +31,5 @@
       "aether:diamond_sword_repairing"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

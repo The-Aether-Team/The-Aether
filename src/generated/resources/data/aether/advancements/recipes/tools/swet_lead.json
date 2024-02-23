@@ -20,8 +20,8 @@
   },
   "requirements": [
     [
-      "has_swet_balls",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_swet_balls"
     ]
   ],
   "rewards": {

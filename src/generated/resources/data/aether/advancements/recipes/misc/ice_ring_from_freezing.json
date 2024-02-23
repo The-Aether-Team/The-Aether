@@ -20,8 +20,8 @@
   },
   "requirements": [
     [
-      "has_ring",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_ring"
     ]
   ],
   "rewards": {
@@ -29,5 +29,5 @@
       "aether:ice_ring_from_freezing"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

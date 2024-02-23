@@ -306,8 +306,8 @@ public class AetherChestLoot implements LootTableSubProvider {
         );
         builder.accept(AetherLoot.SILVER_DUNGEON_CAPE_CONFIG, LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                        .add(LootItem.lootTableItem(AetherItems.VALKYRIE_CAPE.get()).setWeight(1).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))).when(ConfigEnabled.isEnabled(AetherConfig.SERVER.spawn_valkyrie_cape.get())))
-                        .add(LootItem.lootTableItem(AetherItems.GOLDEN_FEATHER.get()).setWeight(1).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))).when(ConfigEnabled.isEnabled(AetherConfig.SERVER.spawn_golden_feather.get())))
+                        .add(LootItem.lootTableItem(AetherItems.VALKYRIE_CAPE.get()).setWeight(1).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))).when(ConfigEnabled.isEnabled(AetherConfig.SERVER.spawn_valkyrie_cape)))
+                        .add(LootItem.lootTableItem(AetherItems.GOLDEN_FEATHER.get()).setWeight(1).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))).when(ConfigEnabled.isEnabled(AetherConfig.SERVER.spawn_golden_feather)))
                 )
         );
         builder.accept(AetherLoot.SILVER_DUNGEON_GUMMIES, LootTable.lootTable()

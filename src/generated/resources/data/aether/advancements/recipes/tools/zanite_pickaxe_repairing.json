@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_zanite_pickaxe",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_zanite_pickaxe"
     ]
   ],
   "rewards": {
@@ -31,5 +31,5 @@
       "aether:zanite_pickaxe_repairing"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

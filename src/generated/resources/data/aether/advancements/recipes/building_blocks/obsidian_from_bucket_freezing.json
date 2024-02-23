@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_lava_bucket",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_lava_bucket"
     ]
   ],
   "rewards": {
@@ -31,5 +31,5 @@
       "aether:obsidian_from_bucket_freezing"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

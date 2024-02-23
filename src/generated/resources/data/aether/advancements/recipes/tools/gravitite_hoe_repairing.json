@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_gravitite_hoe",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_gravitite_hoe"
     ]
   ],
   "rewards": {
@@ -31,5 +31,5 @@
       "aether:gravitite_hoe_repairing"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

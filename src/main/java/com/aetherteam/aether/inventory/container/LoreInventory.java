@@ -1,5 +1,6 @@
 package com.aetherteam.aether.inventory.container;
 
+import com.aetherteam.aether.advancement.AetherAdvancementTriggers;
 import com.aetherteam.aether.advancement.LoreTrigger;
 import com.aetherteam.aether.inventory.menu.LoreBookMenu;
 import com.aetherteam.aether.network.AetherPacketHandler;
@@ -41,7 +42,7 @@ public class LoreInventory extends SimpleContainer {
                 }
             } else if (this.player instanceof ServerPlayer serverPlayer) {
                 if (this.menu.getLoreEntryExists()) {
-                    LoreTrigger.INSTANCE.trigger(serverPlayer, stack);
+                    AetherAdvancementTriggers.LORE_ENTRY.trigger(serverPlayer, stack);
                 }
             }
         }

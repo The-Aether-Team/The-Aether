@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_purple_flower",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_purple_flower"
     ]
   ],
   "rewards": {

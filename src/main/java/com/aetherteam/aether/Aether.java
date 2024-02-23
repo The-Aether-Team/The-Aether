@@ -139,8 +139,7 @@ public class Aether {
         Reflection.initialize(AetherRecipeBookTypes.class);
         Reflection.initialize(AetherBlockPathTypes.class);
         Reflection.initialize(AetherMobCategory.class);
-
-        AetherAdvancementTriggers.init();
+        Reflection.initialize(AetherAdvancementTriggers.class);
 
         MoaSkins.registerMoaSkins();
 

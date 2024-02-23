@@ -12,8 +12,6 @@ import java.util.Optional;
  * Criterion trigger used for checking when an item has finished incubating.
  */
 public class IncubationTrigger extends SimpleCriterionTrigger<IncubationTrigger.Instance> {
-    public static final IncubationTrigger INSTANCE = new IncubationTrigger();
-
     @Override
     public IncubationTrigger.Instance createInstance(JsonObject json, Optional<ContextAwarePredicate> predicate, DeserializationContext context) {
         Optional<ItemPredicate> itemPredicate = ItemPredicate.fromJson(json.get("item"));
@@ -33,7 +31,7 @@ public class IncubationTrigger extends SimpleCriterionTrigger<IncubationTrigger.
         }
 
         public static Criterion<Instance> forItem(ItemPredicate item) {
-            return INSTANCE.createCriterion(new IncubationTrigger.Instance(Optional.empty(), Optional.of(item)));
+            return AetherAdvancementTriggers.INCUBATION_TRIGGER.createCriterion(new IncubationTrigger.Instance(Optional.empty(), Optional.of(item)));
         }
 
         public boolean test(ItemStack stack) {

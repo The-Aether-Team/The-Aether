@@ -58,11 +58,11 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_iron_gloves",
       "has_iron_pendant",
       "has_iron_ring",
-      "has_chainmail_gloves",
-      "has_the_recipe"
+      "has_chainmail_gloves"
     ]
   ],
   "rewards": {

@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_pillar_top",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_pillar_top"
     ]
   ],
   "rewards": {

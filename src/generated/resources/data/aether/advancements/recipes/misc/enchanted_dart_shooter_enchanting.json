@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_golden_dart_shooter",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_golden_dart_shooter"
     ]
   ],
   "rewards": {
@@ -31,5 +31,5 @@
       "aether:enchanted_dart_shooter_enchanting"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

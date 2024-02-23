@@ -13,8 +13,6 @@ import java.util.Optional;
  * Criterion trigger used for checking an item placed by a player inside a Book of Lore.
  */
 public class LoreTrigger extends SimpleCriterionTrigger<LoreTrigger.Instance> {
-    public static final LoreTrigger INSTANCE = new LoreTrigger();
-
     @Override
     protected Instance createInstance(JsonObject json, Optional<ContextAwarePredicate> predicate, DeserializationContext context) {
         Optional<ItemPredicate> itemPredicate = ItemPredicate.fromJson(json.get("item"));
@@ -34,7 +32,7 @@ public class LoreTrigger extends SimpleCriterionTrigger<LoreTrigger.Instance> {
         }
 
         public static Criterion<Instance> forItem(ItemPredicate item) {
-            return INSTANCE.createCriterion(new LoreTrigger.Instance(Optional.empty(), Optional.of(item)));
+            return AetherAdvancementTriggers.LORE_ENTRY.createCriterion(new LoreTrigger.Instance(Optional.empty(), Optional.of(item)));
         }
 
         public static Criterion<Instance> forItem(ItemLike item) {
@@ -42,7 +40,7 @@ public class LoreTrigger extends SimpleCriterionTrigger<LoreTrigger.Instance> {
         }
 
         public static Criterion<Instance> forAny() {
-            return INSTANCE.createCriterion(new LoreTrigger.Instance(Optional.empty(), Optional.empty()));
+            return AetherAdvancementTriggers.LORE_ENTRY.createCriterion(new LoreTrigger.Instance(Optional.empty(), Optional.empty()));
         }
 
         public boolean test(ItemStack stack) {

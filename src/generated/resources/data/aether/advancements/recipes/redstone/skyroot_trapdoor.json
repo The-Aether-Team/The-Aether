@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_skyroot_planks",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_skyroot_planks"
     ]
   ],
   "rewards": {

@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_music_disc_high",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_music_disc_high"
     ]
   ],
   "rewards": {
@@ -31,5 +31,5 @@
       "aether:high_freezing"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

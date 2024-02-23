@@ -20,8 +20,8 @@
   },
   "requirements": [
     [
-      "has_water_bucket",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_water_bucket"
     ]
   ],
   "rewards": {
@@ -29,5 +29,5 @@
       "aether:ice_from_bucket_freezing"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

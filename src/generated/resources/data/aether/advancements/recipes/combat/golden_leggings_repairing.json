@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_golden_leggings",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_golden_leggings"
     ]
   ],
   "rewards": {
@@ -31,5 +31,5 @@
       "aether:golden_leggings_repairing"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

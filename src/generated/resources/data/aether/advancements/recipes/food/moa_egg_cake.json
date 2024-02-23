@@ -20,8 +20,8 @@
   },
   "requirements": [
     [
-      "has_moa_egg",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_moa_egg"
     ]
   ],
   "rewards": {

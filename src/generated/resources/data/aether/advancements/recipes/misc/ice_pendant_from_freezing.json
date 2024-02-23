@@ -20,8 +20,8 @@
   },
   "requirements": [
     [
-      "has_pendant",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_pendant"
     ]
   ],
   "rewards": {
@@ -29,5 +29,5 @@
       "aether:ice_pendant_from_freezing"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

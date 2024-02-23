@@ -58,7 +58,7 @@ public class BlockBanBuilder extends PlacementBanBuilder {
         @Override
         public void serializeRecipeData(JsonObject json) {
             super.serializeRecipeData(json);
-            json.add("ingredient", this.ingredient.toJson());
+            json.add("ingredient", this.ingredient.toJson(false));
         }
     }
 }

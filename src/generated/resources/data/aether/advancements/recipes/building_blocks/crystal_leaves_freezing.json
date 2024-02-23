@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_skyroot_leaves",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_skyroot_leaves"
     ]
   ],
   "rewards": {
@@ -31,5 +31,5 @@
       "aether:crystal_leaves_freezing"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

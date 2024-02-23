@@ -32,9 +32,9 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_feather",
-      "has_golden_amber",
-      "has_the_recipe"
+      "has_golden_amber"
     ]
   ],
   "rewards": {

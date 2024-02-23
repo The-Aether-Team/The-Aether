@@ -1,6 +1,7 @@
 package com.aetherteam.aether.blockentity;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.advancement.AetherAdvancementTriggers;
 import com.aetherteam.aether.advancement.IncubationTrigger;
 import com.aetherteam.aether.inventory.menu.IncubatorMenu;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
@@ -245,7 +246,7 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 				if (entity != null) {
 					entity.setCustomName(customName);
 					if (this.player != null) {
-						IncubationTrigger.INSTANCE.trigger(this.player, itemStack);
+						AetherAdvancementTriggers.INCUBATION_TRIGGER.trigger(this.player, itemStack);
 					}
 				}
 			}

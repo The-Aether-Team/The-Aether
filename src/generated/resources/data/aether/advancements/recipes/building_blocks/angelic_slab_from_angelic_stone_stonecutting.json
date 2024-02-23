@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_angelic_stone",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_angelic_stone"
     ]
   ],
   "rewards": {

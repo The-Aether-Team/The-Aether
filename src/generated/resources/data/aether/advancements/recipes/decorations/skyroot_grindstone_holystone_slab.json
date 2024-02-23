@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_holystone_slab",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_holystone_slab"
     ]
   ],
   "rewards": {

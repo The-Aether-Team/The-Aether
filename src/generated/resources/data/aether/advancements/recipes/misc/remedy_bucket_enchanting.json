@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_skyroot_poison_bucket",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_skyroot_poison_bucket"
     ]
   ],
   "rewards": {
@@ -31,5 +31,5 @@
       "aether:remedy_bucket_enchanting"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

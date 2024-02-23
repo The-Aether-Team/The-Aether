@@ -1,4 +1,4 @@
-// 1.20.1	2024-01-23T12:37:16.0299097	Tags for minecraft:entity_type mod id aether
+// 1.20.2	2024-02-22T19:23:10.0579317	Tags for minecraft:entity_type mod id aether
 b3a379df5d7bd0f9d26800bb985a7acba83143fe data/aether/tags/entity_types/deflectable_projectiles.json
 1b6a9ff2a0c19d921d6b0012941d44eeb7c028f6 data/aether/tags/entity_types/dungeon_entities.json
 0830aa859642688f0ce9dbf68ec5710f92d7f5d6 data/aether/tags/entity_types/fire_mob.json

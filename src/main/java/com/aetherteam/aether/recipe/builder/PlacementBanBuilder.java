@@ -87,7 +87,7 @@ public abstract class PlacementBanBuilder implements RecipeBuilder {
             BlockStateRecipeUtil.biomeKeyToJson(json, this.biomeKey);
             BlockStateRecipeUtil.biomeTagToJson(json, this.biomeTag);
             if (!this.bypassBlock.isEmpty()) {
-                json.add("bypass", this.bypassBlock.toJson());
+                json.add("bypass", this.bypassBlock.toJson(false));
             }
         }
 

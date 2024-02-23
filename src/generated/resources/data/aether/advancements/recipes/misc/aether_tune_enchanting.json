@@ -20,8 +20,8 @@
   },
   "requirements": [
     [
-      "has_disc",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_disc"
     ]
   ],
   "rewards": {
@@ -29,5 +29,5 @@
       "aether:aether_tune_enchanting"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

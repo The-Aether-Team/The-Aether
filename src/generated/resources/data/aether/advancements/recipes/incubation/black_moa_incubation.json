@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_black_moa_egg",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_black_moa_egg"
     ]
   ],
   "rewards": {
@@ -31,5 +31,5 @@
       "aether:black_moa_incubation"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }
