@@ -67,7 +67,7 @@ public class BlockBanRecipe extends AbstractPlacementBanRecipe<BlockState, Block
             return RecordCodecBuilder.create(inst -> inst.group(
                     ResourceKey.codec(Registries.BIOME).fieldOf("biome").orElse(null).forGetter(BlockBanRecipe::getBiomeKey),
                     TagKey.codec(Registries.BIOME).fieldOf("biome").orElse(null).forGetter(BlockBanRecipe::getBiomeTag),
-                    BlockStateIngredient.CODEC.fieldOf("bypassBlock").forGetter(BlockBanRecipe::getBypassBlock),
+                    BlockStateIngredient.CODEC.fieldOf("bypass").orElse(BlockStateIngredient.EMPTY).forGetter(BlockBanRecipe::getBypassBlock),
                     BlockStateIngredient.CODEC.fieldOf("ingredient").forGetter(BlockBanRecipe::getIngredient)
             ).apply(inst, this.getFactory()));
         }
