@@ -3,11 +3,17 @@ package com.aetherteam.aether.recipe.recipes.ban;
 import com.aetherteam.aether.event.AetherEventDispatch;
 import com.aetherteam.aether.recipe.AetherRecipeSerializers;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
+import com.aetherteam.aether.recipe.recipes.block.AbstractBiomeParameterRecipe;
 import com.aetherteam.aether.recipe.serializer.PlacementBanRecipeSerializer;
+import com.aetherteam.nitrogen.recipe.BlockPropertyPair;
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import com.aetherteam.nitrogen.recipe.BlockStateRecipeUtil;
+import com.aetherteam.nitrogen.recipe.recipes.AbstractBlockStateRecipe;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
@@ -61,6 +67,16 @@ public class ItemBanRecipe extends AbstractPlacementBanRecipe<ItemStack, Ingredi
     public static class Serializer extends PlacementBanRecipeSerializer<ItemStack, Ingredient, ItemBanRecipe> {
         public Serializer() {
             super(ItemBanRecipe::new);
+        }
+
+        @Override
+        public Codec<ItemBanRecipe> codec() {
+            return RecordCodecBuilder.create(inst -> inst.group(
+                    ResourceKey.codec(Registries.BIOME).fieldOf("biome").orElse(null).forGetter(ItemBanRecipe::getBiomeKey),
+                    TagKey.codec(Registries.BIOME).fieldOf("biome").orElse(null).forGetter(ItemBanRecipe::getBiomeTag),
+                    BlockStateIngredient.CODEC.fieldOf("bypassBlock").forGetter(ItemBanRecipe::getBypassBlock),
+                    Ingredient.CODEC.fieldOf("ingredient").forGetter(ItemBanRecipe::getIngredient)
+            ).apply(inst, this.getFactory()));
         }
 
         @Nullable

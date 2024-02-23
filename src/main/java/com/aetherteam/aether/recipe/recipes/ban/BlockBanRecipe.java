@@ -6,12 +6,16 @@ import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.serializer.PlacementBanRecipeSerializer;
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import com.aetherteam.nitrogen.recipe.BlockStateRecipeUtil;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -56,6 +60,16 @@ public class BlockBanRecipe extends AbstractPlacementBanRecipe<BlockState, Block
     public static class Serializer extends PlacementBanRecipeSerializer<BlockState, BlockStateIngredient, BlockBanRecipe> {
         public Serializer() {
             super(BlockBanRecipe::new);
+        }
+
+        @Override
+        public Codec<BlockBanRecipe> codec() {
+            return RecordCodecBuilder.create(inst -> inst.group(
+                    ResourceKey.codec(Registries.BIOME).fieldOf("biome").orElse(null).forGetter(BlockBanRecipe::getBiomeKey),
+                    TagKey.codec(Registries.BIOME).fieldOf("biome").orElse(null).forGetter(BlockBanRecipe::getBiomeTag),
+                    BlockStateIngredient.CODEC.fieldOf("bypassBlock").forGetter(BlockBanRecipe::getBypassBlock),
+                    BlockStateIngredient.CODEC.fieldOf("ingredient").forGetter(BlockBanRecipe::getIngredient)
+            ).apply(inst, this.getFactory()));
         }
 
         @Nullable

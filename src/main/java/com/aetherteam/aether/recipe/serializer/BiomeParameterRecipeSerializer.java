@@ -36,7 +36,6 @@ public class BiomeParameterRecipeSerializer<T extends AbstractBiomeParameterReci
 
     @Override
     public Codec<T> codec() {
-        //return ExtraCodecs.withAlternative(this.codec, super.codec());
         return this.codec;
     }
 
