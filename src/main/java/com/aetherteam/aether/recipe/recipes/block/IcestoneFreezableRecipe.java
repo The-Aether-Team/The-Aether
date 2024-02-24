@@ -6,10 +6,13 @@ import com.aetherteam.nitrogen.recipe.BlockPropertyPair;
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import com.aetherteam.nitrogen.recipe.recipes.AbstractBlockStateRecipe;
 import com.aetherteam.nitrogen.recipe.serializer.BlockStateRecipeSerializer;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
+import java.util.Optional;
+
 public class IcestoneFreezableRecipe extends AbstractBlockStateRecipe {
-    public IcestoneFreezableRecipe(BlockStateIngredient ingredient, BlockPropertyPair result, String function) {
+    public IcestoneFreezableRecipe(BlockStateIngredient ingredient, BlockPropertyPair result, Optional<ResourceLocation> function) {
         super(AetherRecipeTypes.ICESTONE_FREEZABLE.get(), ingredient, result, function);
     }
 

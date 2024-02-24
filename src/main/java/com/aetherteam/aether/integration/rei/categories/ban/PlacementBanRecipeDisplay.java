@@ -44,8 +44,8 @@ public class PlacementBanRecipeDisplay<R extends AbstractPlacementBanRecipe<?, ?
         this(categoryIdentifier,
                 inputs,
                 recipe.getBypassBlock(),
-                Optional.ofNullable(recipe.getBiomeKey()),
-                Optional.ofNullable(recipe.getBiomeTag()),
+                recipe.getBiomeKey(),
+                recipe.getBiomeTag(),
                 Optional.ofNullable((recipe.getIngredient() instanceof BlockStateIngredient ingredient) ? ingredient : null),
                 Optional.empty());
     }
@@ -70,14 +70,12 @@ public class PlacementBanRecipeDisplay<R extends AbstractPlacementBanRecipe<?, ?
         return this.bypassBlock;
     }
 
-    @Nullable
-    public ResourceKey<Biome> getBiomeKey() {
-        return this.biomeKey.orElse(null);
+    public Optional<ResourceKey<Biome>> getBiomeKey() {
+        return this.biomeKey;
     }
 
-    @Nullable
-    public TagKey<Biome> getBiomeTag() {
-        return this.biomeTag.orElse(null);
+    public Optional<TagKey<Biome>> getBiomeTag() {
+        return this.biomeTag;
     }
 
     @Nullable

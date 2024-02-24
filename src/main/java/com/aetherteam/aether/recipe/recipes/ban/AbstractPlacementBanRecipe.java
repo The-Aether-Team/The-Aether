@@ -13,19 +13,17 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nullable;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 public abstract class AbstractPlacementBanRecipe<T, S extends Predicate<T>> implements Recipe<Container> {
     protected final RecipeType<?> type;
-    @Nullable
-    private final ResourceKey<Biome> biomeKey;
-    @Nullable
-    private final TagKey<Biome> biomeTag;
+    private final Optional<ResourceKey<Biome>> biomeKey;
+    private final Optional<TagKey<Biome>> biomeTag;
     protected final BlockStateIngredient bypassBlock;
     protected final S ingredient;
 
-    public AbstractPlacementBanRecipe(RecipeType<?> type, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient bypassBlock, S ingredient) {
+    public AbstractPlacementBanRecipe(RecipeType<?> type, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, BlockStateIngredient bypassBlock, S ingredient) {
         this.type = type;
         this.biomeKey = biomeKey;
         this.biomeTag = biomeTag;
@@ -45,24 +43,18 @@ public abstract class AbstractPlacementBanRecipe<T, S extends Predicate<T>> impl
      */
     public boolean matches(Level level, BlockPos pos, T object) {
         if (this.bypassBlock.isEmpty() || !this.bypassBlock.test(level.getBlockState(pos))) {
-            if (this.biomeKey != null) {
-                return this.getIngredient().test(object) && level.getBiome(pos).is(this.biomeKey);
-            } else if (this.biomeTag != null) {
-                return this.getIngredient().test(object) && level.getBiome(pos).is(this.biomeTag);
-            } else {
-                return this.getIngredient().test(object);
-            }
+            return this.biomeKey.map(biomeResourceKey -> this.getIngredient().test(object) && level.getBiome(pos).is(biomeResourceKey))
+                    .orElseGet(() -> this.biomeTag.map(biomeTagKey -> this.getIngredient().test(object) && level.getBiome(pos).is(biomeTagKey))
+                            .orElseGet(() -> this.getIngredient().test(object)));
         }
         return false;
     }
 
-    @Nullable
-    public ResourceKey<Biome> getBiomeKey() {
+    public Optional<ResourceKey<Biome>> getBiomeKey() {
         return this.biomeKey;
     }
 
-    @Nullable
-    public TagKey<Biome> getBiomeTag() {
+    public Optional<TagKey<Biome>> getBiomeTag() {
         return this.biomeTag;
     }
 
@@ -88,7 +80,6 @@ public abstract class AbstractPlacementBanRecipe<T, S extends Predicate<T>> impl
     public boolean canCraftInDimensions(int pWidth, int pHeight) {
         return false;
     }
-
 
     @Override
     public ItemStack assemble(Container container, RegistryAccess registryAccess) {

@@ -2,7 +2,6 @@ package com.aetherteam.aether.blockentity;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.advancement.AetherAdvancementTriggers;
-import com.aetherteam.aether.advancement.IncubationTrigger;
 import com.aetherteam.aether.inventory.menu.IncubatorMenu;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.recipes.item.IncubationRecipe;

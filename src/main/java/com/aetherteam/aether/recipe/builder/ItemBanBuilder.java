@@ -13,33 +13,33 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.biome.Biome;
 
-import javax.annotation.Nullable;
+import java.util.Optional;
 
 public class ItemBanBuilder extends PlacementBanBuilder {
     private final Ingredient ingredient;
 
-    public ItemBanBuilder(Ingredient ingredient, @Nullable BlockStateIngredient bypassBlock, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, PlacementBanRecipeSerializer<ItemStack, Ingredient, ItemBanRecipe> serializer) {
+    public ItemBanBuilder(Ingredient ingredient, BlockStateIngredient bypassBlock, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, PlacementBanRecipeSerializer<ItemStack, Ingredient, ItemBanRecipe> serializer) {
         super(bypassBlock, biomeKey, biomeTag, serializer);
         this.ingredient = ingredient;
     }
 
-    public static PlacementBanBuilder recipe(Ingredient ingredient, @Nullable ResourceKey<Biome> biomeKey, PlacementBanRecipeSerializer<ItemStack, Ingredient, ItemBanRecipe> serializer) {
-        return recipe(ingredient, BlockStateIngredient.EMPTY, biomeKey, null, serializer);
+    public static PlacementBanBuilder recipe(Ingredient ingredient, ResourceKey<Biome> biomeKey, PlacementBanRecipeSerializer<ItemStack, Ingredient, ItemBanRecipe> serializer) {
+        return recipe(ingredient, BlockStateIngredient.EMPTY, Optional.ofNullable(biomeKey), Optional.empty(), serializer);
     }
 
-    public static PlacementBanBuilder recipe(Ingredient ingredient, @Nullable TagKey<Biome> biomeTag, PlacementBanRecipeSerializer<ItemStack, Ingredient, ItemBanRecipe> serializer) {
-        return recipe(ingredient, BlockStateIngredient.EMPTY, null, biomeTag, serializer);
+    public static PlacementBanBuilder recipe(Ingredient ingredient, TagKey<Biome> biomeTag, PlacementBanRecipeSerializer<ItemStack, Ingredient, ItemBanRecipe> serializer) {
+        return recipe(ingredient, BlockStateIngredient.EMPTY, Optional.empty(), Optional.ofNullable(biomeTag), serializer);
     }
 
-    public static PlacementBanBuilder recipe(Ingredient ingredient, BlockStateIngredient bypassBlock, @Nullable ResourceKey<Biome> biomeKey, PlacementBanRecipeSerializer<ItemStack, Ingredient, ItemBanRecipe> serializer) {
-        return recipe(ingredient, bypassBlock, biomeKey, null, serializer);
+    public static PlacementBanBuilder recipe(Ingredient ingredient, BlockStateIngredient bypassBlock, ResourceKey<Biome> biomeKey, PlacementBanRecipeSerializer<ItemStack, Ingredient, ItemBanRecipe> serializer) {
+        return recipe(ingredient, bypassBlock, Optional.ofNullable(biomeKey), Optional.empty(), serializer);
     }
 
-    public static PlacementBanBuilder recipe(Ingredient ingredient, BlockStateIngredient bypassBlock, @Nullable TagKey<Biome> biomeTag, PlacementBanRecipeSerializer<ItemStack, Ingredient, ItemBanRecipe> serializer) {
-        return recipe(ingredient, bypassBlock, null, biomeTag, serializer);
+    public static PlacementBanBuilder recipe(Ingredient ingredient, BlockStateIngredient bypassBlock, TagKey<Biome> biomeTag, PlacementBanRecipeSerializer<ItemStack, Ingredient, ItemBanRecipe> serializer) {
+        return recipe(ingredient, bypassBlock, Optional.empty(), Optional.ofNullable(biomeTag), serializer);
     }
 
-    public static PlacementBanBuilder recipe(Ingredient ingredient, BlockStateIngredient bypassBlock, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, PlacementBanRecipeSerializer<ItemStack, Ingredient, ItemBanRecipe> serializer) {
+    public static PlacementBanBuilder recipe(Ingredient ingredient, BlockStateIngredient bypassBlock, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, PlacementBanRecipeSerializer<ItemStack, Ingredient, ItemBanRecipe> serializer) {
         return new ItemBanBuilder(ingredient, bypassBlock, biomeKey, biomeTag, serializer);
     }
 
@@ -51,7 +51,7 @@ public class ItemBanBuilder extends PlacementBanBuilder {
     public static class Result extends PlacementBanBuilder.Result {
         private final Ingredient ingredient;
 
-        public Result(ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, @Nullable BlockStateIngredient bypassBlock, Ingredient ingredient, RecipeSerializer<?> serializer) {
+        public Result(ResourceLocation id, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, BlockStateIngredient bypassBlock, Ingredient ingredient, RecipeSerializer<?> serializer) {
             super(id, biomeKey, biomeTag, bypassBlock, serializer);
             this.ingredient = ingredient;
         }

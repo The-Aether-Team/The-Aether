@@ -1,12 +1,10 @@
 package com.aetherteam.aether.item.combat;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.item.combat.abilities.weapon.SkyrootWeapon;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.neoforged.fml.common.Mod;
 
 import javax.annotation.Nullable;
 

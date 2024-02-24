@@ -19,6 +19,8 @@ import net.minecraft.world.level.material.FluidState;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 
+import java.util.Optional;
+
 public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
     /**
      * Freezes blocks around the wearer in a radius of 1.9 as long as they aren't flying or in spectator. This also damages the Ice accessory for every 3 blocks frozen.
@@ -54,7 +56,7 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
                 if (fluidState.isEmpty() || oldBlockState.is(fluidState.createLegacyBlock().getBlock())) { // Default freezing behavior.
                     if (freezableRecipe.matches(level, pos, oldBlockState)) {
                         BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                        CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
+                        Optional<CommandFunction.CacheableFunction> function = freezableRecipe.getFunction();
                         return this.freezeBlockAt(level, pos, origin, oldBlockState, newBlockState, function, source, flag);
                     }
                 } else if (!oldBlockState.hasProperty(BlockStateProperties.WATERLOGGED)) { // Breaks a block before freezing if it has a FluidState attached by default (this is different from waterlogging for blocks like Kelp and Seagrass).
@@ -62,7 +64,7 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
                     if (freezableRecipe.matches(level, pos, oldBlockState)) {
                         level.destroyBlock(pos, true);
                         BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                        CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
+                        Optional<CommandFunction.CacheableFunction> function = freezableRecipe.getFunction();
                         return this.freezeBlockAt(level, pos, origin, oldBlockState, newBlockState, function, source, flag);
                     }
                 }

@@ -7,8 +7,6 @@ import com.aetherteam.aether.item.miscellaneous.MoaEggItem;
 import com.aetherteam.aether.mixin.mixins.client.accessor.BlockColorsAccessor;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -21,7 +19,6 @@ import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = Aether.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherColorResolvers {

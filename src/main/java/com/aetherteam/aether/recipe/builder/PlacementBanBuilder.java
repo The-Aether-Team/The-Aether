@@ -16,16 +16,15 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.biome.Biome;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public abstract class PlacementBanBuilder implements RecipeBuilder {
     private final BlockStateIngredient bypassBlock;
-    @Nullable
-    private final ResourceKey<Biome> biomeKey;
-    @Nullable
-    private final TagKey<Biome> biomeTag;
+    private final Optional<ResourceKey<Biome>> biomeKey;
+    private final Optional<TagKey<Biome>> biomeTag;
     private final RecipeSerializer<?> serializer;
 
-    public PlacementBanBuilder(BlockStateIngredient bypassBlock, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, RecipeSerializer<?> serializer) {
+    public PlacementBanBuilder(BlockStateIngredient bypassBlock, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, RecipeSerializer<?> serializer) {
         this.bypassBlock = bypassBlock;
         this.biomeKey = biomeKey;
         this.biomeTag = biomeTag;
@@ -41,13 +40,11 @@ public abstract class PlacementBanBuilder implements RecipeBuilder {
         return this.bypassBlock;
     }
 
-    @Nullable
-    public ResourceKey<Biome> getBiomeKey() {
+    public Optional<ResourceKey<Biome>> getBiomeKey() {
         return this.biomeKey;
     }
 
-    @Nullable
-    public TagKey<Biome> getBiomeTag() {
+    public Optional<TagKey<Biome>> getBiomeTag() {
         return this.biomeTag;
     }
 
@@ -67,14 +64,12 @@ public abstract class PlacementBanBuilder implements RecipeBuilder {
 
     public static class Result implements FinishedRecipe {
         private final ResourceLocation id;
-        @Nullable
-        private final ResourceKey<Biome> biomeKey;
-        @Nullable
-        private final TagKey<Biome> biomeTag;
+        private final Optional<ResourceKey<Biome>> biomeKey;
+        private final Optional<TagKey<Biome>> biomeTag;
         private final BlockStateIngredient bypassBlock;
         private final RecipeSerializer<?> serializer;
 
-        public Result(ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient bypassBlock, RecipeSerializer<?> serializer) {
+        public Result(ResourceLocation id, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, BlockStateIngredient bypassBlock, RecipeSerializer<?> serializer) {
             this.id = id;
             this.biomeKey = biomeKey;
             this.biomeTag = biomeTag;

@@ -16,46 +16,44 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.Property;
 
-import javax.annotation.Nullable;
 import java.util.Map;
+import java.util.Optional;
 
 public class BiomeParameterRecipeBuilder extends BlockStateRecipeBuilder {
-    @Nullable
-    private final ResourceKey<Biome> biomeKey;
-    @Nullable
-    private final TagKey<Biome> biomeTag;
+    private final Optional<ResourceKey<Biome>> biomeKey;
+    private final Optional<TagKey<Biome>> biomeTag;
 
-    public BiomeParameterRecipeBuilder(BlockPropertyPair result, BlockStateIngredient ingredient, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateRecipeSerializer<?> serializer) {
+    public BiomeParameterRecipeBuilder(BlockPropertyPair result, BlockStateIngredient ingredient, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, BlockStateRecipeSerializer<?> serializer) {
         super(result, ingredient, serializer);
         this.biomeKey = biomeKey;
         this.biomeTag = biomeTag;
     }
 
     public static BiomeParameterRecipeBuilder recipe(BlockStateIngredient ingredient, Block result, ResourceKey<Biome> biomeKey, BlockStateRecipeSerializer<?> serializer) {
-        return recipe(BlockPropertyPair.of(result, Map.of()), ingredient, biomeKey, null, serializer);
+        return recipe(BlockPropertyPair.of(result, Map.of()), ingredient, Optional.ofNullable(biomeKey), Optional.empty(), serializer);
     }
 
     public static BiomeParameterRecipeBuilder recipe(BlockStateIngredient ingredient, BlockPropertyPair resultPair, ResourceKey<Biome> biomeKey, BlockStateRecipeSerializer<?> serializer) {
-        return recipe(BlockPropertyPair.of(resultPair.block(), resultPair.properties()), ingredient, biomeKey, null, serializer);
+        return recipe(BlockPropertyPair.of(resultPair.block(), resultPair.properties()), ingredient, Optional.ofNullable(biomeKey), Optional.empty(), serializer);
     }
 
     public static BiomeParameterRecipeBuilder recipe(BlockStateIngredient ingredient, Block resultBlock, Map<Property<?>, Comparable<?>> resultProperties, ResourceKey<Biome> biomeKey, BlockStateRecipeSerializer<?> serializer) {
-        return recipe(BlockPropertyPair.of(resultBlock, resultProperties), ingredient, biomeKey, null, serializer);
+        return recipe(BlockPropertyPair.of(resultBlock, resultProperties), ingredient, Optional.ofNullable(biomeKey), Optional.empty(), serializer);
     }
 
     public static BiomeParameterRecipeBuilder recipe(BlockStateIngredient ingredient, Block result, TagKey<Biome> biomeTag, BlockStateRecipeSerializer<?> serializer) {
-        return recipe(BlockPropertyPair.of(result, Map.of()), ingredient, null, biomeTag, serializer);
+        return recipe(BlockPropertyPair.of(result, Map.of()), ingredient, Optional.empty(), Optional.ofNullable(biomeTag), serializer);
     }
 
     public static BiomeParameterRecipeBuilder recipe(BlockStateIngredient ingredient, BlockPropertyPair resultPair, TagKey<Biome> biomeTag, BlockStateRecipeSerializer<?> serializer) {
-        return recipe(BlockPropertyPair.of(resultPair.block(), resultPair.properties()), ingredient, null, biomeTag, serializer);
+        return recipe(BlockPropertyPair.of(resultPair.block(), resultPair.properties()), ingredient, Optional.empty(), Optional.ofNullable(biomeTag), serializer);
     }
 
     public static BiomeParameterRecipeBuilder recipe(BlockStateIngredient ingredient, Block resultBlock, Map<Property<?>, Comparable<?>> resultProperties, TagKey<Biome> biomeTag, BlockStateRecipeSerializer<?> serializer) {
-        return recipe(BlockPropertyPair.of(resultBlock, resultProperties), ingredient, null, biomeTag, serializer);
+        return recipe(BlockPropertyPair.of(resultBlock, resultProperties), ingredient, Optional.empty(), Optional.ofNullable(biomeTag), serializer);
     }
 
-    public static BiomeParameterRecipeBuilder recipe(BlockPropertyPair result, BlockStateIngredient ingredient, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateRecipeSerializer<?> serializer) {
+    public static BiomeParameterRecipeBuilder recipe(BlockPropertyPair result, BlockStateIngredient ingredient, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, BlockStateRecipeSerializer<?> serializer) {
         return new BiomeParameterRecipeBuilder(result, ingredient, biomeKey, biomeTag, serializer);
     }
 
@@ -65,16 +63,14 @@ public class BiomeParameterRecipeBuilder extends BlockStateRecipeBuilder {
     }
 
     public static class Result extends BlockStateRecipeBuilder.Result {
-        @Nullable
-        private final ResourceKey<Biome> biomeKey;
-        @Nullable
-        private final TagKey<Biome> biomeTag;
+        private final Optional<ResourceKey<Biome>> biomeKey;
+        private final Optional<TagKey<Biome>> biomeTag;
 
-        public Result(ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, RecipeSerializer<? extends AbstractBlockStateRecipe> serializer) {
-            this(id, biomeKey, biomeTag, ingredient, result, serializer, null);
+        public Result(ResourceLocation id, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, RecipeSerializer<? extends AbstractBlockStateRecipe> serializer) {
+            this(id, biomeKey, biomeTag, ingredient, result, serializer, Optional.empty());
         }
 
-        public Result(ResourceLocation id, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, RecipeSerializer<? extends AbstractBlockStateRecipe> serializer, @Nullable ResourceLocation function) {
+        public Result(ResourceLocation id, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, RecipeSerializer<? extends AbstractBlockStateRecipe> serializer, Optional<ResourceLocation> function) {
             super(id, ingredient, result, serializer, function);
             this.biomeKey = biomeKey;
             this.biomeTag = biomeTag;

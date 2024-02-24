@@ -1,22 +1,16 @@
 package com.aetherteam.aether.recipe.serializer;
 
 import com.aetherteam.aether.recipe.recipes.ban.AbstractPlacementBanRecipe;
-import com.aetherteam.aether.recipe.recipes.block.AbstractBiomeParameterRecipe;
-import com.aetherteam.nitrogen.recipe.BlockPropertyPair;
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import com.aetherteam.nitrogen.recipe.BlockStateRecipeUtil;
-import com.aetherteam.nitrogen.recipe.recipes.AbstractBlockStateRecipe;
 import com.mojang.datafixers.util.Function4;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.biome.Biome;
 
-import javax.annotation.Nullable;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 public abstract class PlacementBanRecipeSerializer<T, S extends Predicate<T>, F extends AbstractPlacementBanRecipe<T, S>> implements RecipeSerializer<F> {
@@ -37,8 +31,8 @@ public abstract class PlacementBanRecipeSerializer<T, S extends Predicate<T>, F 
         return this.factory;
     }
 
-    public interface CookieBaker<T, S extends Predicate<T>, F extends AbstractPlacementBanRecipe<T, S>> extends Function4<ResourceKey<Biome>, TagKey<Biome>, BlockStateIngredient, S, F> {
+    public interface CookieBaker<T, S extends Predicate<T>, F extends AbstractPlacementBanRecipe<T, S>> extends Function4<Optional<ResourceKey<Biome>>, Optional<TagKey<Biome>>, BlockStateIngredient, S, F> {
         @Override
-        F apply(@Nullable ResourceKey<Biome> dimensionTypeKey, @Nullable TagKey<Biome> dimensionTypeTag, BlockStateIngredient bypassBlock, S ingredient);
+        F apply(Optional<ResourceKey<Biome>> dimensionTypeKey, Optional<TagKey<Biome>> dimensionTypeTag, BlockStateIngredient bypassBlock, S ingredient);
     }
 }

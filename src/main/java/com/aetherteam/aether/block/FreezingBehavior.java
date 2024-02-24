@@ -10,7 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nullable;
+import java.util.Optional;
 
 public interface FreezingBehavior<T> {
     /**
@@ -111,7 +111,7 @@ public interface FreezingBehavior<T> {
      * @param flag The {@link Integer} placement flag.
      * @return An {@link Integer} 0 if the block failed to freeze or 1 if it succeeded
      */
-    default int freezeBlockAt(Level level, BlockPos pos, BlockPos origin, BlockState oldBlockState, BlockState newBlockState, @Nullable CommandFunction.CacheableFunction function, T source, int flag) {
+    default int freezeBlockAt(Level level, BlockPos pos, BlockPos origin, BlockState oldBlockState, BlockState newBlockState, Optional<CommandFunction.CacheableFunction> function, T source, int flag) {
         FreezeEvent event = this.onFreeze(level, pos, origin, oldBlockState, newBlockState, source);
         if (!event.isCanceled()) {
             level.setBlock(pos, newBlockState, flag);

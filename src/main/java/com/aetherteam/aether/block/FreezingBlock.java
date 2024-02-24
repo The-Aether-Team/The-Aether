@@ -20,10 +20,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public interface FreezingBlock extends FreezingBehavior<BlockState> {
     /**
@@ -58,7 +55,7 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
                     IcestoneFreezableRecipe freezableRecipe = cachedBlocks.get(oldBlock, pair);
                     if (freezableRecipe != null) {
                         BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                        CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
+                        Optional<CommandFunction.CacheableFunction> function = freezableRecipe.getFunction();
                         return this.freezeBlockAt(level, pos, origin, oldBlockState, newBlockState, function, source, flag);
                     }
                 }
@@ -71,7 +68,7 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
                     if (freezableRecipe != null) {
                         level.destroyBlock(pos, true);
                         BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                        CommandFunction.CacheableFunction function = freezableRecipe.getFunction();
+                        Optional<CommandFunction.CacheableFunction> function = freezableRecipe.getFunction();
                         return this.freezeBlockAt(level, pos, origin, oldBlockState, newBlockState, function, source, flag);
                     }
                 }

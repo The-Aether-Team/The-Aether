@@ -13,24 +13,26 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public class BiomeParameterRecipeSerializer<T extends AbstractBiomeParameterRecipe> extends BlockStateRecipeSerializer<T> {
     private final BiomeParameterRecipeSerializer.CookieBaker<T> factory;
     private final Codec<T> codec;
 
-    public BiomeParameterRecipeSerializer(BiomeParameterRecipeSerializer.CookieBaker<T> factory, Function3<BlockStateIngredient, BlockPropertyPair, String, T> superFactory) {
+    public BiomeParameterRecipeSerializer(BiomeParameterRecipeSerializer.CookieBaker<T> factory, Function3<BlockStateIngredient, BlockPropertyPair, Optional<ResourceLocation>, T> superFactory) {
         super(superFactory);
         this.factory = factory;
         this.codec = RecordCodecBuilder.create(inst -> inst.group(
-                ResourceKey.codec(Registries.BIOME).fieldOf("biome").orElse(null).forGetter(AbstractBiomeParameterRecipe::getBiomeKey),
-                TagKey.codec(Registries.BIOME).fieldOf("biome").orElse(null).forGetter(AbstractBiomeParameterRecipe::getBiomeTag),
+                ResourceKey.codec(Registries.BIOME).optionalFieldOf("biome").forGetter(AbstractBiomeParameterRecipe::getBiomeKey),
+                TagKey.codec(Registries.BIOME).optionalFieldOf("biome").forGetter(AbstractBiomeParameterRecipe::getBiomeTag),
                 BlockStateIngredient.CODEC.fieldOf("ingredient").forGetter(AbstractBlockStateRecipe::getIngredient),
                 BlockPropertyPair.BLOCKSTATE_CODEC.fieldOf("result").forGetter(AbstractBlockStateRecipe::getResult),
-                Codec.STRING.fieldOf("mcfunction").orElse("").forGetter(AbstractBlockStateRecipe::getFunctionString)
+                ResourceLocation.CODEC.optionalFieldOf("mcfunction").forGetter(AbstractBlockStateRecipe::getFunctionId)
         ).apply(inst, factory));
     }
 
@@ -42,12 +44,12 @@ public class BiomeParameterRecipeSerializer<T extends AbstractBiomeParameterReci
     @Nullable
     @Override
     public T fromNetwork(FriendlyByteBuf buffer) {
-        ResourceKey<Biome> biomeKey = BlockStateRecipeUtil.readBiomeKey(buffer);
-        TagKey<Biome> biomeTag = BlockStateRecipeUtil.readBiomeTag(buffer);
+        Optional<ResourceKey<Biome>> biomeKey = BlockStateRecipeUtil.readBiomeKey(buffer);
+        Optional<TagKey<Biome>> biomeTag = BlockStateRecipeUtil.readBiomeTag(buffer);
         BlockStateIngredient ingredient = BlockStateIngredient.fromNetwork(buffer);
         BlockPropertyPair result = BlockStateRecipeUtil.readPair(buffer);
-        String functionString = buffer.readUtf();
-        return this.factory.apply(biomeKey, biomeTag, ingredient, result, functionString);
+        Optional<ResourceLocation> function = buffer.readOptional(FriendlyByteBuf::readResourceLocation);
+        return this.factory.apply(biomeKey, biomeTag, ingredient, result, function);
     }
 
     @Override
@@ -57,8 +59,8 @@ public class BiomeParameterRecipeSerializer<T extends AbstractBiomeParameterReci
         super.toNetwork(buffer, recipe);
     }
 
-    public interface CookieBaker<T extends AbstractBiomeParameterRecipe> extends Function5<ResourceKey<Biome>, TagKey<Biome>, BlockStateIngredient, BlockPropertyPair, String, T> {
+    public interface CookieBaker<T extends AbstractBiomeParameterRecipe> extends Function5<Optional<ResourceKey<Biome>>, Optional<TagKey<Biome>>, BlockStateIngredient, BlockPropertyPair, Optional<ResourceLocation>, T> {
         @Override
-        T apply(@Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, @Nullable String function);
+        T apply(Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, Optional<ResourceLocation> function);
     }
 }

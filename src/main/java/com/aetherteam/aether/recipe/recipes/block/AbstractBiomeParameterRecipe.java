@@ -5,21 +5,20 @@ import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import com.aetherteam.nitrogen.recipe.recipes.AbstractBlockStateRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nullable;
+import java.util.Optional;
 
 public abstract class AbstractBiomeParameterRecipe extends AbstractBlockStateRecipe {
-    @Nullable
-    private final ResourceKey<Biome> biomeKey;
-    @Nullable
-    private final TagKey<Biome> biomeTag;
+    private final Optional<ResourceKey<Biome>> biomeKey;
+    private final Optional<TagKey<Biome>> biomeTag;
 
-    public AbstractBiomeParameterRecipe(RecipeType<?> type, @Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, @Nullable String function) {
+    public AbstractBiomeParameterRecipe(RecipeType<?> type, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, Optional<ResourceLocation> function) {
         super(type, ingredient, result, function);
         this.biomeKey = biomeKey;
         this.biomeTag = biomeTag;
@@ -36,22 +35,16 @@ public abstract class AbstractBiomeParameterRecipe extends AbstractBlockStateRec
      */
     @Override
     public boolean matches(Level level, BlockPos pos, BlockState state) {
-        if (this.biomeKey != null) {
-            return super.matches(level, pos, state) && level.getBiome(pos).is(this.biomeKey);
-        } else if (this.biomeTag != null) {
-            return super.matches(level, pos, state) && level.getBiome(pos).is(this.biomeTag);
-        } else {
-            return super.matches(level, pos, state);
-        }
+        return this.biomeKey.map(biomeResourceKey -> super.matches(level, pos, state) && level.getBiome(pos).is(biomeResourceKey))
+                .orElseGet(() -> this.biomeTag.map(biomeTagKey -> super.matches(level, pos, state) && level.getBiome(pos).is(biomeTagKey))
+                        .orElseGet(() -> super.matches(level, pos, state)));
     }
 
-    @Nullable
-    public ResourceKey<Biome> getBiomeKey() {
+    public Optional<ResourceKey<Biome>> getBiomeKey() {
         return this.biomeKey;
     }
 
-    @Nullable
-    public TagKey<Biome> getBiomeTag() {
+    public Optional<TagKey<Biome>> getBiomeTag() {
         return this.biomeTag;
     }
 }

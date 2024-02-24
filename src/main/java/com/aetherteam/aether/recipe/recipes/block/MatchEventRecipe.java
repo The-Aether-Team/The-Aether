@@ -13,6 +13,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public interface MatchEventRecipe {
     /**
@@ -23,7 +24,7 @@ public interface MatchEventRecipe {
      * @param function The {@link CommandFunction.CacheableFunction} to run when the recipe is performed.
      * @return Whether the new {@link BlockState} was set.
      */
-    default boolean convert(Level level, BlockPos pos, BlockState newState, @Nullable CommandFunction.CacheableFunction function) {
+    default boolean convert(Level level, BlockPos pos, BlockState newState, Optional<CommandFunction.CacheableFunction> function) {
         level.setBlockAndUpdate(pos, newState);
         BlockStateRecipeUtil.executeFunction(level, pos, function);
         return true;

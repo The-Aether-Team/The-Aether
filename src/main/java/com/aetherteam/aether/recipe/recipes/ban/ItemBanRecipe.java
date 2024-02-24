@@ -3,12 +3,9 @@ package com.aetherteam.aether.recipe.recipes.ban;
 import com.aetherteam.aether.event.AetherEventDispatch;
 import com.aetherteam.aether.recipe.AetherRecipeSerializers;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
-import com.aetherteam.aether.recipe.recipes.block.AbstractBiomeParameterRecipe;
 import com.aetherteam.aether.recipe.serializer.PlacementBanRecipeSerializer;
-import com.aetherteam.nitrogen.recipe.BlockPropertyPair;
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import com.aetherteam.nitrogen.recipe.BlockStateRecipeUtil;
-import com.aetherteam.nitrogen.recipe.recipes.AbstractBlockStateRecipe;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
@@ -26,13 +23,14 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public class ItemBanRecipe extends AbstractPlacementBanRecipe<ItemStack, Ingredient> {
-    public ItemBanRecipe(@Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient bypassBlock, Ingredient ingredient) {
+    public ItemBanRecipe(Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, BlockStateIngredient bypassBlock, Ingredient ingredient) {
         super(AetherRecipeTypes.ITEM_PLACEMENT_BAN.get(), biomeKey, biomeTag, bypassBlock, ingredient);
     }
 
-    public ItemBanRecipe(@Nullable ResourceKey<Biome> biomeKey, @Nullable TagKey<Biome> biomeTag, BlockStateIngredient bypassBlock) {
+    public ItemBanRecipe(Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, BlockStateIngredient bypassBlock) {
         this(biomeKey, biomeTag, bypassBlock, Ingredient.EMPTY);
     }
 
@@ -72,8 +70,8 @@ public class ItemBanRecipe extends AbstractPlacementBanRecipe<ItemStack, Ingredi
         @Override
         public Codec<ItemBanRecipe> codec() {
             return RecordCodecBuilder.create(inst -> inst.group(
-                    ResourceKey.codec(Registries.BIOME).fieldOf("biome").orElse(null).forGetter(ItemBanRecipe::getBiomeKey),
-                    TagKey.codec(Registries.BIOME).fieldOf("biome").orElse(null).forGetter(ItemBanRecipe::getBiomeTag),
+                    ResourceKey.codec(Registries.BIOME).optionalFieldOf("biome").forGetter(ItemBanRecipe::getBiomeKey),
+                    TagKey.codec(Registries.BIOME).optionalFieldOf("biome").forGetter(ItemBanRecipe::getBiomeTag),
                     BlockStateIngredient.CODEC.fieldOf("bypass").orElse(BlockStateIngredient.EMPTY).forGetter(ItemBanRecipe::getBypassBlock),
                     Ingredient.CODEC.fieldOf("ingredient").forGetter(ItemBanRecipe::getIngredient)
             ).apply(inst, this.getFactory()));
@@ -82,8 +80,8 @@ public class ItemBanRecipe extends AbstractPlacementBanRecipe<ItemStack, Ingredi
         @Nullable
         @Override
         public ItemBanRecipe fromNetwork(FriendlyByteBuf buffer) {
-            ResourceKey<Biome> biomeKey = BlockStateRecipeUtil.readBiomeKey(buffer);
-            TagKey<Biome> biomeTag = BlockStateRecipeUtil.readBiomeTag(buffer);
+            Optional<ResourceKey<Biome>> biomeKey = BlockStateRecipeUtil.readBiomeKey(buffer);
+            Optional<TagKey<Biome>> biomeTag = BlockStateRecipeUtil.readBiomeTag(buffer);
             BlockStateIngredient bypassBlock = BlockStateIngredient.fromNetwork(buffer);
             Ingredient ingredient = Ingredient.fromNetwork(buffer);
             return new ItemBanRecipe(biomeKey, biomeTag, bypassBlock, ingredient);
