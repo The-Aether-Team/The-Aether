@@ -21,8 +21,8 @@ import javax.annotation.Nullable;
 public class AltarRepairRecipe extends AbstractAetherCookingRecipe {
     public final Ingredient ingredient;
 
-    public AltarRepairRecipe(String group, AetherBookCategory category, Ingredient ingredient, int repairTime) {
-        super(AetherRecipeTypes.ENCHANTING.get(), group, category, ingredient, ingredient.getItems()[0], 0.0F, repairTime);
+    public AltarRepairRecipe(String group, Ingredient ingredient, int repairTime) {
+        super(AetherRecipeTypes.ENCHANTING.get(), group, AetherBookCategory.ENCHANTING_REPAIR, ingredient, ingredient.getItems()[0], 0.0F, repairTime);
         this.ingredient = ingredient;
     }
 
@@ -61,7 +61,6 @@ public class AltarRepairRecipe extends AbstractAetherCookingRecipe {
     public static class Serializer implements RecipeSerializer<AltarRepairRecipe> {
         private static final Codec<AltarRepairRecipe> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
                 ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(AbstractCookingRecipe::getGroup),
-                AetherBookCategory.CODEC.fieldOf("category").forGetter((recipe) -> AetherBookCategory.CODEC.byName(recipe.group)),
                 Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter((recipe) -> recipe.ingredient),
                 Codec.INT.fieldOf("repairTime").orElse(500).forGetter((recipe) -> recipe.cookingTime)
         ).apply(instance, AltarRepairRecipe::new));
@@ -76,16 +75,14 @@ public class AltarRepairRecipe extends AbstractAetherCookingRecipe {
         public AltarRepairRecipe fromNetwork(FriendlyByteBuf buffer) {
             String group = buffer.readUtf();
 
-            AetherBookCategory aetherBookCategory = buffer.readEnum(AetherBookCategory.class);
             Ingredient ingredient = Ingredient.fromNetwork(buffer);
             int cookingTime = buffer.readVarInt();
-            return new AltarRepairRecipe(group, aetherBookCategory, ingredient, cookingTime);
+            return new AltarRepairRecipe(group, ingredient, cookingTime);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf buffer, AltarRepairRecipe recipe) {
             buffer.writeUtf(recipe.group);
-            buffer.writeEnum(recipe.aetherCategory());
             recipe.ingredient.toNetwork(buffer);
             buffer.writeVarInt(recipe.cookingTime);
         }
