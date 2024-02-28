@@ -44,7 +44,6 @@
   "client": [
     "client.AdvancementToastMixin",
     "client.BossHealthOverlayMixin",
-    "client.ClientPacketListenerMixin",
     "client.ConnectScreenMixin",
     "client.CreateWorldScreenMixin",
     "client.ElytraLayerMixin",

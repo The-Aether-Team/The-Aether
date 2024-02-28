@@ -22,16 +22,17 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public class IncubationRecipe implements Recipe<Container> {
     protected final RecipeType<?> type;
     protected final String group;
     protected final Ingredient ingredient;
     protected final EntityType<?> entity;
-    protected final CompoundTag tag;
+    protected final Optional<CompoundTag> tag;
     protected final int incubationTime;
 
-    public IncubationRecipe(String group, Ingredient ingredient, EntityType<?> entity, CompoundTag tag, int incubationTime) {
+    public IncubationRecipe(String group, Ingredient ingredient, EntityType<?> entity, Optional<CompoundTag> tag, int incubationTime) {
         this.type = AetherRecipeTypes.INCUBATION.get();
         this.group = group;
         this.ingredient = ingredient;
@@ -74,7 +75,7 @@ public class IncubationRecipe implements Recipe<Container> {
         return this.entity;
     }
 
-    public CompoundTag getTag() {
+    public Optional<CompoundTag> getTag() {
         return this.tag;
     }
 
@@ -110,9 +111,14 @@ public class IncubationRecipe implements Recipe<Container> {
                 ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(IncubationRecipe::getGroup),
                 Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter((recipe) -> recipe.ingredient),
                 BuiltInRegistries.ENTITY_TYPE.byNameCodec().fieldOf("entity").forGetter((recipe) -> recipe.entity),
-                CompoundTag.CODEC.fieldOf("tag").orElse(null).forGetter((recipe) -> recipe.tag),
+                CompoundTag.CODEC.optionalFieldOf("tag").forGetter((recipe) -> recipe.tag),
                 Codec.INT.fieldOf("incubationtime").orElse(500).forGetter((recipe) -> recipe.incubationTime)
         ).apply(instance, IncubationRecipe::new));
+
+        @Override
+        public Codec<IncubationRecipe> codec() {
+            return CODEC;
+        }
 
         @Nullable
         @Override
@@ -120,17 +126,9 @@ public class IncubationRecipe implements Recipe<Container> {
             String group = buffer.readUtf();
             Ingredient ingredient = Ingredient.fromNetwork(buffer);
             EntityType<?> entityType = EntityType.byString(buffer.readUtf()).orElseThrow(() -> new JsonSyntaxException("Entity type cannot be found"));
-            CompoundTag tag = null;
-            if (buffer.readBoolean()) {
-                tag = buffer.readNbt();
-            }
+            Optional<CompoundTag> tag = buffer.readOptional(FriendlyByteBuf::readNbt);
             int incubationTime = buffer.readVarInt();
             return new IncubationRecipe(group, ingredient, entityType, tag, incubationTime);
-        }
-
-        @Override
-        public Codec<IncubationRecipe> codec() {
-            return CODEC;
         }
 
         @Override
@@ -138,12 +136,7 @@ public class IncubationRecipe implements Recipe<Container> {
             buffer.writeUtf(recipe.group);
             recipe.ingredient.toNetwork(buffer);
             buffer.writeUtf(EntityType.getKey(recipe.getEntity()).toString());
-            if (recipe.tag != null) {
-                buffer.writeBoolean(true);
-                buffer.writeNbt(recipe.tag);
-            } else {
-                buffer.writeBoolean(false);
-            }
+            buffer.writeOptional(recipe.tag, (FriendlyByteBuf::writeNbt));
             buffer.writeVarInt(recipe.getIncubationTime());
         }
     }
