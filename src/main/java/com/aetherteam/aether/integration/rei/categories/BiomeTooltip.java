@@ -9,7 +9,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 
-import javax.annotation.Nullable;
 import java.util.Optional;
 
 public interface BiomeTooltip {
