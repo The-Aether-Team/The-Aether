@@ -19,12 +19,12 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 public abstract class PlacementBanBuilder implements RecipeBuilder {
-    private final BlockStateIngredient bypassBlock;
+    private final Optional<BlockStateIngredient> bypassBlock;
     private final Optional<ResourceKey<Biome>> biomeKey;
     private final Optional<TagKey<Biome>> biomeTag;
     private final RecipeSerializer<?> serializer;
 
-    public PlacementBanBuilder(BlockStateIngredient bypassBlock, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, RecipeSerializer<?> serializer) {
+    public PlacementBanBuilder(Optional<BlockStateIngredient> bypassBlock, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, RecipeSerializer<?> serializer) {
         this.bypassBlock = bypassBlock;
         this.biomeKey = biomeKey;
         this.biomeTag = biomeTag;
@@ -36,7 +36,7 @@ public abstract class PlacementBanBuilder implements RecipeBuilder {
         return this;
     }
 
-    public BlockStateIngredient getBypassBlock() {
+    public Optional<BlockStateIngredient> getBypassBlock() {
         return this.bypassBlock;
     }
 
@@ -66,10 +66,10 @@ public abstract class PlacementBanBuilder implements RecipeBuilder {
         private final ResourceLocation id;
         private final Optional<ResourceKey<Biome>> biomeKey;
         private final Optional<TagKey<Biome>> biomeTag;
-        private final BlockStateIngredient bypassBlock;
+        private final Optional<BlockStateIngredient> bypassBlock;
         private final RecipeSerializer<?> serializer;
 
-        public Result(ResourceLocation id, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, BlockStateIngredient bypassBlock, RecipeSerializer<?> serializer) {
+        public Result(ResourceLocation id, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, Optional<BlockStateIngredient> bypassBlock, RecipeSerializer<?> serializer) {
             this.id = id;
             this.biomeKey = biomeKey;
             this.biomeTag = biomeTag;
@@ -81,9 +81,7 @@ public abstract class PlacementBanBuilder implements RecipeBuilder {
         public void serializeRecipeData(JsonObject json) {
             BlockStateRecipeUtil.biomeKeyToJson(json, this.biomeKey);
             BlockStateRecipeUtil.biomeTagToJson(json, this.biomeTag);
-            if (!this.bypassBlock.isEmpty()) {
-                json.add("bypass", this.bypassBlock.toJson(false));
-            }
+            this.bypassBlock.ifPresent((blockStateIngredient) -> json.add("bypass", blockStateIngredient.toJson(false)));
         }
 
         @Override

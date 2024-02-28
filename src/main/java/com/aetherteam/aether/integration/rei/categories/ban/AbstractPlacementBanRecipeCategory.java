@@ -7,6 +7,7 @@ import com.aetherteam.nitrogen.integration.rei.categories.AbstractRecipeCategory
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.Renderer;
+import me.shedaniel.rei.api.client.gui.widgets.Slot;
 import me.shedaniel.rei.api.client.gui.widgets.Tooltip;
 import me.shedaniel.rei.api.client.gui.widgets.Widget;
 import me.shedaniel.rei.api.client.gui.widgets.Widgets;
@@ -32,12 +33,12 @@ public abstract class AbstractPlacementBanRecipeCategory<T, S extends Predicate<
         var widgets = super.setupDisplay(display, bounds);
         var bypassBlock = display.getBypassBlock();
 
-        if (bypassBlock != null && !bypassBlock.isEmpty()) {
+        if (bypassBlock.isPresent() && !bypassBlock.get().isEmpty()) {
             var bypassPoint = startingOffset(bounds);
             bypassPoint.translate(99, 1);
 
             var bypassSlot = Widgets.createSlot(bypassPoint)
-                    .entries(REIClientUtils.setupRendering(display.getInputEntries().get(0), bypassBlock.getPairs(), (tooltip) -> this.populateTooltip(display, tooltip)));
+                    .entries(REIClientUtils.setupRendering(display.getInputEntries().get(0), bypassBlock.get().getPairs(), (tooltip) -> this.populateTooltip(display, tooltip)));
             widgets.add(bypassSlot);
 
             var text = Component.translatable("gui.aether.jei.bypass");

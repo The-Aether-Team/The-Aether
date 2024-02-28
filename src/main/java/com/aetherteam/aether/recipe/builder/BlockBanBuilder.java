@@ -17,28 +17,28 @@ import java.util.Optional;
 public class BlockBanBuilder extends PlacementBanBuilder {
     private final BlockStateIngredient ingredient;
 
-    public BlockBanBuilder(BlockStateIngredient ingredient, BlockStateIngredient bypassBlock, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, PlacementBanRecipeSerializer<BlockState, BlockStateIngredient, BlockBanRecipe> serializer) {
+    public BlockBanBuilder(BlockStateIngredient ingredient, Optional<BlockStateIngredient> bypassBlock, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, PlacementBanRecipeSerializer<BlockState, BlockStateIngredient, BlockBanRecipe> serializer) {
         super(bypassBlock, biomeKey, biomeTag, serializer);
         this.ingredient = ingredient;
     }
 
     public static PlacementBanBuilder recipe(BlockStateIngredient ingredient, ResourceKey<Biome> biomeKey, PlacementBanRecipeSerializer<BlockState, BlockStateIngredient, BlockBanRecipe> serializer) {
-        return recipe(ingredient, BlockStateIngredient.EMPTY, Optional.ofNullable(biomeKey), Optional.empty(), serializer);
+        return recipe(ingredient, Optional.empty(), Optional.ofNullable(biomeKey), Optional.empty(), serializer);
     }
 
     public static PlacementBanBuilder recipe(BlockStateIngredient ingredient, TagKey<Biome> biomeTag, PlacementBanRecipeSerializer<BlockState, BlockStateIngredient, BlockBanRecipe> serializer) {
-        return recipe(ingredient, BlockStateIngredient.EMPTY, Optional.empty(), Optional.ofNullable(biomeTag), serializer);
+        return recipe(ingredient, Optional.empty(), Optional.empty(), Optional.ofNullable(biomeTag), serializer);
     }
 
-    public static PlacementBanBuilder recipe(BlockStateIngredient ingredient, BlockStateIngredient bypassBlock, ResourceKey<Biome> biomeKey, PlacementBanRecipeSerializer<BlockState, BlockStateIngredient, BlockBanRecipe> serializer) {
+    public static PlacementBanBuilder recipe(BlockStateIngredient ingredient, Optional<BlockStateIngredient> bypassBlock, ResourceKey<Biome> biomeKey, PlacementBanRecipeSerializer<BlockState, BlockStateIngredient, BlockBanRecipe> serializer) {
         return recipe(ingredient, bypassBlock, Optional.ofNullable(biomeKey), Optional.empty(), serializer);
     }
 
-    public static PlacementBanBuilder recipe(BlockStateIngredient ingredient, BlockStateIngredient bypassBlock, TagKey<Biome> biomeTag, PlacementBanRecipeSerializer<BlockState, BlockStateIngredient, BlockBanRecipe> serializer) {
+    public static PlacementBanBuilder recipe(BlockStateIngredient ingredient, Optional<BlockStateIngredient> bypassBlock, TagKey<Biome> biomeTag, PlacementBanRecipeSerializer<BlockState, BlockStateIngredient, BlockBanRecipe> serializer) {
         return recipe(ingredient, bypassBlock, Optional.empty(), Optional.ofNullable(biomeTag), serializer);
     }
 
-    public static PlacementBanBuilder recipe(BlockStateIngredient ingredient, BlockStateIngredient bypassBlock, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, PlacementBanRecipeSerializer<BlockState, BlockStateIngredient, BlockBanRecipe> serializer) {
+    public static PlacementBanBuilder recipe(BlockStateIngredient ingredient, Optional<BlockStateIngredient> bypassBlock, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, PlacementBanRecipeSerializer<BlockState, BlockStateIngredient, BlockBanRecipe> serializer) {
         return new BlockBanBuilder(ingredient, bypassBlock, biomeKey, biomeTag, serializer);
     }
 
@@ -50,7 +50,7 @@ public class BlockBanBuilder extends PlacementBanBuilder {
     public static class Result extends PlacementBanBuilder.Result {
         private final BlockStateIngredient ingredient;
 
-        public Result(ResourceLocation id, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, BlockStateIngredient bypassBlock, BlockStateIngredient ingredient, RecipeSerializer<?> serializer) {
+        public Result(ResourceLocation id, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, Optional<BlockStateIngredient> bypassBlock, BlockStateIngredient ingredient, RecipeSerializer<?> serializer) {
             super(id, biomeKey, biomeTag, bypassBlock, serializer);
             this.ingredient = ingredient;
         }

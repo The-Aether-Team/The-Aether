@@ -24,15 +24,15 @@ public abstract class PlacementBanRecipeSerializer<T, S extends Predicate<T>, F 
     public void toNetwork(FriendlyByteBuf buffer, F recipe) {
         BlockStateRecipeUtil.writeBiomeKey(buffer, recipe.getBiomeKey());
         BlockStateRecipeUtil.writeBiomeTag(buffer, recipe.getBiomeTag());
-        recipe.getBypassBlock().toNetwork(buffer);
+        buffer.writeOptional(recipe.getBypassBlock(), (buf, blockStateIngredient) -> blockStateIngredient.toNetwork(buf));
     }
 
     public CookieBaker<T, S, F> getFactory() {
         return this.factory;
     }
 
-    public interface CookieBaker<T, S extends Predicate<T>, F extends AbstractPlacementBanRecipe<T, S>> extends Function4<Optional<ResourceKey<Biome>>, Optional<TagKey<Biome>>, BlockStateIngredient, S, F> {
+    public interface CookieBaker<T, S extends Predicate<T>, F extends AbstractPlacementBanRecipe<T, S>> extends Function4<Optional<ResourceKey<Biome>>, Optional<TagKey<Biome>>, Optional<BlockStateIngredient>, S, F> {
         @Override
-        F apply(Optional<ResourceKey<Biome>> dimensionTypeKey, Optional<TagKey<Biome>> dimensionTypeTag, BlockStateIngredient bypassBlock, S ingredient);
+        F apply(Optional<ResourceKey<Biome>> dimensionTypeKey, Optional<TagKey<Biome>> dimensionTypeTag, Optional<BlockStateIngredient> bypassBlock, S ingredient);
     }
 }

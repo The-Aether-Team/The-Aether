@@ -24,14 +24,14 @@ import java.util.Optional;
 public class PlacementBanRecipeDisplay<R extends AbstractPlacementBanRecipe<?, ?>> extends BasicDisplay {
     private final CategoryIdentifier<?> categoryIdentifier;
 
-    private final BlockStateIngredient bypassBlock;
+    private final Optional<BlockStateIngredient> bypassBlock;
 
     private final Optional<ResourceKey<Biome>> biomeKey;
     private final Optional<TagKey<Biome>> biomeTag;
 
     private final Optional<BlockStateIngredient> blockStateIngredient;
 
-    protected PlacementBanRecipeDisplay(CategoryIdentifier<? extends PlacementBanRecipeDisplay<R>> categoryIdentifier, List<EntryIngredient> inputs, BlockStateIngredient bypassBlock, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, Optional<BlockStateIngredient> blockStateIngredient, Optional<ResourceLocation> location){
+    protected PlacementBanRecipeDisplay(CategoryIdentifier<? extends PlacementBanRecipeDisplay<R>> categoryIdentifier, List<EntryIngredient> inputs, Optional<BlockStateIngredient> bypassBlock, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, Optional<BlockStateIngredient> blockStateIngredient, Optional<ResourceLocation> location){
         super(inputs, List.of(), location);
         this.bypassBlock = bypassBlock;
         this.biomeKey = biomeKey;
@@ -51,7 +51,10 @@ public class PlacementBanRecipeDisplay<R extends AbstractPlacementBanRecipe<?, ?
     }
 
     public static PlacementBanRecipeDisplay<ItemBanRecipe> ofItem(ItemBanRecipe recipe){
-        var list = new ArrayList<>(REIUtils.toIngredientList(recipe.getBypassBlock().getPairs()));
+        List<EntryIngredient> list = new ArrayList<>();
+        if (recipe.getBypassBlock().isPresent()) {
+            list.addAll(REIUtils.toIngredientList(recipe.getBypassBlock().get().getPairs()));
+        }
 
         list.add(EntryIngredients.ofIngredient(recipe.getIngredient()));
 
@@ -59,14 +62,17 @@ public class PlacementBanRecipeDisplay<R extends AbstractPlacementBanRecipe<?, ?
     }
 
     public static PlacementBanRecipeDisplay<BlockBanRecipe> ofBlock(BlockBanRecipe recipe){
-        var list = new ArrayList<>(REIUtils.toIngredientList(recipe.getBypassBlock().getPairs()));
+        List<EntryIngredient> list = new ArrayList<>();
+        if (recipe.getBypassBlock().isPresent()) {
+            list.addAll(REIUtils.toIngredientList(recipe.getBypassBlock().get().getPairs()));
+        }
 
         list.addAll(REIUtils.toIngredientList(recipe.getIngredient().getPairs()));
 
         return new PlacementBanRecipeDisplay<>(recipe, AetherREIServerPlugin.BLOCK_PLACEMENT_BAN, list);
     }
 
-    public BlockStateIngredient getBypassBlock() {
+    public Optional<BlockStateIngredient> getBypassBlock() {
         return this.bypassBlock;
     }
 

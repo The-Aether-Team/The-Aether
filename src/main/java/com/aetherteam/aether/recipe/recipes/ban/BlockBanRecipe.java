@@ -25,11 +25,11 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class BlockBanRecipe extends AbstractPlacementBanRecipe<BlockState, BlockStateIngredient> {
-    public BlockBanRecipe(Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, BlockStateIngredient bypassBlock, BlockStateIngredient ingredient) {
+    public BlockBanRecipe(Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, Optional<BlockStateIngredient> bypassBlock, BlockStateIngredient ingredient) {
         super(AetherRecipeTypes.BLOCK_PLACEMENT_BAN.get(), biomeKey, biomeTag, bypassBlock, ingredient);
     }
 
-    public BlockBanRecipe(Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, BlockStateIngredient bypassBlock) {
+    public BlockBanRecipe(Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, Optional<BlockStateIngredient> bypassBlock) {
         this(biomeKey, biomeTag, bypassBlock, BlockStateIngredient.EMPTY);
     }
 
@@ -67,7 +67,7 @@ public class BlockBanRecipe extends AbstractPlacementBanRecipe<BlockState, Block
             return RecordCodecBuilder.create(inst -> inst.group(
                     ResourceKey.codec(Registries.BIOME).optionalFieldOf("biome").forGetter(BlockBanRecipe::getBiomeKey),
                     TagKey.codec(Registries.BIOME).optionalFieldOf("biome").forGetter(BlockBanRecipe::getBiomeTag),
-                    BlockStateIngredient.CODEC.fieldOf("bypass").orElse(BlockStateIngredient.EMPTY).forGetter(BlockBanRecipe::getBypassBlock),
+                    BlockStateIngredient.CODEC.optionalFieldOf("bypass").forGetter(BlockBanRecipe::getBypassBlock),
                     BlockStateIngredient.CODEC.fieldOf("ingredient").forGetter(BlockBanRecipe::getIngredient)
             ).apply(inst, this.getFactory()));
         }
@@ -77,7 +77,7 @@ public class BlockBanRecipe extends AbstractPlacementBanRecipe<BlockState, Block
         public BlockBanRecipe fromNetwork(FriendlyByteBuf buffer) {
             Optional<ResourceKey<Biome>> biomeKey = BlockStateRecipeUtil.readBiomeKey(buffer);
             Optional<TagKey<Biome>> biomeTag = BlockStateRecipeUtil.readBiomeTag(buffer);
-            BlockStateIngredient bypassBlock = BlockStateIngredient.fromNetwork(buffer);
+            Optional<BlockStateIngredient> bypassBlock = buffer.readOptional((buf) -> BlockStateIngredient.fromNetwork(buffer));
             BlockStateIngredient ingredient = BlockStateIngredient.fromNetwork(buffer);
             return new BlockBanRecipe(biomeKey, biomeTag, bypassBlock, ingredient);
         }

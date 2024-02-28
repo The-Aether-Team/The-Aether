@@ -194,18 +194,18 @@ public abstract class AetherRecipeProvider extends NitrogenRecipeProvider {
     }
 
     protected PlacementBanBuilder banItemPlacement(ItemLike ingredient, TagKey<Biome> biome) {
-        return ItemBanBuilder.recipe(Ingredient.of(ingredient), BlockStateIngredient.EMPTY, biome, AetherRecipeSerializers.ITEM_PLACEMENT_BAN.get());
+        return ItemBanBuilder.recipe(Ingredient.of(ingredient), Optional.empty(), biome, AetherRecipeSerializers.ITEM_PLACEMENT_BAN.get());
     }
 
     protected PlacementBanBuilder banItemPlacementWithBypass(ItemLike ingredient, TagKey<Block> bypass, TagKey<Biome> biome) {
-        return ItemBanBuilder.recipe(Ingredient.of(ingredient), BlockStateIngredient.of(bypass), biome, AetherRecipeSerializers.ITEM_PLACEMENT_BAN.get());
+        return ItemBanBuilder.recipe(Ingredient.of(ingredient), Optional.of(BlockStateIngredient.of(bypass)), biome, AetherRecipeSerializers.ITEM_PLACEMENT_BAN.get());
     }
 
     protected PlacementBanBuilder banBlockPlacement(Block ingredient, TagKey<Biome> biome) {
-        return BlockBanBuilder.recipe(BlockStateIngredient.of(ingredient), BlockStateIngredient.EMPTY, biome, AetherRecipeSerializers.BLOCK_PLACEMENT_BAN.get());
+        return BlockBanBuilder.recipe(BlockStateIngredient.of(ingredient), Optional.empty(), biome, AetherRecipeSerializers.BLOCK_PLACEMENT_BAN.get());
     }
 
     protected PlacementBanBuilder banBlockPlacementWithBypass(Block ingredient, TagKey<Block> bypass, TagKey<Biome> biome) {
-        return BlockBanBuilder.recipe(BlockStateIngredient.of(ingredient), BlockStateIngredient.of(bypass), biome, AetherRecipeSerializers.BLOCK_PLACEMENT_BAN.get());
+        return BlockBanBuilder.recipe(BlockStateIngredient.of(ingredient), Optional.of(BlockStateIngredient.of(bypass)), biome, AetherRecipeSerializers.BLOCK_PLACEMENT_BAN.get());
     }
 }

@@ -20,10 +20,10 @@ public abstract class AbstractPlacementBanRecipe<T, S extends Predicate<T>> impl
     protected final RecipeType<?> type;
     private final Optional<ResourceKey<Biome>> biomeKey;
     private final Optional<TagKey<Biome>> biomeTag;
-    protected final BlockStateIngredient bypassBlock;
+    protected final Optional<BlockStateIngredient> bypassBlock;
     protected final S ingredient;
 
-    public AbstractPlacementBanRecipe(RecipeType<?> type, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, BlockStateIngredient bypassBlock, S ingredient) {
+    public AbstractPlacementBanRecipe(RecipeType<?> type, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, Optional<BlockStateIngredient> bypassBlock, S ingredient) {
         this.type = type;
         this.biomeKey = biomeKey;
         this.biomeTag = biomeTag;
@@ -42,7 +42,7 @@ public abstract class AbstractPlacementBanRecipe<T, S extends Predicate<T>> impl
      * @return Whether the given object is banned from placement.
      */
     public boolean matches(Level level, BlockPos pos, T object) {
-        if (this.bypassBlock.isEmpty() || !this.bypassBlock.test(level.getBlockState(pos))) {
+        if (this.bypassBlock.isEmpty() || this.bypassBlock.get().isEmpty() || !this.bypassBlock.get().test(level.getBlockState(pos))) {
             return this.biomeKey.map(biomeResourceKey -> this.getIngredient().test(object) && level.getBiome(pos).is(biomeResourceKey))
                     .orElseGet(() -> this.biomeTag.map(biomeTagKey -> this.getIngredient().test(object) && level.getBiome(pos).is(biomeTagKey))
                             .orElseGet(() -> this.getIngredient().test(object)));
@@ -58,7 +58,7 @@ public abstract class AbstractPlacementBanRecipe<T, S extends Predicate<T>> impl
         return this.biomeTag;
     }
 
-    public BlockStateIngredient getBypassBlock() {
+    public Optional<BlockStateIngredient> getBypassBlock() {
         return this.bypassBlock;
     }
 
