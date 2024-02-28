@@ -25,6 +25,7 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.neoforged.neoforge.common.Tags;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
@@ -181,7 +182,7 @@ public abstract class AetherRecipeProvider extends NitrogenRecipeProvider {
     }
 
     protected BlockStateRecipeBuilder accessoryFreezable(Block result, Block ingredient) {
-        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(this.pair(ingredient, Map.of(BlockStateProperties.LEVEL, 0))), result, AetherRecipeSerializers.ACCESSORY_FREEZABLE.get());
+        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(this.pair(ingredient, Optional.of(Map.of(BlockStateProperties.LEVEL, 0)))), result, AetherRecipeSerializers.ACCESSORY_FREEZABLE.get());
     }
 
     protected BlockStateRecipeBuilder convertPlacement(Block result, Block ingredient, TagKey<Biome> biome) {
@@ -189,7 +190,7 @@ public abstract class AetherRecipeProvider extends NitrogenRecipeProvider {
     }
 
     protected BlockStateRecipeBuilder convertPlacementWithProperties(Block result, Map<Property<?>, Comparable<?>> resultProperties, Block ingredient, Map<Property<?>, Comparable<?>> ingredientProperties, TagKey<Biome> biome) {
-        return BiomeParameterRecipeBuilder.recipe(BlockStateIngredient.of(this.pair(ingredient, ingredientProperties)), result, resultProperties, biome, AetherRecipeSerializers.PLACEMENT_CONVERSION.get());
+        return BiomeParameterRecipeBuilder.recipe(BlockStateIngredient.of(this.pair(ingredient, Optional.of(ingredientProperties))), result, resultProperties, biome, AetherRecipeSerializers.PLACEMENT_CONVERSION.get());
     }
 
     protected PlacementBanBuilder banItemPlacement(ItemLike ingredient, TagKey<Biome> biome) {

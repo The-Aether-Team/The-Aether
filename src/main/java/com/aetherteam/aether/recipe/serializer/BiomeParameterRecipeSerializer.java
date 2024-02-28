@@ -31,7 +31,7 @@ public class BiomeParameterRecipeSerializer<T extends AbstractBiomeParameterReci
                 ResourceKey.codec(Registries.BIOME).optionalFieldOf("biome").forGetter(AbstractBiomeParameterRecipe::getBiomeKey),
                 TagKey.codec(Registries.BIOME).optionalFieldOf("biome").forGetter(AbstractBiomeParameterRecipe::getBiomeTag),
                 BlockStateIngredient.CODEC.fieldOf("ingredient").forGetter(AbstractBlockStateRecipe::getIngredient),
-                BlockPropertyPair.BLOCKSTATE_CODEC.fieldOf("result").forGetter(AbstractBlockStateRecipe::getResult),
+                BlockPropertyPair.CODEC.fieldOf("result").forGetter(AbstractBlockStateRecipe::getResult),
                 ResourceLocation.CODEC.optionalFieldOf("mcfunction").forGetter(AbstractBlockStateRecipe::getFunctionId)
         ).apply(inst, factory));
     }

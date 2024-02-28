@@ -102,7 +102,7 @@ dependencies {
 
 //    runtimeOnly fg.deobf("io.github.ultimateboomer:smoothboot-forge:${project.smoothboot_version}")
 
-//    compileOnly fileTree(dir: 'libs', include: '*.jar')
+//    implementation fileTree(dir: 'libs', include: '*.jar')
 
 //    runtimeOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:$rei_version")
 

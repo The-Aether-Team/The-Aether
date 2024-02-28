@@ -30,7 +30,7 @@ public class BiomeParameterRecipeBuilder extends BlockStateRecipeBuilder {
     }
 
     public static BiomeParameterRecipeBuilder recipe(BlockStateIngredient ingredient, Block result, ResourceKey<Biome> biomeKey, BlockStateRecipeSerializer<?> serializer) {
-        return recipe(BlockPropertyPair.of(result, Map.of()), ingredient, Optional.ofNullable(biomeKey), Optional.empty(), serializer);
+        return recipe(BlockPropertyPair.of(result, Optional.empty()), ingredient, Optional.ofNullable(biomeKey), Optional.empty(), serializer);
     }
 
     public static BiomeParameterRecipeBuilder recipe(BlockStateIngredient ingredient, BlockPropertyPair resultPair, ResourceKey<Biome> biomeKey, BlockStateRecipeSerializer<?> serializer) {
@@ -38,11 +38,11 @@ public class BiomeParameterRecipeBuilder extends BlockStateRecipeBuilder {
     }
 
     public static BiomeParameterRecipeBuilder recipe(BlockStateIngredient ingredient, Block resultBlock, Map<Property<?>, Comparable<?>> resultProperties, ResourceKey<Biome> biomeKey, BlockStateRecipeSerializer<?> serializer) {
-        return recipe(BlockPropertyPair.of(resultBlock, resultProperties), ingredient, Optional.ofNullable(biomeKey), Optional.empty(), serializer);
+        return recipe(BlockPropertyPair.of(resultBlock, Optional.ofNullable(resultProperties)), ingredient, Optional.ofNullable(biomeKey), Optional.empty(), serializer);
     }
 
     public static BiomeParameterRecipeBuilder recipe(BlockStateIngredient ingredient, Block result, TagKey<Biome> biomeTag, BlockStateRecipeSerializer<?> serializer) {
-        return recipe(BlockPropertyPair.of(result, Map.of()), ingredient, Optional.empty(), Optional.ofNullable(biomeTag), serializer);
+        return recipe(BlockPropertyPair.of(result, Optional.empty()), ingredient, Optional.empty(), Optional.ofNullable(biomeTag), serializer);
     }
 
     public static BiomeParameterRecipeBuilder recipe(BlockStateIngredient ingredient, BlockPropertyPair resultPair, TagKey<Biome> biomeTag, BlockStateRecipeSerializer<?> serializer) {
@@ -50,7 +50,7 @@ public class BiomeParameterRecipeBuilder extends BlockStateRecipeBuilder {
     }
 
     public static BiomeParameterRecipeBuilder recipe(BlockStateIngredient ingredient, Block resultBlock, Map<Property<?>, Comparable<?>> resultProperties, TagKey<Biome> biomeTag, BlockStateRecipeSerializer<?> serializer) {
-        return recipe(BlockPropertyPair.of(resultBlock, resultProperties), ingredient, Optional.empty(), Optional.ofNullable(biomeTag), serializer);
+        return recipe(BlockPropertyPair.of(resultBlock, Optional.ofNullable(resultProperties)), ingredient, Optional.empty(), Optional.ofNullable(biomeTag), serializer);
     }
 
     public static BiomeParameterRecipeBuilder recipe(BlockPropertyPair result, BlockStateIngredient ingredient, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, BlockStateRecipeSerializer<?> serializer) {
