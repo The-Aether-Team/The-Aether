@@ -53,13 +53,13 @@ import javax.annotation.Nullable;
  * Modified to register slots for Aether accessories only.
  */
 public class AccessoriesScreen extends EffectRenderingInventoryScreen<AccessoriesMenu> implements RecipeUpdateListener, RecipeBookBehavior<AccessoriesMenu, AccessoriesScreen> {
-    public static final WidgetSprites ACCESSORIES_BUTTON = new WidgetSprites(new ResourceLocation(Aether.MODID, "textures/gui/inventory/button/accessories_button.png"), new ResourceLocation(Aether.MODID, "textures/gui/inventory/button/accessories_button_highlighted.png"));
-    public static final WidgetSprites SKINS_BUTTON = new WidgetSprites(new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/skins_button.png"), new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/skins_button_highlighted.png"));
-    public static final WidgetSprites CUSTOMIZATION_BUTTON = new WidgetSprites(new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/customization_button.png"), new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/customization_button_highlighted.png"));
+    public static final WidgetSprites ACCESSORIES_BUTTON = new WidgetSprites(new ResourceLocation(Aether.MODID, "inventory/accessories_button"), new ResourceLocation(Aether.MODID, "inventory/accessories_button_highlighted"));
+    public static final WidgetSprites SKINS_BUTTON = new WidgetSprites(new ResourceLocation(Aether.MODID, "skins/skins_button"), new ResourceLocation(Aether.MODID, "skins/skins_button_highlighted"));
+    public static final WidgetSprites CUSTOMIZATION_BUTTON = new WidgetSprites(new ResourceLocation(Aether.MODID, "customization/customization_button"), new ResourceLocation(Aether.MODID, "customization/customization_button_highlighted"));
 
     private static final ResourceLocation ACCESSORIES_INVENTORY = new ResourceLocation(Aether.MODID, "textures/gui/inventory/accessories.png");
     private static final ResourceLocation ACCESSORIES_INVENTORY_CREATIVE = new ResourceLocation(Aether.MODID, "textures/gui/inventory/accessories_creative.png");
-    private static final ResourceLocation CURIO_INVENTORY = new ResourceLocation(Curios.MODID, "textures/gui/inventory.png");
+    private static final ResourceLocation CURIO_INVENTORY = new ResourceLocation(Curios.MODID, "textures/gui/curios/inventory.png");
     private static final ResourceLocation RECIPE_BUTTON_LOCATION = new ResourceLocation("textures/gui/recipe_button.png");
 
     private static final SimpleContainer DESTROY_ITEM_CONTAINER = new SimpleContainer(1);

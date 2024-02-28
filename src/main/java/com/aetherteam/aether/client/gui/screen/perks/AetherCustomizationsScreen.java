@@ -27,8 +27,8 @@ import net.minecraft.resources.ResourceLocation;
  * @see CustomizationsOptions
  */
 public class AetherCustomizationsScreen extends Screen {
-    public static final WidgetSprites SAVE_BUTTON = new WidgetSprites(new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/save_button.png"), new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/save_button_disabled.png"), new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/save_button_highlighted.png"));
-    public static final WidgetSprites UNDO_BUTTON = new WidgetSprites(new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/undo_button.png"), new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/undo_button_disabled.png"), new ResourceLocation(Aether.MODID, "textures/gui/perks/customization/undo_button_highlighted.png"));
+    public static final WidgetSprites SAVE_BUTTON = new WidgetSprites(new ResourceLocation(Aether.MODID, "customization/save_button"), new ResourceLocation(Aether.MODID, "customization/save_button_disabled"), new ResourceLocation(Aether.MODID, "customization/save_button_highlighted"));
+    public static final WidgetSprites UNDO_BUTTON = new WidgetSprites(new ResourceLocation(Aether.MODID, "customization/undo_button"), new ResourceLocation(Aether.MODID, "customization/undo_button_disabled"), new ResourceLocation(Aether.MODID, "customization/undo_button_highlighted"));
 
     private final Screen lastScreen;
     private final CustomizationsOptions customizations = CustomizationsOptions.INSTANCE;

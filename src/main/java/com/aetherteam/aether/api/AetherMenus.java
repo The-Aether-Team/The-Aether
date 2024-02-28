@@ -34,10 +34,10 @@ public class AetherMenus {
     private static final ResourceLocation THE_AETHER_HEADER_SEPARATOR = new ResourceLocation(Aether.MODID, "textures/gui/title/header_separator.png");
     private static final ResourceLocation THE_AETHER_FOOTER_SEPARATOR = new ResourceLocation(Aether.MODID, "textures/gui/title/footer_separator.png");
     private static final WidgetSprites THE_AETHER_TAB_BUTTON = new WidgetSprites(
-            new ResourceLocation(Aether.MODID, "gui/title/tab_selected"),
-            new ResourceLocation(Aether.MODID, "gui/title/tab"),
-            new ResourceLocation(Aether.MODID, "gui/title/tab_selected_highlighted"),
-            new ResourceLocation(Aether.MODID, "gui/title/tab_highlighted"));
+            new ResourceLocation(Aether.MODID, "title/tab_selected"),
+            new ResourceLocation(Aether.MODID, "title/tab"),
+            new ResourceLocation(Aether.MODID, "title/tab_selected_highlighted"),
+            new ResourceLocation(Aether.MODID, "title/tab_highlighted"));
     private static final Menu.Background THE_AETHER_BACKGROUND = new Menu.Background()
             .regularBackground(THE_AETHER_REGULAR_BACKGROUND)
             .darkBackground(THE_AETHER_DARK_BACKGROUND)
