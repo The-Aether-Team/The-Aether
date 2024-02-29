@@ -5,5 +5,10 @@
   "ingredient": {
     "item": "aether:white_moa_egg"
   },
-  "tag": "{Hungry:1b,IsBaby:1b,MoaType:\"aether:white\",PlayerGrown:1b}"
+  "tag": {
+    "Hungry": 1,
+    "IsBaby": 1,
+    "MoaType": "aether:white",
+    "PlayerGrown": 1
+  }
 }

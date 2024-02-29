@@ -1,7 +1,10 @@
 package com.aetherteam.aether.recipe.builder;
 
 import com.aetherteam.aether.recipe.recipes.item.IncubationRecipe;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.JsonOps;
+import net.minecraft.Util;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -84,7 +87,8 @@ public class IncubationBuilder implements RecipeBuilder {
             json.add("ingredient", this.ingredient.toJson(false));
             json.addProperty("entity", EntityType.getKey(this.entity).toString());
             if (this.tag != null && !this.tag.isEmpty()) {
-                json.addProperty("tag", this.tag.toString());
+                JsonElement tagElement = Util.getOrThrow(CompoundTag.CODEC.encodeStart(JsonOps.INSTANCE, this.tag), IllegalStateException::new);
+                json.add("tag", tagElement);
             }
             json.addProperty("incubationtime", this.incubationTime);
         }
