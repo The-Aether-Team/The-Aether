@@ -15,7 +15,7 @@
           }
         ]
       },
-      "trigger": "minecraft:location"
+      "trigger": "minecraft:slept_in_bed"
     }
   },
   "display": {

@@ -29,6 +29,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
@@ -347,7 +348,7 @@ public class AetherAdvancementData extends AdvancementProvider {
                             Component.translatable("advancement.aether.aether_sleep.desc"),
                             null,
                             FrameType.CHALLENGE, true, true, true)
-                    .addCriterion("aether_sleep", PlayerTrigger.TriggerInstance.located(EntityPredicate.Builder.entity().located(LocationPredicate.Builder.inDimension(AetherDimensions.AETHER_LEVEL))))
+                    .addCriterion("aether_sleep", CriteriaTriggers.SLEPT_IN_BED.createCriterion(new PlayerTrigger.TriggerInstance(Optional.of(EntityPredicate.wrap(EntityPredicate.Builder.entity().located(LocationPredicate.Builder.inDimension(AetherDimensions.AETHER_LEVEL)))))))
                     .save(consumer, new ResourceLocation(Aether.MODID, "aether_sleep"), existingFileHelper);
         }
     }
