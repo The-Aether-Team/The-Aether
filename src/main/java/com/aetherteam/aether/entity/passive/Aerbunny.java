@@ -364,7 +364,7 @@ public class Aerbunny extends AetherAnimal {
      */
     @Override
     public float getMyRidingOffset(Entity entity) {
-        return this.getVehicle() != null && this.getVehicle().isCrouching() ? 0.4F : 0.575F;
+        return 0.075F;
     }
 
     /**

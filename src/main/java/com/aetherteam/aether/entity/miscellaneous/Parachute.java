@@ -138,7 +138,7 @@ public class Parachute extends Entity {
 
     @Override
     public Vec3 getPassengerRidingPosition(Entity entity) {
-        return super.getPassengerRidingPosition(entity).add(0, 1.35, 0);
+        return super.getPassengerRidingPosition(entity).add(0, 0.65, 0);
     }
 
     /**

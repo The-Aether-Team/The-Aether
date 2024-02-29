@@ -15,6 +15,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.CommonHooks;
 import net.neoforged.neoforge.common.NeoForgeMod;
 
 import java.util.UUID;
@@ -189,7 +190,7 @@ public interface MountableMob {
      * @param vehicle The vehicle {@link Mob}.
      */
     default void onJump(Mob vehicle) {
-        net.neoforged.neoforge.common.CommonHooks.onLivingJump(vehicle);
+        CommonHooks.onLivingJump(vehicle);
     }
 
     default AttributeModifier getMountStepHeightModifier() {

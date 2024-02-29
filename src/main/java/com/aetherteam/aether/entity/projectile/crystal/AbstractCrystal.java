@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
@@ -68,7 +69,7 @@ public abstract class AbstractCrystal extends Projectile {
                 flag = true;
             }
         }
-        if (result.getType() != HitResult.Type.MISS && !flag && !net.neoforged.neoforge.event.EventHooks.onProjectileImpact(this, result)) {
+        if (result.getType() != HitResult.Type.MISS && !flag && !EventHooks.onProjectileImpact(this, result)) {
             this.onHit(result);
         }
         this.checkInsideBlocks();
