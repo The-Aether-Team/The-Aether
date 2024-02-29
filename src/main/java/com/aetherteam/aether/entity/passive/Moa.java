@@ -797,7 +797,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 
 	@Override
 	public Vec3 getPassengerRidingPosition(Entity entity) {
-		return this.isSitting() ? super.getPassengerRidingPosition(entity).add(0, 0.25, 0) : super.getPassengerRidingPosition(entity).add(0, 1.25, 0);
+		return this.isSitting() ? super.getPassengerRidingPosition(entity).add(0, -0.575, 0) : super.getPassengerRidingPosition(entity).add(0, -0.65, 0);
 	}
 
 	/**
