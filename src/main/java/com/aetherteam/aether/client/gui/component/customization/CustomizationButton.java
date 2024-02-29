@@ -1,10 +1,11 @@
 package com.aetherteam.aether.client.gui.component.customization;
 
 import com.aetherteam.aether.client.gui.screen.perks.AetherCustomizationsScreen;
+import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.network.chat.Component;
 
-public class CustomizationButton extends InactiveImageButton {
+public class CustomizationButton extends ImageButton {
     protected final AetherCustomizationsScreen screen;
     protected final ColorBox colorBox;
     protected final ButtonType buttonType;
