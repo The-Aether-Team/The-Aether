@@ -26,8 +26,8 @@ public class SunAltarScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
+    public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        super.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
         int xSize = 176;
         int ySize = 79;
         int x = (this.width - xSize) / 2;
@@ -36,8 +36,6 @@ public class SunAltarScreen extends Screen {
 
         FormattedCharSequence sequence = this.title.getVisualOrderText();
         guiGraphics.drawString(this.font, this.title, (int) ((this.width - this.font.width(sequence)) / 2.0F), y + 20, 0x404040, false);
-
-        super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
 
     @Override

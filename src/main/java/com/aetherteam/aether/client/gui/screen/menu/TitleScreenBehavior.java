@@ -81,10 +81,10 @@ public interface TitleScreenBehavior {
                 if (TitleScreenBehavior.isImageButton(buttonText)) {
                     button.visible = true;
                 }
-                if (buttonText.equals(Component.translatable("narrator.button.accessibility"))) {
+                if (buttonText.equals(Component.translatable("options.accessibility"))) {
                     button.setX(titleScreen.width - 48 + xOffset);
                     button.setY(4);
-                } else if (buttonText.equals(Component.translatable("narrator.button.language"))) {
+                } else if (buttonText.equals(Component.translatable("options.language"))) {
                     button.setX(titleScreen.width - 24 + xOffset);
                     button.setY(4);
                 }
@@ -98,8 +98,8 @@ public interface TitleScreenBehavior {
      * @return The {@link Boolean} result.
      */
     static boolean isImageButton(Component buttonText) {
-        return buttonText.equals(Component.translatable("narrator.button.accessibility"))
-                || buttonText.equals(Component.translatable("narrator.button.language"));
+        return buttonText.equals(Component.translatable("options.accessibility"))
+                || buttonText.equals(Component.translatable("options.language"));
     }
 
     /**

@@ -231,7 +231,7 @@ public class AetherCustomizationsScreen extends Screen {
         if (this.getMinecraft().player != null) {
             int x = (this.width / 2) - 175;
             int y = (this.height / 2) + 50;
-            InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics, x + 33, y, x + 82, y + 70, 60, 0.0625F, (float) (x + 33 - mouseX), (float) (y - 100 - mouseY), this.getMinecraft().player);
+            InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics, x - 35, y - 170, x + 114, y + 50, 60, 0.3125F, mouseX, mouseY, this.getMinecraft().player);
         }
         // Resets color values if they're invalid.
         if (this.haloColorBox != null && !this.haloColorBox.getValue().equals(this.haloColor)) {

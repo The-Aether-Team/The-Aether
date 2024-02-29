@@ -163,12 +163,16 @@ public class MoaSkinsScreen extends Screen {
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+        this.checkUserConnectionStatus();
+    }
+
+    @Override
+    public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        super.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
         this.renderWindow(guiGraphics);
         this.renderSlots(guiGraphics, mouseX, mouseY);
         this.renderInterface(guiGraphics, mouseX, mouseY, partialTicks);
-        super.render(guiGraphics, mouseX, mouseY, partialTicks);
-        this.checkUserConnectionStatus();
     }
 
     /**
@@ -372,7 +376,10 @@ public class MoaSkinsScreen extends Screen {
                 }
             } else { // Render and rotate preview Moa once it does exist.
                 this.moaRotation = Mth.wrapDegrees(Mth.lerp(partialTicks, this.moaRotation, this.moaRotation + 2.5F));
-                renderRotatingEntity(guiGraphics, this.leftPos + (this.imageWidth / 2), this.topPos + (this.imageHeight / 2) - 4, 27, this.moaRotation, -20.0F, this.getPreviewMoa());
+                int startX = this.leftPos + (this.imageWidth / 2);
+                int startY = this.topPos + (this.imageHeight / 2);
+                renderRotatingEntity(guiGraphics, startX - 100, startY - 135, startX + 100, startY + 65, 27, 0.1F, this.moaRotation, -20.0F, this.getPreviewMoa());
+
             }
         }
     }
@@ -381,7 +388,10 @@ public class MoaSkinsScreen extends Screen {
      * [CODE COPY] - {@link net.minecraft.client.gui.screens.inventory.InventoryScreen#renderEntityInInventoryFollowsAngle(GuiGraphics, int, int, int, int, int, float, float, float, LivingEntity)} (GuiGraphics, int, int, int, float, float, LivingEntity)}.<br><br>
      * Code Modified so that the head rotation follows the body rotation and doesn't rotate separately.<br><br>
      */
-    public static void renderRotatingEntity(GuiGraphics guiGraphics, int posX, int posY, int scale, float angleXComponent, float angleYComponent, LivingEntity livingEntity) {
+    public static void renderRotatingEntity(GuiGraphics guiGraphics, int startX, int startY, int endX, int endY, int scale, float yOffset, float angleXComponent, float angleYComponent, LivingEntity livingEntity) {
+        float posX = (float) (startX + endX) / 2.0F;
+        float posY = (float) (startY + endY) / 2.0F;
+        guiGraphics.enableScissor(startX, startY, endX, endY);
         Quaternionf xQuaternion = new Quaternionf().rotateZ(Mth.PI);
         Quaternionf zQuaternion = new Quaternionf().rotateX(angleYComponent * Mth.DEG_TO_RAD);
         xQuaternion.mul(zQuaternion);
@@ -393,12 +403,13 @@ public class MoaSkinsScreen extends Screen {
         livingEntity.setXRot(-angleYComponent);
         livingEntity.setYHeadRot(livingEntity.getYRot());
         livingEntity.yHeadRotO = livingEntity.getYRot();
-        Vector3f vector3f = new Vector3f(0.0F, livingEntity.getBbHeight() / 2.0F + posY, 0.0F);
+        Vector3f vector3f = new Vector3f(0.0F, livingEntity.getBbHeight() / 2.0F + yOffset, 0.0F);
 
         InventoryScreen.renderEntityInInventory(guiGraphics, posX, posY, scale, vector3f, xQuaternion, zQuaternion, livingEntity);
         livingEntity.setYBodyRot(yBodyRot);
         livingEntity.setYRot(yRot);
         livingEntity.setXRot(xRot);
+        guiGraphics.disableScissor();
     }
 
     /**

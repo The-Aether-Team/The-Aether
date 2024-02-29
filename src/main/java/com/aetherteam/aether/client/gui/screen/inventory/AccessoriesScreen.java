@@ -202,7 +202,6 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
         if (this.getRecipeBookComponent().isVisible() && this.widthTooNarrow) {
             this.renderBg(guiGraphics, partialTicks, mouseX, mouseY);
             this.getRecipeBookComponent().render(guiGraphics, mouseX, mouseY, partialTicks);
@@ -257,7 +256,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
             int i = this.getGuiLeft();
             int j = this.getGuiTop();
             guiGraphics.blit(this.getMinecraft().player.isCreative() ? ACCESSORIES_INVENTORY_CREATIVE : ACCESSORIES_INVENTORY, i, j, 0, 0, this.getXSize() + this.creativeXOffset(), this.getYSize());
-            InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics, i + 33, j + 75, i + 82, j + 145, 30, 0.0625F, (float) (i + 31) - mouseX, (float) (j + 75 - 50) - mouseY, this.getMinecraft().player);
+            InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics, i + 9, j + 8, i + 58, j + 78, 30, 0.125F, mouseX, mouseY, this.getMinecraft().player);
         }
     }
 
