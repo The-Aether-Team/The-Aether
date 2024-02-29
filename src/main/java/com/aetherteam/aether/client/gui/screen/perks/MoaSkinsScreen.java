@@ -378,7 +378,7 @@ public class MoaSkinsScreen extends Screen {
                 this.moaRotation = Mth.wrapDegrees(Mth.lerp(partialTicks, this.moaRotation, this.moaRotation + 2.5F));
                 int startX = this.leftPos + (this.imageWidth / 2);
                 int startY = this.topPos + (this.imageHeight / 2);
-                renderRotatingEntity(guiGraphics, startX - 100, startY - 135, startX + 100, startY + 65, 27, 0.1F, this.moaRotation, -20.0F, this.getPreviewMoa());
+                renderRotatingEntity(guiGraphics, startX - 100, startY - 135, startX + 100, startY + 65, 27, 0.055F, this.moaRotation, -20.0F, this.getPreviewMoa());
 
             }
         }
