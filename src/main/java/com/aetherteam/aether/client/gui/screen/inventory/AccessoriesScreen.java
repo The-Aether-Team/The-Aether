@@ -256,7 +256,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
             int i = this.getGuiLeft();
             int j = this.getGuiTop();
             guiGraphics.blit(this.getMinecraft().player.isCreative() ? ACCESSORIES_INVENTORY_CREATIVE : ACCESSORIES_INVENTORY, i, j, 0, 0, this.getXSize() + this.creativeXOffset(), this.getYSize());
-            InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics, i + 9, j + 8, i + 58, j + 78, 30, 0.125F, mouseX, mouseY, this.getMinecraft().player);
+            InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics, i + 9, j + 8, i + 58, j + 78, 30, 0.1575F, mouseX, mouseY, this.getMinecraft().player);
         }
     }
 
