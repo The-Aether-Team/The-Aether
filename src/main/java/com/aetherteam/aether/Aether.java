@@ -1,6 +1,7 @@
 package com.aetherteam.aether;
 
 import com.aetherteam.aether.advancement.AetherAdvancementTriggers;
+import com.aetherteam.aether.api.AetherAdvancementSoundOverrides;
 import com.aetherteam.aether.api.AetherMenus;
 import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.block.AetherBlocks;
@@ -86,6 +87,7 @@ public class Aether {
         bus.addListener(AetherData::dataSetup);
         bus.addListener(this::commonSetup);
         bus.addListener(this::packSetup);
+        bus.addListener(NewRegistryEvent.class, event -> event.register(AetherAdvancementSoundOverrides.ADVANCEMENT_SOUND_OVERRIDE_REGISTRY));
         bus.addListener(NewRegistryEvent.class, event -> event.register(AetherMoaTypes.MOA_TYPE_REGISTRY));
 
         DeferredRegister<?>[] registers = {
@@ -112,8 +114,9 @@ public class Aether {
                 AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,
                 AetherSoundEvents.SOUNDS,
                 AetherGameEvents.GAME_EVENTS,
-                AetherMoaTypes.MOA_TYPES,
-                AetherCreativeTabs.CREATIVE_MODE_TABS
+                AetherCreativeTabs.CREATIVE_MODE_TABS,
+                AetherAdvancementSoundOverrides.ADVANCEMENT_SOUND_OVERRIDES,
+                AetherMoaTypes.MOA_TYPES
         };
 
         for (DeferredRegister<?> register : registers) {
