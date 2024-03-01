@@ -43,7 +43,23 @@ public class AetherOverlays {
     private static final ResourceLocation TEXTURE_SHIELD_OF_REPULSION_VIGNETTE = new ResourceLocation(Aether.MODID, "textures/blur/shield_of_repulsion_vignette.png");
     private static final ResourceLocation TEXTURE_COOLDOWN_BAR = new ResourceLocation(Aether.MODID, "textures/gui/cooldown_bar.png");
     private static final ResourceLocation TEXTURE_JUMPS = new ResourceLocation(Aether.MODID, "textures/gui/jumps.png");
-    private static final ResourceLocation TEXTURE_LIFE_SHARD_HEARTS = new ResourceLocation(Aether.MODID, "textures/gui/life_shard_hearts.png");
+
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_FULL = new ResourceLocation(Aether.MODID, "hud/heart/shard_full");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_HALF = new ResourceLocation(Aether.MODID, "hud/heart/shard_half");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_FULL_BLINKING = new ResourceLocation(Aether.MODID, "hud/heart/shard_full_blinking");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_HALF_BLINKING   = new ResourceLocation(Aether.MODID, "hud/heart/shard_half_blinkin");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_POISONED_FULL = new ResourceLocation(Aether.MODID, "hud/heart/shard_poisoned_full");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_POISONED_HALF = new ResourceLocation(Aether.MODID, "hud/heart/shard_poisoned_half");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_POISONED_FULL_BLINKING = new ResourceLocation(Aether.MODID, "hud/heart/shard_poisoned_full_blinking");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_POISONED_HALF_BLINKING = new ResourceLocation(Aether.MODID, "hud/heart/shard_poisoned_half_blinking");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_WITHERED_FULL = new ResourceLocation(Aether.MODID, "hud/heart/shard_withered_full");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_WITHERED_HALF = new ResourceLocation(Aether.MODID, "hud/heart/shard_withered_half");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_WITHERED_FULL_BLINKING = new ResourceLocation(Aether.MODID, "hud/heart/shard_withered_full_blinking");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_WITHERED_HALF_BLINKING = new ResourceLocation(Aether.MODID, "hud/heart/shard_withered_half_blinking");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_ABSORBING_FULL = new ResourceLocation(Aether.MODID, "hud/heart/shard_absorbing_full");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_ABSORBING_HALF = new ResourceLocation(Aether.MODID, "hud/heart/shard_absorbing_half");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_FROZEN_FULL = new ResourceLocation(Aether.MODID, "hud/heart/shard_frozen_full");
+    private static final ResourceLocation TEXTURE_LIFE_SHARD_FROZEN_HALF = new ResourceLocation(Aether.MODID, "hud/heart/shard_frozen_half");
 
     @SubscribeEvent
     public static void registerOverlays(RegisterGuiOverlaysEvent event) {
@@ -343,26 +359,42 @@ public class AetherOverlays {
             if (currentHeart + (maxDefaultHearts > 10 ? overallHearts - 10 : maxDefaultHearts) < overallHearts && currentHeart + Math.min(maxDefaultHearts, 10) - (tooManyHearts ? overallHearts : 0) == regen) {
                 y -= 2;
             }
-            boolean isNormal = heartType == Gui.HeartType.NORMAL;
             int selectedContainer = currentHeart * 2;
             if (highlight && selectedContainer < displayLifeShardHealth) {
                 boolean halfHeart = selectedContainer + 1 == displayLifeShardHealth;
-                if (isNormal) {
-                    int offset = 9 * 4;
-                    guiGraphics.blit(TEXTURE_LIFE_SHARD_HEARTS, x, y, halfHeart ? offset + 9 : offset, 0, 9, 9);
-                } else {
-                    guiGraphics.blitSprite(heartType.getSprite(true, halfHeart, true), x, y, 9, 9);
-                }
+                guiGraphics.blitSprite(AetherOverlays.getSprite(heartType, halfHeart, true), x, y, 9, 9);
             }
             if (selectedContainer < lifeShardHealth) {
                 boolean halfHeart = selectedContainer + 1 == lifeShardHealth;
-                if (isNormal) {
-                    int offset = 9 * 3;
-                    guiGraphics.blit(TEXTURE_LIFE_SHARD_HEARTS, x, y, halfHeart ? offset + 9 : offset, 0, 9, 9);
-                } else {
-                    guiGraphics.blitSprite(heartType.getSprite(true, halfHeart, false), x, y, 9, 9);
-                }
+                guiGraphics.blitSprite(AetherOverlays.getSprite(heartType, halfHeart, false), x, y, 9, 9);
             }
         }
+    }
+
+    private static ResourceLocation getSprite(Gui.HeartType heartType, boolean halfHeart, boolean blinking) {
+        if (heartType == Gui.HeartType.NORMAL) {
+            if (!halfHeart) {
+                return !blinking ? TEXTURE_LIFE_SHARD_FULL : TEXTURE_LIFE_SHARD_FULL_BLINKING;
+            } else {
+                return !blinking ? TEXTURE_LIFE_SHARD_HALF : TEXTURE_LIFE_SHARD_HALF_BLINKING;
+            }
+        } else if (heartType == Gui.HeartType.POISIONED) {
+            if (!halfHeart) {
+                return !blinking ? TEXTURE_LIFE_SHARD_POISONED_FULL : TEXTURE_LIFE_SHARD_POISONED_FULL_BLINKING;
+            } else {
+                return !blinking ? TEXTURE_LIFE_SHARD_POISONED_HALF : TEXTURE_LIFE_SHARD_POISONED_HALF_BLINKING;
+            }
+        } else if (heartType == Gui.HeartType.WITHERED) {
+            if (!halfHeart) {
+                return !blinking ? TEXTURE_LIFE_SHARD_WITHERED_FULL : TEXTURE_LIFE_SHARD_WITHERED_FULL_BLINKING;
+            } else {
+                return !blinking ? TEXTURE_LIFE_SHARD_WITHERED_HALF : TEXTURE_LIFE_SHARD_WITHERED_HALF_BLINKING;
+            }
+        } else if (heartType == Gui.HeartType.ABSORBING) {
+            return !halfHeart ? TEXTURE_LIFE_SHARD_ABSORBING_FULL : TEXTURE_LIFE_SHARD_ABSORBING_HALF;
+        } else if (heartType == Gui.HeartType.FROZEN) {
+            return !halfHeart ? TEXTURE_LIFE_SHARD_FROZEN_FULL : TEXTURE_LIFE_SHARD_FROZEN_HALF;
+        }
+        return Gui.HeartType.CONTAINER.getSprite(false, halfHeart, blinking);
     }
 }
