@@ -1,6 +1,7 @@
 package com.aetherteam.aether.recipe.recipes.ban;
 
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
+import com.mojang.datafixers.util.Either;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
@@ -18,15 +19,13 @@ import java.util.function.Predicate;
 
 public abstract class AbstractPlacementBanRecipe<T, S extends Predicate<T>> implements Recipe<Container> {
     protected final RecipeType<?> type;
-    private final Optional<ResourceKey<Biome>> biomeKey;
-    private final Optional<TagKey<Biome>> biomeTag;
+    private final Either<ResourceKey<Biome>, TagKey<Biome>> biome;
     protected final Optional<BlockStateIngredient> bypassBlock;
     protected final S ingredient;
 
-    public AbstractPlacementBanRecipe(RecipeType<?> type, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, Optional<BlockStateIngredient> bypassBlock, S ingredient) {
+    public AbstractPlacementBanRecipe(RecipeType<?> type, Either<ResourceKey<Biome>, TagKey<Biome>> biome, Optional<BlockStateIngredient> bypassBlock, S ingredient) {
         this.type = type;
-        this.biomeKey = biomeKey;
-        this.biomeTag = biomeTag;
+        this.biome = biome;
         this.bypassBlock = bypassBlock;
         this.ingredient = ingredient;
     }
@@ -34,7 +33,7 @@ public abstract class AbstractPlacementBanRecipe<T, S extends Predicate<T>> impl
     /**
      * Tests if the given object matches with the recipe.<br><br>
      * First it checks if there is no {@link AbstractPlacementBanRecipe#bypassBlock} or it doesn't match the interacted block.
-     * Then if there is a {@link AbstractPlacementBanRecipe#biomeKey} or a {@link AbstractPlacementBanRecipe#biomeTag} it will test one of those alongside {@link BlockStateIngredient#test(BlockState)}.
+     * Then if there is a {@link Biome} {@link ResourceKey} or a {@link Biome} {@link TagKey} it will test one of those alongside {@link BlockStateIngredient#test(BlockState)}.
      * Otherwise, it will only test {@link BlockStateIngredient#test(BlockState)}.
      * @param level The {@link Level} the recipe is performed in.
      * @param pos The {@link BlockPos} the recipe is performed at.
@@ -43,19 +42,19 @@ public abstract class AbstractPlacementBanRecipe<T, S extends Predicate<T>> impl
      */
     public boolean matches(Level level, BlockPos pos, T object) {
         if (this.bypassBlock.isEmpty() || this.bypassBlock.get().isEmpty() || !this.bypassBlock.get().test(level.getBlockState(pos))) {
-            return this.biomeKey.map(biomeResourceKey -> this.getIngredient().test(object) && level.getBiome(pos).is(biomeResourceKey))
-                    .orElseGet(() -> this.biomeTag.map(biomeTagKey -> this.getIngredient().test(object) && level.getBiome(pos).is(biomeTagKey))
-                            .orElseGet(() -> this.getIngredient().test(object)));
+            if (this.biome.left().isPresent()) {
+                return this.getIngredient().test(object) && level.getBiome(pos).is(this.biome.left().get());
+            } else if (this.biome.right().isPresent()) {
+                return this.getIngredient().test(object) && level.getBiome(pos).is(this.biome.right().get());
+            } else {
+                return this.getIngredient().test(object);
+            }
         }
         return false;
     }
 
-    public Optional<ResourceKey<Biome>> getBiomeKey() {
-        return this.biomeKey;
-    }
-
-    public Optional<TagKey<Biome>> getBiomeTag() {
-        return this.biomeTag;
+    public Either<ResourceKey<Biome>, TagKey<Biome>> getBiome() {
+        return this.biome;
     }
 
     public Optional<BlockStateIngredient> getBypassBlock() {

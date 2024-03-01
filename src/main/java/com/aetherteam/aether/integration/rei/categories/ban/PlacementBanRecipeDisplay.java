@@ -44,8 +44,8 @@ public class PlacementBanRecipeDisplay<R extends AbstractPlacementBanRecipe<?, ?
         this(categoryIdentifier,
                 inputs,
                 recipe.getBypassBlock(),
-                recipe.getBiomeKey(),
-                recipe.getBiomeTag(),
+                recipe.getBiome().left(),
+                recipe.getBiome().right(),
                 Optional.ofNullable((recipe.getIngredient() instanceof BlockStateIngredient ingredient) ? ingredient : null),
                 Optional.empty());
     }

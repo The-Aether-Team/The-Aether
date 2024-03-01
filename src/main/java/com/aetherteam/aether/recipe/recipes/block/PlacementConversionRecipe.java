@@ -7,6 +7,7 @@ import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.serializer.BiomeParameterRecipeSerializer;
 import com.aetherteam.nitrogen.recipe.BlockPropertyPair;
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
+import com.mojang.datafixers.util.Either;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -19,12 +20,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.Optional;
 
 public class PlacementConversionRecipe extends AbstractBiomeParameterRecipe {
-    public PlacementConversionRecipe(Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, Optional<ResourceLocation> function) {
-        super(AetherRecipeTypes.PLACEMENT_CONVERSION.get(), biomeKey, biomeTag, ingredient, result, function);
+    public PlacementConversionRecipe(Optional<Either<ResourceKey<Biome>, TagKey<Biome>>> biome, BlockStateIngredient ingredient, BlockPropertyPair result, Optional<ResourceLocation> function) {
+        super(AetherRecipeTypes.PLACEMENT_CONVERSION.get(), biome, ingredient, result, function);
     }
 
     public PlacementConversionRecipe(BlockStateIngredient ingredient, BlockPropertyPair result, Optional<ResourceLocation> function) {
-        this(Optional.empty(), Optional.empty(), ingredient, result, function);
+        this(Optional.empty(), ingredient, result, function);
     }
 
     /**

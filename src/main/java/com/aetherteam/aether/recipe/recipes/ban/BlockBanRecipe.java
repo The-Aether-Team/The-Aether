@@ -6,6 +6,7 @@ import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.serializer.PlacementBanRecipeSerializer;
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import com.aetherteam.nitrogen.recipe.BlockStateRecipeUtil;
+import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
@@ -25,12 +26,12 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class BlockBanRecipe extends AbstractPlacementBanRecipe<BlockState, BlockStateIngredient> {
-    public BlockBanRecipe(Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, Optional<BlockStateIngredient> bypassBlock, BlockStateIngredient ingredient) {
-        super(AetherRecipeTypes.BLOCK_PLACEMENT_BAN.get(), biomeKey, biomeTag, bypassBlock, ingredient);
+    public BlockBanRecipe(Either<ResourceKey<Biome>, TagKey<Biome>> biome, Optional<BlockStateIngredient> bypassBlock, BlockStateIngredient ingredient) {
+        super(AetherRecipeTypes.BLOCK_PLACEMENT_BAN.get(), biome, bypassBlock, ingredient);
     }
 
-    public BlockBanRecipe(Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, Optional<BlockStateIngredient> bypassBlock) {
-        this(biomeKey, biomeTag, bypassBlock, BlockStateIngredient.EMPTY);
+    public BlockBanRecipe(Either<ResourceKey<Biome>, TagKey<Biome>> biome, Optional<BlockStateIngredient> bypassBlock) {
+        this(biome, bypassBlock, BlockStateIngredient.EMPTY);
     }
 
     /**
@@ -65,8 +66,7 @@ public class BlockBanRecipe extends AbstractPlacementBanRecipe<BlockState, Block
         @Override
         public Codec<BlockBanRecipe> codec() {
             return RecordCodecBuilder.create(inst -> inst.group(
-                    ResourceKey.codec(Registries.BIOME).optionalFieldOf("biome").forGetter(BlockBanRecipe::getBiomeKey),
-                    TagKey.codec(Registries.BIOME).optionalFieldOf("biome").forGetter(BlockBanRecipe::getBiomeTag),
+                    BlockStateRecipeUtil.KEY_CODEC.fieldOf("biome").forGetter(BlockBanRecipe::getBiome),
                     BlockStateIngredient.CODEC.optionalFieldOf("bypass").forGetter(BlockBanRecipe::getBypassBlock),
                     BlockStateIngredient.CODEC.fieldOf("ingredient").forGetter(BlockBanRecipe::getIngredient)
             ).apply(inst, this.getFactory()));
@@ -75,11 +75,10 @@ public class BlockBanRecipe extends AbstractPlacementBanRecipe<BlockState, Block
         @Nullable
         @Override
         public BlockBanRecipe fromNetwork(FriendlyByteBuf buffer) {
-            Optional<ResourceKey<Biome>> biomeKey = BlockStateRecipeUtil.readBiomeKey(buffer);
-            Optional<TagKey<Biome>> biomeTag = BlockStateRecipeUtil.readBiomeTag(buffer);
+            Either<ResourceKey<Biome>, TagKey<Biome>> biome = buffer.readEither((buf) -> ResourceKey.create(Registries.BIOME, buf.readResourceLocation()), (buf) -> TagKey.create(Registries.BIOME, buf.readResourceLocation()));
             Optional<BlockStateIngredient> bypassBlock = buffer.readOptional((buf) -> BlockStateIngredient.fromNetwork(buffer));
             BlockStateIngredient ingredient = BlockStateIngredient.fromNetwork(buffer);
-            return new BlockBanRecipe(biomeKey, biomeTag, bypassBlock, ingredient);
+            return new BlockBanRecipe(biome, bypassBlock, ingredient);
         }
 
         @Override

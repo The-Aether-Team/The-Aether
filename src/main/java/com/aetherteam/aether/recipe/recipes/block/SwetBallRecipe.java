@@ -5,6 +5,7 @@ import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.serializer.BiomeParameterRecipeSerializer;
 import com.aetherteam.nitrogen.recipe.BlockPropertyPair;
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
+import com.mojang.datafixers.util.Either;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -21,12 +22,12 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class SwetBallRecipe extends AbstractBiomeParameterRecipe implements MatchEventRecipe {
-    public SwetBallRecipe(Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, BlockStateIngredient ingredient, BlockPropertyPair result, Optional<ResourceLocation> function) {
-        super(AetherRecipeTypes.SWET_BALL_CONVERSION.get(), biomeKey, biomeTag, ingredient, result, function);
+    public SwetBallRecipe(Optional<Either<ResourceKey<Biome>, TagKey<Biome>>> biome, BlockStateIngredient ingredient, BlockPropertyPair result, Optional<ResourceLocation> function) {
+        super(AetherRecipeTypes.SWET_BALL_CONVERSION.get(), biome, ingredient, result, function);
     }
 
     public SwetBallRecipe(BlockStateIngredient ingredient, BlockPropertyPair result, Optional<ResourceLocation> function) {
-        this(Optional.empty(), Optional.empty(), ingredient, result, function);
+        this(Optional.empty(), ingredient, result, function);
     }
 
     @Override

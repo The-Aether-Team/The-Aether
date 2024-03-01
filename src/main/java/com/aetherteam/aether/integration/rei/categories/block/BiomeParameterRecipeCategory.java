@@ -19,7 +19,9 @@ public class BiomeParameterRecipeCategory<R extends AbstractBiomeParameterRecipe
 
     @Override
     protected void populateTooltip(BlockStateRecipeDisplay<R> display, Tooltip tooltip) {
-        this.populateBiomeInformation(display.getRecipe().getBiomeKey(), display.getRecipe().getBiomeTag(), tooltip);
+        if (display.getRecipe().getBiome().isPresent()) {
+            this.populateBiomeInformation(display.getRecipe().getBiome().get().left(), display.getRecipe().getBiome().get().right(), tooltip);
+        }
     }
 
     public static BiomeParameterRecipeCategory<PlacementConversionRecipe> placementConversion() {
