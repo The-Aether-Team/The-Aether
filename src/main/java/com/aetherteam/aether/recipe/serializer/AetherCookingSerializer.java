@@ -18,12 +18,10 @@ import net.neoforged.neoforge.common.crafting.CraftingHelper;
  * Cleaned up.
  */
 public class AetherCookingSerializer<T extends AbstractAetherCookingRecipe> implements RecipeSerializer<T> {
-    private final int defaultCookingTime;
     private final AetherCookingSerializer.CookieBaker<T> factory;
     private final Codec<T> codec;
 
     public AetherCookingSerializer(AetherCookingSerializer.CookieBaker<T> factory, int defaultCookingTime) {
-        this.defaultCookingTime = defaultCookingTime;
         this.factory = factory;
         this.codec = RecordCodecBuilder.create((instance) -> instance.group(
                 ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(AbstractCookingRecipe::getGroup),

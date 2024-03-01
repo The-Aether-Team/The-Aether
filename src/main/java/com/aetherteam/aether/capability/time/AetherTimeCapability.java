@@ -82,7 +82,7 @@ public class AetherTimeCapability implements AetherTime {
                 if (tempTime > 54000L) {
                     tempTime -= AetherDimensions.AETHER_TICKS_PER_DAY;
                 }
-                long target = (long) Mth.clamp(18000L - tempTime, -10, 10);
+                long target = Mth.clamp(18000L - tempTime, -10, 10);
                 dayTime += target;
             }
         } else {

@@ -36,7 +36,7 @@ public class AetherMixinHooks {
      * Checks whether a cape accessory is visible.
      * @param livingEntity The {@link LivingEntity} wearing the cape.
      * @return Whether the cape is visible, as a {@link Boolean}.
-     * @see com.aetherteam.aether.mixin.mixins.client.AbstractClientPlayerMixin
+     * @see com.aetherteam.aether.mixin.mixins.client.PlayerSkinMixin
      */
     public static boolean isCapeVisible(LivingEntity livingEntity) {
         Optional<SlotResult> slotResult = EquipmentUtil.findFirstCurio(livingEntity, (item) -> item.getItem() instanceof CapeItem);

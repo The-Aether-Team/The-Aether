@@ -1,5 +1,6 @@
 package com.aetherteam.aether.client;
 
+import net.minecraft.FileUtil;
 import net.minecraft.server.packs.CompositePackResources;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
@@ -30,45 +31,22 @@ public class CombinedPackResources extends DelegatingPackResources {
     }
 
     /**
-     * [CODE COPY] - {@link net.neoforged.neoforge.resource.PathPackResources#resolve(String...)}.
-     */
-    protected Path resolve(String... paths) {
-        Path path = getSource();
-        for (String name : paths) {
-            path = path.resolve(name);
-        }
-        return path;
-    }
-
-    /**
-     * [CODE COPY] - {@link net.neoforged.neoforge.resource.PathPackResources#getRootResource(String...)}.
+     * [CODE COPY] - {@link net.minecraft.server.packs.PathPackResources#getRootResource(String...)}.
      */
     @Nullable
     @Override
     public IoSupplier<InputStream> getRootResource(String... paths) {
-        final Path path = resolve(paths);
-        if (!Files.exists(path)) {
-            return null;
-        }
-        return IoSupplier.create(path);
+        FileUtil.validatePath(paths);
+        Path path = FileUtil.resolvePath(this.getSource(), List.of(paths));
+        return Files.exists(path) ? IoSupplier.create(path) : null;
     }
 
     @Override
     public String toString() {
-        return String.format("%s: %s", getClass().getName(), getSource());
+        return String.format("%s: %s", this.getClass().getName(), this.getSource());
     }
 
-    public static class CombinedResourcesSupplier implements Pack.ResourcesSupplier {
-        private final PackMetadataSection packInfo;
-        private final List<? extends PackResources> packs;
-        private final Path sourcePack;
-
-        public CombinedResourcesSupplier(PackMetadataSection packInfo, List<? extends PackResources> packs, Path sourcePack) {
-            this.packInfo = packInfo;
-            this.packs = packs;
-            this.sourcePack = sourcePack;
-        }
-
+    public record CombinedResourcesSupplier(PackMetadataSection packInfo, List<? extends PackResources> packs, Path sourcePack) implements Pack.ResourcesSupplier {
         @Override
         public PackResources openPrimary(String pId) {
             return new CombinedPackResources(pId, this.packInfo, this.packs, this.sourcePack);
@@ -85,7 +63,7 @@ public class CombinedPackResources extends DelegatingPackResources {
 
                 for (String s : list) {
                     Path path = this.sourcePack.resolve(s);
-                    list1.add(new CombinedPackResources(id,this.packInfo, this.packs, path));
+                    list1.add(new CombinedPackResources(id, this.packInfo, this.packs, path));
                 }
 
                 return new CompositePackResources(packresources, list1);

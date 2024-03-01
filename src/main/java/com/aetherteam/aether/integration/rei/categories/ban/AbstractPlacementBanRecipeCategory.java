@@ -49,11 +49,6 @@ public abstract class AbstractPlacementBanRecipeCategory<T, S extends Predicate<
     }
 
     @Override
-    public int getDisplayHeight() {
-        return super.getDisplayHeight();
-    }
-
-    @Override
     public int getDisplayWidth(PlacementBanRecipeDisplay<R> display) {
         return super.getDisplayWidth(display);
     }

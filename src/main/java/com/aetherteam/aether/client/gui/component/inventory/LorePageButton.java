@@ -33,9 +33,6 @@ public class LorePageButton extends Button {
         guiGraphics.drawCenteredString(fontRenderer, this.getMessage(), this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2, color | 255 << 24);
     }
 
-    /**
-     * [CODE COPY] - {@link AbstractButton#getTextureY()}
-     */
     private int getTextureY() {
         int i = 1;
         if (!this.isActive()) {

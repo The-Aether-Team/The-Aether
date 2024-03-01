@@ -26,7 +26,7 @@ public class ItemBanRecipeCategory extends AbstractPlacementBanRecipeCategory<It
 
         Point startingPoint;
 
-        if (display.getBypassBlock() == null || display.getBypassBlock().isEmpty()) {
+        if (display.getBypassBlock().isEmpty()) {
             startingPoint = new Point(bounds.getCenterX() - 8, bounds.getCenterY() - 8);
         } else {
             startingPoint = startingOffset(bounds);

@@ -33,7 +33,7 @@ public class AetherAdvancementSoundOverrides {
 
     /**
      * Retrieves the {@link SoundEvent} to use in an override for the given {@link AdvancementHolder}.
-     * @param location The @link AdvancementHolder}.
+     * @param advancement The {@link AdvancementHolder}.
      * @return The new {@link SoundEvent}.
      */
     @Nullable

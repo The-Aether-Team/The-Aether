@@ -156,6 +156,7 @@ public class EntityHooks {
             for (SlotResult slotResult : handler.findCurios(identifier)) {
                 if (!slotResult.stack().isEmpty()) {
                     empty = false;
+                    break;
                 }
             }
             if (empty) {
@@ -212,7 +213,7 @@ public class EntityHooks {
      * @param mob The {@link Mob} wearing the accessories.
      * @param difficulty The {@link DifficultyInstance} of the level.
      * @param allowedSlots The list of {@link String} identifiers to enchant the accessories in.
-     * @see EntityHooks#spawnWithAccessories(Entity)
+     * @see EntityHooks#spawnWithAccessories(Entity, DifficultyInstance)
      */
     private static void enchantAccessories(Mob mob, DifficultyInstance difficulty, String[] allowedSlots) {
         RandomSource random = mob.getRandom();

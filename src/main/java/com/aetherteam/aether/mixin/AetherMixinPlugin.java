@@ -15,7 +15,7 @@ public class AetherMixinPlugin implements IMixinConfigPlugin {
         try {
             Class.forName("optifine.Installer", false, getClass().getClassLoader());
             isOptiFineInstalled = true;
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException ignored) {
         }
     }
 

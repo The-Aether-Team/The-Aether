@@ -14,8 +14,8 @@ import java.util.function.Supplier;
 public class AetherFeatures {
     public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(BuiltInRegistries.FEATURE, Aether.MODID);
 
-    public static Supplier<Feature<ShelfConfiguration>> SHELF = FEATURES.register("shelf", () -> new ShelfFeature(ShelfConfiguration.CODEC));
-    public static Supplier<Feature<AercloudConfiguration>> AERCLOUD = FEATURES.register("aercloud", () -> new AercloudFeature(AercloudConfiguration.CODEC));
-    public static Supplier<Feature<NoneFeatureConfiguration>> CRYSTAL_ISLAND = FEATURES.register("crystal_island", () -> new CrystalIslandFeature(NoneFeatureConfiguration.CODEC));
-    public static Supplier<Feature<AetherLakeConfiguration>> LAKE = FEATURES.register("lake", () -> new AetherLakeFeature(AetherLakeConfiguration.CODEC));
+    public static final Supplier<Feature<ShelfConfiguration>> SHELF = FEATURES.register("shelf", () -> new ShelfFeature(ShelfConfiguration.CODEC));
+    public static final Supplier<Feature<AercloudConfiguration>> AERCLOUD = FEATURES.register("aercloud", () -> new AercloudFeature(AercloudConfiguration.CODEC));
+    public static final Supplier<Feature<NoneFeatureConfiguration>> CRYSTAL_ISLAND = FEATURES.register("crystal_island", () -> new CrystalIslandFeature(NoneFeatureConfiguration.CODEC));
+    public static final Supplier<Feature<AetherLakeConfiguration>> LAKE = FEATURES.register("lake", () -> new AetherLakeFeature(AetherLakeConfiguration.CODEC));
 }

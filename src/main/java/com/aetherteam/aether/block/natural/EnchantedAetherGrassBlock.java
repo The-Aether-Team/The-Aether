@@ -27,7 +27,6 @@ public class EnchantedAetherGrassBlock extends GrassBlock {
 	 * Based on part of {@link net.minecraft.world.level.block.SpreadingSnowyDirtBlock#randomTick(BlockState, ServerLevel, BlockPos, RandomSource)}.<br><br>
 	 * Warning for "deprecation" is suppressed due to being copied from what Forge does.
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
 		if (!SpreadingSnowyDirtBlockAccessor.callCanBeGrass(state, level, pos)) {

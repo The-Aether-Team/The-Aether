@@ -277,7 +277,7 @@ public class AetherOverlays {
      * Stripped down to only use what is necessary.<br>
      * Renders silver heart textures over the extra hearts given by Life Shards.
      * @param guiGraphics The {@link GuiGraphics} for rendering.
-     * @param gui The {@link ForgeGui} included in rendering.
+     * @param gui The {@link ExtendedGui} included in rendering.
      * @param player The {@link LocalPlayer}.
      * @param width The {@link Integer} for the screen width.
      * @param height The {@link Integer} for the screen height.
@@ -311,7 +311,7 @@ public class AetherOverlays {
 
                         //do NOT cast this to long. This is the only way the hearts will properly shake when health is low
                         //the only time the shaking will be off is if the player's max health attribute base is below 0. This probably can't be fixed.
-                        guiAccessor.aether$getRandom().setSeed(gui.getGuiTicks() * 312871);
+                        guiAccessor.aether$getRandom().setSeed(gui.getGuiTicks() * 312871L);
 
                         float displayOverallHealth = Math.max((float) overallHealth, Math.max(lastOverallHealth, currentOverallHealth));
                         float displayLifeShardHealth = Math.max((float) maxLifeShardHealth, Math.max(lastLifeShardHealth, currentLifeShardHealth));

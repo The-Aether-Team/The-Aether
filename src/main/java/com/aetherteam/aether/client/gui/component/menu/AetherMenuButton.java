@@ -98,7 +98,6 @@ public class AetherMenuButton extends Button {
 	}
 
 	/**
-	 * [CODE COPY] - {@link AbstractButton#getTextureY()}.<br><br>
 	 * Modified the final offset multipliers.
 	 */
 	private int getTextureY() {

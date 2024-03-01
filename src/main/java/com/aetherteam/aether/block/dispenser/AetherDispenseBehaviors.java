@@ -237,7 +237,7 @@ public class AetherDispenseBehaviors {
                     if (stack.isEmpty()) {
                         return new ItemStack(item);
                     } else {
-                        if (source.<DispenserBlockEntity>blockEntity().addItem(new ItemStack(item)) < 0) {
+                        if (source.blockEntity().addItem(new ItemStack(item)) < 0) {
                             this.defaultDispenseItemBehavior.dispense(source, new ItemStack(item));
                         }
                         return stack;
