@@ -36,6 +36,8 @@ import me.shedaniel.rei.forge.REIPluginClient;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +79,8 @@ public class AetherREIClientPlugin implements REIClientPlugin {
             }
         }
 
+        registry.registerFiller((o) -> o instanceof RecipeHolder<? extends Recipe<?>> holder && holder.value() instanceof EnchantingRecipe, recipe -> AetherCookingRecipeDisplay.of(AetherREIServerPlugin.ALTAR_ENCHANTING, ((RecipeHolder<EnchantingRecipe>) recipe).value()));
+        registry.registerFiller((o) -> o instanceof RecipeHolder<? extends Recipe<?>> holder && holder.value() instanceof AltarRepairRecipe, recipe -> AetherCookingRecipeDisplay.of(AetherREIServerPlugin.ALTAR_REPAIR, ((RecipeHolder<AltarRepairRecipe>) recipe).value()));
         registry.registerRecipeFiller(FreezingRecipe.class, AetherRecipeTypes.FREEZING.get(), recipe -> AetherCookingRecipeDisplay.of(AetherREIServerPlugin.FREEZING, recipe.value()));
         registry.registerRecipeFiller(IncubationRecipe.class, AetherRecipeTypes.INCUBATION.get(), recipe -> AetherCookingRecipeDisplay.of(AetherREIServerPlugin.INCUBATING, recipe.value()));
     }
