@@ -16,6 +16,7 @@ import me.shedaniel.rei.api.client.gui.widgets.Widget;
 import me.shedaniel.rei.api.client.gui.widgets.WidgetWithBounds;
 import me.shedaniel.rei.api.client.gui.widgets.Widgets;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
+import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -60,17 +61,19 @@ public class AetherCookingRecipeCategory<R extends Recipe<?>> extends AbstractRe
 
     public static AetherCookingRecipeCategory<IncubationRecipe> incubating() {
         return new AetherCookingRecipeCategory<>("incubating", AetherREIServerPlugin.INCUBATING, 88, 54, EntryStacks.of(AetherBlocks.INCUBATOR.get()), INCUBATOR_TEXTURE, () -> {
-            var lastTick = new MutableDouble(0);
+            MutableDouble lastTick = new MutableDouble(0);
 
-            var widgetBound = new Rectangle(8, -13, 10, 54);
+            Rectangle widgetBound = new Rectangle(8, -13, 10, 54);
 
             return Widgets.wrapRenderer(widgetBound, (graphics, bound, mouseX, mouseY, delta) -> {
                 lastTick.getAndAdd(delta);
 
-                if(lastTick.getValue() > 5700) lastTick.setValue(0);
+                if (lastTick.getValue() > 5700) {
+                    lastTick.setValue(0);
+                }
 
-                var textureLength = 54;
-                var scissorOffset = (int) Math.round(textureLength * (lastTick.getValue() / 5700));
+                int textureLength = 54;
+                int scissorOffset = (int) Math.round(textureLength * (lastTick.getValue() / 5700));
 
                 graphics.blit(INCUBATOR_TEXTURE, bound.x, bound.y, 103, 16, 9, 54);
                 graphics.enableScissor(bound.x, bound.y + textureLength - scissorOffset, bound.x + 10, bound.y + (textureLength * 2) - scissorOffset);
@@ -94,9 +97,9 @@ public class AetherCookingRecipeCategory<R extends Recipe<?>> extends AbstractRe
                 lastTick.setValue(0);
             }
 
-            var xOffset = 23 - (int) Math.round(23 * (lastTick.getValue() / burnTime));
+            int xOffset = 23 - (int) Math.round(23 * (lastTick.getValue() / burnTime));
 
-            var blankArrow = REIRuntime.getInstance().getDefaultDisplayTexture(false);
+            ResourceLocation blankArrow = REIRuntime.getInstance().getDefaultDisplayTexture(false);
             graphics.blit(blankArrow, bound.x, bound.y, 106, 91, 24, 17);
 
             graphics.enableScissor(bound.x - xOffset, bound.y, bound.x + 23 - xOffset, bound.y + 16);
@@ -107,10 +110,10 @@ public class AetherCookingRecipeCategory<R extends Recipe<?>> extends AbstractRe
 
     @Override
     public List<Widget> setupDisplay(AetherCookingRecipeDisplay<R> display, Rectangle bounds) {
-        var widgets = super.setupDisplay(display, bounds);
-        var startPoint = new Point(bounds.getCenterX() - 41, bounds.y + 10);
+        List<Widget> widgets = super.setupDisplay(display, bounds);
+        Point startPoint = new Point(bounds.getCenterX() - 41, bounds.y + 10);
 
-        var df = new DecimalFormat("###.##");
+        DecimalFormat df = new DecimalFormat("###.##");
 
         float experience = display.getExperience();
         int cookingTime = display.getCookingTime();
@@ -122,7 +125,7 @@ public class AetherCookingRecipeCategory<R extends Recipe<?>> extends AbstractRe
             cookInfo = Component.translatable("category.rei.campfire.time", df.format(cookingTime / 20d));
         }
 
-        var labelPoint = new Point(bounds.x + bounds.width - 5, bounds.y + 5);
+        Point labelPoint = new Point(bounds.x + bounds.width - 5, bounds.y + 5);
 
         if (display.isIncubation()) {
             labelPoint.move(labelPoint.x, bounds.getCenterY() - Minecraft.getInstance().font.lineHeight / 2);
@@ -130,9 +133,9 @@ public class AetherCookingRecipeCategory<R extends Recipe<?>> extends AbstractRe
 
         widgets.add(Widgets.createLabel(labelPoint, cookInfo).noShadow().rightAligned().color(0xFF404040, 0xFFBBBBBB));
 
-        var arrowPoint = new Point(startPoint.x + 24, startPoint.y + 8);
+        Point arrowPoint = new Point(startPoint.x + 24, startPoint.y + 8);
 
-        var arrowWidget = this.animatedProgressArrow.get();
+        WidgetWithBounds arrowWidget = this.animatedProgressArrow.get();
         arrowWidget.getBounds().translate(arrowPoint.x, arrowPoint.y);
         widgets.add(arrowWidget);
 
@@ -140,7 +143,7 @@ public class AetherCookingRecipeCategory<R extends Recipe<?>> extends AbstractRe
             startPoint.translate(6, 5);
         }
 
-        var fuelWidget = this.fuelIndicator.get();
+        WidgetWithBounds fuelWidget = this.fuelIndicator.get();
         fuelWidget.getBounds().move(startPoint.x + 2, startPoint.y + 20);
         widgets.add(fuelWidget);
 
@@ -148,11 +151,10 @@ public class AetherCookingRecipeCategory<R extends Recipe<?>> extends AbstractRe
                 .entries(display.getInputEntries().get(0))
                 .markInput());
 
-        var outputEntries = display.getOutputEntries();
+        List<EntryIngredient> outputEntries = display.getOutputEntries();
 
         if (outputEntries.size() > 0) {
             widgets.add(Widgets.createResultSlotBackground(new Point(startPoint.x + 61, startPoint.y + 9)));
-
             widgets.add(Widgets.createSlot(new Point(startPoint.x + 61, startPoint.y + 9))
                     .entries(outputEntries.get(0))
                     .disableBackground()

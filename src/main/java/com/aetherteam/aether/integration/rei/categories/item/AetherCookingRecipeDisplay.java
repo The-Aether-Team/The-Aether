@@ -61,6 +61,11 @@ public class AetherCookingRecipeDisplay<T extends Recipe<?>> extends BasicDispla
         return (recipe instanceof AbstractAetherCookingRecipe cookingRecipe) ? List.of(EntryIngredients.of(cookingRecipe.getResult())) : List.of();
     }
 
+    @Override
+    public CategoryIdentifier<?> getCategoryIdentifier() {
+        return this.identifier;
+    }
+
     public float getExperience() {
         return this.experience;
     }
@@ -71,11 +76,6 @@ public class AetherCookingRecipeDisplay<T extends Recipe<?>> extends BasicDispla
 
     public boolean isIncubation() {
         return this.isIncubation;
-    }
-
-    @Override
-    public CategoryIdentifier<?> getCategoryIdentifier() {
-        return this.identifier;
     }
 
     public static <T extends Recipe<?>> DisplaySerializer<AetherCookingRecipeDisplay<T>> serializer(CategoryIdentifier<AetherCookingRecipeDisplay<T>> identifier) {

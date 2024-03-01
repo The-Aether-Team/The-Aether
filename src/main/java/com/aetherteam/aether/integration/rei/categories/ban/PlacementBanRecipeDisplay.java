@@ -6,6 +6,7 @@ import com.aetherteam.aether.recipe.recipes.ban.BlockBanRecipe;
 import com.aetherteam.aether.recipe.recipes.ban.ItemBanRecipe;
 import com.aetherteam.nitrogen.integration.rei.REIUtils;
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
+import com.mojang.datafixers.util.Either;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.basic.BasicDisplay;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
@@ -20,34 +21,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-// TODO: Implement DisplaySerializer within the future
 public class PlacementBanRecipeDisplay<R extends AbstractPlacementBanRecipe<?, ?>> extends BasicDisplay {
     private final CategoryIdentifier<?> categoryIdentifier;
 
+    private final Either<ResourceKey<Biome>, TagKey<Biome>> biome;
     private final Optional<BlockStateIngredient> bypassBlock;
-
-    private final Optional<ResourceKey<Biome>> biomeKey;
-    private final Optional<TagKey<Biome>> biomeTag;
-
     private final Optional<BlockStateIngredient> blockStateIngredient;
 
-    protected PlacementBanRecipeDisplay(CategoryIdentifier<? extends PlacementBanRecipeDisplay<R>> categoryIdentifier, List<EntryIngredient> inputs, Optional<BlockStateIngredient> bypassBlock, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, Optional<BlockStateIngredient> blockStateIngredient, Optional<ResourceLocation> location){
+    protected PlacementBanRecipeDisplay(CategoryIdentifier<? extends PlacementBanRecipeDisplay<R>> categoryIdentifier, List<EntryIngredient> inputs, Either<ResourceKey<Biome>, TagKey<Biome>> biome, Optional<BlockStateIngredient> bypassBlock, Optional<BlockStateIngredient> blockStateIngredient, Optional<ResourceLocation> location) {
         super(inputs, List.of(), location);
-        this.bypassBlock = bypassBlock;
-        this.biomeKey = biomeKey;
-        this.biomeTag = biomeTag;
-        this.blockStateIngredient = blockStateIngredient;
         this.categoryIdentifier = categoryIdentifier;
+        this.biome = biome;
+        this.bypassBlock = bypassBlock;
+        this.blockStateIngredient = blockStateIngredient;
     }
 
     protected PlacementBanRecipeDisplay(R recipe, CategoryIdentifier<? extends PlacementBanRecipeDisplay<R>> categoryIdentifier, List<EntryIngredient> inputs) {
-        this(categoryIdentifier,
-                inputs,
-                recipe.getBypassBlock(),
-                recipe.getBiome().left(),
-                recipe.getBiome().right(),
-                Optional.ofNullable((recipe.getIngredient() instanceof BlockStateIngredient ingredient) ? ingredient : null),
-                Optional.empty());
+        this(categoryIdentifier, inputs, recipe.getBiome(), recipe.getBypassBlock(), Optional.ofNullable((recipe.getIngredient() instanceof BlockStateIngredient ingredient) ? ingredient : null), Optional.empty());
     }
 
     public static PlacementBanRecipeDisplay<ItemBanRecipe> ofItem(ItemBanRecipe recipe){
@@ -55,42 +45,36 @@ public class PlacementBanRecipeDisplay<R extends AbstractPlacementBanRecipe<?, ?
         if (recipe.getBypassBlock().isPresent()) {
             list.addAll(REIUtils.toIngredientList(recipe.getBypassBlock().get().getPairs()));
         }
-
         list.add(EntryIngredients.ofIngredient(recipe.getIngredient()));
 
         return new PlacementBanRecipeDisplay<>(recipe, AetherREIServerPlugin.ITEM_PLACEMENT_BAN, list);
     }
 
-    public static PlacementBanRecipeDisplay<BlockBanRecipe> ofBlock(BlockBanRecipe recipe){
+    public static PlacementBanRecipeDisplay<BlockBanRecipe> ofBlock(BlockBanRecipe recipe) {
         List<EntryIngredient> list = new ArrayList<>();
         if (recipe.getBypassBlock().isPresent()) {
             list.addAll(REIUtils.toIngredientList(recipe.getBypassBlock().get().getPairs()));
         }
-
         list.addAll(REIUtils.toIngredientList(recipe.getIngredient().getPairs()));
 
         return new PlacementBanRecipeDisplay<>(recipe, AetherREIServerPlugin.BLOCK_PLACEMENT_BAN, list);
+    }
+
+    @Override
+    public CategoryIdentifier<?> getCategoryIdentifier() {
+        return this.categoryIdentifier;
+    }
+
+    public Either<ResourceKey<Biome>, TagKey<Biome>> getBiome() {
+        return this.biome;
     }
 
     public Optional<BlockStateIngredient> getBypassBlock() {
         return this.bypassBlock;
     }
 
-    public Optional<ResourceKey<Biome>> getBiomeKey() {
-        return this.biomeKey;
-    }
-
-    public Optional<TagKey<Biome>> getBiomeTag() {
-        return this.biomeTag;
-    }
-
     @Nullable
     public BlockStateIngredient getBlockStateIngredient() {
         return this.blockStateIngredient.orElse(null);
-    }
-
-    @Override
-    public CategoryIdentifier<?> getCategoryIdentifier() {
-        return this.categoryIdentifier;
     }
 }

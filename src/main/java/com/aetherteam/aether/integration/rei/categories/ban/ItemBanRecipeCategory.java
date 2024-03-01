@@ -22,10 +22,9 @@ public class ItemBanRecipeCategory extends AbstractPlacementBanRecipeCategory<It
 
     @Override
     public List<Widget> setupDisplay(PlacementBanRecipeDisplay<ItemBanRecipe> display, Rectangle bounds) {
-        var widgets = super.setupDisplay(display, bounds);
+        List<Widget> widgets = super.setupDisplay(display, bounds);
 
         Point startingPoint;
-
         if (display.getBypassBlock().isEmpty()) {
             startingPoint = new Point(bounds.getCenterX() - 8, bounds.getCenterY() - 8);
         } else {
@@ -33,10 +32,7 @@ public class ItemBanRecipeCategory extends AbstractPlacementBanRecipeCategory<It
             startingPoint.translate(1, 1);
         }
 
-        widgets.add(
-                Widgets.createSlot(startingPoint)
-                        .entries(REIClientUtils.setupRendering(display.getInputEntries().get(1), (tooltip) -> this.populateTooltip(display, tooltip)))
-        );
+        widgets.add(Widgets.createSlot(startingPoint).entries(REIClientUtils.setupRendering(display.getInputEntries().get(1), (tooltip) -> this.populateTooltip(display, tooltip))));
 
         return widgets;
     }

@@ -23,10 +23,9 @@ public class BlockBanRecipeCategory extends AbstractPlacementBanRecipeCategory<B
 
     @Override
     public List<Widget> setupDisplay(PlacementBanRecipeDisplay<BlockBanRecipe> display, Rectangle bounds) {
-        var widgets = super.setupDisplay(display, bounds);
+        List<Widget> widgets = super.setupDisplay(display, bounds);
 
         Point startingPoint;
-
         if (display.getBypassBlock().isEmpty()) {
             startingPoint = new Point(bounds.getCenterX() - 8, bounds.getCenterY() - 8);
         } else {
@@ -34,10 +33,9 @@ public class BlockBanRecipeCategory extends AbstractPlacementBanRecipeCategory<B
             startingPoint.translate(1, 1);
         }
 
-        widgets.add(
-                Widgets.createSlot(startingPoint)
-                        .entries(REIClientUtils.setupRendering(display.getInputEntries().get(1), display.getBlockStateIngredient().getPairs(), (tooltip) -> this.populateTooltip(display, tooltip)))
-        );
+        if (display.getBlockStateIngredient() != null) {
+            widgets.add(Widgets.createSlot(startingPoint).entries(REIClientUtils.setupRendering(display.getInputEntries().get(1), display.getBlockStateIngredient().getPairs(), (tooltip) -> this.populateTooltip(display, tooltip))));
+        }
 
         return widgets;
     }
