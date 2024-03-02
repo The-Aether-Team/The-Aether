@@ -97,4 +97,10 @@ public interface AetherBossMob<T extends Mob & AetherBossMob<T>> extends BossMob
      */
     @Nullable
     ResourceLocation getBossBarTexture();
+
+    /**
+     * @return The {@link ResourceLocation} for this boss's health bar background.
+     */
+    @Nullable
+    ResourceLocation getBossBarBackgroundTexture();
 }

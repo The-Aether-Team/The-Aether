@@ -312,12 +312,12 @@ public class GuiHooks {
      * This version of the method doesn't account for other types of boss bars because the Aether only has one.
      */
     public static void drawBar(GuiGraphics guiGraphics, int x, int y, BossEvent bossEvent, AetherBossMob<?> aetherBossMob) {
-        if (aetherBossMob.getBossBarTexture() != null) {
+        if (aetherBossMob.getBossBarBackgroundTexture() != null && aetherBossMob.getBossBarTexture() != null) {
             x -= 37; // The default boss health bar is offset by -91. We need -128.
-            guiGraphics.blit(aetherBossMob.getBossBarTexture(), x, y, -90, 0, 16, 256, 16, 256, 256);
+            guiGraphics.blitSprite(aetherBossMob.getBossBarBackgroundTexture(), 256, 16, 0, 0, x, y, 256, 16);
             int health = (int) (bossEvent.getProgress() * 256.0F);
             if (health > 0) {
-                guiGraphics.blit(aetherBossMob.getBossBarTexture(), x, y, -90, 0, 0, health, 16, 256, 256);
+                guiGraphics.blitSprite(aetherBossMob.getBossBarTexture(), 256, 16, 0, 0, x, y, health, 16);
             }
         }
     }

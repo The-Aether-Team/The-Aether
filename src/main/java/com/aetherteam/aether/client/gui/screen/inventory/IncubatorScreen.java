@@ -10,6 +10,8 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class IncubatorScreen extends AbstractRecipeBookScreen<IncubatorMenu, IncubatorRecipeBookComponent> {
 	private static final ResourceLocation INCUBATOR_GUI_TEXTURES = new ResourceLocation(Aether.MODID, "textures/gui/menu/incubator.png");
+	private static final ResourceLocation LIT_PROGRESS_TEXTURE = new ResourceLocation(Aether.MODID, "menu/lit_progress");
+	private static final ResourceLocation INCUBATION_PROGRESS_TEXTURE = new ResourceLocation(Aether.MODID, "menu/incubation_progress");
 
 	public IncubatorScreen(IncubatorMenu menu, Inventory playerInventory, Component title) {
 		super(menu, new IncubatorRecipeBookComponent(), playerInventory, title);
@@ -27,10 +29,10 @@ public class IncubatorScreen extends AbstractRecipeBookScreen<IncubatorMenu, Inc
 		int top = this.getGuiTop();
 		guiGraphics.blit(INCUBATOR_GUI_TEXTURES, left, top, 0, 0, this.getXSize(), this.getYSize());
 		if (this.getMenu().isIncubating()) {
-			int incubationTimeRemaining = this.getMenu().getIncubationTimeRemaining();
-			guiGraphics.blit(INCUBATOR_GUI_TEXTURES, left + 74, (top + 48) - incubationTimeRemaining, 176, 13 - incubationTimeRemaining, 14, incubationTimeRemaining + 1);
+			int incubationTimeRemaining = this.getMenu().getIncubationTimeRemaining() + 1;
+			guiGraphics.blitSprite(LIT_PROGRESS_TEXTURE, 14, 14, 0, 14 - incubationTimeRemaining, left + 73, top + 36 + 13 - incubationTimeRemaining, 14, incubationTimeRemaining);
 		}
-		int incubationProgressScaled = this.getMenu().getIncubationProgressScaled();
-		guiGraphics.blit(INCUBATOR_GUI_TEXTURES, left + 103, top + 70 - incubationProgressScaled, 179, 70 - incubationProgressScaled, 10, incubationProgressScaled);
+		int incubationProgressScaled = this.getMenu().getIncubationProgressScaled() + 1;
+		guiGraphics.blitSprite(INCUBATION_PROGRESS_TEXTURE, 10, 56, 0, 55 - incubationProgressScaled, left + 103, top + 15 + 55 - incubationProgressScaled, 10, incubationProgressScaled);
 	}
 }

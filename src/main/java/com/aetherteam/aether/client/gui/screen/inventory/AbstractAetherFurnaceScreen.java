@@ -1,5 +1,6 @@
 package com.aetherteam.aether.client.gui.screen.inventory;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.inventory.menu.AbstractAetherFurnaceMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.recipebook.AbstractFurnaceRecipeBookComponent;
@@ -9,10 +10,14 @@ import net.minecraft.world.entity.player.Inventory;
 
 public abstract class AbstractAetherFurnaceScreen<T extends AbstractAetherFurnaceMenu> extends AbstractRecipeBookScreen<T, AbstractFurnaceRecipeBookComponent> {
     private final ResourceLocation texture;
+    private final ResourceLocation litProgressSprite;
+    private final ResourceLocation burnProgressSprite;
 
-    public AbstractAetherFurnaceScreen(T menu, AbstractFurnaceRecipeBookComponent recipeBook, Inventory playerInventory, Component title, ResourceLocation texture) {
+    public AbstractAetherFurnaceScreen(T menu, AbstractFurnaceRecipeBookComponent recipeBook, Inventory playerInventory, Component title, ResourceLocation texture, ResourceLocation litProgressSprite, ResourceLocation burnProgressSprite) {
         super(menu, recipeBook, playerInventory, title);
         this.texture = texture;
+        this.litProgressSprite = litProgressSprite;
+        this.burnProgressSprite = burnProgressSprite;
     }
 
     @Override
@@ -27,10 +32,11 @@ public abstract class AbstractAetherFurnaceScreen<T extends AbstractAetherFurnac
         int top = this.getGuiTop();
         guiGraphics.blit(this.texture, left, top, 0, 0, this.getXSize(), this.getYSize());
         if (this.getMenu().isLit()) {
-            int litProgress = this.getMenu().getLitProgress();
-            guiGraphics.blit(this.texture, left + 56, top + 36 + 12 - litProgress, 176, 12 - litProgress, 14, litProgress + 1);
+            int litProgress = this.getMenu().getLitProgress() + 1;
+            Aether.LOGGER.info(String.valueOf(litProgress));
+            guiGraphics.blitSprite(this.litProgressSprite, 14, 14, 0, 14 - litProgress, left + 56, top + 36 + 13 - litProgress, 14, litProgress);
         }
         int burnProgress = this.getMenu().getBurnProgress();
-        guiGraphics.blit(this.texture, left + 79, top + 34, 176, 14, burnProgress + 1, 16);
+        guiGraphics.blitSprite(this.burnProgressSprite, 24, 16, 0, 0, left + 79, top + 34, burnProgress + 1, 16);
     }
 }

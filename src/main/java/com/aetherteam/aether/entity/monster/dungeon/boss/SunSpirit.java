@@ -524,7 +524,16 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     @Nullable
     @Override
     public ResourceLocation getBossBarTexture() {
-        return new ResourceLocation(Aether.MODID, "textures/gui/boss_bar_sun_spirit.png");
+        return new ResourceLocation(Aether.MODID, "boss_bar/sun_spirit");
+    }
+
+    /**
+     * @return The {@link ResourceLocation} for this boss's health bar background.
+     */
+    @Nullable
+    @Override
+    public ResourceLocation getBossBarBackgroundTexture() {
+        return new ResourceLocation(Aether.MODID, "boss_bar/sun_spirit_background");
     }
 
     /**

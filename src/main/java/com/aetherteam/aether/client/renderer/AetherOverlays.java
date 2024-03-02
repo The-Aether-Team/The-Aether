@@ -41,8 +41,12 @@ public class AetherOverlays {
     private static final ResourceLocation TEXTURE_INEBRIATION_VIGNETTE = new ResourceLocation(Aether.MODID, "textures/blur/inebriation_vignette.png");
     private static final ResourceLocation TEXTURE_REMEDY_VIGNETTE = new ResourceLocation(Aether.MODID, "textures/blur/remedy_vignette.png");
     private static final ResourceLocation TEXTURE_SHIELD_OF_REPULSION_VIGNETTE = new ResourceLocation(Aether.MODID, "textures/blur/shield_of_repulsion_vignette.png");
-    private static final ResourceLocation TEXTURE_COOLDOWN_BAR = new ResourceLocation(Aether.MODID, "textures/gui/cooldown_bar.png");
-    private static final ResourceLocation TEXTURE_JUMPS = new ResourceLocation(Aether.MODID, "textures/gui/jumps.png");
+
+    private static final ResourceLocation TEXTURE_COOLDOWN_BAR = new ResourceLocation(Aether.MODID, "hud/cooldown");
+    private static final ResourceLocation TEXTURE_COOLDOWN_BAR_BACKGROUND = new ResourceLocation(Aether.MODID, "hud/cooldown_background");
+
+    private static final ResourceLocation TEXTURE_JUMPS = new ResourceLocation(Aether.MODID, "hud/jumps");
+    private static final ResourceLocation TEXTURE_JUMPS_BACKGROUND = new ResourceLocation(Aether.MODID, "hud/jumps_background");
 
     private static final ResourceLocation TEXTURE_LIFE_SHARD_FULL = new ResourceLocation(Aether.MODID, "hud/heart/shard_full");
     private static final ResourceLocation TEXTURE_LIFE_SHARD_HALF = new ResourceLocation(Aether.MODID, "hud/heart/shard_half");
@@ -242,8 +246,8 @@ public class AetherOverlays {
                             }
                             String text = itemStack.getHoverName().getString().concat(" ").concat(Component.translatable("aether.hammer_of_kingbdogz_cooldown").getString());
                             guiGraphics.drawString(minecraft.font, text, (int) ((window.getGuiScaledWidth() / 2.0F) - (minecraft.font.width(text) / 2.0F)), 32, 16777215);
-                            guiGraphics.blit(TEXTURE_COOLDOWN_BAR, window.getGuiScaledWidth() / 2 - 64, 42, 0, 8, 128, 8, 256, 256);
-                            guiGraphics.blit(TEXTURE_COOLDOWN_BAR, window.getGuiScaledWidth() / 2 - 64, 42, 0, 0, (int) (cooldownPercent * 128), 8, 256, 256);
+                            guiGraphics.blitSprite(TEXTURE_COOLDOWN_BAR_BACKGROUND, 128, 8, 0, 0, window.getGuiScaledWidth() / 2 - 64, 42, 128, 8);
+                            guiGraphics.blitSprite(TEXTURE_COOLDOWN_BAR, 128, 8, 0, 0, window.getGuiScaledWidth() / 2 - 64, 42, (int) (cooldownPercent * 128), 8);
                             break;
                         }
                     }
@@ -264,9 +268,9 @@ public class AetherOverlays {
                 int xPos = ((window.getGuiScaledWidth() / 2) + (jumpCount * 8)) - (moa.getMaxJumps() * 8) / 2;
                 int yPos = 18;
                 if (jumpCount < moa.getRemainingJumps()) {
-                    guiGraphics.blit(TEXTURE_JUMPS, xPos, yPos, 0, 0, 9, 11, 256, 256);
+                    guiGraphics.blitSprite(TEXTURE_JUMPS, xPos, yPos, 9, 11);
                 } else {
-                    guiGraphics.blit(TEXTURE_JUMPS, xPos, yPos, 10, 0, 9, 11, 256, 256);
+                    guiGraphics.blitSprite(TEXTURE_JUMPS_BACKGROUND, xPos, yPos, 9, 11);
                 }
             }
         }

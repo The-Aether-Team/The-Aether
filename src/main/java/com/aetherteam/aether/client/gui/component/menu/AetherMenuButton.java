@@ -10,17 +10,17 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class AetherMenuButton extends Button {
-	private static final ResourceLocation AETHER_WIDGETS = new ResourceLocation(Aether.MODID, "textures/gui/title/buttons.png");
+	private static final WidgetSprites AETHER_WIDGETS = new WidgetSprites(new ResourceLocation(Aether.MODID, "title/button"), new ResourceLocation(Aether.MODID, "title/button_highlighted"));
 	private static final int BUTTON_WIDTH = 400;
 	private static final int BUTTON_HEIGHT = 40;
 	private static final int BUTTON_SEPARATION = 50;
 	private static final int INITIAL_X_OFFSET = 16;
 	private static final int INITIAL_Y_OFFSET = 100;
-	private static final int TEXTURE_SIZE = 512;
 	private final AetherTitleScreen screen;
 	public final int originalX;
 	public final int originalY;
@@ -51,7 +51,6 @@ public class AetherMenuButton extends Button {
 		PoseStack poseStack = guiGraphics.pose();
 		Minecraft minecraft = Minecraft.getInstance();
 		Font font = minecraft.font;
-		int i = this.getTextureY();
 
 		float scale = AetherTitleScreen.getScale(this.screen, minecraft); // The scaling for elements relative to the true screen scale.
 		if (this.screen.isAlignedLeft()) { // Changes button positioning dependent on whether the parent title screen is aligned left or not.
@@ -65,9 +64,11 @@ public class AetherMenuButton extends Button {
 		}
 		this.setHeight((int) (BUTTON_HEIGHT / scale));
 
+		ResourceLocation location = AETHER_WIDGETS.get(this.isActive(), this.isHoveredOrFocused());
+
 		RenderSystem.enableBlend();
 		guiGraphics.setColor(1.0F, 1.0F, 1.0F, this.alpha);
-		guiGraphics.blit(AETHER_WIDGETS, this.getX() + this.hoverOffset, this.getY(), 0, Mth.ceil(i / scale), this.getWidth(), this.getHeight(), (int) (TEXTURE_SIZE / scale), (int) (TEXTURE_SIZE / scale));
+		guiGraphics.blitSprite(location, this.getX() + this.hoverOffset, this.getY(), (int) (BUTTON_WIDTH / scale), (int) (BUTTON_HEIGHT / scale));
 		RenderSystem.disableBlend();
 
 		poseStack.pushPose();

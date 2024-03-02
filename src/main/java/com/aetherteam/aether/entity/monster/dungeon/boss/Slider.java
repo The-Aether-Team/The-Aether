@@ -526,7 +526,16 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     @Nullable
     @Override
     public ResourceLocation getBossBarTexture() {
-        return new ResourceLocation(Aether.MODID, "textures/gui/boss_bar_slider.png");
+        return new ResourceLocation(Aether.MODID, "boss_bar/slider");
+    }
+
+    /**
+     * @return The {@link ResourceLocation} for this boss's health bar background.
+     */
+    @Nullable
+    @Override
+    public ResourceLocation getBossBarBackgroundTexture() {
+        return new ResourceLocation(Aether.MODID, "boss_bar/slider_background");
     }
 
     /**

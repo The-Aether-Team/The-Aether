@@ -105,7 +105,7 @@ dependencies {
 
 //    implementation fileTree(dir: 'libs', include: '*.jar')
 
-//    runtimeOnly "me.shedaniel:RoughlyEnoughItems-neoforge:$rei_version"
+    runtimeOnly "me.shedaniel:RoughlyEnoughItems-neoforge:$rei_version"
 
     compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:$rei_version"
     compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:$rei_version"
