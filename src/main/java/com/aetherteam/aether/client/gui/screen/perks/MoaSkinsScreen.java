@@ -25,6 +25,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.ConfirmLinkScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -48,6 +49,14 @@ import java.util.UUID;
 
 public class MoaSkinsScreen extends Screen {
     public static final ResourceLocation MOA_SKINS_GUI = new ResourceLocation(Aether.MODID, "textures/gui/perks/skins/skins.png");
+    public static final ResourceLocation LOCK_SPRITE = new ResourceLocation(Aether.MODID, "skins/lock");
+    public static final ResourceLocation SLOT_SELECTED_SPRITE = new ResourceLocation(Aether.MODID, "skins/slot_selected");
+
+    public static final WidgetSprites SLOT_WIDGET = new WidgetSprites(new ResourceLocation(Aether.MODID, "skins/slot"), new ResourceLocation(Aether.MODID, "skins/slot_disabled"), new ResourceLocation(Aether.MODID, "skins/slot_highlighted"));
+    public static final WidgetSprites SCROLL_WIDGET = new WidgetSprites(new ResourceLocation(Aether.MODID, "skins/scroll"), new ResourceLocation(Aether.MODID, "skins/scroll_disabled"), new ResourceLocation(Aether.MODID, "skins/scroll"));
+    public static final WidgetSprites PERMANENT_WIDGET = new WidgetSprites(new ResourceLocation(Aether.MODID, "skins/permanent"), new ResourceLocation(Aether.MODID, "skins/permanent_highlighted"));
+    public static final WidgetSprites TEMPORARY_WIDGET = new WidgetSprites(new ResourceLocation(Aether.MODID, "skins/temporary"), new ResourceLocation(Aether.MODID, "skins/temporary_highlighted"));
+
     private static final String PATREON_LINK = "https://www.patreon.com/TheAetherTeam";
     private static final String HELP_LINK = "https://github.com/The-Aether-Team/.github/wiki/Patreon-Guide";
 
@@ -219,16 +228,17 @@ public class MoaSkinsScreen extends Screen {
                 // This depends on whether the skin is selected in which case it will be highlighted.
                 // If a skin slot is not selected, then it will display as darkened only if the user does not have access to that skin.
                 if (user == null || !skin.getUserPredicate().test(user) || skin == this.getSelectedSkin() || this.getSlotIndex(mouseX, mouseY) == slotIndex) {
-                    int u = skin == this.getSelectedSkin() || this.getSlotIndex(mouseX, mouseY) == slotIndex ? 18 : 0; // Highlighted slot vs. Darkened slot.
-                    guiGraphics.blit(MOA_SKINS_GUI, x, y, u, 191, 18, 18); // Render slot.
+                    // Highlighted slot vs. Darkened slot.
+                    ResourceLocation location = SLOT_WIDGET.get(user != null && skin.getUserPredicate().test(user), skin == this.getSelectedSkin() || this.getSlotIndex(mouseX, mouseY) == slotIndex);
+                    guiGraphics.blitSprite(location, x, y, 18, 18); // Render slot.
                 }
 
                 // Renders an outline for the player's currently active Moa Skin.
                 if (userSkinsData.containsKey(uuid) && userSkinsData.get(uuid).moaSkin() == skin) {
-                    guiGraphics.blit(MOA_SKINS_GUI, x, y, 36, 191, 18, 18); // Render golden slot outline.
+                    guiGraphics.blit(SLOT_SELECTED_SPRITE, x, y, 36, 191, 18, 18); // Render golden slot outline.
                 }
 
-                guiGraphics.blit(skin.getIconLocation(), x + 1, y + 1, 0, 0, 16, 16, 16, 16); // Render Moa skin icon.
+                guiGraphics.blitSprite(skin.getIconLocation(), x + 1, y + 1, 16, 16); // Render Moa skin icon.
 
                 slotIndex++;
             }
@@ -244,9 +254,9 @@ public class MoaSkinsScreen extends Screen {
     private void renderScrollbar(GuiGraphics guiGraphics) {
         int scrollbarTop = (this.topPos + (this.imageHeight / 2)) + 29;
         int scrollbarLeft = this.leftPos + 8;
-        int scrollbarU = this.moaSkins.size() > this.maxSlots() ? 0 : 13;
 
-        guiGraphics.blit(MOA_SKINS_GUI, (int) (scrollbarLeft + this.scrollX), scrollbarTop, scrollbarU, 209, 13, 6); // Render scrollbar.
+        ResourceLocation location = SCROLL_WIDGET.get(this.moaSkins.size() > this.maxSlots(), true);
+        guiGraphics.blitSprite(location, (int) (scrollbarLeft + this.scrollX), scrollbarTop, 13, 6); // Render scrollbar.
     }
 
     /**
@@ -296,7 +306,7 @@ public class MoaSkinsScreen extends Screen {
             this.applyButton.active = false;
             this.removeButton.active = false;
 
-            guiGraphics.blit(MOA_SKINS_GUI, this.leftPos + 13, this.topPos + 13, 54, 191, 10, 14); // Lock Icon
+            guiGraphics.blitSprite(LOCK_SPRITE, this.leftPos + 13, this.topPos + 13, 10, 14); // Lock Icon
 
             if (this.getSelectedSkin().getInfo().lifetime()) {
                 boolean mouseOver = this.isMouseOverIcon(mouseX, mouseY, 8);
@@ -325,7 +335,8 @@ public class MoaSkinsScreen extends Screen {
      * @param mouseOver Whether the mouse is hovering over this icon, as a {@link Boolean}.
      */
     private void renderLifetimeIcon(GuiGraphics guiGraphics, boolean mouseOver) {
-        guiGraphics.blit(MOA_SKINS_GUI, this.leftPos + 13, (this.topPos + (this.imageHeight / 2)) - 9, mouseOver ? 63 : 55, 184, 8, 7); // Lifetime Icon
+        ResourceLocation location = PERMANENT_WIDGET.get(true, mouseOver);
+        guiGraphics.blitSprite(location, this.leftPos + 13, (this.topPos + (this.imageHeight / 2)) - 9, 8, 7); // Lifetime Icon
     }
 
     /**
@@ -334,7 +345,8 @@ public class MoaSkinsScreen extends Screen {
      * @param mouseOver Whether the mouse is hovering over this icon, as a {@link Boolean}.
      */
     private void renderPledgingIcon(GuiGraphics guiGraphics, boolean mouseOver) {
-        guiGraphics.blit(MOA_SKINS_GUI, this.leftPos + 13, (this.topPos + (this.imageHeight / 2)) - 9, mouseOver ? 49 : 42, 184, 7, 7);
+        ResourceLocation location = TEMPORARY_WIDGET.get(true, mouseOver);
+        guiGraphics.blitSprite(location, this.leftPos + 13, (this.topPos + (this.imageHeight / 2)) - 9, 7, 7);
     }
 
     private boolean isMouseOverIcon(int mouseX, int mouseY, int width) {

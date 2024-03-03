@@ -2,7 +2,6 @@ package com.aetherteam.aether.network.packet.clientbound;
 
 import com.aetherteam.aether.event.hooks.DimensionHooks;
 import com.aetherteam.nitrogen.network.BasePacket;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;

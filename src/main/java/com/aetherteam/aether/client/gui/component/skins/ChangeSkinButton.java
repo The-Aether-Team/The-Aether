@@ -1,10 +1,15 @@
 package com.aetherteam.aether.client.gui.component.skins;
 
-import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
+import com.aetherteam.aether.Aether;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.WidgetSprites;
+import net.minecraft.resources.ResourceLocation;
 
 public class ChangeSkinButton extends Button {
+    public static final WidgetSprites APPLY_WIDGET = new WidgetSprites(new ResourceLocation(Aether.MODID, "skins/apply_button"), new ResourceLocation(Aether.MODID, "skins/apply_button_disabled"), new ResourceLocation(Aether.MODID, "skins/apply_button_highlighted"));
+    public static final WidgetSprites REMOVE_WIDGET = new WidgetSprites(new ResourceLocation(Aether.MODID, "skins/remove_button"), new ResourceLocation(Aether.MODID, "skins/remove_button_disabled"), new ResourceLocation(Aether.MODID, "skins/remove_button_highlighted"));
+
     private final ButtonType buttonType;
 
     public ChangeSkinButton(ButtonType buttonType, Builder builder) {
@@ -21,17 +26,13 @@ public class ChangeSkinButton extends Button {
 
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        int u = 0;
-        if (this.buttonType == ButtonType.REMOVE) {
-            u += 3;
+        ResourceLocation location;
+        if (this.buttonType == ButtonType.APPLY) {
+            location = APPLY_WIDGET.get(this.isActive(), this.isHovered());
+        } else {
+            location = REMOVE_WIDGET.get(this.isActive(), this.isHovered());
         }
-        if (this.isActive()) {
-            u += 1;
-            if (this.isHovered()) {
-                u += 1;
-            }
-        }
-        guiGraphics.blit(MoaSkinsScreen.MOA_SKINS_GUI, this.getX(), this.getY(), u * 7, 184, 7, 7);
+        guiGraphics.blitSprite(location, this.getX(), this.getY(), 7, 7);
     }
 
     public enum ButtonType {

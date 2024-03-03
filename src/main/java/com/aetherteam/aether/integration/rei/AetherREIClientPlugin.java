@@ -44,7 +44,8 @@ import java.util.List;
 
 @REIPluginClient
 public class AetherREIClientPlugin implements REIClientPlugin {
-    public static final ResourceLocation ALTAR_TEXTURE = new ResourceLocation(Aether.MODID, "textures/gui/menu/altar.png");
+    private static final ResourceLocation LIT_PROGRESS_TRANSPARENT_TEXTURE = new ResourceLocation(Aether.MODID, "menu/lit_progress_transparent");
+    private static final ResourceLocation LIT_PROGRESS_BACKGROUND_TEXTURE = new ResourceLocation(Aether.MODID, "menu/lit_progress_background");
 
     public static List<FuelRecipe> getFuelRecipes() {
         List<FuelRecipe> fuelRecipes = new ArrayList<>();
@@ -97,7 +98,7 @@ public class AetherREIClientPlugin implements REIClientPlugin {
         registry.add(BiomeParameterRecipeCategory.placementConversion());
         registry.add(BiomeParameterRecipeCategory.swetBall());
 
-        registry.add(new AbstractFuelCategory(AetherREIServerPlugin.AETHER_FUEL, ALTAR_TEXTURE) {
+        registry.add(new AbstractFuelCategory(AetherREIServerPlugin.AETHER_FUEL, LIT_PROGRESS_TRANSPARENT_TEXTURE, LIT_PROGRESS_BACKGROUND_TEXTURE) {
             @Override
             public Component getTitle() {
                 return Component.translatable("gui." + Aether.MODID + ".jei.fuel");

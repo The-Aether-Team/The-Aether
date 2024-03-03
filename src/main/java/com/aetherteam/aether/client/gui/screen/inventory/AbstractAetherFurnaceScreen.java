@@ -1,6 +1,5 @@
 package com.aetherteam.aether.client.gui.screen.inventory;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.inventory.menu.AbstractAetherFurnaceMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.recipebook.AbstractFurnaceRecipeBookComponent;
@@ -33,8 +32,7 @@ public abstract class AbstractAetherFurnaceScreen<T extends AbstractAetherFurnac
         guiGraphics.blit(this.texture, left, top, 0, 0, this.getXSize(), this.getYSize());
         if (this.getMenu().isLit()) {
             int litProgress = this.getMenu().getLitProgress() + 1;
-            Aether.LOGGER.info(String.valueOf(litProgress));
-            guiGraphics.blitSprite(this.litProgressSprite, 14, 14, 0, 14 - litProgress, left + 56, top + 36 + 13 - litProgress, 14, litProgress);
+            guiGraphics.blitSprite(this.litProgressSprite, 14, 14, 0, 14 - litProgress, left + 57, top + 36 + 13 - litProgress, 14, litProgress);
         }
         int burnProgress = this.getMenu().getBurnProgress();
         guiGraphics.blitSprite(this.burnProgressSprite, 24, 16, 0, 0, left + 79, top + 34, burnProgress + 1, 16);
