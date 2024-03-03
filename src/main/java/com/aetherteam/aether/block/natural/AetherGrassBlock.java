@@ -2,9 +2,11 @@ package com.aetherteam.aether.block.natural;
 
 import com.aetherteam.aether.block.AetherBlockStateProperties;
 import com.aetherteam.aether.block.AetherBlocks;
+import com.aetherteam.aether.data.resources.registries.AetherPlacedFeatures;
 import com.aetherteam.aether.mixin.mixins.common.accessor.SpreadingSnowyDirtBlockAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -95,7 +97,7 @@ public class AetherGrassBlock extends GrassBlock {
 					}
 					featureHolder = ((RandomPatchConfiguration) list.get(random.nextInt(list.size())).config()).feature();
 				} else {
-					featureHolder = VegetationPlacements.GRASS_BONEMEAL;
+					featureHolder = level.registryAccess().registryOrThrow(Registry.PLACED_FEATURE_REGISTRY).getHolderOrThrow(AetherPlacedFeatures.AETHER_GRASS_BONEMEAL);
 				}
 				featureHolder.value().place(level, level.getChunkSource().getGenerator(), random, blockPos);
 			}
