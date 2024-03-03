@@ -1,1 +1,18 @@
-{}
+{
+  "advancement.aether.aether_sleep": "راحة مكتسبه",
+  "advancement.aether.aether_sleep.desc": "نام في الاثير",
+  "advancement.aether.black_moa": "فلنطير!",
+  "advancement.aether.black_moa.desc": "اركب موا سوداء",
+  "advancement.aether.blue_aercloud": "ألى ما لا نهاية و ما بعدها!",
+  "advancement.aether.blue_aercloud.desc": "نط على ايروكلود ازرق",
+  "advancement.aether.bronze_dungeon": "مثل الزعيم!",
+  "advancement.aether.bronze_dungeon.desc": "إغلب الزنزانة البرونزية",
+  "advancement.aether.craft_altar": "هل تصدق في السحر؟",
+  "advancement.aether.craft_altar.desc": "إصنع ألتار",
+  "advancement.aether.enchanted_gravitite": "الوردي هو الأزرق الجديد",
+  "advancement.aether.enchanted_gravitite.desc": "استخدم الالتر للحصول على الجرافيت المقوى",
+  "advancement.aether.enter_aether": "الفردوس الخطر",
+  "advancement.aether.enter_aether.desc": "إنطقل الى الأيثر",
+  "advancement.aether.gold_dungeon": "إنطفئ",
+  "advancement.aether.gold_dungeon.desc": "إغلب الزنزانة الذهبية"
+}
