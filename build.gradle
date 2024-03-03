@@ -97,7 +97,7 @@ dependencies {
 
 //    compileOnly fg.deobf("curse.maven:colytra-280200:${project.colytra_version}")
 //    compileOnly fg.deobf("curse.maven:curious-elytra-317716:${project.curiouselytra_version}")
-    compileOnly "curse.maven:jade-324717:${project.jade_version}"
+//    compileOnly "curse.maven:jade-324717:${project.jade_version}"
 //    runtimeOnly "curse.maven:jade-324717:${project.jade_version}"
 //    compileOnly fg.deobf("curse.maven:lootr-361276:${project.lootr_version}")
 
@@ -105,13 +105,13 @@ dependencies {
 
 //    implementation fileTree(dir: 'libs', include: '*.jar')
 
-    runtimeOnly "me.shedaniel:RoughlyEnoughItems-neoforge:$rei_version"
-
-    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:$rei_version"
-    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:$rei_version"
-
-    implementation "me.shedaniel.cloth:cloth-config-neoforge:$cloth_config_version"
-    implementation "dev.architectury:architectury-neoforge:$architectury_version"
+//    runtimeOnly "me.shedaniel:RoughlyEnoughItems-neoforge:$rei_version"
+//
+//    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:$rei_version"
+//    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:$rei_version"
+//
+//    implementation "me.shedaniel.cloth:cloth-config-neoforge:$cloth_config_version"
+//    implementation "dev.architectury:architectury-neoforge:$architectury_version"
 }
 
 repositories {
