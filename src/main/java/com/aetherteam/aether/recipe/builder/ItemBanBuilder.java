@@ -4,6 +4,7 @@ import com.aetherteam.aether.recipe.recipes.ban.ItemBanRecipe;
 import com.aetherteam.aether.recipe.serializer.PlacementBanRecipeSerializer;
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import com.google.gson.JsonObject;
+import com.mojang.datafixers.util.Either;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -18,41 +19,25 @@ import java.util.Optional;
 public class ItemBanBuilder extends PlacementBanBuilder {
     private final Ingredient ingredient;
 
-    public ItemBanBuilder(Ingredient ingredient, Optional<BlockStateIngredient> bypassBlock, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, PlacementBanRecipeSerializer<ItemStack, Ingredient, ItemBanRecipe> serializer) {
-        super(bypassBlock, biomeKey, biomeTag, serializer);
+    public ItemBanBuilder(Ingredient ingredient, Optional<BlockStateIngredient> bypassBlock, Either<ResourceKey<Biome>, TagKey<Biome>> biome, PlacementBanRecipeSerializer<ItemStack, Ingredient, ItemBanRecipe> serializer) {
+        super(bypassBlock, biome, serializer);
         this.ingredient = ingredient;
     }
 
-    public static PlacementBanBuilder recipe(Ingredient ingredient, ResourceKey<Biome> biomeKey, PlacementBanRecipeSerializer<ItemStack, Ingredient, ItemBanRecipe> serializer) {
-        return recipe(ingredient, Optional.empty(), Optional.ofNullable(biomeKey), Optional.empty(), serializer);
-    }
-
-    public static PlacementBanBuilder recipe(Ingredient ingredient, TagKey<Biome> biomeTag, PlacementBanRecipeSerializer<ItemStack, Ingredient, ItemBanRecipe> serializer) {
-        return recipe(ingredient, Optional.empty(), Optional.empty(), Optional.ofNullable(biomeTag), serializer);
-    }
-
-    public static PlacementBanBuilder recipe(Ingredient ingredient, Optional<BlockStateIngredient> bypassBlock, ResourceKey<Biome> biomeKey, PlacementBanRecipeSerializer<ItemStack, Ingredient, ItemBanRecipe> serializer) {
-        return recipe(ingredient, bypassBlock, Optional.ofNullable(biomeKey), Optional.empty(), serializer);
-    }
-
-    public static PlacementBanBuilder recipe(Ingredient ingredient, Optional<BlockStateIngredient> bypassBlock, TagKey<Biome> biomeTag, PlacementBanRecipeSerializer<ItemStack, Ingredient, ItemBanRecipe> serializer) {
-        return recipe(ingredient, bypassBlock, Optional.empty(), Optional.ofNullable(biomeTag), serializer);
-    }
-
-    public static PlacementBanBuilder recipe(Ingredient ingredient, Optional<BlockStateIngredient> bypassBlock, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, PlacementBanRecipeSerializer<ItemStack, Ingredient, ItemBanRecipe> serializer) {
-        return new ItemBanBuilder(ingredient, bypassBlock, biomeKey, biomeTag, serializer);
+    public static PlacementBanBuilder recipe(Ingredient ingredient, Optional<BlockStateIngredient> bypassBlock, Either<ResourceKey<Biome>, TagKey<Biome>> biome, PlacementBanRecipeSerializer<ItemStack, Ingredient, ItemBanRecipe> serializer) {
+        return new ItemBanBuilder(ingredient, bypassBlock, biome, serializer);
     }
 
     @Override
     public void save(RecipeOutput finishedRecipeConsumer, ResourceLocation id) {
-        finishedRecipeConsumer.accept(new ItemBanBuilder.Result(id, this.getBiomeKey(), this.getBiomeTag(), this.getBypassBlock(), this.ingredient, this.getSerializer()));
+        finishedRecipeConsumer.accept(new ItemBanBuilder.Result(id, this.getBiome(), this.getBypassBlock(), this.ingredient, this.getSerializer()));
     }
 
     public static class Result extends PlacementBanBuilder.Result {
         private final Ingredient ingredient;
 
-        public Result(ResourceLocation id, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, Optional<BlockStateIngredient> bypassBlock, Ingredient ingredient, RecipeSerializer<?> serializer) {
-            super(id, biomeKey, biomeTag, bypassBlock, serializer);
+        public Result(ResourceLocation id, Either<ResourceKey<Biome>, TagKey<Biome>> biome, Optional<BlockStateIngredient> bypassBlock, Ingredient ingredient, RecipeSerializer<?> serializer) {
+            super(id, biome, bypassBlock, serializer);
             this.ingredient = ingredient;
         }
 

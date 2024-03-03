@@ -3,6 +3,7 @@ package com.aetherteam.aether.recipe.builder;
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import com.aetherteam.nitrogen.recipe.BlockStateRecipeUtil;
 import com.google.gson.JsonObject;
+import com.mojang.datafixers.util.Either;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -20,14 +21,12 @@ import java.util.Optional;
 
 public abstract class PlacementBanBuilder implements RecipeBuilder {
     private final Optional<BlockStateIngredient> bypassBlock;
-    private final Optional<ResourceKey<Biome>> biomeKey;
-    private final Optional<TagKey<Biome>> biomeTag;
+    private final Either<ResourceKey<Biome>, TagKey<Biome>> biome;
     private final RecipeSerializer<?> serializer;
 
-    public PlacementBanBuilder(Optional<BlockStateIngredient> bypassBlock, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, RecipeSerializer<?> serializer) {
+    public PlacementBanBuilder(Optional<BlockStateIngredient> bypassBlock, Either<ResourceKey<Biome>, TagKey<Biome>> biome, RecipeSerializer<?> serializer) {
         this.bypassBlock = bypassBlock;
-        this.biomeKey = biomeKey;
-        this.biomeTag = biomeTag;
+        this.biome = biome;
         this.serializer = serializer;
     }
 
@@ -40,12 +39,8 @@ public abstract class PlacementBanBuilder implements RecipeBuilder {
         return this.bypassBlock;
     }
 
-    public Optional<ResourceKey<Biome>> getBiomeKey() {
-        return this.biomeKey;
-    }
-
-    public Optional<TagKey<Biome>> getBiomeTag() {
-        return this.biomeTag;
+    public Either<ResourceKey<Biome>, TagKey<Biome>> getBiome() {
+        return this.biome;
     }
 
     public RecipeSerializer<?> getSerializer() {
@@ -64,23 +59,21 @@ public abstract class PlacementBanBuilder implements RecipeBuilder {
 
     public static class Result implements FinishedRecipe {
         private final ResourceLocation id;
-        private final Optional<ResourceKey<Biome>> biomeKey;
-        private final Optional<TagKey<Biome>> biomeTag;
+        private final Either<ResourceKey<Biome>, TagKey<Biome>> biome;
         private final Optional<BlockStateIngredient> bypassBlock;
         private final RecipeSerializer<?> serializer;
 
-        public Result(ResourceLocation id, Optional<ResourceKey<Biome>> biomeKey, Optional<TagKey<Biome>> biomeTag, Optional<BlockStateIngredient> bypassBlock, RecipeSerializer<?> serializer) {
+        public Result(ResourceLocation id, Either<ResourceKey<Biome>, TagKey<Biome>> biome, Optional<BlockStateIngredient> bypassBlock, RecipeSerializer<?> serializer) {
             this.id = id;
-            this.biomeKey = biomeKey;
-            this.biomeTag = biomeTag;
+            this.biome = biome;
             this.bypassBlock = bypassBlock;
             this.serializer = serializer;
         }
 
         @Override
         public void serializeRecipeData(JsonObject json) {
-            BlockStateRecipeUtil.biomeKeyToJson(json, this.biomeKey);
-            BlockStateRecipeUtil.biomeTagToJson(json, this.biomeTag);
+            BlockStateRecipeUtil.biomeKeyToJson(json, this.biome.left());
+            BlockStateRecipeUtil.biomeTagToJson(json, this.biome.right());
             this.bypassBlock.ifPresent((blockStateIngredient) -> json.add("bypass", blockStateIngredient.toJson(false)));
         }
 

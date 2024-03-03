@@ -7,6 +7,7 @@ import com.aetherteam.aether.recipe.builder.*;
 import com.aetherteam.nitrogen.data.providers.NitrogenRecipeProvider;
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import com.aetherteam.nitrogen.recipe.builder.BlockStateRecipeBuilder;
+import com.mojang.datafixers.util.Either;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -194,18 +195,18 @@ public abstract class AetherRecipeProvider extends NitrogenRecipeProvider {
     }
 
     protected PlacementBanBuilder banItemPlacement(ItemLike ingredient, TagKey<Biome> biome) {
-        return ItemBanBuilder.recipe(Ingredient.of(ingredient), Optional.empty(), biome, AetherRecipeSerializers.ITEM_PLACEMENT_BAN.get());
+        return ItemBanBuilder.recipe(Ingredient.of(ingredient), Optional.empty(), Either.right(biome), AetherRecipeSerializers.ITEM_PLACEMENT_BAN.get());
     }
 
     protected PlacementBanBuilder banItemPlacementWithBypass(ItemLike ingredient, TagKey<Block> bypass, TagKey<Biome> biome) {
-        return ItemBanBuilder.recipe(Ingredient.of(ingredient), Optional.of(BlockStateIngredient.of(bypass)), biome, AetherRecipeSerializers.ITEM_PLACEMENT_BAN.get());
+        return ItemBanBuilder.recipe(Ingredient.of(ingredient), Optional.of(BlockStateIngredient.of(bypass)), Either.right(biome), AetherRecipeSerializers.ITEM_PLACEMENT_BAN.get());
     }
 
     protected PlacementBanBuilder banBlockPlacement(Block ingredient, TagKey<Biome> biome) {
-        return BlockBanBuilder.recipe(BlockStateIngredient.of(ingredient), Optional.empty(), biome, AetherRecipeSerializers.BLOCK_PLACEMENT_BAN.get());
+        return BlockBanBuilder.recipe(BlockStateIngredient.of(ingredient), Optional.empty(), Either.right(biome), AetherRecipeSerializers.BLOCK_PLACEMENT_BAN.get());
     }
 
     protected PlacementBanBuilder banBlockPlacementWithBypass(Block ingredient, TagKey<Block> bypass, TagKey<Biome> biome) {
-        return BlockBanBuilder.recipe(BlockStateIngredient.of(ingredient), Optional.of(BlockStateIngredient.of(bypass)), biome, AetherRecipeSerializers.BLOCK_PLACEMENT_BAN.get());
+        return BlockBanBuilder.recipe(BlockStateIngredient.of(ingredient), Optional.of(BlockStateIngredient.of(bypass)), Either.right(biome), AetherRecipeSerializers.BLOCK_PLACEMENT_BAN.get());
     }
 }
