@@ -10,14 +10,12 @@ import com.aetherteam.aether.inventory.menu.LoreBookMenu;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.perk.CustomizationsOptions;
 import com.aetherteam.cumulus.CumulusConfig;
-import com.google.common.base.Functions;
 import com.google.common.reflect.Reflection;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackRepository;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterEntitySpectatorShadersEvent;
@@ -28,9 +26,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherClient {

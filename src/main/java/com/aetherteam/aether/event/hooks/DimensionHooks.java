@@ -48,7 +48,6 @@ import net.minecraftforge.event.level.SleepFinishedTimeEvent;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class DimensionHooks {
