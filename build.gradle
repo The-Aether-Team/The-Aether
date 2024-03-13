@@ -169,7 +169,7 @@ tasks.named('jar', Jar) {
     archiveClassifier = 'no-embeds'
 
     doLast {
-        minifyJson(it)
+        minifyJson(it as Jar)
     }
 }
 
@@ -177,10 +177,10 @@ processResources {
     exclude '.cache/'
 }
 
-tasks.named('jarJar', JarJar) {
+tasks.named('jarJar', net.minecraftforge.gradle.userdev.tasks.JarJar) {
     archiveClassifier = ''
     doLast {
-        minifyJson(it)
+        minifyJson(it as Jar)
     }
     finalizedBy('reobfJarJar')
 }
@@ -261,9 +261,9 @@ build {
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
-import java.util.zip.ZipFile
-import java.util.zip.ZipOutputStream
-import java.util.zip.ZipEntry
+import java.util.jar.JarFile
+import java.util.jar.JarOutputStream
+import java.util.jar.JarEntry
 import java.util.zip.Deflater
 
 static def minifyJson(Jar task) {
@@ -271,7 +271,7 @@ static def minifyJson(Jar task) {
     if(!file.exists()) return
 
     LinkedHashMap<String, byte[]> fileContents = [:]
-    new ZipFile(file).with { jar ->
+    new JarFile(file).with { jar ->
         jar.entries().each {
             if (!it.directory) {
                 def bytes = jar.getInputStream(it).bytes
@@ -279,17 +279,19 @@ static def minifyJson(Jar task) {
             }
         }
     }
-    new ZipOutputStream(file.newOutputStream()).withCloseable {
+    file.delete()
+    new JarOutputStream(file.newOutputStream()).withCloseable {
         it.setLevel(Deflater.BEST_COMPRESSION)
         fileContents.each { name, bytes ->
             def newBytes = bytes
             if(name.endsWith(".json") || name.endsWith(".mcmeta")) {
                 newBytes = JsonOutput.toJson(new JsonSlurper().parse(bytes)).bytes
             }
-            it.putNextEntry(new ZipEntry(name))
+            it.putNextEntry(new JarEntry(name))
             it.write(newBytes)
             it.closeEntry()
         }
+        it.flush()
         it.finish()
     }
 }
