@@ -17,7 +17,7 @@ public class PlayerMixin {
      * @param ci The {@link CallbackInfo} for the void method return.
      * @see AbilityHooks.AccessoryHooks#damageGloves(Player)
      */
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;getSweepingDamageRatio(Lnet/minecraft/world/entity/LivingEntity;)F", shift = At.Shift.AFTER), method = "attack(Lnet/minecraft/world/entity/Entity;)V")
+    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;doPostHurtEffects(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;)V", shift = At.Shift.AFTER), method = "attack(Lnet/minecraft/world/entity/Entity;)V")
     private void attack(Entity target, CallbackInfo ci) {
         Player player = (Player) (Object) this;
         AbilityHooks.AccessoryHooks.damageGloves(player);

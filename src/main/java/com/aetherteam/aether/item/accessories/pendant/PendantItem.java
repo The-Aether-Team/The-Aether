@@ -12,23 +12,14 @@ import java.util.function.Supplier;
 
 public class PendantItem extends AccessoryItem {
     protected ResourceLocation PENDANT_LOCATION;
-    protected final Supplier<? extends SoundEvent> equipSound;
 
     public PendantItem(String pendantLocation, Supplier<? extends SoundEvent> pendantSound, Properties properties) {
-        super(properties);
-        this.setRenderTexture(Aether.MODID, pendantLocation);
-        this.equipSound = pendantSound;
+        this(new ResourceLocation(Aether.MODID, pendantLocation), pendantSound, properties);
     }
 
     public PendantItem(ResourceLocation pendantLocation, Supplier<? extends SoundEvent> pendantSound, Properties properties) {
-        super(properties);
+        super(pendantSound, properties);
         this.setRenderTexture(pendantLocation.getNamespace(), pendantLocation.getPath());
-        this.equipSound = pendantSound;
-    }
-
-    @Override
-    public ICurio.SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
-        return new ICurio.SoundInfo(this.equipSound.get(), 1.0f, 1.0f);
     }
 
     public void setRenderTexture(String modId, String registryName) {
