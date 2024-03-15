@@ -4,9 +4,6 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.item.accessories.AccessoryItem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.item.ItemStack;
-import top.theillusivec4.curios.api.SlotContext;
-import top.theillusivec4.curios.api.type.capability.ICurio;
 
 import java.util.function.Supplier;
 
