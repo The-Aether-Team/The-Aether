@@ -358,6 +358,8 @@
   "death.attack.aether.inebriation.player": "%1$s was inebriated by %2$s",
   "death.attack.aether.thunder_crystal": "%1$s was zapped by %2$s's Thunder Crystal",
   "dimension.aether.the_aether": "The Aether",
+  "effect.aether.effect.aether.inebriation.description": "Inflicts damage over time and causes random movement.",
+  "effect.aether.effect.aether.remedy.description": "Cures and grants immunity to inebriation.",
   "effect.aether.inebriation": "Inebriation",
   "effect.aether.remedy": "Remedy",
   "entity.aether.aechor_plant": "Aechor Plant",
