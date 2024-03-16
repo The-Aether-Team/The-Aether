@@ -4,7 +4,7 @@
   "group": "minecraft:jukebox",
   "key": {
     "G": {
-      "item": "aether:enchanted_gravitite"
+      "tag": "aether:processed/gravitite"
     },
     "P": {
       "tag": "minecraft:planks"

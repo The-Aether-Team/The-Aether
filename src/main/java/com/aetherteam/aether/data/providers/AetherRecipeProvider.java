@@ -107,6 +107,10 @@ public abstract class AetherRecipeProvider extends NitrogenRecipeProvider {
         return this.makePendant(pendant, material, Ingredient.of(Tags.Items.STRING));
     }
 
+    protected ShapedRecipeBuilder makePendantWithTag(Supplier<? extends Item> pendant, TagKey<Item> material, String unlockName) {
+        return this.makePendantWithTag(pendant, material, Ingredient.of(Tags.Items.STRING), unlockName);
+    }
+
     protected ShapedRecipeBuilder makeCape(Supplier<? extends Item> cape, Item material) {
         return ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, cape.get())
                 .define('#', material)

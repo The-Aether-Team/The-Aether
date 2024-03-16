@@ -57,7 +57,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .save(consumer);
 
         this.oreBlockStorageRecipesRecipesWithCustomUnpacking(consumer, RecipeCategory.MISC, AetherItems.AMBROSIUM_SHARD.get(), RecipeCategory.BUILDING_BLOCKS, AetherBlocks.AMBROSIUM_BLOCK.get(), "ambrosium_shard_from_ambrosium_block", "ambrosium_shard");
-        this.oreBlockStorageRecipesRecipesWithCustomUnpacking(consumer, RecipeCategory.MISC, AetherTags.Items.GEMS_ZANITE, RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ZANITE_BLOCK.get(), "zanite_gemstone_from_zanite_block", "zanite_gemstone");
+        this.oreBlockStorageRecipesRecipesWithCustomUnpacking(consumer, RecipeCategory.MISC, AetherItems.ZANITE_GEMSTONE.get(), RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ZANITE_BLOCK.get(), "zanite_gemstone_from_zanite_block", "zanite_gemstone");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, AetherBlocks.QUICKSOIL_GLASS_PANE.get(), 16)
                 .define('#', AetherBlocks.QUICKSOIL_GLASS.get())
@@ -250,23 +250,23 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .unlockedBy(getHasName(AetherItems.AECHOR_PETAL.get()), has(AetherItems.AECHOR_PETAL.get()))
                 .save(consumer);
 
-        this.makeHelmet(AetherItems.ZANITE_HELMET, AetherTags.Items.GEMS_ZANITE).save(consumer);
-        this.makeChestplate(AetherItems.ZANITE_CHESTPLATE, AetherTags.Items.GEMS_ZANITE).save(consumer);
-        this.makeLeggings(AetherItems.ZANITE_LEGGINGS, AetherTags.Items.GEMS_ZANITE).save(consumer);
-        this.makeBoots(AetherItems.ZANITE_BOOTS, AetherTags.Items.GEMS_ZANITE).save(consumer);
+        this.makeHelmetWithTag(AetherItems.ZANITE_HELMET, AetherTags.Items.GEMS_ZANITE, "zanite").save(consumer);
+        this.makeChestplateWithTag(AetherItems.ZANITE_CHESTPLATE, AetherTags.Items.GEMS_ZANITE, "zanite").save(consumer);
+        this.makeLeggingsWithTag(AetherItems.ZANITE_LEGGINGS, AetherTags.Items.GEMS_ZANITE, "zanite").save(consumer);
+        this.makeBootsWithTag(AetherItems.ZANITE_BOOTS, AetherTags.Items.GEMS_ZANITE, "zanite").save(consumer);
 
-        this.makeHelmetWithBlock(AetherItems.GRAVITITE_HELMET, AetherTags.Items.PROCESSED_GRAVITITE).save(consumer);
-        this.makeChestplateWithBlock(AetherItems.GRAVITITE_CHESTPLATE, AetherTags.Items.PROCESSED_GRAVITITE).save(consumer);
-        this.makeLeggingsWithBlock(AetherItems.GRAVITITE_LEGGINGS, AetherTags.Items.PROCESSED_GRAVITITE).save(consumer);
-        this.makeBootsWithBlock(AetherItems.GRAVITITE_BOOTS, AetherTags.Items.PROCESSED_GRAVITITE).save(consumer);
+        this.makeHelmetWithTag(AetherItems.GRAVITITE_HELMET, AetherTags.Items.PROCESSED_GRAVITITE, "gravitite").save(consumer);
+        this.makeChestplateWithTag(AetherItems.GRAVITITE_CHESTPLATE, AetherTags.Items.PROCESSED_GRAVITITE, "gravitite").save(consumer);
+        this.makeLeggingsWithTag(AetherItems.GRAVITITE_LEGGINGS, AetherTags.Items.PROCESSED_GRAVITITE, "gravitite").save(consumer);
+        this.makeBootsWithTag(AetherItems.GRAVITITE_BOOTS, AetherTags.Items.PROCESSED_GRAVITITE, "gravitite").save(consumer);
 
         this.makeRing(AetherItems.IRON_RING, Items.IRON_INGOT).save(consumer);
         this.makeRing(AetherItems.GOLDEN_RING, Items.GOLD_INGOT).save(consumer);
-        this.makeRing(AetherItems.ZANITE_RING, AetherTags.Items.GEMS_ZANITE).save(consumer);
+        this.makeRingWithTag(AetherItems.ZANITE_RING, AetherTags.Items.GEMS_ZANITE, "zanite").save(consumer);
 
         this.makePendant(AetherItems.IRON_PENDANT, Items.IRON_INGOT).save(consumer);
         this.makePendant(AetherItems.GOLDEN_PENDANT, Items.GOLD_INGOT).save(consumer);
-        this.makePendant(AetherItems.ZANITE_PENDANT, AetherTags.Items.GEMS_ZANITE).save(consumer);
+        this.makePendantWithTag(AetherItems.ZANITE_PENDANT, AetherTags.Items.GEMS_ZANITE, "zanite").save(consumer);
 
         this.makeCape(AetherItems.RED_CAPE, Blocks.RED_WOOL.asItem()).save(consumer);
         this.makeCape(AetherItems.BLUE_CAPE, Blocks.BLUE_WOOL.asItem()).group("blue_cape").save(consumer, this.name("blue_cape_blue_wool"));
