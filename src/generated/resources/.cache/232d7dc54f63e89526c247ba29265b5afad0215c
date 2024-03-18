@@ -1,4 +1,4 @@
-// 1.20.2	2024-02-22T19:23:10.0679319	Tags for minecraft:item mod id aether
+// 1.20.2	2024-03-15T18:01:18.616628	Tags for minecraft:item mod id aether
 688ae9828b941d1f6760e1e9d3126fac6b99608c data/aether/tags/items/accepted_music_discs.json
 b1ab124000a7da5fa5e186c46b51223391f132d9 data/aether/tags/items/accessories.json
 99e752628cab3cfc3a63a53fa4d137f0f7f03936 data/aether/tags/items/accessories_capes.json
@@ -28,6 +28,7 @@ b7b37d30e23e65ee6925f4068e6d142f874fadd6 data/aether/tags/items/dungeon_blocks.j
 465cdb990ab342cb97554e980a0558c26a7fb539 data/aether/tags/items/freezable_buckets.json
 cf02540e648766882006eb0eb293476a9c3d33c5 data/aether/tags/items/freezable_pendants.json
 bbd431b5ea0dbbac9aa71e30c71140e28ae93250 data/aether/tags/items/freezable_rings.json
+794ba2e4990dd4fa1823ea008d8b78437527dacd data/aether/tags/items/gems/zanite.json
 1fa02ed3118a751ff7ef2022d14fa9d0ba8b31e6 data/aether/tags/items/golden_amber_harvesters.json
 65976e3564baed2ae1f9323801f6fdc2faa84331 data/aether/tags/items/golden_oak_logs.json
 957be727d32dc68397dfa668523e6adf63de4feb data/aether/tags/items/gold_dungeon_loot.json
@@ -52,6 +53,7 @@ d0f09b8dfc6381aa826e9b27dfc398b8b7c02625 data/aether/tags/items/moa_temptation_i
 75df44deafb1f627b674575d499833e104a43f2b data/aether/tags/items/pig_drops.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/pig_slayer_repairing.json
 d57e931f91a1b51aa96c3007c5fce585e2e84cc2 data/aether/tags/items/planks_crafting.json
+24739a7c6e39fa7efc02d98276194ef47fa70290 data/aether/tags/items/processed/gravitite.json
 7662bf8395dc6e9d79fc291d51aae6ef32a050fd data/aether/tags/items/save_nbt_in_recipe.json
 66891bf965b86e92235cc816a4a0c898ada827e6 data/aether/tags/items/sentry_blocks.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aether/tags/items/sentry_repairing.json
