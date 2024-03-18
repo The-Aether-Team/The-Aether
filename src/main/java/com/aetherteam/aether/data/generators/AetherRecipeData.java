@@ -68,7 +68,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, AetherBlocks.ALTAR.get(), 1)
                 .define('H', AetherBlocks.HOLYSTONE.get())
-                .define('Z', AetherItems.ZANITE_GEMSTONE.get())
+                .define('Z', AetherTags.Items.GEMS_ZANITE)
                 .pattern("HHH")
                 .pattern("HZH")
                 .pattern("HHH")
@@ -188,20 +188,20 @@ public class AetherRecipeData extends AetherRecipeProvider {
         this.makeShovelWithBlock(AetherItems.HOLYSTONE_SHOVEL, AetherBlocks.HOLYSTONE).save(consumer);
         this.makeHoeWithBlock(AetherItems.HOLYSTONE_HOE, AetherBlocks.HOLYSTONE).save(consumer);
 
-        this.makePickaxe(AetherItems.ZANITE_PICKAXE, AetherItems.ZANITE_GEMSTONE).save(consumer);
-        this.makeAxe(AetherItems.ZANITE_AXE, AetherItems.ZANITE_GEMSTONE).save(consumer);
-        this.makeShovel(AetherItems.ZANITE_SHOVEL, AetherItems.ZANITE_GEMSTONE).save(consumer);
-        this.makeHoe(AetherItems.ZANITE_HOE, AetherItems.ZANITE_GEMSTONE).save(consumer);
+        this.makePickaxeWithTag(AetherItems.ZANITE_PICKAXE, AetherTags.Items.GEMS_ZANITE, "has_zanite").save(consumer);
+        this.makeAxeWithTag(AetherItems.ZANITE_AXE, AetherTags.Items.GEMS_ZANITE, "has_zanite").save(consumer);
+        this.makeShovelWithTag(AetherItems.ZANITE_SHOVEL, AetherTags.Items.GEMS_ZANITE, "has_zanite").save(consumer);
+        this.makeHoeWithTag(AetherItems.ZANITE_HOE, AetherTags.Items.GEMS_ZANITE, "has_zanite").save(consumer);
 
-        this.makePickaxeWithBlock(AetherItems.GRAVITITE_PICKAXE, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
-        this.makeAxeWithBlock(AetherItems.GRAVITITE_AXE, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
-        this.makeShovelWithBlock(AetherItems.GRAVITITE_SHOVEL, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
-        this.makeHoeWithBlock(AetherItems.GRAVITITE_HOE, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
+        this.makePickaxeWithTag(AetherItems.GRAVITITE_PICKAXE, AetherTags.Items.PROCESSED_GRAVITITE, "has_gravitite").save(consumer);
+        this.makeAxeWithTag(AetherItems.GRAVITITE_AXE, AetherTags.Items.PROCESSED_GRAVITITE, "has_gravitite").save(consumer);
+        this.makeShovelWithTag(AetherItems.GRAVITITE_SHOVEL, AetherTags.Items.PROCESSED_GRAVITITE, "has_gravitite").save(consumer);
+        this.makeHoeWithTag(AetherItems.GRAVITITE_HOE, AetherTags.Items.PROCESSED_GRAVITITE, "has_gravitite").save(consumer);
 
         this.makeSwordWithTag(AetherItems.SKYROOT_SWORD, AetherTags.Items.SKYROOT_TOOL_CRAFTING, "has_planks").save(consumer);
         this.makeSwordWithBlock(AetherItems.HOLYSTONE_SWORD, AetherBlocks.HOLYSTONE).save(consumer);
-        this.makeSword(AetherItems.ZANITE_SWORD, AetherItems.ZANITE_GEMSTONE).save(consumer);
-        this.makeSwordWithBlock(AetherItems.GRAVITITE_SWORD, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
+        this.makeSwordWithTag(AetherItems.ZANITE_SWORD, AetherTags.Items.GEMS_ZANITE, "has_zanite").save(consumer);
+        this.makeSwordWithTag(AetherItems.GRAVITITE_SWORD, AetherTags.Items.PROCESSED_GRAVITITE, "has_gravitite").save(consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, AetherItems.GOLDEN_DART.get(), 4)
                 .define('F', Tags.Items.FEATHERS)
@@ -240,23 +240,23 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .unlockedBy(getHasName(AetherItems.AECHOR_PETAL.get()), has(AetherItems.AECHOR_PETAL.get()))
                 .save(consumer);
 
-        this.makeHelmet(AetherItems.ZANITE_HELMET, AetherItems.ZANITE_GEMSTONE).save(consumer);
-        this.makeChestplate(AetherItems.ZANITE_CHESTPLATE, AetherItems.ZANITE_GEMSTONE).save(consumer);
-        this.makeLeggings(AetherItems.ZANITE_LEGGINGS, AetherItems.ZANITE_GEMSTONE).save(consumer);
-        this.makeBoots(AetherItems.ZANITE_BOOTS, AetherItems.ZANITE_GEMSTONE).save(consumer);
+        this.makeHelmetWithTag(AetherItems.ZANITE_HELMET, AetherTags.Items.GEMS_ZANITE, "zanite").save(consumer);
+        this.makeChestplateWithTag(AetherItems.ZANITE_CHESTPLATE, AetherTags.Items.GEMS_ZANITE, "zanite").save(consumer);
+        this.makeLeggingsWithTag(AetherItems.ZANITE_LEGGINGS, AetherTags.Items.GEMS_ZANITE, "zanite").save(consumer);
+        this.makeBootsWithTag(AetherItems.ZANITE_BOOTS, AetherTags.Items.GEMS_ZANITE, "zanite").save(consumer);
 
-        this.makeHelmetWithBlock(AetherItems.GRAVITITE_HELMET, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
-        this.makeChestplateWithBlock(AetherItems.GRAVITITE_CHESTPLATE, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
-        this.makeLeggingsWithBlock(AetherItems.GRAVITITE_LEGGINGS, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
-        this.makeBootsWithBlock(AetherItems.GRAVITITE_BOOTS, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
+        this.makeHelmetWithTag(AetherItems.GRAVITITE_HELMET, AetherTags.Items.PROCESSED_GRAVITITE, "gravitite").save(consumer);
+        this.makeChestplateWithTag(AetherItems.GRAVITITE_CHESTPLATE, AetherTags.Items.PROCESSED_GRAVITITE, "gravitite").save(consumer);
+        this.makeLeggingsWithTag(AetherItems.GRAVITITE_LEGGINGS, AetherTags.Items.PROCESSED_GRAVITITE, "gravitite").save(consumer);
+        this.makeBootsWithTag(AetherItems.GRAVITITE_BOOTS, AetherTags.Items.PROCESSED_GRAVITITE, "gravitite").save(consumer);
 
         this.makeRing(AetherItems.IRON_RING, Items.IRON_INGOT).save(consumer);
         this.makeRing(AetherItems.GOLDEN_RING, Items.GOLD_INGOT).save(consumer);
-        this.makeRing(AetherItems.ZANITE_RING, AetherItems.ZANITE_GEMSTONE.get()).save(consumer);
+        this.makeRingWithTag(AetherItems.ZANITE_RING, AetherTags.Items.GEMS_ZANITE, "zanite").save(consumer);
 
         this.makePendant(AetherItems.IRON_PENDANT, Items.IRON_INGOT).save(consumer);
         this.makePendant(AetherItems.GOLDEN_PENDANT, Items.GOLD_INGOT).save(consumer);
-        this.makePendant(AetherItems.ZANITE_PENDANT, AetherItems.ZANITE_GEMSTONE.get()).save(consumer);
+        this.makePendantWithTag(AetherItems.ZANITE_PENDANT, AetherTags.Items.GEMS_ZANITE, "zanite").save(consumer);
 
         this.makeCape(AetherItems.RED_CAPE, Blocks.RED_WOOL.asItem()).save(consumer);
         this.makeCape(AetherItems.BLUE_CAPE, Blocks.BLUE_WOOL.asItem()).group("blue_cape").save(consumer, this.name("blue_cape_blue_wool"));
@@ -271,8 +271,8 @@ public class AetherRecipeData extends AetherRecipeProvider {
         this.makeGlovesWithTag(AetherItems.DIAMOND_GLOVES, Tags.Items.GEMS_DIAMOND, "diamond").save(consumer);
         LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(AetherItems.DIAMOND_GLOVES.get()), Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.COMBAT, AetherItems.NETHERITE_GLOVES.get()).unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT)).save(consumer, this.name("old_" + getItemName(AetherItems.NETHERITE_GLOVES.get()) + "_smithing"));
         SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE), Ingredient.of(AetherItems.DIAMOND_GLOVES.get()), Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.COMBAT, AetherItems.NETHERITE_GLOVES.get()).unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT)).save(consumer, this.name(getItemName(AetherItems.NETHERITE_GLOVES.get()) + "_smithing"));
-        this.makeGloves(AetherItems.ZANITE_GLOVES, AetherItems.ZANITE_GEMSTONE).save(consumer);
-        this.makeGlovesWithBlock(AetherItems.GRAVITITE_GLOVES, AetherBlocks.ENCHANTED_GRAVITITE).save(consumer);
+        this.makeGlovesWithTag(AetherItems.ZANITE_GLOVES, AetherTags.Items.GEMS_ZANITE, "zanite").save(consumer);
+        this.makeGlovesWithTag(AetherItems.GRAVITITE_GLOVES, AetherTags.Items.PROCESSED_GRAVITITE, "gravitite").save(consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, AetherItems.SKYROOT_STICK.get(), 4)
                 .group("sticks")
@@ -293,11 +293,11 @@ public class AetherRecipeData extends AetherRecipeProvider {
         twoByTwoPacker(consumer, RecipeCategory.TOOLS, AetherItems.GOLDEN_PARACHUTE.get(), AetherBlocks.GOLDEN_AERCLOUD.get());
 
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, AetherItems.NATURE_STAFF.get(), 1)
-                .define('Z', AetherItems.ZANITE_GEMSTONE.get())
+                .define('Z', AetherTags.Items.GEMS_ZANITE)
                 .define('/', AetherTags.Items.SKYROOT_STICKS)
                 .pattern("Z")
                 .pattern("/")
-                .unlockedBy(getHasName(AetherItems.ZANITE_GEMSTONE.get()), has(AetherItems.ZANITE_GEMSTONE.get()))
+                .unlockedBy("has_zanite", has(AetherTags.Items.GEMS_ZANITE))
                 .save(consumer);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AetherItems.BOOK_OF_LORE.get())
@@ -450,21 +450,21 @@ public class AetherRecipeData extends AetherRecipeProvider {
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.JUKEBOX, 1)
                 .group("minecraft:jukebox")
                 .define('P', ItemTags.PLANKS)
-                .define('G', AetherBlocks.ENCHANTED_GRAVITITE.get())
+                .define('G', AetherTags.Items.PROCESSED_GRAVITITE)
                 .pattern("PPP")
                 .pattern("PGP")
                 .pattern("PPP")
-                .unlockedBy(getHasName(AetherBlocks.ENCHANTED_GRAVITITE.get()), has(AetherBlocks.ENCHANTED_GRAVITITE.get()))
+                .unlockedBy("has_gravitite", has(AetherTags.Items.PROCESSED_GRAVITITE))
                 .save(consumer, this.name("gravitite_jukebox"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.JUKEBOX, 1)
                 .group("minecraft:jukebox")
                 .define('P', AetherTags.Items.PLANKS_CRAFTING)
-                .define('G', AetherBlocks.ENCHANTED_GRAVITITE.get())
+                .define('G', AetherTags.Items.PROCESSED_GRAVITITE)
                 .pattern("PPP")
                 .pattern("PGP")
                 .pattern("PPP")
-                .unlockedBy(getHasName(AetherBlocks.ENCHANTED_GRAVITITE.get()), has(AetherBlocks.ENCHANTED_GRAVITITE.get()))
+                .unlockedBy("has_gravitite", has(AetherTags.Items.PROCESSED_GRAVITITE))
                 .save(consumer, this.name("skyroot_gravitite_jukebox"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.LOOM, 1)
@@ -511,21 +511,21 @@ public class AetherRecipeData extends AetherRecipeProvider {
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, Items.SHIELD, 1)
                 .group("minecraft:shield")
                 .define('P', AetherTags.Items.PLANKS_CRAFTING)
-                .define('Z', AetherItems.ZANITE_GEMSTONE.get())
+                .define('Z', AetherTags.Items.GEMS_ZANITE)
                 .pattern("PZP")
                 .pattern("PPP")
                 .pattern(" P ")
-                .unlockedBy("has_zanite_gemstone", has(AetherItems.ZANITE_GEMSTONE.get()))
+                .unlockedBy("has_zanite_gemstone", has(AetherTags.Items.GEMS_ZANITE))
                 .save(consumer, this.name("skyroot_zanite_vanilla_shield"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, Items.SHIELD, 1)
                 .group("minecraft:shield")
                 .define('P', ItemTags.PLANKS)
-                .define('Z', AetherItems.ZANITE_GEMSTONE.get())
+                .define('Z', AetherTags.Items.GEMS_ZANITE)
                 .pattern("PZP")
                 .pattern("PPP")
                 .pattern(" P ")
-                .unlockedBy("has_zanite_gemstone", has(AetherItems.ZANITE_GEMSTONE.get()))
+                .unlockedBy("has_zanite_gemstone", has(AetherTags.Items.GEMS_ZANITE))
                 .save(consumer, this.name("wood_zanite_vanilla_shield"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.SMITHING_TABLE, 1)

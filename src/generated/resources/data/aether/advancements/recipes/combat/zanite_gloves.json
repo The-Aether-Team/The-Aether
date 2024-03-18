@@ -7,13 +7,11 @@
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "has_zanite_gemstone": {
+    "has_zanite": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "aether:zanite_gemstone"
-            ]
+            "tag": "aether:gems/zanite"
           }
         ]
       },
@@ -22,7 +20,7 @@
   },
   "requirements": [
     [
-      "has_zanite_gemstone",
+      "has_zanite",
       "has_the_recipe"
     ]
   ],

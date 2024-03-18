@@ -6,7 +6,7 @@
       "tag": "aether:skyroot_stick"
     },
     "Z": {
-      "item": "aether:zanite_gemstone"
+      "tag": "aether:gems/zanite"
     }
   },
   "pattern": [
