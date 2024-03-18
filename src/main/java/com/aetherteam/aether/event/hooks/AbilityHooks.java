@@ -453,7 +453,7 @@ public class AbilityHooks {
                 if (lightningTrackerOptional.isPresent()) {
                     LightningTracker lightningTracker = lightningTrackerOptional.get();
                     if (lightningTracker.getOwner() != null) {
-                        return livingEntity == lightningTracker.getOwner() || livingEntity == lightningTracker.getOwner().getVehicle();
+                        return livingEntity == lightningTracker.getOwner() || livingEntity == lightningTracker.getOwner().getVehicle() || lightningTracker.getOwner().getPassengers().contains(livingEntity);
                     }
                 }
             }

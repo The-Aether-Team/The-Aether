@@ -126,6 +126,9 @@ public class AetherTags {
 		public static final TagKey<Item> SENTRY_REPAIRING = tag("sentry_repairing");
 		public static final TagKey<Item> ICE_REPAIRING = tag("ice_repairing");
 
+		public static final TagKey<Item> GEMS_ZANITE = tag("gems/zanite");
+		public static final TagKey<Item> PROCESSED_GRAVITITE = tag("processed/gravitite");
+
 		public static final TagKey<Item> TOOLS_LANCES = tag("tools/lances");
 		public static final TagKey<Item> TOOLS_HAMMERS = tag("tools/hammers");
 
@@ -174,6 +177,7 @@ public class AetherTags {
 		public static final TagKey<EntityType<?>> UNHOOKABLE = tag("unhookable");
 		public static final TagKey<EntityType<?>> TREATED_AS_AETHER_ENTITY = tag("treated_as_aether_entity");
 		public static final TagKey<EntityType<?>> TREATED_AS_VANILLA_ENTITY = tag("treated_as_vanilla_entity");
+		public static final TagKey<EntityType<?>> DUNGEON_ENTITIES = tag("dungeon_entities");
 
 		private static TagKey<EntityType<?>> tag(String name) {
 			return TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Aether.MODID, name));

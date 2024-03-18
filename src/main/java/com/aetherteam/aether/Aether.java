@@ -1,6 +1,7 @@
 package com.aetherteam.aether;
 
 import com.aetherteam.aether.advancement.AetherAdvancementTriggers;
+import com.aetherteam.aether.api.AetherAdvancementSoundOverrides;
 import com.aetherteam.aether.api.AetherMenus;
 import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.block.AetherBlocks;
@@ -122,6 +123,7 @@ public class Aether implements ModInitializer {
                 AetherLootModifiers.GLOBAL_LOOT_MODIFIERS,
                 AetherSoundEvents.SOUNDS,
                 AetherGameEvents.GAME_EVENTS,
+                AetherAdvancementSoundOverrides.ADVANCEMENT_SOUND_OVERRIDES,
                 AetherMoaTypes.MOA_TYPES,
                 AetherCreativeTabs.CREATIVE_MODE_TABS
         };

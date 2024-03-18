@@ -210,23 +210,25 @@ public class AetherOverlays {
      * @param player The {@link LocalPlayer}.
      */
     private static void renderHammerCooldownOverlay(GuiGraphics guiGraphics, Minecraft minecraft, Window window, LocalPlayer player) {
-        Inventory inventory = player.getInventory();
-        if (inventory.hasAnyMatching((itemStack) -> itemStack.is(AetherItems.HAMMER_OF_KINGBDOGZ.get()))) {
-            for (ItemStack itemStack : inventory.items) {
-                Item item = itemStack.getItem();
-                if (item == AetherItems.HAMMER_OF_KINGBDOGZ.get()) {
-                    float cooldownPercent = player.getCooldowns().getCooldownPercent(item, 0.0F);
-                    if (cooldownPercent > 0.0F) {
-                        if (player.getMainHandItem().getItem() == item) {
-                            itemStack = player.getMainHandItem();
-                        } else if (player.getOffhandItem().getItem() == item) {
-                            itemStack = player.getOffhandItem();
+        if (AetherConfig.CLIENT.enable_hammer_cooldown_overlay.get()) {
+            Inventory inventory = player.getInventory();
+            if (inventory.hasAnyMatching((itemStack) -> itemStack.is(AetherItems.HAMMER_OF_KINGBDOGZ.get()))) {
+                for (ItemStack itemStack : inventory.items) {
+                    Item item = itemStack.getItem();
+                    if (item == AetherItems.HAMMER_OF_KINGBDOGZ.get()) {
+                        float cooldownPercent = player.getCooldowns().getCooldownPercent(item, 0.0F);
+                        if (cooldownPercent > 0.0F) {
+                            if (player.getMainHandItem().getItem() == item) {
+                                itemStack = player.getMainHandItem();
+                            } else if (player.getOffhandItem().getItem() == item) {
+                                itemStack = player.getOffhandItem();
+                            }
+                            String text = itemStack.getHoverName().getString().concat(" ").concat(Component.translatable("aether.hammer_of_kingbdogz_cooldown").getString());
+                            guiGraphics.drawString(minecraft.font, text, (int) ((window.getGuiScaledWidth() / 2.0F) - (minecraft.font.width(text) / 2.0F)), 32, 16777215);
+                            guiGraphics.blit(TEXTURE_COOLDOWN_BAR, window.getGuiScaledWidth() / 2 - 64, 42, 0, 8, 128, 8, 256, 256);
+                            guiGraphics.blit(TEXTURE_COOLDOWN_BAR, window.getGuiScaledWidth() / 2 - 64, 42, 0, 0, (int) (cooldownPercent * 128), 8, 256, 256);
+                            break;
                         }
-                        String text = itemStack.getHoverName().getString().concat(" ").concat(Component.translatable("aether.hammer_of_kingbdogz_cooldown").getString());
-                        guiGraphics.drawString(minecraft.font, text, (int) ((window.getGuiScaledWidth() / 2.0F) - (minecraft.font.width(text) / 2.0F)), 32, 16777215);
-                        guiGraphics.blit(TEXTURE_COOLDOWN_BAR, window.getGuiScaledWidth() / 2 - 64, 42, 0, 8, 128, 8, 256, 256);
-                        guiGraphics.blit(TEXTURE_COOLDOWN_BAR, window.getGuiScaledWidth() / 2 - 64, 42, 0, 0, (int) (cooldownPercent * 128), 8, 256, 256);
-                        break;
                     }
                 }
             }

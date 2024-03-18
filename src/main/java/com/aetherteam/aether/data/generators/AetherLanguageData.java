@@ -4,6 +4,8 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.data.providers.AetherLanguageProvider;
 import com.aetherteam.aether.data.resources.registries.AetherBiomes;
+import com.aetherteam.aether.data.resources.registries.AetherDimensions;
+import com.aetherteam.aether.data.resources.registries.AetherStructures;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
@@ -429,13 +431,21 @@ public class AetherLanguageData extends AetherLanguageProvider {
 
 
         this.addEffect(AetherEffects.INEBRIATION, "Inebriation");
+        this.addEffectDesc(AetherEffects.INEBRIATION, "Inflicts damage over time and causes random movement.");
         this.addEffect(AetherEffects.REMEDY, "Remedy");
+        this.addEffectDesc(AetherEffects.REMEDY, "Cures and grants immunity to inebriation.");
 
+
+        this.addDimension(AetherDimensions.AETHER_LEVEL, "The Aether");
 
         this.addBiome(AetherBiomes.SKYROOT_MEADOW, "Skyroot Meadow");
         this.addBiome(AetherBiomes.SKYROOT_GROVE, "Skyroot Grove");
         this.addBiome(AetherBiomes.SKYROOT_WOODLAND, "Skyroot Woodland");
         this.addBiome(AetherBiomes.SKYROOT_FOREST, "Skyroot Forest");
+
+        this.addStructure(AetherStructures.BRONZE_DUNGEON, "Bronze Dungeon");
+        this.addStructure(AetherStructures.SILVER_DUNGEON, "Silver Dungeon");
+        this.addStructure(AetherStructures.GOLD_DUNGEON, "Gold Dungeon");
 
 
         this.addContainerType(AetherMenuTypes.BOOK_OF_LORE, "Book of Lore");
@@ -1261,6 +1271,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addClientConfig("gui", "button_accessories_y", "The y-coordinate of the accessories button in the accessories menu");
         this.addClientConfig("gui", "layout_perks_x", "The x-coordinate of the perks button layout when in the pause menu");
         this.addClientConfig("gui", "layout_perks_y", "The y-coordinate of the perks button layout when in the pause menu");
+        this.addClientConfig("gui", "enable_hammer_cooldown_overlay", "Enables the overlay at the top of the screen for the Hammer of Kingbdogz' cooldown");
 
         this.addClientConfig("audio", "music_backup_min_delay", "Sets the minimum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");
         this.addClientConfig("audio", "music_backup_max_delay", "Sets the maximum delay for the Aether's music manager to use if needing to reset the song delay outside the Aether");

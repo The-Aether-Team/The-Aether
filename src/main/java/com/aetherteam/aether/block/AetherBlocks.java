@@ -53,7 +53,7 @@ import java.util.function.Supplier;
 public class AetherBlocks {
     public static final LazyRegistrar<Block> BLOCKS = LazyRegistrar.create(Registries.BLOCK, Aether.MODID);
 
-    public static final RegistryObject<AetherPortalBlock> AETHER_PORTAL = BLOCKS.register("aether_portal", () -> new AetherPortalBlock(Block.Properties.copy(Blocks.NETHER_PORTAL)));
+    public static final RegistryObject<AetherPortalBlock> AETHER_PORTAL = BLOCKS.register("aether_portal", () -> new AetherPortalBlock(Block.Properties.of().noCollission().randomTicks().strength(-1.0F).sound(SoundType.GLASS).lightLevel(AetherBlocks::lightLevel11).pushReaction(PushReaction.BLOCK).forceSolidOn()));
 
     public static final RegistryObject<Block> AETHER_GRASS_BLOCK = register("aether_grass_block", () -> new AetherGrassBlock(Block.Properties.of().mapColor(MapColor.WARPED_WART_BLOCK).randomTicks().strength(0.2F).sound(SoundType.GRASS)));
     public static final RegistryObject<Block> ENCHANTED_AETHER_GRASS_BLOCK = register("enchanted_aether_grass_block", () -> new EnchantedAetherGrassBlock(Block.Properties.of().mapColor(MapColor.GOLD).randomTicks().strength(0.2F).sound(SoundType.GRASS)));
@@ -145,12 +145,12 @@ public class AetherBlocks {
     public static final RegistryObject<Block> TRAPPED_HELLFIRE_STONE = register("trapped_hellfire_stone", () -> new TrappedBlock(AetherEntityTypes.FIRE_MINION::get, () -> LOCKED_HELLFIRE_STONE.get().defaultBlockState(), Block.Properties.copy(LOCKED_HELLFIRE_STONE.get())));
     public static final RegistryObject<Block> TRAPPED_LIGHT_HELLFIRE_STONE = register("trapped_light_hellfire_stone", () -> new TrappedBlock(AetherEntityTypes.FIRE_MINION::get, () -> LOCKED_LIGHT_HELLFIRE_STONE.get().defaultBlockState(), Block.Properties.copy(LOCKED_LIGHT_HELLFIRE_STONE.get())));
 
-    public static final RegistryObject<Block> BOSS_DOORWAY_CARVED_STONE = register("boss_doorway_carved_stone", () -> new DoorwayBlock(AetherEntityTypes.SLIDER::get, BlockBehaviour.Properties.copy(LOCKED_CARVED_STONE.get())));
-    public static final RegistryObject<Block> BOSS_DOORWAY_SENTRY_STONE = register("boss_doorway_sentry_stone", () -> new DoorwayBlock(AetherEntityTypes.SLIDER::get, BlockBehaviour.Properties.copy(LOCKED_SENTRY_STONE.get())));
-    public static final RegistryObject<Block> BOSS_DOORWAY_ANGELIC_STONE = register("boss_doorway_angelic_stone", () -> new DoorwayBlock(AetherEntityTypes.VALKYRIE_QUEEN::get, BlockBehaviour.Properties.copy(LOCKED_ANGELIC_STONE.get())));
-    public static final RegistryObject<Block> BOSS_DOORWAY_LIGHT_ANGELIC_STONE = register("boss_doorway_light_angelic_stone", () -> new DoorwayBlock(AetherEntityTypes.VALKYRIE_QUEEN::get, BlockBehaviour.Properties.copy(LOCKED_LIGHT_ANGELIC_STONE.get())));
-    public static final RegistryObject<Block> BOSS_DOORWAY_HELLFIRE_STONE = register("boss_doorway_hellfire_stone", () -> new DoorwayBlock(AetherEntityTypes.SUN_SPIRIT::get, BlockBehaviour.Properties.copy(LOCKED_HELLFIRE_STONE.get())));
-    public static final RegistryObject<Block> BOSS_DOORWAY_LIGHT_HELLFIRE_STONE = register("boss_doorway_light_hellfire_stone", () -> new DoorwayBlock(AetherEntityTypes.SUN_SPIRIT::get, BlockBehaviour.Properties.copy(LOCKED_LIGHT_HELLFIRE_STONE.get())));
+    public static final RegistryObject<Block> BOSS_DOORWAY_CARVED_STONE = register("boss_doorway_carved_stone", () -> new DoorwayBlock(AetherEntityTypes.SLIDER::get, BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(-1.0F, 3600000.0F).forceSolidOn()));
+    public static final RegistryObject<Block> BOSS_DOORWAY_SENTRY_STONE = register("boss_doorway_sentry_stone", () -> new DoorwayBlock(AetherEntityTypes.SLIDER::get, BlockBehaviour.Properties.copy(BOSS_DOORWAY_CARVED_STONE.get())));
+    public static final RegistryObject<Block> BOSS_DOORWAY_ANGELIC_STONE = register("boss_doorway_angelic_stone", () -> new DoorwayBlock(AetherEntityTypes.VALKYRIE_QUEEN::get, BlockBehaviour.Properties.of().mapColor(MapColor.SAND).instrument(NoteBlockInstrument.BASEDRUM).strength(-1.0F, 3600000.0F).forceSolidOn()));
+    public static final RegistryObject<Block> BOSS_DOORWAY_LIGHT_ANGELIC_STONE = register("boss_doorway_light_angelic_stone", () -> new DoorwayBlock(AetherEntityTypes.VALKYRIE_QUEEN::get, BlockBehaviour.Properties.copy(BOSS_DOORWAY_ANGELIC_STONE.get())));
+    public static final RegistryObject<Block> BOSS_DOORWAY_HELLFIRE_STONE = register("boss_doorway_hellfire_stone", () -> new DoorwayBlock(AetherEntityTypes.SUN_SPIRIT::get, BlockBehaviour.Properties.of().mapColor(MapColor.NETHER).instrument(NoteBlockInstrument.BASEDRUM).strength(-1.0F, 3600000.0F).forceSolidOn()));
+    public static final RegistryObject<Block> BOSS_DOORWAY_LIGHT_HELLFIRE_STONE = register("boss_doorway_light_hellfire_stone", () -> new DoorwayBlock(AetherEntityTypes.SUN_SPIRIT::get, BlockBehaviour.Properties.copy(BOSS_DOORWAY_HELLFIRE_STONE.get())));
 
     public static final RegistryObject<Block> TREASURE_DOORWAY_CARVED_STONE = register("treasure_doorway_carved_stone", () -> new TreasureDoorwayBlock(BlockBehaviour.Properties.copy(LOCKED_CARVED_STONE.get())));
     public static final RegistryObject<Block> TREASURE_DOORWAY_SENTRY_STONE = register("treasure_doorway_sentry_stone", () -> new TreasureDoorwayBlock(BlockBehaviour.Properties.copy(LOCKED_SENTRY_STONE.get())));

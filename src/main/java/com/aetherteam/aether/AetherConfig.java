@@ -226,6 +226,7 @@ public class AetherConfig {
         public final ConfigValue<Integer> button_accessories_y;
         public final ConfigValue<Integer> layout_perks_x;
         public final ConfigValue<Integer> layout_perks_y;
+        public final ConfigValue<Boolean> enable_hammer_cooldown_overlay;
 
         public final ConfigValue<Integer> music_backup_min_delay;
         public final ConfigValue<Integer> music_backup_max_delay;
@@ -334,6 +335,10 @@ public class AetherConfig {
                     .comment("The y-coordinate of the perks button layout when in the pause menu")
                     .translation("config.aether.client.gui.layout_perks_y")
                     .define("Layout y-coordinate in pause menu", 0);
+            enable_hammer_cooldown_overlay = builder
+                    .comment("Enables the overlay at the top of the screen for the Hammer of Kingbdogz' cooldown")
+                    .translation("config.aether.client.gui.enable_hammer_cooldown_overlay")
+                    .define("Enables Hammer of Kingbdogz' cooldown overlay", true);
             builder.pop();
 
             builder.push("Audio");

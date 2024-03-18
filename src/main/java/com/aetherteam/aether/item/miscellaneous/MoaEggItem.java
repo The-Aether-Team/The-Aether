@@ -3,7 +3,6 @@ package com.aetherteam.aether.item.miscellaneous;
 import com.aetherteam.aether.api.registers.MoaType;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.passive.Moa;
-import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.mixin.mixins.common.accessor.BaseSpawnerAccessor;
 import com.google.common.collect.Iterables;
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject;
@@ -189,12 +188,14 @@ public class MoaEggItem extends Item {
      */
     @Nullable
     public static MoaEggItem byId(MoaType moaType) {
-        for (Supplier<? extends MoaType> holder : BY_ID.keySet()) {
-            if (moaType.getId().equals(holder.get().getId())) {
-                return BY_ID.get(holder);
+        if (moaType != null) {
+            for (Supplier<? extends MoaType> holder : BY_ID.keySet()) {
+                if (moaType.getId().equals(holder.get().getId())) {
+                    return BY_ID.get(holder);
+                }
             }
         }
-        return (MoaEggItem) AetherItems.BLUE_MOA_EGG.get();
+        return null;
     }
 
     /**

@@ -1,3 +1,51 @@
+# The Aether - NeoForge - 1.20.1-1.3.0
+
+Additions
+
+- Added two new tags that are now used in relevant recipes: `aether:gems/zanite` and `aether:processed/gravitite`.
+- Added a new registry `aether:advancement_sound_override` which makes it easier for addon developers to override advancement sounds like for dungeons.
+- Added a new placed feature `aether:aether_grass_bonemeal` to use for bone meal on Aether Grass instead of using the Vanilla-equivalent placed feature.
+- Added descriptions for the Inebriation and Remedy effects that can be viewed with mods like JEED.
+
+Fixes
+
+- Fixed the fuel duration message for REI not being localized without JEI installed.
+
+# The Aether - NeoForge - 1.20.1-1.2.0
+
+Additions
+
+- Add a client config option `"Enables Hammer of Kingbdogz' cooldown overlay"` for disabling the Hammer of Kingbdogz' visual bar for cooldown.
+- Add translation keys for dimension and dungeon names.
+- Add a new event `BossFightEvent` for addon developers.
+- Compatibility with REI.
+- Compatibility with Combatify.
+- Update de_at translation.
+- Update en_ud translation.
+- Update es_es translation.
+- Update it_it translation.
+- Update ja_jp translation.
+- Update ms_my translation.
+- Update pl_pl translation.
+- Update ru_ru translation.
+- Update sk_sk translation.
+- Update sv_se translation.
+- Update tok translation.
+- Update uk_ua translation.
+- Update zh_cn translation.
+
+Fixes
+
+- Fix gloves not taking durability damage.
+- Fix doorways being breakable with water.
+- Fix dungeon entities being able to go through portals.
+- Fix Thunder Crystals still being able to destroy items.
+- Fix player passengers like Aerbunnies being able to be damaged by lightning weaponry.
+- Fix the high disc having an incorrect redstone signal duration.
+- Fix Aether Portals continuously breaking underwater.
+- Fix more issues with the Invisibility Cloak not syncing properly on multiplayer.
+- Fix a warning and crash with JER.
+
 # The Aether - NeoForge - 1.20.1-1.1.0
 
 Additions

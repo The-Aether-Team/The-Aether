@@ -13,6 +13,7 @@ import com.aetherteam.aether.entity.ai.AetherBlockPathTypes;
 import com.aetherteam.aether.entity.ai.goal.NpcDialogueGoal;
 import com.aetherteam.aether.entity.monster.dungeon.AbstractValkyrie;
 import com.aetherteam.aether.entity.projectile.crystal.ThunderCrystal;
+import com.aetherteam.aether.event.AetherEventDispatch;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.clientbound.QueenDialoguePacket;
@@ -383,6 +384,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                             if (this.getDungeon() != null) {
                                 this.closeRoom();
                             }
+                            AetherEventDispatch.onBossFightStart(this, this.getDungeon());
                         }
                         return true;
                     }
@@ -421,6 +423,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
         if (this.getDungeon() != null) {
             this.openRoom();
         }
+        AetherEventDispatch.onBossFightStop(this, this.getDungeon());
     }
 
     /**
@@ -494,6 +497,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
         PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new BossInfoPacket.Display(this.bossFight.getId(), this.getId()), player);
         if (this.getDungeon() == null || this.getDungeon().isPlayerTracked(player)) {
             this.bossFight.addPlayer(player);
+            AetherEventDispatch.onBossFightPlayerAdd(this, this.getDungeon(), player);
         }
     }
 
@@ -506,6 +510,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
         super.stopSeenByPlayer(player);
         PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new BossInfoPacket.Remove(this.bossFight.getId(), this.getId()), player);
         this.bossFight.removePlayer(player);
+        AetherEventDispatch.onBossFightPlayerRemove(this, this.getDungeon(), player);
     }
 
     /**
@@ -516,6 +521,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     public void onDungeonPlayerAdded(@Nullable Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
             this.bossFight.addPlayer(serverPlayer);
+            AetherEventDispatch.onBossFightPlayerAdd(this, this.getDungeon(), serverPlayer);
         }
     }
 
@@ -527,6 +533,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     public void onDungeonPlayerRemoved(@Nullable Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
             this.bossFight.removePlayer(serverPlayer);
+            AetherEventDispatch.onBossFightPlayerRemove(this, this.getDungeon(), serverPlayer);
         }
     }
 

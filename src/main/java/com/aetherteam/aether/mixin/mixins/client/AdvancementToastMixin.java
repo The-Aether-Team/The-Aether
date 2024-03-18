@@ -1,14 +1,13 @@
 package com.aetherteam.aether.mixin.mixins.client;
 
-import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.client.AetherSoundEvents;
+import com.aetherteam.aether.api.AetherAdvancementSoundOverrides;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.toasts.AdvancementToast;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -34,27 +33,13 @@ public class AdvancementToastMixin {
     @Inject(at = @At(value = "FIELD", target = "net/minecraft/client/gui/components/toasts/AdvancementToast.playedSound:Z"), method = "render(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/client/gui/components/toasts/ToastComponent;J)Lnet/minecraft/client/gui/components/toasts/Toast$Visibility;")
     private void render(GuiGraphics guiGraphics, ToastComponent toastComponent, long timeSinceLastVisible, CallbackInfoReturnable<Toast.Visibility> cir) {
         if (!this.playedSound) { // Checks if a sound hasn't been played yet.
-            if (this.checkRoot()) {
-                this.playedSound = true;
-                switch (this.advancement.getId().getPath()) {
-                    case "bronze_dungeon" -> toastComponent.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(AetherSoundEvents.UI_TOAST_AETHER_BRONZE.get(), 1.0F, 1.0F));
-                    case "silver_dungeon" -> toastComponent.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(AetherSoundEvents.UI_TOAST_AETHER_SILVER.get(), 1.0F, 1.0F));
-                    default -> toastComponent.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(AetherSoundEvents.UI_TOAST_AETHER_GENERAL.get(), 1.0F, 1.0F));
+            if (this.advancement != null) {
+                SoundEvent soundOverride = AetherAdvancementSoundOverrides.retrieveOverride(this.advancement);
+                if (soundOverride != null) {
+                    toastComponent.getMinecraft().getSoundManager().play(SimpleSoundInstance.forUI(soundOverride, 1.0F, 1.0F));
+                    this.playedSound = true;
                 }
             }
         }
-    }
-
-    /**
-     * Checks all the way up to the root of the advancement tree to determine if it's an Aether advancement.
-     */
-    private boolean checkRoot() {
-        ResourceLocation enterAether = new ResourceLocation(Aether.MODID, "enter_aether");
-        for (Advancement advancement = this.advancement; advancement != null; advancement = advancement.getParent()) {
-            if (advancement.getId().equals(enterAether)) {
-                return true;
-            }
-        }
-        return false;
     }
 }

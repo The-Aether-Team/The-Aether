@@ -1,4 +1,4 @@
-// 1.20.1	2023-09-16T18:01:52.3063707	Registries
+// 1.20.1	2024-02-04T19:00:51.7311319	Registries
 25d924fdac4392adb88fe3b6aa2c23420f6fb4f9 data/aether/damage_type/armor_piercing_attack.json
 03d6a63bae7e4458c11da22471bf0f8b5051023c data/aether/damage_type/cloud_crystal.json
 024fc58ce3f33e1542dfe59582a4da47cc178764 data/aether/damage_type/crush.json
@@ -45,6 +45,7 @@ b994dbe2cb5a71e4a96d87e31aa723d37cd426cf data/aether/worldgen/noise/temperature.
 0547b8f546b081ef94acc9834c288c90a2ae5ee3 data/aether/worldgen/noise/vegetation.json
 18f6b851997876ebbe8ebe075f434a84f0b4c867 data/aether/worldgen/noise_settings/skylands.json
 a77560ee37b3f00f8b6800bd195494f81f4bc6de data/aether/worldgen/placed_feature/aether_dirt_ore.json
+28f1d57ec7fe32c1e8c66c57b1c107a8fcaacacd data/aether/worldgen/placed_feature/aether_grass_bonemeal.json
 d5ba8cc497ab193e90aa5ffeba4b3f7dea211ac9 data/aether/worldgen/placed_feature/ambrosium_ore.json
 8b0452fe5fd0e19e18e41a66895ce18467d40af7 data/aether/worldgen/placed_feature/berry_bush_patch.json
 b2deb063e6cb1b471b65780bd157b3a81c8adc86 data/aether/worldgen/placed_feature/blue_aercloud.json

@@ -24,22 +24,16 @@ public class GlovesItem extends AccessoryItem {
     protected final ArmorMaterial material;
     protected final double damage;
     protected ResourceLocation GLOVES_TEXTURE;
-    protected final Supplier<? extends SoundEvent> equipSound;
 
     public GlovesItem(ArmorMaterial material, double punchDamage, String glovesName, Supplier<? extends SoundEvent> glovesSound, Properties properties) {
-        super(properties);
-        this.material = material;
-        this.damage = punchDamage;
-        this.setRenderTexture(Aether.MODID, glovesName);
-        this.equipSound = glovesSound;
+        this(material, punchDamage, new ResourceLocation(Aether.MODID, glovesName), glovesSound, properties);
     }
 
     public GlovesItem(ArmorMaterial material, double punchDamage, ResourceLocation glovesName, Supplier<? extends SoundEvent> glovesSound, Properties properties) {
-        super(properties);
+        super(glovesSound, properties);
         this.material = material;
         this.damage = punchDamage;
         this.setRenderTexture(glovesName.getNamespace(), glovesName.getPath());
-        this.equipSound = glovesSound;
     }
 
     @Override
@@ -47,11 +41,6 @@ public class GlovesItem extends AccessoryItem {
         Multimap<Attribute, AttributeModifier> attributes = HashMultimap.create();
         attributes.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, "Gloves Damage Bonus", this.damage, AttributeModifier.Operation.ADDITION));
         return attributes;
-    }
-
-    @Override
-    public SoundInfo getEquipSound(ItemStack stack, SlotReference slot, LivingEntity entity) {
-        return new SoundInfo(this.equipSound.get(), 1.0F, 1.0F);
     }
 
     /**

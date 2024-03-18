@@ -71,6 +71,16 @@ public class AetherEntityTagData extends EntityTypeTagsProvider {
                 AetherEntityTypes.SUN_SPIRIT.get());
         this.tag(AetherTags.Entities.TREATED_AS_AETHER_ENTITY);
         this.tag(AetherTags.Entities.TREATED_AS_VANILLA_ENTITY);
+        this.tag(AetherTags.Entities.DUNGEON_ENTITIES).add(
+                AetherEntityTypes.SENTRY.get(),
+                AetherEntityTypes.SLIDER.get(),
+                AetherEntityTypes.VALKYRIE.get(),
+                AetherEntityTypes.VALKYRIE_QUEEN.get(),
+                AetherEntityTypes.THUNDER_CRYSTAL.get(),
+                AetherEntityTypes.SUN_SPIRIT.get(),
+                AetherEntityTypes.FIRE_MINION.get(),
+                AetherEntityTypes.FIRE_CRYSTAL.get(),
+                AetherEntityTypes.ICE_CRYSTAL.get());
 
         // Forge
         this.tag(Tags.EntityTypes.BOSSES).add(

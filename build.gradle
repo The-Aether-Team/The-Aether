@@ -74,11 +74,12 @@ dependencies {
 //    }
     modImplementation include("dev.emi:trinkets:${project.trinkets_version}")
 
-    compileOnly "mezz.jei:jei-${project.mc_version}-common:${project.jei_version}"
-    compileOnly "mezz.jei:jei-${project.mc_version}-fabric:${project.jei_version}"
+    compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-common-api:${project.jei_version}"))
+    compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${project.jei_version}"))
+
+    runtimeOnly compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-fabric:${project.jei_version}"))
 
     modCompileOnly("com.blamejared.crafttweaker:CraftTweaker-fabric-${project.crafttweaker_version}")
-//    compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-${project.crafttweaker_version}")
 
 //    runtimeOnly fg.deobf("net.darkhax.bookshelf:Bookshelf-Forge-1.20.1:20.0.5")
 //    runtimeOnly fg.deobf("net.darkhax.tips:Tips-Forge-1.20.1:12.0.3")
@@ -93,6 +94,15 @@ dependencies {
 //    runtimeOnly fg.deobf("io.github.ultimateboomer:smoothboot-forge:${project.smoothboot_version}")
 
 //    compileOnly fileTree(dir: 'libs', include: '*.jar')
+
+//    runtimeOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:$rei_version")
+//    runtimeOnly fg.deobf("me.shedaniel.cloth:cloth-config-forge:$cloth_config_version")
+//    runtimeOnly fg.deobf("dev.architectury:architectury-forge:$architectury_version")
+
+    compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-api-forge:$rei_version")
+    compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-default-plugin-forge:$rei_version")
+    compileOnly fg.deobf("me.shedaniel.cloth:cloth-config-forge:$cloth_config_version")
+    compileOnly fg.deobf("dev.architectury:architectury-forge:$architectury_version")
 }
 
 repositories {
@@ -114,6 +124,9 @@ repositories {
     }
     maven githubPackage.invoke("The-Aether-Team/Nitrogen")
     maven githubPackage.invoke("The-Aether-Team/Cumulus")
+    maven { url "https://maven.shedaniel.me/" }
+    maven { url "https://maven.architectury.dev/" }
+    //mavenLocal()
 }
 
 tasks.named('jar', Jar).configure {

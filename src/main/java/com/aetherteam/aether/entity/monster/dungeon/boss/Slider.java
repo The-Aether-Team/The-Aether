@@ -8,6 +8,7 @@ import com.aetherteam.aether.entity.AetherBossMob;
 import com.aetherteam.aether.entity.ai.controller.BlankMoveControl;
 import com.aetherteam.aether.entity.ai.goal.MostDamageTargetGoal;
 import com.aetherteam.aether.entity.monster.dungeon.boss.goal.*;
+import com.aetherteam.aether.event.AetherEventDispatch;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.BossInfoPacket;
 import com.aetherteam.nitrogen.entity.BossRoomTracker;
@@ -260,6 +261,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         if (this.getDungeon() != null) {
             this.closeRoom();
         }
+        AetherEventDispatch.onBossFightStart(this, this.getDungeon());
     }
 
     /**
@@ -275,6 +277,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
             this.setPos(this.getDungeon().originCoordinates());
             this.openRoom();
         }
+        AetherEventDispatch.onBossFightStop(this, this.getDungeon());
     }
 
     /**
@@ -364,6 +367,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new BossInfoPacket.Display(this.bossFight.getId(), this.getId()), player);
         if (this.getDungeon() == null || this.getDungeon().isPlayerTracked(player)) {
             this.bossFight.addPlayer(player);
+            AetherEventDispatch.onBossFightPlayerAdd(this, this.getDungeon(), player);
         }
     }
 
@@ -376,6 +380,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         super.stopSeenByPlayer(player);
         PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new BossInfoPacket.Remove(this.bossFight.getId(), this.getId()), player);
         this.bossFight.removePlayer(player);
+        AetherEventDispatch.onBossFightPlayerRemove(this, this.getDungeon(), player);
     }
 
     /**
@@ -386,6 +391,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     public void onDungeonPlayerAdded(@Nullable Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
             this.bossFight.addPlayer(serverPlayer);
+            AetherEventDispatch.onBossFightPlayerAdd(this, this.getDungeon(), serverPlayer);
         }
     }
 
@@ -397,6 +403,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     public void onDungeonPlayerRemoved(@Nullable Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
             this.bossFight.removePlayer(serverPlayer);
+            AetherEventDispatch.onBossFightPlayerRemove(this, this.getDungeon(), serverPlayer);
         }
     }
 

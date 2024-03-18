@@ -15,6 +15,7 @@ import com.aetherteam.aether.entity.monster.dungeon.FireMinion;
 import com.aetherteam.aether.entity.projectile.crystal.AbstractCrystal;
 import com.aetherteam.aether.entity.projectile.crystal.FireCrystal;
 import com.aetherteam.aether.entity.projectile.crystal.IceCrystal;
+import com.aetherteam.aether.event.AetherEventDispatch;
 import com.aetherteam.aether.mixin.mixins.common.accessor.LookAtPlayerGoalAccessor;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.BossInfoPacket;
@@ -250,6 +251,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
                             if (this.getDungeon() != null) {
                                 this.closeRoom();
                             }
+                            AetherEventDispatch.onBossFightStart(this, this.getDungeon());
                             aetherPlayer.ifPresent(cap -> cap.setSeenSunSpiritDialogue(true));
                         }
                         default -> {
@@ -304,6 +306,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         if (this.dungeon != null) {
             this.openRoom();
         }
+        AetherEventDispatch.onBossFightStop(this, this.getDungeon());
     }
 
     /**
@@ -396,6 +399,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new BossInfoPacket.Display(this.bossFight.getId(), this.getId()), player);
         if (this.getDungeon() == null || this.getDungeon().isPlayerTracked(player)) {
             this.bossFight.addPlayer(player);
+            AetherEventDispatch.onBossFightPlayerAdd(this, this.getDungeon(), player);
         }
     }
 
@@ -408,6 +412,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         super.stopSeenByPlayer(player);
         PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new BossInfoPacket.Remove(this.bossFight.getId(), this.getId()), player);
         this.bossFight.removePlayer(player);
+        AetherEventDispatch.onBossFightPlayerRemove(this, this.getDungeon(), player);
     }
 
     /**
@@ -418,6 +423,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
     public void onDungeonPlayerAdded(@Nullable Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
             this.bossFight.addPlayer(serverPlayer);
+            AetherEventDispatch.onBossFightPlayerAdd(this, this.getDungeon(), serverPlayer);
         }
     }
 
@@ -432,6 +438,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
             if (!serverPlayer.isAlive()) {
                 serverPlayer.sendSystemMessage(Component.translatable("gui.aether.sun_spirit.playerdeath").withStyle(ChatFormatting.RED));
             }
+            AetherEventDispatch.onBossFightPlayerRemove(this, this.getDungeon(), serverPlayer);
         }
     }
 

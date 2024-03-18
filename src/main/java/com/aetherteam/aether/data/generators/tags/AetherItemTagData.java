@@ -201,6 +201,9 @@ public class AetherItemTagData extends ItemTagsProvider {
         this.tag(AetherTags.Items.SENTRY_REPAIRING);
         this.tag(AetherTags.Items.ICE_REPAIRING);
 
+        this.tag(AetherTags.Items.GEMS_ZANITE).add(AetherItems.ZANITE_GEMSTONE.get());
+        this.tag(AetherTags.Items.PROCESSED_GRAVITITE).add(AetherBlocks.ENCHANTED_GRAVITITE.get().asItem());
+
         this.tag(AetherTags.Items.TOOLS_LANCES).add(AetherItems.VALKYRIE_LANCE.get());
         this.tag(AetherTags.Items.TOOLS_HAMMERS).add(AetherItems.HAMMER_OF_KINGBDOGZ.get());
 
