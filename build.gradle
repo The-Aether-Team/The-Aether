@@ -74,10 +74,10 @@ dependencies {
 //    }
     modImplementation include("dev.emi:trinkets:${project.trinkets_version}")
 
-    compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-common-api:${project.jei_version}"))
-    compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${project.jei_version}"))
+    modCompileOnly("mezz.jei:jei-${mc_version}-common-api:${project.jei_version}")
+    modCompileOnly("mezz.jei:jei-${mc_version}-fabric-api:${project.jei_version}")
 
-    runtimeOnly compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-fabric:${project.jei_version}"))
+    modRuntimeOnly modCompileOnly("mezz.jei:jei-${mc_version}-fabric:${project.jei_version}")
 
     modCompileOnly("com.blamejared.crafttweaker:CraftTweaker-fabric-${project.crafttweaker_version}")
 
@@ -99,10 +99,10 @@ dependencies {
 //    runtimeOnly fg.deobf("me.shedaniel.cloth:cloth-config-forge:$cloth_config_version")
 //    runtimeOnly fg.deobf("dev.architectury:architectury-forge:$architectury_version")
 
-    compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-api-forge:$rei_version")
-    compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-default-plugin-forge:$rei_version")
-    compileOnly fg.deobf("me.shedaniel.cloth:cloth-config-forge:$cloth_config_version")
-    compileOnly fg.deobf("dev.architectury:architectury-forge:$architectury_version")
+    modCompileOnly("me.shedaniel:RoughlyEnoughItems-api-fabric:$rei_version")
+    modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:$rei_version")
+    modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:$cloth_config_version")
+    modCompileOnly("dev.architectury:architectury-fabric:$architectury_version")
 }
 
 repositories {
