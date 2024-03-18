@@ -67,7 +67,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, AetherBlocks.ALTAR.get(), 1)
                 .define('H', AetherBlocks.HOLYSTONE.get())
-                .define('Z', AetherItems.ZANITE_GEMSTONE.get())
+                .define('Z', AetherTags.Items.GEMS_ZANITE)
                 .pattern("HHH")
                 .pattern("HZH")
                 .pattern("HHH")
