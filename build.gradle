@@ -53,7 +53,7 @@ sourceSets.main.resources {
 
 subsystems {
     parchment {
-        minecraftVersion = project.mc_version
+        minecraftVersion = "1.20.3" //todo
         mappingsVersion = project.mappings
     }
 }
@@ -109,10 +109,10 @@ dependencies {
 //    runtimeOnly "me.shedaniel.cloth:cloth-config-neoforge:$cloth_config_version"
 //    runtimeOnly "dev.architectury:architectury-neoforge:$architectury_version"
 
-    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:$rei_version"
-    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:$rei_version"
-    compileOnly "me.shedaniel.cloth:cloth-config-neoforge:$cloth_config_version"
-    compileOnly "dev.architectury:architectury-neoforge:$architectury_version"
+//    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:$rei_version"
+//    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:$rei_version"
+//    compileOnly "me.shedaniel.cloth:cloth-config-neoforge:$cloth_config_version"
+//    compileOnly "dev.architectury:architectury-neoforge:$architectury_version"
 }
 
 repositories {
