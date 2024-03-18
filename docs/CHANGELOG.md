@@ -1,3 +1,16 @@
+# The Aether - NeoForge - 1.20.1-1.3.0
+
+Additions
+
+- Added two new tags that are now used in relevant recipes: `aether:gems/zanite` and `aether:processed/gravitite`.
+- Added a new registry `aether:advancement_sound_override` which makes it easier for addon developers to override advancement sounds like for dungeons.
+- Added a new placed feature `aether:aether_grass_bonemeal` to use for bone meal on Aether Grass instead of using the Vanilla-equivalent placed feature.
+- Added descriptions for the Inebriation and Remedy effects that can be viewed with mods like JEED.
+
+Fixes
+
+- Fixed the fuel duration message for REI not being localized without JEI installed.
+
 # The Aether - NeoForge - 1.20.1-1.2.0
 
 Additions
