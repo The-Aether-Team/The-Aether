@@ -5,17 +5,19 @@ import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.nitrogen.ConstantsUtil;
+import dev.emi.trinkets.api.SlotReference;
+import dev.emi.trinkets.api.TrinketsApi;
 import io.github.fabricators_of_create.porting_lib.entity.events.ProjectileImpactEvent;
 import net.minecraft.client.player.Input;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.SlotResult;
 
 public interface ShieldOfRepulsionAccessory {
     /**
@@ -31,11 +33,11 @@ public interface ShieldOfRepulsionAccessory {
         if (hitResult.getType() == HitResult.Type.ENTITY && hitResult instanceof EntityHitResult entityHitResult) {
             if (entityHitResult.getEntity() instanceof LivingEntity impactedLiving) {
                 if (projectile.getType().is(AetherTags.Entities.DEFLECTABLE_PROJECTILES)) {
-                    SlotResult slotResult = EquipmentUtil.getCurio(impactedLiving, AetherItems.SHIELD_OF_REPULSION.get());
+                    Tuple<SlotReference, ItemStack> slotResult = EquipmentUtil.getCurio(impactedLiving, AetherItems.SHIELD_OF_REPULSION.get());
                     if (slotResult != null) {
                         Vec3 motion = impactedLiving.getDeltaMovement();
                         if (impactedLiving instanceof Player player) {
-                            AetherPlayer.get(player).ifPresent(aetherPlayer -> {
+                            AetherPlayer.getOptional(player).ifPresent(aetherPlayer -> {
                                 if (!aetherPlayer.isMoving()) {
                                     if (aetherPlayer.getPlayer().level().isClientSide()) { // Values used by the Shield of Repulsion screen overlay vignette.
                                         aetherPlayer.setProjectileImpactedMaximum(150);
@@ -60,9 +62,9 @@ public interface ShieldOfRepulsionAccessory {
      * Each deflection takes 1 durability off of the Shield of Repulsion.
      * @param projectile The impacting {@link Projectile}.
      * @param impactedLiving The impacted {@link LivingEntity}.
-     * @param slotResult The {@link SlotResult} of the Shield of Repulsion.
+     * @param slotResult The {@link SlotReference} of the Shield of Repulsion.
      */
-    private static void handleDeflection(ProjectileImpactEvent event, Projectile projectile, LivingEntity impactedLiving, SlotResult slotResult) {
+    private static void handleDeflection(ProjectileImpactEvent event, Projectile projectile, LivingEntity impactedLiving, Tuple<SlotReference, ItemStack> slotResult) {
         event.setCanceled(true);
         if (!impactedLiving.equals(projectile.getOwner())) {
             projectile.setDeltaMovement(projectile.getDeltaMovement().scale(-0.25));
@@ -71,7 +73,7 @@ public interface ShieldOfRepulsionAccessory {
                 damagingProjectileEntity.yPower *= -0.25;
                 damagingProjectileEntity.zPower *= -0.25;
             }
-            slotResult.stack().hurtAndBreak(1, impactedLiving, (entity) -> CuriosApi.broadcastCurioBreakEvent(slotResult.slotContext()));
+            slotResult.getB().hurtAndBreak(1, impactedLiving, (entity) -> TrinketsApi.onTrinketBroken(slotResult.getB(), slotResult.getA(), impactedLiving));
         }
     }
 }

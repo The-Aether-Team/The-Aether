@@ -2,6 +2,7 @@ package com.aetherteam.aether.event.listeners.abilities;
 
 import com.aetherteam.aether.event.hooks.AbilityHooks;
 import com.aetherteam.aether.item.accessories.abilities.ShieldOfRepulsionAccessory;
+import io.github.fabricators_of_create.porting_lib.entity.events.LivingAttackEvent;
 import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
 import io.github.fabricators_of_create.porting_lib.entity.events.PlayerEvents;
 import io.github.fabricators_of_create.porting_lib.entity.events.ProjectileImpactEvent;
@@ -49,14 +50,15 @@ public class AccessoryAbilityListener {
      * @see com.aetherteam.aether.event.hooks.AbilityHooks.AccessoryHooks#preventTargeting(LivingEntity, Entity)
      * @see com.aetherteam.aether.event.hooks.AbilityHooks.AccessoryHooks#recentlyAttackedWithInvisibility(LivingEntity, Entity)
      */
-    public static double onTargetSet(LivingEntity livingEntity, Entity lookingEntity, double originalMultiplier) {
+    public static void onTargetSet(LivingEntityEvents.LivingVisibilityEvent event) {
+        LivingEntity livingEntity = event.getEntity();
+        Entity lookingEntity = event.getLookingEntity();
         if (AbilityHooks.AccessoryHooks.preventTargeting(livingEntity, lookingEntity) && !AbilityHooks.AccessoryHooks.recentlyAttackedWithInvisibility(livingEntity, lookingEntity)) {
-            return 0.0;
+            event.modifyVisibility(0.0);
         }
         if (AbilityHooks.AccessoryHooks.recentlyAttackedWithInvisibility(livingEntity, lookingEntity)) {
-            return originalMultiplier;
+            event.modifyVisibility(1.0);
         }
-        return originalMultiplier;
     }
 
     /**
@@ -71,19 +73,20 @@ public class AccessoryAbilityListener {
     /**
      * @see AbilityHooks.AccessoryHooks#preventMagmaDamage(LivingEntity, DamageSource)
      */
-    public static boolean onEntityHurt(LivingEntity livingEntity, DamageSource damageSource, float amount) {
-        AbilityHooks.AccessoryHooks.setAttack(damageSource);
+    public static void onEntityHurt(LivingAttackEvent event) {
+        LivingEntity livingEntity = event.getEntity();
+        DamageSource damageSource = event.getSource();
+        AbilityHooks.AccessoryHooks.setAttack(event.getSource());
         if (AbilityHooks.AccessoryHooks.preventMagmaDamage(livingEntity, damageSource)) {
-            return true;
+            event.setCanceled(true);
         }
-        return false;
     }
 
     public static void init() {
         BlockEvents.BLOCK_BREAK.register(AccessoryAbilityListener::onBlockBreak);
         PlayerEvents.BREAK_SPEED.register(AccessoryAbilityListener::onMiningSpeed);
-        LivingEntityEvents.VISIBILITY.register(AccessoryAbilityListener::onTargetSet);
+        LivingEntityEvents.LivingVisibilityEvent.VISIBILITY.register(AccessoryAbilityListener::onTargetSet);
         ProjectileImpactEvent.PROJECTILE_IMPACT.register(AccessoryAbilityListener::onProjectileImpact);
-        LivingEntityEvents.ATTACK.register(AccessoryAbilityListener::onEntityHurt);
+        LivingAttackEvent.ATTACK.register(AccessoryAbilityListener::onEntityHurt);
     }
 }

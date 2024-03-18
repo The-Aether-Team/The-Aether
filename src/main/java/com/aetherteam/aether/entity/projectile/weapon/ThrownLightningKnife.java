@@ -3,6 +3,7 @@ package com.aetherteam.aether.entity.projectile.weapon;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.item.AetherItems;
+import io.github.fabricators_of_create.porting_lib.entity.PortingLibEntity;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerLevel;
@@ -50,6 +51,6 @@ public class ThrownLightningKnife extends ThrowableItemProjectile {
 
 	@Override
 	public Packet<ClientGamePacketListener> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
+		return PortingLibEntity.getEntitySpawningPacket(this);
 	}
 }

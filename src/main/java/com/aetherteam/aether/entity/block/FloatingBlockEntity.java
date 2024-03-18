@@ -6,6 +6,7 @@ import com.aetherteam.aether.block.miscellaneous.FloatingBlock;
 import com.aetherteam.aether.data.resources.registries.AetherDamageTypes;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ConcretePowderBlockAccessor;
+import io.github.fabricators_of_create.porting_lib.entity.ITeleporter;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -47,7 +48,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.ITeleporter;
 
 import org.jetbrains.annotations.Nullable;
 import java.util.function.Predicate;
@@ -286,6 +286,12 @@ public class FloatingBlockEntity extends Entity {
     @Nullable
     @Override
     public Entity changeDimension(ServerLevel destination, ITeleporter teleporter) {
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public Entity changeDimension(ServerLevel destination) {
         return null;
     }
 

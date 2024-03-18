@@ -18,7 +18,7 @@ public class CapabilityClientHooks {
          * @see com.aetherteam.aether.client.event.listeners.capability.AetherPlayerClientListener#onMove(MovementInputUpdateEvent)
          */
         public static void movementInput(Player player, Input input) {
-            AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
+            AetherPlayer.getOptional(player).ifPresent((aetherPlayer) -> {
                 boolean isJumping = input.jumping;
                 if (isJumping != aetherPlayer.isJumping()) {
                     aetherPlayer.setSynched(INBTSynchable.Direction.SERVER, "setJumping", isJumping);
@@ -57,7 +57,7 @@ public class CapabilityClientHooks {
         private static void checkHit(int input) {
             Player player = Minecraft.getInstance().player;
             if (player != null) {
-                AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
+                AetherPlayer.getOptional(player).ifPresent((aetherPlayer) -> {
                     boolean isAttack = input == Minecraft.getInstance().options.keyAttack.getKey().getValue();
                     boolean isPressing = Minecraft.getInstance().options.keyAttack.isDown();
                     boolean isHitting = isAttack && isPressing;
@@ -75,7 +75,7 @@ public class CapabilityClientHooks {
         private static void checkJumpAbility(int input) {
             Player player = Minecraft.getInstance().player;
             if (player != null) {
-                AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
+                AetherPlayer.getOptional(player).ifPresent((aetherPlayer) -> {
                     if (input == AetherKeys.GRAVITITE_JUMP_ABILITY.getKey().getValue()) {
                         aetherPlayer.setSynched(INBTSynchable.Direction.SERVER, "setGravititeJumpActive", AetherKeys.GRAVITITE_JUMP_ABILITY.isDown());
                     }

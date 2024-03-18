@@ -306,11 +306,9 @@ public class AetherPlayerCapability implements AetherPlayer {
 				PlayerList playerList = server.getPlayerList();
 				for (ServerPlayer serverPlayer : playerList.getPlayers()) {
 					if (!serverPlayer.getUUID().equals(this.getPlayer().getUUID())) {
-						AetherPlayer.get(serverPlayer).ifPresent(aetherPlayer -> {
-							if (aetherPlayer instanceof AetherPlayerCapability capability) {
-								capability.forceSync(INBTSynchable.Direction.CLIENT);
-							}
-						});
+						if (AetherPlayer.get(serverPlayer) instanceof AetherPlayerCapability capability) {
+							capability.forceSync(INBTSynchable.Direction.CLIENT);
+						}
 					}
 				}
 			}

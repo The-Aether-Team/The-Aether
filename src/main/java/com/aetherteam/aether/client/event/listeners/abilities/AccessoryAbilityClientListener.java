@@ -1,31 +1,23 @@
 package com.aetherteam.aether.client.event.listeners.abilities;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.capability.player.AetherPlayer;
+import com.mojang.blaze3d.vertex.PoseStack;
+import io.github.fabricators_of_create.porting_lib.event.client.RenderPlayerEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderArmEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT)
 public class AccessoryAbilityClientListener {
     /**
      * Disables the player's rendering completely if wearing an Invisibility Cloak.
      */
-    @SubscribeEvent
-    public static void onRenderPlayer(RenderPlayerEvent.Pre event) {
-        Player player = event.getEntity();
-        if (!event.isCanceled()) {
-            AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
-                if (aetherPlayer.isWearingInvisibilityCloak()) {
-                    event.setCanceled(true);
-                }
-            });
+    public static boolean onRenderPlayer(Player player, PlayerRenderer renderer, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+        if (AetherPlayer.get(player).isWearingInvisibilityCloak()) {
+            return true;
         }
+        return false;
     }
 
     /**
@@ -35,11 +27,15 @@ public class AccessoryAbilityClientListener {
     public static void onRenderHand(RenderArmEvent event) {
         LocalPlayer player = Minecraft.getInstance().player;
         if (!event.isCanceled() && player != null) {
-            AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
+            AetherPlayer.getOptional(player).ifPresent((aetherPlayer) -> {
                 if (aetherPlayer.isWearingInvisibilityCloak()) {
                     event.setCanceled(true);
                 }
             });
         }
+    }
+
+    public static void init() {
+        RenderPlayerEvents.PRE.register(AccessoryAbilityClientListener::onRenderPlayer);
     }
 }

@@ -4,18 +4,18 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.item.accessories.AccessoryItem;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import dev.emi.trinkets.api.SlotReference;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
-import top.theillusivec4.curios.api.SlotContext;
-import top.theillusivec4.curios.api.type.capability.ICurio;
 
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -43,15 +43,15 @@ public class GlovesItem extends AccessoryItem {
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
+    public Multimap<Attribute, AttributeModifier> getModifiers(ItemStack stack, SlotReference slotContext, LivingEntity livingEntity, UUID uuid) {
         Multimap<Attribute, AttributeModifier> attributes = HashMultimap.create();
         attributes.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, "Gloves Damage Bonus", this.damage, AttributeModifier.Operation.ADDITION));
         return attributes;
     }
 
     @Override
-    public ICurio.SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
-        return new ICurio.SoundInfo(this.equipSound.get(), 1.0F, 1.0F);
+    public SoundInfo getEquipSound(ItemStack stack, SlotReference slot, LivingEntity entity) {
+        return new SoundInfo(this.equipSound.get(), 1.0F, 1.0F);
     }
 
     /**
@@ -84,7 +84,7 @@ public class GlovesItem extends AccessoryItem {
         return this.GLOVES_TEXTURE;
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public ImmutableTriple<Float, Float, Float> getColors(ItemStack stack) {
         float red = 1.0F;
         float green = 1.0F;

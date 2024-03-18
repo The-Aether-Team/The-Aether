@@ -29,21 +29,18 @@ public class LifeShardItem extends Item implements ConsumableItem {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack heldStack = player.getItemInHand(hand);
         if (!player.isCreative()) {
-            Optional<AetherPlayer> aetherPlayerOptional = AetherPlayer.get(player).resolve();
-            if (aetherPlayerOptional.isPresent()) {
-                AetherPlayer aetherPlayer = aetherPlayerOptional.get();
-                if (aetherPlayer.getLifeShardCount() < aetherPlayer.getLifeShardLimit()) {
-                    player.swing(hand);
-                    if (!level.isClientSide()) {
-                        this.consume(this, heldStack, player);
-                        aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setLifeShardCount", aetherPlayer.getLifeShardCount() + 1);
-                        return InteractionResultHolder.consume(heldStack);
-                    } else {
-                        return InteractionResultHolder.success(heldStack);
-                    }
-                } else if (aetherPlayer.getLifeShardCount() >= aetherPlayer.getLifeShardLimit()) {
-                    player.displayClientMessage(Component.translatable("aether.life_shard_limit", aetherPlayer.getLifeShardLimit()), true);
+            AetherPlayer aetherPlayer = AetherPlayer.get(player);
+            if (aetherPlayer.getLifeShardCount() < aetherPlayer.getLifeShardLimit()) {
+                player.swing(hand);
+                if (!level.isClientSide()) {
+                    this.consume(this, heldStack, player);
+                    aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setLifeShardCount", aetherPlayer.getLifeShardCount() + 1);
+                    return InteractionResultHolder.consume(heldStack);
+                } else {
+                    return InteractionResultHolder.success(heldStack);
                 }
+            } else if (aetherPlayer.getLifeShardCount() >= aetherPlayer.getLifeShardLimit()) {
+                player.displayClientMessage(Component.translatable("aether.life_shard_limit", aetherPlayer.getLifeShardLimit()), true);
             }
         }
         return InteractionResultHolder.pass(heldStack);

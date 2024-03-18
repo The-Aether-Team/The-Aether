@@ -5,8 +5,9 @@ import com.aetherteam.nitrogen.capability.INBTSynchable;
 import com.aetherteam.nitrogen.network.packet.SyncLevelPacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.util.LazyOptional;
 import org.apache.commons.lang3.tuple.Triple;
+
+import java.util.Optional;
 
 /**
  * Sync packet for values in the {@link com.aetherteam.aether.capability.time.AetherTimeCapability} class.
@@ -25,7 +26,7 @@ public class AetherTimeSyncPacket extends SyncLevelPacket<AetherTime> {
     }
 
     @Override
-    public LazyOptional<AetherTime> getCapability(Level level) {
+    public Optional<AetherTime> getCapability(Level level) {
         return AetherTime.get(level);
     }
 }

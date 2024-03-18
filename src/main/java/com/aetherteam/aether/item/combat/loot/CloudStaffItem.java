@@ -35,7 +35,7 @@ public class CloudStaffItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack heldItem = player.getItemInHand(hand);
-        AetherPlayer.get(player).ifPresent(aetherPlayer -> {
+        AetherPlayer.getOptional(player).ifPresent(aetherPlayer -> {
             Player innerPlayer = aetherPlayer.getPlayer();
             Level innerLevel = innerPlayer.level();
             if (aetherPlayer.getCloudMinions().isEmpty()) {
@@ -70,7 +70,7 @@ public class CloudStaffItem extends Item {
     @Override
     public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
         if (entity instanceof Player player) {
-            AetherPlayer.get(player).ifPresent(aetherPlayer -> {
+            AetherPlayer.getOptional(player).ifPresent(aetherPlayer -> {
                 if (!aetherPlayer.getPlayer().getCooldowns().isOnCooldown(this) && aetherPlayer.isHitting()) {
                     boolean hasMinions = false;
                     for (int i = 0; i < aetherPlayer.getCloudMinions().size(); i++) {

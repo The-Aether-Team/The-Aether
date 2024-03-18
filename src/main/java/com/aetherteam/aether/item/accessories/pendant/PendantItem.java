@@ -2,11 +2,11 @@ package com.aetherteam.aether.item.accessories.pendant;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.item.accessories.AccessoryItem;
+import dev.emi.trinkets.api.SlotReference;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import top.theillusivec4.curios.api.SlotContext;
-import top.theillusivec4.curios.api.type.capability.ICurio;
 
 import java.util.function.Supplier;
 
@@ -27,8 +27,8 @@ public class PendantItem extends AccessoryItem {
     }
 
     @Override
-    public ICurio.SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
-        return new ICurio.SoundInfo(this.equipSound.get(), 1.0f, 1.0f);
+    public SoundInfo getEquipSound(ItemStack stack, SlotReference slot, LivingEntity entity) {
+        return new SoundInfo(this.equipSound.get(), 1.0f, 1.0f);
     }
 
     public void setRenderTexture(String modId, String registryName) {

@@ -7,7 +7,7 @@ public interface ZaniteAccessory {
      * Calculates damage increase based on a base value, the amount of damage taken (maximum durability - current durability), and the stack's maximum durability.<br><br>
      * <a href="https://www.desmos.com/calculator/drohdchhsx">See math visually.</a>
      * @param speed A base {@link Float} value.
-     * @param stack The {@link ItemStack} of the Curio.
+     * @param stack The {@link ItemStack} of the Trinket.
      * @return The buffed {@link Float} value.
      */
     static float handleMiningSpeed(float speed, ItemStack stack) {

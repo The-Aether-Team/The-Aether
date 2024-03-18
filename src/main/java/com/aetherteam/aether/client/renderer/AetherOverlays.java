@@ -52,7 +52,7 @@ public class AetherOverlays {
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                AetherPlayer.get(player).ifPresent(handler -> renderAetherPortalOverlay(pStack, minecraft, window, handler, partialTicks));
+                renderAetherPortalOverlay(pStack, minecraft, window, AetherPlayer.get(player), partialTicks);
             }
         });
         event.registerAboveAll("inebriation_vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
@@ -60,7 +60,7 @@ public class AetherOverlays {
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                AetherPlayer.get(player).ifPresent(handler -> renderInebriationOverlay(pStack, minecraft, window, handler));
+                renderInebriationOverlay(pStack, minecraft, window, AetherPlayer.get(player));
             }
         });
         event.registerAboveAll("remedy_vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
@@ -68,7 +68,7 @@ public class AetherOverlays {
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                AetherPlayer.get(player).ifPresent(handler -> renderRemedyOverlay(pStack, minecraft, window, handler));
+                renderRemedyOverlay(pStack, minecraft, window, AetherPlayer.get(player));
             }
         });
         event.registerAboveAll("shield_of_repulsion_vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
@@ -76,7 +76,7 @@ public class AetherOverlays {
             Window window = minecraft.getWindow();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                AetherPlayer.get(player).ifPresent(handler -> renderRepulsionOverlay(pStack, minecraft, window, handler));
+                renderRepulsionOverlay(pStack, minecraft, window, AetherPlayer.get(player));
             }
         });
         event.registerAboveAll("hammer_cooldown", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
@@ -266,7 +266,7 @@ public class AetherOverlays {
     private static void renderSilverLifeShardHearts(GuiGraphics guiGraphics, ForgeGui gui, LocalPlayer player, int width, int height) {
         GuiAccessor guiAccessor = (GuiAccessor) gui;
         if (AetherConfig.CLIENT.enable_silver_hearts.get() && gui.shouldDrawSurvivalElements()) {
-            AetherPlayer.get(player).ifPresent(aetherPlayer -> {
+            AetherPlayer.getOptional(player).ifPresent(aetherPlayer -> {
                 Player innerPlayer = aetherPlayer.getPlayer();
                 if (aetherPlayer.getLifeShardCount() > 0) {
                     AttributeInstance attributeInstance = innerPlayer.getAttribute(Attributes.MAX_HEALTH);

@@ -2,6 +2,7 @@ package com.aetherteam.aether.entity.projectile.dart;
 
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.mixin.mixins.common.accessor.PlayerAccessor;
+import io.github.fabricators_of_create.porting_lib.entity.PortingLibEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -24,7 +25,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkHooks;
 
 import org.jetbrains.annotations.Nullable;
 import java.util.function.Supplier;
@@ -183,6 +183,6 @@ public abstract class AbstractDart extends AbstractArrow {
    
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
+        return PortingLibEntity.getEntitySpawningPacket(this);
     }
 }

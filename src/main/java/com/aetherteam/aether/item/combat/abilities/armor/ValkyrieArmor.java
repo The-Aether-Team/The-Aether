@@ -3,22 +3,22 @@ package com.aetherteam.aether.item.combat.abilities.armor;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
+import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.living.LivingEvent;
 
 public interface ValkyrieArmor {
     /**
      * Allows an entity temporary upwards flight if wearing a full set of Valkyrie Armor. This only works for players.
      * @param entity The {@link LivingEntity} wearing the armor.
-     * @see com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(LivingEvent.LivingTickEvent)
+     * @see com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(LivingEntityEvents.LivingTickEvent)
      */
     static void handleFlight(LivingEntity entity) {
         if (EquipmentUtil.hasFullValkyrieSet(entity)) {
             if (entity instanceof Player player && !player.getAbilities().flying) { // The player can't have creative flight enabled, otherwise it causes issues.
-                AetherPlayer.get(player).ifPresent(aetherPlayer -> {
+                AetherPlayer.getOptional(player).ifPresent(aetherPlayer -> {
                     Vec3 deltaMovement = player.getDeltaMovement();
                     // Updates the flight modifier and timer values.
                     if (aetherPlayer.isJumping() && !onGround(player)) { // Checks if the player is off the ground and holding the jump key (space bar by default).

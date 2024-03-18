@@ -10,6 +10,7 @@ import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListen
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.AerbunnyPuffPacket;
 import com.aetherteam.nitrogen.network.PacketRelay;
+import io.github.fabricators_of_create.porting_lib.attributes.PortingLibAttributes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -20,6 +21,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -39,7 +41,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeMod;
 
 import org.jetbrains.annotations.Nullable;
 import java.util.EnumSet;
@@ -123,7 +124,7 @@ public class Aerbunny extends AetherAnimal {
      * Makes this entity fall slowly.
      */
     private void handleFallSpeed() {
-        AttributeInstance gravity = this.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
+        AttributeInstance gravity = this.getAttribute(PortingLibAttributes.ENTITY_GRAVITY);
         if (gravity != null) {
             double fallSpeed = Math.max(gravity.getValue() * -1.25, -0.1); // Entity isn't allowed to fall too slowly from gravity.
             if (this.getDeltaMovement().y() < fallSpeed) {
@@ -145,13 +146,13 @@ public class Aerbunny extends AetherAnimal {
 
             player.resetFallDistance();
             if (!player.onGround() && !player.isFallFlying()) {
-                AttributeInstance playerGravity = player.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
+                AttributeInstance playerGravity = player.getAttribute(PortingLibAttributes.ENTITY_GRAVITY);
                 if (playerGravity != null) {
                     if (!player.getAbilities().flying && !player.isInFluidType() && playerGravity.getValue() > 0.02) {  // Entity isn't allowed to fall too slowly from gravity.
                         player.setDeltaMovement(player.getDeltaMovement().add(0.0, 0.05, 0.0));
                     }
                 }
-                AetherPlayer.get(player).ifPresent(aetherPlayer -> {
+                AetherPlayer.getOptional(player).ifPresent(aetherPlayer -> {
                     Player innerPlayer = aetherPlayer.getPlayer();
                     if (this.level().isClientSide()) {
                         if (innerPlayer.getDeltaMovement().y() <= 0.0) {
@@ -184,7 +185,7 @@ public class Aerbunny extends AetherAnimal {
     @Override
     public void baseTick() {
         super.baseTick();
-        if (this.isAlive() && this.isPassenger() && this.getVehicle() != null && this.getVehicle().isEyeInFluidType(ForgeMod.WATER_TYPE.get())
+        if (this.isAlive() && this.isPassenger() && this.getVehicle() != null && this.getVehicle().isEyeInFluid(FluidTags.WATER)
                 && !this.level().getBlockState(BlockPos.containing(this.getVehicle().getX(), this.getVehicle().getEyeY(), this.getVehicle().getZ())).is(Blocks.BUBBLE_COLUMN)) {
             this.stopRiding();
         }
@@ -221,7 +222,7 @@ public class Aerbunny extends AetherAnimal {
                 Vec3 playerMovement = player.getDeltaMovement();
                 this.setDeltaMovement(playerMovement.x() * 5, playerMovement.y() * 0.5 + 0.5, playerMovement.z() * 5);
             } else if (this.startRiding(player)) { // Mount segment.
-                AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setMountedAerbunny(this));
+                AetherPlayer.getOptional(player).ifPresent(aetherPlayer -> aetherPlayer.setMountedAerbunny(this));
                 this.level().playSound(player, this, AetherSoundEvents.ENTITY_AERBUNNY_LIFT.get(), SoundSource.NEUTRAL, 1.0F, (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.2F + 1.0F);
             }
             return InteractionResult.SUCCESS;
@@ -235,7 +236,7 @@ public class Aerbunny extends AetherAnimal {
     @Override
     public void stopRiding() {
         if (this.getVehicle() instanceof Player player) {
-            AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setMountedAerbunny(null));
+            AetherPlayer.getOptional(player).ifPresent(aetherPlayer -> aetherPlayer.setMountedAerbunny(null));
         }
         super.stopRiding();
     }

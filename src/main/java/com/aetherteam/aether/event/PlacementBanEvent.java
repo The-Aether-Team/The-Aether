@@ -1,33 +1,53 @@
 package com.aetherteam.aether.event;
 
 import com.google.common.base.Preconditions;
+import io.github.fabricators_of_create.porting_lib.core.event.BaseEvent;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.fabric.api.event.Event;
+import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.Cancelable;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.fml.LogicalSide;
-
 import org.jetbrains.annotations.Nullable;
 
 /**
  * PlacementBanEvent is fired when an event involving placement banning occurs.<br>
- * If a method utilizes this {@link Event} as its parameter, the method will receive every child event of this class.<br>
+ * If a method utilizes this {@link BaseEvent} as its parameter, the method will receive every child event of this class.<br>
  * <br>
- * All children of this event are fired on the {@link MinecraftForge#EVENT_BUS}.
  */
-public class PlacementBanEvent extends Event {
+public class PlacementBanEvent extends BaseEvent {
+	public static final Event<PlacementBanCallback> PLACEMENT_BAN = EventFactory.createWithPhases(PlacementBanCallback.class, callbacks -> event -> {
+		for (PlacementBanCallback e : callbacks)
+			e.onPlacementBan(event);
+	}, AetherEvents.LOWEST, Event.DEFAULT_PHASE);
+	public static final Event<PlacementBanCheckItemCallback> CHECK_ITEM = EventFactory.createWithPhases(PlacementBanCheckItemCallback.class, callbacks -> event -> {
+		for (PlacementBanCheckItemCallback e : callbacks)
+			e.onPlacementBanCheckItem(event);
+	}, AetherEvents.LOWEST, Event.DEFAULT_PHASE);
+	public static final Event<PlacementBanCheckBlockCallback> CHECK_BLOCK = EventFactory.createWithPhases(PlacementBanCheckBlockCallback.class, callbacks -> event -> {
+		for (PlacementBanCheckBlockCallback e : callbacks)
+			e.onPlacementBanCheckBlock(event);
+	}, AetherEvents.LOWEST, Event.DEFAULT_PHASE);
+	public static final Event<PlacementBanParticlesCallback> SPAWN_PARTICLES = EventFactory.createWithPhases(PlacementBanParticlesCallback.class, callbacks -> event -> {
+		for (PlacementBanParticlesCallback e : callbacks)
+			e.onPlacementBanSpawnParticles(event);
+	}, AetherEvents.LOWEST, Event.DEFAULT_PHASE);
+
+	@Override
+	public void sendEvent() {
+		PLACEMENT_BAN.invoker().onPlacementBan(this);
+	}
+
 	/**
 	 * PlacementBanEvent.CheckItem is fired after an item that can be banned is used, but before its placement has been prevented.
 	 * <br>
-	 * This event is not {@link Cancelable}. <br>
+	 * This event is not cancelable. <br>
 	 * <br>
-	 * This event does not have a result. {@link HasResult} <br>
+	 * This event does not have a result. <br>
 	 * <br>
-	 * This event is fired on both {@link LogicalSide sides}.
+	 * This event is fired on both {@link EnvType sides}.
 	 */
 	public static class CheckItem extends PlacementBanEvent {
 		private boolean banned = true;
@@ -81,16 +101,21 @@ public class PlacementBanEvent extends Event {
 		public void setBanned(boolean banned) {
 			this.banned = banned;
 		}
+
+		@Override
+		public void sendEvent() {
+			CHECK_ITEM.invoker().onPlacementBanCheckItem(this);
+		}
 	}
 
 	/**
 	 * PlacementBanEvent.CheckItem is fired after a block that can be banned is placed, but before its placement has been prevented.
 	 * <br>
-	 * This event is not {@link Cancelable}. <br>
+	 * This event is not cancelable. <br>
 	 * <br>
-	 * This event does not have a result. {@link HasResult} <br>
+	 * This event does not have a result.<br>
 	 * <br>
-	 * This event is only fired on the {@link LogicalSide#SERVER} side.
+	 * This event is only fired on the {@link EnvType#SERVER} side.
 	 */
 	public static class CheckBlock extends PlacementBanEvent {
 		private boolean banned = true;
@@ -144,21 +169,25 @@ public class PlacementBanEvent extends Event {
 		public void setBanned(boolean banned) {
 			this.banned = banned;
 		}
+
+		@Override
+		public void sendEvent() {
+			CHECK_BLOCK.invoker().onPlacementBanCheckBlock(this);
+		}
 	}
 
 	/**
 	 * PlacementBanEvent.SpawnParticles is fired after a placement ban has occurred.
 	 * <br>
-	 * This event is {@link Cancelable}.<br>
+	 * This event is cancelable.<br>
 	 * If the event is not canceled, the particles will spawn.
 	 * <br>
-	 * This event does not have a result. {@link net.minecraftforge.eventbus.api.Event.HasResult}<br>
+	 * This event does not have a result.<br>
 	 * <br>
-	 * This event is fired on both {@link LogicalSide sides}.<br>
+	 * This event is fired on both {@link EnvType sides}.<br>
 	 * <br>
 	 * If this event is canceled, the particles will not be spawned.
 	 */
-	@Cancelable
 	public static class SpawnParticles extends PlacementBanEvent {
 		private final LevelAccessor level;
 		private final BlockPos pos;
@@ -224,5 +253,30 @@ public class PlacementBanEvent extends Event {
 		public BlockState getBlockState() {
 			return this.blockState;
 		}
+
+		@Override
+		public void sendEvent() {
+			SPAWN_PARTICLES.invoker().onPlacementBanSpawnParticles(this);
+		}
+	}
+
+	@FunctionalInterface
+	public interface PlacementBanCallback {
+		void onPlacementBan(PlacementBanEvent event);
+	}
+
+	@FunctionalInterface
+	public interface PlacementBanCheckItemCallback {
+		void onPlacementBanCheckItem(CheckItem event);
+	}
+
+	@FunctionalInterface
+	public interface PlacementBanCheckBlockCallback {
+		void onPlacementBanCheckBlock(CheckBlock event);
+	}
+
+	@FunctionalInterface
+	public interface PlacementBanParticlesCallback {
+		void onPlacementBanSpawnParticles(SpawnParticles event);
 	}
 }

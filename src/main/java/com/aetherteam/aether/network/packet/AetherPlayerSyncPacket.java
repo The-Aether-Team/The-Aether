@@ -6,8 +6,9 @@ import com.aetherteam.nitrogen.network.packet.SyncEntityPacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.common.util.LazyOptional;
 import oshi.util.tuples.Quartet;
+
+import java.util.Optional;
 
 /**
  * Sync packet for values in the {@link com.aetherteam.aether.capability.player.AetherPlayerCapability} class.
@@ -26,7 +27,7 @@ public class AetherPlayerSyncPacket extends SyncEntityPacket<AetherPlayer> {
     }
 
     @Override
-    public LazyOptional<AetherPlayer> getCapability(Entity entity) {
-        return AetherPlayer.get((Player) entity);
+    public Optional<AetherPlayer> getCapability(Entity entity) {
+        return AetherPlayer.getOptional((Player) entity);
     }
 }

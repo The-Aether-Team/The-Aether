@@ -3,6 +3,10 @@ package com.aetherteam.aether.item;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.item.accessories.cape.CapeItem;
 import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
+import dev.emi.trinkets.api.SlotReference;
+import dev.emi.trinkets.api.TrinketComponent;
+import dev.emi.trinkets.api.TrinketsApi;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -132,7 +136,7 @@ public final class EquipmentUtil {
      * @return The {@link SlotResult} for the curio item.
      */
     @Nullable
-    public static SlotResult getCurio(LivingEntity entity, Item item) {
+    public static Tuple<SlotReference, ItemStack> getCurio(LivingEntity entity, Item item) {
         return findFirstCurio(entity, item).orElse(null);
     }
 
@@ -244,18 +248,19 @@ public final class EquipmentUtil {
     /**
      * @see ICuriosItemHandler#findFirstCurio(Item)
      */
-    public static Optional<SlotResult> findFirstCurio(LivingEntity entity, Item item) {
+    public static Optional<Tuple<SlotReference, ItemStack>> findFirstCurio(LivingEntity entity, Item item) {
         return findFirstCurio(entity, (itemStack) -> itemStack.is(item));
     }
 
     /**
      * @see ICuriosItemHandler#findFirstCurio(Predicate)
      */
-    public static Optional<SlotResult> findFirstCurio(LivingEntity entity, Predicate<ItemStack> predicate) {
-        LazyOptional<ICuriosItemHandler> inventoryOptional = CuriosApi.getCuriosInventory(entity);
-        if (inventoryOptional.isPresent() && inventoryOptional.resolve().isPresent()) {
-            ICuriosItemHandler inventory = inventoryOptional.resolve().get();
-            return inventory.findFirstCurio(predicate);
+    public static Optional<Tuple<SlotReference, ItemStack>> findFirstCurio(LivingEntity entity, Predicate<ItemStack> predicate) {
+        Optional<TrinketComponent> inventoryOptional = TrinketsApi.getTrinketComponent(entity);
+        if (inventoryOptional.isPresent()) {
+            TrinketComponent inventory = inventoryOptional.get();
+            var equipped = inventory.getEquipped(predicate);
+            return Optional.ofNullable(equipped.isEmpty() ? null : equipped.get(0));
         }
         return Optional.empty();
     }

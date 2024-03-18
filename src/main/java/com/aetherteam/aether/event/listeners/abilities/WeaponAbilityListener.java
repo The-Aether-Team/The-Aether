@@ -1,38 +1,33 @@
 package com.aetherteam.aether.event.listeners.abilities;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.event.hooks.AbilityHooks;
 import io.github.fabricators_of_create.porting_lib.entity.events.EntityEvents;
 import io.github.fabricators_of_create.porting_lib.entity.events.EntityStruckByLightningEvent;
-import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
-import io.github.fabricators_of_create.porting_lib.entity.events.ProjectileImpactCallback;
+import io.github.fabricators_of_create.porting_lib.entity.events.ProjectileImpactEvent;
+import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingDamageEvent;
+import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingHurtEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID)
 public class WeaponAbilityListener {
     /**
      * @see AbilityHooks.WeaponHooks#stickDart(LivingEntity, DamageSource)
      */
-    public static float onDartHurt(DamageSource damageSource, LivingEntity livingEntity, float amount) {
-        AbilityHooks.WeaponHooks.stickDart(livingEntity, damageSource);
-        return amount;
+    public static void onDartHurt(LivingHurtEvent event) {
+        LivingEntity livingEntity = event.getEntity();
+        DamageSource damageSource = event.getSource();
+        if (!event.isCanceled()) {
+            AbilityHooks.WeaponHooks.stickDart(livingEntity, damageSource);
+        }
     }
 
     /**
      * @see AbilityHooks.WeaponHooks#phoenixArrowHit(HitResult, Projectile)
      */
-    @SubscribeEvent
     public static void onArrowHit(ProjectileImpactEvent event) {
         HitResult hitResult = event.getRayTraceResult();
         Projectile projectile = event.getProjectile();
@@ -56,7 +51,6 @@ public class WeaponAbilityListener {
      * @see com.aetherteam.aether.event.hooks.AbilityHooks.WeaponHooks#reduceWeaponEffectiveness(LivingEntity, Entity, float)
      * @see com.aetherteam.aether.event.hooks.AbilityHooks.WeaponHooks#reduceArmorEffectiveness(LivingEntity, Entity, float)
      */
-    @SubscribeEvent
     public static void onEntityDamage(LivingDamageEvent event) {
         LivingEntity targetEntity = event.getEntity();
         DamageSource damageSource = event.getSource();
@@ -66,8 +60,9 @@ public class WeaponAbilityListener {
     }
 
     public static void init() {
-        LivingEntityEvents.HURT.register(WeaponAbilityListener::onDartHurt);
+        LivingHurtEvent.HURT.register(WeaponAbilityListener::onDartHurt);
         EntityEvents.ENTITY_STRUCK_BY_LIGHTING.register(WeaponAbilityListener::onLightningStrike);
-        ProjectileImpactCallback.EVENT.register();
+        ProjectileImpactEvent.PROJECTILE_IMPACT.register(WeaponAbilityListener::onArrowHit);
+        LivingDamageEvent.DAMAGE.register(WeaponAbilityListener::onEntityDamage);
     }
 }

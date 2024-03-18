@@ -1,53 +1,48 @@
 package com.aetherteam.aether.event.listeners.capability;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.event.hooks.CapabilityHooks;
+import io.github.fabricators_of_create.porting_lib.entity.events.EntityEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.PlayerEvents;
+import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
+import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraft.world.level.Level;
 
 /**
- * Listener for Forge events to handle functions in {@link com.aetherteam.aether.capability.player.AetherPlayerCapability}.
+ * Listener for events to handle functions in {@link com.aetherteam.aether.capability.player.AetherPlayerCapability}.
  */
-@Mod.EventBusSubscriber(modid = Aether.MODID)
 public class AetherPlayerListener {
     /**
      * @see com.aetherteam.aether.event.hooks.CapabilityHooks.AetherPlayerHooks#login(Player)
      */
-    @SubscribeEvent
-    public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
-        Player player = event.getEntity();
+    public static void onPlayerLogin(Player player) {
         CapabilityHooks.AetherPlayerHooks.login(player);
     }
 
     /**
      * @see com.aetherteam.aether.event.hooks.CapabilityHooks.AetherPlayerHooks#login(Player)
      */
-    @SubscribeEvent
-    public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent event) {
-        Player player = event.getEntity();
+    public static void onPlayerLogout(Player player) {
         CapabilityHooks.AetherPlayerHooks.logout(player);
     }
 
     /**
      * @see com.aetherteam.aether.event.hooks.CapabilityHooks.AetherPlayerHooks#joinLevel(Entity)
      */
-    @SubscribeEvent
-    public static void onPlayerJoinLevel(EntityJoinLevelEvent event) {
-        Entity entity = event.getEntity();
+    public static boolean onPlayerJoinLevel(Entity entity, Level world, boolean loadedFromDisk) {
         CapabilityHooks.AetherPlayerHooks.joinLevel(entity);
+        return true;
     }
 
     /**
      * @see com.aetherteam.aether.event.hooks.CapabilityHooks.AetherPlayerHooks#update(LivingEntity)
      */
-    @SubscribeEvent
-    public static void onPlayerUpdate(LivingEvent.LivingTickEvent event) {
+    public static void onPlayerUpdate(LivingEntityEvents.LivingTickEvent event) {
         LivingEntity livingEntity = event.getEntity();
         CapabilityHooks.AetherPlayerHooks.update(livingEntity);
     }
@@ -55,20 +50,23 @@ public class AetherPlayerListener {
     /**
      * @see com.aetherteam.aether.event.hooks.CapabilityHooks.AetherPlayerHooks#clone(Player, Player, boolean)
      */
-    @SubscribeEvent
-    public static void onPlayerClone(PlayerEvent.Clone event) {
-        Player originalPlayer = event.getOriginal();
-        Player newPlayer = event.getEntity();
-        boolean wasDeath = event.isWasDeath();
-        CapabilityHooks.AetherPlayerHooks.clone(originalPlayer, newPlayer, wasDeath);
+    public static void onPlayerClone(ServerPlayer originalPlayer, ServerPlayer newPlayer, boolean alive) {
+        CapabilityHooks.AetherPlayerHooks.clone(originalPlayer, newPlayer, !alive);
     }
 
     /**
      * @see com.aetherteam.aether.event.hooks.CapabilityHooks.AetherPlayerHooks#changeDimension(Player)
      */
-    @SubscribeEvent
-    public static void onPlayerChangeDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
-        Player player = event.getEntity();
+    public static void onPlayerChangeDimension(ServerPlayer player, ServerLevel origin, ServerLevel destination) {
         CapabilityHooks.AetherPlayerHooks.changeDimension(player);
+    }
+
+    public static void init() {
+        PlayerEvents.LOGGED_IN.register(AetherPlayerListener::onPlayerLogin);
+        PlayerEvents.LOGGED_OUT.register(AetherPlayerListener::onPlayerLogout);
+        EntityEvents.ON_JOIN_WORLD.register(AetherPlayerListener::onPlayerJoinLevel);
+        LivingEntityEvents.LivingTickEvent.TICK.register(AetherPlayerListener::onPlayerUpdate);
+        ServerPlayerEvents.COPY_FROM.register(AetherPlayerListener::onPlayerClone);
+        ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register(AetherPlayerListener::onPlayerChangeDimension);
     }
 }

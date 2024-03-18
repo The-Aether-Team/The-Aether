@@ -4,17 +4,14 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.item.combat.AetherItemTiers;
+import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingDamageEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID)
 public class FlamingSwordItem extends SwordItem {
 	public FlamingSwordItem() {
 		super(AetherItemTiers.FLAMING, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
@@ -23,7 +20,6 @@ public class FlamingSwordItem extends SwordItem {
 	/**
 	 * @see FlamingSwordItem#handleFlamingSwordAbility(LivingEntity, DamageSource) 
 	 */
-	@SubscribeEvent
 	public static void onLivingDamage(LivingDamageEvent event) {
 		LivingEntity target = event.getEntity();
 		DamageSource damageSource = event.getSource();

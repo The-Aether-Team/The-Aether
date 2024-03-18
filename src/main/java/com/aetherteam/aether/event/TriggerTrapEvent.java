@@ -1,30 +1,31 @@
 package com.aetherteam.aether.event;
 
+import io.github.fabricators_of_create.porting_lib.event.common.BlockEvents;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.fabric.api.event.Event;
+import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.eventbus.api.Cancelable;
-import net.minecraftforge.fml.LogicalSide;
 
 /**
  * TriggerTrapEvent is fired when a player steps on a trapped block.
  * <br>
- * This event is {@link Cancelable}.<br>
+ * This event is cancelable.<br>
  * If the event is not canceled, the trapped block will be detected as having been stepped on.
  * <br>
- * This event does not have a result. {@link net.minecraftforge.eventbus.api.Event.HasResult}<br>
+ * This event does not have a result.<br>
  * <br>
- * This event is fired on the {@link MinecraftForge#EVENT_BUS}.<br>
- * <br>
- * This event is fired on both {@link LogicalSide sides}.<br>
+ * This event is fired on both {@link EnvType sides}.<br>
  * <br>
  * If this event is canceled, the trapped block will not trigger.
  */
-@Cancelable
-public class TriggerTrapEvent extends BlockEvent {
+public class TriggerTrapEvent extends BlockEvents {
+    public static final Event<TriggerTrapCallback> TRIGGER_TRAP = EventFactory.createArrayBacked(TriggerTrapCallback.class, callbacks -> event -> {
+        for (TriggerTrapCallback e : callbacks)
+            e.onTriggerTrap(event);
+    });
     private final Player player;
 
     /**
@@ -43,5 +44,15 @@ public class TriggerTrapEvent extends BlockEvent {
      */
     public Player getPlayer() {
         return this.player;
+    }
+
+    @Override
+    public void sendEvent() {
+        TRIGGER_TRAP.invoker().onTriggerTrap(this);
+    }
+
+    @FunctionalInterface
+    public interface TriggerTrapCallback {
+        void onTriggerTrap(TriggerTrapEvent event);
     }
 }

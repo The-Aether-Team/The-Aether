@@ -40,7 +40,7 @@ public class HandRenderHooks {
      */
     public static void renderGloveHandOverlay(ItemInHandRenderer itemInHandRenderer, @Nullable AbstractClientPlayer player, InteractionHand hand, float pitch, float swingProgress, float equippedProgress, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         if (player != null) {
-            AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
+            AetherPlayer.getOptional(player).ifPresent((aetherPlayer) -> {
                 if (!aetherPlayer.isWearingInvisibilityCloak()) { // Check for Invisibility Cloak.
                     EquipmentUtil.findFirstCurio(player, (item) -> item.getItem() instanceof GlovesItem).ifPresent((slotResult) -> {
                         String identifier = slotResult.slotContext().identifier();
@@ -77,7 +77,7 @@ public class HandRenderHooks {
      */
     public static void renderShieldOfRepulsionHandOverlay(ItemInHandRenderer itemInHandRenderer, @Nullable AbstractClientPlayer player, InteractionHand hand, float pitch, float swingProgress, float equippedProgress, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         if (player != null) {
-            AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
+            AetherPlayer.getOptional(player).ifPresent((aetherPlayer) -> {
                 if (!aetherPlayer.isWearingInvisibilityCloak()) { // Check for Invisibility Cloak.
                     EquipmentUtil.findFirstCurio(player, (item) -> item.getItem() instanceof ShieldOfRepulsionItem).ifPresent((slotResult) -> {
                         String identifier = slotResult.slotContext().identifier();

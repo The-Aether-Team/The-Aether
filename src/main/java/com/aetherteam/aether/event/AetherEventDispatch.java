@@ -12,7 +12,6 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.MinecraftForge;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -22,7 +21,7 @@ public class AetherEventDispatch {
 	 */
 	public static EggLayEvent onLayEgg(Entity entity, SoundEvent sound, float volume, float pitch, Item item) {
 		EggLayEvent event = new EggLayEvent(entity, sound, volume, pitch, item);
-		MinecraftForge.EVENT_BUS.post(event);
+		event.sendEvent();
 		return event;
 	}
 
@@ -31,7 +30,7 @@ public class AetherEventDispatch {
 	 */
 	public static PlacementBanEvent.SpawnParticles onPlacementSpawnParticles(LevelAccessor level, BlockPos pos, @Nullable Direction face, @Nullable ItemStack stack, @Nullable BlockState state) {
 		PlacementBanEvent.SpawnParticles event = new PlacementBanEvent.SpawnParticles(level, pos, face, stack, state);
-		MinecraftForge.EVENT_BUS.post(event);
+		event.sendEvent();
 		return event;
 	}
 
@@ -40,7 +39,7 @@ public class AetherEventDispatch {
 	 */
 	public static boolean isItemPlacementBanned(LevelAccessor level, BlockPos pos, ItemStack stack) {
 		PlacementBanEvent.CheckItem event = new PlacementBanEvent.CheckItem(level, pos, stack.copy());
-		MinecraftForge.EVENT_BUS.post(event);
+		event.sendEvent();
 		return event.isBanned();
 	}
 
@@ -49,7 +48,7 @@ public class AetherEventDispatch {
 	 */
 	public static boolean isBlockPlacementBanned(LevelAccessor level, BlockPos pos, BlockState state) {
 		PlacementBanEvent.CheckBlock event = new PlacementBanEvent.CheckBlock(level, pos, state);
-		MinecraftForge.EVENT_BUS.post(event);
+		event.sendEvent();
 		return event.isBanned();
 	}
 
@@ -58,7 +57,7 @@ public class AetherEventDispatch {
 	 */
 	public static PlacementConvertEvent onPlacementConvert(LevelAccessor level, BlockPos pos, BlockState oldState, BlockState newState)  {
 		PlacementConvertEvent event = new PlacementConvertEvent(level, pos, oldState, newState);
-		MinecraftForge.EVENT_BUS.post(event);
+		event.sendEvent();
 		return event;
 	}
 
@@ -67,7 +66,7 @@ public class AetherEventDispatch {
 	 */
 	public static FreezeEvent.FreezeFromBlock onBlockFreezeFluid(LevelAccessor level, BlockPos pos, BlockPos origin, BlockState fluidState, BlockState blockState, BlockState sourceBlock) {
 		FreezeEvent.FreezeFromBlock event = new FreezeEvent.FreezeFromBlock(level, pos, origin, fluidState, blockState, sourceBlock);
-		MinecraftForge.EVENT_BUS.post(event);
+		event.sendEvent();
 		return event;
 	}
 
@@ -76,7 +75,7 @@ public class AetherEventDispatch {
 	 */
 	public static FreezeEvent.FreezeFromItem onItemFreezeFluid(LevelAccessor level, BlockPos pos, BlockState fluidState, BlockState blockState, ItemStack sourceItem) {
 		FreezeEvent.FreezeFromItem event = new FreezeEvent.FreezeFromItem(level, pos, fluidState, blockState, sourceItem);
-		MinecraftForge.EVENT_BUS.post(event);
+		event.sendEvent();
 		return event;
 	}
 
@@ -85,7 +84,7 @@ public class AetherEventDispatch {
 	 */
 	public static ItemUseConvertEvent onItemUseConvert(@Nullable Player player, LevelAccessor level, BlockPos pos, @Nullable ItemStack stack, BlockState oldState, BlockState newState, RecipeType<?> recipeType) {
 		ItemUseConvertEvent event = new ItemUseConvertEvent(player, level, pos, stack, oldState, newState, recipeType);
-		MinecraftForge.EVENT_BUS.post(event);
+		event.sendEvent();
 		return event;
 	}
 
@@ -94,7 +93,7 @@ public class AetherEventDispatch {
 	 */
 	public static boolean onTriggerTrap(Player player, Level level, BlockPos pos, BlockState state) {
 		TriggerTrapEvent event = new TriggerTrapEvent(player, level, pos, state);
-		MinecraftForge.EVENT_BUS.post(event);
+		event.sendEvent();
 		return !event.isCanceled();
 	}
 

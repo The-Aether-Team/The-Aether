@@ -1,31 +1,32 @@
 package com.aetherteam.aether.event;
 
+import io.github.fabricators_of_create.porting_lib.entity.events.EntityEvents;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.fabric.api.event.Event;
+import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.EntityEvent;
-import net.minecraftforge.eventbus.api.Cancelable;
-import net.minecraftforge.fml.LogicalSide;
 
 import org.jetbrains.annotations.Nullable;
 
 /**
  * EggLayEvent is fired before a Moa lays an egg.
  * <br>
- * This event is {@link Cancelable}.<br>
+ * This event is cancelable.<br>
  * If the event is not canceled, the Moa will lay an egg.
  * <br>
- * This event does not have a result. {@link net.minecraftforge.eventbus.api.Event.HasResult}<br>
+ * This event does not have a result.<br>
  * <br>
- * This event is fired on the {@link MinecraftForge#EVENT_BUS}.<br>
- * <br>
- * This event is only fired on the {@link LogicalSide#SERVER} side.<br>
+ * This event is only fired on the {@link EnvType#SERVER} side.<br>
  * <br>
  * If this event is canceled, the Moa will not lay an egg.
  */
-@Cancelable
-public class EggLayEvent extends EntityEvent {
+public class EggLayEvent extends EntityEvents {
+    public static final Event<EggLayCallback> EGG_LAY = EventFactory.createArrayBacked(EggLayCallback.class, callbacks -> event -> {
+        for (EggLayCallback e : callbacks)
+            e.onEggLayEvent(event);
+    });
     @Nullable
     private Item item;
     @Nullable
@@ -110,5 +111,15 @@ public class EggLayEvent extends EntityEvent {
      */
     public void setPitch(float pitch) {
         this.pitch = pitch;
+    }
+
+    @Override
+    public void sendEvent() {
+        EGG_LAY.invoker().onEggLayEvent(this);
+    }
+
+    @FunctionalInterface
+    public interface EggLayCallback {
+        void onEggLayEvent(EggLayEvent event);
     }
 }

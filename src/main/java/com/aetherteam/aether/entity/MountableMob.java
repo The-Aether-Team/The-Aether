@@ -34,7 +34,7 @@ public interface MountableMob {
      */
     default void riderTick(Mob vehicle) {
         if (vehicle.getControllingPassenger() instanceof Player player) {
-            AetherPlayer.get(player).ifPresent(aetherPlayer -> {
+            AetherPlayer.getOptional(player).ifPresent(aetherPlayer -> {
                 if (aetherPlayer.isJumping() && !this.isMountJumping()) {
                     this.setPlayerJumped(true);
                 }

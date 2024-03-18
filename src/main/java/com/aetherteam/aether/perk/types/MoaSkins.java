@@ -6,10 +6,10 @@ import com.aetherteam.aether.api.registers.MoaType;
 import com.aetherteam.aether.perk.PerkUtil;
 import com.aetherteam.nitrogen.api.users.User;
 import com.google.common.collect.ImmutableMap;
+import io.github.fabricators_of_create.porting_lib.util.RegistryObject;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.RegistryObject;
 
 import org.jetbrains.annotations.Nullable;
 import java.util.LinkedHashMap;

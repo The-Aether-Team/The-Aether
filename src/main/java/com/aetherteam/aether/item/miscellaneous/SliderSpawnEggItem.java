@@ -1,5 +1,6 @@
 package com.aetherteam.aether.item.miscellaneous;
 
+import io.github.fabricators_of_create.porting_lib.util.LazySpawnEggItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -16,12 +17,11 @@ import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeSpawnEggItem;
 
 import java.util.Objects;
 import java.util.function.Supplier;
 
-public class SliderSpawnEggItem extends ForgeSpawnEggItem {
+public class SliderSpawnEggItem extends LazySpawnEggItem {
     public SliderSpawnEggItem(Supplier<? extends EntityType<? extends Mob>> type, int backgroundColor, int highlightColor, Properties props) {
         super(type, backgroundColor, highlightColor, props);
     }

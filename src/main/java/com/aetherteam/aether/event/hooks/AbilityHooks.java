@@ -24,7 +24,15 @@ import com.aetherteam.aether.network.packet.clientbound.ToolDebuffPacket;
 import com.aetherteam.nitrogen.capability.INBTSynchable;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import com.google.common.collect.ImmutableMap;
+import io.github.fabricators_of_create.porting_lib.attributes.PortingLibAttributes;
+import io.github.fabricators_of_create.porting_lib.entity.events.EntityStruckByLightningEvent;
+import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
 import io.github.fabricators_of_create.porting_lib.entity.events.PlayerEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.ProjectileImpactEvent;
+import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingDamageEvent;
+import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingHurtEvent;
+import io.github.fabricators_of_create.porting_lib.event.common.BlockEvents;
+import io.github.fabricators_of_create.porting_lib.tool.ToolActions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -50,17 +58,6 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.common.ToolActions;
-import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingFallEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.level.BlockEvent;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
@@ -86,7 +83,7 @@ public class AbilityHooks {
 
         /**
          * Damages Zanite Rings when a block is broken.
-         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onBlockBreak(BlockEvent.BreakEvent)
+         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onBlockBreak(BlockEvents.BreakEvent)
          */
         public static void damageZaniteRing(LivingEntity entity, LevelAccessor level, BlockState state, BlockPos pos) {
             List<SlotResult> slotResults = EquipmentUtil.getZaniteRings(entity);
@@ -101,7 +98,7 @@ public class AbilityHooks {
 
         /**
          * Damages Zanite Pendant when a block is broken.
-         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onBlockBreak(BlockEvent.BreakEvent)
+         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onBlockBreak(BlockEvents.BreakEvent)
          */
         public static void damageZanitePendant(LivingEntity entity, LevelAccessor level, BlockState state, BlockPos pos) {
             SlotResult slotResult = EquipmentUtil.getZanitePendant(entity);
@@ -115,7 +112,7 @@ public class AbilityHooks {
         /**
          * Handles ability for {@link ZaniteAccessory} for Zanite Rings (accounts for if multiple are equipped).
          * @see ZaniteAccessory#handleMiningSpeed(float, ItemStack)
-         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onMiningSpeed(PlayerEvent.BreakSpeed)
+         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onMiningSpeed(PlayerEvents.BreakSpeed)
          */
         public static float handleZaniteRingAbility(LivingEntity entity, float speed) {
             float newSpeed = speed;
@@ -143,15 +140,15 @@ public class AbilityHooks {
 
         /**
          * Checks whether an entity can be targeted while wearing an Invisibility Cloak.
-         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onTargetSet(LivingEntity, Entity, double)
+         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onTargetSet(LivingEntityEvents.LivingVisibilityEvent)
          */
         public static boolean preventTargeting(LivingEntity target, @Nullable Entity lookingEntity) {
-            if (target instanceof Player player && AetherPlayer.get(player).isPresent() && AetherPlayer.get(player).resolve().isPresent()) {
+            if (target instanceof Player player && AetherPlayer.getOptional(player).isPresent() && AetherPlayer.getOptional(player).isPresent()) {
                 return lookingEntity != null
                         && !lookingEntity.getType().is(AetherTags.Entities.IGNORE_INVISIBILITY)
-                        && AetherPlayer.get(player).resolve().get().isWearingInvisibilityCloak()
-                        && AetherPlayer.get(player).resolve().get().isInvisibilityEnabled()
-                        && !AetherPlayer.get(player).resolve().get().attackedWithInvisibility();
+                        && AetherPlayer.getOptional(player).get().isWearingInvisibilityCloak()
+                        && AetherPlayer.getOptional(player).get().isInvisibilityEnabled()
+                        && !AetherPlayer.getOptional(player).get().attackedWithInvisibility();
             } else {
                 return lookingEntity != null
                         && !lookingEntity.getType().is(AetherTags.Entities.IGNORE_INVISIBILITY)
@@ -161,14 +158,14 @@ public class AbilityHooks {
 
         /**
          * Checks if an entity recently attacked while wearing an Invisibility Cloak.
-         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onTargetSet(LivingEvent.LivingVisibilityEvent)
+         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onTargetSet(LivingEntityEvents.LivingVisibilityEvent)
          */
         public static boolean recentlyAttackedWithInvisibility(LivingEntity target, Entity lookingEntity) {
-            if (target instanceof Player player && AetherPlayer.get(player).isPresent() && AetherPlayer.get(player).resolve().isPresent()) {
+            if (target instanceof Player player && AetherPlayer.getOptional(player).isPresent() && AetherPlayer.getOptional(player).isPresent()) {
                 return !lookingEntity.getType().is(AetherTags.Entities.IGNORE_INVISIBILITY)
-                        && AetherPlayer.get(player).resolve().get().isWearingInvisibilityCloak()
-                        && AetherPlayer.get(player).resolve().get().isInvisibilityEnabled()
-                        && AetherPlayer.get(player).resolve().get().attackedWithInvisibility();
+                        && AetherPlayer.getOptional(player).get().isWearingInvisibilityCloak()
+                        && AetherPlayer.getOptional(player).get().isInvisibilityEnabled()
+                        && AetherPlayer.getOptional(player).get().attackedWithInvisibility();
             } else {
                 return false;
             }
@@ -176,17 +173,17 @@ public class AbilityHooks {
 
         /**
          * Sets that the player recently attacked.
-         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onEntityHurt(net.minecraftforge.event.entity.living.LivingAttackEvent)
+         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onEntityHurt(io.github.fabricators_of_create.porting_lib.entity.events.LivingAttackEvent)
          */
         public static void setAttack(DamageSource source) {
             if (source.getEntity() instanceof Player player) {
-                AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setAttackedWithInvisibility(true));
+                AetherPlayer.getOptional(player).ifPresent(aetherPlayer -> aetherPlayer.setAttackedWithInvisibility(true));
             }
         }
 
         /**
          * Prevents magma block damage when wearing ice accessories.
-         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onEntityHurt(net.minecraftforge.event.entity.living.LivingAttackEvent)
+         * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onEntityHurt(io.github.fabricators_of_create.porting_lib.entity.events.LivingAttackEvent)
          */
         public static boolean preventMagmaDamage(LivingEntity entity, DamageSource source) {
             return source == entity.level().damageSources().hotFloor() && EquipmentUtil.hasFreezingAccessory(entity);
@@ -198,7 +195,7 @@ public class AbilityHooks {
          * Cancels fall damage if the wearer either has Sentry Boots, a full Gravitite Armor set, or a full Valkyrie Armor set.
          * @param entity The {@link LivingEntity} wearing the armor.
          * @return Whether the wearer's fall damage should be cancelled, as a {@link Boolean}.
-         * @see com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener#onEntityFall(LivingFallEvent)
+         * @see com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener#onEntityFall(LivingEntityEvents.Fall.FallEvent)
          */
         public static boolean fallCancellation(LivingEntity entity) {
             return EquipmentUtil.hasSentryBoots(entity) || EquipmentUtil.hasFullGravititeSet(entity) || EquipmentUtil.hasFullValkyrieSet(entity);
@@ -356,11 +353,11 @@ public class AbilityHooks {
          */
         public static boolean entityTooFar(Entity target, Player player, InteractionHand hand) {
             if (hand == InteractionHand.OFF_HAND && hasValkyrieItemInMainHandOnly(player)) {
-                AttributeInstance attackRange = player.getAttribute(ForgeMod.ENTITY_REACH.get());
+                AttributeInstance attackRange = player.getAttribute(PortingLibAttributes.ENTITY_REACH);
                 if (attackRange != null) {
                     AttributeModifier valkyrieModifier = attackRange.getModifier(ValkyrieTool.ATTACK_RANGE_MODIFIER_UUID);
                     if (valkyrieModifier != null) {
-                        double range = player.getAttributeValue(ForgeMod.ENTITY_REACH.get()) - valkyrieModifier.getAmount();
+                        double range = player.getAttributeValue(PortingLibAttributes.ENTITY_REACH) - valkyrieModifier.getAmount();
                         double trueReach = range == 0 ? 0 : range + (player.isCreative() ? 3 : 0); // [CODE COPY] - IForgePlayer#getAttackRange().
                         return !player.isCloseEnough(target, trueReach);
                     }
@@ -377,11 +374,11 @@ public class AbilityHooks {
          */
         public static boolean blockTooFar(Player player, InteractionHand hand) {
             if (hand == InteractionHand.OFF_HAND && hasValkyrieItemInMainHandOnly(player)) {
-                AttributeInstance reachDistance = player.getAttribute(ForgeMod.BLOCK_REACH.get());
+                AttributeInstance reachDistance = player.getAttribute(PortingLibAttributes.BLOCK_REACH);
                 if (reachDistance != null) {
                     AttributeModifier valkyrieModifier = reachDistance.getModifier(ValkyrieTool.REACH_DISTANCE_MODIFIER_UUID);
                     if (valkyrieModifier != null) {
-                        double reach = player.getAttributeValue(ForgeMod.BLOCK_REACH.get()) - valkyrieModifier.getAmount();
+                        double reach = player.getAttributeValue(PortingLibAttributes.BLOCK_REACH) - valkyrieModifier.getAmount();
                         double trueReach = reach == 0 ? 0 : reach + (player.isCreative() ? 0.5 : 0); // [CODE COPY] - IForgePlayer#getReachDistance().
                         return player.pick(trueReach, 0.0F, false).getType() != HitResult.Type.BLOCK;
                     }
@@ -414,11 +411,11 @@ public class AbilityHooks {
             if (entity instanceof Player player && !player.level().isClientSide()) {
                 Entity sourceEntity = source.getDirectEntity();
                 if (sourceEntity instanceof GoldenDart) {
-                    AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setGoldenDartCount", aetherPlayer.getGoldenDartCount() + 1));
+                    AetherPlayer.getOptional(player).ifPresent(aetherPlayer -> aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setGoldenDartCount", aetherPlayer.getGoldenDartCount() + 1));
                 } else if (sourceEntity instanceof PoisonDart || sourceEntity instanceof PoisonNeedle) {
-                    AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setPoisonDartCount", aetherPlayer.getPoisonDartCount() + 1));
+                    AetherPlayer.getOptional(player).ifPresent(aetherPlayer -> aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setPoisonDartCount", aetherPlayer.getPoisonDartCount() + 1));
                 } else if (sourceEntity instanceof EnchantedDart) {
-                    AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setEnchantedDartCount", aetherPlayer.getEnchantedDartCount() + 1));
+                    AetherPlayer.getOptional(player).ifPresent(aetherPlayer -> aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setEnchantedDartCount", aetherPlayer.getEnchantedDartCount() + 1));
                 }
             }
         }
@@ -452,7 +449,7 @@ public class AbilityHooks {
          */
         public static boolean lightningTracking(Entity entity, LightningBolt lightning) {
             if (entity instanceof LivingEntity livingEntity) {
-                Optional<LightningTracker> lightningTrackerOptional = LightningTracker.get(lightning).resolve();
+                Optional<LightningTracker> lightningTrackerOptional = LightningTracker.get(lightning);
                 if (lightningTrackerOptional.isPresent()) {
                     LightningTracker lightningTracker = lightningTrackerOptional.get();
                     if (lightningTracker.getOwner() != null) {
@@ -487,7 +484,7 @@ public class AbilityHooks {
                 } else if (source instanceof Projectile) { // Used for reducing projectile weapon effectiveness.
                     if ((target.getType().getDescriptionId().startsWith("entity.aether") || target.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY)) && !target.getType().is(AetherTags.Entities.TREATED_AS_VANILLA_ENTITY)) { // Checks if the target is an Aether entity.
                         if ((!source.getType().getDescriptionId().startsWith("entity.aether") && !source.getType().is(AetherTags.Entities.TREATED_AS_AETHER_ENTITY)) // Checks if the projectile is non-Aether.
-                                && (!(source instanceof AbstractArrow abstractArrow) || !PhoenixArrow.get(abstractArrow).isPresent() || PhoenixArrow.get(abstractArrow).resolve().isEmpty() || !PhoenixArrow.get(abstractArrow).resolve().get().isPhoenixArrow())) { // Special check against Phoenix Arrows.
+                                && (!(source instanceof AbstractArrow abstractArrow) || !PhoenixArrow.get(abstractArrow).isPresent() || PhoenixArrow.get(abstractArrow).isEmpty() || !PhoenixArrow.get(abstractArrow).get().isPhoenixArrow())) { // Special check against Phoenix Arrows.
                             damage = (float) pow;
                         }
                     }

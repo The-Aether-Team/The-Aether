@@ -23,6 +23,7 @@ import com.aetherteam.aether.item.miscellaneous.bucket.SkyrootBucketItem;
 import com.aetherteam.aether.mixin.AetherMixinHooks;
 import io.github.fabricators_of_create.porting_lib.entity.events.EntityStruckByLightningEvent;
 import io.github.fabricators_of_create.porting_lib.entity.events.ProjectileImpactEvent;
+import io.github.fabricators_of_create.porting_lib.entity.events.ShieldBlockEvent;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -52,7 +53,6 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
-import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
@@ -71,7 +71,7 @@ public class EntityHooks {
     /**
      * Adds a new goal to an entity.
      * @param entity The {@link Entity}.
-     * @see com.aetherteam.aether.event.listeners.EntityListener#onEntityJoin(EntityJoinLevelEvent)
+     * @see com.aetherteam.aether.event.listeners.EntityListener#onEntityJoin(Entity, Level, boolean)
      */
     public static void addGoals(Entity entity) {
         if (entity.getClass() == Bee.class) {
@@ -241,7 +241,7 @@ public class EntityHooks {
     /**
      * Launches a mount when it interacts with a blue aercloud. This is handled as an event to get around a vanilla bug with it not working from the {@link com.aetherteam.aether.block.natural.BlueAercloudBlock} class.
      * @param player The passenger {@link Player}.
-     * @see com.aetherteam.aether.event.listeners.EntityListener#onRiderTick(TickEvent.PlayerTickEvent)
+     * @see com.aetherteam.aether.event.listeners.EntityListener#onRiderTick(Player)
      */
     public static void launchMount(Player player) {
         Entity mount = player.getVehicle();
@@ -556,7 +556,7 @@ public class EntityHooks {
      */
     public static int modifyExperience(LivingEntity entity, int experience) {
         if (entity instanceof Mob mob) {
-            LazyOptional<MobAccessory> accessoryMobLazy = MobAccessory.get(mob);
+            Optional<MobAccessory> accessoryMobLazy = MobAccessory.get(mob);
             if (accessoryMobLazy.isPresent() && accessoryMobLazy.resolve().isPresent()) {
                 MobAccessory accessoryMob = accessoryMobLazy.resolve().get();
                 LazyOptional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(mob);

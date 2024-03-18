@@ -2,6 +2,7 @@ package com.aetherteam.aether.client;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.client.event.listeners.abilities.AccessoryAbilityClientListener;
 import com.aetherteam.aether.client.gui.screen.inventory.*;
 import com.aetherteam.aether.client.renderer.AetherRenderers;
 import com.aetherteam.aether.entity.AetherEntityTypes;
@@ -18,6 +19,7 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
 
 public class AetherClient implements ClientModInitializer {
     private static boolean refreshPacks = false;
@@ -34,7 +36,13 @@ public class AetherClient implements ClientModInitializer {
         registerLoreOverrides();
         autoApplyPacks();
 
+        initEvents();
+
         RegisterEntitySpectatorShadersCallback.EVENT.register(AetherClient::registerSpectatorShaders);
+    }
+
+    public void initEvents() {
+        AccessoryAbilityClientListener.init();
     }
 
     /**

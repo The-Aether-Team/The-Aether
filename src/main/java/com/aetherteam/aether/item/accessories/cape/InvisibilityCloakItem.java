@@ -9,12 +9,10 @@ import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.clientbound.SetInvisibilityPacket;
 import com.aetherteam.nitrogen.capability.INBTSynchable;
 import com.aetherteam.nitrogen.network.PacketRelay;
+import dev.emi.trinkets.api.SlotReference;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import top.theillusivec4.curios.api.SlotContext;
 
 /**
  * Additional invisibility behavior is handled with {@link com.aetherteam.aether.client.event.listeners.abilities.AccessoryAbilityClientListener#onRenderPlayer(RenderPlayerEvent.Pre)}
@@ -27,17 +25,16 @@ public class InvisibilityCloakItem extends AccessoryItem {
     }
 
     @Override
-    public void curioTick(SlotContext slotContext, ItemStack stack) {
-        LivingEntity livingEntity = slotContext.entity();
+    public void tick(ItemStack stack, SlotReference slotContext, LivingEntity livingEntity) {
         if (livingEntity.level().isClientSide() && livingEntity instanceof Player player) {
-            AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
+            AetherPlayer.getOptional(player).ifPresent((aetherPlayer) -> {
                 if (AetherKeys.INVISIBILITY_TOGGLE.consumeClick()) {
                     aetherPlayer.setSynched(INBTSynchable.Direction.SERVER, "setInvisibilityEnabled", !aetherPlayer.isInvisibilityEnabled());
                 }
             });
         }
         if (!livingEntity.level().isClientSide() && livingEntity instanceof Player player) {
-            AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
+            AetherPlayer.getOptional(player).ifPresent((aetherPlayer) -> {
                 if (aetherPlayer.isInvisibilityEnabled()) {
                     if (!AetherConfig.SERVER.balance_invisibility_cloak.get()) {
                         aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setWearingInvisibilityCloak", true);
@@ -56,7 +53,7 @@ public class InvisibilityCloakItem extends AccessoryItem {
         if (!livingEntity.level().isClientSide()) {
             if (!livingEntity.isInvisible()) {
                 if (livingEntity instanceof Player player) {
-                    AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
+                    AetherPlayer.getOptional(player).ifPresent((aetherPlayer) -> {
                         if (aetherPlayer.isWearingInvisibilityCloak()) {
                             aetherPlayer.getPlayer().setInvisible(true);
                             PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new SetInvisibilityPacket(aetherPlayer.getPlayer().getId(), true));
@@ -67,7 +64,7 @@ public class InvisibilityCloakItem extends AccessoryItem {
                 }
             } else {
                 if (livingEntity instanceof Player player) {
-                    AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
+                    AetherPlayer.getOptional(player).ifPresent((aetherPlayer) -> {
                         if (!aetherPlayer.isWearingInvisibilityCloak()) {
                             aetherPlayer.getPlayer().setInvisible(false);
                             PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new SetInvisibilityPacket(aetherPlayer.getPlayer().getId(), false));
@@ -79,10 +76,9 @@ public class InvisibilityCloakItem extends AccessoryItem {
     }
 
     @Override
-    public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
-        LivingEntity livingEntity = slotContext.entity();
+    public void onUnequip(ItemStack stack, SlotReference slotContext, LivingEntity livingEntity) {
         if (!livingEntity.level().isClientSide() && livingEntity instanceof Player player) {
-            AetherPlayer.get(player).ifPresent((aetherPlayer) -> aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setWearingInvisibilityCloak", false));
+            AetherPlayer.getOptional(player).ifPresent((aetherPlayer) -> aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setWearingInvisibilityCloak", false));
         }
         livingEntity.setInvisible(false);
         ((LivingEntityAccessor) livingEntity).callUpdateEffectVisibility();

@@ -17,6 +17,7 @@ import com.aetherteam.aether.network.packet.clientbound.SetVehiclePacket;
 import com.aetherteam.aether.world.AetherLevelData;
 import com.aetherteam.aether.world.LevelUtil;
 import com.aetherteam.nitrogen.network.PacketRelay;
+import io.github.fabricators_of_create.porting_lib.event.common.BlockEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
@@ -48,7 +49,6 @@ import net.minecraftforge.event.level.SleepFinishedTimeEvent;
 
 import org.jetbrains.annotations.Nullable;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class DimensionHooks {
@@ -59,10 +59,10 @@ public class DimensionHooks {
     /**
      * Spawns the player in the Aether dimension if the {@link AetherConfig.Server#spawn_in_aether} config is enabled.
      * @param player The {@link Player}.
-     * @see com.aetherteam.aether.event.listeners.DimensionListener#onPlayerLogin(PlayerEvent.PlayerLoggedInEvent)
+     * @see com.aetherteam.aether.event.listeners.DimensionListener#onPlayerLogin(Player)
      */
     public static void startInAether(Player player) {
-        AetherPlayer.get(player).ifPresent(aetherPlayer -> {
+        AetherPlayer.getOptional(player).ifPresent(aetherPlayer -> {
             if (AetherConfig.SERVER.spawn_in_aether.get()) {
                 if (aetherPlayer.canSpawnInAether()) { // Checks if the player has been set to spawn in the Aether.
                     if (aetherPlayer.getPlayer() instanceof ServerPlayer serverPlayer) {
@@ -107,11 +107,11 @@ public class DimensionHooks {
                         if (!player.isCreative()) {
                             if (stack.getCount() > 1) {
                                 stack.shrink(1);
-                                player.addItem(stack.hasCraftingRemainingItem() ? stack.getCraftingRemainingItem() : ItemStack.EMPTY);
+                                player.addItem(stack.getRecipeRemainder());
                             } else if (stack.isDamageableItem()) {
                                 stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
                             } else {
-                                player.setItemInHand(hand, stack.hasCraftingRemainingItem() ? stack.getCraftingRemainingItem() : ItemStack.EMPTY);
+                                player.setItemInHand(hand, stack.getRecipeRemainder());
                             }
                         }
                         return true;
@@ -129,7 +129,7 @@ public class DimensionHooks {
      * @param blockState The water {@link BlockState}.
      * @param fluidState The water {@link FluidState}.
      * @return Whether the portal should be created, as a {@link Boolean}.
-     * @see com.aetherteam.aether.event.listeners.DimensionListener#onWaterExistsInsidePortalFrame(BlockEvent.NeighborNotifyEvent)
+     * @see com.aetherteam.aether.event.listeners.DimensionListener#onWaterExistsInsidePortalFrame(BlockEvents.NeighborNotifyEvent)
      */
     public static boolean detectWaterInFrame(LevelAccessor levelAccessor, BlockPos pos, BlockState blockState, FluidState fluidState) {
         if (levelAccessor instanceof Level level) {
@@ -149,7 +149,7 @@ public class DimensionHooks {
     /**
      * Ticks time in dimensions with the Aether effects location.
      * @param level The {@link Level}
-     * @see com.aetherteam.aether.event.listeners.DimensionListener#onWorldTick(TickEvent.LevelTickEvent)
+     * @see com.aetherteam.aether.event.listeners.DimensionListener#onWorldTick(ServerLevel)
      */
     public static void tickTime(Level level) {
         if (level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location()) && level instanceof ServerLevel serverLevel) {
@@ -166,7 +166,7 @@ public class DimensionHooks {
     /**
      * This code is used to handle entities falling out of the Aether. If an entity is not a player, vehicle, or tracked item, it is removed.
      * @param level The {@link Level}
-     * @see com.aetherteam.aether.event.listeners.DimensionListener#onWorldTick(TickEvent.LevelTickEvent)
+     * @see com.aetherteam.aether.event.listeners.DimensionListener#onWorldTick(ServerLevel)
      */
     public static void fallFromAether(Level level) {
         if (level instanceof ServerLevel serverLevel) {
@@ -230,7 +230,7 @@ public class DimensionHooks {
     /**
      * Checks whether eternal day is configured to be disabled, and disables it in the {@link com.aetherteam.aether.capability.player.AetherPlayerCapability}.
      * @param level The {@link Level}
-     * @see com.aetherteam.aether.event.listeners.DimensionListener#onWorldTick(TickEvent.LevelTickEvent)
+     * @see com.aetherteam.aether.event.listeners.DimensionListener#onWorldTick(ServerLevel)
      */
     public static void checkEternalDayConfig(Level level) {
         if (!level.isClientSide()) {
@@ -248,11 +248,11 @@ public class DimensionHooks {
      *
      * @param entity The {@link Entity} travelling between dimensions.
      * @param dimension The {@link ResourceKey} of the dimension ({@link Level}) being teleported to.
-     * @see com.aetherteam.aether.event.listeners.DimensionListener#onEntityTravelToDimension(EntityTravelToDimensionEvent)
+     * @see com.aetherteam.aether.event.listeners.DimensionListener#onEntityTravelToDimension(ServerPlayer, ServerLevel, ServerLevel)
      */
     public static void dimensionTravel(Entity entity, ResourceKey<Level> dimension) {
         if (entity instanceof Player player) {
-            AetherPlayer.get(player).ifPresent(aetherPlayer -> {
+            AetherPlayer.getOptional(player).ifPresent(aetherPlayer -> {
                 if (!AetherConfig.SERVER.spawn_in_aether.get() || !aetherPlayer.canSpawnInAether()) {
                     if (entity.level().getBiome(entity.blockPosition()).is(AetherTags.Biomes.DISPLAY_TRAVEL_TEXT)) {
                         if (entity.level().dimension() == LevelUtil.destinationDimension() && dimension == LevelUtil.returnDimension()) { // We display the Descending GUI text to the player if they're about to return to the Overworld.
@@ -278,7 +278,7 @@ public class DimensionHooks {
     /**
      * Checks if the player was falling out of the Aether, and prevents server fly-hack checks during this.
      * @param player The {@link Player}.
-     * @see com.aetherteam.aether.event.listeners.DimensionListener#onPlayerTraveling(TickEvent.PlayerTickEvent)
+     * @see com.aetherteam.aether.event.listeners.DimensionListener#onPlayerTraveling(Player)
      */
     public static void travelling(Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
@@ -298,7 +298,7 @@ public class DimensionHooks {
      * Initializes the Aether level data for time separate from the overworld.
      * serverLevelData and levelData are access transformed.
      * @param serverLevel The {@link ServerLevel}.
-     * @see com.aetherteam.aether.event.listeners.DimensionListener#onPlayerTraveling(TickEvent.PlayerTickEvent)
+     * @see com.aetherteam.aether.event.listeners.DimensionListener#onPlayerTraveling(Player)
      */
     public static void initializeLevelData(MinecraftServer server, ServerLevel serverLevel) {
         if (serverLevel.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {

@@ -10,10 +10,7 @@ import com.aetherteam.aether.block.dispenser.DispenseDartBehavior;
 import com.aetherteam.aether.block.dispenser.DispenseSkyrootBoatBehavior;
 import com.aetherteam.aether.block.dispenser.DispenseUsableItemBehavior;
 import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
-import com.aetherteam.aether.client.AetherClient;
-import com.aetherteam.aether.client.AetherSoundEvents;
-import com.aetherteam.aether.client.CombinedPackResources;
-import com.aetherteam.aether.client.TriviaGenerator;
+import com.aetherteam.aether.client.*;
 import com.aetherteam.aether.client.particle.AetherParticleTypes;
 import com.aetherteam.aether.command.AetherCommands;
 import com.aetherteam.aether.command.SunAltarWhitelist;
@@ -22,6 +19,13 @@ import com.aetherteam.aether.data.resources.AetherMobCategory;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.ai.AetherBlockPathTypes;
+import com.aetherteam.aether.event.listeners.*;
+import com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener;
+import com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener;
+import com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener;
+import com.aetherteam.aether.event.listeners.abilities.WeaponAbilityListener;
+import com.aetherteam.aether.event.listeners.capability.AetherPlayerListener;
+import com.aetherteam.aether.event.listeners.capability.AetherTimeListener;
 import com.aetherteam.aether.inventory.AetherRecipeBookTypes;
 import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
 import com.aetherteam.aether.item.AetherCreativeTabs;
@@ -93,7 +97,6 @@ public class Aether implements ModInitializer {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         modEventBus.addListener(AetherData::dataSetup);
-        modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::packSetup);
 
         LazyRegistrar<?>[] registers = {
@@ -127,6 +130,8 @@ public class Aether implements ModInitializer {
             register.register();
         }
 
+        commonSetup();
+
         EnvExecutor.unsafeRunForDist(() -> () -> {
             AetherMenus.MENUS.register();
             return true;
@@ -147,15 +152,20 @@ public class Aether implements ModInitializer {
         ItemListener.init();
         PerkListener.init();
         EntityListener.init();
+        RecipeListener.init();
         DimensionListener.init();
+        AetherTimeListener.init();
         ToolAbilityListener.init();
+        AetherColorResolvers.init();
+        AetherPlayerListener.init();
+        ArmorAbilityListener.init();
         WeaponAbilityListener.init();
         AccessoryAbilityListener.init();
 
         CommandRegistrationCallback.EVENT.register(AetherCommands::registerCommands);
     }
 
-    public void commonSetup(FMLCommonSetupEvent event) {
+    public void commonSetup() {
         AetherPacketHandler.register();
 
         Reflection.initialize(SunAltarWhitelist.class);
@@ -168,18 +178,16 @@ public class Aether implements ModInitializer {
 
         MoaSkins.registerMoaSkins();
 
-        event.enqueueWork(() -> {
-            AetherBlocks.registerFuels();
-            AetherBlocks.registerPots();
-            AetherBlocks.registerFlammability();
-            AetherBlocks.registerFluidInteractions();
+        AetherBlocks.registerFuels();
+        AetherBlocks.registerPots();
+        AetherBlocks.registerFlammability();
+        AetherBlocks.registerFluidInteractions();
 
-            AetherItems.setupBucketReplacements();
+        AetherItems.setupBucketReplacements();
 
-            this.registerDispenserBehaviors();
-            this.registerCauldronInteractions();
-            this.registerComposting();
-        });
+        this.registerDispenserBehaviors();
+        this.registerCauldronInteractions();
+        this.registerComposting();
     }
 
     public void packSetup(AddPackFindersEvent event) {
@@ -228,7 +236,7 @@ public class Aether implements ModInitializer {
      * @param description The {@link String} description of the resource pack.
      */
     private void createCombinedPack(AddPackFindersEvent event, Path sourcePath, PathPackResources pack, String name, String title, String description) {
-        Path baseResourcePath = ModList.get().getModFileById(Aether.MODID).getFile().findResource("packs/classic_base");
+        Path baseResourcePath = FabricLoader.getInstance().getModContainer(Aether.MODID).getFile().findResource("packs/classic_base");
         PathPackResources basePack = new PathPackResources(ModList.get().getModFileById(Aether.MODID).getFile().getFileName() + ":" + baseResourcePath, false, baseResourcePath);
         List<PathPackResources> mergedPacks = List.of(pack, basePack);
         Pack.ResourcesSupplier resourcesSupplier = (string) -> new CombinedPackResources(name, new PackMetadataSection(Component.translatable(description), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES)), mergedPacks, sourcePath);

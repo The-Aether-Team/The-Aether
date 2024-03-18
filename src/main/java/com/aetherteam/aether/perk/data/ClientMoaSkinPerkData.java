@@ -28,7 +28,7 @@ public class ClientMoaSkinPerkData extends ClientPerkData<MoaData> {
         if (this.canSync(player)) {
             User user = UserData.Client.getClientUser(); // The client's User.
             UUID uuid = player.getUUID(); // The player's UUID.
-            AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
+            AetherPlayer.getOptional(player).ifPresent((aetherPlayer) -> {
                 UUID lastRiddenMoa = aetherPlayer.getLastRiddenMoa(); // The UUID of the last Moa ridden by the player.
                 CustomizationsOptions.INSTANCE.load(); // Loads data from the client's "customizations.txt" file.
                 String moaSkinName = CustomizationsOptions.INSTANCE.getMoaSkin(); // Retrieves the chosen Moa Skin from the file.

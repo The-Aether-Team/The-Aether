@@ -1,10 +1,10 @@
 package com.aetherteam.aether.item.accessories.ring;
 
 import com.aetherteam.aether.item.accessories.AccessoryItem;
+import dev.emi.trinkets.api.SlotReference;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import top.theillusivec4.curios.api.SlotContext;
-import top.theillusivec4.curios.api.type.capability.ICurio;
 
 import java.util.function.Supplier;
 
@@ -17,7 +17,7 @@ public class RingItem extends AccessoryItem {
     }
 
     @Override
-    public ICurio.SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
-        return new ICurio.SoundInfo(this.equipSound.get(), 1.0F, 1.0F);
+    public SoundInfo getEquipSound(ItemStack stack, SlotReference slot, LivingEntity entity) {
+        return new SoundInfo(this.equipSound.get(), 1.0F, 1.0F);
     }
 }

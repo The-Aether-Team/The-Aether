@@ -6,8 +6,9 @@ import com.aetherteam.nitrogen.network.packet.SyncEntityPacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraftforge.common.util.LazyOptional;
 import oshi.util.tuples.Quartet;
+
+import java.util.Optional;
 
 /**
  * Sync packet for values in the {@link com.aetherteam.aether.capability.arrow.PhoenixArrowCapability} class.
@@ -26,7 +27,7 @@ public class PhoenixArrowSyncPacket extends SyncEntityPacket<PhoenixArrow> {
     }
 
     @Override
-    public LazyOptional<PhoenixArrow> getCapability(Entity entity) {
+    public Optional<PhoenixArrow> getCapability(Entity entity) {
         return PhoenixArrow.get((AbstractArrow) entity);
     }
 }

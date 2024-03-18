@@ -25,6 +25,7 @@ import com.aetherteam.aether.perk.data.ServerPerkData;
 import com.aetherteam.aether.perk.types.MoaData;
 import com.aetherteam.nitrogen.capability.INBTSynchable;
 import com.aetherteam.nitrogen.network.PacketRelay;
+import io.github.fabricators_of_create.porting_lib.attributes.PortingLibAttributes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -57,7 +58,6 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeMod;
 
 import org.jetbrains.annotations.Nullable;
 import java.util.Map;
@@ -205,7 +205,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 	@Override
 	public void tick() {
 		super.tick();
-		AttributeInstance gravity = this.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
+		AttributeInstance gravity = this.getAttribute(PortingLibAttributes.ENTITY_GRAVITY);
 		if (gravity != null) {
 			double max = this.isVehicle() ? -0.5 : -0.1;
 			double fallSpeed = Math.max(gravity.getValue() * -1.25, max); // Entity isn't allowed to fall too slowly from gravity.
@@ -300,7 +300,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 				this.setLastRider(player.getUUID());
 			}
 			if (!player.level().isClientSide()) {
-				AetherPlayer.get(player).ifPresent((aetherPlayer) -> aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setLastRiddenMoa", this.getMoaUUID())); // Tracks the player as having last ridden this Moa.
+				AetherPlayer.getOptional(player).ifPresent((aetherPlayer) -> aetherPlayer.setSynched(INBTSynchable.Direction.CLIENT, "setLastRiddenMoa", this.getMoaUUID())); // Tracks the player as having last ridden this Moa.
 				Map<UUID, MoaData> userSkinsData = ServerPerkData.MOA_SKIN_INSTANCE.getServerPerkData(player.getServer());
 				if (userSkinsData.containsKey(this.getLastRider())) { // Tracks a Moa Skin as being tied to this Moa and this passenger.
 					ServerPerkData.MOA_SKIN_INSTANCE.applyPerkWithVerification(player.getServer(), this.getLastRider(), new MoaData(this.getMoaUUID(), userSkinsData.get(this.getLastRider()).moaSkin()));

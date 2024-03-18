@@ -1,21 +1,35 @@
 package com.aetherteam.aether.event;
 
+import com.aetherteam.aether.Aether;
+import io.github.fabricators_of_create.porting_lib.core.event.BaseEvent;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.fabric.api.event.Event;
+import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.Cancelable;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.fml.LogicalSide;
 
 /**
  * FreezeEvent is fired when an event for a freezing recipe occurs.<br>
- * If a method utilizes this {@link Event} as its parameter, the method will receive every child event of this class.<br>
+ * If a method utilizes this {@link BaseEvent} as its parameter, the method will receive every child event of this class.<br>
  * <br>
- * All children of this event are fired on the {@link MinecraftForge#EVENT_BUS}.
  */
-public class FreezeEvent extends Event {
+public class FreezeEvent extends BaseEvent {
+    public static final Event<FreezeCallback> FREEZE = EventFactory.createArrayBacked(FreezeCallback.class, callbacks -> event -> {
+        for (FreezeCallback e : callbacks)
+            e.onFreeze(event);
+    });
+    public static final Event<FreezeBlockCallback> FREEZE_FROM_BLOCK = EventFactory.createArrayBacked(FreezeBlockCallback.class, callbacks -> event -> {
+        for (FreezeBlockCallback e : callbacks)
+            e.onFreezeBlock(event);
+    });
+    public static final Event<FreezeItemCallback> FREEZE_ITEM_BLOCK = EventFactory.createArrayBacked(FreezeItemCallback.class, callbacks -> event -> {
+        for (FreezeItemCallback e : callbacks)
+            e.onFreezeItem(event);
+    });
+
     private final LevelAccessor level;
     private final BlockPos pos;
     private final BlockState priorBlock;
@@ -70,19 +84,23 @@ public class FreezeEvent extends Event {
         this.frozenBlock = frozenBlock;
     }
 
+    @Override
+    public void sendEvent() {
+        FREEZE.invoker().onFreeze(this);
+    }
+
     /**
      * FreezeEvent.FreezeFromBlock is fired for freezing recipes triggered by blocks.
      * <br>
-     * This event is {@link Cancelable}.<br>
+     * This event is cancelable.<br>
      * If the event is not canceled, the block will be frozen.
      * <br>
-     * This event does not have a result. {@link net.minecraftforge.eventbus.api.Event.HasResult}<br>
+     * This event does not have a result.<br>
      * <br>
-     * This event is only fired on the {@link LogicalSide#SERVER} side.<br>
+     * This event is only fired on the {@link EnvType#SERVER} side.<br>
      * <br>
      * If this event is canceled, the block will not be frozen.
      */
-    @Cancelable
     public static class FreezeFromBlock extends FreezeEvent {
         private final BlockPos sourcePos;
         private final BlockState sourceBlock;
@@ -114,21 +132,25 @@ public class FreezeEvent extends Event {
         public BlockPos getSourcePos() {
             return this.sourcePos;
         }
+
+        @Override
+        public void sendEvent() {
+            FREEZE_FROM_BLOCK.invoker().onFreezeBlock(this);
+        }
     }
 
     /**
      * FreezeEvent.FreezeFromItem is fired for freezing recipes triggered by items.
      * <br>
-     * This event is {@link Cancelable}.<br>
+     * This event is cancelable.<br>
      * If the event is not canceled, the block will be frozen.
      * <br>
-     * This event does not have a result. {@link net.minecraftforge.eventbus.api.Event.HasResult}<br>
+     * This event does not have a result.<br>
      * <br>
-     * This event is only fired on the {@link LogicalSide#SERVER} side.<br>
+     * This event is only fired on the {@link EnvType#SERVER} side.<br>
      * <br>
      * If this event is canceled, the block will not be frozen.
      */
-    @Cancelable
     public static class FreezeFromItem extends FreezeEvent {
         private final ItemStack sourceStack;
 
@@ -150,5 +172,25 @@ public class FreezeEvent extends Event {
         public ItemStack getSourceStack() {
             return this.sourceStack;
         }
+
+        @Override
+        public void sendEvent() {
+            FREEZE_ITEM_BLOCK.invoker().onFreezeItem(this);
+        }
+    }
+
+    @FunctionalInterface
+    public interface FreezeCallback {
+        void onFreeze(FreezeEvent event);
+    }
+
+    @FunctionalInterface
+    public interface FreezeBlockCallback {
+        void onFreezeBlock(FreezeFromBlock event);
+    }
+
+    @FunctionalInterface
+    public interface FreezeItemCallback {
+        void onFreezeItem(FreezeFromItem event);
     }
 }

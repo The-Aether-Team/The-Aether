@@ -110,7 +110,7 @@ public class MoaSkinsScreen extends Screen {
 
             // Button for saving a selected skin as the one that will be applied to the player's Moa.
             this.applyButton = this.addRenderableWidget(new ChangeSkinButton(ChangeSkinButton.ButtonType.APPLY, Button.builder(Component.translatable("gui.aether.moa_skins.button.apply"),
-                (pressed) -> AetherPlayer.get(this.getMinecraft().player).ifPresent((aetherPlayer) -> {
+                (pressed) -> AetherPlayer.getOptional(this.getMinecraft().player).ifPresent((aetherPlayer) -> {
                     PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Apply(this.getMinecraft().player.getUUID(), new MoaData(aetherPlayer.getLastRiddenMoa(), this.getSelectedSkin())));
                     this.customizations.setMoaSkin(this.getSelectedSkin().getId());
                     this.customizations.save();
@@ -408,7 +408,7 @@ public class MoaSkinsScreen extends Screen {
                 PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Remove(this.getMinecraft().player.getUUID()));
                 this.userConnectionExists = false;
             } else if (user != null && !this.userConnectionExists && MoaSkins.getMoaSkins().get(this.customizations.getMoaSkin()) != null) { // Add skin data if the user has started existing.
-                AetherPlayer.get(this.getMinecraft().player).ifPresent((aetherPlayer) ->
+                AetherPlayer.getOptional(this.getMinecraft().player).ifPresent((aetherPlayer) ->
                         PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Apply(this.getMinecraft().player.getUUID(), new MoaData(aetherPlayer.getLastRiddenMoa(), MoaSkins.getMoaSkins().get(this.customizations.getMoaSkin())))));
                 this.userConnectionExists = true;
             }

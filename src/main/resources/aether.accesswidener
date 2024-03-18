@@ -1,0 +1,8 @@
+accessWidener v2 named
+accessible class net/minecraft/client/gui/Gui$HeartType
+accessible class net/minecraft/world/entity/monster/Slime$SlimeRandomDirectionGoal
+accessible class net/minecraft/world/entity/monster/Slime$SlimeKeepOnJumpingGoal
+accessible class net/minecraft/world/entity/monster/Slime$SlimeFloatGoal
+accessible class net/minecraft/world/entity/monster/Slime$SlimeAttackGoal
+
+accessible class net/minecraft/client/gui/screens/TitleScreen$WarningLabel

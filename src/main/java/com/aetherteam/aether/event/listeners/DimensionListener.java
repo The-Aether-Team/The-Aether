@@ -4,6 +4,7 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.event.hooks.DimensionHooks;
 import io.github.fabricators_of_create.porting_lib.entity.events.PlayerEvents;
 import io.github.fabricators_of_create.porting_lib.entity.events.PlayerTickEvents;
+import io.github.fabricators_of_create.porting_lib.event.common.BlockEvents;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -24,20 +25,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.SleepingTimeCheckEvent;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.event.level.LevelEvent;
-import net.minecraftforge.event.level.SleepFinishedTimeEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID)
 public class DimensionListener {
     /**
      * @see DimensionHooks#startInAether(Player)
@@ -65,8 +53,7 @@ public class DimensionListener {
     /**
      * @see DimensionHooks#detectWaterInFrame(LevelAccessor, BlockPos, BlockState, FluidState)
      */
-    @SubscribeEvent
-    public static void onWaterExistsInsidePortalFrame(BlockEvent.NeighborNotifyEvent event) {
+    public static void onWaterExistsInsidePortalFrame(BlockEvents.NeighborNotifyEvent event) {
         LevelAccessor level = event.getLevel();
         BlockPos blockPos = event.getPos();
         BlockState blockState = level.getBlockState(blockPos);
@@ -133,11 +120,13 @@ public class DimensionListener {
 
     public static void init() {
         PlayerEvents.LOGGED_IN.register(DimensionListener::onPlayerLogin);
+        BlockEvents.NEIGHBORS_NOTIFY.register(DimensionListener::onWaterExistsInsidePortalFrame);
         ServerTickEvents.END_WORLD_TICK.register(DimensionListener::onWorldTick);
         ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register(DimensionListener::onEntityTravelToDimension);
         PlayerTickEvents.START.register(DimensionListener::onPlayerTraveling);
         PlayerTickEvents.END.register(DimensionListener::onPlayerTraveling);
         ServerWorldEvents.LOAD.register(DimensionListener::onWorldLoad);
         EntitySleepEvents.ALLOW_SLEEP_TIME.register(DimensionListener::onTriedToSleep);
+
     }
 }

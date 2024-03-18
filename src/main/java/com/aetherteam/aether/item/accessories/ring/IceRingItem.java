@@ -3,8 +3,9 @@ package com.aetherteam.aether.item.accessories.ring;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.item.accessories.abilities.FreezingAccessory;
+import dev.emi.trinkets.api.SlotReference;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import top.theillusivec4.curios.api.SlotContext;
 
 public class IceRingItem extends RingItem implements FreezingAccessory {
     public IceRingItem(Properties properties) {
@@ -17,8 +18,8 @@ public class IceRingItem extends RingItem implements FreezingAccessory {
     }
 
     @Override
-    public void curioTick(SlotContext slotContext, ItemStack stack) {
-        if (!slotContext.entity().isInFluidType()) {
+    public void tick(ItemStack stack, SlotReference slotContext, LivingEntity livingEntity) {
+        if (!livingEntity.isInFluidType()) {
             this.freezeTick(slotContext, stack);
         }
     }

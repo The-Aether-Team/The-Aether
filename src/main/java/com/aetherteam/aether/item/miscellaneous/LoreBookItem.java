@@ -1,6 +1,7 @@
 package com.aetherteam.aether.item.miscellaneous;
 
 import com.aetherteam.aether.inventory.menu.LoreBookMenu;
+import io.github.fabricators_of_create.porting_lib.util.NetworkHooks;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -10,7 +11,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.network.NetworkHooks;
 
 public class LoreBookItem extends Item {
     public LoreBookItem(Properties properties) {

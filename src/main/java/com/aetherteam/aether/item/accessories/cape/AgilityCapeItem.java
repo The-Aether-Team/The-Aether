@@ -1,11 +1,11 @@
 package com.aetherteam.aether.item.accessories.cape;
 
+import dev.emi.trinkets.api.SlotReference;
+import io.github.fabricators_of_create.porting_lib.attributes.PortingLibAttributes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ForgeMod;
-import top.theillusivec4.curios.api.SlotContext;
 
 import java.util.UUID;
 
@@ -21,13 +21,13 @@ public class AgilityCapeItem extends CapeItem {
 
     /**
      * Applies a step height modifier to the wearer as long as they aren't holding shift. If they are, the modifier is removed until they stop holding shift.
-     * @param slotContext The {@link SlotContext} of the Curio.
-     * @param stack The Curio {@link ItemStack}.
+     * @param stack The Trinket {@link ItemStack}.
+     * @param slotContext The {@link SlotReference} of the Trinket.
+     * @param livingEntity The {@link LivingEntity} of the Trinket.
      */
     @Override
-    public void curioTick(SlotContext slotContext, ItemStack stack) {
-        LivingEntity livingEntity = slotContext.entity();
-        AttributeInstance stepHeight = livingEntity.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
+    public void tick(ItemStack stack, SlotReference slotContext, LivingEntity livingEntity) {
+        AttributeInstance stepHeight = livingEntity.getAttribute(PortingLibAttributes.STEP_HEIGHT_ADDITION);
         if (stepHeight != null) {
             if (!stepHeight.hasModifier(this.getStepHeightModifier()) && !livingEntity.isShiftKeyDown()) {
                 stepHeight.addTransientModifier(this.getStepHeightModifier());
@@ -40,14 +40,13 @@ public class AgilityCapeItem extends CapeItem {
 
     /**
      * Removes the step height modifier when the Agility Cape is unequipped.
-     * @param slotContext The {@link SlotContext} of the Curio.
-     * @param newStack The new {@link ItemStack} in the slot.
-     * @param stack The {@link ItemStack} of the Curio.
+     * @param stack The {@link ItemStack} of the Trinket.
+     * @param slotContext The {@link SlotReference} of the Trinket.
+     * @param livingEntity The {@link LivingEntity} of the Trinket.
      */
     @Override
-    public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
-        LivingEntity livingEntity = slotContext.entity();
-        AttributeInstance stepHeight = livingEntity.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
+    public void onUnequip(ItemStack stack, SlotReference slotContext, LivingEntity livingEntity) {
+        AttributeInstance stepHeight = livingEntity.getAttribute(PortingLibAttributes.STEP_HEIGHT_ADDITION);
         if (stepHeight != null) {
             if (stepHeight.hasModifier(this.getStepHeightModifier())) {
                 stepHeight.removeModifier(this.getStepHeightModifier());

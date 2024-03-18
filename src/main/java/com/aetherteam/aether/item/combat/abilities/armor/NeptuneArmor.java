@@ -2,24 +2,24 @@ package com.aetherteam.aether.item.combat.abilities.armor;
 
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.item.EquipmentUtil;
+import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.living.LivingEvent;
 
 public interface NeptuneArmor {
     /**
      * Boosts the entity's movement in water or bubble columns if wearing a full set of Neptune Armor. The default boost is modified based on duration in water and whether the boots have Depth Strider.
      * @param entity The {@link LivingEntity} wearing the armor.
-     * @see com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(LivingEvent.LivingTickEvent)
+     * @see com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(LivingEntityEvents.LivingTickEvent)
      */
     static void boostWaterSwimming(LivingEntity entity) {
         if (EquipmentUtil.hasFullNeptuneSet(entity)) {
             if (entity.isInWaterOrBubble()) {
                 if (entity instanceof Player player) {
-                    AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
+                    AetherPlayer.getOptional(player).ifPresent((aetherPlayer) -> {
                         Player innerPlayer = aetherPlayer.getPlayer();
                         float defaultBoost = boostWithDepthStrider(innerPlayer);
                         aetherPlayer.setNeptuneSubmergeLength(Math.min(aetherPlayer.getNeptuneSubmergeLength() + 0.1, 1.0));
@@ -40,7 +40,7 @@ public interface NeptuneArmor {
         }
         if (!EquipmentUtil.hasFullNeptuneSet(entity) || !entity.isInWaterOrBubble()) {
             if (entity instanceof Player player) {
-                AetherPlayer.get(player).ifPresent((aetherPlayer) -> aetherPlayer.setNeptuneSubmergeLength(0.0));
+                AetherPlayer.getOptional(player).ifPresent((aetherPlayer) -> aetherPlayer.setNeptuneSubmergeLength(0.0));
             }
         }
     }

@@ -32,7 +32,7 @@ public record RemountAerbunnyPacket(int vehicleID, int aerbunnyID) implements Ba
             Level world = Minecraft.getInstance().player.level();
             if (world.getEntity(this.vehicleID()) instanceof Player player && world.getEntity(this.aerbunnyID()) instanceof Aerbunny aerbunny) {
                 aerbunny.startRiding(player);
-                AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setMountedAerbunny(aerbunny));
+                AetherPlayer.getOptional(player).ifPresent(aetherPlayer -> aetherPlayer.setMountedAerbunny(aerbunny));
             }
         }
     }

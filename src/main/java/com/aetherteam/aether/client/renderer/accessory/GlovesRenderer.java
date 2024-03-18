@@ -97,7 +97,7 @@ public class GlovesRenderer implements ICurioRenderer {
 
     /**
      * Renders a glove in the player's hand in first person.
-     * @param stack The {@link ItemStack} for the Curio.
+     * @param stack The {@link ItemStack} for the Trinket.
      * @param poseStack The rendering {@link PoseStack}.
      * @param buffer The rendering {@link MultiBufferSource}.
      * @param packedLight The {@link Integer} for the packed lighting for rendering.

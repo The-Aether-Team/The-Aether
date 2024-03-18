@@ -27,7 +27,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.util.LazyOptional;
+
+import java.util.Optional;
 
 public class AetherPortalBlock extends Block {
 	public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
@@ -61,7 +62,7 @@ public class AetherPortalBlock extends Block {
 				if (!entity.level().isClientSide() && !pos.equals(entityAccessor.aether$getPortalEntrancePos())) {
 					entityAccessor.aether$setPortalEntrancePos(pos.immutable());
 				}
-				LazyOptional<AetherPlayer> aetherPlayer = entity.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
+				Optional<AetherPlayer> aetherPlayer = AetherCapabilities.AETHER_PLAYER_CAPABILITY.maybeGet(entity);
 				if (!aetherPlayer.isPresent()) {
 					this.handleTeleportation(entity);
 				} else {

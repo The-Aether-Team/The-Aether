@@ -34,8 +34,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.level.BlockEvent;
+//import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import io.github.fabricators_of_create.porting_lib.event.common.BlockEvents;
 
 import java.util.Map;
 
@@ -102,7 +102,7 @@ public class RecipeHooks {
      * Checks if a block is unable to exist in the Aether, and either removes it or replaces it with another block.
      * @param levelAccessor The {@link LevelAccessor} the block is in.
      * @param pos The {@link BlockPos} of the block.
-     * @see com.aetherteam.aether.event.listeners.RecipeListener#onNeighborNotified(BlockEvent.NeighborNotifyEvent)
+     * @see com.aetherteam.aether.event.listeners.RecipeListener#onNeighborNotified(BlockEvents.NeighborNotifyEvent)
      */
     public static void checkExistenceBanned(LevelAccessor levelAccessor, BlockPos pos) {
         if (levelAccessor instanceof Level level) {
@@ -180,7 +180,7 @@ public class RecipeHooks {
      * The game event is used to let Icestone blocks know to freeze another block in a performance-efficient way.
      * @param accessor The {@link LevelAccessor} that the block is in.
      * @param pos The {@link BlockPos}
-     * @see com.aetherteam.aether.event.listeners.RecipeListener#onNeighborNotified(BlockEvent.NeighborNotifyEvent)
+     * @see com.aetherteam.aether.event.listeners.RecipeListener#onNeighborNotified(BlockEvents.NeighborNotifyEvent)
      */
     public static void sendIcestoneFreezableUpdateEvent(LevelAccessor accessor, BlockPos pos) {
         if (accessor instanceof Level level && !level.isClientSide())  {

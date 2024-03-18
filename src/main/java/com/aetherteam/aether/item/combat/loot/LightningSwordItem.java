@@ -4,13 +4,13 @@ import com.aetherteam.aether.capability.lightning.LightningTracker;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.item.combat.AetherItemTiers;
+import io.github.fabricators_of_create.porting_lib.entity.events.EntityStruckByLightningEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
-import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 
 public class LightningSwordItem extends SwordItem {
     public LightningSwordItem() {

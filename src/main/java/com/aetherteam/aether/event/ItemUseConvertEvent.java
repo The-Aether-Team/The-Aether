@@ -1,34 +1,35 @@
 package com.aetherteam.aether.event;
 
+import io.github.fabricators_of_create.porting_lib.entity.events.PlayerEvents;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.fabric.api.event.Event;
+import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.Cancelable;
-import net.minecraftforge.fml.LogicalSide;
 
 import org.jetbrains.annotations.Nullable;
 
 /**
  * ItemUseConvertEvent is fired after an item that can convert blocks is used, but before the block is converted by the recipe.
  * <br>
- * This event is {@link Cancelable}.<br>
+ * This event is cancelable.<br>
  * If the event is not canceled, the block conversion will happen and the item will be consumed.
  * <br>
- * This event does not have a result. {@link net.minecraftforge.eventbus.api.Event.HasResult}<br>
+ * This event does not have a result.<br>
  * <br>
- * This event is fired on the {@link MinecraftForge#EVENT_BUS}.<br>
- * <br>
- * This event is fired on both {@link LogicalSide sides}.<br>
+ * This event is fired on both {@link EnvType sides}.<br>
  * <br>
  * If this event is canceled, block conversion will not happen and the item will not be consumed.
  */
-@Cancelable
-public class ItemUseConvertEvent extends PlayerEvent {
+public class ItemUseConvertEvent extends PlayerEvents {
+	public static final Event<ItemUseConvertCallback> ITEM_USE_CONVERT = EventFactory.createArrayBacked(ItemUseConvertCallback.class, callbacks -> event -> {
+		for (ItemUseConvertCallback e : callbacks)
+			e.onItemUseConvert(event);
+	});
 	private final LevelAccessor level;
 	private final BlockPos pos;
 	@Nullable
@@ -105,5 +106,15 @@ public class ItemUseConvertEvent extends PlayerEvent {
 	 */
 	public void setNewBlockState(BlockState newBlockState) {
 		this.newBlockState = newBlockState;
+	}
+
+	@Override
+	public void sendEvent() {
+		ITEM_USE_CONVERT.invoker().onItemUseConvert(this);
+	}
+
+	@FunctionalInterface
+	public interface ItemUseConvertCallback {
+		void onItemUseConvert(ItemUseConvertEvent event);
 	}
 }

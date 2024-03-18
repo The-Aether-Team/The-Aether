@@ -22,7 +22,7 @@ loom {
 //    copyIdeResources = true
 //    generateRunFolders = true
 
-//    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    accessWidenerPath = file('src/main/resources/aether.accesswidener')
 
     runs {
 //        datagen {
@@ -51,8 +51,8 @@ dependencies {
 
 //    implementation fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios_version}+${project.mc_version}")
 
-    modImplementation("io.github.fabricators_of_create.Porting-Lib:Porting-Lib:${project.porting_lib_version}") {
-        exclude(group: "io.vram")
+    for (String module in port_lib_modules.split(",")) {
+        modImplementation(include("io.github.fabricators_of_create.Porting-Lib:$module:$port_lib_version+$mc_version"))
     }
 
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}"

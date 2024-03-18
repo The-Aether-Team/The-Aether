@@ -44,7 +44,7 @@ public class EntityAccessoryLayer extends CuriosLayer<LivingEntity, EntityModel<
                         cosmetic = false;
                     }
 
-                    if (!stack.isEmpty() && stack.is(AetherTags.Items.ACCESSORIES)) { // Check if the Curio is an Aether accessory using the tag.
+                    if (!stack.isEmpty() && stack.is(AetherTags.Items.ACCESSORIES)) { // Check if the Trinket is an Aether accessory using the tag.
                         SlotContext slotContext = new SlotContext(id, livingEntity, i, cosmetic, renderable);
                         ItemStack finalStack = stack;
                         CuriosRendererRegistry.getRenderer(stack.getItem()).ifPresent(renderer -> renderer.render(finalStack, slotContext, poseStack, this.renderLayerParent, buffer, light, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch));

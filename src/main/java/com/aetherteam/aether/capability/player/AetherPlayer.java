@@ -4,7 +4,6 @@ import com.aetherteam.aether.capability.AetherCapabilities;
 import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
 import com.aetherteam.aether.entity.passive.Aerbunny;
 import com.aetherteam.nitrogen.capability.INBTSynchable;
-import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.entity.PlayerComponent;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -18,8 +17,12 @@ import java.util.UUID;
 public interface AetherPlayer extends INBTSynchable<CompoundTag>, PlayerComponent<AetherPlayer> {
 	Player getPlayer();
 
-	static Optional<AetherPlayer> get(Player player) {
+	static Optional<AetherPlayer> getOptional(Player player) {
 		return AetherCapabilities.AETHER_PLAYER_CAPABILITY.maybeGet(player);
+	}
+
+	static AetherPlayer get(Player player) {
+		return AetherCapabilities.AETHER_PLAYER_CAPABILITY.get(player);
 	}
 
 	void onLogout();

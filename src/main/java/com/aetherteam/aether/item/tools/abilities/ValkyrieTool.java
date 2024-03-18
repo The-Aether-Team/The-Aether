@@ -2,10 +2,10 @@ package com.aetherteam.aether.item.tools.abilities;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import io.github.fabricators_of_create.porting_lib.attributes.PortingLibAttributes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraftforge.common.ForgeMod;
 
 import java.util.UUID;
 
@@ -31,8 +31,8 @@ public interface ValkyrieTool {
         if (slot == EquipmentSlot.MAINHAND) {
             ImmutableMultimap.Builder<Attribute, AttributeModifier> attributeBuilder = ImmutableMultimap.builder();
             attributeBuilder.putAll(map);
-            attributeBuilder.put(ForgeMod.BLOCK_REACH.get(), new AttributeModifier(REACH_DISTANCE_MODIFIER_UUID, "Reach distance modifier", this.getModifier(), AttributeModifier.Operation.ADDITION));
-            attributeBuilder.put(ForgeMod.ENTITY_REACH.get(), new AttributeModifier(ATTACK_RANGE_MODIFIER_UUID, "Attack range modifier", this.getModifier(), AttributeModifier.Operation.ADDITION));
+            attributeBuilder.put(PortingLibAttributes.BLOCK_REACH, new AttributeModifier(REACH_DISTANCE_MODIFIER_UUID, "Reach distance modifier", this.getModifier(), AttributeModifier.Operation.ADDITION));
+            attributeBuilder.put(PortingLibAttributes.ENTITY_REACH, new AttributeModifier(ATTACK_RANGE_MODIFIER_UUID, "Attack range modifier", this.getModifier(), AttributeModifier.Operation.ADDITION));
             map = attributeBuilder.build();
         }
         return map;
