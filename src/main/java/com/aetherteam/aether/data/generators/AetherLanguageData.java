@@ -425,7 +425,9 @@ public class AetherLanguageData extends AetherLanguageProvider {
 
 
         this.addEffect(AetherEffects.INEBRIATION, "Inebriation");
+        this.addEffectDesc(AetherEffects.INEBRIATION, "Inflicts damage over time and causes random movement.");
         this.addEffect(AetherEffects.REMEDY, "Remedy");
+        this.addEffectDesc(AetherEffects.REMEDY, "Cures and grants immunity to inebriation.");
 
 
         this.addDimension(AetherDimensions.AETHER_LEVEL, "The Aether");
