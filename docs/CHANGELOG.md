@@ -1,6 +1,6 @@
 # The Aether - NeoForge - 1.20.2-1.3.0
 
-**This beta is a full port of 1.20.1-1.2.0 to NeoForge 1.20.2!**
+**This release is a full port of 1.20.1-1.2.0 to NeoForge 1.20.2!**
 
 Additions
 
