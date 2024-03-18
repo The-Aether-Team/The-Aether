@@ -810,7 +810,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
         this.enchantingRecipe(RecipeCategory.MISC, AetherItems.ENCHANTED_DART_SHOOTER.get(), AetherItems.GOLDEN_DART_SHOOTER.get(), 1.0F, 750).save(consumer, this.name("enchanted_dart_shooter_enchanting"));
 
         this.enchantingRecipe(RecipeCategory.FOOD, AetherItems.HEALING_STONE.get(), AetherBlocks.HOLYSTONE.get(), 0.35F, 500).save(consumer, this.name("healing_stone_enchanting"));
-        this.enchantingRecipe(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.GRAVITITE_ORE.get(), AetherBlocks.GRAVITITE_ORE.get(), 1.0F, 750).save(consumer, this.name("enchanted_gravitite_enchanting"));
+        this.enchantingRecipe(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.ENCHANTED_GRAVITITE.get(), AetherBlocks.GRAVITITE_ORE.get(), 1.0F, 750).save(consumer, this.name("enchanted_gravitite_enchanting"));
         this.enchantingRecipe(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.QUICKSOIL_GLASS.get(), AetherBlocks.QUICKSOIL.get(), 0.1F, 250).save(consumer, this.name("quicksoil_glass_enchanting"));
         this.enchantingRecipe(RecipeCategory.BUILDING_BLOCKS, AetherBlocks.GOLDEN_AERCLOUD.get(), AetherBlocks.COLD_AERCLOUD.get(), 0.1F, 1000).save(consumer, this.name("golden_aercloud_enchanting"));
 
