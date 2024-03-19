@@ -6,7 +6,7 @@ import net.minecraft.sounds.SoundEvent;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-public record AdvancementSoundOverride(Predicate<Advancement> predicate, Supplier<SoundEvent> sound) {
+public record AdvancementSoundOverride(int priority, Predicate<Advancement> predicate, Supplier<SoundEvent> sound) {
     /**
      * @return Whether the {@link Advancement} matches this {@link AdvancementSoundOverride}'s predicate
      */
