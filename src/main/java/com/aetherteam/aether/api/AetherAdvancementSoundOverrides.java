@@ -14,6 +14,7 @@ import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Map;
 import java.util.function.Supplier;
 
 public class AetherAdvancementSoundOverrides {
@@ -37,13 +38,13 @@ public class AetherAdvancementSoundOverrides {
      */
     @Nullable
     public static SoundEvent retrieveOverride(Advancement advancement) {
-        @Nullable RegistryObject<AdvancementSoundOverride> reg = null;
-        for (RegistryObject<AdvancementSoundOverride> override : ADVANCEMENT_SOUND_OVERRIDES.getEntries()) {
-            if (override.get().matches(advancement) && (reg == null || override.get().priority() > reg.get().priority())) {
-                reg = override;
+        @Nullable AdvancementSoundOverride usedOverride = null;
+        for (AdvancementSoundOverride override : AetherAdvancementSoundOverrides.ADVANCEMENT_SOUND_OVERRIDE_REGISTRY.get().getEntries().stream().map(Map.Entry::getValue).toList()) {
+            if (override.matches(advancement) && (usedOverride == null || override.priority() > usedOverride.priority())) {
+                usedOverride = override;
             }
         }
-        return reg == null ? null : reg.get().sound().get();
+        return usedOverride == null ? null : usedOverride.sound().get();
     }
 
     /**
