@@ -1,5 +1,3 @@
-import net.minecraftforge.gradle.userdev.tasks.JarJar
-
 plugins {
     id 'eclipse'
     id 'maven-publish'
@@ -153,7 +151,7 @@ repositories {
     //mavenLocal()
 }
 
-tasks.named('jar', Jar).configure {
+tasks.named('jar', Jar) {
     manifest {
         attributes([
                 "Specification-Title"     : project.mod_name,
@@ -169,16 +167,26 @@ tasks.named('jar', Jar).configure {
     finalizedBy 'reobfJar'
 
     archiveClassifier = 'no-embeds'
+
+    doLast {
+        minifyJson(it as Jar)
+    }
 }
 
-tasks.named('jarJar', JarJar).configure {
+processResources {
+    exclude '.cache/'
+}
+
+tasks.named('jarJar', net.minecraftforge.gradle.userdev.tasks.JarJar) {
     archiveClassifier = ''
+    doLast {
+        minifyJson(it as Jar)
+    }
+    finalizedBy('reobfJarJar')
 }
-
-tasks.jarJar.finalizedBy('reobfJarJar')
 
 tasks.named(sourceSets.main.compileJavaTaskName) {
-    outputs.file("${it.temporaryDir}/${it.name}-refmap.json").withPropertyName("mixin refmap")
+    outputs.file("${it.temporaryDir}/${it.name}.refmap.json").withPropertyName("mixin refmap")
 }
 
 compileJava {
@@ -208,11 +216,11 @@ publishing {
 curseforge {
     project {
         apiKey = System.getenv("CURSEFORGE_TOKEN")
-        id = "${project.curseforge_id}"
-        releaseType = "${project.version_type}"
+        id = project.curseforge_id
+        releaseType = project.version_type
         changelog = file("$rootDir/docs/CHANGELOG.md")
         changelogType = "markdown"
-        addGameVersion("${project.mc_version}")
+        addGameVersion(project.mc_version)
         addGameVersion("Forge")
         addGameVersion("NeoForge")
         mainArtifact(tasks.jarJar) {
@@ -227,13 +235,13 @@ curseforge {
 
 modrinth {
     token = System.getenv("MODRINTH_TOKEN")
-    projectId = "${project.modrinth_id}"
-    versionNumber = "${version}"
-    versionType = "${project.version_type}"
+    projectId = project.modrinth_id
+    versionNumber = project.version.toString()
+    versionType = project.version_type
     versionName = "${project.mod_name} - ${version}"
     changelog = new File("$rootDir/docs/CHANGELOG.md").text
     uploadFile = tasks.jarJar
-    gameVersions = ["${project.mc_version}"]
+    gameVersions = [project.mc_version]
     loaders = ["forge", "neoforge"]
     dependencies {
         embedded.version "curios", "${project.curios_version}+${project.mc_version}"
@@ -248,4 +256,42 @@ mixin {
 
 build {
     dependsOn 'jarJar'
+}
+
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+
+import java.util.jar.JarFile
+import java.util.jar.JarOutputStream
+import java.util.jar.JarEntry
+import java.util.zip.Deflater
+
+static def minifyJson(Jar task) {
+    def file = task.archiveFile.get().asFile
+    if(!file.exists()) return
+
+    LinkedHashMap<String, byte[]> fileContents = [:]
+    new JarFile(file).with { jar ->
+        jar.entries().each {
+            if (!it.directory) {
+                def bytes = jar.getInputStream(it).bytes
+                fileContents[it.name] = bytes
+            }
+        }
+    }
+    file.delete()
+    new JarOutputStream(file.newOutputStream()).withCloseable {
+        it.setLevel(Deflater.BEST_COMPRESSION)
+        fileContents.each { name, bytes ->
+            def newBytes = bytes
+            if(name.endsWith(".json") || name.endsWith(".mcmeta")) {
+                newBytes = JsonOutput.toJson(new JsonSlurper().parse(bytes)).bytes
+            }
+            it.putNextEntry(new JarEntry(name))
+            it.write(newBytes)
+            it.closeEntry()
+        }
+        it.flush()
+        it.finish()
+    }
 }
