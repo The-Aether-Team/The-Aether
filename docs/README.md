@@ -31,9 +31,9 @@ If you're interested in sponsoring the Aether project or The Aether Team, please
 [![Modrinth Version](https://img.shields.io/modrinth/game-versions/YhmgMVyu?color=00AF5C&label=latest&logo=modrinth&last=true)](https://modrinth.com/mod/aether)
 [![CurseForge Downloads](http://cf.way2muchnoise.eu/255308.svg)](https://www.curseforge.com/minecraft/mc-mods/aether)
 [![CurseForge Version](http://cf.way2muchnoise.eu/versions/255308_latest.svg)](https://www.curseforge.com/minecraft/mc-mods/aether)
-[![CircleCI](https://circleci.com/gh/The-Aether-Team/The-Aether/tree/1.20.1-develop.svg?style=shield)](https://app.circleci.com/pipelines/github/The-Aether-Team/The-Aether?branch=1.20.1-develop)
+[![CircleCI](https://circleci.com/gh/The-Aether-Team/The-Aether/tree/1.20.2-develop.svg?style=shield)](https://app.circleci.com/pipelines/github/The-Aether-Team/The-Aether?branch=1.20.2-develop)
 ### Release builds
-The Aether has stable release builds available for 1.19.2, 1.19.4, and 1.20.1 on [Modrinth](https://modrinth.com/mod/aether) and [CurseForge](https://www.curseforge.com/minecraft/mc-mods/aether).
+The Aether has stable release builds available for 1.19.2, 1.19.4, 1.20.1, and 1.20.2 on [Modrinth](https://modrinth.com/mod/aether) and [CurseForge](https://www.curseforge.com/minecraft/mc-mods/aether).
 
 ### Bleeding edge builds
 If you’re feeling a bit more adventurous or wish to help test the in-development versions, we provide **bleeding edge builds** which are produced on [CircleCI](https://app.circleci.com/pipelines/github/The-Aether-Team/The-Aether). These builds are created for every new commit and contain the latest available code. We do not recommend users treat these builds as releases, as they are unfinished and may contain serious issues. If you wish to download these builds, check out [this guide](https://github.com/The-Aether-Team/The-Aether/wiki/CircleCI-Guide).
@@ -95,13 +95,13 @@ dependencies {
 If you're running into bugs or other problems, feel free to open an issue on our [issue tracker](https://github.com/The-Aether-Team/The-Aether/issues). When doing so, make sure to use one of the provided templates and fill out all the requested information. Make sure to keep your issue's description clear and concise. Your issue's title should also be easy to digest, giving our developers and reporters a good idea of what's wrong without including too many details. Failure to follow any of the above may result in your issue being closed.
 
 ## :wrench: Contribute to the project
-Looking to contribute to the project? We ask that you read over our [Contributor's Guide](https://github.com/The-Aether-Team/The-Aether/blob/1.20.1-develop/docs/CONTRIBUTING.md) for more details as well as our [Contributor License Agreement (CLA)](https://github.com/The-Aether-Team/The-Aether/blob/1.20.1-develop/docs/AGREEMENT.md) before getting started.
+Looking to contribute to the project? We ask that you read over our [Contributor's Guide](https://github.com/The-Aether-Team/The-Aether/blob/1.20.2-develop/docs/CONTRIBUTING.md) for more details as well as our [Contributor License Agreement (CLA)](https://github.com/The-Aether-Team/The-Aether/blob/1.20.2-develop/docs/AGREEMENT.md) before getting started.
 
 Not sure what to help with? Take a look at our issue tracker for some ideas! [Here's a quick link](https://github.com/The-Aether-Team/The-Aether/labels/status%2Fhelp-wanted) which shows all the currently open issues that we'd love some help on.
 
 ## :scroll: License information
 [![Asset license (Unlicensed)](https://img.shields.io/badge/assets%20license-All%20Rights%20Reserved-red.svg?style=flat-square)](https://en.wikipedia.org/wiki/All_rights_reserved)
-[![Code license (LGPL v3.0)](https://img.shields.io/badge/code%20license-LGPL%20v3.0-green.svg?style=flat-square)](https://github.com/The-Aether-Team/The-Aether/blob/1.20.1-develop/LICENSE.txt)
+[![Code license (LGPL v3.0)](https://img.shields.io/badge/code%20license-LGPL%20v3.0-green.svg?style=flat-square)](https://github.com/The-Aether-Team/The-Aether/blob/1.20.2-develop/LICENSE.txt)
 
 If you're wanting to create a gameplay video/review, extension or addon, parody, or any other fan work of your own for The Aether, go for it! We love seeing the content our community creates, and we hope to make it as welcoming as possible for everyone. We ask however that you please don't advertise using our brand (our specific logo assets, team name, official social media posts).
 
@@ -152,7 +152,7 @@ The Aether is available in these languages thanks to the following contributors:
 If you are interested in contributing translations to The Aether, check out our [Crowdin](https://translate.aether.devaether.com/) and our [Discord](https://discord.gg/aethermod)! If you have contributed translations in the past and your name is missing from the above list, please contact us.
 
 ### :hammer: Contributions
-All of our code contribution credits can be found [here](https://github.com/The-Aether-Team/The-Aether/blob/1.20.1-develop/docs/CREDITS.txt). If you contributed to the project and do not see your name, please contact us.
+All of our code contribution credits can be found [here](https://github.com/The-Aether-Team/The-Aether/blob/1.20.2-develop/docs/CREDITS.txt). If you contributed to the project and do not see your name, please contact us.
 
 ### :file_folder: Dependencies
 The Aether would not be possible without the features provided by the APIs and libraries it implements. Thanks goes to:
