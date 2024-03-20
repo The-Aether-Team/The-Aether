@@ -122,3 +122,4 @@ Zepalesque
 - Changes to EggLayEvent to use ItemStack.
 - Implementation of a custom Aether Grass bonemeal feature.
 - Implementation of an advancement sound override registry.
+- Implementation of priority system for advancement sound override registry.
