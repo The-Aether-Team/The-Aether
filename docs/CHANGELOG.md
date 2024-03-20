@@ -1,3 +1,9 @@
+# The Aether - Forge - 1.19.4-1.3.1
+
+Fixes
+
+- Fixed Bronze and Silver advancement sounds not playing.
+
 # The Aether - Forge - 1.19.4-1.3.0
 
 Additions
