@@ -1,3 +1,9 @@
+# The Aether - NeoForge - 1.20.2-1.3.1
+
+Fixes
+
+- Fixed Bronze and Silver advancement sounds not playing.
+
 # The Aether - NeoForge - 1.20.2-1.3.0
 
 **This release is a full port of 1.20.1-1.2.0 to NeoForge 1.20.2!**
