@@ -1,4 +1,4 @@
-// 1.20.2	2024-03-03T15:06:49.3224063	Registries
+// 1.20.4	2024-03-19T10:40:11.1146426	Registries
 25d924fdac4392adb88fe3b6aa2c23420f6fb4f9 data/aether/damage_type/armor_piercing_attack.json
 03d6a63bae7e4458c11da22471bf0f8b5051023c data/aether/damage_type/cloud_crystal.json
 024fc58ce3f33e1542dfe59582a4da47cc178764 data/aether/damage_type/crush.json
@@ -26,7 +26,7 @@ e8a26e105aaec63ce90962277b1d0075eaf16a71 data/aether/worldgen/configured_feature
 555c94c8069948d6ea754d82c864433ca26f451a data/aether/worldgen/configured_feature/crystal_tree.json
 dfc78a16e715dbf5702264789746f4cc747bd188 data/aether/worldgen/configured_feature/golden_aercloud.json
 6ed5f270a8e3594b1860c10348f5e200e59628c7 data/aether/worldgen/configured_feature/golden_oak_tree.json
-c75a69a06a66ad5a2ab402d7bca52e3e58098362 data/aether/worldgen/configured_feature/grass_patch.json
+f6150d0174f5752a547fed46223d302ab95ebdf9 data/aether/worldgen/configured_feature/grass_patch.json
 922e214f5e2c8564e532b37c76aff07a17340414 data/aether/worldgen/configured_feature/gravitite_ore.json
 df7baff686b5d66e4e816e1ef2716751fe927f0e data/aether/worldgen/configured_feature/gravitite_ore_buried.json
 601b9ac6551101ffa824913082400b735e3232a2 data/aether/worldgen/configured_feature/holiday_tree.json

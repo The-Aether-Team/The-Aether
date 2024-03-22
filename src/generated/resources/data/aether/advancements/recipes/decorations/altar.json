@@ -30,6 +30,5 @@
     "recipes": [
       "aether:altar"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

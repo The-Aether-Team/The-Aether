@@ -63,7 +63,6 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.aether.obsidian_armor.desc"
     },
@@ -73,7 +72,6 @@
       "item": "aether:obsidian_chestplate",
       "nbt": "{Damage:0}"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.aether.obsidian_armor"
     }

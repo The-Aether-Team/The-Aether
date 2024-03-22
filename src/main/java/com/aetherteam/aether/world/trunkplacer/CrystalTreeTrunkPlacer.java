@@ -31,12 +31,13 @@ public class CrystalTreeTrunkPlacer extends StraightTrunkPlacer {
     /**
      * Places a log on each side of the Crystal Tree's trunk every 3 blocks,
      * starting at 2 blocks up from the initial position and then 5 blocks up (3 and 6 blocks up from the ground).
-     * @param level The {@link LevelSimulatedReader}.
+     *
+     * @param level       The {@link LevelSimulatedReader}.
      * @param blockSetter The {@link BiConsumer} of a {@link BlockPos} and {@link BlockState} used for block placement.
-     * @param random The {@link RandomSource}.
-     * @param height The {@link Integer} height of the tree.
-     * @param pos The initial {@link BlockPos} for placement.
-     * @param config The {@link TreeConfiguration}.
+     * @param random      The {@link RandomSource}.
+     * @param height      The {@link Integer} height of the tree.
+     * @param pos         The initial {@link BlockPos} for placement.
+     * @param config      The {@link TreeConfiguration}.
      * @return A {@link List} of {@link net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer.FoliageAttachment}s for the tree.
      */
     @Override

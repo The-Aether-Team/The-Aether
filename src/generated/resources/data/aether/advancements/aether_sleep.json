@@ -19,7 +19,6 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.aether.aether_sleep.desc"
     },
@@ -28,7 +27,6 @@
     "icon": {
       "item": "aether:skyroot_bed"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.aether.aether_sleep"
     }

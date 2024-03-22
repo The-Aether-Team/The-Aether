@@ -9,16 +9,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.aether.enter_aether.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "minecraft:glowstone"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.aether.enter_aether"
     }

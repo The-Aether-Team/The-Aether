@@ -20,7 +20,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.common.util.LazyOptional;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
@@ -45,9 +44,9 @@ public class ArmorStandCapeLayer extends RenderLayer<ArmorStand, ArmorStandModel
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, ArmorStand livingEntity, float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
         String identifier = AetherConfig.COMMON.use_curios_menu.get() ? "back" : "aether_cape";
-        LazyOptional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(livingEntity);
-        if (lazyHandler.isPresent() && lazyHandler.resolve().isPresent()) {
-            ICuriosItemHandler handler = lazyHandler.resolve().get();
+        Optional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(livingEntity);
+        if (lazyHandler.isPresent()) {
+            ICuriosItemHandler handler = lazyHandler.get();
             Optional<ICurioStacksHandler> stacksHandler = handler.getStacksHandler(identifier);
             if (stacksHandler.isPresent()) {
                 IDynamicStackHandler stackHandler = stacksHandler.get().getCosmeticStacks();

@@ -30,6 +30,5 @@
     "recipes": [
       "aether:skyroot_bookshelf"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

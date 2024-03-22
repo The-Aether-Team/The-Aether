@@ -2,13 +2,12 @@ package com.aetherteam.aether.client.gui.screen.perks;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.api.AetherMoaTypes;
-import com.aetherteam.aether.capability.player.AetherPlayer;
+import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.client.gui.component.skins.ChangeSkinButton;
 import com.aetherteam.aether.client.gui.component.skins.PatreonButton;
 import com.aetherteam.aether.client.gui.component.skins.RefreshButton;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.passive.Moa;
-import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.ServerMoaSkinPacket;
 import com.aetherteam.aether.perk.CustomizationsOptions;
 import com.aetherteam.aether.perk.data.ClientMoaSkinPerkData;
@@ -16,7 +15,6 @@ import com.aetherteam.aether.perk.types.MoaData;
 import com.aetherteam.aether.perk.types.MoaSkins;
 import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
-import com.aetherteam.nitrogen.network.NitrogenPacketHandler;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import com.aetherteam.nitrogen.network.packet.serverbound.TriggerUpdateInfoPacket;
 import net.minecraft.ChatFormatting;
@@ -120,29 +118,29 @@ public class MoaSkinsScreen extends Screen {
 
             // Button for saving a selected skin as the one that will be applied to the player's Moa.
             this.applyButton = this.addRenderableWidget(new ChangeSkinButton(ChangeSkinButton.ButtonType.APPLY, Button.builder(Component.translatable("gui.aether.moa_skins.button.apply"),
-                (pressed) -> AetherPlayer.get(this.getMinecraft().player).ifPresent((aetherPlayer) -> {
-                    PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Apply(this.getMinecraft().player.getUUID(), new MoaData(aetherPlayer.getLastRiddenMoa(), this.getSelectedSkin())));
-                    this.customizations.setMoaSkin(this.getSelectedSkin().getId());
-                    this.customizations.save();
-                    this.customizations.load();
-                })
+                    (pressed) -> {
+                        PacketRelay.sendToServer(new ServerMoaSkinPacket.Apply(this.getMinecraft().player.getUUID(), new MoaData(this.getMinecraft().player.getData(AetherDataAttachments.AETHER_PLAYER).getLastRiddenMoa().orElse(null), this.getSelectedSkin())));
+                        this.customizations.setMoaSkin(this.getSelectedSkin().getId());
+                        this.customizations.save();
+                        this.customizations.load();
+                    }
             ).bounds((this.leftPos + this.imageWidth) - 20, this.topPos + 13, 7, 7)));
 
             // Button for removing the player's currently applied Moa Skin.
             this.removeButton = this.addRenderableWidget(new ChangeSkinButton(ChangeSkinButton.ButtonType.REMOVE, Button.builder(Component.translatable("gui.aether.moa_skins.button.remove"),
-                (pressed) -> {
-                    PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Remove(this.getMinecraft().player.getUUID()));
-                    this.customizations.setMoaSkin("");
-                    this.customizations.save();
-                    this.customizations.load();
-                }
+                    (pressed) -> {
+                        PacketRelay.sendToServer(new ServerMoaSkinPacket.Remove(this.getMinecraft().player.getUUID()));
+                        this.customizations.setMoaSkin("");
+                        this.customizations.save();
+                        this.customizations.load();
+                    }
             ).bounds((this.leftPos + this.imageWidth) - 20, this.topPos + 22, 7, 7)));
 
             // Button that forces the server to re-check the status of the player's user info and Patreon connection.
             this.addRenderableWidget(new RefreshButton(Button.builder(Component.literal(""),
                     (pressed) -> {
                         if (RefreshButton.reboundTimer == 0) {
-                            PacketRelay.sendToServer(NitrogenPacketHandler.INSTANCE, new TriggerUpdateInfoPacket(this.getMinecraft().player.getId()));
+                            PacketRelay.sendToServer(new TriggerUpdateInfoPacket(this.getMinecraft().player.getId()));
                             RefreshButton.reboundTimer = RefreshButton.reboundMax;
                         }
                     }
@@ -150,12 +148,12 @@ public class MoaSkinsScreen extends Screen {
 
             // Button that opens a screen with a redirect to Patreon.
             this.addRenderableWidget(new PatreonButton(Button.builder(Component.translatable("gui.aether.moa_skins.button.donate"),
-                (pressed) -> this.getMinecraft().setScreen(new ConfirmLinkScreen((callback) -> {
-                    if (callback) {
-                        Util.getPlatform().openUri(PATREON_LINK);
-                    }
-                    this.getMinecraft().setScreen(this);
-                }, PATREON_LINK, true))
+                    (pressed) -> this.getMinecraft().setScreen(new ConfirmLinkScreen((callback) -> {
+                        if (callback) {
+                            Util.getPlatform().openUri(PATREON_LINK);
+                        }
+                        this.getMinecraft().setScreen(this);
+                    }, PATREON_LINK, true))
             ).bounds(this.leftPos + (this.imageWidth / 2) - (54 / 2), this.topPos + this.imageHeight - 25, 54, 18)));
 
             // Button that opens a screen with a redirect to a guide for how to connect a UUID.
@@ -188,6 +186,7 @@ public class MoaSkinsScreen extends Screen {
      * Displays the main window GUI. Depending on the player's donation status, the text
      * "Donate to the project to get Moa Skins!" or "Thank you for donating to the project!"
      * will also be displayed.
+     *
      * @param guiGraphics The rendering {@link GuiGraphics}.
      */
     private void renderWindow(GuiGraphics guiGraphics) {
@@ -205,9 +204,10 @@ public class MoaSkinsScreen extends Screen {
 
     /**
      * Renders the slots for selecting different Moa Skins from.
+     *
      * @param guiGraphics The rendering {@link GuiGraphics}.
-     * @param mouseX The {@link Integer} for the mouse's x-position.
-     * @param mouseY The {@link Integer} for the mouse's y-position.
+     * @param mouseX      The {@link Integer} for the mouse's x-position.
+     * @param mouseY      The {@link Integer} for the mouse's y-position.
      */
     private void renderSlots(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         if (this.getMinecraft().player != null) {
@@ -249,6 +249,7 @@ public class MoaSkinsScreen extends Screen {
 
     /**
      * Renders the scrollbar based on the leftmost position for it and the current x-offset as determined by {@link MoaSkinsScreen#scrollX}.
+     *
      * @param guiGraphics The rendering {@link GuiGraphics}.
      */
     private void renderScrollbar(GuiGraphics guiGraphics) {
@@ -262,9 +263,10 @@ public class MoaSkinsScreen extends Screen {
     /**
      * Using {@link MoaSkinsScreen#getSkinFromSlot(double, double)}, this checks if the mouse is currently hovered over a Moa Skin slot,
      * and if so, then it will display a tooltip with the name of the Moa Skin.
+     *
      * @param guiGraphics The rendering {@link GuiGraphics}.
-     * @param mouseX The {@link Integer} for the mouse's x-position.
-     * @param mouseY The {@link Integer} for the mouse's y-position.
+     * @param mouseX      The {@link Integer} for the mouse's x-position.
+     * @param mouseY      The {@link Integer} for the mouse's y-position.
      */
     private void renderSlotTooltips(GuiGraphics guiGraphics, double mouseX, double mouseY) {
         MoaSkins.MoaSkin skin = this.getSkinFromSlot(mouseX, mouseY);
@@ -276,9 +278,10 @@ public class MoaSkinsScreen extends Screen {
 
     /**
      * Renders elements of the interface over the black section of the GUI.
-     * @param guiGraphics The rendering {@link GuiGraphics}.
-     * @param mouseX The {@link Integer} for the mouse's x-position.
-     * @param mouseY The {@link Integer} for the mouse's y-position.
+     *
+     * @param guiGraphics  The rendering {@link GuiGraphics}.
+     * @param mouseX       The {@link Integer} for the mouse's x-position.
+     * @param mouseY       The {@link Integer} for the mouse's y-position.
      * @param partialTicks The {@link Float} for the game's partial ticks.
      */
     private void renderInterface(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
@@ -331,8 +334,9 @@ public class MoaSkinsScreen extends Screen {
 
     /**
      * Displays an infinity sign icon in the bottom left corner of the black GUI interface.
+     *
      * @param guiGraphics The rendering {@link GuiGraphics}.
-     * @param mouseOver Whether the mouse is hovering over this icon, as a {@link Boolean}.
+     * @param mouseOver   Whether the mouse is hovering over this icon, as a {@link Boolean}.
      */
     private void renderLifetimeIcon(GuiGraphics guiGraphics, boolean mouseOver) {
         ResourceLocation location = PERMANENT_WIDGET.get(true, mouseOver);
@@ -341,8 +345,9 @@ public class MoaSkinsScreen extends Screen {
 
     /**
      * Displays an hourglass icon in the bottom left corner of the black GUI interface.
+     *
      * @param guiGraphics The rendering {@link GuiGraphics}.
-     * @param mouseOver Whether the mouse is hovering over this icon, as a {@link Boolean}.
+     * @param mouseOver   Whether the mouse is hovering over this icon, as a {@link Boolean}.
      */
     private void renderPledgingIcon(GuiGraphics guiGraphics, boolean mouseOver) {
         ResourceLocation location = TEMPORARY_WIDGET.get(true, mouseOver);
@@ -359,11 +364,12 @@ public class MoaSkinsScreen extends Screen {
 
     /**
      * Displays a formatted tooltip with a title and a description.
-     * @param title The title {@link MutableComponent} for the tooltip.
+     *
+     * @param title       The title {@link MutableComponent} for the tooltip.
      * @param description The description {@link Component} for the tooltip.
      * @param guiGraphics The rendering {@link GuiGraphics}.
-     * @param mouseX The {@link Integer} for the mouse's x-position.
-     * @param mouseY The {@link Integer} for the mouse's y-position.
+     * @param mouseX      The {@link Integer} for the mouse's x-position.
+     * @param mouseY      The {@link Integer} for the mouse's y-position.
      */
     private void renderTooltip(MutableComponent title, Component description, GuiGraphics guiGraphics, int mouseX, int mouseY) {
         List<FormattedText> formattedTextList = new ArrayList<>();
@@ -374,6 +380,7 @@ public class MoaSkinsScreen extends Screen {
 
     /**
      * Sets up a Moa entity for rendering in the GUI.
+     *
      * @param partialTicks The {@link Float} for the game's partial ticks.
      */
     private void renderMoa(GuiGraphics guiGraphics, float partialTicks) {
@@ -430,11 +437,10 @@ public class MoaSkinsScreen extends Screen {
         User user = UserData.Client.getClientUser();
         if (this.getMinecraft().player != null) {
             if (user == null && this.userConnectionExists) { // Remove skin data if the user no longer exists.
-                PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Remove(this.getMinecraft().player.getUUID()));
+                PacketRelay.sendToServer(new ServerMoaSkinPacket.Remove(this.getMinecraft().player.getUUID()));
                 this.userConnectionExists = false;
             } else if (user != null && !this.userConnectionExists && MoaSkins.getMoaSkins().get(this.customizations.getMoaSkin()) != null) { // Add skin data if the user has started existing.
-                AetherPlayer.get(this.getMinecraft().player).ifPresent((aetherPlayer) ->
-                        PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Apply(this.getMinecraft().player.getUUID(), new MoaData(aetherPlayer.getLastRiddenMoa(), MoaSkins.getMoaSkins().get(this.customizations.getMoaSkin())))));
+                PacketRelay.sendToServer(new ServerMoaSkinPacket.Apply(this.getMinecraft().player.getUUID(), new MoaData(this.getMinecraft().player.getData(AetherDataAttachments.AETHER_PLAYER).getLastRiddenMoa().orElse(null), MoaSkins.getMoaSkins().get(this.customizations.getMoaSkin()))));
                 this.userConnectionExists = true;
             }
         }
@@ -442,11 +448,12 @@ public class MoaSkinsScreen extends Screen {
 
     /**
      * Handles dragging the scrollbar with the mouse.
+     *
      * @param mouseX The {@link Integer} for the mouse's x-position.
      * @param mouseY The {@link Integer} for the mouse's y-position.
      * @param button The {@link Integer} for the clicked mouse button ID.
-     * @param dragX The {@link Double} for the drag amount in the x-direction.
-     * @param dragY The {@link Double} for the drag amount in the y-direction.
+     * @param dragX  The {@link Double} for the drag amount in the x-direction.
+     * @param dragY  The {@link Double} for the drag amount in the y-direction.
      * @return Whether the mouse can drag, as a {@link Boolean}.
      */
     @Override
@@ -467,8 +474,9 @@ public class MoaSkinsScreen extends Screen {
 
     /**
      * Handles moving the scrollbar to snapping points when using the mouse's scroll wheel.
-     * @param mouseX The {@link Double} for the mouse's x-position.
-     * @param mouseY The {@link Double} for the mouse's y-position.
+     *
+     * @param mouseX  The {@link Double} for the mouse's x-position.
+     * @param mouseY  The {@link Double} for the mouse's y-position.
      * @param scrollX The {@link Double} for the mouse's x-scroll.
      * @param scrollY The {@link Double} for the mouse's y-scroll.
      * @return Whether the mouse can scroll, as a {@link Boolean}.
@@ -493,6 +501,7 @@ public class MoaSkinsScreen extends Screen {
 
     /**
      * Handles clicking on slots in the GUI and changing the selected skin based on what slot was clicked.
+     *
      * @param mouseX The {@link Integer} for the mouse's x-position.
      * @param mouseY The {@link Integer} for the mouse's y-position.
      * @param button The {@link Integer} for the clicked mouse button ID.
@@ -510,6 +519,7 @@ public class MoaSkinsScreen extends Screen {
 
     /**
      * Gets a skin from the slot that the mouse is currently hovered over.
+     *
      * @param mouseX The {@link Integer} for the mouse's x-position.
      * @param mouseY The {@link Integer} for the mouse's y-position.
      * @return The {@link com.aetherteam.aether.perk.types.MoaSkins.MoaSkin} from the corresponding slot.
@@ -526,6 +536,7 @@ public class MoaSkinsScreen extends Screen {
 
     /**
      * Gets the index from 0-8 for the skin selection slot that is currently hovered over.
+     *
      * @param mouseX The {@link Integer} for the mouse's x-position.
      * @param mouseY The {@link Integer} for the mouse's y-position.
      * @return The {@link Integer} index.
@@ -545,6 +556,7 @@ public class MoaSkinsScreen extends Screen {
      * Using {@link MoaSkinsScreen#snapPoints}, this determines how many slots after the starting list to pass by moving the scrollbar,
      * by checking how close the scrollbar is to different snapping points. The snapping points act as position boundaries for the scrollbar
      * that determine when to shift the slot list over to display a new slot.
+     *
      * @return The {@link Integer} for the offset amount of slots.
      */
     private int getSlotOffset() {
@@ -569,6 +581,7 @@ public class MoaSkinsScreen extends Screen {
 
     /**
      * Sets the scrollbar to no longer be scrollable when mouse buttons have been released.
+     *
      * @param mouseX The {@link Integer} for the mouse's x-position.
      * @param mouseY The {@link Integer} for the mouse's y-position.
      * @param button The {@link Integer} for the clicked mouse button ID.

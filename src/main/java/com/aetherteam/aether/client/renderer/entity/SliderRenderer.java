@@ -36,10 +36,11 @@ public class SliderRenderer extends MobRenderer<Slider, SliderModel> {
 
     /**
      * Rotates the Slider to tilt based on the direction and angle of the damage it has received.
-     * @param slider The {@link Slider} entity.
-     * @param poseStack The rendering {@link PoseStack}.
-     * @param ageInTicks The {@link Float} for the entity's age in ticks.
-     * @param rotationYaw The {@link Float} for the rotation yaw.
+     *
+     * @param slider       The {@link Slider} entity.
+     * @param poseStack    The rendering {@link PoseStack}.
+     * @param ageInTicks   The {@link Float} for the entity's age in ticks.
+     * @param rotationYaw  The {@link Float} for the rotation yaw.
      * @param partialTicks The {@link Float} for the game's partial ticks.
      */
     @Override
@@ -57,7 +58,7 @@ public class SliderRenderer extends MobRenderer<Slider, SliderModel> {
             }
         }
     }
-   
+
     @Override
     public ResourceLocation getTextureLocation(Slider slider) {
         if (!slider.isAwake()) {

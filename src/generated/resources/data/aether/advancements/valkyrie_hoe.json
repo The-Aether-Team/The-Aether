@@ -36,7 +36,6 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.aether.valkyrie_hoe.desc"
     },
@@ -45,7 +44,6 @@
     "icon": {
       "item": "aether:aether_farmland"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.aether.valkyrie_hoe"
     }

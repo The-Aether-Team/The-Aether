@@ -8,16 +8,16 @@ import net.minecraft.client.resources.model.Material;
 import net.minecraft.world.level.block.state.properties.ChestType;
 
 public class TreasureChestRenderer extends ChestRenderer<TreasureChestBlockEntity> {
-	public TreasureChestRenderer(BlockEntityRendererProvider.Context context) {
-		super(context);
-	}
+    public TreasureChestRenderer(BlockEntityRendererProvider.Context context) {
+        super(context);
+    }
 
-	@Override
-	protected Material getMaterial(TreasureChestBlockEntity blockEntity, ChestType chestType) {
-		return switch (chestType) {
-			case LEFT -> AetherAtlases.TREASURE_CHEST_LEFT_MATERIAL;
-			case RIGHT -> AetherAtlases.TREASURE_CHEST_RIGHT_MATERIAL;
-			case SINGLE -> AetherAtlases.TREASURE_CHEST_MATERIAL;
-		};
-	}
+    @Override
+    protected Material getMaterial(TreasureChestBlockEntity blockEntity, ChestType chestType) {
+        return switch (chestType) {
+            case LEFT -> AetherAtlases.TREASURE_CHEST_LEFT_MATERIAL;
+            case RIGHT -> AetherAtlases.TREASURE_CHEST_RIGHT_MATERIAL;
+            case SINGLE -> AetherAtlases.TREASURE_CHEST_MATERIAL;
+        };
+    }
 }

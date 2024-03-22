@@ -11,6 +11,7 @@ import java.util.UUID;
 public record MoaData(@Nullable UUID moaUUID, @Nullable MoaSkins.MoaSkin moaSkin) {
     /**
      * Reads {@link MoaData} from a {@link FriendlyByteBuf} network buffer.
+     *
      * @param buffer The {@link FriendlyByteBuf} buffer.
      * @return The {@link MoaData}.
      */
@@ -25,7 +26,8 @@ public record MoaData(@Nullable UUID moaUUID, @Nullable MoaSkins.MoaSkin moaSkin
 
     /**
      * Writes {@link MoaData} to a {@link FriendlyByteBuf} network buffer.
-     * @param buffer The {@link FriendlyByteBuf} buffer.
+     *
+     * @param buffer  The {@link FriendlyByteBuf} buffer.
      * @param moaData The {@link MoaData}.
      */
     public static void write(FriendlyByteBuf buffer, MoaData moaData) {

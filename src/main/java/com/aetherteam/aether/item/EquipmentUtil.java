@@ -9,7 +9,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.fml.ModList;
-import net.neoforged.neoforge.common.util.LazyOptional;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
@@ -22,6 +21,7 @@ import java.util.function.Predicate;
 public final class EquipmentUtil {
     /**
      * An attack is full strength if either it's a player that attacked with full attack strength, or if the entity is not a player.
+     *
      * @param attacker The attacking {@link LivingEntity}.
      * @return Whether the attack was full strength, as a {@link Boolean}.
      */
@@ -33,7 +33,8 @@ public final class EquipmentUtil {
     /**
      * Calculates damage increase based on a base value, the amount of damage taken (maximum durability - current durability), and the stack's maximum durability.<br><br>
      * <a href="https://www.desmos.com/calculator/gmaj2zduis">See math visually.</a>
-     * @param stack A {@link ItemStack} to check the durability of.
+     *
+     * @param stack     A {@link ItemStack} to check the durability of.
      * @param baseValue A base {@link Double} value.
      * @return The buffed {@link Double} value.
      */
@@ -43,6 +44,7 @@ public final class EquipmentUtil {
 
     /**
      * Searches for gloves in an entity's accessory inventory and returns the first {@link SlotResult} instance.
+     *
      * @param entity The {@link LivingEntity} wearer.
      * @return The {@link SlotResult} for the curio item.
      */
@@ -54,6 +56,7 @@ public final class EquipmentUtil {
 
     /**
      * Searches for Zanite Rings in an entity's accessory inventory and returns all the {@link SlotResult} instances.
+     *
      * @param entity The {@link LivingEntity} wearer.
      * @return The {@link List} of {@link SlotResult}s for the curio items.
      */
@@ -63,6 +66,7 @@ public final class EquipmentUtil {
 
     /**
      * Searches for a Zanite Pendant in an entity's accessory inventory and returns the first {@link SlotResult} instance.
+     *
      * @param entity The {@link LivingEntity} wearer.
      * @return The {@link SlotResult} for the curio item.
      */
@@ -73,6 +77,7 @@ public final class EquipmentUtil {
 
     /**
      * Checks if an Ice Pendant or Ice Ring exists in an entity's accessory inventory.
+     *
      * @param entity The {@link LivingEntity} wearer.
      * @return The result of the check, as a {@link Boolean}.
      */
@@ -82,6 +87,7 @@ public final class EquipmentUtil {
 
     /**
      * Checks if a Swet Cape exists in an entity's accessory inventory.
+     *
      * @param entity The {@link LivingEntity} wearer.
      * @return The result of the check, as a {@link Boolean}.
      */
@@ -91,6 +97,7 @@ public final class EquipmentUtil {
 
     /**
      * Checks if an Invisibility Cloak exists in an entity's accessory inventory.
+     *
      * @param entity The {@link LivingEntity} wearer.
      * @return The result of the check, as a {@link Boolean}.
      */
@@ -100,6 +107,7 @@ public final class EquipmentUtil {
 
     /**
      * Checks if a {@link CapeItem} exists in an entity's accessory inventory.
+     *
      * @param entity The {@link LivingEntity} wearer.
      * @return The result of the check, as a {@link Boolean}.
      */
@@ -109,6 +117,7 @@ public final class EquipmentUtil {
 
     /**
      * Searches for a {@link CapeItem} in an entity's accessory inventory and returns the first {@link SlotResult} instance.
+     *
      * @param entity The {@link LivingEntity} wearer.
      * @return The {@link SlotResult} for the curio item.
      */
@@ -119,8 +128,9 @@ public final class EquipmentUtil {
 
     /**
      * Checks if a curio {@link Item} exists in an entity's accessory inventory.
+     *
      * @param entity The {@link LivingEntity} wearer.
-     * @param item The curio {@link Item} to look for.
+     * @param item   The curio {@link Item} to look for.
      * @return The result of the check, as a {@link Boolean}.
      */
     public static boolean hasCurio(LivingEntity entity, Item item) {
@@ -129,8 +139,9 @@ public final class EquipmentUtil {
 
     /**
      * Searches for a curio {@link Item} in an entity's accessory inventory and returns the first {@link SlotResult} instance.
+     *
      * @param entity The {@link LivingEntity} wearer.
-     * @param item The curio {@link Item} to look for.
+     * @param item   The curio {@link Item} to look for.
      * @return The {@link SlotResult} for the curio item.
      */
     @Nullable
@@ -140,21 +151,22 @@ public final class EquipmentUtil {
 
     /**
      * Searches for a curio {@link Item} in an entity's accessory inventory and returns all the {@link SlotResult} instances.
+     *
      * @param entity The {@link LivingEntity} wearer.
-     * @param item The curio {@link Item} to look for.
+     * @param item   The curio {@link Item} to look for.
      * @return The {@link List} of {@link SlotResult}s for the curio items.
      */
     public static List<SlotResult> getCurios(LivingEntity entity, Item item) {
-        LazyOptional<ICuriosItemHandler> inventoryOptional = CuriosApi.getCuriosInventory(entity);
-        if (inventoryOptional.isPresent() && inventoryOptional.resolve().isPresent()) {
-            ICuriosItemHandler inventory = inventoryOptional.resolve().get();
-            return inventory.findCurios(item);
+        Optional<ICuriosItemHandler> inventoryOptional = CuriosApi.getCuriosInventory(entity);
+        if (inventoryOptional.isPresent()) {
+            return inventoryOptional.get().findCurios(item);
         }
         return List.of();
     }
 
     /**
      * Checks if the player is wearing Sentry Boots.
+     *
      * @param entity The {@link LivingEntity} wearer.
      * @return The result of the check, as a {@link Boolean}.
      */
@@ -164,6 +176,7 @@ public final class EquipmentUtil {
 
     /**
      * Checks if the player is wearing the Gravitite Armor set.
+     *
      * @param entity The {@link LivingEntity} wearer.
      * @return The result of the check, as a {@link Boolean}.
      */
@@ -173,6 +186,7 @@ public final class EquipmentUtil {
 
     /**
      * Checks if the player is wearing the Valkyrie Armor set.
+     *
      * @param entity The {@link LivingEntity} wearer.
      * @return The result of the check, as a {@link Boolean}.
      */
@@ -182,6 +196,7 @@ public final class EquipmentUtil {
 
     /**
      * Checks if the player is wearing the Neptune Armor set.
+     *
      * @param entity The {@link LivingEntity} wearer.
      * @return The result of the check, as a {@link Boolean}.
      */
@@ -191,6 +206,7 @@ public final class EquipmentUtil {
 
     /**
      * Checks if the player is wearing the Phoenix Armor set.
+     *
      * @param entity The {@link LivingEntity} wearer.
      * @return The result of the check, as a {@link Boolean}.
      */
@@ -200,6 +216,7 @@ public final class EquipmentUtil {
 
     /**
      * Checks if the player is wearing any Phoenix Armor.
+     *
      * @param entity The {@link LivingEntity} wearer.
      * @return The result of the check, as a {@link Boolean}.
      */
@@ -209,12 +226,13 @@ public final class EquipmentUtil {
 
     /**
      * Checks if the player is wearing all armor pieces out of a set.
-     * @param entity The {@link LivingEntity} wearer.
-     * @param helmet The helmet {@link Item}.
+     *
+     * @param entity     The {@link LivingEntity} wearer.
+     * @param helmet     The helmet {@link Item}.
      * @param chestplate The chestplate {@link Item}.
-     * @param leggings The leggings {@link Item}.
-     * @param boots The boots {@link Item}.
-     * @param gloves The gloves {@link Item}.
+     * @param leggings   The leggings {@link Item}.
+     * @param boots      The boots {@link Item}.
+     * @param gloves     The gloves {@link Item}.
      * @return The result of the check, as a {@link Boolean}.
      */
     private static boolean hasArmorSet(LivingEntity entity, Item helmet, Item chestplate, Item leggings, Item boots, Item gloves) {
@@ -227,12 +245,13 @@ public final class EquipmentUtil {
 
     /**
      * Checks if the player is wearing any armor pieces out of a set.
-     * @param entity The {@link LivingEntity} wearer.
-     * @param helmet The helmet {@link Item}.
+     *
+     * @param entity     The {@link LivingEntity} wearer.
+     * @param helmet     The helmet {@link Item}.
      * @param chestplate The chestplate {@link Item}.
-     * @param leggings The leggings {@link Item}.
-     * @param boots The boots {@link Item}.
-     * @param gloves The gloves {@link Item}.
+     * @param leggings   The leggings {@link Item}.
+     * @param boots      The boots {@link Item}.
+     * @param gloves     The gloves {@link Item}.
      * @return The result of the check, as a {@link Boolean}.
      */
     private static boolean hasAnyArmor(LivingEntity entity, Item helmet, Item chestplate, Item leggings, Item boots, Item gloves) {
@@ -254,10 +273,9 @@ public final class EquipmentUtil {
      * @see ICuriosItemHandler#findFirstCurio(Predicate)
      */
     public static Optional<SlotResult> findFirstCurio(LivingEntity entity, Predicate<ItemStack> predicate) {
-        LazyOptional<ICuriosItemHandler> inventoryOptional = CuriosApi.getCuriosInventory(entity);
-        if (inventoryOptional.isPresent() && inventoryOptional.resolve().isPresent()) {
-            ICuriosItemHandler inventory = inventoryOptional.resolve().get();
-            return inventory.findFirstCurio(predicate);
+        Optional<ICuriosItemHandler> inventoryOptional = CuriosApi.getCuriosInventory(entity);
+        if (inventoryOptional.isPresent()) {
+            return inventoryOptional.get().findFirstCurio(predicate);
         }
         return Optional.empty();
     }

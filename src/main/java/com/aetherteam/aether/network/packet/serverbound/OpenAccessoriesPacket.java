@@ -1,17 +1,17 @@
 package com.aetherteam.aether.network.packet.serverbound;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.inventory.menu.AccessoriesMenu;
-import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.clientbound.ClientGrabItemPacket;
 import com.aetherteam.nitrogen.network.BasePacket;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
@@ -20,8 +20,16 @@ import javax.annotation.Nullable;
  * Adapted to Nitrogen packet system.
  */
 public record OpenAccessoriesPacket(ItemStack carryStack) implements BasePacket {
+
+    public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "open_accessories");
+
     @Override
-    public void encode(FriendlyByteBuf buf) {
+    public ResourceLocation id() {
+        return ID;
+    }
+
+    @Override
+    public void write(FriendlyByteBuf buf) {
         buf.writeItem(this.carryStack());
     }
 
@@ -35,10 +43,10 @@ public record OpenAccessoriesPacket(ItemStack carryStack) implements BasePacket 
         if (player != null && player.getServer() != null && player instanceof ServerPlayer serverPlayer) {
             ItemStack itemStack = serverPlayer.isCreative() ? this.carryStack() : serverPlayer.containerMenu.getCarried();
             serverPlayer.containerMenu.setCarried(ItemStack.EMPTY);
-            NetworkHooks.openScreen(serverPlayer, new SimpleMenuProvider((id, inventory, playerEntity) -> new AccessoriesMenu(id, inventory), Component.translatable("container.crafting")));
+            serverPlayer.openMenu(new SimpleMenuProvider((id, inventory, playerEntity) -> new AccessoriesMenu(id, inventory), Component.translatable("container.crafting")));
             if (!itemStack.isEmpty()) {
                 serverPlayer.containerMenu.setCarried(itemStack);
-                PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new ClientGrabItemPacket(itemStack), serverPlayer);
+                PacketRelay.sendToPlayer(new ClientGrabItemPacket(itemStack), serverPlayer);
             }
         }
     }

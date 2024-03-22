@@ -16,14 +16,14 @@ public class AetherSoundData extends SoundDefinitionsProvider {
         // Blocks
         this.add(AetherSoundEvents.BLOCK_AETHER_PORTAL_AMBIENT,
                 definition().with(sound("minecraft:portal/portal").attenuationDistance(10))
-                .subtitle("subtitles.aether.block.aether_portal.ambient")
+                        .subtitle("subtitles.aether.block.aether_portal.ambient")
         );
         this.add(AetherSoundEvents.BLOCK_AETHER_PORTAL_TRAVEL,
                 definition().with(sound("minecraft:portal/travel"))
         );
         this.add(AetherSoundEvents.BLOCK_AETHER_PORTAL_TRIGGER,
                 definition().with(sound("minecraft:portal/trigger"))
-                .subtitle("subtitles.aether.block.aether_portal.trigger")
+                        .subtitle("subtitles.aether.block.aether_portal.trigger")
         );
         this.add(AetherSoundEvents.BLOCK_CHEST_MIMIC_OPEN,
                 definition().with(sound("minecraft:block/chest/open"))
@@ -87,15 +87,15 @@ public class AetherSoundData extends SoundDefinitionsProvider {
         );
         this.add(AetherSoundEvents.ITEM_DART_SHOOTER_SHOOT,
                 definition().with(sound("minecraft:random/bow"))
-                .subtitle("subtitles.aether.item.dart_shooter.shoot")
+                        .subtitle("subtitles.aether.item.dart_shooter.shoot")
         );
         this.add(AetherSoundEvents.ITEM_LIGHTNING_KNIFE_SHOOT,
                 definition().with(sound("minecraft:random/bow"))
-                .subtitle("subtitles.aether.item.lightning_knife.shoot")
+                        .subtitle("subtitles.aether.item.lightning_knife.shoot")
         );
         this.add(AetherSoundEvents.ITEM_HAMMER_OF_KINGBDOGZ_SHOOT,
                 definition().with(sound("minecraft:mob/ghast/fireball4"))
-                .subtitle("subtitles.aether.item.hammer_of_kingbdogz.shoot")
+                        .subtitle("subtitles.aether.item.hammer_of_kingbdogz.shoot")
         );
         this.add(AetherSoundEvents.ITEM_ARMOR_EQUIP_ZANITE,
                 definition().with(
@@ -287,7 +287,7 @@ public class AetherSoundData extends SoundDefinitionsProvider {
         );
         this.add(AetherSoundEvents.ENTITY_PHYG_DEATH,
                 definition().with(sound("minecraft:mob/pig/death"))
-                .subtitle("subtitles.aether.entity.phyg.death")
+                        .subtitle("subtitles.aether.entity.phyg.death")
         );
         this.add(AetherSoundEvents.ENTITY_PHYG_HURT,
                 definition().with(
@@ -298,7 +298,7 @@ public class AetherSoundData extends SoundDefinitionsProvider {
         );
         this.add(AetherSoundEvents.ENTITY_PHYG_SADDLE,
                 definition().with(sound("minecraft:mob/horse/leather"))
-                .subtitle("subtitles.aether.entity.phyg.saddle")
+                        .subtitle("subtitles.aether.entity.phyg.saddle")
         );
         this.add(AetherSoundEvents.ENTITY_PHYG_STEP,
                 definition().with(
@@ -373,7 +373,7 @@ public class AetherSoundData extends SoundDefinitionsProvider {
         );
         this.add(AetherSoundEvents.ENTITY_SHEEPUFF_SHEAR,
                 definition().with(sound("minecraft:mob/sheep/shear"))
-                .subtitle("subtitles.item.shears.shear")
+                        .subtitle("subtitles.item.shears.shear")
         );
         this.add(AetherSoundEvents.ENTITY_SHEEPUFF_STEP,
                 definition().with(
@@ -386,15 +386,15 @@ public class AetherSoundData extends SoundDefinitionsProvider {
         );
         this.add(AetherSoundEvents.ENTITY_MOA_AMBIENT,
                 definition().with(sound("aether:entity/moa/say"))
-                .subtitle("subtitles.aether.entity.moa.ambient")
+                        .subtitle("subtitles.aether.entity.moa.ambient")
         );
         this.add(AetherSoundEvents.ENTITY_MOA_DEATH,
                 definition().with(sound("aether:entity/moa/say"))
-                .subtitle("subtitles.aether.entity.moa.death")
+                        .subtitle("subtitles.aether.entity.moa.death")
         );
         this.add(AetherSoundEvents.ENTITY_MOA_HURT,
                 definition().with(sound("aether:entity/moa/say"))
-                .subtitle("subtitles.aether.entity.moa.hurt")
+                        .subtitle("subtitles.aether.entity.moa.hurt")
         );
         this.add(AetherSoundEvents.ENTITY_MOA_SADDLE,
                 definition().with(sound("minecraft:mob/horse/leather"))
@@ -415,23 +415,23 @@ public class AetherSoundData extends SoundDefinitionsProvider {
         );
         this.add(AetherSoundEvents.ENTITY_MOA_EGG,
                 definition().with(sound("minecraft:mob/chicken/plop"))
-                .subtitle("subtitles.aether.entity.moa.egg")
+                        .subtitle("subtitles.aether.entity.moa.egg")
         );
         this.add(AetherSoundEvents.ENTITY_AERWHALE_AMBIENT,
                 definition().with(sound("aether:entity/aerwhale/call"))
-                .subtitle("subtitles.aether.entity.aerwhale.ambient")
+                        .subtitle("subtitles.aether.entity.aerwhale.ambient")
         );
         this.add(AetherSoundEvents.ENTITY_AERWHALE_DEATH,
                 definition().with(sound("aether:entity/aerwhale/death"))
-                .subtitle("subtitles.aether.entity.aerwhale.death")
+                        .subtitle("subtitles.aether.entity.aerwhale.death")
         );
         this.add(AetherSoundEvents.ENTITY_AERWHALE_HURT,
                 definition().with(sound("aether:entity/aerwhale/death"))
-                .subtitle("subtitles.aether.entity.aerwhale.death")
+                        .subtitle("subtitles.aether.entity.aerwhale.death")
         );
         this.add(AetherSoundEvents.ENTITY_AERBUNNY_DEATH,
                 definition().with(sound("aether:entity/aerbunny/death"))
-                .subtitle("subtitles.aether.entity.aerbunny.death")
+                        .subtitle("subtitles.aether.entity.aerbunny.death")
         );
         this.add(AetherSoundEvents.ENTITY_AERBUNNY_HURT,
                 definition().with(sound("aether:entity/aerbunny/hurt"))
@@ -485,7 +485,7 @@ public class AetherSoundData extends SoundDefinitionsProvider {
         );
         this.add(AetherSoundEvents.ENTITY_AECHOR_PLANT_SHOOT,
                 definition().with(sound("minecraft:random/bow"))
-                .subtitle("subtitles.aether.entity.aechor_plant.shoot")
+                        .subtitle("subtitles.aether.entity.aechor_plant.shoot")
         );
         this.add(AetherSoundEvents.ENTITY_AECHOR_PLANT_HURT,
                 definition().with(
@@ -500,39 +500,39 @@ public class AetherSoundData extends SoundDefinitionsProvider {
         );
         this.add(AetherSoundEvents.ENTITY_COCKATRICE_SHOOT,
                 definition().with(sound("minecraft:random/bow"))
-                .subtitle("subtitles.aether.entity.cockatrice.shoot")
+                        .subtitle("subtitles.aether.entity.cockatrice.shoot")
         );
         this.add(AetherSoundEvents.ENTITY_COCKATRICE_AMBIENT,
                 definition().with(sound("aether:entity/moa/say"))
-                .subtitle("subtitles.aether.entity.cockatrice.ambient")
+                        .subtitle("subtitles.aether.entity.cockatrice.ambient")
         );
         this.add(AetherSoundEvents.ENTITY_COCKATRICE_DEATH,
                 definition().with(sound("aether:entity/moa/say"))
-                .subtitle("subtitles.aether.entity.cockatrice.death")
+                        .subtitle("subtitles.aether.entity.cockatrice.death")
         );
         this.add(AetherSoundEvents.ENTITY_COCKATRICE_HURT,
                 definition().with(sound("aether:entity/moa/say"))
-                .subtitle("subtitles.aether.entity.cockatrice.hurt")
+                        .subtitle("subtitles.aether.entity.cockatrice.hurt")
         );
         this.add(AetherSoundEvents.ENTITY_COCKATRICE_FLAP,
                 definition().with(sound("minecraft:mob/bat/takeoff"))
-                .subtitle("subtitles.aether.entity.cockatrice.flap")
+                        .subtitle("subtitles.aether.entity.cockatrice.flap")
         );
         this.add(AetherSoundEvents.ENTITY_ZEPHYR_SHOOT,
                 definition().with(sound("aether:entity/zephyr/shoot"))
-                .subtitle("subtitles.aether.entity.zephyr.shoot")
+                        .subtitle("subtitles.aether.entity.zephyr.shoot")
         );
         this.add(AetherSoundEvents.ENTITY_ZEPHYR_AMBIENT,
                 definition().with(sound("aether:entity/zephyr/call"))
-                .subtitle("subtitles.aether.entity.zephyr.ambient")
+                        .subtitle("subtitles.aether.entity.zephyr.ambient")
         );
         this.add(AetherSoundEvents.ENTITY_ZEPHYR_DEATH,
                 definition().with(sound("aether:entity/zephyr/call"))
-                .subtitle("subtitles.aether.entity.zephyr.death")
+                        .subtitle("subtitles.aether.entity.zephyr.death")
         );
         this.add(AetherSoundEvents.ENTITY_ZEPHYR_HURT,
                 definition().with(sound("aether:entity/zephyr/call"))
-                .subtitle("subtitles.aether.entity.zephyr.hurt")
+                        .subtitle("subtitles.aether.entity.zephyr.hurt")
         );
         this.add(AetherSoundEvents.ENTITY_SENTRY_DEATH,
                 definition().with(
@@ -582,12 +582,12 @@ public class AetherSoundData extends SoundDefinitionsProvider {
         );
         this.add(AetherSoundEvents.ENTITY_MIMIC_KILL,
                 definition().with(
-                        sound( 	"minecraft:random/burp")
+                        sound("minecraft:random/burp")
                 ).subtitle("subtitles.aether.entity.mimic.kill")
         );
         this.add(AetherSoundEvents.ENTITY_SLIDER_AWAKEN,
                 definition().with(sound("aether:entity/slider/awaken"))
-                .subtitle("subtitles.aether.entity.slider.awaken")
+                        .subtitle("subtitles.aether.entity.slider.awaken")
         );
         this.add(AetherSoundEvents.ENTITY_SLIDER_AMBIENT,
                 definition().with(sound("minecraft:ambient/cave/cave1"),
@@ -613,7 +613,7 @@ public class AetherSoundData extends SoundDefinitionsProvider {
         );
         this.add(AetherSoundEvents.ENTITY_SLIDER_COLLIDE,
                 definition().with(sound("aether:entity/slider/collide"))
-                .subtitle("subtitles.aether.entity.slider.collide")
+                        .subtitle("subtitles.aether.entity.slider.collide")
         );
         this.add(AetherSoundEvents.ENTITY_SLIDER_MOVE,
                 definition().with(sound("aether:entity/slider/move"))
@@ -630,7 +630,7 @@ public class AetherSoundData extends SoundDefinitionsProvider {
         );
         this.add(AetherSoundEvents.ENTITY_SLIDER_DEATH,
                 definition().with(sound("aether:entity/slider/death"))
-                .subtitle("subtitles.aether.entity.slider.death")
+                        .subtitle("subtitles.aether.entity.slider.death")
         );
         this.add(AetherSoundEvents.ENTITY_VALKYRIE_DEATH,
                 definition().with(sound("damage/hit1"),
@@ -658,11 +658,11 @@ public class AetherSoundData extends SoundDefinitionsProvider {
         );
         this.add(AetherSoundEvents.ENTITY_SUN_SPIRIT_SHOOT,
                 definition().with(sound("minecraft:mob/ghast/fireball4"))
-                .subtitle("subtitles.aether.entity.sun_spirit.shoot")
+                        .subtitle("subtitles.aether.entity.sun_spirit.shoot")
         );
         this.add(AetherSoundEvents.ENTITY_CLOUD_MINION_SHOOT,
                 definition().with(sound("aether:entity/zephyr/shoot"))
-                .subtitle("subtitles.aether.entity.cloud_minion.shoot")
+                        .subtitle("subtitles.aether.entity.cloud_minion.shoot")
         );
         this.add(AetherSoundEvents.ENTITY_CLOUD_CRYSTAL_EXPLODE,
                 definition().with(
@@ -695,7 +695,7 @@ public class AetherSoundData extends SoundDefinitionsProvider {
         );
         this.add(AetherSoundEvents.ENTITY_DART_HIT,
                 definition().with(sound("aether:entity/projectile/shoot"))
-                .subtitle("subtitles.aether.entity.dart.hit")
+                        .subtitle("subtitles.aether.entity.dart.hit")
         );
 
 

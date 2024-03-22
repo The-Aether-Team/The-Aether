@@ -28,6 +28,5 @@
     "recipes": [
       "aether:swet_sticky_piston"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

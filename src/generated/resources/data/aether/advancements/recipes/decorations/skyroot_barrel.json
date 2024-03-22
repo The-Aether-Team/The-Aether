@@ -39,6 +39,5 @@
     "recipes": [
       "aether:skyroot_barrel"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

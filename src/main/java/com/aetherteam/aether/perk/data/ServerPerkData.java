@@ -1,6 +1,5 @@
 package com.aetherteam.aether.perk.data;
 
-import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.clientbound.ClientDeveloperGlowPacket;
 import com.aetherteam.aether.network.packet.clientbound.ClientHaloPacket;
 import com.aetherteam.aether.network.packet.clientbound.ClientMoaSkinPacket;
@@ -93,27 +92,29 @@ public class ServerPerkData<T> {
 
     /**
      * Syncs the data for a perk from the server to the client.
+     *
      * @param player The {@link Player} to send the packet to.
      */
     public void syncFromServer(Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
-            PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, this.getSyncPacket(this.getServerPerkData(serverPlayer.getServer())), serverPlayer); // Send to client.
+            PacketRelay.sendToPlayer(this.getSyncPacket(this.getServerPerkData(serverPlayer.getServer())), serverPlayer); // Send to client.
         }
     }
 
     /**
      * Applies a perk as long as the player's {@link User} class exists and matches the verification requirement from {@link ServerPerkData#getVerificationPredicate(Object)}.<br>
      * The perk is sent to all players' clients with a packet, and the data for it is stored to the server world.
+     *
      * @param server The {@link MinecraftServer}
-     * @param uuid The player's {@link UUID}
-     * @param perk The perk data type.
+     * @param uuid   The player's {@link UUID}
+     * @param perk   The perk data type.
      */
     public void applyPerkWithVerification(MinecraftServer server, UUID uuid, T perk) {
         Map<UUID, User> storedUsers = UserData.Server.getStoredUsers();
         if (storedUsers.containsKey(uuid)) { // Checks if User exists.
             User user = storedUsers.get(uuid);
             if (user != null && this.getVerificationPredicate(perk).test(user)) { // Checks verification requirement to have the perk that is trying to be applied.
-                PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, this.getApplyPacket(uuid, perk)); // Send to clients.
+                PacketRelay.sendToAll(this.getApplyPacket(uuid, perk)); // Send to clients.
                 this.modifySavedData(server, uuid, perk); // Save to world.
             }
         }
@@ -121,17 +122,19 @@ public class ServerPerkData<T> {
 
     /**
      * Removes a perk from a player. The removal is relayed and synced to all players' clients with a packet.
+     *
      * @param server The {@link MinecraftServer}.
-     * @param uuid The {@link UUID} of the player.
+     * @param uuid   The {@link UUID} of the player.
      */
     public void removePerk(MinecraftServer server, UUID uuid) {
-        PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, this.getRemovePacket(uuid)); // Send to clients.
+        PacketRelay.sendToAll(this.getRemovePacket(uuid)); // Send to clients.
         this.removeSavedData(server, uuid); // Save to world.
     }
 
     /**
      * Gets the data for all {@link UUID}s that have a specific perk (handled by subclasses).<br>
      * Before returning the data, this method runs verification checks on the information it gathers from the world.
+     *
      * @param server The {@link MinecraftServer}.
      * @return A {@link Map} of player {@link UUID}s and perk {@link Object} data types.
      */
@@ -159,6 +162,7 @@ public class ServerPerkData<T> {
 
     /**
      * Calls a get method from {@link PerkSavedData}
+     *
      * @param server The {@link MinecraftServer}.
      * @return A {@link Map} of {@link UUID}s and a perk data type.
      */
@@ -168,9 +172,10 @@ public class ServerPerkData<T> {
 
     /**
      * Calls a modify method from {@link PerkSavedData}
+     *
      * @param server The {@link MinecraftServer}.
-     * @param uuid The player {@link UUID}.
-     * @param perk The perk data type.
+     * @param uuid   The player {@link UUID}.
+     * @param perk   The perk data type.
      */
     protected void modifySavedData(MinecraftServer server, UUID uuid, T perk) {
         this.modify.accept(server, uuid, perk);
@@ -178,8 +183,9 @@ public class ServerPerkData<T> {
 
     /**
      * Calls a remove method from {@link PerkSavedData}.
+     *
      * @param server The {@link MinecraftServer}.
-     * @param uuid The player {@link UUID}.
+     * @param uuid   The player {@link UUID}.
      */
     protected void removeSavedData(MinecraftServer server, UUID uuid) {
         this.remove.accept(server, uuid);
@@ -187,6 +193,7 @@ public class ServerPerkData<T> {
 
     /**
      * Sends an application packet.
+     *
      * @param uuid The player {@link UUID}.
      * @param perk The perk data type.
      * @return The packet.
@@ -197,6 +204,7 @@ public class ServerPerkData<T> {
 
     /**
      * Sends a removal packet.
+     *
      * @param uuid The player {@link UUID}.
      * @return The packet.
      */
@@ -206,6 +214,7 @@ public class ServerPerkData<T> {
 
     /**
      * Sends a sync packet.
+     *
      * @param serverPerkData A {@link Map} of {@link UUID}s and a perk data type.
      * @return The packet.
      */
@@ -215,6 +224,7 @@ public class ServerPerkData<T> {
 
     /**
      * Gets the verification requirement for this perk.
+     *
      * @param perk The perk data type.
      * @return A {@link User} {@link Predicate} for the perk.
      */

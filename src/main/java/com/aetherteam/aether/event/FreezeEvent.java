@@ -21,9 +21,9 @@ public class FreezeEvent extends Event implements ICancellableEvent {
     private BlockState frozenBlock;
 
     /**
-     * @param level The {@link LevelAccessor} that the freezing is occurring in.
-     * @param pos The {@link BlockPos} that the freezing is occurring at.
-     * @param priorBlock The old {@link BlockState} that is to be frozen.
+     * @param level       The {@link LevelAccessor} that the freezing is occurring in.
+     * @param pos         The {@link BlockPos} that the freezing is occurring at.
+     * @param priorBlock  The old {@link BlockState} that is to be frozen.
      * @param frozenBlock The original result {@link BlockState} from the freezing.
      */
     public FreezeEvent(LevelAccessor level, BlockPos pos, BlockState priorBlock, BlockState frozenBlock) {
@@ -63,6 +63,7 @@ public class FreezeEvent extends Event implements ICancellableEvent {
 
     /**
      * Sets a new block to result from the freezing.
+     *
      * @param frozenBlock The new {@link BlockState}.
      */
     public void setFrozenBlock(BlockState frozenBlock) {
@@ -84,10 +85,10 @@ public class FreezeEvent extends Event implements ICancellableEvent {
         private final BlockState sourceBlock;
 
         /**
-         * @param level The {@link LevelAccessor} that the freezing is occurring in.
-         * @param pos The {@link BlockPos} that the freezing is occurring at.
-         * @param sourcePos The {@link BlockPos} of the source that is causing the freezing.
-         * @param priorBlock The old {@link BlockState} that is to be frozen.
+         * @param level       The {@link LevelAccessor} that the freezing is occurring in.
+         * @param pos         The {@link BlockPos} that the freezing is occurring at.
+         * @param sourcePos   The {@link BlockPos} of the source that is causing the freezing.
+         * @param priorBlock  The old {@link BlockState} that is to be frozen.
          * @param frozenBlock The original result {@link BlockState} from the freezing.
          * @param sourceBlock The source {@link BlockState} performing the freezing.
          */
@@ -126,9 +127,9 @@ public class FreezeEvent extends Event implements ICancellableEvent {
         private final ItemStack sourceStack;
 
         /**
-         * @param level The {@link LevelAccessor} that the freezing is occurring in.
-         * @param pos The {@link BlockPos} that the freezing is occurring at.
-         * @param priorBlock The old {@link BlockState} that is to be frozen.
+         * @param level       The {@link LevelAccessor} that the freezing is occurring in.
+         * @param pos         The {@link BlockPos} that the freezing is occurring at.
+         * @param priorBlock  The old {@link BlockState} that is to be frozen.
          * @param frozenBlock The original result {@link BlockState} from the freezing.
          * @param sourceStack The source {@link ItemStack} performing the freezing.
          */

@@ -24,16 +24,17 @@ public class ZephyrTransparencyLayer extends RenderLayer<Zephyr, EntityModel<Zep
 
     /**
      * Renders the transparent parts of the Zephyr's model.
-     * @param poseStack The rendering {@link PoseStack}.
-     * @param buffer The rendering {@link MultiBufferSource}.
-     * @param packedLight The {@link Integer} for the packed lighting for rendering.
-     * @param zephyr The {@link Zephyr} entity.
-     * @param limbSwing The {@link Float} for the limb swing rotation.
+     *
+     * @param poseStack       The rendering {@link PoseStack}.
+     * @param buffer          The rendering {@link MultiBufferSource}.
+     * @param packedLight     The {@link Integer} for the packed lighting for rendering.
+     * @param zephyr          The {@link Zephyr} entity.
+     * @param limbSwing       The {@link Float} for the limb swing rotation.
      * @param limbSwingAmount The {@link Float} for the limb swing amount.
-     * @param partialTicks The {@link Float} for the game's partial ticks.
-     * @param ageInTicks The {@link Float} for the entity's age in ticks.
-     * @param netHeadYaw The {@link Float} for the head yaw rotation.
-     * @param headPitch The {@link Float} for the head pitch rotation.
+     * @param partialTicks    The {@link Float} for the game's partial ticks.
+     * @param ageInTicks      The {@link Float} for the entity's age in ticks.
+     * @param netHeadYaw      The {@link Float} for the head yaw rotation.
+     * @param headPitch       The {@link Float} for the head pitch rotation.
      */
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Zephyr zephyr, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {

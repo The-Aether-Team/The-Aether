@@ -11,7 +11,6 @@ import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
 import com.aetherteam.aether.entity.AetherBossMob;
 import com.aetherteam.aether.event.hooks.DimensionHooks;
 import com.aetherteam.aether.inventory.menu.AccessoriesMenu;
-import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.OpenAccessoriesPacket;
 import com.aetherteam.aether.perk.PerkUtil;
 import com.aetherteam.nitrogen.api.users.User;
@@ -62,6 +61,7 @@ public class GuiHooks {
 
     /**
      * Checks whether the accessory button isn't disabled by {@link AetherConfig.Client#disable_accessory_button} or accessory tags being empty.
+     *
      * @return The {@link Boolean} value.
      * @see com.aetherteam.aether.client.event.listeners.GuiListener#onGuiInitialize(ScreenEvent.Init.Post)
      */
@@ -84,7 +84,8 @@ public class GuiHooks {
 
     /**
      * Creates an {@link AccessoryButton} if one can be created for the screen according to {@link GuiHooks#canCreateAccessoryButtonForScreen(Screen)}.
-     * @param screen The parent {@link Screen}.
+     *
+     * @param screen  The parent {@link Screen}.
      * @param offsets A {@link Tuple} containing the x and y offset {@link Integer}s.
      * @return The {@link AccessoryButton}.
      * @see com.aetherteam.aether.client.event.listeners.GuiListener#onGuiInitialize(ScreenEvent.Init.Post)
@@ -101,6 +102,7 @@ public class GuiHooks {
     /**
      * Checks whether the screen is an inventory screen or if it's the {@link AccessoriesScreen} and a button can be added to it.
      * If the screen is the {@link AccessoriesScreen}, then it sets the {@link AccessoryButton} should be rendered in it.
+     *
      * @param screen The parent {@link Screen}.
      * @return The parent screen, cast to a {@link AbstractContainerScreen}.
      */
@@ -116,6 +118,7 @@ public class GuiHooks {
 
     /**
      * Sets up the buttons for the {@link MoaSkinsScreen} and the {@link AetherCustomizationsScreen} in a {@link GridLayout}.
+     *
      * @param screen The parent {@link Screen}.
      * @return The {@link GridLayout} holding the buttons.
      * @see com.aetherteam.aether.client.event.listeners.GuiListener#onGuiInitialize(ScreenEvent.Init.Post)
@@ -151,9 +154,10 @@ public class GuiHooks {
 
     /**
      * Creates the button for the {@link MoaSkinsScreen}.
-     * @param screen The parent {@link Screen}.
+     *
+     * @param screen     The parent {@link Screen}.
      * @param gridLayout The {@link GridLayout} for the button.
-     * @param rowHelper The {@link net.minecraft.client.gui.layouts.GridLayout.RowHelper} to add the button to.
+     * @param rowHelper  The {@link net.minecraft.client.gui.layouts.GridLayout.RowHelper} to add the button to.
      */
     private static void createSkinsButton(Screen screen, GridLayout gridLayout, GridLayout.RowHelper rowHelper) {
         ImageButton skinsButton = new ImageButton(0, 0, 20, 20, AccessoriesScreen.SKINS_BUTTON,
@@ -165,7 +169,8 @@ public class GuiHooks {
 
     /**
      * Creates the button for the {@link AetherCustomizationsScreen}.
-     * @param screen The parent {@link Screen}.
+     *
+     * @param screen    The parent {@link Screen}.
      * @param rowHelper The {@link net.minecraft.client.gui.layouts.GridLayout.RowHelper} to add the button to.
      */
     private static void createCustomizationsButton(Screen screen, GridLayout.RowHelper rowHelper) {
@@ -178,7 +183,8 @@ public class GuiHooks {
 
     /**
      * Generates and draws the Aether's trivia lines in various loading screens.
-     * @param screen The current {@link Screen}.
+     *
+     * @param screen      The current {@link Screen}.
      * @param guiGraphics The rendering {@link GuiGraphics}.
      * @see com.aetherteam.aether.client.event.listeners.GuiListener#onGuiDraw(ScreenEvent.Render.Post)
      */
@@ -205,6 +211,7 @@ public class GuiHooks {
 
     /**
      * Generates the trivia lines for display.
+     *
      * @param screen The current {@link Screen}.
      */
     private static void generateTrivia(Screen screen) {
@@ -228,7 +235,8 @@ public class GuiHooks {
     /**
      * Draws text for leaving and entering the Aether.
      * Checks for when to display different text are handled by {@link DimensionHooks}.
-     * @param screen The current {@link Screen}.
+     *
+     * @param screen      The current {@link Screen}.
      * @param guiGraphics The rendering {@link GuiGraphics}.
      * @see com.aetherteam.aether.client.event.listeners.GuiListener#onGuiDraw(ScreenEvent.Render.Post)
      */
@@ -250,6 +258,7 @@ public class GuiHooks {
 
     /**
      * Handles the time until the Patreon {@link RefreshButton} can be clicked again.
+     *
      * @see com.aetherteam.aether.client.event.listeners.GuiListener#onClientTick(TickEvent.ClientTickEvent)
      */
     public static void handlePatreonRefreshRebound() {
@@ -263,13 +272,14 @@ public class GuiHooks {
 
     /**
      * Handles opening the {@link AccessoriesMenu} when clicking the {@link AetherKeys#OPEN_ACCESSORY_INVENTORY} keybind.
+     *
      * @see com.aetherteam.aether.client.event.listeners.GuiListener#onKeyPress(InputEvent.Key)
      */
     public static void openAccessoryMenu() {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player != null && minecraft.getOverlay() == null && minecraft.screen == null) {
             if (!AetherConfig.CLIENT.disable_accessory_button.get() && AetherKeys.OPEN_ACCESSORY_INVENTORY.consumeClick()) {
-                PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new OpenAccessoriesPacket(ItemStack.EMPTY));
+                PacketRelay.sendToServer(new OpenAccessoriesPacket(ItemStack.EMPTY));
                 shouldAddButton = false; // The AccessoryButton is not added to menus opened with the key.
             }
         }
@@ -277,7 +287,8 @@ public class GuiHooks {
 
     /**
      * Allows various menus to be closed with the {@link AetherKeys#OPEN_ACCESSORY_INVENTORY} keybind.
-     * @param key The {@link Integer} ID for the key.
+     *
+     * @param key    The {@link Integer} ID for the key.
      * @param action The {@link Integer} for the key action.
      * @see com.aetherteam.aether.client.event.listeners.GuiListener#onKeyPress(InputEvent.Key)
      */
@@ -293,6 +304,7 @@ public class GuiHooks {
     /**
      * [CODE COPY] - {@link net.minecraft.client.gui.components.BossHealthOverlay#render(GuiGraphics)}
      * Modified to draw the Aether's custom boss health bars.
+     *
      * @see com.aetherteam.aether.client.event.listeners.GuiListener#onRenderBossBar(CustomizeGuiOverlayEvent.BossEventProgress)
      */
     public static void drawBossHealthBar(GuiGraphics guiGraphics, int x, int y, LerpingBossEvent bossEvent) {
@@ -324,6 +336,7 @@ public class GuiHooks {
 
     /**
      * Checks whether a boss bar belongs to an Aether boss, as determined by {@link GuiHooks#BOSS_EVENTS}.
+     *
      * @param uuid The boss {@link UUID}.
      * @return The {@link Boolean} value.
      */

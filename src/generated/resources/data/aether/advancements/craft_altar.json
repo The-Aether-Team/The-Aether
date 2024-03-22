@@ -15,16 +15,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.aether.craft_altar.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "aether:altar"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.aether.craft_altar"
     }

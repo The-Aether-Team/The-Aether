@@ -13,7 +13,8 @@ public class TriviaGenerator {
     private final List<Component> trivia = new ArrayList<>();
     private int index;
 
-    public TriviaGenerator() { }
+    public TriviaGenerator() {
+    }
 
     /**
      * Generates a list of "Pro Tip" entries to display on the loading screen.

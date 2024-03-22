@@ -1,13 +1,13 @@
 package com.aetherteam.aether.entity.passive;
 
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.capability.player.AetherPlayer;
+import com.aetherteam.aether.attachment.AetherDataAttachments;
+import com.aetherteam.aether.attachment.AetherPlayerAttachment;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.ai.goal.FallingRandomStrollGoal;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
-import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.AerbunnyPuffPacket;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.core.BlockPos;
@@ -66,7 +66,7 @@ public class Aerbunny extends AetherAnimal {
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(5, new FallingRandomStrollGoal(this, 1.0, 80));
     }
-   
+
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 6.0)
@@ -148,23 +148,22 @@ public class Aerbunny extends AetherAnimal {
                         player.setDeltaMovement(player.getDeltaMovement().add(0.0, 0.05, 0.0));
                     }
                 }
-                AetherPlayer.get(player).ifPresent(aetherPlayer -> {
-                    Player innerPlayer = aetherPlayer.getPlayer();
-                    if (this.level().isClientSide()) {
-                        if (innerPlayer.getDeltaMovement().y() <= 0.0) {
-                            if (this.lastPos == null) { // Tracks the last position when the player starts falling.
-                                this.lastPos = this.position();
-                            }
-                            // The player is only able to jump if the Aerbunny's position is below the last tracked falling position, to avoid infinite jump exploits.
-                            if (!innerPlayer.onGround() && aetherPlayer.isJumping() && innerPlayer.getDeltaMovement().y() <= 0.0 && this.position().y() < this.lastPos.y() - 1.1) {
-                                innerPlayer.setDeltaMovement(innerPlayer.getDeltaMovement().x(), 0.125, innerPlayer.getDeltaMovement().z());
-                                PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new AerbunnyPuffPacket(this.getId())); // Calls Aerbunny#puff() on the server.
-                                this.spawnExplosionParticle();
-                                this.lastPos = null;
-                            }
+
+                if (this.level().isClientSide()) {
+                    var data = player.getData(AetherDataAttachments.AETHER_PLAYER);
+                    if (player.getDeltaMovement().y() <= 0.0) {
+                        if (this.lastPos == null) { // Tracks the last position when the player starts falling.
+                            this.lastPos = this.position();
+                        }
+                        // The player is only able to jump if the Aerbunny's position is below the last tracked falling position, to avoid infinite jump exploits.
+                        if (!player.onGround() && data.isJumping() && player.getDeltaMovement().y() <= 0.0 && this.position().y() < this.lastPos.y() - 1.1) {
+                            player.setDeltaMovement(player.getDeltaMovement().x(), 0.125, player.getDeltaMovement().z());
+                            PacketRelay.sendToServer(new AerbunnyPuffPacket(this.getId())); // Calls Aerbunny#puff() on the server.
+                            this.spawnExplosionParticle();
+                            this.lastPos = null;
                         }
                     }
-                });
+                }
             } else if (player.isFallFlying()) { // Dismount when wearing Elytra.
                 this.stopRiding();
             }
@@ -189,8 +188,9 @@ public class Aerbunny extends AetherAnimal {
 
     /**
      * Handles right-clicking the Aerbunny for mounting and dismounting.
+     *
      * @param player The interacting {@link Player}.
-     * @param hand The {@link InteractionHand}.
+     * @param hand   The {@link InteractionHand}.
      * @return The {@link InteractionResult}.
      */
     @Override
@@ -207,6 +207,7 @@ public class Aerbunny extends AetherAnimal {
 
     /**
      * Method used for both mounting and dismounting the Aerbunny to a vehicle player.
+     *
      * @param player The {@link Player}.
      * @return The {@link InteractionResult}.
      */
@@ -218,7 +219,7 @@ public class Aerbunny extends AetherAnimal {
                 Vec3 playerMovement = player.getDeltaMovement();
                 this.setDeltaMovement(playerMovement.x() * 5, playerMovement.y() * 0.5 + 0.5, playerMovement.z() * 5);
             } else if (this.startRiding(player)) { // Mount segment.
-                AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setMountedAerbunny(this));
+                player.getData(AetherDataAttachments.AETHER_PLAYER).setMountedAerbunny(this);
                 this.level().playSound(player, this, AetherSoundEvents.ENTITY_AERBUNNY_LIFT.get(), SoundSource.NEUTRAL, 1.0F, (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.2F + 1.0F);
             }
             return InteractionResult.SUCCESS;
@@ -227,18 +228,19 @@ public class Aerbunny extends AetherAnimal {
     }
 
     /**
-     * Stop tracking mounted Aerbunny with {@link com.aetherteam.aether.capability.player.AetherPlayerCapability}.
+     * Stop tracking mounted Aerbunny with {@link AetherPlayerAttachment}.
      */
     @Override
     public void stopRiding() {
         if (this.getVehicle() instanceof Player player) {
-            AetherPlayer.get(player).ifPresent(aetherPlayer -> aetherPlayer.setMountedAerbunny(null));
+            player.getData(AetherDataAttachments.AETHER_PLAYER).setMountedAerbunny(null);
         }
         super.stopRiding();
     }
 
     /**
      * Sets the Aerbunny as afraid when hit by a player.
+     *
      * @param source The {@link DamageSource}.
      * @param amount The damage amount, as a {@link Float}.
      * @return Whether the entity was hurt, as a {@link Boolean}.
@@ -288,6 +290,7 @@ public class Aerbunny extends AetherAnimal {
 
     /**
      * Sets the puffiness value, used for animation.
+     *
      * @param puffiness The {@link Integer} value.
      */
     public void setPuffiness(int puffiness) {
@@ -303,6 +306,7 @@ public class Aerbunny extends AetherAnimal {
 
     /**
      * Sets how long the Aerbunny should be afraid for.
+     *
      * @param afraidTime The {@link Integer} value.
      */
     public void setAfraidTime(int afraidTime) {
@@ -318,6 +322,7 @@ public class Aerbunny extends AetherAnimal {
 
     /**
      * Sets whether the Aerbunny is falling fast.
+     *
      * @param fastFalling The {@link Boolean} value.
      */
     public void setFastFalling(boolean fastFalling) {
@@ -381,6 +386,7 @@ public class Aerbunny extends AetherAnimal {
 
     /**
      * Prevents the Aerbunny from being hurt by the vehicle entity.
+     *
      * @param damageSource The {@link DamageSource}.
      * @return Whether the Aerbunny is invulnerable to the damage, as a {@link Boolean}.
      */

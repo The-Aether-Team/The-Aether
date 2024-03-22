@@ -28,6 +28,5 @@
     "recipes": [
       "aether:aether_tune_enchanting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

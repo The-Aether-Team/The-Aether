@@ -74,7 +74,7 @@ public abstract class AetherBlockLootSubProvider extends NitrogenBlockLootSubPro
         return createForgeSilkTouchOrShearsDispatchTable(block, this.applyExplosionCondition(block, LootItem.lootTableItem(sapling)).when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, chances)))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).when(BlockLootAccessor.aether$hasShearsOrSilkTouch().invert())
                         .add(this.applyExplosionDecay(block,
-                                LootItem.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
+                                        LootItem.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
                                 .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
                 .apply(DoubleDrops.builder());
     }
@@ -83,7 +83,7 @@ public abstract class AetherBlockLootSubProvider extends NitrogenBlockLootSubPro
         return this.droppingWithChancesAndSkyrootSticks(block, sapling, chances)
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).when(BlockLootAccessor.aether$hasShearsOrSilkTouch().invert())
                         .add(this.applyExplosionCondition(block,
-                                LootItem.lootTableItem(Items.GOLDEN_APPLE))
+                                        LootItem.lootTableItem(Items.GOLDEN_APPLE))
                                 .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.00005F, 0.000055555557F, 0.0000625F, 0.00008333334F, 0.00025F))));
     }
 
@@ -95,7 +95,7 @@ public abstract class AetherBlockLootSubProvider extends NitrogenBlockLootSubPro
 
     public LootTable.Builder droppingWithSkyrootSticks(Block block) {
         return createForgeSilkTouchOrShearsDispatchTable(block, this.applyExplosionDecay(block,
-                LootItem.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
+                        LootItem.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
                 .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F)))
                 .apply(DoubleDrops.builder());
     }
@@ -104,7 +104,7 @@ public abstract class AetherBlockLootSubProvider extends NitrogenBlockLootSubPro
         return createForgeSilkTouchOrShearsDispatchTable(block, this.applyExplosionDecay(block, LootItem.lootTableItem(fruit)))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).when(BlockLootAccessor.aether$hasShearsOrSilkTouch().invert())
                         .add(this.applyExplosionDecay(block,
-                                LootItem.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
+                                        LootItem.lootTableItem(AetherItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
                                 .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
                 .apply(DoubleDrops.builder());
     }
@@ -126,7 +126,7 @@ public abstract class AetherBlockLootSubProvider extends NitrogenBlockLootSubPro
     public LootTable.Builder droppingBerryBush(Block block, Block stem, Item drop) {
         return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                 .add(this.applyExplosionDecay(block, LootItem.lootTableItem(drop)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
                         .apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE)))
                 .when(BlockLootAccessor.aether$hasSilkTouch().invert())
                 .apply(DoubleDrops.builder())

@@ -162,7 +162,7 @@ public class FloatingBlockEntity extends Entity {
                                     } else if (block instanceof ConcretePowderBlock concretePowderBlock) {
                                         if (ConcretePowderBlockAccessor.callShouldSolidify(this.level(), blockPos1, blockState)) {
                                             ConcretePowderBlockAccessor concretePowderBlockAccessor = (ConcretePowderBlockAccessor) concretePowderBlock;
-                                            this.level().setBlock(blockPos1, concretePowderBlockAccessor.aether$getConcrete(), 1 | 2);
+                                            this.level().setBlock(blockPos1, concretePowderBlockAccessor.aether$getConcrete().defaultBlockState(), 1 | 2);
                                         }
                                     } else if (block instanceof AnvilBlock) {
                                         if (!this.isSilent()) {
@@ -304,7 +304,7 @@ public class FloatingBlockEntity extends Entity {
         return false;
     }
 
-   
+
     @Override
     protected Entity.MovementEmission getMovementEmission() {
         return Entity.MovementEmission.NONE;
@@ -371,7 +371,7 @@ public class FloatingBlockEntity extends Entity {
         double d0 = packet.getX();
         double d1 = packet.getY();
         double d2 = packet.getZ();
-        this.setPos(d0, d1 + (double)((1.0F - this.getBbHeight()) / 2.0F), d2);
+        this.setPos(d0, d1 + (double) ((1.0F - this.getBbHeight()) / 2.0F), d2);
         this.setStartPos(this.blockPosition());
     }
 

@@ -30,6 +30,5 @@
     "recipes": [
       "aether:skyroot_axe_repairing"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

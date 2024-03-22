@@ -47,18 +47,19 @@ public class GlovesRenderer implements ICurioRenderer {
 
     /**
      * Renders gloves in third person on the player's model.
-     * @param stack The {@link ItemStack} for the Curio.
-     * @param slotContext The {@link SlotContext} for the Curio.
-     * @param poseStack The rendering {@link PoseStack}.
+     *
+     * @param stack             The {@link ItemStack} for the Curio.
+     * @param slotContext       The {@link SlotContext} for the Curio.
+     * @param poseStack         The rendering {@link PoseStack}.
      * @param renderLayerParent The {@link RenderLayerParent} for the renderer.
-     * @param buffer The rendering {@link MultiBufferSource}.
-     * @param packedLight The {@link Integer} for the packed lighting for rendering.
-     * @param limbSwing The {@link Float} for the limb swing rotation.
-     * @param limbSwingAmount The {@link Float} for the limb swing amount.
-     * @param partialTicks The {@link Float} for the game's partial ticks.
-     * @param ageInTicks The {@link Float} for the entity's age in ticks.
-     * @param netHeadYaw The {@link Float} for the head yaw rotation.
-     * @param headPitch The {@link Float} for the head pitch rotation.
+     * @param buffer            The rendering {@link MultiBufferSource}.
+     * @param packedLight       The {@link Integer} for the packed lighting for rendering.
+     * @param limbSwing         The {@link Float} for the limb swing rotation.
+     * @param limbSwingAmount   The {@link Float} for the limb swing amount.
+     * @param partialTicks      The {@link Float} for the game's partial ticks.
+     * @param ageInTicks        The {@link Float} for the entity's age in ticks.
+     * @param netHeadYaw        The {@link Float} for the head yaw rotation.
+     * @param headPitch         The {@link Float} for the head pitch rotation.
      */
     @Override
     public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack poseStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource buffer, int packedLight, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
@@ -97,12 +98,13 @@ public class GlovesRenderer implements ICurioRenderer {
 
     /**
      * Renders a glove in the player's hand in first person.
-     * @param stack The {@link ItemStack} for the Curio.
-     * @param poseStack The rendering {@link PoseStack}.
-     * @param buffer The rendering {@link MultiBufferSource}.
+     *
+     * @param stack       The {@link ItemStack} for the Curio.
+     * @param poseStack   The rendering {@link PoseStack}.
+     * @param buffer      The rendering {@link MultiBufferSource}.
      * @param packedLight The {@link Integer} for the packed lighting for rendering.
-     * @param player The {@link AbstractClientPlayer} to render for.
-     * @param arm The {@link HumanoidArm} to render on.
+     * @param player      The {@link AbstractClientPlayer} to render for.
+     * @param arm         The {@link HumanoidArm} to render on.
      */
     public void renderFirstPerson(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int packedLight, AbstractClientPlayer player, HumanoidArm arm) {
         GlovesModel model = this.glovesFirstPerson;

@@ -30,6 +30,5 @@
     "recipes": [
       "aether:enchanted_berry_enchanting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

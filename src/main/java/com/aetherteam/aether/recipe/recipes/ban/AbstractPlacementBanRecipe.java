@@ -35,8 +35,9 @@ public abstract class AbstractPlacementBanRecipe<T, S extends Predicate<T>> impl
      * First it checks if there is no {@link AbstractPlacementBanRecipe#bypassBlock} or it doesn't match the interacted block.
      * Then if there is a {@link Biome} {@link ResourceKey} or a {@link Biome} {@link TagKey} it will test one of those alongside {@link BlockStateIngredient#test(BlockState)}.
      * Otherwise, it will only test {@link BlockStateIngredient#test(BlockState)}.
-     * @param level The {@link Level} the recipe is performed in.
-     * @param pos The {@link BlockPos} the recipe is performed at.
+     *
+     * @param level  The {@link Level} the recipe is performed in.
+     * @param pos    The {@link BlockPos} the recipe is performed at.
      * @param object The object being used that is being checked.
      * @return Whether the given object is banned from placement.
      */

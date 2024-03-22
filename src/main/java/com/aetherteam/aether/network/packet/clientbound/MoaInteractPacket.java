@@ -1,8 +1,10 @@
 package com.aetherteam.aether.network.packet.clientbound;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -11,8 +13,16 @@ import net.minecraft.world.entity.player.Player;
  * Swings the player's hand when feeding a Moa.
  */
 public record MoaInteractPacket(int playerID, boolean mainHand) implements BasePacket {
+
+    public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "interact_with_moa");
+
     @Override
-    public void encode(FriendlyByteBuf buf) {
+    public ResourceLocation id() {
+        return ID;
+    }
+
+    @Override
+    public void write(FriendlyByteBuf buf) {
         buf.writeInt(this.playerID());
         buf.writeBoolean(this.mainHand());
     }

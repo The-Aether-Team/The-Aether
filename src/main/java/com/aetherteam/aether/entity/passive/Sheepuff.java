@@ -207,7 +207,7 @@ public class Sheepuff extends AetherAnimal implements Shearable, IShearable {
             this.ageUp(60);
         }
     }
-   
+
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
@@ -308,6 +308,7 @@ public class Sheepuff extends AetherAnimal implements Shearable, IShearable {
 
     /**
      * Sets whether the Sheepuff is puffed up.
+     *
      * @param flag Whether to set the Sheepuff as puffed, as a {@link Boolean}.
      */
     public void setPuffed(boolean flag) {

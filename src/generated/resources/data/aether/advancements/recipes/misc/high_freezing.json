@@ -30,6 +30,5 @@
     "recipes": [
       "aether:high_freezing"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

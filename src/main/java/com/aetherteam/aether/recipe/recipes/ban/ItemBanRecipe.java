@@ -39,10 +39,11 @@ public class ItemBanRecipe extends AbstractPlacementBanRecipe<ItemStack, Ingredi
      * Checks if the recipe matches the given parameters using {@link AbstractPlacementBanRecipe#matches(Level, BlockPos, Object)}.<br><br>
      * Then checks an event hook through {@link AetherEventDispatch#isItemPlacementBanned(LevelAccessor, BlockPos, ItemStack)}.<br><br>
      * Before calling {@link AetherEventDispatch#onPlacementSpawnParticles(LevelAccessor, BlockPos, Direction, ItemStack, BlockState)} to spawn particles on item ban.
-     * @param level The {@link Level} the recipe is performed in.
-     * @param pos The {@link BlockPos} the recipe is performed at.
-     * @param direction The {@link Direction} face that is interacted with.
-     * @param stack The {@link ItemStack} being used that is being checked.
+     *
+     * @param level          The {@link Level} the recipe is performed in.
+     * @param pos            The {@link BlockPos} the recipe is performed at.
+     * @param direction      The {@link Direction} face that is interacted with.
+     * @param stack          The {@link ItemStack} being used that is being checked.
      * @param spawnParticles A {@link Boolean} for whether to spawn particles.
      * @return Whether the given {@link ItemStack} is banned from placement.
      */

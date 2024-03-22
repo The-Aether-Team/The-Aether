@@ -82,6 +82,7 @@ public class CustomizationsOptions {
 
     /**
      * Modifies the "haloEnabled" setting.
+     *
      * @param value The {@link Boolean} value.
      */
     public void setIsHaloEnabled(boolean value) {
@@ -102,6 +103,7 @@ public class CustomizationsOptions {
 
     /**
      * Modifies the "haloColor" setting.
+     *
      * @param value The {@link String} hex code value.
      */
     public void setHaloColor(String value) {
@@ -122,6 +124,7 @@ public class CustomizationsOptions {
 
     /**
      * Modifies the "developerGlowEnabled" setting.
+     *
      * @param value The {@link Boolean} value.
      */
     public void setIsDeveloperGlowEnabled(boolean value) {
@@ -142,6 +145,7 @@ public class CustomizationsOptions {
 
     /**
      * Modifies the "developerGlowColor" setting.
+     *
      * @param value The {@link String} hex code value.
      */
     public void setDeveloperGlowColor(String value) {
@@ -162,6 +166,7 @@ public class CustomizationsOptions {
 
     /**
      * Modifies the "moaSkin" setting.
+     *
      * @param value The {@link String} name ID value.
      */
     public void setMoaSkin(String value) {
@@ -178,6 +183,7 @@ public class CustomizationsOptions {
 
     /**
      * Modifies a setting.
+     *
      * @param string A setting key {@link String}.
      * @param object A setting value as an {@link Object}.
      */

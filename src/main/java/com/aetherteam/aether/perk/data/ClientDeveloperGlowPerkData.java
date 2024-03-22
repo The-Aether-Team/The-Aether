@@ -1,6 +1,5 @@
 package com.aetherteam.aether.perk.data;
 
-import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.ServerDeveloperGlowPacket;
 import com.aetherteam.aether.perk.CustomizationsOptions;
 import com.aetherteam.aether.perk.PerkUtil;
@@ -20,6 +19,7 @@ public class ClientDeveloperGlowPerkData extends ClientPerkData<DeveloperGlow> {
 
     /**
      * Updates the player's Developer Glow data on the server if changes to the information occur on the client.
+     *
      * @param player The {@link Player}.
      */
     @Override
@@ -34,11 +34,11 @@ public class ClientDeveloperGlowPerkData extends ClientPerkData<DeveloperGlow> {
             if (developerGlowEnabled) { // Checks whether the Developer Glow is enabled in the options.
                 if (!userDeveloperGlowData.containsKey(uuid) || userDeveloperGlowData.get(uuid) == null || (developerGlowColor != null && !userDeveloperGlowData.get(uuid).hexColor().equals(developerGlowColor))) { // A check to see if any options have changed.
                     if (PerkUtil.hasDeveloperGlow().test(user)) { // Verifies whether the User can have the Developer Glow.
-                        PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerDeveloperGlowPacket.Apply(player.getUUID(), new DeveloperGlow(developerGlowColor))); // Send a modification packet to the server.
+                        PacketRelay.sendToServer(new ServerDeveloperGlowPacket.Apply(player.getUUID(), new DeveloperGlow(developerGlowColor))); // Send a modification packet to the server.
                     }
                 }
             } else { // Removes the Halo if it isn't enabled in the options.
-                PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerDeveloperGlowPacket.Remove(player.getUUID())); // Send a removal packet to the server.
+                PacketRelay.sendToServer(new ServerDeveloperGlowPacket.Remove(player.getUUID())); // Send a removal packet to the server.
             }
         }
     }

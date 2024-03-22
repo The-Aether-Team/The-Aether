@@ -1063,7 +1063,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addLore(AetherBlocks.SENTRY_STONE, "The light version of Carved Stone, also found in Bronze Dungeons.");
         this.addLore(AetherItems.SILVER_DUNGEON_KEY, "A reflective key that is given to you by the Valkyrie Queen after defeating her. Use it to claim the treasure she left behind!");
         this.addLore(AetherItems.SKYROOT_AXE, "One of the Aether's wooden tools. It can be used to double Skyroot Log drops. Simple but useful for beginners.");
-        this.addLore(AetherItems.SKYROOT_AXOLOTL_BUCKET,"A Skyroot Bucket with a friendly Axolotl in it. Axolotls can be incredibly helpful aquatic partners. So, it's best to keep one on hand if you're exploring wet environments.");
+        this.addLore(AetherItems.SKYROOT_AXOLOTL_BUCKET, "A Skyroot Bucket with a friendly Axolotl in it. Axolotls can be incredibly helpful aquatic partners. So, it's best to keep one on hand if you're exploring wet environments.");
         this.addLore(AetherBlocks.SKYROOT_BED, "Crafted with wool and Skyroot Planks. You can only sleep at night to skip nighttime, but during the day you can set your respawn point in the Aether. You cannot sleep while monsters are nearby.");
         this.addLore(AetherItems.SKYROOT_BOAT, "While the Aether does not have many large bodies of water, a Boat can occasionally be a useful tool for crossing large distances over ice!");
         this.addLore(AetherItems.SKYROOT_CHEST_BOAT, "A Skyroot Boat with a handy Chest in the back. It is useful for transporting more items over long stretches of water, which are famously difficult to find in the Aether.");
@@ -1097,7 +1097,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addLore(AetherItems.SKYROOT_SWORD, "One of the Aether's wooden tools. It has a low amount of durability and doubles mob drops. It makes an excellent weapon for collecting food when combined with enchantments such as Looting and Fire Aspect.");
         this.addLore(AetherItems.SKYROOT_TADPOLE_BUCKET, "A Skyroot Bucket with a Tadpole inside. Transporting a Tadpole to a new biome can change what type of Frog it grows up into!");
         this.addLore(AetherBlocks.SKYROOT_TRAPDOOR, "Crafted from Skyroot Planks. A Trapdoor is useful for covering one block wide entryways. Often used to add extra protection to staircases.");
-        this.addLore(AetherItems.SKYROOT_TROPICAL_FISH_BUCKET,"A Skyroot Bucket containing a Tropical Fish. A helpful way to transport and catalog the numerous varieties of Tropical Fish.");
+        this.addLore(AetherItems.SKYROOT_TROPICAL_FISH_BUCKET, "A Skyroot Bucket containing a Tropical Fish. A helpful way to transport and catalog the numerous varieties of Tropical Fish.");
         this.addLore(AetherItems.SKYROOT_WATER_BUCKET, "A Skyroot Bucket that is filled to the brim with water.");
         this.addLore(AetherBlocks.STRIPPED_SKYROOT_LOG, "A Skyroot Log that has had its bark stripped away with an Axe. When put in a Crafting Table, they will provide 4 Skyroot Planks.");
         this.addLore(AetherBlocks.STRIPPED_SKYROOT_WOOD, "Stripped Skyroot Logs crafted to be smooth on all sides. When put in a Crafting Table, they will provide 4 Skyroot Planks.");
@@ -1140,8 +1140,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addLore(AetherItems.ZANITE_SWORD, "One of the Aether's mid-tier tools, the attack damage on this Sword starts at iron level and will increase up to twice as strong as it loses durability.");
         this.addLore(AetherItems.MUSIC_DISC_AETHER_TUNE, "A music disc that plays \"Aether Tune\" by Noisestorm.");
         this.addLore(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "A music disc that plays \"Ascending Dawn\" by Emile van Krieken.");
-        this.addLore(AetherItems.MUSIC_DISC_CHINCHILLA,"A music disc that plays \"chinchilla\" by RENREN.");
-        this.addLore(AetherItems.MUSIC_DISC_HIGH,"A music disc that plays \"high\" by RENREN.");
+        this.addLore(AetherItems.MUSIC_DISC_CHINCHILLA, "A music disc that plays \"chinchilla\" by RENREN.");
+        this.addLore(AetherItems.MUSIC_DISC_HIGH, "A music disc that plays \"high\" by RENREN.");
         this.addLoreUnique("item.aether.hammer_of_jeb", "A mysterious hammer that can shoot projectiles. At one point, it vanished from existence. It's said this was actually Jeb's hammer at one point.");
 
 
@@ -1156,7 +1156,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addProTip("gravitite_ore_enchanting", "Gravitite Ore can be enchanted into Enchanted Gravitite.");
         this.addProTip("enchanted_gravitite_floating", "Enchanted Gravitite only floats up when powered.");
         this.addProTip("enchanted_gravitite_crafting", "Enchanted Gravitite can be crafted into armor and tools.");
-        this.addProTip("gravitite_armour_ability","Gravitite armor grants you higher jumps and no fall damage.");
+        this.addProTip("gravitite_armour_ability", "Gravitite armor grants you higher jumps and no fall damage.");
         this.addProTip("moa_nature_staff", "Baby Moas will stay put when right clicking them with a Nature Staff.");
         this.addProTip("golden_oak_amber", "Golden Oak Trees yield valuable Golden Amber in their logs.");
         this.addProTip("altar_repairing", "Altars can repair damaged items and enhance existing items.");

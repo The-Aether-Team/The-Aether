@@ -15,8 +15,9 @@ public class DirectoryLockMixin {
     /**
      * Used by the world preview system.<br>
      * Unlocks the active world preview level when in the world selection screen.
+     *
      * @param basePath The {@link Path} for the level directory.
-     * @param cir The {@link Boolean} {@link CallbackInfoReturnable} used for the method's return value.
+     * @param cir      The {@link Boolean} {@link CallbackInfoReturnable} used for the method's return value.
      * @see WorldDisplayHelper#isActive()
      * @see AetherMixinHooks#canUnlockLevel(Path)
      */

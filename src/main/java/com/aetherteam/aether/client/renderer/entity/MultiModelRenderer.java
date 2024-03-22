@@ -31,7 +31,7 @@ public abstract class MultiModelRenderer<T extends Mob, M extends EntityModel<T>
     public abstract N getDefaultModel();
 
     public abstract O getOldModel();
-   
+
     @Override
     public ResourceLocation getTextureLocation(T entity) {
         return AetherConfig.CLIENT.legacy_models.get() ? this.getOldTexture() : this.getDefaultTexture();

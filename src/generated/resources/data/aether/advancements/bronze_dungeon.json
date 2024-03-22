@@ -17,16 +17,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.aether.bronze_dungeon.desc"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "aether:bronze_dungeon_key"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.aether.bronze_dungeon"
     }

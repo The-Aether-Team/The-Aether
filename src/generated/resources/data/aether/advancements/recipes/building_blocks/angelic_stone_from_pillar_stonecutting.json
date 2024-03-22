@@ -30,6 +30,5 @@
     "recipes": [
       "aether:angelic_stone_from_pillar_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

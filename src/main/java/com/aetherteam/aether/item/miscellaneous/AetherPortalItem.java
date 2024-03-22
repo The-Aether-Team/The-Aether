@@ -19,6 +19,7 @@ public class AetherPortalItem extends Item {
 
     /**
      * Creates an Aether Portal with {@link AetherPortalItem#createPortalFrame(UseOnContext)} and swing and consumes the item if the portal is successfully placed.
+     *
      * @param context The {@link UseOnContext} of the usage interaction.
      * @return A "consume" {@link InteractionResult} if successful, fail if otherwise.
      */
@@ -39,6 +40,7 @@ public class AetherPortalItem extends Item {
 
     /**
      * Creates an Aether Portal.
+     *
      * @param context The {@link UseOnContext} of the usage interaction.
      * @return Whether the portal frame can be placed, as a {@link Boolean}.
      */

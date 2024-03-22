@@ -31,15 +31,16 @@ public class CrystalFoliagePlacer extends FoliagePlacer {
 
     /**
      * Places leaves in a diamond shape around the trunk with different radii at different heights.
-     * @param level The {@link LevelSimulatedReader}.
-     * @param foliageSetter The {@link BiConsumer} of a {@link BlockPos} and {@link BlockState} used for block placement.
-     * @param random The {@link RandomSource}.
-     * @param config The {@link TreeConfiguration}.
+     *
+     * @param level             The {@link LevelSimulatedReader}.
+     * @param foliageSetter     The {@link BiConsumer} of a {@link BlockPos} and {@link BlockState} used for block placement.
+     * @param random            The {@link RandomSource}.
+     * @param config            The {@link TreeConfiguration}.
      * @param maxFreeTreeHeight The {@link Integer} for the maximum tree height.
-     * @param attachment A {@link net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer.FoliageAttachment} to add foliage to.
-     * @param foliageHeight The {@link Integer} for the foliage height.
-     * @param foliageRadius The {@link Integer} for the foliage radius.
-     * @param offset The {@link Integer} for the foliage offset.
+     * @param attachment        A {@link net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer.FoliageAttachment} to add foliage to.
+     * @param foliageHeight     The {@link Integer} for the foliage height.
+     * @param foliageRadius     The {@link Integer} for the foliage radius.
+     * @param offset            The {@link Integer} for the foliage offset.
      */
     @Override
     protected void createFoliage(LevelSimulatedReader level, FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, int maxFreeTreeHeight, FoliagePlacer.FoliageAttachment attachment, int foliageHeight, int foliageRadius, int offset) {
@@ -63,13 +64,14 @@ public class CrystalFoliagePlacer extends FoliagePlacer {
 
     /**
      * Places leaves in a diamond shape around a trunk piece.
-     * @param level The {@link LevelSimulatedReader}.
+     *
+     * @param level         The {@link LevelSimulatedReader}.
      * @param foliageSetter The {@link BiConsumer} of a {@link BlockPos} and {@link BlockState} used for block placement.
-     * @param random The {@link RandomSource}.
-     * @param config The {@link TreeConfiguration}.
-     * @param attachment A {@link net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer.FoliageAttachment} to add foliage to.
-     * @param radius The {@link Integer} for the placement radius.
-     * @param offset The {@link Integer} for the placement offset.
+     * @param random        The {@link RandomSource}.
+     * @param config        The {@link TreeConfiguration}.
+     * @param attachment    A {@link net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer.FoliageAttachment} to add foliage to.
+     * @param radius        The {@link Integer} for the placement radius.
+     * @param offset        The {@link Integer} for the placement offset.
      */
     private void placeLeavesDiamond(LevelSimulatedReader level, FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, FoliagePlacer.FoliageAttachment attachment, int radius, int offset) {
         this.placeLeavesRow(level, foliageSetter, random, config, attachment.pos().north(), radius, offset, attachment.doubleTrunk());
@@ -80,6 +82,7 @@ public class CrystalFoliagePlacer extends FoliagePlacer {
 
     /**
      * Determines the foliage height with some randomization.
+     *
      * @param random The {@link RandomSource}.
      * @param height The {@link Integer} for the foliage height.
      * @param config The {@link TreeConfiguration}.
@@ -92,12 +95,13 @@ public class CrystalFoliagePlacer extends FoliagePlacer {
 
     /**
      * Skips placing a foliage block at an edge location.
+     *
      * @param random The {@link RandomSource}.
      * @param localX The local {@link Integer} x-position.
      * @param localY The local {@link Integer} y-position.
      * @param localZ The local {@link Integer} z-position.
-     * @param range The {@link Integer} for the placement range.
-     * @param large The {@link Boolean} for whether the tree is large.
+     * @param range  The {@link Integer} for the placement range.
+     * @param large  The {@link Boolean} for whether the tree is large.
      * @return Whether the location should be skipped, as a {@link Boolean}.
      */
     @Override

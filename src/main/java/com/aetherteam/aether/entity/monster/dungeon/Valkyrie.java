@@ -49,7 +49,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
         this.targetSelector.addGoal(4, new ResetUniversalAngerTargetGoal<>(this, false));
     }
-   
+
     public static AttributeSupplier.Builder createMobAttributes() {
         return createAttributes()
                 .add(Attributes.FOLLOW_RANGE, 16.0)
@@ -71,8 +71,9 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
     /**
      * Allows the players to chat with the Valkyries if they're not provoked. Players will see the chat messages only
      * if they are the one who interacted with the valkyrie.
+     *
      * @param player The interacting {@link Player}.
-     * @param hand The {@link InteractionHand}.
+     * @param hand   The {@link InteractionHand}.
      * @return The {@link InteractionResult}.
      */
     @Override
@@ -104,6 +105,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
 
     /**
      * Plays the message for the Valkyrie going to attack the player when hurt.
+     *
      * @param source The {@link DamageSource}.
      * @param amount The {@link Float} amount of damage.
      * @return Whether the entity was hurt, as a {@link Boolean}.
@@ -121,6 +123,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
 
     /**
      * Plays the message for the Valkyrie defeating the player.
+     *
      * @param entity The hurt {@link Entity}.
      */
     @Override
@@ -134,6 +137,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
 
     /**
      * Plays the Valkyrie's defeat message.
+     *
      * @param source The {@link DamageSource}.
      */
     @Override
@@ -163,6 +167,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
 
     /**
      * Sets how long this entity should be angry.
+     *
      * @param time The {@link Integer} value.
      */
     @Override
@@ -181,6 +186,7 @@ public class Valkyrie extends AbstractValkyrie implements NeutralMob {
 
     /**
      * Sets the target to be angry at.
+     *
      * @param target The target's {@link UUID}.
      */
     @Override

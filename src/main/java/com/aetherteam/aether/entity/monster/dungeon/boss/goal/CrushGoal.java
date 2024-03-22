@@ -57,6 +57,7 @@ public class CrushGoal extends Goal {
 
     /**
      * Checks if there are blocks between a target and the Slider.
+     *
      * @param slider The {@link Slider} that the brain belongs to.
      * @return Whether there are blocks, as a {@link Boolean}.
      */
@@ -67,7 +68,7 @@ public class CrushGoal extends Goal {
         }
         return slider.level().getBlockStates(
                 AABB.of(BoundingBox.fromCorners(target.blockPosition(), slider.blockPosition()))
-                ).anyMatch(this::isBreakable);
+        ).anyMatch(this::isBreakable);
     }
 
     private boolean isBreakable(BlockState blockState) {

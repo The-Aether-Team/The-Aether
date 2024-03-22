@@ -32,15 +32,16 @@ public class GoldenOakFoliagePlacer extends FoliagePlacer {
 
     /**
      * Places a sphere of leaves.
-     * @param level The {@link LevelSimulatedReader}.
-     * @param foliageSetter The {@link BiConsumer} of a {@link BlockPos} and {@link BlockState} used for block placement.
-     * @param random The {@link RandomSource}.
-     * @param config The {@link TreeConfiguration}.
+     *
+     * @param level             The {@link LevelSimulatedReader}.
+     * @param foliageSetter     The {@link BiConsumer} of a {@link BlockPos} and {@link BlockState} used for block placement.
+     * @param random            The {@link RandomSource}.
+     * @param config            The {@link TreeConfiguration}.
      * @param maxFreeTreeHeight The {@link Integer} for the maximum tree height.
-     * @param attachment A {@link net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer.FoliageAttachment} to add foliage to.
-     * @param foliageHeight The {@link Integer} for the foliage height.
-     * @param foliageRadius The {@link Integer} for the foliage radius.
-     * @param offset The {@link Integer} for the foliage offset.
+     * @param attachment        A {@link net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer.FoliageAttachment} to add foliage to.
+     * @param foliageHeight     The {@link Integer} for the foliage height.
+     * @param foliageRadius     The {@link Integer} for the foliage radius.
+     * @param offset            The {@link Integer} for the foliage offset.
      */
     @Override
     protected void createFoliage(LevelSimulatedReader level, FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, int maxFreeTreeHeight, FoliageAttachment attachment, int foliageHeight, int foliageRadius, int offset) {
@@ -48,8 +49,10 @@ public class GoldenOakFoliagePlacer extends FoliagePlacer {
             this.placeLeavesRow(level, foliageSetter, random, config, attachment.pos(), 4, i, attachment.doubleTrunk());
         }
     }
+
     /**
      * Determines the foliage height at a constant value of 7.
+     *
      * @param random The {@link RandomSource}.
      * @param height The {@link Integer} for the foliage height.
      * @param config The {@link TreeConfiguration}.
@@ -62,12 +65,13 @@ public class GoldenOakFoliagePlacer extends FoliagePlacer {
 
     /**
      * Skips placing a foliage block at a spherical edge location and with some randomness.
+     *
      * @param random The {@link RandomSource}.
      * @param localX The local {@link Integer} x-position.
      * @param localY The local {@link Integer} y-position.
      * @param localZ The local {@link Integer} z-position.
-     * @param range The {@link Integer} for the placement range.
-     * @param large The {@link Boolean} for whether the tree is large.
+     * @param range  The {@link Integer} for the placement range.
+     * @param large  The {@link Boolean} for whether the tree is large.
      * @return Whether the location should be skipped, as a {@link Boolean}.
      */
     @Override

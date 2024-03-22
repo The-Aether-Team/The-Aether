@@ -24,8 +24,9 @@ public class PigDropsModifier extends LootModifier {
 
     /**
      * Doubles pig drops with a 1/4 chance if a mob is attacked with full strength with a Pig Slayer and the mob is tagged with {@link AetherTags.Entities#PIGS} and the item is tagged with {@link AetherTags.Items#PIG_DROPS}.
+     *
      * @param lootStacks Result items from a loot table as an {@link ObjectArrayList} of {@link ItemStack}s.
-     * @param context The {@link LootContext}.
+     * @param context    The {@link LootContext}.
      * @return A new {@link ObjectArrayList} of {@link ItemStack}s that a loot table will give.
      */
     @Override

@@ -8,15 +8,15 @@ import net.neoforged.neoforge.event.entity.EntityEvent;
 
 /**
  * BossFightEvent is fired when an event for a boss fight occurs.<br>
- *  * If a method utilizes this {@link EntityEvent} as its parameter, the method will receive every child event of this class.<br>
- *  * <br>
- *  * All children of this event are fired on the {@link net.neoforged.neoforge.common.NeoForge#EVENT_BUS}.
+ * * If a method utilizes this {@link EntityEvent} as its parameter, the method will receive every child event of this class.<br>
+ * * <br>
+ * * All children of this event are fired on the {@link net.neoforged.neoforge.common.NeoForge#EVENT_BUS}.
  */
 public class BossFightEvent extends EntityEvent {
     private final BossRoomTracker<?> dungeon;
 
     /**
-     * @param entity The {@link Entity} triggering the boss fight.
+     * @param entity  The {@link Entity} triggering the boss fight.
      * @param dungeon The {@link BossRoomTracker} representing the boss's dungeon.
      */
     public BossFightEvent(Entity entity, BossRoomTracker<?> dungeon) {

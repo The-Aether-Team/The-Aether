@@ -17,16 +17,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.aether.silver_dungeon.desc"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "aether:silver_dungeon_key"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.aether.silver_dungeon"
     }

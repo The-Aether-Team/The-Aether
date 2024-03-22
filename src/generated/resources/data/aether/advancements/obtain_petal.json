@@ -15,16 +15,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.aether.obtain_petal.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "aether:aechor_petal"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.aether.obtain_petal"
     }

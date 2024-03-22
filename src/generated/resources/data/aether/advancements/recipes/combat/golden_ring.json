@@ -30,6 +30,5 @@
     "recipes": [
       "aether:golden_ring"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

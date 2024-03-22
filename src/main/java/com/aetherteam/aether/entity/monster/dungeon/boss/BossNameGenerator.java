@@ -8,14 +8,14 @@ public final class BossNameGenerator {
     /**
      * Valkyrie names
      */
-    public static final String[] valkyrieNameFirst = { "Signy", "Har", "Her", "Gon", "Sko", "Hil" };
-    public static final String[] valkyrieNameMiddle = { "fjo", "ska", "bri", ""};
-    public static final String[] valkyrieNameLast = { "tur", "pul", "dul", "gul", "or"};
+    public static final String[] valkyrieNameFirst = {"Signy", "Har", "Her", "Gon", "Sko", "Hil"};
+    public static final String[] valkyrieNameMiddle = {"fjo", "ska", "bri", ""};
+    public static final String[] valkyrieNameLast = {"tur", "pul", "dul", "gul", "or"};
 
     /**
      * Slider and Sun Spirit names
      */
-    public static final String[] genericNameFirst = new String[] { "Del", "Ros", "Per", "Cyn",
+    public static final String[] genericNameFirst = new String[]{"Del", "Ros", "Per", "Cyn",
             "Flar", "Ba", "Lab", "Az", "Ob", "Al", "Pas", "Nun", "Ur", "Ter",
             "Jar", "Est", "Car", "Houl", "In", "Kop", "Shot", "Vast", "Ael",
             "Skal", "Geld", "Er", "Sald", "Sar", "Binthe", "Haur", "Syn",
@@ -32,8 +32,8 @@ public final class BossNameGenerator {
             "Mold", "Bae", "As", "Ki", "Val", "Par", "Ash", "Ost", "Haith",
             "I", "Ca", "Vad", "Ro", "Dez", "Kuv", "Vab", "Dar", "Ral", "Mar",
             "Quarne", "Pulg", "Hor", "Ka", "Quer", "And", "Ny", "Ym", "Wal",
-            "Tarl", "Vart","Pro" };
-    public static final String[] genericNameMiddle = new String[] { "cath", "yd", "rik", "nal",
+            "Tarl", "Vart", "Pro"};
+    public static final String[] genericNameMiddle = new String[]{"cath", "yd", "rik", "nal",
             "y", "ro", "stead", "carn", "tak", "chean", "ain", "ak", "loc",
             "ras", "ien", "cuth", "alen", "is", "carad", "acy", "la", "asc",
             "arn", "ayn", "sene", "art", "lyn", "cam", "mel", "ly", "eas",
@@ -48,8 +48,8 @@ public final class BossNameGenerator {
             "ax", "ast", "azer", "ont", "or", "ian", "gur", "et", "er", "im",
             "dar", "end", "doth", "en", "aller", "reth", "juin", "arny", "un",
             "len", "ere", "ane", "aryn", "dy", "gary", "arry", "arty", "ydd",
-            "ris", "ar", "ance", "hen", "el", "air", "rum" };
-    public static final String[] genericNameLast = new String[] { "cath", "carth", "ayne",
+            "ris", "ar", "ance", "hen", "el", "air", "rum"};
+    public static final String[] genericNameLast = new String[]{"cath", "carth", "ayne",
             "yd", "arik", "asty", "rik", "lir", "dor", "nal", "on", "codd",
             "y", "ber", "ro", "stead", "ta", "tyne", "wat", "carn", "erry",
             "chean", "ain", "aryne", "al", "ak", "ert", "ras", "ien", "alen",
@@ -63,7 +63,7 @@ public final class BossNameGenerator {
             "ane", "valer", "war", "ant", "iam", "ew", "dy", "aryn", "gary",
             "ime", "varn", "orn", "tha", "arty", "quent", "arry", "aver",
             "geth", "car", "lin", "ydd", "ris", "nyd", "ance", "luth", "ar",
-            "dal", "gant", "el", "tyn", "air", "gine", "boo" };
+            "dal", "gant", "el", "tyn", "air", "gine", "boo"};
 
     /**
      * Generates a generic boss name.

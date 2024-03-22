@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class FlyingCowRenderer extends MobRenderer<FlyingCow, CowModel<FlyingCow>> {
     private static final ResourceLocation FLYING_COW_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/flying_cow/flying_cow.png");
-    
+
     public FlyingCowRenderer(EntityRendererProvider.Context context) {
         super(context, new CowModel<>(context.bakeLayer(AetherModelLayers.FLYING_COW)), 0.7F);
         this.addLayer(new QuadrupedWingsLayer<>(this, new QuadrupedWingsModel<>(context.bakeLayer(AetherModelLayers.FLYING_COW_WINGS)), new ResourceLocation(Aether.MODID, "textures/entity/mobs/flying_cow/flying_cow_wings.png")));

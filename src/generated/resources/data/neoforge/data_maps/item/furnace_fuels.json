@@ -1,0 +1,37 @@
+{
+  "values": {
+    "aether:ambrosium_block": {
+      "burn_time": 16000
+    },
+    "aether:ambrosium_shard": {
+      "burn_time": 1600
+    },
+    "aether:skyroot_axe": {
+      "burn_time": 200
+    },
+    "aether:skyroot_bookshelf": {
+      "burn_time": 300
+    },
+    "aether:skyroot_bucket": {
+      "burn_time": 200
+    },
+    "aether:skyroot_hoe": {
+      "burn_time": 200
+    },
+    "aether:skyroot_pickaxe": {
+      "burn_time": 200
+    },
+    "aether:skyroot_planks": {
+      "burn_time": 300
+    },
+    "aether:skyroot_shovel": {
+      "burn_time": 200
+    },
+    "aether:skyroot_stick": {
+      "burn_time": 100
+    },
+    "aether:skyroot_sword": {
+      "burn_time": 200
+    }
+  }
+}

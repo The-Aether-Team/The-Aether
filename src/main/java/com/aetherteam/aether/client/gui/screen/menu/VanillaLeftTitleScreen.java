@@ -91,7 +91,8 @@ public class VanillaLeftTitleScreen extends TitleScreen implements TitleScreenBe
                     poseStack.translate(250.0F, 50.0F, 0.0F);
                     poseStack.mulPose(Axis.ZP.rotationDegrees(-20.0F));
                     float textSize = 1.8F - Mth.abs(Mth.sin((float) (Util.getMillis() % 1000L) / 1000.0F * Mth.TWO_PI) * 0.1F);
-                    textSize = textSize * 100.0F / (float) (VanillaLeftTitleScreen.this.font.width(splashRendererAccessor.cumulus$getSplash()) + 32); poseStack.scale(textSize, textSize, textSize);
+                    textSize = textSize * 100.0F / (float) (VanillaLeftTitleScreen.this.font.width(splashRendererAccessor.cumulus$getSplash()) + 32);
+                    poseStack.scale(textSize, textSize, textSize);
                     guiGraphics.drawCenteredString(VanillaLeftTitleScreen.this.font, splashRendererAccessor.cumulus$getSplash(), 0, -8, 16776960 | roundedFadeAmount);
                     poseStack.popPose();
                 }

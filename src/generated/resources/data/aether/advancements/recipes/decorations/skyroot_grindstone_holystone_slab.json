@@ -30,6 +30,5 @@
     "recipes": [
       "aether:skyroot_grindstone_holystone_slab"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

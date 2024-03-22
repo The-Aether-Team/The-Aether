@@ -2,7 +2,7 @@ package com.aetherteam.aether.block.dispenser;
 
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.capability.accessory.MobAccessory;
+import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.entity.projectile.weapon.HammerProjectile;
 import com.aetherteam.aether.entity.projectile.weapon.ThrownLightningKnife;
 import com.aetherteam.aether.event.hooks.EntityHooks;
@@ -63,8 +63,9 @@ public class AetherDispenseBehaviors {
     /**
      * Based on {@link net.minecraft.world.item.ArmorItem#dispenseArmor(BlockSource, ItemStack)} and {@link top.theillusivec4.curios.common.event.CuriosEventHandler#curioRightClick(PlayerInteractEvent.RightClickItem)}.<br><br>
      * Handles checking if an accessory shot from a dispenser can be equipped, and handles that equipping behavior if it can.
+     *
      * @param blockSource The {@link BlockSource} for the dispenser.
-     * @param stack The {@link ItemStack} in the dispenser.
+     * @param stack       The {@link ItemStack} in the dispenser.
      * @return Whether the accessory can be dispensed, as a {@link Boolean}.
      */
     public static boolean dispenseAccessory(BlockSource blockSource, ItemStack stack) {
@@ -91,10 +92,8 @@ public class AetherDispenseBehaviors {
                                         int count = itemStack.getCount();
                                         itemStack.shrink(count); // Shrink stack in dispenser.
                                         if (livingEntity instanceof Mob mob && EntityHooks.canMobSpawnWithAccessories(mob)) {
-                                            MobAccessory.get(mob).ifPresent((accessoryMob) -> {
-                                                accessoryMob.setGuaranteedDrop(id);
-                                                accessoryMob.getMob().setPersistenceRequired();
-                                            });
+                                            mob.getData(AetherDataAttachments.MOB_ACCESSORY).setGuaranteedDrop(id);
+                                            mob.setPersistenceRequired();
                                         }
                                     }
                                 }
@@ -103,7 +102,7 @@ public class AetherDispenseBehaviors {
                     }
                 }));
             } else {
-                CuriosApi.getCurio(itemStack).ifPresent(curio -> CuriosApi.getCuriosInventory(livingEntity).ifPresent(handler -> {
+                CuriosApi.getCurio(itemStack).flatMap(curio -> CuriosApi.getCuriosInventory(livingEntity)).ifPresent(handler -> {
                     if (itemStack.is(AetherTags.Items.ACCESSORIES)) {
                         String identifier = "";
                         if (itemStack.getItem() instanceof GlovesItem) {
@@ -140,7 +139,7 @@ public class AetherDispenseBehaviors {
                             }
                         }
                     }
-                }));
+                });
             }
             return true;
         }
@@ -250,9 +249,10 @@ public class AetherDispenseBehaviors {
 
     /**
      * Behavior to shoot a projectile.
-     * @param source The {@link BlockSource} for the dispenser.
+     *
+     * @param source     The {@link BlockSource} for the dispenser.
      * @param projectile The {@link Projectile} to dispense.
-     * @param velocity The velocity for the projectile, as a {@link Float}.
+     * @param velocity   The velocity for the projectile, as a {@link Float}.
      * @param inaccuracy The inaccuracy for the projectile, as a {@link Float}.
      */
     protected static void spawnProjectile(BlockSource source, Projectile projectile, float velocity, float inaccuracy) {

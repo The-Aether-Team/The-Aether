@@ -8,5 +8,6 @@ import net.minecraft.world.entity.Entity;
  */
 public interface NotGrounded {
     boolean isEntityOnGround();
+
     void setEntityOnGround(boolean onGround);
 }

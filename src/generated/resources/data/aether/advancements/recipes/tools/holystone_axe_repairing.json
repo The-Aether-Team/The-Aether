@@ -30,6 +30,5 @@
     "recipes": [
       "aether:holystone_axe_repairing"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

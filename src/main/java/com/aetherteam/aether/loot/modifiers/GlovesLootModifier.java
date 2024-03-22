@@ -41,8 +41,9 @@ public class GlovesLootModifier extends LootModifier {
      * Randomly replaces {@link ArmorItem} {@link ItemStack}s in loot with gloves of the equivalent {@link ArmorMaterials} with a 1/10 chance for each armor item,
      * with the gloves provided by {@link GlovesLootModifier#glovesStack} and the material provided by {@link GlovesLootModifier#armorMaterial}.
      * During replacement, the gloves will retain any enchantments from the respective armor piece.
+     *
      * @param lootStacks Result items from a loot table as an {@link ObjectArrayList} of {@link ItemStack}s.
-     * @param context The {@link LootContext}.
+     * @param context    The {@link LootContext}.
      * @return A new {@link ObjectArrayList} of {@link ItemStack}s that a loot table will give.
      */
     @Override

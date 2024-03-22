@@ -23,8 +23,9 @@ public class RemoveSeedsModifier extends LootModifier {
 
     /**
      * Removes Wheat Seeds from loot tables within the Aether (determined by {@link AetherTags.Biomes#NO_WHEAT_SEEDS}).
+     *
      * @param lootStacks Result items from a loot table as an {@link ObjectArrayList} of {@link ItemStack}s.
-     * @param context The {@link LootContext}.
+     * @param context    The {@link LootContext}.
      * @return A new {@link ObjectArrayList} of {@link ItemStack}s that a loot table will give.
      */
     @Override

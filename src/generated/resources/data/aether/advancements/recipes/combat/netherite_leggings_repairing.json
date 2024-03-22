@@ -30,6 +30,5 @@
     "recipes": [
       "aether:netherite_leggings_repairing"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

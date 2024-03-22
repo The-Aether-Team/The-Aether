@@ -30,6 +30,5 @@
     "recipes": [
       "aether:black_moa_incubation"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

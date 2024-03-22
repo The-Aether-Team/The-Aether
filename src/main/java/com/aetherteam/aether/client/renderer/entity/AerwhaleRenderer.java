@@ -17,7 +17,7 @@ public class AerwhaleRenderer extends MultiModelRenderer<Aerwhale, EntityModel<A
     private static final ResourceLocation AERWHALE_CLASSIC_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/aerwhale/aerwhale_classic.png");
     private final AerwhaleModel defaultModel;
     private final ClassicAerwhaleModel oldModel;
-    
+
     public AerwhaleRenderer(EntityRendererProvider.Context context) {
         super(context, new AerwhaleModel(context.bakeLayer(AetherModelLayers.AERWHALE)), 0.5F);
         this.defaultModel = new AerwhaleModel(context.bakeLayer(AetherModelLayers.AERWHALE));
@@ -32,10 +32,11 @@ public class AerwhaleRenderer extends MultiModelRenderer<Aerwhale, EntityModel<A
 
     /**
      * Rotates the Aerwhale from data values stored in the entity.
-     * @param aerwhale The {@link Aerwhale} entity.
-     * @param poseStack The rendering {@link PoseStack}.
-     * @param ageInTicks The {@link Float} for the entity's age in ticks.
-     * @param rotationYaw The {@link Float} for the rotation yaw.
+     *
+     * @param aerwhale     The {@link Aerwhale} entity.
+     * @param poseStack    The rendering {@link PoseStack}.
+     * @param ageInTicks   The {@link Float} for the entity's age in ticks.
+     * @param rotationYaw  The {@link Float} for the rotation yaw.
      * @param partialTicks The {@link Float} for the game's partial ticks.
      */
     @Override

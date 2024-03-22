@@ -20,6 +20,7 @@ public class SkyrootSolidBucketItem extends SolidBucketItem {
 
     /**
      * Sets the bucket after usage to a Skyroot Bucket. Otherwise behavior is the same as {@link SolidBucketItem}.
+     *
      * @param context The {@link UseOnContext} of the usage interaction.
      * @return The super {@link InteractionResult}.
      */
@@ -36,16 +37,18 @@ public class SkyrootSolidBucketItem extends SolidBucketItem {
 
     /**
      * This is used to pair a {@link net.minecraft.world.item.BlockItem} to a block, which we don't want to do because we don't want to pair our solid bucket items in place of vanilla's.
+     *
      * @param blockToItemMap The {@link Map} pairing {@link Block}s to {@link Item}s.
-     * @param item The {@link Item} to register.
+     * @param item           The {@link Item} to register.
      */
     @Override
     public void registerBlocks(Map<Block, Item> blockToItemMap, Item item) { }
 
     /**
      * We don't register to the map, so we also don't allow removing from it. See {@link SkyrootSolidBucketItem#registerBlocks(Map, Item)}.
+     *
      * @param blockToItemMap The {@link Map} pairing {@link Block}s to {@link Item}s.
-     * @param item The {@link Item} to register.
+     * @param item           The {@link Item} to register.
      */
     @Override
     public void removeFromBlockToItemMap(Map<Block, Item> blockToItemMap, Item item) { }

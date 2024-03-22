@@ -30,6 +30,5 @@
     "recipes": [
       "aether:sentry_stone_from_carved_stone_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

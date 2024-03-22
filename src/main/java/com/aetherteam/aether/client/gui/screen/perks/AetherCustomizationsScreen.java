@@ -2,7 +2,6 @@ package com.aetherteam.aether.client.gui.screen.perks;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.gui.component.customization.*;
-import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.ServerDeveloperGlowPacket;
 import com.aetherteam.aether.network.packet.serverbound.ServerHaloPacket;
 import com.aetherteam.aether.perk.CustomizationsOptions;
@@ -24,6 +23,7 @@ import net.minecraft.resources.ResourceLocation;
 
 /**
  * A screen for changing perk-related options in-game.
+ *
  * @see CustomizationsOptions
  */
 public class AetherCustomizationsScreen extends Screen {
@@ -85,16 +85,17 @@ public class AetherCustomizationsScreen extends Screen {
 
     /**
      * Sets up the widgets for toggling the Halo rendering, changing the Halo color, and saving or undoing changes.
+     *
      * @param xPos The {@link Integer} x-position for widgets.
      * @param yPos The {@link Integer} y-position for widgets.
-     * @param i The {@link Integer} offset multiplier for widgets.
+     * @param i    The {@link Integer} offset multiplier for widgets.
      */
     private void setupHaloOptions(int xPos, int yPos, int i) {
         this.haloToggleButton = this.addRenderableWidget(Button.builder(Component.translatable(this.haloEnabled ? "gui.aether.customization.halo.on" : "gui.aether.customization.halo.off"),
-            (pressed) -> {
-                this.haloEnabled = !this.haloEnabled;
-                pressed.setMessage(Component.translatable(this.haloEnabled ? "gui.aether.customization.halo.on" : "gui.aether.customization.halo.off"));
-            }).pos(xPos, yPos + (25 * i)).build());
+                (pressed) -> {
+                    this.haloEnabled = !this.haloEnabled;
+                    pressed.setMessage(Component.translatable(this.haloEnabled ? "gui.aether.customization.halo.on" : "gui.aether.customization.halo.off"));
+                }).pos(xPos, yPos + (25 * i)).build());
 
         this.haloColorBox = this.addRenderableWidget(new HaloColorBox(this, this.getMinecraft().font, xPos + 155, yPos + (25 * i), 60, 20, Component.translatable("gui.aether.customization.halo.color")));
         if (this.haloColor != null && !this.haloColor.isEmpty()) {
@@ -104,19 +105,19 @@ public class AetherCustomizationsScreen extends Screen {
         // Resets to the currently stored settings in the game.
         Component undoText = Component.translatable("gui.aether.customization.undo");
         HaloCustomizationButton undoButton = new HaloCustomizationButton(this, CustomizationButton.ButtonType.UNDO, this.haloColorBox, xPos + 220, yPos + (25 * i), 20, 20, UNDO_BUTTON,
-            (pressed) -> {
-                if (pressed.isActive()) {
-                    this.haloEnabled = this.customizations.isHaloEnabled();
-                    this.haloColor = this.customizations.getHaloHex();
-                    this.haloToggleButton.setMessage(Component.translatable(this.haloEnabled ? "gui.aether.customization.halo.on" : "gui.aether.customization.halo.off"));
-                    if (this.haloColor != null && !this.haloColor.isEmpty()) {
-                        this.haloColorBox.setValue(this.haloColor);
-                    } else {
-                        this.haloColorBox.setValue("");
+                (pressed) -> {
+                    if (pressed.isActive()) {
+                        this.haloEnabled = this.customizations.isHaloEnabled();
+                        this.haloColor = this.customizations.getHaloHex();
+                        this.haloToggleButton.setMessage(Component.translatable(this.haloEnabled ? "gui.aether.customization.halo.on" : "gui.aether.customization.halo.off"));
+                        if (this.haloColor != null && !this.haloColor.isEmpty()) {
+                            this.haloColorBox.setValue(this.haloColor);
+                        } else {
+                            this.haloColorBox.setValue("");
+                        }
+                        this.customizations.load();
                     }
-                    this.customizations.load();
-                }
-            }, undoText
+                }, undoText
         );
         undoButton.setTooltip(Tooltip.create(undoText));
         this.addRenderableWidget(undoButton);
@@ -124,30 +125,30 @@ public class AetherCustomizationsScreen extends Screen {
         // Saves and stores settings to the game.
         Component saveText = Component.translatable("gui.aether.customization.save");
         HaloCustomizationButton saveButton = new HaloCustomizationButton(this, CustomizationButton.ButtonType.SAVE, this.haloColorBox, xPos + 245, yPos + (25 * i), 20, 20, SAVE_BUTTON,
-            (pressed) -> {
-                if (pressed.isActive()) {
-                    if (this.haloColorBox.hasValidColor() && this.haloColorBox.hasTextChanged()) {
-                        this.customizations.setHaloColor(this.haloColorBox.getValue());
-                        this.haloColor = this.customizations.getHaloHex();
-                    }
-                    if (this.haloEnabled != this.customizations.isHaloEnabled()) {
-                        this.customizations.setIsHaloEnabled(this.haloEnabled);
-                        this.haloEnabled = this.customizations.isHaloEnabled();
-                    }
-                    // Propagate changes to the server for other players to see.
-                    if (this.haloEnabled) {
-                        if (this.getMinecraft().player != null) {
-                            PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerHaloPacket.Apply(this.getMinecraft().player.getUUID(), new Halo(this.haloColor)));
+                (pressed) -> {
+                    if (pressed.isActive()) {
+                        if (this.haloColorBox.hasValidColor() && this.haloColorBox.hasTextChanged()) {
+                            this.customizations.setHaloColor(this.haloColorBox.getValue());
+                            this.haloColor = this.customizations.getHaloHex();
                         }
-                    } else {
-                        if (this.getMinecraft().player != null) {
-                            PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerHaloPacket.Remove(this.getMinecraft().player.getUUID()));
+                        if (this.haloEnabled != this.customizations.isHaloEnabled()) {
+                            this.customizations.setIsHaloEnabled(this.haloEnabled);
+                            this.haloEnabled = this.customizations.isHaloEnabled();
                         }
+                        // Propagate changes to the server for other players to see.
+                        if (this.haloEnabled) {
+                            if (this.getMinecraft().player != null) {
+                                PacketRelay.sendToServer(new ServerHaloPacket.Apply(this.getMinecraft().player.getUUID(), new Halo(this.haloColor)));
+                            }
+                        } else {
+                            if (this.getMinecraft().player != null) {
+                                PacketRelay.sendToServer(new ServerHaloPacket.Remove(this.getMinecraft().player.getUUID()));
+                            }
+                        }
+                        this.customizations.save();
+                        this.customizations.load();
                     }
-                    this.customizations.save();
-                    this.customizations.load();
-                }
-            }, saveText
+                }, saveText
         );
         saveButton.setTooltip(Tooltip.create(saveText));
         this.addRenderableWidget(saveButton);
@@ -155,16 +156,17 @@ public class AetherCustomizationsScreen extends Screen {
 
     /**
      * Sets up the widgets for toggling the Developer Glow rendering, changing the Developer Glow color, and saving or undoing changes.
+     *
      * @param xPos The {@link Integer} x-position for widgets.
      * @param yPos The {@link Integer} y-position for widgets.
-     * @param i The {@link Integer} offset multiplier for widgets.
+     * @param i    The {@link Integer} offset multiplier for widgets.
      */
     private void setupDeveloperGlowOptions(int xPos, int yPos, int i) {
         this.developerGlowToggleButton = this.addRenderableWidget(Button.builder(Component.translatable(this.developerGlowEnabled ? "gui.aether.customization.developer_glow.on" : "gui.aether.customization.developer_glow.off"),
-            (pressed) -> {
-                this.developerGlowEnabled = !this.developerGlowEnabled;
-                pressed.setMessage(Component.translatable(this.developerGlowEnabled ? "gui.aether.customization.developer_glow.on" : "gui.aether.customization.developer_glow.off"));
-            }).pos(xPos, yPos + (25 * i)).build());
+                (pressed) -> {
+                    this.developerGlowEnabled = !this.developerGlowEnabled;
+                    pressed.setMessage(Component.translatable(this.developerGlowEnabled ? "gui.aether.customization.developer_glow.on" : "gui.aether.customization.developer_glow.off"));
+                }).pos(xPos, yPos + (25 * i)).build());
 
         this.developerGlowColorBox = this.addRenderableWidget(new DeveloperGlowColorBox(this, this.getMinecraft().font, xPos + 155, yPos + (25 * i), 60, 20, Component.translatable("gui.aether.customization.developer_glow.color")));
         if (this.developerGlowColor != null && !this.developerGlowColor.isEmpty()) {
@@ -174,19 +176,19 @@ public class AetherCustomizationsScreen extends Screen {
         // Resets to the currently stored settings in the game.
         Component undoText = Component.translatable("gui.aether.customization.undo");
         DeveloperGlowCustomizationButton undoButton = new DeveloperGlowCustomizationButton(this, CustomizationButton.ButtonType.UNDO, this.developerGlowColorBox, xPos + 220, yPos + (25 * i), 20, 20, UNDO_BUTTON,
-            (pressed) -> {
-                if (pressed.isActive()) {
-                    this.developerGlowEnabled = this.customizations.isDeveloperGlowEnabled();
-                    this.developerGlowColor = this.customizations.getDeveloperGlowHex();
-                    this.developerGlowToggleButton.setMessage(Component.translatable(this.developerGlowEnabled ? "gui.aether.customization.developer_glow.on" : "gui.aether.customization.developer_glow.off"));
-                    if (this.developerGlowColor != null && !this.developerGlowColor.isEmpty()) {
-                        this.developerGlowColorBox.setValue(this.developerGlowColor);
-                    } else {
-                        this.developerGlowColorBox.setValue("");
+                (pressed) -> {
+                    if (pressed.isActive()) {
+                        this.developerGlowEnabled = this.customizations.isDeveloperGlowEnabled();
+                        this.developerGlowColor = this.customizations.getDeveloperGlowHex();
+                        this.developerGlowToggleButton.setMessage(Component.translatable(this.developerGlowEnabled ? "gui.aether.customization.developer_glow.on" : "gui.aether.customization.developer_glow.off"));
+                        if (this.developerGlowColor != null && !this.developerGlowColor.isEmpty()) {
+                            this.developerGlowColorBox.setValue(this.developerGlowColor);
+                        } else {
+                            this.developerGlowColorBox.setValue("");
+                        }
+                        this.customizations.load();
                     }
-                    this.customizations.load();
-                }
-            }, undoText
+                }, undoText
         );
         undoButton.setTooltip(Tooltip.create(undoText));
         this.addRenderableWidget(undoButton);
@@ -194,30 +196,30 @@ public class AetherCustomizationsScreen extends Screen {
         // Saves and stores settings to the game.
         Component saveText = Component.translatable("gui.aether.customization.save");
         DeveloperGlowCustomizationButton saveButton = new DeveloperGlowCustomizationButton(this, CustomizationButton.ButtonType.SAVE, this.developerGlowColorBox, xPos + 245, yPos + (25 * i), 20, 20, SAVE_BUTTON,
-            (pressed) -> {
-                if (pressed.isActive()) {
-                    if (this.developerGlowColorBox.hasValidColor() && this.developerGlowColorBox.hasTextChanged()) {
-                        this.customizations.setDeveloperGlowColor(this.developerGlowColorBox.getValue());
-                        this.developerGlowColor = this.customizations.getDeveloperGlowHex();
-                    }
-                    if (this.developerGlowEnabled != this.customizations.isDeveloperGlowEnabled()) {
-                        this.customizations.setIsDeveloperGlowEnabled(this.developerGlowEnabled);
-                        this.developerGlowEnabled = this.customizations.isDeveloperGlowEnabled();
-                    }
-                    // Propagate changes to the server for other players to see.
-                    if (this.developerGlowEnabled) {
-                        if (this.getMinecraft().player != null) {
-                            PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerDeveloperGlowPacket.Apply(this.getMinecraft().player.getUUID(), new DeveloperGlow(this.developerGlowColor)));
+                (pressed) -> {
+                    if (pressed.isActive()) {
+                        if (this.developerGlowColorBox.hasValidColor() && this.developerGlowColorBox.hasTextChanged()) {
+                            this.customizations.setDeveloperGlowColor(this.developerGlowColorBox.getValue());
+                            this.developerGlowColor = this.customizations.getDeveloperGlowHex();
                         }
-                    } else {
-                        if (this.getMinecraft().player != null) {
-                            PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerDeveloperGlowPacket.Remove(this.getMinecraft().player.getUUID()));
+                        if (this.developerGlowEnabled != this.customizations.isDeveloperGlowEnabled()) {
+                            this.customizations.setIsDeveloperGlowEnabled(this.developerGlowEnabled);
+                            this.developerGlowEnabled = this.customizations.isDeveloperGlowEnabled();
                         }
+                        // Propagate changes to the server for other players to see.
+                        if (this.developerGlowEnabled) {
+                            if (this.getMinecraft().player != null) {
+                                PacketRelay.sendToServer(new ServerDeveloperGlowPacket.Apply(this.getMinecraft().player.getUUID(), new DeveloperGlow(this.developerGlowColor)));
+                            }
+                        } else {
+                            if (this.getMinecraft().player != null) {
+                                PacketRelay.sendToServer(new ServerDeveloperGlowPacket.Remove(this.getMinecraft().player.getUUID()));
+                            }
+                        }
+                        this.customizations.save();
+                        this.customizations.load();
                     }
-                    this.customizations.save();
-                    this.customizations.load();
-                }
-            }, saveText
+                }, saveText
         );
         saveButton.setTooltip(Tooltip.create(saveText));
         this.addRenderableWidget(saveButton);

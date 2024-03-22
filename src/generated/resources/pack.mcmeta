@@ -3,11 +3,10 @@
     "description": {
       "translate": "pack.aether.mod.description"
     },
-    "neoforge": {
-      "versions": {
-        "server_data": 18
-      }
-    },
-    "pack_format": 18
+    "pack_format": 26,
+    "supported_formats": [
+      0,
+      2147483647
+    ]
   }
 }

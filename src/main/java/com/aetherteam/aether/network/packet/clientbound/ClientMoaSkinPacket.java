@@ -1,10 +1,12 @@
 package com.aetherteam.aether.network.packet.clientbound;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.perk.data.ClientMoaSkinPerkData;
 import com.aetherteam.aether.perk.types.MoaData;
 import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.Map;
@@ -15,8 +17,16 @@ public abstract class ClientMoaSkinPacket {
      * Applies a Moa Skin for a player on the client.
      */
     public record Apply(UUID playerUUID, MoaData moaSkinData) implements BasePacket {
+
+        public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "apply_moa_skin");
+
         @Override
-        public void encode(FriendlyByteBuf buf) {
+        public ResourceLocation id() {
+            return ID;
+        }
+
+        @Override
+        public void write(FriendlyByteBuf buf) {
             buf.writeUUID(this.playerUUID());
             MoaData.write(buf, this.moaSkinData());
         }
@@ -39,8 +49,16 @@ public abstract class ClientMoaSkinPacket {
      * Removes a Moa Skin for a player on the client.
      */
     public record Remove(UUID playerUUID) implements BasePacket {
+
+        public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "remove_moa_skin");
+
         @Override
-        public void encode(FriendlyByteBuf buf) {
+        public ResourceLocation id() {
+            return ID;
+        }
+
+        @Override
+        public void write(FriendlyByteBuf buf) {
             buf.writeUUID(this.playerUUID());
         }
 
@@ -61,8 +79,16 @@ public abstract class ClientMoaSkinPacket {
      * Syncs Moa Skin data for all players to the client.
      */
     public record Sync(Map<UUID, MoaData> moaSkinsData) implements BasePacket {
+
+        public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "sync_moa_skin");
+
         @Override
-        public void encode(FriendlyByteBuf buf) {
+        public ResourceLocation id() {
+            return ID;
+        }
+
+        @Override
+        public void write(FriendlyByteBuf buf) {
             buf.writeMap(this.moaSkinsData(), FriendlyByteBuf::writeUUID, MoaData::write);
         }
 

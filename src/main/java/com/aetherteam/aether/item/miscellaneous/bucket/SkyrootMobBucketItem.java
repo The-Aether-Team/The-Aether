@@ -1,7 +1,6 @@
 package com.aetherteam.aether.item.miscellaneous.bucket;
 
 import com.aetherteam.aether.item.AetherItems;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -13,9 +12,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MobBucketItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
-import net.neoforged.neoforge.common.capabilities.ICapabilityProvider;
 
-import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 public class SkyrootMobBucketItem extends MobBucketItem {
@@ -25,9 +22,10 @@ public class SkyrootMobBucketItem extends MobBucketItem {
 
     /**
      * Sets the bucket after usage to a Skyroot Bucket if it returns as a Bucket. Otherwise behavior is the same as {@link MobBucketItem}.
-     * @param level The {@link Level} of the user.
+     *
+     * @param level  The {@link Level} of the user.
      * @param player The {@link Player} using this item.
-     * @param hand The {@link InteractionHand} in which the item is being used.
+     * @param hand   The {@link InteractionHand} in which the item is being used.
      * @return The super {@link InteractionResultHolder} or a {@link net.minecraft.world.InteractionResult#sidedSuccess(boolean)}.
      */
     @Override
@@ -37,14 +35,5 @@ public class SkyrootMobBucketItem extends MobBucketItem {
             result = InteractionResultHolder.sidedSuccess(new ItemStack(AetherItems.SKYROOT_BUCKET.get()), level.isClientSide());
         }
         return result;
-    }
-
-    /**
-     * We don't initialize the Forge {@link net.neoforged.neoforge.fluids.capability.wrappers.FluidBucketWrapper} for Skyroot Buckets.
-     */
-    @Nullable
-    @Override
-    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag tag) {
-        return null;
     }
 }

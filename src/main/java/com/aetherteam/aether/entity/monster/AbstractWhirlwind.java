@@ -78,11 +78,12 @@ public abstract class AbstractWhirlwind extends Mob {
     /**
      * Whirlwinds can spawn if {@link Mob#checkMobSpawnRules(EntityType, LevelAccessor, MobSpawnType, BlockPos, RandomSource)} is true,
      * if they are spawning at a light level above 12, and if the difficulty isn't peaceful.
+     *
      * @param whirlwind The {@link AbstractWhirlwind} {@link EntityType}.
-     * @param level The {@link LevelAccessor}.
-     * @param reason The {@link MobSpawnType} reason.
-     * @param pos The spawn {@link BlockPos}.
-     * @param random The {@link RandomSource}.
+     * @param level     The {@link LevelAccessor}.
+     * @param reason    The {@link MobSpawnType} reason.
+     * @param pos       The spawn {@link BlockPos}.
+     * @param random    The {@link RandomSource}.
      * @return Whether this entity can spawn, as a {@link Boolean}.
      */
     public static boolean checkWhirlwindSpawnRules(EntityType<? extends AbstractWhirlwind> whirlwind, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
@@ -216,6 +217,7 @@ public abstract class AbstractWhirlwind extends Mob {
 
     /**
      * Sets the color of this Whirlwind.
+     *
      * @param color The {@link Integer} value for the decimal color.
      */
     public void setColorData(int color) {
@@ -231,6 +233,7 @@ public abstract class AbstractWhirlwind extends Mob {
 
     /**
      * Sets how much life duration is left.
+     *
      * @param lifeLeft The {@link Integer} value.
      */
     public void setLifeLeft(int lifeLeft) {
@@ -246,6 +249,7 @@ public abstract class AbstractWhirlwind extends Mob {
 
     /**
      * Sets whether the Whirlwind is evil.
+     *
      * @param evil The {@link Boolean} value.
      */
     public void setEvil(boolean evil) {

@@ -8,8 +8,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WoodType;
 
 public class SkyrootWallSignBlock extends WallSignBlock {
-    public SkyrootWallSignBlock(Properties properties, WoodType woodType) {
-        super(properties, woodType);
+    public SkyrootWallSignBlock(WoodType type, Properties properties) {
+        super(type, properties);
     }
 
     @Override

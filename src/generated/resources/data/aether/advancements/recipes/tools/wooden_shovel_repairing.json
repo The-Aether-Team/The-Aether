@@ -30,6 +30,5 @@
     "recipes": [
       "aether:wooden_shovel_repairing"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

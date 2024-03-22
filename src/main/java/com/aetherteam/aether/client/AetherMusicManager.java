@@ -96,6 +96,7 @@ public class AetherMusicManager {
 
     /**
      * Determines when to play different music.
+     *
      * @return The {@link Music} to play.
      */
     @Nullable

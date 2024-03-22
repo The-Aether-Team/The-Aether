@@ -28,7 +28,6 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.aether.zephyr_hammer.desc"
     },
@@ -37,7 +36,6 @@
     "icon": {
       "item": "minecraft:snowball"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.aether.zephyr_hammer"
     }

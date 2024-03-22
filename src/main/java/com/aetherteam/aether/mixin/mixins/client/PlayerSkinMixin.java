@@ -16,6 +16,7 @@ import top.theillusivec4.curios.api.SlotResult;
 public class PlayerSkinMixin {
     /**
      * Sets the cape texture to use when a cape accessory is equipped and visible. This is also used by Elytra.
+     *
      * @param cir The {@link ResourceLocation} {@link CallbackInfoReturnable} used for the method's return value.
      */
     @Inject(at = @At("HEAD"), method = "capeTexture", cancellable = true)
