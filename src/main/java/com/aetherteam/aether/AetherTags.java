@@ -155,7 +155,7 @@ public class AetherTags {
 		}
 
 		private static TagKey<Item> curio(String name) {
-			return TagKey.create(Registries.ITEM, new ResourceLocation(CuriosApi.MODID, name));
+			return TagKey.create(Registries.ITEM, new ResourceLocation("trinket", name));
 		}
 
 		private static TagKey<Item> moddedTag(String modid, String name) {

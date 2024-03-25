@@ -1,9 +1,11 @@
 package com.aetherteam.aether.item.accessories.ring;
 
 import com.aetherteam.aether.AetherTags;
+import com.aetherteam.aether.Utils.LivingEntityUtils;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.item.accessories.abilities.FreezingAccessory;
 import dev.emi.trinkets.api.SlotReference;
+import io.github.fabricators_of_create.porting_lib.entity.extensions.EntityExtensions;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
@@ -19,8 +21,8 @@ public class IceRingItem extends RingItem implements FreezingAccessory {
 
     @Override
     public void tick(ItemStack stack, SlotReference slotContext, LivingEntity livingEntity) {
-        if (!livingEntity.isInFluidType()) {
-            this.freezeTick(slotContext, stack);
+        if (!LivingEntityUtils.isInFluidType(livingEntity)) {
+            this.freezeTick(slotContext, stack, livingEntity);
         }
     }
 }
