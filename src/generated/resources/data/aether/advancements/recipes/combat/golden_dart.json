@@ -41,6 +41,5 @@
     "recipes": [
       "aether:golden_dart"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

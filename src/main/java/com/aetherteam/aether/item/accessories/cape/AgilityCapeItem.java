@@ -21,8 +21,9 @@ public class AgilityCapeItem extends CapeItem {
 
     /**
      * Applies a step height modifier to the wearer as long as they aren't holding shift. If they are, the modifier is removed until they stop holding shift.
+     *
      * @param slotContext The {@link SlotContext} of the Curio.
-     * @param stack The Curio {@link ItemStack}.
+     * @param stack       The Curio {@link ItemStack}.
      */
     @Override
     public void curioTick(SlotContext slotContext, ItemStack stack) {
@@ -40,9 +41,10 @@ public class AgilityCapeItem extends CapeItem {
 
     /**
      * Removes the step height modifier when the Agility Cape is unequipped.
+     *
      * @param slotContext The {@link SlotContext} of the Curio.
-     * @param newStack The new {@link ItemStack} in the slot.
-     * @param stack The {@link ItemStack} of the Curio.
+     * @param newStack    The new {@link ItemStack} in the slot.
+     * @param stack       The {@link ItemStack} of the Curio.
      */
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {

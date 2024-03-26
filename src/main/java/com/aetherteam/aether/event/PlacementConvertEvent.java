@@ -26,8 +26,8 @@ public class PlacementConvertEvent extends Event implements ICancellableEvent {
     private BlockState newBlockState;
 
     /**
-     * @param level The {@link LevelAccessor} that the conversion occurs in.
-     * @param pos The {@link BlockPos} the conversion occurs at.
+     * @param level         The {@link LevelAccessor} that the conversion occurs in.
+     * @param pos           The {@link BlockPos} the conversion occurs at.
      * @param oldBlockState The old {@link BlockState} that is to be converted.
      * @param newBlockState The original result {@link BlockState} from the conversion.
      */
@@ -68,6 +68,7 @@ public class PlacementConvertEvent extends Event implements ICancellableEvent {
 
     /**
      * Sets a new block to result from the conversion.
+     *
      * @param newBlockState The new {@link BlockState}.
      */
     public void setNewBlockState(BlockState newBlockState) {

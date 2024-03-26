@@ -15,10 +15,11 @@ import net.minecraft.world.level.block.state.BlockState;
 public interface ItemUseConversion<R extends MatchEventRecipe & BlockStateRecipe> {
     /**
      * Runs block conversion code using the given {@link RecipeType}.
+     *
      * @param recipeType The {@link RecipeType RecipeType&lt;T&gt;} to lookup recipes from.
      *                   &lt;T&gt; extends &lt;R&gt;, which extends {@link MatchEventRecipe} and {@link BlockStateRecipe}.
      *                   The double extension is due to the type parameter that {@link RecipeType} takes.
-     * @param context The {@link UseOnContext} of the conversion.
+     * @param context    The {@link UseOnContext} of the conversion.
      * @return A success on client and consume on server (based on {@link InteractionResult#sidedSuccess(boolean)}) if the recipe is found, and a pass if it is not.
      * Used by the return of whatever {@link net.minecraft.world.item.Item#useOn(UseOnContext)} called this.
      */
@@ -49,12 +50,13 @@ public interface ItemUseConversion<R extends MatchEventRecipe & BlockStateRecipe
 
     /**
      * Similar to {@link ItemUseConversion#convertBlock(RecipeType, UseOnContext)} except it is used by dispensers, i.e. without context.
+     *
      * @param recipeType The {@link RecipeType RecipeType&lt;T&gt;} to lookup recipes from.
      *                   &lt;T&gt; extends &lt;R&gt;, which extends {@link MatchEventRecipe} and {@link BlockStateRecipe}.
      *                   The double extension is due to the type parameter that {@link RecipeType} takes.
-     * @param level The {@link Level} the conversion is being attempted in.
-     * @param pos The {@link BlockPos} the conversion is being attempted at.
-     * @param stack The {@link ItemStack} being used to attempt conversion.
+     * @param level      The {@link Level} the conversion is being attempted in.
+     * @param pos        The {@link BlockPos} the conversion is being attempted at.
+     * @param stack      The {@link ItemStack} being used to attempt conversion.
      * @return A {@link Boolean} which returns true if the conversion was successful and false if not.
      */
     default <T extends R> boolean convertBlockWithoutContext(RecipeType<T> recipeType, Level level, BlockPos pos, ItemStack stack) {

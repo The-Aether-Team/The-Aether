@@ -28,6 +28,5 @@
     "recipes": [
       "aether:packed_ice_freezing"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

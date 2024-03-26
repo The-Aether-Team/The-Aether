@@ -30,6 +30,5 @@
     "recipes": [
       "aether:enchanted_dart_shooter_enchanting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

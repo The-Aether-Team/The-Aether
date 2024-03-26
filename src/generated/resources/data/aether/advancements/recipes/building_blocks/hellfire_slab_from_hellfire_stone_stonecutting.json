@@ -30,6 +30,5 @@
     "recipes": [
       "aether:hellfire_slab_from_hellfire_stone_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -21,7 +21,6 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.common.util.LazyOptional;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.ISlotType;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
@@ -39,19 +38,19 @@ import java.util.Set;
  * Heavily adapted to only set up Aether curio types.
  */
 public class AccessoriesMenu extends InventoryMenu {
-    private static final ResourceLocation[] ARMOR_SLOT_TEXTURES = new ResourceLocation[] {
+    private static final ResourceLocation[] ARMOR_SLOT_TEXTURES = new ResourceLocation[]{
             InventoryMenu.EMPTY_ARMOR_SLOT_BOOTS,
             InventoryMenu.EMPTY_ARMOR_SLOT_LEGGINGS,
             InventoryMenu.EMPTY_ARMOR_SLOT_CHESTPLATE,
             InventoryMenu.EMPTY_ARMOR_SLOT_HELMET
     };
-    private static final EquipmentSlot[] VALID_EQUIPMENT_SLOTS = new EquipmentSlot[] {
+    private static final EquipmentSlot[] VALID_EQUIPMENT_SLOTS = new EquipmentSlot[]{
             EquipmentSlot.HEAD,
             EquipmentSlot.CHEST,
             EquipmentSlot.LEGS,
             EquipmentSlot.FEET
     };
-    public static final String[] AETHER_IDENTIFIERS = new String[] {
+    public static final String[] AETHER_IDENTIFIERS = new String[]{
             "aether_pendant",
             "aether_cape",
             "aether_shield",
@@ -60,7 +59,7 @@ public class AccessoriesMenu extends InventoryMenu {
             "aether_accessory"
     };
 
-    public final LazyOptional<ICuriosItemHandler> curiosHandler;
+    public final Optional<ICuriosItemHandler> curiosHandler;
     private final Player player;
 
     private final CraftingContainer craftMatrix = new TransientCraftingContainer(this, 2, 2);
@@ -317,7 +316,7 @@ public class AccessoriesMenu extends InventoryMenu {
     private Set<Integer> getEmptyCurioSlots(Map<String, ISlotType> slotData) {
         Set<Integer> slots = new HashSet<>();
         for (String identifier : slotData.keySet()) {
-            switch(identifier) {
+            switch (identifier) {
                 case "aether_pendant" -> slots.add(46);
                 case "aether_cape" -> slots.add(47);
                 case "aether_shield" -> slots.add(48);

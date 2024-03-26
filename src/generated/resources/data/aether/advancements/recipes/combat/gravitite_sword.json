@@ -28,6 +28,5 @@
     "recipes": [
       "aether:gravitite_sword"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

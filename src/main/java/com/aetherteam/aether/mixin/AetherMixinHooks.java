@@ -19,8 +19,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.neoforged.neoforge.common.util.LazyOptional;
-import top.theillusivec4.curios.Curios;
+import top.theillusivec4.curios.CuriosConstants;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
@@ -34,6 +33,7 @@ public class AetherMixinHooks {
 
     /**
      * Checks whether a cape accessory is visible.
+     *
      * @param livingEntity The {@link LivingEntity} wearing the cape.
      * @return Whether the cape is visible, as a {@link Boolean}.
      * @see com.aetherteam.aether.mixin.mixins.client.PlayerSkinMixin
@@ -43,9 +43,9 @@ public class AetherMixinHooks {
         if (slotResult.isPresent()) {
             String identifier = slotResult.get().slotContext().identifier();
             int id = slotResult.get().slotContext().index();
-            LazyOptional<ICuriosItemHandler> itemHandler = CuriosApi.getCuriosInventory(livingEntity);
-            if (itemHandler.resolve().isPresent()) {
-                Optional<ICurioStacksHandler> stacksHandler = itemHandler.resolve().get().getStacksHandler(identifier);
+            Optional<ICuriosItemHandler> itemHandler = CuriosApi.getCuriosInventory(livingEntity);
+            if (itemHandler.isPresent()) {
+                Optional<ICurioStacksHandler> stacksHandler = itemHandler.get().getStacksHandler(identifier);
                 if (stacksHandler.isPresent()) {
                     return stacksHandler.get().getRenders().get(id);
                 }
@@ -56,6 +56,7 @@ public class AetherMixinHooks {
 
     /**
      * Gets the cape texture from a {@link CapeItem}.
+     *
      * @param stack The {@link ItemStack}.
      * @return The {@link ResourceLocation} texture from the cape.
      */
@@ -72,6 +73,7 @@ public class AetherMixinHooks {
 
     /**
      * Checks whether the {@link SelectWorldScreen} is open and the level that the lock belongs to is the same one as the level loaded by the world preview.
+     *
      * @param basePath The {@link Path} for the level directory.
      * @return Whether the level can be unlocked, as a {@link Boolean}.
      * @see com.aetherteam.aether.mixin.mixins.common.DirectoryLockMixin
@@ -85,9 +87,10 @@ public class AetherMixinHooks {
 
     /**
      * Whether an accessory can be equipped or replace an already equipped accessory.
-     * @param mob The {@link Mob} to equip the accessory to.
+     *
+     * @param mob       The {@link Mob} to equip the accessory to.
      * @param candidate The {@link ItemStack} to try to equip.
-     * @param existing The {@link ItemStack} already equipped.
+     * @param existing  The {@link ItemStack} already equipped.
      * @return Whether the accessory can be equipped or replaced, as a {@link Boolean}.
      */
     public static boolean canReplaceCurrentAccessory(Mob mob, ItemStack candidate, ItemStack existing) {
@@ -117,14 +120,15 @@ public class AetherMixinHooks {
 
     /**
      * Gets the corresponding slot identifier for an accessory item.
+     *
      * @param livingEntity The {@link LivingEntity} to get the accessory from.
-     * @param stack The accessory {@link ItemStack}.
+     * @param stack        The accessory {@link ItemStack}.
      * @return The slot identifier {@link String}.
      */
     public static String getIdentifierForItem(LivingEntity livingEntity, ItemStack stack) {
         if (AetherConfig.COMMON.use_curios_menu.get()) {
-            TagKey<Item> glovesTag = TagKey.create(Registries.ITEM, new ResourceLocation(Curios.MODID, "hands"));
-            TagKey<Item> pendantTag = TagKey.create(Registries.ITEM, new ResourceLocation(Curios.MODID, "necklace"));
+            TagKey<Item> glovesTag = TagKey.create(Registries.ITEM, new ResourceLocation(CuriosConstants.MOD_ID, "hands"));
+            TagKey<Item> pendantTag = TagKey.create(Registries.ITEM, new ResourceLocation(CuriosConstants.MOD_ID, "necklace"));
             if (stack.is(glovesTag)) {
                 return "hands";
             } else if (stack.is(pendantTag) && (livingEntity.getType() == EntityType.PIGLIN || livingEntity.getType() == EntityType.ZOMBIFIED_PIGLIN)) {
@@ -142,14 +146,15 @@ public class AetherMixinHooks {
 
     /**
      * Gets an accessory from an entity.
+     *
      * @param livingEntity The {@link LivingEntity} to get the accessory from.
-     * @param identifier The {@link String} for the slot identifier.
+     * @param identifier   The {@link String} for the slot identifier.
      * @return The accessory {@link ItemStack} gotten from the entity.
      */
     public static ItemStack getItemByIdentifier(LivingEntity livingEntity, String identifier) {
-        LazyOptional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(livingEntity);
-        if (lazyHandler.isPresent() && lazyHandler.resolve().isPresent()) {
-            ICuriosItemHandler handler = lazyHandler.resolve().get();
+        Optional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(livingEntity);
+        if (lazyHandler.isPresent()) {
+            ICuriosItemHandler handler = lazyHandler.get();
             Optional<SlotResult> optionalResult = handler.findCurio(identifier, 0);
             if (optionalResult.isPresent()) {
                 return optionalResult.get().stack();
@@ -160,15 +165,12 @@ public class AetherMixinHooks {
 
     /**
      * Equips an accessory to an entity.
+     *
      * @param livingEntity The {@link LivingEntity} to equip to.
-     * @param itemStack The {@link ItemStack} to equip.
-     * @param identifier The {@link String} for the slot identifier.
+     * @param itemStack    The {@link ItemStack} to equip.
+     * @param identifier   The {@link String} for the slot identifier.
      */
     public static void setItemByIdentifier(LivingEntity livingEntity, ItemStack itemStack, String identifier) {
-        LazyOptional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(livingEntity);
-        if (lazyHandler.isPresent() && lazyHandler.resolve().isPresent()) {
-            ICuriosItemHandler handler = lazyHandler.resolve().get();
-            handler.setEquippedCurio(identifier, 0, itemStack);
-        }
+        CuriosApi.getCuriosInventory(livingEntity).ifPresent(handler -> handler.setEquippedCurio(identifier, 0, itemStack));
     }
 }

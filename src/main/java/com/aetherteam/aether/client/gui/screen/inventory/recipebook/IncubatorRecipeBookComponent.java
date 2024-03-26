@@ -1,8 +1,9 @@
 package com.aetherteam.aether.client.gui.screen.inventory.recipebook;
 
-import com.aetherteam.aether.blockentity.IncubatorBlockEntity;
+import com.aetherteam.aether.api.AetherDataMaps;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.Slot;
@@ -14,6 +15,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class IncubatorRecipeBookComponent extends RecipeBookComponent {
     private static final WidgetSprites FILTER_SPRITES = new WidgetSprites(
@@ -63,6 +65,6 @@ public class IncubatorRecipeBookComponent extends RecipeBookComponent {
     }
 
     protected Set<Item> getFuelItems() {
-        return IncubatorBlockEntity.getIncubatingMap().keySet();
+        return BuiltInRegistries.ITEM.getDataMap(AetherDataMaps.INCUBATOR_FUEL).keySet().stream().map(BuiltInRegistries.ITEM::get).collect(Collectors.toSet());
     }
 }

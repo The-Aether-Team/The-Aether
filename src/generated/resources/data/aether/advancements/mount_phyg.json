@@ -19,16 +19,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.aether.mount_phyg.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "minecraft:saddle"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.aether.mount_phyg"
     }

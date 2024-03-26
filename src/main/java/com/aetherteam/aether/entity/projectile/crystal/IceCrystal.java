@@ -52,6 +52,7 @@ public class IceCrystal extends AbstractCrystal implements WeaknessDamage {
 
     /**
      * Until the crystal is hit by a player, it will bounce off the walls. If it has already been attacked once, it will break on the next block it touches.
+     *
      * @param result The {@link BlockHitResult} of the projectile.
      */
     @Override
@@ -99,6 +100,7 @@ public class IceCrystal extends AbstractCrystal implements WeaknessDamage {
 
     /**
      * Weakens an entity that is hit by the projectile. The Sun Spirit can be damaged by the {@link AetherDamageTypes#ICE_CRYSTAL} damage type.
+     *
      * @param entity The hit {@link Entity}
      */
     public void doDamage(Entity entity) {

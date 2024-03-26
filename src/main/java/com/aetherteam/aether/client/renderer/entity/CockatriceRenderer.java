@@ -19,13 +19,14 @@ public class CockatriceRenderer extends MobRenderer<Cockatrice, CockatriceModel>
     }
 
     @Override
-	protected void scale(Cockatrice cockatrice, PoseStack poseStack, float partialTickTime) {
+    protected void scale(Cockatrice cockatrice, PoseStack poseStack, float partialTickTime) {
         poseStack.scale(1.8F, 1.8F, 1.8F);
     }
 
     /**
      * Passes the Cockatrice's wing rotation to the model as the "ageInTicks" parameter.
-     * @param cockatrice The {@link Cockatrice} entity.
+     *
+     * @param cockatrice   The {@link Cockatrice} entity.
      * @param partialTicks The {@link Float} for the game's partial ticks.
      * @return The {@link Float} for the petal rotation.
      */
@@ -33,7 +34,7 @@ public class CockatriceRenderer extends MobRenderer<Cockatrice, CockatriceModel>
     protected float getBob(Cockatrice cockatrice, float partialTicks) {
         return this.model.setupWingsAnimation(cockatrice, partialTicks);
     }
-   
+
     @Override
     public ResourceLocation getTextureLocation(Cockatrice cockatrice) {
         return COCKATRICE_TEXTURE;

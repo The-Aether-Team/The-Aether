@@ -24,8 +24,9 @@ public class HolySwordItem extends SwordItem {
 
     /**
      * Reduces the item's durability by 10 when attacking  undead mobs or mobs that treat healing and harming effects as inverted. This occurs if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.
-     * @param stack The {@link ItemStack} used to hurt the target
-     * @param target The hurt {@link LivingEntity}.
+     *
+     * @param stack    The {@link ItemStack} used to hurt the target
+     * @param target   The hurt {@link LivingEntity}.
      * @param attacker The attacking {@link LivingEntity}.
      * @return Whether the enemy was hurt or not, as a {@link Boolean}.
      */
@@ -60,6 +61,7 @@ public class HolySwordItem extends SwordItem {
 
     /**
      * Basic checks to perform the ability if the source is living, the target is an undead entity, the item is a Holy Sword, and if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.
+     *
      * @param target The killed {@link LivingEntity}.
      * @param source The attacking {@link DamageSource}.
      */

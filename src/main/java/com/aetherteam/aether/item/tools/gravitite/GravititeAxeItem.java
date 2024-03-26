@@ -14,6 +14,7 @@ public class GravititeAxeItem extends AxeItem implements GravititeTool {
 
     /**
      * Interaction code to prioritize the ability at {@link GravititeTool#floatBlock(UseOnContext)} over the normal tool interactions.
+     *
      * @param context The {@link UseOnContext} of the tool interaction.
      * @return The {@link InteractionResult} of the interaction, which returns the result of {@link AxeItem#useOn(UseOnContext)} if the ability fails and a {@link InteractionResult#sidedSuccess(boolean)} if it doesn't.
      */

@@ -13,6 +13,7 @@ import net.neoforged.neoforge.event.TickEvent;
 public class AudioHooks {
     /**
      * Stops other music from playing over Aether music.
+     *
      * @see com.aetherteam.aether.client.event.listeners.AudioListener#onPlaySound(PlaySoundEvent)
      */
     public static boolean shouldCancelSound(SoundInstance sound) {
@@ -28,6 +29,7 @@ public class AudioHooks {
 
     /**
      * Ticks the Aether's music manager.
+     *
      * @see com.aetherteam.aether.client.event.listeners.AudioListener#onClientTick(TickEvent.ClientTickEvent)
      */
     public static void tick() {
@@ -38,6 +40,7 @@ public class AudioHooks {
 
     /**
      * Resets the music on respawn.
+     *
      * @see com.aetherteam.aether.client.event.listeners.AudioListener#onPlayerRespawn(ClientPlayerNetworkEvent.Clone)
      */
     public static void stop() {

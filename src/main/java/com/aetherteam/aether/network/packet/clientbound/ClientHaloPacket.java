@@ -1,10 +1,12 @@
 package com.aetherteam.aether.network.packet.clientbound;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.perk.data.ClientHaloPerkData;
 import com.aetherteam.aether.perk.types.Halo;
 import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.Map;
@@ -15,8 +17,16 @@ public class ClientHaloPacket {
      * Applies the Halo perk to a player on the client.
      */
     public record Apply(UUID playerUUID, Halo halo) implements BasePacket {
+
+        public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "apply_halo");
+
         @Override
-        public void encode(FriendlyByteBuf buf) {
+        public ResourceLocation id() {
+            return ID;
+        }
+
+        @Override
+        public void write(FriendlyByteBuf buf) {
             buf.writeUUID(this.playerUUID());
             Halo.write(buf, this.halo());
         }
@@ -39,8 +49,16 @@ public class ClientHaloPacket {
      * Removes the Halo perk from a player on the client.
      */
     public record Remove(UUID playerUUID) implements BasePacket {
+
+        public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "remove_halo");
+
         @Override
-        public void encode(FriendlyByteBuf buf) {
+        public ResourceLocation id() {
+            return ID;
+        }
+
+        @Override
+        public void write(FriendlyByteBuf buf) {
             buf.writeUUID(this.playerUUID());
         }
 
@@ -61,8 +79,16 @@ public class ClientHaloPacket {
      * Syncs Halo perk data for all players to the client.
      */
     public record Sync(Map<UUID, Halo> halos) implements BasePacket {
+
+        public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "sync_halo");
+
         @Override
-        public void encode(FriendlyByteBuf buf) {
+        public ResourceLocation id() {
+            return ID;
+        }
+
+        @Override
+        public void write(FriendlyByteBuf buf) {
             buf.writeMap(this.halos(), FriendlyByteBuf::writeUUID, Halo::write);
         }
 

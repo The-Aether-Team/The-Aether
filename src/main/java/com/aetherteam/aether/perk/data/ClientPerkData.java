@@ -12,6 +12,7 @@ public abstract class ClientPerkData<T> {
     /**
      * Adds a perk to a client map of player {@link UUID}s paired with perks.<br>
      * The type of perk is handled by subclasses.
+     *
      * @param uuid The player's {@link UUID}.
      * @param perk The perk data type.
      */
@@ -21,6 +22,7 @@ public abstract class ClientPerkData<T> {
 
     /**
      * Removes a perk from a player that currently has one on the client.
+     *
      * @param uuid The player's {@link UUID}.
      */
     public void removePerk(UUID uuid) {
@@ -36,6 +38,7 @@ public abstract class ClientPerkData<T> {
 
     /**
      * A basic check for whether the player can have perk data synced to the client.
+     *
      * @param player The {@link Player}.
      * @return The result of the check, as a {@link Boolean}.
      */

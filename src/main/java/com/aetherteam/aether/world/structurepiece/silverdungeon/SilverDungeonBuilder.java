@@ -75,9 +75,10 @@ public class SilverDungeonBuilder {
 
     /**
      * Recursively traverse through the rooms to build a path through them.
-     * @param x The x {@link Integer} offset for the room position.
-     * @param y The y {@link Integer} offset for the room position.
-     * @param z The z {@link Integer} offset for the room position.
+     *
+     * @param x            The x {@link Integer} offset for the room position.
+     * @param y            The y {@link Integer} offset for the room position.
+     * @param z            The z {@link Integer} offset for the room position.
      * @param typesToAvoid An {@link Integer} bitmask of the types of rooms that should not be connected to.
      * @return Whether the path can be made between the rooms, as a {@link Boolean}.
      */
@@ -143,11 +144,12 @@ public class SilverDungeonBuilder {
 
     /**
      * Build the rooms based on the grid.
-     * @param builder The {@link StructurePiecesBuilder}.
+     *
+     * @param builder         The {@link StructurePiecesBuilder}.
      * @param templateManager The {@link StructureTemplateManager}.
-     * @param startPos The starting {@link BlockPos} for the structure.
-     * @param rotation The structure's {@link Rotation}.
-     * @param direction The structure's {@link Direction}.
+     * @param startPos        The starting {@link BlockPos} for the structure.
+     * @param rotation        The structure's {@link Rotation}.
+     * @param direction       The structure's {@link Direction}.
      */
     public void assembleDungeon(StructurePiecesBuilder builder, StructureTemplateManager templateManager, BlockPos startPos, Rotation rotation, Direction direction) {
         startPos = startPos.offset(direction.getStepZ() * 5 - direction.getStepX(), 5, -direction.getStepX() * 5 - direction.getStepZ());

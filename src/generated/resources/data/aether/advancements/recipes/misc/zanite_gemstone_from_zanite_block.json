@@ -30,6 +30,5 @@
     "recipes": [
       "aether:zanite_gemstone_from_zanite_block"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

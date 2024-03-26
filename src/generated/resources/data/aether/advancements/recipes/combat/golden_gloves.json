@@ -28,6 +28,5 @@
     "recipes": [
       "aether:golden_gloves"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

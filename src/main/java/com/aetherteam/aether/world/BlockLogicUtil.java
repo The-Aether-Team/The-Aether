@@ -9,9 +9,10 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 public final class BlockLogicUtil {
     /**
      * Find the entry point for a tunnel piece to a room with an odd-numbered width
-     * @param box - The room to tunnel from
+     *
+     * @param box       - The room to tunnel from
      * @param direction - The direction to tunnel in
-     * @param width - The width of the tunnel to build
+     * @param width     - The width of the tunnel to build
      */
     public static BlockPos tunnelFromOddSquareRoom(BoundingBox box, Direction direction, int width) {
         int offsetFromCenter = (direction.getAxis() == Direction.Axis.X ? box.getZSpan() : box.getXSpan()) >> 1;
@@ -29,9 +30,10 @@ public final class BlockLogicUtil {
 
     /**
      * Find the entry point for a tunnel piece to a room with an even-numbered width
-     * @param box - The room to tunnel from
+     *
+     * @param box       - The room to tunnel from
      * @param direction - The direction to tunnel in
-     * @param width - The width of the tunnel to build
+     * @param width     - The width of the tunnel to build
      */
     public static BlockPos tunnelFromEvenSquareRoom(BoundingBox box, Direction direction, int width) {
         int offsetFromCenter = (((direction.getAxis() == Direction.Axis.X ? box.getZSpan() : box.getXSpan()) + 1) >> 1);
@@ -49,7 +51,8 @@ public final class BlockLogicUtil {
 
     /**
      * Checks if a position for block placement is within a center chunk.
-     * @param pos The {@link BlockPos}.
+     *
+     * @param pos         The {@link BlockPos}.
      * @param centerChunk The center {@link ChunkPos}.
      * @return Whether the position is in bounds, as a {@link Boolean}.
      */

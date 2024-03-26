@@ -11,8 +11,7 @@ public class SkyrootSignBlockEntity extends SignBlockEntity {
     }
 
     @Override
-    public BlockEntityType<SkyrootSignBlockEntity> getType()
-    {
+    public BlockEntityType<SkyrootSignBlockEntity> getType() {
         return AetherBlockEntityTypes.SKYROOT_SIGN.get();
     }
 }

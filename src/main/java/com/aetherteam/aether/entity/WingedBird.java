@@ -5,13 +5,19 @@ package com.aetherteam.aether.entity;
  */
 public interface WingedBird extends NotGrounded {
     float getWingRotation();
+
     void setWingRotation(float rot);
+
     float getPrevWingRotation();
+
     void setPrevWingRotation(float rot);
 
     float getWingDestPos();
+
     void setWingDestPos(float pos);
+
     float getPrevWingDestPos();
+
     void setPrevWingDestPos(float pos);
 
     /**

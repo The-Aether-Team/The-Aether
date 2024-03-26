@@ -1,8 +1,10 @@
 package com.aetherteam.aether.network.packet.clientbound;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
@@ -11,8 +13,16 @@ import net.minecraft.world.item.ItemStack;
  * Adapted to Nitrogen packet system.
  */
 public record ClientGrabItemPacket(ItemStack stack) implements BasePacket {
+
+    public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "grab_from_accessories_inventory");
+
     @Override
-    public void encode(FriendlyByteBuf buf) {
+    public ResourceLocation id() {
+        return ID;
+    }
+
+    @Override
+    public void write(FriendlyByteBuf buf) {
         buf.writeItem(this.stack());
     }
 

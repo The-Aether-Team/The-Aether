@@ -14,9 +14,10 @@ public class FeatureMixin {
     /**
      * Prevents Aether Dirt from being replaced by Podzol.<br><br>
      * Marked for deprecation as it will be replaced by a NeoForge event in 1.20.
+     *
      * @param level The {@link LevelSimulatedReader} that is being checked in.
-     * @param pos The {@link BlockPos} to check for the block.
-     * @param cir The {@link Boolean} {@link CallbackInfoReturnable} used for the method's return value.
+     * @param pos   The {@link BlockPos} to check for the block.
+     * @param cir   The {@link Boolean} {@link CallbackInfoReturnable} used for the method's return value.
      */
     @Deprecated(forRemoval = true)
     @Inject(at = @At(value = "HEAD"), method = "isGrassOrDirt(Lnet/minecraft/world/level/LevelSimulatedReader;Lnet/minecraft/core/BlockPos;)Z", cancellable = true)

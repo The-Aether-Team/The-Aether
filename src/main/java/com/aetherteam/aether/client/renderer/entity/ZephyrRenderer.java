@@ -28,8 +28,9 @@ public class ZephyrRenderer extends MultiModelRenderer<Zephyr, EntityModel<Zephy
 
     /**
      * Scales the Zephyr according to its attack charge progress, as well as dependent on the model it is using.
-     * @param zephyr The {@link Zephyr} entity.
-     * @param poseStack The rendering {@link PoseStack}.
+     *
+     * @param zephyr       The {@link Zephyr} entity.
+     * @param poseStack    The rendering {@link PoseStack}.
      * @param partialTicks The {@link Float} for the game's partial ticks.
      */
     @Override
@@ -54,7 +55,8 @@ public class ZephyrRenderer extends MultiModelRenderer<Zephyr, EntityModel<Zephy
 
     /**
      * Passes the Zephyr's tail rotation to the model as the "ageInTicks" parameter.
-     * @param zephyr The {@link Zephyr} entity.
+     *
+     * @param zephyr       The {@link Zephyr} entity.
      * @param partialTicks The {@link Float} for the game's partial ticks.
      * @return The {@link Float} for the petal rotation.
      */

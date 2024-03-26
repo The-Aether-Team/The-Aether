@@ -28,6 +28,5 @@
     "recipes": [
       "aether:skyroot_loom"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

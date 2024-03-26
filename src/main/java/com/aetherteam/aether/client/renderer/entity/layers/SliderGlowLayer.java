@@ -22,16 +22,17 @@ public class SliderGlowLayer extends EyesLayer<Slider, SliderModel> {
 
     /**
      * Renders the glowing eye layer for the Slider when it is awake.
-     * @param poseStack The rendering {@link PoseStack}.
-     * @param buffer The rendering {@link MultiBufferSource}.
-     * @param packedLight The {@link Integer} for the packed lighting for rendering.
-     * @param slider The {@link Slider} entity.
-     * @param limbSwing The {@link Float} for the limb swing rotation.
+     *
+     * @param poseStack       The rendering {@link PoseStack}.
+     * @param buffer          The rendering {@link MultiBufferSource}.
+     * @param packedLight     The {@link Integer} for the packed lighting for rendering.
+     * @param slider          The {@link Slider} entity.
+     * @param limbSwing       The {@link Float} for the limb swing rotation.
      * @param limbSwingAmount The {@link Float} for the limb swing amount.
-     * @param partialTicks The {@link Float} for the game's partial ticks.
-     * @param ageInTicks The {@link Float} for the entity's age in ticks.
-     * @param netHeadYaw The {@link Float} for the head yaw rotation.
-     * @param headPitch The {@link Float} for the head pitch rotation.
+     * @param partialTicks    The {@link Float} for the game's partial ticks.
+     * @param ageInTicks      The {@link Float} for the entity's age in ticks.
+     * @param netHeadYaw      The {@link Float} for the head yaw rotation.
+     * @param headPitch       The {@link Float} for the head pitch rotation.
      */
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Slider slider, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
@@ -43,6 +44,7 @@ public class SliderGlowLayer extends EyesLayer<Slider, SliderModel> {
 
     /**
      * Selects the red glow render if the Slider is critical, and otherwise selects the default blue glow render.
+     *
      * @param slider The {@link Slider}.
      * @return The {@link RenderType}.
      */

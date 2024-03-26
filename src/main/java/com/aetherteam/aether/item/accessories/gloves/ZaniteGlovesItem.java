@@ -28,6 +28,7 @@ public class ZaniteGlovesItem extends GlovesItem {
      * If the current durability is greater than 3/4 the max durability, the damage will be 0.25.<br><br>
      * If the current durability is less than 3/4 the max durability and greater than 1/3 the max durability, the damage will be 0.5.<br><br>
      * If the current durability is less than 1/3 the max durability, the damage will be 0.75.
+     *
      * @param stack The {@link ItemStack} of the item.
      * @return The {@link Float} value of the Zanite Gloves' damage.
      */

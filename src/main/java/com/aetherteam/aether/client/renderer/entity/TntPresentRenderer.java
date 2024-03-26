@@ -41,7 +41,7 @@ public class TntPresentRenderer extends EntityRenderer<TntPresent> {
         poseStack.popPose();
         super.render(present, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }
-   
+
     @Override
     public ResourceLocation getTextureLocation(TntPresent present) {
         return InventoryMenu.BLOCK_ATLAS;

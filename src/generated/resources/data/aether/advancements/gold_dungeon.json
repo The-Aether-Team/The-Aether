@@ -17,16 +17,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.aether.gold_dungeon.desc"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "aether:gold_dungeon_key"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.aether.gold_dungeon"
     }

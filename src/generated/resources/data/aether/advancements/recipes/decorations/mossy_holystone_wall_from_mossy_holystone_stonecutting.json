@@ -30,6 +30,5 @@
     "recipes": [
       "aether:mossy_holystone_wall_from_mossy_holystone_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

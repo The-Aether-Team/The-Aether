@@ -26,6 +26,7 @@ import java.util.function.Predicate;
 public class MenuHooks {
     /**
      * Prepares the Aether's registered custom menus in the order to check whether they should be displayed or not.
+     *
      * @param menuHelper The {@link MenuHelper} for the menu system.
      * @see com.aetherteam.aether.client.event.listeners.MenuListener#onGuiOpenHighest(ScreenEvent.Opening)
      */
@@ -37,6 +38,7 @@ public class MenuHooks {
 
     /**
      * If the current date is July 22nd, displays the Aether's anniversary splash text.
+     *
      * @see com.aetherteam.aether.client.event.listeners.MenuListener#onGuiInitialize(ScreenEvent.Init.Post)
      */
     public static void setCustomSplashText(TitleScreen screen) {
@@ -46,6 +48,7 @@ public class MenuHooks {
 
     /**
      * Sets up the button for toggling the world preview display.
+     *
      * @param screen The current {@link Screen}.
      * @return The created {@link Button}.
      * @see com.aetherteam.aether.client.event.listeners.MenuListener#onGuiInitialize(ScreenEvent.Init.Post)
@@ -66,6 +69,7 @@ public class MenuHooks {
 
     /**
      * Sets up the button for toggling between the Aether and Minecraft menu themes.
+     *
      * @param screen The current {@link Screen}.
      * @return The created {@link Button}.
      * @see com.aetherteam.aether.client.event.listeners.MenuListener#onGuiInitialize(ScreenEvent.Init.Post)
@@ -93,6 +97,7 @@ public class MenuHooks {
 
     /**
      * Sets up the button for quick-loading into a world when the world preview is active.
+     *
      * @param screen The current {@link Screen}.
      * @return The created {@link Button}.
      * @see com.aetherteam.aether.client.event.listeners.MenuListener#onGuiInitialize(ScreenEvent.Init.Post)
@@ -117,6 +122,7 @@ public class MenuHooks {
     /**
      * Toggles between Aether and Minecraft menus, with the default menus to toggle to determined by
      * {@link AetherConfig.Client#default_minecraft_menu} and {@link AetherConfig.Client#default_aether_menu}.
+     *
      * @return The {@link String} for the menu's ID.
      */
     @Nullable

@@ -29,16 +29,17 @@ public class DeveloperGlowLayer<T extends Player, M extends PlayerModel<T>> exte
 
     /**
      * If the player has Developer Glow, this will render it in the {@link AetherCustomizationsScreen} or in the world, and color it based on the settings the player has defined.
-     * @param poseStack The rendering {@link PoseStack}.
-     * @param buffer The rendering {@link MultiBufferSource}.
-     * @param packedLight The {@link Integer} for the packed lighting for rendering.
-     * @param entity The entity.
-     * @param limbSwing The {@link Float} for the limb swing rotation.
+     *
+     * @param poseStack       The rendering {@link PoseStack}.
+     * @param buffer          The rendering {@link MultiBufferSource}.
+     * @param packedLight     The {@link Integer} for the packed lighting for rendering.
+     * @param entity          The entity.
+     * @param limbSwing       The {@link Float} for the limb swing rotation.
      * @param limbSwingAmount The {@link Float} for the limb swing amount.
-     * @param partialTicks The {@link Float} for the game's partial ticks.
-     * @param ageInTicks The {@link Float} for the entity's age in ticks.
-     * @param netHeadYaw The {@link Float} for the head yaw rotation.
-     * @param headPitch The {@link Float} for the head pitch rotation.
+     * @param partialTicks    The {@link Float} for the game's partial ticks.
+     * @param ageInTicks      The {@link Float} for the entity's age in ticks.
+     * @param netHeadYaw      The {@link Float} for the head yaw rotation.
+     * @param headPitch       The {@link Float} for the head pitch rotation.
      */
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {

@@ -16,6 +16,7 @@ import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
  * This event is only fired on the {@link LogicalSide#SERVER} side.<br>
  * <br>
  * If this event is canceled, the entity will not be teleported.
+ *
  * @see EntityTeleportEvent
  */
 public class ValkyrieTeleportEvent extends EntityTeleportEvent implements ICancellableEvent {

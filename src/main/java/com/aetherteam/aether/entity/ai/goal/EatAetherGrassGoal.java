@@ -19,7 +19,7 @@ import java.util.function.Predicate;
  * Changed checks for Grass Blocks to Aether Grass Blocks.
  */
 public class EatAetherGrassGoal extends Goal {
-    private static final Predicate<BlockState> IS_TALL_GRASS = BlockStatePredicate.forBlock(Blocks.GRASS);
+    private static final Predicate<BlockState> IS_TALL_GRASS = BlockStatePredicate.forBlock(Blocks.SHORT_GRASS);
     private final Mob mob;
     private int eatAnimationTick;
 

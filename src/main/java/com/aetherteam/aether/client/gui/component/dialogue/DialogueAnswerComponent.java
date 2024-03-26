@@ -26,7 +26,8 @@ public class DialogueAnswerComponent {
 
     /**
      * Repositions the dialogue to the center of the screen.
-     * @param width The {@link Integer} for the parent screen width.
+     *
+     * @param width  The {@link Integer} for the parent screen width.
      * @param height The {@link Integer} for the parent screen height.
      */
     public void reposition(int width, int height) {

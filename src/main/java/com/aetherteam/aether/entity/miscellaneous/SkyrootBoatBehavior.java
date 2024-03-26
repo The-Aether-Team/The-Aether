@@ -31,11 +31,11 @@ public interface SkyrootBoatBehavior {
                     if (!boat.level().isClientSide() && !boat.isRemoved()) {
                         boat.kill();
                         if (boat.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
-                            for(int i = 0; i < 3; ++i) {
+                            for (int i = 0; i < 3; ++i) {
                                 boat.spawnAtLocation(AetherBlocks.SKYROOT_PLANKS.get());
                             }
 
-                            for(int j = 0; j < 2; ++j) {
+                            for (int j = 0; j < 2; ++j) {
                                 boat.spawnAtLocation(AetherItems.SKYROOT_STICK.get());
                             }
                         }

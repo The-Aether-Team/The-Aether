@@ -25,9 +25,9 @@ public class TriggerTrapEvent extends BlockEvent implements ICancellableEvent {
 
     /**
      * @param player The {@link Player} stepping on the trapped block.
-     * @param level The {@link LevelAccessor} that the block is in.
-     * @param pos The {@link BlockPos} of the block.
-     * @param state The {@link BlockState} of the block.
+     * @param level  The {@link LevelAccessor} that the block is in.
+     * @param pos    The {@link BlockPos} of the block.
+     * @param state  The {@link BlockState} of the block.
      */
     public TriggerTrapEvent(Player player, LevelAccessor level, BlockPos pos, BlockState state) {
         super(level, pos, state);

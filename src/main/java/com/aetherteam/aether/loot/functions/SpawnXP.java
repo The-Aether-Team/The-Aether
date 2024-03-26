@@ -23,7 +23,8 @@ public class SpawnXP extends LootItemConditionalFunction {
 
     /**
      * Spawns experience orbs that give 6-9 experience.
-     * @param stack The {@link ItemStack} for the loot pool.
+     *
+     * @param stack   The {@link ItemStack} for the loot pool.
      * @param context The {@link LootContext}.
      * @return The {@link ItemStack} for the loot pool.
      */

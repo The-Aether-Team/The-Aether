@@ -12,8 +12,9 @@ public class IronBubbleItem extends AccessoryItem {
 
     /**
      * Keeps the wearer's air supply at 30 if they're underwater.
+     *
      * @param slotContext The {@link SlotContext} of the Curio.
-     * @param stack The Curio {@link ItemStack}.
+     * @param stack       The Curio {@link ItemStack}.
      */
     @Override
     public void curioTick(SlotContext slotContext, ItemStack stack) {

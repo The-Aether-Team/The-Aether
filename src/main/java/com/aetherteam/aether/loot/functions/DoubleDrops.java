@@ -14,34 +14,35 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import java.util.List;
 
 public class DoubleDrops extends LootItemConditionalFunction {
-	public static final Codec<DoubleDrops> CODEC = RecordCodecBuilder.create(instance -> commonFields(instance).apply(instance, DoubleDrops::new));
+    public static final Codec<DoubleDrops> CODEC = RecordCodecBuilder.create(instance -> commonFields(instance).apply(instance, DoubleDrops::new));
 
-	protected DoubleDrops(List<LootItemCondition> conditions) {
-		super(conditions);
-	}
+    protected DoubleDrops(List<LootItemCondition> conditions) {
+        super(conditions);
+    }
 
-	/**
-	 * Doubles the dropped stack through {@link SkyrootTool#doubleDrops(ItemStack, ItemStack, BlockState)}.
-	 * @param stack The {@link ItemStack} for the loot pool.
-	 * @param context The {@link LootContext}.
-	 * @return The {@link ItemStack} for the loot pool.
-	 */
-	@Override
-	protected ItemStack run(ItemStack stack, LootContext context) {
-		ItemStack toolStack = context.getParamOrNull(LootContextParams.TOOL);
-		BlockState blockState = context.getParamOrNull(LootContextParams.BLOCK_STATE);
-		if (toolStack.getItem() instanceof SkyrootTool skyrootTool) {
-			return skyrootTool.doubleDrops(stack, toolStack, blockState);
-		} else {
-			return stack;
-		}
-	}
+    /**
+     * Doubles the dropped stack through {@link SkyrootTool#doubleDrops(ItemStack, ItemStack, BlockState)}.
+     *
+     * @param stack   The {@link ItemStack} for the loot pool.
+     * @param context The {@link LootContext}.
+     * @return The {@link ItemStack} for the loot pool.
+     */
+    @Override
+    protected ItemStack run(ItemStack stack, LootContext context) {
+        ItemStack toolStack = context.getParamOrNull(LootContextParams.TOOL);
+        BlockState blockState = context.getParamOrNull(LootContextParams.BLOCK_STATE);
+        if (toolStack.getItem() instanceof SkyrootTool skyrootTool) {
+            return skyrootTool.doubleDrops(stack, toolStack, blockState);
+        } else {
+            return stack;
+        }
+    }
 
-	public static LootItemConditionalFunction.Builder<?> builder() {
-		return LootItemConditionalFunction.simpleBuilder(DoubleDrops::new);
-	}
+    public static LootItemConditionalFunction.Builder<?> builder() {
+        return LootItemConditionalFunction.simpleBuilder(DoubleDrops::new);
+    }
 
-	@Override
+    @Override
     public LootItemFunctionType getType() {
         return AetherLootFunctions.DOUBLE_DROPS.get();
     }

@@ -19,8 +19,9 @@ public class InebriationEffect extends MobEffect {
 
     /**
      * Damages the affected entity with Inebriation damage every 50 ticks, and performs distraction behavior in {@link InebriationEffect#distractEntity(LivingEntity)} every tick.
+     *
      * @param livingEntity The affected {@link LivingEntity}.
-     * @param amplifier The {@link Integer} amplifier for the effect.
+     * @param amplifier    The {@link Integer} amplifier for the effect.
      */
     @Override
     public void applyEffectTick(LivingEntity livingEntity, int amplifier) {
@@ -33,6 +34,7 @@ public class InebriationEffect extends MobEffect {
     /**
      * Distraction code for Inebriation, which randomly modifies the affected entity's motion and rotation, moving them around and rotating their camera.
      * It also spawns red dye particles from the player's head position.
+     *
      * @param livingEntity The affected {@link LivingEntity}.
      */
     private void distractEntity(LivingEntity livingEntity) {

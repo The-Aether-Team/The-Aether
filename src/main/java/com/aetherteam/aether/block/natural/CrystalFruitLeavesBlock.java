@@ -31,12 +31,13 @@ public class CrystalFruitLeavesBlock extends LeavesWithParticlesBlock {
 
     /**
      * Warning for "deprecation" is suppressed because the method is fine to override.
-     * @param state The {@link BlockState} of the block.
-     * @param level The {@link Level} the block is in.
-     * @param pos The {@link BlockPos} of the block.
+     *
+     * @param state  The {@link BlockState} of the block.
+     * @param level  The {@link Level} the block is in.
+     * @param pos    The {@link BlockPos} of the block.
      * @param player The {@link Player} interacting with the block.
-     * @param hand The {@link InteractionHand} the player interacts with.
-     * @param hit The {@link BlockHitResult} of the interaction.
+     * @param hand   The {@link InteractionHand} the player interacts with.
+     * @param hit    The {@link BlockHitResult} of the interaction.
      * @return The {@link InteractionResult} of the interaction.
      */
     @SuppressWarnings("deprecation")

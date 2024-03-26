@@ -21,14 +21,22 @@ import java.util.Map;
  */
 public class MostDamageTargetGoal extends TargetGoal {
     private static final TargetingConditions HURT_BY_TARGETING = TargetingConditions.forCombat().ignoreLineOfSight().ignoreInvisibilityTesting();
-    /** Holds the aggro values from all recent attackers. */
+    /**
+     * Holds the aggro values from all recent attackers.
+     */
     private final Object2DoubleMap<LivingEntity> attackers = new Object2DoubleOpenHashMap<>();
-    /** Store the previous revengeTimer value. */
+    /**
+     * Store the previous revengeTimer value.
+     */
     private int lastHurtTimestamp;
-    /** The current target. */
+    /**
+     * The current target.
+     */
     @Nullable
     private LivingEntity primaryTarget;
-    /** How much aggro each mob loses per second. */
+    /**
+     * How much aggro each mob loses per second.
+     */
     private final float calmDownRate;
     private int aiTicks;
 

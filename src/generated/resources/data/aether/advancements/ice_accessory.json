@@ -27,17 +27,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.aether.ice_accessory.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "aether:ice_pendant",
       "nbt": "{Damage:0}"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.aether.ice_accessory"
     }

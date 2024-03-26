@@ -12,6 +12,7 @@ public class TitleScreenMixin {
     /**
      * Used by the world preview system.<br>
      * Sets the {@link TitleScreen} to pause the game when the world preview is active.
+     *
      * @param cir The {@link Boolean} {@link CallbackInfoReturnable} used for the method's return value.
      * @see WorldDisplayHelper#isActive()
      */

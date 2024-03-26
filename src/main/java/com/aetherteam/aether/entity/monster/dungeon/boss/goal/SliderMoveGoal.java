@@ -77,7 +77,8 @@ public class SliderMoveGoal extends Goal {
 
     /**
      * Get the move direction if it already exists, or calculate a new one.
-     * @param slider The {@link Slider} that the brain belongs to.
+     *
+     * @param slider      The {@link Slider} that the brain belongs to.
      * @param targetPoint The target {@link Vec3} position.
      * @return The {@link Direction} to move in.
      */
@@ -96,6 +97,7 @@ public class SliderMoveGoal extends Goal {
 
     /**
      * Gets the calculated distance between two points on one axis.
+     *
      * @param direction The axis and direction to move along {@link Direction}.
      * @return The calculated distance.
      */

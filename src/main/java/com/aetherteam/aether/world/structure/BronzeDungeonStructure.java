@@ -70,11 +70,12 @@ public class BronzeDungeonStructure extends Structure {
 
     /**
      * Check the surrounding chunks for bronze dungeon placement.
-     * @param chunkPos The {@link ChunkPos}.
-     * @param height The {@link MutableInt} for the height to check.
-     * @param generator The {@link ChunkGenerator} for generation.
-     * @param heightAccessor The {@link LevelHeightAccessor} to place in.
-     * @param randomState The {@link RandomState} for the structure.
+     *
+     * @param chunkPos        The {@link ChunkPos}.
+     * @param height          The {@link MutableInt} for the height to check.
+     * @param generator       The {@link ChunkGenerator} for generation.
+     * @param heightAccessor  The {@link LevelHeightAccessor} to place in.
+     * @param randomState     The {@link RandomState} for the structure.
      * @param templateManager The {@link StructureTemplateManager}.
      * @return A {@link ChunkPos} for placement.
      */
@@ -98,10 +99,11 @@ public class BronzeDungeonStructure extends Structure {
     /**
      * The bronze dungeon needs to generate as covered by land as possible.
      * Try to find a place where the land is taller than the boss room.
-     * @param generator The {@link ChunkGenerator} for generation.
-     * @param heightAccessor The {@link LevelHeightAccessor} to place in.
-     * @param chunkPos The {@link ChunkPos}.
-     * @param random The {@link RandomSource} for the structure.
+     *
+     * @param generator       The {@link ChunkGenerator} for generation.
+     * @param heightAccessor  The {@link LevelHeightAccessor} to place in.
+     * @param chunkPos        The {@link ChunkPos}.
+     * @param random          The {@link RandomSource} for the structure.
      * @param templateManager The {@link StructureTemplateManager}.
      * @return The starting height as an {@link Integer}.
      */
@@ -144,8 +146,9 @@ public class BronzeDungeonStructure extends Structure {
 
     /**
      * Checks for no air in a column.
+     *
      * @param columns The {@link NoiseColumn NoiseColumn[]} array to check.
-     * @param y The given y-level {@link Integer} to check.
+     * @param y       The given y-level {@link Integer} to check.
      * @return A {@link Boolean} if there was no air found at the given y-level. Returns false if there was air found.
      */
     private static boolean checkEachCornerAtY(NoiseColumn[] columns, int y) {
@@ -159,6 +162,7 @@ public class BronzeDungeonStructure extends Structure {
 
     /**
      * Override to prevent beardifier bounding box adjustment.
+     *
      * @param box The original {@link BoundingBox}.
      * @return The new {@link BoundingBox}.
      */

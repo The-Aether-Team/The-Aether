@@ -18,65 +18,65 @@ import snownee.jade.api.*;
 
 @WailaPlugin
 public class AetherJadePlugin implements IWailaPlugin {
-	@Override
-	public void registerClient(IWailaClientRegistration registration) {
-		registration.addRayTraceCallback(this::registerAetherOverrides);
-	}
+    @Override
+    public void registerClient(IWailaClientRegistration registration) {
+        registration.addRayTraceCallback(this::registerAetherOverrides);
+    }
 
-	@Nullable
-	public Accessor<?> registerAetherOverrides(HitResult hitResult, @Nullable Accessor<?> accessor, @Nullable Accessor<?> originalAccessor) {
-		if (accessor instanceof BlockAccessor target) {
-			Player player = accessor.getPlayer();
-			if (player.isCreative() || player.isSpectator()) {
-				return accessor;
-			}
-			IWailaClientRegistration client = VanillaPlugin.CLIENT_REGISTRATION;
-			if (target.getBlock() instanceof TrappedBlock trapped) { // Trapped dungeon blocks show up as their normal dungeon blocks
-				return client.blockAccessor().from(target).blockState(trapped.getFacadeBlock()).build();
-			} else if (target.getBlock() instanceof DoorwayBlock door) { // Both doorways show up as locked dungeon blocks, since you won't see them if a dungeon is completed anyway
-				ResourceLocation doorLocation = BuiltInRegistries.BLOCK.getKey(door);
-				Block doorBlock = this.getLockedDungeonBlock(doorLocation.getPath());
-				if (doorBlock != null) {
-					return client.blockAccessor().from(target).blockState(doorBlock.defaultBlockState()).build();
-				}
-			} else if (target.getBlock() instanceof TreasureDoorwayBlock door) {
-				ResourceLocation doorLocation = BuiltInRegistries.BLOCK.getKey(door);
-				Block doorBlock = this.getLockedDungeonBlock(doorLocation.getPath());
-				if (doorBlock != null) {
-					return client.blockAccessor().from(target).blockState(doorBlock.defaultBlockState()).build();
-				}
-			} else if (target.getBlock() == AetherBlocks.CHEST_MIMIC.get()) { // Mimics show up as normal chests. There's not a single way to tell the difference between these and normal chests from the tooltip.
+    @Nullable
+    public Accessor<?> registerAetherOverrides(HitResult hitResult, @Nullable Accessor<?> accessor, @Nullable Accessor<?> originalAccessor) {
+        if (accessor instanceof BlockAccessor target) {
+            Player player = accessor.getPlayer();
+            if (player.isCreative() || player.isSpectator()) {
+                return accessor;
+            }
+            IWailaClientRegistration client = VanillaPlugin.CLIENT_REGISTRATION;
+            if (target.getBlock() instanceof TrappedBlock trapped) { // Trapped dungeon blocks show up as their normal dungeon blocks
+                return client.blockAccessor().from(target).blockState(trapped.getFacadeBlock()).build();
+            } else if (target.getBlock() instanceof DoorwayBlock door) { // Both doorways show up as locked dungeon blocks, since you won't see them if a dungeon is completed anyway
+                ResourceLocation doorLocation = BuiltInRegistries.BLOCK.getKey(door);
+                Block doorBlock = this.getLockedDungeonBlock(doorLocation.getPath());
+                if (doorBlock != null) {
+                    return client.blockAccessor().from(target).blockState(doorBlock.defaultBlockState()).build();
+                }
+            } else if (target.getBlock() instanceof TreasureDoorwayBlock door) {
+                ResourceLocation doorLocation = BuiltInRegistries.BLOCK.getKey(door);
+                Block doorBlock = this.getLockedDungeonBlock(doorLocation.getPath());
+                if (doorBlock != null) {
+                    return client.blockAccessor().from(target).blockState(doorBlock.defaultBlockState()).build();
+                }
+            } else if (target.getBlock() == AetherBlocks.CHEST_MIMIC.get()) { // Mimics show up as normal chests. There's not a single way to tell the difference between these and normal chests from the tooltip.
 //				if (ModList.get().isLoaded("lootr")) { // Disguise as Lootr Loot Chest
 //					return client.blockAccessor().from(target).serverData(this.createFakeChestData(target)).blockState(ModBlocks.CHEST.get().defaultBlockState()).build();
 //				} else {
-					return client.blockAccessor().from(target).serverData(this.createFakeChestData(target)).blockState(Blocks.CHEST.defaultBlockState()).build();
+                return client.blockAccessor().from(target).serverData(this.createFakeChestData(target)).blockState(Blocks.CHEST.defaultBlockState()).build();
 //				}
-			}
-		}
-		return accessor;
-	}
+            }
+        }
+        return accessor;
+    }
 
-	/**
-	 * Adds the "inventory not generated" text to the mimic's tooltip
-	 */
-	private CompoundTag createFakeChestData(BlockAccessor target) {
-		CompoundTag tag = new CompoundTag();
-		if (!target.getServerData().isEmpty()) {
-			tag.putBoolean("Loot", true);
-		}
-		return tag;
-	}
+    /**
+     * Adds the "inventory not generated" text to the mimic's tooltip
+     */
+    private CompoundTag createFakeChestData(BlockAccessor target) {
+        CompoundTag tag = new CompoundTag();
+        if (!target.getServerData().isEmpty()) {
+            tag.putBoolean("Loot", true);
+        }
+        return tag;
+    }
 
-	/**
-	 * Converts doorway blocks to their appropriate locked blocks
-	 */
-	@Nullable
-	private Block getLockedDungeonBlock(String name) {
-		if (name.startsWith("boss_doorway_")) {
-			return BuiltInRegistries.BLOCK.get(new ResourceLocation(Aether.MODID, "locked_" + name.substring(13)));
-		} else if (name.startsWith("treasure_doorway_")) {
-			return BuiltInRegistries.BLOCK.get(new ResourceLocation(Aether.MODID, "locked_" + name.substring(17)));
-		}
-		return null;
-	}
+    /**
+     * Converts doorway blocks to their appropriate locked blocks
+     */
+    @Nullable
+    private Block getLockedDungeonBlock(String name) {
+        if (name.startsWith("boss_doorway_")) {
+            return BuiltInRegistries.BLOCK.get(new ResourceLocation(Aether.MODID, "locked_" + name.substring(13)));
+        } else if (name.startsWith("treasure_doorway_")) {
+            return BuiltInRegistries.BLOCK.get(new ResourceLocation(Aether.MODID, "locked_" + name.substring(17)));
+        }
+        return null;
+    }
 }

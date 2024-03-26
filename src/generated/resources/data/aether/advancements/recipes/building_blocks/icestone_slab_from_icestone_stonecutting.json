@@ -30,6 +30,5 @@
     "recipes": [
       "aether:icestone_slab_from_icestone_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

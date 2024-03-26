@@ -32,12 +32,13 @@ public class ParachuteRenderer extends EntityRenderer<Parachute> {
     /**
      * Renders and rotates the Parachute with the player.<br><br>
      * The warning for "deprecation" is suppressed because {@link net.minecraft.client.renderer.block.BlockRenderDispatcher#renderSingleBlock(BlockState, PoseStack, MultiBufferSource, int, int, ModelData, RenderType)} is fine to use.
-     * @param parachute The {@link Parachute} entity.
-     * @param entityYaw The {@link Float} for the entity's yaw rotation.
+     *
+     * @param parachute    The {@link Parachute} entity.
+     * @param entityYaw    The {@link Float} for the entity's yaw rotation.
      * @param partialTicks The {@link Float} for the game's partial ticks.
-     * @param poseStack The rendering {@link PoseStack}.
-     * @param buffer The rendering {@link MultiBufferSource}.
-     * @param packedLight The {@link Integer} for the packed lighting for rendering.
+     * @param poseStack    The rendering {@link PoseStack}.
+     * @param buffer       The rendering {@link MultiBufferSource}.
+     * @param packedLight  The {@link Integer} for the packed lighting for rendering.
      */
     @Override
     @SuppressWarnings("deprecation")

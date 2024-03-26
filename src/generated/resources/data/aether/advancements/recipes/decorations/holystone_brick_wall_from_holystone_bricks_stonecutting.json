@@ -30,6 +30,5 @@
     "recipes": [
       "aether:holystone_brick_wall_from_holystone_bricks_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

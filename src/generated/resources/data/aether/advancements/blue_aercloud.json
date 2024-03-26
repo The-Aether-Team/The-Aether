@@ -9,16 +9,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.aether.blue_aercloud.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "aether:blue_aercloud"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.aether.blue_aercloud"
     }

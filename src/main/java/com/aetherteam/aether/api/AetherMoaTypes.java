@@ -32,6 +32,7 @@ public class AetherMoaTypes {
     /**
      * Gets a random {@link MoaType} with a weighted chance. This is used when spawning Moas in the world.<br>
      * A {@link SimpleWeightedRandomList} is built with all the {@link MoaType}s and their spawn chance weights, and one is randomly picked out of the list.
+     *
      * @param random The {@link RandomSource} to use.
      * @return The {@link MoaType}.
      */

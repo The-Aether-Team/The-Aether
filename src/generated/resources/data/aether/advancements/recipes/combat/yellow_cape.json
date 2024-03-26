@@ -30,6 +30,5 @@
     "recipes": [
       "aether:yellow_cape"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

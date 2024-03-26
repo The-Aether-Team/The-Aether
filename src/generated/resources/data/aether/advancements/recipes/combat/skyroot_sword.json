@@ -28,6 +28,5 @@
     "recipes": [
       "aether:skyroot_sword"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

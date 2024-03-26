@@ -17,8 +17,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class PlayerMixin {
     /**
      * Damages gloves only once during a sweeping attack, instead of once for every damaged entity in the attack.
+     *
      * @param target The target {@link Entity}.
-     * @param ci The {@link CallbackInfo} for the void method return.
+     * @param ci     The {@link CallbackInfo} for the void method return.
      * @see AbilityHooks.AccessoryHooks#damageGloves(Player)
      */
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;doPostHurtEffects(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;)V", shift = At.Shift.AFTER), method = "attack(Lnet/minecraft/world/entity/Entity;)V")
@@ -29,6 +30,7 @@ public class PlayerMixin {
 
     /**
      * Used to set whether the player tried to crouch for {@link MountableAnimal}, before crouching is cancelled for mounts by the {@link Player} class.
+     *
      * @param ci The {@link CallbackInfo} for the void method return.
      */
     @Inject(at = @At(value = "HEAD"), method = "rideTick()V")
@@ -43,6 +45,7 @@ public class PlayerMixin {
 
     /**
      * Sets the player as having a loaded cape if they have a cape accessory equipped and visible.
+     *
      * @param cir The {@link Boolean} {@link CallbackInfoReturnable} used for the method's return value.
      */
     @Inject(at = @At(value = "HEAD"), method = "isModelPartShown(Lnet/minecraft/world/entity/player/PlayerModelPart;)Z", cancellable = true)

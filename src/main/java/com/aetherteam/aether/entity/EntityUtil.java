@@ -1,6 +1,6 @@
 package com.aetherteam.aether.entity;
 
-import com.aetherteam.aether.capability.lightning.LightningTracker;
+import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.mixin.mixins.common.accessor.EntityAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -15,6 +15,7 @@ import net.minecraft.world.level.Level;
 public final class EntityUtil {
     /**
      * Copies rotation values from one entity to another.
+     *
      * @param entity The {@link Entity} to copy rotations to.
      * @param source The {@link Entity} to copy rotations from.
      */
@@ -27,6 +28,7 @@ public final class EntityUtil {
 
     /**
      * Spawns explosion particles used for various entity movement effects.
+     *
      * @param entity The {@link Entity} to spawn the particles for.
      */
     public static void spawnMovementExplosionParticles(Entity entity) {
@@ -43,6 +45,7 @@ public final class EntityUtil {
 
     /**
      * Spawns explosion particles used for various entity summoning effects.
+     *
      * @param entity The {@link Entity} to spawn the particles for.
      */
     public static void spawnSummoningExplosionParticles(Entity entity) {
@@ -61,8 +64,9 @@ public final class EntityUtil {
 
     /**
      * Spawns particles for block removal interactions.
+     *
      * @param level The {@link Level} to spawn the particles in.
-     * @param pos The {@link BlockPos} to spawn the particles at.
+     * @param pos   The {@link BlockPos} to spawn the particles at.
      */
     public static void spawnRemovalParticles(Level level, BlockPos pos) {
         double a = pos.getX() + 0.5 + (double) (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.375;
@@ -75,12 +79,13 @@ public final class EntityUtil {
 
     /**
      * Summons a {@link LightningBolt}.
+     *
      * @param projectile The {@link Projectile} that is summoning lightning.
      */
     public static void summonLightningFromProjectile(Projectile projectile) {
         LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(projectile.level());
         if (lightningBolt != null) {
-            LightningTracker.get(lightningBolt).ifPresent(lightningTracker -> lightningTracker.setOwner(projectile.getOwner()));
+            lightningBolt.getData(AetherDataAttachments.LIGHTNING_TRACKER).setOwner(projectile.getOwner());
             lightningBolt.setPos(projectile.getX(), projectile.getY(), projectile.getZ());
             projectile.level().addFreshEntity(lightningBolt);
         }

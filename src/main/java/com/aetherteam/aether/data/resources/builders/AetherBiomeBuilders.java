@@ -51,7 +51,7 @@ public class AetherBiomeBuilders {
                 new MobSpawnSettings.Builder()
                         .addMobCharge(AetherEntityTypes.COCKATRICE.get(), 0.5, 0.15)
                         .addMobCharge(AetherEntityTypes.ZEPHYR.get(), 0.6, 0.16)
-                        .addMobCharge(AetherEntityTypes.AECHOR_PLANT.get(), 0.4,0.11)
+                        .addMobCharge(AetherEntityTypes.AECHOR_PLANT.get(), 0.4, 0.11)
                         .addMobCharge(AetherEntityTypes.BLUE_SWET.get(), 0.5, 0.1)
                         .addMobCharge(AetherEntityTypes.GOLDEN_SWET.get(), 0.5, 0.1)
                         .addMobCharge(AetherEntityTypes.WHIRLWIND.get(), 0.4, 0.1)
@@ -110,7 +110,7 @@ public class AetherBiomeBuilders {
                 .temperatureAdjustment(temperatureModifier)
                 .build();
     }
-    
+
     public static BiomeSource buildAetherBiomeSource(HolderGetter<Biome> biomes) {
         Climate.Parameter fullRange = Climate.Parameter.span(-1.0F, 1.0F);
         Climate.Parameter temps1 = Climate.Parameter.span(-1.0F, -0.8F);

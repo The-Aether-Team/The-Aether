@@ -56,6 +56,7 @@ public class MoaEggItem extends Item {
     /**
      * [CODE COPY] - {@link net.minecraft.world.item.SpawnEggItem#useOn(UseOnContext)}<br><br>
      * Modified for Moa spawning specifically and ensuring all the Moa's NBT tags are set.
+     *
      * @param context The {@link UseOnContext} of the usage interaction.
      */
     @Override
@@ -107,9 +108,10 @@ public class MoaEggItem extends Item {
     /**
      * [CODE COPY] - {@link net.minecraft.world.item.SpawnEggItem#use(Level, Player, InteractionHand)}<br><br>
      * Modified for Moa spawning specifically and ensuring all the Moa's NBT tags are set.
-     * @param level The {@link Level} of the user.
+     *
+     * @param level  The {@link Level} of the user.
      * @param player The {@link Player} using this item.
-     * @param hand The {@link InteractionHand} in which the item is being used.
+     * @param hand   The {@link InteractionHand} in which the item is being used.
      */
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
@@ -145,10 +147,11 @@ public class MoaEggItem extends Item {
 
     /**
      * Applies NBT tags to the Moa Egg item to used for spawning a Moa from it.
-     * @param stack The {@link ItemStack} to apply the tags to.
-     * @param isBaby {@link Boolean} for whether the Moa should spawn as a baby or not.
-     * @param moaType {@link MoaType} of the Moa.
-     * @param isHungry {@link Boolean} for if the Moa should spawn hungry or not.
+     *
+     * @param stack         The {@link ItemStack} to apply the tags to.
+     * @param isBaby        {@link Boolean} for whether the Moa should spawn as a baby or not.
+     * @param moaType       {@link MoaType} of the Moa.
+     * @param isHungry      {@link Boolean} for if the Moa should spawn hungry or not.
      * @param isPlayerGrown @{link Boolean} for if the Moa was spawned as grown by a player.
      * @return The {@link ItemStack} with the applied tags.
      */
@@ -177,6 +180,7 @@ public class MoaEggItem extends Item {
 
     /**
      * Gets a {@link MoaEggItem} from a {@link MoaType} by comparing the ID of the given type to the IDs of MoaTypes in the {@link MoaEggItem#BY_ID} list.
+     *
      * @param moaType The {@link MoaType} to get an egg for.
      * @return The {@link MoaEggItem} from the type.
      */

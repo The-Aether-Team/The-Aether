@@ -3,7 +3,6 @@ package com.aetherteam.aether.inventory.container;
 import com.aetherteam.aether.advancement.AetherAdvancementTriggers;
 import com.aetherteam.aether.advancement.LoreTrigger;
 import com.aetherteam.aether.inventory.menu.LoreBookMenu;
-import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.LoreExistsPacket;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.client.player.LocalPlayer;
@@ -28,6 +27,7 @@ public class LoreInventory extends SimpleContainer {
      * This will change the {@link LoreBookMenu#loreEntryExists} value on the server according to {@link LoreExistsPacket#exists()}.<br><br>
      * On the server side, if {@link LoreBookMenu#loreEntryExists} is found to be true through {@link LoreBookMenu#getLoreEntryExists()},
      * then the item must have a lore entry, so {@link LoreTrigger#trigger(ServerPlayer, ItemStack)} is called for achievements.
+     *
      * @param index The {@link Integer} index of the slot.
      * @param stack the {@link ItemStack} trying to be set to the slot.
      */
@@ -36,13 +36,13 @@ public class LoreInventory extends SimpleContainer {
         if (!stack.isEmpty()) {
             if (this.player.level().isClientSide() && this.player instanceof LocalPlayer) {
                 if (this.menu.loreEntryKeyExists(stack)) {
-                    PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new LoreExistsPacket(this.player.getId(), stack, true));
+                    PacketRelay.sendToServer(new LoreExistsPacket(this.player.getId(), stack, true));
                 } else {
-                    PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new LoreExistsPacket(this.player.getId(), stack, false));
+                    PacketRelay.sendToServer(new LoreExistsPacket(this.player.getId(), stack, false));
                 }
             } else if (this.player instanceof ServerPlayer serverPlayer) {
                 if (this.menu.getLoreEntryExists()) {
-                    AetherAdvancementTriggers.LORE_ENTRY.trigger(serverPlayer, stack);
+                    AetherAdvancementTriggers.LORE_ENTRY.get().trigger(serverPlayer, stack);
                 }
             }
         }

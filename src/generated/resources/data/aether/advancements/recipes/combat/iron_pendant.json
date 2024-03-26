@@ -30,6 +30,5 @@
     "recipes": [
       "aether:iron_pendant"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

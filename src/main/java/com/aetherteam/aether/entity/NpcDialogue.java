@@ -19,7 +19,8 @@ public interface NpcDialogue {
 
     /**
      * Handles an NPC reaction on the server.
-     * @param player The interacting {@link Player}.
+     *
+     * @param player        The interacting {@link Player}.
      * @param interactionID The {@link Byte} ID corresponding to the option the player chose.
      */
     void handleNpcInteraction(Player player, byte interactionID);

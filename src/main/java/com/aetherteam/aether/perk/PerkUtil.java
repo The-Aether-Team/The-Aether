@@ -32,7 +32,7 @@ public final class PerkUtil {
      * @return A {@link Predicate} to check if a {@link User} has access to Ascentan-tier Moa skins.
      */
     public static Predicate<User> hasAscentanMoaSkins() {
-        return (user) -> hasAllSkins().test(user) || hasBaseSkins().test(user)  || user.getCurrentTierLevel() >= User.Tier.ASCENTAN.getLevel();
+        return (user) -> hasAllSkins().test(user) || hasBaseSkins().test(user) || user.getCurrentTierLevel() >= User.Tier.ASCENTAN.getLevel();
     }
 
     /**
@@ -86,6 +86,7 @@ public final class PerkUtil {
 
     /**
      * Converts a hex code to RGB values stored as decimals from 0 to 1.
+     *
      * @param hex The color hex code as a {@link String}.
      * @return A {@link Triple} storing three {@link Float}s for RGB values.
      */

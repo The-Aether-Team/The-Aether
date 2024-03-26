@@ -1,0 +1,16 @@
+{
+  "values": {
+    "aether:icestone": {
+      "burn_time": 400
+    },
+    "aether:icestone_slab": {
+      "burn_time": 200
+    },
+    "aether:icestone_stairs": {
+      "burn_time": 400
+    },
+    "aether:icestone_wall": {
+      "burn_time": 400
+    }
+  }
+}

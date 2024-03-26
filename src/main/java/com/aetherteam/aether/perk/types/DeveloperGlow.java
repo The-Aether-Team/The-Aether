@@ -8,6 +8,7 @@ import net.minecraft.network.FriendlyByteBuf;
 public record DeveloperGlow(String hexColor) {
     /**
      * Reads a {@link DeveloperGlow} from a {@link FriendlyByteBuf} network buffer.
+     *
      * @param buffer The {@link FriendlyByteBuf} buffer.
      * @return A {@link DeveloperGlow}.
      */
@@ -18,7 +19,8 @@ public record DeveloperGlow(String hexColor) {
 
     /**
      * Writes a {@link DeveloperGlow} to a {@link FriendlyByteBuf} network buffer.
-     * @param buffer The {@link FriendlyByteBuf} buffer.
+     *
+     * @param buffer        The {@link FriendlyByteBuf} buffer.
      * @param developerGlow A {@link DeveloperGlow}.
      */
     public static void write(FriendlyByteBuf buffer, DeveloperGlow developerGlow) {

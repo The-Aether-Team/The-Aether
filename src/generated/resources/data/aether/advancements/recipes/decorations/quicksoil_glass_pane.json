@@ -30,6 +30,5 @@
     "recipes": [
       "aether:quicksoil_glass_pane"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

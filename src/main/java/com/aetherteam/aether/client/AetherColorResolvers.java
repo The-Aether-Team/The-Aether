@@ -29,7 +29,7 @@ public class AetherColorResolvers {
     static void registerBlockColor(RegisterColorHandlersEvent.Block event) {
         Map<Block, BlockColor> map = new HashMap<>();
         Map<Block, BlockColor> blockColors = ((BlockColorsAccessor) event.getBlockColors()).aether$getBlockColors();
-        map.put(Blocks.GRASS, blockColors.get(Blocks.GRASS));
+        map.put(Blocks.SHORT_GRASS, blockColors.get(Blocks.SHORT_GRASS));
         map.put(Blocks.FERN, blockColors.get(Blocks.FERN));
         map.put(Blocks.TALL_GRASS, blockColors.get(Blocks.TALL_GRASS));
         map.put(Blocks.LARGE_FERN, blockColors.get(Blocks.LARGE_FERN));

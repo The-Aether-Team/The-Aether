@@ -5,7 +5,6 @@ import com.aetherteam.aether.item.AetherItems;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -15,7 +14,6 @@ import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BucketPickup;
@@ -27,10 +25,8 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.neoforged.neoforge.common.capabilities.ICapabilityProvider;
 import net.neoforged.neoforge.event.EventHooks;
 
-import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -49,9 +45,10 @@ public class SkyrootBucketItem extends BucketItem {
      * [CODE COPY] - {@link BucketItem#use(Level, Player, InteractionHand)}.<br><br>
      * Blocks that can be picked up depends on {@link AetherTags.Blocks#ALLOWED_BUCKET_PICKUP} or {@link AetherTags.Fluids#ALLOWED_BUCKET_PICKUP},
      * and the method will also swap out any returned vanilla buckets from interactions with Skyroot Buckets using {@link SkyrootBucketItem#swapBucketType(ItemStack)}.
-     * @param level The {@link Level} of the user.
+     *
+     * @param level  The {@link Level} of the user.
      * @param player The {@link Player} using this item.
-     * @param hand The {@link InteractionHand} in which the item is being used.
+     * @param hand   The {@link InteractionHand} in which the item is being used.
      */
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
@@ -80,7 +77,7 @@ public class SkyrootBucketItem extends BucketItem {
                             level.gameEvent(player, GameEvent.FLUID_PICKUP, blockPos);
                             ItemStack resultStack = ItemUtils.createFilledResult(heldStack, player, bucketStack);
                             if (!level.isClientSide()) {
-                                CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer)player, bucketStack);
+                                CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer) player, bucketStack);
                             }
                             return InteractionResultHolder.sidedSuccess(resultStack, level.isClientSide());
                         }
@@ -108,8 +105,9 @@ public class SkyrootBucketItem extends BucketItem {
 
     /**
      * Swaps a given bucket with a replacement using {@link SkyrootBucketItem#REPLACEMENTS}.
+     *
      * @param filledStack The given bucket as an {@link ItemStack}
-     * @return  The replacement bucket as an {@link ItemStack}.
+     * @return The replacement bucket as an {@link ItemStack}.
      */
     public static ItemStack swapBucketType(ItemStack filledStack) {
         Supplier<? extends Item> filledItem = filledStack::getItem;
@@ -133,21 +131,7 @@ public class SkyrootBucketItem extends BucketItem {
     }
 
     /**
-     * We don't initialize the Forge {@link net.neoforged.neoforge.fluids.capability.wrappers.FluidBucketWrapper} for Skyroot Buckets.
-     */
-    @Nullable
-    @Override
-    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag tag) {
-        return null;
-    }
-
-    @Override
-    public int getBurnTime(ItemStack itemStack, RecipeType<?> recipeType) {
-        return 200;
-    }
-
-    /**
-     *[CODE COPY] - {@link BucketItem#canBlockContainFluid(Player, Level, BlockPos, BlockState)}.
+     * [CODE COPY] - {@link BucketItem#canBlockContainFluid(Player, Level, BlockPos, BlockState)}.
      */
     protected boolean canBlockContainFluid(Player player, Level level, BlockPos pos, BlockState state) {
         return state.getBlock() instanceof LiquidBlockContainer liquidBlockContainer && liquidBlockContainer.canPlaceLiquid(player, level, pos, state, this.getFluid());

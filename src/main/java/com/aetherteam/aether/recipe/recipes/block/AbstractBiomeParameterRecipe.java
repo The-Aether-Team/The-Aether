@@ -27,8 +27,9 @@ public abstract class AbstractBiomeParameterRecipe extends AbstractBlockStateRec
      * Tests if the given object matches with the recipe.<br><br>
      * Checks if there is a {@link Biome} {@link ResourceKey} or a {@link Biome} {@link TagKey} it will test one of those alongside {@link AbstractBlockStateRecipe#matches(Level, BlockPos, BlockState)}.
      * Otherwise, it will only test {@link AbstractBlockStateRecipe#matches(Level, BlockPos, BlockState)}.
+     *
      * @param level The {@link Level} the recipe is performed in.
-     * @param pos The {@link BlockPos} the recipe is performed at.
+     * @param pos   The {@link BlockPos} the recipe is performed at.
      * @param state The {@link BlockState} being used that is being checked.
      * @return Whether the given {@link BlockState} matches.
      */

@@ -42,6 +42,7 @@ public class ThunderCrystal extends AbstractCrystal {
 
     /**
      * Damages and knocks back an entity when this projectile hits it.
+     *
      * @param result The {@link EntityHitResult} of the projectile.
      */
     @Override
@@ -99,8 +100,9 @@ public class ThunderCrystal extends AbstractCrystal {
 
     /**
      * Applies knockback to this projectile.
+     *
      * @param strength The {@link Double} strength of the knockback.
-     * @param target The {@link Vec3} motion for the knockback.
+     * @param target   The {@link Vec3} motion for the knockback.
      */
     public void knockback(double strength, Vec3 target) {
         this.hasImpulse = true;

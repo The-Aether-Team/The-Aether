@@ -10,8 +10,9 @@ import javax.annotation.Nullable;
 public interface SkyrootTool {
     /**
      * Doubles the count of item drops as long as the harvesting tool doesn't have silk touch and the block is able to have double drops.
-     * @param drop The {@link ItemStack} dropped from a block.
-     * @param tool The {@link ItemStack} of the tool used to harvest the block.
+     *
+     * @param drop  The {@link ItemStack} dropped from a block.
+     * @param tool  The {@link ItemStack} of the tool used to harvest the block.
      * @param state The {@link BlockState} of the block.
      * @return The new modified {@link ItemStack} of the item drop.
      * @see com.aetherteam.aether.loot.functions.DoubleDrops

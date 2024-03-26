@@ -12,21 +12,21 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 public class EnchantingRecipe extends AbstractAetherCookingRecipe {
     public EnchantingRecipe(String group, AetherBookCategory category, Ingredient ingredient, ItemStack result, float experience, int enchantingTime) {
         super(AetherRecipeTypes.ENCHANTING.get(), group, category, ingredient, result, experience, enchantingTime);
-	}
+    }
 
-	@Override
-	public ItemStack getToastSymbol() {
-		return new ItemStack(AetherBlocks.ALTAR.get());
-	}
+    @Override
+    public ItemStack getToastSymbol() {
+        return new ItemStack(AetherBlocks.ALTAR.get());
+    }
 
-	@Override
-	public RecipeSerializer<?> getSerializer() {
-		return AetherRecipeSerializers.ENCHANTING.get();
-	}
+    @Override
+    public RecipeSerializer<?> getSerializer() {
+        return AetherRecipeSerializers.ENCHANTING.get();
+    }
 
-	public static class Serializer extends AetherCookingSerializer<EnchantingRecipe> {
-		public Serializer() {
-			super(EnchantingRecipe::new, 250);
-		}
-	}
+    public static class Serializer extends AetherCookingSerializer<EnchantingRecipe> {
+        public Serializer() {
+            super(EnchantingRecipe::new, 250);
+        }
+    }
 }

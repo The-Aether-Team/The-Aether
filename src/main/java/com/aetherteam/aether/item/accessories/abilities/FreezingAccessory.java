@@ -5,7 +5,7 @@ import com.aetherteam.aether.event.AetherEventDispatch;
 import com.aetherteam.aether.event.FreezeEvent;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.recipes.block.AccessoryFreezableRecipe;
-import net.minecraft.commands.CommandFunction;
+import net.minecraft.commands.CacheableFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -56,7 +56,7 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
                 if (fluidState.isEmpty() || oldBlockState.is(fluidState.createLegacyBlock().getBlock())) { // Default freezing behavior.
                     if (freezableRecipe.matches(level, pos, oldBlockState)) {
                         BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                        Optional<CommandFunction.CacheableFunction> function = freezableRecipe.getFunction();
+                        Optional<CacheableFunction> function = freezableRecipe.getFunction();
                         return this.freezeBlockAt(level, pos, origin, oldBlockState, newBlockState, function, source, flag);
                     }
                 } else if (!oldBlockState.hasProperty(BlockStateProperties.WATERLOGGED)) { // Breaks a block before freezing if it has a FluidState attached by default (this is different from waterlogging for blocks like Kelp and Seagrass).
@@ -64,7 +64,7 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
                     if (freezableRecipe.matches(level, pos, oldBlockState)) {
                         level.destroyBlock(pos, true);
                         BlockState newBlockState = freezableRecipe.getResultState(oldBlockState);
-                        Optional<CommandFunction.CacheableFunction> function = freezableRecipe.getFunction();
+                        Optional<CacheableFunction> function = freezableRecipe.getFunction();
                         return this.freezeBlockAt(level, pos, origin, oldBlockState, newBlockState, function, source, flag);
                     }
                 }

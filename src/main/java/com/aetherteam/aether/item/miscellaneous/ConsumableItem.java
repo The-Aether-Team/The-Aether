@@ -11,9 +11,10 @@ import net.minecraft.world.item.ItemStack;
 public interface ConsumableItem {
     /**
      * Manually consumes the item and triggers the {@link CriteriaTriggers#CONSUME_ITEM} advancement criteria and gives the {@link Stats#ITEM_USED} stat to the player for the item.
-     * @param item The {@link Item} in use.
+     *
+     * @param item  The {@link Item} in use.
      * @param stack The {@link ItemStack} in use.
-     * @param user The {@link LivingEntity} using the stack.
+     * @param user  The {@link LivingEntity} using the stack.
      */
     default void consume(Item item, ItemStack stack, LivingEntity user) {
         if (user instanceof Player player) {

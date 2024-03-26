@@ -42,8 +42,9 @@ public class HolidayTreeDecorator extends TreeDecorator {
 
     /**
      * Places blocks in a radius around the tree.
+     *
      * @param context The {@link TreeDecorator.Context}.
-     * @param pos The initial {@link BlockPos} for placement.
+     * @param pos     The initial {@link BlockPos} for placement.
      */
     private void placeCircle(Context context, BlockPos pos) {
         LevelSimulatedReader level = context.level();
@@ -67,10 +68,11 @@ public class HolidayTreeDecorator extends TreeDecorator {
      * Loops through a column and randomly places blocks as long as there is enough air above the position.
      * If the block is a leaf, snow will be placed above.
      * If the block is dirt or grass, a block from the provider will be placed above.
-     * @param context The {@link TreeDecorator.Context}.
-     * @param level The {@link LevelSimulatedReader} to place the block in.
-     * @param random The  {@link RandomSource}.
-     * @param pos The initial {@link BlockPos} for placement.
+     *
+     * @param context  The {@link TreeDecorator.Context}.
+     * @param level    The {@link LevelSimulatedReader} to place the block in.
+     * @param random   The  {@link RandomSource}.
+     * @param pos      The initial {@link BlockPos} for placement.
      * @param distance The {@link Float} distance to place at.
      */
     private void placeBlockAt(Context context, LevelSimulatedReader level, RandomSource random, BlockPos pos, float distance) {

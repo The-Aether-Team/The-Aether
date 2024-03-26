@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 public class FireMinionRenderer extends MobRenderer<FireMinion, FireMinionModel<FireMinion>> {
     private static final ResourceLocation SUN_SPIRIT_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sun_spirit/sun_spirit.png");
     private static final ResourceLocation FROZEN_SPIRIT_TEXTURE = new ResourceLocation(Aether.MODID, "textures/entity/mobs/sun_spirit/frozen_sun_spirit.png");
-    
+
     public FireMinionRenderer(EntityRendererProvider.Context context) {
         super(context, new FireMinionModel<>(context.bakeLayer(AetherModelLayers.FIRE_MINION)), 0.8F);
     }
@@ -26,6 +26,7 @@ public class FireMinionRenderer extends MobRenderer<FireMinion, FireMinionModel<
     /**
      * If the Fire Minion has specific custom names, it will use the frozen texture as an Easter Egg.
      * Otherwise it uses the normal texture.
+     *
      * @param fireMinion The {@link FireMinion} entity.
      * @return The texture {@link ResourceLocation}.
      */

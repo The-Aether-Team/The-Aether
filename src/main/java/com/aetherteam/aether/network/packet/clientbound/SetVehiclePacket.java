@@ -1,8 +1,10 @@
 package com.aetherteam.aether.network.packet.clientbound;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
@@ -10,8 +12,16 @@ import net.minecraft.world.entity.player.Player;
  * Sets a passenger to ride a vehicle. Called from {@link com.aetherteam.aether.event.hooks.DimensionHooks#entityFell}.
  */
 public record SetVehiclePacket(int passengerID, int vehicleID) implements BasePacket {
+
+    public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "set_mount");
+
     @Override
-    public void encode(FriendlyByteBuf buf) {
+    public ResourceLocation id() {
+        return ID;
+    }
+
+    @Override
+    public void write(FriendlyByteBuf buf) {
         buf.writeInt(this.passengerID());
         buf.writeInt(this.vehicleID());
     }

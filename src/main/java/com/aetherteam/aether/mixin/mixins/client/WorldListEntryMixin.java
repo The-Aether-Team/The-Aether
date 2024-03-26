@@ -22,6 +22,7 @@ public class WorldListEntryMixin {
     /**
      * Used by the world preview system.<br>
      * Unloads the currently loaded world preview level if the level is being deleted.
+     *
      * @param ci The {@link CallbackInfo} for the void method return.
      * @see WorldDisplayHelper#isActive()
      * @see WorldDisplayHelper#sameSummaries(LevelSummary)
@@ -33,9 +34,11 @@ public class WorldListEntryMixin {
             WorldDisplayHelper.stopLevel(null);
         }
     }
+
     /**
      * Used by the world preview system.<br>
      * Stops the world join behavior when the world preview is active, and instead enters directly into the loaded level.
+     *
      * @param ci The {@link CallbackInfo} for the void method return.
      * @see WorldDisplayHelper#isActive()
      * @see WorldDisplayHelper#sameSummaries(LevelSummary)
@@ -46,21 +49,6 @@ public class WorldListEntryMixin {
         if (WorldDisplayHelper.isActive() && WorldDisplayHelper.sameSummaries(this.summary)) {
             WorldDisplayHelper.enterLoadedLevel();
             ci.cancel();
-        }
-    }
-
-    /**
-     * Used by the world preview system.<br>
-     * Unloads the currently loaded world preview level if another level is being loaded.
-     * @param ci The {@link CallbackInfo} for the void method return.
-     * @see WorldDisplayHelper#isActive()
-     * @see WorldDisplayHelper#sameSummaries(LevelSummary)
-     * @see WorldDisplayHelper#stopLevel(Screen)
-     */
-    @Inject(at = @At(value = "HEAD"), method = "loadWorld()V")
-    private void loadWorld(CallbackInfo ci) {
-        if (WorldDisplayHelper.isActive() && !WorldDisplayHelper.sameSummaries(this.summary)) {
-            WorldDisplayHelper.stopLevel(new GenericDirtMessageScreen(Component.literal("")));
         }
     }
 }

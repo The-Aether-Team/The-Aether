@@ -18,8 +18,9 @@ public abstract class SwetRenderer extends MobRenderer<Swet, SlimeModel<Swet>> {
 
     /**
      * Scales the Swet according to its size.
-     * @param swet The {@link AechorPlant} entity.
-     * @param poseStack The rendering {@link PoseStack}.
+     *
+     * @param swet         The {@link AechorPlant} entity.
+     * @param poseStack    The rendering {@link PoseStack}.
      * @param partialTicks The {@link Float} for the game's partial ticks.
      */
     @Override

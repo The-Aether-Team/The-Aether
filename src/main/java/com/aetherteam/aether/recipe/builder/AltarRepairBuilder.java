@@ -1,17 +1,17 @@
 package com.aetherteam.aether.recipe.builder;
 
 import com.aetherteam.aether.recipe.recipes.item.AltarRepairRecipe;
-import com.google.gson.JsonObject;
-import net.minecraft.advancements.*;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementRequirements;
+import net.minecraft.advancements.AdvancementRewards;
+import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
-import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 
 import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
@@ -25,17 +25,15 @@ public class AltarRepairBuilder implements RecipeBuilder {
     private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
     @Nullable
     private String group;
-    private final RecipeSerializer<AltarRepairRecipe> serializer;
 
-    private AltarRepairBuilder(RecipeCategory category, Ingredient ingredient, int repairTime, RecipeSerializer<AltarRepairRecipe> serializer) {
+    private AltarRepairBuilder(RecipeCategory category, Ingredient ingredient, int repairTime) {
         this.category = category;
         this.ingredient = ingredient;
         this.repairTime = repairTime;
-        this.serializer = serializer;
     }
 
-    public static AltarRepairBuilder repair(Ingredient item, RecipeCategory category, int repairTime, RecipeSerializer<AltarRepairRecipe> serializer) {
-        return new AltarRepairBuilder(category, item, repairTime, serializer);
+    public static AltarRepairBuilder repair(Ingredient item, RecipeCategory category, int repairTime) {
+        return new AltarRepairBuilder(category, item, repairTime);
     }
 
     @Override
@@ -61,24 +59,13 @@ public class AltarRepairBuilder implements RecipeBuilder {
         Advancement.Builder advancement$builder = recipeOutput.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(AdvancementRequirements.Strategy.OR);
         Objects.requireNonNull(advancement$builder);
         this.criteria.forEach(advancement$builder::addCriterion);
-        recipeOutput.accept(new AltarRepairBuilder.Result(id, this.group == null ? "" : this.group, this.ingredient, this.repairTime, advancement$builder.build(id.withPrefix("recipes/" + this.category.getFolderName() + "/")), this.serializer));
-
+        AltarRepairRecipe recipe = new AltarRepairRecipe(this.group == null ? "" : this.group, this.ingredient, this.repairTime);
+        recipeOutput.accept(id, recipe, advancement$builder.build(id.withPrefix("recipes/" + this.category.getFolderName() + "/")));
     }
 
     private void ensureValid(ResourceLocation id) {
         if (this.criteria.isEmpty()) {
             throw new IllegalStateException("No way of obtaining recipe " + id);
-        }
-    }
-
-    public record Result(ResourceLocation id, String group, Ingredient ingredient, int repairTime, AdvancementHolder advancement, RecipeSerializer<AltarRepairRecipe> type) implements FinishedRecipe {
-        @Override
-        public void serializeRecipeData(JsonObject json) {
-            if (!this.group.isEmpty()) {
-                json.addProperty("group", this.group);
-            }
-            json.add("ingredient", this.ingredient.toJson(false));
-            json.addProperty("repairTime", this.repairTime);
         }
     }
 }

@@ -1,0 +1,49 @@
+{
+  "values": {
+    "aether:berry_bush": {
+      "chance": 0.5
+    },
+    "aether:berry_bush_stem": {
+      "chance": 0.5
+    },
+    "aether:blue_berry": {
+      "chance": 0.3
+    },
+    "aether:crystal_fruit_leaves": {
+      "chance": 0.3
+    },
+    "aether:crystal_leaves": {
+      "chance": 0.3
+    },
+    "aether:decorated_holiday_leaves": {
+      "chance": 0.3
+    },
+    "aether:enchanted_berry": {
+      "chance": 0.5
+    },
+    "aether:golden_oak_leaves": {
+      "chance": 0.3
+    },
+    "aether:golden_oak_sapling": {
+      "chance": 0.3
+    },
+    "aether:holiday_leaves": {
+      "chance": 0.3
+    },
+    "aether:purple_flower": {
+      "chance": 0.65
+    },
+    "aether:skyroot_leaves": {
+      "chance": 0.3
+    },
+    "aether:skyroot_sapling": {
+      "chance": 0.3
+    },
+    "aether:white_apple": {
+      "chance": 0.65
+    },
+    "aether:white_flower": {
+      "chance": 0.65
+    }
+  }
+}

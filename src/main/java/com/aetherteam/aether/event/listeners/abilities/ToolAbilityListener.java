@@ -55,7 +55,7 @@ public class ToolAbilityListener {
             AbilityHooks.ToolHooks.handleHolystoneToolAbility(player, level, blockPos, itemStack, blockState);
         }
     }
-    
+
     /**
      * @see AbilityHooks.ToolHooks#handleZaniteToolAbility(ItemStack, float)
      * @see AbilityHooks.ToolHooks#reduceToolEffectiveness(Player, BlockState, ItemStack, float)
@@ -136,6 +136,7 @@ public class ToolAbilityListener {
 
     /**
      * Cancels the given event if the targeted entity is too far away.
+     *
      * @see AbilityHooks.ToolHooks#entityTooFar(Entity, Player, InteractionHand)
      */
     private static void checkEntityTooFar(PlayerEvent event, Entity target, Player player, InteractionHand hand) {
@@ -146,6 +147,7 @@ public class ToolAbilityListener {
 
     /**
      * Cancels the given event if the targeted block is too far away.
+     *
      * @see AbilityHooks.ToolHooks#blockTooFar(Player, InteractionHand)
      */
     private static void checkBlockTooFar(PlayerEvent event, Player player, InteractionHand hand) {

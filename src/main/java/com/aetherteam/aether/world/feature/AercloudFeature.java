@@ -17,6 +17,7 @@ public class AercloudFeature extends Feature<AercloudConfiguration> {
     /**
      * Randomly places an area blocks in a direction to create a cloud.
      * The code is taken from older versions.
+     *
      * @param context The {@link FeaturePlaceContext} with a {@link AercloudConfiguration}.
      * @return Whether the placement was successful, as a {@link Boolean}.
      */

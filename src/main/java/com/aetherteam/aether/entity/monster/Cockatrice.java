@@ -88,11 +88,12 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
     /**
      * Cockatrices can spawn if {@link Mob#checkMobSpawnRules(EntityType, LevelAccessor, MobSpawnType, BlockPos, RandomSource)} and {@link Cockatrice#isDarkEnoughToSpawn(ServerLevelAccessor, BlockPos, RandomSource)} are true,
      * if the block at the spawn location isn't in the {@link AetherTags.Blocks#COCKATRICE_SPAWNABLE_BLACKLIST} tag, if the difficulty isn't peaceful, and they spawn with a random chance of 1/3.
+     *
      * @param cockatrice The {@link Cockatrice} {@link EntityType}.
-     * @param level The {@link LevelAccessor}.
-     * @param reason The {@link MobSpawnType} reason.
-     * @param pos The spawn {@link BlockPos}.
-     * @param random The {@link RandomSource}.
+     * @param level      The {@link LevelAccessor}.
+     * @param reason     The {@link MobSpawnType} reason.
+     * @param pos        The spawn {@link BlockPos}.
+     * @param random     The {@link RandomSource}.
      * @return Whether this entity can spawn, as a {@link Boolean}.
      */
     public static boolean checkCockatriceSpawnRules(EntityType<? extends Cockatrice> cockatrice, ServerLevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
@@ -193,6 +194,7 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
 
     /**
      * Sets whether this entity is on the ground.
+     *
      * @param onGround The {@link Boolean} value.
      */
     @Override
@@ -210,6 +212,7 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
 
     /**
      * Sets the wing rotation for animation.
+     *
      * @param rotation The {@link Float} value.
      */
     @Override
@@ -227,6 +230,7 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
 
     /**
      * Sets the previous wing rotation for animation.
+     *
      * @param rotation The {@link Float} value.
      */
     @Override
@@ -244,6 +248,7 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
 
     /**
      * Sets the amplitude of how far the wings should rotate during animation.
+     *
      * @param pos The {@link Float} value.
      */
     @Override
@@ -261,6 +266,7 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
 
     /**
      * Sets the previous amplitude of how far the wings should rotate during animation.
+     *
      * @param pos The {@link Float} value.
      */
     @Override
@@ -277,6 +283,7 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
 
     /**
      * Sets how long until the Cockatrice can play the flap sound effect again.
+     *
      * @param flapCooldown The {@link Integer} value.
      */
     public void setFlapCooldown(int flapCooldown) {
@@ -308,6 +315,7 @@ public class Cockatrice extends Monster implements RangedAttackMob, WingedBird, 
 
     /**
      * Makes Cockatrices immune to Inebriation.
+     *
      * @param effect The {@link MobEffectInstance} to check whether this mob is affected by.
      * @return Whether the mob is affected.
      */

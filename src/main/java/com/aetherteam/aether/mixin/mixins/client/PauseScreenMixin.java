@@ -17,6 +17,7 @@ public class PauseScreenMixin {
      * Used by the world preview system.<br>
      * Stops the level disconnect behavior when the world preview is active, and instead
      * sets the {@link net.minecraft.client.gui.screens.TitleScreen} back up so there is no load time to return to the menu.
+     *
      * @param ci The {@link CallbackInfo} for the void method return.
      * @see WorldDisplayHelper#setActive()
      * @see WorldDisplayHelper#setupLevelForDisplay()
@@ -36,6 +37,7 @@ public class PauseScreenMixin {
 
     /**
      * Sends the player straight back to the title screen if the server button is enabled.
+     *
      * @param ci The {@link CallbackInfo} for the void method return.
      * @see WorldDisplayHelper#setActive()
      * @see WorldDisplayHelper#setupLevelForDisplay()

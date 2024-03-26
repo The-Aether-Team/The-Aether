@@ -1,7 +1,6 @@
 package com.aetherteam.aether.client.gui.component.inventory;
 
 import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
-import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.OpenAccessoriesPacket;
 import com.aetherteam.aether.network.packet.serverbound.OpenInventoryPacket;
 import com.aetherteam.nitrogen.network.PacketRelay;
@@ -36,9 +35,9 @@ public class AccessoryButton extends ImageButton {
                             InventoryScreen inventory = new InventoryScreen(player);
                             minecraft.setScreen(inventory);
                             player.inventoryMenu.setCarried(stack);
-                            PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new OpenInventoryPacket(stack));
+                            PacketRelay.sendToServer(new OpenInventoryPacket(stack));
                         } else {
-                            PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new OpenAccessoriesPacket(stack));
+                            PacketRelay.sendToServer(new OpenAccessoriesPacket(stack));
                         }
                     }
                 });
@@ -46,7 +45,7 @@ public class AccessoryButton extends ImageButton {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(this.parentScreen);
         this.setX(this.parentScreen.getGuiLeft() + offsets.getA());
         this.setY(this.parentScreen.getGuiTop() + offsets.getB());
@@ -54,14 +53,14 @@ public class AccessoryButton extends ImageButton {
             boolean isInventoryTab = screen.isInventoryOpen();
             this.active = isInventoryTab;
             if (isInventoryTab) {
-                super.render(guiGraphics, mouseX, mouseY, partialTicks);
+                super.renderWidget(guiGraphics, mouseX, mouseY, partialTicks);
             }
         } else if (this.parentScreen instanceof AccessoriesScreen screen) {
             if (screen.getMenu().hasButton) {
-                super.render(guiGraphics, mouseX, mouseY, partialTicks);
+                super.renderWidget(guiGraphics, mouseX, mouseY, partialTicks);
             }
         } else {
-            super.render(guiGraphics, mouseX, mouseY, partialTicks);
+            super.renderWidget(guiGraphics, mouseX, mouseY, partialTicks);
         }
     }
 }

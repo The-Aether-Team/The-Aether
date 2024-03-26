@@ -106,17 +106,17 @@ public class AechorPlantModel extends EntityModel<AechorPlant> {
         return LayerDefinition.create(meshDefinition, 64, 32);
     }
 
-   
+
     public Iterable<ModelPart> stamenStemParts() {
         return ImmutableList.of(this.stamenStem1, this.stamenStem2, this.stamenStem3);
     }
 
-   
+
     public Iterable<ModelPart> leafParts() {
         return ImmutableList.of(this.leaf1, this.leaf2, this.leaf3, this.leaf4, this.leaf5, this.leaf6, this.leaf7, this.leaf8, this.leaf9, this.leaf10);
     }
 
-   
+
     public Iterable<ModelPart> petalParts() {
         return ImmutableList.of(this.upperPetal1, this.lowerPetal1, this.upperPetal2, this.lowerPetal2, this.upperPetal3, this.lowerPetal3, this.upperPetal4, this.lowerPetal4, this.upperPetal5, this.lowerPetal5);
     }
@@ -156,7 +156,7 @@ public class AechorPlantModel extends EntityModel<AechorPlant> {
         for (ModelPart modelPart : this.leafParts()) {
             modelPart.xRot = ((i % 2 == 0) ? 0.1F : 0.2F);
             modelPart.xRot += sinage1 * 0.75F;
-            modelPart.yRot = this.head.yRot + (Mth.TWO_PI/ 10.0F / 2.0F);
+            modelPart.yRot = this.head.yRot + (Mth.TWO_PI / 10.0F / 2.0F);
             modelPart.yRot += (Mth.TWO_PI / 10.0F) * i;
             modelPart.y = sinage2;
             i++;

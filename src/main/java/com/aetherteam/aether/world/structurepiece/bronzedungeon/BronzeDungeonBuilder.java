@@ -31,6 +31,7 @@ import java.util.Map;
 /**
  * A directed graph used for assembling the Bronze Dungeon. This allows us to keep track of how far away a room is
  * from the starting point by counting along the path.
+ *
  * @see <a href="https://en.wikipedia.org/wiki/Directed_graph">https://en.wikipedia.org/wiki/Directed_graph</a>
  */
 public class BronzeDungeonBuilder {
@@ -94,9 +95,10 @@ public class BronzeDungeonBuilder {
 
     /**
      * Recursively move through the graph of rooms to add new pieces.
+     *
      * @param currentNode The current {@link StructurePiece} node to try to add.
-     * @param chunkPos The {@link ChunkPos} for the piece.
-     * @param placeLobby Whether to place a lobby or a chest room, as a {@link Boolean}.
+     * @param chunkPos    The {@link ChunkPos} for the piece.
+     * @param placeLobby  Whether to place a lobby or a chest room, as a {@link Boolean}.
      * @return Whether the new piece was successfully placed, as a {@link Boolean}.
      */
     private boolean propagateRooms(StructurePiece currentNode, ChunkPos chunkPos, boolean placeLobby) {
@@ -164,11 +166,12 @@ public class BronzeDungeonBuilder {
 
     /**
      * Builds a tunnel from a symmetrical room to make an entrance.
+     *
      * @param connectedRoom The {@link StructurePiece} for the room that the tunnel leads to.
-     * @param list The {@link List} of {@link StructurePiece}s to add to.
-     * @param rotation The {@link Rotation} of the template.
-     * @param direction The {@link Direction} to build in.
-     * @param origin The start {@link BlockPos} of the structure.
+     * @param list          The {@link List} of {@link StructurePiece}s to add to.
+     * @param rotation      The {@link Rotation} of the template.
+     * @param direction     The {@link Direction} to build in.
+     * @param origin        The start {@link BlockPos} of the structure.
      * @return Whether the tunnel should stop generating, as a {@link Boolean}.
      */
     public boolean buildTunnelFromRoom(StructurePiece connectedRoom, List<StructurePiece> list, Rotation rotation, Direction direction, BlockPos origin) {
@@ -217,6 +220,7 @@ public class BronzeDungeonBuilder {
 
     /**
      * Adds all the pieces to the StructurePieceAccessor so that it can generate in the world.
+     *
      * @param builder The {@link StructurePiecesBuilder} for the structure.
      */
     public void populatePiecesBuilder(StructurePiecesBuilder builder) {
@@ -229,7 +233,8 @@ public class BronzeDungeonBuilder {
 
     /**
      * Checks if there is a hallway going in the given direction from the room.
-     * @param node The {@link StructurePiece} node.
+     *
+     * @param node      The {@link StructurePiece} node.
      * @param direction The {@link Direction} to check.
      * @return Whether there is a hallway, as a {@link Boolean}.
      */
@@ -245,8 +250,9 @@ public class BronzeDungeonBuilder {
 
     /**
      * Checks whether the room position at the current chunk is less than three chunks away from the structure's starting chunk.
+     *
      * @param chunkPos The starting {@link ChunkPos}.
-     * @param pos The {@link BlockPos} for the current room.
+     * @param pos      The {@link BlockPos} for the current room.
      * @return Whether the room position is close enough to the starting chunk, as a {@link Boolean}.
      */
     private boolean isCloseToCenter(ChunkPos chunkPos, BlockPos pos) {
@@ -256,6 +262,7 @@ public class BronzeDungeonBuilder {
 
     /**
      * Checks whether the room is covered at all four corner columns.
+     *
      * @param room The {@link BoundingBox} of the room.
      * @return Whether the room is covered, as a {@link Boolean}.
      */
@@ -280,6 +287,7 @@ public class BronzeDungeonBuilder {
 
     /**
      * Find a viable direction for the boss room to face.
+     *
      * @param minPos The starting corner {@link BlockPos} for the boss room.
      * @param maxPos The ending corner {@link BlockPos} for the boss room.
      * @return A viable {@link Rotation} direction.
@@ -304,9 +312,10 @@ public class BronzeDungeonBuilder {
 
     /**
      * Iterates through an array of noise columns and checks if any of them have air in the range specified.
+     *
      * @param columns The {@link NoiseColumn NoiseColumn[]} array to check.
-     * @param minY The minimum y {@link Integer} for the range.
-     * @param maxY The maximum y {@link Integer} for the range.
+     * @param minY    The minimum y {@link Integer} for the range.
+     * @param maxY    The maximum y {@link Integer} for the range.
      * @return If there is no air in the range, as a {@link Boolean}.
      */
     private static boolean isSolidInColumns(NoiseColumn[] columns, int minY, int maxY) {
@@ -320,7 +329,9 @@ public class BronzeDungeonBuilder {
         return true;
     }
 
-    /** An edge going in one direction. When iterating through the graph, you cannot go backward through these. */
+    /**
+     * An edge going in one direction. When iterating through the graph, you cannot go backward through these.
+     */
     private class Connection {
         public final StructurePiece start;
         public final StructurePiece end;
@@ -328,9 +339,10 @@ public class BronzeDungeonBuilder {
 
         /**
          * Creates a new Connection and adds it to the map.
-         * @param start The {@link StructurePiece} at the start.
-         * @param end The {@link StructurePiece} at the end.
-         * @param hallway The {@link StructurePiece} for the hallway connecting the rooms.
+         *
+         * @param start     The {@link StructurePiece} at the start.
+         * @param end       The {@link StructurePiece} at the end.
+         * @param hallway   The {@link StructurePiece} for the hallway connecting the rooms.
          * @param direction The {@link Direction} of the connection.
          */
         public Connection(StructurePiece start, StructurePiece end, StructurePiece hallway, Direction direction) {

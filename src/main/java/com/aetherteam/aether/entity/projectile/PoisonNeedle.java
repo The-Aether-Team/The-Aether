@@ -21,6 +21,7 @@ public class PoisonNeedle extends AbstractDart {
 
     /**
      * Applies the Inebriation effect to an entity after being hurt.
+     *
      * @param living The {@link LivingEntity} to affect.
      */
     @Override

@@ -66,6 +66,7 @@ public class FireCrystal extends AbstractCrystal {
 
     /**
      * Damages an entity and sets them on fire when they are hit by the projectile.
+     *
      * @param result The {@link EntityHitResult} of the projectile.
      */
     @Override
@@ -86,6 +87,7 @@ public class FireCrystal extends AbstractCrystal {
 
     /**
      * Reverses the projectile's movement, bouncing it off of the block it hits.
+     *
      * @param result The {@link BlockHitResult} of the projectile.
      */
     @Override

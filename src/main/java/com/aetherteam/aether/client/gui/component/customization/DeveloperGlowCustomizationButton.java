@@ -13,6 +13,7 @@ public class DeveloperGlowCustomizationButton extends CustomizationButton {
     /**
      * If this is a save button, it will only be active if the color input is valid and has changed, or if the display option has changed.<br>
      * If this is an undo button, it will be active if the text has changed or the display option has changed.
+     *
      * @return The {@link Boolean} result.
      */
     @Override

@@ -32,5 +32,6 @@ public class CloudMinionModel extends ListModel<CloudMinion> {
     }
 
     @Override
-    public void setupAnim(CloudMinion cloudMinion, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) { }
+    public void setupAnim(CloudMinion cloudMinion, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    }
 }

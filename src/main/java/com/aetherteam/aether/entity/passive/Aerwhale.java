@@ -1,6 +1,6 @@
 package com.aetherteam.aether.entity.passive;
 
-import com.aetherteam.aether.capability.player.AetherPlayer;
+import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -67,11 +67,12 @@ public class Aerwhale extends FlyingMob {
     /**
      * Aerwhales can spawn if {@link Mob#checkMobSpawnRules(EntityType, LevelAccessor, MobSpawnType, BlockPos, RandomSource)} is true, if they aren't spawning in fluid,
      * if they are spawning at a light level above 8, if they are spawning in view of the sky, and they spawn with a random chance of 1/40.
+     *
      * @param aerwhale The {@link Aerwhale} {@link EntityType}.
-     * @param level The {@link LevelAccessor}.
-     * @param reason The {@link MobSpawnType} reason.
-     * @param pos The spawn {@link BlockPos}.
-     * @param random The {@link RandomSource}.
+     * @param level    The {@link LevelAccessor}.
+     * @param reason   The {@link MobSpawnType} reason.
+     * @param pos      The spawn {@link BlockPos}.
+     * @param random   The {@link RandomSource}.
      * @return Whether this entity can spawn, as a {@link Boolean}.
      */
     public static boolean checkAerwhaleSpawnRules(EntityType<? extends Aerwhale> aerwhale, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
@@ -96,6 +97,7 @@ public class Aerwhale extends FlyingMob {
 
     /**
      * The purpose of this method override is to fix the weird movement from flying mobs.
+     *
      * @param vector The {@link Vec3} for travel movement.
      */
     @Override
@@ -111,9 +113,9 @@ public class Aerwhale extends FlyingMob {
                     this.xRotO = this.getXRot() * 0.5F;
                     this.setYHeadRot(player.yHeadRot);
 
-                    vector = new Vec3(player.xxa, 0.0, (player.zza <= 0.0F)? player.zza * 0.25F : player.zza);
+                    vector = new Vec3(player.xxa, 0.0, (player.zza <= 0.0F) ? player.zza * 0.25F : player.zza);
 
-                    if (AetherPlayer.get(player).map(AetherPlayer::isJumping).orElse(false)) {
+                    if (player.getData(AetherDataAttachments.AETHER_PLAYER).isJumping()) {
                         this.setDeltaMovement(new Vec3(0.0, 0.0, 0.0));
                     } else {
                         double d0 = Math.toRadians(this.getYRot());
@@ -132,7 +134,7 @@ public class Aerwhale extends FlyingMob {
 
                     double d0 = this.getX() - this.xo;
                     double d1 = this.getZ() - this.zo;
-                    float f4 = 4.0F * Mth.sqrt((float) (d0*d0 + d1*d1));
+                    float f4 = 4.0F * Mth.sqrt((float) (d0 * d0 + d1 * d1));
 
                     if (f4 > 1.0F) {
                         f4 = 1.0F;
@@ -173,6 +175,7 @@ public class Aerwhale extends FlyingMob {
 
     /**
      * Sets the old x-rotation data value, used for animation.
+     *
      * @param rot The {@link Float} value.
      */
     public void setXRotOData(float rot) {
@@ -188,6 +191,7 @@ public class Aerwhale extends FlyingMob {
 
     /**
      * Sets the x-rotation data value, used for animation.
+     *
      * @param rot The {@link Float} value.
      */
     public void setXRotData(float rot) {
@@ -203,6 +207,7 @@ public class Aerwhale extends FlyingMob {
 
     /**
      * Sets the y-rotation data value, used for animation.
+     *
      * @param rot The {@link Float} value.
      */
     public void setYRotData(float rot) {
@@ -384,9 +389,9 @@ public class Aerwhale extends FlyingMob {
                     this.mob.dropLeash(true, true);
                     this.mob.goalSelector.disableControlFlag(Goal.Flag.MOVE);
                 } else if (f > 6.0F) {
-                    double d0 = (entity.getX() - this.mob.getX()) / (double)f;
-                    double d1 = (entity.getY() - this.mob.getY()) / (double)f;
-                    double d2 = (entity.getZ() - this.mob.getZ()) / (double)f;
+                    double d0 = (entity.getX() - this.mob.getX()) / (double) f;
+                    double d1 = (entity.getY() - this.mob.getY()) / (double) f;
+                    double d2 = (entity.getZ() - this.mob.getZ()) / (double) f;
                     this.mob.setDeltaMovement(this.mob.getDeltaMovement().add(Math.copySign(d0 * d0 * 0.4, d0), Math.copySign(d1 * d1 * 0.4, d1), Math.copySign(d2 * d2 * 0.4, d2)));
                     this.mob.checkSlowFallDistance();
                 } else if (this.mob.shouldStayCloseToLeashHolder()) {

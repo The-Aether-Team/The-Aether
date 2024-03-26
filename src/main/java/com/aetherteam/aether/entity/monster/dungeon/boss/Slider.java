@@ -9,7 +9,6 @@ import com.aetherteam.aether.entity.ai.controller.BlankMoveControl;
 import com.aetherteam.aether.entity.ai.goal.MostDamageTargetGoal;
 import com.aetherteam.aether.entity.monster.dungeon.boss.goal.*;
 import com.aetherteam.aether.event.AetherEventDispatch;
-import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.BossInfoPacket;
 import com.aetherteam.nitrogen.entity.BossRoomTracker;
 import com.aetherteam.nitrogen.network.PacketRelay;
@@ -19,8 +18,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -42,6 +39,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
@@ -50,14 +48,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.ToolActions;
-import net.neoforged.neoforge.entity.IEntityAdditionalSpawnData;
-import net.neoforged.neoforge.network.NetworkHooks;
+import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
 import java.util.function.Predicate;
 
-public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enemy, IEntityAdditionalSpawnData {
+public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enemy, IEntityWithComplexSpawn {
     private static final EntityDataAccessor<Boolean> DATA_AWAKE_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Component> DATA_BOSS_NAME_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.COMPONENT);
     private static final EntityDataAccessor<Float> DATA_HURT_ANGLE_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.FLOAT);
@@ -96,11 +93,12 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     /**
      * Generates a name for the boss and adjusts its position.<br><br>
      * Warning for "deprecation" is suppressed because this is fine to override.
-     * @param level The {@link ServerLevelAccessor} where the entity is spawned.
+     *
+     * @param level      The {@link ServerLevelAccessor} where the entity is spawned.
      * @param difficulty The {@link DifficultyInstance} of the game.
-     * @param reason The {@link MobSpawnType} reason.
-     * @param spawnData The {@link SpawnGroupData}.
-     * @param tag The {@link CompoundTag} to apply to this entity.
+     * @param reason     The {@link MobSpawnType} reason.
+     * @param spawnData  The {@link SpawnGroupData}.
+     * @param tag        The {@link CompoundTag} to apply to this entity.
      * @return The {@link SpawnGroupData} to return.
      */
     @Override
@@ -158,6 +156,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
 
     /**
      * Evaporates liquid blocks.
+     *
      * @see AetherBossMob#evaporate(Mob, BlockPos, BlockPos, Predicate)
      */
     private void evaporate() {
@@ -184,6 +183,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
 
     /**
      * Handles damaging the Slider or playing a chat message if the player attempts to damage with the wrong tool.
+     *
      * @param source The {@link DamageSource}.
      * @param amount The {@link Float} amount of damage.
      * @return Whether the entity was hurt, as a {@link Boolean}.
@@ -282,6 +282,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
 
     /**
      * Ends the boss fight, opens the room, and grants advancements when the boss dies.
+     *
      * @param source The {@link DamageSource}.
      */
     @Override
@@ -312,30 +313,36 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
 
     /**
      * Disallows the Slider from receiving knockback.
+     *
      * @param strength The {@link Double} for knockback strength.
-     * @param x The {@link Double} for knockback x-direction.
-     * @param z The {@link Double} for knockback z-direction.
+     * @param x        The {@link Double} for knockback x-direction.
+     * @param z        The {@link Double} for knockback z-direction.
      */
     @Override
-    public void knockback(double strength, double x, double z) { }
+    public void knockback(double strength, double x, double z) {
+    }
 
     /**
      * Disallows the Slider from being pushed.
+     *
      * @param x The {@link Double} for x-motion.
      * @param y The {@link Double} for y-motion.
      * @param z The {@link Double} for z-motion.
      */
     @Override
-    public void push(double x, double y, double z) { }
+    public void push(double x, double y, double z) {
+    }
 
     /**
      * Required despite call to {@link Mob#setPersistenceRequired()} in constructor.
      */
     @Override
-    public void checkDespawn() { }
+    public void checkDespawn() {
+    }
 
     /**
      * Called on every block in the boss room when the boss is defeated.
+     *
      * @param state The {@link BlockState} to try to convert.
      * @return The converted {@link BlockState}.
      */
@@ -359,12 +366,13 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
 
     /**
      * Tracks the player as a part of the boss fight when the player is nearby, displaying the boss bar for them.
+     *
      * @param player The {@link ServerPlayer}.
      */
     @Override
     public void startSeenByPlayer(ServerPlayer player) {
         super.startSeenByPlayer(player);
-        PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new BossInfoPacket.Display(this.bossFight.getId(), this.getId()), player);
+        PacketRelay.sendToPlayer(new BossInfoPacket.Display(this.bossFight.getId(), this.getId()), player);
         if (this.getDungeon() == null || this.getDungeon().isPlayerTracked(player)) {
             this.bossFight.addPlayer(player);
             AetherEventDispatch.onBossFightPlayerAdd(this, this.getDungeon(), player);
@@ -373,18 +381,20 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
 
     /**
      * Tracks the player as no longer in the boss fight when the player is nearby, removing the boss bar for them.
+     *
      * @param player The {@link ServerPlayer}.
      */
     @Override
     public void stopSeenByPlayer(ServerPlayer player) {
         super.stopSeenByPlayer(player);
-        PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new BossInfoPacket.Remove(this.bossFight.getId(), this.getId()), player);
+        PacketRelay.sendToPlayer(new BossInfoPacket.Remove(this.bossFight.getId(), this.getId()), player);
         this.bossFight.removePlayer(player);
         AetherEventDispatch.onBossFightPlayerRemove(this, this.getDungeon(), player);
     }
 
     /**
      * Adds a player to the boss fight when they've entered the dungeon.
+     *
      * @param player The {@link Player}.
      */
     @Override
@@ -397,6 +407,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
 
     /**
      * Removes a player from the boss fight when they've left the dungeon.
+     *
      * @param player The {@link Player}.
      */
     @Override
@@ -416,6 +427,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
 
     /**
      * Sets whether the entity is awake.
+     *
      * @param awake The {@link Boolean} value.
      */
     public void setAwake(boolean awake) {
@@ -432,6 +444,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
 
     /**
      * Sets the {@link Component} for the boss name and in the boss fight.
+     *
      * @param component The name {@link Component}.
      */
     @Override
@@ -449,6 +462,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
 
     /**
      * Sets the x-angle for the Slider to tilt when damaged.
+     *
      * @param hurtAngleX The {@link Float} value.
      */
     public void setHurtAngleX(float hurtAngleX) {
@@ -464,6 +478,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
 
     /**
      * Sets the z-angle for the Slider to tilt when damaged.
+     *
      * @param hurtAngleZ The {@link Float} value.
      */
     public void setHurtAngleZ(float hurtAngleZ) {
@@ -479,6 +494,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
 
     /**
      * Sets the magnitude of the hurt angle tilt.
+     *
      * @param hurtAngle The {@link Float} value.
      */
     public void setHurtAngle(float hurtAngle) {
@@ -496,6 +512,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
 
     /**
      * Sets the tracker for the Bronze Dungeon.
+     *
      * @param dungeon The {@link Slider} {@link BossRoomTracker}.
      */
     @Override
@@ -513,6 +530,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
 
     /**
      * Sets whether the boss fight is active and the boss bar is visible.
+     *
      * @param isFighting The {@link Boolean} value.
      */
     @Override
@@ -547,6 +565,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
 
     /**
      * Sets the cooldown for when another chat message can display.
+     *
      * @param cooldown The {@link Integer} cooldown.
      */
     public void setChatCooldown(int cooldown) {
@@ -629,7 +648,8 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
 
     /**
      * Calculates a box adjacent to the original, with equal dimensions except for the axis it's translated along.
-     * @param box The {@link AABB} bounding box.
+     *
+     * @param box       The {@link AABB} bounding box.
      * @param direction The movement {@link Direction}.
      * @return The adjacent {@link AABB} bounding box.
      */
@@ -678,7 +698,9 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         return this.getHealth() <= 100;
     }
 
-    /**=
+    /**
+     * =
+     *
      * @return The {@link Float} for the maximum velocity limit.
      */
     public float getMaxVelocity() {
@@ -733,7 +755,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
      * @return A false {@link Boolean}, preventing the Slider from being affected by explosions.
      */
     @Override
-    public boolean ignoreExplosion() {
+    public boolean ignoreExplosion(Explosion explosion) {
         return true;
     }
 
@@ -806,6 +828,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
 
     /**
      * Disallows the Slider from making footstep noises.
+     *
      * @return The type of {@link net.minecraft.world.entity.Entity.MovementEmission}.
      */
     @Override
@@ -854,10 +877,5 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
         if (tag != null) {
             this.readBossSaveData(tag);
         }
-    }
-
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

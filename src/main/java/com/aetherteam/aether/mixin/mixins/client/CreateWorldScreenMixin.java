@@ -16,9 +16,10 @@ public class CreateWorldScreenMixin {
     /**
      * Used by the world preview system.<br>
      * Unloads the currently loaded world preview level if a new level is being created.
+     *
      * @param minecraft The {@link Minecraft} instance.
-     * @param screen The last {@link Screen}.
-     * @param ci The {@link CallbackInfo} for the void method return.
+     * @param screen    The last {@link Screen}.
+     * @param ci        The {@link CallbackInfo} for the void method return.
      * @see WorldDisplayHelper#isActive()
      * @see WorldDisplayHelper#stopLevel(Screen)
      */

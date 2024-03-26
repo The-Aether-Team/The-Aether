@@ -62,8 +62,7 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
                     flag1 = true;
                     if (itemstack.hasCraftingRemainingItem())
                         abstractFurnaceBlockEntityAccessor.aether$getItems().set(1, itemstack.getCraftingRemainingItem());
-                    else
-                    if (flag3) {
+                    else if (flag3) {
                         itemstack.shrink(1);
                         if (itemstack.isEmpty()) {
                             abstractFurnaceBlockEntityAccessor.aether$getItems().set(1, itemstack.getCraftingRemainingItem());
@@ -108,8 +107,9 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
     /**
      * Ensures that NBT is carried over between input and result stacks.<br><br>
      * Warning for "unchecked" is suppressed because casting {@link Recipe}<{@link WorldlyContainer}> is fine and done by vanilla.
-     * @param recipe The {@link Recipe Recipe<?>} being burned.
-     * @param stacks The {@link NonNullList NonNullList<ItemStack>} of items in the menu.
+     *
+     * @param recipe    The {@link Recipe Recipe<?>} being burned.
+     * @param stacks    The {@link NonNullList NonNullList<ItemStack>} of items in the menu.
      * @param stackSize The max stack size as an {@link Integer}.
      * @return A {@link Boolean} for whether the item successfully burnt.
      */
@@ -170,8 +170,9 @@ public abstract class AbstractAetherFurnaceBlockEntity extends AbstractFurnaceBl
 
     /**
      * Allows the Aether's furnaces to have remaining crafting byproducts extracted (like buckets) alongside product items.
-     * @param index The {@link Integer} for the slot index.
-     * @param stack The {@link ItemStack} trying to be taken from the block.
+     *
+     * @param index     The {@link Integer} for the slot index.
+     * @param stack     The {@link ItemStack} trying to be taken from the block.
      * @param direction The {@link Direction} for a face.
      * @return Whether the item can be taken by a hopper through the face, as a {@link Boolean}.
      */

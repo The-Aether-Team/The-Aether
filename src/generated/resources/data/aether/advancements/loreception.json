@@ -13,7 +13,6 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.aether.loreception.desc"
     },
@@ -22,7 +21,6 @@
     "icon": {
       "item": "aether:book_of_lore"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.aether.loreception"
     }

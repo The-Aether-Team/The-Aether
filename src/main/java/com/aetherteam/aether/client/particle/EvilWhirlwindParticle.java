@@ -35,7 +35,7 @@ public class EvilWhirlwindParticle extends AbstractWhirlwindParticle<EvilWhirlwi
 
     @Override
     public void render(VertexConsumer consumer, Camera camera, float partialTicks) {
-        float f = ((float) this.age + partialTicks) / (float)this.lifetime * 32.0F;
+        float f = ((float) this.age + partialTicks) / (float) this.lifetime * 32.0F;
         f = Mth.clamp(f, 0.0F, 1.0F);
         this.quadSize = this.smokeParticleScale * f;
         super.render(consumer, camera, partialTicks);

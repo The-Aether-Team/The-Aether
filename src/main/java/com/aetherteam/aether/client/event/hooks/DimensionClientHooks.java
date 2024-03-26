@@ -1,6 +1,6 @@
 package com.aetherteam.aether.client.event.hooks;
 
-import com.aetherteam.aether.capability.time.AetherTime;
+import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.client.renderer.level.AetherSkyRenderEffects;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.item.EquipmentUtil;
@@ -22,8 +22,9 @@ import javax.annotation.Nullable;
 public class DimensionClientHooks {
     /**
      * Halves the far fog distance in the Aether to add to the dimension's ambience, similar to beta.
-     * @param camera The {@link Camera} for rendering the fog.
-     * @param mode The {@link net.minecraft.client.renderer.FogRenderer.FogMode}.
+     *
+     * @param camera      The {@link Camera} for rendering the fog.
+     * @param mode        The {@link net.minecraft.client.renderer.FogRenderer.FogMode}.
      * @param farDistance The far distance for the fog, as a {@link Float}.
      * @return The new far distance for the fog, as a {@link Float}.
      * @see com.aetherteam.aether.client.event.listeners.DimensionClientListener#onRenderFog(ViewportEvent.RenderFog)
@@ -43,7 +44,8 @@ public class DimensionClientHooks {
 
     /**
      * Increases the view distance while in lava when wearing Phoenix Armor.
-     * @param camera The {@link Camera} for rendering the fog.
+     *
+     * @param camera       The {@link Camera} for rendering the fog.
      * @param nearDistance The near distance for the fog, as a {@link Float}.
      * @return The new near distance for the fog, as a {@link Float}.
      * @see com.aetherteam.aether.client.event.listeners.DimensionClientListener#onRenderFog(ViewportEvent.RenderFog)
@@ -64,10 +66,11 @@ public class DimensionClientHooks {
     /**
      * Prevents the sky fog from turning black near the void in the Aether.
      * This works with any dimension using the Aether's dimension effects.
+     *
      * @param camera The {@link Camera} for rendering the fog.
-     * @param red The red value of the fog color, as a {@link Float}.
-     * @param green The green value of the fog color, as a {@link Float}.
-     * @param blue The blue value of the fog color, as a {@link Float}.
+     * @param red    The red value of the fog color, as a {@link Float}.
+     * @param green  The green value of the fog color, as a {@link Float}.
+     * @param blue   The blue value of the fog color, as a {@link Float}.
      * @return A {@link Triple} of {@link Float}s, containing the RGB values for the fog color.
      * @see com.aetherteam.aether.client.event.listeners.DimensionClientListener#onRenderFogColor(ViewportEvent.ComputeFogColor)
      */
@@ -94,10 +97,11 @@ public class DimensionClientHooks {
 
     /**
      * Makes the sky fog less dark in the Aether during weather.
+     *
      * @param camera The {@link Camera} for rendering the fog.
-     * @param red The red value of the fog color, as a {@link Float}.
-     * @param green The green value of the fog color, as a {@link Float}.
-     * @param blue The blue value of the fog color, as a {@link Float}.
+     * @param red    The red value of the fog color, as a {@link Float}.
+     * @param green  The green value of the fog color, as a {@link Float}.
+     * @param blue   The blue value of the fog color, as a {@link Float}.
      * @return A {@link Triple} of {@link Float}s, containing the RGB values for the fog color.
      * @see com.aetherteam.aether.client.event.listeners.DimensionClientListener#onRenderFogColor(ViewportEvent.ComputeFogColor)
      */
@@ -134,6 +138,7 @@ public class DimensionClientHooks {
 
     /**
      * Ticks time in clientside Aether levels.
+     *
      * @see com.aetherteam.aether.client.event.listeners.DimensionClientListener#onClientTick(TickEvent.ClientTickEvent)
      */
     public static void tickTime() {
@@ -141,7 +146,7 @@ public class DimensionClientHooks {
         if (level != null && !Minecraft.getInstance().isPaused() && level.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
             LevelAccessor levelAccessor = (LevelAccessor) level;
             if (levelAccessor.aether$getLevelData().getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
-                AetherTime.get(level).ifPresent(aetherTime -> level.setDayTime(aetherTime.tickTime(level) - 1)); // The client always increments time by 1 every tick.
+                level.setDayTime(level.getData(AetherDataAttachments.AETHER_TIME).tickTime(level) - 1); // The client always increments time by 1 every tick.
             }
         }
     }

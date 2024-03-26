@@ -12,9 +12,10 @@ import java.util.List;
 public class ItemHooks {
     /**
      * Adds a tooltip to loot items in the creative inventory, indicating what dungeon(s) they can be found in.
+     *
      * @param components The old {@link List} of {@link Component}s for the item.
-     * @param stack The loot {@link ItemStack}.
-     * @param flag The {@link TooltipFlag} for what type of tooltip this is.
+     * @param stack      The loot {@link ItemStack}.
+     * @param flag       The {@link TooltipFlag} for what type of tooltip this is.
      * @see com.aetherteam.aether.event.listeners.ItemListener#onTooltipAdd(ItemTooltipEvent)
      */
     public static void addDungeonTooltips(List<Component> components, ItemStack stack, TooltipFlag flag) {

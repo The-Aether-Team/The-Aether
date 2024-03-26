@@ -15,17 +15,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.aether.lance_loot.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "aether:valkyrie_lance",
       "nbt": "{Damage:0}"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.aether.lance_loot"
     }

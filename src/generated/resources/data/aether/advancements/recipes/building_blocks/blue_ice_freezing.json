@@ -28,6 +28,5 @@
     "recipes": [
       "aether:blue_ice_freezing"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

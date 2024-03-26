@@ -13,8 +13,6 @@
     "description": {
       "translate": "advancement.aether.the_aether.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "aether:aether_portal_frame"
     },

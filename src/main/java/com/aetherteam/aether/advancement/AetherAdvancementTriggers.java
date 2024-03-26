@@ -1,8 +1,15 @@
 package com.aetherteam.aether.advancement;
 
-import net.minecraft.advancements.CriteriaTriggers;
+import com.aetherteam.aether.Aether;
+import net.minecraft.advancements.CriterionTrigger;
+import net.minecraft.core.registries.Registries;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class AetherAdvancementTriggers {
-    public static final IncubationTrigger INCUBATION_TRIGGER = CriteriaTriggers.register("aether:incubation_trigger", new IncubationTrigger());
-    public static final LoreTrigger LORE_ENTRY = CriteriaTriggers.register("aether:lore_entry", new LoreTrigger());
+
+    public static final DeferredRegister<CriterionTrigger<?>> TRIGGERS = DeferredRegister.create(Registries.TRIGGER_TYPE, Aether.MODID);
+
+    public static final DeferredHolder<CriterionTrigger<?>, IncubationTrigger> INCUBATION_TRIGGER = TRIGGERS.register("incubation_trigger", IncubationTrigger::new);
+    public static final DeferredHolder<CriterionTrigger<?>, LoreTrigger> LORE_ENTRY = TRIGGERS.register("lore_entry", LoreTrigger::new);
 }

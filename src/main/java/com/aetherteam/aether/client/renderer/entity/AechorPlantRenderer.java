@@ -19,8 +19,9 @@ public class AechorPlantRenderer extends MobRenderer<AechorPlant, AechorPlantMod
 
     /**
      * Scales the Aechor Plant according to its size.
-     * @param aechorPlant The {@link AechorPlant} entity.
-     * @param poseStack The rendering {@link PoseStack}.
+     *
+     * @param aechorPlant  The {@link AechorPlant} entity.
+     * @param poseStack    The rendering {@link PoseStack}.
      * @param partialTicks The {@link Float} for the game's partial ticks.
      */
     @Override
@@ -33,7 +34,8 @@ public class AechorPlantRenderer extends MobRenderer<AechorPlant, AechorPlantMod
 
     /**
      * Passes the Aechor Plant's petal rotation to the model as the "ageInTicks" parameter.
-     * @param aechorPlant The {@link AechorPlant} entity.
+     *
+     * @param aechorPlant  The {@link AechorPlant} entity.
      * @param partialTicks The {@link Float} for the game's partial ticks.
      * @return The {@link Float} for the petal rotation.
      */

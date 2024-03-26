@@ -1,17 +1,24 @@
 package com.aetherteam.aether.network.packet;
 
-import com.aetherteam.aether.capability.time.AetherTime;
-import com.aetherteam.nitrogen.capability.INBTSynchable;
+import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.attachment.AetherDataAttachments;
+import com.aetherteam.aether.attachment.AetherTimeAttachment;
+import com.aetherteam.nitrogen.attachment.INBTSynchable;
 import com.aetherteam.nitrogen.network.packet.SyncLevelPacket;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.common.util.LazyOptional;
+import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.attachment.AttachmentType;
 import org.apache.commons.lang3.tuple.Triple;
 
+import java.util.function.Supplier;
+
 /**
- * Sync packet for values in the {@link com.aetherteam.aether.capability.time.AetherTimeCapability} class.
+ * Sync packet for values in the {@link AetherTimeAttachment} class.
  */
-public class AetherTimeSyncPacket extends SyncLevelPacket<AetherTime> {
+public class AetherTimeSyncPacket extends SyncLevelPacket<AetherTimeAttachment> {
+
+    public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "sync_aether_time_attachment");
+
     public AetherTimeSyncPacket(Triple<String, INBTSynchable.Type, Object> values) {
         super(values);
     }
@@ -20,12 +27,17 @@ public class AetherTimeSyncPacket extends SyncLevelPacket<AetherTime> {
         super(key, type, value);
     }
 
+    @Override
+    public ResourceLocation id() {
+        return ID;
+    }
+
     public static AetherTimeSyncPacket decode(FriendlyByteBuf buf) {
         return new AetherTimeSyncPacket(SyncLevelPacket.decodeValues(buf));
     }
 
     @Override
-    public LazyOptional<AetherTime> getCapability(Level level) {
-        return AetherTime.get(level);
+    public Supplier<AttachmentType<AetherTimeAttachment>> getAttachment() {
+        return AetherDataAttachments.AETHER_TIME;
     }
 }

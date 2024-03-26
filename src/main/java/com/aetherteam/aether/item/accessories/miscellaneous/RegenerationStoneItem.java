@@ -12,8 +12,9 @@ public class RegenerationStoneItem extends AccessoryItem {
 
     /**
      * Regenerates half a heart every 50 ticks, if the wearer is missing health.
+     *
      * @param slotContext The {@link SlotContext} of the Curio.
-     * @param stack The Curio {@link ItemStack}.
+     * @param stack       The Curio {@link ItemStack}.
      */
     @Override
     public void curioTick(SlotContext slotContext, ItemStack stack) {

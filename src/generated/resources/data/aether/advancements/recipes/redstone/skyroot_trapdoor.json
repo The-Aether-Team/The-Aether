@@ -30,6 +30,5 @@
     "recipes": [
       "aether:skyroot_trapdoor"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

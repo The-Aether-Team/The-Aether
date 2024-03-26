@@ -22,11 +22,11 @@ public class DynamicMenuButton extends Button {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         if (this.shouldRender()) {
             this.enabled = true;
             this.setX(this.getOriginX() + gatherOffsets(this.offsetConfigs));
-            super.render(guiGraphics, mouseX, mouseY, partialTicks);
+            super.renderWidget(guiGraphics, mouseX, mouseY, partialTicks);
         } else {
             this.enabled = false;
         }

@@ -31,6 +31,7 @@ public class SliderSpawnEggItem extends DeferredSpawnEggItem {
      * Changed to round the X/Z values based on the click location.
      * This makes it so the slider will always spawn in the center of a 2x2 region based on what corner of a block the player is aiming.<br><br>
      * The position still needs to be aligned with Math.floor once the entity is spawned, so the Slider rounds it's X and Z coordinates down after spawning.
+     *
      * @param context The {@link UseOnContext} of the usage interaction.
      */
     public InteractionResult useOn(UseOnContext context) {
@@ -65,7 +66,7 @@ public class SliderSpawnEggItem extends DeferredSpawnEggItem {
             BlockPos roundedPos = new BlockPos((int) Math.round(clickLoc.x()), relativePos.getY(), (int) Math.round(clickLoc.z()));
 
             EntityType<?> entityType = this.getType(itemStack.getTag());
-            if (entityType.spawn((ServerLevel)level, itemStack, context.getPlayer(), roundedPos, MobSpawnType.SPAWN_EGG, false, !Objects.equals(blockPos, relativePos) && direction == Direction.UP) != null) {
+            if (entityType.spawn((ServerLevel) level, itemStack, context.getPlayer(), roundedPos, MobSpawnType.SPAWN_EGG, false, !Objects.equals(blockPos, relativePos) && direction == Direction.UP) != null) {
                 itemStack.shrink(1);
                 level.gameEvent(context.getPlayer(), GameEvent.ENTITY_PLACE, blockPos);
             }

@@ -30,6 +30,5 @@
     "recipes": [
       "aether:holystone_pickaxe"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

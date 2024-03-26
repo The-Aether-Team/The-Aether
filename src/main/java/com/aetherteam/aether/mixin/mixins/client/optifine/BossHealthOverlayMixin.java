@@ -15,6 +15,7 @@ public class BossHealthOverlayMixin {
      * Cancels the {@link CustomizeGuiOverlayEvent.BossEventProgress} GUI event after the event hook has been called for it.
      * Made as a workaround for Jade's boss bar pushdown.<br>
      * This modifies the assignment of the {@link CustomizeGuiOverlayEvent.BossEventProgress} event variable.
+     *
      * @param event The original {@link CustomizeGuiOverlayEvent.BossEventProgress} parameter value.
      * @return The modified {@link CustomizeGuiOverlayEvent.BossEventProgress} parameter value.
      */

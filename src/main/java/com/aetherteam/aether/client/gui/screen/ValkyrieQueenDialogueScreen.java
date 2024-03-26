@@ -4,7 +4,6 @@ import com.aetherteam.aether.client.gui.component.dialogue.DialogueAnswerCompone
 import com.aetherteam.aether.client.gui.component.dialogue.DialogueChoiceComponent;
 import com.aetherteam.aether.entity.monster.dungeon.boss.ValkyrieQueen;
 import com.aetherteam.aether.item.AetherItems;
-import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.NpcPlayerInteractPacket;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.ChatFormatting;
@@ -52,6 +51,7 @@ public class ValkyrieQueenDialogueScreen extends Screen {
 
     /**
      * Adds and repositions a new set of dialogue options.
+     *
      * @param options The {@link DialogueChoiceComponent} option buttons to render.
      */
     public void setupDialogueChoices(DialogueChoiceComponent... options) {
@@ -81,6 +81,7 @@ public class ValkyrieQueenDialogueScreen extends Screen {
 
     /**
      * Sets what message to display for a dialogue answer.
+     *
      * @param component The message {@link Component}.
      */
     private void setDialogueAnswer(Component component) {
@@ -89,6 +90,7 @@ public class ValkyrieQueenDialogueScreen extends Screen {
 
     /**
      * Sets up the formatting for the Valkyrie Queen's name in the {@link DialogueAnswerComponent} widget.
+     *
      * @param component The name {@link Component}.
      * @return The formatted {@link MutableComponent}.
      */
@@ -98,6 +100,7 @@ public class ValkyrieQueenDialogueScreen extends Screen {
 
     /**
      * Sets up the text for a player dialogue choice in a {@link DialogueChoiceComponent} button.
+     *
      * @param key The suffix {@link String} to get the full translation key from.
      * @return The {@link MutableComponent} for the choice text.
      */
@@ -107,6 +110,7 @@ public class ValkyrieQueenDialogueScreen extends Screen {
 
     /**
      * Sends an NPC interaction to the server, which is sent through a packet to be handled in {@link ValkyrieQueen#handleNpcInteraction(Player, byte)}.
+     *
      * @param interactionID A code for which interaction was performed on the client.<br>
      *                      0 - "What can you tell me about this place?"<br>
      *                      1 - "I wish to fight you!"<br>
@@ -116,7 +120,7 @@ public class ValkyrieQueenDialogueScreen extends Screen {
      * @see ValkyrieQueen#handleNpcInteraction(Player, byte)
      */
     private void finishChat(byte interactionID) {
-        PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new NpcPlayerInteractPacket(this.valkyrieQueen.getId(), interactionID));
+        PacketRelay.sendToServer(new NpcPlayerInteractPacket(this.valkyrieQueen.getId(), interactionID));
         super.onClose();
     }
 

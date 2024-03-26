@@ -1,6 +1,6 @@
 package com.aetherteam.aether.item.combat.loot;
 
-import com.aetherteam.aether.capability.lightning.LightningTracker;
+import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.EquipmentUtil;
 import com.aetherteam.aether.item.combat.AetherItemTiers;
@@ -20,8 +20,9 @@ public class LightningSwordItem extends SwordItem {
     /**
      * Summon lightning at the position of the target if the attacker attacked with full strength as determined by {@link EquipmentUtil#isFullStrength(LivingEntity)}.<br><br>
      * {@link com.aetherteam.aether.event.listeners.abilities.WeaponAbilityListener#onLightningStrike(EntityStruckByLightningEvent)} prevents the attacker from being injured by the lightning.
-     * @param stack The {@link ItemStack} used to hurt the target
-     * @param target The hurt {@link LivingEntity}.
+     *
+     * @param stack    The {@link ItemStack} used to hurt the target
+     * @param target   The hurt {@link LivingEntity}.
      * @param attacker The attacking {@link LivingEntity}.
      * @return Whether the enemy was hurt or not, as a {@link Boolean}.
      */
@@ -30,7 +31,7 @@ public class LightningSwordItem extends SwordItem {
         if (EquipmentUtil.isFullStrength(attacker)) {
             LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(attacker.level());
             if (lightningBolt != null) {
-                LightningTracker.get(lightningBolt).ifPresent(lightningTracker -> lightningTracker.setOwner(attacker));
+                lightningBolt.getData(AetherDataAttachments.LIGHTNING_TRACKER).setOwner(attacker);
                 lightningBolt.setPos(target.getX(), target.getY(), target.getZ());
                 attacker.level().addFreshEntity(lightningBolt);
             }

@@ -7,7 +7,6 @@ import com.aetherteam.aether.client.gui.screen.perks.AetherCustomizationsScreen;
 import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
 import com.aetherteam.aether.inventory.menu.AccessoriesMenu;
 import com.aetherteam.aether.mixin.mixins.client.accessor.ScreenAccessor;
-import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.ClearItemPacket;
 import com.aetherteam.aether.perk.PerkUtil;
 import com.aetherteam.nitrogen.api.users.User;
@@ -36,12 +35,11 @@ import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
-import top.theillusivec4.curios.Curios;
+import top.theillusivec4.curios.CuriosConstants;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
 import top.theillusivec4.curios.client.gui.RenderButton;
 import top.theillusivec4.curios.common.inventory.CosmeticCurioSlot;
 import top.theillusivec4.curios.common.inventory.CurioSlot;
-import top.theillusivec4.curios.common.network.NetworkHandler;
 import top.theillusivec4.curios.common.network.client.CPacketDestroy;
 import top.theillusivec4.curios.common.network.client.CPacketToggleRender;
 
@@ -59,7 +57,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
 
     private static final ResourceLocation ACCESSORIES_INVENTORY = new ResourceLocation(Aether.MODID, "textures/gui/inventory/accessories.png");
     private static final ResourceLocation ACCESSORIES_INVENTORY_CREATIVE = new ResourceLocation(Aether.MODID, "textures/gui/inventory/accessories_creative.png");
-    private static final ResourceLocation CURIO_INVENTORY = new ResourceLocation(Curios.MODID, "textures/gui/curios/inventory.png");
+    private static final ResourceLocation CURIO_INVENTORY = new ResourceLocation(CuriosConstants.MOD_ID, "textures/gui/curios/inventory.png");
     private static final ResourceLocation RECIPE_BUTTON_LOCATION = new ResourceLocation("textures/gui/recipe_button.png");
 
     private static final SimpleContainer DESTROY_ITEM_CONTAINER = new SimpleContainer(1);
@@ -135,6 +133,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
 
     /**
      * Creates the button for the {@link MoaSkinsScreen}.
+     *
      * @return The {@link ImageButton}.
      */
     private ImageButton createSkinsButton() {
@@ -142,8 +141,8 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
                 (pressed) -> this.getMinecraft().setScreen(new MoaSkinsScreen(this)),
                 Component.translatable("gui.aether.accessories.skins_button")) {
             @Override
-            public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-                super.render(guiGraphics, mouseX, mouseY, partialTick);
+            public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+                super.renderWidget(guiGraphics, mouseX, mouseY, partialTick);
                 if (!AccessoriesScreen.this.getRecipeBookComponent().isVisible()) {
                     this.setX(AccessoriesScreen.this.getGuiLeft() - 22);
                     this.setY(AccessoriesScreen.this.getGuiTop() + 2);
@@ -159,6 +158,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
 
     /**
      * Creates the button for the {@link AetherCustomizationsScreen}.
+     *
      * @return The {@link ImageButton}.
      */
     private ImageButton createCustomizationButton() {
@@ -166,8 +166,8 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
                 (pressed) -> this.getMinecraft().setScreen(new AetherCustomizationsScreen(this)),
                 Component.translatable("gui.aether.accessories.customization_button")) {
             @Override
-            public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-                super.render(guiGraphics, mouseX, mouseY, partialTick);
+            public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+                super.renderWidget(guiGraphics, mouseX, mouseY, partialTick);
                 if (!AccessoriesScreen.this.getRecipeBookComponent().isVisible()) {
                     this.setX(AccessoriesScreen.this.getGuiLeft() - 22);
                     this.setY(AccessoriesScreen.this.getGuiTop() + 24);
@@ -189,9 +189,9 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
         for (Slot inventorySlot : this.getMenu().slots) {
             if (inventorySlot instanceof CurioSlot curioSlot && !(inventorySlot instanceof CosmeticCurioSlot)) {
                 this.addRenderableWidget(new RenderButton(curioSlot, this.getGuiLeft() + inventorySlot.x + 11, this.getGuiTop() + inventorySlot.y - 3, 8, 8, 75, 0, CURIO_INVENTORY,
-                        (button) -> NetworkHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(), new CPacketToggleRender(curioSlot.getIdentifier(), inventorySlot.getSlotIndex()))) {
+                        (button) -> PacketDistributor.SERVER.noArg().send(new CPacketToggleRender(curioSlot.getIdentifier(), inventorySlot.getSlotIndex()))) {
                     @Override
-                    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+                    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
                         this.setX(AccessoriesScreen.this.getGuiLeft() + inventorySlot.x + 11);
                         this.setY(AccessoriesScreen.this.getGuiTop() + inventorySlot.y - 3);
                     }
@@ -293,8 +293,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
             this.getRecipeBookComponent().toggleVisibility();
             this.updateScreenPosition();
             return true;
-        } else
-        if (AetherKeys.OPEN_ACCESSORY_INVENTORY.isActiveAndMatches(InputConstants.getKey(keyCode, scanCode))) {
+        } else if (AetherKeys.OPEN_ACCESSORY_INVENTORY.isActiveAndMatches(InputConstants.getKey(keyCode, scanCode))) {
             LocalPlayer playerEntity = this.getMinecraft().player;
             if (playerEntity != null) {
                 playerEntity.closeContainer();
@@ -352,12 +351,12 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
                     if (slot == this.destroyItemSlot && this.destroyItemSlot != null && flag) {
                         for (int j = 0; j < this.getMinecraft().player.inventoryMenu.getItems().size(); ++j) {
                             this.getMinecraft().gameMode.handleCreativeModeItemAdd(ItemStack.EMPTY, j);
-                            NetworkHandler.INSTANCE.send(PacketDistributor.SERVER.noArg(), new CPacketDestroy());
+                            PacketDistributor.SERVER.noArg().send(new CPacketDestroy());
                         }
                     } else {
                         if (slot == this.destroyItemSlot && this.destroyItemSlot != null) {
                             this.getMenu().setCarried(ItemStack.EMPTY);
-                            PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ClearItemPacket(this.getMinecraft().player.getId()));
+                            PacketRelay.sendToServer(new ClearItemPacket(this.getMinecraft().player.getId()));
                         }
                     }
                 }
@@ -385,6 +384,7 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
 
     /**
      * Offsets the accessories screen button based on what screen is currently open.
+     *
      * @param screen The current {@link Screen}.
      * @return A {@link Tuple} containing the x and y {@link Integer}s.
      */

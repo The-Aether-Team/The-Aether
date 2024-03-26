@@ -21,12 +21,13 @@ public abstract class AbstractCrystalRenderer<T extends AbstractCrystal> extends
 
     /**
      * Rotates the different parts of the crystal model.
-     * @param crystal The entity.
-     * @param entityYaw The {@link Float} for the entity's yaw rotation.
+     *
+     * @param crystal      The entity.
+     * @param entityYaw    The {@link Float} for the entity's yaw rotation.
      * @param partialTicks The {@link Float} for the game's partial ticks.
-     * @param poseStack The rendering {@link PoseStack}.
-     * @param buffer The rendering {@link MultiBufferSource}.
-     * @param packedLight The {@link Integer} for the packed lighting for rendering.
+     * @param poseStack    The rendering {@link PoseStack}.
+     * @param buffer       The rendering {@link MultiBufferSource}.
+     * @param packedLight  The {@link Integer} for the packed lighting for rendering.
      */
     @Override
     public void render(T crystal, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {

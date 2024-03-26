@@ -3,8 +3,6 @@ package com.aetherteam.aether.entity.projectile.dart;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.mixin.mixins.common.accessor.PlayerAccessor;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -24,24 +22,18 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.NetworkHooks;
 
-import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 public abstract class AbstractDart extends AbstractArrow {
-    @Nullable
-    private final Supplier<Item> pickupItem;
     private int ticksInAir = 0;
 
     protected AbstractDart(EntityType<? extends AbstractDart> type, Level level, Supplier<Item> pickupItem) {
-        super(type, level);
-        this.pickupItem = pickupItem;
+        super(type, level, new ItemStack(pickupItem.get()));
     }
 
     public AbstractDart(EntityType<? extends AbstractDart> type, Level level, LivingEntity shooter, Supplier<Item> pickupItem) {
-        super(type, shooter, level);
-        this.pickupItem = pickupItem;
+        super(type, shooter, level, new ItemStack(pickupItem.get()));
     }
 
     @Override
@@ -59,6 +51,7 @@ public abstract class AbstractDart extends AbstractArrow {
 
     /**
      * Handles shield damaging when this projectile hits an entity.
+     *
      * @param result The {@link HitResult} of the projectile.
      */
     @Override
@@ -121,7 +114,7 @@ public abstract class AbstractDart extends AbstractArrow {
 
                 if (!this.level().isClientSide() && owner instanceof LivingEntity) {
                     EnchantmentHelper.doPostHurtEffects(livingentity, owner);
-                    EnchantmentHelper.doPostDamageEffects((LivingEntity)owner, livingentity);
+                    EnchantmentHelper.doPostDamageEffects((LivingEntity) owner, livingentity);
                 }
 
                 this.doPostHurtEffects(livingentity);
@@ -149,6 +142,7 @@ public abstract class AbstractDart extends AbstractArrow {
 
     /**
      * Restores gravity to the dart when it hits a block.
+     *
      * @param result The {@link BlockHitResult} of the projectile.
      */
     @Override
@@ -156,15 +150,10 @@ public abstract class AbstractDart extends AbstractArrow {
         super.onHitBlock(result);
         this.setNoGravity(false);
     }
-   
+
     @Override
     protected SoundEvent getDefaultHitGroundSoundEvent() {
         return AetherSoundEvents.ENTITY_DART_HIT.get();
-    }
-
-    @Override
-    protected ItemStack getPickupItem() {
-        return this.pickupItem != null ? new ItemStack(this.pickupItem.get()) : ItemStack.EMPTY;
     }
 
     @Override
@@ -179,10 +168,5 @@ public abstract class AbstractDart extends AbstractArrow {
         if (tag.contains("TicksInAir")) {
             this.ticksInAir = tag.getInt("TicksInAir");
         }
-    }
-   
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

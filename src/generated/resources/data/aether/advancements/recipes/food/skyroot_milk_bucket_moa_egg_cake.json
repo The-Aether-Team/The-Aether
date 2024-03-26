@@ -28,6 +28,5 @@
     "recipes": [
       "aether:skyroot_milk_bucket_moa_egg_cake"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

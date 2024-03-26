@@ -2,7 +2,7 @@ package com.aetherteam.aether.block;
 
 import com.aetherteam.aether.event.FreezeEvent;
 import com.aetherteam.nitrogen.recipe.BlockStateRecipeUtil;
-import net.minecraft.commands.CommandFunction;
+import net.minecraft.commands.CacheableFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
@@ -31,7 +31,8 @@ public interface FreezingBehavior<T> {
      * because the loop for each coordinate starts at the radius (as far away from the center as possible) and decreases (moves inwards towards the center).
      * It does this so that it can separate what update flags are used for the freezing depending on whether a block was at the exterior (see: {@link FreezingBehavior#FLAG_SHELL}) or at the interior (see: {@link FreezingBehavior#FLAG_VOLUME}),
      * to minimize the amount of block updates caused.
-     * @param level The {@link Level} to perform the freezing in.
+     *
+     * @param level  The {@link Level} to perform the freezing in.
      * @param origin The origin {@link BlockPos}; the center of the circle.
      * @param source The source causing the freezing, which is accepted as {@link T}.
      * @param radius The radius of the circle/sphere as a {@link Float}.
@@ -48,7 +49,8 @@ public interface FreezingBehavior<T> {
             for (int z = (int) radius; z >= 0; z--) {
                 int xzLengthSq = x * x + z * z;
 
-                if (xzLengthSq > radiusSq) continue; // Restarts the loop at the next iteration, skipping the following code. This ensures freezing never occurs beyond the radius.
+                if (xzLengthSq > radiusSq)
+                    continue; // Restarts the loop at the next iteration, skipping the following code. This ensures freezing never occurs beyond the radius.
 
                 blocksFrozen += this.quarters(level, origin, x, 0, z, source, firstXZ ? FLAG_SHELL : FLAG_VOLUME); // Only places along the center-most y region (at 0), meaning this will only freeze within a circle.
                 firstXZ = false;
@@ -56,7 +58,8 @@ public interface FreezingBehavior<T> {
                 boolean firstY = true; // Reset every time the z iteration changes, or the x iteration changes causing the z iterations to restart.
                 for (int y = (int) radius; y >= 0; y--) { // Responsible for freezing the rest of the blocks, forming the sphere shape, in addition to the circle frozen at y=0.
 
-                    if (xzLengthSq + y * y > radiusSq) continue; // Restarts the loop at the next iteration, skipping the following code. This ensures freezing never occurs beyond the radius.
+                    if (xzLengthSq + y * y > radiusSq)
+                        continue; // Restarts the loop at the next iteration, skipping the following code. This ensures freezing never occurs beyond the radius.
 
                     int placementFlag = firstY ? FLAG_SHELL : FLAG_VOLUME;
                     blocksFrozen += this.quarters(level, origin, x, y, z, source, placementFlag); // Place in positive space
@@ -72,13 +75,14 @@ public interface FreezingBehavior<T> {
 
     /**
      * Freezes a block in all four quarters/quadrants of a circle (+x,+z; +x,-z; -x,+z; -x,-z), offset equally from the origin by the given x and z parameters.
-     * @param level The {@link Level} to perform the freezing in.
+     *
+     * @param level  The {@link Level} to perform the freezing in.
      * @param origin The origin {@link BlockPos}; the center of the circle.
-     * @param dX The x {@link Integer} offset from the center of the circle.
-     * @param dY The y {@link Integer} offset from the center of the circle.
-     * @param dZ The z {@link Integer} offset from the center of the circle.
+     * @param dX     The x {@link Integer} offset from the center of the circle.
+     * @param dY     The y {@link Integer} offset from the center of the circle.
+     * @param dZ     The z {@link Integer} offset from the center of the circle.
      * @param source The source causing the freezing, which is accepted as {@link T}.
-     * @param flag The flag to use for block placement when freezing.
+     * @param flag   The flag to use for block placement when freezing.
      * @return An {@link Integer} added up from the blocks being frozen. See {@link FreezingBehavior#freezeFromRecipe(Level, BlockPos, BlockPos, Object, int)}.
      */
     private int quarters(Level level, BlockPos origin, int dX, int dY, int dZ, T source, int flag) {
@@ -90,28 +94,30 @@ public interface FreezingBehavior<T> {
 
     /**
      * Handles pre-block modification freezing behavior, should be used by subclasses for recipe and source-specific code.
-     * @param level The {@link Level} to freeze the blocks in.
-     * @param pos The {@link BlockPos} the freezing occurred at.
+     *
+     * @param level  The {@link Level} to freeze the blocks in.
+     * @param pos    The {@link BlockPos} the freezing occurred at.
      * @param origin The {@link BlockPos} of the source that is causing the freezing.
      * @param source The source causing the freezing, which is accepted as {@link T}.
-     * @param flag The {@link Integer} representing the block placement flag (see {@link net.minecraft.world.level.LevelWriter#setBlock(BlockPos, BlockState, int)}).
+     * @param flag   The {@link Integer} representing the block placement flag (see {@link net.minecraft.world.level.LevelWriter#setBlock(BlockPos, BlockState, int)}).
      * @return An {@link Integer} 1 if a block was successfully frozen, or a 0 if it wasn't.
      */
     int freezeFromRecipe(Level level, BlockPos pos, BlockPos origin, T source, int flag);
 
     /**
      * Freezes (sets) a block at a position if the {@link FreezeEvent} isn't cancelled. Also schedules a tick if the block can randomly tick, and plays a lava extinguishing sound if the old block is in the {@link FluidTags#LAVA} tag.
-     * @param level The {@link Level} to perform the freezing in.
-     * @param pos The {@link BlockPos} to freeze at.
-     * @param origin The {@link BlockPos} of the source that is causing the freezing.
+     *
+     * @param level         The {@link Level} to perform the freezing in.
+     * @param pos           The {@link BlockPos} to freeze at.
+     * @param origin        The {@link BlockPos} of the source that is causing the freezing.
      * @param oldBlockState The original {@link BlockState} being frozen.
      * @param newBlockState The new {@link BlockState} to freeze into.
-     * @param function The {@link CommandFunction.CacheableFunction} to run after freezing.
-     * @param source The source causing the freezing, which is accepted as {@link T}.
-     * @param flag The {@link Integer} placement flag.
+     * @param function      The {@link CacheableFunction} to run after freezing.
+     * @param source        The source causing the freezing, which is accepted as {@link T}.
+     * @param flag          The {@link Integer} placement flag.
      * @return An {@link Integer} 0 if the block failed to freeze or 1 if it succeeded
      */
-    default int freezeBlockAt(Level level, BlockPos pos, BlockPos origin, BlockState oldBlockState, BlockState newBlockState, Optional<CommandFunction.CacheableFunction> function, T source, int flag) {
+    default int freezeBlockAt(Level level, BlockPos pos, BlockPos origin, BlockState oldBlockState, BlockState newBlockState, Optional<CacheableFunction> function, T source, int flag) {
         FreezeEvent event = this.onFreeze(level, pos, origin, oldBlockState, newBlockState, source);
         if (!event.isCanceled()) {
             level.setBlock(pos, newBlockState, flag);
@@ -126,12 +132,13 @@ public interface FreezingBehavior<T> {
 
     /**
      * Event hook call for freezing blocks, used by subclasses.
-     * @param level The {@link Level} to perform the freezing in.
-     * @param pos The {@link BlockPos} to freeze at.
-     * @param origin The {@link BlockPos} of the source that is causing the freezing.
+     *
+     * @param level         The {@link Level} to perform the freezing in.
+     * @param pos           The {@link BlockPos} to freeze at.
+     * @param origin        The {@link BlockPos} of the source that is causing the freezing.
      * @param oldBlockState The original {@link BlockState} being frozen.
      * @param newBlockState The new {@link BlockState} to freeze into.
-     * @param source The source causing the freezing, which is accepted as {@link T}.
+     * @param source        The source causing the freezing, which is accepted as {@link T}.
      * @return The {@link FreezeEvent} for this behavior.
      */
     FreezeEvent onFreeze(LevelAccessor level, BlockPos pos, BlockPos origin, BlockState oldBlockState, BlockState newBlockState, T source);

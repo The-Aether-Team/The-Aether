@@ -19,9 +19,10 @@ public class WhiteAppleItem extends Item {
     /**
      * Cures any potion effects that are removed by White Apples, then sets the remedy vignette if the user was a player.
      * Also triggers the {@link CriteriaTriggers#CONSUME_ITEM} advancement criteria and gives the {@link Stats#ITEM_USED} stat to the player for the item.
+     *
      * @param stack The {@link ItemStack} in use.
      * @param level The {@link Level} of the user.
-     * @param user The {@link LivingEntity} using the stack.
+     * @param user  The {@link LivingEntity} using the stack.
      * @return The used {@link ItemStack}.
      */
     @Override

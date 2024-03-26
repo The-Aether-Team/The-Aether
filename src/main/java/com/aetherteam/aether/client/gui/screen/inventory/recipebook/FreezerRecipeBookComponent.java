@@ -1,11 +1,13 @@
 package com.aetherteam.aether.client.gui.screen.inventory.recipebook;
 
-import com.aetherteam.aether.blockentity.FreezerBlockEntity;
+import com.aetherteam.aether.api.AetherDataMaps;
 import net.minecraft.client.gui.screens.recipebook.AbstractFurnaceRecipeBookComponent;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class FreezerRecipeBookComponent extends AbstractFurnaceRecipeBookComponent {
     private static final Component FILTER_NAME = Component.translatable("gui.aether.recipebook.toggleRecipes.freezable");
@@ -17,6 +19,6 @@ public class FreezerRecipeBookComponent extends AbstractFurnaceRecipeBookCompone
 
     @Override
     protected Set<Item> getFuelItems() {
-        return FreezerBlockEntity.getFreezingMap().keySet();
+        return BuiltInRegistries.ITEM.getDataMap(AetherDataMaps.FREEZER_FUEL).keySet().stream().map(BuiltInRegistries.ITEM::get).collect(Collectors.toSet());
     }
 }

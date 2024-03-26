@@ -220,7 +220,7 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
 
     /**
      * @param level The {@link Level} that the block is in.
-     * @param pos The {@link BlockPos} to check.
+     * @param pos   The {@link BlockPos} to check.
      * @return Whether the {@link BlockState} at the given position can be replaced by Aether Grass or Aether Dirt.
      */
     private boolean canBlockBeReplacedByAetherGrass(LevelAccessor level, BlockPos pos) {
@@ -230,9 +230,10 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
 
     /**
      * Places Aether Grass Blocks below air (i.e. on the surface), and Aether Dirt blocks anywhere else.
+     *
      * @param random The {@link RandomSource} for the structure piece.
-     * @param level The {@link Level} to place in.
-     * @param pos The {@link BlockPos} to place at.
+     * @param level  The {@link Level} to place in.
+     * @param pos    The {@link BlockPos} to place at.
      */
     private void placeAetherDirtOrGrass(RandomSource random, LevelAccessor level, BlockPos pos) {
         if (SpreadingSnowyDirtBlockAccessor.callCanBeGrass(AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState(), level, pos)) {
@@ -248,9 +249,10 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
      * Flowers are chosen with a 1/10 chance, while grass has a 9/10 chance.<br>
      * Choosing between a Purple Flower or a White Flower is 50/50 chance.<br>
      * Choosing Tall Grass is a 1/10 chance, while Grass is a 9/10 chance.
+     *
      * @param random The {@link RandomSource} for the structure piece.
-     * @param level The {@link Level} to place in.
-     * @param pos The {@link BlockPos} to place at.
+     * @param level  The {@link Level} to place in.
+     * @param pos    The {@link BlockPos} to place at.
      */
     private void growGrassAndFlowers(RandomSource random, LevelAccessor level, BlockPos pos) {
         int featureType = random.nextInt(50);
@@ -260,7 +262,7 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
                 level.setBlock(pos, flower.defaultBlockState(), 2);
             } else {
                 if (random.nextInt(50) > 5) {
-                    level.setBlock(pos, Blocks.GRASS.defaultBlockState(), 2);
+                    level.setBlock(pos, Blocks.SHORT_GRASS.defaultBlockState(), 2);
                 } else {
                     DoublePlantBlock.placeAt(level, Blocks.TALL_GRASS.defaultBlockState(), pos, 2);
                 }

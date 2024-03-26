@@ -26,7 +26,8 @@ public class SpawnTNT extends LootItemConditionalFunction {
 
     /**
      * Spawns a TNT Present.
-     * @param stack The {@link ItemStack} for the loot pool.
+     *
+     * @param stack   The {@link ItemStack} for the loot pool.
      * @param context The {@link LootContext}.
      * @return The {@link ItemStack} for the loot pool.
      */

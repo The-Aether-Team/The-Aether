@@ -51,7 +51,7 @@ public class GoldStubCave extends StructurePiece {
         double lowerY = j + random.nextInt(3) + 2;
         double upperY = j + random.nextInt(3) + 2;
 
-        for(int length = 0; length <= 30; ++length) {
+        for (int length = 0; length <= 30; ++length) {
             double radius = length / 30.0;
 
             double x = lowerX + (upperX - lowerX) * radius;
@@ -70,15 +70,15 @@ public class GoldStubCave extends StructurePiece {
             int maxY = Mth.floor(y + width);
             int maxZ = Mth.floor(z + width);
 
-            for(int xOffset = minX; xOffset <= maxX; ++xOffset) {
+            for (int xOffset = minX; xOffset <= maxX; ++xOffset) {
                 double xDistance = Mth.square((xOffset + 0.5 - x) / (width));
-                if(xDistance < 1.0) {
-                    for(int yOffset = minY; yOffset <= maxY; ++yOffset) {
+                if (xDistance < 1.0) {
+                    for (int yOffset = minY; yOffset <= maxY; ++yOffset) {
                         double yDistance = Mth.square((yOffset + 0.5 - y) / (width));
-                        if(xDistance + yDistance < 1.0) {
-                            for(int zOffset = minZ; zOffset <= maxZ; ++zOffset) {
+                        if (xDistance + yDistance < 1.0) {
+                            for (int zOffset = minZ; zOffset <= maxZ; ++zOffset) {
                                 double zDistance = Mth.square((zOffset + 0.5 - z) / (width));
-                                if(xDistance + yDistance + zDistance < 1.0) {
+                                if (xDistance + yDistance + zDistance < 1.0) {
                                     BlockState state = level.getBlockState(mutable.set(xOffset, yOffset, zOffset));
                                     if (state.is(AetherTags.Blocks.AETHER_DIRT) || state.is(AetherTags.Blocks.HOLYSTONE)) {
                                         level.setBlock(mutable, Blocks.AIR.defaultBlockState(), 2);

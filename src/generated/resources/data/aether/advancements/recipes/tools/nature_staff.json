@@ -28,6 +28,5 @@
     "recipes": [
       "aether:nature_staff"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

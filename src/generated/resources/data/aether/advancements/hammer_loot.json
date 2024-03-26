@@ -15,17 +15,14 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.aether.hammer_loot.desc"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "aether:hammer_of_kingbdogz",
       "nbt": "{Damage:0}"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.aether.hammer_loot"
     }

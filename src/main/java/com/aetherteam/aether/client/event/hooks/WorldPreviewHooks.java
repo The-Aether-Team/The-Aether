@@ -18,6 +18,7 @@ public class WorldPreviewHooks {
     /**
      * When a {@link TitleScreen} is opened, if the {@link AetherConfig.Client#enable_world_preview} config is enabled
      * then the world preview is set up, but otherwise it is ensured to be inactive.
+     *
      * @see com.aetherteam.aether.client.event.listeners.WorldPreviewListener#onGuiOpenLowest(ScreenEvent.Opening)
      */
     public static void setupWorldPreview(Screen screen) {
@@ -31,6 +32,7 @@ public class WorldPreviewHooks {
     /**
      * Checks if the {@link TitleScreen} should be hidden during loading. This is used to make sure it
      * doesn't show up briefly during the loading screen process when the world preview is being set up.
+     *
      * @param screen The currently rendered {@link Screen}.
      * @return Whether to hide the screen, as a {@link Boolean}.
      * @see com.aetherteam.aether.client.event.listeners.WorldPreviewListener#onScreenRender(ScreenEvent.Render.Pre)
@@ -42,6 +44,7 @@ public class WorldPreviewHooks {
     /**
      * After the level is loaded for the world preview by other events, when it gets rendered then
      * the panorama-style setup with the displayed menu is handled by {@link WorldDisplayHelper#setupLevelForDisplay()}.
+     *
      * @param stage The {@link net.neoforged.neoforge.client.event.RenderLevelStageEvent.Stage} of rendering.
      * @see com.aetherteam.aether.client.event.listeners.WorldPreviewListener#onRenderLevelLast(RenderLevelStageEvent)
      */
@@ -59,6 +62,7 @@ public class WorldPreviewHooks {
     /**
      * Handles how the world should be displayed for the world preview. Rendering, sounds, and music are allowed to tick, but nothing else is.
      * This makes the world static and paused but also still animated.
+     *
      * @see com.aetherteam.aether.client.event.listeners.WorldPreviewListener#onClientTick(TickEvent.ClientTickEvent)
      */
     public static void tickMenuWhenPaused() {
@@ -78,6 +82,7 @@ public class WorldPreviewHooks {
 
     /**
      * Angles and rotates the camera for the world preview display.
+     *
      * @see com.aetherteam.aether.client.event.listeners.WorldPreviewListener#onCameraView(ViewportEvent.ComputeCameraAngles)
      */
     public static void angleCamera() {
@@ -117,6 +122,7 @@ public class WorldPreviewHooks {
 
     /**
      * Checks whether to hide an entity in the world preview.
+     *
      * @param entity The {@link Entity}.
      * @return The {@link Boolean} result.
      * @see com.aetherteam.aether.client.event.listeners.WorldPreviewListener#onRenderEntity(RenderLivingEvent.Pre)
@@ -127,8 +133,9 @@ public class WorldPreviewHooks {
 
     /**
      * Removes or enables an entity's shadow for world preview rendering.
+     *
      * @param renderer The {@link EntityRenderer}.
-     * @param flag Whether the entity that the shadow belongs to is hidden.
+     * @param flag     Whether the entity that the shadow belongs to is hidden.
      * @see com.aetherteam.aether.client.event.listeners.WorldPreviewListener#onRenderPlayer(RenderPlayerEvent.Pre)
      * @see com.aetherteam.aether.client.event.listeners.WorldPreviewListener#onRenderPlayer(RenderPlayerEvent.Pre)
      */

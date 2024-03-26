@@ -26,11 +26,12 @@ public class PassiveWhirlwind extends AbstractWhirlwind {
     /**
      * Sets the Whirlwind's lifespan.<br><br>
      * Warning for "deprecation" is suppressed because this is fine to override.
-     * @param level The {@link ServerLevelAccessor} where the entity is spawned.
+     *
+     * @param level      The {@link ServerLevelAccessor} where the entity is spawned.
      * @param difficulty The {@link DifficultyInstance} of the game.
-     * @param reason The {@link MobSpawnType} reason.
-     * @param spawnData The {@link SpawnGroupData}.
-     * @param tag The {@link CompoundTag} to apply to this entity.
+     * @param reason     The {@link MobSpawnType} reason.
+     * @param spawnData  The {@link SpawnGroupData}.
+     * @param tag        The {@link CompoundTag} to apply to this entity.
      * @return The {@link SpawnGroupData} to return.
      */
     @Override
@@ -42,8 +43,9 @@ public class PassiveWhirlwind extends AbstractWhirlwind {
 
     /**
      * Allows creative mode players to color Passive Whirlwinds, as an Easter Egg.
+     *
      * @param player The interacting {@link Player}.
-     * @param hand The {@link InteractionHand}.
+     * @param hand   The {@link InteractionHand}.
      * @return The {@link InteractionResult}.
      */
     @Override

@@ -53,12 +53,13 @@ public class DoorwayBlock extends Block {
     /**
      * Toggles the block between invisible and not invisible if a creative player interacts with it.<br><br>
      * Warning for "deprecation" is suppressed because the method is fine to override.
-     * @param state The {@link BlockState} of the block.
-     * @param level The {@link Level} the block is in.
-     * @param pos The {@link BlockPos} of the block.
+     *
+     * @param state  The {@link BlockState} of the block.
+     * @param level  The {@link Level} the block is in.
+     * @param pos    The {@link BlockPos} of the block.
      * @param player The {@link Player} interacting with the block.
-     * @param hand The {@link InteractionHand} the player interacts with.
-     * @param hit The {@link BlockHitResult} of the interaction.
+     * @param hand   The {@link InteractionHand} the player interacts with.
+     * @param hit    The {@link BlockHitResult} of the interaction.
      * @return The {@link InteractionResult} of the interaction.
      */
     @SuppressWarnings("deprecation")
@@ -76,7 +77,8 @@ public class DoorwayBlock extends Block {
     /**
      * Spawns smoke particles when a player attempts to place anything inside the block.<br><br>
      * Warning for "deprecation" is suppressed because the method is fine to override.
-     * @param state The {@link BlockState} of the block.
+     *
+     * @param state   The {@link BlockState} of the block.
      * @param context The {@link BlockPlaceContext} of the replacement attempt.
      * @return Whether the block can be replaced, as a {@link Boolean}.
      */
@@ -97,9 +99,10 @@ public class DoorwayBlock extends Block {
     /**
      * [CODE COPY] - {@link ClientLevel#getMarkerParticleTarget()} and {@link ClientLevel#doAnimateTick(int, int, int, int, RandomSource, Block, BlockPos.MutableBlockPos)}.<br><br>
      * Similar to barrier blocks, this renders the boss doorway block overlay icon at a doorway block's position while it's invisible if the block is held by the player.
-     * @param state The {@link BlockState} of the block.
-     * @param level The {@link Level} the block is in.
-     * @param pos The {@link BlockPos} of the block.
+     *
+     * @param state  The {@link BlockState} of the block.
+     * @param level  The {@link Level} the block is in.
+     * @param pos    The {@link BlockPos} of the block.
      * @param random The {@link RandomSource} of the level.
      */
     @Override
@@ -119,9 +122,10 @@ public class DoorwayBlock extends Block {
     /**
      * Creates a small hitbox for doorway blocks when invisible and hovered over by creative players.<br><br>
      * Warning for "deprecation" is suppressed because the method is fine to override.
-     * @param state The {@link BlockState} of the block.
-     * @param level The {@link Level} the block is in.
-     * @param pos The {@link BlockPos} of the block.
+     *
+     * @param state   The {@link BlockState} of the block.
+     * @param level   The {@link Level} the block is in.
+     * @param pos     The {@link BlockPos} of the block.
      * @param context The {@link CollisionContext} of the entity with the block.
      * @return The {@link VoxelShape} of the block.
      */
@@ -161,10 +165,11 @@ public class DoorwayBlock extends Block {
 
     /**
      * Gets the {@link BlockPathTypes} corresponding to this block for mob navigation checks.
+     *
      * @param state The {@link BlockState} of the block.
      * @param level The {@link Level} the block is in.
-     * @param pos The {@link BlockPos} of the block.
-     * @param mob The {@link Mob} trying to pathfind in respect to this block.
+     * @param pos   The {@link BlockPos} of the block.
+     * @param mob   The {@link Mob} trying to pathfind in respect to this block.
      * @return The {@link BlockPathTypes} corresponding to this block.
      */
     @Nullable

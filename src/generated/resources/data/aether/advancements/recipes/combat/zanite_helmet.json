@@ -28,6 +28,5 @@
     "recipes": [
       "aether:zanite_helmet"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -1,7 +1,7 @@
 package com.aetherteam.aether.client.event.listeners.abilities;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.capability.player.AetherPlayer;
+import com.aetherteam.aether.attachment.AetherDataAttachments;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -20,11 +20,9 @@ public class AccessoryAbilityClientListener {
     public static void onRenderPlayer(RenderPlayerEvent.Pre event) {
         Player player = event.getEntity();
         if (!event.isCanceled()) {
-            AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
-                if (aetherPlayer.isWearingInvisibilityCloak()) {
-                    event.setCanceled(true);
-                }
-            });
+            if (player.getData(AetherDataAttachments.AETHER_PLAYER).isWearingInvisibilityCloak()) {
+                event.setCanceled(true);
+            }
         }
     }
 
@@ -35,11 +33,9 @@ public class AccessoryAbilityClientListener {
     public static void onRenderHand(RenderArmEvent event) {
         LocalPlayer player = Minecraft.getInstance().player;
         if (!event.isCanceled() && player != null) {
-            AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
-                if (aetherPlayer.isWearingInvisibilityCloak()) {
-                    event.setCanceled(true);
-                }
-            });
+            if (player.getData(AetherDataAttachments.AETHER_PLAYER).isWearingInvisibilityCloak()) {
+                event.setCanceled(true);
+            }
         }
     }
 }

@@ -405,7 +405,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("PPP")
                 .pattern("P P")
                 .pattern("PPP")
-                .unlockedBy("has_lots_of_items", CriteriaTriggers.INVENTORY_CHANGED.createCriterion(new InventoryChangeTrigger.TriggerInstance(Optional.empty(), MinMaxBounds.Ints.atLeast(10), MinMaxBounds.Ints.ANY, MinMaxBounds.Ints.ANY, List.of())))
+                .unlockedBy("has_lots_of_items", CriteriaTriggers.INVENTORY_CHANGED.createCriterion(new InventoryChangeTrigger.TriggerInstance(Optional.empty(), new InventoryChangeTrigger.TriggerInstance.Slots(MinMaxBounds.Ints.atLeast(10), MinMaxBounds.Ints.ANY, MinMaxBounds.Ints.ANY), List.of())))
                 .save(consumer, this.name("skyroot_chest"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Blocks.CRAFTING_TABLE, 1)
@@ -589,7 +589,7 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .pattern("CCC")
                 .unlockedBy("has_egg", has(Items.EGG))
                 .save(consumer, this.name("skyroot_milk_bucket_cake"));
-        
+
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, Blocks.CAKE)
                 .group("minecraft:cake")
                 .define('A', Items.MILK_BUCKET)
@@ -622,7 +622,6 @@ public class AetherRecipeData extends AetherRecipeProvider {
                 .unlockedBy("has_carved_pumpkin", has(Blocks.CARVED_PUMPKIN))
                 .unlockedBy("has_pumpkin", has(Blocks.PUMPKIN))
                 .save(consumer, this.name("moa_egg_pumpkin_pie"));
-
 
 
         this.smeltingOreRecipe(AetherItems.AMBROSIUM_SHARD.get(), AetherBlocks.AMBROSIUM_ORE.get(), 0.1F).save(consumer, this.name("ambrosium_shard_from_smelting"));

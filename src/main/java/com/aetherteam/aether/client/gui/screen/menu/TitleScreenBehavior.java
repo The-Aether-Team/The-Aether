@@ -71,8 +71,9 @@ public interface TitleScreenBehavior {
     /**
      * Handles whether image buttons should be visible and handles their positioning offset in the top right corner of the screen.
      * The visibility handling is necessary here to avoid a bug where the buttons will render in the center of the screen before they have a specified offset.
+     *
      * @param titleScreen The parent {@link TitleScreen}.
-     * @param xOffset The {@link Integer} x-offset for the buttons.
+     * @param xOffset     The {@link Integer} x-offset for the buttons.
      */
     default void handleImageButtons(TitleScreen titleScreen, int xOffset) {
         for (Renderable renderable : titleScreen.renderables) {
@@ -94,6 +95,7 @@ public interface TitleScreenBehavior {
 
     /**
      * Checks whether a button is one of the title screen image buttons.
+     *
      * @param buttonText The button text {@link Component}.
      * @return The {@link Boolean} result.
      */
@@ -104,6 +106,7 @@ public interface TitleScreenBehavior {
 
     /**
      * Checks whether a button belongs to the main set of title screen buttons.
+     *
      * @param buttonText The button text {@link Component}.
      * @return The {@link Boolean} result.
      */

@@ -24,8 +24,9 @@ public class DoubleDropsModifier extends LootModifier {
 
     /**
      * Doubles mob drops if a mob is attacked with full strength with an item that implements {@link SkyrootWeapon} if the mob isn't tagged with {@link AetherTags.Entities#NO_SKYROOT_DOUBLE_DROPS} and the item isn't tagged with {@link AetherTags.Items#NO_SKYROOT_DOUBLE_DROPS}.
+     *
      * @param lootStacks Result items from a loot table as an {@link ObjectArrayList} of {@link ItemStack}s.
-     * @param context The {@link LootContext}.
+     * @param context    The {@link LootContext}.
      * @return A new {@link ObjectArrayList} of {@link ItemStack}s that a loot table will give.
      */
     @Override

@@ -33,9 +33,10 @@ public class SkyrootBoatItem extends Item {
 
     /**
      * [CODE COPY] - {@link net.minecraft.world.item.BoatItem#use(Level, Player, InteractionHand)}.
-     * @param level The {@link Level} of the user.
+     *
+     * @param level  The {@link Level} of the user.
      * @param player The {@link Player} using this item.
-     * @param hand The {@link InteractionHand} in which the item is being used.
+     * @param hand   The {@link InteractionHand} in which the item is being used.
      */
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
@@ -48,7 +49,7 @@ public class SkyrootBoatItem extends Item {
             List<Entity> list = level.getEntities(player, player.getBoundingBox().expandTowards(viewVector.scale(5.0)).inflate(1.0), ENTITY_PREDICATE);
             if (!list.isEmpty()) {
                 Vec3 eyePosition = player.getEyePosition();
-                for(Entity entity : list) {
+                for (Entity entity : list) {
                     AABB aabb = entity.getBoundingBox().inflate(entity.getPickRadius());
                     if (aabb.contains(eyePosition)) {
                         return InteractionResultHolder.pass(heldStack);
@@ -79,7 +80,8 @@ public class SkyrootBoatItem extends Item {
 
     /**
      * Gets a Skyroot Boat dependent on {@link SkyrootBoatItem#hasChest}.
-     * @param level The {@link Level} of the boat.
+     *
+     * @param level     The {@link Level} of the boat.
      * @param hitResult The {@link HitResult} of attempting to place the boat.
      * @return The type of {@link Boat}, either a {@link SkyrootChestBoat} or a {@link SkyrootBoat}.
      */

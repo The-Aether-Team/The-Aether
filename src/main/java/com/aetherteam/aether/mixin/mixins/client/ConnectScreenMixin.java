@@ -18,12 +18,13 @@ public class ConnectScreenMixin {
     /**
      * Used by the world preview system.<br>
      * Prevents a deadlock when connecting to servers with the world preview.
-     * @param screen The parent {@link Screen}.
-     * @param minecraft The {@link Minecraft} instance.
+     *
+     * @param screen        The parent {@link Screen}.
+     * @param minecraft     The {@link Minecraft} instance.
      * @param serverAddress The {@link ServerAddress} of the server being connected to.
-     * @param serverData The {@link ServerData} of the server being connected to.
-     * @param isQuickPlay A {@link Boolean} for whether quick play is used from the launcher.
-     * @param ci The {@link CallbackInfo} for the void method return.
+     * @param serverData    The {@link ServerData} of the server being connected to.
+     * @param isQuickPlay   A {@link Boolean} for whether quick play is used from the launcher.
+     * @param ci            The {@link CallbackInfo} for the void method return.
      * @see WorldDisplayHelper#isActive()
      * @see WorldDisplayHelper#stopLevel(Screen)
      */

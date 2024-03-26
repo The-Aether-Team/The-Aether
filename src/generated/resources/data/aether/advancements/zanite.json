@@ -15,16 +15,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.aether.zanite.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "aether:zanite_gemstone"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.aether.zanite"
     }

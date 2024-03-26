@@ -1,6 +1,5 @@
 package com.aetherteam.aether.perk.data;
 
-import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.ServerHaloPacket;
 import com.aetherteam.aether.perk.CustomizationsOptions;
 import com.aetherteam.aether.perk.PerkUtil;
@@ -20,6 +19,7 @@ public class ClientHaloPerkData extends ClientPerkData<Halo> {
 
     /**
      * Updates the player's Halo data on the server if changes to the information occur on the client.
+     *
      * @param player The {@link Player}.
      */
     @Override
@@ -34,11 +34,11 @@ public class ClientHaloPerkData extends ClientPerkData<Halo> {
             if (haloEnabled) { // Checks whether the Halo is enabled in the options.
                 if (!userHaloData.containsKey(uuid) || userHaloData.get(uuid) == null || (haloColor != null && !userHaloData.get(uuid).hexColor().equals(haloColor))) { // A check to see if any options have changed.
                     if (PerkUtil.hasHalo().test(user)) { // Verifies whether the User can have the Halo.
-                        PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerHaloPacket.Apply(player.getUUID(), new Halo(haloColor))); // Send a modification packet to the server.
+                        PacketRelay.sendToServer(new ServerHaloPacket.Apply(player.getUUID(), new Halo(haloColor))); // Send a modification packet to the server.
                     }
                 }
             } else { // Removes the Halo if it isn't enabled in the options.
-                PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerHaloPacket.Remove(player.getUUID())); // Send a removal packet to the server.
+                PacketRelay.sendToServer(new ServerHaloPacket.Remove(player.getUUID())); // Send a removal packet to the server.
             }
         }
     }

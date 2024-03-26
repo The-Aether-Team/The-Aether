@@ -9,29 +9,30 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class AerogelWallBlock extends WallBlock {
-	public AerogelWallBlock(Properties properties) {
-		super(properties);
-	}
+    public AerogelWallBlock(Properties properties) {
+        super(properties);
+    }
 
-	/**
-	 * Relevant to lighting checks for blocks that aren't full cubes and neighboring blocks.<br><br>
-	 * Warning for "deprecation" is suppressed because the method is fine to override.
-	 * @param state The {@link BlockState} of the block.
-	 * @return Whether to use the shape for light occlusion, as a {@link Boolean}.
-	 */
-	@SuppressWarnings("deprecation")
-	@Override
-	public boolean useShapeForLightOcclusion(BlockState state) {
-		return true;
-	}
+    /**
+     * Relevant to lighting checks for blocks that aren't full cubes and neighboring blocks.<br><br>
+     * Warning for "deprecation" is suppressed because the method is fine to override.
+     *
+     * @param state The {@link BlockState} of the block.
+     * @return Whether to use the shape for light occlusion, as a {@link Boolean}.
+     */
+    @SuppressWarnings("deprecation")
+    @Override
+    public boolean useShapeForLightOcclusion(BlockState state) {
+        return true;
+    }
 
-	/**
-	 * [CODE COPY] - {@link net.minecraft.world.level.block.AbstractGlassBlock#getVisualShape(BlockState, BlockGetter, BlockPos, CollisionContext)}.<br><br>
-	 * Warning for "deprecation" is suppressed because the method is fine to override.
-	 */
-	@SuppressWarnings("deprecation")
-	@Override
-	public VoxelShape getVisualShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-		return Shapes.empty();
-	}
+    /**
+     * [CODE COPY] - {@link net.minecraft.world.level.block.AbstractGlassBlock#getVisualShape(BlockState, BlockGetter, BlockPos, CollisionContext)}.<br><br>
+     * Warning for "deprecation" is suppressed because the method is fine to override.
+     */
+    @SuppressWarnings("deprecation")
+    @Override
+    public VoxelShape getVisualShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return Shapes.empty();
+    }
 }

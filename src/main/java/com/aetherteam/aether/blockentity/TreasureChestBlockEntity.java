@@ -25,16 +25,9 @@ import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
-import net.neoforged.neoforge.common.capabilities.Capability;
-import net.neoforged.neoforge.common.util.LazyOptional;
-import net.neoforged.neoforge.items.IItemHandlerModifiable;
-import net.neoforged.neoforge.items.wrapper.InvWrapper;
 
-import javax.annotation.Nullable;
 import java.util.stream.IntStream;
 
 /**
@@ -68,8 +61,6 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     private final ChestLidController chestLidController = new ChestLidController();
     private boolean locked;
     private ResourceLocation kind;
-    @Nullable
-    private LazyOptional<IItemHandlerModifiable> chestHandler;
 
     public TreasureChestBlockEntity() {
         this(AetherBlockEntityTypes.TREASURE_CHEST.get(), BlockPos.ZERO, AetherBlocks.TREASURE_CHEST.get().defaultBlockState());
@@ -87,6 +78,7 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
 
     /**
      * Attempts to unlock the Treasure Chest with a Dungeon Key.
+     *
      * @param player The {@link Player} attempting to unlock the Treasure Chest.
      * @return Whether the Treasure Chest was unlocked.
      */
@@ -101,57 +93,6 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
         } else {
             player.displayClientMessage(Component.translatable(this.getKind().getNamespace() + "." + this.getKind().getPath() + "_treasure_chest_locked"), true);
             return false;
-        }
-    }
-
-    @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
-        if (!this.remove && capability == Capabilities.ITEM_HANDLER) {
-            if (this.chestHandler == null) {
-                this.chestHandler = LazyOptional.of(this::createHandler);
-            }
-            return this.chestHandler.cast();
-        }
-        return super.getCapability(capability, side);
-    }
-
-    private IItemHandlerModifiable createHandler() {
-        BlockState blockState = this.getBlockState();
-        if (!(blockState.getBlock() instanceof ChestBlock)) {
-            return new InvWrapper(this) {
-                @Override
-                public ItemStack extractItem(int slot, int amount, boolean simulate) {
-                    if (TreasureChestBlockEntity.this.getLocked()) {
-                        return ItemStack.EMPTY;
-                    }
-                    return super.extractItem(slot, amount, simulate);
-                }
-            };
-        }
-        Container inv = ChestBlock.getContainer((ChestBlock) blockState.getBlock(), blockState, this.level, getBlockPos(), true);
-        return new InvWrapper(inv == null ? this : inv);
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        if (this.chestHandler != null) {
-            this.chestHandler.invalidate();
-            this.chestHandler = null;
-        }
-    }
-
-    /**
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     */
-    @SuppressWarnings("deprecation")
-    @Override
-    public void setBlockState(BlockState state) {
-        super.setBlockState(state);
-        if (this.chestHandler != null) {
-            LazyOptional<?> oldHandler = this.chestHandler;
-            this.chestHandler = null;
-            oldHandler.invalidate();
         }
     }
 
