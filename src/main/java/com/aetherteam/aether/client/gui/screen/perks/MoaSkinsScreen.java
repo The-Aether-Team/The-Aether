@@ -119,7 +119,7 @@ public class MoaSkinsScreen extends Screen {
             // Button for saving a selected skin as the one that will be applied to the player's Moa.
             this.applyButton = this.addRenderableWidget(new ChangeSkinButton(ChangeSkinButton.ButtonType.APPLY, Button.builder(Component.translatable("gui.aether.moa_skins.button.apply"),
                     (pressed) -> {
-                        PacketRelay.sendToServer(new ServerMoaSkinPacket.Apply(this.getMinecraft().player.getUUID(), new MoaData(this.getMinecraft().player.getData(AetherDataAttachments.AETHER_PLAYER).getLastRiddenMoa().orElse(null), this.getSelectedSkin())));
+                        PacketRelay.sendToServer(new ServerMoaSkinPacket.Apply(this.getMinecraft().player.getUUID(), new MoaData(this.getMinecraft().player.getData(AetherDataAttachments.AETHER_PLAYER).getLastRiddenMoa(), this.getSelectedSkin())));
                         this.customizations.setMoaSkin(this.getSelectedSkin().getId());
                         this.customizations.save();
                         this.customizations.load();
@@ -440,7 +440,7 @@ public class MoaSkinsScreen extends Screen {
                 PacketRelay.sendToServer(new ServerMoaSkinPacket.Remove(this.getMinecraft().player.getUUID()));
                 this.userConnectionExists = false;
             } else if (user != null && !this.userConnectionExists && MoaSkins.getMoaSkins().get(this.customizations.getMoaSkin()) != null) { // Add skin data if the user has started existing.
-                PacketRelay.sendToServer(new ServerMoaSkinPacket.Apply(this.getMinecraft().player.getUUID(), new MoaData(this.getMinecraft().player.getData(AetherDataAttachments.AETHER_PLAYER).getLastRiddenMoa().orElse(null), MoaSkins.getMoaSkins().get(this.customizations.getMoaSkin()))));
+                PacketRelay.sendToServer(new ServerMoaSkinPacket.Apply(this.getMinecraft().player.getUUID(), new MoaData(this.getMinecraft().player.getData(AetherDataAttachments.AETHER_PLAYER).getLastRiddenMoa(), MoaSkins.getMoaSkins().get(this.customizations.getMoaSkin()))));
                 this.userConnectionExists = true;
             }
         }

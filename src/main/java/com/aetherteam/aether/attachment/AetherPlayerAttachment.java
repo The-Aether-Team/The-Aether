@@ -143,7 +143,7 @@ public class AetherPlayerAttachment implements INBTSynchable {
         Map.entry("setInvisibilityEnabled", Triple.of(Type.BOOLEAN, (object) -> this.setInvisibilityEnabled((boolean) object), this::isInvisibilityEnabled)),
         Map.entry("setWearingInvisibilityCloak", Triple.of(Type.BOOLEAN, (object) -> this.setWearingInvisibilityCloak((boolean) object), this::isWearingInvisibilityCloak)),
         Map.entry("setLifeShardCount", Triple.of(Type.INT, (object) -> this.setLifeShardCount((int) object), this::getLifeShardCount)),
-        Map.entry("setLastRiddenMoa", Triple.of(Type.UUID, (object) -> this.setLastRiddenMoa((Optional<UUID>) object), this::getLastRiddenMoa)),
+        Map.entry("setLastRiddenMoa", Triple.of(Type.UUID, (object) -> this.setLastRiddenMoa((UUID) object), this::getLastRiddenMoa)),
         Map.entry("setShouldSyncBetweenClients", Triple.of(Type.BOOLEAN, (object) -> this.setShouldSyncBetweenClients((boolean) object), this::shouldSyncBetweenClients))
     );
     private boolean shouldSyncAfterJoin;
@@ -157,7 +157,7 @@ public class AetherPlayerAttachment implements INBTSynchable {
         Codec.BOOL.fieldOf("seen_sun_spirit").forGetter(AetherPlayerAttachment::hasSeenSunSpiritDialogue),
         Codec.INT.fieldOf("remedy_start_duration").forGetter(AetherPlayerAttachment::getRemedyStartDuration),
         CompoundTag.CODEC.optionalFieldOf("mounted_aerbunny").forGetter(AetherPlayerAttachment::getMountedAerbunnyTag),
-        UUIDUtil.CODEC.optionalFieldOf("last_ridden_moa").forGetter(AetherPlayerAttachment::getLastRiddenMoa),
+        UUIDUtil.CODEC.optionalFieldOf("last_ridden_moa").forGetter(o -> o.lastRiddenMoa),
         Codec.BOOL.fieldOf("show_patreon_message").forGetter(o -> o.canShowPatreonMessage),
         Codec.INT.fieldOf("logins_until_patreon_message").forGetter(o -> o.loginsUntilPatreonMessage)
     ).apply(instance, AetherPlayerAttachment::new));
@@ -174,7 +174,7 @@ public class AetherPlayerAttachment implements INBTSynchable {
         this.setSeenSunSpiritDialogue(seenSunSpirit);
         this.setRemedyStartDuration(remedyDuration);
         this.setMountedAerbunnyTag(mountedAerbunnyTag);
-        this.setLastRiddenMoa(lastRiddenMoa);
+        this.setLastRiddenMoa(lastRiddenMoa.orElse(null));
         this.canShowPatreonMessage = showPatreonMessage;
         this.loginsUntilPatreonMessage = loginUntilMessage;
     }
@@ -835,15 +835,16 @@ public class AetherPlayerAttachment implements INBTSynchable {
         return this.mountedAerbunnyTag;
     }
 
-    public void setLastRiddenMoa(Optional<UUID> lastRiddenMoa) {
-        this.lastRiddenMoa = lastRiddenMoa;
+    public void setLastRiddenMoa(@Nullable UUID lastRiddenMoa) {
+        this.lastRiddenMoa = Optional.ofNullable(lastRiddenMoa);
     }
 
     /**
      * @return The {@link UUID} for the last ridden Moa.
      */
-    public Optional<UUID> getLastRiddenMoa() {
-        return this.lastRiddenMoa;
+    @Nullable
+    public UUID getLastRiddenMoa() {
+        return this.lastRiddenMoa.orElse(null);
     }
 
     public void setCloudMinions(Player player, CloudMinion cloudMinionRight, CloudMinion cloudMinionLeft) {
