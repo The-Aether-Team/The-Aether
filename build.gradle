@@ -54,7 +54,7 @@ sourceSets.main.resources {
 dependencies {
     implementation "net.neoforged:neoforge:${project.neoforge_version}"
 
-    //implementation "com.aetherteam.nitrogen:nitrogen_internals:${project.nitrogen_version}"
+    implementation "com.aetherteam.nitrogen:nitrogen_internals:${project.nitrogen_version}"
     implementation "com.aetherteam.cumulus:cumulus_menus:${project.cumulus_version}"
 
     implementation "top.theillusivec4.curios:curios-neoforge:${project.curios_version}+${project.mc_version}"
@@ -96,7 +96,7 @@ dependencies {
 
 //    runtimeOnly fg.deobf("io.github.ultimateboomer:smoothboot-forge:${project.smoothboot_version}")
 
-    implementation fileTree(dir: 'libs', include: '*.jar')
+//    implementation fileTree(dir: 'libs', include: '*.jar')
 
 //    runtimeOnly "me.shedaniel:RoughlyEnoughItems-neoforge:$rei_version"
 //    runtimeOnly "me.shedaniel.cloth:cloth-config-neoforge:$cloth_config_version"
