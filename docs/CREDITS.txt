@@ -46,6 +46,7 @@ FlashFyreMods
 - Implementation of more beta-accurate terrain generation for the Aether dimension.
 
 GizmoTheMoonPig
+- Help with porting to 1.20.4.
 - Implementation of Jade compatibility.
 - Implementation of Lootr compatibility.
 - Implementation of Randomium compatibility.
