@@ -15,7 +15,6 @@ import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
 import java.util.concurrent.CompletableFuture;
 
 public class AetherDataMapData extends DataMapProvider {
-
     public AetherDataMapData(PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
         super(output, provider);
     }
