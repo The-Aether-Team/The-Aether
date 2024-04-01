@@ -6,8 +6,6 @@ import com.aetherteam.aether.data.resources.registries.AetherMoaTypes;
 import com.aetherteam.aether.perk.PerkUtil;
 import com.aetherteam.nitrogen.api.users.User;
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;

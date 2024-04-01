@@ -38,7 +38,6 @@ import com.aetherteam.aether.network.packet.AetherTimeSyncPacket;
 import com.aetherteam.aether.network.packet.PhoenixArrowSyncPacket;
 import com.aetherteam.aether.network.packet.clientbound.*;
 import com.aetherteam.aether.network.packet.serverbound.*;
-import com.aetherteam.aether.perk.types.MoaSkins;
 import com.aetherteam.aether.recipe.AetherRecipeSerializers;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.world.AetherPoi;
