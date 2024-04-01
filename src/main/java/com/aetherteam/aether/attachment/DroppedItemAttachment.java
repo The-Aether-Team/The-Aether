@@ -17,11 +17,9 @@ import java.util.Collection;
  * @see com.aetherteam.aether.event.hooks.DimensionHooks#fallFromAether(Level)
  */
 public class DroppedItemAttachment {
-
     private int ownerID;
     @Nullable
     private Entity owner;
-
 
     public static final Codec<DroppedItemAttachment> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.INT.fieldOf("owner_id").forGetter(o -> o.owner.getId())

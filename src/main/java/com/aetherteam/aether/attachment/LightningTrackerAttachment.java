@@ -13,7 +13,6 @@ import org.jetbrains.annotations.Nullable;
  * @see com.aetherteam.aether.event.hooks.AbilityHooks.WeaponHooks#lightningTracking(Entity, LightningBolt)
  */
 public class LightningTrackerAttachment {
-
     private int ownerID;
     @Nullable
     private Entity owner;

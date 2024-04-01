@@ -12,7 +12,6 @@ import net.minecraft.world.entity.player.Player;
  * Plays the Aether Portal sound on the client from {@link com.aetherteam.aether.block.portal.AetherPortalForcer}.
  */
 public record PortalTravelSoundPacket() implements BasePacket {
-
     public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "play_portal_travel_sound");
 
     @Override

@@ -16,7 +16,6 @@ public class ServerHaloPacket {
      * Applies the Halo perk to a player on the server.
      */
     public record Apply(UUID playerUUID, Halo halo) implements BasePacket {
-
         public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "add_halo_server");
 
         @Override
@@ -48,7 +47,6 @@ public class ServerHaloPacket {
      * Removes the Halo perk from a player on the server.
      */
     public record Remove(UUID playerUUID) implements BasePacket {
-
         public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "remove_halo_server");
 
         @Override

@@ -12,7 +12,6 @@ import net.minecraft.world.entity.player.Player;
  * Used to move the player on the client when they are hit by a ZephyrSnowBallEntity on the server.
  */
 public record ZephyrSnowballHitPacket(int entityID, double xSpeed, double zSpeed) implements BasePacket {
-
     public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "zephyr_snowball_knockback_player");
 
     @Override

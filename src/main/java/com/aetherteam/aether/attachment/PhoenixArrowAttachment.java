@@ -22,7 +22,6 @@ import java.util.function.Supplier;
  * @see com.aetherteam.aether.mixin.mixins.client.TippableArrowRendererMixin
  */
 public class PhoenixArrowAttachment implements INBTSynchable {
-
     private boolean isPhoenixArrow;
     private int fireTime;
 

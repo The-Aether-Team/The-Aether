@@ -61,7 +61,6 @@ import java.util.function.Supplier;
  * @see com.aetherteam.aether.event.hooks.CapabilityHooks.AetherPlayerHooks
  */
 public class AetherPlayerAttachment implements INBTSynchable {
-
     private static final UUID LIFE_SHARD_HEALTH_ID = UUID.fromString("E11710C8-4247-4CB6-B3B5-729CB34CFC1A");
 
     private boolean canGetPortal = true;

@@ -16,7 +16,6 @@ public abstract class ServerMoaSkinPacket {
      * Applies a Moa Skin for a player on the server.
      */
     public record Apply(UUID playerUUID, MoaData moaSkinData) implements BasePacket {
-
         public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "apply_moa_skin_server");
 
         @Override
@@ -48,7 +47,6 @@ public abstract class ServerMoaSkinPacket {
      * Removes a Moa Skin for a player on the server.
      */
     public record Remove(UUID playerUUID) implements BasePacket {
-
         public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "remove_moa_skin_server");
 
         @Override

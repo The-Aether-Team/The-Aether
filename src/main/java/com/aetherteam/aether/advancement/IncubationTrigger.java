@@ -17,7 +17,6 @@ import java.util.Optional;
  * Criterion trigger used for checking when an item has finished incubating.
  */
 public class IncubationTrigger extends SimpleCriterionTrigger<IncubationTrigger.Instance> {
-
     @Override
     public Codec<Instance> codec() {
         return Instance.CODEC;
@@ -27,9 +26,7 @@ public class IncubationTrigger extends SimpleCriterionTrigger<IncubationTrigger.
         this.trigger(player, (instance) -> instance.test(stack));
     }
 
-    public record Instance(Optional<ContextAwarePredicate> player,
-                           Optional<ItemPredicate> item) implements SimpleInstance {
-
+    public record Instance(Optional<ContextAwarePredicate> player, Optional<ItemPredicate> item) implements SimpleInstance {
         public static final Codec<Instance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                         ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(IncubationTrigger.Instance::player),
                         ExtraCodecs.strictOptionalField(ItemPredicate.CODEC, "item").forGetter(IncubationTrigger.Instance::item))

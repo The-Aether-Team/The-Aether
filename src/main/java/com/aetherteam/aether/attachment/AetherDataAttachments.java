@@ -8,7 +8,6 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 
 public class AetherDataAttachments {
-
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENTS = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, Aether.MODID);
 
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<AetherPlayerAttachment>> AETHER_PLAYER = ATTACHMENTS.register("aether_player", () -> AttachmentType.builder(AetherPlayerAttachment::new).serialize(AetherPlayerAttachment.CODEC).copyOnDeath().build());

@@ -16,7 +16,6 @@ import net.minecraft.world.level.Level;
  * This also stores the summoned Aerbunny back into the capability so the player is tracked as having a mounted Aerbunny.
  */
 public record RemountAerbunnyPacket(int vehicleID, int aerbunnyID) implements BasePacket {
-
     public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "remount_aerbunny");
 
     @Override

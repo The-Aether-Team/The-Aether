@@ -20,7 +20,6 @@ import javax.annotation.Nullable;
  * Adapted to Nitrogen packet system.
  */
 public record OpenAccessoriesPacket(ItemStack carryStack) implements BasePacket {
-
     public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "open_accessories");
 
     @Override

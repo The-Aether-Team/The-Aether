@@ -12,7 +12,6 @@ import net.minecraft.world.entity.player.Player;
  * Stores a client value for whether tools are debuffed in the Aether for {@link com.aetherteam.aether.event.hooks.AbilityHooks.ToolHooks}.
  */
 public record ToolDebuffPacket(boolean debuffTools) implements BasePacket {
-
     public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "apply_tool_debuff");
 
     @Override

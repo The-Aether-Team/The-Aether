@@ -16,7 +16,6 @@ import java.util.function.Supplier;
  * Sync packet for values in the {@link AetherTimeAttachment} class.
  */
 public class AetherTimeSyncPacket extends SyncLevelPacket<AetherTimeAttachment> {
-
     public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "sync_aether_time_attachment");
 
     public AetherTimeSyncPacket(Triple<String, INBTSynchable.Type, Object> values) {

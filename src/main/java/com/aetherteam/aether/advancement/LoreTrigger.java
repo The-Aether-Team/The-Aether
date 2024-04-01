@@ -18,7 +18,6 @@ import java.util.Optional;
  * Criterion trigger used for checking an item placed by a player inside a Book of Lore.
  */
 public class LoreTrigger extends SimpleCriterionTrigger<LoreTrigger.Instance> {
-
     @Override
     public Codec<Instance> codec() {
         return Instance.CODEC;
@@ -28,9 +27,7 @@ public class LoreTrigger extends SimpleCriterionTrigger<LoreTrigger.Instance> {
         this.trigger(player, (instance) -> instance.test(stack));
     }
 
-    public record Instance(Optional<ContextAwarePredicate> player,
-                           Optional<ItemPredicate> item) implements SimpleInstance {
-
+    public record Instance(Optional<ContextAwarePredicate> player, Optional<ItemPredicate> item) implements SimpleInstance {
         public static final Codec<LoreTrigger.Instance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                         ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(LoreTrigger.Instance::player),
                         ExtraCodecs.strictOptionalField(ItemPredicate.CODEC, "item").forGetter(LoreTrigger.Instance::item))

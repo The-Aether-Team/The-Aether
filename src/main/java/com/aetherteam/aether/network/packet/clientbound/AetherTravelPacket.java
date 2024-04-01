@@ -15,7 +15,6 @@ import net.minecraft.world.entity.player.Player;
  * @see com.aetherteam.aether.client.event.hooks.GuiHooks#drawAetherTravelMessage(Screen, net.minecraft.client.gui.GuiGraphics)
  */
 public record AetherTravelPacket(boolean displayAetherTravel) implements BasePacket {
-
     public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "travel_across_dimensions");
 
     @Override
