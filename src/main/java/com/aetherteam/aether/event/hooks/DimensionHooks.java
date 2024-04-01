@@ -11,7 +11,6 @@ import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListen
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerLevelAccessor;
 import com.aetherteam.aether.network.packet.clientbound.AetherTravelPacket;
 import com.aetherteam.aether.network.packet.clientbound.LeavingAetherPacket;
-import com.aetherteam.aether.network.packet.clientbound.SetVehiclePacket;
 import com.aetherteam.aether.world.AetherLevelData;
 import com.aetherteam.aether.world.LevelUtil;
 import com.aetherteam.nitrogen.network.PacketRelay;
@@ -24,15 +23,12 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.Saddleable;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.event.TickEvent;
@@ -44,7 +40,6 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.SleepFinishedTimeEvent;
 
 import javax.annotation.Nullable;
-import java.util.List;
 import java.util.Optional;
 
 public class DimensionHooks {
@@ -162,71 +157,6 @@ public class DimensionHooks {
                 serverLevel.setDayTime(serverLevel.getData(AetherDataAttachments.AETHER_TIME).tickTime(level));
             }
         }
-    }
-
-    /**
-     * This code is used to handle entities falling out of the Aether. If an entity is not a player, vehicle, or tracked item, it is removed.
-     *
-     * @param level The {@link Level}
-     * @see com.aetherteam.aether.event.listeners.DimensionListener#onWorldTick(TickEvent.LevelTickEvent)
-     */
-    public static void fallFromAether(Level level) {
-        if (level instanceof ServerLevel serverLevel) {
-            if (!AetherConfig.SERVER.disable_falling_to_overworld.get()) {
-                if (level.dimension() == LevelUtil.destinationDimension()) {
-                    for (Entity entity : serverLevel.getEntities(EntityTypeTest.forClass(Entity.class), (entity) -> entity.getY() <= serverLevel.getMinBuildHeight() && !entity.isPassenger() && level.getBiome(entity.blockPosition()).is(AetherTags.Biomes.FALL_TO_OVERWORLD))) {
-                        if (entity instanceof Player || entity.isVehicle() || (entity instanceof Saddleable) && ((Saddleable) entity).isSaddled()) { // Checks if an entity is a player or a vehicle of a player.
-                            entityFell(entity);
-                        } else if (entity instanceof ItemEntity itemEntity) {
-                            if (itemEntity.hasData(AetherDataAttachments.DROPPED_ITEM)) {
-                                if (itemEntity.getOwner() instanceof Player || itemEntity.getData(AetherDataAttachments.DROPPED_ITEM).getOwner(level) instanceof Player) { // Checks if an entity is an item that was dropped by a player.
-                                    entityFell(entity);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Code to handle falling out of the Aether with all passengers intact.
-     *
-     * @param entity The {@link Entity}
-     */
-    @Nullable
-    private static Entity entityFell(Entity entity) {
-        Level serverLevel = entity.level();
-        MinecraftServer minecraftserver = serverLevel.getServer();
-        if (minecraftserver != null) {
-            ServerLevel destination = minecraftserver.getLevel(LevelUtil.returnDimension());
-            if (destination != null && LevelUtil.returnDimension() != LevelUtil.destinationDimension()) {
-                List<Entity> passengers = entity.getPassengers();
-                serverLevel.getProfiler().push("aether_fall");
-                entity.setPortalCooldown();
-                Entity target = entity.changeDimension(destination, new AetherPortalForcer(destination, false));
-                serverLevel.getProfiler().pop();
-                // Check for passengers.
-                if (target != null) {
-                    for (Entity passenger : passengers) {
-                        passenger.stopRiding();
-                        Entity nextPassenger = entityFell(passenger);
-                        if (nextPassenger != null) {
-                            nextPassenger.startRiding(target);
-                            if (target instanceof ServerPlayer serverPlayer) { // Fixes a desync between the server and client.
-                                PacketRelay.sendToPlayer(new SetVehiclePacket(nextPassenger.getId(), target.getId()), serverPlayer);
-                            }
-                        }
-                    }
-                    if (target instanceof ServerPlayer) {
-                        teleportationTimer = 500; // Sets a timer marking that the player teleported from falling out of the Aether.
-                    }
-                }
-                return target;
-            }
-        }
-        return null;
     }
 
     /**

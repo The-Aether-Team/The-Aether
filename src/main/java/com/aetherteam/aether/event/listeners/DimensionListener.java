@@ -69,7 +69,6 @@ public class DimensionListener {
 
     /**
      * @see DimensionHooks#tickTime(Level)
-     * @see DimensionHooks#fallFromAether(Level)
      * @see DimensionHooks#checkEternalDayConfig(Level)
      */
     @SubscribeEvent
@@ -77,7 +76,6 @@ public class DimensionListener {
         Level level = event.level;
         if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.END) {
             DimensionHooks.tickTime(level);
-            DimensionHooks.fallFromAether(level);
             DimensionHooks.checkEternalDayConfig(level);
         }
     }

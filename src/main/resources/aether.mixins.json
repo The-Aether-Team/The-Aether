@@ -11,6 +11,7 @@
     "common.ArmorStandMixin",
     "common.DimensionTypeMixin",
     "common.DirectoryLockMixin",
+    "common.EntityMixin",
     "common.EventHooksMixin",
     "common.FeatureMixin",
     "common.ItemMixin",
