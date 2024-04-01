@@ -1,3 +1,10 @@
+# The Aether - NeoForge - 1.20.2-1.3.2
+
+Fixes
+
+- Fixed the mod crashing on dedicated servers.
+- Fixed some in-world block recipes not working properly.
+
 # The Aether - NeoForge - 1.20.2-1.3.1
 
 Fixes
