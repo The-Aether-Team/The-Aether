@@ -8,21 +8,21 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.SimpleWeightedRandomList;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.RegistryBuilder;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 public class AetherMoaTypes {
     public static final ResourceKey<Registry<MoaType>> MOA_TYPE_REGISTRY_KEY = ResourceKey.createRegistryKey(new ResourceLocation(Aether.MODID, "moa_type"));
     public static final DeferredRegister<MoaType> MOA_TYPES = DeferredRegister.create(MOA_TYPE_REGISTRY_KEY, Aether.MODID);
     public static final Registry<MoaType> MOA_TYPE_REGISTRY = new RegistryBuilder<>(MOA_TYPE_REGISTRY_KEY).sync(true).create();
 
-    public static final Supplier<MoaType> BLUE = MOA_TYPES.register("blue", () -> new MoaType(new MoaType.Properties().egg(AetherItems.BLUE_MOA_EGG).maxJumps(3).speed(0.155F).spawnChance(100).texture("textures/entity/mobs/moa/blue_moa.png")));
-    public static final Supplier<MoaType> WHITE = MOA_TYPES.register("white", () -> new MoaType(new MoaType.Properties().egg(AetherItems.WHITE_MOA_EGG).maxJumps(4).speed(0.155F).spawnChance(50).texture("textures/entity/mobs/moa/white_moa.png")));
-    public static final Supplier<MoaType> BLACK = MOA_TYPES.register("black", () -> new MoaType(new MoaType.Properties().egg(AetherItems.BLACK_MOA_EGG).maxJumps(8).speed(0.155F).spawnChance(25).texture("textures/entity/mobs/moa/black_moa.png").saddleTexture("textures/entity/mobs/moa/black_moa_saddle.png")));
+    public static final DeferredHolder<MoaType, MoaType> BLUE = MOA_TYPES.register("blue", () -> new MoaType(new MoaType.Properties().egg(AetherItems.BLUE_MOA_EGG).maxJumps(3).speed(0.155F).spawnChance(100).texture("textures/entity/mobs/moa/blue_moa.png")));
+    public static final DeferredHolder<MoaType, MoaType> WHITE = MOA_TYPES.register("white", () -> new MoaType(new MoaType.Properties().egg(AetherItems.WHITE_MOA_EGG).maxJumps(4).speed(0.155F).spawnChance(50).texture("textures/entity/mobs/moa/white_moa.png")));
+    public static final DeferredHolder<MoaType, MoaType> BLACK = MOA_TYPES.register("black", () -> new MoaType(new MoaType.Properties().egg(AetherItems.BLACK_MOA_EGG).maxJumps(8).speed(0.155F).spawnChance(25).texture("textures/entity/mobs/moa/black_moa.png").saddleTexture("textures/entity/mobs/moa/black_moa_saddle.png")));
 
     @Nullable
     public static MoaType get(String id) {

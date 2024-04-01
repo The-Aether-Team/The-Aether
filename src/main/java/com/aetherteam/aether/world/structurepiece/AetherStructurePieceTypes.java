@@ -11,30 +11,30 @@ import com.aetherteam.aether.world.structurepiece.silverdungeon.SilverFloorPiece
 import com.aetherteam.aether.world.structurepiece.silverdungeon.SilverTemplePiece;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.Locale;
-import java.util.function.Supplier;
 
 public class AetherStructurePieceTypes {
     public static final DeferredRegister<StructurePieceType> STRUCTURE_PIECE_TYPES = DeferredRegister.create(Registries.STRUCTURE_PIECE, Aether.MODID);
 
-    public static final Supplier<StructurePieceType> LARGE_AERCLOUD = register("ALC", LargeAercloudChunk::new);
-    public static final Supplier<StructurePieceType> BRONZE_BOSS_ROOM = register("BBossRoom", BronzeBossRoom::new);
-    public static final Supplier<StructurePieceType> BRONZE_DUNGEON_ROOM = register("BDungeonRoom", BronzeDungeonRoom::new);
-    public static final Supplier<StructurePieceType> BRONZE_TUNNEL = register("BTunnel", BronzeTunnel::new);
-    public static final Supplier<StructurePieceType> SILVER_TEMPLE_PIECE = register("STemplePiece", SilverTemplePiece::new);
-    public static final Supplier<StructurePieceType> SILVER_FLOOR_PIECE = register("SFloorPiece", SilverFloorPiece::new);
-    public static final Supplier<StructurePieceType> SILVER_DUNGEON_ROOM = register("SDungeonRoom", SilverDungeonRoom::new);
-    public static final Supplier<StructurePieceType> SILVER_BOSS_ROOM = register("SBossRoom", SilverBossRoom::new);
-    public static final Supplier<StructurePieceType> GOLD_BOSS_ROOM = register("GBossRoom", GoldBossRoom::new);
-    public static final Supplier<StructurePieceType> GOLD_ISLAND = register("GIsland", GoldIsland::new);
-    public static final Supplier<StructurePieceType> GOLD_STUB = register("GStub", GoldStub::new);
-    public static final Supplier<StructurePieceType> GOLD_TUNNEL = register("GTunnel", GoldTunnel::new);
-    public static final Supplier<StructurePieceType> GUMDROP_CAVE = register("GumdropCave", GoldStubCave::new);
-    public static final Supplier<StructurePieceType> RUINED_PORTAL = register("GlowstoneRuins", GlowstoneRuinedPortalPiece::new);
+    public static final DeferredHolder<StructurePieceType, StructurePieceType> LARGE_AERCLOUD = register("ALC", LargeAercloudChunk::new);
+    public static final DeferredHolder<StructurePieceType, StructurePieceType> BRONZE_BOSS_ROOM = register("BBossRoom", BronzeBossRoom::new);
+    public static final DeferredHolder<StructurePieceType, StructurePieceType> BRONZE_DUNGEON_ROOM = register("BDungeonRoom", BronzeDungeonRoom::new);
+    public static final DeferredHolder<StructurePieceType, StructurePieceType> BRONZE_TUNNEL = register("BTunnel", BronzeTunnel::new);
+    public static final DeferredHolder<StructurePieceType, StructurePieceType> SILVER_TEMPLE_PIECE = register("STemplePiece", SilverTemplePiece::new);
+    public static final DeferredHolder<StructurePieceType, StructurePieceType> SILVER_FLOOR_PIECE = register("SFloorPiece", SilverFloorPiece::new);
+    public static final DeferredHolder<StructurePieceType, StructurePieceType> SILVER_DUNGEON_ROOM = register("SDungeonRoom", SilverDungeonRoom::new);
+    public static final DeferredHolder<StructurePieceType, StructurePieceType> SILVER_BOSS_ROOM = register("SBossRoom", SilverBossRoom::new);
+    public static final DeferredHolder<StructurePieceType, StructurePieceType> GOLD_BOSS_ROOM = register("GBossRoom", GoldBossRoom::new);
+    public static final DeferredHolder<StructurePieceType, StructurePieceType> GOLD_ISLAND = register("GIsland", GoldIsland::new);
+    public static final DeferredHolder<StructurePieceType, StructurePieceType> GOLD_STUB = register("GStub", GoldStub::new);
+    public static final DeferredHolder<StructurePieceType, StructurePieceType> GOLD_TUNNEL = register("GTunnel", GoldTunnel::new);
+    public static final DeferredHolder<StructurePieceType, StructurePieceType> GUMDROP_CAVE = register("GumdropCave", GoldStubCave::new);
+    public static final DeferredHolder<StructurePieceType, StructurePieceType> RUINED_PORTAL = register("GlowstoneRuins", GlowstoneRuinedPortalPiece::new);
 
-    private static Supplier<StructurePieceType> register(String name, StructurePieceType structurePieceType) {
+    private static DeferredHolder<StructurePieceType, StructurePieceType> register(String name, StructurePieceType structurePieceType) {
         return STRUCTURE_PIECE_TYPES.register(name.toLowerCase(Locale.ROOT), () -> structurePieceType);
     }
 }

@@ -1,10 +1,8 @@
 package com.aetherteam.aether.mixin.mixins.client;
 
 import com.aetherteam.aether.client.WorldDisplayHelper;
-import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.worldselection.WorldSelectionList;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.storage.LevelSummary;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
