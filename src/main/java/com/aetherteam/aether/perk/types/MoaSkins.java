@@ -1,35 +1,60 @@
 package com.aetherteam.aether.perk.types;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.api.registers.MoaType;
+import com.aetherteam.aether.data.resources.registries.AetherMoaTypes;
 import com.aetherteam.aether.perk.PerkUtil;
 import com.aetherteam.nitrogen.api.users.User;
 import com.google.common.collect.ImmutableMap;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.registries.DeferredHolder;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
 public class MoaSkins {
     private static final Map<String, MoaSkin> MOA_SKINS = new LinkedHashMap<>();
 
-    public static void registerMoaSkins() {
-        for (MoaType moaType : AetherMoaTypes.MOA_TYPES.getEntries().stream().map(DeferredHolder::get).toList()) {
-            String name = (moaType.getId().getNamespace().equals(Aether.MODID) ? moaType.getId().getPath() : moaType.getId().toString().replace(":", ".")) + "_moa";
-            register(name, new MoaSkin(name, new MoaSkin.Properties()
-                    .displayName(Component.translatable("gui.aether.moa_skins.skin." + name))
-                    .userPredicate((user) -> PerkUtil.hasLifetimeAscentanMoaSkins().test(user))
-                    .iconLocation(new ResourceLocation(Aether.MODID, "skins/icons/" + name + "_icon"))
-                    .skinLocation(moaType.getMoaTexture())
-                    .saddleLocation(moaType.getSaddleTexture())
-                    .info(new MoaSkin.Info(User.Tier.ASCENTAN, true))
-            ));
+    public static void registerMoaSkins(Level level) {
+        if (!MOA_SKINS.isEmpty()) {
+            MOA_SKINS.clear();
+        }
+        if (level != null) {
+            RegistryAccess registryAccess = level.registryAccess();
+            Registry<MoaType> registry = registryAccess.registryOrThrow(AetherMoaTypes.MOA_TYPE_REGISTRY_KEY);
+            List<ResourceKey<MoaType>> moaTypes = registry.registryKeySet().stream().sorted((current, next) -> {
+                MoaType currentType = AetherMoaTypes.getMoaType(registryAccess, current.location());
+                MoaType nextType = AetherMoaTypes.getMoaType(registryAccess, next.location());
+                if (currentType != null && nextType != null) {
+                    return Integer.compare(currentType.maxJumps(), nextType.maxJumps());
+                } else {
+                    return 0;
+                }
+            }).toList();
+            for (ResourceKey<MoaType> moaTypeKey : moaTypes) {
+                MoaType moaType = registry.get(moaTypeKey);
+                if (moaType != null) {
+                    String name = (moaTypeKey.location().getNamespace().equals(Aether.MODID) ? moaTypeKey.location().getPath() : moaTypeKey.location().toString().replace(":", ".")) + "_moa";
+                    register(name, new MoaSkin(name, new MoaSkin.Properties()
+                        .displayName(Component.translatable("gui.aether.moa_skins.skin." + name))
+                        .userPredicate((user) -> PerkUtil.hasLifetimeAscentanMoaSkins().test(user))
+                        .iconLocation(new ResourceLocation(Aether.MODID, "skins/icons/" + name + "_icon"))
+                        .skinLocation(moaType.moaTexture())
+                        .saddleLocation(moaType.saddleTexture())
+                        .info(new MoaSkin.Info(User.Tier.ASCENTAN, true))
+                    ));
+                }
+            }
         }
         register("classic_moa", new MoaSkin("classic_moa", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.classic_moa"))

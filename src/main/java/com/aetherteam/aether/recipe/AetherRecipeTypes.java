@@ -5,7 +5,6 @@ import com.aetherteam.aether.recipe.recipes.ban.BlockBanRecipe;
 import com.aetherteam.aether.recipe.recipes.ban.ItemBanRecipe;
 import com.aetherteam.aether.recipe.recipes.block.*;
 import com.aetherteam.aether.recipe.recipes.item.AbstractAetherCookingRecipe;
-import com.aetherteam.aether.recipe.recipes.item.EnchantingRecipe;
 import com.aetherteam.aether.recipe.recipes.item.FreezingRecipe;
 import com.aetherteam.aether.recipe.recipes.item.IncubationRecipe;
 import net.minecraft.core.registries.BuiltInRegistries;

@@ -1,7 +1,6 @@
 package com.aetherteam.aether.client.renderer.entity;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.api.registers.MoaType;
 import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
@@ -9,6 +8,7 @@ import com.aetherteam.aether.client.renderer.entity.layers.MoaEmissiveLayer;
 import com.aetherteam.aether.client.renderer.entity.layers.MoaSaddleEmissiveLayer;
 import com.aetherteam.aether.client.renderer.entity.layers.MoaSaddleLayer;
 import com.aetherteam.aether.client.renderer.entity.model.MoaModel;
+import com.aetherteam.aether.data.resources.registries.AetherMoaTypes;
 import com.aetherteam.aether.entity.passive.Moa;
 import com.aetherteam.aether.perk.data.ClientMoaSkinPerkData;
 import com.aetherteam.aether.perk.types.MoaData;
@@ -77,12 +77,12 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
         if (moa.hasCustomName() && moa.getName().getString().equals("Mos")) {
             return MOS_TEXTURE;
         }
-        if ((moa.hasCustomName() && moa.getName().getString().equals("Raptor__") && moa.getMoaType() == AetherMoaTypes.BLUE.get())
+        if ((moa.hasCustomName() && moa.getName().getString().equals("Raptor__") && moa.getMoaTypeKey() == AetherMoaTypes.BLUE)
                 || (moa.getRider() != null && moa.getRider().equals(UUID.fromString("c3e6871e-8e60-490a-8a8d-2bbe35ad1604")))) { // Raptor__
             return RAPTOR_TEXTURE;
         }
         MoaType moaType = moa.getMoaType();
-        return moaType == null ? DEFAULT_TEXTURE : moaType.getMoaTexture();
+        return moaType == null ? DEFAULT_TEXTURE : moaType.moaTexture();
     }
 
     /**

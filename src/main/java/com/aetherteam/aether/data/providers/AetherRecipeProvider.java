@@ -16,6 +16,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -163,10 +164,10 @@ public abstract class AetherRecipeProvider extends NitrogenRecipeProvider {
                 .unlockedBy(getHasName(result), has(result));
     }
 
-    protected IncubationBuilder moaIncubationRecipe(EntityType<?> entity, Supplier<? extends MoaType> moaType, ItemLike ingredient) {
+    protected IncubationBuilder moaIncubationRecipe(EntityType<?> entity, ResourceKey<MoaType> moaType, ItemLike ingredient) {
         CompoundTag tag = new CompoundTag();
         tag.putBoolean("IsBaby", true);
-        tag.putString("MoaType", moaType.get().toString());
+        tag.putString("MoaType", moaType.location().toString());
         tag.putBoolean("Hungry", true);
         tag.putBoolean("PlayerGrown", true);
         return IncubationBuilder.incubation(Ingredient.of(ingredient), entity, tag, 1000, AetherRecipeSerializers.INCUBATION.get())

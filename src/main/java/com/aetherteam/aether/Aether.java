@@ -2,9 +2,8 @@ package com.aetherteam.aether;
 
 import com.aetherteam.aether.advancement.AetherAdvancementTriggers;
 import com.aetherteam.aether.api.AetherAdvancementSoundOverrides;
-import com.aetherteam.aether.api.AetherDataMaps;
 import com.aetherteam.aether.api.AetherMenus;
-import com.aetherteam.aether.api.AetherMoaTypes;
+import com.aetherteam.aether.api.registers.MoaType;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.block.AetherCauldronInteractions;
@@ -22,6 +21,8 @@ import com.aetherteam.aether.client.particle.AetherParticleTypes;
 import com.aetherteam.aether.command.SunAltarWhitelist;
 import com.aetherteam.aether.data.AetherData;
 import com.aetherteam.aether.data.resources.AetherMobCategory;
+import com.aetherteam.aether.data.resources.registries.AetherDataMaps;
+import com.aetherteam.aether.data.resources.registries.AetherMoaTypes;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.ai.AetherBlockPathTypes;
@@ -81,6 +82,7 @@ import net.neoforged.neoforge.items.wrapper.InvWrapper;
 import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
 import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
+import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
@@ -106,7 +108,7 @@ public class Aether {
         bus.addListener(this::registerDataMaps);
         bus.addListener(this::packSetup);
         bus.addListener(NewRegistryEvent.class, event -> event.register(AetherAdvancementSoundOverrides.ADVANCEMENT_SOUND_OVERRIDE_REGISTRY));
-        bus.addListener(NewRegistryEvent.class, event -> event.register(AetherMoaTypes.MOA_TYPE_REGISTRY));
+        bus.addListener(DataPackRegistryEvent.NewRegistry.class, event -> event.dataPackRegistry(AetherMoaTypes.MOA_TYPE_REGISTRY_KEY, MoaType.CODEC, MoaType.CODEC));
 
         DeferredRegister<?>[] registers = {
                 AetherBlocks.BLOCKS,
@@ -134,7 +136,6 @@ public class Aether {
                 AetherGameEvents.GAME_EVENTS,
                 AetherCreativeTabs.CREATIVE_MODE_TABS,
                 AetherAdvancementSoundOverrides.ADVANCEMENT_SOUND_OVERRIDES,
-                AetherMoaTypes.MOA_TYPES,
                 AetherDataAttachments.ATTACHMENTS,
                 AetherAdvancementTriggers.TRIGGERS
         };
@@ -156,14 +157,11 @@ public class Aether {
     }
 
     public void commonSetup(FMLCommonSetupEvent event) {
-
         Reflection.initialize(SunAltarWhitelist.class);
         Reflection.initialize(AetherRecipeBookTypes.class);
         Reflection.initialize(AetherBlockPathTypes.class);
         Reflection.initialize(AetherMobCategory.class);
         Reflection.initialize(AetherAdvancementTriggers.class);
-
-        MoaSkins.registerMoaSkins();
 
         event.enqueueWork(() -> {
             AetherBlocks.registerPots();

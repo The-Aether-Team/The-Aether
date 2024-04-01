@@ -1,6 +1,5 @@
 package com.aetherteam.aether.item.miscellaneous;
 
-import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.api.registers.MoaType;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.passive.Moa;
@@ -9,7 +8,7 @@ import com.google.common.collect.Iterables;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -39,14 +38,13 @@ import javax.annotation.Nullable;
 import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Supplier;
 
 public class MoaEggItem extends Item {
-    private static final Map<Supplier<? extends MoaType>, MoaEggItem> BY_ID = new IdentityHashMap<>();
-    private final Supplier<? extends MoaType> moaType;
+    private static final Map<ResourceKey<MoaType>, MoaEggItem> BY_ID = new IdentityHashMap<>();
+    private final ResourceKey<MoaType> moaType;
     private final int color;
 
-    public MoaEggItem(Supplier<? extends MoaType> moaType, int shellColor, Properties properties) {
+    public MoaEggItem(ResourceKey<MoaType> moaType, int shellColor, Properties properties) {
         super(properties);
         this.moaType = moaType;
         this.color = shellColor;
@@ -77,7 +75,7 @@ public class MoaEggItem extends Item {
                         BaseSpawnerAccessor baseSpawnerAccessor = (BaseSpawnerAccessor) spawnerBlockEntity.getSpawner();
                         EntityType<Moa> entityType = AetherEntityTypes.MOA.get();
                         spawnerBlockEntity.setEntityId(entityType, level.getRandom());
-                        baseSpawnerAccessor.aether$getNextSpawnData().getEntityToSpawn().putString("MoaType", this.getMoaTypeId().toString());
+                        baseSpawnerAccessor.aether$getNextSpawnData().getEntityToSpawn().putString("MoaType", this.getMoaType().location().toString());
                         baseSpawnerAccessor.aether$getNextSpawnData().getEntityToSpawn().putBoolean("PlayerGrown", true); // Moas spawned from a Mob Spawner as set by a Moa Egg will always be tamed.
                         blockEntity.setChanged();
                         level.sendBlockUpdated(blockPos, blockState, blockState, 3);
@@ -155,11 +153,11 @@ public class MoaEggItem extends Item {
      * @param isPlayerGrown @{link Boolean} for if the Moa was spawned as grown by a player.
      * @return The {@link ItemStack} with the applied tags.
      */
-    public ItemStack getStackWithTags(ItemStack stack, boolean isBaby, MoaType moaType, boolean isHungry, boolean isPlayerGrown) {
+    public ItemStack getStackWithTags(ItemStack stack, boolean isBaby, ResourceKey<MoaType> moaType, boolean isHungry, boolean isPlayerGrown) {
         ItemStack itemStack = stack.copy();
         CompoundTag tag = itemStack.getOrCreateTag();
         tag.putBoolean("IsBaby", isBaby);
-        tag.putString("MoaType", moaType.toString());
+        tag.putString("MoaType", moaType.location().toString());
         tag.putBoolean("Hungry", isHungry);
         tag.putBoolean("PlayerGrown", isPlayerGrown);
         return itemStack;
@@ -170,12 +168,8 @@ public class MoaEggItem extends Item {
         return this.color;
     }
 
-    public MoaType getMoaType() {
-        return this.moaType.get();
-    }
-
-    public ResourceLocation getMoaTypeId() {
-        return AetherMoaTypes.MOA_TYPE_REGISTRY.getKey(this.moaType.get());
+    public ResourceKey<MoaType> getMoaType() {
+        return this.moaType;
     }
 
     /**
@@ -185,11 +179,11 @@ public class MoaEggItem extends Item {
      * @return The {@link MoaEggItem} from the type.
      */
     @Nullable
-    public static MoaEggItem byId(MoaType moaType) {
+    public static MoaEggItem byId(ResourceKey<MoaType> moaType) {
         if (moaType != null) {
-            for (Supplier<? extends MoaType> holder : BY_ID.keySet()) {
-                if (moaType.getId().equals(holder.get().getId())) {
-                    return BY_ID.get(holder);
+            for (ResourceKey<MoaType> key : BY_ID.keySet()) {
+                if (moaType.equals(key)) {
+                    return BY_ID.get(key);
                 }
             }
         }

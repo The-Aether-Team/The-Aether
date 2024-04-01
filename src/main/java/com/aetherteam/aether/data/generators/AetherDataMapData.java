@@ -1,7 +1,7 @@
 package com.aetherteam.aether.data.generators;
 
-import com.aetherteam.aether.api.AetherDataMaps;
 import com.aetherteam.aether.block.AetherBlocks;
+import com.aetherteam.aether.data.resources.registries.AetherDataMaps;
 import com.aetherteam.aether.item.AetherItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;

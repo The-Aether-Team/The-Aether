@@ -2,9 +2,9 @@ package com.aetherteam.aether.data.generators;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.data.providers.AetherRecipeProvider;
+import com.aetherteam.aether.data.resources.registries.AetherMoaTypes;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.item.AetherItems;
 import net.minecraft.advancements.CriteriaTriggers;

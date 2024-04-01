@@ -4,9 +4,9 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.advancement.IncubationTrigger;
 import com.aetherteam.aether.advancement.LoreTrigger;
-import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
+import com.aetherteam.aether.data.resources.registries.AetherMoaTypes;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.event.hooks.AbilityHooks;
 import com.aetherteam.aether.item.AetherItems;
@@ -166,7 +166,7 @@ public class AetherAdvancementData extends AdvancementProvider {
                     .save(consumer, new ResourceLocation(Aether.MODID, "incubate_moa"), existingFileHelper);
 
             CompoundTag moaTag = new CompoundTag();
-            moaTag.putString("MoaType", AetherMoaTypes.BLACK.get().getId().toString());
+            moaTag.putString("MoaType", AetherMoaTypes.BLACK.location().toString());
 
             AdvancementHolder blackMoa = Advancement.Builder.advancement()
                     .parent(incubateMoa)

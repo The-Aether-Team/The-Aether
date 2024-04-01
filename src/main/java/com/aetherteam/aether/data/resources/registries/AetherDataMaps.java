@@ -1,4 +1,4 @@
-package com.aetherteam.aether.api;
+package com.aetherteam.aether.data.resources.registries;
 
 import com.aetherteam.aether.Aether;
 import net.minecraft.core.registries.Registries;

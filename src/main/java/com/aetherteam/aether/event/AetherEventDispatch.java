@@ -8,7 +8,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
@@ -58,7 +57,7 @@ public class AetherEventDispatch {
     /**
      * @see EggLayEvent
      */
-    public static EggLayEvent onLayEgg(Entity entity, SoundEvent sound, float volume, float pitch, Item item) {
+    public static EggLayEvent onLayEgg(Entity entity, SoundEvent sound, float volume, float pitch, ItemStack item) {
         EggLayEvent event = new EggLayEvent(entity, sound, volume, pitch, item);
         NeoForge.EVENT_BUS.post(event);
         return event;

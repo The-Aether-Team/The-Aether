@@ -1,6 +1,6 @@
 package com.aetherteam.aether.client.gui.screen.inventory.recipebook;
 
-import com.aetherteam.aether.api.AetherDataMaps;
+import com.aetherteam.aether.data.resources.registries.AetherDataMaps;
 import net.minecraft.client.gui.screens.recipebook.AbstractFurnaceRecipeBookComponent;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;

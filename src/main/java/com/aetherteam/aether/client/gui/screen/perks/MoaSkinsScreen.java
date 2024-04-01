@@ -1,11 +1,11 @@
 package com.aetherteam.aether.client.gui.screen.perks;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.client.gui.component.skins.ChangeSkinButton;
 import com.aetherteam.aether.client.gui.component.skins.PatreonButton;
 import com.aetherteam.aether.client.gui.component.skins.RefreshButton;
+import com.aetherteam.aether.data.resources.registries.AetherMoaTypes;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.passive.Moa;
 import com.aetherteam.aether.network.packet.serverbound.ServerMoaSkinPacket;
@@ -389,7 +389,7 @@ public class MoaSkinsScreen extends Screen {
                 Moa moa = AetherEntityTypes.MOA.get().create(this.getMinecraft().level);
                 if (moa != null) {
                     moa.generateMoaUUID();
-                    moa.setMoaType(AetherMoaTypes.BLUE.get());
+                    moa.setMoaTypeByKey(AetherMoaTypes.BLUE);
                     moa.setSaddled(true);
                     this.previewMoa = moa;
                 }

@@ -1,10 +1,10 @@
 package com.aetherteam.aether.entity.passive;
 
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.api.registers.MoaType;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.client.AetherSoundEvents;
+import com.aetherteam.aether.data.resources.registries.AetherMoaTypes;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.MountableMob;
@@ -30,6 +30,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -157,9 +158,9 @@ public class Moa extends MountableAnimal implements WingedBird {
                 this.setBaby(tag.getBoolean("IsBaby"));
             }
             if (tag.contains("MoaType")) {
-                MoaType moaType = AetherMoaTypes.get(tag.getString("MoaType"));
-                if (moaType != null) {
-                    this.setMoaType(moaType);
+                ResourceKey<MoaType> moaTypeKey = AetherMoaTypes.getResourceKey(level.registryAccess(), tag.getString("MoaType"));
+                if (moaTypeKey != null) {
+                    this.setMoaTypeByKey(moaTypeKey);
                 }
             }
             if (tag.contains("Hungry")) {
@@ -173,7 +174,14 @@ public class Moa extends MountableAnimal implements WingedBird {
             spawnData = new AgeableMob.AgeableMobGroupData(false);
         }
         if (this.getMoaType() == null) { // A random Moa Type to set during natural spawning.
-            this.setMoaType(AetherMoaTypes.getWeightedChance(this.getRandom()));
+            MoaType moaType = AetherMoaTypes.getWeightedChance(level.registryAccess(), this.getRandom());
+            ResourceKey<MoaType> moaTypeKey = AetherMoaTypes.getResourceKey(level.registryAccess(), moaType);
+            if (moaTypeKey != null) {
+                this.setMoaTypeByKey(moaTypeKey);
+            }
+        }
+        if (this.getMoaType() == null) {
+            this.setMoaTypeByKey(AetherMoaTypes.BLUE);
         }
         return super.finalizeSpawn(level, difficulty, reason, spawnData, tag);
     }
@@ -234,7 +242,7 @@ public class Moa extends MountableAnimal implements WingedBird {
             if (!this.isBaby() && this.getPassengers().isEmpty() && --this.eggTime <= 0) {
                 MoaType moaType = this.getMoaType();
                 if (moaType != null) {
-                    EggLayEvent eggLayEvent = AetherEventDispatch.onLayEgg(this, AetherSoundEvents.ENTITY_MOA_EGG.get(), 1.0F, (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.2F + 1.0F, this.getMoaType().getEgg());
+                    EggLayEvent eggLayEvent = AetherEventDispatch.onLayEgg(this, AetherSoundEvents.ENTITY_MOA_EGG.get(), 1.0F, (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.2F + 1.0F, this.getMoaType().egg());
                     if (!eggLayEvent.isCanceled()) {
                         if (eggLayEvent.getSound() != null) {
                             this.playSound(eggLayEvent.getSound(), eggLayEvent.getVolume(), eggLayEvent.getPitch());
@@ -456,16 +464,24 @@ public class Moa extends MountableAnimal implements WingedBird {
      */
     @Nullable
     public MoaType getMoaType() {
-        return AetherMoaTypes.get(this.getEntityData().get(DATA_MOA_TYPE_ID));
+        return AetherMoaTypes.getMoaType(this.level().registryAccess(), this.getEntityData().get(DATA_MOA_TYPE_ID));
+    }
+
+    /**
+     * @return This Moa's {@link MoaType} {@link ResourceKey}.
+     */
+    @Nullable
+    public ResourceKey<MoaType> getMoaTypeKey() {
+        return AetherMoaTypes.getResourceKey(this.level().registryAccess(), this.getEntityData().get(DATA_MOA_TYPE_ID));
     }
 
     /**
      * Sets this Moa's {@link MoaType}.
      *
-     * @param moaType The {@link MoaType}.
+     * @param moaType The {@link MoaType} {@link ResourceKey}.
      */
-    public void setMoaType(MoaType moaType) {
-        this.getEntityData().set(DATA_MOA_TYPE_ID, moaType.toString());
+    public void setMoaTypeByKey(ResourceKey<MoaType> moaType) {
+        this.getEntityData().set(DATA_MOA_TYPE_ID, moaType.location().toString());
     }
 
     /**
@@ -733,7 +749,7 @@ public class Moa extends MountableAnimal implements WingedBird {
      */
     public int getMaxJumps() {
         MoaType moaType = this.getMoaType();
-        return moaType != null ? moaType.getMaxJumps() : AetherMoaTypes.BLUE.get().getMaxJumps();
+        return moaType != null ? moaType.maxJumps() : 3;
     }
 
     /**
@@ -765,7 +781,7 @@ public class Moa extends MountableAnimal implements WingedBird {
     @Override
     public float getSpeed() {
         MoaType moaType = this.getMoaType();
-        return moaType != null ? moaType.getSpeed() : AetherMoaTypes.BLUE.get().getSpeed();
+        return moaType != null ? moaType.speed() : 0.155F;
     }
 
     /**
@@ -795,7 +811,7 @@ public class Moa extends MountableAnimal implements WingedBird {
     @Override
     public float getSteeringSpeed() {
         MoaType moaType = this.getMoaType();
-        return moaType != null ? moaType.getSpeed() : AetherMoaTypes.BLUE.get().getSpeed();
+        return moaType != null ? moaType.speed() : 0.155F;
     }
 
     /**
@@ -878,7 +894,7 @@ public class Moa extends MountableAnimal implements WingedBird {
     @Nullable
     @Override
     public ItemStack getPickResult() {
-        MoaEggItem moaEggItem = MoaEggItem.byId(this.getMoaType());
+        MoaEggItem moaEggItem = MoaEggItem.byId(this.getMoaTypeKey());
         return moaEggItem == null ? null : new ItemStack(moaEggItem);
     }
 
@@ -891,11 +907,13 @@ public class Moa extends MountableAnimal implements WingedBird {
         if (tag.contains("IsBaby")) {
             this.setBaby(tag.getBoolean("IsBaby"));
         }
-        MoaType moaType = AetherMoaTypes.get(tag.getString("MoaType"));
-        if (tag.contains("MoaType") && moaType != null) {
-            this.setMoaType(moaType);
+        ResourceKey<MoaType> moaTypeKey = AetherMoaTypes.getResourceKey(this.level().registryAccess(), tag.getString("MoaType"));
+        if (tag.contains("MoaType") && moaTypeKey != null) {
+            this.setMoaTypeByKey(moaTypeKey);
         } else {
-            this.setMoaType(AetherMoaTypes.getWeightedChance(this.getRandom()));
+            MoaType moaType = AetherMoaTypes.getWeightedChance(this.level().registryAccess(), this.getRandom());
+            ResourceKey<MoaType> randomMoaTypeKey = AetherMoaTypes.getResourceKey(this.level().registryAccess(), moaType);
+            this.setMoaTypeByKey(Objects.requireNonNullElse(randomMoaTypeKey, AetherMoaTypes.BLUE));
         }
         if (tag.hasUUID("Rider")) {
             this.setRider(tag.getUUID("Rider"));
@@ -930,7 +948,7 @@ public class Moa extends MountableAnimal implements WingedBird {
             tag.putUUID("MoaUUID", this.getMoaUUID());
         }
         tag.putBoolean("IsBaby", this.isBaby());
-        tag.putString("MoaType", Objects.requireNonNullElse(this.getMoaType(), AetherMoaTypes.BLUE).toString());
+        tag.putString("MoaType", Objects.requireNonNullElse(this.getMoaTypeKey(), AetherMoaTypes.BLUE).location().toString());
         if (this.getRider() != null) {
             tag.putUUID("Rider", this.getRider());
         }

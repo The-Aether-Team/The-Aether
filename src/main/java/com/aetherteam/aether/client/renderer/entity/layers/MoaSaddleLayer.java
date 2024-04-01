@@ -1,6 +1,5 @@
 package com.aetherteam.aether.client.renderer.entity.layers;
 
-import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.api.registers.MoaType;
 import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
 import com.aetherteam.aether.client.renderer.entity.model.MoaModel;
@@ -22,6 +21,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class MoaSaddleLayer extends RenderLayer<Moa, MoaModel> {
+    private static final ResourceLocation DEFAULT_LOCATION = new ResourceLocation("textures/entity/mobs/moa/black_moa_saddle.png");
     private final MoaModel saddle;
 
     public MoaSaddleLayer(RenderLayerParent<Moa, MoaModel> entityRenderer, MoaModel saddleModel) {
@@ -46,7 +46,7 @@ public class MoaSaddleLayer extends RenderLayer<Moa, MoaModel> {
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Moa moa, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (moa.isSaddled() && !moa.isInvisible()) {
-            ResourceLocation texture = moa.getMoaType() != null ? moa.getMoaType().getSaddleTexture() : AetherMoaTypes.BLUE.get().getSaddleTexture();
+            ResourceLocation texture = moa.getMoaType() != null ? moa.getMoaType().saddleTexture() : DEFAULT_LOCATION;
             ResourceLocation moaSkin = this.getMoaSkinLocation(moa);
             if (moaSkin != null) {
                 texture = moaSkin;

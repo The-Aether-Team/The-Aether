@@ -1,8 +1,8 @@
 package com.aetherteam.aether.integration.rei;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.api.AetherDataMaps;
 import com.aetherteam.aether.block.AetherBlocks;
+import com.aetherteam.aether.data.resources.registries.AetherDataMaps;
 import com.aetherteam.aether.integration.rei.categories.ban.BlockBanRecipeCategory;
 import com.aetherteam.aether.integration.rei.categories.ban.ItemBanRecipeCategory;
 import com.aetherteam.aether.integration.rei.categories.ban.PlacementBanRecipeDisplay;

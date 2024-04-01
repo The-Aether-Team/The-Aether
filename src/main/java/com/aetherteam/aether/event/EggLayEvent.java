@@ -3,6 +3,7 @@ package com.aetherteam.aether.event;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.ICancellableEvent;
 import net.neoforged.fml.LogicalSide;
 import net.neoforged.neoforge.event.entity.EntityEvent;
@@ -23,7 +24,7 @@ import javax.annotation.Nullable;
  */
 public class EggLayEvent extends EntityEvent implements ICancellableEvent {
     @Nullable
-    private Item item;
+    private ItemStack item;
     @Nullable
     private SoundEvent sound;
     private float volume;
@@ -34,9 +35,9 @@ public class EggLayEvent extends EntityEvent implements ICancellableEvent {
      * @param sound  The original {@link SoundEvent} played by laying the egg.
      * @param volume The original volume of the sound as a {@link Float}.
      * @param pitch  The original pitch of the sound as a {@link Float}.
-     * @param item   The original egg {@link Item} to be laid.
+     * @param item   The original egg {@link ItemStack} to be laid.
      */
-    public EggLayEvent(Entity entity, @Nullable SoundEvent sound, float volume, float pitch, @Nullable Item item) {
+    public EggLayEvent(Entity entity, @Nullable SoundEvent sound, float volume, float pitch, @Nullable ItemStack item) {
         super(entity);
         this.sound = sound;
         this.volume = volume;
@@ -50,7 +51,7 @@ public class EggLayEvent extends EntityEvent implements ICancellableEvent {
      * @return The egg {@link Item} to be laid.
      */
     @Nullable
-    public Item getItem() {
+    public ItemStack getItem() {
         return this.item;
     }
 
@@ -59,7 +60,7 @@ public class EggLayEvent extends EntityEvent implements ICancellableEvent {
      *
      * @param item The egg {@link Item}.
      */
-    public void setItem(@Nullable Item item) {
+    public void setItem(@Nullable ItemStack item) {
         this.item = item;
     }
 

@@ -1,0 +1,8 @@
+{
+  "egg": "aether:white_moa_egg",
+  "max_jumps": 4,
+  "moa_texture": "aether:textures/entity/mobs/moa/white_moa.png",
+  "saddle_texture": "aether:textures/entity/mobs/moa/moa_saddle.png",
+  "spawn_chance": 50,
+  "speed": 0.155
+}

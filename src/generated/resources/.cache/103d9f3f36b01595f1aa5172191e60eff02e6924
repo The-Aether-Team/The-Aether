@@ -1,4 +1,7 @@
-// 1.20.4	2024-03-19T10:40:11.1146426	Registries
+// 1.20.4	2024-04-01T13:38:34.173659	Registries
+82530938d7de52efd594f6bae0aaef2428f09853 data/aether/aether/moa_type/black.json
+2db7c2a7f294f52b13239ecb53053bd4ffa4bb69 data/aether/aether/moa_type/blue.json
+5eb707f4fb2ff05d33f1718f3e8ca61371af5a62 data/aether/aether/moa_type/white.json
 25d924fdac4392adb88fe3b6aa2c23420f6fb4f9 data/aether/damage_type/armor_piercing_attack.json
 03d6a63bae7e4458c11da22471bf0f8b5051023c data/aether/damage_type/cloud_crystal.json
 024fc58ce3f33e1542dfe59582a4da47cc178764 data/aether/damage_type/crush.json

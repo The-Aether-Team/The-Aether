@@ -1,6 +1,6 @@
 package com.aetherteam.aether.inventory.menu;
 
-import com.aetherteam.aether.api.AetherDataMaps;
+import com.aetherteam.aether.data.resources.registries.AetherDataMaps;
 import com.aetherteam.aether.inventory.AetherRecipeBookTypes;
 import com.aetherteam.aether.inventory.menu.slot.IncubatorFuelSlot;
 import com.aetherteam.aether.inventory.menu.slot.IncubatorItemSlot;

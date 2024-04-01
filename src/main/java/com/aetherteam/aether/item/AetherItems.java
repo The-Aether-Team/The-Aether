@@ -1,8 +1,8 @@
 package com.aetherteam.aether.item;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.api.AetherMoaTypes;
 import com.aetherteam.aether.client.AetherSoundEvents;
+import com.aetherteam.aether.data.resources.registries.AetherMoaTypes;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.item.accessories.cape.AgilityCapeItem;
 import com.aetherteam.aether.item.accessories.cape.CapeItem;

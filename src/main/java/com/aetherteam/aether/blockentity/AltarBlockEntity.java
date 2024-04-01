@@ -1,7 +1,7 @@
 package com.aetherteam.aether.blockentity;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.api.AetherDataMaps;
+import com.aetherteam.aether.data.resources.registries.AetherDataMaps;
 import com.aetherteam.aether.inventory.menu.AltarMenu;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import net.minecraft.core.BlockPos;
