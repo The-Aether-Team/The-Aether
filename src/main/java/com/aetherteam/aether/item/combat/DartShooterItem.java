@@ -30,9 +30,10 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
 
     /**
      * Rearranged version of {@link net.minecraft.world.item.BowItem#use(Level, Player, InteractionHand)}.
-     * @param level The {@link Level} of the user.
+     *
+     * @param level  The {@link Level} of the user.
      * @param player The {@link Player} using this item.
-     * @param hand The {@link InteractionHand} in which the item is being used.
+     * @param hand   The {@link InteractionHand} in which the item is being used.
      * @return Consume (cause the item to bob down then up in hand) if the player has ammo or is in creative, or fail (do nothing) if those conditions aren't met, or use the result of the Forge event hook if there is one.
      * This is an {@link InteractionResultHolder InteractionResultHolder&lt;ItemStack&gt;}.
      */
@@ -56,9 +57,10 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
 
     /**
      * Based somewhat on {@link net.minecraft.world.item.BowItem#releaseUsing(ItemStack, Level, LivingEntity, int)}, although we use {@link Item#finishUsingItem(ItemStack, Level, LivingEntity)} instead to allow for the Dart Shooter to shoot continuously without releasing.
+     *
      * @param stack The {@link ItemStack} in use.
      * @param level The {@link Level} of the user.
-     * @param user The {@link LivingEntity} using the stack.
+     * @param user  The {@link LivingEntity} using the stack.
      * @return The used {@link ItemStack}.
      */
     @Override
@@ -120,6 +122,7 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
 
     /**
      * The Dart Shooter has a very short usage duration to make it almost instant but still play the usage animation; any shorter duration breaks the animation.
+     *
      * @param stack The {@link ItemStack} in use.
      * @return The usage duration in ticks as an {@link Integer}.
      */

@@ -184,7 +184,7 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects {
                 ((LevelRendererAccessor) levelRenderer).aether$getCloudBuffer().bind();
                 int l = ((LevelRendererAccessor) levelRenderer).aether$getPrevCloudsType() == CloudStatus.FANCY ? 0 : 1;
 
-                for(int i1 = l; i1 < 2; ++i1) {
+                for (int i1 = l; i1 < 2; ++i1) {
                     if (i1 == 0) {
                         RenderSystem.colorMask(false, false, false, false);
                     } else {
@@ -348,7 +348,7 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects {
         }
 
         if (!Minecraft.getInstance().options.hideLightningFlash().get() && level.getSkyFlashTime() > 0) {
-            float f11 = (float)level.getSkyFlashTime() - partialTick;
+            float f11 = (float) level.getSkyFlashTime() - partialTick;
             if (f11 > 1.0F) {
                 f11 = 1.0F;
             }

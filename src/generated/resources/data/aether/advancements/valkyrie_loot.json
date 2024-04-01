@@ -111,17 +111,14 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.aether.valkyrie_loot.desc"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "aether:valkyrie_helmet",
       "nbt": "{Damage:0}"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.aether.valkyrie_loot"
     }

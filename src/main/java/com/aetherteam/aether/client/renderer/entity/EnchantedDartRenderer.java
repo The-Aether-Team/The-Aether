@@ -12,7 +12,7 @@ public class EnchantedDartRenderer extends ArrowRenderer<EnchantedDart> {
     public EnchantedDartRenderer(EntityRendererProvider.Context context) {
         super(context);
     }
-   
+
     @Override
     public ResourceLocation getTextureLocation(EnchantedDart dart) {
         return ENCHANTED_DART_TEXTURE;

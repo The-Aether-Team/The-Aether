@@ -3,8 +3,6 @@ package com.aetherteam.aether.entity.projectile.crystal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
@@ -20,7 +18,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.EventHooks;
-import net.neoforged.neoforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
@@ -78,6 +75,7 @@ public abstract class AbstractCrystal extends Projectile {
 
     /**
      * Spawns explosion particles when this projectile is removed from the world.
+     *
      * @param reason The {@link net.minecraft.world.entity.Entity.RemovalReason}.
      */
     @Override
@@ -154,10 +152,5 @@ public abstract class AbstractCrystal extends Projectile {
         if (tag.contains("TicksInAir")) {
             this.ticksInAir = tag.getInt("TicksInAir");
         }
-    }
-
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

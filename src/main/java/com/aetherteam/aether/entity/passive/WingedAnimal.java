@@ -12,6 +12,7 @@ import net.neoforged.neoforge.common.NeoForgeMod;
 public abstract class WingedAnimal extends MountableAnimal {
     /**
      * Used for wing animations.
+     *
      * @see com.aetherteam.aether.client.renderer.entity.layers.QuadrupedWingsLayer
      */
     private float wingFold;
@@ -23,6 +24,7 @@ public abstract class WingedAnimal extends MountableAnimal {
 
     /**
      * Navigation for falling entities.
+     *
      * @param level The {@link Level}.
      * @return The {@link PathNavigation} class.
      */
@@ -68,6 +70,7 @@ public abstract class WingedAnimal extends MountableAnimal {
 
     /**
      * Sets the wings' fold amount.
+     *
      * @param wingFold The {@link Float} amount.
      */
     public void setWingFold(float wingFold) {
@@ -83,6 +86,7 @@ public abstract class WingedAnimal extends MountableAnimal {
 
     /**
      * Sets the wings' angle
+     *
      * @param wingAngle The {@link Float} amount.
      */
     public void setWingAngle(float wingAngle) {

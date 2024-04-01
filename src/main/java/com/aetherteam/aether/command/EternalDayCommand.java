@@ -1,6 +1,6 @@
 package com.aetherteam.aether.command;
 
-import com.aetherteam.aether.capability.time.AetherTime;
+import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import net.minecraft.commands.CommandSourceStack;
@@ -24,17 +24,20 @@ public class EternalDayCommand {
 
     private static int setEternalDay(CommandSourceStack source, boolean value) {
         ServerLevel level = source.getLevel();
-        AetherTime.get(level).ifPresent(aetherTime -> {
-            aetherTime.setEternalDay(value);
-            aetherTime.updateEternalDay(); // Syncs to client.
+        if (level.hasData(AetherDataAttachments.AETHER_TIME)) {
+            var data = level.getData(AetherDataAttachments.AETHER_TIME);
+            data.setEternalDay(value);
+            data.updateEternalDay(level); // Syncs to client.
             source.sendSuccess(() -> Component.translatable("commands.aether.capability.time.eternal_day.set", value), true);
-        });
+        }
         return 1;
     }
 
     private static int queryEternalDay(CommandSourceStack source) {
         ServerLevel level = source.getLevel();
-        AetherTime.get(level).ifPresent(aetherTime -> source.sendSuccess(() -> Component.translatable("commands.aether.capability.time.eternal_day.query", aetherTime.getEternalDay()), true));
+        if (level.hasData(AetherDataAttachments.AETHER_TIME)) {
+            source.sendSuccess(() -> Component.translatable("commands.aether.capability.time.eternal_day.query", level.getData(AetherDataAttachments.AETHER_TIME).isEternalDay()), true);
+        }
         return 1;
     }
 }

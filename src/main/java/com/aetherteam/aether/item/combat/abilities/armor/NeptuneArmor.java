@@ -1,6 +1,6 @@
 package com.aetherteam.aether.item.combat.abilities.armor;
 
-import com.aetherteam.aether.capability.player.AetherPlayer;
+import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.item.EquipmentUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
@@ -12,6 +12,7 @@ import net.neoforged.neoforge.event.entity.living.LivingEvent;
 public interface NeptuneArmor {
     /**
      * Boosts the entity's movement in water or bubble columns if wearing a full set of Neptune Armor. The default boost is modified based on duration in water and whether the boots have Depth Strider.
+     *
      * @param entity The {@link LivingEntity} wearing the armor.
      * @see com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener#onEntityUpdate(LivingEvent.LivingTickEvent)
      */
@@ -19,16 +20,14 @@ public interface NeptuneArmor {
         if (EquipmentUtil.hasFullNeptuneSet(entity)) {
             if (entity.isInWaterOrBubble()) {
                 if (entity instanceof Player player) {
-                    AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
-                        Player innerPlayer = aetherPlayer.getPlayer();
-                        float defaultBoost = boostWithDepthStrider(innerPlayer);
-                        aetherPlayer.setNeptuneSubmergeLength(Math.min(aetherPlayer.getNeptuneSubmergeLength() + 0.1, 1.0));
-                        defaultBoost *= aetherPlayer.getNeptuneSubmergeLength();
-                        innerPlayer.moveRelative(0.04F * defaultBoost, new Vec3(innerPlayer.xxa, innerPlayer.yya, innerPlayer.zza));
-                        if (innerPlayer.isSwimming() || innerPlayer.getDeltaMovement().y() > 0 || innerPlayer.isCrouching()) {
-                            innerPlayer.move(MoverType.SELF, innerPlayer.getDeltaMovement().multiply(0.0, defaultBoost, 0.0));
-                        }
-                    });
+                    var data = player.getData(AetherDataAttachments.AETHER_PLAYER);
+                    float defaultBoost = boostWithDepthStrider(player);
+                    data.setNeptuneSubmergeLength(Math.min(data.getNeptuneSubmergeLength() + 0.1, 1.0));
+                    defaultBoost *= data.getNeptuneSubmergeLength();
+                    player.moveRelative(0.04F * defaultBoost, new Vec3(player.xxa, player.yya, player.zza));
+                    if (player.isSwimming() || player.getDeltaMovement().y() > 0 || player.isCrouching()) {
+                        player.move(MoverType.SELF, player.getDeltaMovement().multiply(0.0, defaultBoost, 0.0));
+                    }
                 } else {
                     float defaultBoost = boostWithDepthStrider(entity);
                     entity.moveRelative(0.04F * defaultBoost, new Vec3(entity.xxa, entity.yya, entity.zza));
@@ -40,13 +39,14 @@ public interface NeptuneArmor {
         }
         if (!EquipmentUtil.hasFullNeptuneSet(entity) || !entity.isInWaterOrBubble()) {
             if (entity instanceof Player player) {
-                AetherPlayer.get(player).ifPresent((aetherPlayer) -> aetherPlayer.setNeptuneSubmergeLength(0.0));
+                player.getData(AetherDataAttachments.AETHER_PLAYER).setNeptuneSubmergeLength(0.0);
             }
         }
     }
 
     /**
      * Adds an extra 0.15 to the boost for every Depth Strider level up to Depth Strider 3.
+     *
      * @param entity The {@link LivingEntity} wearing the armor.
      * @return The modified boost as a {@link Float}.
      */

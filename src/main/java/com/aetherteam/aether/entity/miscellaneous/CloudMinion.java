@@ -4,8 +4,6 @@ import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.projectile.crystal.CloudCrystal;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -20,7 +18,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
@@ -47,7 +44,7 @@ public class CloudMinion extends FlyingMob {
         this.setXRot(player.getXRot());
         this.setYRot(player.getYRot());
     }
-   
+
     public static AttributeSupplier.Builder createMobAttributes() {
         return FlyingMob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 1.0)
@@ -179,7 +176,8 @@ public class CloudMinion extends FlyingMob {
      * Cloud Minions have no collision.
      */
     @Override
-    protected void pushEntities() { }
+    protected void pushEntities() {
+    }
 
     @Override
     protected boolean canRide(Entity vehicle) {
@@ -204,6 +202,7 @@ public class CloudMinion extends FlyingMob {
 
     /**
      * Sets the owner {@link Player} of the Cloud Minion.
+     *
      * @param entity The owner {@link Player}.
      */
     public void setOwner(Player entity) {
@@ -219,6 +218,7 @@ public class CloudMinion extends FlyingMob {
 
     /**
      * Sets the {@link HumanoidArm} side that the Cloud Minion should hover at
+     *
      * @param armSide The {@link HumanoidArm} side.
      */
     public void setSide(HumanoidArm armSide) {
@@ -234,6 +234,7 @@ public class CloudMinion extends FlyingMob {
 
     /**
      * Sets the lifespan of the Cloud Minion.
+     *
      * @param lifespan The lifespan, as an {@link Integer}.
      */
     public void setLifeSpan(int lifespan) {
@@ -249,6 +250,7 @@ public class CloudMinion extends FlyingMob {
 
     /**
      * Sets whether the Cloud Minion can shoot a Cloud Crystal.
+     *
      * @param shouldShoot Whether it should shoot, as a {@link Boolean}.
      */
     public void setShouldShoot(boolean shouldShoot) {
@@ -262,10 +264,5 @@ public class CloudMinion extends FlyingMob {
         } else {
             super.handleEntityEvent(id);
         }
-    }
-   
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

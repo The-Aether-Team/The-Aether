@@ -30,7 +30,7 @@ public class IcestoneBlockEntity extends BlockEntity implements FreezingBlock {
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, IcestoneBlockEntity blockEntity) {
         if (!blockEntity.lastBrokenPositions.isEmpty()) {
-            for (Iterator<Map.Entry<BlockPos, Integer>> it = blockEntity.lastBrokenPositions.entrySet().iterator(); it.hasNext();) {
+            for (Iterator<Map.Entry<BlockPos, Integer>> it = blockEntity.lastBrokenPositions.entrySet().iterator(); it.hasNext(); ) {
                 Map.Entry<BlockPos, Integer> entry = it.next();
                 int nextDelay = entry.setValue(entry.getValue() - 1);
                 if (nextDelay == 0) {

@@ -21,6 +21,7 @@ public class IncubatorItemSlot extends Slot {
 
     /**
      * Stores the player who deposits an item to this slot to a value within the Incubator.
+     *
      * @param stack The {@link ItemStack} being put in the slot.
      */
     @Override

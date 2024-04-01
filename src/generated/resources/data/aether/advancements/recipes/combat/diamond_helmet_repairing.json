@@ -30,6 +30,5 @@
     "recipes": [
       "aether:diamond_helmet_repairing"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

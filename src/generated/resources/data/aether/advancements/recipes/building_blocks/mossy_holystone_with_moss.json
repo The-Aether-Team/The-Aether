@@ -30,6 +30,5 @@
     "recipes": [
       "aether:mossy_holystone_with_moss"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

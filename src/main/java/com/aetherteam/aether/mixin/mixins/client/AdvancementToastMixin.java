@@ -25,10 +25,11 @@ public class AdvancementToastMixin {
 
     /**
      * Plays the Aether's advancement sounds when the player gets an Aether advancement.
-     * @param guiGraphics The {@link GuiGraphics} for rendering.
-     * @param toastComponent The {@link ToastComponent} for rendering.
+     *
+     * @param guiGraphics          The {@link GuiGraphics} for rendering.
+     * @param toastComponent       The {@link ToastComponent} for rendering.
      * @param timeSinceLastVisible The {@link Long} time since the toast was last visible.
-     * @param cir The {@link net.minecraft.client.gui.components.toasts.Toast.Visibility} {@link CallbackInfoReturnable} used for the method's return value.
+     * @param cir                  The {@link net.minecraft.client.gui.components.toasts.Toast.Visibility} {@link CallbackInfoReturnable} used for the method's return value.
      */
     @Inject(at = @At(value = "FIELD", target = "net/minecraft/client/gui/components/toasts/AdvancementToast.playedSound:Z"), method = "render(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/client/gui/components/toasts/ToastComponent;J)Lnet/minecraft/client/gui/components/toasts/Toast$Visibility;")
     private void render(GuiGraphics guiGraphics, ToastComponent toastComponent, long timeSinceLastVisible, CallbackInfoReturnable<Toast.Visibility> cir) {

@@ -11,5 +11,6 @@ public class BlankMoveControl extends MoveControl {
         super(mob);
     }
 
-    public void tick() { }
+    public void tick() {
+    }
 }

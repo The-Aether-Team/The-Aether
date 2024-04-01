@@ -110,6 +110,7 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
 
     /**
      * Splits lore entry text into lines and pages in the Book of Lore.
+     *
      * @param loreEntry The raw {@link Component} for a lore entry.
      */
     private void createPages(Component loreEntry) {
@@ -134,10 +135,11 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
 
     /**
      * Draws the given lines of text on a book page.
-     * @param guiGraphics The rendering {@link GuiGraphics}.
+     *
+     * @param guiGraphics          The rendering {@link GuiGraphics}.
      * @param reorderingProcessors The {@link List} of {@link FormattedCharSequence} to render text with.
-     * @param x The {@link Integer} for the text x-position.
-     * @param y The {@link Integer} for the text y-position.
+     * @param x                    The {@link Integer} for the text x-position.
+     * @param y                    The {@link Integer} for the text y-position.
      */
     private void createText(GuiGraphics guiGraphics, List<FormattedCharSequence> reorderingProcessors, int x, int y) {
         int length = 0;

@@ -17,8 +17,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class ArmorStandMixin {
     /**
      * Allows {@link ArmorStand}s to accept accessories from {@link net.minecraft.world.entity.EntitySelector.MobCanWearArmorEntitySelector}.
+     *
      * @param stack The {@link ItemStack}.
-     * @param cir The {@link Boolean} {@link CallbackInfoReturnable} used for the method's return value.
+     * @param cir   The {@link Boolean} {@link CallbackInfoReturnable} used for the method's return value.
      */
     @Inject(at = @At(value = "HEAD"), method = "canTakeItem(Lnet/minecraft/world/item/ItemStack;)Z", cancellable = true)
     private void canTakeItem(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {

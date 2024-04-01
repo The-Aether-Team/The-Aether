@@ -70,6 +70,7 @@ public class FireMinion extends Monster {
 
     /**
      * Increases damage from Snowballs.
+     *
      * @param source The {@link DamageSource}.
      * @param amount The {@link Float} amount of damage.
      * @return Whether the entity was hurt, as a {@link Boolean}.
@@ -84,6 +85,7 @@ public class FireMinion extends Monster {
 
     /**
      * Prevents Fire Minions from being damaged by the Sun Spirit.
+     *
      * @param source The {@link DamageSource}.
      * @return Whether the Fire Minion is invulnerable to the damage, as a {@link Boolean}.
      */

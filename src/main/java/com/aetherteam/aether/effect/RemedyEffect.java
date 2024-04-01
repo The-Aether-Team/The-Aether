@@ -1,7 +1,8 @@
 package com.aetherteam.aether.effect;
 
-import com.aetherteam.aether.capability.player.AetherPlayer;
-import com.aetherteam.nitrogen.capability.INBTSynchable;
+import com.aetherteam.aether.attachment.AetherDataAttachments;
+import com.aetherteam.aether.attachment.AetherPlayerAttachment;
+import com.aetherteam.nitrogen.attachment.INBTSynchable;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
@@ -15,19 +16,19 @@ public class RemedyEffect extends MobEffect {
     }
 
     /**
-     * Tracks the starting effect duration through {@link AetherPlayer} and removes Inebriation if the entity has it.
+     * Tracks the starting effect duration through {@link AetherPlayerAttachment} and removes Inebriation if the entity has it.
+     *
      * @param livingEntity The affected {@link LivingEntity}.
-     * @param amplifier The {@link Integer} amplifier for the effect.
+     * @param amplifier    The {@link Integer} amplifier for the effect.
      */
     @Override
     public void applyEffectTick(LivingEntity livingEntity, int amplifier) {
         if (livingEntity instanceof Player player) {
             if (player.level().isClientSide()) {
-                AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
-                    if (aetherPlayer.getRemedyStartDuration() <= 0) {
-                        aetherPlayer.setSynched(INBTSynchable.Direction.SERVER, "setRemedyStartDuration", this.effectDuration);
-                    }
-                });
+                var data = player.getData(AetherDataAttachments.AETHER_PLAYER);
+                if (data.getRemedyStartDuration() <= 0) {
+                    data.setSynched(player.getId(), INBTSynchable.Direction.SERVER, "setRemedyStartDuration", this.effectDuration);
+                }
             }
         }
         if (livingEntity.hasEffect(AetherEffects.INEBRIATION.get())) {

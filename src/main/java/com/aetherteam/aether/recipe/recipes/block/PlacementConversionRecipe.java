@@ -30,8 +30,9 @@ public class PlacementConversionRecipe extends AbstractBiomeParameterRecipe {
 
     /**
      * Replaces an old {@link BlockState} with a new one from {@link com.aetherteam.nitrogen.recipe.recipes.AbstractBlockStateRecipe#getResultState(BlockState)}, if {@link PlacementConvertEvent} isn't cancelled.
-     * @param level The {@link Level} the recipe is performed in.
-     * @param pos The {@link BlockPos} the recipe is performed at.
+     *
+     * @param level    The {@link Level} the recipe is performed in.
+     * @param pos      The {@link BlockPos} the recipe is performed at.
      * @param oldState The original {@link BlockState} being used that is being checked.
      * @return Whether the new {@link BlockState} was set.
      */

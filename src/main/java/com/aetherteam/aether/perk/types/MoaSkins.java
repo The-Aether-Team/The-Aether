@@ -315,6 +315,7 @@ public class MoaSkins {
 
         /**
          * Reads a {@link MoaSkin} from a {@link FriendlyByteBuf} network buffer.
+         *
          * @param buffer The {@link FriendlyByteBuf} buffer.
          * @return A {@link MoaSkin}.
          */
@@ -325,7 +326,8 @@ public class MoaSkins {
 
         /**
          * Writes a {@link MoaSkin} to a {@link FriendlyByteBuf} network buffer.
-         * @param buffer The {@link FriendlyByteBuf} buffer.
+         *
+         * @param buffer  The {@link FriendlyByteBuf} buffer.
          * @param moaSkin A {@link MoaSkin}.
          */
         public static void write(FriendlyByteBuf buffer, MoaSkin moaSkin) {

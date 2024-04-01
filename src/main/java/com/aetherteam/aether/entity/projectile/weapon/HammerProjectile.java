@@ -1,13 +1,10 @@
 package com.aetherteam.aether.entity.projectile.weapon;
 
 import com.aetherteam.aether.entity.AetherEntityTypes;
-import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.HammerProjectileLaunchPacket;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -20,7 +17,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.neoforged.neoforge.network.NetworkHooks;
 
 import java.util.List;
 
@@ -64,10 +60,11 @@ public class HammerProjectile extends ThrowableProjectile {
 
     /**
      * Sets the movement parameters for this projectile when shot.
+     *
      * @param rotationPitch The {@link Float} for the rotation pitch.
-     * @param rotationYaw The {@link Float} for the rotation yaw.
-     * @param velocity The {@link Float} velocity of the projectile.
-     * @param inaccuracy The {@link Float} inaccuracy of the projectile.
+     * @param rotationYaw   The {@link Float} for the rotation yaw.
+     * @param velocity      The {@link Float} velocity of the projectile.
+     * @param inaccuracy    The {@link Float} inaccuracy of the projectile.
      */
     public void shoot(float rotationPitch, float rotationYaw, float velocity, float inaccuracy) {
         float x = -Mth.sin(rotationYaw * Mth.DEG_TO_RAD) * Mth.cos(rotationPitch * Mth.DEG_TO_RAD);
@@ -78,6 +75,7 @@ public class HammerProjectile extends ThrowableProjectile {
 
     /**
      * Discards the entity when it hits something.
+     *
      * @param result The {@link HitResult} of the projectile.
      */
     @Override
@@ -91,6 +89,7 @@ public class HammerProjectile extends ThrowableProjectile {
 
     /**
      * Launches an entity on hit on the server, and spawns explosion particles on client.
+     *
      * @param result The {@link EntityHitResult} of the projectile.
      */
     @Override
@@ -100,13 +99,14 @@ public class HammerProjectile extends ThrowableProjectile {
             this.launchTarget(target);
             this.level().broadcastEntityEvent(this, (byte) 70);
         } else {
-            PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new HammerProjectileLaunchPacket(target.getId(), this.getId()));
+            PacketRelay.sendToServer(new HammerProjectileLaunchPacket(target.getId(), this.getId()));
             this.spawnParticles();
         }
     }
 
     /**
      * Launches nearby entities in a 5 block radius when hitting a block on the server, and spawns explosion particles on client.
+     *
      * @param result The {@link BlockHitResult} of the projectile.
      */
     @Override
@@ -117,7 +117,7 @@ public class HammerProjectile extends ThrowableProjectile {
             if (!this.level().isClientSide()) {
                 this.launchTarget(target);
             } else {
-                PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new HammerProjectileLaunchPacket(target.getId(), this.getId()));
+                PacketRelay.sendToServer(new HammerProjectileLaunchPacket(target.getId(), this.getId()));
             }
         }
         if (!this.level().isClientSide()) {
@@ -139,6 +139,7 @@ public class HammerProjectile extends ThrowableProjectile {
 
     /**
      * Hurts and pushes back an entity.
+     *
      * @param target The {@link Entity} to affect.
      */
     public void launchTarget(Entity target) {
@@ -189,10 +190,5 @@ public class HammerProjectile extends ThrowableProjectile {
         if (tag.contains("TicksInAir")) {
             this.ticksInAir = tag.getInt("TicksInAir");
         }
-    }
-   
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

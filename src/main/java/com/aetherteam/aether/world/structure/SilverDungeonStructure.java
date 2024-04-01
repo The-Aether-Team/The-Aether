@@ -128,9 +128,10 @@ public class SilverDungeonStructure extends Structure {
     /**
      * Builds a cloud bed under the Silver Dungeon. This serves as a work-around for being unable to place blocks in
      * neighboring chunks.
-     * @param builder The {@link StructurePiecesBuilder}.
-     * @param random The {@link RandomSource} for the structure.
-     * @param origin The origin {@link BlockPos} to start generating from.
+     *
+     * @param builder   The {@link StructurePiecesBuilder}.
+     * @param random    The {@link RandomSource} for the structure.
+     * @param origin    The origin {@link BlockPos} to start generating from.
      * @param direction The {@link Direction} to place the structure in.
      */
     private void buildCloudBed(StructurePiecesBuilder builder, RandomSource random, BlockPos origin, Direction direction) {
@@ -205,13 +206,14 @@ public class SilverDungeonStructure extends Structure {
 
     /**
      * Set the dungeon bounds when using the place command.
-     * @param level The {@link WorldGenLevel} to place in.
+     *
+     * @param level            The {@link WorldGenLevel} to place in.
      * @param structureManager The {@link StructureManager}.
-     * @param generator The {@link ChunkGenerator} for generation.
-     * @param random The {@link RandomSource} for the structure.
-     * @param chunkBox The {@link BoundingBox} for chunk bounds.
-     * @param chunkPos The {@link ChunkPos}.
-     * @param pieces The {@link PiecesContainer} holding structure pieces.
+     * @param generator        The {@link ChunkGenerator} for generation.
+     * @param random           The {@link RandomSource} for the structure.
+     * @param chunkBox         The {@link BoundingBox} for chunk bounds.
+     * @param chunkPos         The {@link ChunkPos}.
+     * @param pieces           The {@link PiecesContainer} holding structure pieces.
      */
     @Override
     public void afterPlace(WorldGenLevel level, StructureManager structureManager, ChunkGenerator generator, RandomSource random, BoundingBox chunkBox, ChunkPos chunkPos, PiecesContainer pieces) {

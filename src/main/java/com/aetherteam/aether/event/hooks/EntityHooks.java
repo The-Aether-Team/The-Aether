@@ -2,10 +2,8 @@ package com.aetherteam.aether.event.hooks;
 
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
+import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.block.AetherBlocks;
-import com.aetherteam.aether.capability.accessory.MobAccessory;
-import com.aetherteam.aether.capability.item.DroppedItem;
-import com.aetherteam.aether.capability.lightning.LightningTracker;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.ai.goal.BeeGrowBerryBushGoal;
@@ -47,7 +45,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.util.LazyOptional;
 import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
@@ -74,6 +71,7 @@ import java.util.Optional;
 public class EntityHooks {
     /**
      * Adds a new goal to an entity.
+     *
      * @param entity The {@link Entity}.
      * @see com.aetherteam.aether.event.listeners.EntityListener#onEntityJoin(EntityJoinLevelEvent)
      */
@@ -89,6 +87,7 @@ public class EntityHooks {
 
     /**
      * Used to check whether an entity can spawn with accessories based on their {@link EntityType}.
+     *
      * @param entity The {@link Entity} that is spawning.
      * @return Whether the entity can spawn in the world with accessories, as a {@link Boolean}.
      * @see com.aetherteam.aether.mixin.mixins.common.EventHooksMixin
@@ -101,6 +100,7 @@ public class EntityHooks {
 
     /**
      * Equips entities with accessories during spawning.
+     *
      * @param entity The {@link Entity} to equip accessories to.
      * @see com.aetherteam.aether.mixin.mixins.common.EventHooksMixin
      */
@@ -145,8 +145,9 @@ public class EntityHooks {
 
     /**
      * Equips an accessory to an empty slot for an entity on spawn.
-     * @param mob The {@link Mob} to equip to.
-     * @param identifier The {@link String} identifier for the slot.
+     *
+     * @param mob            The {@link Mob} to equip to.
+     * @param identifier     The {@link String} identifier for the slot.
      * @param armorMaterials The {@link ArmorMaterials} to get an item from.
      * @see EntityHooks#spawnWithAccessories(Entity, DifficultyInstance)
      */
@@ -170,7 +171,8 @@ public class EntityHooks {
 
     /**
      * Gets an accessory item from a slot identifier and armor material.
-     * @param identifier The {@link String} identifier for the slot.
+     *
+     * @param identifier     The {@link String} identifier for the slot.
      * @param armorMaterials The {@link ArmorMaterials} to get an item from.
      * @return The accessory {@link Item}.
      * @see EntityHooks#equipAccessory(Mob, String, ArmorMaterials)
@@ -210,8 +212,9 @@ public class EntityHooks {
 
     /**
      * Randomly enchants accessories.
-     * @param mob The {@link Mob} wearing the accessories.
-     * @param difficulty The {@link DifficultyInstance} of the level.
+     *
+     * @param mob          The {@link Mob} wearing the accessories.
+     * @param difficulty   The {@link DifficultyInstance} of the level.
      * @param allowedSlots The list of {@link String} identifiers to enchant the accessories in.
      * @see EntityHooks#spawnWithAccessories(Entity, DifficultyInstance)
      */
@@ -230,8 +233,9 @@ public class EntityHooks {
 
     /**
      * Prevents dismounting Aether mounts in the air, and Swets when consumed.
-     * @param rider The {@link Entity} riding the mount.
-     * @param mount The mounted {@link Entity}.
+     *
+     * @param rider       The {@link Entity} riding the mount.
+     * @param mount       The mounted {@link Entity}.
      * @param dismounting Whether the rider is trying to dismount, as a {@link Boolean}.
      * @return Whether to prevent the rider from dismounting, as a {@link Boolean}.
      * @see com.aetherteam.aether.event.listeners.EntityListener#onMountEntity(EntityMountEvent)
@@ -245,6 +249,7 @@ public class EntityHooks {
 
     /**
      * Launches a mount when it interacts with a blue aercloud. This is handled as an event to get around a vanilla bug with it not working from the {@link com.aetherteam.aether.block.natural.BlueAercloudBlock} class.
+     *
      * @param player The passenger {@link Player}.
      * @see com.aetherteam.aether.event.listeners.EntityListener#onRiderTick(TickEvent.PlayerTickEvent)
      */
@@ -261,9 +266,10 @@ public class EntityHooks {
 
     /**
      * Handles milking cow entities with Skyroot Buckets.
+     *
      * @param target The target {@link Entity} to milk.
      * @param player The {@link Player} milking the target.
-     * @param hand The {@link InteractionHand} with the bucket item.
+     * @param hand   The {@link InteractionHand} with the bucket item.
      * @see com.aetherteam.aether.event.listeners.EntityListener#onInteractWithEntity(PlayerInteractEvent.EntityInteractSpecific)
      */
     public static void skyrootBucketMilking(Entity target, Player player, InteractionHand hand) {
@@ -272,7 +278,7 @@ public class EntityHooks {
             if (heldStack.is(AetherItems.SKYROOT_BUCKET.get())) {
                 if (target instanceof FlyingCow) {
                     player.playSound(AetherSoundEvents.ENTITY_FLYING_COW_MILK.get(), 1.0F, 1.0F);
-                } else  {
+                } else {
                     player.playSound(SoundEvents.COW_MILK, 1.0F, 1.0F);
                 }
                 ItemStack filledBucket = ItemUtils.createFilledResult(heldStack, player, AetherItems.SKYROOT_MILK_BUCKET.get().getDefaultInstance());
@@ -284,9 +290,10 @@ public class EntityHooks {
 
     /**
      * Handles picking up aquatic entities with a Skyroot Bucket. This is done by checking for the result bucket that contains the entity and replacing it with a Skyroot equivalent.
+     *
      * @param target The target {@link Entity}.
      * @param player The {@link Player}.
-     * @param hand The {@link InteractionHand} with the bucket item.
+     * @param hand   The {@link InteractionHand} with the bucket item.
      * @return The {@link Optional} {@link InteractionResult} from this interaction.
      * @see com.aetherteam.aether.event.listeners.EntityListener#onInteractWithEntity(PlayerInteractEvent.EntityInteractSpecific)
      */
@@ -318,11 +325,12 @@ public class EntityHooks {
 
     /**
      * Handles the interaction for equipping and unequipping accessories to armor stands.
+     *
      * @param target The target {@link Entity}.
      * @param player The {@link Player}.
-     * @param stack The held {@link ItemStack}.
-     * @param pos The right-click {@link Vec3} position.
-     * @param hand The {@link InteractionHand} with the item.
+     * @param stack  The held {@link ItemStack}.
+     * @param pos    The right-click {@link Vec3} position.
+     * @param hand   The {@link InteractionHand} with the item.
      * @return The {@link Optional} {@link InteractionResult} from this interaction.
      * @see com.aetherteam.aether.event.listeners.EntityListener#onInteractWithEntity(PlayerInteractEvent.EntityInteractSpecific)
      */
@@ -343,9 +351,9 @@ public class EntityHooks {
                     } else if (stack.getItem() instanceof ShieldOfRepulsionItem) {
                         identifier = AetherConfig.COMMON.use_curios_menu.get() ? "body" : "aether_shield";
                     }
-                    LazyOptional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(armorStand);
-                    if (lazyHandler.isPresent() && lazyHandler.resolve().isPresent()) {
-                        ICuriosItemHandler handler = lazyHandler.resolve().get();
+                    Optional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(armorStand);
+                    if (lazyHandler.isPresent()) {
+                        ICuriosItemHandler handler = lazyHandler.get();
                         Optional<ICurioStacksHandler> stacksHandler = handler.getStacksHandler(identifier);
                         if (stacksHandler.isPresent()) {
                             IDynamicStackHandler stackHandler = stacksHandler.get().getCosmeticStacks();
@@ -382,9 +390,9 @@ public class EntityHooks {
             } else { // Unequip behavior.
                 String identifier = slotToUnequip(armorStand, pos);
                 if (!identifier.isEmpty()) {
-                    LazyOptional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(armorStand);
-                    if (lazyHandler.isPresent() && lazyHandler.resolve().isPresent()) {
-                        ICuriosItemHandler handler = lazyHandler.resolve().get();
+                    Optional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(armorStand);
+                    if (lazyHandler.isPresent()) {
+                        ICuriosItemHandler handler = lazyHandler.get();
                         Optional<ICurioStacksHandler> stacksHandler = handler.getStacksHandler(identifier);
                         if (stacksHandler.isPresent()) {
                             IDynamicStackHandler stackHandler = stacksHandler.get().getCosmeticStacks();
@@ -406,8 +414,9 @@ public class EntityHooks {
 
     /**
      * What accessory slot of the armor stand to unequip from, based on where the armor stand is right-clicked.
+     *
      * @param armorStand The {@link ArmorStand} to unequip from.
-     * @param pos The right-click {@link Vec3} position.
+     * @param pos        The right-click {@link Vec3} position.
      * @return The {@link String} for the slot identifier.
      * @see EntityHooks#interactWithArmorStand(Entity, Player, ItemStack, Vec3, InteractionHand)
      */
@@ -445,15 +454,16 @@ public class EntityHooks {
 
     /**
      * Gets an accessory from an armor stand.
+     *
      * @param armorStand The {@link ArmorStand} to get the accessory from.
      * @param identifier The {@link String} for the slot identifier.
      * @return The accessory {@link ItemStack} gotten from the entity.
      * @see EntityHooks#slotToUnequip(ArmorStand, Vec3)
      */
     private static ItemStack getItemByIdentifier(ArmorStand armorStand, String identifier) {
-        LazyOptional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(armorStand);
-        if (lazyHandler.isPresent() && lazyHandler.resolve().isPresent()) {
-            ICuriosItemHandler handler = lazyHandler.resolve().get();
+        Optional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(armorStand);
+        if (lazyHandler.isPresent()) {
+            ICuriosItemHandler handler = lazyHandler.get();
             Optional<ICurioStacksHandler> stacksHandler = handler.getStacksHandler(identifier);
             if (stacksHandler.isPresent()) {
                 IDynamicStackHandler stackHandler = stacksHandler.get().getCosmeticStacks();
@@ -467,8 +477,9 @@ public class EntityHooks {
 
     /**
      * Prevents an entity from being hooked with a Fishing Rod.
+     *
      * @param projectileEntity The hook projectile {@link Entity}.
-     * @param rayTraceResult The {@link HitResult} of the projectile.
+     * @param rayTraceResult   The {@link HitResult} of the projectile.
      * @return Whether to prevent the hook interaction, as a {@link Boolean}.
      * @see com.aetherteam.aether.event.listeners.EntityListener#onProjectileHitEntity(ProjectileImpactEvent)
      */
@@ -481,6 +492,7 @@ public class EntityHooks {
 
     /**
      * Disallows blocking the Slider with a shield.
+     *
      * @param source The {@link DamageSource} to block.
      * @return Whether to disallow blocking, as a {@link Boolean}.
      * @see com.aetherteam.aether.event.listeners.EntityListener#onShieldBlock(ShieldBlockEvent)
@@ -491,6 +503,7 @@ public class EntityHooks {
 
     /**
      * Prevents lightning from damaging dungeon keys.
+     *
      * @param entity The {@link Entity}.
      * @return Whether lightning hit a key item, as a {@link Boolean}.
      * @see com.aetherteam.aether.event.listeners.EntityListener#onLightningStrike(EntityStruckByLightningEvent)
@@ -505,16 +518,15 @@ public class EntityHooks {
 
     /**
      * Prevents lightning summoned by Thunder Crystals from damaging items.
-     * @param entity The {@link Entity} struck by the lightning bolt.
+     *
+     * @param entity    The {@link Entity} struck by the lightning bolt.
      * @param lightning The {@link LightningBolt} that struck the entity.
      * @return Whether the lightning was from a {@link ThunderCrystal} and hit an item, as a {@link Boolean}.
      */
     public static boolean thunderCrystalHitItems(Entity entity, LightningBolt lightning) {
         if (entity instanceof ItemEntity) {
-            Optional<LightningTracker> lightningTrackerOptional = LightningTracker.get(lightning).resolve();
-            if (lightningTrackerOptional.isPresent()) {
-                LightningTracker lightningTracker = lightningTrackerOptional.get();
-                return lightningTracker.getOwner() instanceof ThunderCrystal;
+            if (lightning.hasData(AetherDataAttachments.LIGHTNING_TRACKER)) {
+                return lightning.getData(AetherDataAttachments.LIGHTNING_TRACKER).getOwner(lightning.level()) instanceof ThunderCrystal;
             }
         }
         return false;
@@ -522,77 +534,75 @@ public class EntityHooks {
 
     /**
      * Tracks if items were dropped by a player's death.
-     * @param entity The {@link LivingEntity} that dropped the items.
+     *
+     * @param entity    The {@link LivingEntity} that dropped the items.
      * @param itemDrops The {@link Collection} of dropped {@link ItemEntity}s.
      * @see com.aetherteam.aether.event.listeners.EntityListener#onPlayerDrops(LivingDropsEvent)
      */
     public static void trackDrops(LivingEntity entity, Collection<ItemEntity> itemDrops) {
         if (entity instanceof Player player) {
-            itemDrops.forEach(itemEntity -> DroppedItem.get(itemEntity).ifPresent(droppedItem -> droppedItem.setOwner(player)));
+            itemDrops.forEach(itemEntity -> itemEntity.getData(AetherDataAttachments.DROPPED_ITEM).setOwner(player));
         }
     }
 
     /**
      * Damages certain accessory items dropped from entities if they're not guaranteed drops.
-     * @param entity The {@link LivingEntity} dropping the accessories.
-     * @param itemDrops The {@link Collection} of {@link ItemEntity} drops.
+     *
+     * @param entity      The {@link LivingEntity} dropping the accessories.
+     * @param itemDrops   The {@link Collection} of {@link ItemEntity} drops.
      * @param recentlyHit Whether the entity was recently hit, as a {@link Boolean}.
-     * @param looting The {@link Integer} for the looting enchantment value.
+     * @param looting     The {@link Integer} for the looting enchantment value.
      * @return The new {@link Collection} of {@link ItemEntity} drops.
      * @see com.aetherteam.aether.event.listeners.EntityListener#onCurioDrops(CurioDropsEvent)
      */
     public static Collection<ItemEntity> handleEntityCurioDrops(LivingEntity entity, Collection<ItemEntity> itemDrops, boolean recentlyHit, int looting) {
-        if (entity instanceof Mob mob) {
-            MobAccessory.get(mob).ifPresent((accessoryMob) -> {
-                String[] allSlots = {"hands", "necklace", "aether_gloves", "aether_pendant"};
-                for (String identifier : allSlots) {
-                    List<ItemStack> itemStacks = itemDrops.stream().map(ItemEntity::getItem).filter((stack) -> AetherMixinHooks.getIdentifierForItem(accessoryMob.getMob(), stack).equals(identifier)).toList();
-                    if (!itemStacks.isEmpty()) {
-                        ItemStack itemStack = itemStacks.get(0);
-                        float f = accessoryMob.getEquipmentDropChance(identifier);
-                        boolean flag = f > 1.0F;
-                        if (!itemStack.isEmpty()) {
-                            itemDrops.removeIf((itemEntity) -> ItemStack.isSameItemSameTags(itemEntity.getItem(), itemStack));
+        if (entity instanceof Mob mob && mob.hasData(AetherDataAttachments.MOB_ACCESSORY)) {
+            String[] allSlots = {"hands", "necklace", "aether_gloves", "aether_pendant"};
+            for (String identifier : allSlots) {
+                List<ItemStack> itemStacks = itemDrops.stream().map(ItemEntity::getItem).filter((stack) -> AetherMixinHooks.getIdentifierForItem(mob, stack).equals(identifier)).toList();
+                if (!itemStacks.isEmpty()) {
+                    ItemStack itemStack = itemStacks.get(0);
+                    float f = mob.getData(AetherDataAttachments.MOB_ACCESSORY).getEquipmentDropChance(identifier);
+                    boolean flag = f > 1.0F;
+                    if (!itemStack.isEmpty()) {
+                        itemDrops.removeIf((itemEntity) -> ItemStack.isSameItemSameTags(itemEntity.getItem(), itemStack));
+                    }
+                    if (!itemStack.isEmpty() && !EnchantmentHelper.hasVanishingCurse(itemStack) && recentlyHit && Math.max(mob.getRandom().nextFloat() - (float) looting * 0.01F, 0.0F) < f) {
+                        if (!flag && itemStack.isDamageableItem()) {
+                            itemStack.setDamageValue(itemStack.getMaxDamage() - mob.getRandom().nextInt(1 + mob.getRandom().nextInt(Math.max(itemStack.getMaxDamage() - 3, 1))));
                         }
-                        if (!itemStack.isEmpty() && !EnchantmentHelper.hasVanishingCurse(itemStack) && recentlyHit && Math.max(mob.getRandom().nextFloat() - (float) looting * 0.01F, 0.0F) < f) {
-                            if (!flag && itemStack.isDamageableItem()) {
-                                itemStack.setDamageValue(itemStack.getMaxDamage() - accessoryMob.getMob().getRandom().nextInt(1 + accessoryMob.getMob().getRandom().nextInt(Math.max(itemStack.getMaxDamage() - 3, 1))));
-                            }
-                            ItemEntity itemEntity = new ItemEntity(accessoryMob.getMob().level(), accessoryMob.getMob().getX(), accessoryMob.getMob().getY(), accessoryMob.getMob().getZ(), itemStack);
-                            itemEntity.setDefaultPickUpDelay();
-                            itemDrops.add(itemEntity);
-                        }
+                        ItemEntity itemEntity = new ItemEntity(mob.level(), mob.getX(), mob.getY(), mob.getZ(), itemStack);
+                        itemEntity.setDefaultPickUpDelay();
+                        itemDrops.add(itemEntity);
                     }
                 }
-            });
+            }
+
         }
         return itemDrops;
     }
 
     /**
      * Increase the experience drops of an entity based on whether they're wearing accessories.
-     * @param entity The {@link LivingEntity} dropping the experience.
+     *
+     * @param entity     The {@link LivingEntity} dropping the experience.
      * @param experience The original {@link Integer} amount of experience.
      * @return The new {@link Integer} amount of experience.
      * @see com.aetherteam.aether.event.listeners.EntityListener#onDropExperience(LivingExperienceDropEvent)
      */
     public static int modifyExperience(LivingEntity entity, int experience) {
-        if (entity instanceof Mob mob) {
-            LazyOptional<MobAccessory> accessoryMobLazy = MobAccessory.get(mob);
-            if (accessoryMobLazy.isPresent() && accessoryMobLazy.resolve().isPresent()) {
-                MobAccessory accessoryMob = accessoryMobLazy.resolve().get();
-                LazyOptional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(mob);
-                if (lazyHandler.isPresent() && lazyHandler.resolve().isPresent()) {
-                    ICuriosItemHandler handler = lazyHandler.resolve().get();
-                    if (experience > 0) {
-                        String[] allSlots = {"hands", "necklace", "aether_gloves", "aether_pendant"};
-                        for (String identifier : allSlots) {
-                            Optional<SlotResult> optionalSlotResult = handler.findCurio(identifier, 0);
-                            if (optionalSlotResult.isPresent()) {
-                                ItemStack stack = optionalSlotResult.get().stack();
-                                if (!stack.isEmpty() && accessoryMob.getEquipmentDropChance(identifier) <= 1.0F) {
-                                    experience += 1 + mob.getRandom().nextInt(3);
-                                }
+        if (entity instanceof Mob mob && mob.hasData(AetherDataAttachments.MOB_ACCESSORY)) {
+            Optional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(mob);
+            if (lazyHandler.isPresent()) {
+                ICuriosItemHandler handler = lazyHandler.get();
+                if (experience > 0) {
+                    String[] allSlots = {"hands", "necklace", "aether_gloves", "aether_pendant"};
+                    for (String identifier : allSlots) {
+                        Optional<SlotResult> optionalSlotResult = handler.findCurio(identifier, 0);
+                        if (optionalSlotResult.isPresent()) {
+                            ItemStack stack = optionalSlotResult.get().stack();
+                            if (!stack.isEmpty() && mob.getData(AetherDataAttachments.MOB_ACCESSORY).getEquipmentDropChance(identifier) <= 1.0F) {
+                                experience += 1 + mob.getRandom().nextInt(3);
                             }
                         }
                     }
@@ -604,7 +614,8 @@ public class EntityHooks {
 
     /**
      * Prevents an entity from being inflicted with {@link AetherEffects#INEBRIATION} if it has {@link AetherEffects#REMEDY} applied.
-     * @param livingEntity The {@link LivingEntity} that the effect is being applied to.
+     *
+     * @param livingEntity    The {@link LivingEntity} that the effect is being applied to.
      * @param appliedInstance The {@link MobEffectInstance}.
      * @return Whether Inebriation application can be prevented.
      * @see com.aetherteam.aether.event.listeners.EntityListener#onEffectApply(MobEffectEvent.Applicable)

@@ -15,7 +15,6 @@ import com.aetherteam.aether.entity.monster.dungeon.AbstractValkyrie;
 import com.aetherteam.aether.entity.projectile.crystal.ThunderCrystal;
 import com.aetherteam.aether.event.AetherEventDispatch;
 import com.aetherteam.aether.item.AetherItems;
-import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.clientbound.QueenDialoguePacket;
 import com.aetherteam.aether.network.packet.serverbound.BossInfoPacket;
 import com.aetherteam.aether.network.packet.serverbound.NpcPlayerInteractPacket;
@@ -30,8 +29,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -64,15 +61,14 @@ import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.entity.IEntityAdditionalSpawnData;
+import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
 import net.neoforged.neoforge.event.EventHooks;
-import net.neoforged.neoforge.network.NetworkHooks;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
 import java.util.function.Predicate;
 
-public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<ValkyrieQueen>, NpcDialogue, IEntityAdditionalSpawnData {
+public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<ValkyrieQueen>, NpcDialogue, IEntityWithComplexSpawn {
     private static final EntityDataAccessor<Boolean> DATA_IS_READY = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.COMPONENT);
 
@@ -103,11 +99,12 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * Generates a name for the boss. Also save the dungeon bounds when in a naturally generating dungeon
      * so the queen can transform the locked blocks after the fight.<br><br>
      * Warning for "deprecation" is suppressed because this is fine to override.
-     * @param level The {@link ServerLevelAccessor} where the entity is spawned.
+     *
+     * @param level      The {@link ServerLevelAccessor} where the entity is spawned.
      * @param difficulty The {@link DifficultyInstance} of the game.
-     * @param reason The {@link MobSpawnType} reason.
-     * @param spawnData The {@link SpawnGroupData}.
-     * @param tag The {@link CompoundTag} to apply to this entity.
+     * @param reason     The {@link MobSpawnType} reason.
+     * @param spawnData  The {@link SpawnGroupData}.
+     * @param tag        The {@link CompoundTag} to apply to this entity.
      * @return The {@link SpawnGroupData} to return.
      */
     @Override
@@ -118,16 +115,16 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
         if (tag != null && tag.contains("Dungeon")) {
             StructureManager manager = level.getLevel().structureManager();
             manager.registryAccess().registry(Registries.STRUCTURE).ifPresent(registry -> {
-                    Structure temple = registry.get(AetherStructures.SILVER_DUNGEON);
-                    if (temple != null) {
-                        StructureStart start = manager.getStructureAt(this.blockPosition(), temple);
-                        if (start != StructureStart.INVALID_START) {
-                            BoundingBox box = start.getBoundingBox();
-                            AABB dungeonBounds = new AABB(box.minX(), box.minY(), box.minZ(), box.maxX() + 1, box.maxY() + 1, box.maxZ() + 1);
-                            this.setDungeonBounds(dungeonBounds);
+                        Structure temple = registry.get(AetherStructures.SILVER_DUNGEON);
+                        if (temple != null) {
+                            StructureStart start = manager.getStructureAt(this.blockPosition(), temple);
+                            if (start != StructureStart.INVALID_START) {
+                                BoundingBox box = start.getBoundingBox();
+                                AABB dungeonBounds = new AABB(box.minX(), box.minY(), box.minZ(), box.maxX() + 1, box.maxY() + 1, box.maxZ() + 1);
+                                this.setDungeonBounds(dungeonBounds);
+                            }
                         }
                     }
-                }
             );
         }
         return spawnData;
@@ -203,6 +200,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
 
     /**
      * Evaporates liquid blocks.
+     *
      * @see AetherBossMob#evaporate(Mob, BlockPos, BlockPos, Predicate)
      */
     private void evaporate() {
@@ -222,6 +220,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
 
     /**
      * Teleports near a target but outside a specified radius. If it's outside the destination is outside boss room, clamp to inside the room.
+     *
      * @return Whether the teleportation was successful, as a {@link Boolean}.
      */
     @Override
@@ -241,6 +240,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
 
     /**
      * Forces teleportation to an unreachable player.
+     *
      * @param target The target {@link Entity}.
      */
     protected void teleportUnstuck(Entity target) {
@@ -250,8 +250,9 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     /**
      * Allows the players to start a conversation with the Valkyrie Queen.
      * The dialogue screen is opened through {@link ValkyrieQueen#handleEntityEvent(byte)}.
+     *
      * @param player The interacting {@link Player}.
-     * @param hand The {@link InteractionHand}.
+     * @param hand   The {@link InteractionHand}.
      * @return The {@link InteractionResult}.
      */
     @Override
@@ -262,7 +263,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
                     this.lookAt(player, 180.0F, 180.0F);
                     if (player instanceof ServerPlayer serverPlayer) {
                         if (this.getConversingPlayer() == null) {
-                            PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new QueenDialoguePacket(this.getId()), serverPlayer);
+                            PacketRelay.sendToPlayer(new QueenDialoguePacket(this.getId()), serverPlayer);
                             this.setConversingPlayer(serverPlayer);
                         }
                     }
@@ -286,7 +287,8 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
 
     /**
      * Handles an NPC dialogue interaction on the server.
-     * @param player The {@link Player}.
+     *
+     * @param player        The {@link Player}.
      * @param interactionID A code for which interaction was performed on the client.<br>
      *                      0 - "What can you tell me about this place?"<br>
      *                      1 - "I wish to fight you!"<br>
@@ -346,6 +348,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
 
     /**
      * Sends a message to nearby players. Useful for boss fights.
+     *
      * @param message The message {@link Component}.
      */
     protected void chatWithNearby(Component message) {
@@ -355,7 +358,8 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
 
     /**
      * Sends a message to the player who interacted with the Valkyrie Queen.
-     * @param player The interacting {@link Player}.
+     *
+     * @param player  The interacting {@link Player}.
      * @param message The message {@link Component}.
      */
     @Override
@@ -365,6 +369,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
 
     /**
      * Handles damaging the Valkyrie Queen, which is only allowed after 10 Victory Medals have been presented.
+     *
      * @param source The {@link DamageSource}.
      * @param amount The {@link Float} amount of damage.
      * @return Whether the entity was hurt, as a {@link Boolean}.
@@ -401,6 +406,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
 
     /**
      * Plays the message for the Valkyrie Queen defeating the player.
+     *
      * @param entity The hurt {@link Entity}.
      */
     @Override
@@ -428,6 +434,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
 
     /**
      * Plays the Valkyrie Queen's defeat message, ends the boss fight, opens the room, and grants advancements when the boss dies.
+     *
      * @param source The {@link DamageSource}.
      */
     @Override
@@ -462,10 +469,12 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * Required despite call to {@link Mob#setPersistenceRequired()} in constructor.
      */
     @Override
-    public void checkDespawn() { }
+    public void checkDespawn() {
+    }
 
     /**
      * Called on every block in the boss room when the boss is defeated.
+     *
      * @param state The {@link BlockState} to try to convert.
      * @return The converted {@link BlockState}.
      */
@@ -489,12 +498,13 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
 
     /**
      * Tracks the player as a part of the boss fight when the player is nearby, displaying the boss bar for them.
+     *
      * @param player The {@link ServerPlayer}.
      */
     @Override
     public void startSeenByPlayer(ServerPlayer player) {
         super.startSeenByPlayer(player);
-        PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new BossInfoPacket.Display(this.bossFight.getId(), this.getId()), player);
+        PacketRelay.sendToPlayer(new BossInfoPacket.Display(this.bossFight.getId(), this.getId()), player);
         if (this.getDungeon() == null || this.getDungeon().isPlayerTracked(player)) {
             this.bossFight.addPlayer(player);
             AetherEventDispatch.onBossFightPlayerAdd(this, this.getDungeon(), player);
@@ -503,18 +513,20 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
 
     /**
      * Tracks the player as no longer in the boss fight when the player is nearby, removing the boss bar for them.
+     *
      * @param player The {@link ServerPlayer}.
      */
     @Override
     public void stopSeenByPlayer(ServerPlayer player) {
         super.stopSeenByPlayer(player);
-        PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new BossInfoPacket.Remove(this.bossFight.getId(), this.getId()), player);
+        PacketRelay.sendToPlayer(new BossInfoPacket.Remove(this.bossFight.getId(), this.getId()), player);
         this.bossFight.removePlayer(player);
         AetherEventDispatch.onBossFightPlayerRemove(this, this.getDungeon(), player);
     }
 
     /**
      * Adds a player to the boss fight when they've entered the dungeon.
+     *
      * @param player The {@link Player}.
      */
     @Override
@@ -527,6 +539,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
 
     /**
      * Removes a player from the boss fight when they've left the dungeon.
+     *
      * @param player The {@link Player}.
      */
     @Override
@@ -546,6 +559,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
 
     /**
      * Sets whether the Valkyrie Queen is ready to fight.
+     *
      * @param ready The {@link Boolean} value.
      */
     public void setReady(boolean ready) {
@@ -562,6 +576,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
 
     /**
      * Sets the {@link Component} for the boss name and in the boss fight.
+     *
      * @param component The name {@link Component}.
      */
     @Override
@@ -581,6 +596,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
 
     /**
      * Sets the tracker for the Bronze Dungeon.
+     *
      * @param dungeon The {@link ValkyrieQueen} {@link BossRoomTracker}.
      */
     @Override
@@ -601,6 +617,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
 
     /**
      * Sets whether the boss fight is active and the boss bar is visible.
+     *
      * @param isFighting The {@link Boolean} value.
      */
     @Override
@@ -628,6 +645,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
 
     /**
      * Sets the bounds of the entire Silver Dungeon.
+     *
      * @param dungeonBounds The {@link AABB} bounds.
      */
     public void setDungeonBounds(@Nullable AABB dungeonBounds) {
@@ -645,6 +663,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
 
     /**
      * Sets the player that is conversing with the Valkyrie Queen.
+     *
      * @param player The {@link Player}.
      */
     @Override
@@ -744,11 +763,6 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
         if (tag != null) {
             this.readBossSaveData(tag);
         }
-    }
-
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     /**

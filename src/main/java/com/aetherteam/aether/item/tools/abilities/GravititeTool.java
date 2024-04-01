@@ -20,6 +20,7 @@ public interface GravititeTool {
      * Floats a block by spawning a floating entity version at its position and removing the block.<br><br>
      * This occurs if the player isn't holding shift, if the tool can harvest the block, if the block has space above it, if it isn't a block entity, if the block is a singular block that's not in the {@link AetherTags.Blocks#GRAVITITE_ABILITY_BLACKLIST} tag, and if the call isn't clientside.<br><br>
      * This damages the tool for 4 durability. There is also behavior to allow the floating block to damage entities if it is an Anvil.
+     *
      * @param context The {@link UseOnContext} for the float interaction.
      * @return Whether the block was successfully floated or not, as a {@link Boolean}.
      */

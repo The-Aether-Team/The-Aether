@@ -1,6 +1,7 @@
 package com.aetherteam.aether.client.renderer.player.layer;
 
-import com.aetherteam.aether.capability.player.AetherPlayer;
+import com.aetherteam.aether.attachment.AetherDataAttachments;
+import com.aetherteam.aether.attachment.AetherPlayerAttachment;
 import com.aetherteam.aether.entity.projectile.dart.AbstractDart;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.PlayerModel;
@@ -15,16 +16,15 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
-import java.util.Optional;
 import java.util.function.Function;
 
 public class DartLayer<T extends LivingEntity, M extends PlayerModel<T>> extends StuckInBodyLayer<T, M> {
     private final EntityRenderDispatcher dispatcher;
     private final Function<Entity, AbstractDart> dart;
-    private final Function<AetherPlayer, Integer> dartCount;
+    private final Function<AetherPlayerAttachment, Integer> dartCount;
     private final float offset;
 
-    public DartLayer(EntityRenderDispatcher renderDispatcher, LivingEntityRenderer<T, M> renderer, Function<Entity, AbstractDart> dart, Function<AetherPlayer, Integer> dartCount, float offset) {
+    public DartLayer(EntityRenderDispatcher renderDispatcher, LivingEntityRenderer<T, M> renderer, Function<Entity, AbstractDart> dart, Function<AetherPlayerAttachment, Integer> dartCount, float offset) {
         super(renderer);
         this.dispatcher = renderDispatcher;
         this.dart = dart;
@@ -40,7 +40,7 @@ public class DartLayer<T extends LivingEntity, M extends PlayerModel<T>> extends
         float offset = this.offset;
         RandomSource randomSource = RandomSource.create((long) (livingEntity.getId() * (0.25 * offset)));
         if (i > 0) {
-            for(int j = 0; j < i; ++j) {
+            for (int j = 0; j < i; ++j) {
                 poseStack.pushPose();
                 ModelPart modelPart = this.getParentModel().getRandomModelPart(randomSource);
                 ModelPart.Cube cube = modelPart.getRandomCube(randomSource);
@@ -80,10 +80,7 @@ public class DartLayer<T extends LivingEntity, M extends PlayerModel<T>> extends
     @Override
     protected int numStuck(T entity) {
         if (entity instanceof Player player) {
-            Optional<AetherPlayer> aetherPlayerOptional = AetherPlayer.get(player).resolve();
-            if (aetherPlayerOptional.isPresent()) {
-                return this.dartCount.apply(aetherPlayerOptional.get());
-            }
+            return this.dartCount.apply(player.getData(AetherDataAttachments.AETHER_PLAYER));
         }
         return 0;
     }

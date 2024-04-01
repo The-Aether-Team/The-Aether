@@ -8,6 +8,7 @@ import net.minecraft.network.FriendlyByteBuf;
 public record Halo(String hexColor) {
     /**
      * Reads a {@link Halo} from a {@link FriendlyByteBuf} network buffer.
+     *
      * @param buffer The {@link FriendlyByteBuf} buffer.
      * @return A {@link Halo}.
      */
@@ -18,8 +19,9 @@ public record Halo(String hexColor) {
 
     /**
      * Writes a {@link Halo} to a {@link FriendlyByteBuf} network buffer.
+     *
      * @param buffer The {@link FriendlyByteBuf} buffer.
-     * @param halo A {@link Halo}.
+     * @param halo   A {@link Halo}.
      */
     public static void write(FriendlyByteBuf buffer, Halo halo) {
         buffer.writeUtf(halo.hexColor());

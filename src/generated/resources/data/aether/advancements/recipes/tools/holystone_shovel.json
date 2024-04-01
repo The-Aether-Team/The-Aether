@@ -30,6 +30,5 @@
     "recipes": [
       "aether:holystone_shovel"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

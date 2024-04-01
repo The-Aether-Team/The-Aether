@@ -161,11 +161,12 @@ public class GlowstoneRuinedPortalStructure extends Structure {
 
     /**
      * Checks whether a chunk corner isn't empty, to determine whether a ruined portal can generate at the location it has chosen.
-     * @param generator The {@link ChunkGenerator} for the world.
+     *
+     * @param generator      The {@link ChunkGenerator} for the world.
      * @param heightAccessor The {@link LevelHeightAccessor} for the world.
-     * @param chunkPos The {@link ChunkPos} for the structure generation.
-     * @param random The {@link RandomState} from the world.
-     * @param spawnY The {@link Integer} for the y-position where the structure tries to generate.
+     * @param chunkPos       The {@link ChunkPos} for the structure generation.
+     * @param random         The {@link RandomState} from the world.
+     * @param spawnY         The {@link Integer} for the y-position where the structure tries to generate.
      * @return Whether a chunk corner is valid for the structure to generate from.
      */
     private static boolean validCorners(ChunkGenerator generator, LevelHeightAccessor heightAccessor, ChunkPos chunkPos, RandomState random, int spawnY) {

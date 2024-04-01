@@ -30,6 +30,5 @@
     "recipes": [
       "aether:aerogel_slab"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

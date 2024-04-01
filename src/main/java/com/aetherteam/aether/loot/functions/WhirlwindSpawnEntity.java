@@ -20,9 +20,9 @@ import java.util.List;
 
 public class WhirlwindSpawnEntity extends LootItemConditionalFunction {
     public static final Codec<WhirlwindSpawnEntity> CODEC = RecordCodecBuilder.create(instance -> commonFields(instance)
-        .and(EntityTypePredicate.CODEC.fieldOf("entity").forGetter(whirlwindSpawnEntity -> whirlwindSpawnEntity.entityType))
-        .and(IntProvider.CODEC.fieldOf("count").forGetter(whirlwindSpawnEntity -> whirlwindSpawnEntity.count))
-        .apply(instance, WhirlwindSpawnEntity::new)
+            .and(EntityTypePredicate.CODEC.fieldOf("entity").forGetter(whirlwindSpawnEntity -> whirlwindSpawnEntity.entityType))
+            .and(IntProvider.CODEC.fieldOf("count").forGetter(whirlwindSpawnEntity -> whirlwindSpawnEntity.count))
+            .apply(instance, WhirlwindSpawnEntity::new)
     );
     private final EntityTypePredicate entityType;
     private final IntProvider count;
@@ -35,7 +35,8 @@ public class WhirlwindSpawnEntity extends LootItemConditionalFunction {
 
     /**
      * Spawns an entity from a Whirlwind.
-     * @param stack The {@link ItemStack} for the loot pool.
+     *
+     * @param stack   The {@link ItemStack} for the loot pool.
      * @param context The {@link LootContext}.
      * @return The {@link ItemStack} for the loot pool.
      */

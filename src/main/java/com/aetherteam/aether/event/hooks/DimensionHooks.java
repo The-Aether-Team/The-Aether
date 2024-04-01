@@ -2,15 +2,13 @@ package com.aetherteam.aether.event.hooks;
 
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
+import com.aetherteam.aether.attachment.AetherDataAttachments;
+import com.aetherteam.aether.attachment.AetherPlayerAttachment;
 import com.aetherteam.aether.block.portal.AetherPortalForcer;
 import com.aetherteam.aether.block.portal.AetherPortalShape;
-import com.aetherteam.aether.capability.item.DroppedItem;
-import com.aetherteam.aether.capability.player.AetherPlayer;
-import com.aetherteam.aether.capability.time.AetherTime;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerLevelAccessor;
-import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.clientbound.AetherTravelPacket;
 import com.aetherteam.aether.network.packet.clientbound.LeavingAetherPacket;
 import com.aetherteam.aether.network.packet.clientbound.SetVehiclePacket;
@@ -37,7 +35,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.neoforged.neoforge.common.util.LazyOptional;
 import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
@@ -57,40 +54,41 @@ public class DimensionHooks {
 
     /**
      * Spawns the player in the Aether dimension if the {@link AetherConfig.Server#spawn_in_aether} config is enabled.
+     *
      * @param player The {@link Player}.
      * @see com.aetherteam.aether.event.listeners.DimensionListener#onPlayerLogin(PlayerEvent.PlayerLoggedInEvent)
      */
     public static void startInAether(Player player) {
-        AetherPlayer.get(player).ifPresent(aetherPlayer -> {
-            if (AetherConfig.SERVER.spawn_in_aether.get()) {
-                if (aetherPlayer.canSpawnInAether()) { // Checks if the player has been set to spawn in the Aether.
-                    if (aetherPlayer.getPlayer() instanceof ServerPlayer serverPlayer) {
-                        MinecraftServer server = serverPlayer.level().getServer();
-                        if (server != null) {
-                            ServerLevel aetherLevel = server.getLevel(AetherDimensions.AETHER_LEVEL);
-                            if (aetherLevel != null && serverPlayer.level().dimension() != AetherDimensions.AETHER_LEVEL) {
-                                if (aetherPlayer.getPlayer().changeDimension(aetherLevel, new AetherPortalForcer(aetherLevel, false, true)) != null) {
-                                    serverPlayer.setRespawnPosition(AetherDimensions.AETHER_LEVEL, serverPlayer.blockPosition(), serverPlayer.getYRot(), true, false);
-                                    aetherPlayer.setCanSpawnInAether(false); // Sets that the player has already spawned in the Aether.
-                                }
+        var aetherPlayer = player.getData(AetherDataAttachments.AETHER_PLAYER);
+        if (AetherConfig.SERVER.spawn_in_aether.get()) {
+            if (aetherPlayer.canSpawnInAether()) { // Checks if the player has been set to spawn in the Aether.
+                if (player instanceof ServerPlayer serverPlayer) {
+                    MinecraftServer server = serverPlayer.level().getServer();
+                    if (server != null) {
+                        ServerLevel aetherLevel = server.getLevel(AetherDimensions.AETHER_LEVEL);
+                        if (aetherLevel != null && serverPlayer.level().dimension() != AetherDimensions.AETHER_LEVEL) {
+                            if (player.changeDimension(aetherLevel, new AetherPortalForcer(aetherLevel, false, true)) != null) {
+                                serverPlayer.setRespawnPosition(AetherDimensions.AETHER_LEVEL, serverPlayer.blockPosition(), serverPlayer.getYRot(), true, false);
+                                aetherPlayer.setCanSpawnInAether(false); // Sets that the player has already spawned in the Aether.
                             }
                         }
                     }
                 }
-            } else {
-                aetherPlayer.setCanSpawnInAether(false);
             }
-        });
+        } else {
+            aetherPlayer.setCanSpawnInAether(false);
+        }
     }
 
     /**
      * Used to handle creating an Aether portal from a glowstone frame if the correct activation item is used.
-     * @param player The {@link Player} creating the portal.
-     * @param level The {@link Level} to create the portal in.
-     * @param pos The {@link BlockPos} to create the portal at.
+     *
+     * @param player    The {@link Player} creating the portal.
+     * @param level     The {@link Level} to create the portal in.
+     * @param pos       The {@link BlockPos} to create the portal at.
      * @param direction The {@link Direction} of where the portal is interacted at.
-     * @param stack The {@link ItemStack} used to attempt to activate the portal.
-     * @param hand The {@link InteractionHand} that the item is in.
+     * @param stack     The {@link ItemStack} used to attempt to activate the portal.
+     * @param hand      The {@link InteractionHand} that the item is in.
      * @return Whether the portal should be created, as a {@link Boolean}.
      * @see com.aetherteam.aether.event.listeners.DimensionListener#onInteractWithPortalFrame(PlayerInteractEvent.RightClickBlock)
      */
@@ -125,10 +123,11 @@ public class DimensionHooks {
 
     /**
      * Detects whether water is found in a glowstone frame.
+     *
      * @param levelAccessor The {@link Level} to create the portal in.
-     * @param pos The {@link BlockPos} to create the portal at.
-     * @param blockState The water {@link BlockState}.
-     * @param fluidState The water {@link FluidState}.
+     * @param pos           The {@link BlockPos} to create the portal at.
+     * @param blockState    The water {@link BlockState}.
+     * @param fluidState    The water {@link FluidState}.
      * @return Whether the portal should be created, as a {@link Boolean}.
      * @see com.aetherteam.aether.event.listeners.DimensionListener#onWaterExistsInsidePortalFrame(BlockEvent.NeighborNotifyEvent)
      */
@@ -149,6 +148,7 @@ public class DimensionHooks {
 
     /**
      * Ticks time in dimensions with the Aether effects location.
+     *
      * @param level The {@link Level}
      * @see com.aetherteam.aether.event.listeners.DimensionListener#onWorldTick(TickEvent.LevelTickEvent)
      */
@@ -159,13 +159,14 @@ public class DimensionHooks {
             long i = levelAccessor.aether$getLevelData().getGameTime() + 1L;
             serverLevelAccessor.aether$getServerLevelData().setGameTime(i);
             if (serverLevelAccessor.aether$getServerLevelData().getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
-                AetherTime.get(level).ifPresent(cap -> serverLevel.setDayTime(cap.tickTime(level)));
+                serverLevel.setDayTime(serverLevel.getData(AetherDataAttachments.AETHER_TIME).tickTime(level));
             }
         }
     }
 
     /**
      * This code is used to handle entities falling out of the Aether. If an entity is not a player, vehicle, or tracked item, it is removed.
+     *
      * @param level The {@link Level}
      * @see com.aetherteam.aether.event.listeners.DimensionListener#onWorldTick(TickEvent.LevelTickEvent)
      */
@@ -177,9 +178,8 @@ public class DimensionHooks {
                         if (entity instanceof Player || entity.isVehicle() || (entity instanceof Saddleable) && ((Saddleable) entity).isSaddled()) { // Checks if an entity is a player or a vehicle of a player.
                             entityFell(entity);
                         } else if (entity instanceof ItemEntity itemEntity) {
-                            LazyOptional<DroppedItem> droppedItem = DroppedItem.get(itemEntity);
-                            if (droppedItem.isPresent() && droppedItem.resolve().isPresent()) {
-                                if (itemEntity.getOwner() instanceof Player || droppedItem.resolve().get().getOwner() instanceof Player) { // Checks if an entity is an item that was dropped by a player.
+                            if (itemEntity.hasData(AetherDataAttachments.DROPPED_ITEM)) {
+                                if (itemEntity.getOwner() instanceof Player || itemEntity.getData(AetherDataAttachments.DROPPED_ITEM).getOwner(level) instanceof Player) { // Checks if an entity is an item that was dropped by a player.
                                     entityFell(entity);
                                 }
                             }
@@ -192,6 +192,7 @@ public class DimensionHooks {
 
     /**
      * Code to handle falling out of the Aether with all passengers intact.
+     *
      * @param entity The {@link Entity}
      */
     @Nullable
@@ -214,7 +215,7 @@ public class DimensionHooks {
                         if (nextPassenger != null) {
                             nextPassenger.startRiding(target);
                             if (target instanceof ServerPlayer serverPlayer) { // Fixes a desync between the server and client.
-                                PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new SetVehiclePacket(nextPassenger.getId(), target.getId()), serverPlayer);
+                                PacketRelay.sendToPlayer(new SetVehiclePacket(nextPassenger.getId(), target.getId()), serverPlayer);
                             }
                         }
                     }
@@ -229,55 +230,54 @@ public class DimensionHooks {
     }
 
     /**
-     * Checks whether eternal day is configured to be disabled, and disables it in the {@link com.aetherteam.aether.capability.player.AetherPlayerCapability}.
+     * Checks whether eternal day is configured to be disabled, and disables it in the {@link AetherPlayerAttachment}.
+     *
      * @param level The {@link Level}
      * @see com.aetherteam.aether.event.listeners.DimensionListener#onWorldTick(TickEvent.LevelTickEvent)
      */
     public static void checkEternalDayConfig(Level level) {
-        if (!level.isClientSide()) {
-            AetherTime.get(level).ifPresent(aetherTime -> {
-                boolean eternalDay = aetherTime.getEternalDay();
-                if (AetherConfig.SERVER.disable_eternal_day.get() && eternalDay) {
-                    aetherTime.setEternalDay(false);
-                    aetherTime.updateEternalDay();
-                }
-            });
+        if (!level.isClientSide() && level.hasData(AetherDataAttachments.AETHER_TIME)) {
+            var aetherTime = level.getData(AetherDataAttachments.AETHER_TIME);
+            boolean eternalDay = aetherTime.isEternalDay();
+            if (AetherConfig.SERVER.disable_eternal_day.get() && eternalDay) {
+                aetherTime.setEternalDay(false);
+                aetherTime.updateEternalDay(level);
+            }
         }
     }
 
     /**
-     *
-     * @param entity The {@link Entity} travelling between dimensions.
+     * @param entity    The {@link Entity} travelling between dimensions.
      * @param dimension The {@link ResourceKey} of the dimension ({@link Level}) being teleported to.
      * @see com.aetherteam.aether.event.listeners.DimensionListener#onEntityTravelToDimension(EntityTravelToDimensionEvent)
      */
     public static void dimensionTravel(Entity entity, ResourceKey<Level> dimension) {
         if (entity instanceof Player player) {
-            AetherPlayer.get(player).ifPresent(aetherPlayer -> {
-                if (!AetherConfig.SERVER.spawn_in_aether.get() || !aetherPlayer.canSpawnInAether()) {
-                    if (entity.level().getBiome(entity.blockPosition()).is(AetherTags.Biomes.DISPLAY_TRAVEL_TEXT)) {
-                        if (entity.level().dimension() == LevelUtil.destinationDimension() && dimension == LevelUtil.returnDimension()) { // We display the Descending GUI text to the player if they're about to return to the Overworld.
-                            displayAetherTravel = true;
-                            playerLeavingAether = true;
-                            PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new AetherTravelPacket(true));
-                            PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new LeavingAetherPacket(true));
-                        } else if (entity.level().dimension() == LevelUtil.returnDimension() && dimension == LevelUtil.destinationDimension()) { // We display the Ascending GUI text to the player if they're about to enter the Aether.
-                            displayAetherTravel = true;
-                            playerLeavingAether = false;
-                            PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new AetherTravelPacket(true));
-                            PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new LeavingAetherPacket(false));
-                        } else { // Don't display any text if not travelling between the Aether and Overworld or vice-versa.
-                            displayAetherTravel = false;
-                            PacketRelay.sendToAll(AetherPacketHandler.INSTANCE, new AetherTravelPacket(false));
-                        }
+            var aetherPlayer = player.getData(AetherDataAttachments.AETHER_PLAYER);
+            if (!AetherConfig.SERVER.spawn_in_aether.get() || !aetherPlayer.canSpawnInAether()) {
+                if (entity.level().getBiome(entity.blockPosition()).is(AetherTags.Biomes.DISPLAY_TRAVEL_TEXT)) {
+                    if (entity.level().dimension() == LevelUtil.destinationDimension() && dimension == LevelUtil.returnDimension()) { // We display the Descending GUI text to the player if they're about to return to the Overworld.
+                        displayAetherTravel = true;
+                        playerLeavingAether = true;
+                        PacketRelay.sendToAll(new AetherTravelPacket(true));
+                        PacketRelay.sendToAll(new LeavingAetherPacket(true));
+                    } else if (entity.level().dimension() == LevelUtil.returnDimension() && dimension == LevelUtil.destinationDimension()) { // We display the Ascending GUI text to the player if they're about to enter the Aether.
+                        displayAetherTravel = true;
+                        playerLeavingAether = false;
+                        PacketRelay.sendToAll(new AetherTravelPacket(true));
+                        PacketRelay.sendToAll(new LeavingAetherPacket(false));
+                    } else { // Don't display any text if not travelling between the Aether and Overworld or vice-versa.
+                        displayAetherTravel = false;
+                        PacketRelay.sendToAll(new AetherTravelPacket(false));
                     }
                 }
-            });
+            }
         }
     }
 
     /**
      * Checks if the player was falling out of the Aether, and prevents server fly-hack checks during this.
+     *
      * @param player The {@link Player}.
      * @see com.aetherteam.aether.event.listeners.DimensionListener#onPlayerTraveling(TickEvent.PlayerTickEvent)
      */
@@ -298,24 +298,24 @@ public class DimensionHooks {
     /**
      * Initializes the Aether level data for time separate from the overworld.
      * serverLevelData and levelData are access transformed.
+     *
      * @param level The {@link LevelAccessor}.
      * @see com.aetherteam.aether.event.listeners.DimensionListener#onPlayerTraveling(TickEvent.PlayerTickEvent)
      */
     public static void initializeLevelData(LevelAccessor level) {
         if (level instanceof ServerLevel serverLevel && serverLevel.dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
-            AetherTime.get(serverLevel).ifPresent(cap -> {
-                AetherLevelData levelData = new AetherLevelData(serverLevel.getServer().getWorldData(), serverLevel.getServer().getWorldData().overworldData(), cap.getDayTime());
-                ServerLevelAccessor serverLevelAccessor = (ServerLevelAccessor) serverLevel;
-                com.aetherteam.aether.mixin.mixins.common.accessor.LevelAccessor levelAccessor = (com.aetherteam.aether.mixin.mixins.common.accessor.LevelAccessor) level;
-                serverLevelAccessor.aether$setServerLevelData(levelData);
-                levelAccessor.aether$setLevelData(levelData);
-            });
+            AetherLevelData levelData = new AetherLevelData(serverLevel.getServer().getWorldData(), serverLevel.getServer().getWorldData().overworldData(), serverLevel.getData(AetherDataAttachments.AETHER_TIME).getDayTime());
+            ServerLevelAccessor serverLevelAccessor = (ServerLevelAccessor) serverLevel;
+            com.aetherteam.aether.mixin.mixins.common.accessor.LevelAccessor levelAccessor = (com.aetherteam.aether.mixin.mixins.common.accessor.LevelAccessor) level;
+            serverLevelAccessor.aether$setServerLevelData(levelData);
+            levelAccessor.aether$setLevelData(levelData);
         }
     }
 
     /**
      * Resets the weather cycle if players finish sleeping in an Aether dimension.<br>
      * Sets the time in the Aether according to the Aether's day/night cycle.
+     *
      * @param level The {@link LevelAccessor}.
      * @see com.aetherteam.aether.event.listeners.DimensionListener#onSleepFinish(SleepFinishedTimeEvent)
      */
@@ -336,20 +336,14 @@ public class DimensionHooks {
 
     /**
      * Checks whether it is eternal day in the Aether.
+     *
      * @param player The {@link Player}.
      * @return Whether it is eternal day, as a {@link Boolean}.
      * @see com.aetherteam.aether.event.listeners.DimensionListener#onTriedToSleep(SleepingTimeCheckEvent)
      */
     public static boolean isEternalDay(Player player) {
         if (player.level().dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
-            LazyOptional<AetherTime> aetherTimeLazy = AetherTime.get(player.level());
-            if (aetherTimeLazy.isPresent()) {
-                Optional<AetherTime> aetherTimeOptional = aetherTimeLazy.resolve();
-                if (aetherTimeOptional.isPresent()) {
-                    AetherTime aetherTime = aetherTimeOptional.get();
-                    return aetherTime.getEternalDay();
-                }
-            }
+            return player.getData(AetherDataAttachments.AETHER_TIME).isEternalDay();
         }
         return false;
     }

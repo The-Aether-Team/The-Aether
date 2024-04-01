@@ -30,6 +30,5 @@
     "recipes": [
       "aether:obsidian_from_bucket_freezing"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

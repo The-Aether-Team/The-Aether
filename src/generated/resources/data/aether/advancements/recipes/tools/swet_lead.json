@@ -28,6 +28,5 @@
     "recipes": [
       "aether:swet_lead"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

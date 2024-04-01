@@ -21,7 +21,8 @@ public interface ValkyrieTool {
 
     /**
      * Sets up the attributes for the item if it is in the entity's main hand, adding attributes for the mining reach distance and the attack range distance alongside the default item attributes.<br><br>
-     * @param map The item's default attributes ({@link Multimap Multimap&lt;Attribute, AttributeModifier&gt;}).
+     *
+     * @param map  The item's default attributes ({@link Multimap Multimap&lt;Attribute, AttributeModifier&gt;}).
      * @param slot The {@link EquipmentSlot} the stack is in.
      * @return The new attributes ({@link Multimap Multimap&lt;Attribute, AttributeModifier&gt;}) made up of the old attributes and the reach attributes.
      * @see com.aetherteam.aether.item.tools.valkyrie

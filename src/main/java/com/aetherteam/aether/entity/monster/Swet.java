@@ -63,7 +63,7 @@ public class Swet extends Slime implements MountableMob {
         this.goalSelector.addGoal(4, new SwetKeepOnJumpingGoal(this));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, (target) -> !this.isFriendlyTowardEntity(target) && !(target.getRootVehicle() instanceof Swet)));
     }
-   
+
     public static AttributeSupplier.Builder createMobAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 12.0)
@@ -82,6 +82,7 @@ public class Swet extends Slime implements MountableMob {
 
     /**
      * Refreshes the Swet's bounding box dimensions.
+     *
      * @param dataAccessor The {@link EntityDataAccessor} for the entity.
      */
     @Override
@@ -94,11 +95,12 @@ public class Swet extends Slime implements MountableMob {
 
     /**
      * Swets can spawn if the block at the spawn location is in the {@link AetherTags.Blocks#SWET_SPAWNABLE_ON} tag, if they are spawning at a light level above 8,
-     *and  if the difficulty isn't peaceful.
-     * @param swet The {@link Swet} {@link EntityType}.
-     * @param level The {@link LevelAccessor}.
+     * and  if the difficulty isn't peaceful.
+     *
+     * @param swet   The {@link Swet} {@link EntityType}.
+     * @param level  The {@link LevelAccessor}.
      * @param reason The {@link MobSpawnType} reason.
-     * @param pos The spawn {@link BlockPos}.
+     * @param pos    The spawn {@link BlockPos}.
      * @param random The {@link RandomSource}.
      * @return Whether this entity can spawn, as a {@link Boolean}.
      */
@@ -186,6 +188,7 @@ public class Swet extends Slime implements MountableMob {
 
     /**
      * Handles jumping when the Swet is being controlled by a mount.
+     *
      * @param vector The {@link Vec3} for travel movement.
      */
     @Override
@@ -209,8 +212,9 @@ public class Swet extends Slime implements MountableMob {
 
     /**
      * Mounts the interacting player onto the Swet.
+     *
      * @param player The interacting {@link Player}.
-     * @param hand The {@link InteractionHand}.
+     * @param hand   The {@link InteractionHand}.
      * @return The {@link InteractionResult}.
      */
     @Override
@@ -227,6 +231,7 @@ public class Swet extends Slime implements MountableMob {
 
     /**
      * Mounts an entity to the Swet.
+     *
      * @param livingEntity The {@link LivingEntity} to mount.
      */
     public void consumePassenger(LivingEntity livingEntity) {
@@ -246,15 +251,6 @@ public class Swet extends Slime implements MountableMob {
     }
 
     /**
-     * [CODE COPY] - {@link Entity#remove(RemovalReason)}.
-     */
-    @Override
-    public void remove(Entity.RemovalReason pReason) {
-        this.setRemoved(pReason);
-        this.invalidateCaps();
-    }
-
-    /**
      * @return Whether the Swet is in the middle of a jump, as a {@link Boolean}.
      */
     public boolean getMidJump() {
@@ -263,6 +259,7 @@ public class Swet extends Slime implements MountableMob {
 
     /**
      * Sets whether the Swet is in the middle of a jump.
+     *
      * @param midJump The {@link Boolean} value.
      */
     public void setMidJump(boolean midJump) {
@@ -278,6 +275,7 @@ public class Swet extends Slime implements MountableMob {
 
     /**
      * Sets the water damage the Swet has received.
+     *
      * @param scale The {@link Float} value.
      */
     public void setWaterDamageScale(float scale) {
@@ -294,6 +292,7 @@ public class Swet extends Slime implements MountableMob {
 
     /**
      * Sets whether the mounted player has jumped.
+     *
      * @param playerJumped The {@link Boolean} value.
      */
     @Override
@@ -311,6 +310,7 @@ public class Swet extends Slime implements MountableMob {
 
     /**
      * Sets whether the mount is jumping.
+     *
      * @param isMountJumping The {@link Boolean} value.
      */
     @Override
@@ -384,6 +384,7 @@ public class Swet extends Slime implements MountableMob {
 
     /**
      * Checks if a Swet should not target an entity that is wearing a Swet Cape.
+     *
      * @param entity The {@link LivingEntity}.
      * @return Whether the Swet should target, as a {@link Boolean}.
      */
@@ -474,6 +475,7 @@ public class Swet extends Slime implements MountableMob {
 
     /**
      * The sizing is larger when the Swet is mounted, to prevent it from being targeted by frogs.
+     *
      * @return The {@link Integer} size of the Swet.
      */
     @Override
@@ -485,11 +487,13 @@ public class Swet extends Slime implements MountableMob {
 
     /**
      * This method is overridden to be empty to remove the behavior from {@link Slime#setSize(int, boolean)}.
-     * @param size The size {@link Integer}.
+     *
+     * @param size        The size {@link Integer}.
      * @param resetHealth Whether to reset the entity's health, as a {@link Boolean}.
      */
     @Override
-    public void setSize(int size, boolean resetHealth) { }
+    public void setSize(int size, boolean resetHealth) {
+    }
 
     /**
      * @return The float for the Swet's hitbox scaling. Calculated from the scale subtracted from itself multiplied by the water damage scale.
@@ -501,6 +505,7 @@ public class Swet extends Slime implements MountableMob {
 
     /**
      * Handles the hitbox size for the Swet according to the scale from {@link Swet#getScale()}.
+     *
      * @param pose The {@link Pose} to get dimensions for.
      * @return The {@link EntityDimensions}.
      */
@@ -761,7 +766,7 @@ public class Swet extends Slime implements MountableMob {
                         this.swet.setSpeed(0.0F);
                     }
                 } else {
-                    this.swet.setSpeed((float)(this.speedModifier * this.swet.getAttributeValue(Attributes.MOVEMENT_SPEED)));
+                    this.swet.setSpeed((float) (this.speedModifier * this.swet.getAttributeValue(Attributes.MOVEMENT_SPEED)));
                 }
             }
         }

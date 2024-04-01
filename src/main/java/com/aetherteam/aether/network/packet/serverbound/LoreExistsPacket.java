@@ -1,8 +1,10 @@
 package com.aetherteam.aether.network.packet.serverbound;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.inventory.menu.LoreBookMenu;
 import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -13,8 +15,16 @@ import javax.annotation.Nullable;
  * Communicates whether a language entry for lore exists from the client to the server.
  */
 public record LoreExistsPacket(int playerID, ItemStack itemStack, boolean exists) implements BasePacket {
+
+    public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "check_for_lore_entry");
+
     @Override
-    public void encode(FriendlyByteBuf buf) {
+    public ResourceLocation id() {
+        return ID;
+    }
+
+    @Override
+    public void write(FriendlyByteBuf buf) {
         buf.writeInt(this.playerID());
         buf.writeItem(this.itemStack());
         buf.writeBoolean(this.exists());

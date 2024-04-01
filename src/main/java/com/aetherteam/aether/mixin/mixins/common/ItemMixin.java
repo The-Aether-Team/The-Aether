@@ -23,10 +23,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class ItemMixin {
     /**
      * Checks if a block-item interaction is too far away.
-     * @param level The {@link Level} for interaction.
-     * @param player The {@link Player} attempting to interact.
+     *
+     * @param level     The {@link Level} for interaction.
+     * @param player    The {@link Player} attempting to interact.
      * @param fluidMode The {@link net.minecraft.world.level.ClipContext.Fluid} for interaction.
-     * @param cir The {@link BlockHitResult} {@link CallbackInfoReturnable} used for the method's return value.
+     * @param cir       The {@link BlockHitResult} {@link CallbackInfoReturnable} used for the method's return value.
      * @see ItemMixin#interactionTooFar(Level, Player, InteractionHand, ClipContext.Fluid)
      */
     @Inject(at = @At(value = "HEAD"), method = "getPlayerPOVHitResult(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/ClipContext$Fluid;)Lnet/minecraft/world/phys/BlockHitResult;", cancellable = true)
@@ -42,8 +43,9 @@ public class ItemMixin {
 
     /**
      * Checks if a block-item interaction is too far away for the player to be able to interact with if they're trying to interact using a hand that doesn't contain a {@link ValkyrieTool}, but are still holding a Valkyrie Tool in another hand.
+     *
      * @param player The {@link Player} attempting to interact.
-     * @param hand The {@link InteractionHand} used to interact.
+     * @param hand   The {@link InteractionHand} used to interact.
      * @return Whether the player is too far to interact, as a {@link Boolean}.
      * @see ItemMixin#getPlayerPOVHitResultForReach(Level, Player, double, ClipContext.Fluid)
      */

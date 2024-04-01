@@ -25,8 +25,9 @@ public class DispenseDartBehavior extends AbstractProjectileDispenseBehavior {
 
     /**
      * Dispenses the {@link AbstractDart} projectile and shrinks the {@link DartItem} stack.
+     *
      * @param blockSource The {@link BlockSource} for the dispenser.
-     * @param stack The {@link ItemStack} in the dispenser.
+     * @param stack       The {@link ItemStack} in the dispenser.
      * @return A modified version of the {@link ItemStack} in the dispenser.
      */
     @Override
@@ -41,9 +42,10 @@ public class DispenseDartBehavior extends AbstractProjectileDispenseBehavior {
 
     /**
      * Sets up the {@link AbstractDart} projectile to be dispensed using the {@link DartItem} in the dispenser.
-     * @param level The {@link Level} the dispenser is in.
+     *
+     * @param level    The {@link Level} the dispenser is in.
      * @param position The {@link Position} to dispense at.
-     * @param stack The {@link ItemStack} in the dispenser.
+     * @param stack    The {@link ItemStack} in the dispenser.
      * @return The {@link Projectile} to dispense.
      */
     @Nullable

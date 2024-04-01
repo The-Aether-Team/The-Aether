@@ -1,13 +1,11 @@
 package com.aetherteam.aether.recipe.builder;
 
 import com.aetherteam.aether.recipe.recipes.item.IncubationRecipe;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.mojang.serialization.JsonOps;
-import net.minecraft.Util;
-import net.minecraft.advancements.*;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementRequirements;
+import net.minecraft.advancements.AdvancementRewards;
+import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
-import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.nbt.CompoundTag;
@@ -22,6 +20,7 @@ import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 public class IncubationBuilder implements RecipeBuilder {
     private final Ingredient ingredient;
@@ -69,28 +68,12 @@ public class IncubationBuilder implements RecipeBuilder {
         Advancement.Builder advancement$builder = recipeOutput.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(AdvancementRequirements.Strategy.OR);
         Objects.requireNonNull(advancement$builder);
         this.criteria.forEach(advancement$builder::addCriterion);
-        recipeOutput.accept(new IncubationBuilder.Result(id, this.group == null ? "" : this.group, this.ingredient, this.entity, this.tag, this.incubationTime, advancement$builder.build(new ResourceLocation(id.getNamespace(), "recipes/incubation/" + id.getPath())), this.serializer));
+        recipeOutput.accept(id, new IncubationRecipe(this.group == null ? "" : this.group, this.ingredient, this.entity, Optional.ofNullable(this.tag), this.incubationTime), advancement$builder.build(new ResourceLocation(id.getNamespace(), "recipes/incubation/" + id.getPath())));
     }
 
     private void ensureValid(ResourceLocation id) {
         if (this.criteria.isEmpty()) {
             throw new IllegalStateException("No way of obtaining recipe " + id);
-        }
-    }
-
-    public record Result(ResourceLocation id, String group, Ingredient ingredient, EntityType<?> entity, @Nullable CompoundTag tag, int incubationTime, AdvancementHolder advancement, RecipeSerializer<IncubationRecipe> type) implements FinishedRecipe {
-        @Override
-        public void serializeRecipeData(JsonObject json) {
-            if (!this.group.isEmpty()) {
-                json.addProperty("group", this.group);
-            }
-            json.add("ingredient", this.ingredient.toJson(false));
-            json.addProperty("entity", EntityType.getKey(this.entity).toString());
-            if (this.tag != null && !this.tag.isEmpty()) {
-                JsonElement tagElement = Util.getOrThrow(CompoundTag.CODEC.encodeStart(JsonOps.INSTANCE, this.tag), IllegalStateException::new);
-                json.add("tag", tagElement);
-            }
-            json.addProperty("incubationtime", this.incubationTime);
         }
     }
 }

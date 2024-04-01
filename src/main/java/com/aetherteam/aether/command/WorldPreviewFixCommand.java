@@ -17,6 +17,7 @@ public class WorldPreviewFixCommand {
 
     /**
      * Resets the values used for displaying the world preview, in case they become bugged.
+     *
      * @param source The {@link CommandSourceStack}.
      * @return An {@link Integer}.
      */

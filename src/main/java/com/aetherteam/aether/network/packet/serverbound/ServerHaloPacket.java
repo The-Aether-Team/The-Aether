@@ -1,9 +1,11 @@
 package com.aetherteam.aether.network.packet.serverbound;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.perk.data.ServerPerkData;
 import com.aetherteam.aether.perk.types.Halo;
 import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
 import javax.annotation.Nullable;
@@ -14,8 +16,16 @@ public class ServerHaloPacket {
      * Applies the Halo perk to a player on the server.
      */
     public record Apply(UUID playerUUID, Halo halo) implements BasePacket {
+
+        public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "add_halo_server");
+
         @Override
-        public void encode(FriendlyByteBuf buf) {
+        public ResourceLocation id() {
+            return ID;
+        }
+
+        @Override
+        public void write(FriendlyByteBuf buf) {
             buf.writeUUID(this.playerUUID());
             Halo.write(buf, this.halo());
         }
@@ -38,8 +48,16 @@ public class ServerHaloPacket {
      * Removes the Halo perk from a player on the server.
      */
     public record Remove(UUID playerUUID) implements BasePacket {
+
+        public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "remove_halo_server");
+
         @Override
-        public void encode(FriendlyByteBuf buf) {
+        public ResourceLocation id() {
+            return ID;
+        }
+
+        @Override
+        public void write(FriendlyByteBuf buf) {
             buf.writeUUID(this.playerUUID());
         }
 

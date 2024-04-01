@@ -29,6 +29,7 @@ public class WorldDisplayHelper {
 
     /**
      * Checks if {@link AetherConfig.Client#enable_world_preview} is enabled to see whether the world preview should be enabled or disabled.
+     *
      * @see WorldDisplayHelper#enableWorldPreview()
      * @see WorldDisplayHelper#disableWorldPreview()
      */
@@ -42,6 +43,7 @@ public class WorldDisplayHelper {
 
     /**
      * If there is no level loaded, then load a level.
+     *
      * @see WorldDisplayHelper#loadLevel()
      */
     public static void enableWorldPreview() {
@@ -62,7 +64,8 @@ public class WorldDisplayHelper {
         if (summary != null && minecraft.getLevelSource().levelExists(summary.getLevelId())) {
             setActive();
             minecraft.forceSetScreen(new GenericDirtMessageScreen(Component.translatable("selectWorld.data_read")));
-            minecraft.createWorldOpenFlows().loadLevel(minecraft.screen, summary.getLevelId());
+            minecraft.createWorldOpenFlows().checkForBackupAndLoad(summary.getLevelId(), () -> {
+            });
         } else {
             resetActive();
             resetConfig();
@@ -85,6 +88,7 @@ public class WorldDisplayHelper {
 
     /**
      * If there is a level loaded, then stop the level. Then load the title screen menu back up.
+     *
      * @see WorldDisplayHelper#stopLevel(Screen)
      * @see WorldDisplayHelper#setMenu()
      */
@@ -98,6 +102,7 @@ public class WorldDisplayHelper {
 
     /**
      * Stops a level if one exists, after resetting the player and helper states to default with {@link WorldDisplayHelper#resetStates()}.
+     *
      * @param screen The current {@link Screen}.
      */
     public static void stopLevel(@Nullable Screen screen) {
@@ -161,7 +166,8 @@ public class WorldDisplayHelper {
                     loadedSummary = summary;
                 }
             }
-        } catch (ExecutionException | InterruptedException | UnsupportedOperationException | IOException e) { // If a LevelSummary can't be found, then reset the helper back to the default states.
+        } catch (ExecutionException | InterruptedException | UnsupportedOperationException |
+                 IOException e) { // If a LevelSummary can't be found, then reset the helper back to the default states.
             resetActive();
             resetConfig();
             e.printStackTrace();
@@ -170,6 +176,7 @@ public class WorldDisplayHelper {
 
     /**
      * Checks whether a provided {@link LevelSummary} is the same as the one of the world preview's displayed level.
+     *
      * @param summary The {@link LevelSummary} to compare to.
      * @return Whether they match, as a {@link Boolean}.
      */

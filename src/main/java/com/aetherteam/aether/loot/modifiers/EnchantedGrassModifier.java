@@ -30,8 +30,9 @@ public class EnchantedGrassModifier extends LootModifier {
     /**
      * Randomly adds an extra item drop with a 50% chance if the modifier block target is on top of any blocks in the {@link AetherTags.Blocks#ENCHANTED_GRASS},
      * and if there's a loot item that matches the item that is able to have its drops increased.
+     *
      * @param lootStacks Result items from a loot table as an {@link ObjectArrayList} of {@link ItemStack}s.
-     * @param context The {@link LootContext}.
+     * @param context    The {@link LootContext}.
      * @return A new {@link ObjectArrayList} of {@link ItemStack}s that a loot table will give.
      */
     @Override

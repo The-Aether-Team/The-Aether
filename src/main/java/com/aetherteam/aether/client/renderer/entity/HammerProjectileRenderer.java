@@ -49,6 +49,7 @@ public class HammerProjectileRenderer extends EntityRenderer<HammerProjectile> {
 
     /**
      * Checks whether the projectile should use the Kingbdogz or Jeb hammer texture.
+     *
      * @param hammer The {@link HammerProjectile} entity.
      * @return The texture {@link ResourceLocation}.
      */

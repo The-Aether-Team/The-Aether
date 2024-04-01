@@ -30,6 +30,5 @@
     "recipes": [
       "aether:pillar_from_pillar_top_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

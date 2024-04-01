@@ -34,6 +34,7 @@ public class AetherLevelData extends DerivedLevelData {
 
     /**
      * Sets the world time.
+     *
      * @param time The {@link Integer} for the time in ticks.
      */
     @Override
@@ -43,6 +44,7 @@ public class AetherLevelData extends DerivedLevelData {
 
     /**
      * Sets the number of ticks the weather will be clear for.
+     *
      * @param time The {@link Integer} for the time in ticks.
      */
     @Override
@@ -52,6 +54,7 @@ public class AetherLevelData extends DerivedLevelData {
 
     /**
      * Sets whether it is raining.
+     *
      * @param raining The {@link Boolean} value.
      */
     @Override
@@ -61,6 +64,7 @@ public class AetherLevelData extends DerivedLevelData {
 
     /**
      * Sets the number of ticks until rain.
+     *
      * @param time The {@link Integer} for the time in ticks.
      */
     @Override
@@ -70,6 +74,7 @@ public class AetherLevelData extends DerivedLevelData {
 
     /**
      * Sets whether it is thundering.
+     *
      * @param thundering The {@link Boolean} value.
      */
     @Override
@@ -79,6 +84,7 @@ public class AetherLevelData extends DerivedLevelData {
 
     /**
      * Defines the number of ticks until next lightning bolt.
+     *
      * @param time The {@link Integer} for the time in ticks.
      */
     @Override
@@ -88,6 +94,7 @@ public class AetherLevelData extends DerivedLevelData {
 
     /**
      * Gets the game rules class instance.
+     *
      * @return The {@link WrappedGameRules} instance.
      */
     @Override

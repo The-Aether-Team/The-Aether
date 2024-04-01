@@ -19,6 +19,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
@@ -57,7 +58,10 @@ public class SilverBossRoom extends SilverDungeonPiece {
     protected void handleDataMarker(String name, BlockPos pos, ServerLevelAccessor level, RandomSource random, BoundingBox box) {
         if (name.equals("Treasure Chest")) {
             BlockPos chest = pos.below();
-            RandomizableContainerBlockEntity.setLootTable(level, random, chest, AetherLoot.SILVER_DUNGEON_REWARD);
+            BlockEntity entity = level.getBlockEntity(chest);
+            if (entity instanceof RandomizableContainerBlockEntity container) {
+                container.setLootTable(AetherLoot.SILVER_DUNGEON_REWARD, random.nextLong());
+            }
             TreasureChestBlockEntity.setDungeonType(level, chest, new ResourceLocation(Aether.MODID, "silver"));
             level.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
         }

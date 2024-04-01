@@ -65,7 +65,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         this.targetSelector.addGoal(1, this.mostDamageTargetGoal);
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
     }
-   
+
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MOVEMENT_SPEED, 0.5);
@@ -109,6 +109,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
 
     /**
      * The Valkyrie will be provoked to attack the player if attacked.
+     *
      * @param source The {@link DamageSource}.
      * @param amount The {@link Float} amount of damage.
      * @return Whether the entity was hurt, as a {@link Boolean}.
@@ -125,6 +126,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
     /**
      * Teleports near a target outside a specified radius.<br><br>
      * Warning for "deprecation" is suppressed because {@link BlockState#blocksMotion()} is necessary to call.
+     *
      * @return Whether the teleportation succeeded, as a {@link Boolean}.
      */
     @SuppressWarnings("deprecation")
@@ -145,6 +147,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
 
     /**
      * Teleports to the specified position.
+     *
      * @return Whether the teleportation succeeded, as a {@link Boolean}.
      */
     protected boolean teleport(double x, double y, double z) {
@@ -170,7 +173,8 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
 
     /**
      * Sends a message to the player who interacted with the Valkyrie.
-     * @param player The interacting {@link Player}.
+     *
+     * @param player  The interacting {@link Player}.
      * @param message The message {@link Component}.
      */
     protected void chat(Player player, Component message) {
@@ -187,6 +191,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
 
     /**
      * Sets whether this entity is on the ground.
+     *
      * @param onGround The {@link Boolean} value.
      */
     @Override

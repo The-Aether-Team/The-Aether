@@ -30,6 +30,7 @@ public class CloudCrystal extends AbstractCrystal implements WeaknessDamage {
 
     /**
      * Weakens an entity that is hit by the projectile. The projectile is also able to damage blazes.
+     *
      * @param result The {@link EntityHitResult} of the projectile.
      */
     @Override

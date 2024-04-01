@@ -38,6 +38,7 @@ public class SunAltarWhitelist {
 
     /**
      * Checks if a player is whitelisted.
+     *
      * @param profile The player's {@link GameProfile}.
      * @return Whether the player was found in the whitelist data, as a {@link Boolean}.
      */
@@ -48,6 +49,7 @@ public class SunAltarWhitelist {
 
     /**
      * Adds a player to the whitelist.
+     *
      * @param element The {@link UserWhiteListEntry} for the player.
      */
     public void add(UserWhiteListEntry element) {
@@ -57,6 +59,7 @@ public class SunAltarWhitelist {
 
     /**
      * Removes a player from the whitelist.
+     *
      * @param element The {@link UserWhiteListEntry} for the player.
      */
     public void remove(UserWhiteListEntry element) {
@@ -66,6 +69,7 @@ public class SunAltarWhitelist {
 
     /**
      * Reloads the whitelist file.
+     *
      * @see SunAltarWhitelist#load()
      */
     public void reload() {

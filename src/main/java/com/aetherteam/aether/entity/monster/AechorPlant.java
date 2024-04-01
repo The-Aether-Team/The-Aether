@@ -55,7 +55,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0,  new RangedAttackGoal(this, 1.0, 60, 10.0F));
+        this.goalSelector.addGoal(0, new RangedAttackGoal(this, 1.0, 60, 10.0F));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }
@@ -77,6 +77,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
 
     /**
      * Refreshes the Aechor Plant's bounding box dimensions.
+     *
      * @param dataAccessor The {@link EntityDataAccessor} for the entity.
      */
     @Override
@@ -89,11 +90,12 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
 
     /**
      * Sets up random sizing for the Aechor Plant.
-     * @param level The {@link ServerLevelAccessor} where the entity is spawned.
+     *
+     * @param level      The {@link ServerLevelAccessor} where the entity is spawned.
      * @param difficulty The {@link DifficultyInstance} of the game.
-     * @param reason The {@link MobSpawnType} reason.
-     * @param spawnData The {@link SpawnGroupData}.
-     * @param tag The {@link CompoundTag} to apply to this entity.
+     * @param reason     The {@link MobSpawnType} reason.
+     * @param spawnData  The {@link SpawnGroupData}.
+     * @param tag        The {@link CompoundTag} to apply to this entity.
      * @return The {@link SpawnGroupData} to return.
      */
     @Nullable
@@ -108,11 +110,12 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
     /**
      * Aechor Plants can spawn if the block at the spawn location is in the {@link AetherTags.Blocks#AECHOR_PLANT_SPAWNABLE_ON} tag, if they are spawning at a light level above 8,
      * if the difficulty isn't peaceful, and they spawn with a random chance of 1/10.
+     *
      * @param aechorPlant The {@link AechorPlant} {@link EntityType}.
-     * @param level The {@link LevelAccessor}.
-     * @param reason The {@link MobSpawnType} reason.
-     * @param pos The spawn {@link BlockPos}.
-     * @param random The {@link RandomSource}.
+     * @param level       The {@link LevelAccessor}.
+     * @param reason      The {@link MobSpawnType} reason.
+     * @param pos         The spawn {@link BlockPos}.
+     * @param random      The {@link RandomSource}.
      * @return Whether this entity can spawn, as a {@link Boolean}.
      */
     public static boolean checkAechorPlantSpawnRules(EntityType<? extends AechorPlant> aechorPlant, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
@@ -163,8 +166,9 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
 
     /**
      * Fills a Skyroot Bucket with poison and reduces the amount of poison left collectible from this Aechor Plant.
+     *
      * @param player The interacting {@link Player}.
-     * @param hand The {@link InteractionHand}.
+     * @param hand   The {@link InteractionHand}.
      * @return The {@link InteractionResult}.
      */
     @Override
@@ -182,29 +186,33 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
 
     /**
      * Disallows Aechor Plants from being pushed.
+     *
      * @param x The {@link Double} for x-motion.
      * @param y The {@link Double} for y-motion.
      * @param z The {@link Double} for z-motion.
      */
     @Override
-    public void push(double x, double y, double z) { }
+    public void push(double x, double y, double z) {
+    }
 
     /**
      * Disallows Aechor Plants from jumping.
      */
     @Override
-    protected void jumpFromGround() { }
+    protected void jumpFromGround() {
+    }
 
     /**
-    * Disallows Aechor Plants from being leashed.
-    */
+     * Disallows Aechor Plants from being leashed.
+     */
     @Override
     public boolean canBeLeashed(Player player) {
         return false;
     }
-    
+
     /**
      * Spawns particles when the Aechor Plant's hurt animation is complete.
+     *
      * @param source The {@link DamageSource}.
      * @param amount The {@link Float} amount of damage.
      * @return Whether the entity was hurt, as a {@link Boolean}.
@@ -226,7 +234,8 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
 
     /**
      * Shoots a Poison Needle from the center of the Aechor Plant.
-     * @param target The target {@link LivingEntity}.
+     *
+     * @param target         The target {@link LivingEntity}.
      * @param distanceFactor The {@link Float} distance factor for targeting.
      */
     @Override
@@ -253,6 +262,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
 
     /**
      * Sets the size of the Aechor Plant.
+     *
      * @param size The {@link Integer} value.
      */
     public void setSize(int size) {
@@ -268,6 +278,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
 
     /**
      * Sets the amount of remaining poison that can be collected from the Aechor Plant.
+     *
      * @param poisonRemaining The {@link Integer} value.
      */
     public void setPoisonRemaining(int poisonRemaining) {
@@ -283,6 +294,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
 
     /**
      * Sets whether an entity is being targeted.
+     *
      * @param targetingEntity The {@link Boolean} value.
      */
     public void setTargetingEntity(boolean targetingEntity) {
@@ -320,6 +332,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
 
     /**
      * Handles the hitbox for the randomized sizing of Aechor Plants.
+     *
      * @param pose The {@link Pose} to get dimensions for.
      * @return The {@link EntityDimensions}.
      */
@@ -342,6 +355,7 @@ public class AechorPlant extends PathfinderMob implements RangedAttackMob {
 
     /**
      * Makes Aechor Plants immune to Inebriation.
+     *
      * @param effect The {@link MobEffectInstance} to check whether this mob is affected by.
      * @return Whether the mob is affected.
      */

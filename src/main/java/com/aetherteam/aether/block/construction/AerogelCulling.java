@@ -12,11 +12,12 @@ import java.util.List;
 public interface AerogelCulling {
     /**
      * Skips rendering for Aerogel blocks that are neighboring this block if the bordering face shapes match.
-     * @param level The {@link Level} that the block is in.
-     * @param pos The {@link BlockPos} of this block.
-     * @param state The {@link BlockState} of the block.
+     *
+     * @param level         The {@link Level} that the block is in.
+     * @param pos           The {@link BlockPos} of this block.
+     * @param state         The {@link BlockState} of the block.
      * @param neighborState The {@link BlockState} of the neighboring block.
-     * @param dir The {@link Direction} to the neighboring state.
+     * @param dir           The {@link Direction} to the neighboring state.
      * @return Whether the neighbor block should skip rendering the neighboring face, as a {@link Boolean}.
      */
     default boolean shouldHideNeighboringAerogelFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState, Direction dir) {

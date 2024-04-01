@@ -111,11 +111,12 @@ public class GoldDungeonStructure extends Structure {
 
     /**
      * Decorate the island with smaller spheres on the edges.
+     *
      * @param templateManager The {@link StructureTemplateManager}.
-     * @param builder The {@link StructurePiecesBuilder}.
-     * @param random The {@link RandomSource} for the structure.
-     * @param center The center {@link BlockPos} to place from.
-     * @param stubOffset The {@link Vec3i} offset for the stub piece.
+     * @param builder         The {@link StructurePiecesBuilder}.
+     * @param random          The {@link RandomSource} for the structure.
+     * @param center          The center {@link BlockPos} to place from.
+     * @param stubOffset      The {@link Vec3i} offset for the stub piece.
      */
     private void addIslandStubs(StructureTemplateManager templateManager, StructurePiecesBuilder builder, RandomSource random, BlockPos center, Vec3i stubOffset) {
         int stubCount = this.stubIslandCount + random.nextInt(5);
@@ -141,12 +142,13 @@ public class GoldDungeonStructure extends Structure {
 
     /**
      * Place small caves around the island.
+     *
      * @param builder The {@link StructurePiecesBuilder}.
-     * @param random The {@link RandomSource} for the structure.
-     * @param center The center {@link BlockPos} to place from.
+     * @param random  The {@link RandomSource} for the structure.
+     * @param center  The center {@link BlockPos} to place from.
      */
     private void placeGumdropCaves(StructurePiecesBuilder builder, RandomSource random, BlockPos center) {
-        for(int count = 0; count < 18; ++count) {
+        for (int count = 0; count < 18; ++count) {
             int x = center.getX() + random.nextInt(24) - random.nextInt(24);
             int y = center.getY() + random.nextInt(24) - random.nextInt(24);
             int z = center.getZ() + random.nextInt(24) - random.nextInt(24);
@@ -157,12 +159,13 @@ public class GoldDungeonStructure extends Structure {
     /**
      * Place the tunnel so that it connects to the boss room's door.
      * Returns the difference between the height of the world's surface and the tunnel.
+     *
      * @param templateManager The {@link StructureTemplateManager}.
-     * @param builder The {@link StructurePiecesBuilder}.
-     * @param room The {@link StructurePiece} for the boss room.
-     * @param chunkGenerator The {@link ChunkGenerator} for generation.
-     * @param heightAccessor The {@link LevelHeightAccessor} to place in.
-     * @param randomState The {@link RandomState} for the structure.
+     * @param builder         The {@link StructurePiecesBuilder}.
+     * @param room            The {@link StructurePiece} for the boss room.
+     * @param chunkGenerator  The {@link ChunkGenerator} for generation.
+     * @param heightAccessor  The {@link LevelHeightAccessor} to place in.
+     * @param randomState     The {@link RandomState} for the structure.
      * @return The {@link Integer} for the first available height to place at.
      */
     private int tunnelFromBossRoom(StructureTemplateManager templateManager, StructurePiecesBuilder builder, StructurePiece room, ChunkGenerator chunkGenerator, LevelHeightAccessor heightAccessor, RandomState randomState) {
@@ -195,13 +198,14 @@ public class GoldDungeonStructure extends Structure {
 
     /**
      * Place the trees after caves have been generated
-     * @param level The {@link WorldGenLevel} to place in.
+     *
+     * @param level            The {@link WorldGenLevel} to place in.
      * @param structureManager The {@link StructureManager}.
-     * @param generator The {@link ChunkGenerator} for generation.
-     * @param random The {@link RandomSource} for the structure.
-     * @param chunkBox The {@link BoundingBox} for chunk bounds.
-     * @param chunkPos The {@link ChunkPos}.
-     * @param pieces The {@link PiecesContainer} holding structure pieces.
+     * @param generator        The {@link ChunkGenerator} for generation.
+     * @param random           The {@link RandomSource} for the structure.
+     * @param chunkBox         The {@link BoundingBox} for chunk bounds.
+     * @param chunkPos         The {@link ChunkPos}.
+     * @param pieces           The {@link PiecesContainer} holding structure pieces.
      */
     @Override
     public void afterPlace(WorldGenLevel level, StructureManager structureManager, ChunkGenerator generator, RandomSource random, BoundingBox chunkBox, ChunkPos chunkPos, PiecesContainer pieces) {
@@ -216,13 +220,14 @@ public class GoldDungeonStructure extends Structure {
 
     /**
      * Randomly place Golden Oak trees and flowers on top of a structure piece.
-     * @param level The {@link WorldGenLevel} to place in.
-     * @param generator The {@link ChunkGenerator} for generation.
-     * @param random The {@link RandomSource} for the structure.
-     * @param boundingBox The {@link BoundingBox} for the structure piece.
-     * @param chunkBox The {@link BoundingBox} for chunk bounds.
+     *
+     * @param level        The {@link WorldGenLevel} to place in.
+     * @param generator    The {@link ChunkGenerator} for generation.
+     * @param random       The {@link RandomSource} for the structure.
+     * @param boundingBox  The {@link BoundingBox} for the structure piece.
+     * @param chunkBox     The {@link BoundingBox} for chunk bounds.
      * @param randomBounds The {@link Integer} parameter for random.nextInt().
-     * @param treeWeight The {@link Integer} chance out of randomBounds of placing a tree.
+     * @param treeWeight   The {@link Integer} chance out of randomBounds of placing a tree.
      * @param flowerWeight The {@link Integer} chance out of randomBounds of placing a flower.
      */
     private static void placeGoldenOaks(WorldGenLevel level, ChunkGenerator generator, RandomSource random, BoundingBox boundingBox, BoundingBox chunkBox, int randomBounds, int treeWeight, int flowerWeight) {
@@ -255,10 +260,11 @@ public class GoldDungeonStructure extends Structure {
 
     /**
      * Returns true if there is a solid block in the column. MutableBlockPos is set to the first empty block.
+     *
      * @param level The {@link WorldGenLevel} to check for blocks.
-     * @param pos This {@link net.minecraft.core.BlockPos.MutableBlockPos} is set to the first empty block in the column.
-     * @param minY The minimum {@link Integer} y-level for the column.
-     * @param maxY The maximum {@link Integer} y-level for the column.
+     * @param pos   This {@link net.minecraft.core.BlockPos.MutableBlockPos} is set to the first empty block in the column.
+     * @param minY  The minimum {@link Integer} y-level for the column.
+     * @param maxY  The maximum {@link Integer} y-level for the column.
      * @return Whether a dirt position was found in the column, as a {@link Boolean}.
      */
     private static boolean iterateColumn(WorldGenLevel level, BlockPos.MutableBlockPos pos, int minY, int maxY) {

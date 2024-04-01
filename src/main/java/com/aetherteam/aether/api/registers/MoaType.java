@@ -129,6 +129,7 @@ public class MoaType {
 
         /**
          * Sets the {@link MoaType} texture with the "aether" mod ID.
+         *
          * @see MoaType#getMoaTexture()
          */
         public MoaType.Properties texture(String texture) {
@@ -138,6 +139,7 @@ public class MoaType {
 
         /**
          * Sets the {@link MoaType} texture with a given mod ID.
+         *
          * @param id The given mod ID {@link String}.
          * @see MoaType#getMoaTexture()
          */
@@ -148,6 +150,7 @@ public class MoaType {
 
         /**
          * Sets the {@link MoaType} saddle texture with the "aether" mod ID.
+         *
          * @see MoaType#getMoaTexture()
          */
         public MoaType.Properties saddleTexture(String saddleTexture) {
@@ -157,6 +160,7 @@ public class MoaType {
 
         /**
          * Sets the {@link MoaType} saddle texture with a given mod ID.
+         *
          * @param id The given mod ID {@link String}.
          * @see MoaType#getMoaTexture()
          */

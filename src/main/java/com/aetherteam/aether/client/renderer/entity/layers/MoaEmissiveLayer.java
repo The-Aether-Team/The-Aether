@@ -26,16 +26,17 @@ public class MoaEmissiveLayer extends RenderLayer<Moa, MoaModel> {
 
     /**
      * Renders an emissive layer on a Moa if the texture from a {@link com.aetherteam.aether.perk.types.MoaSkins.MoaSkin} is present.
-     * @param poseStack The rendering {@link PoseStack}.
-     * @param buffer The rendering {@link MultiBufferSource}.
-     * @param packedLight The {@link Integer} for the packed lighting for rendering.
-     * @param moa The {@link Moa} entity.
-     * @param limbSwing The {@link Float} for the limb swing rotation.
+     *
+     * @param poseStack       The rendering {@link PoseStack}.
+     * @param buffer          The rendering {@link MultiBufferSource}.
+     * @param packedLight     The {@link Integer} for the packed lighting for rendering.
+     * @param moa             The {@link Moa} entity.
+     * @param limbSwing       The {@link Float} for the limb swing rotation.
      * @param limbSwingAmount The {@link Float} for the limb swing amount.
-     * @param partialTicks The {@link Float} for the game's partial ticks.
-     * @param ageInTicks The {@link Float} for the entity's age in ticks.
-     * @param netHeadYaw The {@link Float} for the head yaw rotation.
-     * @param headPitch The {@link Float} for the head pitch rotation.
+     * @param partialTicks    The {@link Float} for the game's partial ticks.
+     * @param ageInTicks      The {@link Float} for the entity's age in ticks.
+     * @param netHeadYaw      The {@link Float} for the head yaw rotation.
+     * @param headPitch       The {@link Float} for the head pitch rotation.
      */
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Moa moa, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
@@ -49,6 +50,7 @@ public class MoaEmissiveLayer extends RenderLayer<Moa, MoaModel> {
 
     /**
      * Retrieves the emissive texture for the player's {@link com.aetherteam.aether.perk.types.MoaSkins.MoaSkin}, if there is one and the player has a Moa Skin.
+     *
      * @param moa The {@link Moa} to retrieve the skin from.
      * @return The {@link ResourceLocation} for the emissive texture.
      */

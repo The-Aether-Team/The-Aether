@@ -16,6 +16,7 @@ public class ShelfFeature extends Feature<ShelfConfiguration> {
 
     /**
      * Places disks within a y-range and in a 16x16 area, creating continuous shelves along island edges.
+     *
      * @param context The {@link FeaturePlaceContext} with a {@link ShelfConfiguration}.
      * @return Whether the placement was successful, as a {@link Boolean}.
      */

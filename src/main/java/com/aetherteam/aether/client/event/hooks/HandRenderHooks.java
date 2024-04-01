@@ -1,6 +1,6 @@
 package com.aetherteam.aether.client.event.hooks;
 
-import com.aetherteam.aether.capability.player.AetherPlayer;
+import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.client.renderer.accessory.GlovesRenderer;
 import com.aetherteam.aether.client.renderer.accessory.ShieldOfRepulsionRenderer;
 import com.aetherteam.aether.item.EquipmentUtil;
@@ -28,75 +28,73 @@ import javax.annotation.Nullable;
 public class HandRenderHooks {
     /**
      * Handles rendering gloves on the player's hands in first person, if they aren't wearing an Invisibility Cloak and if the gloves are set to be visible.
+     *
      * @param itemInHandRenderer The {@link ItemInHandRenderer} for rendering items in the player's hand.
-     * @param player The {@link net.minecraft.world.entity.player.Player} to render the gloves on.
-     * @param hand The {@link InteractionHand} to render a glove on.
-     * @param pitch The interpolated pitch for the hand, as a {@link Float}.
-     * @param swingProgress The swing progress for the hand, as a {@link Float}.
-     * @param equippedProgress The equipping progress for the hand, as a {@link Float}.
-     * @param poseStack The rendering {@link PoseStack}.
-     * @param buffer The rendering {@link MultiBufferSource}.
-     * @param packedLight The {@link Integer} for the packed lighting for rendering.
+     * @param player             The {@link net.minecraft.world.entity.player.Player} to render the gloves on.
+     * @param hand               The {@link InteractionHand} to render a glove on.
+     * @param pitch              The interpolated pitch for the hand, as a {@link Float}.
+     * @param swingProgress      The swing progress for the hand, as a {@link Float}.
+     * @param equippedProgress   The equipping progress for the hand, as a {@link Float}.
+     * @param poseStack          The rendering {@link PoseStack}.
+     * @param buffer             The rendering {@link MultiBufferSource}.
+     * @param packedLight        The {@link Integer} for the packed lighting for rendering.
      * @see com.aetherteam.aether.client.event.listeners.HandRenderListener#onRenderHand(RenderHandEvent)
      */
     public static void renderGloveHandOverlay(ItemInHandRenderer itemInHandRenderer, @Nullable AbstractClientPlayer player, InteractionHand hand, float pitch, float swingProgress, float equippedProgress, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         if (player != null) {
-            AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
-                if (!aetherPlayer.isWearingInvisibilityCloak()) { // Check for Invisibility Cloak.
-                    EquipmentUtil.findFirstCurio(player, (item) -> item.getItem() instanceof GlovesItem).ifPresent((slotResult) -> {
-                        String identifier = slotResult.slotContext().identifier();
-                        int id = slotResult.slotContext().index();
-                        ItemStack itemStack = slotResult.stack();
-                        CuriosApi.getCuriosInventory(player).ifPresent(handler -> handler.getStacksHandler(identifier).ifPresent(stacksHandler -> {
-                            if (stacksHandler.getRenders().get(id)) { // Check if Gloves are visible.
-                                CuriosRendererRegistry.getRenderer(itemStack.getItem()).ifPresent((renderer) -> {
-                                    if (renderer instanceof GlovesRenderer glovesRenderer) {
-                                        ItemStack heldItem = hand == InteractionHand.MAIN_HAND ? ((ItemInHandRendererAccessor) itemInHandRenderer).aether$getMainHandItem() : ((ItemInHandRendererAccessor) itemInHandRenderer).aether$getOffHandItem();
-                                        renderArmWithItem(itemInHandRenderer, glovesRenderer, itemStack, player, heldItem, hand, pitch, swingProgress, equippedProgress, poseStack, buffer, packedLight, HandRenderType.GLOVES);
-                                    }
-                                });
-                            }
-                        }));
+            if (!player.getData(AetherDataAttachments.AETHER_PLAYER).isWearingInvisibilityCloak()) { // Check for Invisibility Cloak.
+                EquipmentUtil.findFirstCurio(player, (item) -> item.getItem() instanceof GlovesItem).ifPresent((slotResult) -> {
+                    String identifier = slotResult.slotContext().identifier();
+                    int id = slotResult.slotContext().index();
+                    ItemStack itemStack = slotResult.stack();
+                    CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.getStacksHandler(identifier)).ifPresent(stacksHandler -> {
+                        if (stacksHandler.getRenders().get(id)) { // Check if Gloves are visible.
+                            CuriosRendererRegistry.getRenderer(itemStack.getItem()).ifPresent((renderer) -> {
+                                if (renderer instanceof GlovesRenderer glovesRenderer) {
+                                    ItemStack heldItem = hand == InteractionHand.MAIN_HAND ? ((ItemInHandRendererAccessor) itemInHandRenderer).aether$getMainHandItem() : ((ItemInHandRendererAccessor) itemInHandRenderer).aether$getOffHandItem();
+                                    renderArmWithItem(itemInHandRenderer, glovesRenderer, itemStack, player, heldItem, hand, pitch, swingProgress, equippedProgress, poseStack, buffer, packedLight, HandRenderType.GLOVES);
+                                }
+                            });
+                        }
                     });
-                }
-            });
+                });
+            }
         }
     }
 
     /**
      * Handles rendering the Shield of Repulsion overlay on the player's hands in first person, if they aren't wearing an Invisibility Cloak and if the shield is set to be visible.
+     *
      * @param itemInHandRenderer The {@link ItemInHandRenderer} for rendering items in the player's hand.
-     * @param player The {@link net.minecraft.world.entity.player.Player} to render the gloves on.
-     * @param hand The {@link InteractionHand} to render a glove on.
-     * @param pitch The interpolated pitch for the hand, as a {@link Float}.
-     * @param swingProgress The swing progress for the hand, as a {@link Float}.
-     * @param equippedProgress The equipping progress for the hand, as a {@link Float}.
-     * @param poseStack The rendering {@link PoseStack}.
-     * @param buffer The rendering {@link MultiBufferSource}.
-     * @param packedLight The {@link Integer} for the packed lighting for rendering.
+     * @param player             The {@link net.minecraft.world.entity.player.Player} to render the gloves on.
+     * @param hand               The {@link InteractionHand} to render a glove on.
+     * @param pitch              The interpolated pitch for the hand, as a {@link Float}.
+     * @param swingProgress      The swing progress for the hand, as a {@link Float}.
+     * @param equippedProgress   The equipping progress for the hand, as a {@link Float}.
+     * @param poseStack          The rendering {@link PoseStack}.
+     * @param buffer             The rendering {@link MultiBufferSource}.
+     * @param packedLight        The {@link Integer} for the packed lighting for rendering.
      * @see com.aetherteam.aether.client.event.listeners.HandRenderListener#onRenderHand(RenderHandEvent)
      */
     public static void renderShieldOfRepulsionHandOverlay(ItemInHandRenderer itemInHandRenderer, @Nullable AbstractClientPlayer player, InteractionHand hand, float pitch, float swingProgress, float equippedProgress, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         if (player != null) {
-            AetherPlayer.get(player).ifPresent((aetherPlayer) -> {
-                if (!aetherPlayer.isWearingInvisibilityCloak()) { // Check for Invisibility Cloak.
-                    EquipmentUtil.findFirstCurio(player, (item) -> item.getItem() instanceof ShieldOfRepulsionItem).ifPresent((slotResult) -> {
-                        String identifier = slotResult.slotContext().identifier();
-                        int id = slotResult.slotContext().index();
-                        ItemStack itemStack = slotResult.stack();
-                        CuriosApi.getCuriosInventory(player).ifPresent(handler -> handler.getStacksHandler(identifier).ifPresent(stacksHandler -> {
-                            if (stacksHandler.getRenders().get(id)) { // Check if Shield of Repulsion is visible.
-                                CuriosRendererRegistry.getRenderer(itemStack.getItem()).ifPresent((renderer) -> {
-                                    if (renderer instanceof ShieldOfRepulsionRenderer shieldRenderer) {
-                                        ItemStack heldItem = hand == InteractionHand.MAIN_HAND ? ((ItemInHandRendererAccessor) itemInHandRenderer).aether$getMainHandItem() : ((ItemInHandRendererAccessor) itemInHandRenderer).aether$getOffHandItem();
-                                        renderArmWithItem(itemInHandRenderer, shieldRenderer, itemStack, player, heldItem, hand, pitch, swingProgress, equippedProgress, poseStack, buffer, packedLight, HandRenderType.SHIELD_OF_REPULSION);
-                                    }
-                                });
-                            }
-                        }));
+            if (!player.getData(AetherDataAttachments.AETHER_PLAYER).isWearingInvisibilityCloak()) { // Check for Invisibility Cloak.
+                EquipmentUtil.findFirstCurio(player, (item) -> item.getItem() instanceof ShieldOfRepulsionItem).ifPresent((slotResult) -> {
+                    String identifier = slotResult.slotContext().identifier();
+                    int id = slotResult.slotContext().index();
+                    ItemStack itemStack = slotResult.stack();
+                    CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.getStacksHandler(identifier)).ifPresent(stacksHandler -> {
+                        if (stacksHandler.getRenders().get(id)) { // Check if Shield of Repulsion is visible.
+                            CuriosRendererRegistry.getRenderer(itemStack.getItem()).ifPresent((renderer) -> {
+                                if (renderer instanceof ShieldOfRepulsionRenderer shieldRenderer) {
+                                    ItemStack heldItem = hand == InteractionHand.MAIN_HAND ? ((ItemInHandRendererAccessor) itemInHandRenderer).aether$getMainHandItem() : ((ItemInHandRendererAccessor) itemInHandRenderer).aether$getOffHandItem();
+                                    renderArmWithItem(itemInHandRenderer, shieldRenderer, itemStack, player, heldItem, hand, pitch, swingProgress, equippedProgress, poseStack, buffer, packedLight, HandRenderType.SHIELD_OF_REPULSION);
+                                }
+                            });
+                        }
                     });
-                }
-            });
+                });
+            }
         }
     }
 
@@ -152,8 +150,10 @@ public class HandRenderHooks {
         }
         poseStack.translate(f * offset, 0.0F, 0.0F);
         switch (handRenderType) {
-            case GLOVES -> ((GlovesRenderer) renderer).renderFirstPerson(glovesStack, poseStack, buffer, combinedLight, player, arm);
-            case SHIELD_OF_REPULSION -> ((ShieldOfRepulsionRenderer) renderer).renderFirstPerson(glovesStack, poseStack, buffer, combinedLight, player, arm);
+            case GLOVES ->
+                    ((GlovesRenderer) renderer).renderFirstPerson(glovesStack, poseStack, buffer, combinedLight, player, arm);
+            case SHIELD_OF_REPULSION ->
+                    ((ShieldOfRepulsionRenderer) renderer).renderFirstPerson(glovesStack, poseStack, buffer, combinedLight, player, arm);
         }
     }
 
@@ -221,8 +221,10 @@ public class HandRenderHooks {
         poseStack.mulPose(Axis.ZP.rotationDegrees(f * -41.0F));
         poseStack.translate(f * 0.3F, -1.1F, 0.45F);
         switch (handRenderType) {
-            case GLOVES -> ((GlovesRenderer) renderer).renderFirstPerson(glovesStack, poseStack, buffer, combinedLight, player, arm);
-            case SHIELD_OF_REPULSION -> ((ShieldOfRepulsionRenderer) renderer).renderFirstPerson(glovesStack, poseStack, buffer, combinedLight, player, arm);
+            case GLOVES ->
+                    ((GlovesRenderer) renderer).renderFirstPerson(glovesStack, poseStack, buffer, combinedLight, player, arm);
+            case SHIELD_OF_REPULSION ->
+                    ((ShieldOfRepulsionRenderer) renderer).renderFirstPerson(glovesStack, poseStack, buffer, combinedLight, player, arm);
         }
         poseStack.popPose();
     }

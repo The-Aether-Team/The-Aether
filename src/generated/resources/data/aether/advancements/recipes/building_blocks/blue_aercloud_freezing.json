@@ -30,6 +30,5 @@
     "recipes": [
       "aether:blue_aercloud_freezing"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

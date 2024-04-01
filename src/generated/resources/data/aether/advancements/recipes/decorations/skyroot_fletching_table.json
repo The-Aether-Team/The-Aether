@@ -30,6 +30,5 @@
     "recipes": [
       "aether:skyroot_fletching_table"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

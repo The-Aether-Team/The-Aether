@@ -61,7 +61,8 @@ public class AetherPortalShape {
 
     @Nullable
     private BlockPos calculateBottomLeft(BlockPos pos) {
-        for (int i = Math.max(this.level.getMinBuildHeight(), pos.getY() - 21); pos.getY() > i && isEmpty(this.level.getBlockState(pos.below())); pos = pos.below()) { }
+        for (int i = Math.max(this.level.getMinBuildHeight(), pos.getY() - 21); pos.getY() > i && isEmpty(this.level.getBlockState(pos.below())); pos = pos.below()) {
+        }
         Direction direction = this.rightDir.getOpposite();
         int j = this.getDistanceUntilEdgeAboveFrame(pos, direction) - 1;
         return j < 0 ? null : pos.relative(direction, j);

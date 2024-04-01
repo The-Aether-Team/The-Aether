@@ -8,11 +8,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class AltarScreen extends AbstractAetherFurnaceScreen<AltarMenu> {
-	private static final ResourceLocation ALTAR_GUI_TEXTURES = new ResourceLocation(Aether.MODID, "textures/gui/menu/altar.png");
-	private static final ResourceLocation LIT_PROGRESS_TEXTURE = new ResourceLocation(Aether.MODID, "menu/lit_progress");
-	private static final ResourceLocation BURN_PROGRESS_TEXTURE = new ResourceLocation(Aether.MODID, "menu/burn_progress");
-	
-	public AltarScreen(AltarMenu menu, Inventory inventory, Component title) {
-		super(menu, new AltarRecipeBookComponent(), inventory, title, ALTAR_GUI_TEXTURES, LIT_PROGRESS_TEXTURE, BURN_PROGRESS_TEXTURE);
-	}
+    private static final ResourceLocation ALTAR_GUI_TEXTURES = new ResourceLocation(Aether.MODID, "textures/gui/menu/altar.png");
+    private static final ResourceLocation LIT_PROGRESS_TEXTURE = new ResourceLocation(Aether.MODID, "menu/lit_progress");
+    private static final ResourceLocation BURN_PROGRESS_TEXTURE = new ResourceLocation(Aether.MODID, "menu/burn_progress");
+
+    public AltarScreen(AltarMenu menu, Inventory inventory, Component title) {
+        super(menu, new AltarRecipeBookComponent(), inventory, title, ALTAR_GUI_TEXTURES, LIT_PROGRESS_TEXTURE, BURN_PROGRESS_TEXTURE);
+    }
 }

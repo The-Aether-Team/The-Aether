@@ -21,6 +21,7 @@ public class PerkSavedData extends SavedData {
 
     /**
      * Saves perk data to the world in a file named "perks.dat".
+     *
      * @param tag The {@link CompoundTag} to save the data to.
      * @return A {@link CompoundTag} with the data.
      */
@@ -64,6 +65,7 @@ public class PerkSavedData extends SavedData {
 
     /**
      * Loads perk data from the world from a {@link CompoundTag} representing the data in "perks.dat".
+     *
      * @param tag The {@link CompoundTag}.
      * @return The {@link PerkSavedData} created from the world data.
      */
@@ -121,11 +123,12 @@ public class PerkSavedData extends SavedData {
 
     /**
      * Loads or creates the "perks.dat" file.
+     *
      * @param dataStorage The {@link DimensionDataStorage} of the world.
      * @return The {@link PerkSavedData} corresponding to the data file.
      */
     public static PerkSavedData compute(DimensionDataStorage dataStorage) {
-       return dataStorage.computeIfAbsent(new SavedData.Factory<>(PerkSavedData::create, PerkSavedData::load, null), FILE_NAME);
+        return dataStorage.computeIfAbsent(new SavedData.Factory<>(PerkSavedData::create, PerkSavedData::load, null), FILE_NAME);
     }
 
     /**
@@ -137,7 +140,8 @@ public class PerkSavedData extends SavedData {
 
     /**
      * Modifies the {@link MoaData} stored in the world data.
-     * @param uuid The {@link UUID} of the player that the {@link MoaData} belongs to.
+     *
+     * @param uuid    The {@link UUID} of the player that the {@link MoaData} belongs to.
      * @param moaData The {@link MoaData}.
      */
     void modifyStoredSkinData(UUID uuid, MoaData moaData) {
@@ -147,6 +151,7 @@ public class PerkSavedData extends SavedData {
 
     /**
      * Removes an entry for a player's {@link MoaData} from the world data.
+     *
      * @param uuid The player's {@link UUID}.
      */
     void removeStoredSkinData(UUID uuid) {
@@ -163,6 +168,7 @@ public class PerkSavedData extends SavedData {
 
     /**
      * Modifies the {@link Halo} info stored in the world data.
+     *
      * @param uuid The {@link UUID} of the player that the {@link Halo} belongs to.
      * @param halo The {@link Halo}.
      */
@@ -173,6 +179,7 @@ public class PerkSavedData extends SavedData {
 
     /**
      * Removes an entry for a player's {@link Halo} from the world data.
+     *
      * @param uuid The player's {@link UUID}.
      */
     void removeStoredHaloData(UUID uuid) {
@@ -189,7 +196,8 @@ public class PerkSavedData extends SavedData {
 
     /**
      * Modifies the {@link DeveloperGlow} info stored in the world data.
-     * @param uuid The {@link UUID} of the player that the {@link Halo} belongs to.
+     *
+     * @param uuid          The {@link UUID} of the player that the {@link Halo} belongs to.
      * @param developerGlow The {@link DeveloperGlow}.
      */
     void modifyStoredDeveloperGlowData(UUID uuid, DeveloperGlow developerGlow) {
@@ -199,6 +207,7 @@ public class PerkSavedData extends SavedData {
 
     /**
      * Removes an entry for a player's {@link DeveloperGlow} from the world data.
+     *
      * @param uuid The player's {@link UUID}.
      */
     void removeStoredDeveloperGlowData(UUID uuid) {

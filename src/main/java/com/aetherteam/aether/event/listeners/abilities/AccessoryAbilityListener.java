@@ -53,6 +53,7 @@ public class AccessoryAbilityListener {
 
     /**
      * Makes the wearer invisible to other mobs' targeting if wearing an Invisibility Cloak.
+     *
      * @see com.aetherteam.aether.event.hooks.AbilityHooks.AccessoryHooks#preventTargeting(LivingEntity, Entity)
      * @see com.aetherteam.aether.event.hooks.AbilityHooks.AccessoryHooks#recentlyAttackedWithInvisibility(LivingEntity, Entity)
      */

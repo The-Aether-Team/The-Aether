@@ -48,9 +48,9 @@ public class AetherLakeFeature extends Feature<AetherLakeConfiguration> {
                 for (int l = 1; l < 15; ++l) {
                     for (int i1 = 1; i1 < 15; ++i1) {
                         for (int j1 = 1; j1 < 7; ++j1) {
-                            double d6 = ((double)l - d3) / (d0 / 2.0);
-                            double d7 = ((double)j1 - d4) / (d1 / 2.0);
-                            double d8 = ((double)i1 - d5) / (d2 / 2.0);
+                            double d6 = ((double) l - d3) / (d0 / 2.0);
+                            double d7 = ((double) j1 - d4) / (d1 / 2.0);
+                            double d8 = ((double) i1 - d5) / (d2 / 2.0);
                             double d9 = d6 * d6 + d7 * d7 + d8 * d8;
                             if (d9 < 1.0) {
                                 booleans[(l * 16 + i1) * 8 + j1] = true;
@@ -105,7 +105,7 @@ public class AetherLakeFeature extends Feature<AetherLakeConfiguration> {
                             if (booleans[(i2 * 16 + j3) * 8 + j4]) {
                                 BlockPos offsetPos = blockPos.offset(i2, j4 - 1, j3);
                                 if (isDirt(level.getBlockState(offsetPos)) && level.getBrightness(LightLayer.SKY, blockPos.offset(i2, j4, j3)) > 0) {
-                                    level.setBlock(offsetPos,topBlockState, 2);
+                                    level.setBlock(offsetPos, topBlockState, 2);
                                 }
                             }
                         }

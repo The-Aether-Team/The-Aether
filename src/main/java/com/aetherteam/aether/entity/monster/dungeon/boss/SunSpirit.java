@@ -3,9 +3,8 @@ package com.aetherteam.aether.entity.monster.dungeon.boss;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
+import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.block.AetherBlocks;
-import com.aetherteam.aether.capability.AetherCapabilities;
-import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.data.resources.registries.AetherDamageTypes;
 import com.aetherteam.aether.entity.AetherBossMob;
@@ -17,7 +16,6 @@ import com.aetherteam.aether.entity.projectile.crystal.FireCrystal;
 import com.aetherteam.aether.entity.projectile.crystal.IceCrystal;
 import com.aetherteam.aether.event.AetherEventDispatch;
 import com.aetherteam.aether.mixin.mixins.common.accessor.LookAtPlayerGoalAccessor;
-import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.BossInfoPacket;
 import com.aetherteam.nitrogen.entity.BossRoomTracker;
 import com.aetherteam.nitrogen.network.PacketRelay;
@@ -27,8 +25,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -52,6 +48,7 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
@@ -60,17 +57,15 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.Event;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.common.util.LazyOptional;
-import net.neoforged.neoforge.entity.IEntityAdditionalSpawnData;
+import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
-import net.neoforged.neoforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>, Enemy, IEntityAdditionalSpawnData {
+public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>, Enemy, IEntityWithComplexSpawn {
     private static final EntityDataAccessor<Boolean> DATA_IS_FROZEN = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(SunSpirit.class, EntityDataSerializers.COMPONENT);
 
@@ -97,18 +92,19 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         this.origin = this.position();
         this.xpReward = XP_REWARD_BOSS;
         this.noPhysics = true;
-        this.velocity =  1 - this.getHealth() / 700;
+        this.velocity = 1 - this.getHealth() / 700;
         this.setPersistenceRequired();
     }
 
     /**
      * Generates a name for the boss and tracks the origin where the boss spawned.<br><br>
      * Warning for "deprecation" is suppressed because this is fine to override.
-     * @param level The {@link ServerLevelAccessor} where the entity is spawned.
+     *
+     * @param level      The {@link ServerLevelAccessor} where the entity is spawned.
      * @param difficulty The {@link DifficultyInstance} of the game.
-     * @param reason The {@link MobSpawnType} reason.
-     * @param spawnData The {@link SpawnGroupData}.
-     * @param tag The {@link CompoundTag} to apply to this entity.
+     * @param reason     The {@link MobSpawnType} reason.
+     * @param spawnData  The {@link SpawnGroupData}.
+     * @param tag        The {@link CompoundTag} to apply to this entity.
      * @return The {@link SpawnGroupData} to return.
      */
     @Override
@@ -163,6 +159,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
 
     /**
      * Evaporates liquid blocks.
+     *
      * @see AetherBossMob#evaporate(Mob, BlockPos, BlockPos, Predicate)
      */
     private void evaporate() {
@@ -208,8 +205,9 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
 
     /**
      * Plays the Sun Spirit's intro chat dialogue.
+     *
      * @param player The interacting {@link Player}.
-     * @param hand The {@link InteractionHand}.
+     * @param hand   The {@link InteractionHand}.
      * @return The {@link InteractionResult}.
      */
     @Override
@@ -218,20 +216,22 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
             if (this.getChatCooldown() <= 0) {
                 this.setChatCooldown(14);
                 if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoomInterior(player)) {
-                    LazyOptional<AetherPlayer> aetherPlayer = player.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
                     if (!AetherConfig.COMMON.repeat_sun_spirit_dialogue.get()) {
-                        aetherPlayer.ifPresent(cap -> {
-                            if (cap.hasSeenSunSpiritDialogue() && this.chatLine == 0) {
-                                this.chatLine = 10;
-                            }
-                        });
+                        if (player.getData(AetherDataAttachments.AETHER_PLAYER).hasSeenSunSpiritDialogue() && this.chatLine == 0) {
+                            this.chatLine = 10;
+                        }
                     }
                     switch (this.chatLine++) {
-                        case 0 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line0").withStyle(ChatFormatting.RED));
-                        case 1 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line1").withStyle(ChatFormatting.RED));
-                        case 2 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line2").withStyle(ChatFormatting.RED));
-                        case 3 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line3").withStyle(ChatFormatting.RED));
-                        case 4 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line4").withStyle(ChatFormatting.RED));
+                        case 0 ->
+                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line0").withStyle(ChatFormatting.RED));
+                        case 1 ->
+                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line1").withStyle(ChatFormatting.RED));
+                        case 2 ->
+                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line2").withStyle(ChatFormatting.RED));
+                        case 3 ->
+                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line3").withStyle(ChatFormatting.RED));
+                        case 4 ->
+                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line4").withStyle(ChatFormatting.RED));
                         case 5 -> {
                             this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line5.1").withStyle(ChatFormatting.RED));
                             this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line5.2").withStyle(ChatFormatting.RED));
@@ -244,7 +244,8 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
                             this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line7.1").withStyle(ChatFormatting.RED));
                             this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line7.2").withStyle(ChatFormatting.RED));
                         }
-                        case 8 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line8").withStyle(ChatFormatting.RED));
+                        case 8 ->
+                                this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line8").withStyle(ChatFormatting.RED));
                         case 9 -> {
                             this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line9").withStyle(ChatFormatting.GOLD));
                             this.setBossFight(true);
@@ -252,7 +253,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
                                 this.closeRoom();
                             }
                             AetherEventDispatch.onBossFightStart(this, this.getDungeon());
-                            aetherPlayer.ifPresent(cap -> cap.setSeenSunSpiritDialogue(true));
+                            player.getData(AetherDataAttachments.AETHER_PLAYER).setSeenSunSpiritDialogue(true);
                         }
                         default -> {
                             this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line10").withStyle(ChatFormatting.RED));
@@ -269,6 +270,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
 
     /**
      * Sends a message to nearby players. Useful for boss fights.
+     *
      * @param message The message {@link Component}.
      */
     protected void chatWithNearby(Component message) {
@@ -278,6 +280,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
 
     /**
      * Spawns a Fire Minion when the Sun Spirit is damaged and increases velocity.
+     *
      * @param source The {@link DamageSource}.
      * @param amount The {@link Float} amount of damage.
      * @return Whether the entity was hurt, as a {@link Boolean}.
@@ -311,6 +314,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
 
     /**
      * Plays the Sun Spirit's defeat message, ends the boss fight, opens the room, grants advancements when the boss dies, and ends eternal day.
+     *
      * @param source The {@link DamageSource}.
      */
     @Override
@@ -323,31 +327,36 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
                 this.getDungeon().grantAdvancements(source);
                 this.tearDownRoom();
             }
-            this.level().getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).ifPresent((aetherTime) -> {
-                aetherTime.setEternalDay(false);
-                aetherTime.updateEternalDay();
-            });
+            if (this.level().hasData(AetherDataAttachments.AETHER_TIME)) {
+                var data = this.level().getData(AetherDataAttachments.AETHER_TIME);
+                data.setEternalDay(false);
+                data.updateEternalDay(this.level());
+            }
         }
         super.die(source);
     }
 
     /**
      * Disallows the Sun Spirit from receiving knockback.
+     *
      * @param strength The {@link Double} for knockback strength.
-     * @param x The {@link Double} for knockback x-direction.
-     * @param z The {@link Double} for knockback z-direction.
+     * @param x        The {@link Double} for knockback x-direction.
+     * @param z        The {@link Double} for knockback z-direction.
      */
     @Override
-    public void knockback(double strength, double x, double z) { }
+    public void knockback(double strength, double x, double z) {
+    }
 
     /**
      * Disallows the Sun Spirit from being pushed.
+     *
      * @param x The {@link Double} for x-motion.
      * @param y The {@link Double} for y-motion.
      * @param z The {@link Double} for z-motion.
      */
     @Override
-    public void push(double x, double y, double z) { }
+    public void push(double x, double y, double z) {
+    }
 
     /**
      * [CODE COPY] - {@link LivingEntity#canBeAffected(MobEffectInstance)}.<br><br>
@@ -367,10 +376,12 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
      * Required despite call to {@link Mob#setPersistenceRequired()} in constructor.
      */
     @Override
-    public void checkDespawn() { }
+    public void checkDespawn() {
+    }
 
     /**
      * Called on every block in the boss room when the boss is defeated.
+     *
      * @param state The {@link BlockState} to try to convert.
      * @return The converted {@link BlockState}.
      */
@@ -391,12 +402,13 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
 
     /**
      * Tracks the player as a part of the boss fight when the player is nearby, displaying the boss bar for them.
+     *
      * @param player The {@link ServerPlayer}.
      */
     @Override
     public void startSeenByPlayer(ServerPlayer player) {
         super.startSeenByPlayer(player);
-        PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new BossInfoPacket.Display(this.bossFight.getId(), this.getId()), player);
+        PacketRelay.sendToPlayer(new BossInfoPacket.Display(this.bossFight.getId(), this.getId()), player);
         if (this.getDungeon() == null || this.getDungeon().isPlayerTracked(player)) {
             this.bossFight.addPlayer(player);
             AetherEventDispatch.onBossFightPlayerAdd(this, this.getDungeon(), player);
@@ -405,18 +417,20 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
 
     /**
      * Tracks the player as no longer in the boss fight when the player is nearby, removing the boss bar for them.
+     *
      * @param player The {@link ServerPlayer}.
      */
     @Override
     public void stopSeenByPlayer(ServerPlayer player) {
         super.stopSeenByPlayer(player);
-        PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new BossInfoPacket.Remove(this.bossFight.getId(), this.getId()), player);
+        PacketRelay.sendToPlayer(new BossInfoPacket.Remove(this.bossFight.getId(), this.getId()), player);
         this.bossFight.removePlayer(player);
         AetherEventDispatch.onBossFightPlayerRemove(this, this.getDungeon(), player);
     }
 
     /**
      * Adds a player to the boss fight when they've entered the dungeon.
+     *
      * @param player The {@link Player}.
      */
     @Override
@@ -429,6 +443,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
 
     /**
      * Removes a player from the boss fight when they've left the dungeon.
+     *
      * @param player The {@link Player}.
      */
     @Override
@@ -451,6 +466,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
 
     /**
      * Sets whether the Sun Spirit should display as frozen.
+     *
      * @param frozen The {@link Boolean} value.
      */
     public void setFrozen(boolean frozen) {
@@ -467,6 +483,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
 
     /**
      * Sets the {@link Component} for the boss name and in the boss fight.
+     *
      * @param component The name {@link Component}.
      */
     @Override
@@ -486,6 +503,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
 
     /**
      * Sets the tracker for the Gold Dungeon and also tracks the boss origin point and maximum movement distances.
+     *
      * @param dungeon The {@link SunSpirit} {@link BossRoomTracker}.
      */
     @Override
@@ -511,6 +529,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
 
     /**
      * Sets whether the boss fight is active and the boss bar is visible.
+     *
      * @param isFighting The {@link Boolean} value.
      */
     @Override
@@ -545,6 +564,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
 
     /**
      * Sets the cooldown for when another chat message can display.
+     *
      * @param cooldown The {@link Integer} cooldown.
      */
     public void setChatCooldown(int cooldown) {
@@ -561,6 +581,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
 
     /**
      * Makes the Sun Spirit immune to all damage except cold damage from Ice Crystals, as determined by {@link AetherTags.DamageTypes#IS_COLD}.
+     *
      * @param source The {@link DamageSource}.
      * @return Whether the Sun Spirit is invulnerable to the damage, as a {@link Boolean}.
      */
@@ -589,7 +610,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
      * @return A false {@link Boolean}, preventing the Sun Spirit from being affected by explosions.
      */
     @Override
-    public boolean ignoreExplosion() {
+    public boolean ignoreExplosion(Explosion explosion) {
         return true;
     }
 
@@ -653,11 +674,6 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         if (tag != null) {
             this.readBossSaveData(tag);
         }
-    }
-
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     /**

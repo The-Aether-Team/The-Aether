@@ -30,6 +30,5 @@
     "recipes": [
       "aether:skyroot_grindstone"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

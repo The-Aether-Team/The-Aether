@@ -15,16 +15,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.aether.regen_stone.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "aether:regeneration_stone"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.aether.regen_stone"
     }

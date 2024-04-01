@@ -1,11 +1,13 @@
 package com.aetherteam.aether.network.packet.serverbound;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.command.SunAltarWhitelist;
 import com.aetherteam.aether.data.resources.registries.AetherDimensions;
 import com.aetherteam.nitrogen.network.BasePacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.game.ClientboundSetTimePacket;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameRules;
@@ -16,8 +18,16 @@ import javax.annotation.Nullable;
  * Updates the time on the server, then updates that time for all players in the Aether.
  */
 public record SunAltarUpdatePacket(long dayTime) implements BasePacket {
+
+    public static final ResourceLocation ID = new ResourceLocation(Aether.MODID, "update_sun_altar");
+
     @Override
-    public void encode(FriendlyByteBuf buf) {
+    public ResourceLocation id() {
+        return ID;
+    }
+
+    @Override
+    public void write(FriendlyByteBuf buf) {
         buf.writeLong(this.dayTime());
     }
 

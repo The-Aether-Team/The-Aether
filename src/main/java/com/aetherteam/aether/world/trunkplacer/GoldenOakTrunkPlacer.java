@@ -28,12 +28,13 @@ public class GoldenOakTrunkPlacer extends TrunkPlacer {
 
     /**
      * Randomly places logs in Golden Oak Trees branching out from the center until they reach the edge of the leaves.
-     * @param level The {@link LevelSimulatedReader}.
+     *
+     * @param level       The {@link LevelSimulatedReader}.
      * @param blockSetter The {@link BiConsumer} of a {@link BlockPos} and {@link BlockState} used for block placement.
-     * @param random The {@link RandomSource}.
-     * @param height The {@link Integer} height of the tree.
-     * @param pos The initial {@link BlockPos} for placement.
-     * @param config The {@link TreeConfiguration}.
+     * @param random      The {@link RandomSource}.
+     * @param height      The {@link Integer} height of the tree.
+     * @param pos         The initial {@link BlockPos} for placement.
+     * @param config      The {@link TreeConfiguration}.
      * @return A {@link List} of {@link net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer.FoliageAttachment}s for the tree.
      */
     @Override
@@ -50,24 +51,25 @@ public class GoldenOakTrunkPlacer extends TrunkPlacer {
 
     /**
      * Places a branch.
-     * @param level The {@link LevelSimulatedReader}.
-     * @param random The {@link RandomSource}.
+     *
+     * @param level       The {@link LevelSimulatedReader}.
+     * @param random      The {@link RandomSource}.
      * @param blockSetter The {@link BiConsumer} of a {@link BlockPos} and {@link BlockState} used for block placement.
-     * @param i The x {@link Integer} position.
-     * @param j The y {@link Integer} position.
-     * @param k The z {@link Integer} position.
-     * @param slant The {@link Integer} value for the branch slant.
-     * @param config The {@link TreeConfiguration}.
+     * @param i           The x {@link Integer} position.
+     * @param j           The y {@link Integer} position.
+     * @param k           The z {@link Integer} position.
+     * @param slant       The {@link Integer} value for the branch slant.
+     * @param config      The {@link TreeConfiguration}.
      */
     public void branch(LevelSimulatedReader level, RandomSource random, BiConsumer<BlockPos, BlockState> blockSetter, int i, int j, int k, int slant, TreeConfiguration config) {
-		int directionX = random.nextInt(3) - 1;
+        int directionX = random.nextInt(3) - 1;
         int directionZ = random.nextInt(3) - 1;
 
-		for (int n = 0; n < random.nextInt(2) + 1; ++n) {
-			i += directionX;
-			j += slant;
-			k += directionZ;
+        for (int n = 0; n < random.nextInt(2) + 1; ++n) {
+            i += directionX;
+            j += slant;
+            k += directionZ;
             this.placeLog(level, blockSetter, random, new BlockPos(i, j, k), config);
-		}
-	}
+        }
+    }
 }

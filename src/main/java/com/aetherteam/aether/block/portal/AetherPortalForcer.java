@@ -4,7 +4,6 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.mixin.mixins.common.accessor.EntityAccessor;
-import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.clientbound.PortalTravelSoundPacket;
 import com.aetherteam.aether.world.AetherPoi;
 import com.aetherteam.aether.world.LevelUtil;
@@ -59,7 +58,7 @@ public class AetherPortalForcer implements ITeleporter {
     @Override
     public boolean playTeleportSound(ServerPlayer player, ServerLevel sourceLevel, ServerLevel destinationLevel) {
         if (this.hasFrame) {
-            PacketRelay.sendToPlayer(AetherPacketHandler.INSTANCE, new PortalTravelSoundPacket(), player);
+            PacketRelay.sendToPlayer(new PortalTravelSoundPacket(), player);
         }
         return false;
     }
@@ -98,6 +97,7 @@ public class AetherPortalForcer implements ITeleporter {
             }).orElse(null);
         }
     }
+
     /**
      * Based on {@link Entity#getExitPortal(ServerLevel, BlockPos, boolean, WorldBorder)} and {@link ServerPlayer#getExitPortal(ServerLevel, BlockPos, boolean, WorldBorder)}.
      */
@@ -166,7 +166,8 @@ public class AetherPortalForcer implements ITeleporter {
                     mutablePos1.setY(l);
                     if (this.level.isEmptyBlock(mutablePos1)) {
                         int i1;
-                        for (i1 = l; l > this.level.getMinBuildHeight() && this.level.isEmptyBlock(mutablePos1.move(Direction.DOWN)); --l) { }
+                        for (i1 = l; l > this.level.getMinBuildHeight() && this.level.isEmptyBlock(mutablePos1.move(Direction.DOWN)); --l) {
+                        }
 
                         if (l + 4 <= i) {
                             int j1 = i1 - l;

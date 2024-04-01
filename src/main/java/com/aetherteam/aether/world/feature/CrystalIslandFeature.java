@@ -21,6 +21,7 @@ public class CrystalIslandFeature extends Feature<NoneFeatureConfiguration> {
 
     /**
      * Places a Crystal Tree, then creates a small island around it if the placement was successful.
+     *
      * @param context The {@link FeaturePlaceContext} with a {@link NoneFeatureConfiguration}.
      * @return Whether the placement was successful, as a {@link Boolean}.
      */

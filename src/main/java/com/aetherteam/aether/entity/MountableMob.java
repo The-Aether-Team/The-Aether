@@ -1,8 +1,7 @@
 package com.aetherteam.aether.entity;
 
-import com.aetherteam.aether.capability.player.AetherPlayer;
+import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
-import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.StepHeightPacket;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import net.minecraft.server.level.ServerPlayer;
@@ -31,20 +30,20 @@ public interface MountableMob {
 
     /**
      * Call this at the beginning of your entity's tick method to update the state of the entity.
+     *
      * @param vehicle The {@link Mob} being ridden.
      */
     default void riderTick(Mob vehicle) {
         if (vehicle.getControllingPassenger() instanceof Player player) {
-            AetherPlayer.get(player).ifPresent(aetherPlayer -> {
-                if (aetherPlayer.isJumping() && !this.isMountJumping()) {
-                    this.setPlayerJumped(true);
-                }
-            });
+            if (player.getData(AetherDataAttachments.AETHER_PLAYER).isJumping() && !this.isMountJumping()) {
+                this.setPlayerJumped(true);
+            }
         }
     }
 
     /**
      * Call this from your entity's tick method.
+     *
      * @param vehicle The entity being ridden.
      */
     default <T extends Mob & MountableMob> void tick(T vehicle) {
@@ -71,8 +70,9 @@ public interface MountableMob {
 
     /**
      * Call this from your entity's travel method.
+     *
      * @param vehicle The entity being ridden.
-     * @param motion The {@link Vec3} travel movement vector.
+     * @param motion  The {@link Vec3} travel movement vector.
      */
     default <T extends Mob & MountableMob> void travel(T vehicle, Vec3 motion) {
         Entity entity = vehicle.getControllingPassenger();
@@ -111,14 +111,14 @@ public interface MountableMob {
                     stepHeight.addTransientModifier(vehicle.getMountStepHeightModifier());
                 }
                 if (vehicle.level().isClientSide()) {
-                    PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new StepHeightPacket(vehicle.getId()));
+                    PacketRelay.sendToServer(new StepHeightPacket(vehicle.getId()));
                 }
             }
             // Handles movement.
             if (vehicle.isControlledByLocalInstance()) {
                 vehicle.setSpeed(vehicle.getSteeringSpeed());
                 this.travelWithInput(new Vec3(f, motion.y, f1));
-            } else if (passenger instanceof Player)  {
+            } else if (passenger instanceof Player) {
                 vehicle.setDeltaMovement(Vec3.ZERO);
             }
             vehicle.calculateEntityAnimation(false);
@@ -139,6 +139,7 @@ public interface MountableMob {
 
     /**
      * Usually, this just calls the entity's super$travel method.
+     *
      * @param motion The {@link Vec3} movement vector from input.
      */
     void travelWithInput(Vec3 motion);
@@ -150,6 +151,7 @@ public interface MountableMob {
 
     /**
      * Sets whether the player attempted to jump.
+     *
      * @param playerJumped The {@link Boolean} value.
      */
     void setPlayerJumped(boolean playerJumped);
@@ -171,6 +173,7 @@ public interface MountableMob {
 
     /**
      * Sets whether the mount is jumping.
+     *
      * @param isMountJumping The {@link Boolean} value.
      */
     void setMountJumping(boolean isMountJumping);
@@ -187,6 +190,7 @@ public interface MountableMob {
 
     /**
      * Called when the mount jumps.
+     *
      * @param vehicle The vehicle {@link Mob}.
      */
     default void onJump(Mob vehicle) {

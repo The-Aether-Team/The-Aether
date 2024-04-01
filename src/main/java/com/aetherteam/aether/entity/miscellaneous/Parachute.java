@@ -4,8 +4,6 @@ import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -16,7 +14,6 @@ import net.minecraft.world.entity.vehicle.DismountHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.NeoForgeMod;
-import net.neoforged.neoforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
@@ -34,7 +31,8 @@ public class Parachute extends Entity {
      * Necessary to define, even if empty.
      */
     @Override
-    protected void defineSynchedData() { }
+    protected void defineSynchedData() {
+    }
 
     @Override
     public void tick() {
@@ -55,6 +53,7 @@ public class Parachute extends Entity {
 
     /**
      * Handles parachute and passenger movement.
+     *
      * @param passenger The {@link LivingEntity} passenger.
      */
     public void moveParachute(LivingEntity passenger) {
@@ -92,6 +91,7 @@ public class Parachute extends Entity {
 
     /**
      * Calculates the movement vector for the parachute from the passenger.
+     *
      * @param vec3 The passenger {@link Vec3}.
      * @return The modified {@link Vec3}.
      */
@@ -143,6 +143,7 @@ public class Parachute extends Entity {
 
     /**
      * Handles where the passenger will dismount to.
+     *
      * @param passenger The {@link LivingEntity} passenger.
      * @return The {@link Vec3} position to dismount to.
      */
@@ -171,10 +172,10 @@ public class Parachute extends Entity {
         return null;
     }
 
-	@Override
-	public boolean isAttackable() {
-		return false;
-	}
+    @Override
+    public boolean isAttackable() {
+        return false;
+    }
 
     @Override
     public boolean isPickable() {
@@ -196,13 +197,10 @@ public class Parachute extends Entity {
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag tag) { }
+    protected void addAdditionalSaveData(CompoundTag tag) {
+    }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag tag) { }
-   
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
+    protected void readAdditionalSaveData(CompoundTag tag) {
     }
 }

@@ -23,10 +23,11 @@ public class DartItem extends Item {
 
     /**
      * Creates Dart with setup using shooter entity.
-     * @see DartItem#createDart(Level)
-     * @param level {@link Level} of shooter entity.
+     *
+     * @param level   {@link Level} of shooter entity.
      * @param shooter {@link LivingEntity} shooting dart.
      * @return {@link AbstractDart} entity created from dart entity type.
+     * @see DartItem#createDart(Level)
      */
     @Nullable
     public AbstractDart createDart(Level level, LivingEntity shooter) {
@@ -42,6 +43,7 @@ public class DartItem extends Item {
 
     /**
      * Creates Dart from given dart entity type.
+     *
      * @param level The corresponding {@link Level}.
      * @return {@link AbstractDart} entity created from dart entity type.
      */
@@ -58,6 +60,7 @@ public class DartItem extends Item {
     /**
      * [CODE COPY] - {@link net.minecraft.world.item.ArrowItem#isInfinite(ItemStack, ItemStack, Player)}.<br><br>
      * Checks if the Dart item is allowed to be infinite, if the dart shooter item has the Infinity enchantment and the dart item is specifically DartItem and not a subclass.
+     *
      * @param dartShooter The dart shooter {@link ItemStack}.
      * @return Whether the dart item ammo is allowed to be infinite, as a {@link Boolean}.
      */

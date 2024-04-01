@@ -51,13 +51,6 @@ sourceSets.main.resources {
     srcDir 'src/generated/resources'
 }
 
-subsystems {
-    parchment {
-        minecraftVersion = "1.20.3" //todo
-        mappingsVersion = project.mappings
-    }
-}
-
 dependencies {
     implementation "net.neoforged:neoforge:${project.neoforge_version}"
 
@@ -85,21 +78,21 @@ dependencies {
         jarJar.pin(it, "${project.curios_version}+${project.mc_version}")
     }
 
-//    compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-common-api:${project.jei_version}"))
-//    compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${project.jei_version}"))
+    compileOnly("mezz.jei:jei-${mc_version}-common-api:${project.jei_version}")
+    compileOnly("mezz.jei:jei-${mc_version}-neoforge:${project.jei_version}")
 
-//    runtimeOnly compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge:${project.jei_version}"))
+    runtimeOnly compileOnly("mezz.jei:jei-${mc_version}-neoforge:${project.jei_version}")
 
-    compileOnly "com.blamejared.crafttweaker:CraftTweaker-neoforge-${project.crafttweaker_version}"
+//    compileOnly "com.blamejared.crafttweaker:CraftTweaker-neoforge-${project.crafttweaker_version}"
 
-//    runtimeOnly fg.deobf("net.darkhax.bookshelf:Bookshelf-Forge-1.20.1:20.0.5")
-//    runtimeOnly fg.deobf("net.darkhax.tips:Tips-Forge-1.20.1:12.0.3")
+//    runtimeOnly "net.darkhax.bookshelf:Bookshelf-Forge-1.20.1:20.0.5"
+//    runtimeOnly "net.darkhax.tips:Tips-Forge-1.20.1:12.0.3"
 
-//    compileOnly fg.deobf("curse.maven:colytra-280200:${project.colytra_version}")
-//    compileOnly fg.deobf("curse.maven:curious-elytra-317716:${project.curiouselytra_version}")
+//    compileOnly "curse.maven:colytra-280200:${project.colytra_version}"
+//    compileOnly "curse.maven:curious-elytra-317716:${project.curiouselytra_version}"
     compileOnly "curse.maven:jade-324717:${project.jade_version}"
 //    runtimeOnly "curse.maven:jade-324717:${project.jade_version}"
-//    compileOnly fg.deobf("curse.maven:lootr-361276:${project.lootr_version}")
+//    compileOnly "curse.maven:lootr-361276:${project.lootr_version}"
 
 //    runtimeOnly fg.deobf("io.github.ultimateboomer:smoothboot-forge:${project.smoothboot_version}")
 
@@ -109,10 +102,10 @@ dependencies {
 //    runtimeOnly "me.shedaniel.cloth:cloth-config-neoforge:$cloth_config_version"
 //    runtimeOnly "dev.architectury:architectury-neoforge:$architectury_version"
 
-//    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:$rei_version"
-//    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:$rei_version"
-//    compileOnly "me.shedaniel.cloth:cloth-config-neoforge:$cloth_config_version"
-//    compileOnly "dev.architectury:architectury-neoforge:$architectury_version"
+    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:$rei_version"
+    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:$rei_version"
+    compileOnly "me.shedaniel.cloth:cloth-config-neoforge:$cloth_config_version"
+    compileOnly "dev.architectury:architectury-neoforge:$architectury_version"
 }
 
 repositories {

@@ -30,6 +30,5 @@
     "recipes": [
       "aether:blue_cape_blue_wool"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

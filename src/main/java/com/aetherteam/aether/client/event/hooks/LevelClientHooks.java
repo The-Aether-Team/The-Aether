@@ -37,6 +37,7 @@ public class LevelClientHooks {
     /**
      * [CODE COPY] - {@link ClientLevel#animateTick(int, int, int)}.
      * Checks to set up positions and render overlays for dungeon blocks from whatever block item the player is holding.
+     *
      * @see com.aetherteam.aether.client.event.listeners.LevelClientListener#onRenderLevelLast(RenderLevelStageEvent)
      */
     public static void renderDungeonBlockOverlays(RenderLevelStageEvent.Stage stage, PoseStack poseStack, Camera camera, Frustum frustum, Minecraft minecraft) {
@@ -99,12 +100,13 @@ public class LevelClientHooks {
 
     /**
      * Renders all the overlays for block positions as stored in {@link LevelClientHooks#positionsForTypes}.
-     * @param level The {@link ClientLevel} to render in.
-     * @param poseStack The rendering {@link PoseStack}.
+     *
+     * @param level         The {@link ClientLevel} to render in.
+     * @param poseStack     The rendering {@link PoseStack}.
      * @param renderBuffers The rendering {@link RenderBuffers}.
-     * @param camera The {@link Camera} viewing the overlays.
-     * @param frustum The camera's {@link Frustum}, for checking things in view of the camera.
-     * @param type The {@link Integer} type ID for an overlay.
+     * @param camera        The {@link Camera} viewing the overlays.
+     * @param frustum       The camera's {@link Frustum}, for checking things in view of the camera.
+     * @param type          The {@link Integer} type ID for an overlay.
      */
     private static void renderOverlays(ClientLevel level, PoseStack poseStack, RenderBuffers renderBuffers, Camera camera, Frustum frustum, int type) {
         for (BlockPos blockPos : positionsForTypes.get(type)) {
@@ -188,12 +190,13 @@ public class LevelClientHooks {
 
     /**
      * Returns a dungeon block overlay sprite for an ID.
+     *
      * @param id The {@link Integer} ID.
      * @return The {@link TextureAtlasSprite} for the overlay.
      */
     @Nullable
     private static TextureAtlasSprite spriteForId(int id) {
-        switch(id) {
+        switch (id) {
             case 0 -> {
                 return Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation(Aether.MODID, "block/dungeon/lock"));
             }
@@ -214,6 +217,7 @@ public class LevelClientHooks {
 
     /**
      * Returns an ID to a dungeon block item.
+     *
      * @param stack The {@link ItemStack} for the dungeon block.
      * @return The corresponding {@link Integer} ID.
      */

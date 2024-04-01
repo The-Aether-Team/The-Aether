@@ -26,9 +26,10 @@ public class ParachuteItem extends Item {
 
     /**
      * Spawns in a {@link Parachute} when used dependent on various conditions.
-     * @param level The {@link Level} of the user.
+     *
+     * @param level  The {@link Level} of the user.
      * @param player The {@link Player} using this item.
-     * @param hand The {@link InteractionHand} in which the item is being used.
+     * @param hand   The {@link InteractionHand} in which the item is being used.
      * @return a {@link InteractionResultHolder#sidedSuccess(Object, boolean)} (success on client, consume on server) if the Parachute is successfully spawned. Otherwise, return a pass.
      */
     @Override

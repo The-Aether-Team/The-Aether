@@ -30,6 +30,5 @@
     "recipes": [
       "aether:iron_gloves_repairing"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

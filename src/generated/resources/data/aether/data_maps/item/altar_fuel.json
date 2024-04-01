@@ -1,0 +1,10 @@
+{
+  "values": {
+    "aether:ambrosium_block": {
+      "burn_time": 2500
+    },
+    "aether:ambrosium_shard": {
+      "burn_time": 250
+    }
+  }
+}

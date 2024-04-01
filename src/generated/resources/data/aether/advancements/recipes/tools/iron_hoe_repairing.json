@@ -30,6 +30,5 @@
     "recipes": [
       "aether:iron_hoe_repairing"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -4,6 +4,7 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.recipe.recipes.ban.BlockBanRecipe;
 import com.aetherteam.aether.recipe.recipes.ban.ItemBanRecipe;
 import com.aetherteam.aether.recipe.recipes.block.*;
+import com.aetherteam.aether.recipe.recipes.item.AbstractAetherCookingRecipe;
 import com.aetherteam.aether.recipe.recipes.item.EnchantingRecipe;
 import com.aetherteam.aether.recipe.recipes.item.FreezingRecipe;
 import com.aetherteam.aether.recipe.recipes.item.IncubationRecipe;
@@ -17,7 +18,7 @@ import java.util.function.Supplier;
 public class AetherRecipeTypes {
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE, Aether.MODID);
 
-    public static final Supplier<RecipeType<EnchantingRecipe>> ENCHANTING = RECIPE_TYPES.register("enchanting", () -> RecipeType.simple(new ResourceLocation(Aether.MODID, "enchanting")));
+    public static final Supplier<RecipeType<? extends AbstractAetherCookingRecipe>> ENCHANTING = RECIPE_TYPES.register("enchanting", () -> RecipeType.simple(new ResourceLocation(Aether.MODID, "enchanting")));
     public static final Supplier<RecipeType<FreezingRecipe>> FREEZING = RECIPE_TYPES.register("freezing", () -> RecipeType.simple(new ResourceLocation(Aether.MODID, "freezing")));
     public static final Supplier<RecipeType<IncubationRecipe>> INCUBATION = RECIPE_TYPES.register("incubation", () -> RecipeType.simple(new ResourceLocation(Aether.MODID, "incubation")));
     public static final Supplier<RecipeType<AmbrosiumRecipe>> AMBROSIUM_ENCHANTING = RECIPE_TYPES.register("ambrosium_enchanting", () -> RecipeType.simple(new ResourceLocation(Aether.MODID, "ambrosium_enchanting")));

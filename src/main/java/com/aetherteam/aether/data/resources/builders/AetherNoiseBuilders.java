@@ -46,7 +46,7 @@ public class AetherNoiseBuilders {
     }
 
     private static DensityFunction buildFinalDensity(HolderGetter<DensityFunction> densityFunctions) {
-        DensityFunction density = getFunction(densityFunctions, ResourceKey.create(Registries.DENSITY_FUNCTION, new ResourceLocation(Aether.MODID,"base_3d_noise_aether")));
+        DensityFunction density = getFunction(densityFunctions, ResourceKey.create(Registries.DENSITY_FUNCTION, new ResourceLocation(Aether.MODID, "base_3d_noise_aether")));
         density = DensityFunctions.add(density, DensityFunctions.constant(-0.13));
         density = slide(density, 0, 128, 72, 0, -0.2, 8, 40, -0.1);
         density = DensityFunctions.add(density, DensityFunctions.constant(-0.05));
@@ -76,7 +76,7 @@ public class AetherNoiseBuilders {
         DensityFunction temperature = DensityFunctions.shiftedNoise2d(shiftX, shiftZ, 0.25, noise.getOrThrow(AetherNoises.TEMPERATURE));
         DensityFunction vegetation = DensityFunctions.shiftedNoise2d(shiftX, shiftZ, 0.25, noise.getOrThrow(AetherNoises.VEGETATION));
         return new NoiseRouter(
-        		DensityFunctions.zero(), // barrier noise
+                DensityFunctions.zero(), // barrier noise
                 DensityFunctions.zero(), // fluid level floodedness noise
                 DensityFunctions.zero(), // fluid level spread noise
                 DensityFunctions.zero(), // lava noise

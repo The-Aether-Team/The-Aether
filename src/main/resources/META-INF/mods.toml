@@ -18,20 +18,20 @@ description = '''
 
 [[dependencies.aether]]
     modId="neoforge"
-    mandatory=true
-    versionRange="[20.2.0,)"
+    type = "required"
+    versionRange="[20.4.167,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.aether]]
     modId = "curios"
-    mandatory = true
-    versionRange = "[6.1.0+1.20.2,)"
+    type = "required"
+    versionRange = "[7.3.0+1.20.4,)"
     ordering = "NONE"
     side = "BOTH"
 [[dependencies.aether]]
     modId="minecraft"
-    mandatory=true
-    versionRange="[1.20.2,1.20.3)"
+    type = "required"
+    versionRange="[1.20.4]"
     ordering="NONE"
     side="BOTH"
 

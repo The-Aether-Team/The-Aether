@@ -4,6 +4,9 @@ import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.api.registers.MoaType;
 import com.aetherteam.aether.recipe.AetherRecipeSerializers;
 import com.aetherteam.aether.recipe.builder.*;
+import com.aetherteam.aether.recipe.recipes.block.*;
+import com.aetherteam.aether.recipe.recipes.item.EnchantingRecipe;
+import com.aetherteam.aether.recipe.recipes.item.FreezingRecipe;
 import com.aetherteam.nitrogen.data.providers.NitrogenRecipeProvider;
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import com.aetherteam.nitrogen.recipe.builder.BlockStateRecipeBuilder;
@@ -32,7 +35,7 @@ import java.util.function.Supplier;
 
 public abstract class AetherRecipeProvider extends NitrogenRecipeProvider {
     public AetherRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, String id) {
-        super(output, lookupProvider, id);
+        super(output, id);
     }
 
     protected ShapedRecipeBuilder fence(Supplier<? extends Block> fence, Supplier<? extends Block> material) {
@@ -121,42 +124,42 @@ public abstract class AetherRecipeProvider extends NitrogenRecipeProvider {
     }
 
     protected AltarRepairBuilder repairingRecipe(RecipeCategory category, ItemLike item, int duration) {
-        return AltarRepairBuilder.repair(Ingredient.of(new ItemStack(item, 1)), category, duration, AetherRecipeSerializers.REPAIRING.get())
+        return AltarRepairBuilder.repair(Ingredient.of(new ItemStack(item, 1)), category, duration)
                 .unlockedBy(getHasName(item), has(item));
     }
 
     protected AetherCookingRecipeBuilder enchantingRecipe(RecipeCategory category, ItemLike result, ItemLike ingredient, float experience, int duration) {
-        return AetherCookingRecipeBuilder.generic(Ingredient.of(new ItemStack(ingredient, 1)), category, result, experience, duration, AetherRecipeSerializers.ENCHANTING.get())
+        return AetherCookingRecipeBuilder.generic(Ingredient.of(new ItemStack(ingredient, 1)), category, result, experience, duration, AetherRecipeSerializers.ENCHANTING.get(), EnchantingRecipe::new)
                 .unlockedBy(getHasName(ingredient), has(ingredient));
     }
 
     protected AetherCookingRecipeBuilder enchantingRecipe(RecipeCategory category, ItemLike result, TagKey<Item> ingredient, float experience, int duration, String unlockName) {
-        return AetherCookingRecipeBuilder.generic(Ingredient.of(ingredient), category, result, experience, duration, AetherRecipeSerializers.ENCHANTING.get())
+        return AetherCookingRecipeBuilder.generic(Ingredient.of(ingredient), category, result, experience, duration, AetherRecipeSerializers.ENCHANTING.get(), EnchantingRecipe::new)
                 .unlockedBy("has_" + unlockName, has(ingredient));
     }
 
     protected AetherCookingRecipeBuilder hiddenEnchantingRecipe(RecipeCategory category, ItemLike result, ItemLike ingredient, float experience, int duration) {
-        return AetherCookingRecipeBuilder.generic(Ingredient.of(ingredient), category, result, experience, duration, AetherRecipeSerializers.ENCHANTING.get())
+        return AetherCookingRecipeBuilder.generic(Ingredient.of(ingredient), category, result, experience, duration, AetherRecipeSerializers.ENCHANTING.get(), EnchantingRecipe::new)
                 .unlockedBy(getHasName(result), has(result));
     }
 
     protected AetherCookingRecipeBuilder freezingRecipe(RecipeCategory category, ItemLike result, ItemLike ingredient, float experience, int duration) {
-        return AetherCookingRecipeBuilder.generic(Ingredient.of(ingredient), category, result, experience, duration, AetherRecipeSerializers.FREEZING.get())
+        return AetherCookingRecipeBuilder.generic(Ingredient.of(ingredient), category, result, experience, duration, AetherRecipeSerializers.FREEZING.get(), FreezingRecipe::new)
                 .unlockedBy(getHasName(ingredient), has(ingredient));
     }
 
     protected AetherCookingRecipeBuilder freezingRecipeWithTag(RecipeCategory category, ItemLike result, TagKey<Item> ingredient, float experience, int duration, String unlockName) {
-        return AetherCookingRecipeBuilder.generic(Ingredient.of(ingredient), category, result, experience, duration, AetherRecipeSerializers.FREEZING.get())
+        return AetherCookingRecipeBuilder.generic(Ingredient.of(ingredient), category, result, experience, duration, AetherRecipeSerializers.FREEZING.get(), FreezingRecipe::new)
                 .unlockedBy("has_" + unlockName, has(ingredient));
     }
 
     protected AetherCookingRecipeBuilder freezingRecipeWithUnlockTag(RecipeCategory category, ItemLike result, ItemLike ingredient, TagKey<Item> unlock, float experience, int duration, String unlockName) {
-        return AetherCookingRecipeBuilder.generic(Ingredient.of(ingredient), category, result, experience, duration, AetherRecipeSerializers.FREEZING.get())
+        return AetherCookingRecipeBuilder.generic(Ingredient.of(ingredient), category, result, experience, duration, AetherRecipeSerializers.FREEZING.get(), FreezingRecipe::new)
                 .unlockedBy("has_" + unlockName, has(unlock));
     }
 
     protected AetherCookingRecipeBuilder hiddenFreezingRecipe(RecipeCategory category, ItemLike result, ItemLike ingredient, float experience, int duration) {
-        return AetherCookingRecipeBuilder.generic(Ingredient.of(ingredient), category, result, experience, duration, AetherRecipeSerializers.FREEZING.get())
+        return AetherCookingRecipeBuilder.generic(Ingredient.of(ingredient), category, result, experience, duration, AetherRecipeSerializers.FREEZING.get(), FreezingRecipe::new)
                 .unlockedBy(getHasName(result), has(result));
     }
 
@@ -171,46 +174,46 @@ public abstract class AetherRecipeProvider extends NitrogenRecipeProvider {
     }
 
     protected BlockStateRecipeBuilder ambrosiumEnchanting(Block result, Block ingredient) {
-        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipeSerializers.AMBROSIUM_ENCHANTING.get());
+        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AmbrosiumRecipe::new);
     }
 
     protected BlockStateRecipeBuilder swetBallConversion(Block result, Block ingredient) {
-        return BiomeParameterRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipeSerializers.SWET_BALL_CONVERSION.get());
+        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, SwetBallRecipe::new);
     }
 
-    protected BlockStateRecipeBuilder swetBallConversionTag(Block result, Block ingredient, TagKey<Biome> tagKey) {
-        return BiomeParameterRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, tagKey, AetherRecipeSerializers.SWET_BALL_CONVERSION.get());
+    protected BiomeParameterRecipeBuilder swetBallConversionTag(Block result, Block ingredient, TagKey<Biome> tagKey) {
+        return BiomeParameterRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, tagKey, SwetBallRecipe::new);
     }
 
     protected BlockStateRecipeBuilder icestoneFreezable(Block result, Block ingredient) {
-        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, AetherRecipeSerializers.ICESTONE_FREEZABLE.get());
+        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, IcestoneFreezableRecipe::new);
     }
 
     protected BlockStateRecipeBuilder accessoryFreezable(Block result, Block ingredient) {
-        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(this.pair(ingredient, Optional.of(Map.of(BlockStateProperties.LEVEL, 0)))), result, AetherRecipeSerializers.ACCESSORY_FREEZABLE.get());
+        return BlockStateRecipeBuilder.recipe(BlockStateIngredient.of(this.pair(ingredient, Optional.of(Map.of(BlockStateProperties.LEVEL, 0)))), result, AccessoryFreezableRecipe::new);
     }
 
-    protected BlockStateRecipeBuilder convertPlacement(Block result, Block ingredient, TagKey<Biome> biome) {
-        return BiomeParameterRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, biome, AetherRecipeSerializers.PLACEMENT_CONVERSION.get());
+    protected BiomeParameterRecipeBuilder convertPlacement(Block result, Block ingredient, TagKey<Biome> biome) {
+        return BiomeParameterRecipeBuilder.recipe(BlockStateIngredient.of(ingredient), result, biome, PlacementConversionRecipe::new);
     }
 
-    protected BlockStateRecipeBuilder convertPlacementWithProperties(Block result, Map<Property<?>, Comparable<?>> resultProperties, Block ingredient, Map<Property<?>, Comparable<?>> ingredientProperties, TagKey<Biome> biome) {
-        return BiomeParameterRecipeBuilder.recipe(BlockStateIngredient.of(this.pair(ingredient, Optional.of(ingredientProperties))), result, resultProperties, biome, AetherRecipeSerializers.PLACEMENT_CONVERSION.get());
+    protected BiomeParameterRecipeBuilder convertPlacementWithProperties(Block result, Map<Property<?>, Comparable<?>> resultProperties, Block ingredient, Map<Property<?>, Comparable<?>> ingredientProperties, TagKey<Biome> biome) {
+        return BiomeParameterRecipeBuilder.recipe(BlockStateIngredient.of(this.pair(ingredient, Optional.of(ingredientProperties))), result, resultProperties, biome, PlacementConversionRecipe::new);
     }
 
     protected PlacementBanBuilder banItemPlacement(ItemLike ingredient, TagKey<Biome> biome) {
-        return ItemBanBuilder.recipe(Ingredient.of(ingredient), Optional.empty(), Either.right(biome), AetherRecipeSerializers.ITEM_PLACEMENT_BAN.get());
+        return ItemBanBuilder.recipe(Ingredient.of(ingredient), Optional.empty(), Either.right(biome));
     }
 
     protected PlacementBanBuilder banItemPlacementWithBypass(ItemLike ingredient, TagKey<Block> bypass, TagKey<Biome> biome) {
-        return ItemBanBuilder.recipe(Ingredient.of(ingredient), Optional.of(BlockStateIngredient.of(bypass)), Either.right(biome), AetherRecipeSerializers.ITEM_PLACEMENT_BAN.get());
+        return ItemBanBuilder.recipe(Ingredient.of(ingredient), Optional.of(BlockStateIngredient.of(bypass)), Either.right(biome));
     }
 
     protected PlacementBanBuilder banBlockPlacement(Block ingredient, TagKey<Biome> biome) {
-        return BlockBanBuilder.recipe(BlockStateIngredient.of(ingredient), Optional.empty(), Either.right(biome), AetherRecipeSerializers.BLOCK_PLACEMENT_BAN.get());
+        return BlockBanBuilder.recipe(BlockStateIngredient.of(ingredient), Optional.empty(), Either.right(biome));
     }
 
     protected PlacementBanBuilder banBlockPlacementWithBypass(Block ingredient, TagKey<Block> bypass, TagKey<Biome> biome) {
-        return BlockBanBuilder.recipe(BlockStateIngredient.of(ingredient), Optional.of(BlockStateIngredient.of(bypass)), Either.right(biome), AetherRecipeSerializers.BLOCK_PLACEMENT_BAN.get());
+        return BlockBanBuilder.recipe(BlockStateIngredient.of(ingredient), Optional.of(BlockStateIngredient.of(bypass)), Either.right(biome));
     }
 }

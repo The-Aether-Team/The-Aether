@@ -16,10 +16,11 @@ public class AetherArmorItem extends ArmorItem {
 
     /**
      * Formats the resource path of the armor texture with the mod id replacing the first %s, the material name replacing the next %s, and whether the slot is legs or not replacing the last %s with a number 1 or 2.
-     * @param stack The armor {@link ItemStack}.
+     *
+     * @param stack  The armor {@link ItemStack}.
      * @param entity The {@link Entity} wearing the armor.
-     * @param slot The {@link EquipmentSlot} the armor is in.
-     * @param type A {@link String} type, either null or "overlay" if this is called to render an armor overlay, like for colored textures.
+     * @param slot   The {@link EquipmentSlot} the armor is in.
+     * @param type   A {@link String} type, either null or "overlay" if this is called to render an armor overlay, like for colored textures.
      * @return The resource path of the armor texture as a {@link String}.
      */
     @Nullable

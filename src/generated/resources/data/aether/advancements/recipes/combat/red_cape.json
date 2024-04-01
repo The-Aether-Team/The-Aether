@@ -30,6 +30,5 @@
     "recipes": [
       "aether:red_cape"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

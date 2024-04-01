@@ -20,6 +20,7 @@ import java.util.function.Predicate;
 
 /**
  * Interface for handling boss-related behavior for mobs.
+ *
  * @see BossMob
  */
 public interface AetherBossMob<T extends Mob & AetherBossMob<T>> extends BossMob<T> {
@@ -51,10 +52,11 @@ public interface AetherBossMob<T extends Mob & AetherBossMob<T>> extends BossMob
 
     /**
      * Evaporates a liquid block.
+     *
      * @param entity The boss entity.
-     * @param min The minimum {@link BlockPos} bounds corner.
-     * @param max The maximum {@link BlockPos} bounds corner.
-     * @param check An additional check using a {@link BlockState} {@link Predicate}.
+     * @param min    The minimum {@link BlockPos} bounds corner.
+     * @param max    The maximum {@link BlockPos} bounds corner.
+     * @param check  An additional check using a {@link BlockState} {@link Predicate}.
      */
     default void evaporate(T entity, BlockPos min, BlockPos max, Predicate<BlockState> check) {
         if (EventHooks.getMobGriefingEvent(entity.level(), entity)) {
@@ -72,8 +74,9 @@ public interface AetherBossMob<T extends Mob & AetherBossMob<T>> extends BossMob
 
     /**
      * Spawns particles and plays sounds for evaporation.
+     *
      * @param entity The boss entity.
-     * @param pos The {@link BlockPos} for effects.
+     * @param pos    The {@link BlockPos} for effects.
      */
     default void evaporateEffects(T entity, BlockPos pos) {
         EntityUtil.spawnRemovalParticles(entity.level(), pos);
@@ -82,6 +85,7 @@ public interface AetherBossMob<T extends Mob & AetherBossMob<T>> extends BossMob
 
     /**
      * The default minimum and maximum positions for expanded entity bounds.
+     *
      * @param entity The boss entity.
      * @return A {@link Pair} of the minimum {@link BlockPos} and the maximum {@link BlockPos}.
      */
