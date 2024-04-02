@@ -2,6 +2,7 @@ package com.aetherteam.aether.client;
 
 import com.aetherteam.aether.mixin.mixins.client.accessor.I18nAccessor;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.RandomSource;
 
 import javax.annotation.Nullable;
@@ -42,7 +43,9 @@ public class TriviaGenerator {
     @Nullable
     public Component getTriviaLine() {
         if (this.getTriviaComponent() != null) {
-            return Component.translatable("gui.aether.pro_tip").append(Component.literal(" ").append(this.getTriviaComponent()));
+            Component triviaComponent = this.getTriviaComponent();
+            MutableComponent prefixComponent = Component.translatable("gui.aether.pro_tip").withStyle(triviaComponent.getStyle());
+            return prefixComponent.append(Component.literal(" ").append(triviaComponent));
         }
         return null;
     }
