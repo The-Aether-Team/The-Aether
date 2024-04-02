@@ -37,9 +37,10 @@ public class AetherClient {
         bus.addListener(AetherClient::clientSetup);
         bus.addListener(AetherClient::registerSpectatorShaders);
         bus.addListener(AetherClient::loadComplete);
-        AetherClient.eventSetup();
 
         AetherMenus.MENUS.register(bus);
+
+        AetherClient.eventSetup(bus);
     }
 
     public static void clientSetup(FMLClientSetupEvent event) {
@@ -110,7 +111,7 @@ public class AetherClient {
         }
     }
 
-    public static void eventSetup() {
+    public static void eventSetup(IEventBus neoBus) {
         IEventBus bus = NeoForge.EVENT_BUS;
 
         AccessoryAbilityClientListener.listen(bus);
@@ -123,16 +124,16 @@ public class AetherClient {
         MenuListener.listen(bus);
         WorldPreviewListener.listen(bus);
 
-        bus.addListener(AetherColorResolvers::registerBlockColor);
-        bus.addListener(AetherColorResolvers::registerItemColor);
-        bus.addListener(AetherKeys::registerKeyMappings);
-        bus.addListener(AetherRecipeCategories::registerRecipeCategories);
-        bus.addListener(AetherParticleTypes::registerParticleFactories);
-        bus.addListener(AetherOverlays::registerOverlays);
-        bus.addListener(AetherRenderers::registerEntityRenderers);
-        bus.addListener(AetherRenderers::registerLayerDefinitions);
-        bus.addListener(AetherRenderers::addEntityLayers);
-        bus.addListener(AetherRenderEffects::registerRenderEffects);
+        neoBus.addListener(AetherColorResolvers::registerBlockColor);
+        neoBus.addListener(AetherColorResolvers::registerItemColor);
+        neoBus.addListener(AetherKeys::registerKeyMappings);
+        neoBus.addListener(AetherRecipeCategories::registerRecipeCategories);
+        neoBus.addListener(AetherParticleTypes::registerParticleFactories);
+        neoBus.addListener(AetherOverlays::registerOverlays);
+        neoBus.addListener(AetherRenderers::registerEntityRenderers);
+        neoBus.addListener(AetherRenderers::registerLayerDefinitions);
+        neoBus.addListener(AetherRenderers::addEntityLayers);
+        neoBus.addListener(AetherRenderEffects::registerRenderEffects);
     }
 
     /**

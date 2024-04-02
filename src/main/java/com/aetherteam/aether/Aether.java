@@ -155,7 +155,7 @@ public class Aether {
             register.register(bus);
         }
 
-        this.eventSetup();
+        this.eventSetup(bus);
 
         AetherBlocks.registerWoodTypes(); // Registered this early to avoid bugs with WoodTypes and signs.
 
@@ -494,7 +494,7 @@ public class Aether {
         }
     }
 
-    public void eventSetup() {
+    public void eventSetup(IEventBus neoBus) {
         IEventBus bus = NeoForge.EVENT_BUS;
 
         AccessoryAbilityListener.listen(bus);
@@ -509,14 +509,15 @@ public class Aether {
         PerkListener.listen(bus);
         RecipeListener.listen(bus);
 
-        bus.addListener(AetherCreativeTabs::buildCreativeModeTabs);
         bus.addListener(AetherCommands::registerCommands);
         bus.addListener(ReloadListeners::reloadListenerSetup);
-        bus.addListener(AetherEntityTypes::registerSpawnPlacements);
-        bus.addListener(AetherEntityTypes::registerEntityAttributes);
         bus.addListener(FlamingSwordItem::onLivingDamage);
         bus.addListener(HolySwordItem::onLivingDamage);
         bus.addListener(PigSlayerItem::onLivingDamage);
+
+        neoBus.addListener(AetherCreativeTabs::buildCreativeModeTabs);
+        neoBus.addListener(AetherEntityTypes::registerSpawnPlacements);
+        neoBus.addListener(AetherEntityTypes::registerEntityAttributes);
     }
 
     /**
