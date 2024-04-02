@@ -16,7 +16,7 @@ import com.aetherteam.aether.entity.projectile.crystal.ThunderCrystal;
 import com.aetherteam.aether.event.AetherEventDispatch;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.network.packet.clientbound.QueenDialoguePacket;
-import com.aetherteam.aether.network.packet.serverbound.BossInfoPacket;
+import com.aetherteam.aether.network.packet.clientbound.BossInfoPacket;
 import com.aetherteam.aether.network.packet.serverbound.NpcPlayerInteractPacket;
 import com.aetherteam.nitrogen.entity.BossRoomTracker;
 import com.aetherteam.nitrogen.network.PacketRelay;

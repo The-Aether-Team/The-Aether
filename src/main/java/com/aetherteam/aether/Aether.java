@@ -178,6 +178,8 @@ public class Aether {
         IPayloadRegistrar registrar = event.registrar(MODID).versioned("1.0.0").optional();
         // CLIENTBOUND
         registrar.play(AetherTravelPacket.ID, AetherTravelPacket::decode, payload -> payload.client(AetherTravelPacket::handle));
+        registrar.play(BossInfoPacket.Display.ID, BossInfoPacket.Display::decode, payload -> payload.client(BossInfoPacket.Display::handle));
+        registrar.play(BossInfoPacket.Remove.ID, BossInfoPacket.Remove::decode, payload -> payload.client(BossInfoPacket.Remove::handle));
         registrar.play(ClientDeveloperGlowPacket.Apply.ID, ClientDeveloperGlowPacket.Apply::decode, payload -> payload.client(ClientDeveloperGlowPacket.Apply::handle));
         registrar.play(ClientDeveloperGlowPacket.Remove.ID, ClientDeveloperGlowPacket.Remove::decode, payload -> payload.client(ClientDeveloperGlowPacket.Remove::handle));
         registrar.play(ClientDeveloperGlowPacket.Sync.ID, ClientDeveloperGlowPacket.Sync::decode, payload -> payload.client(ClientDeveloperGlowPacket.Sync::handle));
@@ -203,8 +205,6 @@ public class Aether {
 
         // SERVERBOUND
         registrar.play(AerbunnyPuffPacket.ID, AerbunnyPuffPacket::decode, payload -> payload.server(AerbunnyPuffPacket::handle));
-        registrar.play(BossInfoPacket.Display.ID, BossInfoPacket.Display::decode, payload -> payload.server(BossInfoPacket.Display::handle));
-        registrar.play(BossInfoPacket.Remove.ID, BossInfoPacket.Remove::decode, payload -> payload.server(BossInfoPacket.Remove::handle));
         registrar.play(ClearItemPacket.ID, ClearItemPacket::decode, payload -> payload.server(ClearItemPacket::handle));
         registrar.play(HammerProjectileLaunchPacket.ID, HammerProjectileLaunchPacket::decode, payload -> payload.server(HammerProjectileLaunchPacket::handle));
         registrar.play(LoreExistsPacket.ID, LoreExistsPacket::decode, payload -> payload.server(LoreExistsPacket::handle));

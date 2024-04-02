@@ -1,4 +1,4 @@
-package com.aetherteam.aether.network.packet.serverbound;
+package com.aetherteam.aether.network.packet.clientbound;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.event.hooks.GuiHooks;
