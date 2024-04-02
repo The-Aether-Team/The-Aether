@@ -46,7 +46,6 @@ public class EnchantedAetherGrassBlock extends GrassBlock {
 		}
 	}
 
-
 	@Override
 	public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
 		BlockPos abovePos = pos.above();
@@ -66,7 +65,7 @@ public class EnchantedAetherGrassBlock extends GrassBlock {
 
 			BlockState blockState = level.getBlockState(blockPos);
 			if (blockState.is(grass) && random.nextInt(10) == 0) {
-				((BonemealableBlock	) grass).performBonemeal(level, random, blockPos, blockState);
+				((BonemealableBlock) grass).performBonemeal(level, random, blockPos, blockState);
 			}
 
 			if (blockState.isAir()) {
