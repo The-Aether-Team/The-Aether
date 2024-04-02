@@ -38,6 +38,7 @@ public class AetherPlacedFeatures {
     public static final ResourceKey<PlacedFeature> GRASS_PATCH_PLACEMENT = createKey("grass_patch");
     public static final ResourceKey<PlacedFeature> TALL_GRASS_PATCH_PLACEMENT = createKey("tall_grass_patch");
     public static final ResourceKey<PlacedFeature> AETHER_GRASS_BONEMEAL = createKey("aether_grass_bonemeal");
+    public static final ResourceKey<PlacedFeature> ENCHANTED_AETHER_GRASS_BONEMEAL = createKey("enchanted_aether_grass_bonemeal");
     public static final ResourceKey<PlacedFeature> WHITE_FLOWER_PATCH_PLACEMENT = createKey("white_flower_patch");
     public static final ResourceKey<PlacedFeature> PURPLE_FLOWER_PATCH_PLACEMENT = createKey("purple_flower_patch");
     public static final ResourceKey<PlacedFeature> BERRY_BUSH_PATCH_PLACEMENT = createKey("berry_bush_patch");
@@ -95,6 +96,8 @@ public class AetherPlacedFeatures {
                 new ConfigFilter(AetherConfig.SERVER.generate_tall_grass));
         register(context, AETHER_GRASS_BONEMEAL, configuredFeatures.getOrThrow(VegetationFeatures.SINGLE_PIECE_OF_GRASS),
                 PlacementUtils.isEmpty());
+        register(context, ENCHANTED_AETHER_GRASS_BONEMEAL, configuredFeatures.getOrThrow(VegetationFeatures.SINGLE_PIECE_OF_GRASS),
+            PlacementUtils.isEmpty());
         register(context, WHITE_FLOWER_PATCH_PLACEMENT, configuredFeatures.getOrThrow(AetherConfiguredFeatures.WHITE_FLOWER_PATCH_CONFIGURATION),
                 RarityFilter.onAverageOnceEvery(8),
                 ImprovedLayerPlacementModifier.of(Heightmap.Types.MOTION_BLOCKING, UniformInt.of(0, 1), 4),
