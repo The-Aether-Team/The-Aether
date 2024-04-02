@@ -38,21 +38,10 @@ public class TriviaGenerator {
     }
 
     /**
-     * @return A constructed trivia line {@link Component} appended with "Pro Tip:", for display on the loading screen.
-     */
-    @Nullable
-    public Component getTriviaLine() {
-        if (this.getTriviaComponent() != null) {
-            return Component.translatable("gui.aether.pro_tip").append(Component.literal(" ").append(this.getTriviaComponent()));
-        }
-        return null;
-    }
-
-    /**
      * @return A {@link Component} for the trivia line at the current index.
      */
     @Nullable
-    private Component getTriviaComponent() {
+    public Component getTriviaLine() {
         if (!this.getTrivia().isEmpty()) {
             return this.getTrivia().get(this.index);
         }
