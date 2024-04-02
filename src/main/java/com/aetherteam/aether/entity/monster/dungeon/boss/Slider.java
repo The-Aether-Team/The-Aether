@@ -185,7 +185,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     }
 
     /**
-     * Handles damaging the Slider or playing a chat message if the player attempts to damage with the wrong tool.
+     * Handles damaging the Slider.
      * @param source The {@link DamageSource}.
      * @param amount The {@link Float} amount of damage.
      * @return Whether the entity was hurt, as a {@link Boolean}.
