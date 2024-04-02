@@ -90,18 +90,19 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
      * @param player The {@link Player} attempting to unlock the Treasure Chest.
      * @return Whether the Treasure Chest was unlocked.
      */
-    public boolean tryUnlock(Player player) {
-        ItemStack stack = player.getMainHandItem();
+    public boolean tryUnlock(Player player, ItemStack stack) {
         boolean keyMatches = stack.getItem() instanceof DungeonKeyItem dungeonKeyItem && this.getKind().equals(dungeonKeyItem.getDungeonType());
+        boolean hasNoKeys = (!(player.getMainHandItem().getItem() instanceof DungeonKeyItem mainHandItem) || !this.getKind().equals(mainHandItem.getDungeonType()))
+                && (!(player.getOffhandItem().getItem() instanceof DungeonKeyItem offhandItem) || !this.getKind().equals(offhandItem.getDungeonType()));
         if (this.getLocked() && keyMatches && this.level != null) {
             this.setLocked(false);
             this.setChanged();
             this.level.markAndNotifyBlock(this.worldPosition, this.level.getChunkAt(this.worldPosition), this.getBlockState(), this.getBlockState(), 2, 512);
             return true;
-        } else {
+        } else if (hasNoKeys) {
             player.displayClientMessage(Component.translatable(this.getKind().getNamespace() + "." + this.getKind().getPath() + "_treasure_chest_locked"), true);
-            return false;
         }
+        return false;
     }
 
     @Override
