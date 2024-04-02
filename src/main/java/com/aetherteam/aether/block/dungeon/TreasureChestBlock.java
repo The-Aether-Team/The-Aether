@@ -2,10 +2,13 @@ package com.aetherteam.aether.block.dungeon;
 
 import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
 import com.aetherteam.aether.blockentity.TreasureChestBlockEntity;
+import com.aetherteam.aether.item.miscellaneous.DungeonKeyItem;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -119,27 +122,40 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof TreasureChestBlockEntity treasureChestBlockEntity) {
-            MenuProvider menuProvider = this.getMenuProvider(state, level, pos);
+            ResourceLocation kind = treasureChestBlockEntity.getKind();
+
+            InteractionHand useHand = null;
+            if ((player.getMainHandItem().getItem() instanceof DungeonKeyItem dungeonKeyItem) && kind.equals(dungeonKeyItem.getDungeonType())) {
+                useHand = InteractionHand.MAIN_HAND;
+            } else if ((player.getOffhandItem().getItem() instanceof DungeonKeyItem dungeonKeyItem) && kind.equals(dungeonKeyItem.getDungeonType())) {
+                useHand = InteractionHand.OFF_HAND;
+            }
+
             if (treasureChestBlockEntity.getLocked()) {
-                ItemStack stack = player.getItemInHand(hand);
-                if (treasureChestBlockEntity.tryUnlock(player, stack)) {
-                    if (player instanceof ServerPlayer) {
-                        player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+                if (useHand != null) {
+                    ItemStack key = player.getItemInHand(useHand);
+                    if (!key.isEmpty() && treasureChestBlockEntity.tryUnlock(player)) {
+                        if (level.isClientSide()) {
+                            player.swing(useHand);
+                        }
+                        if (player instanceof ServerPlayer) {
+                            player.awardStat(Stats.ITEM_USED.get(key.getItem()));
+                        }
+                        if (!player.getAbilities().instabuild) {
+                            key.shrink(1);
+                        }
+                        return InteractionResult.CONSUME;
                     }
-                    if (!player.getAbilities().instabuild) {
-                        stack.shrink(1);
-                    }
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                } else {
-                    player.swing(InteractionHand.MAIN_HAND);
                 }
-            } else if (!ChestBlock.isChestBlockedAt(level, pos) && menuProvider != null) {
+                player.displayClientMessage(Component.translatable(kind.getNamespace() + "." + kind.getPath() + "_treasure_chest_locked"), true);
+            } else {
+                MenuProvider menuProvider = this.getMenuProvider(state, level, pos);
                 player.openMenu(menuProvider);
                 player.awardStat(Stats.CUSTOM.get(Stats.OPEN_CHEST));
                 PiglinAi.angerNearbyPiglins(player, true);
             }
         }
-        return InteractionResult.PASS;
+        return InteractionResult.sidedSuccess(level.isClientSide());
     }
 
     @Override
