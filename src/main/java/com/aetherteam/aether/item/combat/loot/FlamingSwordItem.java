@@ -10,20 +10,17 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID)
 public class FlamingSwordItem extends SwordItem {
     public FlamingSwordItem() {
         super(AetherItemTiers.FLAMING, 3, -2.4F, new Item.Properties().rarity(AetherItems.AETHER_LOOT));
     }
 
     /**
+     * @see Aether#eventSetup()
      * @see FlamingSwordItem#handleFlamingSwordAbility(LivingEntity, DamageSource)
      */
-    @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent event) {
         LivingEntity target = event.getEntity();
         DamageSource damageSource = event.getSource();

@@ -41,17 +41,16 @@ public class AetherData {
         generator.addProvider(event.includeServer(), new AetherLootModifierData(packOutput));
         generator.addProvider(event.includeServer(), new AetherAdvancementData(packOutput, lookupProvider, fileHelper));
         generator.addProvider(event.includeServer(), new AetherDataMapData(packOutput, lookupProvider));
-        //tags
+        DatapackBuiltinEntriesProvider registrySets = new AetherRegistrySets(packOutput, lookupProvider);
+        CompletableFuture<HolderLookup.Provider> registryProvider = registrySets.getRegistryProvider();
+        generator.addProvider(event.includeServer(), registrySets);
+        // Tags
         AetherBlockTagData blockTags = new AetherBlockTagData(packOutput, lookupProvider, fileHelper);
         generator.addProvider(event.includeServer(), blockTags);
         generator.addProvider(event.includeServer(), new AetherItemTagData(packOutput, lookupProvider, blockTags.contentsGetter(), fileHelper));
         generator.addProvider(event.includeServer(), new AetherEntityTagData(packOutput, lookupProvider, fileHelper));
         generator.addProvider(event.includeServer(), new AetherFluidTagData(packOutput, lookupProvider, fileHelper));
         generator.addProvider(event.includeServer(), new AetherBiomeTagData(packOutput, lookupProvider, fileHelper));
-        //registries
-        DatapackBuiltinEntriesProvider datapackProvider = new AetherRegistrySets(packOutput, lookupProvider);
-        CompletableFuture<HolderLookup.Provider> registryProvider = datapackProvider.getRegistryProvider();
-        generator.addProvider(event.includeServer(), datapackProvider);
         generator.addProvider(event.includeServer(), new AetherStructureTagData(packOutput, registryProvider, fileHelper));
         generator.addProvider(event.includeServer(), new AetherDamageTypeTagData(packOutput, registryProvider, fileHelper));
 

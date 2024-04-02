@@ -1,7 +1,7 @@
 package com.aetherteam.aether.client.event.listeners.abilities;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
+import com.aetherteam.aether.client.AetherClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -11,7 +11,7 @@ import net.neoforged.neoforge.client.event.RenderPlayerEvent;
 
 public class AccessoryAbilityClientListener {
     /**
-     * @see Aether#eventSetup()
+     * @see AetherClient#eventSetup()
      */
     public static void listen(IEventBus bus) {
         bus.addListener(AccessoryAbilityClientListener::onRenderPlayer);

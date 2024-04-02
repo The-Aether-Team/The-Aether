@@ -1,6 +1,6 @@
 package com.aetherteam.aether.client.event.listeners;
 
-import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.client.AetherClient;
 import com.aetherteam.aether.client.event.hooks.HandRenderHooks;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -13,7 +13,7 @@ import net.neoforged.neoforge.client.event.RenderHandEvent;
 
 public class HandRenderListener {
     /**
-     * @see Aether#eventSetup()
+     * @see AetherClient#eventSetup()
      */
     public static void listen(IEventBus bus) {
         bus.addListener(HandRenderListener::onRenderHand);

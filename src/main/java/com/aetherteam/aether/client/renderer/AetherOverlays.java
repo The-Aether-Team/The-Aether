@@ -4,6 +4,7 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.block.AetherBlocks;
+import com.aetherteam.aether.client.AetherClient;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.passive.Moa;
 import com.aetherteam.aether.item.AetherItems;
@@ -30,13 +31,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.RegisterGuiOverlaysEvent;
 import net.neoforged.neoforge.client.gui.overlay.ExtendedGui;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherOverlays {
     private static final ResourceLocation TEXTURE_INEBRIATION_VIGNETTE = new ResourceLocation(Aether.MODID, "textures/blur/inebriation_vignette.png");
     private static final ResourceLocation TEXTURE_REMEDY_VIGNETTE = new ResourceLocation(Aether.MODID, "textures/blur/remedy_vignette.png");
@@ -65,7 +62,9 @@ public class AetherOverlays {
     private static final ResourceLocation TEXTURE_LIFE_SHARD_FROZEN_FULL = new ResourceLocation(Aether.MODID, "hud/heart/shard_frozen_full");
     private static final ResourceLocation TEXTURE_LIFE_SHARD_FROZEN_HALF = new ResourceLocation(Aether.MODID, "hud/heart/shard_frozen_half");
 
-    @SubscribeEvent
+    /**
+     * @see AetherClient#eventSetup()
+     */
     public static void registerOverlays(RegisterGuiOverlaysEvent event) {
         event.registerAboveAll(new ResourceLocation(Aether.MODID, "aether_portal_overlay"), (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
             Minecraft minecraft = Minecraft.getInstance();

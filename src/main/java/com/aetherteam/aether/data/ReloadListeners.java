@@ -9,16 +9,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
 
 import java.util.Map;
 
 
-@Mod.EventBusSubscriber(modid = Aether.MODID)
 public class ReloadListeners {
-    @SubscribeEvent
+    /**
+     * @see Aether#eventSetup()
+     */
     public static void reloadListenerSetup(AddReloadListenerEvent event) {
         event.addListener(new RecipeReloadListener());
     }

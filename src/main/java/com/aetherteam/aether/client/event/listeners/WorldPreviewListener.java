@@ -1,6 +1,6 @@
 package com.aetherteam.aether.client.event.listeners;
 
-import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.client.AetherClient;
 import com.aetherteam.aether.client.event.hooks.WorldPreviewHooks;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -13,7 +13,7 @@ import net.neoforged.neoforge.event.TickEvent;
 
 public class WorldPreviewListener {
     /**
-     * @see Aether#eventSetup()
+     * @see AetherClient#eventSetup()
      */
     public static void listen(IEventBus bus) {
         bus.addListener(EventPriority.LOWEST, WorldPreviewListener::onGuiOpenLowest);

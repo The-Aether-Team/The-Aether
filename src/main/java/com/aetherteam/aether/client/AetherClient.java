@@ -7,7 +7,10 @@ import com.aetherteam.aether.client.event.listeners.*;
 import com.aetherteam.aether.client.event.listeners.abilities.AccessoryAbilityClientListener;
 import com.aetherteam.aether.client.event.listeners.capability.AetherPlayerClientListener;
 import com.aetherteam.aether.client.gui.screen.inventory.*;
+import com.aetherteam.aether.client.particle.AetherParticleTypes;
+import com.aetherteam.aether.client.renderer.AetherOverlays;
 import com.aetherteam.aether.client.renderer.AetherRenderers;
+import com.aetherteam.aether.client.renderer.level.AetherRenderEffects;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
 import com.aetherteam.aether.inventory.menu.LoreBookMenu;
@@ -21,7 +24,6 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
@@ -110,6 +112,7 @@ public class AetherClient {
 
     public static void eventSetup() {
         IEventBus bus = NeoForge.EVENT_BUS;
+
         AccessoryAbilityClientListener.listen(bus);
         AetherPlayerClientListener.listen(bus);
         AudioListener.listen(bus);
@@ -119,12 +122,22 @@ public class AetherClient {
         LevelClientListener.listen(bus);
         MenuListener.listen(bus);
         WorldPreviewListener.listen(bus);
+
+        bus.addListener(AetherColorResolvers::registerBlockColor);
+        bus.addListener(AetherColorResolvers::registerItemColor);
+        bus.addListener(AetherKeys::registerKeyMappings);
+        bus.addListener(AetherRecipeCategories::registerRecipeCategories);
+        bus.addListener(AetherParticleTypes::registerParticleFactories);
+        bus.addListener(AetherOverlays::registerOverlays);
+        bus.addListener(AetherRenderers::registerEntityRenderers);
+        bus.addListener(AetherRenderers::registerLayerDefinitions);
+        bus.addListener(AetherRenderers::addEntityLayers);
+        bus.addListener(AetherRenderEffects::registerRenderEffects);
     }
 
     /**
      * Registers a unique shader for spectating the Sun Spirit, which tints the screen red.
      */
-    @SubscribeEvent
     public static void registerSpectatorShaders(RegisterEntitySpectatorShadersEvent event) {
         event.register(AetherEntityTypes.SUN_SPIRIT.get(), new ResourceLocation(Aether.MODID, "shaders/post/sun_spirit.json"));
     }
@@ -132,7 +145,6 @@ public class AetherClient {
     /**
      * Refreshes resource packs at the end of loading, so that auto-applied packs in {@link AetherClient#autoApplyPacks()} get processed.
      */
-    @SubscribeEvent
     public static void loadComplete(FMLLoadCompleteEvent event) {
         if (refreshPacks) {
             Minecraft.getInstance().reloadResourcePacks();

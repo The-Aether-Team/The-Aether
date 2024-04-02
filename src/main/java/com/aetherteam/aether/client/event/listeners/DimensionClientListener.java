@@ -1,6 +1,6 @@
 package com.aetherteam.aether.client.event.listeners;
 
-import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.client.AetherClient;
 import com.aetherteam.aether.client.event.hooks.DimensionClientHooks;
 import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.FogRenderer;
@@ -11,7 +11,7 @@ import org.apache.commons.lang3.tuple.Triple;
 
 public class DimensionClientListener {
     /**
-     * @see Aether#eventSetup()
+     * @see AetherClient#eventSetup()
      */
     public static void listen(IEventBus bus) {
         bus.addListener(DimensionClientListener::onRenderFog);

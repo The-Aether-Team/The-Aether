@@ -1,6 +1,6 @@
 package com.aetherteam.aether.client.event.listeners;
 
-import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.client.AetherClient;
 import com.aetherteam.aether.client.event.hooks.MenuHooks;
 import com.aetherteam.cumulus.api.MenuHelper;
 import com.aetherteam.cumulus.client.CumulusClient;
@@ -13,7 +13,7 @@ import net.neoforged.neoforge.client.event.ScreenEvent;
 
 public class MenuListener {
     /**
-     * @see Aether#eventSetup()
+     * @see AetherClient#eventSetup()
      */
     public static void listen(IEventBus bus) {
         bus.addListener(EventPriority.HIGHEST, MenuListener::onGuiOpenHighest);

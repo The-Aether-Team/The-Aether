@@ -1,6 +1,6 @@
 package com.aetherteam.aether.client.event.listeners.capability;
 
-import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.client.AetherClient;
 import com.aetherteam.aether.client.event.hooks.CapabilityClientHooks;
 import net.minecraft.client.player.Input;
 import net.minecraft.world.entity.player.Player;
@@ -10,7 +10,7 @@ import net.neoforged.neoforge.client.event.MovementInputUpdateEvent;
 
 public class AetherPlayerClientListener {
     /**
-     * @see Aether#eventSetup()
+     * @see AetherClient#eventSetup()
      */
     public static void listen(IEventBus bus) {
         bus.addListener(AetherPlayerClientListener::onMove);

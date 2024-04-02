@@ -17,8 +17,10 @@ import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.client.CombinedPackResources;
 import com.aetherteam.aether.client.TriviaGenerator;
 import com.aetherteam.aether.client.particle.AetherParticleTypes;
+import com.aetherteam.aether.command.AetherCommands;
 import com.aetherteam.aether.command.SunAltarWhitelist;
 import com.aetherteam.aether.data.AetherData;
+import com.aetherteam.aether.data.ReloadListeners;
 import com.aetherteam.aether.data.resources.AetherMobCategory;
 import com.aetherteam.aether.data.resources.registries.AetherDataMaps;
 import com.aetherteam.aether.data.resources.registries.AetherMoaTypes;
@@ -36,6 +38,9 @@ import com.aetherteam.aether.inventory.AetherRecipeBookTypes;
 import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
 import com.aetherteam.aether.item.AetherCreativeTabs;
 import com.aetherteam.aether.item.AetherItems;
+import com.aetherteam.aether.item.combat.loot.FlamingSwordItem;
+import com.aetherteam.aether.item.combat.loot.HolySwordItem;
+import com.aetherteam.aether.item.combat.loot.PigSlayerItem;
 import com.aetherteam.aether.loot.conditions.AetherLootConditions;
 import com.aetherteam.aether.loot.functions.AetherLootFunctions;
 import com.aetherteam.aether.loot.modifiers.AetherLootModifiers;
@@ -115,7 +120,6 @@ public class Aether {
         bus.addListener(this::packSetup);
         bus.addListener(NewRegistryEvent.class, event -> event.register(AetherAdvancementSoundOverrides.ADVANCEMENT_SOUND_OVERRIDE_REGISTRY));
         bus.addListener(DataPackRegistryEvent.NewRegistry.class, event -> event.dataPackRegistry(AetherMoaTypes.MOA_TYPE_REGISTRY_KEY, MoaType.CODEC, MoaType.CODEC));
-        this.eventSetup();
 
         DeferredRegister<?>[] registers = {
                 AetherBlocks.BLOCKS,
@@ -150,6 +154,8 @@ public class Aether {
         for (DeferredRegister<?> register : registers) {
             register.register(bus);
         }
+
+        this.eventSetup();
 
         AetherBlocks.registerWoodTypes(); // Registered this early to avoid bugs with WoodTypes and signs.
 
@@ -490,6 +496,7 @@ public class Aether {
 
     public void eventSetup() {
         IEventBus bus = NeoForge.EVENT_BUS;
+
         AccessoryAbilityListener.listen(bus);
         ArmorAbilityListener.listen(bus);
         ToolAbilityListener.listen(bus);
@@ -501,6 +508,15 @@ public class Aether {
         ItemListener.listen(bus);
         PerkListener.listen(bus);
         RecipeListener.listen(bus);
+
+        bus.addListener(AetherCreativeTabs::buildCreativeModeTabs);
+        bus.addListener(AetherCommands::registerCommands);
+        bus.addListener(ReloadListeners::reloadListenerSetup);
+        bus.addListener(AetherEntityTypes::registerSpawnPlacements);
+        bus.addListener(AetherEntityTypes::registerEntityAttributes);
+        bus.addListener(FlamingSwordItem::onLivingDamage);
+        bus.addListener(HolySwordItem::onLivingDamage);
+        bus.addListener(PigSlayerItem::onLivingDamage);
     }
 
     /**
