@@ -40,6 +40,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
@@ -53,6 +54,7 @@ import net.minecraftforge.network.NetworkHooks;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enemy, IEntityAdditionalSpawnData {
@@ -185,71 +187,121 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     }
 
     /**
-     * Handles damaging the Slider or playing a chat message if the player attempts to damage with the wrong tool.
+     * Handles damaging the Slider.
      * @param source The {@link DamageSource}.
      * @param amount The {@link Float} amount of damage.
      * @return Whether the entity was hurt, as a {@link Boolean}.
      */
     @Override
     public boolean hurt(DamageSource source, float amount) {
+        Optional<LivingEntity> damageResult = this.canDamageSlider(source);
         if (source.isBypassInvul()) {
             super.hurt(source, amount);
             if (!this.getLevel().isClientSide() && source.getEntity() instanceof LivingEntity living) {
                 this.mostDamageTargetGoal.addAggro(living, amount); // AI goal for being hurt.
             }
-        } else if (source.getDirectEntity() instanceof LivingEntity attacker && this.getLevel().getDifficulty() != Difficulty.PEACEFUL) {
-            if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoomInterior(attacker)) { // Only allow damage within the boss room.
-                if (attacker.getMainHandItem().canPerformAction(ToolActions.PICKAXE_DIG) || attacker.getMainHandItem().is(AetherTags.Items.SLIDER_DAMAGING_ITEMS)) { // Check for correct tool.
-                    if (super.hurt(source, amount) && this.getHealth() > 0) {
-                        if (!this.isBossFight()) {
-                            this.start();
-                        }
-                        this.setDeltaMovement(this.getDeltaMovement().scale(0.75F));
+        } else if (damageResult.isPresent()) {
+            LivingEntity attacker = damageResult.get();
+            if (super.hurt(source, amount) && this.getHealth() > 0) {
+                if (!this.isBossFight()) {
+                    this.start();
+                }
+                this.setDeltaMovement(this.getDeltaMovement().scale(0.75F));
 
-                        // Handle the Slider's model tilt when damaged.
-                        double a = Math.abs(this.position().x() - attacker.position().x());
-                        double c = Math.abs(this.position().z() - attacker.position().z());
-                        if (a > c) {
-                            this.setHurtAngleZ(1);
-                            this.setHurtAngleX(0);
-                            if (this.position().x() > attacker.position().x()) {
-                                this.setHurtAngleZ(-1);
-                            }
-                        } else {
-                            this.setHurtAngleX(1);
-                            this.setHurtAngleZ(0);
-                            if (this.position().z() > attacker.position().z()) {
-                                this.setHurtAngleX(-1);
-                            }
-                        }
-                        this.setHurtAngle(0.7F - (this.getHealth() / 875.0F));
-
-                        if (!this.getLevel().isClientSide() && source.getEntity() instanceof LivingEntity living) {
-                            this.mostDamageTargetGoal.addAggro(living, amount); // AI goal for being hurt.
-                        }
-
-                        return true;
+                // Handle the Slider's model tilt when damaged.
+                double a = Math.abs(this.position().x() - attacker.position().x());
+                double c = Math.abs(this.position().z() - attacker.position().z());
+                if (a > c) {
+                    this.setHurtAngleZ(1);
+                    this.setHurtAngleX(0);
+                    if (this.position().x() > attacker.position().x()) {
+                        this.setHurtAngleZ(-1);
                     }
                 } else {
-                    if (!this.getLevel().isClientSide() && attacker instanceof Player player) {
-                        if (this.getChatCooldown() <= 0) {
-                            player.sendSystemMessage(Component.translatable("gui.aether.slider.message.attack.invalid")); // Invalid tool.
-                            this.setChatCooldown(15);
-                            return false;
-                        }
+                    this.setHurtAngleX(1);
+                    this.setHurtAngleZ(0);
+                    if (this.position().z() > attacker.position().z()) {
+                        this.setHurtAngleX(-1);
                     }
                 }
-            } else {
-                if (!this.getLevel().isClientSide() && attacker instanceof Player player) {
-                    if (this.getChatCooldown() <= 0) {
-                        this.displayTooFarMessage(player); // Too far from Slider
-                        this.setChatCooldown(15);
-                        return false;
+                this.setHurtAngle(0.7F - (this.getHealth() / 875.0F));
+
+                if (!this.getLevel().isClientSide() && source.getEntity() instanceof LivingEntity living) {
+                    this.mostDamageTargetGoal.addAggro(living, amount); // AI goal for being hurt.
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks whether the Slider can be damaged, playing a chat message if the player attempts to damage with the wrong tool or is too far away.
+     *
+     * @param source The {@link DamageSource}.
+     * @return An {@link Optional} that contains the attacking {@link LivingEntity} if the damage checks are successful.
+     */
+    private Optional<LivingEntity> canDamageSlider(DamageSource source) {
+        if (this.getLevel().getDifficulty() != Difficulty.PEACEFUL) {
+            if (source.getDirectEntity() instanceof LivingEntity attacker) {
+                if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoomInterior(attacker)) { // Only allow damage within the boss room.
+                    if (attacker.getMainHandItem().canPerformAction(ToolActions.PICKAXE_DIG)
+                            || attacker.getMainHandItem().is(AetherTags.Items.SLIDER_DAMAGING_ITEMS)
+                            || attacker.getMainHandItem().isCorrectToolForDrops(AetherBlocks.CARVED_STONE.get().defaultBlockState())) { // Check for correct tool.
+                        return Optional.of(attacker);
+                    } else {
+                        return this.sendInvalidToolMessage(attacker);
+                    }
+                } else {
+                    this.sendTooFarMessage(attacker);
+                }
+            } else if (source.getDirectEntity() instanceof Projectile projectile) {
+                if (projectile.getOwner() instanceof LivingEntity attacker) {
+                    if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoomInterior(attacker)) { // Only allow damage within the boss room.
+                        if (projectile.getType().is(AetherTags.Entities.SLIDER_DAMAGING_PROJECTILES)) {
+                            return Optional.of(attacker);
+                        } else {
+                            return this.sendInvalidToolMessage(attacker);
+                        }
+                    } else {
+                        return this.sendTooFarMessage(attacker);
                     }
                 }
             }
         }
-        return false;
+        return Optional.empty();
+    }
+
+    /**
+     * Tells the player that they are using an invalid tool to attack the Slider.
+     *
+     * @param attacker The attacking {@link LivingEntity}.
+     * @return An empty {@link Optional}.
+     */
+    private Optional<LivingEntity> sendInvalidToolMessage(LivingEntity attacker) {
+        if (!this.getLevel().isClientSide() && attacker instanceof Player player) {
+            if (this.getChatCooldown() <= 0) {
+                player.sendSystemMessage(Component.translatable("gui.aether.slider.message.attack.invalid")); // Invalid tool.
+                this.setChatCooldown(15);
+            }
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Tells the player that they are too far away to attack the Slider.
+     *
+     * @param attacker The attacking {@link LivingEntity}.
+     * @return An empty {@link Optional}.
+     */
+    private Optional<LivingEntity> sendTooFarMessage(LivingEntity attacker) {
+        if (!this.getLevel().isClientSide() && attacker instanceof Player player) {
+            if (this.getChatCooldown() <= 0) {
+                this.displayTooFarMessage(player); // Too far from Slider
+                this.setChatCooldown(15);
+            }
+        }
+        return Optional.empty();
     }
 
     /**

@@ -177,6 +177,7 @@ public class AetherTags {
 		public static final TagKey<EntityType<?>> TREATED_AS_AETHER_ENTITY = tag("treated_as_aether_entity");
 		public static final TagKey<EntityType<?>> TREATED_AS_VANILLA_ENTITY = tag("treated_as_vanilla_entity");
 		public static final TagKey<EntityType<?>> DUNGEON_ENTITIES = tag("dungeon_entities");
+		public static final TagKey<EntityType<?>> SLIDER_DAMAGING_PROJECTILES = tag("slider_damaging_projectiles");
 
 		private static TagKey<EntityType<?>> tag(String name) {
 			return TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Aether.MODID, name));
