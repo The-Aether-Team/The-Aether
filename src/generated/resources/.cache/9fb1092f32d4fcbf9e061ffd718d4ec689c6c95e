@@ -1,4 +1,4 @@
-// 1.20.1	2024-03-17T20:14:22.2015111	Recipes
+// 1.20.1	2024-04-01T21:48:51.8197528	Recipes
 ce9ab2e043b1d5d8747a22324584f0bcf4c2b3b1 data/aether/advancements/recipes/building_blocks/aerogel_slab.json
 90208eb708709fa9badd0fc606e5daf5ad91b03b data/aether/advancements/recipes/building_blocks/aerogel_slab_from_aerogel_stonecutting.json
 6845688223f47a89fd0d51f6e6d1de155f983710 data/aether/advancements/recipes/building_blocks/aerogel_stairs.json
@@ -323,7 +323,7 @@ c978ad29d62a992f1a45c13793d45564e8718de1 data/aether/recipes/aether_gold_nugget_
 d6ea60e365df69ac31671107d7c4b87d96adcb24 data/aether/recipes/aether_iron_nugget_from_smelting.json
 22c5f28f42aeeec0a4f9bb3f4d3b4d1a7f94d22d data/aether/recipes/aether_saddle.json
 0c21d2b654c566de841cac9311066f39f31e85bc data/aether/recipes/aether_tune_enchanting.json
-07f4b638eb1ebe38f6a2a736eb6ef7325f5c6fce data/aether/recipes/altar.json
+52afabb7a247db3632c65c5e2efcee8f0fee15d3 data/aether/recipes/altar.json
 f16e7f5f90f310f7be36030d1070e44e76e7cbdb data/aether/recipes/ambrosium_block.json
 453451e26bd4a68814efc558a9eae20afcbc8c3d data/aether/recipes/ambrosium_enchant_aether_grass_to_enchanted_aether_grass.json
 311c797765eefdecd2e980cbbfb50217d7ad66ee data/aether/recipes/ambrosium_shard_from_ambrosium_block.json
