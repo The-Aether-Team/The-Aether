@@ -19,10 +19,10 @@ public final class EntityUtil {
      * @param source The {@link Entity} to copy rotations from.
      */
     public static void copyRotations(Entity entity, Entity source) {
-        entity.setYRot(source.getYRot() % 360.0F);
-        entity.setXRot(source.getXRot() % 360.0F);
-        entity.setYBodyRot(source.getYRot());
-        entity.setYHeadRot(source.getYRot());
+        entity.setYRot((float) Mth.rotLerp(1.0 / 3.0, source.getYRot(), source.yRotO));
+        entity.setXRot((float) Mth.rotLerp(1.0 / 3.0, source.getXRot(), source.xRotO));
+        entity.setYBodyRot((float) Mth.rotLerp(1.0 / 3.0, source.getYRot(), source.yRotO));
+        entity.setYHeadRot((float) Mth.rotLerp(1.0 / 3.0, source.getYRot(), source.yRotO));
     }
 
     /**
