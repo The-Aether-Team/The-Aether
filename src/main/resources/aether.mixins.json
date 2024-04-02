@@ -9,6 +9,7 @@
     "common.AbstractArrowMixin",
     "common.DimensionTypeMixin",
     "common.DirectoryLockMixin",
+    "common.EntityMixin",
     "common.FeatureMixin",
     "common.ItemMixin",
     "common.LivingEntityMixin",
