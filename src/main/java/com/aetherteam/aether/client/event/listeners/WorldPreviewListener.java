@@ -3,11 +3,9 @@ package com.aetherteam.aether.client.event.listeners;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.event.hooks.WorldPreviewHooks;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.*;
@@ -25,7 +23,7 @@ public class WorldPreviewListener {
         bus.addListener(WorldPreviewListener::onCameraView);
         bus.addListener(WorldPreviewListener::onRenderOverlay);
         bus.addListener(WorldPreviewListener::onRenderPlayer);
-        bus.addListener((event) -> WorldPreviewListener.onRenderEntity((RenderLivingEvent.Pre<?, ?>) event));
+        bus.addListener(WorldPreviewListener::onRenderEntity);
     }
 
     /**
@@ -96,7 +94,7 @@ public class WorldPreviewListener {
      * @see WorldPreviewHooks#shouldHideEntity(Entity)
      * @see WorldPreviewHooks#adjustShadow(EntityRenderer, boolean)
      */
-    public static <T extends LivingEntity, M extends EntityModel<T>> void onRenderEntity(RenderLivingEvent.Pre<T, M> event) {
+    public static void onRenderEntity(RenderLivingEvent.Pre<?, ?> event) {
         Entity entity = event.getEntity();
         EntityRenderer<?> renderer = event.getRenderer();
         boolean hide = WorldPreviewHooks.shouldHideEntity(entity);
