@@ -90,7 +90,6 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
         } else {
             return false;
         }
-        return false;
     }
 
     @Override
