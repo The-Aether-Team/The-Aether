@@ -21,6 +21,7 @@ public class AetherPlacedFeatures {
     public static final ResourceKey<PlacedFeature> GRASS_PATCH_PLACEMENT = createKey("grass_patch");
     public static final ResourceKey<PlacedFeature> TALL_GRASS_PATCH_PLACEMENT = createKey("tall_grass_patch");
     public static final ResourceKey<PlacedFeature> AETHER_GRASS_BONEMEAL = createKey("aether_grass_bonemeal");
+    public static final ResourceKey<PlacedFeature> ENCHANTED_AETHER_GRASS_BONEMEAL = createKey("enchanted_aether_grass_bonemeal");
     public static final ResourceKey<PlacedFeature> WHITE_FLOWER_PATCH_PLACEMENT = createKey("white_flower_patch");
     public static final ResourceKey<PlacedFeature> PURPLE_FLOWER_PATCH_PLACEMENT = createKey("purple_flower_patch");
     public static final ResourceKey<PlacedFeature> BERRY_BUSH_PATCH_PLACEMENT = createKey("berry_bush_patch");
