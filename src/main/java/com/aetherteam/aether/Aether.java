@@ -2,7 +2,6 @@ package com.aetherteam.aether;
 
 import com.aetherteam.aether.advancement.AetherAdvancementTriggers;
 import com.aetherteam.aether.api.AetherAdvancementSoundOverrides;
-import com.aetherteam.aether.api.AetherMenus;
 import com.aetherteam.aether.api.registers.MoaType;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.block.AetherBlocks;
@@ -26,6 +25,13 @@ import com.aetherteam.aether.data.resources.registries.AetherMoaTypes;
 import com.aetherteam.aether.effect.AetherEffects;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.ai.AetherBlockPathTypes;
+import com.aetherteam.aether.event.listeners.*;
+import com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener;
+import com.aetherteam.aether.event.listeners.abilities.ArmorAbilityListener;
+import com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener;
+import com.aetherteam.aether.event.listeners.abilities.WeaponAbilityListener;
+import com.aetherteam.aether.event.listeners.capability.AetherPlayerListener;
+import com.aetherteam.aether.event.listeners.capability.AetherTimeListener;
 import com.aetherteam.aether.inventory.AetherRecipeBookTypes;
 import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
 import com.aetherteam.aether.item.AetherCreativeTabs;
@@ -76,6 +82,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
 import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
@@ -108,6 +115,7 @@ public class Aether {
         bus.addListener(this::packSetup);
         bus.addListener(NewRegistryEvent.class, event -> event.register(AetherAdvancementSoundOverrides.ADVANCEMENT_SOUND_OVERRIDE_REGISTRY));
         bus.addListener(DataPackRegistryEvent.NewRegistry.class, event -> event.dataPackRegistry(AetherMoaTypes.MOA_TYPE_REGISTRY_KEY, MoaType.CODEC, MoaType.CODEC));
+        this.eventSetup();
 
         DeferredRegister<?>[] registers = {
                 AetherBlocks.BLOCKS,
@@ -143,16 +151,16 @@ public class Aether {
             register.register(bus);
         }
 
-        if (dist == Dist.CLIENT) {
-            AetherMenus.MENUS.register(bus);
-        }
-
         AetherBlocks.registerWoodTypes(); // Registered this early to avoid bugs with WoodTypes and signs.
 
         DIRECTORY.toFile().mkdirs(); // Ensures the Aether's config folder is generated.
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, AetherConfig.SERVER_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AetherConfig.COMMON_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AetherConfig.CLIENT_SPEC);
+
+        if (dist == Dist.CLIENT) {
+            AetherClient.clientInit(bus);
+        }
     }
 
     public void commonSetup(FMLCommonSetupEvent event) {
@@ -176,6 +184,7 @@ public class Aether {
 
     public void registerPackets(RegisterPayloadHandlerEvent event) {
         IPayloadRegistrar registrar = event.registrar(MODID).versioned("1.0.0").optional();
+
         // CLIENTBOUND
         registrar.play(AetherTravelPacket.ID, AetherTravelPacket::decode, payload -> payload.client(AetherTravelPacket::handle));
         registrar.play(BossInfoPacket.Display.ID, BossInfoPacket.Display::decode, payload -> payload.client(BossInfoPacket.Display::handle));
@@ -477,6 +486,21 @@ public class Aether {
                     )
             );
         }
+    }
+
+    public void eventSetup() {
+        IEventBus bus = NeoForge.EVENT_BUS;
+        AccessoryAbilityListener.listen(bus);
+        ArmorAbilityListener.listen(bus);
+        ToolAbilityListener.listen(bus);
+        WeaponAbilityListener.listen(bus);
+        AetherPlayerListener.listen(bus);
+        AetherTimeListener.listen(bus);
+        DimensionListener.listen(bus);
+        EntityListener.listen(bus);
+        ItemListener.listen(bus);
+        PerkListener.listen(bus);
+        RecipeListener.listen(bus);
     }
 
     /**

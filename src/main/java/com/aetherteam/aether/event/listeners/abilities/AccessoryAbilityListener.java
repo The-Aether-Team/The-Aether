@@ -12,21 +12,29 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.living.LivingAttackEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID)
 public class AccessoryAbilityListener {
+    /**
+     * @see Aether#eventSetup()
+     */
+    public static void listen(IEventBus bus) {
+        bus.addListener(AccessoryAbilityListener::onBlockBreak);
+        bus.addListener(AccessoryAbilityListener::onMiningSpeed);
+        bus.addListener(AccessoryAbilityListener::onTargetSet);
+        bus.addListener(AccessoryAbilityListener::onProjectileImpact);
+        bus.addListener(AccessoryAbilityListener::onEntityHurt);
+    }
+
     /**
      * @see AbilityHooks.AccessoryHooks#damageZaniteRing(LivingEntity, LevelAccessor, BlockState, BlockPos)
      * @see AbilityHooks.AccessoryHooks#damageZanitePendant(LivingEntity, LevelAccessor, BlockState, BlockPos)
      */
-    @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
         Player player = event.getPlayer();
         LevelAccessor level = event.getLevel();
@@ -42,7 +50,6 @@ public class AccessoryAbilityListener {
      * @see AbilityHooks.AccessoryHooks#handleZaniteRingAbility(LivingEntity, float)
      * @see AbilityHooks.AccessoryHooks#handleZanitePendantAbility(LivingEntity, float)
      */
-    @SubscribeEvent
     public static void onMiningSpeed(PlayerEvent.BreakSpeed event) {
         Player player = event.getEntity();
         if (!event.isCanceled()) {
@@ -57,7 +64,6 @@ public class AccessoryAbilityListener {
      * @see com.aetherteam.aether.event.hooks.AbilityHooks.AccessoryHooks#preventTargeting(LivingEntity, Entity)
      * @see com.aetherteam.aether.event.hooks.AbilityHooks.AccessoryHooks#recentlyAttackedWithInvisibility(LivingEntity, Entity)
      */
-    @SubscribeEvent
     public static void onTargetSet(LivingEvent.LivingVisibilityEvent event) {
         LivingEntity livingEntity = event.getEntity();
         Entity lookingEntity = event.getLookingEntity();
@@ -72,7 +78,6 @@ public class AccessoryAbilityListener {
     /**
      * @see ShieldOfRepulsionAccessory#deflectProjectile(ProjectileImpactEvent, HitResult, Projectile)
      */
-    @SubscribeEvent
     public static void onProjectileImpact(ProjectileImpactEvent event) {
         HitResult hitResult = event.getRayTraceResult();
         Projectile projectile = event.getProjectile();
@@ -82,7 +87,6 @@ public class AccessoryAbilityListener {
     /**
      * @see AbilityHooks.AccessoryHooks#preventMagmaDamage(LivingEntity, DamageSource)
      */
-    @SubscribeEvent
     public static void onEntityHurt(LivingAttackEvent event) {
         LivingEntity livingEntity = event.getEntity();
         DamageSource damageSource = event.getSource();

@@ -13,8 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.ICancellableEvent;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.ToolAction;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
@@ -22,14 +21,28 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID)
 public class ToolAbilityListener {
     public static InteractionHand INTERACTION_HAND;
 
     /**
+     * @see Aether#eventSetup()
+     */
+    public static void listen(IEventBus bus) {
+        bus.addListener(ToolAbilityListener::setupToolModifications);
+        bus.addListener(ToolAbilityListener::doHolystoneAbility);
+        bus.addListener(ToolAbilityListener::modifyBreakSpeed);
+        bus.addListener(ToolAbilityListener::doGoldenOakStripping);
+        bus.addListener(ToolAbilityListener::onEntityAttack);
+        bus.addListener(ToolAbilityListener::onEntityInteractSpecific);
+        bus.addListener(ToolAbilityListener::onEntityInteract);
+        bus.addListener(ToolAbilityListener::onEntityInteractRightClickBlock);
+        bus.addListener(ToolAbilityListener::onEntityInteractLeftClickBlock);
+        bus.addListener(ToolAbilityListener::onEntityInteractRightClickItem);
+    }
+
+    /**
      * @see AbilityHooks.ToolHooks#setupToolActions(LevelAccessor, BlockPos, BlockState, ToolAction)
      */
-    @SubscribeEvent
     public static void setupToolModifications(BlockEvent.BlockToolModificationEvent event) {
         LevelAccessor levelAccessor = event.getLevel();
         BlockPos pos = event.getPos();
@@ -44,7 +57,6 @@ public class ToolAbilityListener {
     /**
      * @see AbilityHooks.ToolHooks#handleHolystoneToolAbility(Player, Level, BlockPos, ItemStack, BlockState)
      */
-    @SubscribeEvent
     public static void doHolystoneAbility(BlockEvent.BreakEvent event) {
         Player player = event.getPlayer();
         Level level = player.level();
@@ -60,7 +72,6 @@ public class ToolAbilityListener {
      * @see AbilityHooks.ToolHooks#handleZaniteToolAbility(ItemStack, float)
      * @see AbilityHooks.ToolHooks#reduceToolEffectiveness(Player, BlockState, ItemStack, float)
      */
-    @SubscribeEvent
     public static void modifyBreakSpeed(PlayerEvent.BreakSpeed event) {
         BlockState blockState = event.getState();
         Player player = event.getEntity();
@@ -74,7 +85,6 @@ public class ToolAbilityListener {
     /**
      * @see AbilityHooks.ToolHooks#stripGoldenOak(LevelAccessor, BlockState, ItemStack, ToolAction, UseOnContext)
      */
-    @SubscribeEvent
     public static void doGoldenOakStripping(BlockEvent.BlockToolModificationEvent event) {
         LevelAccessor levelAccessor = event.getLevel();
         BlockState oldState = event.getState();
@@ -89,7 +99,6 @@ public class ToolAbilityListener {
     /**
      * @see ToolAbilityListener#checkEntityTooFar(PlayerEvent, Entity, Player, InteractionHand)
      */
-    @SubscribeEvent
     public static void onEntityAttack(AttackEntityEvent event) {
         checkEntityTooFar(event, event.getTarget(), event.getEntity(), InteractionHand.MAIN_HAND);
     }
@@ -97,7 +106,6 @@ public class ToolAbilityListener {
     /**
      * @see ToolAbilityListener#checkEntityTooFar(PlayerEvent, Entity, Player, InteractionHand)
      */
-    @SubscribeEvent
     public static void onEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
         checkEntityTooFar(event, event.getTarget(), event.getEntity(), event.getHand());
     }
@@ -105,7 +113,6 @@ public class ToolAbilityListener {
     /**
      * @see ToolAbilityListener#checkEntityTooFar(PlayerEvent, Entity, Player, InteractionHand)
      */
-    @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
         checkEntityTooFar(event, event.getTarget(), event.getEntity(), event.getHand());
     }
@@ -113,7 +120,6 @@ public class ToolAbilityListener {
     /**
      * @see ToolAbilityListener#checkBlockTooFar(PlayerEvent, Player, InteractionHand)
      */
-    @SubscribeEvent
     public static void onEntityInteractRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         checkBlockTooFar(event, event.getEntity(), event.getHand());
     }
@@ -121,7 +127,6 @@ public class ToolAbilityListener {
     /**
      * @see ToolAbilityListener#checkBlockTooFar(PlayerEvent, Player, InteractionHand)
      */
-    @SubscribeEvent
     public static void onEntityInteractLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
         checkBlockTooFar(event, event.getEntity(), event.getHand());
     }
@@ -129,7 +134,6 @@ public class ToolAbilityListener {
     /**
      * @see com.aetherteam.aether.mixin.mixins.common.ItemMixin#getPlayerPOVHitResult(Level, Player, ClipContext.Fluid, CallbackInfoReturnable)
      */
-    @SubscribeEvent
     public static void onEntityInteractRightClickItem(PlayerInteractEvent.RightClickItem event) {
         INTERACTION_HAND = event.getHand();
     }

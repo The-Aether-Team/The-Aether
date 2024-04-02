@@ -2,6 +2,10 @@ package com.aetherteam.aether.client;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.api.AetherMenus;
+import com.aetherteam.aether.client.event.listeners.*;
+import com.aetherteam.aether.client.event.listeners.abilities.AccessoryAbilityClientListener;
+import com.aetherteam.aether.client.event.listeners.capability.AetherPlayerClientListener;
 import com.aetherteam.aether.client.gui.screen.inventory.*;
 import com.aetherteam.aether.client.renderer.AetherRenderers;
 import com.aetherteam.aether.entity.AetherEntityTypes;
@@ -16,19 +20,26 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.neoforged.neoforge.client.event.RegisterEntitySpectatorShadersEvent;
+import net.neoforged.neoforge.common.NeoForge;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherClient {
     private static boolean refreshPacks = false;
 
-    @SubscribeEvent
+    public static void clientInit(IEventBus bus) {
+        bus.addListener(AetherClient::clientSetup);
+        bus.addListener(AetherClient::registerSpectatorShaders);
+        bus.addListener(AetherClient::loadComplete);
+        AetherClient.eventSetup();
+
+        AetherMenus.MENUS.register(bus);
+    }
+
     public static void clientSetup(FMLClientSetupEvent event) {
         disableCumulusButton();
         Reflection.initialize(CustomizationsOptions.class);
@@ -95,6 +106,19 @@ public class AetherClient {
             }
             refreshPacks = true;
         }
+    }
+
+    public static void eventSetup() {
+        IEventBus bus = NeoForge.EVENT_BUS;
+        AccessoryAbilityClientListener.listen(bus);
+        AetherPlayerClientListener.listen(bus);
+        AudioListener.listen(bus);
+        DimensionClientListener.listen(bus);
+        GuiListener.listen(bus);
+        HandRenderListener.listen(bus);
+        LevelClientListener.listen(bus);
+        MenuListener.listen(bus);
+        WorldPreviewListener.listen(bus);
     }
 
     /**

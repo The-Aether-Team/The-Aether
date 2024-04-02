@@ -14,9 +14,8 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.neoforged.bus.api.Event;
-import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.LogicalSide;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
@@ -26,12 +25,25 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.level.SleepFinishedTimeEvent;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID)
 public class DimensionListener {
+    /**
+     * @see Aether#eventSetup()
+     */
+    public static void listen(IEventBus bus) {
+        bus.addListener(DimensionListener::onPlayerLogin);
+        bus.addListener(DimensionListener::onInteractWithPortalFrame);
+        bus.addListener(DimensionListener::onWaterExistsInsidePortalFrame);
+        bus.addListener(DimensionListener::onWorldTick);
+        bus.addListener(DimensionListener::onEntityTravelToDimension);
+        bus.addListener(DimensionListener::onPlayerTraveling);
+        bus.addListener(DimensionListener::onWorldLoad);
+        bus.addListener(DimensionListener::onSleepFinish);
+        bus.addListener(DimensionListener::onTriedToSleep);
+    }
+
     /**
      * @see DimensionHooks#startInAether(Player)
      */
-    @SubscribeEvent
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
         Player player = event.getEntity();
         DimensionHooks.startInAether(player);
@@ -40,7 +52,6 @@ public class DimensionListener {
     /**
      * @see DimensionHooks#createPortal(Player, Level, BlockPos, Direction, ItemStack, InteractionHand)
      */
-    @SubscribeEvent
     public static void onInteractWithPortalFrame(PlayerInteractEvent.RightClickBlock event) {
         Player player = event.getEntity();
         Level level = event.getLevel();
@@ -56,7 +67,6 @@ public class DimensionListener {
     /**
      * @see DimensionHooks#detectWaterInFrame(LevelAccessor, BlockPos, BlockState, FluidState)
      */
-    @SubscribeEvent
     public static void onWaterExistsInsidePortalFrame(BlockEvent.NeighborNotifyEvent event) {
         LevelAccessor level = event.getLevel();
         BlockPos blockPos = event.getPos();
@@ -71,7 +81,6 @@ public class DimensionListener {
      * @see DimensionHooks#tickTime(Level)
      * @see DimensionHooks#checkEternalDayConfig(Level)
      */
-    @SubscribeEvent
     public static void onWorldTick(TickEvent.LevelTickEvent event) {
         Level level = event.level;
         if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.END) {
@@ -83,7 +92,6 @@ public class DimensionListener {
     /**
      * @see DimensionHooks#dimensionTravel(Entity, ResourceKey)
      */
-    @SubscribeEvent
     public static void onEntityTravelToDimension(EntityTravelToDimensionEvent event) {
         Entity entity = event.getEntity();
         ResourceKey<Level> dimension = event.getDimension();
@@ -93,7 +101,6 @@ public class DimensionListener {
     /**
      * @see DimensionHooks#travelling(Player)
      */
-    @SubscribeEvent
     public static void onPlayerTraveling(TickEvent.PlayerTickEvent event) {
         Player player = event.player;
         DimensionHooks.travelling(player);
@@ -102,7 +109,6 @@ public class DimensionListener {
     /**
      * @see DimensionHooks#initializeLevelData(LevelAccessor)
      */
-    @SubscribeEvent
     public static void onWorldLoad(LevelEvent.Load event) {
         LevelAccessor level = event.getLevel();
         DimensionHooks.initializeLevelData(level);
@@ -111,7 +117,6 @@ public class DimensionListener {
     /**
      * @see DimensionHooks#finishSleep(LevelAccessor, long)
      */
-    @SubscribeEvent
     public static void onSleepFinish(SleepFinishedTimeEvent event) {
         LevelAccessor level = event.getLevel();
         Long time = DimensionHooks.finishSleep(level, event.getNewTime());
@@ -123,7 +128,6 @@ public class DimensionListener {
     /**
      * @see DimensionHooks#isEternalDay(Player)
      */
-    @SubscribeEvent
     public static void onTriedToSleep(SleepingTimeCheckEvent event) {
         Player player = event.getEntity();
         if (DimensionHooks.isEternalDay(player)) {

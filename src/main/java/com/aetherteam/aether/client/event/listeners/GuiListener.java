@@ -9,10 +9,8 @@ import net.minecraft.client.gui.components.LerpingBossEvent;
 import net.minecraft.client.gui.layouts.GridLayout;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.util.Tuple;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.CustomizeGuiOverlayEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.ScreenEvent;
@@ -20,14 +18,23 @@ import net.neoforged.neoforge.event.TickEvent;
 
 import java.util.UUID;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT)
 public class GuiListener {
+    /**
+     * @see Aether#eventSetup()
+     */
+    public static void listen(IEventBus bus) {
+        bus.addListener(GuiListener::onGuiInitialize);
+        bus.addListener(GuiListener::onGuiDraw);
+        bus.addListener(GuiListener::onClientTick);
+        bus.addListener(GuiListener::onKeyPress);
+        bus.addListener(GuiListener::onRenderBossBar);
+    }
+
     /**
      * @see AccessoriesScreen#getButtonOffset(Screen)
      * @see GuiHooks#setupAccessoryButton(Screen, Tuple)
      * @see GuiHooks#setupPerksButtons(Screen)
      */
-    @SubscribeEvent
     public static void onGuiInitialize(ScreenEvent.Init.Post event) {
         Screen screen = event.getScreen();
         if (GuiHooks.isAccessoryButtonEnabled()) {
@@ -48,7 +55,6 @@ public class GuiListener {
      * @see GuiHooks#drawTrivia(Screen, GuiGraphics)
      * @see GuiHooks#drawAetherTravelMessage(Screen, GuiGraphics)
      */
-    @SubscribeEvent
     public static void onGuiDraw(ScreenEvent.Render.Post event) {
         Screen screen = event.getScreen();
         GuiGraphics guiGraphics = event.getGuiGraphics();
@@ -61,7 +67,6 @@ public class GuiListener {
     /**
      * @see GuiHooks#handlePatreonRefreshRebound()
      */
-    @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
             GuiHooks.handlePatreonRefreshRebound();
@@ -72,7 +77,6 @@ public class GuiListener {
      * @see GuiHooks#openAccessoryMenu()
      * @see GuiHooks#closeContainerMenu(int, int)
      */
-    @SubscribeEvent
     public static void onKeyPress(InputEvent.Key event) {
         GuiHooks.openAccessoryMenu();
         GuiHooks.closeContainerMenu(event.getKey(), event.getAction());
@@ -84,7 +88,6 @@ public class GuiListener {
      * @see com.aetherteam.aether.mixin.mixins.client.BossHealthOverlayMixin#event(CustomizeGuiOverlayEvent.BossEventProgress)
      * @see GuiHooks#drawBossHealthBar(GuiGraphics, int, int, LerpingBossEvent)
      */
-    @SubscribeEvent
     public static void onRenderBossBar(CustomizeGuiOverlayEvent.BossEventProgress event) {
         GuiGraphics guiGraphics = event.getGuiGraphics();
         LerpingBossEvent bossEvent = event.getBossEvent();

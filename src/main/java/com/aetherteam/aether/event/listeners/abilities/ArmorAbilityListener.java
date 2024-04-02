@@ -8,21 +8,28 @@ import com.aetherteam.aether.item.combat.abilities.armor.PhoenixArmor;
 import com.aetherteam.aether.item.combat.abilities.armor.ValkyrieArmor;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.entity.living.LivingAttackEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID)
 public class ArmorAbilityListener {
+    /**
+     * @see Aether#eventSetup()
+     */
+    public static void listen(IEventBus bus) {
+        bus.addListener(ArmorAbilityListener::onEntityUpdate);
+        bus.addListener(ArmorAbilityListener::onEntityJump);
+        bus.addListener(ArmorAbilityListener::onEntityFall);
+        bus.addListener(ArmorAbilityListener::onEntityAttack);
+    }
+
     /**
      * @see ValkyrieArmor#handleFlight(LivingEntity)
      * @see NeptuneArmor#boostWaterSwimming(LivingEntity)
      * @see PhoenixArmor#boostLavaSwimming(LivingEntity)
      * @see PhoenixArmor#damageArmor(LivingEntity)
      */
-    @SubscribeEvent
     public static void onEntityUpdate(LivingEvent.LivingTickEvent event) {
         LivingEntity livingEntity = event.getEntity();
         if (!event.isCanceled()) {
@@ -36,7 +43,6 @@ public class ArmorAbilityListener {
     /**
      * @see GravititeArmor#boostedJump(LivingEntity)
      */
-    @SubscribeEvent
     public static void onEntityJump(LivingEvent.LivingJumpEvent event) {
         LivingEntity livingEntity = event.getEntity();
         GravititeArmor.boostedJump(livingEntity);
@@ -45,7 +51,6 @@ public class ArmorAbilityListener {
     /**
      * @see AbilityHooks.ArmorHooks#fallCancellation(LivingEntity)
      */
-    @SubscribeEvent
     public static void onEntityFall(LivingFallEvent event) {
         LivingEntity livingEntity = event.getEntity();
         if (!event.isCanceled()) {
@@ -56,7 +61,6 @@ public class ArmorAbilityListener {
     /**
      * @see PhoenixArmor#extinguishUser(LivingEntity, DamageSource)
      */
-    @SubscribeEvent
     public static void onEntityAttack(LivingAttackEvent event) {
         LivingEntity livingEntity = event.getEntity();
         DamageSource damageSource = event.getSource();

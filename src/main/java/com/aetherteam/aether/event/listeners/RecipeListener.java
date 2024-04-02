@@ -14,17 +14,25 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.EventPriority;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID)
 public class RecipeListener {
+    /**
+     * @see Aether#eventSetup()
+     */
+    public static void listen(IEventBus bus) {
+        bus.addListener(RecipeListener::checkBanned);
+        bus.addListener(RecipeListener::onNeighborNotified);
+        bus.addListener(RecipeListener::onBlockFreeze);
+        bus.addListener(EventPriority.LOWEST, RecipeListener::onConvert);
+        bus.addListener(EventPriority.LOWEST, RecipeListener::onBanned);
+    }
+
     /**
      * @see RecipeHooks#checkInteractionBanned(Player, Level, BlockPos, Direction, ItemStack, BlockState, boolean)
      */
-    @SubscribeEvent
     public static void checkBanned(PlayerInteractEvent.RightClickBlock event) {
         Player player = event.getEntity();
         Level level = event.getLevel();
@@ -42,7 +50,6 @@ public class RecipeListener {
     /**
      * @see RecipeHooks#checkExistenceBanned(LevelAccessor, BlockPos)
      */
-    @SubscribeEvent
     public static void onNeighborNotified(BlockEvent.NeighborNotifyEvent event) {
         LevelAccessor levelAccessor = event.getLevel();
         BlockPos blockPos = event.getPos();
@@ -53,7 +60,6 @@ public class RecipeListener {
     /**
      * @see RecipeHooks#preventBlockFreezing(LevelAccessor, BlockPos, BlockPos)
      */
-    @SubscribeEvent
     public static void onBlockFreeze(FreezeEvent.FreezeFromBlock event) {
         LevelAccessor level = event.getLevel();
         BlockPos sourcePos = event.getSourcePos();
@@ -66,7 +72,6 @@ public class RecipeListener {
     /**
      * @see RecipeHooks#banOrConvert(LevelAccessor, BlockPos)
      */
-    @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onConvert(PlacementConvertEvent event) {
         LevelAccessor levelAccessor = event.getLevel();
         BlockPos blockPos = event.getPos();
@@ -78,7 +83,6 @@ public class RecipeListener {
     /**
      * @see RecipeHooks#banOrConvert(LevelAccessor, BlockPos)
      */
-    @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onBanned(PlacementBanEvent.SpawnParticles event) {
         LevelAccessor levelAccessor = event.getLevel();
         BlockPos blockPos = event.getPos();

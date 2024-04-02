@@ -15,8 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.Event;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
@@ -33,13 +32,28 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID)
 public class EntityListener {
+    /**
+     * @see Aether#eventSetup()
+     */
+    public static void listen(IEventBus bus) {
+        bus.addListener(EntityListener::onEntityJoin);
+        bus.addListener(EntityListener::onMountEntity);
+        bus.addListener(EntityListener::onRiderTick);
+        bus.addListener(EntityListener::onInteractWithEntity);
+        bus.addListener(EntityListener::onProjectileHitEntity);
+        bus.addListener(EntityListener::onShieldBlock);
+        bus.addListener(EntityListener::onLightningStrike);
+        bus.addListener(EntityListener::onPlayerDrops);
+        bus.addListener(EntityListener::onCurioDrops);
+        bus.addListener(EntityListener::onDropExperience);
+        bus.addListener(EntityListener::onEffectApply);
+    }
+
     /**
      * @see EntityHooks#addGoals(Entity)
      * @see EntityHooks#canMobSpawnWithAccessories(Entity)
      */
-    @SubscribeEvent
     public static void onEntityJoin(EntityJoinLevelEvent event) {
         Entity entity = event.getEntity();
         EntityHooks.addGoals(entity);
@@ -48,7 +62,6 @@ public class EntityListener {
     /**
      * @see EntityHooks#dismountPrevention(Entity, Entity, boolean)
      */
-    @SubscribeEvent
     public static void onMountEntity(EntityMountEvent event) {
         Entity riderEntity = event.getEntityMounting();
         Entity mountEntity = event.getEntityBeingMounted();
@@ -59,7 +72,6 @@ public class EntityListener {
     /**
      * @see EntityHooks#launchMount(Player)
      */
-    @SubscribeEvent
     public static void onRiderTick(TickEvent.PlayerTickEvent event) {
         Player player = event.player;
         EntityHooks.launchMount(player);
@@ -70,7 +82,6 @@ public class EntityListener {
      * @see EntityHooks#pickupBucketable(Entity, Player, InteractionHand)
      * @see EntityHooks#interactWithArmorStand(Entity, Player, ItemStack, Vec3, InteractionHand)
      */
-    @SubscribeEvent
     public static void onInteractWithEntity(PlayerInteractEvent.EntityInteractSpecific event) {
         Entity targetEntity = event.getTarget();
         Player player = event.getEntity();
@@ -89,7 +100,6 @@ public class EntityListener {
     /**
      * @see EntityHooks#preventEntityHooked(Entity, HitResult)
      */
-    @SubscribeEvent
     public static void onProjectileHitEntity(ProjectileImpactEvent event) {
         Entity projectileEntity = event.getEntity();
         HitResult rayTraceResult = event.getRayTraceResult();
@@ -99,7 +109,6 @@ public class EntityListener {
     /**
      * @see EntityHooks#preventSliderShieldBlock(DamageSource)
      */
-    @SubscribeEvent
     public static void onShieldBlock(ShieldBlockEvent event) {
         if (!event.isCanceled()) {
             event.setCanceled(EntityHooks.preventSliderShieldBlock(event.getDamageSource()));
@@ -109,7 +118,6 @@ public class EntityListener {
     /**
      * @see EntityHooks#lightningHitKeys(Entity)
      */
-    @SubscribeEvent
     public static void onLightningStrike(EntityStruckByLightningEvent event) {
         Entity entity = event.getEntity();
         LightningBolt lightningBolt = event.getLightning();
@@ -121,7 +129,6 @@ public class EntityListener {
     /**
      * @see EntityHooks#trackDrops(LivingEntity, Collection)
      */
-    @SubscribeEvent
     public static void onPlayerDrops(LivingDropsEvent event) {
         LivingEntity entity = event.getEntity();
         Collection<ItemEntity> itemDrops = event.getDrops();
@@ -131,7 +138,6 @@ public class EntityListener {
     /**
      * @see EntityHooks#handleEntityCurioDrops(LivingEntity, Collection, boolean, int)
      */
-    @SubscribeEvent
     public static void onCurioDrops(CurioDropsEvent event) {
         LivingEntity entity = event.getEntity();
         Collection<ItemEntity> itemDrops = event.getDrops();
@@ -145,7 +151,6 @@ public class EntityListener {
     /**
      * @see EntityHooks#modifyExperience(LivingEntity, int)
      */
-    @SubscribeEvent
     public static void onDropExperience(LivingExperienceDropEvent event) {
         LivingEntity livingEntity = event.getEntity();
         int experience = event.getDroppedExperience();
@@ -156,7 +161,6 @@ public class EntityListener {
     /**
      * @see EntityHooks#preventInebriation(LivingEntity, MobEffectInstance)
      */
-    @SubscribeEvent
     public static void onEffectApply(MobEffectEvent.Applicable event) {
         LivingEntity livingEntity = event.getEntity();
         MobEffectInstance effectInstance = event.getEffectInstance();

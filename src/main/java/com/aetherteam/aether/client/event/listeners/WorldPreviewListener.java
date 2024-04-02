@@ -8,19 +8,29 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.EventPriority;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.event.TickEvent;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT)
 public class WorldPreviewListener {
+    /**
+     * @see Aether#eventSetup()
+     */
+    public static void listen(IEventBus bus) {
+        bus.addListener(EventPriority.LOWEST, WorldPreviewListener::onGuiOpenLowest);
+        bus.addListener(WorldPreviewListener::onScreenRender);
+        bus.addListener(WorldPreviewListener::onRenderLevelLast);
+        bus.addListener(WorldPreviewListener::onClientTick);
+        bus.addListener(WorldPreviewListener::onCameraView);
+        bus.addListener(WorldPreviewListener::onRenderOverlay);
+        bus.addListener(WorldPreviewListener::onRenderPlayer);
+        bus.addListener((event) -> WorldPreviewListener.onRenderEntity((RenderLivingEvent.Pre<?, ?>) event));
+    }
+
     /**
      * @see WorldPreviewHooks#setupWorldPreview(Screen)
      */
-    @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onGuiOpenLowest(ScreenEvent.Opening event) {
         Screen newScreen = event.getNewScreen();
         WorldPreviewHooks.setupWorldPreview(newScreen);
@@ -29,7 +39,6 @@ public class WorldPreviewListener {
     /**
      * @see WorldPreviewHooks#hideScreen(Screen)
      */
-    @SubscribeEvent
     public static void onScreenRender(ScreenEvent.Render.Pre event) {
         Screen screen = event.getScreen();
         if (WorldPreviewHooks.hideScreen(screen)) {
@@ -40,7 +49,6 @@ public class WorldPreviewListener {
     /**
      * @see WorldPreviewHooks#renderMenuWithWorld(RenderLevelStageEvent.Stage)
      */
-    @SubscribeEvent
     public static void onRenderLevelLast(RenderLevelStageEvent event) {
         RenderLevelStageEvent.Stage stage = event.getStage();
         WorldPreviewHooks.renderMenuWithWorld(stage);
@@ -49,7 +57,6 @@ public class WorldPreviewListener {
     /**
      * @see WorldPreviewHooks#tickMenuWhenPaused()
      */
-    @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
             WorldPreviewHooks.tickMenuWhenPaused();
@@ -59,7 +66,6 @@ public class WorldPreviewListener {
     /**
      * @see WorldPreviewHooks#angleCamera()
      */
-    @SubscribeEvent
     public static void onCameraView(ViewportEvent.ComputeCameraAngles event) {
         WorldPreviewHooks.angleCamera();
     }
@@ -67,7 +73,6 @@ public class WorldPreviewListener {
     /**
      * @see WorldPreviewHooks#hideOverlays()
      */
-    @SubscribeEvent
     public static void onRenderOverlay(RenderGuiOverlayEvent.Pre event) {
         if (WorldPreviewHooks.hideOverlays()) {
             event.setCanceled(true);
@@ -78,7 +83,6 @@ public class WorldPreviewListener {
      * @see WorldPreviewHooks#shouldHidePlayer()
      * @see WorldPreviewHooks#adjustShadow(EntityRenderer, boolean)
      */
-    @SubscribeEvent
     public static void onRenderPlayer(RenderPlayerEvent.Pre event) {
         PlayerRenderer renderer = event.getRenderer();
         boolean hide = WorldPreviewHooks.shouldHidePlayer();
@@ -92,7 +96,6 @@ public class WorldPreviewListener {
      * @see WorldPreviewHooks#shouldHideEntity(Entity)
      * @see WorldPreviewHooks#adjustShadow(EntityRenderer, boolean)
      */
-    @SubscribeEvent
     public static <T extends LivingEntity, M extends EntityModel<T>> void onRenderEntity(RenderLivingEvent.Pre<T, M> event) {
         Entity entity = event.getEntity();
         EntityRenderer<?> renderer = event.getRenderer();

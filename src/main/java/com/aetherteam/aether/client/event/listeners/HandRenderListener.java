@@ -8,18 +8,21 @@ import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.InteractionHand;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.RenderHandEvent;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT)
 public class HandRenderListener {
+    /**
+     * @see Aether#eventSetup()
+     */
+    public static void listen(IEventBus bus) {
+        bus.addListener(HandRenderListener::onRenderHand);
+    }
+
     /**
      * @see HandRenderHooks#renderGloveHandOverlay(ItemInHandRenderer, AbstractClientPlayer, InteractionHand, float, float, float, PoseStack, MultiBufferSource, int)
      * @see HandRenderHooks#renderShieldOfRepulsionHandOverlay(ItemInHandRenderer, AbstractClientPlayer, InteractionHand, float, float, float, PoseStack, MultiBufferSource, int)
      */
-    @SubscribeEvent
     public static void onRenderHand(RenderHandEvent event) {
         ItemInHandRenderer itemInHandRenderer = Minecraft.getInstance().gameRenderer.itemInHandRenderer;
         AbstractClientPlayer abstractClientPlayer = Minecraft.getInstance().player;

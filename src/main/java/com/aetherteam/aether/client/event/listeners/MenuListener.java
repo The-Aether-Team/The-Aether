@@ -7,18 +7,22 @@ import com.aetherteam.cumulus.client.CumulusClient;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.EventPriority;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.ScreenEvent;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT)
 public class MenuListener {
+    /**
+     * @see Aether#eventSetup()
+     */
+    public static void listen(IEventBus bus) {
+        bus.addListener(EventPriority.HIGHEST, MenuListener::onGuiOpenHighest);
+        bus.addListener(MenuListener::onGuiInitialize);
+    }
+
     /**
      * @see MenuHooks#prepareCustomMenus(MenuHelper)
      */
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onGuiOpenHighest(ScreenEvent.Opening event) {
         MenuHooks.prepareCustomMenus(CumulusClient.MENU_HELPER);
     }
@@ -28,7 +32,6 @@ public class MenuListener {
      * @see MenuHooks#setupMenuSwitchButton(Screen)
      * @see MenuHooks#setupQuickLoadButton(Screen)
      */
-    @SubscribeEvent
     public static void onGuiInitialize(ScreenEvent.Init.Post event) {
         Screen screen = event.getScreen();
         if (screen instanceof TitleScreen titleScreen) {
