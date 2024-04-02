@@ -6,6 +6,7 @@ import com.aetherteam.aether.entity.AetherEntityTypes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.common.Tags;
@@ -81,6 +82,8 @@ public class AetherEntityTagData extends EntityTypeTagsProvider {
                 AetherEntityTypes.FIRE_MINION.get(),
                 AetherEntityTypes.FIRE_CRYSTAL.get(),
                 AetherEntityTypes.ICE_CRYSTAL.get());
+        this.tag(AetherTags.Entities.SLIDER_DAMAGING_PROJECTILES)
+                .addOptional(new ResourceLocation("quark", "pickarang"));
 
         // Forge
         this.tag(Tags.EntityTypes.BOSSES).add(
