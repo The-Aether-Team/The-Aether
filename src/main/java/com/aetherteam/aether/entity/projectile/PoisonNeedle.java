@@ -6,16 +6,17 @@ import com.aetherteam.aether.entity.projectile.dart.AbstractDart;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 public class PoisonNeedle extends AbstractDart {
     public PoisonNeedle(EntityType<? extends PoisonNeedle> type, Level level) {
-        super(type, level, null);
+        super(type, level, ItemStack.EMPTY);
         this.setBaseDamage(0.25);
     }
 
     public PoisonNeedle(Level level, LivingEntity shooter) {
-        super(AetherEntityTypes.POISON_NEEDLE.get(), level, shooter, null);
+        super(AetherEntityTypes.POISON_NEEDLE.get(), level, shooter, ItemStack.EMPTY);
         this.setBaseDamage(0.25);
     }
 

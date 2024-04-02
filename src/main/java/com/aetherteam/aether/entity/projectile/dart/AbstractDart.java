@@ -28,6 +28,14 @@ import java.util.function.Supplier;
 public abstract class AbstractDart extends AbstractArrow {
     private int ticksInAir = 0;
 
+    protected AbstractDart(EntityType<? extends AbstractDart> type, Level level, ItemStack pickupItem) {
+        super(type, level, pickupItem);
+    }
+
+    public AbstractDart(EntityType<? extends AbstractDart> type, Level level, LivingEntity shooter, ItemStack pickupItem) {
+        super(type, shooter, level, pickupItem);
+    }
+
     protected AbstractDart(EntityType<? extends AbstractDart> type, Level level, Supplier<Item> pickupItem) {
         super(type, level, new ItemStack(pickupItem.get()));
     }
