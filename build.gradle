@@ -179,7 +179,6 @@ curseforge {
         changelog = file("$rootDir/docs/CHANGELOG.md")
         changelogType = "markdown"
         addGameVersion("${project.mc_version}")
-        addGameVersion("Forge")
         addGameVersion("NeoForge")
         mainArtifact(tasks.jarJar) {
             displayName = "${project.mod_name} - ${version}"
@@ -200,7 +199,7 @@ modrinth {
     changelog = new File("$rootDir/docs/CHANGELOG.md").text
     uploadFile = tasks.jarJar
     gameVersions = ["${project.mc_version}"]
-    loaders = ["forge", "neoforge"]
+    loaders = ["neoforge"]
     dependencies {
         embedded.version "curios", "${project.curios_version}+${project.mc_version}"
         embedded.version "cumulus", "${project.cumulus_version}"
