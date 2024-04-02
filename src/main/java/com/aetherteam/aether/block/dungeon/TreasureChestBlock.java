@@ -42,7 +42,6 @@ import java.util.function.Supplier;
  * Mostly copied from {@link ChestBlock}.
  */
 public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEntity> implements SimpleWaterloggedBlock {
-
     public static final MapCodec<TreasureChestBlock> CODEC = simpleCodec(TreasureChestBlock::new);
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -118,30 +117,29 @@ public class TreasureChestBlock extends AbstractChestBlock<TreasureChestBlockEnt
     @SuppressWarnings("deprecation")
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (level.isClientSide()) {
-            return InteractionResult.SUCCESS;
-        } else {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof TreasureChestBlockEntity treasureChestBlockEntity) {
-                MenuProvider menuProvider = this.getMenuProvider(state, level, pos);
-                if (treasureChestBlockEntity.getLocked()) {
-                    ItemStack stack = player.getMainHandItem();
-                    if (treasureChestBlockEntity.tryUnlock(player)) {
-                        if (player instanceof ServerPlayer) {
-                            player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
-                        }
-                        if (!player.getAbilities().instabuild) {
-                            stack.shrink(1);
-                        }
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof TreasureChestBlockEntity treasureChestBlockEntity) {
+            MenuProvider menuProvider = this.getMenuProvider(state, level, pos);
+            if (treasureChestBlockEntity.getLocked()) {
+                ItemStack stack = player.getItemInHand(hand);
+                if (treasureChestBlockEntity.tryUnlock(player, stack)) {
+                    if (player instanceof ServerPlayer) {
+                        player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
                     }
-                } else if (!ChestBlock.isChestBlockedAt(level, pos) && menuProvider != null) {
-                    player.openMenu(menuProvider);
-                    player.awardStat(Stats.CUSTOM.get(Stats.OPEN_CHEST));
-                    PiglinAi.angerNearbyPiglins(player, true);
+                    if (!player.getAbilities().instabuild) {
+                        stack.shrink(1);
+                    }
+                    return InteractionResult.sidedSuccess(level.isClientSide);
+                } else {
+                    player.swing(InteractionHand.MAIN_HAND);
                 }
+            } else if (!ChestBlock.isChestBlockedAt(level, pos) && menuProvider != null) {
+                player.openMenu(menuProvider);
+                player.awardStat(Stats.CUSTOM.get(Stats.OPEN_CHEST));
+                PiglinAi.angerNearbyPiglins(player, true);
             }
-            return InteractionResult.CONSUME;
         }
+        return InteractionResult.PASS;
     }
 
     @Override
