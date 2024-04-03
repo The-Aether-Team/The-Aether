@@ -86,6 +86,9 @@ MehVahdJukaar
 Mike-U5
 - Fixes to some Curios default slot icons being incorrect.
 
+mrjasonn
+- Improvements to mcfunctions for development testing.
+
 muzikbike
 - Contribution of the reference JSON for an improved Aercloud block model.
 
