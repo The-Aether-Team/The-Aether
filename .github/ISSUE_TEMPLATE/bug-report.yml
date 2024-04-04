@@ -51,7 +51,7 @@ body:
     id: aether-ver
     attributes:
       label: The Aether Version
-      description: What version of The Aether are you running? This can be found on the jar file you have downloaded or the Mod Options menu. Please note "latest" is NOT a version. Make sure you are using The Aether I mod, not The Aether II mod. Issues for The Aether II mod should be reported on it's issue tracker instead.
+      description: What version of The Aether are you running? This can be found on the jar file you have downloaded or the Mod Options menu. Please note "latest" is NOT a version. Make sure you are using The Aether I mod, not The Aether II mod. Bugs in The Aether II mod should be reported on it's issue tracker instead.
       placeholder: "1.1.1"
     validations:
       required: true
