@@ -109,7 +109,7 @@ body:
           required: true
         - label: I have confirmed this bug is on the most recently supported version of Minecraft.
           required: true
-        - label: I have confirmed the details provided in this report are concise as possible and does not contained vague information (ie. Versions are properly recorded, answers to questions are clear).
+        - label: I have confirmed the details provided in this report are concise as possible and does not contain vague information (ie. Versions are properly recorded, answers to questions are clear).
           required: true
         - label: I have confirmed this issue is unique and has not been reported already.
           required: true
