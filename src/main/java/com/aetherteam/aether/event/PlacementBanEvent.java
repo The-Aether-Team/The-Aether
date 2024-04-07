@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
  * <br>
  * All children of this event are fired on the {@link net.neoforged.neoforge.common.NeoForge#EVENT_BUS}.
  */
-public class PlacementBanEvent extends Event {
+public abstract class PlacementBanEvent extends Event {
     /**
      * PlacementBanEvent.CheckItem is fired after an item that can be banned is used, but before its placement has been prevented.
      * <br>

@@ -14,7 +14,7 @@ import net.neoforged.fml.LogicalSide;
  * <br>
  * All children of this event are fired on the {@link net.neoforged.neoforge.common.NeoForge#EVENT_BUS}.
  */
-public class FreezeEvent extends Event implements ICancellableEvent {
+public abstract class FreezeEvent extends Event implements ICancellableEvent {
     private final LevelAccessor level;
     private final BlockPos pos;
     private final BlockState priorBlock;
