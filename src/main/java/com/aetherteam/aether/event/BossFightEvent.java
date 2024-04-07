@@ -12,7 +12,7 @@ import net.neoforged.neoforge.event.entity.EntityEvent;
  * * <br>
  * * All children of this event are fired on the {@link net.neoforged.neoforge.common.NeoForge#EVENT_BUS}.
  */
-public class BossFightEvent extends EntityEvent {
+public abstract class BossFightEvent extends EntityEvent {
     private final BossRoomTracker<?> dungeon;
 
     /**
