@@ -1,19 +1,39 @@
-# The Aether - NeoForge - 1.20.2-1.3.0
+# The Aether - NeoForge - 1.20.4-1.4.0
 
-**This beta is a full port of 1.20.1-1.2.0 to NeoForge 1.20.2!**
+**This release is a full port of 1.20.2-1.4.0 to NeoForge 1.20.4!**
 
 Additions
 
-- Added two new tags that are now used in relevant recipes: `aether:gems/zanite` and `aether:processed/gravitite`.
-- Added a new registry `aether:advancement_sound_override` which makes it easier for addon developers to override advancement sounds like for dungeons.
-- Added a new placed feature `aether:aether_grass_bonemeal` to use for bone meal on Aether Grass instead of using the Vanilla-equivalent placed feature.
-- Added descriptions for the Inebriation and Remedy effects that can be viewed with mods like JEED.
+- Added a new placed feature `aether:enchanted_aether_grass_bonemeal` to use for bone meal on Enchanted Aether Grass instead of using the Vanilla-equivalent placed feature.
+- Added a new tag `slider_damaging_projectiles` to support pickaxe-like projectiles. This includes Quark's Pickarang.
+- Update ar_sa translation.
+- Update es_es translation.
+- Update es_mx translation.
+- Update it_it translation.
+- Update ja_jp translation.
+- Update lol_us translation.
+- Update pl_pl translation.
+- Update ru_ru translation.
+- Update sk_sk translation.
+- Update sv_se translation.
+- Update tok translation.
+- Update uk_ua translation.
+- Update zh_cn translation.
 
 Changes
 
-- Prefixed screen overlays with the Aether's mod ID internally.
+- Convert the Moa Types registry to be data-driven.
+- More thrown items and projectiles are no longer deleted in the Aether void and will fall to the Overworld.
+- Boss Doorway indicator particles and Whirlwind particles now display even with minimal particle settings.
+- Improve some of the debugging .mcfunctions for development.
+- Switch to using DeferredHolder for registry fields.
+- Made BossFightEvent, FreezeEvent, and PlacementBanEvent abstract.
 
 Fixes
 
-- Fixed the fuel duration message for REI not being localized without JEI installed.
-- Fixed some sprites in crafting stations being a couple pixels off.
+- Fix code for falling out of the Aether having performance issues.
+- Fix edge cases where some modded pickaxe-like items can't damage the slider.
+- Fix Aerbunny rotation on head being choppy.
+- Fix Dungeon Keys not being useable from the player's offhand.
+- Fix trivia prefix not copying trivia text's styling.
+
