@@ -1,3 +1,29 @@
+# The Aether - Forge - 1.19.2-1.4.0
+
+Additions
+
+- Added a new placed feature `aether:enchanted_aether_grass_bonemeal` to use for bone meal on Enchanted Aether Grass instead of using the Vanilla-equivalent placed feature.
+- Added a new tag `slider_damaging_projectiles` to support pickaxe-like projectiles. This includes Quark's Pickarang.
+- Update ar_sa translation.
+- Update ja_jp translation.
+- Update sv_se translation.
+- Update tok translation.
+- Update uk_ua translation.
+- Update zh_cn translation.
+
+Changes
+
+- More thrown items and projectiles are no longer deleted in the Aether void and will fall to the Overworld.
+- Improve some of the debugging .mcfunctions for development.
+
+Fixes
+
+- Fix code for falling out of the Aether having performance issues.
+- Fix edge cases where some modded pickaxe-like items can't damage the slider.
+- Fix Aerbunny rotation on head being choppy.
+- Fix Dungeon Keys not being useable from the player's offhand.
+- Fix trivia prefix not copying trivia text's styling.
+
 # The Aether - Forge - 1.19.2-1.3.1
 
 Fixes
