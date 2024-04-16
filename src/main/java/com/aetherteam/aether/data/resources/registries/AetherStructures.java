@@ -52,7 +52,7 @@ public class AetherStructures {
         context.register(BRONZE_DUNGEON, new BronzeDungeonStructure(AetherStructureBuilders.structure(
                 biomes.getOrThrow(AetherTags.Biomes.HAS_BRONZE_DUNGEON),
                 mobSpawnsPiece,
-                GenerationStep.Decoration.SURFACE_STRUCTURES,
+                GenerationStep.Decoration.TOP_LAYER_MODIFICATION,
                 TerrainAdjustment.NONE),
                 8, 32, 24));
         context.register(SILVER_DUNGEON, new SilverDungeonStructure(AetherStructureBuilders.structure(
