@@ -249,6 +249,8 @@ public class MoaSkins {
         private final ResourceLocation iconLocation;
         private final ResourceLocation skinLocation;
         @Nullable
+        private final ResourceLocation hatLocation;
+        @Nullable
         private final ResourceLocation emissiveLocation;
         private final ResourceLocation saddleLocation;
         @Nullable
@@ -256,15 +258,16 @@ public class MoaSkins {
         private final Info info;
 
         protected MoaSkin(String id, Properties properties) {
-            this(id, properties.displayName, properties.userPredicate, properties.iconLocation, properties.skinLocation, properties.emissiveLocation, properties.saddleLocation, properties.saddleEmissiveLocation, properties.info);
+            this(id, properties.displayName, properties.userPredicate, properties.iconLocation, properties.skinLocation, properties.hatLocation, properties.emissiveLocation, properties.saddleLocation, properties.saddleEmissiveLocation, properties.info);
         }
 
-        protected MoaSkin(String id, Component displayName, Predicate<User> userPredicate, ResourceLocation iconLocation, ResourceLocation skinLocation, ResourceLocation emissiveLocation, ResourceLocation saddleLocation, ResourceLocation saddleEmissiveLocation, Info info) {
+        protected MoaSkin(String id, Component displayName, Predicate<User> userPredicate, ResourceLocation iconLocation, ResourceLocation skinLocation, ResourceLocation hatLocation, ResourceLocation emissiveLocation, ResourceLocation saddleLocation, ResourceLocation saddleEmissiveLocation, Info info) {
             this.id = id;
             this.displayName = displayName;
             this.userPredicate = userPredicate;
             this.iconLocation = iconLocation;
             this.skinLocation = skinLocation;
+            this.hatLocation = hatLocation;
             this.emissiveLocation = emissiveLocation;
             this.saddleLocation = saddleLocation;
             this.saddleEmissiveLocation = saddleEmissiveLocation;
@@ -304,6 +307,13 @@ public class MoaSkins {
          */
         public ResourceLocation getSkinLocation() {
             return this.skinLocation;
+        }
+
+        /**
+         * @return The {@link ResourceLocation} of the {@link MoaSkin}'s hat texture.
+         */
+        public ResourceLocation getHatLocation() {
+            return this.hatLocation;
         }
 
         /**
@@ -363,6 +373,8 @@ public class MoaSkins {
             private ResourceLocation iconLocation;
             private ResourceLocation skinLocation;
             @Nullable
+            private ResourceLocation hatLocation = null;
+            @Nullable
             private ResourceLocation emissiveLocation = null;
             private ResourceLocation saddleLocation;
             @Nullable
@@ -398,6 +410,14 @@ public class MoaSkins {
              */
             public Properties skinLocation(ResourceLocation skinLocation) {
                 this.skinLocation = skinLocation;
+                return this;
+            }
+
+            /**
+             * @see MoaSkin#getHatLocation()
+             */
+            public Properties hatLocation(ResourceLocation hatLocation) {
+                this.hatLocation = hatLocation;
                 return this;
             }
 
