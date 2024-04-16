@@ -3,7 +3,9 @@ package com.aetherteam.aether.world.structurepiece.bronzedungeon;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlockStateProperties;
 import com.aetherteam.aether.block.AetherBlocks;
+import com.aetherteam.aether.data.resources.AetherFeatureStates;
 import com.aetherteam.aether.world.structurepiece.AetherStructurePieceTypes;
+import com.aetherteam.nitrogen.data.resources.builders.NitrogenConfiguredFeatureBuilders;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -17,6 +19,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
@@ -59,6 +63,10 @@ public class BronzeDungeonSurfaceRuins extends StructurePiece {
         //.add(AetherBlocks.HOLYSTONE_STAIRS.get().defaultBlockState().setValue(BlockStateProperties.HALF, Half.TOP).rotate(Rotation.CLOCKWISE_180), 2)
         //.add(AetherBlocks.HOLYSTONE_STAIRS.get().defaultBlockState().setValue(BlockStateProperties.HALF, Half.TOP).rotate(Rotation.COUNTERCLOCKWISE_90), 2)
         .build());
+    private static final ConfiguredFeature<?, ? extends Feature<?>> MIXED_FLOWER_PATCH = new ConfiguredFeature<>(Feature.FLOWER, NitrogenConfiguredFeatureBuilders.grassPatch(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
+        .add(AetherFeatureStates.PURPLE_FLOWER, 1)
+        .add(AetherFeatureStates.WHITE_FLOWER, 1)
+    ), 24));
 
     public BronzeDungeonSurfaceRuins(BoundingBox horizontalBounds) {
         super(AetherStructurePieceTypes.BRONZE_SURFACE_RUINS.value(), 0, horizontalBounds);
@@ -82,6 +90,13 @@ public class BronzeDungeonSurfaceRuins extends StructurePiece {
         for (int z = this.boundingBox.minZ() + 1; z < this.boundingBox.maxZ(); z++) {
             this.generateTunnelWallColumn(level, random, chunkBounds, this.boundingBox.minX(), z);
             this.generateTunnelWallColumn(level, random, chunkBounds, this.boundingBox.maxX(), z);
+        }
+
+        BlockPos pieceCenter = this.boundingBox.getCenter();
+        if (chunkBounds.isInside(pieceCenter)) {
+            BlockPos aboveTopBlock = level.getHeightmapPos(Heightmap.Types.OCEAN_FLOOR_WG, chunkBounds.getCenter());
+
+            MIXED_FLOWER_PATCH.place(level, chunkGen, random, aboveTopBlock);
         }
     }
 
