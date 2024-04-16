@@ -258,8 +258,7 @@ build {
     dependsOn 'jarJar'
 }
 
-import groovy.json.JsonOutput
-import groovy.json.JsonSlurper
+import com.google.gson.JsonParser
 
 import java.util.jar.JarFile
 import java.util.jar.JarOutputStream
@@ -285,7 +284,10 @@ static def minifyJson(Jar task) {
         fileContents.each { name, bytes ->
             def newBytes = bytes
             if(name.endsWith(".json") || name.endsWith(".mcmeta")) {
-                newBytes = JsonOutput.toJson(new JsonSlurper().parse(bytes)).bytes
+                def minified = JsonParser.parseString(new String(bytes)).toString().getBytes()
+                if(minified.length < newBytes.length) {
+                    newBytes = minified
+                }
             }
             it.putNextEntry(new JarEntry(name))
             it.write(newBytes)
