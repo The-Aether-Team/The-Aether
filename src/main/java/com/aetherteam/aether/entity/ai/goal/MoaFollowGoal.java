@@ -36,6 +36,11 @@ public class MoaFollowGoal extends TemptGoal {
             return false;
         } else {
             this.player = this.moa.level().getNearestPlayer(this.targetingConditions, this.moa);
+            if (this.player != null) {
+                if (this.moa.distanceToSqr(this.player) >= 6.25) {
+                    this.mob.getMoveControl().setWantedPosition(this.player.getX(), this.player.getY(), this.player.getZ(), this.speedModifier);
+                }
+            }
             return this.player != null;
         }
     }
