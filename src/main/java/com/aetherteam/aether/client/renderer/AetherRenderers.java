@@ -1,5 +1,6 @@
 package com.aetherteam.aether.client.renderer;
 
+import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.attachment.AetherPlayerAttachment;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.blockentity.AetherBlockEntityTypes;
@@ -12,6 +13,7 @@ import com.aetherteam.aether.client.renderer.accessory.layer.EntityAccessoryLaye
 import com.aetherteam.aether.client.renderer.accessory.model.CapeModel;
 import com.aetherteam.aether.client.renderer.accessory.model.GlovesModel;
 import com.aetherteam.aether.client.renderer.accessory.model.PendantModel;
+import com.aetherteam.aether.client.renderer.block.FastModel;
 import com.aetherteam.aether.client.renderer.blockentity.ChestMimicRenderer;
 import com.aetherteam.aether.client.renderer.blockentity.SkyrootBedRenderer;
 import com.aetherteam.aether.client.renderer.blockentity.TreasureChestRenderer;
@@ -39,14 +41,19 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.resources.PlayerSkin;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.ModelEvent;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class AetherRenderers {
     /**
@@ -224,5 +231,23 @@ public class AetherRenderers {
         if (renderer != null) {
             renderer.addLayer(new ArmorStandCapeLayer(renderer));
         }
+    }
+
+    /**
+     * @see AetherClient#eventSetup()
+     */
+    public static void bakeModels(ModelEvent.ModifyBakingResult event) {
+        List<Map.Entry<ResourceLocation, BakedModel>> models = new ArrayList<>();
+        for (Map.Entry<ResourceLocation, BakedModel> model : event.getModels().entrySet()) {
+            if (model.getKey().getNamespace().equals(Aether.MODID)) {
+                String path = model.getKey().getPath();
+                if (path.equals(AetherBlocks.BERRY_BUSH.getId().getPath())) {
+                    models.add(model);
+                } else if (path.equals(AetherBlocks.POTTED_BERRY_BUSH.getId().getPath())) {
+                    models.add(model);
+                }
+            }
+        }
+        models.forEach(entry -> event.getModels().put(entry.getKey(), new FastModel(entry.getValue())));
     }
 }
