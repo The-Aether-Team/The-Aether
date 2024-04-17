@@ -133,6 +133,7 @@ public class AetherClient {
         neoBus.addListener(AetherRenderers::registerEntityRenderers);
         neoBus.addListener(AetherRenderers::registerLayerDefinitions);
         neoBus.addListener(AetherRenderers::addEntityLayers);
+        neoBus.addListener(AetherRenderers::bakeModels);
         neoBus.addListener(AetherRenderEffects::registerRenderEffects);
     }
 
