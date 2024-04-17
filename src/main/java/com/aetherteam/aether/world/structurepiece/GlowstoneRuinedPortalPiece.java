@@ -8,6 +8,7 @@ import com.aetherteam.aether.mixin.mixins.common.accessor.SpreadingSnowyDirtBloc
 import com.aetherteam.aether.world.processor.DoubleDropsProcessor;
 import com.aetherteam.aether.world.processor.GlowstonePortalAgeProcessor;
 import com.aetherteam.aether.world.processor.HolystoneReplaceProcessor;
+import com.aetherteam.aether.world.processor.SurfaceRuleProcessor;
 import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.Dynamic;
@@ -84,6 +85,7 @@ public class GlowstoneRuinedPortalPiece extends TemplateStructurePiece {
         List<ProcessorRule> list = Lists.newArrayList();
         StructurePlaceSettings structurePlaceSettings = new StructurePlaceSettings().setRotation(rotation).setMirror(mirror).setRotationPivot(pos)
                 .addProcessor(blockIgnoreProcessor)
+                .addProcessor(new SurfaceRuleProcessor())
                 .addProcessor(new RuleProcessor(list))
                 .addProcessor(new GlowstonePortalAgeProcessor(properties.mossiness))
                 .addProcessor(new DoubleDropsProcessor())
