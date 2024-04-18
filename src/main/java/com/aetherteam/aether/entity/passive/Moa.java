@@ -780,8 +780,12 @@ public class Moa extends MountableAnimal implements WingedBird {
      */
     @Override
     public float getSpeed() {
-        MoaType moaType = this.getMoaType();
-        return moaType != null ? moaType.speed() : 0.155F;
+        if (this.isVehicle()) {
+            return this.getSteeringSpeed();
+        } else {
+            MoaType moaType = this.getMoaType();
+            return moaType != null ? (float) (this.getAttributeValue(Attributes.MOVEMENT_SPEED) * moaType.speed()) : 0.155F;
+        }
     }
 
     /**
@@ -811,7 +815,7 @@ public class Moa extends MountableAnimal implements WingedBird {
     @Override
     public float getSteeringSpeed() {
         MoaType moaType = this.getMoaType();
-        return moaType != null ? moaType.speed() : 0.155F;
+        return moaType != null ? (float) (this.getAttributeValue(Attributes.MOVEMENT_SPEED) * moaType.speed()) : 0.155F;
     }
 
     /**
