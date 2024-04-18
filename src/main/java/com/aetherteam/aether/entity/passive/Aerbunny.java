@@ -100,7 +100,7 @@ public class Aerbunny extends AetherAnimal {
             this.setPuffiness(0);
         }
         this.handlePlayerInput();
-        if (this.getVehicle() != null && (this.getVehicle().onGround() || this.getVehicle().isInFluidType())) { // Reset the last tracked fall position if the Aerbunny touches a surface.
+        if (this.getVehicle() != null && (this.getVehicle().onGround() || !this.level().getBlockState(this.getVehicle().blockPosition()).isAir() || this.getVehicle().isInFluidType())) { // Reset the last tracked fall position if the Aerbunny touches a surface.
             this.lastPos = null;
         }
     }
