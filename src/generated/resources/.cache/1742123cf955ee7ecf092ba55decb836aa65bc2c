@@ -1,4 +1,4 @@
-// 1.20.4	2024-03-19T10:40:11.1076437	Block States: aether
+// 1.20.4	2024-04-16T22:45:05.7469514	Block States: aether
 79cb0c0ea34a92e86b03080a209cb60f268cb31e assets/aether/blockstates/aerogel.json
 28f7eea22b621bda459b2328c2252cdebe0bcdb9 assets/aether/blockstates/aerogel_slab.json
 0866f96b2339b894ff4c8a01aebb3d87103eb0fb assets/aether/blockstates/aether_dirt.json
@@ -248,8 +248,8 @@ a8854a5e210ca69e33042bfe746e6971e6a099b4 assets/aether/models/block/mossy_holyst
 cb2a8ab22c6bfe0e3353c310af35d8e990e9f926 assets/aether/models/block/pillar_horizontal.json
 45eca4fd51bdc28e50e4ba3f0587c76d9f7f4450 assets/aether/models/block/pillar_top.json
 f4e9ea5d483484d62b4b6de8aea208b28a2e485c assets/aether/models/block/pillar_top_horizontal.json
-402b62a8443994b9cf239cc5db1a8ddbb30cc007 assets/aether/models/block/potted_berry_bush.json
-62591dd2d094bff022d534b7b91295e86a1e649b assets/aether/models/block/potted_berry_bush_stem.json
+c555738f3c7edf5fbed00421dda5626335df4be2 assets/aether/models/block/potted_berry_bush.json
+60782e46f7fdcad6bb7c691dd203caebc00738fc assets/aether/models/block/potted_berry_bush_stem.json
 7c3a50c0820e7cf446e38e18b7cd7ec07d831566 assets/aether/models/block/potted_golden_oak_sapling.json
 eb9987a5ae084a2563cf1b396202a09d77a8877e assets/aether/models/block/potted_purple_flower.json
 eda9086f5b2a7381d2f2ef777f0196e2a17af85a assets/aether/models/block/potted_skyroot_sapling.json
