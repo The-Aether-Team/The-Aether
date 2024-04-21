@@ -38,13 +38,12 @@ public class AetherAdvancementSoundOverrides {
      */
     @Nullable
     public static SoundEvent retrieveOverride(AdvancementHolder advancement) {
-        @Nullable AdvancementSoundOverride usedOverride = null;
-        for (AdvancementSoundOverride override : ADVANCEMENT_SOUND_OVERRIDES.getEntries().stream().map(DeferredHolder::value).toList()) {
-            if (override.matches(advancement) && (usedOverride == null || override.priority() > usedOverride.priority())) {
-                usedOverride = override;
+        for (DeferredHolder<AdvancementSoundOverride, ? extends AdvancementSoundOverride> override : ADVANCEMENT_SOUND_OVERRIDES.getEntries()) {
+            if (override.get().matches(advancement)) {
+                return override.get().sound().get();
             }
         }
-        return usedOverride == null ? null : usedOverride.sound().get();
+        return null;
     }
 
     /**
