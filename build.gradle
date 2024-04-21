@@ -39,7 +39,7 @@ runs {
     }
 
     gameTestServer {
-        systemProperty 'forge.enabledGameTestNamespaces', mod_id
+        systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
     }
 
     data {
