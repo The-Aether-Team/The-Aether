@@ -49,7 +49,7 @@ public class MoaSkins {
                         .iconLocation(new ResourceLocation(Aether.MODID, "skins/icons/" + name + "_icon"))
                         .skinLocation(moaType.moaTexture())
                         .saddleLocation(moaType.saddleTexture())
-                        .info(new MoaSkin.Info(User.Tier.HUMAN, true))
+                        .info(new MoaSkin.Info(User.Tier.HUMAN, false))
                     ));
                 }
             }
@@ -60,7 +60,7 @@ public class MoaSkins {
             .iconLocation(new ResourceLocation(Aether.MODID, "skins/icons/orange_moa_icon"))
             .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/orange_moa/orange_moa.png"))
             .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png"))
-            .info(new MoaSkin.Info(User.Tier.HUMAN, true))
+            .info(new MoaSkin.Info(User.Tier.HUMAN, false))
         ));
         register("brown_moa", new MoaSkin("brown_moa", new MoaSkin.Properties()
             .displayName(Component.translatable("gui.aether.moa_skins.skin.brown_moa"))
@@ -68,7 +68,7 @@ public class MoaSkins {
             .iconLocation(new ResourceLocation(Aether.MODID, "skins/icons/brown_moa_icon"))
             .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/brown_moa/brown_moa.png"))
             .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/black_moa_saddle.png"))
-            .info(new MoaSkin.Info(User.Tier.HUMAN, true))
+            .info(new MoaSkin.Info(User.Tier.HUMAN, false))
         ));
         register("red_moa", new MoaSkin("red_moa", new MoaSkin.Properties()
             .displayName(Component.translatable("gui.aether.moa_skins.skin.red_moa"))
@@ -76,7 +76,7 @@ public class MoaSkins {
             .iconLocation(new ResourceLocation(Aether.MODID, "skins/icons/red_moa_icon"))
             .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/red_moa/red_moa.png"))
             .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png"))
-            .info(new MoaSkin.Info(User.Tier.HUMAN, true))
+            .info(new MoaSkin.Info(User.Tier.HUMAN, false))
         ));
         register("green_moa", new MoaSkin("green_moa", new MoaSkin.Properties()
             .displayName(Component.translatable("gui.aether.moa_skins.skin.green_moa"))
@@ -84,7 +84,7 @@ public class MoaSkins {
             .iconLocation(new ResourceLocation(Aether.MODID, "skins/icons/green_moa_icon"))
             .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/green_moa/green_moa.png"))
             .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png"))
-            .info(new MoaSkin.Info(User.Tier.HUMAN, true))
+            .info(new MoaSkin.Info(User.Tier.HUMAN, false))
         ));
         register("purple_moa", new MoaSkin("purple_moa", new MoaSkin.Properties()
             .displayName(Component.translatable("gui.aether.moa_skins.skin.purple_moa"))
@@ -92,7 +92,7 @@ public class MoaSkins {
             .iconLocation(new ResourceLocation(Aether.MODID, "skins/icons/purple_moa_icon"))
             .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/purple_moa/purple_moa.png"))
             .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/moa_saddle.png"))
-            .info(new MoaSkin.Info(User.Tier.HUMAN, true))
+            .info(new MoaSkin.Info(User.Tier.HUMAN, false))
         ));
         register("boko_yellow", new MoaSkin("boko_yellow", new MoaSkin.Properties()
                 .displayName(Component.translatable("gui.aether.moa_skins.skin.boko_yellow"))
