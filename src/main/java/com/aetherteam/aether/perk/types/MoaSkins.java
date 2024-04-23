@@ -249,26 +249,29 @@ public class MoaSkins {
         private final ResourceLocation iconLocation;
         private final ResourceLocation skinLocation;
         @Nullable
+        private final ResourceLocation emissiveLocation;
+        @Nullable
         private final ResourceLocation hatLocation;
         @Nullable
-        private final ResourceLocation emissiveLocation;
+        private final ResourceLocation hatEmissiveLocation;
         private final ResourceLocation saddleLocation;
         @Nullable
         private final ResourceLocation saddleEmissiveLocation;
         private final Info info;
 
         protected MoaSkin(String id, Properties properties) {
-            this(id, properties.displayName, properties.userPredicate, properties.iconLocation, properties.skinLocation, properties.hatLocation, properties.emissiveLocation, properties.saddleLocation, properties.saddleEmissiveLocation, properties.info);
+            this(id, properties.displayName, properties.userPredicate, properties.iconLocation, properties.skinLocation, properties.emissiveLocation, properties.hatLocation, properties.hatEmissiveLocation, properties.saddleLocation, properties.saddleEmissiveLocation, properties.info);
         }
 
-        protected MoaSkin(String id, Component displayName, Predicate<User> userPredicate, ResourceLocation iconLocation, ResourceLocation skinLocation, ResourceLocation hatLocation, ResourceLocation emissiveLocation, ResourceLocation saddleLocation, ResourceLocation saddleEmissiveLocation, Info info) {
+        protected MoaSkin(String id, Component displayName, Predicate<User> userPredicate, ResourceLocation iconLocation, ResourceLocation skinLocation, ResourceLocation emissiveLocation, ResourceLocation hatLocation, ResourceLocation hatEmissiveLocation, ResourceLocation saddleLocation, ResourceLocation saddleEmissiveLocation, Info info) {
             this.id = id;
             this.displayName = displayName;
             this.userPredicate = userPredicate;
             this.iconLocation = iconLocation;
             this.skinLocation = skinLocation;
-            this.hatLocation = hatLocation;
             this.emissiveLocation = emissiveLocation;
+            this.hatLocation = hatLocation;
+            this.hatEmissiveLocation = hatEmissiveLocation;
             this.saddleLocation = saddleLocation;
             this.saddleEmissiveLocation = saddleEmissiveLocation;
             this.info = info;
@@ -310,6 +313,14 @@ public class MoaSkins {
         }
 
         /**
+         * @return The {@link ResourceLocation} of the {@link MoaSkin}'s emissive overlay texture.
+         */
+        @Nullable
+        public ResourceLocation getEmissiveLocation() {
+            return this.emissiveLocation;
+        }
+
+        /**
          * @return The {@link ResourceLocation} of the {@link MoaSkin}'s hat texture.
          */
         public ResourceLocation getHatLocation() {
@@ -317,11 +328,10 @@ public class MoaSkins {
         }
 
         /**
-         * @return The {@link ResourceLocation} of the {@link MoaSkin}'s emissive overlay texture.
+         * @return The {@link ResourceLocation} of the {@link MoaSkin}'s hat emissive overlay texture.
          */
-        @Nullable
-        public ResourceLocation getEmissiveLocation() {
-            return this.emissiveLocation;
+        public ResourceLocation getHatEmissiveLocation() {
+            return this.hatEmissiveLocation;
         }
 
         /**
@@ -373,9 +383,11 @@ public class MoaSkins {
             private ResourceLocation iconLocation;
             private ResourceLocation skinLocation;
             @Nullable
+            private ResourceLocation emissiveLocation = null;
+            @Nullable
             private ResourceLocation hatLocation = null;
             @Nullable
-            private ResourceLocation emissiveLocation = null;
+            private ResourceLocation hatEmissiveLocation = null;
             private ResourceLocation saddleLocation;
             @Nullable
             private ResourceLocation saddleEmissiveLocation = null;
@@ -414,6 +426,14 @@ public class MoaSkins {
             }
 
             /**
+             * @see MoaSkin#getEmissiveLocation()
+             */
+            public Properties emissiveLocation(@Nullable ResourceLocation emissiveLocation) {
+                this.emissiveLocation = emissiveLocation;
+                return this;
+            }
+
+            /**
              * @see MoaSkin#getHatLocation()
              */
             public Properties hatLocation(ResourceLocation hatLocation) {
@@ -422,10 +442,10 @@ public class MoaSkins {
             }
 
             /**
-             * @see MoaSkin#getEmissiveLocation()
+             * @see MoaSkin#getHatEmissiveLocation()
              */
-            public Properties emissiveLocation(@Nullable ResourceLocation emissiveLocation) {
-                this.emissiveLocation = emissiveLocation;
+            public Properties hatEmissiveLocation(ResourceLocation hatEmissiveLocation) {
+                this.hatEmissiveLocation = hatEmissiveLocation;
                 return this;
             }
 

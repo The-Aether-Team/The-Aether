@@ -28,7 +28,7 @@ public class MoaHatLayer extends RenderLayer<Moa, MoaModel> {
     }
 
     /**
-     * Renders an hat layer on a Moa if the texture from a {@link com.aetherteam.aether.perk.types.MoaSkins.MoaSkin} is present.
+     * Renders a hat layer on a Moa if the texture from a {@link com.aetherteam.aether.perk.types.MoaSkins.MoaSkin} is present.
      *
      * @param poseStack       The rendering {@link PoseStack}.
      * @param buffer          The rendering {@link MultiBufferSource}.

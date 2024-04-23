@@ -4,10 +4,7 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.api.registers.MoaType;
 import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
-import com.aetherteam.aether.client.renderer.entity.layers.MoaEmissiveLayer;
-import com.aetherteam.aether.client.renderer.entity.layers.MoaHatLayer;
-import com.aetherteam.aether.client.renderer.entity.layers.MoaSaddleEmissiveLayer;
-import com.aetherteam.aether.client.renderer.entity.layers.MoaSaddleLayer;
+import com.aetherteam.aether.client.renderer.entity.layers.*;
 import com.aetherteam.aether.client.renderer.entity.model.MoaModel;
 import com.aetherteam.aether.data.resources.registries.AetherMoaTypes;
 import com.aetherteam.aether.entity.passive.Moa;
@@ -32,6 +29,7 @@ public class MoaRenderer extends MobRenderer<Moa, MoaModel> {
         super(context, new MoaModel(context.bakeLayer(AetherModelLayers.MOA)), 0.7F);
         this.addLayer(new MoaEmissiveLayer(this));
         this.addLayer(new MoaHatLayer(this, new MoaModel(context.bakeLayer(AetherModelLayers.MOA_HAT))));
+        this.addLayer(new MoaHatEmissiveLayer(this, new MoaModel(context.bakeLayer(AetherModelLayers.MOA_HAT))));
         this.addLayer(new MoaSaddleLayer(this, new MoaModel(context.bakeLayer(AetherModelLayers.MOA_SADDLE))));
         this.addLayer(new MoaSaddleEmissiveLayer(this, new MoaModel(context.bakeLayer(AetherModelLayers.MOA_SADDLE))));
     }
