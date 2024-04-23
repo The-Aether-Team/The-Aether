@@ -54,7 +54,7 @@ public class SunAltarBlock extends BaseEntityBlock {
 			if (AetherConfig.SERVER.sun_altar_whitelist.get() && !player.hasPermissions(4) && !SunAltarWhitelist.INSTANCE.isWhiteListed(player.getGameProfile())) { // Prevents non-operator or non-whitelisted players from using the Sun Altar on servers
 				player.displayClientMessage(Component.translatable(Aether.MODID + ".sun_altar.no_permission"), true); // Player doesn't have permission to use the Sun Altar.
 			} else {
-				Optional<AetherTime> aetherTimeOptional = level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).resolve();
+				Optional<AetherTime> aetherTimeOptional = AetherCapabilities.AETHER_TIME_CAPABILITY.maybeGet(level);
 				if (aetherTimeOptional.isPresent()) { // Checks if the level has the capability used for Aether time, which determines if the Sun Altar has control over the time of a dimension.
 					if (!aetherTimeOptional.get().getEternalDay()) { // Checks if the time is locked into eternal day or not.
 						this.openScreen(level, pos, player);

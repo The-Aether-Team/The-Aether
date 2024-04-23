@@ -16,7 +16,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.model.data.ModelData;
 
 import java.util.function.Supplier;
 
@@ -31,7 +30,7 @@ public class ParachuteRenderer extends EntityRenderer<Parachute> {
 
     /**
      * Renders and rotates the Parachute with the player.<br><br>
-     * The warning for "deprecation" is suppressed because {@link net.minecraft.client.renderer.block.BlockRenderDispatcher#renderSingleBlock(BlockState, PoseStack, MultiBufferSource, int, int, ModelData, RenderType)} is fine to use.
+     * The warning for "deprecation" is suppressed because {@link net.minecraft.client.renderer.block.BlockRenderDispatcher#renderSingleBlock(BlockState, PoseStack, MultiBufferSource, int, int)} is fine to use.
      * @param parachute The {@link Parachute} entity.
      * @param entityYaw The {@link Float} for the entity's yaw rotation.
      * @param partialTicks The {@link Float} for the game's partial ticks.

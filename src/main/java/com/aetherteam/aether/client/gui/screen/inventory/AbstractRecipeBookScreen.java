@@ -29,14 +29,14 @@ public abstract class AbstractRecipeBookScreen<T extends RecipeBookMenu<Containe
 
     protected void initScreen(int leftOffset) {
         this.widthTooNarrow = this.width < 379;
-        this.getRecipeBookComponent().init(this.width, this.height, this.getMinecraft(), this.widthTooNarrow, this.getMenu());
-        this.leftPos = this.getRecipeBookComponent().updateScreenPosition(this.width, this.getXSize());
-        this.addRenderableWidget(new ImageButton(this.getGuiLeft() + leftOffset, this.height / 2 - 49, 20, 18, 0, 0, 19, RECIPE_BUTTON_LOCATION, (button) -> {
+        this.getRecipeBookComponent().init(this.width, this.height, this.minecraft, this.widthTooNarrow, this.getMenu());
+        this.leftPos = this.getRecipeBookComponent().updateScreenPosition(this.width, this.imageWidth);
+        this.addRenderableWidget(new ImageButton(this.leftPos + leftOffset, this.height / 2 - 49, 20, 18, 0, 0, 19, RECIPE_BUTTON_LOCATION, (button) -> {
             this.getRecipeBookComponent().toggleVisibility();
-            this.leftPos = this.getRecipeBookComponent().updateScreenPosition(this.width, this.getXSize());
-            button.setPosition(this.getGuiLeft() + leftOffset, this.height / 2 - 49);
+            this.leftPos = this.getRecipeBookComponent().updateScreenPosition(this.width, this.imageWidth);
+            button.setPosition(this.leftPos + leftOffset, this.height / 2 - 49);
         }));
-        this.titleLabelX = (this.getXSize() - this.font.width(this.getTitle())) / 2;
+        this.titleLabelX = (this.imageWidth - this.font.width(this.getTitle())) / 2;
     }
 
     @Override
@@ -54,10 +54,10 @@ public abstract class AbstractRecipeBookScreen<T extends RecipeBookMenu<Containe
         } else {
             this.getRecipeBookComponent().render(guiGraphics, mouseX, mouseY, partialTicks);
             super.render(guiGraphics, mouseX, mouseY, partialTicks);
-            this.getRecipeBookComponent().renderGhostRecipe(guiGraphics, this.getGuiLeft(), this.getGuiTop(), true, partialTicks);
+            this.getRecipeBookComponent().renderGhostRecipe(guiGraphics, this.leftPos, this.topPos, true, partialTicks);
         }
         this.renderTooltip(guiGraphics, mouseX, mouseY);
-        this.getRecipeBookComponent().renderTooltip(guiGraphics, this.getGuiLeft(), this.getGuiTop(), mouseX, mouseY);
+        this.getRecipeBookComponent().renderTooltip(guiGraphics, this.leftPos, this.topPos, mouseX, mouseY);
     }
 
     @Override

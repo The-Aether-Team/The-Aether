@@ -4,7 +4,7 @@ import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.loot.AetherLoot;
-import net.minecraft.data.loot.EntityLootSubProvider;
+import io.github.fabricators_of_create.porting_lib.data.ModdedEntityLootSubProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
@@ -24,7 +24,7 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 import java.util.stream.Stream;
 
-public class AetherEntityLoot extends EntityLootSubProvider {
+public class AetherEntityLoot extends ModdedEntityLootSubProvider {
     public AetherEntityLoot() {
         super(FeatureFlags.REGISTRY.allFlags());
     }

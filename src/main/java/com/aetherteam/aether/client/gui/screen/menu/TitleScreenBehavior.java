@@ -15,7 +15,6 @@ import net.minecraft.client.renderer.PanoramaRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraftforge.internal.BrandingControl;
 
 public interface TitleScreenBehavior {
     /**
@@ -39,12 +38,12 @@ public interface TitleScreenBehavior {
      * Copied branding render segment from render code, but aligned it right.
      */
     default void renderRightBranding(GuiGraphics guiGraphics, TitleScreen titleScreen, Font font, int roundedFadeAmount) {
-        BrandingControl.forEachLine(true, true, (brandingLine, branding) ->
-                guiGraphics.drawString(font, branding, titleScreen.width - font.width(branding) - 1, titleScreen.height - (10 + (brandingLine + 1) * (font.lineHeight + 1)), 16777215 | roundedFadeAmount)
-        );
-        BrandingControl.forEachAboveCopyrightLine((brandingLine, branding) ->
-                guiGraphics.drawString(font, branding, 1, titleScreen.height - (brandingLine + 1) * (font.lineHeight + 1), 16777215 | roundedFadeAmount)
-        );
+//        BrandingControl.forEachLine(true, true, (brandingLine, branding) -> TODO: PORT
+//                guiGraphics.drawString(font, branding, titleScreen.width - font.width(branding) - 1, titleScreen.height - (10 + (brandingLine + 1) * (font.lineHeight + 1)), 16777215 | roundedFadeAmount)
+//        );
+//        BrandingControl.forEachAboveCopyrightLine((brandingLine, branding) ->
+//                guiGraphics.drawString(font, branding, 1, titleScreen.height - (brandingLine + 1) * (font.lineHeight + 1), 16777215 | roundedFadeAmount)
+//        );
     }
 
     /**

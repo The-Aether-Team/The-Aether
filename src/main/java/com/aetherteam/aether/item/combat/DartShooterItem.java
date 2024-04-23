@@ -4,6 +4,7 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.projectile.dart.AbstractDart;
 import com.google.common.collect.ImmutableSet;
+import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingBehaviorItem;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -13,13 +14,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-public class DartShooterItem extends ProjectileWeaponItem implements Vanishable {
+public class DartShooterItem extends ProjectileWeaponItem implements Vanishable, CustomEnchantingBehaviorItem {
     private final Supplier<? extends Item> dartType;
 
     public DartShooterItem(Supplier<? extends Item> dartType, Properties properties) {
@@ -40,17 +42,17 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
         ItemStack heldStack = player.getItemInHand(hand);
         boolean hasAmmo = !player.getProjectile(heldStack).isEmpty();
 
-        InteractionResultHolder<ItemStack> result = ForgeEventFactory.onArrowNock(heldStack, level, player, hand, hasAmmo);
-        if (result == null) {
+//        InteractionResultHolder<ItemStack> result = ForgeEventFactory.onArrowNock(heldStack, level, player, hand, hasAmmo);
+//        if (result == null) {
             if (player.getAbilities().instabuild || hasAmmo) {
                 player.startUsingItem(hand);
                 return InteractionResultHolder.consume(heldStack);
             } else {
                 return InteractionResultHolder.fail(heldStack);
             }
-        } else {
-            return result;
-        }
+//        } else {
+//            return result;
+//        }
     }
 
     /**
@@ -65,10 +67,10 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
         if (user instanceof Player player) {
             ItemStack ammoItem = player.getProjectile(stack); // Gets matching ammo stack from inventory according to DartShooterItem#getAllSupportedProjectiles().
 
-            boolean creativeOrShooterIsInfinite = player.getAbilities().instabuild || stack.getEnchantmentLevel(Enchantments.INFINITY_ARROWS) > 0; // Note: Dart shooters can't be enchanted with Infinity in survival, but we still implement the behavior.
+            boolean creativeOrShooterIsInfinite = player.getAbilities().instabuild || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, stack) > 0; // Note: Dart shooters can't be enchanted with Infinity in survival, but we still implement the behavior.
             boolean stillHasAmmo = !ammoItem.isEmpty() || creativeOrShooterIsInfinite;
 
-            ForgeEventFactory.onArrowLoose(stack, level, player, 0, stillHasAmmo);
+//            ForgeEventFactory.onArrowLoose(stack, level, player, 0, stillHasAmmo);
 
             if (stillHasAmmo) { // Seems to be a failsafe check; under normal circumstances this should already be true because of the checks in DartShooterItem#use().
                 if (ammoItem.isEmpty()) {
@@ -84,12 +86,12 @@ public class DartShooterItem extends ProjectileWeaponItem implements Vanishable 
                         dart.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 3.1F, 1.2F);
                         dart.setNoGravity(true); // Darts have no gravity.
 
-                        int powerModifier = stack.getEnchantmentLevel(Enchantments.POWER_ARROWS);
+                        int powerModifier = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, stack);
                         if (powerModifier > 0) {
                             dart.setBaseDamage(dart.getBaseDamage() + powerModifier * 0.1 + 0.1);
                         }
 
-                        int punchModifier = stack.getEnchantmentLevel(Enchantments.PUNCH_ARROWS);
+                        int punchModifier = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH_ARROWS, stack);
                         if (punchModifier > 0) {
                             dart.setKnockback(punchModifier);
                         }

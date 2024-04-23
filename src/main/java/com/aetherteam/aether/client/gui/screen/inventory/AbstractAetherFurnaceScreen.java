@@ -23,9 +23,9 @@ public abstract class AbstractAetherFurnaceScreen<T extends AbstractAetherFurnac
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
-        int left = this.getGuiLeft();
-        int top = this.getGuiTop();
-        guiGraphics.blit(this.texture, left, top, 0, 0, this.getXSize(), this.getYSize());
+        int left = this.leftPos;
+        int top = this.topPos;
+        guiGraphics.blit(this.texture, left, top, 0, 0, this.imageWidth, this.imageHeight);
         if (this.getMenu().isLit()) {
             int litProgress = this.getMenu().getLitProgress();
             guiGraphics.blit(this.texture, left + 56, top + 36 + 12 - litProgress, 176, 12 - litProgress, 14, litProgress + 1);

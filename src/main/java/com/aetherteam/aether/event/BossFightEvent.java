@@ -1,19 +1,35 @@
 package com.aetherteam.aether.event;
 
 import com.aetherteam.nitrogen.entity.BossRoomTracker;
+import io.github.fabricators_of_create.porting_lib.core.event.BaseEvent;
+import io.github.fabricators_of_create.porting_lib.entity.events.EntityEvents;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.fabric.api.event.Event;
+import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.minecraftforge.event.entity.EntityEvent;
-import net.minecraftforge.eventbus.api.Cancelable;
-import net.minecraftforge.fml.LogicalSide;
 
 /**
  * BossFightEvent is fired when an event for a boss fight occurs.<br>
- *  * If a method utilizes this {@link Event} as its parameter, the method will receive every child event of this class.<br>
- *  * <br>
- *  * All children of this event are fired on the {@link MinecraftForge#EVENT_BUS}.
+ *  * If a method utilizes this {@link BaseEvent} as its parameter, the method will receive every child event of this class.<br>
  */
-public class BossFightEvent extends EntityEvent {
+public abstract class BossFightEvent extends EntityEvents {
+    public static final Event<StartCallback> START = EventFactory.createArrayBacked(StartCallback.class, callbacks -> start -> {
+        for (StartCallback e : callbacks)
+            e.onBossFightStart(start);
+    });
+    public static final Event<StopCallback> STOP = EventFactory.createArrayBacked(StopCallback.class, callbacks -> stop -> {
+        for (StopCallback e : callbacks)
+            e.onBossFightStop(stop);
+    });
+    public static final Event<AddPlayerCallback> ADD_PLAYER = EventFactory.createArrayBacked(AddPlayerCallback.class, callbacks -> event -> {
+        for (AddPlayerCallback e : callbacks)
+            e.onBossFightAddPlayer(event);
+    });
+    public static final Event<RemovePlayerCallback> REMOVE_PLAYER = EventFactory.createArrayBacked(RemovePlayerCallback.class, callbacks -> event -> {
+        for (RemovePlayerCallback e : callbacks)
+            e.onBossFightRemovePlayer(event);
+    });
     private final BossRoomTracker<?> dungeon;
 
     /**
@@ -35,41 +51,51 @@ public class BossFightEvent extends EntityEvent {
     /**
      * BossFightEvent.Start is fired when a boss starts a fight.
      * <br>
-     * This event is not {@link Cancelable}. <br>
+     * This event is not cancelable. <br>
      * <br>
-     * This event does not have a result. {@link HasResult} <br>
+     * This event does not have a result. <br>
      * <br>
-     * This event is fired on both {@link LogicalSide sides}.
+     * This event is fired on both {@link EnvType sides}.
      */
     public static class Start extends BossFightEvent {
         public Start(Entity entity, BossRoomTracker<?> dungeon) {
             super(entity, dungeon);
+        }
+
+        @Override
+        public void sendEvent() {
+            START.invoker().onBossFightStart(this);
         }
     }
 
     /**
      * BossFightEvent.Start is fired when a boss stops a fight.
      * <br>
-     * This event is not {@link Cancelable}. <br>
+     * This event is not cancelable. <br>
      * <br>
-     * This event does not have a result. {@link HasResult} <br>
+     * This event does not have a result. <br>
      * <br>
-     * This event is fired on both {@link LogicalSide sides}.
+     * This event is fired on both {@link EnvType sides}.
      */
     public static class Stop extends BossFightEvent {
         public Stop(Entity entity, BossRoomTracker<?> dungeon) {
             super(entity, dungeon);
+        }
+
+        @Override
+        public void sendEvent() {
+            STOP.invoker().onBossFightStop(this);
         }
     }
 
     /**
      * BossFightEvent.AddPlayer is fired when a player is added to a boss fight.
      * <br>
-     * This event is not {@link Cancelable}. <br>
+     * This event is not cancelable. <br>
      * <br>
-     * This event does not have a result. {@link HasResult} <br>
+     * This event does not have a result. <br>
      * <br>
-     * This event is only fired on the {@link LogicalSide#SERVER} side.<br>
+     * This event is only fired on the {@link EnvType#SERVER} side.<br>
      */
     public static class AddPlayer extends BossFightEvent {
         private final ServerPlayer player;
@@ -85,16 +111,21 @@ public class BossFightEvent extends EntityEvent {
         public ServerPlayer getPlayer() {
             return this.player;
         }
+
+        @Override
+        public void sendEvent() {
+            ADD_PLAYER.invoker().onBossFightAddPlayer(this);
+        }
     }
 
     /**
      * BossFightEvent.RemovePlayer is fired when a player is removed from a boss fight.
      * <br>
-     * This event is not {@link Cancelable}. <br>
+     * This event is not cancelable. <br>
      * <br>
-     * This event does not have a result. {@link HasResult} <br>
+     * This event does not have a result. <br>
      * <br>
-     * This event is only fired on the {@link LogicalSide#SERVER} side.<br>
+     * This event is only fired on the {@link EnvType#SERVER} side.<br>
      */
     public static class RemovePlayer extends BossFightEvent {
         private final ServerPlayer player;
@@ -110,5 +141,30 @@ public class BossFightEvent extends EntityEvent {
         public ServerPlayer getPlayer() {
             return this.player;
         }
+
+        @Override
+        public void sendEvent() {
+            REMOVE_PLAYER.invoker().onBossFightRemovePlayer(this);
+        }
+    }
+
+    @FunctionalInterface
+    public interface StartCallback {
+        void onBossFightStart(Start event);
+    }
+
+    @FunctionalInterface
+    public interface StopCallback {
+        void onBossFightStop(Stop event);
+    }
+
+    @FunctionalInterface
+    public interface AddPlayerCallback {
+        void onBossFightAddPlayer(AddPlayer event);
+    }
+
+    @FunctionalInterface
+    public interface RemovePlayerCallback {
+        void onBossFightRemovePlayer(RemovePlayer event);
     }
 }

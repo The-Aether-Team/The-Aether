@@ -2,9 +2,9 @@ package com.aetherteam.aether.data.generators;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.AetherSoundEvents;
+import io.github.fabricators_of_create.porting_lib.data.ExistingFileHelper;
+import io.github.fabricators_of_create.porting_lib.data.SoundDefinitionsProvider;
 import net.minecraft.data.PackOutput;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.SoundDefinitionsProvider;
 
 public class AetherSoundData extends SoundDefinitionsProvider {
     public AetherSoundData(PackOutput output, ExistingFileHelper helper) {

@@ -3,9 +3,9 @@ package com.aetherteam.aether.data.generators;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.data.providers.AetherBlockStateProvider;
+import io.github.fabricators_of_create.porting_lib.data.ExistingFileHelper;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class AetherBlockStateData extends AetherBlockStateProvider {
     public AetherBlockStateData(PackOutput output, ExistingFileHelper helper) {

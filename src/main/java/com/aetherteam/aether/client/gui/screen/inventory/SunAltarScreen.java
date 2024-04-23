@@ -19,9 +19,9 @@ public class SunAltarScreen extends Screen {
     @Override
     public void init() {
         super.init();
-        if (this.getMinecraft().level != null) {
-            double sliderValue = (this.getMinecraft().level.getDayTime() % (long) AetherDimensions.AETHER_TICKS_PER_DAY) / (double) AetherDimensions.AETHER_TICKS_PER_DAY; // What position the slider bar should be at.
-            this.addRenderableWidget(new SunAltarSlider(this.getMinecraft().level, this.width / 2 - 75, this.height / 2, 150, 20, Component.translatable("gui.aether.sun_altar.time"), sliderValue));
+        if (this.minecraft.level != null) {
+            double sliderValue = (this.minecraft.level.getDayTime() % (long) AetherDimensions.AETHER_TICKS_PER_DAY) / (double) AetherDimensions.AETHER_TICKS_PER_DAY; // What position the slider bar should be at.
+            this.addRenderableWidget(new SunAltarSlider(this.minecraft.level, this.width / 2 - 75, this.height / 2, 150, 20, Component.translatable("gui.aether.sun_altar.time"), sliderValue));
         }
     }
 

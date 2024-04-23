@@ -80,10 +80,7 @@ public class DartLayer<T extends LivingEntity, M extends PlayerModel<T>> extends
     @Override
     protected int numStuck(T entity) {
         if (entity instanceof Player player) {
-            Optional<AetherPlayer> aetherPlayerOptional = AetherPlayer.getOptional(player).resolve();
-            if (aetherPlayerOptional.isPresent()) {
-                return this.dartCount.apply(aetherPlayerOptional.get());
-            }
+            return this.dartCount.apply(AetherPlayer.get(player));
         }
         return 0;
     }

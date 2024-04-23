@@ -3,6 +3,7 @@ package com.aetherteam.aether.block.dungeon;
 import com.aetherteam.aether.client.particle.AetherParticleTypes;
 import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.ai.AetherBlockPathTypes;
+import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
@@ -34,7 +35,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
-public class DoorwayBlock extends Block {
+public class DoorwayBlock extends Block implements LandPathNodeTypesRegistry.StaticPathNodeTypeProvider {
     public static final BooleanProperty INVISIBLE = BooleanProperty.create("invisible");
     public static final VoxelShape INVISIBLE_SHAPE = Block.box(5.0, 5.0, 5.0, 11.0, 11.0, 11.0);
     private final Supplier<EntityType<?>> blockedEntityTypeSupplier;
@@ -43,6 +44,7 @@ public class DoorwayBlock extends Block {
         super(properties);
         this.registerDefaultState(this.getStateDefinition().any().setValue(INVISIBLE, false));
         this.blockedEntityTypeSupplier = blockedEntityTypeSupplier;
+        LandPathNodeTypesRegistry.register(this, this);
     }
 
     @Override
@@ -162,14 +164,13 @@ public class DoorwayBlock extends Block {
     /**
      * Gets the {@link BlockPathTypes} corresponding to this block for mob navigation checks.
      * @param state The {@link BlockState} of the block.
-     * @param level The {@link Level} the block is in.
-     * @param pos The {@link BlockPos} of the block.
-     * @param mob The {@link Mob} trying to pathfind in respect to this block.
+     * @param neighbor Specifies that the block is in a direct neighbor position to an entity path
+     * that is directly next to a block that the entity will pass through or above.
      * @return The {@link BlockPathTypes} corresponding to this block.
      */
     @Nullable
     @Override
-    public BlockPathTypes getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob mob) {
+    public BlockPathTypes getPathNodeType(BlockState state, boolean neighbor) {
         return AetherBlockPathTypes.BOSS_DOORWAY;
     }
 }

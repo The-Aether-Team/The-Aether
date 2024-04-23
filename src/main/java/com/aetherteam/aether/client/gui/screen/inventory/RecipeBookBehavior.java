@@ -1,5 +1,6 @@
 package com.aetherteam.aether.client.gui.screen.inventory;
 
+import io.github.fabricators_of_create.porting_lib.mixin.accessors.client.accessor.AbstractContainerScreenAccessor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.recipebook.RecipeUpdateListener;
 import net.minecraft.world.inventory.RecipeBookMenu;
@@ -19,8 +20,8 @@ public interface RecipeBookBehavior<T extends RecipeBookMenu<?>, V extends Abstr
     }
 
     default boolean hasClickedOutside(V screen, double mouseX, double mouseY, int guiLeft, int guiTop, int mouseButton) {
-        boolean flag = mouseX < (double) guiLeft || mouseY < (double) guiTop || mouseX >= (double) (guiLeft + screen.getXSize()) || mouseY >= (double) (guiTop + screen.getYSize());
-        return screen.getRecipeBookComponent().hasClickedOutside(mouseX, mouseY, screen.getGuiLeft(), screen.getGuiTop(), screen.getXSize(), screen.getYSize(), mouseButton) && flag;
+        boolean flag = mouseX < (double) guiLeft || mouseY < (double) guiTop || mouseX >= (double) (guiLeft + screen.imageWidth) || mouseY >= (double) (guiTop + screen.imageHeight);
+        return screen.getRecipeBookComponent().hasClickedOutside(mouseX, mouseY, ((AbstractContainerScreenAccessor) screen).port_lib$getGuiLeft(), ((AbstractContainerScreenAccessor) screen).port_lib$getGuiTop(), screen.imageWidth, screen.imageHeight, mouseButton) && flag;
     }
 
     default boolean charTyped(V screen, char codePoint, int modifiers) {

@@ -1,10 +1,11 @@
 package com.aetherteam.aether.client.gui.component.skins;
 
 import com.aetherteam.aether.client.gui.screen.perks.MoaSkinsScreen;
+import io.github.fabricators_of_create.porting_lib.gui.utils.ModdedButton;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 
-public class ChangeSkinButton extends Button {
+public class ChangeSkinButton extends ModdedButton {
     private final ButtonType buttonType;
 
     public ChangeSkinButton(ButtonType buttonType, Builder builder) {

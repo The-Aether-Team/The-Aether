@@ -41,13 +41,6 @@ import net.minecraft.world.level.block.AbstractFurnaceBlock;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.tags.ITagManager;
 
 import org.jetbrains.annotations.Nullable;
 import java.util.LinkedHashMap;
@@ -107,7 +100,6 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 	private static final Map<Item, Integer> incubatingMap = new LinkedHashMap<>();
 	private final Object2IntOpenHashMap<ResourceLocation> recipesUsed = new Object2IntOpenHashMap<>();
 	private final RecipeManager.CachedCheck<Container, IncubationRecipe> quickCheck;
-	private LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST);
 
 	public IncubatorBlockEntity(BlockPos pos, BlockState state) {
 		this(pos, state, AetherRecipeTypes.INCUBATION.get());
@@ -150,7 +142,8 @@ public class IncubatorBlockEntity extends BaseContainerBlockEntity implements Wo
 				blockEntity.litDuration = blockEntity.litTime;
 				if (blockEntity.isLit()) {
 					flag1 = true;
-					if (itemstack.hasCraftingRemainingItem()) {
+					ItemStack remainder = itemstack.getRecipeRemainder();
+					if (!remainder.isEmpty()) {
 						blockEntity.items.set(1, itemstack.getRecipeRemainder());
 					} else if (flag3) {
 						itemstack.shrink(1);

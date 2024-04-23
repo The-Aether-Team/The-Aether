@@ -29,7 +29,7 @@ public class EntityListener {
      */
     public static boolean onEntityJoin(Entity entity, Level world, boolean loadedFromDisk) {
         EntityHooks.addGoals(entity);
-        return false;
+        return true;
     }
 
     /**

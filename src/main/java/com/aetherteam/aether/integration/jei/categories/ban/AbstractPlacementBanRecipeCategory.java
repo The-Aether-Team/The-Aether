@@ -8,6 +8,7 @@ import com.aetherteam.nitrogen.integration.jei.categories.AbstractRecipeCategory
 import com.aetherteam.nitrogen.recipe.BlockPropertyPair;
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import com.aetherteam.nitrogen.recipe.BlockStateRecipeUtil;
+import io.github.fabricators_of_create.porting_lib.mixin.accessors.common.accessor.LiquidBlockAccessor;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -73,7 +74,7 @@ public abstract class AbstractPlacementBanRecipeCategory<T, S extends Predicate<
         if (Minecraft.getInstance().level != null) {
             for (BlockPropertyPair pair : pairs) {
                 if (pair.block() instanceof LiquidBlock liquidBlock) {
-                    ingredients.add(this.fluidHelper.create(liquidBlock.getFluid(), 1000));
+                    ingredients.add(this.fluidHelper.create(((LiquidBlockAccessor)liquidBlock).port_lib$getFluid(), 1000));
                 } else {
                     BlockState state = pair.block().defaultBlockState();
                     for (Map.Entry<Property<?>, Comparable<?>> propertyEntry : pair.properties().entrySet()) {

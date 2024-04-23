@@ -1,15 +1,15 @@
 package com.aetherteam.aether.event.listeners;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.event.hooks.DimensionHooks;
 import io.github.fabricators_of_create.porting_lib.entity.events.PlayerEvents;
 import io.github.fabricators_of_create.porting_lib.entity.events.PlayerTickEvents;
 import io.github.fabricators_of_create.porting_lib.event.common.BlockEvents;
+import io.github.fabricators_of_create.porting_lib.level.events.SleepFinishedTimeEvent;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
@@ -25,6 +25,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.BlockHitResult;
 
 public class DimensionListener {
     /**
@@ -37,17 +38,14 @@ public class DimensionListener {
     /**
      * @see DimensionHooks#createPortal(Player, Level, BlockPos, Direction, ItemStack, InteractionHand)
      */
-    @SubscribeEvent
-    public static void onInteractWithPortalFrame(PlayerInteractEvent.RightClickBlock event) {
-        Player player = event.getEntity();
-        Level level = event.getLevel();
-        BlockPos blockPos = event.getPos();
-        Direction direction = event.getFace();
-        ItemStack itemStack = event.getItemStack();
-        InteractionHand interactionHand = event.getHand();
+    public static InteractionResult onInteractWithPortalFrame(Player player, Level level, InteractionHand interactionHand, BlockHitResult hitResult) {
+        BlockPos blockPos = hitResult.getBlockPos();
+        Direction direction = hitResult.getDirection();
+        ItemStack itemStack = player.getItemInHand(interactionHand);
         if (DimensionHooks.createPortal(player, level, blockPos, direction, itemStack, interactionHand)) {
-            event.setCanceled(true);
+            return InteractionResult.FAIL;
         }
+        return InteractionResult.PASS;
     }
 
     /**
@@ -99,7 +97,6 @@ public class DimensionListener {
     /**
      * @see DimensionHooks#finishSleep(LevelAccessor, long)
      */
-    @SubscribeEvent
     public static void onSleepFinish(SleepFinishedTimeEvent event) {
         LevelAccessor level = event.getLevel();
         Long time = DimensionHooks.finishSleep(level, event.getNewTime());
@@ -119,6 +116,7 @@ public class DimensionListener {
     }
 
     public static void init() {
+        UseBlockCallback.EVENT.register(DimensionListener::onInteractWithPortalFrame);
         PlayerEvents.LOGGED_IN.register(DimensionListener::onPlayerLogin);
         BlockEvents.NEIGHBORS_NOTIFY.register(DimensionListener::onWaterExistsInsidePortalFrame);
         ServerTickEvents.END_WORLD_TICK.register(DimensionListener::onWorldTick);
@@ -126,7 +124,7 @@ public class DimensionListener {
         PlayerTickEvents.START.register(DimensionListener::onPlayerTraveling);
         PlayerTickEvents.END.register(DimensionListener::onPlayerTraveling);
         ServerWorldEvents.LOAD.register(DimensionListener::onWorldLoad);
+        SleepFinishedTimeEvent.SLEEP_FINISHED.register(DimensionListener::onSleepFinish);
         EntitySleepEvents.ALLOW_SLEEP_TIME.register(DimensionListener::onTriedToSleep);
-
     }
 }

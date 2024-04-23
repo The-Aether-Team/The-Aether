@@ -1,6 +1,5 @@
 package com.aetherteam.aether.data.generators.tags;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.data.resources.registries.AetherDamageTypes;
 import net.minecraft.core.HolderLookup;
@@ -9,7 +8,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageType;
-import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -17,8 +15,8 @@ import java.util.concurrent.CompletableFuture;
  * Damage type tags are used to change the behavior of damage and how it is calculated.
  */
 public class AetherDamageTypeTagData extends TagsProvider<DamageType> {
-    public AetherDamageTypeTagData(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, ExistingFileHelper existingFileHelper) {
-        super(output, Registries.DAMAGE_TYPE, registries, Aether.MODID, existingFileHelper);
+    public AetherDamageTypeTagData(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+        super(output, Registries.DAMAGE_TYPE, registries);
     }
 
     @Override

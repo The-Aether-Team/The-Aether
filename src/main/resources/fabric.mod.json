@@ -2,13 +2,17 @@
   "id": "aether",
   "name": "The Aether",
   "schemaVersion": 1,
-  "version": "",
+  "version": "1.3.0",
   "contributors": ["The Aether Team, former Aether Team Collaborators for their prior work on The Aether Mod, Modding Legacy for their work on Aether Legacy, GitHub contributors for their additional help, and C4 for Curios API, the source code of which can be found at https://github.com/TheIllusiveC4/Curios"],
   "description": "The Aether Team presents the original Aether mod! Up to date for modern Minecraft versions and fully compatible with multiplayer. The Aether is a dimension of floating islands high in the sky. Ascend through a Glowstone portal and begin a new survival adventure packed with new ores, mythical creatures and perilous Dungeons!",
   "authors": [
     "AlphaMode", "bconlon", "Burning Cactus", "Drullkus", "Hugo Payn", "Jaryt", "Oscar Payn", "quek", "Raptor", "reetam", "RENREN", "sunsette"
   ],
   "accessWidener": "aether.accesswidener",
+  "mixins": [
+    "aether.mixins.json",
+    "aether_fabric.mixins.json"
+  ],
   "entrypoints": {
     "main": [
       "com.aetherteam.aether.Aether"
@@ -16,8 +20,35 @@
     "client": [
       "com.aetherteam.aether.client.AetherClient"
     ],
+    "fabric-datagen": [
+      "com.aetherteam.aether.data.AetherData"
+    ],
+    "cardinal-components": [
+      "com.aetherteam.aether.capability.AetherCapabilities$Entity",
+      "com.aetherteam.aether.capability.AetherCapabilities$Level"
+    ],
+    "rei_client": [
+      "com.aetherteam.aether.integration.rei.AetherREIClientPlugin"
+    ],
+    "rei_server": [
+      "com.aetherteam.aether.integration.rei.AetherREIServerPlugin"
+    ],
+    "jei_mod_plugin": [
+      "com.aetherteam.aether.integration.jei.AetherJEIPlugin"
+    ],
     "mm_shedaniel:early_risers": [
       "com.aetherteam.aether.AetherASM"
+    ]
+  },
+  "custom": {
+    "update_url": "https://github.com/The-Aether-Team/The-Aether/raw/1.20.1-develop/update.json",
+    "cardinal-components": [
+      "aether:aether_player",
+      "aether:mob_accessory",
+      "aether:phoenix_arrow",
+      "aether:lightning_tracker",
+      "aether:dropped_item",
+      "aether:aether_time"
     ]
   }
 }

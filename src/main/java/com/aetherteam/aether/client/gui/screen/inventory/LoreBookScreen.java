@@ -39,8 +39,8 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
     @Override
     protected void init() {
         super.init();
-        int xPos = (this.width - this.getXSize()) / 2;
-        int yPos = (this.height - (this.getYSize())) / 2;
+        int xPos = (this.width - this.imageWidth) / 2;
+        int yPos = (this.height - (this.imageHeight)) / 2;
         this.previousButton = this.addRenderableWidget(new LorePageButton(new Button.Builder(Component.literal("<"), (button) -> {
             if (this.currentPageNumber > 0) {
                 this.currentPageNumber--;
@@ -150,10 +150,10 @@ public class LoreBookScreen extends AbstractContainerScreen<LoreBookMenu> {
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
-        int xPos = (this.width - this.getXSize()) / 2;
-        int yPos = (this.height - (this.getYSize())) / 2;
-        guiGraphics.blit(TEXTURE_LORE_BACKING, xPos, yPos - 4, 0, 0, this.getXSize(), this.getYSize() + 56, 256, 256); // Draws the grey GUI backing.
-        guiGraphics.blit(TEXTURE_LORE_BOOK, xPos + 12, yPos + 2, 0, 0, this.getXSize(), this.getYSize() + 56, 256, 256); // Draws the book GUI on top of backing.
+        int xPos = (this.width - this.imageWidth) / 2;
+        int yPos = (this.height - (this.imageHeight)) / 2;
+        guiGraphics.blit(TEXTURE_LORE_BACKING, xPos, yPos - 4, 0, 0, this.imageWidth, this.imageHeight + 56, 256, 256); // Draws the grey GUI backing.
+        guiGraphics.blit(TEXTURE_LORE_BOOK, xPos + 12, yPos + 2, 0, 0, this.imageWidth, this.imageHeight + 56, 256, 256); // Draws the book GUI on top of backing.
     }
 
     private void drawNormalBookText(GuiGraphics guiGraphics, Font fontRenderer, Component component, int x, int y) {

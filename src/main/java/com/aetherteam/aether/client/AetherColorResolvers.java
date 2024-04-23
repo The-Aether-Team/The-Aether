@@ -3,6 +3,7 @@ package com.aetherteam.aether.client;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.miscellaneous.MoaEggItem;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.core.BlockPos;
@@ -50,7 +51,9 @@ public class AetherColorResolvers {
     }
 
     public static void init() {
-        registerBlockColor();
-        registerItemColor();
+        ClientLifecycleEvents.CLIENT_STARTED.register(client -> {
+            registerBlockColor();
+            registerItemColor();
+        });
     }
 }

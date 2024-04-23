@@ -17,7 +17,7 @@ public class ValkyrieShovelItem extends ShovelItem implements ValkyrieTool {
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
-        return this.extendReachModifier(super.getAttributeModifiers(slot, stack), slot);
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(ItemStack stack, EquipmentSlot slot) {
+        return this.extendReachModifier(super.getAttributeModifiers(stack, slot), slot);
     }
 }

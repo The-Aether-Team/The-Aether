@@ -24,6 +24,8 @@ import com.aetherteam.aether.network.packet.clientbound.ToolDebuffPacket;
 import com.aetherteam.nitrogen.capability.INBTSynchable;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import com.google.common.collect.ImmutableMap;
+import dev.emi.trinkets.api.SlotReference;
+import dev.emi.trinkets.api.TrinketsApi;
 import io.github.fabricators_of_create.porting_lib.attributes.PortingLibAttributes;
 import io.github.fabricators_of_create.porting_lib.entity.events.EntityStruckByLightningEvent;
 import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
@@ -32,9 +34,11 @@ import io.github.fabricators_of_create.porting_lib.entity.events.ProjectileImpac
 import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingDamageEvent;
 import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingHurtEvent;
 import io.github.fabricators_of_create.porting_lib.event.common.BlockEvents;
+import io.github.fabricators_of_create.porting_lib.tool.ToolAction;
 import io.github.fabricators_of_create.porting_lib.tool.ToolActions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -59,8 +63,6 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.SlotResult;
 
 import org.jetbrains.annotations.Nullable;
 import java.util.List;
@@ -75,9 +77,9 @@ public class AbilityHooks {
          * @see com.aetherteam.aether.mixin.mixins.common.PlayerMixin#attack(Entity, CallbackInfo)
          */
         public static void damageGloves(Player player) {
-            SlotResult slotResult = EquipmentUtil.getGloves(player);
+            Tuple<SlotReference, ItemStack> slotResult = EquipmentUtil.getGloves(player);
             if (slotResult != null) {
-                slotResult.stack().hurtAndBreak(1, player, wearer -> CuriosApi.broadcastCurioBreakEvent(slotResult.slotContext()));
+                slotResult.getB().hurtAndBreak(1, player, wearer -> TrinketsApi.onTrinketBroken(slotResult.getB(), slotResult.getA(), player));
             }
         }
 
@@ -86,11 +88,11 @@ public class AbilityHooks {
          * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onBlockBreak(BlockEvents.BreakEvent)
          */
         public static void damageZaniteRing(LivingEntity entity, LevelAccessor level, BlockState state, BlockPos pos) {
-            List<SlotResult> slotResults = EquipmentUtil.getZaniteRings(entity);
-            for (SlotResult slotResult : slotResults) {
+            List<Tuple<SlotReference, ItemStack>> slotResults = EquipmentUtil.getZaniteRings(entity);
+            for (Tuple<SlotReference, ItemStack> slotResult : slotResults) {
                 if (slotResult != null) {
                     if (state.getDestroySpeed(level, pos) > 0 && entity.getRandom().nextInt(6) == 0) {
-                        slotResult.stack().hurtAndBreak(1, entity, wearer -> CuriosApi.broadcastCurioBreakEvent(slotResult.slotContext()));
+                        slotResult.getB().hurtAndBreak(1, entity, wearer -> TrinketsApi.onTrinketBroken(slotResult.getB(), slotResult.getA(), entity));
                     }
                 }
             }
@@ -101,10 +103,10 @@ public class AbilityHooks {
          * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onBlockBreak(BlockEvents.BreakEvent)
          */
         public static void damageZanitePendant(LivingEntity entity, LevelAccessor level, BlockState state, BlockPos pos) {
-            SlotResult slotResult = EquipmentUtil.getZanitePendant(entity);
+            Tuple<SlotReference, ItemStack> slotResult = EquipmentUtil.getZanitePendant(entity);
             if (slotResult != null) {
                 if (state.getDestroySpeed(level, pos) > 0 && entity.getRandom().nextInt(6) == 0) {
-                    slotResult.stack().hurtAndBreak(1, entity, wearer -> CuriosApi.broadcastCurioBreakEvent(slotResult.slotContext()));
+                    slotResult.getB().hurtAndBreak(1, entity, wearer -> TrinketsApi.onTrinketBroken(slotResult.getB(), slotResult.getA(), entity));
                 }
             }
         }
@@ -116,10 +118,10 @@ public class AbilityHooks {
          */
         public static float handleZaniteRingAbility(LivingEntity entity, float speed) {
             float newSpeed = speed;
-            List<SlotResult> slotResults = EquipmentUtil.getZaniteRings(entity);
-            for (SlotResult slotResult : slotResults) {
+            List<Tuple<SlotReference, ItemStack>> slotResults = EquipmentUtil.getZaniteRings(entity);
+            for (Tuple<SlotReference, ItemStack> slotResult : slotResults) {
                 if (slotResult != null) {
-                    newSpeed = ZaniteAccessory.handleMiningSpeed(newSpeed, slotResult.stack());
+                    newSpeed = ZaniteAccessory.handleMiningSpeed(newSpeed, slotResult.getB());
                 }
             }
             return newSpeed;
@@ -131,9 +133,9 @@ public class AbilityHooks {
          * @see com.aetherteam.aether.event.listeners.abilities.AccessoryAbilityListener#onMiningSpeed(PlayerEvents.BreakSpeed)
          */
         public static float handleZanitePendantAbility(LivingEntity entity, float speed) {
-            SlotResult slotResult = EquipmentUtil.getZanitePendant(entity);
+            Tuple<SlotReference, ItemStack> slotResult = EquipmentUtil.getZanitePendant(entity);
             if (slotResult != null) {
-                speed = ZaniteAccessory.handleMiningSpeed(speed, slotResult.stack());
+                speed = ZaniteAccessory.handleMiningSpeed(speed, slotResult.getB());
             }
             return speed;
         }
@@ -266,7 +268,7 @@ public class AbilityHooks {
         /**
          * Handles ability for {@link com.aetherteam.aether.item.tools.abilities.HolystoneTool}.
          * @see HolystoneTool#dropAmbrosium(Player, Level, BlockPos, ItemStack, BlockState)
-         * @see com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener#doHolystoneAbility(BlockEvent.BreakEvent)
+         * @see com.aetherteam.aether.event.listeners.abilities.ToolAbilityListener#doHolystoneAbility(BlockEvents.BreakEvent)
          */
         public static void handleHolystoneToolAbility(Player player, Level level, BlockPos pos, ItemStack stack, BlockState blockState) {
             if (stack.getItem() instanceof HolystoneTool holystoneTool) {

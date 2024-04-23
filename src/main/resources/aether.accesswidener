@@ -6,3 +6,13 @@ accessible class net/minecraft/world/entity/monster/Slime$SlimeFloatGoal
 accessible class net/minecraft/world/entity/monster/Slime$SlimeAttackGoal
 
 accessible class net/minecraft/client/gui/screens/TitleScreen$WarningLabel
+
+# Fabric
+accessible field net/minecraft/world/level/Level rainLevel F
+accessible field net/minecraft/world/level/Level thunderLevel F
+accessible field net/minecraft/world/entity/Mob goalSelector Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+extendable method net/minecraft/client/gui/components/AbstractButton getTextureY ()I # Blame porting lib
+accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen imageWidth I
+accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen imageHeight I
+accessible field net/minecraft/stats/RecipeBookSettings TAG_FIELDS Ljava/util/Map;
+mutable field net/minecraft/stats/RecipeBookSettings TAG_FIELDS Ljava/util/Map;

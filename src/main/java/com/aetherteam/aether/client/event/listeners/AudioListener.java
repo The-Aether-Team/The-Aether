@@ -1,43 +1,39 @@
 package com.aetherteam.aether.client.event.listeners;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.event.hooks.AudioHooks;
+import io.github.fabricators_of_create.porting_lib.client_events.event.client.PlaySoundCallback;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SoundInstance;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
-import net.minecraftforge.client.event.sound.PlaySoundEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraft.client.sounds.SoundEngine;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT)
 public class AudioListener {
     /**
      * @see AudioHooks#shouldCancelSound(SoundInstance)
      */
-    @SubscribeEvent
-    public static void onPlaySound(PlaySoundEvent event) {
-        SoundInstance sound = event.getOriginalSound();
-        if (AudioHooks.shouldCancelSound(sound)) {
-            event.setSound(null);
+    public static SoundInstance onPlaySound(SoundEngine engine, SoundInstance sound, SoundInstance originalSound) {
+        if (AudioHooks.shouldCancelSound(originalSound)) {
+            return null;
         }
+        return sound;
     }
 
     /**
      * @see AudioHooks#tick()
      */
-    @SubscribeEvent
-    public static void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.END) {
-            AudioHooks.tick();
-        }
+    public static void onClientTick(Minecraft minecraft) {
+        AudioHooks.tick();
     }
 
     /**
      * @see AudioHooks#stop()
      */
-    @SubscribeEvent
-    public static void onPlayerRespawn(ClientPlayerNetworkEvent.Clone event) {
+    public static void onPlayerRespawn() {
         AudioHooks.stop();
+    }
+
+    public static void init() {
+        PlaySoundCallback.EVENT.register(AudioListener::onPlaySound);
+        ClientTickEvents.END_CLIENT_TICK.register(AudioListener::onClientTick);
     }
 }

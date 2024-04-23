@@ -1,13 +1,13 @@
 package com.aetherteam.aether.entity.passive;
 
 import com.aetherteam.aether.entity.ai.navigator.FallPathNavigation;
+import io.github.fabricators_of_create.porting_lib.attributes.PortingLibAttributes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ForgeMod;
 
 public abstract class WingedAnimal extends MountableAnimal {
     /**
@@ -37,7 +37,7 @@ public abstract class WingedAnimal extends MountableAnimal {
     @Override
     public void tick() {
         super.tick();
-        AttributeInstance gravity = this.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
+        AttributeInstance gravity = this.getAttribute(PortingLibAttributes.ENTITY_GRAVITY);
         if (gravity != null) {
             double fallSpeed = Math.max(gravity.getValue() * -1.25, -0.1); // Entity isn't allowed to fall too slowly from gravity.
             if (this.getDeltaMovement().y() < fallSpeed && !this.playerTriedToCrouch()) {

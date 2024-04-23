@@ -1,5 +1,7 @@
 package com.aetherteam.aether.entity.projectile.crystal;
 
+import io.github.fabricators_of_create.porting_lib.entity.PortingLibEntity;
+import io.github.fabricators_of_create.porting_lib.entity.events.EntityEventFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
@@ -19,7 +21,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkHooks;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -68,7 +69,7 @@ public abstract class AbstractCrystal extends Projectile {
                 flag = true;
             }
         }
-        if (result.getType() != HitResult.Type.MISS && !flag && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, result)) {
+        if (result.getType() != HitResult.Type.MISS && !flag && !EntityEventFactory.onProjectileImpact(this, result)) {
             this.onHit(result);
         }
         this.checkInsideBlocks();
@@ -157,6 +158,6 @@ public abstract class AbstractCrystal extends Projectile {
 
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
+        return PortingLibEntity.getEntitySpawningPacket(this);
     }
 }

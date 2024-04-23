@@ -8,27 +8,28 @@ import com.aetherteam.aether.blockentity.FreezerBlockEntity;
 import com.aetherteam.aether.blockentity.IncubatorBlockEntity;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.level.storage.loot.Deserializers;
-import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
 import java.util.Map;
 
-
-@Mod.EventBusSubscriber(modid = Aether.MODID)
 public class ReloadListeners {
-    @SubscribeEvent
-    public static void reloadListenerSetup(AddReloadListenerEvent event) {
-        event.addListener(new FuelReloadListener());
-        event.addListener(new RecipeReloadListener());
+    public static final ResourceLocation FUEL = new ResourceLocation(Aether.MODID, "fuel");
+    public static final ResourceLocation RECIPE = new ResourceLocation(Aether.MODID, "recipe");
+
+    public static void reloadListenerSetup() {
+        ResourceManagerHelper helper = ResourceManagerHelper.get(PackType.CLIENT_RESOURCES);
+        helper.registerReloadListener(new FuelReloadListener());
+        helper.registerReloadListener(new RecipeReloadListener());
     }
 
-    public static class FuelReloadListener extends SimpleJsonResourceReloadListener {
+    public static class FuelReloadListener extends SimpleJsonResourceReloadListener implements IdentifiableResourceReloadListener {
         public static final Gson GSON_INSTANCE = Deserializers.createFunctionSerializer().create();
 
         public FuelReloadListener() {
@@ -45,9 +46,14 @@ public class ReloadListeners {
             IncubatorBlockEntity.getIncubatingMap().clear();
             AetherBlocks.registerFuels();
         }
+
+        @Override
+        public ResourceLocation getFabricId() {
+            return FUEL;
+        }
     }
 
-    public static class RecipeReloadListener extends SimpleJsonResourceReloadListener {
+    public static class RecipeReloadListener extends SimpleJsonResourceReloadListener implements IdentifiableResourceReloadListener {
         public static final Gson GSON_INSTANCE = Deserializers.createFunctionSerializer().create();
 
         public RecipeReloadListener() {
@@ -61,6 +67,11 @@ public class ReloadListeners {
         protected void apply(Map<ResourceLocation, JsonElement> object, ResourceManager resourceManager, ProfilerFiller profiler) {
             FreezingBlock.cachedBlocks.clear();
             FreezingBlock.cachedResults.clear();
+        }
+
+        @Override
+        public ResourceLocation getFabricId() {
+            return RECIPE;
         }
     }
 }

@@ -1,13 +1,13 @@
 plugins {
     id 'eclipse'
     id 'maven-publish'
-    id 'fabric-loom' version '1.4-SNAPSHOT'
+    id 'fabric-loom' version '1.6-SNAPSHOT'
     id 'io.github.0ffz.github-packages' version '[1,2)'
     id 'com.matthewprenger.cursegradle' version '[1.4,1.5)'
     id 'com.modrinth.minotaur' version '[2,3)'
 }
 
-version = "${mc_version}-${mod_version}-neoforge"
+version = "${mc_version}-${mod_version}-fabric"
 group = 'com.aetherteam.aether'
 
 base {
@@ -77,7 +77,7 @@ dependencies {
     modCompileOnly("mezz.jei:jei-${mc_version}-common-api:${project.jei_version}")
     modCompileOnly("mezz.jei:jei-${mc_version}-fabric-api:${project.jei_version}")
 
-    modRuntimeOnly modCompileOnly("mezz.jei:jei-${mc_version}-fabric:${project.jei_version}")
+    modCompileOnly("mezz.jei:jei-${mc_version}-fabric:${project.jei_version}")
 
     modCompileOnly("com.blamejared.crafttweaker:CraftTweaker-fabric-${project.crafttweaker_version}")
 
@@ -101,6 +101,7 @@ dependencies {
 
     modCompileOnly("me.shedaniel:RoughlyEnoughItems-api-fabric:$rei_version")
     modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:$rei_version")
+    modRuntimeOnly modCompileOnly("me.shedaniel:RoughlyEnoughItems-fabric:$rei_version")
     modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:$cloth_config_version")
     modCompileOnly("dev.architectury:architectury-fabric:$architectury_version")
 }

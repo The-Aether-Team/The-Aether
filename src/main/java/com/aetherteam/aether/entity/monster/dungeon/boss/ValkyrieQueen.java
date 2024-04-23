@@ -21,6 +21,11 @@ import com.aetherteam.aether.network.packet.serverbound.BossInfoPacket;
 import com.aetherteam.aether.network.packet.serverbound.NpcPlayerInteractPacket;
 import com.aetherteam.nitrogen.entity.BossRoomTracker;
 import com.aetherteam.nitrogen.network.PacketRelay;
+import io.github.fabricators_of_create.porting_lib.entity.IEntityAdditionalSpawnData;
+import io.github.fabricators_of_create.porting_lib.entity.PortingLibEntity;
+import io.github.fabricators_of_create.porting_lib.entity.events.EntityEventFactory;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -50,6 +55,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.StructureManager;
@@ -62,11 +68,6 @@ import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.entity.IEntityAdditionalSpawnData;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.network.NetworkHooks;
 import org.apache.commons.lang3.tuple.Pair;
 
 import org.jetbrains.annotations.Nullable;
@@ -173,7 +174,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
         LivingEntity target = this.getTarget();
         if (!this.level().isClientSide()) {
             if (target != null) {
-                if (ForgeEventFactory.getMobGriefingEvent(this.level(), this)) {
+                if (EntityEventFactory.getMobGriefingEvent(this.level(), this)) {
                     for (int i = 0; i < 2; i++) {
                         Vec3i vector = i == 0 ? this.getMotionDirection().getNormal() : Vec3i.ZERO;
                         BlockPos upperPosition = BlockPos.containing(this.getEyePosition()).offset(vector);
@@ -279,7 +280,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
      * Opens an NPC dialogue window for this entity.
      */
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void openDialogueScreen() {
         Minecraft.getInstance().setScreen(new ValkyrieQueenDialogueScreen(this));
     }
@@ -739,7 +740,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
 
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
+        return PortingLibEntity.getEntitySpawningPacket(this);
     }
 
     /**

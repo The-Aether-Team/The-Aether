@@ -23,7 +23,7 @@ public class AetherEventDispatch {
 	 */
 	public static BossFightEvent.Start onBossFightStart(Entity entity, BossRoomTracker<?> dungeon) {
 		BossFightEvent.Start event = new BossFightEvent.Start(entity, dungeon);
-		MinecraftForge.EVENT_BUS.post(event);
+		event.sendEvent();
 		return event;
 	}
 
@@ -32,7 +32,7 @@ public class AetherEventDispatch {
 	 */
 	public static BossFightEvent.Stop onBossFightStop(Entity entity, BossRoomTracker<?> dungeon) {
 		BossFightEvent.Stop event = new BossFightEvent.Stop(entity, dungeon);
-		MinecraftForge.EVENT_BUS.post(event);
+		event.sendEvent();
 		return event;
 	}
 
@@ -41,7 +41,7 @@ public class AetherEventDispatch {
 	 */
 	public static BossFightEvent.AddPlayer onBossFightPlayerAdd(Entity entity, BossRoomTracker<?> dungeon, ServerPlayer player) {
 		BossFightEvent.AddPlayer event = new BossFightEvent.AddPlayer(entity, dungeon, player);
-		MinecraftForge.EVENT_BUS.post(event);
+		event.sendEvent();
 		return event;
 	}
 
@@ -50,7 +50,7 @@ public class AetherEventDispatch {
 	 */
 	public static BossFightEvent.RemovePlayer onBossFightPlayerRemove(Entity entity, BossRoomTracker<?> dungeon, ServerPlayer player) {
 		BossFightEvent.RemovePlayer event = new BossFightEvent.RemovePlayer(entity, dungeon, player);
-		MinecraftForge.EVENT_BUS.post(event);
+		event.sendEvent();
 		return event;
 	}
 

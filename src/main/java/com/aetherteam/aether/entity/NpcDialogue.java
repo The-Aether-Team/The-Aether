@@ -1,8 +1,8 @@
 package com.aetherteam.aether.entity;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -14,7 +14,7 @@ public interface NpcDialogue {
     /**
      * This method shouldn't be used on the server.
      */
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     void openDialogueScreen();
 
     /**

@@ -75,9 +75,4 @@ public class UnstableObsidianBlock extends Block implements MeltingBehavior {
     public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
         return ItemStack.EMPTY;
     }
-
-    @Override
-    public PushReaction getPistonPushReaction(BlockState state) {
-        return PushReaction.NORMAL;
-    }
 }

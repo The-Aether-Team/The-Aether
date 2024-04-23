@@ -1,22 +1,21 @@
 package com.aetherteam.aether.data.generators.tags;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlocks;
+import io.github.fabricators_of_create.porting_lib.tags.Tags;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.data.BlockTagsProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
 
-import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.CompletableFuture;
 
-public class AetherBlockTagData extends BlockTagsProvider {
-    public AetherBlockTagData(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, @Nullable ExistingFileHelper helper) {
-        super(output, registries, Aether.MODID, helper);
+public class AetherBlockTagData extends FabricTagProvider.BlockTagProvider {
+    public AetherBlockTagData(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+        super(output, registries);
     }
 
     @SuppressWarnings("unchecked")
@@ -456,7 +455,7 @@ public class AetherBlockTagData extends BlockTagsProvider {
                 AetherBlocks.AETHER_DIRT.get(),
                 AetherBlocks.QUICKSOIL.get()
         );
-        this.tag(BlockTags.SNAPS_GOAT_HORN).addTags(AetherTags.Blocks.SKYROOT_LOGS, AetherTags.Blocks.GOLDEN_OAK_LOGS).add(
+        ((FabricTagProvider<Block>.FabricTagBuilder)this.tag(BlockTags.SNAPS_GOAT_HORN).addTags(AetherTags.Blocks.SKYROOT_LOGS, AetherTags.Blocks.GOLDEN_OAK_LOGS)).add(
                 AetherBlocks.HOLYSTONE.get(),
                 AetherBlocks.ICESTONE.get(),
                 AetherBlocks.AMBROSIUM_ORE.get(),
@@ -488,5 +487,10 @@ public class AetherBlockTagData extends BlockTagsProvider {
         this.tag(Tags.Blocks.STORAGE_BLOCKS).add(
                 AetherBlocks.AMBROSIUM_BLOCK.get(),
                 AetherBlocks.ZANITE_BLOCK.get());
+    }
+
+    @Override
+    protected FabricTagProvider<Block>.FabricTagBuilder tag(TagKey<Block> tag) {
+        return getOrCreateTagBuilder(tag);
     }
 }

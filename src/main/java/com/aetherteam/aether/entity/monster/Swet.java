@@ -251,7 +251,6 @@ public class Swet extends Slime implements MountableMob {
     @Override
     public void remove(Entity.RemovalReason pReason) {
         this.setRemoved(pReason);
-        this.invalidateCaps();
     }
 
     /**
@@ -520,7 +519,7 @@ public class Swet extends Slime implements MountableMob {
     }
 
     @Override
-    protected boolean spawnCustomParticles() {
+    public boolean spawnCustomParticles() {
         return true;
     }
 
@@ -782,7 +781,7 @@ public class Swet extends Slime implements MountableMob {
         }
 
         public boolean canUse() {
-            return this.swet.getTarget() == null && (this.swet.onGround() || this.swet.isInFluidType() || this.swet.hasEffect(MobEffects.LEVITATION)) && this.swet.getMoveControl() instanceof SwetMoveControl;
+            return this.swet.getTarget() == null && (this.swet.onGround()/* || this.swet.isInFluidType() TODO: PORT*/ || this.swet.hasEffect(MobEffects.LEVITATION)) && this.swet.getMoveControl() instanceof SwetMoveControl;
         }
 
         public void tick() {

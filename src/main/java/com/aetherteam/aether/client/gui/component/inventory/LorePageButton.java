@@ -1,6 +1,7 @@
 package com.aetherteam.aether.client.gui.component.inventory;
 
 import com.aetherteam.aether.Aether;
+import io.github.fabricators_of_create.porting_lib.gui.utils.ModdedButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -8,7 +9,7 @@ import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.resources.ResourceLocation;
 
-public class LorePageButton extends Button {
+public class LorePageButton extends ModdedButton {
     private static final ResourceLocation BUTTON_TEXTURES = new ResourceLocation(Aether.MODID, "textures/gui/menu/lore_widgets.png");
 
     public LorePageButton(Builder builder) {
@@ -29,14 +30,14 @@ public class LorePageButton extends Button {
         int textureY = this.getTextureY();
         guiGraphics.blit(BUTTON_TEXTURES, this.getX(), this.getY(), 0, textureY, this.width / 2, this.height);
         guiGraphics.blit(BUTTON_TEXTURES, this.getX() + this.width / 2, this.getY(), 200 - this.width / 2, textureY, this.width / 2, this.height);
-        int color = this.getFGColor();
+        int color = this.active ? 16777215 : 10526880;
         guiGraphics.drawCenteredString(fontRenderer, this.getMessage(), this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2, color | 255 << 24);
     }
 
     /**
      * [CODE COPY] - {@link AbstractButton#getTextureY()}
      */
-    private int getTextureY() {
+    public int getTextureY() {
         int i = 1;
         if (!this.isActive()) {
             i = 0;

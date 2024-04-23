@@ -2,6 +2,7 @@ package com.aetherteam.aether.item.miscellaneous.bucket;
 
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.miscellaneous.ConsumableItem;
+import io.github.fabricators_of_create.porting_lib.util.PotionHelper;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -23,7 +24,7 @@ public class SkyrootMilkBucketItem extends MilkBucketItem implements ConsumableI
      */
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity user) {
         if (!level.isClientSide()) {
-            user.curePotionEffects(new ItemStack(Items.MILK_BUCKET));
+            PotionHelper.curePotionEffects(user, new ItemStack(Items.MILK_BUCKET));
         }
         this.consume(this, stack, user);
         return stack.isEmpty() ? new ItemStack(AetherItems.SKYROOT_BUCKET.get()) : stack;

@@ -6,6 +6,7 @@ import com.aetherteam.aether.item.materials.behavior.ItemUseConversion;
 import com.aetherteam.aether.item.miscellaneous.ConsumableItem;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.recipes.block.AmbrosiumRecipe;
+import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -23,6 +24,7 @@ import org.jetbrains.annotations.Nullable;
 public class AmbrosiumShardItem extends Item implements ItemUseConversion<AmbrosiumRecipe>, ConsumableItem {
 	public AmbrosiumShardItem(Properties properties) {
 		super(properties);
+		FuelRegistry.INSTANCE.add(this, 1600);
 	}
 
 	@Override
@@ -89,10 +91,5 @@ public class AmbrosiumShardItem extends Item implements ItemUseConversion<Ambros
 	@Override
 	public int getUseDuration(ItemStack stack) {
 		return AetherConfig.SERVER.edible_ambrosium.get() ? 16 : 0;
-	}
-
-	@Override
-	public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
-		return 1600;
 	}
 }

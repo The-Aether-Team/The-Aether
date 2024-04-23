@@ -9,6 +9,7 @@ import com.aetherteam.aether.mixin.mixins.client.accessor.TitleScreenAccessor;
 import com.aetherteam.cumulus.mixin.mixins.client.accessor.SplashRendererAccessor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -28,8 +29,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.Music;
 import net.minecraft.util.Mth;
-import net.minecraftforge.client.ForgeHooksClient;
-import net.minecraftforge.internal.BrandingControl;
 
 import java.util.function.Predicate;
 
@@ -38,7 +37,7 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 	private static final ResourceLocation AETHER_LOGO = new ResourceLocation(Aether.MODID, "textures/gui/title/aether.png");
 	public static final Music MENU = new Music(AetherSoundEvents.MUSIC_MENU.getHolder().orElseThrow(), 20, 600, true);
 	private final PanoramaRenderer panorama = new PanoramaRenderer(new CubeMap(new ResourceLocation(Aether.MODID, "textures/gui/title/panorama/panorama")));
-	private AetherModUpdateIndicator modUpdateNotification;
+//	private AetherModUpdateIndicator modUpdateNotification;
 	private boolean alignedLeft;
 	private int rows;
 
@@ -55,8 +54,8 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 	protected void init() {
 		super.init();
 		this.setupButtons();
-		this.modUpdateNotification = new AetherModUpdateIndicator(this);
-		this.modUpdateNotification.init();
+//		this.modUpdateNotification = new AetherModUpdateIndicator(this); TODO: PORT
+//		this.modUpdateNotification.init();
 	}
 
 	public void setupButtons() {
@@ -112,11 +111,11 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 			titleScreenAccessor.aether$setSplash(this.minecraft.getSplashManager().getSplash());
 		}
 		float fadeAmount = TitleScreenBehavior.super.handleFading(guiGraphics, this, titleScreenAccessor, this.panorama, PANORAMA_OVERLAY, partialTicks);
-		float scale = getScale(this, this.getMinecraft());
+		float scale = getScale(this, Screens.getClient(this));
 		this.setupLogo(guiGraphics, fadeAmount, scale);
 		int roundedFadeAmount = Mth.ceil(fadeAmount * 255.0F) << 24;
 		if ((roundedFadeAmount & -67108864) != 0) {
-			ForgeHooksClient.renderMainMenu(this, guiGraphics, this.font, this.width, this.height, roundedFadeAmount);
+//			ForgeHooksClient.renderMainMenu(this, guiGraphics, this.font, this.width, this.height, roundedFadeAmount); TODO: PORT
 			if (titleScreenAccessor.aether$getSplash() != null) {
 				SplashRendererAccessor splashRendererAccessor = (SplashRendererAccessor) titleScreenAccessor.aether$getSplash();
 				if (splashRendererAccessor.cumulus$getSplash() != null && !splashRendererAccessor.cumulus$getSplash().isEmpty()) {
@@ -137,12 +136,12 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 			if (this.alignedLeft) {
 				TitleScreenBehavior.super.renderRightBranding(guiGraphics, this, this.font, roundedFadeAmount);
 			} else {
-				BrandingControl.forEachLine(true, true, (brandingLine, branding) ->
-						guiGraphics.drawString(this.font, branding, 2, this.height - (10 + brandingLine * (this.font.lineHeight + 1)), 16777215 | roundedFadeAmount)
-				);
-				BrandingControl.forEachAboveCopyrightLine((brandingLine, branding) ->
-						guiGraphics.drawString(this.font, branding, this.width - this.font.width(branding), this.height - (10 + (brandingLine + 1) * (this.font.lineHeight + 1)), 16777215 | roundedFadeAmount)
-				);
+//				BrandingControl.forEachLine(true, true, (brandingLine, branding) -> TODO: PORT
+//						guiGraphics.drawString(this.font, branding, 2, this.height - (10 + brandingLine * (this.font.lineHeight + 1)), 16777215 | roundedFadeAmount)
+//				);
+//				BrandingControl.forEachAboveCopyrightLine((brandingLine, branding) ->
+//						guiGraphics.drawString(this.font, branding, this.width - this.font.width(branding), this.height - (10 + (brandingLine + 1) * (this.font.lineHeight + 1)), 16777215 | roundedFadeAmount)
+//				);
 			}
 		}
 
@@ -169,7 +168,7 @@ public class AetherTitleScreen extends TitleScreen implements TitleScreenBehavio
 		TitleScreenBehavior.super.handleImageButtons(this, xOffset);
 
 		if (fadeAmount >= 1.0F) {
-			this.modUpdateNotification.render(guiGraphics, mouseX, mouseY, partialTicks);
+//			this.modUpdateNotification.render(guiGraphics, mouseX, mouseY, partialTicks); TODO: PORT
 		}
 	}
 

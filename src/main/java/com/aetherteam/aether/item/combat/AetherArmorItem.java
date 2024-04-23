@@ -1,6 +1,7 @@
 package com.aetherteam.aether.item.combat;
 
 import com.aetherteam.aether.Aether;
+import io.github.fabricators_of_create.porting_lib.item.ArmorTextureItem;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
@@ -9,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 
 import org.jetbrains.annotations.Nullable;
 
-public class AetherArmorItem extends ArmorItem {
+public class AetherArmorItem extends ArmorItem implements ArmorTextureItem {
     public AetherArmorItem(ArmorMaterial material, ArmorItem.Type type, Properties properties) {
         super(material, type, properties);
     }

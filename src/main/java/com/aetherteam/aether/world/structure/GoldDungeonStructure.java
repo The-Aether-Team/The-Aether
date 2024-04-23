@@ -241,7 +241,7 @@ public class GoldDungeonStructure extends Structure {
                     mutable.set(x, maxY, z);
                     if (GoldDungeonStructure.iterateColumn(level, mutable, minY, maxY)) {
                         if (featureType < treeWeight) {
-                            PlacedFeature tree = PlacementUtils.inlinePlaced(level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).getHolderOrThrow(AetherConfiguredFeatures.GOLDEN_OAK_TREE_CONFIGURATION)).get();
+                            PlacedFeature tree = PlacementUtils.inlinePlaced(level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).getHolderOrThrow(AetherConfiguredFeatures.GOLDEN_OAK_TREE_CONFIGURATION)).value();
                             tree.place(level, generator, random, mutable);
                         } else {
                             Block flower = random.nextBoolean() ? Blocks.DANDELION : Blocks.POPPY;

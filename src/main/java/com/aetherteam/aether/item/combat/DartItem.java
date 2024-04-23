@@ -7,6 +7,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 
@@ -62,7 +63,7 @@ public class DartItem extends Item {
      * @return Whether the dart item ammo is allowed to be infinite, as a {@link Boolean}.
      */
     public boolean isInfinite(ItemStack dartShooter) {
-        int enchant = dartShooter.getEnchantmentLevel(Enchantments.INFINITY_ARROWS);
+        int enchant = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, dartShooter);
         return enchant > 0 && this.getClass() == DartItem.class;
     }
 

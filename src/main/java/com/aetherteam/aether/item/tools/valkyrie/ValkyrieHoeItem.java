@@ -5,6 +5,7 @@ import com.aetherteam.aether.item.combat.AetherItemTiers;
 import com.aetherteam.aether.item.tools.abilities.ValkyrieTool;
 import com.google.common.collect.Multimap;
 import com.mojang.datafixers.util.Pair;
+import io.github.fabricators_of_create.porting_lib.tool.ToolActions;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -31,8 +32,8 @@ public class ValkyrieHoeItem extends HoeItem implements ValkyrieTool {
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
-        return this.extendReachModifier(super.getAttributeModifiers(slot, stack), slot);
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(ItemStack stack, EquipmentSlot slot) {
+        return this.extendReachModifier(super.getAttributeModifiers(stack, slot), slot);
     }
 
     /**
@@ -43,7 +44,7 @@ public class ValkyrieHoeItem extends HoeItem implements ValkyrieTool {
     public InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
         BlockPos blockPos = context.getClickedPos();
-        BlockState toolModifiedState = level.getBlockState(blockPos).getToolModifiedState(context, net.minecraftforge.common.ToolActions.HOE_TILL, false);
+        BlockState toolModifiedState = level.getBlockState(blockPos).getToolModifiedState(context, ToolActions.HOE_TILL, false);
         Pair<Predicate<UseOnContext>, Consumer<UseOnContext>> pair = toolModifiedState == null ? null : Pair.of(ctx -> true, changeIntoState(toolModifiedState));
         if (pair == null) {
             return InteractionResult.PASS;

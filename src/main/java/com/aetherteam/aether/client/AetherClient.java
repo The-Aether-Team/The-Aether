@@ -2,18 +2,27 @@ package com.aetherteam.aether.client;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.client.event.listeners.*;
 import com.aetherteam.aether.client.event.listeners.abilities.AccessoryAbilityClientListener;
+import com.aetherteam.aether.client.event.listeners.capability.AetherPlayerClientListener;
 import com.aetherteam.aether.client.gui.screen.inventory.*;
+import com.aetherteam.aether.client.particle.AetherParticleTypes;
+import com.aetherteam.aether.client.renderer.AetherOverlays;
 import com.aetherteam.aether.client.renderer.AetherRenderers;
+import com.aetherteam.aether.client.renderer.level.AetherRenderEffects;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
 import com.aetherteam.aether.inventory.menu.LoreBookMenu;
 import com.aetherteam.aether.item.AetherItems;
+import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.perk.CustomizationsOptions;
 import com.aetherteam.cumulus.CumulusConfig;
 import com.google.common.reflect.Reflection;
 import io.github.fabricators_of_create.porting_lib.client_events.event.client.RegisterEntitySpectatorShadersCallback;
+import io.github.fabricators_of_create.porting_lib.config.ConfigEvents;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -21,28 +30,46 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 
+import java.util.Map;
+
 public class AetherClient implements ClientModInitializer {
     private static boolean refreshPacks = false;
 
     @Override
     public void onInitializeClient() {
-        disableCumulusButton();
+        ClientLifecycleEvents.CLIENT_STARTED.register(client -> disableCumulusButton());
         Reflection.initialize(CustomizationsOptions.class);
-        AetherRenderers.registerCuriosRenderers();
         AetherAtlases.registerTreasureChestAtlases();
         AetherAtlases.registerWoodTypeAtlases();
+        AetherParticleTypes.registerParticleFactories();
+        AetherKeys.registerKeyMappings();
+        AetherRenderEffects.registerRenderEffects();
+        AetherRenderers.init();
         registerGuiFactories();
         registerItemModelProperties();
         registerLoreOverrides();
         autoApplyPacks();
 
+        AetherPacketHandler.INSTANCE.initClientListener();
+
         initEvents();
 
         RegisterEntitySpectatorShadersCallback.EVENT.register(AetherClient::registerSpectatorShaders);
+        ClientLifecycleEvents.CLIENT_STARTED.register(this::loadComplete);
     }
 
     public void initEvents() {
         AccessoryAbilityClientListener.init();
+        AetherPlayerClientListener.init();
+        DimensionClientListener.init();
+        WorldPreviewListener.init();
+        LevelClientListener.init();
+        HandRenderListener.init();
+        AudioListener.init();
+        MenuListener.init();
+        GuiListener.init();
+
+        AetherOverlays.registerOverlays();
     }
 
     /**
@@ -58,7 +85,7 @@ public class AetherClient implements ClientModInitializer {
     }
 
     public static void registerGuiFactories() {
-        MenuScreens.register(AetherMenuTypes.ACCESSORIES.get(), AccessoriesScreen::new);
+//        MenuScreens.register(AetherMenuTypes.ACCESSORIES.get(), AccessoriesScreen::new);
         MenuScreens.register(AetherMenuTypes.BOOK_OF_LORE.get(), LoreBookScreen::new);
         MenuScreens.register(AetherMenuTypes.ALTAR.get(), AltarScreen::new);
         MenuScreens.register(AetherMenuTypes.FREEZER.get(), FreezerScreen::new);
@@ -89,7 +116,7 @@ public class AetherClient implements ClientModInitializer {
      * Auto applies resource packs on load.
      */
     public static void autoApplyPacks() {
-        if (ModList.get().isLoaded("tipsmod")) {
+        if (FabricLoader.getInstance().isModLoaded("tipsmod")) {
             if (AetherConfig.CLIENT.enable_trivia.get()) {
                 Minecraft.getInstance().getResourcePackRepository().addPack("builtin/aether_tips");
             } else {
@@ -109,8 +136,7 @@ public class AetherClient implements ClientModInitializer {
     /**
      * Refreshes resource packs at the end of loading, so that auto-applied packs in {@link AetherClient#autoApplyPacks()} get processed.
      */
-    @SubscribeEvent
-    public void loadComplete(FMLLoadCompleteEvent event) {
+    public void loadComplete(Minecraft client) {
         if (refreshPacks) {
             Minecraft.getInstance().reloadResourcePacks();
             refreshPacks = false;

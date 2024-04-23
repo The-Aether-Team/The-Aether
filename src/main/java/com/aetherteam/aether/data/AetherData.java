@@ -4,54 +4,48 @@ import com.aetherteam.aether.data.generators.*;
 import com.aetherteam.aether.data.generators.tags.*;
 import com.aetherteam.aether.data.resources.AetherMobCategory;
 import com.google.common.reflect.Reflection;
+import io.github.fabricators_of_create.porting_lib.data.ExistingFileHelper;
+import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.SharedConstants;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.PackOutput;
 import net.minecraft.data.metadata.PackMetadataGenerator;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.data.event.GatherDataEvent;
 
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
-public class AetherData {
-    public static void dataSetup(GatherDataEvent event) {
-        DataGenerator generator = event.getGenerator();
-        ExistingFileHelper fileHelper = event.getExistingFileHelper();
-        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
-        PackOutput packOutput = generator.getPackOutput();
+public class AetherData implements DataGeneratorEntrypoint {
+    @Override
+    public void onInitializeDataGenerator(FabricDataGenerator generator) {
+        ExistingFileHelper fileHelper = ExistingFileHelper.withResourcesFromArg();
+        FabricDataGenerator.Pack pack = generator.createPack();
 
         Reflection.initialize(AetherMobCategory.class);
 
         // Client Data
-        generator.addProvider(event.includeClient(), new AetherBlockStateData(packOutput, fileHelper));
-        generator.addProvider(event.includeClient(), new AetherItemModelData(packOutput, fileHelper));
-        generator.addProvider(event.includeClient(), new AetherLanguageData(packOutput));
-        generator.addProvider(event.includeClient(), new AetherSoundData(packOutput, fileHelper));
+        pack.addProvider((packOutput, r) -> new AetherBlockStateData(packOutput, fileHelper));
+        pack.addProvider((packOutput, r) -> new AetherItemModelData(packOutput, fileHelper));
+        pack.addProvider(AetherLanguageData::new);
+        pack.addProvider((packOutput, r) -> new AetherSoundData(packOutput, fileHelper));
 
         // Server Data
-        generator.addProvider(event.includeServer(), new AetherRegistrySets(packOutput, lookupProvider));
-        generator.addProvider(event.includeServer(), new AetherRecipeData(packOutput));
-        generator.addProvider(event.includeServer(), AetherLootTableData.create(packOutput));
-        generator.addProvider(event.includeServer(), new AetherLootModifierData(packOutput));
-        generator.addProvider(event.includeServer(), new AetherAdvancementData(packOutput, lookupProvider, fileHelper));
-        AetherBlockTagData blockTags = new AetherBlockTagData(packOutput, lookupProvider, fileHelper);
-        generator.addProvider(event.includeServer(), blockTags);
-        generator.addProvider(event.includeServer(), new AetherItemTagData(packOutput, lookupProvider, blockTags.contentsGetter(), fileHelper));
-        generator.addProvider(event.includeServer(), new AetherEntityTagData(packOutput, lookupProvider, fileHelper));
-        generator.addProvider(event.includeServer(), new AetherFluidTagData(packOutput, lookupProvider, fileHelper));
-        generator.addProvider(event.includeServer(), new AetherBiomeTagData(packOutput, lookupProvider, fileHelper));
-        generator.addProvider(event.includeServer(), new AetherStructureTagData(packOutput, lookupProvider, fileHelper));
-        generator.addProvider(event.includeServer(), new AetherDamageTypeTagData(packOutput, lookupProvider, fileHelper));
+        pack.addProvider(AetherRegistrySets::new);
+        pack.addProvider(AetherRecipeData::new);
+        pack.addProvider(AetherLootTableData::create);
+        pack.addProvider(AetherLootModifierData::new);
+        pack.addProvider(AetherAdvancementData::new);
+        AetherBlockTagData blockTags = pack.addProvider(AetherBlockTagData::new);
+        pack.addProvider((packOutput, lookupProvider) -> new AetherItemTagData(packOutput, lookupProvider, blockTags));
+        pack.addProvider(AetherEntityTagData::new);
+        pack.addProvider(AetherFluidTagData::new);
+        pack.addProvider(AetherBiomeTagData::new);
+        pack.addProvider(AetherStructureTagData::new);
+        pack.addProvider(AetherDamageTypeTagData::new);
 
         // pack.mcmeta
-        PackMetadataGenerator packMeta = new PackMetadataGenerator(packOutput);
+        PackMetadataGenerator packMeta = pack.addProvider((packOutput, r) -> new PackMetadataGenerator(packOutput));
         Map<PackType, Integer> packTypes = Map.of(PackType.SERVER_DATA, SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
-        packMeta.add(PackMetadataSection.TYPE, new PackMetadataSection(Component.translatable("pack.aether.mod.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES), packTypes));
-        generator.addProvider(true, packMeta);
+        packMeta.add(PackMetadataSection.TYPE, new PackMetadataSection(Component.translatable("pack.aether.mod.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES)/*, packTypes*/));
     }
 }

@@ -78,32 +78,31 @@ public class ToolAbilityListener {
 //    }
 
     /**
-     * @see ToolAbilityListener#checkEntityTooFar(PlayerEvent, Entity, Player, InteractionHand)
+     * @see ToolAbilityListener#checkEntityTooFar(PlayerEvents, Entity, Player, InteractionHand)
      */
-    @SubscribeEvent
     public static void onEntityAttack(AttackEntityEvent event) {
         checkEntityTooFar(event, event.getTarget(), event.getEntity(), InteractionHand.MAIN_HAND);
     }
 
-    /**
-     * @see ToolAbilityListener#checkEntityTooFar(PlayerEvents, Entity, Player, InteractionHand)
-     * @see ToolAbilityListener#checkBlockTooFar(PlayerEvents, Player, InteractionHand)
-     * @see com.aetherteam.aether.mixin.mixins.common.ItemMixin#getPlayerPOVHitResult(Level, Player, ClipContext.Fluid, CallbackInfoReturnable)
-     */
-    @SubscribeEvent
-    public static void onEntityInteract(PlayerInteractEvent event) {
-        if (event instanceof PlayerInteractEvent.EntityInteractSpecific entityInteractSpecific) {
-            checkEntityTooFar(entityInteractSpecific, entityInteractSpecific.getTarget(), entityInteractSpecific.getEntity(), entityInteractSpecific.getHand());
-        } else if (event instanceof PlayerInteractEvent.EntityInteract entityInteract) {
-            checkEntityTooFar(entityInteract, entityInteract.getTarget(), entityInteract.getEntity(), entityInteract.getHand());
-        } else if (event instanceof PlayerInteractEvent.RightClickBlock rightClickBlock) {
-            checkBlockTooFar(event, rightClickBlock.getEntity(), rightClickBlock.getHand());
-        } else if (event instanceof PlayerInteractEvent.LeftClickBlock leftClickBlock) {
-            checkBlockTooFar(event, leftClickBlock.getEntity(), leftClickBlock.getHand());
-        } else if (event instanceof PlayerInteractEvent.RightClickItem rightClickItem) {
-            INTERACTION_HAND = rightClickItem.getHand();
-        }
-    }
+//    /** TODO: PORT
+//     * @see ToolAbilityListener#checkEntityTooFar(PlayerEvents, Entity, Player, InteractionHand)
+//     * @see ToolAbilityListener#checkBlockTooFar(PlayerEvents, Player, InteractionHand)
+//     * @see com.aetherteam.aether.mixin.mixins.common.ItemMixin#getPlayerPOVHitResult(Level, Player, ClipContext.Fluid, CallbackInfoReturnable)
+//     */
+//    @SubscribeEvent
+//    public static void onEntityInteract(PlayerInteractEvent event) {
+//        if (event instanceof PlayerInteractEvent.EntityInteractSpecific entityInteractSpecific) {
+//            checkEntityTooFar(entityInteractSpecific, entityInteractSpecific.getTarget(), entityInteractSpecific.getEntity(), entityInteractSpecific.getHand());
+//        } else if (event instanceof PlayerInteractEvent.EntityInteract entityInteract) {
+//            checkEntityTooFar(entityInteract, entityInteract.getTarget(), entityInteract.getEntity(), entityInteract.getHand());
+//        } else if (event instanceof PlayerInteractEvent.RightClickBlock rightClickBlock) {
+//            checkBlockTooFar(event, rightClickBlock.getEntity(), rightClickBlock.getHand());
+//        } else if (event instanceof PlayerInteractEvent.LeftClickBlock leftClickBlock) {
+//            checkBlockTooFar(event, leftClickBlock.getEntity(), leftClickBlock.getHand());
+//        } else if (event instanceof PlayerInteractEvent.RightClickItem rightClickItem) {
+//            INTERACTION_HAND = rightClickItem.getHand();
+//        }
+//    }
 
     /**
      * Cancels the given event if the targeted entity is too far away.
@@ -128,5 +127,6 @@ public class ToolAbilityListener {
     public static void init() {
         PlayerEvents.BREAK_SPEED.register(ToolAbilityListener::modifyBreakSpeed);
         BlockEvents.BLOCK_BREAK.register(ToolAbilityListener::doHolystoneAbility);
+        AttackEntityEvent.ATTACK_ENTITY.register(ToolAbilityListener::onEntityAttack);
     }
 }

@@ -2,6 +2,7 @@ package com.aetherteam.aether.entity.passive;
 
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.AetherSoundEvents;
+import io.github.fabricators_of_create.porting_lib.attributes.PortingLibAttributes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -27,7 +28,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeMod;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -53,7 +53,7 @@ public class Aerwhale extends FlyingMob {
         return FlyingMob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0)
                 .add(Attributes.FLYING_SPEED, 0.2)
-                .add(ForgeMod.STEP_HEIGHT_ADDITION.get(), 0.4);
+                .add(PortingLibAttributes.STEP_HEIGHT_ADDITION, 0.4);
     }
 
     @Override

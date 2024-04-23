@@ -7,7 +7,8 @@ import com.aetherteam.aether.recipe.builder.*;
 import com.aetherteam.nitrogen.data.providers.NitrogenRecipeProvider;
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import com.aetherteam.nitrogen.recipe.builder.BlockStateRecipeBuilder;
-import net.minecraft.data.PackOutput;
+import io.github.fabricators_of_create.porting_lib.tags.Tags;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.nbt.CompoundTag;
@@ -21,13 +22,12 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraftforge.common.Tags;
 
 import java.util.Map;
 import java.util.function.Supplier;
 
 public abstract class AetherRecipeProvider extends NitrogenRecipeProvider {
-    public AetherRecipeProvider(PackOutput output, String id) {
+    public AetherRecipeProvider(FabricDataOutput output, String id) {
         super(output, id);
     }
 

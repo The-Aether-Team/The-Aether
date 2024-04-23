@@ -12,6 +12,7 @@ import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 
 public class HolySwordItem extends SwordItem {
@@ -46,7 +47,7 @@ public class HolySwordItem extends SwordItem {
         if (canPerformAbility(target, damageSource)) {
             ItemStack itemStack = target.getMainHandItem();
             float bonus = 8.25F;
-            int smiteModifier = itemStack.getEnchantmentLevel(Enchantments.SMITE);
+            int smiteModifier = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SMITE, itemStack);
             if (smiteModifier > 0) {
                 bonus += (smiteModifier * 2.5);
             }

@@ -2,6 +2,7 @@ package com.aetherteam.aether.item.miscellaneous.bucket;
 
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.item.AetherItems;
+import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -27,7 +28,6 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
@@ -40,8 +40,12 @@ public class SkyrootBucketItem extends BucketItem {
      */
     public static final Map<Supplier<? extends Item>, Supplier<? extends Item>> REPLACEMENTS = new HashMap<>();
 
-    public SkyrootBucketItem(Supplier<? extends Fluid> supplier, Item.Properties properties) {
-        super(supplier, properties);
+    protected final Fluid fluid;
+
+    public SkyrootBucketItem(Fluid fluid, Item.Properties properties) {
+        super(fluid, properties);
+        this.fluid = fluid;
+        FuelRegistry.INSTANCE.add(this, 200);
     }
 
     /**
@@ -55,9 +59,9 @@ public class SkyrootBucketItem extends BucketItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack heldStack = player.getItemInHand(hand);
-        BlockHitResult blockhitResult = getPlayerPOVHitResult(level, player, this.getFluid() == Fluids.EMPTY ? ClipContext.Fluid.SOURCE_ONLY : ClipContext.Fluid.NONE);
-        InteractionResultHolder<ItemStack> interactionResult = net.minecraftforge.event.ForgeEventFactory.onBucketUse(player, level, heldStack, blockhitResult);
-        if (interactionResult != null) return interactionResult;
+        BlockHitResult blockhitResult = getPlayerPOVHitResult(level, player, this.fluid == Fluids.EMPTY ? ClipContext.Fluid.SOURCE_ONLY : ClipContext.Fluid.NONE);
+//        InteractionResultHolder<ItemStack> interactionResult = net.minecraftforge.event.ForgeEventFactory.onBucketUse(player, level, heldStack, blockhitResult);
+//        if (interactionResult != null) return interactionResult;
         if (blockhitResult.getType() == HitResult.Type.MISS) {
             return InteractionResultHolder.pass(heldStack);
         } else if (blockhitResult.getType() != HitResult.Type.BLOCK) {
@@ -67,7 +71,7 @@ public class SkyrootBucketItem extends BucketItem {
             Direction direction = blockhitResult.getDirection();
             BlockPos relativePos = blockPos.relative(direction);
             if (level.mayInteract(player, blockPos) && player.mayUseItemAt(relativePos, direction, heldStack)) {
-                if (this.getFluid() == Fluids.EMPTY) {
+                if (this.fluid == Fluids.EMPTY) {
                     BlockState blockState = level.getBlockState(blockPos);
                     FluidState fluidState = level.getFluidState(blockPos);
                     if (blockState.getBlock() instanceof BucketPickup bucketPickup && (blockState.is(AetherTags.Blocks.ALLOWED_BUCKET_PICKUP) || fluidState.is(AetherTags.Fluids.ALLOWED_BUCKET_PICKUP))) {
@@ -75,7 +79,7 @@ public class SkyrootBucketItem extends BucketItem {
                         bucketStack = swapBucketType(bucketStack);
                         if (!bucketStack.isEmpty()) {
                             player.awardStat(Stats.ITEM_USED.get(this));
-                            bucketPickup.getPickupSound(blockState).ifPresent((soundEvent) -> player.playSound(soundEvent, 1.0F, 1.0F));
+                            bucketPickup.getPickupSound().ifPresent((soundEvent) -> player.playSound(soundEvent, 1.0F, 1.0F));
                             level.gameEvent(player, GameEvent.FLUID_PICKUP, blockPos);
                             ItemStack resultStack = ItemUtils.createFilledResult(heldStack, player, bucketStack);
                             if (!level.isClientSide()) {
@@ -88,7 +92,7 @@ public class SkyrootBucketItem extends BucketItem {
                 } else {
                     BlockState blockState = level.getBlockState(blockPos);
                     BlockPos newPos = canBlockContainFluid(level, blockPos, blockState) ? blockPos : relativePos;
-                    if (this.emptyContents(player, level, newPos, blockhitResult, heldStack)) {
+                    if (this.emptyContents(player, level, newPos, blockhitResult)) {
                         this.checkExtraContent(player, level, heldStack, newPos);
                         if (player instanceof ServerPlayer serverPlayer) {
                             CriteriaTriggers.PLACED_BLOCK.trigger(serverPlayer, newPos, heldStack);
@@ -131,24 +135,19 @@ public class SkyrootBucketItem extends BucketItem {
         return !player.getAbilities().instabuild ? new ItemStack(AetherItems.SKYROOT_BUCKET.get()) : bucketStack;
     }
 
-    /**
-     * We don't initialize the Forge {@link net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper} for Skyroot Buckets.
-     */
-    @Nullable
-    @Override
-    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag tag) {
-        return null;
-    }
-
-    @Override
-    public int getBurnTime(ItemStack itemStack, RecipeType<?> recipeType) {
-        return 200;
-    }
+//    /** Probably not needed on fabric?
+//     * We don't initialize the Forge {@link net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper} for Skyroot Buckets.
+//     */
+//    @Nullable
+//    @Override
+//    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag tag) {
+//        return null;
+//    }
 
     /**
      *[CODE COPY] - {@link BucketItem#canBlockContainFluid(Level, BlockPos, BlockState)}.
      */
     protected boolean canBlockContainFluid(Level level, BlockPos pos, BlockState state) {
-        return state.getBlock() instanceof LiquidBlockContainer liquidBlockContainer && liquidBlockContainer.canPlaceLiquid(level, pos, state, this.getFluid());
+        return state.getBlock() instanceof LiquidBlockContainer liquidBlockContainer && liquidBlockContainer.canPlaceLiquid(level, pos, state, this.fluid);
     }
 }

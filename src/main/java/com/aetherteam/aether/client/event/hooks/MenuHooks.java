@@ -17,7 +17,6 @@ import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraftforge.client.event.ScreenEvent;
 
 import org.jetbrains.annotations.Nullable;
 import java.util.Calendar;

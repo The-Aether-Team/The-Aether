@@ -2,6 +2,7 @@ package com.aetherteam.aether.entity.ai.goal;
 
 import com.aetherteam.aether.block.AetherBlockStateProperties;
 import com.aetherteam.aether.block.AetherBlocks;
+import io.github.fabricators_of_create.porting_lib.entity.events.EntityEventFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -68,14 +69,14 @@ public class EatAetherGrassGoal extends Goal {
         if (this.eatAnimationTick == this.adjustedTickDelay(4)) {
             BlockPos blockPos = this.mob.blockPosition();
             if (IS_TALL_GRASS.test(this.mob.level().getBlockState(blockPos))) {
-                if (net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.mob.level(), this.mob)) {
+                if (EntityEventFactory.getMobGriefingEvent(this.mob.level(), this.mob)) {
                     this.mob.level().destroyBlock(blockPos, false);
                 }
                 this.mob.ate();
             } else {
                 BlockPos blockPos1 = blockPos.below();
                 if (this.mob.level().getBlockState(blockPos1).is(AetherBlocks.AETHER_GRASS_BLOCK.get())) {
-                    if (net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.mob.level(), this.mob)) {
+                    if (EntityEventFactory.getMobGriefingEvent(this.mob.level(), this.mob)) {
                         this.mob.level().levelEvent(2001, blockPos1, Block.getId(AetherBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState()));
                         this.mob.level().setBlock(blockPos1, AetherBlocks.AETHER_DIRT.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, this.mob.level().getBlockState(blockPos1).getValue(AetherBlockStateProperties.DOUBLE_DROPS)), 2);
                     }

@@ -2,44 +2,40 @@ package com.aetherteam.aether.client.event.listeners;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.event.hooks.DimensionClientHooks;
+import com.mojang.blaze3d.shaders.FogShape;
+import io.github.fabricators_of_create.porting_lib.event.client.FogEvents;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.Camera;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.FogRenderer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ViewportEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraft.world.level.material.FogType;
 import org.apache.commons.lang3.tuple.Triple;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT)
 public class DimensionClientListener {
     /**
      * @see DimensionClientHooks#renderNearFog(Camera, FogRenderer.FogMode, float)
      * @see DimensionClientHooks#reduceLavaFog(Camera, float)
      */
-    @SubscribeEvent
-    public static void onRenderFog(ViewportEvent.RenderFog event) {
-        Camera camera = event.getCamera();
-        FogRenderer.FogMode fogMode = event.getMode();
-        Float renderNearFog = DimensionClientHooks.renderNearFog(camera, fogMode, event.getFarPlaneDistance());
-        if (!event.isCanceled() && renderNearFog != null) {
-            event.setNearPlaneDistance(renderNearFog);
-            event.setCanceled(true);
+    public static boolean onRenderFog(FogRenderer.FogMode fogMode, FogType type, Camera camera, float partialTick, float renderDistance, float nearDistance, float farDistance, FogShape shape, FogEvents.FogData data) {
+        Float renderNearFog = DimensionClientHooks.renderNearFog(camera, fogMode, data.getFarPlaneDistance());
+        if (renderNearFog != null) {
+            data.setNearPlaneDistance(renderNearFog);
+            return true;
         }
-        Float reduceLavaFog = DimensionClientHooks.reduceLavaFog(camera, event.getNearPlaneDistance());
-        if (!event.isCanceled() && reduceLavaFog != null) {
-            event.setNearPlaneDistance(reduceLavaFog);
-            event.setFarPlaneDistance(reduceLavaFog * 4);
-            event.setCanceled(true);
+        Float reduceLavaFog = DimensionClientHooks.reduceLavaFog(camera, data.getNearPlaneDistance());
+        if (reduceLavaFog != null) {
+            data.setNearPlaneDistance(reduceLavaFog);
+            data.setFarPlaneDistance(reduceLavaFog * 4);
+            return true;
         }
+        return false;
     }
 
     /**
      * @see DimensionClientHooks#renderFogColors(Camera, float, float, float)
      * @see DimensionClientHooks#adjustWeatherFogColors(Camera, float, float, float)
      */
-    @SubscribeEvent
-    public static void onRenderFogColor(ViewportEvent.ComputeFogColor event) {
+    public static void onRenderFogColor(FogEvents.ColorData event, float partialTicks) {
         Camera camera = event.getCamera();
         Triple<Float, Float, Float> renderFogColors = DimensionClientHooks.renderFogColors(camera, event.getRed(), event.getGreen(), event.getBlue());
         if (renderFogColors != null) {
@@ -58,10 +54,13 @@ public class DimensionClientListener {
     /**
      * @see DimensionClientHooks#tickTime()
      */
-    @SubscribeEvent
-    public static void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.START) {
-            DimensionClientHooks.tickTime();
-        }
+    public static void onClientTick(Minecraft client) {
+        DimensionClientHooks.tickTime();
+    }
+
+    public static void init() {
+        FogEvents.RENDER_FOG.register(DimensionClientListener::onRenderFog);
+        FogEvents.SET_COLOR.register(DimensionClientListener::onRenderFogColor);
+        ClientTickEvents.START_CLIENT_TICK.register(DimensionClientListener::onClientTick);
     }
 }

@@ -11,8 +11,6 @@ import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.client.event.*;
-import net.minecraftforge.event.TickEvent;
 
 public class WorldPreviewHooks {
     /**
@@ -39,27 +37,27 @@ public class WorldPreviewHooks {
         return screen instanceof TitleScreen && AetherConfig.CLIENT.enable_world_preview.get() && Minecraft.getInstance().level == null;
     }
 
-    /**
-     * After the level is loaded for the world preview by other events, when it gets rendered then
-     * the panorama-style setup with the displayed menu is handled by {@link WorldDisplayHelper#setupLevelForDisplay()}.
-     * @param stage The {@link net.minecraftforge.client.event.RenderLevelStageEvent.Stage} of rendering.
-     * @see com.aetherteam.aether.client.event.listeners.WorldPreviewListener#onRenderLevelLast(RenderLevelStageEvent)
-     */
-    public static void renderMenuWithWorld(RenderLevelStageEvent.Stage stage) {
-        Minecraft minecraft = Minecraft.getInstance();
-        if (stage == RenderLevelStageEvent.Stage.AFTER_WEATHER) {
-            if (WorldDisplayHelper.isActive()) {
-                if (minecraft.screen == null || minecraft.screen instanceof PauseScreen) { // The menu can only be rendered if there is no screen or a PauseScreen when the level loads.
-                    WorldDisplayHelper.setupLevelForDisplay();
-                }
-            }
-        }
-    }
+//    /** TODO: PORT
+//     * After the level is loaded for the world preview by other events, when it gets rendered then
+//     * the panorama-style setup with the displayed menu is handled by {@link WorldDisplayHelper#setupLevelForDisplay()}.
+//     * @param stage The {@link net.minecraftforge.client.event.RenderLevelStageEvent.Stage} of rendering.
+//     * @see com.aetherteam.aether.client.event.listeners.WorldPreviewListener#onRenderLevelLast(RenderLevelStageEvent)
+//     */
+//    public static void renderMenuWithWorld(RenderLevelStageEvent.Stage stage) {
+//        Minecraft minecraft = Minecraft.getInstance();
+//        if (stage == RenderLevelStageEvent.Stage.AFTER_WEATHER) {
+//            if (WorldDisplayHelper.isActive()) {
+//                if (minecraft.screen == null || minecraft.screen instanceof PauseScreen) { // The menu can only be rendered if there is no screen or a PauseScreen when the level loads.
+//                    WorldDisplayHelper.setupLevelForDisplay();
+//                }
+//            }
+//        }
+//    }
 
     /**
      * Handles how the world should be displayed for the world preview. Rendering, sounds, and music are allowed to tick, but nothing else is.
      * This makes the world static and paused but also still animated.
-     * @see com.aetherteam.aether.client.event.listeners.WorldPreviewListener#onClientTick(TickEvent.ClientTickEvent)
+     * @see com.aetherteam.aether.client.event.listeners.WorldPreviewListener#onClientTick(Minecraft)
      */
     public static void tickMenuWhenPaused() {
         Minecraft minecraft = Minecraft.getInstance();
@@ -78,7 +76,7 @@ public class WorldPreviewHooks {
 
     /**
      * Angles and rotates the camera for the world preview display.
-     * @see com.aetherteam.aether.client.event.listeners.WorldPreviewListener#onCameraView(ViewportEvent.ComputeCameraAngles)
+     * @see com.aetherteam.aether.client.event.listeners.WorldPreviewListener#onCameraView(io.github.fabricators_of_create.porting_lib.event.client.CameraSetupCallback.CameraInfo)
      */
     public static void angleCamera() {
         Minecraft minecraft = Minecraft.getInstance();

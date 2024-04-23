@@ -4,21 +4,24 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.item.AetherItems;
+import io.github.fabricators_of_create.porting_lib.tags.Tags;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.data.ExistingFileHelper;
 
 import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.CompletableFuture;
 
-public class AetherItemTagData extends ItemTagsProvider {
-    public AetherItemTagData(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, CompletableFuture<TagLookup<Block>> blockTags, @Nullable ExistingFileHelper helper) {
-        super(output, registries, blockTags, Aether.MODID, helper);
+public class AetherItemTagData extends FabricTagProvider.ItemTagProvider {
+    public AetherItemTagData(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registries, FabricTagProvider.BlockTagProvider blockTags) {
+        super(output, registries, blockTags);
     }
 
     @SuppressWarnings("unchecked")
@@ -315,11 +318,11 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherItems.VALKYRIE_BOOTS.get(),
                 AetherItems.SENTRY_BOOTS.get());
 
-        this.tag(AetherTags.Items.RANDOMIUM_BLACKLIST).addTags(
+        ((FabricTagProvider<Item>.FabricTagBuilder)this.tag(AetherTags.Items.RANDOMIUM_BLACKLIST).addTags(
                 AetherTags.Items.LOCKED_DUNGEON_BLOCKS,
                 AetherTags.Items.TRAPPED_DUNGEON_BLOCKS,
                 AetherTags.Items.BOSS_DOORWAY_DUNGEON_BLOCKS,
-                AetherTags.Items.TREASURE_DOORWAY_DUNGEON_BLOCKS).add(
+                AetherTags.Items.TREASURE_DOORWAY_DUNGEON_BLOCKS)).add(
                 AetherBlocks.CHEST_MIMIC.get().asItem(),
                 AetherBlocks.TREASURE_CHEST.get().asItem()
         );
@@ -478,5 +481,10 @@ public class AetherItemTagData extends ItemTagsProvider {
                 AetherItems.ZANITE_GEMSTONE.get(),
                 AetherBlocks.ENCHANTED_GRAVITITE.get().asItem(),
                 AetherItems.GOLDEN_AMBER.get());
+    }
+
+    @Override
+    protected FabricTagProvider<Item>.FabricTagBuilder tag(TagKey<Item> tag) {
+        return getOrCreateTagBuilder(tag);
     }
 }

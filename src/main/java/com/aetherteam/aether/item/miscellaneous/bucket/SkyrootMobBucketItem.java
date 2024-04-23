@@ -13,14 +13,13 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MobBucketItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 import org.jetbrains.annotations.Nullable;
 import java.util.function.Supplier;
 
 public class SkyrootMobBucketItem extends MobBucketItem {
-    public SkyrootMobBucketItem(Supplier<? extends EntityType<?>> entitySupplier, Supplier<? extends Fluid> fluidSupplier, Supplier<? extends SoundEvent> soundSupplier, Item.Properties properties) {
-        super(entitySupplier, fluidSupplier, soundSupplier, properties);
+    public SkyrootMobBucketItem(EntityType<?> entity, Fluid fluid, SoundEvent sound, Item.Properties properties) {
+        super(entity, fluid, sound, properties);
     }
 
     /**
@@ -39,12 +38,12 @@ public class SkyrootMobBucketItem extends MobBucketItem {
         return result;
     }
 
-    /**
-     * We don't initialize the Forge {@link net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper} for Skyroot Buckets.
-     */
-    @Nullable
-    @Override
-    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag tag) {
-        return null;
-    }
+//    /** Probably not needed
+//     * We don't initialize the Forge {@link net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper} for Skyroot Buckets.
+//     */
+//    @Nullable
+//    @Override
+//    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag tag) {
+//        return null;
+//    }
 }

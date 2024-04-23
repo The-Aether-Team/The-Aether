@@ -1,6 +1,8 @@
 package com.aetherteam.aether.inventory.menu;
 
 import com.aetherteam.aether.inventory.container.LoreInventory;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
@@ -8,8 +10,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -102,12 +102,12 @@ public class LoreBookMenu extends AbstractContainerMenu {
         this.loreEntryExists = loreEntryExists;
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static void addLoreEntryOverride(Predicate<ItemStack> predicate, String entry) {
         LORE_ENTRY_OVERRIDES.putIfAbsent(predicate, entry);
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public String getLoreEntryKey(ItemStack stack) {
         for (Predicate<ItemStack> predicate : LORE_ENTRY_OVERRIDES.keySet()) {
             if (predicate.test(stack)) {
@@ -117,7 +117,7 @@ public class LoreBookMenu extends AbstractContainerMenu {
         return "lore." + stack.getDescriptionId();
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public boolean loreEntryKeyExists(ItemStack stack) {
         return I18n.exists(this.getLoreEntryKey(stack));
     }

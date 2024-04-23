@@ -1,6 +1,7 @@
 package com.aetherteam.aether.capability.time;
 
 import com.aetherteam.aether.capability.AetherCapabilities;
+import com.aetherteam.aether.capability.NbtComponent;
 import com.aetherteam.nitrogen.capability.INBTSynchable;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import net.minecraft.nbt.CompoundTag;
@@ -12,7 +13,7 @@ import java.util.Optional;
 /**
  * Capability interface to handle the Aether's day/night cycle.
  */
-public interface AetherTime extends INBTSynchable<CompoundTag>, Component {
+public interface AetherTime extends INBTSynchable<CompoundTag>, NbtComponent {
     Level getLevel();
 
     static Optional<AetherTime> get(Level world) {

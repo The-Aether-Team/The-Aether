@@ -11,10 +11,11 @@ import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.inventory.menu.AetherMenuTypes;
 import com.aetherteam.aether.item.AetherCreativeTabs;
 import com.aetherteam.aether.item.AetherItems;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.data.PackOutput;
 
 public class AetherLanguageData extends AetherLanguageProvider {
-    public AetherLanguageData(PackOutput output) {
+    public AetherLanguageData(FabricDataOutput output) {
         super(output, Aether.MODID);
     }
 

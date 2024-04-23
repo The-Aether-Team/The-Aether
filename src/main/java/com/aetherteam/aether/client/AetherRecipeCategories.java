@@ -1,9 +1,6 @@
 package com.aetherteam.aether.client;
 
-import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.inventory.AetherRecipeBookTypes;
-import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.recipe.AetherBookCategory;
 import com.aetherteam.aether.recipe.AetherRecipeTypes;
 import com.aetherteam.aether.recipe.recipes.item.AbstractAetherCookingRecipe;
@@ -11,30 +8,24 @@ import com.aetherteam.aether.recipe.recipes.item.AltarRepairRecipe;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableList;
 import io.github.fabricators_of_create.porting_lib.recipe_book_categories.RecipeBookRegistry;
+import me.shedaniel.mm.api.ClassTinkerers;
 import net.minecraft.client.RecipeBookCategories;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterRecipeBookCategoriesEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
 import java.util.function.Supplier;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherRecipeCategories {
-    public static final Supplier<RecipeBookCategories> ENCHANTING_SEARCH = Suppliers.memoize(() -> RecipeBookCategories.create("ENCHANTING_SEARCH", new ItemStack(Items.COMPASS)));
-    public static final Supplier<RecipeBookCategories> ENCHANTING_FOOD = Suppliers.memoize(() -> RecipeBookCategories.create("ENCHANTING_FOOD", new ItemStack(AetherItems.ENCHANTED_BERRY.get())));
-    public static final Supplier<RecipeBookCategories> ENCHANTING_BLOCKS = Suppliers.memoize(() -> RecipeBookCategories.create("ENCHANTING_BLOCKS", new ItemStack(AetherBlocks.ENCHANTED_GRAVITITE.get())));
-    public static final Supplier<RecipeBookCategories> ENCHANTING_MISC = Suppliers.memoize(() -> RecipeBookCategories.create("ENCHANTING_MISC", new ItemStack(AetherItems.SKYROOT_REMEDY_BUCKET.get())));
-    public static final Supplier<RecipeBookCategories> ENCHANTING_REPAIR = Suppliers.memoize(() -> RecipeBookCategories.create("ENCHANTING_REPAIR", new ItemStack(AetherItems.ZANITE_PICKAXE.get())));
+    public static final Supplier<RecipeBookCategories> ENCHANTING_SEARCH = Suppliers.memoize(() -> ClassTinkerers.getEnum(RecipeBookCategories.class, "ENCHANTING_SEARCH"));
+    public static final Supplier<RecipeBookCategories> ENCHANTING_FOOD = Suppliers.memoize(() -> ClassTinkerers.getEnum(RecipeBookCategories.class, "ENCHANTING_FOOD"));
+    public static final Supplier<RecipeBookCategories> ENCHANTING_BLOCKS = Suppliers.memoize(() -> ClassTinkerers.getEnum(RecipeBookCategories.class, "ENCHANTING_BLOCKS"));
+    public static final Supplier<RecipeBookCategories> ENCHANTING_MISC = Suppliers.memoize(() -> ClassTinkerers.getEnum(RecipeBookCategories.class, "ENCHANTING_MISC"));
+    public static final Supplier<RecipeBookCategories> ENCHANTING_REPAIR = Suppliers.memoize(() -> ClassTinkerers.getEnum(RecipeBookCategories.class, "ENCHANTING_REPAIR"));
 
-    public static final Supplier<RecipeBookCategories> FREEZABLE_SEARCH = Suppliers.memoize(() -> RecipeBookCategories.create("FREEZABLE_SEARCH", new ItemStack(Items.COMPASS)));
-    public static final Supplier<RecipeBookCategories> FREEZABLE_BLOCKS = Suppliers.memoize(() -> RecipeBookCategories.create("FREEZABLE_BLOCKS", new ItemStack(AetherBlocks.BLUE_AERCLOUD.get())));
-    public static final Supplier<RecipeBookCategories> FREEZABLE_MISC = Suppliers.memoize(() -> RecipeBookCategories.create("FREEZABLE_MISC", new ItemStack(AetherItems.ICE_RING.get())));
+    public static final Supplier<RecipeBookCategories> FREEZABLE_SEARCH = Suppliers.memoize(() -> ClassTinkerers.getEnum(RecipeBookCategories.class, "FREEZABLE_SEARCH"));
+    public static final Supplier<RecipeBookCategories> FREEZABLE_BLOCKS = Suppliers.memoize(() -> ClassTinkerers.getEnum(RecipeBookCategories.class, "FREEZABLE_BLOCKS"));
+    public static final Supplier<RecipeBookCategories> FREEZABLE_MISC = Suppliers.memoize(() -> ClassTinkerers.getEnum(RecipeBookCategories.class, "FREEZABLE_MISC"));
 
-    public static final Supplier<RecipeBookCategories> INCUBATION_SEARCH = Suppliers.memoize(() -> RecipeBookCategories.create("INCUBATION_SEARCH", new ItemStack(Items.COMPASS)));
-    public static final Supplier<RecipeBookCategories> INCUBATION_MISC = Suppliers.memoize(() -> RecipeBookCategories.create("INCUBATION_MISC", new ItemStack(AetherItems.BLUE_MOA_EGG.get())));
+    public static final Supplier<RecipeBookCategories> INCUBATION_SEARCH = Suppliers.memoize(() -> ClassTinkerers.getEnum(RecipeBookCategories.class, "INCUBATION_SEARCH"));
+    public static final Supplier<RecipeBookCategories> INCUBATION_MISC = Suppliers.memoize(() -> ClassTinkerers.getEnum(RecipeBookCategories.class, "INCUBATION_MISC"));
 
     /**
      * Registers the mod's categories to be used in-game, along with functions to sort items.

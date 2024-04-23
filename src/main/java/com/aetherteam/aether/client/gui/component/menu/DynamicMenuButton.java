@@ -1,9 +1,9 @@
 package com.aetherteam.aether.client.gui.component.menu;
 
 import io.github.fabricators_of_create.porting_lib.config.ModConfigSpec;
+import io.github.fabricators_of_create.porting_lib.gui.utils.ModdedButton;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraftforge.common.ForgeConfigSpec;
 
 import org.jetbrains.annotations.Nullable;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Button that determines whether it can display and how much to the left it should offset depending on whether certain config options are enabled.
  */
-public class DynamicMenuButton extends Button {
+public class DynamicMenuButton extends ModdedButton {
     private final int originX;
     private List<ModConfigSpec.ConfigValue<Boolean>> displayConfigs;
     private List<ModConfigSpec.ConfigValue<Boolean>> offsetConfigs;

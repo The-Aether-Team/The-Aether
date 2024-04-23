@@ -5,18 +5,18 @@ import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.loot.AetherLoot;
 import com.aetherteam.aether.loot.modifiers.*;
+import io.github.fabricators_of_create.porting_lib.loot.GlobalLootModifierProvider;
+import io.github.fabricators_of_create.porting_lib.loot.LootTableIdCondition;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.predicates.*;
-import net.minecraftforge.common.data.GlobalLootModifierProvider;
-import net.minecraftforge.common.loot.LootTableIdCondition;
 
 public class AetherLootModifierData extends GlobalLootModifierProvider {
-    public AetherLootModifierData(PackOutput output) {
+    public AetherLootModifierData(FabricDataOutput output) {
         super(output, Aether.MODID);
     }
 

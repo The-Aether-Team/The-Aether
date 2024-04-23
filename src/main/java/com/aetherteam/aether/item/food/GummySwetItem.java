@@ -30,7 +30,7 @@ public class GummySwetItem extends Item implements ConsumableItem {
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		ItemStack heldStack = player.getItemInHand(hand);
 		if (this.isEdible()) { // If AetherConfig.SERVER.healing_gummy_swets.get() is false.
-			FoodProperties foodProperties = this.getFoodProperties(heldStack, player);
+			FoodProperties foodProperties = this.getFoodProperties();
 			if (foodProperties != null && player.canEat(foodProperties.canAlwaysEat())) {
 				player.startUsingItem(hand);
 				return InteractionResultHolder.consume(heldStack);

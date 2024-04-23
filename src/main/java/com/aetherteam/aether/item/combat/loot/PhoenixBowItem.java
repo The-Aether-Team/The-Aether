@@ -2,6 +2,7 @@ package com.aetherteam.aether.item.combat.loot;
 
 import com.aetherteam.aether.capability.arrow.PhoenixArrow;
 import com.aetherteam.aether.item.AetherItems;
+import io.github.fabricators_of_create.porting_lib.item.CustomArrowItem;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.BowItem;
@@ -9,7 +10,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 
-public class PhoenixBowItem extends BowItem {
+public class PhoenixBowItem extends BowItem implements CustomArrowItem {
     public PhoenixBowItem() {
         super(new Item.Properties().durability(384).rarity(AetherItems.AETHER_LOOT));
     }
@@ -30,6 +31,6 @@ public class PhoenixBowItem extends BowItem {
             }
             phoenixArrow.setFireTime(defaultTime);
         });
-        return super.customArrow(arrow);
+        return CustomArrowItem.super.customArrow(arrow);
     }
 }

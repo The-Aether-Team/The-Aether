@@ -16,7 +16,7 @@ public interface SlowFallAccessory {
     default void handleSlowFall(LivingEntity livingEntity) {
         AttributeInstance gravity = livingEntity.getAttribute(PortingLibAttributes.ENTITY_GRAVITY);
         if (gravity != null) {
-            if (livingEntity.getDeltaMovement().y() <= -0.06 && !livingEntity.onGround() && !livingEntity.isFallFlying() && !livingEntity.isInFluidType() && !livingEntity.isShiftKeyDown() && gravity.getValue() > 0.0075) {
+            if (livingEntity.getDeltaMovement().y() <= -0.06 && !livingEntity.onGround() && !livingEntity.isFallFlying() /*&& !livingEntity.isInFluidType() TODO: PORT*/ && !livingEntity.isShiftKeyDown() && gravity.getValue() > 0.0075) {
                 livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().multiply(1.0, 0.6, 1.0));
             }
         }

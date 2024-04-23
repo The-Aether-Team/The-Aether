@@ -1,5 +1,6 @@
 package com.aetherteam.aether.loot.modifiers;
 
+import com.aetherteam.aether.utils.FabricUtils;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.fabricators_of_create.porting_lib.loot.IGlobalLootModifier;
@@ -59,21 +60,21 @@ public class GlovesLootModifier extends LootModifier {
                         ItemStack gloves = this.glovesStack.copy();
                         int cost = 0;
                         boolean isTreasure = false;
-                        for (Map.Entry<Enchantment, Integer> enchantmentInfo : armorStack.getAllEnchantments().entrySet()) {
+                        for (Map.Entry<Enchantment, Integer> enchantmentInfo : FabricUtils.getAllEnchantments(armorStack).entrySet()) {
                             Enchantment enchantment = enchantmentInfo.getKey();
                             int level = enchantmentInfo.getValue();
                             cost = Math.max(cost, enchantment.getMinCost(level));
                             if (!isTreasure) {
                                 isTreasure = enchantment.isTreasureOnly();
                             }
-                            if (gloves.canApplyAtEnchantingTable(enchantment)) {
+                            if (FabricUtils.canApplyAtEnchantingTable(gloves, enchantment)) {
                                 gloves.enchant(enchantment, enchantmentInfo.getValue());
                             }
                         }
-                        if (!armorStack.getAllEnchantments().isEmpty() && gloves.getAllEnchantments().isEmpty()) {
+                        if (!FabricUtils.getAllEnchantments(armorStack).isEmpty() && FabricUtils.getAllEnchantments(gloves).isEmpty()) {
                             EnchantmentHelper.enchantItem(randomSource, gloves, cost, isTreasure);
                         }
-                        if (armorStack.getAllEnchantments().isEmpty() || !gloves.getAllEnchantments().isEmpty()) {
+                        if (FabricUtils.getAllEnchantments(armorStack).isEmpty() || !FabricUtils.getAllEnchantments(gloves).isEmpty()) {
                             lootStacks.replaceAll((stack) -> stack.equals(armorStack) ? gloves : stack);
                         }
                     }

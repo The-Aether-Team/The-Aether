@@ -99,7 +99,7 @@ public abstract class AbstractWhirlwind extends Mob {
         super.tick();
         this.lifeLeft--;
         if (!this.level().isClientSide()) {
-            if (this.lifeLeft <= 0 || this.isInFluidType()) {
+            if (this.lifeLeft <= 0/* || this.isInFluidType() TODO: PORT*/) {
                 this.discard();
             }
         }

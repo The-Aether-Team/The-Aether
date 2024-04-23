@@ -127,7 +127,6 @@ public class Sentry extends Slime {
 	@Override
 	public void remove(Entity.RemovalReason pReason) {
 		this.setRemoved(pReason);
-		this.invalidateCaps();
 	}
 
 	/**

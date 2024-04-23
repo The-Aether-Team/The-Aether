@@ -2,6 +2,8 @@ package com.aetherteam.aether.inventory.menu;
 
 import com.aetherteam.aether.mixin.mixins.common.accessor.AbstractContainerMenuAccessor;
 import com.mojang.datafixers.util.Pair;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -18,15 +20,6 @@ import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.util.LazyOptional;
-import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.type.ISlotType;
-import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
-import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
-import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
-import top.theillusivec4.curios.common.inventory.CurioSlot;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -59,7 +52,7 @@ public class AccessoriesMenu extends InventoryMenu {
             "aether_accessory"
     };
 
-    public final LazyOptional<ICuriosItemHandler> curiosHandler;
+//    public final LazyOptional<ICuriosItemHandler> curiosHandler; TODO: PORT
     private final Player player;
 
     private final CraftingContainer craftMatrix = new TransientCraftingContainer(this, 2, 2);
@@ -74,13 +67,13 @@ public class AccessoriesMenu extends InventoryMenu {
     public AccessoriesMenu(int containerId, Inventory playerInventory, boolean hasButton) {
         super(playerInventory, playerInventory.player.level().isClientSide(), playerInventory.player);
         AbstractContainerMenuAccessor abstractContainerMenuAccessor = (AbstractContainerMenuAccessor) this;
-        abstractContainerMenuAccessor.aether$setMenuType(AetherMenuTypes.ACCESSORIES.get());
+//        abstractContainerMenuAccessor.aether$setMenuType(AetherMenuTypes.ACCESSORIES.get()); TODO: PORT
         abstractContainerMenuAccessor.aether$setContainerId(containerId);
         abstractContainerMenuAccessor.aether$getRemoteSlots().clear();
         abstractContainerMenuAccessor.aether$getLastSlots().clear();
         this.slots.clear();
         this.player = playerInventory.player;
-        this.curiosHandler = CuriosApi.getCuriosInventory(this.player);
+//        this.curiosHandler = CuriosApi.getCuriosInventory(this.player);
         this.hasButton = hasButton;
 
         this.addSlot(new ResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 154, 28));
@@ -108,7 +101,7 @@ public class AccessoriesMenu extends InventoryMenu {
 
                 @Override
                 public boolean mayPlace(ItemStack stack) {
-                    return stack.canEquip(equipmentSlotType, AccessoriesMenu.this.player);
+                    return false;//stack.canEquip(equipmentSlotType, AccessoriesMenu.this.player); TODO: PORT
                 }
 
                 @Override
@@ -118,7 +111,7 @@ public class AccessoriesMenu extends InventoryMenu {
                 }
 
                 @Override
-                @OnlyIn(Dist.CLIENT)
+                @Environment(EnvType.CLIENT)
                 public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
                     return Pair.of(InventoryMenu.BLOCK_ATLAS, ARMOR_SLOT_TEXTURES[equipmentSlotType.getIndex()]);
                 }
@@ -137,42 +130,42 @@ public class AccessoriesMenu extends InventoryMenu {
 
         this.addSlot(new Slot(playerInventory, 40, 116, 62) {
             @Override
-            @OnlyIn(Dist.CLIENT)
+            @Environment(EnvType.CLIENT)
             public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
                 return Pair.of(InventoryMenu.BLOCK_ATLAS, InventoryMenu.EMPTY_ARMOR_SLOT_SHIELD);
             }
         });
 
-        this.curiosHandler.ifPresent(curios -> {
-            Map<String, ICurioStacksHandler> curioMap = curios.getCurios();
-            int slots = 0;
-            int xOffset = 77;
-            int yOffset = 8;
-            for (String identifier : AETHER_IDENTIFIERS) { // Creates the slots for all the Aether Curios identifiers.
-                ICurioStacksHandler stacksHandler = curioMap.get(identifier);
-                IDynamicStackHandler stackHandler = stacksHandler.getStacks();
-                if (!stacksHandler.isVisible()) {
-                    for (int i = 0; i < stackHandler.getSlots(); i++) {
-                        if (!identifier.equals("aether_accessory")) {
-                            this.addSlot(new CurioSlot(this.player, stackHandler, i, identifier, xOffset, yOffset, stacksHandler.getRenders(), stacksHandler.canToggleRendering()));
-                            slots++;
-                            yOffset += 18;
-                            if (slots % 3 == 0) {
-                                xOffset += 18;
-                                yOffset = 8;
-                            }
-                        } else {
-                            if (slots == 6) {
-                                xOffset = 77;
-                            }
-                            this.addSlot(new CurioSlot(this.player, stackHandler, i, identifier, xOffset, 62, stacksHandler.getRenders(), stacksHandler.canToggleRendering()));
-                            slots++;
-                            xOffset += 18;
-                        }
-                    }
-                }
-            }
-        });
+//        this.curiosHandler.ifPresent(curios -> { TODO: PORT
+//            Map<String, ICurioStacksHandler> curioMap = curios.getCurios();
+//            int slots = 0;
+//            int xOffset = 77;
+//            int yOffset = 8;
+//            for (String identifier : AETHER_IDENTIFIERS) { // Creates the slots for all the Aether Curios identifiers.
+//                ICurioStacksHandler stacksHandler = curioMap.get(identifier);
+//                IDynamicStackHandler stackHandler = stacksHandler.getStacks();
+//                if (!stacksHandler.isVisible()) {
+//                    for (int i = 0; i < stackHandler.getSlots(); i++) {
+//                        if (!identifier.equals("aether_accessory")) {
+//                            this.addSlot(new CurioSlot(this.player, stackHandler, i, identifier, xOffset, yOffset, stacksHandler.getRenders(), stacksHandler.canToggleRendering()));
+//                            slots++;
+//                            yOffset += 18;
+//                            if (slots % 3 == 0) {
+//                                xOffset += 18;
+//                                yOffset = 8;
+//                            }
+//                        } else {
+//                            if (slots == 6) {
+//                                xOffset = 77;
+//                            }
+//                            this.addSlot(new CurioSlot(this.player, stackHandler, i, identifier, xOffset, 62, stacksHandler.getRenders(), stacksHandler.canToggleRendering()));
+//                            slots++;
+//                            xOffset += 18;
+//                        }
+//                    }
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -257,7 +250,7 @@ public class AccessoriesMenu extends InventoryMenu {
             ItemStack itemStack1 = slot.getItem();
             itemStack = itemStack1.copy();
             EquipmentSlot equipmentSlot = Mob.getEquipmentSlotForItem(itemStack);
-            Map<String, ISlotType> curioTags = CuriosApi.getItemStackSlots(itemStack);
+//            Map<String, ISlotType> curioTags = CuriosApi.getItemStackSlots(itemStack);
             if (index == 0) {
                 if (!this.moveItemStackTo(itemStack1, 9, 45, true)) {
                     return ItemStack.EMPTY;
@@ -276,12 +269,12 @@ public class AccessoriesMenu extends InventoryMenu {
                 if (!this.moveItemStackTo(itemStack1, i, i + 1, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (index < 46 && !curioTags.isEmpty() && !this.getEmptyCurioSlots(curioTags).isEmpty()) {
-                for (int i : this.getEmptyCurioSlots(curioTags)) {
-                    if (!this.moveItemStackTo(itemStack1, i, i + 1, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                }
+//            } else if (index < 46 && !curioTags.isEmpty() && !this.getEmptyCurioSlots(curioTags).isEmpty()) { TODO: PORT
+//                for (int i : this.getEmptyCurioSlots(curioTags)) {
+//                    if (!this.moveItemStackTo(itemStack1, i, i + 1, false)) {
+//                        return ItemStack.EMPTY;
+//                    }
+//                }
             } else if (equipmentSlot == EquipmentSlot.OFFHAND && !(this.slots.get(45)).hasItem()) {
                 if (!this.moveItemStackTo(itemStack1, 45, 46, false)) {
                     return ItemStack.EMPTY;
@@ -313,21 +306,21 @@ public class AccessoriesMenu extends InventoryMenu {
         return itemStack;
     }
 
-    private Set<Integer> getEmptyCurioSlots(Map<String, ISlotType> slotData) {
-        Set<Integer> slots = new HashSet<>();
-        for (String identifier : slotData.keySet()) {
-            switch(identifier) {
-                case "aether_pendant" -> slots.add(46);
-                case "aether_cape" -> slots.add(47);
-                case "aether_shield" -> slots.add(48);
-                case "aether_ring" -> slots.addAll(Set.of(49, 50));
-                case "aether_gloves" -> slots.add(51);
-                case "aether_accessory" -> slots.addAll(Set.of(52, 53));
-            }
-        }
-        slots.removeIf(index -> this.slots.get(index).hasItem());
-        return slots;
-    }
+//    private Set<Integer> getEmptyCurioSlots(Map<String, ISlotType> slotData) { TODO: PORT
+//        Set<Integer> slots = new HashSet<>();
+//        for (String identifier : slotData.keySet()) {
+//            switch(identifier) {
+//                case "aether_pendant" -> slots.add(46);
+//                case "aether_cape" -> slots.add(47);
+//                case "aether_shield" -> slots.add(48);
+//                case "aether_ring" -> slots.addAll(Set.of(49, 50));
+//                case "aether_gloves" -> slots.add(51);
+//                case "aether_accessory" -> slots.addAll(Set.of(52, 53));
+//            }
+//        }
+//        slots.removeIf(index -> this.slots.get(index).hasItem());
+//        return slots;
+//    }
 
     @Override
     public RecipeBookType getRecipeBookType() {

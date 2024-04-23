@@ -5,6 +5,7 @@ import com.aetherteam.aether.client.gui.screen.menu.AetherTitleScreen;
 import com.aetherteam.aether.mixin.mixins.client.accessor.ButtonAccessor;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import io.github.fabricators_of_create.porting_lib.gui.utils.ModdedButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -13,7 +14,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-public class AetherMenuButton extends Button {
+public class AetherMenuButton extends ModdedButton {
 	private static final ResourceLocation AETHER_WIDGETS = new ResourceLocation(Aether.MODID, "textures/gui/title/buttons.png");
 	private static final int BUTTON_WIDTH = 400;
 	private static final int BUTTON_HEIGHT = 40;
@@ -63,7 +64,7 @@ public class AetherMenuButton extends Button {
 			this.setY((int) (10 + (this.height / 2 + (96 / scale)) + (BUTTON_SEPARATION / scale) * this.buttonCountOffset));
 			this.setWidth(this.originalWidth);
 		}
-		this.setHeight((int) (BUTTON_HEIGHT / scale));
+		this.height = (int) (BUTTON_HEIGHT / scale);
 
 		RenderSystem.enableBlend();
 		guiGraphics.setColor(1.0F, 1.0F, 1.0F, this.alpha);
@@ -101,7 +102,7 @@ public class AetherMenuButton extends Button {
 	 * [CODE COPY] - {@link AbstractButton#getTextureY()}.<br><br>
 	 * Modified the final offset multipliers.
 	 */
-	private int getTextureY() {
+	public int getTextureY() {
 		int i = 1;
 		if (!this.isActive()) {
 			i = 0;

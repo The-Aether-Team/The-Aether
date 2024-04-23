@@ -8,22 +8,22 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(WorldOpenFlows.class)
 public class WorldOpenFlowsMixin {
-    /**
-     * Used by the world preview system.<br>
-     * Always makes sure the experimental warnings screen is skipped if the world preview is active,
-     * since a previewed world should already always have had the confirmation on this screen triggered.<br>
-     * This is needed to get around a bug with newly created worlds not working for the world preview when the game is closed and reopened.<br><br>
-     * Modifies the <code>confirmExperimentalWarning</code> parameter.
-     * @param confirmExperimentalWarning The original {@link Boolean} value for whether to skip the experimental warnings screen.
-     * @return The new {@link Boolean} value.
-     * @see WorldDisplayHelper#isActive()
-     */
-    @ModifyVariable(method = "doLoadLevel(Lnet/minecraft/client/gui/screens/Screen;Ljava/lang/String;ZZZ)V", at = @At("HEAD"), ordinal = 2, argsOnly = true, remap = false)
-    private boolean confirmExperimentalWarning(boolean confirmExperimentalWarning) {
-        if (WorldDisplayHelper.isActive()) {
-            return true;
-        } else {
-            return confirmExperimentalWarning;
-        }
-    }
+//    /**
+//     * Used by the world preview system.<br>
+//     * Always makes sure the experimental warnings screen is skipped if the world preview is active,
+//     * since a previewed world should already always have had the confirmation on this screen triggered.<br>
+//     * This is needed to get around a bug with newly created worlds not working for the world preview when the game is closed and reopened.<br><br>
+//     * Modifies the <code>confirmExperimentalWarning</code> parameter.
+//     * @param confirmExperimentalWarning The original {@link Boolean} value for whether to skip the experimental warnings screen.
+//     * @return The new {@link Boolean} value.
+//     * @see WorldDisplayHelper#isActive()
+//     */
+//    @ModifyVariable(method = "doLoadLevel(Lnet/minecraft/client/gui/screens/Screen;Ljava/lang/String;ZZZ)V", at = @At("HEAD"), ordinal = 2, argsOnly = true, remap = false)
+//    private boolean confirmExperimentalWarning(boolean confirmExperimentalWarning) { TODO: PORT
+//        if (WorldDisplayHelper.isActive()) {
+//            return true;
+//        } else {
+//            return confirmExperimentalWarning;
+//        }
+//    }
 }

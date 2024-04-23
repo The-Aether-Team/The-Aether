@@ -1,9 +1,9 @@
 package com.aetherteam.aether.client;
 
+import io.github.fabricators_of_create.porting_lib.resource.DelegatingPackResources;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.resources.IoSupplier;
-import net.minecraftforge.resource.DelegatingPackResources;
 
 import org.jetbrains.annotations.Nullable;
 import java.io.InputStream;

@@ -18,6 +18,9 @@ import com.aetherteam.nitrogen.api.users.User;
 import com.aetherteam.nitrogen.api.users.UserData;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import com.mojang.blaze3d.platform.InputConstants;
+import io.github.fabricators_of_create.porting_lib.mixin.accessors.client.accessor.AbstractContainerScreenAccessor;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -30,6 +33,7 @@ import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -39,13 +43,6 @@ import net.minecraft.util.Tuple;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.ScreenEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.tags.ITagManager;
-import top.theillusivec4.curios.client.gui.CuriosScreen;
 
 import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
@@ -77,11 +74,8 @@ public class GuiHooks {
     private static boolean areAccessoryTagsFilled() {
         boolean flag = true;
         for (String string : AccessoriesMenu.AETHER_IDENTIFIERS) {
-            ITagManager<Item> itemTags = ForgeRegistries.ITEMS.tags();
-            if (itemTags != null) {
-                if (itemTags.getTag(TagKey.create(Registries.ITEM, new ResourceLocation("curios", string))).isEmpty()) {
-                    flag = false;
-                }
+            if (BuiltInRegistries.ITEM.getTagOrEmpty(TagKey.create(Registries.ITEM, new ResourceLocation("curios", string))).spliterator().estimateSize() == 0) {
+                flag = false;
             }
         }
         return flag;
@@ -98,7 +92,7 @@ public class GuiHooks {
     public static AccessoryButton setupAccessoryButton(Screen screen, Tuple<Integer, Integer> offsets) {
         AbstractContainerScreen<?> containerScreen = canCreateAccessoryButtonForScreen(screen);
         if (containerScreen != null) {
-            return new AccessoryButton(containerScreen, containerScreen.getGuiLeft() + offsets.getA(), containerScreen.getGuiTop() + offsets.getB(), AccessoriesScreen.ACCESSORIES_BUTTON);
+            return new AccessoryButton(containerScreen, ((AbstractContainerScreenAccessor)containerScreen).port_lib$getGuiLeft() + offsets.getA(), ((AbstractContainerScreenAccessor)containerScreen).port_lib$getGuiTop() + offsets.getB(), AccessoriesScreen.ACCESSORIES_BUTTON);
         }
         return null;
     }
@@ -111,7 +105,7 @@ public class GuiHooks {
      */
     @Nullable
     private static AbstractContainerScreen<?> canCreateAccessoryButtonForScreen(Screen screen) {
-        if (screen instanceof InventoryScreen || screen instanceof CuriosScreen || screen instanceof CreativeModeInventoryScreen || (screen instanceof AccessoriesScreen && shouldAddButton)) {
+        if (screen instanceof InventoryScreen || /*screen instanceof CuriosScreen TODO: PORT ||*/ screen instanceof CreativeModeInventoryScreen || (screen instanceof AccessoriesScreen && shouldAddButton)) {
             return (AbstractContainerScreen<?>) screen;
         } else if (screen instanceof AccessoriesScreen) {
             shouldAddButton = true;
@@ -242,9 +236,9 @@ public class GuiHooks {
             if (Minecraft.getInstance().player != null) {
                 if (DimensionHooks.displayAetherTravel) {
                     if (DimensionHooks.playerLeavingAether) {
-                        guiGraphics.drawCenteredString(screen.getMinecraft().font, Component.translatable("gui.aether.descending"), screen.width / 2, AetherConfig.CLIENT.portal_text_y.get(), 16777215);
+                        guiGraphics.drawCenteredString(Screens.getTextRenderer(screen), Component.translatable("gui.aether.descending"), screen.width / 2, AetherConfig.CLIENT.portal_text_y.get(), 16777215);
                     } else {
-                        guiGraphics.drawCenteredString(screen.getMinecraft().font, Component.translatable("gui.aether.ascending"), screen.width / 2, AetherConfig.CLIENT.portal_text_y.get(), 16777215);
+                        guiGraphics.drawCenteredString(Screens.getTextRenderer(screen), Component.translatable("gui.aether.ascending"), screen.width / 2, AetherConfig.CLIENT.portal_text_y.get(), 16777215);
                     }
                 }
             }
@@ -268,7 +262,7 @@ public class GuiHooks {
 
     /**
      * Handles opening the {@link AccessoriesMenu} when clicking the {@link AetherKeys#OPEN_ACCESSORY_INVENTORY} keybind.
-     * @see com.aetherteam.aether.client.event.listeners.GuiListener#onKeyPress(InputEvent.Key)
+     * @see com.aetherteam.aether.client.event.listeners.GuiListener#onKeyPress(int, int, int, int)
      */
     public static void openAccessoryMenu() {
         Minecraft minecraft = Minecraft.getInstance();
@@ -284,12 +278,12 @@ public class GuiHooks {
      * Allows various menus to be closed with the {@link AetherKeys#OPEN_ACCESSORY_INVENTORY} keybind.
      * @param key The {@link Integer} ID for the key.
      * @param action The {@link Integer} for the key action.
-     * @see com.aetherteam.aether.client.event.listeners.GuiListener#onKeyPress(InputEvent.Key)
+     * @see com.aetherteam.aether.client.event.listeners.GuiListener#onKeyPress(int, int, int, int)
      */
     public static void closeContainerMenu(int key, int action) {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.screen instanceof AbstractContainerScreen abstractContainerScreen) {
-            if (!AetherConfig.CLIENT.disable_accessory_button.get() && AetherKeys.OPEN_ACCESSORY_INVENTORY.getKey().getValue() == key && (action == InputConstants.PRESS || action == InputConstants.REPEAT)) {
+            if (!AetherConfig.CLIENT.disable_accessory_button.get() && KeyBindingHelper.getBoundKeyOf(AetherKeys.OPEN_ACCESSORY_INVENTORY).getValue() == key && (action == InputConstants.PRESS || action == InputConstants.REPEAT)) {
                 abstractContainerScreen.onClose();
             }
         }

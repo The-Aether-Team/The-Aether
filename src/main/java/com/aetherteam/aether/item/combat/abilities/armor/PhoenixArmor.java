@@ -19,10 +19,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.phys.Vec3;
-import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.SlotResult;
-import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
-import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
 
 import java.util.Map;
 
@@ -177,18 +173,18 @@ public interface PhoenixArmor {
      * @param outcomeStack The replacement {@link ItemStack}.
      */
     private static void breakPhoenixGloves(LivingEntity entity, Tuple<SlotReference, ItemStack> slotResult, ItemStack outcomeStack) {
-        EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(slotResult.stack()), outcomeStack);
+        EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(slotResult.getB()), outcomeStack);
         if (slotResult.getB().hasTag()) {
             outcomeStack.setTag(slotResult.getB().getTag());
         }
-        CuriosApi.getCuriosInventory(entity).ifPresent(iCuriosItemHandler -> {
-            Map<String, ICurioStacksHandler> curios = iCuriosItemHandler.getCurios(); // Map of Curio slot names -> slot stack handlers.
-            ICurioStacksHandler inv = curios.get(slotResult.slotContext().identifier()); // Stack handler for the Curio slot, gotten using the identifier through slotResult.
-            if (inv != null) {
-                IDynamicStackHandler stackHandler = inv.getStacks();
-                stackHandler.setStackInSlot(slotResult.slotContext().index(), outcomeStack); // Changes stack in slot using stack handler.
-            }
-        });
+//        CuriosApi.getCuriosInventory(entity).ifPresent(iCuriosItemHandler -> { TODO: PORT
+//            Map<String, ICurioStacksHandler> curios = iCuriosItemHandler.getCurios(); // Map of Curio slot names -> slot stack handlers.
+//            ICurioStacksHandler inv = curios.get(slotResult.slotContext().identifier()); // Stack handler for the Curio slot, gotten using the identifier through slotResult.
+//            if (inv != null) {
+//                IDynamicStackHandler stackHandler = inv.getStacks();
+//                stackHandler.setStackInSlot(slotResult.slotContext().index(), outcomeStack); // Changes stack in slot using stack handler.
+//            }
+//        });
         if (entity instanceof ServerPlayer serverPlayer) {
             CriteriaTriggers.INVENTORY_CHANGED.trigger(serverPlayer, serverPlayer.getInventory(), outcomeStack);
         }

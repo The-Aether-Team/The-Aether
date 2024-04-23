@@ -3,6 +3,7 @@ package com.aetherteam.aether.client.renderer.entity;
 import com.aetherteam.aether.entity.block.FloatingBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
@@ -17,7 +18,6 @@ import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.model.data.ModelData;
 
 public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity> {
 	public FloatingBlockRenderer(EntityRendererProvider.Context context) {
@@ -36,9 +36,7 @@ public class FloatingBlockRenderer extends EntityRenderer<FloatingBlockEntity> {
 				poseStack.translate(-0.5, 0.0, -0.5);
 				BlockRenderDispatcher blockRenderDispatcher = Minecraft.getInstance().getBlockRenderer();
 				BakedModel model = blockRenderDispatcher.getBlockModel(blockState);
-				for (RenderType renderType : model.getRenderTypes(blockState, RandomSource.create(blockState.getSeed(floatingBlock.getStartPos())), ModelData.EMPTY)) {
-					blockRenderDispatcher.getModelRenderer().tesselateBlock(world, model, blockState, blockPos, poseStack, buffer.getBuffer(renderType), false, RandomSource.create(), blockState.getSeed(floatingBlock.getStartPos()), OverlayTexture.NO_OVERLAY, ModelData.EMPTY, renderType);
-				}
+				blockRenderDispatcher.getModelRenderer().tesselateBlock(world, model, blockState, blockPos, poseStack, buffer.getBuffer(ItemBlockRenderTypes.getChunkRenderType(blockState)), false, RandomSource.create(), blockState.getSeed(floatingBlock.getStartPos()), OverlayTexture.NO_OVERLAY);
 				poseStack.popPose();
 				super.render(floatingBlock, entityYaw, partialTicks, poseStack, buffer, packedLightIn);
 			}

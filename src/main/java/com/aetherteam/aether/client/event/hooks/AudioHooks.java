@@ -6,9 +6,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.sounds.SoundSource;
-import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
-import net.minecraftforge.client.event.sound.PlaySoundEvent;
-import net.minecraftforge.event.TickEvent;
 
 public class AudioHooks {
     /**
@@ -19,7 +16,7 @@ public class AudioHooks {
         if (!AetherConfig.CLIENT.disable_music_manager.get()) {
             if (sound.getSource() == SoundSource.MUSIC) {
                 // Check whether there is Aether music and the sound that attempts to play does not match it.
-                return AetherMusicManager.getSituationalMusic() != null && !sound.getLocation().equals(SimpleSoundInstance.forMusic(AetherMusicManager.getSituationalMusic().getEvent().get()).getLocation())
+                return AetherMusicManager.getSituationalMusic() != null && !sound.getLocation().equals(SimpleSoundInstance.forMusic(AetherMusicManager.getSituationalMusic().getEvent().value()).getLocation())
                         || (AetherMusicManager.getCurrentMusic() != null && !sound.getLocation().equals(AetherMusicManager.getCurrentMusic().getLocation()));
             }
         }
@@ -28,7 +25,7 @@ public class AudioHooks {
 
     /**
      * Ticks the Aether's music manager.
-     * @see com.aetherteam.aether.client.event.listeners.AudioListener#onClientTick(TickEvent.ClientTickEvent)
+     * @see com.aetherteam.aether.client.event.listeners.AudioListener#onClientTick(Minecraft)
      */
     public static void tick() {
         if (!AetherConfig.CLIENT.disable_music_manager.get() && !Minecraft.getInstance().isPaused()) {

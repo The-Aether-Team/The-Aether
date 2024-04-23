@@ -3,11 +3,10 @@ package com.aetherteam.aether.client.event.hooks;
 import com.aetherteam.aether.capability.player.AetherPlayer;
 import com.aetherteam.aether.client.AetherKeys;
 import com.aetherteam.nitrogen.capability.INBTSynchable;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.Input;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.MovementInputUpdateEvent;
 
 public class CapabilityClientHooks {
     public static class AetherPlayerHooks {
@@ -43,7 +42,7 @@ public class CapabilityClientHooks {
         /**
          * Checks for key input.
          * @param key The {@link Integer} ID for the key.
-         * @see com.aetherteam.aether.client.event.listeners.capability.AetherPlayerClientListener#onPress(InputEvent.Key)
+         * @see com.aetherteam.aether.client.event.listeners.capability.AetherPlayerClientListener#onPress(int, int, int, int)
          */
         public static void keyInput(int key) {
             checkHit(key);
@@ -58,7 +57,7 @@ public class CapabilityClientHooks {
             Player player = Minecraft.getInstance().player;
             if (player != null) {
                 AetherPlayer.getOptional(player).ifPresent((aetherPlayer) -> {
-                    boolean isAttack = input == Minecraft.getInstance().options.keyAttack.getKey().getValue();
+                    boolean isAttack = input == KeyBindingHelper.getBoundKeyOf(Minecraft.getInstance().options.keyAttack).getValue();
                     boolean isPressing = Minecraft.getInstance().options.keyAttack.isDown();
                     boolean isHitting = isAttack && isPressing;
                     if (isHitting != aetherPlayer.isHitting()) {
@@ -76,7 +75,7 @@ public class CapabilityClientHooks {
             Player player = Minecraft.getInstance().player;
             if (player != null) {
                 AetherPlayer.getOptional(player).ifPresent((aetherPlayer) -> {
-                    if (input == AetherKeys.GRAVITITE_JUMP_ABILITY.getKey().getValue()) {
+                    if (input == KeyBindingHelper.getBoundKeyOf(AetherKeys.GRAVITITE_JUMP_ABILITY).getValue()) {
                         aetherPlayer.setSynched(INBTSynchable.Direction.SERVER, "setGravititeJumpActive", AetherKeys.GRAVITITE_JUMP_ABILITY.isDown());
                     }
                 });

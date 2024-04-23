@@ -15,65 +15,71 @@ import java.util.function.Function;
 
 public class AetherPacketHandler {
 	private static final String PROTOCOL_VERSION = "1";
-	public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
-		new ResourceLocation(Aether.MODID, "main"),
-		() -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals
-	);
+	public static final SimpleChannel INSTANCE = new SimpleChannel(new ResourceLocation(Aether.MODID, "main"));
 
 	private static int index;
 	
 	public static synchronized void register() {
 		// CLIENTBOUND
-		register(AetherTravelPacket.class, AetherTravelPacket::decode);
-		register(ClientDeveloperGlowPacket.Apply.class, ClientDeveloperGlowPacket.Apply::decode);
-		register(ClientDeveloperGlowPacket.Remove.class, ClientDeveloperGlowPacket.Remove::decode);
-		register(ClientDeveloperGlowPacket.Sync.class, ClientDeveloperGlowPacket.Sync::decode);
-		register(ClientGrabItemPacket.class, ClientGrabItemPacket::decode);
-        register(ClientHaloPacket.Apply.class, ClientHaloPacket.Apply::decode);
-        register(ClientHaloPacket.Remove.class, ClientHaloPacket.Remove::decode);
-        register(ClientHaloPacket.Sync.class, ClientHaloPacket.Sync::decode);
-		register(ClientMoaSkinPacket.Apply.class, ClientMoaSkinPacket.Apply::decode);
-		register(ClientMoaSkinPacket.Remove.class, ClientMoaSkinPacket.Remove::decode);
-		register(ClientMoaSkinPacket.Sync.class, ClientMoaSkinPacket.Sync::decode);
-		register(CloudMinionPacket.class, CloudMinionPacket::decode);
-		register(HealthResetPacket.class, HealthResetPacket::decode);
-		register(LeavingAetherPacket.class, LeavingAetherPacket::decode);
-		register(MoaInteractPacket.class, MoaInteractPacket::decode);
-		register(OpenSunAltarPacket.class, OpenSunAltarPacket::decode);
-		register(PortalTravelSoundPacket.class, PortalTravelSoundPacket::decode);
-		register(QueenDialoguePacket.class, QueenDialoguePacket::decode);
-		register(RemountAerbunnyPacket.class, RemountAerbunnyPacket::decode);
-		register(SetInvisibilityPacket.class, SetInvisibilityPacket::decode);
-		register(SetVehiclePacket.class, SetVehiclePacket::decode);
-		register(ToolDebuffPacket.class, ToolDebuffPacket::decode);
-		register(ZephyrSnowballHitPacket.class, ZephyrSnowballHitPacket::decode);
+		registerClientbound(AetherTravelPacket.class, AetherTravelPacket::decode);
+		registerClientbound(ClientDeveloperGlowPacket.Apply.class, ClientDeveloperGlowPacket.Apply::decode);
+		registerClientbound(ClientDeveloperGlowPacket.Remove.class, ClientDeveloperGlowPacket.Remove::decode);
+		registerClientbound(ClientDeveloperGlowPacket.Sync.class, ClientDeveloperGlowPacket.Sync::decode);
+		registerClientbound(ClientGrabItemPacket.class, ClientGrabItemPacket::decode);
+        registerClientbound(ClientHaloPacket.Apply.class, ClientHaloPacket.Apply::decode);
+        registerClientbound(ClientHaloPacket.Remove.class, ClientHaloPacket.Remove::decode);
+        registerClientbound(ClientHaloPacket.Sync.class, ClientHaloPacket.Sync::decode);
+		registerClientbound(ClientMoaSkinPacket.Apply.class, ClientMoaSkinPacket.Apply::decode);
+		registerClientbound(ClientMoaSkinPacket.Remove.class, ClientMoaSkinPacket.Remove::decode);
+		registerClientbound(ClientMoaSkinPacket.Sync.class, ClientMoaSkinPacket.Sync::decode);
+		registerClientbound(CloudMinionPacket.class, CloudMinionPacket::decode);
+		registerClientbound(HealthResetPacket.class, HealthResetPacket::decode);
+		registerClientbound(LeavingAetherPacket.class, LeavingAetherPacket::decode);
+		registerClientbound(MoaInteractPacket.class, MoaInteractPacket::decode);
+		registerClientbound(OpenSunAltarPacket.class, OpenSunAltarPacket::decode);
+		registerClientbound(PortalTravelSoundPacket.class, PortalTravelSoundPacket::decode);
+		registerClientbound(QueenDialoguePacket.class, QueenDialoguePacket::decode);
+		registerClientbound(RemountAerbunnyPacket.class, RemountAerbunnyPacket::decode);
+		registerClientbound(SetInvisibilityPacket.class, SetInvisibilityPacket::decode);
+		registerClientbound(SetVehiclePacket.class, SetVehiclePacket::decode);
+		registerClientbound(ToolDebuffPacket.class, ToolDebuffPacket::decode);
+		registerClientbound(ZephyrSnowballHitPacket.class, ZephyrSnowballHitPacket::decode);
+		registerClientbound(BossInfoPacket.Display.class, BossInfoPacket.Display::decode);
+		registerClientbound(BossInfoPacket.Remove.class, BossInfoPacket.Remove::decode);
 
 		// SERVERBOUND
-		register(AerbunnyPuffPacket.class, AerbunnyPuffPacket::decode);
-		register(BossInfoPacket.Display.class, BossInfoPacket.Display::decode);
-		register(BossInfoPacket.Remove.class, BossInfoPacket.Remove::decode);
-		register(ClearItemPacket.class, ClearItemPacket::decode);
-		register(HammerProjectileLaunchPacket.class, HammerProjectileLaunchPacket::decode);
-		register(LoreExistsPacket.class, LoreExistsPacket::decode);
-		register(NpcPlayerInteractPacket.class, NpcPlayerInteractPacket::decode);
-		register(OpenAccessoriesPacket.class, OpenAccessoriesPacket::decode);
-		register(OpenInventoryPacket.class, OpenInventoryPacket::decode);
-		register(ServerDeveloperGlowPacket.Apply.class, ServerDeveloperGlowPacket.Apply::decode);
-		register(ServerDeveloperGlowPacket.Remove.class, ServerDeveloperGlowPacket.Remove::decode);
-        register(ServerHaloPacket.Apply.class, ServerHaloPacket.Apply::decode);
-        register(ServerHaloPacket.Remove.class, ServerHaloPacket.Remove::decode);
-		register(ServerMoaSkinPacket.Apply.class, ServerMoaSkinPacket.Apply::decode);
-		register(ServerMoaSkinPacket.Remove.class, ServerMoaSkinPacket.Remove::decode);
-		register(StepHeightPacket.class, StepHeightPacket::decode);
-		register(SunAltarUpdatePacket.class, SunAltarUpdatePacket::decode);
+		registerServerbound(AerbunnyPuffPacket.class, AerbunnyPuffPacket::decode);
+		registerServerbound(ClearItemPacket.class, ClearItemPacket::decode);
+		registerServerbound(HammerProjectileLaunchPacket.class, HammerProjectileLaunchPacket::decode);
+		registerServerbound(LoreExistsPacket.class, LoreExistsPacket::decode);
+		registerServerbound(NpcPlayerInteractPacket.class, NpcPlayerInteractPacket::decode);
+		registerServerbound(OpenAccessoriesPacket.class, OpenAccessoriesPacket::decode);
+		registerServerbound(OpenInventoryPacket.class, OpenInventoryPacket::decode);
+		registerServerbound(ServerDeveloperGlowPacket.Apply.class, ServerDeveloperGlowPacket.Apply::decode);
+		registerServerbound(ServerDeveloperGlowPacket.Remove.class, ServerDeveloperGlowPacket.Remove::decode);
+        registerServerbound(ServerHaloPacket.Apply.class, ServerHaloPacket.Apply::decode);
+        registerServerbound(ServerHaloPacket.Remove.class, ServerHaloPacket.Remove::decode);
+		registerServerbound(ServerMoaSkinPacket.Apply.class, ServerMoaSkinPacket.Apply::decode);
+		registerServerbound(ServerMoaSkinPacket.Remove.class, ServerMoaSkinPacket.Remove::decode);
+		registerServerbound(StepHeightPacket.class, StepHeightPacket::decode);
+		registerServerbound(SunAltarUpdatePacket.class, SunAltarUpdatePacket::decode);
 
 		// BOTH
-		register(AetherPlayerSyncPacket.class, AetherPlayerSyncPacket::decode);
-		register(AetherTimeSyncPacket.class, AetherTimeSyncPacket::decode);
-		register(PhoenixArrowSyncPacket.class, PhoenixArrowSyncPacket::decode);
+		registerBoth(AetherPlayerSyncPacket.class, AetherPlayerSyncPacket::decode);
+		registerBoth(AetherTimeSyncPacket.class, AetherTimeSyncPacket::decode);
+		registerBoth(PhoenixArrowSyncPacket.class, PhoenixArrowSyncPacket::decode);
 	}
 
-	private static <MSG extends BasePacket> void register(final Class<MSG> packet, Function<FriendlyByteBuf, MSG> decoder) {
-		INSTANCE.messageBuilder(packet, index++).encoder(BasePacket::encode).decoder(decoder).consumerMainThread(BasePacket::handle).add();
+	private static <MSG extends BasePacket> void registerClientbound(final Class<MSG> packet, Function<FriendlyByteBuf, MSG> decoder) {
+		INSTANCE.registerS2CPacket(packet, index++, decoder);
+	}
+
+	private static <MSG extends BasePacket> void registerServerbound(final Class<MSG> packet, Function<FriendlyByteBuf, MSG> decoder) {
+		INSTANCE.registerC2SPacket(packet, index++, decoder);
+	}
+
+	private static <MSG extends BasePacket> void registerBoth(final Class<MSG> packet, Function<FriendlyByteBuf, MSG> decoder) {
+		registerClientbound(packet, decoder);
+		registerServerbound(packet, decoder);
 	}
 }

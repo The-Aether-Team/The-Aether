@@ -18,6 +18,7 @@ import com.aetherteam.aether.world.AetherLevelData;
 import com.aetherteam.aether.world.LevelUtil;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import io.github.fabricators_of_create.porting_lib.event.common.BlockEvents;
+import io.github.fabricators_of_create.porting_lib.level.events.SleepFinishedTimeEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
@@ -38,14 +39,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.SleepingTimeCheckEvent;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.event.level.SleepFinishedTimeEvent;
 
 import org.jetbrains.annotations.Nullable;
 import java.util.List;
@@ -176,9 +169,9 @@ public class DimensionHooks {
                         if (entity instanceof Player || entity.isVehicle() || (entity instanceof Saddleable) && ((Saddleable) entity).isSaddled()) { // Checks if an entity is a player or a vehicle of a player.
                             entityFell(entity);
                         } else if (entity instanceof ItemEntity itemEntity) {
-                            LazyOptional<DroppedItem> droppedItem = DroppedItem.get(itemEntity);
-                            if (droppedItem.isPresent() && droppedItem.resolve().isPresent()) {
-                                if (itemEntity.getOwner() instanceof Player || droppedItem.resolve().get().getOwner() instanceof Player) { // Checks if an entity is an item that was dropped by a player.
+                            Optional<DroppedItem> droppedItem = DroppedItem.get(itemEntity);
+                            if (droppedItem.isPresent() && droppedItem.isPresent()) {
+                                if (itemEntity.getOwner() instanceof Player || droppedItem.get().getOwner() instanceof Player) { // Checks if an entity is an item that was dropped by a player.
                                     entityFell(entity);
                                 }
                             }
@@ -305,7 +298,7 @@ public class DimensionHooks {
             AetherTime.get(serverLevel).ifPresent(cap -> {
                 AetherLevelData levelData = new AetherLevelData(server.getWorldData(), server.getWorldData().overworldData(), cap.getDayTime());
                 ServerLevelAccessor serverLevelAccessor = (ServerLevelAccessor) serverLevel;
-                com.aetherteam.aether.mixin.mixins.common.accessor.LevelAccessor levelAccessor = (com.aetherteam.aether.mixin.mixins.common.accessor.LevelAccessor) level;
+                com.aetherteam.aether.mixin.mixins.common.accessor.LevelAccessor levelAccessor = (com.aetherteam.aether.mixin.mixins.common.accessor.LevelAccessor) serverLevel;
                 serverLevelAccessor.aether$setServerLevelData(levelData);
                 levelAccessor.aether$setLevelData(levelData);
             });
@@ -337,17 +330,14 @@ public class DimensionHooks {
      * Checks whether it is eternal day in the Aether.
      * @param player The {@link Player}.
      * @return Whether it is eternal day, as a {@link Boolean}.
-     * @see com.aetherteam.aether.event.listeners.DimensionListener#onTriedToSleep(SleepingTimeCheckEvent)
+     * @see com.aetherteam.aether.event.listeners.DimensionListener#onTriedToSleep(Player,BlockPos,boolean)
      */
     public static boolean isEternalDay(Player player) {
         if (player.level().dimensionType().effectsLocation().equals(AetherDimensions.AETHER_DIMENSION_TYPE.location())) {
-            LazyOptional<AetherTime> aetherTimeLazy = AetherTime.get(player.level());
-            if (aetherTimeLazy.isPresent()) {
-                Optional<AetherTime> aetherTimeOptional = aetherTimeLazy.resolve();
-                if (aetherTimeOptional.isPresent()) {
-                    AetherTime aetherTime = aetherTimeOptional.get();
-                    return aetherTime.getEternalDay();
-                }
+            Optional<AetherTime> aetherTimeOptional = AetherTime.get(player.level());
+            if (aetherTimeOptional.isPresent()) {
+                AetherTime aetherTime = aetherTimeOptional.get();
+                return aetherTime.getEternalDay();
             }
         }
         return false;

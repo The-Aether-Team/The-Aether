@@ -19,6 +19,7 @@ import com.aetherteam.nitrogen.api.users.UserData;
 import com.aetherteam.nitrogen.network.NitrogenPacketHandler;
 import com.aetherteam.nitrogen.network.PacketRelay;
 import com.aetherteam.nitrogen.network.packet.serverbound.TriggerUpdateInfoPacket;
+import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.gui.Font;
@@ -98,9 +99,9 @@ public class MoaSkinsScreen extends Screen {
             this.snapPoints.add((this.scrollbarGutterWidth() / remainingSlots) * i);
         }
 
-        if (this.getMinecraft().player != null) {
+        if (Screens.getClient(this).player != null) {
             // Retrieve Moa Skin data for this user.
-            UUID uuid = this.getMinecraft().player.getUUID();
+            UUID uuid = Screens.getClient(this).player.getUUID();
             Map<UUID, MoaData> userSkinsData = ClientMoaSkinPerkData.INSTANCE.getClientPerkData();
 
             // If the user has no selected skin in this screen, set it to whatever their saved skin is according to the server data.
@@ -110,8 +111,8 @@ public class MoaSkinsScreen extends Screen {
 
             // Button for saving a selected skin as the one that will be applied to the player's Moa.
             this.applyButton = this.addRenderableWidget(new ChangeSkinButton(ChangeSkinButton.ButtonType.APPLY, Button.builder(Component.translatable("gui.aether.moa_skins.button.apply"),
-                (pressed) -> AetherPlayer.getOptional(this.getMinecraft().player).ifPresent((aetherPlayer) -> {
-                    PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Apply(this.getMinecraft().player.getUUID(), new MoaData(aetherPlayer.getLastRiddenMoa(), this.getSelectedSkin())));
+                (pressed) -> AetherPlayer.getOptional(Screens.getClient(this).player).ifPresent((aetherPlayer) -> {
+                    PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Apply(Screens.getClient(this).player.getUUID(), new MoaData(aetherPlayer.getLastRiddenMoa(), this.getSelectedSkin())));
                     this.customizations.setMoaSkin(this.getSelectedSkin().getId());
                     this.customizations.save();
                     this.customizations.load();
@@ -121,7 +122,7 @@ public class MoaSkinsScreen extends Screen {
             // Button for removing the player's currently applied Moa Skin.
             this.removeButton = this.addRenderableWidget(new ChangeSkinButton(ChangeSkinButton.ButtonType.REMOVE, Button.builder(Component.translatable("gui.aether.moa_skins.button.remove"),
                 (pressed) -> {
-                    PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Remove(this.getMinecraft().player.getUUID()));
+                    PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Remove(Screens.getClient(this).player.getUUID()));
                     this.customizations.setMoaSkin("");
                     this.customizations.save();
                     this.customizations.load();
@@ -132,7 +133,7 @@ public class MoaSkinsScreen extends Screen {
             this.addRenderableWidget(new RefreshButton(Button.builder(Component.literal(""),
                     (pressed) -> {
                         if (RefreshButton.reboundTimer == 0) {
-                            PacketRelay.sendToServer(NitrogenPacketHandler.INSTANCE, new TriggerUpdateInfoPacket(this.getMinecraft().player.getId()));
+                            PacketRelay.sendToServer(NitrogenPacketHandler.INSTANCE, new TriggerUpdateInfoPacket(Screens.getClient(this).player.getId()));
                             RefreshButton.reboundTimer = RefreshButton.reboundMax;
                         }
                     }
@@ -140,21 +141,21 @@ public class MoaSkinsScreen extends Screen {
 
             // Button that opens a screen with a redirect to Patreon.
             this.addRenderableWidget(new PatreonButton(Button.builder(Component.translatable("gui.aether.moa_skins.button.donate"),
-                (pressed) -> this.getMinecraft().setScreen(new ConfirmLinkScreen((callback) -> {
+                (pressed) -> Screens.getClient(this).setScreen(new ConfirmLinkScreen((callback) -> {
                     if (callback) {
                         Util.getPlatform().openUri(PATREON_LINK);
                     }
-                    this.getMinecraft().setScreen(this);
+                    Screens.getClient(this).setScreen(this);
                 }, PATREON_LINK, true))
             ).bounds(this.leftPos + (this.imageWidth / 2) - (54 / 2), this.topPos + this.imageHeight - 25, 54, 18)));
 
             // Button that opens a screen with a redirect to a guide for how to connect a UUID.
             this.addRenderableWidget(new PatreonButton(Button.builder(Component.translatable("?"),
-                    (pressed) -> this.getMinecraft().setScreen(new ConfirmLinkScreen((callback) -> {
+                    (pressed) -> Screens.getClient(this).setScreen(new ConfirmLinkScreen((callback) -> {
                         if (callback) {
                             Util.getPlatform().openUri(HELP_LINK);
                         }
-                        this.getMinecraft().setScreen(this);
+                        Screens.getClient(this).setScreen(this);
                     }, HELP_LINK, true))
             ).bounds(this.leftPos + (this.imageWidth / 2) + 63, this.topPos + this.imageHeight - 25, 18, 18).tooltip(Tooltip.create(Component.translatable("gui.aether.moa_skins.button.help"))), true));
         }
@@ -178,7 +179,7 @@ public class MoaSkinsScreen extends Screen {
      */
     private void renderWindow(GuiGraphics guiGraphics) {
         User user = UserData.Client.getClientUser();
-        Font font = this.getMinecraft().font;
+        Font font = Screens.getClient(this).font;
         guiGraphics.blit(MOA_SKINS_GUI, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
 
         Component component = user == null ? Component.translatable("gui.aether.moa_skins.text.donate") : Component.translatable("gui.aether.moa_skins.text.reward");
@@ -196,8 +197,8 @@ public class MoaSkinsScreen extends Screen {
      * @param mouseY The {@link Integer} for the mouse's y-position.
      */
     private void renderSlots(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        if (this.getMinecraft().player != null) {
-            UUID uuid = this.getMinecraft().player.getUUID();
+        if (Screens.getClient(this).player != null) {
+            UUID uuid = Screens.getClient(this).player.getUUID();
             Map<UUID, MoaData> userSkinsData = ClientMoaSkinPerkData.INSTANCE.getClientPerkData();
             User user = UserData.Client.getClientUser();
 
@@ -255,7 +256,7 @@ public class MoaSkinsScreen extends Screen {
         MoaSkins.MoaSkin skin = this.getSkinFromSlot(mouseX, mouseY);
         if (skin != null) {
             Component name = skin.getDisplayName();
-            guiGraphics.renderTooltip(this.getMinecraft().font, name, (int) mouseX, (int) mouseY);
+            guiGraphics.renderTooltip(Screens.getClient(this).font, name, (int) mouseX, (int) mouseY);
         }
     }
 
@@ -310,8 +311,8 @@ public class MoaSkinsScreen extends Screen {
             }
         }
         this.renderMoa(guiGraphics, partialTicks); // Renders the spinning Moa with the selected skin.
-        guiGraphics.drawCenteredString(this.getMinecraft().font, this.getSelectedSkin().getDisplayName(), this.leftPos + (this.imageWidth / 2), this.topPos + 12, 16777215); // Skin Name
-        guiGraphics.drawCenteredString(this.getMinecraft().font, this.getTitle(), this.leftPos + (this.imageWidth / 2), this.topPos - 15, 16777215); // Title
+        guiGraphics.drawCenteredString(Screens.getClient(this).font, this.getSelectedSkin().getDisplayName(), this.leftPos + (this.imageWidth / 2), this.topPos + 12, 16777215); // Skin Name
+        guiGraphics.drawCenteredString(Screens.getClient(this).font, this.getTitle(), this.leftPos + (this.imageWidth / 2), this.topPos - 15, 16777215); // Title
     }
 
     /**
@@ -351,8 +352,8 @@ public class MoaSkinsScreen extends Screen {
     private void renderTooltip(MutableComponent title, Component description, GuiGraphics guiGraphics, int mouseX, int mouseY) {
         List<FormattedText> formattedTextList = new ArrayList<>();
         formattedTextList.add(title.withStyle(ChatFormatting.GOLD));
-        formattedTextList.addAll(this.getMinecraft().font.getSplitter().splitLines(description, this.width / 3, Style.EMPTY));
-        guiGraphics.renderComponentTooltip(this.getMinecraft().font, formattedTextList, mouseX, mouseY, ItemStack.EMPTY);
+        formattedTextList.addAll(Screens.getClient(this).font.getSplitter().splitLines(description, this.width / 3, Style.EMPTY));
+//        guiGraphics.renderComponentTooltip(Screens.getClient(this).font, formattedTextList, mouseX, mouseY, ItemStack.EMPTY); TODO: PORT
     }
 
     /**
@@ -360,9 +361,9 @@ public class MoaSkinsScreen extends Screen {
      * @param partialTicks The {@link Float} for the game's partial ticks.
      */
     private void renderMoa(GuiGraphics guiGraphics, float partialTicks) {
-        if (this.getMinecraft().level != null) {
+        if (Screens.getClient(this).level != null) {
             if (this.getPreviewMoa() == null) { // Set up preview Moa if it doesn't exist.
-                Moa moa = AetherEntityTypes.MOA.get().create(this.getMinecraft().level);
+                Moa moa = AetherEntityTypes.MOA.get().create(Screens.getClient(this).level);
                 if (moa != null) {
                     moa.generateMoaUUID();
                     moa.setMoaType(AetherMoaTypes.BLUE.get());
@@ -403,13 +404,13 @@ public class MoaSkinsScreen extends Screen {
      */
     private void checkUserConnectionStatus() {
         User user = UserData.Client.getClientUser();
-        if (this.getMinecraft().player != null) {
+        if (Screens.getClient(this).player != null) {
             if (user == null && this.userConnectionExists) { // Remove skin data if the user no longer exists.
-                PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Remove(this.getMinecraft().player.getUUID()));
+                PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Remove(Screens.getClient(this).player.getUUID()));
                 this.userConnectionExists = false;
             } else if (user != null && !this.userConnectionExists && MoaSkins.getMoaSkins().get(this.customizations.getMoaSkin()) != null) { // Add skin data if the user has started existing.
-                AetherPlayer.getOptional(this.getMinecraft().player).ifPresent((aetherPlayer) ->
-                        PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Apply(this.getMinecraft().player.getUUID(), new MoaData(aetherPlayer.getLastRiddenMoa(), MoaSkins.getMoaSkins().get(this.customizations.getMoaSkin())))));
+                AetherPlayer.getOptional(Screens.getClient(this).player).ifPresent((aetherPlayer) ->
+                        PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new ServerMoaSkinPacket.Apply(Screens.getClient(this).player.getUUID(), new MoaData(aetherPlayer.getLastRiddenMoa(), MoaSkins.getMoaSkins().get(this.customizations.getMoaSkin())))));
                 this.userConnectionExists = true;
             }
         }
@@ -576,7 +577,7 @@ public class MoaSkinsScreen extends Screen {
 
     @Override
     public void onClose() {
-        this.getMinecraft().setScreen(this.lastScreen);
+        Screens.getClient(this).setScreen(this.lastScreen);
     }
 
     @Override

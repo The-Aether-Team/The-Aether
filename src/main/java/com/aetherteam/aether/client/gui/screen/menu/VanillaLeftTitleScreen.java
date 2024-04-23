@@ -17,8 +17,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraftforge.client.ForgeHooksClient;
-import net.minecraftforge.client.gui.TitleScreenModUpdateIndicator;
 
 /**
  * A left-aligned variant of Minecraft's title screen.
@@ -27,7 +25,7 @@ public class VanillaLeftTitleScreen extends TitleScreen implements TitleScreenBe
     private static final ResourceLocation PANORAMA_OVERLAY = new ResourceLocation("textures/gui/title/background/panorama_overlay.png");
     private final PanoramaRenderer panorama = new PanoramaRenderer(TitleScreen.CUBE_MAP);
     private final boolean showMinceraftEasterEgg = (double) RandomSource.create().nextFloat() < 1.0E-4D;
-    private TitleScreenModUpdateIndicator modUpdateNotification;
+//    private TitleScreenModUpdateIndicator modUpdateNotification;
 
     public VanillaLeftTitleScreen() {
         ((TitleScreenAccessor) this).aether$setFading(true);
@@ -57,7 +55,7 @@ public class VanillaLeftTitleScreen extends TitleScreen implements TitleScreenBe
                         button.setWidth(200);
                         buttonCount++;
                         if (button.getMessage().equals(Component.translatable("fml.menu.mods"))) {
-                            this.modUpdateNotification = TitleScreenModUpdateIndicator.init(this, button);
+//                            this.modUpdateNotification = TitleScreenModUpdateIndicator.init(this, button); TODO: PORT
                         }
                     }
                 }
@@ -82,7 +80,7 @@ public class VanillaLeftTitleScreen extends TitleScreen implements TitleScreenBe
             if (titleScreenAccessor.getWarningLabel() != null) {
                 titleScreenAccessor.getWarningLabel().render(guiGraphics, roundedFadeAmount);
             }
-            ForgeHooksClient.renderMainMenu(this, guiGraphics, this.font, this.width, this.height, roundedFadeAmount);
+//            ForgeHooksClient.renderMainMenu(this, guiGraphics, this.font, this.width, this.height, roundedFadeAmount); TODO: PORT
             if (titleScreenAccessor.aether$getSplash() != null) {
                 SplashRendererAccessor splashRendererAccessor = (SplashRendererAccessor) titleScreenAccessor.aether$getSplash();
                 if (splashRendererAccessor.cumulus$getSplash() != null && !splashRendererAccessor.cumulus$getSplash().isEmpty()) {
@@ -111,7 +109,7 @@ public class VanillaLeftTitleScreen extends TitleScreen implements TitleScreenBe
         TitleScreenBehavior.super.handleImageButtons(this, xOffset);
 
         if (fadeAmount >= 1.0F) {
-            this.modUpdateNotification.render(guiGraphics, mouseX, mouseY, partialTicks);
+//            this.modUpdateNotification.render(guiGraphics, mouseX, mouseY, partialTicks); TODO: PORT
         }
     }
 

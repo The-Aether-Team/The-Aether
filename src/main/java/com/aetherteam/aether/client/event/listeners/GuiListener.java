@@ -4,55 +4,49 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.event.hooks.GuiHooks;
 import com.aetherteam.aether.client.gui.component.inventory.AccessoryButton;
 import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
+import io.github.fabricators_of_create.porting_lib.event.client.KeyInputCallback;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.LerpingBossEvent;
 import net.minecraft.client.gui.layouts.GridLayout;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.util.Tuple;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.ScreenEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraft.world.BossEvent;
 
 import java.util.UUID;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT)
 public class GuiListener {
-	/**
-	 * @see AccessoriesScreen#getButtonOffset(Screen)
-	 * @see GuiHooks#setupAccessoryButton(Screen, Tuple)
-	 * @see GuiHooks#setupPerksButtons(Screen)
-	 */
-	@SubscribeEvent
-	public static void onGuiInitialize(ScreenEvent.Init.Post event) {
-		Screen screen = event.getScreen();
-		if (GuiHooks.isAccessoryButtonEnabled()) {
-			Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(screen);
-			AccessoryButton inventoryAccessoryButton = GuiHooks.setupAccessoryButton(screen, offsets);
-			if (inventoryAccessoryButton != null) {
-				event.addListener(inventoryAccessoryButton);
-			}
-		} else {
-			GridLayout layout = GuiHooks.setupPerksButtons(screen);
-			if (layout != null) {
-				layout.visitWidgets(event::addListener);
-			}
-		}
-	}
+//	/** TODO: PORT
+//	 * @see AccessoriesScreen#getButtonOffset(Screen)
+//	 * @see GuiHooks#setupAccessoryButton(Screen, Tuple)
+//	 * @see GuiHooks#setupPerksButtons(Screen)
+//	 */
+//	@SubscribeEvent
+//	public static void onGuiInitialize(ScreenEvent.Init.Post event) {
+//		Screen screen = event.getScreen();
+//		if (GuiHooks.isAccessoryButtonEnabled()) {
+//			Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(screen);
+//			AccessoryButton inventoryAccessoryButton = GuiHooks.setupAccessoryButton(screen, offsets);
+//			if (inventoryAccessoryButton != null) {
+//				event.addListener(inventoryAccessoryButton);
+//			}
+//		} else {
+//			GridLayout layout = GuiHooks.setupPerksButtons(screen);
+//			if (layout != null) {
+//				layout.visitWidgets(event::addListener);
+//			}
+//		}
+//	}
 
 	/**
 	 * @see GuiHooks#drawTrivia(Screen, GuiGraphics)
 	 * @see GuiHooks#drawAetherTravelMessage(Screen, GuiGraphics)
 	 */
-	@SubscribeEvent
-	public static void onGuiDraw(ScreenEvent.Render.Post event) {
-		Screen screen = event.getScreen();
-		GuiGraphics guiGraphics = event.getGuiGraphics();
-		if (!ModList.get().isLoaded("tipsmod")) {
+	public static void onGuiDraw(Screen screen, GuiGraphics guiGraphics, int mouseX, int mouseY, float tickDelta) {
+		if (!FabricLoader.getInstance().isModLoaded("tipsmod")) {
 			GuiHooks.drawTrivia(screen, guiGraphics);
 		}
 		GuiHooks.drawAetherTravelMessage(screen, guiGraphics);
@@ -61,21 +55,17 @@ public class GuiListener {
 	/**
 	 * @see GuiHooks#handlePatreonRefreshRebound()
 	 */
-	@SubscribeEvent
-	public static void onClientTick(TickEvent.ClientTickEvent event) {
-		if (event.phase == TickEvent.Phase.END) {
-			GuiHooks.handlePatreonRefreshRebound();
-		}
+	public static void onClientTick(Minecraft minecraft) {
+		GuiHooks.handlePatreonRefreshRebound();
 	}
 
 	/**
 	 * @see GuiHooks#openAccessoryMenu()
 	 * @see GuiHooks#closeContainerMenu(int, int)
 	 */
-	@SubscribeEvent
-	public static void onKeyPress(InputEvent.Key event) {
+	public static void onKeyPress(int key, int scancode, int action, int mods) {
 		GuiHooks.openAccessoryMenu();
-		GuiHooks.closeContainerMenu(event.getKey(), event.getAction());
+		GuiHooks.closeContainerMenu(key, action);
 	}
 
 	/**
@@ -83,14 +73,21 @@ public class GuiListener {
 	 * @see com.aetherteam.aether.mixin.mixins.client.BossHealthOverlayMixin#event(CustomizeGuiOverlayEvent.BossEventProgress)
 	 * @see GuiHooks#drawBossHealthBar(GuiGraphics, int, int, LerpingBossEvent)
 	 */
-	@SubscribeEvent
-	public static void onRenderBossBar(CustomizeGuiOverlayEvent.BossEventProgress event) {
-		GuiGraphics guiGraphics = event.getGuiGraphics();
-		LerpingBossEvent bossEvent = event.getBossEvent();
+	public static int onRenderBossBar(GuiGraphics guiGraphics, int x, int y, BossEvent bossEvent, int increment) {
 		UUID bossUUID = bossEvent.getId();
 		if (GuiHooks.isAetherBossBar(bossUUID)) {
-			GuiHooks.drawBossHealthBar(guiGraphics, event.getX(), event.getY(), bossEvent);
-			event.setIncrement(event.getIncrement() + 13);
+			GuiHooks.drawBossHealthBar(guiGraphics, x, y, (LerpingBossEvent) bossEvent);
+			return increment + 13;
 		}
+
+		return increment;
+	}
+
+	public static void init() {
+		ScreenEvents.BEFORE_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
+			ScreenEvents.afterRender(screen).register(GuiListener::onGuiDraw);
+		});
+		ClientTickEvents.END_CLIENT_TICK.register(GuiListener::onClientTick);
+		KeyInputCallback.EVENT.register(GuiListener::onKeyPress);
 	}
 }

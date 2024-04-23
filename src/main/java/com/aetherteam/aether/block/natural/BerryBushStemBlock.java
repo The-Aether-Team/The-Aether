@@ -58,9 +58,8 @@ public class BerryBushStemBlock extends AetherBushBlock implements BonemealableB
 	@SuppressWarnings("deprecation")
 	@Override
 	public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-		if (level.getRawBrightness(pos.above(), 0) >= 9 && ForgeHooks.onCropsGrowPre(level, pos, state,random.nextInt(60) == 0)) {
+		if (level.getRawBrightness(pos.above(), 0) >= 9 && random.nextInt(60) == 0) {
 			level.setBlockAndUpdate(pos, AetherBlocks.BERRY_BUSH.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, state.getValue(AetherBlockStateProperties.DOUBLE_DROPS)));
-			ForgeHooks.onCropsGrowPost(level, pos, state);
 		}
 	}
 

@@ -3,6 +3,7 @@ package com.aetherteam.aether.block.natural;
 import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.block.AetherBlockStateProperties;
 import com.aetherteam.aether.block.AetherBlocks;
+import io.github.fabricators_of_create.porting_lib.blocks.extensions.OnExplodedBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -13,6 +14,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Explosion;
@@ -29,7 +31,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class BerryBushBlock extends AetherBushBlock {
+public class BerryBushBlock extends AetherBushBlock implements OnExplodedBlock {
 	public BerryBushBlock(Properties properties) {
 		super(properties);
 		this.registerDefaultState(this.defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, false));
@@ -90,7 +92,7 @@ public class BerryBushBlock extends AetherBushBlock {
 	@Override
 	public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
 		super.playerDestroy(level, player, pos, state, blockEntity, tool);
-		if (tool.getEnchantmentLevel(Enchantments.SILK_TOUCH) <= 0) {
+		if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) <= 0) {
 			level.setBlock(pos, AetherBlocks.BERRY_BUSH_STEM.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, state.getValue(AetherBlockStateProperties.DOUBLE_DROPS)), 1 | 2);
 			if (AetherConfig.SERVER.berry_bush_consistency.get()) { // Destroy stem too if config is enabled.
 				level.destroyBlock(pos, true, player);
@@ -107,7 +109,7 @@ public class BerryBushBlock extends AetherBushBlock {
 	 */
 	@Override
 	public void onBlockExploded(BlockState state, Level level, BlockPos pos, Explosion explosion) {
-		super.onBlockExploded(state, level, pos, explosion);
+		OnExplodedBlock.super.onBlockExploded(state, level, pos, explosion);
 		level.setBlock(pos, AetherBlocks.BERRY_BUSH_STEM.get().defaultBlockState().setValue(AetherBlockStateProperties.DOUBLE_DROPS, state.getValue(AetherBlockStateProperties.DOUBLE_DROPS)), 1 | 2);
 		if (AetherConfig.SERVER.berry_bush_consistency.get()) { // Destroy stem too if config is enabled.
 			level.destroyBlock(pos, true);

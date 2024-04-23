@@ -15,7 +15,7 @@ public class ZaniteSwordItem extends SwordItem implements ZaniteWeapon {
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
-        return this.increaseDamage(super.getAttributeModifiers(slot, stack), stack, slot);
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(ItemStack stack, EquipmentSlot slot) {
+        return this.increaseDamage(super.getAttributeModifiers(stack, slot), stack, slot);
     }
 }

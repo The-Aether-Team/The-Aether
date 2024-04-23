@@ -5,6 +5,8 @@ import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListen
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.StepHeightPacket;
 import com.aetherteam.nitrogen.network.PacketRelay;
+import io.github.fabricators_of_create.porting_lib.attributes.PortingLibAttributes;
+import io.github.fabricators_of_create.porting_lib.entity.events.EntityEventFactory;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -15,7 +17,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeMod;
 
 import java.util.UUID;
 
@@ -101,7 +102,7 @@ public interface MountableMob {
                 vehicle.hasImpulse = true;
             }
             // Handles step height.
-            AttributeInstance stepHeight = vehicle.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
+            AttributeInstance stepHeight = vehicle.getAttribute(PortingLibAttributes.STEP_HEIGHT_ADDITION);
             if (stepHeight != null) {
                 if (stepHeight.hasModifier(vehicle.getDefaultStepHeightModifier())) {
                     stepHeight.removeModifier(vehicle.getDefaultStepHeightModifier());
@@ -123,7 +124,7 @@ public interface MountableMob {
             vehicle.calculateEntityAnimation(false);
         } else {
             // Handles step height.
-            AttributeInstance stepHeight = vehicle.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
+            AttributeInstance stepHeight = vehicle.getAttribute(PortingLibAttributes.STEP_HEIGHT_ADDITION);
             if (stepHeight != null) {
                 if (stepHeight.hasModifier(vehicle.getMountStepHeightModifier())) {
                     stepHeight.removeModifier(vehicle.getMountStepHeightModifier());
@@ -189,7 +190,7 @@ public interface MountableMob {
      * @param vehicle The vehicle {@link Mob}.
      */
     default void onJump(Mob vehicle) {
-        net.minecraftforge.common.ForgeHooks.onLivingJump(vehicle);
+        EntityEventFactory.onLivingJump(vehicle);
     }
 
     default AttributeModifier getMountStepHeightModifier() {

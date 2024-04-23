@@ -6,6 +6,8 @@ import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
 import com.aetherteam.aether.mixin.mixins.client.accessor.PlayerModelAccessor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import dev.emi.trinkets.api.SlotReference;
+import dev.emi.trinkets.api.client.TrinketRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.PlayerModel;
@@ -23,10 +25,9 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.armortrim.ArmorTrim;
-import top.theillusivec4.curios.api.SlotContext;
-import top.theillusivec4.curios.api.client.ICurioRenderer;
 
-public class GlovesRenderer implements ICurioRenderer {
+public class GlovesRenderer implements TrinketRenderer {
+    public static final GlovesRenderer INSTANCE = new GlovesRenderer();
     private final GlovesModel glovesModel;
     private final GlovesModel glovesTrimModel;
     private final GlovesModel glovesModelSlim;
@@ -61,21 +62,20 @@ public class GlovesRenderer implements ICurioRenderer {
      * @param headPitch The {@link Float} for the head pitch rotation.
      */
     @Override
-    public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack poseStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource buffer, int packedLight, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        LivingEntity livingEntity = slotContext.entity();
+    public void render(ItemStack stack, SlotReference slotContext, EntityModel<? extends LivingEntity> contextModel, PoseStack poseStack, MultiBufferSource buffer, int packedLight, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         GlovesItem glovesItem = (GlovesItem) stack.getItem();
         GlovesModel model = this.glovesModel;
         GlovesModel trimModel = this.glovesTrimModel;
         ResourceLocation texture = glovesItem.getGlovesTexture();
 
-        if (renderLayerParent.getModel() instanceof PlayerModel<?> playerModel) {
+        if (contextModel instanceof PlayerModel<?> playerModel) {
             PlayerModelAccessor playerModelAccessor = (PlayerModelAccessor) playerModel;
             model = playerModelAccessor.aether$getSlim() ? this.glovesModelSlim : this.glovesModel;
             trimModel = playerModelAccessor.aether$getSlim() ? this.glovesTrimModelSlim : this.glovesTrimModel;
         }
 
-        ICurioRenderer.followBodyRotations(slotContext.entity(), model);
-        ICurioRenderer.followBodyRotations(slotContext.entity(), trimModel);
+        TrinketRenderer.followBodyRotations(livingEntity, model);
+        TrinketRenderer.followBodyRotations(livingEntity, trimModel);
 
         float red = glovesItem.getColors(stack).getLeft();
         float green = glovesItem.getColors(stack).getMiddle();

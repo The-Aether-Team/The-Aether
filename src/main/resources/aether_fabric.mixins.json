@@ -6,7 +6,10 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "aether.refmap.json",
   "mixins": [
-
   ],
-  "client": []
+  "client": [
+    "client.fabric.BossHealthOverlayMixin",
+    "client.fabric.ClientPacketListenerMixin",
+    "client.fabric.MinecraftMixin"
+  ]
 }

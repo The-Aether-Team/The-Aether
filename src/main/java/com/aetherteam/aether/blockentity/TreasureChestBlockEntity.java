@@ -3,6 +3,8 @@ package com.aetherteam.aether.blockentity;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.item.miscellaneous.DungeonKeyItem;
+import io.github.fabricators_of_create.porting_lib.block.CustomDataPacketHandlingBlockEntity;
+import io.github.fabricators_of_create.porting_lib.block.CustomUpdateTagHandlingBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -28,11 +30,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.wrapper.InvWrapper;
 
 import org.jetbrains.annotations.Nullable;
 import java.util.stream.IntStream;
@@ -41,7 +38,7 @@ import java.util.stream.IntStream;
  * [CODE COPY] - {@link ChestBlockEntity}.<br><br>
  * Has additional locking behavior.
  */
-public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity implements LidBlockEntity, WorldlyContainer {
+public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity implements LidBlockEntity, WorldlyContainer, CustomUpdateTagHandlingBlockEntity, CustomDataPacketHandlingBlockEntity {
     private NonNullList<ItemStack> items = NonNullList.withSize(27, ItemStack.EMPTY);
     private final ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
         protected void onOpen(Level level, BlockPos pos, BlockState state) {
@@ -68,8 +65,8 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
     private final ChestLidController chestLidController = new ChestLidController();
     private boolean locked;
     private ResourceLocation kind;
-    @Nullable
-    private LazyOptional<IItemHandlerModifiable> chestHandler;
+//    @Nullable
+//    private LazyOptional<IItemHandlerModifiable> chestHandler;
 
     public TreasureChestBlockEntity() {
         this(AetherBlockEntityTypes.TREASURE_CHEST.get(), BlockPos.ZERO, AetherBlocks.TREASURE_CHEST.get().defaultBlockState());
@@ -104,56 +101,56 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
         }
     }
 
-    @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
-        if (!this.remove && capability == ForgeCapabilities.ITEM_HANDLER) {
-            if (this.chestHandler == null) {
-                this.chestHandler = LazyOptional.of(this::createHandler);
-            }
-            return this.chestHandler.cast();
-        }
-        return super.getCapability(capability, side);
-    }
-
-    private IItemHandlerModifiable createHandler() {
-        BlockState blockState = this.getBlockState();
-        if (!(blockState.getBlock() instanceof ChestBlock)) {
-            return new InvWrapper(this) {
-                @Override
-                public ItemStack extractItem(int slot, int amount, boolean simulate) {
-                    if (TreasureChestBlockEntity.this.getLocked()) {
-                        return ItemStack.EMPTY;
-                    }
-                    return super.extractItem(slot, amount, simulate);
-                }
-            };
-        }
-        Container inv = ChestBlock.getContainer((ChestBlock) blockState.getBlock(), blockState, this.level, getBlockPos(), true);
-        return new InvWrapper(inv == null ? this : inv);
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        if (this.chestHandler != null) {
-            this.chestHandler.invalidate();
-            this.chestHandler = null;
-        }
-    }
-
-    /**
-     * Warning for "deprecation" is suppressed because the method is fine to override.
-     */
-    @SuppressWarnings("deprecation")
-    @Override
-    public void setBlockState(BlockState state) {
-        super.setBlockState(state);
-        if (this.chestHandler != null) {
-            LazyOptional<?> oldHandler = this.chestHandler;
-            this.chestHandler = null;
-            oldHandler.invalidate();
-        }
-    }
+//    @Override TODO: PORT (probably not needed?)
+//    public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
+//        if (!this.remove && capability == ForgeCapabilities.ITEM_HANDLER) {
+//            if (this.chestHandler == null) {
+//                this.chestHandler = LazyOptional.of(this::createHandler);
+//            }
+//            return this.chestHandler.cast();
+//        }
+//        return super.getCapability(capability, side);
+//    }
+//
+//    private IItemHandlerModifiable createHandler() {
+//        BlockState blockState = this.getBlockState();
+//        if (!(blockState.getBlock() instanceof ChestBlock)) {
+//            return new InvWrapper(this) {
+//                @Override
+//                public ItemStack extractItem(int slot, int amount, boolean simulate) {
+//                    if (TreasureChestBlockEntity.this.getLocked()) {
+//                        return ItemStack.EMPTY;
+//                    }
+//                    return super.extractItem(slot, amount, simulate);
+//                }
+//            };
+//        }
+//        Container inv = ChestBlock.getContainer((ChestBlock) blockState.getBlock(), blockState, this.level, getBlockPos(), true);
+//        return new InvWrapper(inv == null ? this : inv);
+//    }
+//
+//    @Override
+//    public void invalidateCaps() {
+//        super.invalidateCaps();
+//        if (this.chestHandler != null) {
+//            this.chestHandler.invalidate();
+//            this.chestHandler = null;
+//        }
+//    }
+//
+//    /**
+//     * Warning for "deprecation" is suppressed because the method is fine to override.
+//     */
+//    @SuppressWarnings("deprecation")
+//    @Override
+//    public void setBlockState(BlockState state) {
+//        super.setBlockState(state);
+//        if (this.chestHandler != null) {
+//            LazyOptional<?> oldHandler = this.chestHandler;
+//            this.chestHandler = null;
+//            oldHandler.invalidate();
+//        }
+//    }
 
     @Override
     protected AbstractContainerMenu createMenu(int id, Inventory inventory) {

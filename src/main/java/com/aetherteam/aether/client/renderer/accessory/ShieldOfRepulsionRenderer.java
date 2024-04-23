@@ -7,6 +7,7 @@ import com.aetherteam.aether.mixin.mixins.client.accessor.PlayerModelAccessor;
 import com.aetherteam.nitrogen.ConstantsUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.client.TrinketRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
@@ -60,22 +61,17 @@ public class ShieldOfRepulsionRenderer implements TrinketRenderer {
      * @param headPitch The {@link Float} for the head pitch rotation.
      */
     @Override
-    public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack poseStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource buffer, int packedLight, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        LivingEntity livingEntity = slotContext.entity();
+    public void render(ItemStack stack, SlotReference slotContext, EntityModel<? extends LivingEntity> contextModel, PoseStack poseStack, MultiBufferSource buffer, int packedLight, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         ShieldOfRepulsionItem shield = (ShieldOfRepulsionItem) stack.getItem();
         ResourceLocation texture;
         HumanoidModel<LivingEntity> model;
 
-        if (livingEntity instanceof Player player && renderLayerParent.getModel() instanceof PlayerModel<?> playerModel) {
+        if (livingEntity instanceof Player player && contextModel instanceof PlayerModel<?> playerModel) {
             PlayerModelAccessor playerModelAccessor = (PlayerModelAccessor) playerModel;
             model = playerModelAccessor.aether$getSlim() ? this.shieldModelSlim : this.shieldModel;
-            Optional<AetherPlayer> aetherPlayerOptional = AetherPlayer.getOptional(player).resolve();
-            if (aetherPlayerOptional.isPresent()) {
-                if (!aetherPlayerOptional.get().isMoving()) {
-                    texture = playerModelAccessor.aether$getSlim() ? shield.getShieldOfRepulsionSlimTexture() : shield.getShieldOfRepulsionTexture();
-                } else {
-                    texture = playerModelAccessor.aether$getSlim() ? shield.getShieldOfRepulsionSlimInactiveTexture() : shield.getShieldOfRepulsionInactiveTexture();
-                }
+            AetherPlayer aetherPlayer = AetherPlayer.get(player);
+            if (!aetherPlayer.isMoving()) {
+                texture = playerModelAccessor.aether$getSlim() ? shield.getShieldOfRepulsionSlimTexture() : shield.getShieldOfRepulsionTexture();
             } else {
                 texture = playerModelAccessor.aether$getSlim() ? shield.getShieldOfRepulsionSlimInactiveTexture() : shield.getShieldOfRepulsionInactiveTexture();
             }
@@ -89,8 +85,8 @@ public class ShieldOfRepulsionRenderer implements TrinketRenderer {
             }
         }
 
-        ICurioRenderer.followHeadRotations(slotContext.entity(), model.head);
-        TrinketRenderer.followBodyRotations(slotContext.entity(), model);
+//        ICurioRenderer.followHeadRotations(slotContext.entity(), model.head); TODO: PORT
+        TrinketRenderer.followBodyRotations(livingEntity, model);
         VertexConsumer consumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.entityTranslucent(texture), false, false);
         model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
     }

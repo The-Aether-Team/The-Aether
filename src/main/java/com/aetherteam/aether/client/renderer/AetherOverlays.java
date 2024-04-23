@@ -30,13 +30,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
-import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherOverlays {
     private static final ResourceLocation TEXTURE_INEBRIATION_VIGNETTE = new ResourceLocation(Aether.MODID, "textures/blur/inebriation_vignette.png");
     private static final ResourceLocation TEXTURE_REMEDY_VIGNETTE = new ResourceLocation(Aether.MODID, "textures/blur/remedy_vignette.png");
@@ -45,63 +39,62 @@ public class AetherOverlays {
     private static final ResourceLocation TEXTURE_JUMPS = new ResourceLocation(Aether.MODID, "textures/gui/jumps.png");
     private static final ResourceLocation TEXTURE_LIFE_SHARD_HEARTS = new ResourceLocation(Aether.MODID, "textures/gui/life_shard_hearts.png");
 
-    @SubscribeEvent
-    public static void registerOverlays(RegisterGuiOverlaysEvent event) {
-        event.registerAboveAll("aether_portal_overlay", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
-            Minecraft minecraft = Minecraft.getInstance();
-            Window window = minecraft.getWindow();
-            LocalPlayer player = minecraft.player;
-            if (player != null) {
-                renderAetherPortalOverlay(pStack, minecraft, window, AetherPlayer.get(player), partialTicks);
-            }
-        });
-        event.registerAboveAll("inebriation_vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
-            Minecraft minecraft = Minecraft.getInstance();
-            Window window = minecraft.getWindow();
-            LocalPlayer player = minecraft.player;
-            if (player != null) {
-                renderInebriationOverlay(pStack, minecraft, window, AetherPlayer.get(player));
-            }
-        });
-        event.registerAboveAll("remedy_vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
-            Minecraft minecraft = Minecraft.getInstance();
-            Window window = minecraft.getWindow();
-            LocalPlayer player = minecraft.player;
-            if (player != null) {
-                renderRemedyOverlay(pStack, minecraft, window, AetherPlayer.get(player));
-            }
-        });
-        event.registerAboveAll("shield_of_repulsion_vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
-            Minecraft minecraft = Minecraft.getInstance();
-            Window window = minecraft.getWindow();
-            LocalPlayer player = minecraft.player;
-            if (player != null) {
-                renderRepulsionOverlay(pStack, minecraft, window, AetherPlayer.get(player));
-            }
-        });
-        event.registerAboveAll("hammer_cooldown", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
-            Minecraft minecraft = Minecraft.getInstance();
-            Window window = minecraft.getWindow();
-            LocalPlayer player = minecraft.player;
-            if (player != null) {
-                renderHammerCooldownOverlay(pStack, minecraft, window, player);
-            }
-        });
-        event.registerAboveAll("moa_jumps", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
-            Minecraft minecraft = Minecraft.getInstance();
-            Window window = minecraft.getWindow();
-            LocalPlayer player = minecraft.player;
-            if (player != null) {
-                renderMoaJumps(pStack, window, player);
-            }
-        });
-        event.registerAbove(new ResourceLocation("player_health"), "silver_life_shard_hearts", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
-            Minecraft minecraft = Minecraft.getInstance();
-            LocalPlayer player = minecraft.player;
-            if (player != null) {
-                renderSilverLifeShardHearts(pStack, gui, player, screenWidth, screenHeight);
-            }
-        });
+    public static void registerOverlays() {
+//        event.registerAboveAll("aether_portal_overlay", (gui, pStack, partialTicks, screenWidth, screenHeight) -> { TODO: PORT
+//            Minecraft minecraft = Minecraft.getInstance();
+//            Window window = minecraft.getWindow();
+//            LocalPlayer player = minecraft.player;
+//            if (player != null) {
+//                renderAetherPortalOverlay(pStack, minecraft, window, AetherPlayer.get(player), partialTicks);
+//            }
+//        });
+//        event.registerAboveAll("inebriation_vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+//            Minecraft minecraft = Minecraft.getInstance();
+//            Window window = minecraft.getWindow();
+//            LocalPlayer player = minecraft.player;
+//            if (player != null) {
+//                renderInebriationOverlay(pStack, minecraft, window, AetherPlayer.get(player));
+//            }
+//        });
+//        event.registerAboveAll("remedy_vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+//            Minecraft minecraft = Minecraft.getInstance();
+//            Window window = minecraft.getWindow();
+//            LocalPlayer player = minecraft.player;
+//            if (player != null) {
+//                renderRemedyOverlay(pStack, minecraft, window, AetherPlayer.get(player));
+//            }
+//        });
+//        event.registerAboveAll("shield_of_repulsion_vignette", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+//            Minecraft minecraft = Minecraft.getInstance();
+//            Window window = minecraft.getWindow();
+//            LocalPlayer player = minecraft.player;
+//            if (player != null) {
+//                renderRepulsionOverlay(pStack, minecraft, window, AetherPlayer.get(player));
+//            }
+//        });
+//        event.registerAboveAll("hammer_cooldown", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+//            Minecraft minecraft = Minecraft.getInstance();
+//            Window window = minecraft.getWindow();
+//            LocalPlayer player = minecraft.player;
+//            if (player != null) {
+//                renderHammerCooldownOverlay(pStack, minecraft, window, player);
+//            }
+//        });
+//        event.registerAboveAll("moa_jumps", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+//            Minecraft minecraft = Minecraft.getInstance();
+//            Window window = minecraft.getWindow();
+//            LocalPlayer player = minecraft.player;
+//            if (player != null) {
+//                renderMoaJumps(pStack, window, player);
+//            }
+//        });
+//        event.registerAbove(new ResourceLocation("player_health"), "silver_life_shard_hearts", (gui, pStack, partialTicks, screenWidth, screenHeight) -> {
+//            Minecraft minecraft = Minecraft.getInstance();
+//            LocalPlayer player = minecraft.player;
+//            if (player != null) {
+//                renderSilverLifeShardHearts(pStack, gui, player, screenWidth, screenHeight);
+//            }
+//        });
     }
 
     /**
@@ -255,102 +248,102 @@ public class AetherOverlays {
         }
     }
 
-    /**
-     * [CODE COPY] - {@link Gui#renderPlayerHealth(GuiGraphics)}.<br><br>
-     * Stripped down to only use what is necessary.<br>
-     * Renders silver heart textures over the extra hearts given by Life Shards.
-     * @param guiGraphics The {@link GuiGraphics} for rendering.
-     * @param gui The {@link ForgeGui} included in rendering.
-     * @param player The {@link LocalPlayer}.
-     * @param width The {@link Integer} for the screen width.
-     * @param height The {@link Integer} for the screen height.
-     */
-    private static void renderSilverLifeShardHearts(GuiGraphics guiGraphics, ForgeGui gui, LocalPlayer player, int width, int height) {
-        GuiAccessor guiAccessor = (GuiAccessor) gui;
-        if (AetherConfig.CLIENT.enable_silver_hearts.get() && gui.shouldDrawSurvivalElements()) {
-            AetherPlayer.getOptional(player).ifPresent(aetherPlayer -> {
-                Player innerPlayer = aetherPlayer.getPlayer();
-                if (aetherPlayer.getLifeShardCount() > 0) {
-                    AttributeInstance attributeInstance = innerPlayer.getAttribute(Attributes.MAX_HEALTH);
-                    if (attributeInstance != null) {
-                        int lastLifeShardHealth = 0;
-                        int lastOverallHealth = 0;
-
-                        RenderSystem.enableBlend();
-
-                        double overallHealth = attributeInstance.getValue();
-                        double maxLifeShardHealth = aetherPlayer.getLifeShardHealthAttributeModifier().getAmount();
-
-                        int maxDefaultHealth = Mth.ceil(overallHealth - maxLifeShardHealth);
-
-                        int currentOverallHealth = Mth.ceil(innerPlayer.getHealth());
-                        int currentLifeShardHealth = Mth.ceil(maxDefaultHealth > 20 ? Mth.clamp(currentOverallHealth - 20, 0, maxLifeShardHealth) : Math.min(player.getHealth(), currentOverallHealth - maxDefaultHealth));
-
-                        boolean highlight = guiAccessor.aether$getHealthBlinkTime() > (long) gui.getGuiTicks() && (guiAccessor.aether$getHealthBlinkTime() - (long) gui.getGuiTicks()) / 3L % 2L == 1L;
-                        if (Util.getMillis() - guiAccessor.aether$getLastHealthTime() > 1000L) {
-                            lastOverallHealth = currentOverallHealth;
-                            lastLifeShardHealth = currentLifeShardHealth;
-                        }
-
-                        //do NOT cast this to long. This is the only way the hearts will properly shake when health is low
-                        //the only time the shaking will be off is if the player's max health attribute base is below 0. This probably can't be fixed.
-                        guiAccessor.aether$getRandom().setSeed(gui.getGuiTicks() * 312871);
-
-                        float displayOverallHealth = Math.max((float) overallHealth, Math.max(lastOverallHealth, currentOverallHealth));
-                        float displayLifeShardHealth = Math.max((float) maxLifeShardHealth, Math.max(lastLifeShardHealth, currentLifeShardHealth));
-                        int absorption = Mth.ceil(innerPlayer.getAbsorptionAmount());
-
-                        int healthRows = Mth.ceil((displayOverallHealth + absorption) / 2.0F / 10.0F);
-                        int rowHeight = Math.max(10 - (healthRows - 2), 3);
-
-                        int left = width / 2 - 91;
-                        int top = height - 39;
-
-                        int regen = Integer.MIN_VALUE;
-                        if (innerPlayer.hasEffect(MobEffects.REGENERATION)) {
-                            regen = gui.getGuiTicks() % Mth.ceil(displayOverallHealth + 5.0F);
-                        }
-
-                        renderHearts(guiGraphics, innerPlayer, gui, left, top, regen, displayOverallHealth, displayLifeShardHealth, maxDefaultHealth, currentLifeShardHealth, rowHeight, absorption, highlight);
-
-                        RenderSystem.disableBlend();
-                    }
-                }
-            });
-        }
-    }
-
-    /**
-     * [CODE COPY] - {@link Gui#renderHearts(GuiGraphics, Player, int, int, int, int, float, int, int, int, boolean)}.<br><br>
-     * Stripped down to only use what is necessary.
-     */
-    private static void renderHearts(GuiGraphics guiGraphics, Player player, ForgeGui gui, int left, int top, int regen, float displayOverallHealth, float displayLifeShardHealth, int maxDefaultHealth, int lifeShardHealth, int rowHeight, int absorption, boolean highlight) {
-        GuiAccessor guiAccessor = (GuiAccessor) gui;
-        Gui.HeartType heartType = HeartTypeAccessor.callForPlayer(player);
-        int overallHearts = Mth.ceil((double) displayOverallHealth / 2.0);
-        int lifeShardHearts = Mth.ceil((double) displayLifeShardHealth / 2.0);
-        int maxDefaultHearts = Mth.ceil((double) maxDefaultHealth / 2.0);
-        boolean tooManyHearts = overallHearts > 50;
-        boolean tooLittleHearts = maxDefaultHearts < 10 && maxDefaultHearts > 0;
-        for (int currentHeart = Math.min(overallHearts, lifeShardHearts - 1); currentHeart >= 0; --currentHeart) {
-            int x = left + (currentHeart + (tooLittleHearts ? overallHearts - lifeShardHearts : 0)) % 10 * 8;
-            int y = top - (currentHeart + (tooManyHearts ? 0 : maxDefaultHearts + currentHeart < 10 ? 0 : 10)) / 10 * rowHeight;
-
-            if (Mth.ceil(player.getHealth()) + absorption <= 4) {
-                y += guiAccessor.aether$getRandom().nextInt(2);
-            }
-            if (currentHeart + (maxDefaultHearts > 10 ? overallHearts - 10 : maxDefaultHearts) < overallHearts && currentHeart + Math.min(maxDefaultHearts, 10) - (tooManyHearts ? overallHearts : 0) == regen) {
-                y -= 2;
-            }
-            int selectedContainer = currentHeart * 2;
-            if (highlight && selectedContainer < displayLifeShardHealth) {
-                boolean halfHeart = selectedContainer + 1 == displayLifeShardHealth;
-                guiGraphics.blit(TEXTURE_LIFE_SHARD_HEARTS, x, y, heartType.getX(halfHeart, false), 0, 9, 9);
-            }
-            if (selectedContainer < lifeShardHealth) {
-                boolean halfHeart = selectedContainer + 1 == lifeShardHealth;
-                guiGraphics.blit(TEXTURE_LIFE_SHARD_HEARTS, x, y, heartType.getX(halfHeart, false), 0, 9, 9);
-            }
-        }
-    }
+//    /** TODO: PORT
+//     * [CODE COPY] - {@link Gui#renderPlayerHealth(GuiGraphics)}.<br><br>
+//     * Stripped down to only use what is necessary.<br>
+//     * Renders silver heart textures over the extra hearts given by Life Shards.
+//     * @param guiGraphics The {@link GuiGraphics} for rendering.
+//     * @param gui The {@link ForgeGui} included in rendering.
+//     * @param player The {@link LocalPlayer}.
+//     * @param width The {@link Integer} for the screen width.
+//     * @param height The {@link Integer} for the screen height.
+//     */
+//    private static void renderSilverLifeShardHearts(GuiGraphics guiGraphics, ForgeGui gui, LocalPlayer player, int width, int height) {
+//        GuiAccessor guiAccessor = (GuiAccessor) gui;
+//        if (AetherConfig.CLIENT.enable_silver_hearts.get() && gui.shouldDrawSurvivalElements()) {
+//            AetherPlayer.getOptional(player).ifPresent(aetherPlayer -> {
+//                Player innerPlayer = aetherPlayer.getPlayer();
+//                if (aetherPlayer.getLifeShardCount() > 0) {
+//                    AttributeInstance attributeInstance = innerPlayer.getAttribute(Attributes.MAX_HEALTH);
+//                    if (attributeInstance != null) {
+//                        int lastLifeShardHealth = 0;
+//                        int lastOverallHealth = 0;
+//
+//                        RenderSystem.enableBlend();
+//
+//                        double overallHealth = attributeInstance.getValue();
+//                        double maxLifeShardHealth = aetherPlayer.getLifeShardHealthAttributeModifier().getAmount();
+//
+//                        int maxDefaultHealth = Mth.ceil(overallHealth - maxLifeShardHealth);
+//
+//                        int currentOverallHealth = Mth.ceil(innerPlayer.getHealth());
+//                        int currentLifeShardHealth = Mth.ceil(maxDefaultHealth > 20 ? Mth.clamp(currentOverallHealth - 20, 0, maxLifeShardHealth) : Math.min(player.getHealth(), currentOverallHealth - maxDefaultHealth));
+//
+//                        boolean highlight = guiAccessor.aether$getHealthBlinkTime() > (long) gui.getGuiTicks() && (guiAccessor.aether$getHealthBlinkTime() - (long) gui.getGuiTicks()) / 3L % 2L == 1L;
+//                        if (Util.getMillis() - guiAccessor.aether$getLastHealthTime() > 1000L) {
+//                            lastOverallHealth = currentOverallHealth;
+//                            lastLifeShardHealth = currentLifeShardHealth;
+//                        }
+//
+//                        //do NOT cast this to long. This is the only way the hearts will properly shake when health is low
+//                        //the only time the shaking will be off is if the player's max health attribute base is below 0. This probably can't be fixed.
+//                        guiAccessor.aether$getRandom().setSeed(gui.getGuiTicks() * 312871);
+//
+//                        float displayOverallHealth = Math.max((float) overallHealth, Math.max(lastOverallHealth, currentOverallHealth));
+//                        float displayLifeShardHealth = Math.max((float) maxLifeShardHealth, Math.max(lastLifeShardHealth, currentLifeShardHealth));
+//                        int absorption = Mth.ceil(innerPlayer.getAbsorptionAmount());
+//
+//                        int healthRows = Mth.ceil((displayOverallHealth + absorption) / 2.0F / 10.0F);
+//                        int rowHeight = Math.max(10 - (healthRows - 2), 3);
+//
+//                        int left = width / 2 - 91;
+//                        int top = height - 39;
+//
+//                        int regen = Integer.MIN_VALUE;
+//                        if (innerPlayer.hasEffect(MobEffects.REGENERATION)) {
+//                            regen = gui.getGuiTicks() % Mth.ceil(displayOverallHealth + 5.0F);
+//                        }
+//
+//                        renderHearts(guiGraphics, innerPlayer, gui, left, top, regen, displayOverallHealth, displayLifeShardHealth, maxDefaultHealth, currentLifeShardHealth, rowHeight, absorption, highlight);
+//
+//                        RenderSystem.disableBlend();
+//                    }
+//                }
+//            });
+//        }
+//    }
+//
+//    /**
+//     * [CODE COPY] - {@link Gui#renderHearts(GuiGraphics, Player, int, int, int, int, float, int, int, int, boolean)}.<br><br>
+//     * Stripped down to only use what is necessary.
+//     */
+//    private static void renderHearts(GuiGraphics guiGraphics, Player player, ForgeGui gui, int left, int top, int regen, float displayOverallHealth, float displayLifeShardHealth, int maxDefaultHealth, int lifeShardHealth, int rowHeight, int absorption, boolean highlight) {
+//        GuiAccessor guiAccessor = (GuiAccessor) gui;
+//        Gui.HeartType heartType = HeartTypeAccessor.callForPlayer(player);
+//        int overallHearts = Mth.ceil((double) displayOverallHealth / 2.0);
+//        int lifeShardHearts = Mth.ceil((double) displayLifeShardHealth / 2.0);
+//        int maxDefaultHearts = Mth.ceil((double) maxDefaultHealth / 2.0);
+//        boolean tooManyHearts = overallHearts > 50;
+//        boolean tooLittleHearts = maxDefaultHearts < 10 && maxDefaultHearts > 0;
+//        for (int currentHeart = Math.min(overallHearts, lifeShardHearts - 1); currentHeart >= 0; --currentHeart) {
+//            int x = left + (currentHeart + (tooLittleHearts ? overallHearts - lifeShardHearts : 0)) % 10 * 8;
+//            int y = top - (currentHeart + (tooManyHearts ? 0 : maxDefaultHearts + currentHeart < 10 ? 0 : 10)) / 10 * rowHeight;
+//
+//            if (Mth.ceil(player.getHealth()) + absorption <= 4) {
+//                y += guiAccessor.aether$getRandom().nextInt(2);
+//            }
+//            if (currentHeart + (maxDefaultHearts > 10 ? overallHearts - 10 : maxDefaultHearts) < overallHearts && currentHeart + Math.min(maxDefaultHearts, 10) - (tooManyHearts ? overallHearts : 0) == regen) {
+//                y -= 2;
+//            }
+//            int selectedContainer = currentHeart * 2;
+//            if (highlight && selectedContainer < displayLifeShardHealth) {
+//                boolean halfHeart = selectedContainer + 1 == displayLifeShardHealth;
+//                guiGraphics.blit(TEXTURE_LIFE_SHARD_HEARTS, x, y, heartType.getX(halfHeart, false), 0, 9, 9);
+//            }
+//            if (selectedContainer < lifeShardHealth) {
+//                boolean halfHeart = selectedContainer + 1 == lifeShardHealth;
+//                guiGraphics.blit(TEXTURE_LIFE_SHARD_HEARTS, x, y, heartType.getX(halfHeart, false), 0, 9, 9);
+//            }
+//        }
+//    }
 }

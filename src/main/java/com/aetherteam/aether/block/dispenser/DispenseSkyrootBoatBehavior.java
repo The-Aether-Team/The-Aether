@@ -38,16 +38,16 @@ public class DispenseSkyrootBoatBehavior extends DefaultDispenseItemBehavior {
         BlockPos blockpos = source.getPos().relative(direction);
         Boat boat = (this.isChestBoat ? new SkyrootChestBoat(level, width, x, y) : new SkyrootBoat(level, width, x, y));
         boat.setYRot(direction.toYRot());
-        double yOffset;
-        if (boat.canBoatInFluid(level.getFluidState(blockpos))) {
-            yOffset = 1.0D;
-        } else {
-            if (!level.getBlockState(blockpos).isAir() || !boat.canBoatInFluid(level.getFluidState(blockpos.below()))) {
-                return this.defaultDispenseItemBehavior.dispense(source, stack);
-            }
-            yOffset = 0.0D;
-        }
-        boat.setPos(x, y + yOffset, z);
+//        double yOffset; TODO: PORT
+//        if (boat.canBoatInFluid(level.getFluidState(blockpos))) {
+//            yOffset = 1.0D;
+//        } else {
+//            if (!level.getBlockState(blockpos).isAir() || !boat.canBoatInFluid(level.getFluidState(blockpos.below()))) {
+//                return this.defaultDispenseItemBehavior.dispense(source, stack);
+//            }
+//            yOffset = 0.0D;
+//        }
+//        boat.setPos(x, y + yOffset, z);
         level.addFreshEntity(boat);
         stack.shrink(1);
         return stack;

@@ -1,7 +1,7 @@
 package com.aetherteam.aether.item.accessories.pendant;
 
 import com.aetherteam.aether.AetherTags;
-import com.aetherteam.aether.Utils.LivingEntityUtils;
+import com.aetherteam.aether.utils.FabricUtils;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.item.accessories.abilities.FreezingAccessory;
 import dev.emi.trinkets.api.SlotReference;
@@ -20,7 +20,7 @@ public class IcePendantItem extends PendantItem implements FreezingAccessory {
 
     @Override
     public void tick(ItemStack stack, SlotReference slotContext, LivingEntity livingEntity) {
-        if (!LivingEntityUtils.isInFluidType(livingEntity)) {
+        if (!FabricUtils.isInFluidType(livingEntity)) {
             this.freezeTick(slotContext, stack, livingEntity);
         }
     }

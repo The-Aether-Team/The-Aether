@@ -3,17 +3,18 @@ package com.aetherteam.aether.entity.monster.dungeon.boss.goal;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.monster.dungeon.boss.Slider;
+import io.github.fabricators_of_create.porting_lib.entity.events.EntityEventFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.ForgeEventFactory;
 
 public class CrushGoal extends Goal {
     private final Slider slider;
@@ -35,7 +36,7 @@ public class CrushGoal extends Goal {
     @Override
     public void start() {
         boolean crushed = false;
-        if (ForgeEventFactory.getMobGriefingEvent(this.slider.level(), this.slider)) {
+        if (EntityEventFactory.getMobGriefingEvent(this.slider.level(), this.slider)) {
             AABB crushBox = this.slider.getBoundingBox().inflate(0.2);
             for (BlockPos pos : BlockPos.betweenClosed(Mth.floor(crushBox.minX), Mth.floor(crushBox.minY), Mth.floor(crushBox.minZ), Mth.floor(crushBox.maxX), Mth.floor(crushBox.maxY), Mth.floor(crushBox.maxZ))) {
                 if (this.slider.getDungeon() == null || this.slider.getDungeon().roomBounds().contains(pos.getCenter())) {

@@ -7,6 +7,7 @@ import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.NpcPlayerInteractPacket;
 import com.aetherteam.nitrogen.network.PacketRelay;
+import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -15,8 +16,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.client.event.ScreenEvent;
-import net.minecraftforge.common.MinecraftForge;
 
 public class ValkyrieQueenDialogueScreen extends Screen {
     private final DialogueAnswerComponent dialogueAnswer;
@@ -30,12 +29,12 @@ public class ValkyrieQueenDialogueScreen extends Screen {
 
     @Override
     protected void init() {
-        if (this.getMinecraft().player != null) {
+        if (Screens.getClient(this).player != null) {
             this.setupDialogueChoices( // Set up choices.
                     new DialogueChoiceComponent(this.buildDialogueChoice("question"), button -> this.finishChat((byte) 0)),
                     new DialogueChoiceComponent(this.buildDialogueChoice("challenge"), button -> { // Opens a new dialogue tree.
                         this.setDialogueAnswer(Component.translatable("gui.aether.queen.dialog.challenge")); // The Valkyrie Queen's response to the challenge choice in the GUI (not a chat message).
-                        int medals = this.getMinecraft().player.getInventory().countItem(AetherItems.VICTORY_MEDAL.get());
+                        int medals = Screens.getClient(this).player.getInventory().countItem(AetherItems.VICTORY_MEDAL.get());
                         DialogueChoiceComponent startFightChoice = medals >= 10
                                 ? new DialogueChoiceComponent(this.buildDialogueChoice("have_medals"), button1 -> this.finishChat((byte) 1))
                                 : new DialogueChoiceComponent(this.buildDialogueChoice("no_medals").append(" (" + medals + "/10)"), button1 -> this.finishChat((byte) 1));
@@ -133,9 +132,9 @@ public class ValkyrieQueenDialogueScreen extends Screen {
      */
     @Override
     public void renderBackground(GuiGraphics guiGraphics) {
-        if (this.getMinecraft().level != null) {
-            MinecraftForge.EVENT_BUS.post(new ScreenEvent.BackgroundRendered(this, guiGraphics));
-        }
+//        if (this.getMinecraft().level != null) {
+//            MinecraftForge.EVENT_BUS.post(new ScreenEvent.BackgroundRendered(this, guiGraphics));
+//        }
     }
 
     @Override

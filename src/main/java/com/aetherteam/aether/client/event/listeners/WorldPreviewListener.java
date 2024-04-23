@@ -2,104 +2,109 @@ package com.aetherteam.aether.client.event.listeners;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.event.hooks.WorldPreviewHooks;
+import com.mojang.blaze3d.vertex.PoseStack;
+import io.github.fabricators_of_create.porting_lib.event.client.CameraSetupCallback;
+import io.github.fabricators_of_create.porting_lib.event.client.LivingEntityRenderEvents;
+import io.github.fabricators_of_create.porting_lib.event.client.RenderPlayerEvents;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.*;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraft.world.entity.player.Player;
 
-@Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT)
 public class WorldPreviewListener {
-    /**
-     * @see WorldPreviewHooks#setupWorldPreview(Screen)
-     */
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void onGuiOpenLowest(ScreenEvent.Opening event) {
-        Screen newScreen = event.getNewScreen();
-        WorldPreviewHooks.setupWorldPreview(newScreen);
-    }
-
-    /**
-     * @see WorldPreviewHooks#hideScreen(Screen)
-     */
-    @SubscribeEvent
-    public static void onScreenRender(ScreenEvent.Render.Pre event) {
-        Screen screen = event.getScreen();
-        if (WorldPreviewHooks.hideScreen(screen)) {
-            event.setCanceled(true);
-        }
-    }
-
-    /**
-     * @see WorldPreviewHooks#renderMenuWithWorld(RenderLevelStageEvent.Stage)
-     */
-    @SubscribeEvent
-    public static void onRenderLevelLast(RenderLevelStageEvent event) {
-        RenderLevelStageEvent.Stage stage = event.getStage();
-        WorldPreviewHooks.renderMenuWithWorld(stage);
-    }
+//    /** TODO: PORT
+//     * @see WorldPreviewHooks#setupWorldPreview(Screen)
+//     */
+//    @SubscribeEvent(priority = EventPriority.LOWEST)
+//    public static void onGuiOpenLowest(ScreenEvent.Opening event) {
+//        Screen newScreen = event.getNewScreen();
+//        WorldPreviewHooks.setupWorldPreview(newScreen);
+//    }
+//
+//    /** TODO: PORT
+//     * @see WorldPreviewHooks#hideScreen(Screen)
+//     */
+//    @SubscribeEvent
+//    public static void onScreenRender(ScreenEvent.Render.Pre event) {
+//        Screen screen = event.getScreen();
+//        if (WorldPreviewHooks.hideScreen(screen)) {
+//            event.setCanceled(true);
+//        }
+//    }
+//
+//    /**
+//     * @see WorldPreviewHooks#renderMenuWithWorld(RenderLevelStageEvent.Stage)
+//     */
+//    @SubscribeEvent
+//    public static void onRenderLevelLast(RenderLevelStageEvent event) {
+//        RenderLevelStageEvent.Stage stage = event.getStage();
+//        WorldPreviewHooks.renderMenuWithWorld(stage);
+//    }
 
     /**
      * @see WorldPreviewHooks#tickMenuWhenPaused()
      */
-    @SubscribeEvent
-    public static void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.END) {
-            WorldPreviewHooks.tickMenuWhenPaused();
-        }
+    public static void onClientTick(Minecraft client) {
+        WorldPreviewHooks.tickMenuWhenPaused();
     }
 
     /**
      * @see WorldPreviewHooks#angleCamera()
      */
-    @SubscribeEvent
-    public static void onCameraView(ViewportEvent.ComputeCameraAngles event) {
+    public static boolean onCameraView(CameraSetupCallback.CameraInfo info) {
         WorldPreviewHooks.angleCamera();
+        return false;
     }
 
-    /**
-     * @see WorldPreviewHooks#hideOverlays()
-     */
-    @SubscribeEvent
-    public static void onRenderOverlay(RenderGuiOverlayEvent.Pre event) {
-        if (WorldPreviewHooks.hideOverlays()) {
-            event.setCanceled(true);
-        }
-    }
+//    /** TODO: PORT
+//     * @see WorldPreviewHooks#hideOverlays()
+//     */
+//    @SubscribeEvent
+//    public static void onRenderOverlay(RenderGuiOverlayEvent.Pre event) {
+//        if (WorldPreviewHooks.hideOverlays()) {
+//            event.setCanceled(true);
+//        }
+//    }
 
     /**
      * @see WorldPreviewHooks#shouldHidePlayer()
      * @see WorldPreviewHooks#adjustShadow(EntityRenderer, boolean)
      */
-    @SubscribeEvent
-    public static void onRenderPlayer(RenderPlayerEvent.Pre event) {
-        PlayerRenderer renderer = event.getRenderer();
+    public static boolean onRenderPlayer(Player player, PlayerRenderer renderer, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         boolean hide = WorldPreviewHooks.shouldHidePlayer();
+        boolean canceled = false;
         if (hide) {
-            event.setCanceled(true);
+            canceled = true;
         }
         WorldPreviewHooks.adjustShadow(renderer, hide);
+        return canceled;
     }
 
     /**
      * @see WorldPreviewHooks#shouldHideEntity(Entity)
      * @see WorldPreviewHooks#adjustShadow(EntityRenderer, boolean)
      */
-    @SubscribeEvent
-    public static <T extends LivingEntity, M extends EntityModel<T>> void onRenderEntity(RenderLivingEvent.Pre<T, M> event) {
-        Entity entity = event.getEntity();
-        EntityRenderer<?> renderer = event.getRenderer();
+    public static <T extends LivingEntity, M extends EntityModel<T>> boolean onRenderEntity(LivingEntity entity, LivingEntityRenderer<?, ?> renderer, float partialRenderTick, PoseStack matrixStack, MultiBufferSource buffers, int light) {
         boolean hide = WorldPreviewHooks.shouldHideEntity(entity);
+        boolean canceled = false;
         if (hide) {
-            event.setCanceled(true);
+            canceled = true;
         }
         WorldPreviewHooks.adjustShadow(renderer, hide);
+        return canceled;
+    }
+
+    public static void init() {
+        ClientTickEvents.END_CLIENT_TICK.register(WorldPreviewListener::onClientTick);
+        LivingEntityRenderEvents.PRE.register(WorldPreviewListener::onRenderEntity);
+        CameraSetupCallback.EVENT.register(WorldPreviewListener::onCameraView);
+        RenderPlayerEvents.PRE.register(WorldPreviewListener::onRenderPlayer);
     }
 }

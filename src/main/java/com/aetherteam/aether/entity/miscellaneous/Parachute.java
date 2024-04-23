@@ -2,6 +2,7 @@ package com.aetherteam.aether.entity.miscellaneous;
 
 import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.mixin.mixins.common.accessor.ServerGamePacketListenerImplAccessor;
+import io.github.fabricators_of_create.porting_lib.attributes.PortingLibAttributes;
 import io.github.fabricators_of_create.porting_lib.entity.PortingLibEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -43,7 +44,7 @@ public class Parachute extends Entity {
             this.checkSlowFallDistance(); // Resets the Parachute's fall distance.
             this.moveParachute(passenger);
             this.spawnExplosionParticle();
-            if (this.onGround() || this.isInFluidType() || this.verticalCollisionBelow) { // The parachute breaks when it collides with something.
+            if (this.onGround() ||/* this.isInFluidType() TODO: PORT ||*/ this.verticalCollisionBelow) { // The parachute breaks when it collides with something.
                 this.ejectPassengers();
                 this.die();
             }
@@ -68,7 +69,7 @@ public class Parachute extends Entity {
                 z *= 0.25F; // Backwards movement is slowed.
             }
             Vec3 travelVec = new Vec3(x, passenger.yya, z);
-            AttributeInstance gravity = passenger.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
+            AttributeInstance gravity = passenger.getAttribute(PortingLibAttributes.ENTITY_GRAVITY);
             double gravityModifier = gravity != null ? gravity.getValue() : 0.08;
 
             Vec3 movement = this.calculateMovement(travelVec);
@@ -130,10 +131,10 @@ public class Parachute extends Entity {
         return false;
     }
 
-    @Override
-    public boolean shouldRiderSit() {
-        return false;
-    }
+//    @Override TODO: PORT
+//    public boolean shouldRiderSit() {
+//        return false;
+//    }
 
     @Override
     public double getPassengersRidingOffset() {

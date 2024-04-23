@@ -6,6 +6,7 @@ import com.aetherteam.aether.capability.player.AetherPlayerCapability;
 import com.aetherteam.aether.entity.EntityUtil;
 import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
 import com.aetherteam.aether.item.AetherItems;
+import io.github.fabricators_of_create.porting_lib.item.EntitySwingListenerItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -18,7 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class CloudStaffItem extends Item {
+public class CloudStaffItem extends Item implements EntitySwingListenerItem {
     public CloudStaffItem() {
         super(new Item.Properties().durability(60).rarity(AetherItems.AETHER_LOOT));
     }
@@ -86,7 +87,7 @@ public class CloudStaffItem extends Item {
                 }
             });
         }
-        return super.onEntitySwing(stack, entity);
+        return false;
     }
 
     /**

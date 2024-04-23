@@ -13,8 +13,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.material.FogType;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.event.ViewportEvent;
-import net.minecraftforge.event.TickEvent;
 import org.apache.commons.lang3.tuple.Triple;
 
 import org.jetbrains.annotations.Nullable;
@@ -107,7 +105,7 @@ public class DimensionClientHooks {
             if (clientLevel.effects() instanceof AetherSkyRenderEffects) {
                 FogType fluidState = camera.getFluidInCamera();
                 if (fluidState == FogType.NONE) {
-                    Vec3 defaultSky = Vec3.fromRGB24(clientLevel.getBiome(camera.getBlockPosition()).get().getModifiedSpecialEffects().getFogColor());
+                    Vec3 defaultSky = Vec3.fromRGB24(clientLevel.getBiome(camera.getBlockPosition()).value().getSpecialEffects().getFogColor());
                     if (clientLevel.rainLevel > 0.0) { // Check for rain.
                         float f14 = 1.0F + clientLevel.rainLevel * 0.8F;
                         float f17 = 1.0F + clientLevel.rainLevel * 0.56F;
@@ -134,7 +132,7 @@ public class DimensionClientHooks {
 
     /**
      * Ticks time in clientside Aether levels.
-     * @see com.aetherteam.aether.client.event.listeners.DimensionClientListener#onClientTick(TickEvent.ClientTickEvent)
+     * @see com.aetherteam.aether.client.event.listeners.DimensionClientListener#onClientTick(Minecraft)
      */
     public static void tickTime() {
         ClientLevel level = Minecraft.getInstance().level;

@@ -2,6 +2,8 @@ package com.aetherteam.aether.data.providers;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.nitrogen.data.providers.NitrogenItemModelProvider;
+import io.github.fabricators_of_create.porting_lib.data.ExistingFileHelper;
+import io.github.fabricators_of_create.porting_lib.models.generators.item.ItemModelBuilder;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
@@ -10,8 +12,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.model.generators.ItemModelBuilder;
-import net.minecraftforge.common.data.ExistingFileHelper;
 
 public abstract class AetherItemModelProvider extends NitrogenItemModelProvider {
     public AetherItemModelProvider(PackOutput output, String id, ExistingFileHelper helper) {

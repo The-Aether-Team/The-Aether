@@ -6,6 +6,7 @@ import com.aetherteam.aether.entity.NotGrounded;
 import com.aetherteam.aether.entity.ai.goal.MostDamageTargetGoal;
 import com.aetherteam.aether.event.AetherEventDispatch;
 import com.aetherteam.aether.event.ValkyrieTeleportEvent;
+import io.github.fabricators_of_create.porting_lib.attributes.PortingLibAttributes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -33,7 +34,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeMod;
 
 import java.util.EnumSet;
 
@@ -295,7 +295,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
                 if (this.flyingTicks > 0) {
                     this.flyingTicks--;
                     double fallSpeed;
-                    AttributeInstance gravity = this.valkyrie.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
+                    AttributeInstance gravity = this.valkyrie.getAttribute(PortingLibAttributes.ENTITY_GRAVITY);
                     if (gravity != null) {
                         fallSpeed = Math.max(gravity.getValue() * -0.625, -0.275);
                     } else {

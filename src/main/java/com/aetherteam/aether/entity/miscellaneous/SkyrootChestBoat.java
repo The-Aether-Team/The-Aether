@@ -2,6 +2,7 @@ package com.aetherteam.aether.entity.miscellaneous;
 
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.item.AetherItems;
+import io.github.fabricators_of_create.porting_lib.entity.PortingLibEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -11,7 +12,6 @@ import net.minecraft.world.entity.vehicle.ChestBoat;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.network.NetworkHooks;
 
 public class SkyrootChestBoat extends ChestBoat implements SkyrootBoatBehavior {
     public SkyrootChestBoat(EntityType<? extends SkyrootChestBoat> entityType, Level level) {
@@ -41,6 +41,6 @@ public class SkyrootChestBoat extends ChestBoat implements SkyrootBoatBehavior {
 
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
+        return PortingLibEntity.getEntitySpawningPacket(this);
     }
 }

@@ -3,6 +3,7 @@ package com.aetherteam.aether.client.renderer.entity;
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.mojang.datafixers.util.Pair;
+import io.github.fabricators_of_create.porting_lib.client.entity.CustomBoatModel;
 import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.ChestBoatModel;
 import net.minecraft.client.model.ListModel;
@@ -11,7 +12,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.vehicle.Boat;
 
-public class SkyrootBoatRenderer extends BoatRenderer {
+public class SkyrootBoatRenderer extends BoatRenderer implements CustomBoatModel {
     private static final ResourceLocation SKYROOT_BOAT = new ResourceLocation(Aether.MODID, "textures/entity/miscellaneous/boat/skyroot.png");
     private static final ResourceLocation SKYROOT_CHEST_BOAT = new ResourceLocation(Aether.MODID, "textures/entity/miscellaneous/chest_boat/skyroot.png");
     private final Pair<ResourceLocation, ListModel<Boat>> skyrootBoatResource;

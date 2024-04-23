@@ -62,11 +62,11 @@ public class AetherPlayerListener {
     }
 
     public static void init() {
-        PlayerEvents.LOGGED_IN.register(AetherPlayerListener::onPlayerLogin);
-        PlayerEvents.LOGGED_OUT.register(AetherPlayerListener::onPlayerLogout);
-        EntityEvents.ON_JOIN_WORLD.register(AetherPlayerListener::onPlayerJoinLevel);
-        LivingEntityEvents.LivingTickEvent.TICK.register(AetherPlayerListener::onPlayerUpdate);
-        ServerPlayerEvents.COPY_FROM.register(AetherPlayerListener::onPlayerClone);
-        ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register(AetherPlayerListener::onPlayerChangeDimension);
+//        PlayerEvents.LOGGED_IN.register(AetherPlayerListener::onPlayerLogin);
+//        PlayerEvents.LOGGED_OUT.register(AetherPlayerListener::onPlayerLogout);
+//        EntityEvents.ON_JOIN_WORLD.register(AetherPlayerListener::onPlayerJoinLevel);
+//        LivingEntityEvents.LivingTickEvent.TICK.register(AetherPlayerListener::onPlayerUpdate);
+//        ServerPlayerEvents.COPY_FROM.register(AetherPlayerListener::onPlayerClone);
+//        ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register(AetherPlayerListener::onPlayerChangeDimension);
     }
 }

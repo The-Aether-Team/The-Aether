@@ -1,6 +1,7 @@
 package com.aetherteam.aether.capability.player;
 
 import com.aetherteam.aether.capability.AetherCapabilities;
+import com.aetherteam.aether.capability.NbtComponent;
 import com.aetherteam.aether.entity.miscellaneous.CloudMinion;
 import com.aetherteam.aether.entity.passive.Aerbunny;
 import com.aetherteam.nitrogen.capability.INBTSynchable;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface AetherPlayer extends INBTSynchable<CompoundTag>, PlayerComponent<AetherPlayer> {
+public interface AetherPlayer extends INBTSynchable<CompoundTag>, PlayerComponent<AetherPlayer>, NbtComponent {
 	Player getPlayer();
 
 	static Optional<AetherPlayer> getOptional(Player player) {

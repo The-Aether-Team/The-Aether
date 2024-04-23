@@ -8,6 +8,8 @@ import com.aetherteam.aether.entity.ai.goal.EatAetherGrassGoal;
 import com.aetherteam.aether.entity.ai.goal.FallingRandomStrollGoal;
 import com.aetherteam.aether.entity.ai.navigator.FallPathNavigation;
 import com.aetherteam.aether.loot.AetherLoot;
+import io.github.fabricators_of_create.porting_lib.attributes.PortingLibAttributes;
+import io.github.fabricators_of_create.porting_lib.extensions.extensions.IShearable;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -47,8 +49,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.IForgeShearable;
 
 import org.jetbrains.annotations.Nullable;
 import java.util.*;
@@ -60,7 +60,7 @@ import java.util.stream.Collectors;
  * Warning for "deprecation" is suppressed because we still need to use vanilla shearing behavior from {@link Shearable}.
  */
 @SuppressWarnings("deprecation")
-public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable {
+public class Sheepuff extends AetherAnimal implements Shearable, IShearable {
     private static final EntityDataAccessor<Byte> DATA_WOOL_COLOR_ID = SynchedEntityData.defineId(Sheepuff.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> DATA_PUFFED_ID = SynchedEntityData.defineId(Sheepuff.class, EntityDataSerializers.BOOLEAN);
 
@@ -165,7 +165,7 @@ public class Sheepuff extends AetherAnimal implements Shearable, IForgeShearable
         super.tick();
         if (this.getPuffed()) {
             this.checkSlowFallDistance();
-            AttributeInstance gravity = this.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
+            AttributeInstance gravity = this.getAttribute(PortingLibAttributes.ENTITY_GRAVITY);
             if (gravity != null) {
                 double fallSpeed = Math.max(gravity.getValue() * -0.625, -0.05);
                 if (this.getDeltaMovement().y() < fallSpeed) {

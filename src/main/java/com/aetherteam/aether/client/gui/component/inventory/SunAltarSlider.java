@@ -20,7 +20,7 @@ public class SunAltarSlider extends AbstractSliderButton {
     @Override
     protected void applyValue() {
         long time = (long) (this.value * AetherDimensions.AETHER_TICKS_PER_DAY);
-        this.level.getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).ifPresent(aetherTime -> PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new SunAltarUpdatePacket(time)));
+        AetherCapabilities.AETHER_TIME_CAPABILITY.maybeGet(this.level).ifPresent(aetherTime -> PacketRelay.sendToServer(AetherPacketHandler.INSTANCE, new SunAltarUpdatePacket(time)));
     }
 
     @Override

@@ -40,11 +40,6 @@ import net.minecraft.world.level.block.entity.DispenserBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.SlotContext;
-import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
-import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
 
 import java.util.List;
 import java.util.Map;
@@ -77,71 +72,71 @@ public class AetherDispenseBehaviors {
             LivingEntity livingEntity = list.get(0);
             ItemStack itemStack = stack.split(1);
             if (!(livingEntity instanceof ArmorStand armorStand)) {
-                CuriosApi.getCurio(itemStack).ifPresent(curio -> CuriosApi.getCuriosInventory(livingEntity).ifPresent(handler -> {
-                    Map<String, ICurioStacksHandler> curios = handler.getCurios();
-                    for (Map.Entry<String, ICurioStacksHandler> entry : curios.entrySet()) { // Curios entries.
-                        if (List.of(AccessoriesMenu.AETHER_IDENTIFIERS).contains(entry.getKey())) { // Check if Curios entries match the ones in the Aether accessories menu.
-                            IDynamicStackHandler stackHandler = entry.getValue().getStacks();
-                            for (int i = 0; i < stackHandler.getSlots(); i++) {
-                                String id = entry.getKey();
-                                SlotContext slotContext = new SlotContext(id, livingEntity, i, false, true); // Get slot that a Curio entry has.
-                                if (curio.canEquip(slotContext) && curio.canEquipFromUse(slotContext)) {
-                                    ItemStack slotStack = stackHandler.getStackInSlot(i);
-                                    if (slotStack.isEmpty()) { // Check if Curio slot is empty.
-                                        stackHandler.setStackInSlot(i, itemStack.copy()); // Put copy of stack from dispenser into slot.
-                                        int count = itemStack.getCount();
-                                        itemStack.shrink(count); // Shrink stack in dispenser.
-                                        if (livingEntity instanceof Mob mob && EntityHooks.canMobSpawnWithAccessories(mob)) {
-                                            MobAccessory.get(mob).ifPresent((accessoryMob) -> {
-                                                accessoryMob.setGuaranteedDrop(id);
-                                                accessoryMob.getMob().setPersistenceRequired();
-                                            });
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }));
+//                CuriosApi.getCurio(itemStack).ifPresent(curio -> CuriosApi.getCuriosInventory(livingEntity).ifPresent(handler -> { TODO: PORT
+//                    Map<String, ICurioStacksHandler> curios = handler.getCurios();
+//                    for (Map.Entry<String, ICurioStacksHandler> entry : curios.entrySet()) { // Curios entries.
+//                        if (List.of(AccessoriesMenu.AETHER_IDENTIFIERS).contains(entry.getKey())) { // Check if Curios entries match the ones in the Aether accessories menu.
+//                            IDynamicStackHandler stackHandler = entry.getValue().getStacks();
+//                            for (int i = 0; i < stackHandler.getSlots(); i++) {
+//                                String id = entry.getKey();
+//                                SlotContext slotContext = new SlotContext(id, livingEntity, i, false, true); // Get slot that a Curio entry has.
+//                                if (curio.canEquip(slotContext) && curio.canEquipFromUse(slotContext)) {
+//                                    ItemStack slotStack = stackHandler.getStackInSlot(i);
+//                                    if (slotStack.isEmpty()) { // Check if Curio slot is empty.
+//                                        stackHandler.setStackInSlot(i, itemStack.copy()); // Put copy of stack from dispenser into slot.
+//                                        int count = itemStack.getCount();
+//                                        itemStack.shrink(count); // Shrink stack in dispenser.
+//                                        if (livingEntity instanceof Mob mob && EntityHooks.canMobSpawnWithAccessories(mob)) {
+//                                            MobAccessory.get(mob).ifPresent((accessoryMob) -> {
+//                                                accessoryMob.setGuaranteedDrop(id);
+//                                                accessoryMob.getMob().setPersistenceRequired();
+//                                            });
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }));
             } else {
-                CuriosApi.getCurio(itemStack).ifPresent(curio -> CuriosApi.getCuriosInventory(livingEntity).ifPresent(handler -> {
-                    if (itemStack.is(AetherTags.Items.ACCESSORIES)) {
-                        String identifier = "";
-                        if (itemStack.getItem() instanceof GlovesItem) {
-                            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "hands" : "aether_gloves";
-                        } else if (itemStack.getItem() instanceof PendantItem) {
-                            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "necklace" : "aether_pendant";
-                        } else if (itemStack.getItem() instanceof CapeItem) {
-                            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "back" : "aether_cape";
-                        } else if (itemStack.getItem() instanceof ShieldOfRepulsionItem) {
-                            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "body" : "aether_shield";
-                        }
-                        Optional<ICurioStacksHandler> stacksHandler = handler.getStacksHandler(identifier);
-                        if (stacksHandler.isPresent()) {
-                            IDynamicStackHandler stackHandler = stacksHandler.get().getCosmeticStacks();
-                            if (0 < stackHandler.getSlots()) {
-                                if (stackHandler.getStackInSlot(0).isEmpty()) {
-                                    if (itemStack.getItem() instanceof AccessoryItem accessoryItem) {
-                                        SlotContext slotContext = new SlotContext(identifier, armorStand, 0, true, true);
-                                        if (accessoryItem.canEquip(slotContext, itemStack)) {
-                                            stackHandler.setStackInSlot(0, itemStack.copy());
-                                            if (accessoryItem instanceof GlovesItem glovesItem) {
-                                                armorStand.level().playSound(null, armorStand.blockPosition(), glovesItem.getEquipSound(slotContext, itemStack).soundEvent(), armorStand.getSoundSource(), 1, 1);
-                                            } else if (accessoryItem instanceof PendantItem pendantItem) {
-                                                armorStand.level().playSound(null, armorStand.blockPosition(), pendantItem.getEquipSound(slotContext, itemStack).soundEvent(), armorStand.getSoundSource(), 1, 1);
-                                            } else {
-                                                armorStand.level().playSound(null, armorStand.blockPosition(), SoundEvents.ARMOR_EQUIP_GENERIC, armorStand.getSoundSource(), 1, 1);
-                                            }
-                                            if (identifier.equals("hands") || identifier.equals("aether_gloves")) {
-                                                armorStand.setShowArms(true);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }));
+//                CuriosApi.getCurio(itemStack).ifPresent(curio -> CuriosApi.getCuriosInventory(livingEntity).ifPresent(handler -> { TODO: PORT
+//                    if (itemStack.is(AetherTags.Items.ACCESSORIES)) {
+//                        String identifier = "";
+//                        if (itemStack.getItem() instanceof GlovesItem) {
+//                            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "hands" : "aether_gloves";
+//                        } else if (itemStack.getItem() instanceof PendantItem) {
+//                            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "necklace" : "aether_pendant";
+//                        } else if (itemStack.getItem() instanceof CapeItem) {
+//                            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "back" : "aether_cape";
+//                        } else if (itemStack.getItem() instanceof ShieldOfRepulsionItem) {
+//                            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "body" : "aether_shield";
+//                        }
+//                        Optional<ICurioStacksHandler> stacksHandler = handler.getStacksHandler(identifier);
+//                        if (stacksHandler.isPresent()) {
+//                            IDynamicStackHandler stackHandler = stacksHandler.get().getCosmeticStacks();
+//                            if (0 < stackHandler.getSlots()) {
+//                                if (stackHandler.getStackInSlot(0).isEmpty()) {
+//                                    if (itemStack.getItem() instanceof AccessoryItem accessoryItem) {
+//                                        SlotContext slotContext = new SlotContext(identifier, armorStand, 0, true, true);
+//                                        if (accessoryItem.canEquip(slotContext, itemStack)) {
+//                                            stackHandler.setStackInSlot(0, itemStack.copy());
+//                                            if (accessoryItem instanceof GlovesItem glovesItem) {
+//                                                armorStand.level().playSound(null, armorStand.blockPosition(), glovesItem.getEquipSound(slotContext, itemStack).soundEvent(), armorStand.getSoundSource(), 1, 1);
+//                                            } else if (accessoryItem instanceof PendantItem pendantItem) {
+//                                                armorStand.level().playSound(null, armorStand.blockPosition(), pendantItem.getEquipSound(slotContext, itemStack).soundEvent(), armorStand.getSoundSource(), 1, 1);
+//                                            } else {
+//                                                armorStand.level().playSound(null, armorStand.blockPosition(), SoundEvents.ARMOR_EQUIP_GENERIC, armorStand.getSoundSource(), 1, 1);
+//                                            }
+//                                            if (identifier.equals("hands") || identifier.equals("aether_gloves")) {
+//                                                armorStand.setShowArms(true);
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }));
             }
             return true;
         }
@@ -203,7 +198,7 @@ public class AetherDispenseBehaviors {
             DispensibleContainerItem dispensibleContainerItem = (DispensibleContainerItem) stack.getItem();
             BlockPos blockpos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
             Level level = source.getLevel();
-            if (dispensibleContainerItem.emptyContents(null, level, blockpos, null, stack)) {
+            if (dispensibleContainerItem.emptyContents(null, level, blockpos, null)) {
                 dispensibleContainerItem.checkExtraContent(null, level, stack, blockpos);
                 return new ItemStack(AetherItems.SKYROOT_BUCKET.get());
             } else {

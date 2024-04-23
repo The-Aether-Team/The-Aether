@@ -21,6 +21,8 @@ import com.aetherteam.aether.network.AetherPacketHandler;
 import com.aetherteam.aether.network.packet.serverbound.BossInfoPacket;
 import com.aetherteam.nitrogen.entity.BossRoomTracker;
 import com.aetherteam.nitrogen.network.PacketRelay;
+import io.github.fabricators_of_create.porting_lib.entity.IEntityAdditionalSpawnData;
+import io.github.fabricators_of_create.porting_lib.entity.PortingLibEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -58,12 +60,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.entity.IEntityAdditionalSpawnData;
-import net.minecraftforge.event.entity.living.MobEffectEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.network.NetworkHooks;
 
 import org.jetbrains.annotations.Nullable;
 import java.util.EnumSet;
@@ -218,13 +214,11 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
             if (this.getChatCooldown() <= 0) {
                 this.setChatCooldown(14);
                 if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoomInterior(player)) {
-                    LazyOptional<AetherPlayer> aetherPlayer = player.getCapability(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
+                    AetherPlayer aetherPlayer = player.getComponent(AetherCapabilities.AETHER_PLAYER_CAPABILITY);
                     if (!AetherConfig.COMMON.repeat_sun_spirit_dialogue.get()) {
-                        aetherPlayer.ifPresent(cap -> {
-                            if (cap.hasSeenSunSpiritDialogue() && this.chatLine == 0) {
-                                this.chatLine = 10;
-                            }
-                        });
+                        if (aetherPlayer.hasSeenSunSpiritDialogue() && this.chatLine == 0) {
+                            this.chatLine = 10;
+                        }
                     }
                     switch (this.chatLine++) {
                         case 0 -> this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line0").withStyle(ChatFormatting.RED));
@@ -252,7 +246,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
                                 this.closeRoom();
                             }
                             AetherEventDispatch.onBossFightStart(this, this.getDungeon());
-                            aetherPlayer.ifPresent(cap -> cap.setSeenSunSpiritDialogue(true));
+                            aetherPlayer.setSeenSunSpiritDialogue(true);
                         }
                         default -> {
                             this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line10").withStyle(ChatFormatting.RED));
@@ -323,7 +317,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
                 this.getDungeon().grantAdvancements(source);
                 this.tearDownRoom();
             }
-            this.level().getCapability(AetherCapabilities.AETHER_TIME_CAPABILITY).ifPresent((aetherTime) -> {
+            AetherCapabilities.AETHER_TIME_CAPABILITY.maybeGet(this.level()).ifPresent((aetherTime) -> {
                 aetherTime.setEternalDay(false);
                 aetherTime.updateEternalDay();
             });
@@ -355,11 +349,11 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
      */
     @Override //code copy
     public boolean canBeAffected(MobEffectInstance pEffectInstance) {
-        MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, pEffectInstance);
-        MinecraftForge.EVENT_BUS.post(event);
-        if (event.getResult() != Event.Result.DEFAULT) {
-            return event.getResult() == Event.Result.ALLOW;
-        }
+//        MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, pEffectInstance); TODO: PORT
+//        MinecraftForge.EVENT_BUS.post(event);
+//        if (event.getResult() != Event.Result.DEFAULT) {
+//            return event.getResult() == Event.Result.ALLOW;
+//        }
         return false;
     }
 
@@ -648,7 +642,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
 
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
+        return PortingLibEntity.getEntitySpawningPacket(this);
     }
 
     /**

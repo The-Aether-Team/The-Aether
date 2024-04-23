@@ -6,17 +6,13 @@ import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
 import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketsApi;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fml.ModList;
-import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.SlotResult;
-import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 
 import org.jetbrains.annotations.Nullable;
 import java.util.List;
@@ -30,7 +26,7 @@ public final class EquipmentUtil {
      * @return Whether the attack was full strength, as a {@link Boolean}.
      */
     public static boolean isFullStrength(LivingEntity attacker) {
-        boolean combatifyLoaded = ModList.get().isLoaded("combatify");
+        boolean combatifyLoaded = FabricLoader.getInstance().isModLoaded("combatify");
         return !(attacker instanceof Player player) || (combatifyLoaded ? player.getAttackStrengthScale(1.0F) >= 1.95F : player.getAttackStrengthScale(1.0F) >= 1.0F);
     }
 
@@ -46,13 +42,13 @@ public final class EquipmentUtil {
     }
 
     /**
-     * Searches for gloves in an entity's accessory inventory and returns the first {@link SlotResult} instance.
+     * Searches for gloves in an entity's accessory inventory and returns the first {@link SlotReference} instance.
      * @param entity The {@link LivingEntity} wearer.
-     * @return The {@link SlotResult} for the curio item.
+     * @return The {@link SlotReference} for the curio item.
      */
     @Nullable
-    public static SlotResult getGloves(LivingEntity entity) {
-        Optional<SlotResult> slotResultOptional = EquipmentUtil.findFirstCurio(entity, (stack) -> stack.getItem() instanceof GlovesItem);
+    public static Tuple<SlotReference, ItemStack> getGloves(LivingEntity entity) {
+        Optional<Tuple<SlotReference, ItemStack>> slotResultOptional = EquipmentUtil.findFirstCurio(entity, (stack) -> stack.getItem() instanceof GlovesItem);
         return slotResultOptional.orElse(null);
     }
 
@@ -61,17 +57,17 @@ public final class EquipmentUtil {
      * @param entity The {@link LivingEntity} wearer.
      * @return The {@link List} of {@link SlotResult}s for the curio items.
      */
-    public static List<SlotResult> getZaniteRings(LivingEntity entity) {
+    public static List<Tuple<SlotReference, ItemStack>> getZaniteRings(LivingEntity entity) {
         return getCurios(entity, AetherItems.ZANITE_RING.get());
     }
 
     /**
-     * Searches for a Zanite Pendant in an entity's accessory inventory and returns the first {@link SlotResult} instance.
+     * Searches for a Zanite Pendant in an entity's accessory inventory and returns the first {@link SlotReference} instance.
      * @param entity The {@link LivingEntity} wearer.
-     * @return The {@link SlotResult} for the curio item.
+     * @return The {@link SlotReference} for the curio item.
      */
     @Nullable
-    public static SlotResult getZanitePendant(LivingEntity entity) {
+    public static Tuple<SlotReference, ItemStack> getZanitePendant(LivingEntity entity) {
         return getCurio(entity, AetherItems.ZANITE_PENDANT.get());
     }
 
@@ -112,12 +108,12 @@ public final class EquipmentUtil {
     }
 
     /**
-     * Searches for a {@link CapeItem} in an entity's accessory inventory and returns the first {@link SlotResult} instance.
+     * Searches for a {@link CapeItem} in an entity's accessory inventory and returns the first {@link SlotReference} instance.
      * @param entity The {@link LivingEntity} wearer.
-     * @return The {@link SlotResult} for the curio item.
+     * @return The {@link SlotReference} for the curio item.
      */
     @Nullable
-    public static SlotResult getCape(LivingEntity entity) {
+    public static Tuple<SlotReference, ItemStack> getCape(LivingEntity entity) {
         return findFirstCurio(entity, stack -> stack.getItem() instanceof CapeItem).orElse(null);
     }
 
@@ -132,10 +128,10 @@ public final class EquipmentUtil {
     }
 
     /**
-     * Searches for a curio {@link Item} in an entity's accessory inventory and returns the first {@link SlotResult} instance.
+     * Searches for a curio {@link Item} in an entity's accessory inventory and returns the first {@link SlotReference} instance.
      * @param entity The {@link LivingEntity} wearer.
      * @param item The curio {@link Item} to look for.
-     * @return The {@link SlotResult} for the curio item.
+     * @return The {@link SlotReference} for the curio item.
      */
     @Nullable
     public static Tuple<SlotReference, ItemStack> getCurio(LivingEntity entity, Item item) {
@@ -143,16 +139,16 @@ public final class EquipmentUtil {
     }
 
     /**
-     * Searches for a curio {@link Item} in an entity's accessory inventory and returns all the {@link SlotResult} instances.
+     * Searches for a curio {@link Item} in an entity's accessory inventory and returns all the {@link SlotReference} instances.
      * @param entity The {@link LivingEntity} wearer.
      * @param item The curio {@link Item} to look for.
-     * @return The {@link List} of {@link SlotResult}s for the curio items.
+     * @return The {@link List} of {@link SlotReference}s for the curio items.
      */
-    public static List<SlotResult> getCurios(LivingEntity entity, Item item) {
-        LazyOptional<ICuriosItemHandler> inventoryOptional = CuriosApi.getCuriosInventory(entity);
-        if (inventoryOptional.isPresent() && inventoryOptional.resolve().isPresent()) {
-            ICuriosItemHandler inventory = inventoryOptional.resolve().get();
-            return inventory.findCurios(item);
+    public static List<Tuple<SlotReference, ItemStack>> getCurios(LivingEntity entity, Item item) {
+        Optional<TrinketComponent> inventoryOptional = TrinketsApi.getTrinketComponent(entity);
+        if (inventoryOptional.isPresent()) {
+            TrinketComponent inventory = inventoryOptional.get();
+            return inventory.getEquipped(item);
         }
         return List.of();
     }

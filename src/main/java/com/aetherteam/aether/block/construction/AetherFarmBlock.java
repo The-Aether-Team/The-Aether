@@ -10,8 +10,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BushBlock;
@@ -63,7 +66,10 @@ public class AetherFarmBlock extends FarmBlock {
      */
     @Override
     public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
-        if (!level.isClientSide() && ForgeHooks.onFarmlandTrample(level, pos, AetherBlocks.AETHER_DIRT.get().defaultBlockState(), fallDistance, entity)) { // Forge: Move logic to Entity#canTrample
+        if (!level.isClientSide() && level.random.nextFloat() < fallDistance - 0.5F
+                && entity instanceof LivingEntity
+                && (entity instanceof Player || level.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING))
+                && entity.getBbWidth() * entity.getBbWidth() * entity.getBbHeight() > 0.512F) { // Forge: Move logic to Entity#canTrample
             turnToDirt(state, level, pos);
         }
         entity.causeFallDamage(fallDistance, 1.0F, entity.damageSources().fall());
@@ -94,7 +100,7 @@ public class AetherFarmBlock extends FarmBlock {
                 return true;
             }
         }
-        return FarmlandWaterManager.hasBlockWaterTicket(level, pos);
+        return false;
     }
 
     /**
@@ -104,13 +110,5 @@ public class AetherFarmBlock extends FarmBlock {
     public boolean canSustainPlant(BlockState state, BlockGetter level, BlockPos pos, Direction direction, IPlantable plantable) {
         PlantType type = plantable.getPlantType(level, pos.relative(direction));
         return (plantable instanceof BushBlock bushBlock && ((BushBlockAccessor) bushBlock).callMayPlaceOn(state, level, pos)) || PlantType.CROP.equals(type) || PlantType.PLAINS.equals(type);
-    }
-
-    /**
-     * [CODE COPY] - {@link net.minecraftforge.common.extensions.IForgeBlock#isFertile(BlockState, BlockGetter, BlockPos)}.
-     */
-    @Override
-    public boolean isFertile(BlockState state, BlockGetter level, BlockPos pos) {
-        return state.getValue(FarmBlock.MOISTURE) > 0;
     }
 }

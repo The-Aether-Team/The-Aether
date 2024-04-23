@@ -10,7 +10,6 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.material.Fluid;
-import top.theillusivec4.curios.api.CuriosApi;
 
 public class AetherTags {
 	public static class Blocks {
