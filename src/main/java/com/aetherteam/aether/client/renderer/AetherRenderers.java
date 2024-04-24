@@ -12,6 +12,7 @@ import com.aetherteam.aether.client.renderer.accessory.layer.EntityAccessoryLaye
 import com.aetherteam.aether.client.renderer.accessory.model.CapeModel;
 import com.aetherteam.aether.client.renderer.accessory.model.GlovesModel;
 import com.aetherteam.aether.client.renderer.accessory.model.PendantModel;
+import com.aetherteam.aether.client.renderer.block.FastModel;
 import com.aetherteam.aether.client.renderer.blockentity.ChestMimicRenderer;
 import com.aetherteam.aether.client.renderer.blockentity.SkyrootBedRenderer;
 import com.aetherteam.aether.client.renderer.blockentity.TreasureChestRenderer;
@@ -39,6 +40,9 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.resources.PlayerSkin;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.ArmorStand;
@@ -47,9 +51,12 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.ModelEvent;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = Aether.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AetherRenderers {
@@ -124,7 +131,8 @@ public class AetherRenderers {
         event.registerLayerDefinition(AetherModelLayers.SHEEPUFF_WOOL_PUFFED, () -> SheepuffWoolModel.createFurLayer(new CubeDeformation(3.75F), 2.0F));
         event.registerLayerDefinition(AetherModelLayers.AERBUNNY, AerbunnyModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.MOA, () -> MoaModel.createBodyLayer(CubeDeformation.NONE));
-        event.registerLayerDefinition(AetherModelLayers.MOA_SADDLE, () -> MoaModel.createBodyLayer(new CubeDeformation(0.25F)));
+        event.registerLayerDefinition(AetherModelLayers.MOA_HAT, () -> MoaModel.createBodyLayer(new CubeDeformation(0.23F)));
+        event.registerLayerDefinition(AetherModelLayers.MOA_SADDLE, () -> MoaModel.createBodyLayer(new CubeDeformation(0.27F)));
         event.registerLayerDefinition(AetherModelLayers.AERWHALE, AerwhaleModel::createBodyLayer);
         event.registerLayerDefinition(AetherModelLayers.AERWHALE_CLASSIC, ClassicAerwhaleModel::createBodyLayer);
 
@@ -222,5 +230,21 @@ public class AetherRenderers {
         if (renderer != null) {
             renderer.addLayer(new ArmorStandCapeLayer(renderer));
         }
+    }
+
+    @SubscribeEvent
+    public static void bakeModels(ModelEvent.ModifyBakingResult event) {
+        List<Map.Entry<ResourceLocation, BakedModel>> models = new ArrayList<>();
+        for (Map.Entry<ResourceLocation, BakedModel> model : event.getModels().entrySet()) {
+            if (model.getKey().getNamespace().equals(Aether.MODID)) {
+                String path = model.getKey().getPath();
+                if (path.equals(BuiltInRegistries.BLOCK.getKey(AetherBlocks.BERRY_BUSH.get()).getPath())) {
+                    models.add(model);
+                } else if (path.equals(BuiltInRegistries.BLOCK.getKey(AetherBlocks.BERRY_BUSH.get()).getPath())) {
+                    models.add(model);
+                }
+            }
+        }
+        models.forEach(entry -> event.getModels().put(entry.getKey(), new FastModel(entry.getValue())));
     }
 }

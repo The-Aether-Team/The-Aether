@@ -235,7 +235,7 @@ public class MoaSkinsScreen extends Screen {
 
                 // Renders an outline for the player's currently active Moa Skin.
                 if (userSkinsData.containsKey(uuid) && userSkinsData.get(uuid).moaSkin() == skin) {
-                    guiGraphics.blit(SLOT_SELECTED_SPRITE, x, y, 36, 191, 18, 18); // Render golden slot outline.
+                    guiGraphics.blitSprite(SLOT_SELECTED_SPRITE, x, y, 18, 18); // Render golden slot outline.
                 }
 
                 guiGraphics.blitSprite(skin.getIconLocation(), x + 1, y + 1, 16, 16); // Render Moa skin icon.

@@ -15,7 +15,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.RegistryBuilder;
 
 import javax.annotation.Nullable;
-import java.util.Map;
 import java.util.function.Supplier;
 
 public class AetherAdvancementSoundOverrides {
