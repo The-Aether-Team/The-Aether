@@ -19,16 +19,16 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.UUID;
 
-public class MoaSaddleEmissiveLayer extends RenderLayer<Moa, MoaModel> {
-    private final MoaModel saddle;
+public class MoaHatLayer extends RenderLayer<Moa, MoaModel> {
+    private final MoaModel hat;
 
-    public MoaSaddleEmissiveLayer(RenderLayerParent<Moa, MoaModel> entityRenderer, MoaModel saddleModel) {
+    public MoaHatLayer(RenderLayerParent<Moa, MoaModel> entityRenderer, MoaModel hatModel) {
         super(entityRenderer);
-        this.saddle = saddleModel;
+        this.hat = hatModel;
     }
 
     /**
-     * Renders an emissive saddle layer on a Moa if the texture from a {@link com.aetherteam.aether.perk.types.MoaSkins.MoaSkin} is present.
+     * Renders a hat layer on a Moa if the texture from a {@link com.aetherteam.aether.perk.types.MoaSkins.MoaSkin} is present.
      *
      * @param poseStack       The rendering {@link PoseStack}.
      * @param buffer          The rendering {@link MultiBufferSource}.
@@ -43,24 +43,21 @@ public class MoaSaddleEmissiveLayer extends RenderLayer<Moa, MoaModel> {
      */
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Moa moa, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (moa.isSaddled() && !moa.isInvisible()) {
-            ResourceLocation moaSkin = this.getMoaSkinLocation(moa);
-            if (moaSkin != null) {
-                RenderType renderType = RenderType.eyes(moaSkin);
-                this.getParentModel().copyPropertiesTo(this.saddle);
-                this.saddle.prepareMobModel(moa, limbSwing, limbSwingAmount, partialTicks);
-                this.saddle.setupAnim(moa, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-                VertexConsumer consumer = buffer.getBuffer(renderType);
-                this.saddle.renderToBuffer(poseStack, consumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-            }
+        ResourceLocation texture = this.getMoaSkinLocation(moa);
+        if (texture != null && !moa.isInvisible()) {
+            this.getParentModel().copyPropertiesTo(this.hat);
+            this.hat.prepareMobModel(moa, limbSwing, limbSwingAmount, partialTicks);
+            this.hat.setupAnim(moa, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+            VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutoutNoCull(texture));
+            this.hat.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         }
     }
 
     /**
-     * Retrieves the saddle emissive texture for the player's {@link com.aetherteam.aether.perk.types.MoaSkins.MoaSkin}, if there is one and the player has a Moa Skin.
+     * Retrieves the hat texture for the player's {@link com.aetherteam.aether.perk.types.MoaSkins.MoaSkin}, if there is one and the player has a Moa Skin.
      *
      * @param moa The {@link Moa} to retrieve the skin from.
-     * @return The {@link ResourceLocation} for the emissive texture.
+     * @return The {@link ResourceLocation} for the hat texture.
      */
     @Nullable
     private ResourceLocation getMoaSkinLocation(Moa moa) {
@@ -68,9 +65,9 @@ public class MoaSaddleEmissiveLayer extends RenderLayer<Moa, MoaModel> {
         UUID moaUUID = moa.getMoaUUID();
         Map<UUID, MoaData> userSkinsData = ClientMoaSkinPerkData.INSTANCE.getClientPerkData();
         if (Minecraft.getInstance().screen instanceof MoaSkinsScreen moaSkinsScreen && moaSkinsScreen.getSelectedSkin() != null && moaSkinsScreen.getPreviewMoa() != null && moaSkinsScreen.getPreviewMoa().getMoaUUID() != null && moaSkinsScreen.getPreviewMoa().getMoaUUID().equals(moaUUID)) {
-            return moaSkinsScreen.getSelectedSkin().getSaddleEmissiveLocation();
+            return moaSkinsScreen.getSelectedSkin().getHatLocation();
         } else if (userSkinsData.containsKey(lastRiderUUID) && userSkinsData.get(lastRiderUUID).moaUUID() != null && userSkinsData.get(lastRiderUUID).moaUUID().equals(moaUUID)) {
-            return userSkinsData.get(lastRiderUUID).moaSkin().getSaddleEmissiveLocation();
+            return userSkinsData.get(lastRiderUUID).moaSkin().getHatLocation();
         }
         return null;
     }
