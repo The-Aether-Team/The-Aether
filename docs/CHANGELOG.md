@@ -1,3 +1,19 @@
+# The Aether - NeoForge - 1.20.4-1.4.1
+
+Changes
+
+- Rework the follow behavior for Moas now be controlled by shift right-clicking with a Nature Staff instead of by empty hand.
+- Split some Moa Skin elements between the saddle layer and a hat layer.
+- Make the Berry Bush model opaque with the fast graphics option.
+
+Fixes
+
+- Fix Aerbunny boosts sometimes not resetting from jumping on Blue Aerclouds.
+- Fix speed effects not working on Swets and Moas.
+- Fix the wings of Phygs, Flying Cows, and Valkyries not flashing red when hit.
+- Fix gloves letting the sleeve layer clip through them slightly.
+- Fix the selected Moa Skin slot texture being missing after 1.20.2.
+
 # The Aether - NeoForge - 1.20.4-1.4.0
 
 **This release is a full port of 1.20.2-1.4.0 to NeoForge 1.20.4!**
