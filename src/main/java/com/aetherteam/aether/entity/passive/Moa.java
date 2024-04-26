@@ -362,15 +362,16 @@ public class Moa extends MountableAnimal implements WingedBird {
 	public InteractionResult mobInteract(Player player, InteractionHand hand) {
 		ItemStack itemStack = player.getItemInHand(hand);
 		if (this.isPlayerGrown() && itemStack.is(AetherItems.NATURE_STAFF.get())) { // Sits a tamed Moa down when right-clicked with a Nature Staff.
-			itemStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
-			this.setSitting(!this.isSitting());
-			this.spawnExplosionParticle();
-			return InteractionResult.sidedSuccess(this.level().isClientSide());
-		} else if (this.isPlayerGrown() && itemStack.isEmpty() && player.isShiftKeyDown()) { // Toggles whether a tamed Moa will follow the player.
-			if (this.getFollowing() == null) {
-				this.setFollowing(player.getUUID());
-			} else {
-				this.setFollowing(null);
+			if (player.isShiftKeyDown()) { // Toggles whether a tamed Moa will follow the player.
+				if (this.getFollowing() == null) {
+					this.setFollowing(player.getUUID());
+				} else {
+					this.setFollowing(null);
+				}
+			} else { // Sits a tamed Moa down when right-clicked with a Nature Staff.
+				itemStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
+				this.setSitting(!this.isSitting());
+				this.spawnExplosionParticle();
 			}
 			return InteractionResult.sidedSuccess(this.level().isClientSide());
 		} else if (!this.level().isClientSide() && this.isPlayerGrown() && this.isBaby() && this.isHungry() && this.getAmountFed() < 3 && itemStack.is(AetherTags.Items.MOA_FOOD_ITEMS)) { // Feeds a hungry baby Moa.
@@ -741,8 +742,12 @@ public class Moa extends MountableAnimal implements WingedBird {
 	 */
 	@Override
 	public float getSpeed() {
-		MoaType moaType = this.getMoaType();
-		return moaType != null ? moaType.getSpeed() : AetherMoaTypes.BLUE.get().getSpeed();
+		if (this.isVehicle()) {
+			return this.getSteeringSpeed();
+		} else {
+			MoaType moaType = this.getMoaType();
+			return moaType != null ? (float) (this.getAttributeValue(Attributes.MOVEMENT_SPEED) * moaType.getSpeed()) : 0.155F;
+		}
 	}
 
 	/**
@@ -772,7 +777,7 @@ public class Moa extends MountableAnimal implements WingedBird {
 	@Override
 	public float getSteeringSpeed() {
         MoaType moaType = this.getMoaType();
-		return moaType != null ? moaType.getSpeed() : AetherMoaTypes.BLUE.get().getSpeed();
+		return moaType != null ? (float) (this.getAttributeValue(Attributes.MOVEMENT_SPEED) * moaType.getSpeed()) : 0.155F;
 	}
 
 	/**

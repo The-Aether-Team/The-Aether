@@ -9,7 +9,6 @@ import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.DispenserBlock;
-import org.jetbrains.annotations.Nullable;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
@@ -17,7 +16,6 @@ import top.theillusivec4.curios.api.type.capability.ICurioItem;
 import java.util.function.Supplier;
 
 public class AccessoryItem extends Item implements ICurioItem, Vanishable {
-
     private final Supplier<? extends SoundEvent> soundEventSupplier;
 
     public AccessoryItem(Properties properties) {
@@ -26,9 +24,7 @@ public class AccessoryItem extends Item implements ICurioItem, Vanishable {
 
     public AccessoryItem(Supplier<? extends SoundEvent> soundEventSupplier, Properties properties) {
         super(properties);
-
         this.soundEventSupplier = soundEventSupplier;
-
         DispenserBlock.registerBehavior(this, AetherDispenseBehaviors.DISPENSE_ACCESSORY_BEHAVIOR); // Behavior to allow accessories to be equipped from a Dispenser.
     }
 
@@ -39,7 +35,7 @@ public class AccessoryItem extends Item implements ICurioItem, Vanishable {
 
     @Override
     public ICurio.SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
-        return new ICurio.SoundInfo(soundEventSupplier.get(), 1.0F, 1.0F);
+        return new ICurio.SoundInfo(this.soundEventSupplier.get(), 1.0F, 1.0F);
     }
 
     @Override

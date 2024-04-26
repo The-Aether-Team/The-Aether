@@ -1,4 +1,4 @@
-// 1.20.1	2024-02-04T19:00:51.7311319	Registries
+// 1.20.1	2024-04-24T16:10:37.1018817	Registries
 25d924fdac4392adb88fe3b6aa2c23420f6fb4f9 data/aether/damage_type/armor_piercing_attack.json
 03d6a63bae7e4458c11da22471bf0f8b5051023c data/aether/damage_type/cloud_crystal.json
 024fc58ce3f33e1542dfe59582a4da47cc178764 data/aether/damage_type/crush.json
@@ -51,6 +51,7 @@ d5ba8cc497ab193e90aa5ffeba4b3f7dea211ac9 data/aether/worldgen/placed_feature/amb
 b2deb063e6cb1b471b65780bd157b3a81c8adc86 data/aether/worldgen/placed_feature/blue_aercloud.json
 d8eebbd3094ceb6bed4ba1bb1c31fec48303add7 data/aether/worldgen/placed_feature/cold_aercloud.json
 aae684d7e1458ca092872de8907d926085831266 data/aether/worldgen/placed_feature/crystal_island.json
+28f1d57ec7fe32c1e8c66c57b1c107a8fcaacacd data/aether/worldgen/placed_feature/enchanted_aether_grass_bonemeal.json
 64abdeeb464f26cc5f8919eae3265b0be660f608 data/aether/worldgen/placed_feature/golden_aercloud.json
 d97a961bc867eef61a4d5c2afad47c20e65699c6 data/aether/worldgen/placed_feature/grass_patch.json
 e3b0124a3eb31a495ab67da0d01b46bb94eb9ce0 data/aether/worldgen/placed_feature/gravitite_ore.json

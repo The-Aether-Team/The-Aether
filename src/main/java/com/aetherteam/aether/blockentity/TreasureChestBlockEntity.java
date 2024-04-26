@@ -2,7 +2,6 @@ package com.aetherteam.aether.blockentity;
 
 import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.block.AetherBlocks;
-import com.aetherteam.aether.item.miscellaneous.DungeonKeyItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -91,15 +90,12 @@ public class TreasureChestBlockEntity extends RandomizableContainerBlockEntity i
      * @return Whether the Treasure Chest was unlocked.
      */
     public boolean tryUnlock(Player player) {
-        ItemStack stack = player.getMainHandItem();
-        boolean keyMatches = stack.getItem() instanceof DungeonKeyItem dungeonKeyItem && this.getKind().equals(dungeonKeyItem.getDungeonType());
-        if (this.getLocked() && keyMatches && this.level != null) {
+        if (this.getLocked() && this.level != null) {
             this.setLocked(false);
             this.setChanged();
             this.level.markAndNotifyBlock(this.worldPosition, this.level.getChunkAt(this.worldPosition), this.getBlockState(), this.getBlockState(), 2, 512);
             return true;
         } else {
-            player.displayClientMessage(Component.translatable(this.getKind().getNamespace() + "." + this.getKind().getPath() + "_treasure_chest_locked"), true);
             return false;
         }
     }

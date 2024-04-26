@@ -10,6 +10,7 @@
     "common.ArmorStandMixin",
     "common.DimensionTypeMixin",
     "common.DirectoryLockMixin",
+    "common.EntityMixin",
     "common.FeatureMixin",
     "common.ForgeEventFactoryMixin",
     "common.ItemMixin",

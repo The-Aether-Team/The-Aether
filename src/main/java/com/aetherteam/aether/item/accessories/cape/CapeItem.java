@@ -4,9 +4,6 @@ import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.item.accessories.AccessoryItem;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
-import top.theillusivec4.curios.api.SlotContext;
-import top.theillusivec4.curios.api.type.capability.ICurio;
 
 public class CapeItem extends AccessoryItem {
     protected ResourceLocation CAPE_LOCATION;
