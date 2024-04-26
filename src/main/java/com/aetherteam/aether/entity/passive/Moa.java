@@ -361,10 +361,18 @@ public class Moa extends MountableAnimal implements WingedBird {
 	@Override
 	public InteractionResult mobInteract(Player player, InteractionHand hand) {
 		ItemStack itemStack = player.getItemInHand(hand);
-		if (this.isPlayerGrown() && itemStack.is(AetherItems.NATURE_STAFF.get())) { // Sits a tamed Moa down when right-clicked with a Nature Staff.
-			itemStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
-			this.setSitting(!this.isSitting());
-			this.spawnExplosionParticle();
+		if (this.isPlayerGrown() && itemStack.is(AetherItems.NATURE_STAFF.get())) {
+			if (player.isShiftKeyDown()) { // Toggles whether a tamed Moa will follow the player.
+				if (this.getFollowing() == null) {
+					this.setFollowing(player.getUUID());
+				} else {
+					this.setFollowing(null);
+				}
+			} else { // Sits a tamed Moa down when right-clicked with a Nature Staff.
+				itemStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
+				this.setSitting(!this.isSitting());
+				this.spawnExplosionParticle();
+			}
 			return InteractionResult.sidedSuccess(this.getLevel().isClientSide());
 		} else if (this.isPlayerGrown() && itemStack.isEmpty() && player.isShiftKeyDown()) { // Toggles whether a tamed Moa will follow the player.
 			if (this.getFollowing() == null) {

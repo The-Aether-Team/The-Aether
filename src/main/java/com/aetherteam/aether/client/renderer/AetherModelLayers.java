@@ -21,6 +21,7 @@ public class AetherModelLayers {
     public static final ModelLayerLocation SHEEPUFF_WOOL_PUFFED = register("sheepuff", "outer_puffed");
     public static final ModelLayerLocation AERBUNNY = register("aerbunny");
     public static final ModelLayerLocation MOA = register("moa");
+    public static final ModelLayerLocation MOA_HAT = register("moa", "hat");
     public static final ModelLayerLocation MOA_SADDLE = register("moa", "saddle");
     public static final ModelLayerLocation AERWHALE = register("aerwhale");
     public static final ModelLayerLocation AERWHALE_CLASSIC = register("aerwhale", "classic");
