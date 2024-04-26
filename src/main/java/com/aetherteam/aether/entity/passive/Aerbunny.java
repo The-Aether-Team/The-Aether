@@ -38,7 +38,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeMod;
 
 import javax.annotation.Nullable;
@@ -103,7 +106,30 @@ public class Aerbunny extends AetherAnimal {
             this.setPuffiness(0);
         }
         this.handlePlayerInput();
-        if (this.getVehicle() != null && (this.getVehicle().isOnGround() || this.getVehicle().isInFluidType())) { // Reset the last tracked fall position if the Aerbunny touches a surface.
+
+        boolean blockIntersection = false;
+        if (this.getVehicle() != null) {
+            AABB vehicleBounds = this.getVehicle().getBoundingBox();
+            BlockPos minPos = new BlockPos(vehicleBounds.minX, vehicleBounds.minY, vehicleBounds.minZ);
+            BlockPos maxPos = new BlockPos(vehicleBounds.maxX, vehicleBounds.maxY, vehicleBounds.maxZ);
+            for (int x = minPos.getX(); x <= maxPos.getX(); x++) {
+                for (int y = minPos.getY(); y <= maxPos.getY(); y++) {
+                    for (int z = minPos.getZ(); z <= maxPos.getZ(); z++) {
+                        BlockPos pos = new BlockPos(x, y, z);
+                        BlockState blockState = this.getLevel().getBlockState(pos);
+                        VoxelShape shape = blockState.getShape(this.getVehicle().getLevel(), this.getVehicle().blockPosition());
+                        for (AABB aabb : shape.toAabbs()) {
+                            AABB offset = aabb.move(pos);
+                            if (vehicleBounds.intersects(offset)) {
+                                blockIntersection = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (this.getVehicle() != null && (this.getVehicle().isOnGround() || this.getVehicle().isInFluidType() || blockIntersection)) { // Reset the last tracked fall position if the Aerbunny
             this.lastPos = null;
         }
     }
