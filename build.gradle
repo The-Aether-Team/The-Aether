@@ -112,7 +112,13 @@ repositories {
     maven { url = "https://jitpack.io" }
     maven { url = "https://maven.blamejared.com" }
     maven { url = "https://maven.theillusivec4.top/" }
-    maven { url = "https://cursemaven.com" }
+    maven {
+        name = 'cursemaven'
+        url = "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
     maven { url = "https://gitlab.com/api/v4/projects/21830712/packages/maven" }
     maven githubPackage.invoke("The-Aether-Team/Nitrogen")
     maven githubPackage.invoke("The-Aether-Team/Cumulus")
