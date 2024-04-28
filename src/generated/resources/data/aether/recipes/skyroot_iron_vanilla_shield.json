@@ -4,7 +4,7 @@
   "group": "minecraft:shield",
   "key": {
     "I": {
-      "tag": "forge:ingots/iron"
+      "tag": "c:iron_ingots"
     },
     "P": {
       "tag": "aether:planks_crafting"

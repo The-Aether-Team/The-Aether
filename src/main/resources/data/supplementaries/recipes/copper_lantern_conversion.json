@@ -1,8 +1,10 @@
 {
-  "conditions": [
+  "fabric:load_conditions": [
     {
-      "type": "forge:mod_loaded",
-      "modid": "suppsquared"
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "suppsquared"
+      ]
     }
   ],
   "type": "aether:placement_conversion",

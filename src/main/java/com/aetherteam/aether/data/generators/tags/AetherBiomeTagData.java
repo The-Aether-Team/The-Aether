@@ -2,17 +2,23 @@ package com.aetherteam.aether.data.generators.tags;
 
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.data.resources.registries.AetherBiomes;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.BiomeTagsProvider;
 import net.minecraft.tags.BiomeTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 
 import java.util.concurrent.CompletableFuture;
 
-public class AetherBiomeTagData extends BiomeTagsProvider {
-    public AetherBiomeTagData(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, registries);
+public class AetherBiomeTagData extends FabricTagProvider<Biome> {
+    public AetherBiomeTagData(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+        super(output, Registries.BIOME, registries);
     }
 
     @Override
@@ -52,9 +58,14 @@ public class AetherBiomeTagData extends BiomeTagsProvider {
         this.tag(AetherTags.Biomes.ULTRACOLD).addTag(AetherTags.Biomes.IS_AETHER);
         this.tag(AetherTags.Biomes.NO_WHEAT_SEEDS).addTag(AetherTags.Biomes.IS_AETHER);
         this.tag(AetherTags.Biomes.FALL_TO_OVERWORLD).addTag(AetherTags.Biomes.IS_AETHER);
-        this.tag(AetherTags.Biomes.DISPLAY_TRAVEL_TEXT).addTag(AetherTags.Biomes.IS_AETHER).addTag(BiomeTags.IS_OVERWORLD).add(Biomes.THE_VOID);
+        this.tag(AetherTags.Biomes.DISPLAY_TRAVEL_TEXT).addTag(AetherTags.Biomes.IS_AETHER).forceAddTag(BiomeTags.IS_OVERWORLD).add(Biomes.THE_VOID);
         this.tag(AetherTags.Biomes.AETHER_MUSIC).addTag(AetherTags.Biomes.IS_AETHER);
 
         this.tag(BiomeTags.SPAWNS_COLD_VARIANT_FROGS).addTag(AetherTags.Biomes.IS_AETHER);
+    }
+
+    @Override
+    protected FabricTagProvider<Biome>.FabricTagBuilder tag(TagKey<Biome> tag) {
+        return getOrCreateTagBuilder(tag);
     }
 }

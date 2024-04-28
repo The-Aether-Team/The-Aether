@@ -30,6 +30,19 @@ loom {
 //
 //            environment 'target', 'fmluserdevdata'
 //        }
+        datagen {
+            client()
+
+            name "Data Generation"
+            vmArg "-Dfabric-api.datagen"
+            vmArg "-Dfabric-api.datagen.output-dir=${file("src/generated/resources")}"
+            vmArg "-Dfabric-api.datagen.modid=aether"
+
+            property "porting_lib.datagen.existing_resources", file("src/main/resources").absolutePath
+            property "porting_lib.datagen.existing-mod", "nitrogen_internals,cumulus_menus"
+
+            runDir "build/datagen"
+        }
     }
 }
 

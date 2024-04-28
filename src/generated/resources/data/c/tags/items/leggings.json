@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "aether:zanite_leggings",
+    "aether:gravitite_leggings",
+    "aether:neptune_leggings",
+    "aether:phoenix_leggings",
+    "aether:obsidian_leggings",
+    "aether:valkyrie_leggings"
+  ]
+}

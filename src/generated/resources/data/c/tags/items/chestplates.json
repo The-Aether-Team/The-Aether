@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "aether:zanite_chestplate",
+    "aether:gravitite_chestplate",
+    "aether:neptune_chestplate",
+    "aether:phoenix_chestplate",
+    "aether:obsidian_chestplate",
+    "aether:valkyrie_chestplate"
+  ]
+}

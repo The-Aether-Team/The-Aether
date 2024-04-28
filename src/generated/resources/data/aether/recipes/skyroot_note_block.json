@@ -7,7 +7,7 @@
       "tag": "aether:planks_crafting"
     },
     "R": {
-      "tag": "forge:dusts/redstone"
+      "tag": "c:dusts/redstone"
     }
   },
   "pattern": [

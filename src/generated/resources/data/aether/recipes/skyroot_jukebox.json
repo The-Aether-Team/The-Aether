@@ -4,7 +4,7 @@
   "group": "minecraft:jukebox",
   "key": {
     "D": {
-      "tag": "forge:gems/diamond"
+      "tag": "c:diamonds"
     },
     "P": {
       "tag": "aether:planks_crafting"

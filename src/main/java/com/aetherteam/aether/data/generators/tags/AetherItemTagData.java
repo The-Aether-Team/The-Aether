@@ -57,7 +57,7 @@ public class AetherItemTagData extends FabricTagProvider.ItemTagProvider {
                 Items.WATER_BUCKET);
 
         this.tag(AetherTags.Items.AETHER_PORTAL_ACTIVATION_ITEMS);
-        this.tag(AetherTags.Items.BOOK_OF_LORE_MATERIALS).addTag(Tags.Items.DUSTS_GLOWSTONE).add(
+        this.tag(AetherTags.Items.BOOK_OF_LORE_MATERIALS).forceAddTag(Tags.Items.DUSTS_GLOWSTONE).add(
                 Items.FLINT,
                 AetherItems.AMBROSIUM_SHARD.get());
         this.tag(AetherTags.Items.SKYROOT_STICKS).add(AetherItems.SKYROOT_STICK.get());

@@ -1,0 +1,6 @@
+// 1.20.1	2024-04-23T15:10:26.223525435	The Aether/Tags for minecraft:damage_type
+03065e1efb58ae2c0ec7be22b7cadcc4517464a5 data/aether/tags/damage_type/is_cold.json
+9e4b22cf981bb3c1d4f00d13f1683274b1f633dc data/minecraft/tags/damage_type/damages_helmet.json
+4d11edbbfd0924defa69530a1443f3285889345e data/minecraft/tags/damage_type/is_fire.json
+80f20dd065deb3855a29f60df05ef13977692b32 data/minecraft/tags/damage_type/bypasses_armor.json
+6daa9aac4fdf0f2cad804d1412dd1268b7d567f6 data/minecraft/tags/damage_type/is_projectile.json

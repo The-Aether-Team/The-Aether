@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "#": {
-      "tag": "forge:ingots/gold"
+      "tag": "c:gold_ingots"
     }
   },
   "pattern": [

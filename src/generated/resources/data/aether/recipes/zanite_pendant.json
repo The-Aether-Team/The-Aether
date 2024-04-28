@@ -6,7 +6,7 @@
       "tag": "aether:gems/zanite"
     },
     "S": {
-      "tag": "forge:string"
+      "tag": "c:string"
     }
   },
   "pattern": [

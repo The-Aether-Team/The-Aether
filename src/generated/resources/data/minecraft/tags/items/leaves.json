@@ -1,4 +1,5 @@
 {
+  "replace": false,
   "values": [
     "aether:skyroot_leaves",
     "aether:golden_oak_leaves",

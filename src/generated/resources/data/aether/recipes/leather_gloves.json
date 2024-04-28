@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "#": {
-      "tag": "forge:leather"
+      "tag": "c:leather"
     }
   },
   "pattern": [

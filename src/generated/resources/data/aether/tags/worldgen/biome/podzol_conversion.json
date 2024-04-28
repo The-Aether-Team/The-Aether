@@ -1,4 +1,5 @@
 {
+  "replace": false,
   "values": [
     "minecraft:old_growth_pine_taiga",
     "minecraft:old_growth_spruce_taiga",

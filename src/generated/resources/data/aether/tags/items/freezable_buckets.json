@@ -1,4 +1,5 @@
 {
+  "replace": false,
   "values": [
     "minecraft:water_bucket",
     "aether:skyroot_water_bucket"

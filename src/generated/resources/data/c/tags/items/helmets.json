@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "aether:zanite_helmet",
+    "aether:gravitite_helmet",
+    "aether:neptune_helmet",
+    "aether:phoenix_helmet",
+    "aether:obsidian_helmet",
+    "aether:valkyrie_helmet"
+  ]
+}

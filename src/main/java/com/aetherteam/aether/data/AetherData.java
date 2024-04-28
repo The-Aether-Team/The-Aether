@@ -3,11 +3,14 @@ package com.aetherteam.aether.data;
 import com.aetherteam.aether.data.generators.*;
 import com.aetherteam.aether.data.generators.tags.*;
 import com.aetherteam.aether.data.resources.AetherMobCategory;
+import com.aetherteam.aether.data.resources.registries.*;
 import com.google.common.reflect.Reflection;
 import io.github.fabricators_of_create.porting_lib.data.ExistingFileHelper;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.SharedConstants;
+import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.metadata.PackMetadataGenerator;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
@@ -47,5 +50,22 @@ public class AetherData implements DataGeneratorEntrypoint {
         PackMetadataGenerator packMeta = pack.addProvider((packOutput, r) -> new PackMetadataGenerator(packOutput));
         Map<PackType, Integer> packTypes = Map.of(PackType.SERVER_DATA, SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
         packMeta.add(PackMetadataSection.TYPE, new PackMetadataSection(Component.translatable("pack.aether.mod.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES)/*, packTypes*/));
+    }
+
+    @Override
+    public void buildRegistry(RegistrySetBuilder registryBuilder) {
+        registryBuilder
+                .add(Registries.CONFIGURED_FEATURE, AetherConfiguredFeatures::bootstrap)
+                .add(Registries.PLACED_FEATURE, AetherPlacedFeatures::bootstrap)
+                .add(Registries.BIOME, AetherBiomes::bootstrap)
+                .add(Registries.DENSITY_FUNCTION, AetherDensityFunctions::bootstrap)
+                .add(Registries.NOISE, AetherNoises::bootstrap)
+                .add(Registries.NOISE_SETTINGS, AetherNoiseSettings::bootstrap)
+                .add(Registries.DIMENSION_TYPE, AetherDimensions::bootstrapDimensionType)
+                .add(Registries.LEVEL_STEM, AetherDimensions::bootstrapLevelStem)
+                .add(Registries.STRUCTURE, AetherStructures::bootstrap)
+                .add(Registries.STRUCTURE_SET, AetherStructureSets::bootstrap)
+                .add(Registries.DAMAGE_TYPE, AetherDamageTypes::bootstrap)
+                .add(Registries.TRIM_MATERIAL, AetherTrimMaterials::bootstrap);
     }
 }

@@ -181,9 +181,9 @@ public class AetherBlockTagData extends FabricTagProvider.BlockTagProvider {
                 AetherTags.Blocks.TREASURE_DOORWAY_DUNGEON_BLOCKS);
         this.tag(AetherTags.Blocks.NON_RUINED_PORTAL_SPAWNABLE);
         this.tag(AetherTags.Blocks.RUINED_PORTAL_GROUND_REPLACEABLE)
-                .addTag(BlockTags.BASE_STONE_OVERWORLD)
-                .addTag(BlockTags.DIRT)
-                .addTag(BlockTags.SAND)
+                .forceAddTag(BlockTags.BASE_STONE_OVERWORLD)
+                .forceAddTag(BlockTags.DIRT)
+                .forceAddTag(BlockTags.SAND)
                 .add(Blocks.GRAVEL)
                 .add(Blocks.CALCITE)
                 .add(Blocks.SMOOTH_BASALT)
@@ -211,7 +211,7 @@ public class AetherBlockTagData extends FabricTagProvider.BlockTagProvider {
         this.tag(AetherTags.Blocks.AETHER_ANIMALS_SPAWNABLE_ON).add(AetherBlocks.AETHER_GRASS_BLOCK.get());
         this.tag(AetherTags.Blocks.SWET_SPAWNABLE_ON).add(AetherBlocks.AETHER_GRASS_BLOCK.get());
         this.tag(AetherTags.Blocks.AECHOR_PLANT_SPAWNABLE_ON).add(AetherBlocks.AETHER_GRASS_BLOCK.get());
-        this.tag(AetherTags.Blocks.INFINIBURN).addTag(BlockTags.INFINIBURN_OVERWORLD);
+        this.tag(AetherTags.Blocks.INFINIBURN).forceAddTag(BlockTags.INFINIBURN_OVERWORLD);
         this.tag(AetherTags.Blocks.ALLOWED_FLAMMABLES).add(Blocks.SOUL_SAND, Blocks.SOUL_SOIL).addTags(
                 AetherTags.Blocks.INFINIBURN,
                 AetherTags.Blocks.HELLFIRE_BLOCKS);

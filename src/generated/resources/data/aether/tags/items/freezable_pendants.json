@@ -1,4 +1,5 @@
 {
+  "replace": false,
   "values": [
     "aether:iron_pendant",
     "aether:golden_pendant"

@@ -8,6 +8,7 @@
   "mixins": [
   ],
   "client": [
+    "client.fabric.ExistingFileHelperMixin",
     "client.fabric.BossHealthOverlayMixin",
     "client.fabric.ClientPacketListenerMixin",
     "client.fabric.MinecraftMixin"

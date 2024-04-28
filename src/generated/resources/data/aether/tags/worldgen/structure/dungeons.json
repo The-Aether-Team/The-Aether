@@ -1,4 +1,5 @@
 {
+  "replace": false,
   "values": [
     "aether:bronze_dungeon",
     "aether:silver_dungeon",

@@ -1,4 +1,5 @@
 {
+  "replace": false,
   "values": [
     "aether:skyroot_button",
     "aether:holystone_button"

@@ -4,7 +4,7 @@
   "group": "wooden_sign",
   "key": {
     "/": {
-      "tag": "forge:rods/wooden"
+      "tag": "c:wooden_rods"
     },
     "P": {
       "item": "aether:skyroot_planks"

@@ -1,6 +1,7 @@
 {
+  "replace": false,
   "values": [
     "aether:aechor_plant",
-    "#forge:bosses"
+    "#c:bosses"
   ]
 }

@@ -1,4 +1,5 @@
 {
+  "replace": false,
   "values": [
     "aether:treasure_doorway_carved_stone",
     "aether:treasure_doorway_sentry_stone",

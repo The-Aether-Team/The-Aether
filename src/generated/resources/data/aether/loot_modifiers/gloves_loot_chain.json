@@ -5,7 +5,7 @@
     {
       "condition": "minecraft:inverted",
       "term": {
-        "condition": "forge:loot_table_id",
+        "condition": "porting_lib:loot_table_id",
         "loot_table_id": "aether:chests/dungeon/gold/gold_dungeon_reward"
       }
     }

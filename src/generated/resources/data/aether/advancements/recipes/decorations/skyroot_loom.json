@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:string"
+            "tag": "c:string"
           }
         ]
       },

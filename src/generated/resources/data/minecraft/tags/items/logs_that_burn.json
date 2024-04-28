@@ -1,4 +1,5 @@
 {
+  "replace": false,
   "values": [
     "#aether:skyroot_logs",
     "#aether:golden_oak_logs"

@@ -1,6 +1,7 @@
 {
+  "replace": false,
   "values": [
-    "#forge:bosses",
+    "#c:bosses",
     "minecraft:guardian",
     "minecraft:elder_guardian"
   ]

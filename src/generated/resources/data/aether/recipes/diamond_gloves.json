@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "#": {
-      "tag": "forge:gems/diamond"
+      "tag": "c:diamonds"
     }
   },
   "pattern": [

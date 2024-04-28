@@ -7,7 +7,7 @@
       "tag": "aether:planks_crafting"
     },
     "T": {
-      "tag": "forge:string"
+      "tag": "c:string"
     }
   },
   "pattern": [

@@ -1,4 +1,5 @@
 {
+  "replace": false,
   "values": [
     "aether:locked_angelic_stone",
     "aether:locked_light_angelic_stone"

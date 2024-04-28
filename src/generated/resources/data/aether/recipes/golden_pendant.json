@@ -6,7 +6,7 @@
       "item": "minecraft:gold_ingot"
     },
     "S": {
-      "tag": "forge:string"
+      "tag": "c:string"
     }
   },
   "pattern": [

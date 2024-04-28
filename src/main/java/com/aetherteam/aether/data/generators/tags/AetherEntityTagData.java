@@ -3,16 +3,20 @@ package com.aetherteam.aether.data.generators.tags;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import io.github.fabricators_of_create.porting_lib.tags.Tags;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
 
 import java.util.concurrent.CompletableFuture;
 
-public class AetherEntityTagData extends EntityTypeTagsProvider {
-    public AetherEntityTagData(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+public class AetherEntityTagData extends FabricTagProvider.EntityTypeTagProvider {
+    public AetherEntityTagData(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries);
     }
 
@@ -42,7 +46,7 @@ public class AetherEntityTagData extends EntityTypeTagsProvider {
         this.tag(AetherTags.Entities.NO_AMBROSIUM_DROPS).add(EntityType.PLAYER);
         this.tag(AetherTags.Entities.UNLAUNCHABLE).add(AetherEntityTypes.AECHOR_PLANT.get());
         this.tag(AetherTags.Entities.NO_CANDY_CANE_DROPS).add(EntityType.PLAYER);
-        this.tag(AetherTags.Entities.DEFLECTABLE_PROJECTILES).addTag(EntityTypeTags.ARROWS).add(
+        this.tag(AetherTags.Entities.DEFLECTABLE_PROJECTILES).forceAddTag(EntityTypeTags.ARROWS).add(
                 EntityType.EGG,
                 EntityType.SMALL_FIREBALL,
                 EntityType.FIREBALL,
@@ -122,5 +126,10 @@ public class AetherEntityTagData extends EntityTypeTagsProvider {
                 AetherEntityTypes.BLUE_SWET.get(),
                 AetherEntityTypes.GOLDEN_SWET.get()
         );
+    }
+
+    @Override
+    protected FabricTagProvider<EntityType<?>>.FabricTagBuilder tag(TagKey<EntityType<?>> tag) {
+        return getOrCreateTagBuilder(tag);
     }
 }

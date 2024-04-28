@@ -7,7 +7,7 @@
       "tag": "aether:swet_balls"
     },
     "S": {
-      "tag": "forge:string"
+      "tag": "c:string"
     }
   },
   "pattern": [
