@@ -416,18 +416,6 @@ public class Moa extends MountableAnimal implements WingedBird {
 	}
 
 	/**
-	 * When a player dismounts, the Moa will follow them.
-	 * @param passenger The passenger {@link Entity}.
-	 */
-	@Override
-	protected void removePassenger(Entity passenger) {
-		super.removePassenger(passenger);
-		if (passenger instanceof Player player && (this.getFollowing() == null || this.getFollowing().toString().equals(player.getUUID().toString()))) {
-			this.setFollowing(player.getUUID());
-		}
-	}
-
-	/**
 	 * Generates a {@link UUID} for this Moa; used for Moa Skin tracking.
 	 */
 	public void generateMoaUUID() {
