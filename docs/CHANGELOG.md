@@ -1,3 +1,8 @@
+# The Aether - Forge - 1.19.4-1.4.2
+
+Fixes
+- Fix issue with Moa following.
+
 # The Aether - Forge - 1.19.4-1.4.1
 
 Changes
