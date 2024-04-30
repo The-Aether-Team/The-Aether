@@ -54,5 +54,5 @@
       "spawns": []
     }
   },
-  "step": "surface_structures"
+  "step": "top_layer_modification"
 }

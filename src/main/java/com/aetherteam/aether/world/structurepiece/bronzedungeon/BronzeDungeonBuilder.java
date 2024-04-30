@@ -14,6 +14,7 @@ import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.RandomState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
@@ -62,7 +63,7 @@ public class BronzeDungeonBuilder {
         this.maxSize = Math.max(3, maxSize);
     }
 
-    public void initializeDungeon(BlockPos startPos, ChunkPos chunkPos, StructurePiecesBuilder builder) {
+    public void initializeDungeon(BlockPos startPos, Structure.GenerationContext genContext, StructurePiecesBuilder builder) {
         StructureTemplate bossTemplate = this.context.structureTemplateManager().getOrCreate(new ResourceLocation(Aether.MODID, "bronze_dungeon/boss_room"));
 
         Rotation rotation = getBossRoomRotation(startPos, startPos.offset(bossTemplate.getSize()));
@@ -81,6 +82,8 @@ public class BronzeDungeonBuilder {
             this.nodes.add(chestRoom);
             new Connection(bossRoom, chestRoom, hallway, direction);
 
+            ChunkPos chunkPos = genContext.chunkPos();
+
             for (int i = 2; i < this.maxSize - 1; ++i) {
                 this.propagateRooms(chestRoom, chunkPos, false);
             }
@@ -88,6 +91,7 @@ public class BronzeDungeonBuilder {
             this.propagateRooms(chestRoom, chunkPos, true);
             StructurePiece lobby = this.nodes.get(this.nodes.size() - 1);
             this.buildEndTunnel(lobby, startPos);
+            this.buildSurfaceTunnel(lobby, genContext.heightAccessor(), genContext.chunkGenerator(), genContext.randomState());
 
             this.populatePiecesBuilder(builder);
         }
@@ -162,6 +166,23 @@ public class BronzeDungeonBuilder {
             }
         }
         this.nodes.addAll(longestTunnel);
+    }
+
+    private void buildSurfaceTunnel(StructurePiece lobby, LevelHeightAccessor level, ChunkGenerator chunkGenerator, RandomState randomState) {
+        BoundingBox lobbyBounds = lobby.getBoundingBox();
+        BlockPos entranceRoomCenter = lobbyBounds.getCenter();
+        int topYSolid = chunkGenerator.getFirstOccupiedHeight(entranceRoomCenter.getX(), entranceRoomCenter.getZ(), Heightmap.Types.OCEAN_FLOOR_WG, level, randomState);
+
+        int shrink = 3;
+        BoundingBox upwardsTunnelBox = new BoundingBox(
+            lobbyBounds.minX() + shrink,
+            lobbyBounds.maxY() + 1, // Right above the lobby's ceiling blocks
+            lobbyBounds.minZ() + shrink,
+            lobbyBounds.maxX() - shrink,
+            topYSolid + 4, // A few extra blocks above the surface centered in this box
+            lobbyBounds.maxZ() - shrink
+        );
+        this.nodes.add(new BronzeDungeonSurfaceRuins(upwardsTunnelBox));
     }
 
     /**
