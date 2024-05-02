@@ -3,19 +3,19 @@
     "sounds": [
       {
         "attenuation_distance": 10,
-        "name": "portal/portal"
+        "name": "aether:portal/portal"
       }
     ],
     "subtitle": "subtitles.aether.block.aether_portal.ambient"
   },
   "block.aether_portal.travel": {
     "sounds": [
-      "portal/travel"
+      "aether:portal/travel"
     ]
   },
   "block.aether_portal.trigger": {
     "sounds": [
-      "portal/trigger"
+      "aether:portal/trigger"
     ],
     "subtitle": "subtitles.aether.block.aether_portal.trigger"
   },
@@ -100,7 +100,8 @@
   },
   "entity.aerbunny.hurt": {
     "sounds": [
-      "aether:entity/aerbunny/hurt"
+      "aether:entity/aerbunny/hurt",
+      "aether:entity/aerbunny/hurt2"
     ],
     "subtitle": "subtitles.aether.entity.aerbunny.hurt"
   },
@@ -144,13 +145,13 @@
   },
   "entity.cockatrice.ambient": {
     "sounds": [
-      "aether:entity/moa/say"
+      "aether:entity/moa/cockatrice_say"
     ],
     "subtitle": "subtitles.aether.entity.cockatrice.ambient"
   },
   "entity.cockatrice.death": {
     "sounds": [
-      "aether:entity/moa/say"
+      "aether:entity/moa/cockatrice_death"
     ],
     "subtitle": "subtitles.aether.entity.cockatrice.death"
   },
@@ -162,7 +163,7 @@
   },
   "entity.cockatrice.hurt": {
     "sounds": [
-      "aether:entity/moa/say"
+      "aether:entity/moa/cockatrice_hurt"
     ],
     "subtitle": "subtitles.aether.entity.cockatrice.hurt"
   },
@@ -282,7 +283,7 @@
   },
   "entity.moa.death": {
     "sounds": [
-      "aether:entity/moa/say"
+      "aether:entity/moa/death"
     ],
     "subtitle": "subtitles.aether.entity.moa.death"
   },
@@ -300,7 +301,7 @@
   },
   "entity.moa.hurt": {
     "sounds": [
-      "aether:entity/moa/say"
+      "aether:entity/moa/hurt"
     ],
     "subtitle": "subtitles.aether.entity.moa.hurt"
   },
@@ -543,33 +544,29 @@
   },
   "entity.valkyrie.death": {
     "sounds": [
-      "damage/hit1",
-      "damage/hit2",
-      "damage/hit3"
+      "aether:entity/angel/death"
     ],
     "subtitle": "subtitles.aether.entity.valkyrie.death"
   },
   "entity.valkyrie.hurt": {
     "sounds": [
-      "damage/hit1",
-      "damage/hit2",
-      "damage/hit3"
+      "aether:entity/angel/hurt",
+      "aether:entity/angel/hurt2",
+      "aether:entity/angel/hurt3"
     ],
     "subtitle": "subtitles.aether.entity.valkyrie.hurt"
   },
   "entity.valkyrie_queen.death": {
     "sounds": [
-      "damage/hit1",
-      "damage/hit2",
-      "damage/hit3"
+      "aether:entity/queen/death"
     ],
     "subtitle": "subtitles.aether.entity.valkyrie_queen.death"
   },
   "entity.valkyrie_queen.hurt": {
     "sounds": [
-      "damage/hit1",
-      "damage/hit2",
-      "damage/hit3"
+      "aether:entity/queen/hurt",
+      "aether:entity/queen/hurt2",
+      "aether:entity/queen/hurt3"
     ],
     "subtitle": "subtitles.aether.entity.valkyrie_queen.hurt"
   },
@@ -581,19 +578,20 @@
   },
   "entity.zephyr.ambient": {
     "sounds": [
-      "aether:entity/zephyr/call"
+      "aether:entity/zephyr/call",
+      "aether:entity/zephyr/call2"
     ],
     "subtitle": "subtitles.aether.entity.zephyr.ambient"
   },
   "entity.zephyr.death": {
     "sounds": [
-      "aether:entity/zephyr/call"
+      "aether:entity/zephyr/death"
     ],
     "subtitle": "subtitles.aether.entity.zephyr.death"
   },
   "entity.zephyr.hurt": {
     "sounds": [
-      "aether:entity/zephyr/call"
+      "aether:entity/zephyr/hurt"
     ],
     "subtitle": "subtitles.aether.entity.zephyr.hurt"
   },
