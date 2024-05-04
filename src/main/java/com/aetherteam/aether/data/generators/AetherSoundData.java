@@ -275,6 +275,9 @@ public class AetherSoundData extends SoundDefinitionsProvider {
         this.add(AetherSoundEvents.ITEM_MUSIC_DISC_HIGH,
                 definition().with(sound("aether:item/records/high").stream())
         );
+        this.add(AetherSoundEvents.ITEM_MUSIC_DISC_KLEPTO,
+            definition().with(sound("aether:item/records/klepto").stream())
+        );
 
 
 

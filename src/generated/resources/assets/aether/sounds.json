@@ -893,6 +893,14 @@
       }
     ]
   },
+  "item.music_disc.klepto": {
+    "sounds": [
+      {
+        "name": "aether:item/records/klepto",
+        "stream": true
+      }
+    ]
+  },
   "item.swet_ball.use": {
     "sounds": [
       "mob/slime/big1",

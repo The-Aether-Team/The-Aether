@@ -325,6 +325,8 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addDiscDesc(AetherItems.MUSIC_DISC_CHINCHILLA, "RENREN - chinchilla");
         this.addItem(AetherItems.MUSIC_DISC_HIGH, "Super Music Disc");
         this.addDiscDesc(AetherItems.MUSIC_DISC_HIGH, "RENREN - high");
+        this.addItem(AetherItems.MUSIC_DISC_KLEPTO, "Blackened Music Disc");
+        this.addDiscDesc(AetherItems.MUSIC_DISC_KLEPTO, "sunsette - klepto");
 
         this.addItem(AetherItems.SKYROOT_BUCKET, "Skyroot Bucket");
         this.addItem(AetherItems.SKYROOT_WATER_BUCKET, "Skyroot Water Bucket");
@@ -1151,6 +1153,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addLore(AetherItems.MUSIC_DISC_ASCENDING_DAWN, "A music disc that plays \"Ascending Dawn\" by Emile van Krieken.");
         this.addLore(AetherItems.MUSIC_DISC_CHINCHILLA, "A music disc that plays \"chinchilla\" by RENREN.");
         this.addLore(AetherItems.MUSIC_DISC_HIGH, "A music disc that plays \"high\" by RENREN.");
+        this.addLore(AetherItems.MUSIC_DISC_KLEPTO, "A music disc that plays \"klepto\" by sunsette.");
         this.addLoreUnique("item.aether.hammer_of_jeb", "A mysterious hammer that can shoot projectiles. At one point, it vanished from existence. It's said this was actually Jeb's hammer at one point.");
 
 

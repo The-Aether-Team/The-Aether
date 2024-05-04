@@ -1,4 +1,4 @@
-// 1.20.4	2024-03-21T20:12:24.2940489	Recipes
+// 1.20.4	2024-05-04T15:54:16.802701	Recipes
 677229eff00099e5ef402be1ab8f30aed900069d data/aether/advancements/recipes/building_blocks/aerogel_slab.json
 5df758ef8ac62e1c2c9f75056306fd9b4a95cfb0 data/aether/advancements/recipes/building_blocks/aerogel_slab_from_aerogel_stonecutting.json
 e093ed5a0f506d259f063268945b9afeb0e1e046 data/aether/advancements/recipes/building_blocks/aerogel_stairs.json
@@ -225,6 +225,7 @@ e1ad4aa0872f7899b2310272269643a233afa385 data/aether/advancements/recipes/misc/e
 e3f9f332e5c5e88e3af5ee3114164607f52c6205 data/aether/advancements/recipes/misc/high_freezing.json
 1c93d5afb9d021e11398d58574d0c934c8a05cca data/aether/advancements/recipes/misc/ice_pendant_from_freezing.json
 3eae19d03dd73c110034f9d2b94b02c17e9993ab data/aether/advancements/recipes/misc/ice_ring_from_freezing.json
+b3a93b4761bc5f9b66537ed33f0380e93f91e6ae data/aether/advancements/recipes/misc/klepto_smelting.json
 334948556122c9d620455c13a01fc82a42ca614c data/aether/advancements/recipes/misc/remedy_bucket_enchanting.json
 c211d1032efd2130da0332f73314dd3177026d73 data/aether/advancements/recipes/misc/skyroot_bucket.json
 6a06e046a5fe9382fcea1f24d51511fe368a1109 data/aether/advancements/recipes/misc/skyroot_stick.json
@@ -504,6 +505,7 @@ c744736f8063d5791aefc491388038a6d76761bd data/aether/recipes/iron_ring.json
 2771dac4157251645431efc71bb648697fd0e565 data/aether/recipes/iron_shovel_repairing.json
 d049e611a7d041fda1527ecb3f1a89e72f03c55b data/aether/recipes/iron_sword_repairing.json
 cb352b3eaf3f668b1c3bd081252c803ea92e7b5c data/aether/recipes/jack_o_lantern_conversion.json
+121284cebf90c799c6ac33a10b21738ef5853d94 data/aether/recipes/klepto_smelting.json
 f611323404f573aa51e067755bc5f3bcd2f0f529 data/aether/recipes/lantern_block_ban.json
 3fd5e1423752ac00420b0da48f6332bd777e8327 data/aether/recipes/lantern_item_ban.json
 8d3b0a01b2ee97f7a9076d082ccfc59396127251 data/aether/recipes/leather_boots_repairing.json
