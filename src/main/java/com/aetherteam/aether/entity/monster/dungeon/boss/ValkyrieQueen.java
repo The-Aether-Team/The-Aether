@@ -365,6 +365,7 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     @Override
     protected void chat(Player player, Component message) {
         player.sendSystemMessage(Component.literal("[").append(this.getBossName().copy().withStyle(ChatFormatting.YELLOW)).append("]: ").append(message));
+        this.playSound(this.getInteractSound(), 1.0F, this.level().getRandom().nextFloat() - this.level().getRandom().nextFloat() * 0.2F + 1.2F);
     }
 
     /**
@@ -683,6 +684,10 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     public void setCustomName(@Nullable Component pName) {
         super.setCustomName(pName);
         this.setBossName(pName);
+    }
+
+    protected SoundEvent getInteractSound() {
+        return AetherSoundEvents.ENTITY_VALKYRIE_QUEEN_INTERACT.get();
     }
 
     @Override

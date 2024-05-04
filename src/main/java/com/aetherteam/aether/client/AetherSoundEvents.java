@@ -131,13 +131,22 @@ public class AetherSoundEvents {
     public static final DeferredHolder<SoundEvent, SoundEvent> ENTITY_SLIDER_HURT = register("entity.slider.hurt");
     public static final DeferredHolder<SoundEvent, SoundEvent> ENTITY_SLIDER_DEATH = register("entity.slider.death");
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> ENTITY_VALKYRIE_INTERACT = register("entity.valkyrie.interact");
     public static final DeferredHolder<SoundEvent, SoundEvent> ENTITY_VALKYRIE_DEATH = register("entity.valkyrie.death");
     public static final DeferredHolder<SoundEvent, SoundEvent> ENTITY_VALKYRIE_HURT = register("entity.valkyrie.hurt");
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> ENTITY_VALKYRIE_QUEEN_INTERACT = register("entity.valkyrie_queen.interact");
     public static final DeferredHolder<SoundEvent, SoundEvent> ENTITY_VALKYRIE_QUEEN_DEATH = register("entity.valkyrie_queen.death");
     public static final DeferredHolder<SoundEvent, SoundEvent> ENTITY_VALKYRIE_QUEEN_HURT = register("entity.valkyrie_queen.hurt");
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> ENTITY_FIRE_MINION_DEATH = register("entity.fire_minion.death");
+    public static final DeferredHolder<SoundEvent, SoundEvent> ENTITY_FIRE_MINION_HURT = register("entity.fire_minion.hurt");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> ENTITY_SUN_SPIRIT_INTERACT = register("entity.sun_spirit.interact");
+    public static final DeferredHolder<SoundEvent, SoundEvent> ENTITY_SUN_SPIRIT_ACTIVATE = register("entity.sun_spirit.activate");
     public static final DeferredHolder<SoundEvent, SoundEvent> ENTITY_SUN_SPIRIT_SHOOT = register("entity.sun_spirit.shoot");
+    public static final DeferredHolder<SoundEvent, SoundEvent> ENTITY_SUN_SPIRIT_DEATH = register("entity.sun_spirit.death");
+    public static final DeferredHolder<SoundEvent, SoundEvent> ENTITY_SUN_SPIRIT_HURT = register("entity.sun_spirit.hurt");
 
     public static final DeferredHolder<SoundEvent, SoundEvent> ENTITY_CLOUD_MINION_SHOOT = register("entity.cloud_minion.shoot");
 

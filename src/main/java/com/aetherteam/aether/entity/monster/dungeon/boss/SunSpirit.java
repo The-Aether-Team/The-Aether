@@ -221,6 +221,9 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
                             this.chatLine = 10;
                         }
                     }
+                    if (this.chatLine < 9) {
+                        this.playSound(this.getInteractSound(), 1.0F, this.level().getRandom().nextFloat() - this.level().getRandom().nextFloat() * 0.2F + 1.2F);
+                    }
                     switch (this.chatLine++) {
                         case 0 ->
                                 this.chatWithNearby(Component.translatable("gui.aether.sun_spirit.line0").withStyle(ChatFormatting.RED));
@@ -252,6 +255,7 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
                             if (this.getDungeon() != null) {
                                 this.closeRoom();
                             }
+                            this.playSound(this.getActivateSound(), 1.0F, this.level().getRandom().nextFloat() - this.level().getRandom().nextFloat() * 0.2F + 1.2F);
                             AetherEventDispatch.onBossFightStart(this, this.getDungeon());
                             player.getData(AetherDataAttachments.AETHER_PLAYER).setSeenSunSpiritDialogue(true);
                         }
@@ -590,20 +594,28 @@ public class SunSpirit extends PathfinderMob implements AetherBossMob<SunSpirit>
         return this.isRemoved() || !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) && !source.is(AetherTags.DamageTypes.IS_COLD);
     }
 
+    protected SoundEvent getInteractSound() {
+        return AetherSoundEvents.ENTITY_SUN_SPIRIT_INTERACT.get();
+    }
+
+    protected SoundEvent getActivateSound() {
+        return AetherSoundEvents.ENTITY_SUN_SPIRIT_ACTIVATE.get();
+    }
+
     protected SoundEvent getShootSound() {
         return AetherSoundEvents.ENTITY_SUN_SPIRIT_SHOOT.get();
     }
 
     @Nullable
     @Override
-    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-        return null;
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return AetherSoundEvents.ENTITY_SUN_SPIRIT_HURT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return null;
+        return AetherSoundEvents.ENTITY_SUN_SPIRIT_DEATH.get();
     }
 
     /**

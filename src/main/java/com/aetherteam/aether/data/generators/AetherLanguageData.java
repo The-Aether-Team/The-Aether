@@ -635,13 +635,22 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addSubtitle("entity", "slider.hurt", "Slider hurts");
         this.addSubtitle("entity", "slider.death", "Slider breaks");
 
+        this.addSubtitle("entity", "valkyrie.interact", "Valkyrie speaks");
         this.addSubtitle("entity", "valkyrie.death", "Valkyrie dies");
         this.addSubtitle("entity", "valkyrie.hurt", "Valkyrie hurts");
 
+        this.addSubtitle("entity", "valkyrie_queen.interact", "Valkyrie speaks");
         this.addSubtitle("entity", "valkyrie_queen.death", "Valkyrie Queen dies");
         this.addSubtitle("entity", "valkyrie_queen.hurt", "Valkyrie Queen hurts");
 
+        this.addSubtitle("entity", "fire_minion.death", "Fire Minion dies");
+        this.addSubtitle("entity", "fire_minion.hurt", "Fire Minion hurts");
+
+        this.addSubtitle("entity", "sun_spirit.interact", "Sun Spirit speaks");
+        this.addSubtitle("entity", "sun_spirit.activate", "Sun Spirit rumbles");
         this.addSubtitle("entity", "sun_spirit.shoot", "Sun Spirit shoots");
+        this.addSubtitle("entity", "sun_spirit.death", "Sun Spirit dies");
+        this.addSubtitle("entity", "sun_spirit.hurt", "Sun Spirit hurts");
 
         this.addSubtitle("entity", "cloud_minion.shoot", "Cloud Minion spits");
 

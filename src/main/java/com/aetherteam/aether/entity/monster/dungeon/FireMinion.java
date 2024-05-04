@@ -1,10 +1,12 @@
 package com.aetherteam.aether.entity.monster.dungeon;
 
+import com.aetherteam.aether.client.AetherSoundEvents;
 import com.aetherteam.aether.entity.AetherEntityTypes;
 import com.aetherteam.aether.entity.ai.goal.ContinuousMeleeAttackGoal;
 import com.aetherteam.aether.entity.ai.goal.FallingRandomStrollGoal;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -92,5 +94,15 @@ public class FireMinion extends Monster {
     @Override
     public boolean isInvulnerableTo(DamageSource source) {
         return super.isInvulnerableTo(source) || source.getEntity() != null && source.getEntity().getType() == AetherEntityTypes.SUN_SPIRIT.get();
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return AetherSoundEvents.ENTITY_FIRE_MINION_HURT.get();
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return AetherSoundEvents.ENTITY_FIRE_MINION_DEATH.get();
     }
 }

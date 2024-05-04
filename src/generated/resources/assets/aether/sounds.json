@@ -188,6 +188,18 @@
     ],
     "subtitle": "subtitles.aether.entity.fire_crystal.explode"
   },
+  "entity.fire_minion.death": {
+    "sounds": [
+      "aether:entity/spirit/baby_die"
+    ],
+    "subtitle": "subtitles.aether.entity.fire_minion.death"
+  },
+  "entity.fire_minion.hurt": {
+    "sounds": [
+      "aether:entity/spirit/baby_hurt"
+    ],
+    "subtitle": "subtitles.aether.entity.fire_minion.hurt"
+  },
   "entity.flying_cow.ambient": {
     "sounds": [
       "mob/cow/say1",
@@ -485,6 +497,33 @@
     ],
     "subtitle": "subtitles.aether.entity.slider.move"
   },
+  "entity.sun_spirit.activate": {
+    "sounds": [
+      "aether:entity/spirit/wake"
+    ],
+    "subtitle": "subtitles.aether.entity.sun_spirit.activate"
+  },
+  "entity.sun_spirit.death": {
+    "sounds": [
+      "aether:entity/spirit/die"
+    ],
+    "subtitle": "subtitles.aether.entity.sun_spirit.death"
+  },
+  "entity.sun_spirit.hurt": {
+    "sounds": [
+      "aether:entity/spirit/hurt"
+    ],
+    "subtitle": "subtitles.aether.entity.sun_spirit.hurt"
+  },
+  "entity.sun_spirit.interact": {
+    "sounds": [
+      "aether:entity/spirit/talk1",
+      "aether:entity/spirit/talk2",
+      "aether:entity/spirit/talk3",
+      "aether:entity/spirit/talk4"
+    ],
+    "subtitle": "subtitles.aether.entity.sun_spirit.interact"
+  },
   "entity.sun_spirit.shoot": {
     "sounds": [
       "mob/ghast/fireball4"
@@ -556,6 +595,13 @@
     ],
     "subtitle": "subtitles.aether.entity.valkyrie.hurt"
   },
+  "entity.valkyrie.interact": {
+    "sounds": [
+      "aether:entity/angel/talk",
+      "aether:entity/angel/talk2"
+    ],
+    "subtitle": "subtitles.aether.entity.valkyrie.interact"
+  },
   "entity.valkyrie_queen.death": {
     "sounds": [
       "aether:entity/queen/death"
@@ -569,6 +615,13 @@
       "aether:entity/queen/hurt3"
     ],
     "subtitle": "subtitles.aether.entity.valkyrie_queen.hurt"
+  },
+  "entity.valkyrie_queen.interact": {
+    "sounds": [
+      "aether:entity/queen/talk",
+      "aether:entity/queen/talk2"
+    ],
+    "subtitle": "subtitles.aether.entity.valkyrie_queen.interact"
   },
   "entity.whirlwind.drop": {
     "sounds": [
