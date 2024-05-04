@@ -42,6 +42,7 @@ public class Swet extends Slime implements MountableMob {
     private static final EntityDataAccessor<Boolean> DATA_MID_JUMP_ID = SynchedEntityData.defineId(Swet.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Float> DATA_WATER_DAMAGE_SCALE_ID = SynchedEntityData.defineId(Swet.class, EntityDataSerializers.FLOAT);
 
+    private int ascendTimer;
     private boolean wasOnGround;
     private int jumpTimer;
     private float swetHeight = 1.0F;
@@ -130,6 +131,14 @@ public class Swet extends Slime implements MountableMob {
         this.tick(this);
         this.riderTick(this);
         super.tick();
+
+        if (!this.onGround() && this.getDeltaMovement().y() < 0.05 && this.ascendTimer > 0) {
+            this.setDeltaMovement(this.getDeltaMovement().x() * 1.2, 0.07, this.getDeltaMovement().z() * 1.2);
+            --this.ascendTimer;
+        }
+        if (this.onGround()) {
+            this.ascendTimer = 10;
+        }
 
         // Spawn particles when no target is captured.
         if (!this.hasPrey() && this.canSpawnSplashParticles()) {
@@ -405,7 +414,12 @@ public class Swet extends Slime implements MountableMob {
 
     @Override
     public float getJumpPower() {
-        return 0.5F;
+        LivingEntity entity = this.getControllingPassenger();
+        if (this.isVehicle() && entity != null) {
+            return 0.5F;
+        } else {
+            return 0.325F;
+        }
     }
 
     /**
