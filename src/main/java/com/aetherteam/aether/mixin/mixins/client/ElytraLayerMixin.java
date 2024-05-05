@@ -1,7 +1,10 @@
 package com.aetherteam.aether.mixin.mixins.client;
 
 import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.item.accessories.cape.CapeItem;
 import com.aetherteam.aether.mixin.AetherMixinHooks;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.renderer.entity.layers.ElytraLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
@@ -9,8 +12,6 @@ import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
@@ -23,14 +24,15 @@ public class ElytraLayerMixin<T extends LivingEntity> {
     /**
      * Used to change the elytra texture on an armor stand based on the equipped cape.
      *
+     * @param original The original {@link ResourceLocation} of the texture for the elytra on this armor stand.
      * @param stack  The elytra {@link ItemStack}.
-     * @param entity The entity wearing the elytra.
-     * @param cir    The {@link ResourceLocation} {@link CallbackInfoReturnable} used for the method's return value.
+     * @param entity The {@link LivingEntity} wearing the elytra.
+     * @return If the armor stand has an equipped cape, the cape texture, else returns the original texture.
      */
-    @Inject(at = @At("HEAD"), method = "getElytraTexture(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/resources/ResourceLocation;", cancellable = true, remap = false)
-    private void getElytraTexture(ItemStack stack, T entity, CallbackInfoReturnable<ResourceLocation> cir) {
+    @ModifyReturnValue(at = @At("RETURN"), method = "getElytraTexture(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/resources/ResourceLocation;", remap = false)
+    private ResourceLocation getElytraTexture(ResourceLocation original, @Local(ordinal = 0, argsOnly = true) ItemStack stack, @Local(ordinal = 0, argsOnly = true) T entity) {
         if (entity instanceof ArmorStand armorStand) {
-            String identifier = AetherConfig.COMMON.use_curios_menu.get() ? "back" : "aether_cape";
+            String identifier = CapeItem.getIdentifierStatic();
             Optional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(armorStand);
             if (lazyHandler.isPresent()) {
                 ICuriosItemHandler handler = lazyHandler.get();
@@ -40,12 +42,12 @@ public class ElytraLayerMixin<T extends LivingEntity> {
                     if (0 < stackHandler.getSlots()) {
                         ItemStack itemStack = stackHandler.getStackInSlot(0);
                         ResourceLocation texture = AetherMixinHooks.getCapeTexture(itemStack);
-                        if (texture != null) {
-                            cir.setReturnValue(texture);
-                        }
+                        if (texture != null)
+                            return texture;
                     }
                 }
             }
         }
+        return original;
     }
 }

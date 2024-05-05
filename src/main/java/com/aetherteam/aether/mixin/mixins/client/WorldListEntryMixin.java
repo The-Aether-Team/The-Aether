@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class WorldListEntryMixin {
     @Final
     @Shadow
-    private LevelSummary summary;
+    LevelSummary summary;
 
     /**
      * Used by the world preview system.<br>
