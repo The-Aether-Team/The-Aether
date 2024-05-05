@@ -1,7 +1,6 @@
 package com.aetherteam.aether.mixin.mixins.client;
 
 import com.aetherteam.aether.AetherConfig;
-import com.aetherteam.aether.item.accessories.cape.CapeItem;
 import com.aetherteam.aether.mixin.AetherMixinHooks;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -32,7 +31,7 @@ public class ElytraLayerMixin<T extends LivingEntity> {
     @ModifyReturnValue(at = @At("RETURN"), method = "getElytraTexture(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/resources/ResourceLocation;", remap = false)
     private ResourceLocation getElytraTexture(ResourceLocation original, @Local(ordinal = 0, argsOnly = true) ItemStack stack, @Local(ordinal = 0, argsOnly = true) T entity) {
         if (entity instanceof ArmorStand armorStand) {
-            String identifier = CapeItem.getIdentifierStatic();
+            String identifier = AetherConfig.COMMON.use_curios_menu.get() ? "back" : "aether_cape";
             Optional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(armorStand);
             if (lazyHandler.isPresent()) {
                 ICuriosItemHandler handler = lazyHandler.get();

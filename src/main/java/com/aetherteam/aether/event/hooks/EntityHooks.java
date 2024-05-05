@@ -1,5 +1,6 @@
 package com.aetherteam.aether.event.hooks;
 
+import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.block.AetherBlocks;
@@ -14,7 +15,6 @@ import com.aetherteam.aether.entity.passive.MountableAnimal;
 import com.aetherteam.aether.entity.projectile.crystal.ThunderCrystal;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.accessories.AccessoryItem;
-import com.aetherteam.aether.item.accessories.SlotIdentifierHolder;
 import com.aetherteam.aether.item.accessories.cape.CapeItem;
 import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
 import com.aetherteam.aether.item.accessories.miscellaneous.ShieldOfRepulsionItem;
@@ -179,7 +179,7 @@ public class EntityHooks {
      */
     @Nullable
     private static Item getEquipmentForSlot(String identifier, ArmorMaterials armorMaterials) {
-        if (identifier.equals(GlovesItem.getIdentifierStatic())) {
+        if (identifier.equals(AetherConfig.COMMON.use_curios_menu.get() ? "hands" : "aether_gloves")) {
             switch (armorMaterials) {
                 case LEATHER -> {
                     return AetherItems.LEATHER_GLOVES.get();
@@ -197,7 +197,7 @@ public class EntityHooks {
                     return AetherItems.DIAMOND_GLOVES.get();
                 }
             }
-        } else if (identifier.equals(PendantItem.getIdentifierStatic())) {
+        } else if (identifier.equals(AetherConfig.COMMON.use_curios_menu.get() ? "necklace" : "aether_pendant")) {
             switch (armorMaterials) {
                 case GOLD -> {
                     return AetherItems.GOLDEN_PENDANT.get();
@@ -342,8 +342,15 @@ public class EntityHooks {
             if (!stack.isEmpty()) { // Equip behavior.
                 if (stack.is(AetherTags.Items.ACCESSORIES)) {
                     String identifier = "";
-                    if (stack.getItem() instanceof SlotIdentifierHolder slotIdentifierHolder)
-                        identifier = slotIdentifierHolder.getIdentifier();
+                    if (stack.getItem() instanceof GlovesItem) {
+                        identifier = AetherConfig.COMMON.use_curios_menu.get() ? "hands" : "aether_gloves";
+                    } else if (stack.getItem() instanceof PendantItem) {
+                        identifier = AetherConfig.COMMON.use_curios_menu.get() ? "necklace" : "aether_pendant";
+                    } else if (stack.getItem() instanceof CapeItem) {
+                        identifier = AetherConfig.COMMON.use_curios_menu.get() ? "back" : "aether_cape";
+                    } else if (stack.getItem() instanceof ShieldOfRepulsionItem) {
+                        identifier = AetherConfig.COMMON.use_curios_menu.get() ? "body" : "aether_shield";
+                    }
 
                     Optional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(armorStand);
                     if (lazyHandler.isPresent()) {
@@ -421,10 +428,10 @@ public class EntityHooks {
         double z = isSmall ? pos.z * 2.0 : pos.z;
         double front = axis == Direction.Axis.X ? z : x;
         double vertical = isSmall ? pos.y * 2.0 : pos.y;
-        String glovesIdentifier = GlovesItem.getIdentifierStatic();
-        String pendantIdentifier = PendantItem.getIdentifierStatic();
-        String capeIdentifier = CapeItem.getIdentifierStatic();
-        String shieldIdentifier = ShieldOfRepulsionItem.getIdentifierStatic();
+        String glovesIdentifier = AetherConfig.COMMON.use_curios_menu.get() ? "hands" : "aether_gloves";
+        String pendantIdentifier = AetherConfig.COMMON.use_curios_menu.get() ? "necklace" : "aether_pendant";
+        String capeIdentifier = AetherConfig.COMMON.use_curios_menu.get() ? "back" : "aether_cape";
+        String shieldIdentifier = AetherConfig.COMMON.use_curios_menu.get() ? "body" : "aether_shield";
         if (!getItemByIdentifier(armorStand, glovesIdentifier).isEmpty()
                 && Math.abs(front) >= (isSmall ? 0.15 : 0.2)
                 && vertical >= (isSmall ? 0.65 : 0.75)

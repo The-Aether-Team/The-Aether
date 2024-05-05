@@ -1,5 +1,6 @@
 package com.aetherteam.aether.block.dispenser;
 
+import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.entity.projectile.weapon.HammerProjectile;
@@ -8,8 +9,9 @@ import com.aetherteam.aether.event.hooks.EntityHooks;
 import com.aetherteam.aether.inventory.menu.AccessoriesMenu;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.accessories.AccessoryItem;
-import com.aetherteam.aether.item.accessories.SlotIdentifierHolder;
+import com.aetherteam.aether.item.accessories.cape.CapeItem;
 import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
+import com.aetherteam.aether.item.accessories.miscellaneous.ShieldOfRepulsionItem;
 import com.aetherteam.aether.item.accessories.pendant.PendantItem;
 import com.aetherteam.aether.item.miscellaneous.bucket.SkyrootBucketItem;
 import net.minecraft.Util;
@@ -103,8 +105,15 @@ public class AetherDispenseBehaviors {
                 CuriosApi.getCurio(itemStack).flatMap(curio -> CuriosApi.getCuriosInventory(livingEntity)).ifPresent(handler -> {
                     if (itemStack.is(AetherTags.Items.ACCESSORIES)) {
                         String identifier = "";
-                        if (itemStack.getItem() instanceof SlotIdentifierHolder slotIdentifierHolder)
-                            identifier = slotIdentifierHolder.getIdentifier();
+                        if (itemStack.getItem() instanceof GlovesItem) {
+                            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "hands" : "aether_gloves";
+                        } else if (itemStack.getItem() instanceof PendantItem) {
+                            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "necklace" : "aether_pendant";
+                        } else if (itemStack.getItem() instanceof CapeItem) {
+                            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "back" : "aether_cape";
+                        } else if (itemStack.getItem() instanceof ShieldOfRepulsionItem) {
+                            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "body" : "aether_shield";
+                        }
 
                         Optional<ICurioStacksHandler> stacksHandler = handler.getStacksHandler(identifier);
                         if (stacksHandler.isPresent()) {

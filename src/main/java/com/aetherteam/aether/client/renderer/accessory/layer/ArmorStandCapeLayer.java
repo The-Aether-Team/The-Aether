@@ -1,6 +1,7 @@
 package com.aetherteam.aether.client.renderer.accessory.layer;
 
 import com.aetherteam.aether.Aether;
+import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.client.renderer.AetherModelLayers;
 import com.aetherteam.aether.client.renderer.accessory.model.CapeModel;
 import com.aetherteam.aether.item.accessories.cape.CapeItem;
@@ -42,7 +43,7 @@ public class ArmorStandCapeLayer extends RenderLayer<ArmorStand, ArmorStandModel
 
     @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, ArmorStand livingEntity, float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
-        String identifier = CapeItem.getIdentifierStatic();
+        String identifier = AetherConfig.COMMON.use_curios_menu.get() ? "back" : "aether_cape";
         Optional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(livingEntity);
         if (lazyHandler.isPresent()) {
             ICuriosItemHandler handler = lazyHandler.get();

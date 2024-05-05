@@ -1,9 +1,7 @@
 package com.aetherteam.aether.item.accessories.gloves;
 
 import com.aetherteam.aether.Aether;
-import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.item.accessories.AccessoryItem;
-import com.aetherteam.aether.item.accessories.SlotIdentifierHolder;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.resources.ResourceLocation;
@@ -21,7 +19,7 @@ import top.theillusivec4.curios.api.SlotContext;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-public class GlovesItem extends AccessoryItem implements SlotIdentifierHolder {
+public class GlovesItem extends AccessoryItem {
     protected final ArmorMaterial material;
     protected final double damage;
     protected ResourceLocation GLOVES_TEXTURE;
@@ -86,21 +84,5 @@ public class GlovesItem extends AccessoryItem implements SlotIdentifierHolder {
             blue = (float) (i & 255) / 255.0F;
         }
         return new ImmutableTriple<>(red, green, blue);
-    }
-
-    /**
-     * @return {@link GlovesItem}'s own identifier for its accessory slot,
-     * using a static method as it is used in other conditions without access to an instance.
-     */
-    @Override
-    public String getIdentifier() {
-        return getIdentifierStatic();
-    }
-
-    /**
-     * @return {@link GlovesItem}'s own identifier for its accessory slot.
-     */
-    public static String getIdentifierStatic() {
-        return AetherConfig.COMMON.use_curios_menu.get() ? "hands" : "aether_gloves";
     }
 }

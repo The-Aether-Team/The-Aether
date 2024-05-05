@@ -1,5 +1,6 @@
 package com.aetherteam.aether.mixin.mixins.client;
 
+import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
 import net.minecraft.client.gui.screens.inventory.SmithingScreen;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -32,7 +33,7 @@ public class SmithingScreenMixin {
     @Inject(at = @At("HEAD"), method = "updateArmorStandPreview(Lnet/minecraft/world/item/ItemStack;)V", cancellable = true)
     private void updateArmorStandPreview(ItemStack stack, CallbackInfo ci) {
         if (this.armorStandPreview != null) {
-            String identifier = GlovesItem.getIdentifierStatic();
+            String identifier = AetherConfig.COMMON.use_curios_menu.get() ? "hands" : "aether_gloves";
             Optional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(this.armorStandPreview);
             if (lazyHandler.isPresent()) {
                 ICuriosItemHandler handler = lazyHandler.get();

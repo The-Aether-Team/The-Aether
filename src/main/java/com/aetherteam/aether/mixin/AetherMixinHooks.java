@@ -130,15 +130,15 @@ public class AetherMixinHooks {
             TagKey<Item> glovesTag = TagKey.create(Registries.ITEM, new ResourceLocation(CuriosConstants.MOD_ID, "hands"));
             TagKey<Item> pendantTag = TagKey.create(Registries.ITEM, new ResourceLocation(CuriosConstants.MOD_ID, "necklace"));
             if (stack.is(glovesTag)) {
-                return GlovesItem.getIdentifierStatic();
+                return "hands";
             } else if (stack.is(pendantTag) && (livingEntity.getType() == EntityType.PIGLIN || livingEntity.getType() == EntityType.ZOMBIFIED_PIGLIN)) {
-                return PendantItem.getIdentifierStatic();
+                return "necklace";
             }
         } else {
             if (stack.is(AetherTags.Items.AETHER_GLOVES)) {
-                return GlovesItem.getIdentifierStatic();
+                return "aether_gloves";
             } else if (stack.is(AetherTags.Items.AETHER_PENDANT) && (livingEntity.getType() == EntityType.PIGLIN || livingEntity.getType() == EntityType.ZOMBIFIED_PIGLIN)) {
-                return PendantItem.getIdentifierStatic();
+                return "aether_pendant";
             }
         }
         return "";
