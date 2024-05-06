@@ -13,6 +13,9 @@
     },
     {
       "item": "aether:golden_ring"
+    },
+    {
+      "item": "aether:victory_medal"
     }
   ],
   "result": "minecraft:gold_nugget"
