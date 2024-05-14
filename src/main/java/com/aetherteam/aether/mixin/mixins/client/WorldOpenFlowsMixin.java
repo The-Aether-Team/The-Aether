@@ -29,11 +29,7 @@ public class WorldOpenFlowsMixin {
      */
     @ModifyVariable(method = "loadLevel(Lnet/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess;Lcom/mojang/serialization/Dynamic;ZZLjava/lang/Runnable;Z)V", at = @At("HEAD"), ordinal = 2, argsOnly = true, remap = false)
     private boolean confirmExperimentalWarning(boolean confirmExperimentalWarning) {
-        if (WorldDisplayHelper.isActive()) {
-            return true;
-        } else {
-            return confirmExperimentalWarning;
-        }
+        return WorldDisplayHelper.isActive() || confirmExperimentalWarning;
     }
 
     /**

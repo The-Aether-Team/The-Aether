@@ -114,6 +114,7 @@ public class AetherDispenseBehaviors {
                         } else if (itemStack.getItem() instanceof ShieldOfRepulsionItem) {
                             identifier = AetherConfig.COMMON.use_curios_menu.get() ? "body" : "aether_shield";
                         }
+
                         Optional<ICurioStacksHandler> stacksHandler = handler.getStacksHandler(identifier);
                         if (stacksHandler.isPresent()) {
                             IDynamicStackHandler stackHandler = stacksHandler.get().getCosmeticStacks();
@@ -130,6 +131,7 @@ public class AetherDispenseBehaviors {
                                             } else {
                                                 armorStand.level().playSound(null, armorStand.blockPosition(), SoundEvents.ARMOR_EQUIP_GENERIC, armorStand.getSoundSource(), 1, 1);
                                             }
+
                                             if (identifier.equals("hands") || identifier.equals("aether_gloves")) {
                                                 armorStand.setShowArms(true);
                                             }

@@ -6,23 +6,24 @@ import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
 import com.aetherteam.aether.item.accessories.miscellaneous.ShieldOfRepulsionItem;
 import com.aetherteam.aether.item.accessories.pendant.PendantItem;
 import com.aetherteam.aether.mixin.AetherMixinHooks;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ArmorStand.class)
 public class ArmorStandMixin {
     /**
      * Allows {@link ArmorStand}s to accept accessories from {@link net.minecraft.world.entity.EntitySelector.MobCanWearArmorEntitySelector}.
      *
+     * @param original Whether an item could have been taken before.
      * @param stack The {@link ItemStack}.
-     * @param cir   The {@link Boolean} {@link CallbackInfoReturnable} used for the method's return value.
+     * @return Whether {@link ArmorStand} can take from a curios or aether slot, otherwise whether it could have before.
      */
-    @Inject(at = @At(value = "HEAD"), method = "canTakeItem(Lnet/minecraft/world/item/ItemStack;)Z", cancellable = true)
-    private void canTakeItem(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+    @ModifyReturnValue(at = @At(value = "RETURN"), method = "canTakeItem(Lnet/minecraft/world/item/ItemStack;)Z")
+    private boolean canTakeItem(boolean original, @Local(ordinal = 0, argsOnly = true) ItemStack stack) {
         ArmorStand armorStand = (ArmorStand) (Object) this;
         String identifier = "";
         if (stack.getItem() instanceof GlovesItem) {
@@ -34,11 +35,11 @@ public class ArmorStandMixin {
         } else if (stack.getItem() instanceof ShieldOfRepulsionItem) {
             identifier = AetherConfig.COMMON.use_curios_menu.get() ? "body" : "aether_shield";
         }
+
         if (!identifier.isEmpty()) {
             ItemStack accessory = AetherMixinHooks.getItemByIdentifier(armorStand, identifier);
-            if (accessory.isEmpty()) {
-                cir.setReturnValue(true);
-            }
+            if (accessory.isEmpty()) return true;
         }
+        return original;
     }
 }

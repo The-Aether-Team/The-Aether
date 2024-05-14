@@ -351,6 +351,7 @@ public class EntityHooks {
                     } else if (stack.getItem() instanceof ShieldOfRepulsionItem) {
                         identifier = AetherConfig.COMMON.use_curios_menu.get() ? "body" : "aether_shield";
                     }
+
                     Optional<ICuriosItemHandler> lazyHandler = CuriosApi.getCuriosInventory(armorStand);
                     if (lazyHandler.isPresent()) {
                         ICuriosItemHandler handler = lazyHandler.get();
