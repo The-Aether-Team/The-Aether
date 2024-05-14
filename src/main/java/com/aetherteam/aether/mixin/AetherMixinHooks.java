@@ -148,7 +148,7 @@ public class AetherMixinHooks {
      * Gets an accessory from an entity.
      *
      * @param livingEntity The {@link LivingEntity} to get the accessory from.
-     * @param identifier   The {@link String} for the slot identifier.
+     * @param identifier The {@link String} for the slot identifier.
      * @return The accessory {@link ItemStack} gotten from the entity.
      */
     public static ItemStack getItemByIdentifier(LivingEntity livingEntity, String identifier) {

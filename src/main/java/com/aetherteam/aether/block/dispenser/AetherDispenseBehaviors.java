@@ -122,6 +122,7 @@ public class AetherDispenseBehaviors {
                                             } else {
                                                 armorStand.level().playSound(null, armorStand.blockPosition(), SoundEvents.ARMOR_EQUIP_GENERIC, armorStand.getSoundSource(), 1, 1);
                                             }
+
                                             if (identifier.equals("hands") || identifier.equals("aether_gloves")) {
                                                 armorStand.setShowArms(true);
                                             }
