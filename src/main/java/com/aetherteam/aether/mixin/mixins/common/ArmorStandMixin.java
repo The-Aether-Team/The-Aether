@@ -1,10 +1,6 @@
 package com.aetherteam.aether.mixin.mixins.common;
 
-import com.aetherteam.aether.AetherConfig;
-import com.aetherteam.aether.item.accessories.cape.CapeItem;
-import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
-import com.aetherteam.aether.item.accessories.miscellaneous.ShieldOfRepulsionItem;
-import com.aetherteam.aether.item.accessories.pendant.PendantItem;
+import com.aetherteam.aether.item.accessories.SlotIdentifierHolder;
 import com.aetherteam.aether.mixin.AetherMixinHooks;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -26,15 +22,8 @@ public class ArmorStandMixin {
     private boolean canTakeItem(boolean original, @Local(ordinal = 0, argsOnly = true) ItemStack stack) {
         ArmorStand armorStand = (ArmorStand) (Object) this;
         String identifier = "";
-        if (stack.getItem() instanceof GlovesItem) {
-            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "hands" : "aether_gloves";
-        } else if (stack.getItem() instanceof PendantItem) {
-            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "necklace" : "aether_pendant";
-        } else if (stack.getItem() instanceof CapeItem) {
-            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "back" : "aether_cape";
-        } else if (stack.getItem() instanceof ShieldOfRepulsionItem) {
-            identifier = AetherConfig.COMMON.use_curios_menu.get() ? "body" : "aether_shield";
-        }
+        if (stack.getItem() instanceof SlotIdentifierHolder slotIdentifierHolder)
+            identifier = slotIdentifierHolder.getIdentifier();
 
         if (!identifier.isEmpty()) {
             ItemStack accessory = AetherMixinHooks.getItemByIdentifier(armorStand, identifier);
