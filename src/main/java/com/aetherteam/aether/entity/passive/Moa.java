@@ -332,7 +332,7 @@ public class Moa extends MountableAnimal implements WingedBird {
         } else {
             if (this.isAlive()) {
                 LivingEntity entity = this.getControllingPassenger();
-                if (this.isVehicle() && entity != null) {
+                if (this.isVehicle() && this.isSaddled() && entity != null) {
                     EntityUtil.copyRotations(this, entity);
                     if (this.isControlledByLocalInstance()) {
                         this.travelWithInput(new Vec3(0, vector.y(), 0));
@@ -769,7 +769,7 @@ public class Moa extends MountableAnimal implements WingedBird {
      */
     @Override
     public float getSpeed() {
-        if (this.isVehicle()) {
+        if (this.isVehicle() && this.isSaddled()) {
             return this.getSteeringSpeed();
         } else {
             MoaType moaType = this.getMoaType();
@@ -812,7 +812,7 @@ public class Moa extends MountableAnimal implements WingedBird {
      */
     @Override
     public float getFlyingSpeed() {
-        if (this.isVehicle()) {
+        if (this.isVehicle() && this.isSaddled()) {
             return this.getSteeringSpeed() * 0.45F;
         } else {
             return this.getSteeringSpeed() * 0.025F;
