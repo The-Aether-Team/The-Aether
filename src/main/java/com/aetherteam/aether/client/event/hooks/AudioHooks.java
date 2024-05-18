@@ -5,12 +5,13 @@ import com.aetherteam.aether.client.AetherMusicManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
+import net.minecraft.client.sounds.SoundEngine;
 import net.minecraft.sounds.SoundSource;
 
 public class AudioHooks {
     /**
      * Stops other music from playing over Aether music.
-     * @see com.aetherteam.aether.client.event.listeners.AudioListener#onPlaySound(PlaySoundEvent)
+     * @see com.aetherteam.aether.client.event.listeners.AudioListener#onPlaySound(SoundEngine, SoundInstance, SoundInstance)
      */
     public static boolean shouldCancelSound(SoundInstance sound) {
         if (!AetherConfig.CLIENT.disable_music_manager.get()) {
@@ -35,7 +36,7 @@ public class AudioHooks {
 
     /**
      * Resets the music on respawn.
-     * @see com.aetherteam.aether.client.event.listeners.AudioListener#onPlayerRespawn(ClientPlayerNetworkEvent.Clone)
+     * @see com.aetherteam.aether.client.event.listeners.AudioListener#onPlayerRespawn()
      */
     public static void stop() {
         if (!AetherConfig.CLIENT.disable_music_manager.get()) {

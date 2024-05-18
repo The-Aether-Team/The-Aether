@@ -85,7 +85,7 @@ public class AetherClient implements ClientModInitializer {
     }
 
     public static void registerGuiFactories() {
-//        MenuScreens.register(AetherMenuTypes.ACCESSORIES.get(), AccessoriesScreen::new);
+        MenuScreens.register(AetherMenuTypes.ACCESSORIES.get(), AccessoriesScreen::new);
         MenuScreens.register(AetherMenuTypes.BOOK_OF_LORE.get(), LoreBookScreen::new);
         MenuScreens.register(AetherMenuTypes.ALTAR.get(), AltarScreen::new);
         MenuScreens.register(AetherMenuTypes.FREEZER.get(), FreezerScreen::new);

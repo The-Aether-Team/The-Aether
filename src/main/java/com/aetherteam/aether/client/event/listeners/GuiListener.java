@@ -1,45 +1,46 @@
 package com.aetherteam.aether.client.event.listeners;
 
-import com.aetherteam.aether.Aether;
 import com.aetherteam.aether.client.event.hooks.GuiHooks;
 import com.aetherteam.aether.client.gui.component.inventory.AccessoryButton;
 import com.aetherteam.aether.client.gui.screen.inventory.AccessoriesScreen;
 import io.github.fabricators_of_create.porting_lib.event.client.KeyInputCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
+import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.LerpingBossEvent;
 import net.minecraft.client.gui.layouts.GridLayout;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.BossEvent;
 
+import java.util.List;
 import java.util.UUID;
 
 public class GuiListener {
-//	/** TODO: PORT
-//	 * @see AccessoriesScreen#getButtonOffset(Screen)
-//	 * @see GuiHooks#setupAccessoryButton(Screen, Tuple)
-//	 * @see GuiHooks#setupPerksButtons(Screen)
-//	 */
-//	@SubscribeEvent
-//	public static void onGuiInitialize(ScreenEvent.Init.Post event) {
-//		Screen screen = event.getScreen();
-//		if (GuiHooks.isAccessoryButtonEnabled()) {
-//			Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(screen);
-//			AccessoryButton inventoryAccessoryButton = GuiHooks.setupAccessoryButton(screen, offsets);
-//			if (inventoryAccessoryButton != null) {
-//				event.addListener(inventoryAccessoryButton);
-//			}
-//		} else {
-//			GridLayout layout = GuiHooks.setupPerksButtons(screen);
-//			if (layout != null) {
-//				layout.visitWidgets(event::addListener);
-//			}
-//		}
-//	}
+	/**
+	 * @see AccessoriesScreen#getButtonOffset(Screen)
+	 * @see GuiHooks#setupAccessoryButton(Screen, Tuple)
+	 * @see GuiHooks#setupPerksButtons(Screen)
+	 */
+	public static void onGuiInitialize(Minecraft client, Screen screen, int scaledWidth, int scaledHeight) {
+		List<AbstractWidget> buttons = Screens.getButtons(screen);
+		if (GuiHooks.isAccessoryButtonEnabled()) {
+			Tuple<Integer, Integer> offsets = AccessoriesScreen.getButtonOffset(screen);
+			AccessoryButton inventoryAccessoryButton = GuiHooks.setupAccessoryButton(screen, offsets);
+			if (inventoryAccessoryButton != null) {
+				buttons.add(inventoryAccessoryButton);
+			}
+		} else {
+			GridLayout layout = GuiHooks.setupPerksButtons(screen);
+			if (layout != null) {
+				layout.visitWidgets(buttons::add);
+			}
+		}
+	}
 
 	/**
 	 * @see GuiHooks#drawTrivia(Screen, GuiGraphics)
@@ -87,6 +88,7 @@ public class GuiListener {
 		ScreenEvents.BEFORE_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
 			ScreenEvents.afterRender(screen).register(GuiListener::onGuiDraw);
 		});
+		ScreenEvents.AFTER_INIT.register(GuiListener::onGuiInitialize);
 		ClientTickEvents.END_CLIENT_TICK.register(GuiListener::onClientTick);
 		KeyInputCallback.EVENT.register(GuiListener::onKeyPress);
 	}

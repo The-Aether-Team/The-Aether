@@ -11,7 +11,7 @@ import net.minecraft.world.inventory.MenuType;
 public class AetherMenuTypes {
 	public static final LazyRegistrar<MenuType<?>> MENU_TYPES = LazyRegistrar.create(Registries.MENU, Aether.MODID);
 
-//	public static final RegistryObject<MenuType<AccessoriesMenu>> ACCESSORIES = register("accessories", AccessoriesMenu::new); TODO: PORT
+	public static final RegistryObject<MenuType<AccessoriesMenu>> ACCESSORIES = register("accessories", AccessoriesMenu::new);
 	public static final RegistryObject<MenuType<LoreBookMenu>> BOOK_OF_LORE = register("book_of_lore",LoreBookMenu::new);
 	public static final RegistryObject<MenuType<AltarMenu>> ALTAR = register("altar", AltarMenu::new);
 	public static final RegistryObject<MenuType<FreezerMenu>> FREEZER = register("freezer", FreezerMenu::new);

@@ -117,7 +117,7 @@ public class GuiHooks {
      * Sets up the buttons for the {@link MoaSkinsScreen} and the {@link AetherCustomizationsScreen} in a {@link GridLayout}.
      * @param screen The parent {@link Screen}.
      * @return The {@link GridLayout} holding the buttons.
-     * @see com.aetherteam.aether.client.event.listeners.GuiListener#onGuiInitialize(ScreenEvent.Init.Post)
+     * @see com.aetherteam.aether.client.event.listeners.GuiListener#onGuiInitialize(Minecraft, Screen, int, int)
      */
     @Nullable
     public static GridLayout setupPerksButtons(Screen screen) {
@@ -179,7 +179,7 @@ public class GuiHooks {
      * Generates and draws the Aether's trivia lines in various loading screens.
      * @param screen The current {@link Screen}.
      * @param guiGraphics The rendering {@link GuiGraphics}.
-     * @see com.aetherteam.aether.client.event.listeners.GuiListener#onGuiDraw(ScreenEvent.Render.Post)
+     * @see com.aetherteam.aether.client.event.listeners.GuiListener#onGuiDraw(Screen, GuiGraphics, int, int, float)
      */
     public static void drawTrivia(Screen screen, GuiGraphics guiGraphics) {
         generateTrivia(screen);

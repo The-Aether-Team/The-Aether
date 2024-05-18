@@ -4,6 +4,7 @@ import com.aetherteam.aether.AetherConfig;
 import com.aetherteam.aether.client.AetherMusicManager;
 import com.aetherteam.aether.client.WorldDisplayHelper;
 import com.aetherteam.aether.mixin.mixins.client.accessor.EntityRendererAccessor;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.Screen;
@@ -37,22 +38,19 @@ public class WorldPreviewHooks {
         return screen instanceof TitleScreen && AetherConfig.CLIENT.enable_world_preview.get() && Minecraft.getInstance().level == null;
     }
 
-//    /** TODO: PORT
-//     * After the level is loaded for the world preview by other events, when it gets rendered then
-//     * the panorama-style setup with the displayed menu is handled by {@link WorldDisplayHelper#setupLevelForDisplay()}.
-//     * @param stage The {@link net.minecraftforge.client.event.RenderLevelStageEvent.Stage} of rendering.
-//     * @see com.aetherteam.aether.client.event.listeners.WorldPreviewListener#onRenderLevelLast(RenderLevelStageEvent)
-//     */
-//    public static void renderMenuWithWorld(RenderLevelStageEvent.Stage stage) {
-//        Minecraft minecraft = Minecraft.getInstance();
-//        if (stage == RenderLevelStageEvent.Stage.AFTER_WEATHER) {
-//            if (WorldDisplayHelper.isActive()) {
-//                if (minecraft.screen == null || minecraft.screen instanceof PauseScreen) { // The menu can only be rendered if there is no screen or a PauseScreen when the level loads.
-//                    WorldDisplayHelper.setupLevelForDisplay();
-//                }
-//            }
-//        }
-//    }
+    /**
+     * After the level is loaded for the world preview by other events, when it gets rendered then
+     * the panorama-style setup with the displayed menu is handled by {@link WorldDisplayHelper#setupLevelForDisplay()}.
+     * @see com.aetherteam.aether.client.event.listeners.WorldPreviewListener#onRenderLevelLast(WorldRenderContext)
+     */
+    public static void renderMenuWithWorld() {
+        Minecraft minecraft = Minecraft.getInstance();
+        if (WorldDisplayHelper.isActive()) {
+            if (minecraft.screen == null || minecraft.screen instanceof PauseScreen) { // The menu can only be rendered if there is no screen or a PauseScreen when the level loads.
+                WorldDisplayHelper.setupLevelForDisplay();
+            }
+        }
+    }
 
     /**
      * Handles how the world should be displayed for the world preview. Rendering, sounds, and music are allowed to tick, but nothing else is.

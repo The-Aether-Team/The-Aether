@@ -366,34 +366,34 @@ public class AccessoriesScreen extends EffectRenderingInventoryScreen<Accessorie
     public RecipeBookComponent getRecipeBookComponent() {
         return this.recipeBookComponent;
     }
-//
+
 //    @Override
 //    public boolean canSeeEffects() {
 //        int i = this.getGuiLeft() + this.getXSize() + 2 + this.creativeXOffset();
 //        int j = this.width - i;
 //        return j > 13;
 //    }
-//
-//    /**
-//     * Offsets the accessories screen button based on what screen is currently open.
-//     * @param screen The current {@link Screen}.
-//     * @return A {@link Tuple} containing the x and y {@link Integer}s.
-//     */
-//    public static Tuple<Integer, Integer> getButtonOffset(Screen screen) {
-//        int x = 0;
-//        int y = 0;
-//        if (screen instanceof InventoryScreen || screen instanceof CuriosScreen) {
-//            x = AetherConfig.CLIENT.button_inventory_x.get();
-//            y = AetherConfig.CLIENT.button_inventory_y.get();
-//        }
-//        if (screen instanceof CreativeModeInventoryScreen) {
-//            x = AetherConfig.CLIENT.button_creative_x.get();
-//            y = AetherConfig.CLIENT.button_creative_y.get();
-//        }
-//        if (screen instanceof AccessoriesScreen) {
-//            x = AetherConfig.CLIENT.button_accessories_x.get();
-//            y = AetherConfig.CLIENT.button_accessories_y.get();
-//        }
-//        return new Tuple<>(x, y);
-//    }
+
+    /**
+     * Offsets the accessories screen button based on what screen is currently open.
+     * @param screen The current {@link Screen}.
+     * @return A {@link Tuple} containing the x and y {@link Integer}s.
+     */
+    public static Tuple<Integer, Integer> getButtonOffset(Screen screen) {
+        int x = 0;
+        int y = 0;
+        if (screen instanceof InventoryScreen/* || screen instanceof CuriosScreen*/) {
+            x = AetherConfig.CLIENT.button_inventory_x.get();
+            y = AetherConfig.CLIENT.button_inventory_y.get();
+        }
+        if (screen instanceof CreativeModeInventoryScreen) {
+            x = AetherConfig.CLIENT.button_creative_x.get();
+            y = AetherConfig.CLIENT.button_creative_y.get();
+        }
+        if (screen instanceof AccessoriesScreen) {
+            x = AetherConfig.CLIENT.button_accessories_x.get();
+            y = AetherConfig.CLIENT.button_accessories_y.get();
+        }
+        return new Tuple<>(x, y);
+    }
 }

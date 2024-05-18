@@ -8,9 +8,7 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderBuffers;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -26,6 +24,8 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,31 +33,31 @@ import java.util.List;
 public class LevelClientHooks {
     private static final HashMap<Integer, List<BlockPos>> positionsForTypes = new HashMap<>();
 
-//    /** TODO: PORT
-//     * [CODE COPY] - {@link ClientLevel#animateTick(int, int, int)}.
-//     * Checks to set up positions and render overlays for dungeon blocks from whatever block item the player is holding.
-//     * @see com.aetherteam.aether.client.event.listeners.LevelClientListener#onRenderLevelLast(RenderLevelStageEvent)
-//     */
-//    public static void renderDungeonBlockOverlays(RenderLevelStageEvent.Stage stage, PoseStack poseStack, Camera camera, Frustum frustum, Minecraft minecraft) {
-//        if (stage == RenderLevelStageEvent.Stage.AFTER_PARTICLES && minecraft.level != null) {
-//            LocalPlayer player = minecraft.player;
-//            ClientLevel level = minecraft.level;
-//            RenderBuffers renderBuffers = minecraft.renderBuffers();
-//            int range = 32; // Range for how far the overlays can be rendered at.
-//            if (player != null && player.isCreative()) {
-//                BlockPos playerPos = player.blockPosition();
-//                ItemStack stack = player.getMainHandItem();
-//                int type = idForItem(stack); // Get an ID for the currently held dungeon block item.
-//                if (type != -1) {
-//                    updatePositions(playerPos, level, stack, range, type, false); // Check to add overlays to the map.
-//                }
-//                for (int i = 0; i < positionsForTypes.size(); i++) {
-//                    renderOverlays(level, poseStack, renderBuffers, camera, frustum, i); // Render any overlays at positions in the map.
-//                    updatePositions(playerPos, level, stack, range, i, true); // Check to remove overlays from the map.
-//                }
-//            }
-//        }
-//    }
+    /**
+     * [CODE COPY] - {@link ClientLevel#animateTick(int, int, int)}.
+     * Checks to set up positions and render overlays for dungeon blocks from whatever block item the player is holding.
+     * @see com.aetherteam.aether.mixin.mixins.client.fabric.LevelRendererMixin#renderDungeonBlockOverlays(PoseStack, float, long, boolean, Camera, GameRenderer, LightTexture, Matrix4f, CallbackInfo, Frustum)
+     */
+    public static void renderDungeonBlockOverlays(PoseStack poseStack, Camera camera, Frustum frustum, Minecraft minecraft) {
+        if (minecraft.level != null) {
+            LocalPlayer player = minecraft.player;
+            ClientLevel level = minecraft.level;
+            RenderBuffers renderBuffers = minecraft.renderBuffers();
+            int range = 32; // Range for how far the overlays can be rendered at.
+            if (player != null && player.isCreative()) {
+                BlockPos playerPos = player.blockPosition();
+                ItemStack stack = player.getMainHandItem();
+                int type = idForItem(stack); // Get an ID for the currently held dungeon block item.
+                if (type != -1) {
+                    updatePositions(playerPos, level, stack, range, type, false); // Check to add overlays to the map.
+                }
+                for (int i = 0; i < positionsForTypes.size(); i++) {
+                    renderOverlays(level, poseStack, renderBuffers, camera, frustum, i); // Render any overlays at positions in the map.
+                    updatePositions(playerPos, level, stack, range, i, true); // Check to remove overlays from the map.
+                }
+            }
+        }
+    }
 
     /**
      * [CODE COPY] - {@link ClientLevel#animateTick(int, int, int)}.

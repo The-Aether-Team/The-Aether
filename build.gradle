@@ -163,6 +163,10 @@ compileJava {
     options.incremental = false
 }
 
+java {
+    withSourcesJar()
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {

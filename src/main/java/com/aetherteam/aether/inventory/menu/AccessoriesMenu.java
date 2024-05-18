@@ -2,6 +2,10 @@ package com.aetherteam.aether.inventory.menu;
 
 import com.aetherteam.aether.mixin.mixins.common.accessor.AbstractContainerMenuAccessor;
 import com.mojang.datafixers.util.Pair;
+import dev.emi.trinkets.SurvivalTrinketSlot;
+import dev.emi.trinkets.api.SlotGroup;
+import dev.emi.trinkets.api.TrinketComponent;
+import dev.emi.trinkets.api.TrinketsApi;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
@@ -52,7 +56,7 @@ public class AccessoriesMenu extends InventoryMenu {
             "aether_accessory"
     };
 
-//    public final LazyOptional<ICuriosItemHandler> curiosHandler; TODO: PORT
+    public final Optional<TrinketComponent> curiosHandler;
     private final Player player;
 
     private final CraftingContainer craftMatrix = new TransientCraftingContainer(this, 2, 2);
@@ -67,13 +71,13 @@ public class AccessoriesMenu extends InventoryMenu {
     public AccessoriesMenu(int containerId, Inventory playerInventory, boolean hasButton) {
         super(playerInventory, playerInventory.player.level().isClientSide(), playerInventory.player);
         AbstractContainerMenuAccessor abstractContainerMenuAccessor = (AbstractContainerMenuAccessor) this;
-//        abstractContainerMenuAccessor.aether$setMenuType(AetherMenuTypes.ACCESSORIES.get()); TODO: PORT
+        abstractContainerMenuAccessor.aether$setMenuType(AetherMenuTypes.ACCESSORIES.get());
         abstractContainerMenuAccessor.aether$setContainerId(containerId);
         abstractContainerMenuAccessor.aether$getRemoteSlots().clear();
         abstractContainerMenuAccessor.aether$getLastSlots().clear();
         this.slots.clear();
         this.player = playerInventory.player;
-//        this.curiosHandler = CuriosApi.getCuriosInventory(this.player);
+        this.curiosHandler = TrinketsApi.getTrinketComponent(this.player);
         this.hasButton = hasButton;
 
         this.addSlot(new ResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 154, 28));
@@ -101,7 +105,7 @@ public class AccessoriesMenu extends InventoryMenu {
 
                 @Override
                 public boolean mayPlace(ItemStack stack) {
-                    return false;//stack.canEquip(equipmentSlotType, AccessoriesMenu.this.player); TODO: PORT
+                    return Mob.getEquipmentSlotForItem(stack) == equipmentSlotType;
                 }
 
                 @Override
@@ -136,18 +140,18 @@ public class AccessoriesMenu extends InventoryMenu {
             }
         });
 
-//        this.curiosHandler.ifPresent(curios -> { TODO: PORT
-//            Map<String, ICurioStacksHandler> curioMap = curios.getCurios();
-//            int slots = 0;
-//            int xOffset = 77;
-//            int yOffset = 8;
-//            for (String identifier : AETHER_IDENTIFIERS) { // Creates the slots for all the Aether Curios identifiers.
-//                ICurioStacksHandler stacksHandler = curioMap.get(identifier);
+        this.curiosHandler.ifPresent(curios -> {
+            Map<String, SlotGroup> curioMap = curios.getGroups();
+            int slots = 0;
+            int xOffset = 77;
+            int yOffset = 8;
+            for (String identifier : AETHER_IDENTIFIERS) { // Creates the slots for all the Aether Curios identifiers.
+                SlotGroup stacksHandler = curioMap.get(identifier);
 //                IDynamicStackHandler stackHandler = stacksHandler.getStacks();
 //                if (!stacksHandler.isVisible()) {
 //                    for (int i = 0; i < stackHandler.getSlots(); i++) {
 //                        if (!identifier.equals("aether_accessory")) {
-//                            this.addSlot(new CurioSlot(this.player, stackHandler, i, identifier, xOffset, yOffset, stacksHandler.getRenders(), stacksHandler.canToggleRendering()));
+//                            this.addSlot(new SurvivalTrinketSlot()new CurioSlot(this.player, stackHandler, i, identifier, xOffset, yOffset, stacksHandler.getRenders(), stacksHandler.canToggleRendering()));
 //                            slots++;
 //                            yOffset += 18;
 //                            if (slots % 3 == 0) {
@@ -164,8 +168,8 @@ public class AccessoriesMenu extends InventoryMenu {
 //                        }
 //                    }
 //                }
-//            }
-//        });
+            }
+        });
     }
 
     @Override
@@ -269,7 +273,7 @@ public class AccessoriesMenu extends InventoryMenu {
                 if (!this.moveItemStackTo(itemStack1, i, i + 1, false)) {
                     return ItemStack.EMPTY;
                 }
-//            } else if (index < 46 && !curioTags.isEmpty() && !this.getEmptyCurioSlots(curioTags).isEmpty()) { TODO: PORT
+//            } else if (index < 46 && !curioTags.isEmpty() && !this.getEmptyCurioSlots(curioTags).isEmpty()) {
 //                for (int i : this.getEmptyCurioSlots(curioTags)) {
 //                    if (!this.moveItemStackTo(itemStack1, i, i + 1, false)) {
 //                        return ItemStack.EMPTY;

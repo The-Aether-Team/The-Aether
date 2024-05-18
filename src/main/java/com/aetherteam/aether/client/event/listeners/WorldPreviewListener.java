@@ -7,6 +7,8 @@ import io.github.fabricators_of_create.porting_lib.event.client.CameraSetupCallb
 import io.github.fabricators_of_create.porting_lib.event.client.LivingEntityRenderEvents;
 import io.github.fabricators_of_create.porting_lib.event.client.RenderPlayerEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.model.EntityModel;
@@ -38,15 +40,13 @@ public class WorldPreviewListener {
 //            event.setCanceled(true);
 //        }
 //    }
-//
-//    /**
-//     * @see WorldPreviewHooks#renderMenuWithWorld(RenderLevelStageEvent.Stage)
-//     */
-//    @SubscribeEvent
-//    public static void onRenderLevelLast(RenderLevelStageEvent event) {
-//        RenderLevelStageEvent.Stage stage = event.getStage();
-//        WorldPreviewHooks.renderMenuWithWorld(stage);
-//    }
+
+    /**
+     * @see WorldPreviewHooks#renderMenuWithWorld()
+     */
+    public static void onRenderLevelLast(WorldRenderContext context) {
+        WorldPreviewHooks.renderMenuWithWorld();
+    }
 
     /**
      * @see WorldPreviewHooks#tickMenuWhenPaused()
@@ -102,6 +102,7 @@ public class WorldPreviewListener {
     }
 
     public static void init() {
+        WorldRenderEvents.LAST.register(WorldPreviewListener::onRenderLevelLast);
         ClientTickEvents.END_CLIENT_TICK.register(WorldPreviewListener::onClientTick);
         LivingEntityRenderEvents.PRE.register(WorldPreviewListener::onRenderEntity);
         CameraSetupCallback.EVENT.register(WorldPreviewListener::onCameraView);
