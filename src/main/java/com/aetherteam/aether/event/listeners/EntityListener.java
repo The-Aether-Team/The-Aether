@@ -9,6 +9,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -21,10 +22,7 @@ import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
-import net.neoforged.neoforge.event.entity.living.LivingExperienceDropEvent;
-import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
-import net.neoforged.neoforge.event.entity.living.ShieldBlockEvent;
+import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import top.theillusivec4.curios.api.event.CurioDropsEvent;
 
@@ -166,6 +164,16 @@ public class EntityListener {
         MobEffectInstance effectInstance = event.getEffectInstance();
         if (EntityHooks.preventInebriation(livingEntity, effectInstance)) {
             event.setResult(Event.Result.DENY);
+        }
+    }
+
+    /**
+     * @see EntityHooks#preventSplit(Mob)
+     */
+    public static void onEntitySplit(MobSplitEvent event) {
+        Mob mob = event.getParent();
+        if (EntityHooks.preventSplit(mob)) {
+            event.setCanceled(true);
         }
     }
 }

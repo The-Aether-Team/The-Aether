@@ -50,10 +50,7 @@ import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
-import net.neoforged.neoforge.event.entity.living.LivingExperienceDropEvent;
-import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
-import net.neoforged.neoforge.event.entity.living.ShieldBlockEvent;
+import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
@@ -622,5 +619,16 @@ public class EntityHooks {
      */
     public static boolean preventInebriation(LivingEntity livingEntity, MobEffectInstance appliedInstance) {
         return livingEntity.hasEffect(AetherEffects.REMEDY.get()) && appliedInstance.getEffect() == AetherEffects.INEBRIATION.get();
+    }
+
+    /**
+     * Prevents Slime split behavior from carrying over to Swets.
+     *
+     * @param mob The splitting {@link Mob}.
+     * @return Whether the {@link Mob} should split.
+     * @see com.aetherteam.aether.event.listeners.EntityListener#onEntitySplit(MobSplitEvent)
+     */
+    public static boolean preventSplit(Mob mob) {
+        return mob.getType().is(AetherTags.Entities.SWETS);
     }
 }
