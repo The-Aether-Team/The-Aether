@@ -46,6 +46,7 @@ public class EntityListener {
         bus.addListener(EntityListener::onCurioDrops);
         bus.addListener(EntityListener::onDropExperience);
         bus.addListener(EntityListener::onEffectApply);
+        bus.addListener(EntityListener::onEntitySplit);
     }
 
     /**
