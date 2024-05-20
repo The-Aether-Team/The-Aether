@@ -69,7 +69,8 @@ public class Swet extends Slime implements MountableMob {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 12.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.4)
-                .add(Attributes.FOLLOW_RANGE, 14.0);
+                .add(Attributes.FOLLOW_RANGE, 14.0)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 0.5);
     }
 
     @Override
@@ -165,10 +166,14 @@ public class Swet extends Slime implements MountableMob {
                     this.swetHeight = 1.425F;
                     this.swetWidth = 0.875F;
 
+                    float scale = Math.min(this.getJumpTimer(), 10);
+                    if (this.getJumpTimer() > 2) {
+                        this.swetHeight -= 0.04F * scale;
+                        this.swetWidth += 0.04F * scale;
+                    }
                     if (this.getJumpTimer() > 3) {
-                        float scale = Math.min(this.getJumpTimer(), 10);
-                        this.swetHeight -= 0.05F * scale;
-                        this.swetWidth += 0.05F * scale;
+                        this.swetHeight -= 0.02F * scale;
+                        this.swetWidth += 0.02F * scale;
                     }
                 } else {
                     this.swetHeight = this.swetHeight < 1.0F ? this.swetHeight + 0.25F : 1.0F;
