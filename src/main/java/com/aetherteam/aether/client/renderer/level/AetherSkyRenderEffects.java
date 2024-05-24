@@ -296,20 +296,29 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects {
 
             float f10 = level.getStarBrightness(partialTick);
             if (f10 > 0.0F) {
-                if (GameRenderer.getPositionShader() != null) {
-                    RenderSystem.setShaderColor(f10, f10, f10, f10);
-                    FogRenderer.setupNoFog();
-                    ((LevelRendererAccessor) levelRenderer).aether$getStarBuffer().bind();
-                    ((LevelRendererAccessor) levelRenderer).aether$getStarBuffer().drawWithShader(poseStack.last().pose(), projectionMatrix, GameRenderer.getPositionShader());
-                    VertexBuffer.unbind();
-                    setupFog.run();
-                }
+                RenderSystem.setShaderColor(f10, f10, f10, f10);
+                FogRenderer.setupNoFog();
+                ((LevelRendererAccessor) levelRenderer).aether$getStarBuffer().bind();
+                ((LevelRendererAccessor) levelRenderer).aether$getStarBuffer().drawWithShader(poseStack.last().pose(), projectionMatrix, GameRenderer.getPositionShader());
+                VertexBuffer.unbind();
+                setupFog.run();
             }
 
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.disableBlend();
             poseStack.popPose();
+            RenderSystem.setShaderColor(0.0F, 0.0F, 0.0F, 1.0F);
+            double d0 = Minecraft.getInstance().player.getEyePosition(partialTick).y - level.getLevelData().getHorizonHeight(level);
+            if (d0 < 0.0) {
+                poseStack.pushPose();
+                poseStack.translate(0.0F, 12.0F, 0.0F);
+                ((LevelRendererAccessor) levelRenderer).aether$getDarkBuffer().bind();
+                ((LevelRendererAccessor) levelRenderer).aether$getDarkBuffer().drawWithShader(poseStack.last().pose(), projectionMatrix, shaderInstance);
+                VertexBuffer.unbind();
+                poseStack.popPose();
+            }
 
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.depthMask(true);
         }
         return true;
