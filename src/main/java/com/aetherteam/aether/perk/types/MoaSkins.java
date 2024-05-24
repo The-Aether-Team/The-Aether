@@ -275,6 +275,22 @@ public class MoaSkins {
                 .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/stratus/stratus_saddle.png"))
                 .info(new MoaSkin.Info(User.Tier.VALKYRIE, false))
         ));
+        register("peacock_moa", new MoaSkin("peacock_moa", new MoaSkin.Properties()
+            .displayName(Component.translatable("gui.aether.moa_skins.skin.peacock_moa"))
+            .userPredicate((user) -> PerkUtil.hasValkyrieMoaSkins().test(user))
+            .iconLocation(new ResourceLocation(Aether.MODID, "skins/icons/peacock_moa_icon"))
+            .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/peacock_moa/peacock_moa.png"))
+            .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/peacock_moa/peacock_moa_saddle.png"))
+            .info(new MoaSkin.Info(User.Tier.VALKYRIE, false))
+        ));
+        register("prehistoric_moa", new MoaSkin("prehistoric_moa", new MoaSkin.Properties()
+            .displayName(Component.translatable("gui.aether.moa_skins.skin.prehistoric_moa"))
+            .userPredicate((user) -> PerkUtil.hasValkyrieMoaSkins().test(user))
+            .iconLocation(new ResourceLocation(Aether.MODID, "skins/icons/prehistoric_moa_icon"))
+            .skinLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/prehistoric_moa/prehistoric_moa.png"))
+            .saddleLocation(new ResourceLocation(Aether.MODID, "textures/entity/mobs/moa/skins/prehistoric_moa/prehistoric_moa_saddle.png"))
+            .info(new MoaSkin.Info(User.Tier.VALKYRIE, false))
+        ));
     }
 
     private static void register(String id, MoaSkin moaSkin) {

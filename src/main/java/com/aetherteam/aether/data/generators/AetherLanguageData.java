@@ -822,6 +822,9 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addMoaSkinsText("skin.molten_moa", "Molten Moa");
         this.addMoaSkinsText("skin.undead_moa", "Undead Moa");
         this.addMoaSkinsText("skin.stratus", "Stratus");
+        this.addMoaSkinsText("skin.peacock_moa", "Peacock Moa");
+        this.addMoaSkinsText("skin.prehistoric_moa", "Prehistoric Moa");
+
 
         this.addMoaSkinsText("tooltip.title.access.pledging", "Pledge Access");
         this.addMoaSkinsText("tooltip.title.access.lifetime", "Lifetime Access");
