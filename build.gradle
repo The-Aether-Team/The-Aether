@@ -3,7 +3,7 @@ import net.neoforged.gradle.common.tasks.JarJar
 plugins {
     id 'eclipse'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.+'
+    id 'net.neoforged.gradle.userdev' version '7.0.108'
     id 'io.github.0ffz.github-packages' version '[1,2)'
     id 'com.matthewprenger.cursegradle' version '[1.4,1.5)'
     id 'com.modrinth.minotaur' version '[2,3)'
@@ -92,7 +92,7 @@ dependencies {
 //    compileOnly "curse.maven:curious-elytra-317716:${project.curiouselytra_version}"
     compileOnly "curse.maven:jade-324717:${project.jade_version}"
 //    runtimeOnly "curse.maven:jade-324717:${project.jade_version}"
-//    compileOnly "curse.maven:lootr-361276:${project.lootr_version}"
+    compileOnly "curse.maven:lootr-361276:${project.lootr_version}"
 
 //    runtimeOnly fg.deobf("io.github.ultimateboomer:smoothboot-forge:${project.smoothboot_version}")
 
@@ -112,7 +112,7 @@ repositories {
     maven { url = "https://jitpack.io" }
     maven { url = "https://maven.blamejared.com" }
     maven { url = "https://maven.theillusivec4.top/" }
-    maven { url = "https://www.cursemaven.com" }
+    maven { url = "https://cursemaven.com" }
     maven { url = "https://gitlab.com/api/v4/projects/21830712/packages/maven" }
     maven githubPackage.invoke("The-Aether-Team/Nitrogen")
     maven githubPackage.invoke("The-Aether-Team/Cumulus")

@@ -6,10 +6,10 @@ orbs:
 parameters:
   artifact-name:
     type: string
-    default: aether-1.20.4-1.4.0-neoforge.jar
+    default: aether-1.20.4-1.4.1-neoforge.jar
   deploy-branch:
     type: string
-    default: 1.20.1-develop
+    default: 1.20.4-develop
   allow-deploy-and-discord-publish:
     type: boolean
     default: false
