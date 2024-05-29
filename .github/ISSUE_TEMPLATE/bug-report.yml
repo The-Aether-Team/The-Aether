@@ -51,7 +51,7 @@ body:
     id: aether-ver
     attributes:
       label: The Aether Version
-      description: What version of The Aether are you running? This can be found on the jar file you have downloaded or the Mod Options menu. Please note "latest" is NOT a version.
+      description: What version of The Aether are you running? This can be found on the jar file you have downloaded or the Mod Options menu. Please note "latest" is NOT a version. Make sure you are using The Aether I, not The Aether II. Bugs in The Aether II should be reported on it's issue tracker instead.
       placeholder: "1.1.1"
     validations:
       required: true
@@ -109,9 +109,11 @@ body:
           required: true
         - label: I have confirmed this bug is on the most recently supported version of Minecraft.
           required: true
-        - label: I have confirmed the details provided in this report are concise as possible and does not contained vague information (ie. Versions are properly recorded, answers to questions are clear).
+        - label: I have confirmed the details provided in this report are concise as possible and does not contain vague information (ie. Versions are properly recorded, answers to questions are clear).
           required: true
-        - label: I have confirmed this issue is unique and has not been reported already.
+        - label: I have confirmed this bug is unique and has not been reported already.
           required: true
-        - label: If playing on a modpack, I have reported this issue to their issue tracker already.
+        - label: If playing on a modpack, I have reported this bug to their issue tracker already.
+          required: true
+        - label: I have confirmed that I'm reporting a bug in The Aether I, not The Aether II.
           required: true

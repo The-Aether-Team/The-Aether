@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -29,25 +30,22 @@ public class AbstractArrowMixin {
         AbstractArrow arrow = (AbstractArrow) (Object) this;
         if (arrow.hasData(AetherDataAttachments.PHOENIX_ARROW)) {
             var attachment = arrow.getData(AetherDataAttachments.PHOENIX_ARROW);
-            if (attachment.isPhoenixArrow()) {
-                if (!arrow.level().isClientSide()) {
-                    attachment.setSynched(arrow.getId(), INBTSynchable.Direction.CLIENT, "setPhoenixArrow", true); // Sync Phoenix Arrow variable to client.
-                    if (this.inGround) { // Spawn less particles when the arrow is in the ground.
-                        if (this.inGroundTime % 5 == 0) {
-                            for (int i = 0; i < 1; i++) {
-                                this.spawnParticles(arrow);
-                            }
-                        }
-                    } else {
-                        for (int i = 0; i < 2; i++) {
-                            this.spawnParticles(arrow);
-                        }
+            if (attachment.isPhoenixArrow() && !arrow.level().isClientSide()) {
+                attachment.setSynched(arrow.getId(), INBTSynchable.Direction.CLIENT, "setPhoenixArrow", true); // Sync Phoenix Arrow variable to client.
+                if (this.inGround) { // Spawn less particles when the arrow is in the ground.
+                    if (this.inGroundTime % 5 == 0) {
+                        this.spawnParticles(arrow);
+                    }
+                } else {
+                    for (int i = 0; i < 2; i++) {
+                        this.spawnParticles(arrow);
                     }
                 }
             }
         }
     }
 
+    @Unique
     private void spawnParticles(AbstractArrow arrow) {
         if (arrow.level() instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(ParticleTypes.FLAME,

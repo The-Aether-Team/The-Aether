@@ -12,6 +12,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.HitResult;
+import net.neoforged.fml.ModList;
+import noobanidus.mods.lootr.init.ModBlocks;
 import org.jetbrains.annotations.Nullable;
 import snownee.jade.addon.vanilla.VanillaPlugin;
 import snownee.jade.api.*;
@@ -46,11 +48,11 @@ public class AetherJadePlugin implements IWailaPlugin {
                     return client.blockAccessor().from(target).blockState(doorBlock.defaultBlockState()).build();
                 }
             } else if (target.getBlock() == AetherBlocks.CHEST_MIMIC.get()) { // Mimics show up as normal chests. There's not a single way to tell the difference between these and normal chests from the tooltip.
-//				if (ModList.get().isLoaded("lootr")) { // Disguise as Lootr Loot Chest
-//					return client.blockAccessor().from(target).serverData(this.createFakeChestData(target)).blockState(ModBlocks.CHEST.get().defaultBlockState()).build();
-//				} else {
-                return client.blockAccessor().from(target).serverData(this.createFakeChestData(target)).blockState(Blocks.CHEST.defaultBlockState()).build();
-//				}
+				if (ModList.get().isLoaded("lootr")) { // Disguise as Lootr Loot Chest
+					return client.blockAccessor().from(target).serverData(this.createFakeChestData(target)).blockState(ModBlocks.CHEST.get().defaultBlockState()).build();
+				} else {
+                    return client.blockAccessor().from(target).serverData(this.createFakeChestData(target)).blockState(Blocks.CHEST.defaultBlockState()).build();
+				}
             }
         }
         return accessor;

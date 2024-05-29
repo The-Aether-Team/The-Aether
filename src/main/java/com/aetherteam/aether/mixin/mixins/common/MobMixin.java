@@ -3,6 +3,8 @@ package com.aetherteam.aether.mixin.mixins.common;
 import com.aetherteam.aether.attachment.AetherDataAttachments;
 import com.aetherteam.aether.event.hooks.EntityHooks;
 import com.aetherteam.aether.mixin.AetherMixinHooks;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,31 +17,31 @@ public class MobMixin {
     /**
      * Allows {@link Mob}s to accept accessories from {@link net.minecraft.world.entity.EntitySelector.MobCanWearArmorEntitySelector}.
      *
+     * @param original Whether an item could have been taken before.
      * @param stack The {@link ItemStack}.
-     * @param cir   The {@link Boolean} {@link CallbackInfoReturnable} used for the method's return value.
+     * @return Whether this {@link Mob} can take from a curios or aether slot, otherwise whether it could have before.
      */
-    @Inject(at = @At(value = "HEAD"), method = "canTakeItem(Lnet/minecraft/world/item/ItemStack;)Z", cancellable = true)
-    private void canTakeItem(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+    @ModifyReturnValue(at = @At(value = "RETURN"), method = "canTakeItem(Lnet/minecraft/world/item/ItemStack;)Z")
+    private boolean canTakeItem(boolean original, @Local(ordinal = 0, argsOnly = true) ItemStack stack) {
         Mob mob = (Mob) (Object) this;
         if (EntityHooks.canMobSpawnWithAccessories(mob)) {
             String identifier = AetherMixinHooks.getIdentifierForItem(mob, stack);
             if (!identifier.isEmpty()) {
                 ItemStack accessory = AetherMixinHooks.getItemByIdentifier(mob, identifier);
-                if (accessory.isEmpty()) {
-                    cir.setReturnValue(true);
-                }
+                if (accessory.isEmpty()) return true;
             }
         }
+        return original;
     }
 
     /**
      * Handles equipping accessories for {@link Mob}s.
      *
-     * @param stack The {@link ItemStack}.
-     * @param cir   The {@link Boolean} {@link CallbackInfoReturnable} used for the method's return value.
+     * @param original The {@link ItemStack} returned by the target method.
+     * @param stack The {@link ItemStack} provided to the target method.
      */
-    @Inject(at = @At(value = "HEAD"), method = "equipItemIfPossible(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/ItemStack;", cancellable = true)
-    private void equipItemIfPossible(ItemStack stack, CallbackInfoReturnable<ItemStack> cir) {
+    @ModifyReturnValue(at = @At(value = "RETURN"), method = "equipItemIfPossible(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/ItemStack;")
+    private ItemStack equipItemIfPossible(ItemStack original, @Local(ordinal = 0, argsOnly = true) ItemStack stack) {
         Mob mob = (Mob) (Object) this;
         var data = mob.getData(AetherDataAttachments.MOB_ACCESSORY);
         String identifier = AetherMixinHooks.getIdentifierForItem(mob, stack);
@@ -54,8 +56,9 @@ public class MobMixin {
                 AetherMixinHooks.setItemByIdentifier(mob, stack, identifier);
                 data.setGuaranteedDrop(identifier);
                 mob.setPersistenceRequired();
-                cir.setReturnValue(stack);
+                return stack;
             }
         }
+        return original;
     }
 }
