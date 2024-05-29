@@ -15,7 +15,11 @@ import net.minecraft.client.renderer.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.CubicSampler;
 import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.biome.BiomeManager;
+import net.minecraft.world.level.material.FogType;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -247,81 +251,100 @@ public class AetherSkyRenderEffects extends DimensionSpecialEffects {
      */
     @Override
     public boolean renderSky(ClientLevel level, int ticks, float partialTick, PoseStack poseStack, Camera camera, Matrix4f projectionMatrix, boolean isFoggy, Runnable setupFog) {
-        if (RenderSystem.getShader() != null) {
-            LevelRenderer levelRenderer = Minecraft.getInstance().levelRenderer;
-            Vec3 vec3 = this.getSkyColor(level, camera.getPosition(), partialTick);
-            float f = (float) vec3.x();
-            float f1 = (float) vec3.y();
-            float f2 = (float) vec3.z();
-            FogRenderer.levelFogColor();
-            BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();
-            RenderSystem.depthMask(false);
-            RenderSystem.setShaderColor(f, f1, f2, 1.0F);
-            ShaderInstance shaderInstance = RenderSystem.getShader();
-            ((LevelRendererAccessor) levelRenderer).aether$getSkyBuffer().bind();
-            ((LevelRendererAccessor) levelRenderer).aether$getSkyBuffer().drawWithShader(poseStack.last().pose(), projectionMatrix, shaderInstance);
-            VertexBuffer.unbind();
-            RenderSystem.enableBlend();
-            float[] sunRiseRGBA = level.effects().getSunriseColor(level.getTimeOfDay(partialTick), partialTick);
-            if (sunRiseRGBA != null) {
-                RenderSystem.setShader(GameRenderer::getPositionColorShader);
-                RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-                poseStack.pushPose();
-                poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
-                float f3 = Mth.sin(level.getSunAngle(partialTick)) < 0.0F ? 180.0F : 0.0F;
-                poseStack.mulPose(Axis.ZP.rotationDegrees(f3));
-                poseStack.mulPose(Axis.ZP.rotationDegrees(90.0F));
-                float f4 = sunRiseRGBA[0];
-                float f5 = sunRiseRGBA[1];
-                float f6 = sunRiseRGBA[2];
-                Matrix4f matrix4f = poseStack.last().pose();
-                bufferBuilder.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
-                bufferBuilder.vertex(matrix4f, 0.0F, 100.0F, 0.0F).color(f4, f5, f6, sunRiseRGBA[3]).endVertex();
+        setupFog.run();
+        if (!isFoggy) {
+            FogType fogtype = camera.getFluidInCamera();
+            if (fogtype != FogType.POWDER_SNOW && fogtype != FogType.LAVA && !this.doesMobEffectBlockSky(camera)) {
+                LevelRenderer levelRenderer = Minecraft.getInstance().levelRenderer;
+                Vec3 vec3 = this.getSkyColor(level, Minecraft.getInstance().gameRenderer.getMainCamera().getPosition(), partialTick);
+                float f = (float) vec3.x;
+                float f1 = (float) vec3.y;
+                float f2 = (float) vec3.z;
+                FogRenderer.levelFogColor();
+                BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();
+                RenderSystem.depthMask(false);
+                RenderSystem.setShaderColor(f, f1, f2, 1.0F);
+                ShaderInstance shaderinstance = RenderSystem.getShader();
+                ((LevelRendererAccessor) levelRenderer).aether$getSkyBuffer().bind();
+                ((LevelRendererAccessor) levelRenderer).aether$getSkyBuffer().drawWithShader(poseStack.last().pose(), projectionMatrix, shaderinstance);
+                VertexBuffer.unbind();
+                RenderSystem.enableBlend();
+                float[] sunriseColor = level.effects().getSunriseColor(level.getTimeOfDay(partialTick), partialTick);
+                if (sunriseColor != null) {
+                    RenderSystem.setShader(GameRenderer::getPositionColorShader);
+                    RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+                    poseStack.pushPose();
+                    poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
+                    float f3 = Mth.sin(level.getSunAngle(partialTick)) < 0.0F ? 180.0F : 0.0F;
+                    poseStack.mulPose(Axis.ZP.rotationDegrees(f3));
+                    poseStack.mulPose(Axis.ZP.rotationDegrees(90.0F));
+                    float f4 = sunriseColor[0];
+                    float f5 = sunriseColor[1];
+                    float f6 = sunriseColor[2];
+                    Matrix4f matrix4f = poseStack.last().pose();
+                    bufferBuilder.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
+                    bufferBuilder.vertex(matrix4f, 0.0F, 100.0F, 0.0F).color(f4, f5, f6, sunriseColor[3]).endVertex();
 
-                for (int j = 0; j <= 16; ++j) {
-                    float f7 = j * Mth.TWO_PI / 16.0F;
-                    float f8 = Mth.sin(f7);
-                    float f9 = Mth.cos(f7);
-                    bufferBuilder.vertex(matrix4f, f8 * 120.0F, f9 * 120.0F, -f9 * 40.0F * sunRiseRGBA[3]).color(sunRiseRGBA[0], sunRiseRGBA[1], sunRiseRGBA[2], 0.0F).endVertex();
+                    for (int j = 0; j <= 16; ++j) {
+                        float f7 = (float) j * Mth.TWO_PI / 16.0F;
+                        float f8 = Mth.sin(f7);
+                        float f9 = Mth.cos(f7);
+                        bufferBuilder.vertex(matrix4f, f8 * 120.0F, f9 * 120.0F, -f9 * 40.0F * sunriseColor[3]).color(sunriseColor[0], sunriseColor[1], sunriseColor[2], 0.0F).endVertex();
+                    }
+
+                    BufferUploader.drawWithShader(bufferBuilder.end());
+                    poseStack.popPose();
                 }
 
-                BufferUploader.drawWithShader(bufferBuilder.end());
-                poseStack.popPose();
-            }
-
-            RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-            poseStack.pushPose();
-
-            this.drawCelestialBodies(partialTick, poseStack, level, bufferBuilder);
-
-            float f10 = level.getStarBrightness(partialTick);
-            if (f10 > 0.0F) {
-                RenderSystem.setShaderColor(f10, f10, f10, f10);
-                FogRenderer.setupNoFog();
-                ((LevelRendererAccessor) levelRenderer).aether$getStarBuffer().bind();
-                ((LevelRendererAccessor) levelRenderer).aether$getStarBuffer().drawWithShader(poseStack.last().pose(), projectionMatrix, GameRenderer.getPositionShader());
-                VertexBuffer.unbind();
-                setupFog.run();
-            }
-
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            RenderSystem.disableBlend();
-            poseStack.popPose();
-            RenderSystem.setShaderColor(0.0F, 0.0F, 0.0F, 1.0F);
-            double d0 = Minecraft.getInstance().player.getEyePosition(partialTick).y - level.getLevelData().getHorizonHeight(level);
-            if (d0 < 0.0) {
+                RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
                 poseStack.pushPose();
-                poseStack.translate(0.0F, 12.0F, 0.0F);
-                ((LevelRendererAccessor) levelRenderer).aether$getDarkBuffer().bind();
-                ((LevelRendererAccessor) levelRenderer).aether$getDarkBuffer().drawWithShader(poseStack.last().pose(), projectionMatrix, shaderInstance);
-                VertexBuffer.unbind();
-                poseStack.popPose();
-            }
 
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            RenderSystem.depthMask(true);
+                float f11 = 1.0F - level.getRainLevel(partialTick);
+                RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, f11);
+
+                this.drawCelestialBodies(partialTick, poseStack, level, bufferBuilder);
+
+                float f10 = level.getStarBrightness(partialTick) * f11;
+                if (f10 > 0.0F) {
+                    RenderSystem.setShaderColor(f10, f10, f10, f10);
+                    FogRenderer.setupNoFog();
+                    ((LevelRendererAccessor) levelRenderer).aether$getStarBuffer().bind();
+                    ((LevelRendererAccessor) levelRenderer).aether$getStarBuffer().drawWithShader(poseStack.last().pose(), projectionMatrix, GameRenderer.getPositionShader());
+                    VertexBuffer.unbind();
+                    setupFog.run();
+                }
+
+                RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+                RenderSystem.disableBlend();
+                RenderSystem.defaultBlendFunc();
+                poseStack.popPose();
+                RenderSystem.setShaderColor(0.0F, 0.0F, 0.0F, 1.0F);
+                double d0 = Minecraft.getInstance().player.getEyePosition(partialTick).y - level.getLevelData().getHorizonHeight(level);
+                if (d0 < 0.0) {
+                    poseStack.pushPose();
+                    poseStack.translate(0.0F, 12.0F, 0.0F);
+                    ((LevelRendererAccessor) levelRenderer).aether$getDarkBuffer().bind();
+                    ((LevelRendererAccessor) levelRenderer).aether$getDarkBuffer().drawWithShader(poseStack.last().pose(), projectionMatrix, shaderinstance);
+                    VertexBuffer.unbind();
+                    poseStack.popPose();
+                }
+
+                RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+                RenderSystem.depthMask(true);
+            }
         }
+
         return true;
+    }
+
+    private boolean doesMobEffectBlockSky(Camera pCamera) {
+        Entity entity = pCamera.getEntity();
+        if (!(entity instanceof LivingEntity)) {
+            return false;
+        } else {
+            LivingEntity livingentity = (LivingEntity)entity;
+            return livingentity.hasEffect(MobEffects.BLINDNESS) || livingentity.hasEffect(MobEffects.DARKNESS);
+        }
     }
 
     /**
