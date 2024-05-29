@@ -68,6 +68,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
+                .add(Attributes.KNOCKBACK_RESISTANCE, 0.25)
                 .add(Attributes.MOVEMENT_SPEED, 0.5);
     }
 
@@ -88,7 +89,7 @@ public abstract class AbstractValkyrie extends Monster implements NotGrounded {
         }
         double motionY = this.getDeltaMovement().y();
         if (!this.onGround() && Math.abs(motionY - this.lastMotionY) > 0.07 && Math.abs(motionY - this.lastMotionY) < 0.09) {
-            this.setDeltaMovement(this.getDeltaMovement().add(0, 0.055, 0));
+            this.setDeltaMovement(this.getDeltaMovement().add(0, 0.0225, 0));
         }
     }
 
