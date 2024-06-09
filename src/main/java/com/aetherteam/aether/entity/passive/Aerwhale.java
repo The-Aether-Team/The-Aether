@@ -76,6 +76,12 @@ public class Aerwhale extends FlyingMob {
      * @return Whether this entity can spawn, as a {@link Boolean}.
      */
     public static boolean checkAerwhaleSpawnRules(EntityType<? extends Aerwhale> aerwhale, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
+        boolean entireHitboxCanSeeSky=true;
+        for(int xOffset = -1; xOffset <= 1; xOffset++) {
+            for (int zOffset = -1; zOffset <= 1; zOffset++) {
+                entireHitboxCanSeeSky = entireHitboxCanSeeSky && level.canSeeSky(pos.offset(xOffset,0,zOffset));
+            }
+        }
         return Mob.checkMobSpawnRules(aerwhale, level, reason, pos, random)
                 && level.getFluidState(pos).is(Fluids.EMPTY)
                 && level.getRawBrightness(pos, 0) > 8
