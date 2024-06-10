@@ -125,15 +125,12 @@ public class MenuHooks {
      *
      * @return The {@link String} for the menu's ID.
      */
-    @Nullable
     private static String toggleBetweenMenus() {
         if (AetherMenuUtil.isAetherMenu()) {
             return AetherConfig.CLIENT.default_minecraft_menu.get();
-        } else if (AetherMenuUtil.isMinecraftMenu()) {
-            return AetherConfig.CLIENT.default_aether_menu.get();
-        } else {
-            return null;
         }
+        return AetherConfig.CLIENT.default_aether_menu.get();
+
     }
 
     /**
