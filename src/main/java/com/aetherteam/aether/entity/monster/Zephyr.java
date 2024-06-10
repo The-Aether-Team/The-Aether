@@ -26,6 +26,8 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
 
+import static com.aetherteam.aether.entity.EntityUtil.wholeHitboxCanSeeSky;
+
 public class Zephyr extends FlyingMob implements Enemy {
     private static final EntityDataAccessor<Integer> DATA_CHARGE_TIME_ID = SynchedEntityData.defineId(Zephyr.class, EntityDataSerializers.INT);
 
@@ -72,14 +74,8 @@ public class Zephyr extends FlyingMob implements Enemy {
      * @return Whether this entity can spawn, as a {@link Boolean}.
      */
     public static boolean checkZephyrSpawnRules(EntityType<? extends Zephyr> zephyr, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
-        boolean entireHitboxCanSeeSky=true;
-        for(int xOffset = -2; xOffset <= 2; xOffset++) {
-            for (int zOffset = -2; zOffset <= 2; zOffset++) {
-                entireHitboxCanSeeSky = entireHitboxCanSeeSky && level.canSeeSky(pos.offset(xOffset,0,zOffset));
-            }
-        }
         return Mob.checkMobSpawnRules(zephyr, level, reason, pos, random)
-                && entireHitboxCanSeeSky
+                && wholeHitboxCanSeeSky((Level) level, pos, 2)
                 && level.getDifficulty() != Difficulty.PEACEFUL
                 && (reason != MobSpawnType.NATURAL || random.nextInt(11) == 0);
     }

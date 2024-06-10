@@ -33,6 +33,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.UUID;
 
+import static com.aetherteam.aether.entity.EntityUtil.wholeHitboxCanSeeSky;
+
 public class Aerwhale extends FlyingMob {
     private static final EntityDataAccessor<Float> DATA_X_ROT_O_ID = SynchedEntityData.defineId(Aerwhale.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Float> DATA_X_ROT_ID = SynchedEntityData.defineId(Aerwhale.class, EntityDataSerializers.FLOAT);
@@ -85,7 +87,7 @@ public class Aerwhale extends FlyingMob {
         return Mob.checkMobSpawnRules(aerwhale, level, reason, pos, random)
                 && level.getFluidState(pos).is(Fluids.EMPTY)
                 && level.getRawBrightness(pos, 0) > 8
-                && level.canSeeSky(pos)
+                && wholeHitboxCanSeeSky((Level) level, pos, 1)
                 && (reason != MobSpawnType.NATURAL || random.nextInt(40) == 0);
     }
 
