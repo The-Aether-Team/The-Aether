@@ -622,6 +622,7 @@ public class AetherLanguageData extends AetherLanguageProvider {
         this.addSubtitle("entity", "sentry.death", "Sentry dies");
         this.addSubtitle("entity", "sentry.hurt", "Sentry hurts");
         this.addSubtitle("entity", "sentry.jump", "Sentry squishes");
+        this.addSubtitle("entity", "sentry.squish", "Sentry squishes");
 
         this.addSubtitle("entity", "mimic.attack", "Mimic attacks");
         this.addSubtitle("entity", "mimic.death", "Mimic dies");
