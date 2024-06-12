@@ -358,6 +358,11 @@
     ],
     "subtitle": "subtitles.block.generic.footsteps"
   },
+  "entity.sentry.ambient": {
+    "sounds": [
+      "aether:generic/silence"
+    ]
+  },
   "entity.sentry.death": {
     "sounds": [
       "mob/slime/big1",
@@ -384,6 +389,15 @@
       "mob/slime/big4"
     ],
     "subtitle": "subtitles.aether.entity.sentry.jump"
+  },
+  "entity.sentry.squish": {
+    "sounds": [
+      "mob/slime/big1",
+      "mob/slime/big2",
+      "mob/slime/big3",
+      "mob/slime/big4"
+    ],
+    "subtitle": "subtitles.aether.entity.sentry.squish"
   },
   "entity.sheepuff.ambient": {
     "sounds": [
