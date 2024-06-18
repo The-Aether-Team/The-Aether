@@ -934,6 +934,22 @@
       }
     ]
   },
+  "music.boss.slider": {
+    "sounds": [
+      {
+        "name": "aether:music/boss/sliderfight",
+        "stream": true
+      }
+    ]
+  },
+  "music.boss.valkyrie_queen": {
+    "sounds": [
+      {
+        "name": "aether:music/boss/queenfight",
+        "stream": true
+      }
+    ]
+  },
   "music.menu": {
     "sounds": [
       {

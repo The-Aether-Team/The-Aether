@@ -269,6 +269,7 @@
   "commands.aether.sun_altar_whitelist.reloaded": "Reloaded the Sun Altar's whitelist",
   "commands.aether.sun_altar_whitelist.remove.failed": "Player is not whitelisted to use the Sun Altar",
   "commands.aether.sun_altar_whitelist.remove.success": "Removed %s from the Sun Altar's whitelist",
+  "config.aether.client.audio.disable_aether_boss_music": "Disables the Aether's boss fight music, only works if 'Disables Aether music manager' is false",
   "config.aether.client.audio.disable_aether_menu_music": "Disables the Aether's menu music in case another mod implements its own, only works if 'Disables Aether music manager' is false",
   "config.aether.client.audio.disable_aether_world_preview_menu_music": "Disables the menu music on the Aether world preview menu, only works if 'Disables Aether music manager' is false",
   "config.aether.client.audio.disable_music_manager": "Disables the Aether's internal music manager, if true, this overrides all other audio configs",

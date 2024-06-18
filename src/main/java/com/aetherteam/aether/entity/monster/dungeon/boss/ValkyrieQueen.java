@@ -35,6 +35,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.Music;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
@@ -71,6 +72,7 @@ import java.util.function.Predicate;
 public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<ValkyrieQueen>, NpcDialogue, IEntityWithComplexSpawn {
     private static final EntityDataAccessor<Boolean> DATA_IS_READY = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Component> DATA_BOSS_NAME = SynchedEntityData.defineId(ValkyrieQueen.class, EntityDataSerializers.COMPONENT);
+    private static final Music VALKYRIE_QUEEN_MUSIC = new Music(AetherSoundEvents.MUSIC_BOSS_VALKYRIE_QUEEN, 0, 0, true);
 
     /**
      * Boss health bar manager
@@ -642,6 +644,15 @@ public class ValkyrieQueen extends AbstractValkyrie implements AetherBossMob<Val
     @Override
     public ResourceLocation getBossBarBackgroundTexture() {
         return new ResourceLocation(Aether.MODID, "boss_bar/valkyrie_queen_background");
+    }
+
+    /**
+     * @return The {@link Music} for this boss's fight.
+     */
+    @Nullable
+    @Override
+    public Music getBossMusic() {
+        return VALKYRIE_QUEEN_MUSIC;
     }
 
     /**

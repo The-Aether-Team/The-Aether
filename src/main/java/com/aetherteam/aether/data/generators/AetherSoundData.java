@@ -767,5 +767,14 @@ public class AetherSoundData extends SoundDefinitionsProvider {
                         sound("aether:music/aether5").stream()
                 )
         );
+        this.add(AetherSoundEvents.MUSIC_BOSS_SLIDER,
+            definition().with(sound("aether:music/boss/sliderfight").stream())
+        );
+        this.add(AetherSoundEvents.MUSIC_BOSS_VALKYRIE_QUEEN,
+            definition().with(sound("aether:music/boss/queenfight").stream())
+        );
+//        this.add(AetherSoundEvents.MUSIC_BOSS_SUN_SPIRIT,
+//            definition().with(sound("aether:music/boss/.").stream())
+//        );
     }
 }

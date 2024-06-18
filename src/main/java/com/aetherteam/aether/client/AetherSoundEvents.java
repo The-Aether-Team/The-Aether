@@ -166,6 +166,10 @@ public class AetherSoundEvents {
     public static final DeferredHolder<SoundEvent, SoundEvent> MUSIC_MENU = registerHolder("music.menu");
     public static final DeferredHolder<SoundEvent, SoundEvent> MUSIC_AETHER = registerHolder("music.aether");
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> MUSIC_BOSS_SLIDER = registerHolder("music.boss.slider");
+    public static final DeferredHolder<SoundEvent, SoundEvent> MUSIC_BOSS_VALKYRIE_QUEEN = registerHolder("music.boss.valkyrie_queen");
+    public static final DeferredHolder<SoundEvent, SoundEvent> MUSIC_BOSS_SUN_SPIRIT = registerHolder("music.boss.sun_spirit");
+
     private static DeferredHolder<SoundEvent, SoundEvent> register(String location) {
         return SOUNDS.register(location, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Aether.MODID, location)));
     }
